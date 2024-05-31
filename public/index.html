@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <title>Exchange</title>
+</head>
+
+<body>
+  <div id="app">
+    这里是骨架屏效果 // todo
+  </div>
+  <script>
+    // 解析参数
+    const keys = [
+      "invite",
+    ];
+    keys.forEach((item) => {
+      getQueryFromUrl(item);
+    });
+    function getQueryFromUrl(key) {
+      try {
+        if (location.search.includes(key)) {
+          let str = location.search.split(key + "=")[1].split("&")[0];
+          if (
+            str == null ||
+            str == undefined ||
+            str == "null" ||
+            str == "undefined"
+          )
+            str = "";
+          localStorage.setItem(key, decodeURIComponent(str));
+        }
+      } catch {
+        console.error(key + "获取失败");
+      }
+    }
+    // rem
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+        resizeEvt =
+          "orientationchange" in window ? "orientationchange" : "resize",
+        recalc = function () {
+          if (docEl.clientWidth > 750) {
+            docEl.style.fontSize = "100px"; // 100% == 7.5rem
+            doc.getElementById("app").style.width = "750px";
+          } else {
+            var width = docEl.clientWidth / 7.5;
+            docEl.style.fontSize = width + "px";
+            doc.getElementById("app").style.width = "100%";
+          }
+        };
+      recalc();
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener("DOMContentLoaded", recalc, false);
+    })(document, window);
+    // ios禁止缩放
+    document.documentElement.addEventListener(
+      "touchstart",
+      function (event) {
+        if (event.touches.length > 1) {
+          event.preventDefault();
+        }
+      },
+      false
+    );
+
+    var lastTouchEnd = 0;
+    document.documentElement.addEventListener(
+      "touchend",
+      function (event) {
+        var now = Date.now();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      },
+      false
+    );
+
+    document.addEventListener("gesturestart", function (event) {
+      event.preventDefault();
+    });
+  </script>
+</body>
+
+</html>
