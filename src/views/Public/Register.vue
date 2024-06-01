@@ -1,6 +1,6 @@
-<!-- 登录页 -->
+<!-- 注册页 -->
 <template>
-  <div class="page page-login">
+  <div class="page page-register">
 
     <!-- 返回和语言 -->
     <div class="max-width top">
@@ -15,43 +15,54 @@
 
     <!-- 标题 -->
     <div class="title_box">
-      <div class="title">登录</div>
+      <div class="title">创建您的账户</div>
     </div>
 
     <!-- 表单 -->
     <div class="form">
       <div class="form_title">用户名</div>
       <div class="form_item margin_item">
-        <div class="form_item_user" v-show="form.username">
-          <img src="@/assets/user/user.png" alt="user">
-        </div>
         <input maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text" class="item_input">
       </div>
       <div class="form_title">密码</div>
-      <div class="form_item">
-        <input maxlength="20" v-show="!showPass" v-model.trim="form.password" placeholder="请输入您的密码" type="password"
+      <div class="form_item margin_item">
+        <input maxlength="20" v-show="!showPass" v-model.trim="form.password" placeholder="密码最小8个字符" type="password"
           class="item_input">
-        <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="请输入您的密码" type="text"
+        <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="密码最小8个字符" type="text"
           class="item_input">
         <div class="ripple_button form_item_icon" @click="showPass = !showPass">
           <img v-show="!showPass" src="@/assets/user/eye-off.png" alt="off">
           <img v-show="showPass" src="@/assets/user/eye-open.png" alt="open">
         </div>
       </div>
+      <!-- 密码等级 -->
+      <PasswordLevel style="position: relative;top:-0.32rem;left:0.32rem" :password="form.password" />
+
+      <div class="form_title">邀请码</div>
+      <div class="form_item margin_item">
+        <input maxlength="20" v-model.trim="form.invateCode" placeholder="请输入您的邀请码" type="text" class="item_input">
+      </div>
     </div>
 
-    <!-- 忘记密码 -->
-    <div class="fogot">忘记密码？</div>
+    <!-- 协议 -->
+    <label class="ripple_button register_doc" @click="checked = !checked">
+      <Checkbox :icon-size="'0.36rem'" @click.stop="() => { }" class="register_doc_check" checked-color="#014CFA"
+        shape="square" v-model="checked"></Checkbox>
+      我同意<span>隐私政策</span>和<span>用户条款</span>
+    </label>
 
     <!-- 按钮 -->
-    <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">登录</Button>
+    <div class="submit_box">
+      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
     </div>
 
     <!-- 去注册 -->
-    <div class="go_register" @click="router.replace({ name: 'register' })">
-      没有账号吗？
-      <span>去注册</span>
+    <div class="go_register" @click="router.replace({ name: 'login' })">
+      <div class="server_icon">
+        <img src="@/assets/common/server.png" alt="server">
+      </div>
+      有账号吗？
+      <span>去登录</span>
     </div>
 
 
@@ -63,20 +74,27 @@
 </template>
 
 <script setup>
-import { Icon, Button, showToast, showNotify } from "vant"
+import { Icon, Button, showToast, showNotify, Checkbox } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { _login } from "@/api/api"
 import VerifCode from "@/components/VerifCode.vue"
+import PasswordLevel from "@/components/PasswordLevel.vue"
 import store from "@/store"
 
 const verifCodeRef = ref()
 
 const showPass = ref(false) // 密码显示
+const checked = ref(false) // 同意协议
 const form = ref({ // 表单
   username: '',
   password: '',
-  verifcode: ''
+  safeword: '', // 交易密码
+  confirmSafe: '', // 确认交易密码
+  guest: false,
+  verifcode: '',
+  token: '',
+  invateCode: ''
 })
 
 const loading = ref(false) // 加载
@@ -124,7 +142,7 @@ const submitCode = code => {
 </script>
 
 <style lang="less" scoped>
-.page-login {
+.page-register {
   padding-top: 1.12rem;
 
   .top {
@@ -157,7 +175,7 @@ const submitCode = code => {
   }
 
   .title_box {
-    padding: 0.3rem 0.32rem 1.4rem 0.32rem;
+    padding: 0.3rem 0.32rem 0.56rem 0.32rem;
 
     .title {
       height: 0.78rem;
@@ -216,11 +234,24 @@ const submitCode = code => {
     }
   }
 
-  .fogot {
-    color: #014CFA;
-    font-weight: 400;
+  .register_doc {
     padding-left: 0.32rem;
-    margin: 0.2rem 0 1.14rem 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #343434;
+    font-weight: 400;
+    font-size: 0.26rem;
+    margin-bottom: 0.8rem;
+
+    .register_doc_check {
+      margin-right: 0.24rem;
+    }
+
+    >span {
+      color: #014CFA;
+    }
   }
 
   .submit_box {
@@ -233,9 +264,18 @@ const submitCode = code => {
   }
 
   .go_register {
-    margin: 2.8rem 0 1.4rem 0;
+    margin: 1.12rem 0;
     text-align: center;
     font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .server_icon {
+      width: 0.8rem;
+      height: 0.8rem;
+      margin-right: 0.2rem;
+    }
 
     >span {
       color: #1A59F6;

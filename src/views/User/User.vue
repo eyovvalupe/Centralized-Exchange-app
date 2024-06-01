@@ -3,7 +3,7 @@
     <div class="page page_user">
 
         <!-- 客服 -->
-        <div class="server">
+        <div class=" server">
             <div class="ripple_button server_btn">
                 <img class="server_icon" src="@/assets/common/server.png" alt="server">
             </div>
@@ -17,12 +17,12 @@
             </div>
             <!-- 已登录 -->
             <div v-if="token" class="user_box userinfo">
-                <div class="name">test001</div>
+                <div class="name">{{ userInfo.username || '--' }}</div>
                 <div class="user_status_box">
-                    <!-- <div class="user_status user_status_un">未认证</div> -->
-                    <div class="user_status user_status_ed">已认证</div>
+                    <div class="user_status user_status_un" v-if="!userInfo.kyc">未认证</div>
+                    <div class="user_status user_status_ed" v-if="userInfo.kyc">已认证</div>
 
-                    <div class="ripple_button user_status_up">
+                    <div class="ripple_button user_status_up" v-if="userInfo.role == 'guest'">
                         <div class="user_status_upicon">
                             <img src="@/assets/user/update.png" alt="up">
                         </div>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <!-- 未登录 -->
-            <div v-else class="user_box unlogin">
+            <div v-else class="user_box unlogin" @click="jump('login')">
                 <div class="ripple_button unlogin_btn">
                     登录 / 注册
                 </div>
@@ -42,7 +42,7 @@
         <!-- 功能项 -->
         <div class="navs">
             <!-- 注册 -->
-            <div class="ripple_button nav active_nav" v-if="!token" @click="token = 1">
+            <div class="ripple_button nav active_nav" v-if="!token">
                 <div class="nav_icon">
                     <img src="@/assets/user/register.png" alt="icon">
                 </div>
@@ -75,13 +75,13 @@
                 </div>
                 <span class="nav_title">安全</span>
                 <div class="nav_content">
-                    <span class="tip tip_red">谷歌验证器未绑定</span>
-                    <span class="tip tip_green">谷歌验证器已绑定</span>
+                    <span class="tip tip_red" v-if="!userInfo.googlebind">谷歌验证器未绑定</span>
+                    <span class="tip tip_green" v-if="userInfo.googlebind">谷歌验证器已绑定</span>
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
             <!-- 语言 -->
-            <div class="ripple_button nav">
+            <div class="ripple_button nav" @click="jump('language')">
                 <div class="nav_icon">
                     <img src="@/assets/user/lang.png" alt="icon">
                 </div>
@@ -102,16 +102,34 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
-import { Icon } from 'vant';
+import { ref, computed } from "vue"
+import { Icon, showConfirmDialog } from 'vant';
 import router from "@/router";
+import store from "@/store";
 
-const token = ref('')
+const token = computed(() => store.state.token)
+const userInfo = computed(() => store.state.userInfo || {})
 
 
 const loginout = () => {
+    showConfirmDialog({
+        title: '退出登录',
+        message:
+            '您当前确定要退出吗？',
+        confirmButtonColor: '#014CFA',
+        cancelButtonColor: '#323233'
+    })
+        .then(() => {
+            store.dispatch('reset')
+            router.push({
+                name: 'login'
+            })
+        }).catch(() => { })
+}
+
+const jump = name => {
     router.push({
-        name: 'login'
+        name
     })
 }
 </script>

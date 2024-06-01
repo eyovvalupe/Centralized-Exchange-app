@@ -32,6 +32,9 @@ instance.interceptors.request.use(
     if (config && config.custom && config.custom["Content-Type"]) {
       config.headers["Content-Type"] = config.custom["Content-Type"];
     }
+    if (config && config.custom && config.custom["responseType"]) {
+      config.headers["responseType"] = config.custom["responseType"];
+    }
     console.log(`--- 请求 ${config.url} 参数 ---`);
     return config;
   },
@@ -45,9 +48,8 @@ instance.interceptors.response.use(
   function (response) {
     let res = response.data;
     const custom = response.config?.custom;
-    console.error('---res', response)
-    if (res.code !== 200 && !res.success) {
-      if (res.code === 401) {
+    if (res.code != 200) {
+      if (res.code == 401) {
         console.error(location.href)
         if (
           location.href.includes("/login")
@@ -65,6 +67,7 @@ instance.interceptors.response.use(
           showToast(res.message || "服务端异常");
         }, 600);
       }
+      return Promise.reject(res);
     }
     return res || {};
   },

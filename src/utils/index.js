@@ -2,7 +2,7 @@
 
 
 // 复制
-export const copyTxt = (txt) => {
+export const _copyTxt = (txt) => {
   txt += "";
   if (txt == "null" || txt == "undefined" || txt == "") {
     return;
@@ -86,22 +86,22 @@ export const _chu = (arg1, arg2) => {
 
 
 // 隐藏手机号
-export const hiddenPhone = (str) => {
+export const _hiddenPhone = (str) => {
   if (!str) return "**";
   return str.substr(0, 3) + "****" + str.substr(str.length - 3, 3);
 };
 // 隐藏邮箱
-export const hiddenEmail = (str) => {
+export const _hiddenEmail = (str) => {
   if (!str) return "**";
   return str.substr(0, 1) + "****" + str.split("@")[1];
 };
 // 隐藏身份证
-export const hiddenIden = (str) => {
+export const _hiddenIden = (str) => {
   if (!str) return "**";
   return str.substr(0, 4) + "****" + str.substr(str.length - 4, 4);
 };
 // 隐藏账号
-export const hiddenAccount = (str) => {
+export const _hiddenAccount = (str) => {
   if (!str) return "**";
   if (str.length > 8) {
     return str.substr(0, 3) + "****" + str.substr(str.length - 3, 3);
@@ -109,7 +109,7 @@ export const hiddenAccount = (str) => {
   return str.substr(0, 2) + "****" + str.substr(str.length - 2, 2);
 };
 // 隐藏名字
-export const hiddenName = (str) => {
+export const _hiddenName = (str) => {
   if (!str) return "**";
   if (str.length > 2) {
     return str.substr(0, 1) + "*" + str.substr(str.length - 1, 1);
@@ -119,7 +119,7 @@ export const hiddenName = (str) => {
 
 
 // 文件转url展示
-export const getObjectURL = (file) => {
+export const _getObjectURL = (file) => {
   let url = file
   if (window.createObjectURL != undefined) {
     url = window.createObjectURL(file)
@@ -131,3 +131,7 @@ export const getObjectURL = (file) => {
   return url
 }
 
+// 播放提示音
+export const _voice = (type = 1) => {
+
+}

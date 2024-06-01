@@ -1,5 +1,7 @@
 import http from "./request";
+import axios from "axios";
 
+const baseURL = process.env.NODE_ENV === 'development' ? "/api" : ''
 // 上传文件
 // export const _upload = (file, successFunc, errorFunc, finishFunc) => {
 //   const form = new FormData()
@@ -17,20 +19,14 @@ import http from "./request";
 
 // 获取验证码
 export const _verifcode = () => {
-  return http.get(`/anon/v1/comm/verifcode`, {
+  return axios.get(baseURL + "/anon/v1/comm/verifcode", { responseType: 'blob' })
+};
+
+// 登录
+export const _login = (data = {}) => {
+  return http.post(`/anon/v1/user/login`, data, {
     custom: { auth: false, toast: false },
   });
 };
 
-// 获取腾讯认证结果
-export const memberInfo = () => {
-  return http.get(`/memberCertificate/tencentQueryFaceRecord/1`, {
-    custom: { auth: true, toast: false },
-  });
-};
-// 创建出售订单校验 
-export const createSellOrderVerify = (data = {}) => {
-  return http.post(`/cfbOtcOrder/createSellOrderVerify`, data, {
-    custom: { auth: true, toast: true },
-  });
-};
+export const memberInfo = () => { }

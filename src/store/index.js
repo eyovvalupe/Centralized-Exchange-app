@@ -8,10 +8,14 @@ import router from "@/router/index";
 
 export default createStore({
   state: {
+    transitionName: '', // 页面过渡动画名字
     token: "",
     userInfo: {}, // 用户详情
   },
   mutations: {
+    setTransitionName(state, data) {
+      state.transitionName = data;
+    },
     setToken(state, data) {
       state.token = data;
     },
@@ -20,6 +24,10 @@ export default createStore({
     },
   },
   actions: {
+    reset({ commit }) {
+      commit("setToken", "");
+      commit("setUserInfo", {});
+    },
     updateUserInfo({ commit }) {
       // 更新个人信息
       return new Promise((resolve) => {

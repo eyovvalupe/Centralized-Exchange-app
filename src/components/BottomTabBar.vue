@@ -27,6 +27,7 @@ import icon5 from "@/assets/bottom/bottom_5.png"
 import icon55 from "@/assets/bottom/bottom_5_5.png"
 import { useRoute } from "vue-router";
 import router from "@/router"
+import { _playVoice } from "@/utils/voice"
 
 const route = useRoute();
 const activeRoute = computed(() => route.name)
@@ -44,6 +45,7 @@ const handleClick = item => {
     router.push({
         name: item.route
     })
+    _playVoice()
 }
 
 </script>
@@ -51,6 +53,7 @@ const handleClick = item => {
 <style scoped lang="less">
 .bottom_nav {
     border-top: 1px solid #EAEEF3;
+    background-color: #fff;
     display: flex;
     position: fixed;
     overflow: hidden;

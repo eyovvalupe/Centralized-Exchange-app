@@ -7,11 +7,148 @@
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
   <title>Exchange</title>
+  <style>
+    @keyframes preloadingAni {
+      0% {
+        transform: translateX(-50%) translateY(-50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translateX(-50%) translateY(-50%) rotate(360deg);
+      }
+    }
+
+    @-webkit-keyframes preloadingAni {
+      0% {
+        transform: translateX(-50%) translateY(-50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translateX(-50%) translateY(-50%) rotate(360deg);
+      }
+    }
+
+    .preloading-box {
+      position: absolute;
+      height: 74px;
+      width: 74px;
+      top: 50%;
+      left: 50%;
+      animation: preloadingAni 3s linear infinite;
+    }
+
+    .preloading-item {
+      width: 6px;
+      height: 74px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .preloading-item:nth-child(1) {
+      transform: translateX(-50%) translateY(-50%) rotate(0);
+    }
+
+    .preloading-item:nth-child(2) {
+      transform: translateX(-50%) translateY(-50%) rotate(30deg);
+    }
+
+    .preloading-item:nth-child(3) {
+      transform: translateX(-50%) translateY(-50%) rotate(60deg);
+    }
+
+    .preloading-item:nth-child(4) {
+      transform: translateX(-50%) translateY(-50%) rotate(90deg);
+    }
+
+    .preloading-item:nth-child(5) {
+      transform: translateX(-50%) translateY(-50%) rotate(120deg);
+    }
+
+    .preloading-item:nth-child(6) {
+      transform: translateX(-50%) translateY(-50%) rotate(150deg);
+    }
+
+    .preloading-item:nth-child(7) {
+      transform: translateX(-50%) translateY(-50%) rotate(180deg);
+    }
+
+    .preloading-item:nth-child(8) {
+      transform: translateX(-50%) translateY(-50%) rotate(210deg);
+    }
+
+    .preloading-item:nth-child(9) {
+      transform: translateX(-50%) translateY(-50%) rotate(240deg);
+    }
+
+    .preloading-item:nth-child(10) {
+      transform: translateX(-50%) translateY(-50%) rotate(270deg);
+    }
+
+    .preloading-item:nth-child(11) {
+      transform: translateX(-50%) translateY(-50%) rotate(300deg);
+    }
+
+    .preloading-item:nth-child(12) {
+      transform: translateX(-50%) translateY(-50%) rotate(330deg);
+    }
+
+    .preloading-default {
+      width: 6px;
+      height: 16px;
+      border-radius: 3px;
+      background-color: #ededed;
+    }
+
+    .preloading-color {
+      background-color: #999999;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    这里是骨架屏效果 // todo
+    <div class="preloading-box">
+      <div class="preloading-item">
+        <div class="preloading-default preloading-color"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default preloading-color"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default preloading-color"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default preloading-color"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default preloading-color"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default preloading-color"></div>
+      </div>
+
+      <div class="preloading-item">
+        <div class="preloading-default"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default"></div>
+      </div>
+      <div class="preloading-item">
+        <div class="preloading-default"></div>
+      </div>
+    </div>
   </div>
   <script>
     // 解析参数
@@ -45,8 +182,8 @@
           "orientationchange" in window ? "orientationchange" : "resize",
         recalc = function () {
           if (docEl.clientWidth > 750) {
-            docEl.style.fontSize = "100px"; // 100% == 7.5rem
-            doc.getElementById("app").style.width = "750px";
+            docEl.style.fontSize = "50px"; // 100% == 7.5rem
+            doc.getElementById("app").style.width = "375px";
           } else {
             var width = docEl.clientWidth / 7.5;
             docEl.style.fontSize = width + "px";
