@@ -95,7 +95,6 @@
                 <Icon class="nav_more" name="arrow" />
             </div>
         </div>
-
         <!-- 退出登录 -->
         <div class="ripple_button loginout" v-if="token" @click="loginout">退出登录</div>
     </div>
@@ -132,6 +131,7 @@ const jump = name => {
         name
     })
 }
+
 </script>
 
 <style lang="less" scoped>

@@ -1,11 +1,13 @@
 <template>
   <router-view v-slot="{ Component }">
-    <transition :name="transitionName">
-      <keep-alive v-if="$route.meta.keepAlive">
-        <component :is="Component" :key="$route.name" />
-      </keep-alive>
-      <component :is="Component" :key="$route.name" v-else />
-    </transition>
+    <div class="app_scroll">
+      <transition :name="transitionName">
+        <keep-alive v-if="$route.meta.keepAlive">
+          <component :is="Component" :key="$route.name" />
+        </keep-alive>
+        <component :is="Component" :key="$route.name" v-else />
+      </transition>
+    </div>
   </router-view>
 
   <BottomTabBar v-if="showBottom" />
@@ -17,7 +19,7 @@ import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import { useRoute } from "vue-router";
 
-const route = useRoute();
+
 const BottomTabBar = defineAsyncComponent(() =>
   import("@/components/BottomTabBar.vue")
 );
@@ -28,15 +30,40 @@ console.error(store.state)
 //   store.dispatch("updateUserInfo");
 // }
 
+const route = useRoute();
+
 const loading = ref(true);
 const showBottom = computed(() => {
   return ["home", "user"].includes(route.name) && !loading.value;
 });
+const routeName = computed(() => route.name)
 
 onMounted(() => {
   setTimeout(() => {
     loading.value = false;
-  }, 500);
+
+    const reboundPage = ['user']
+    // 回弹效果
+    let startY = 0
+    const maxMove = 200
+    const body = document.querySelector('#app')
+    const app = document.querySelector('.app_scroll')
+    body.addEventListener('touchstart', e => {
+      if (!reboundPage.includes(routeName.value)) return
+      startY = e.changedTouches[0].clientY
+    })
+    body.addEventListener('touchmove', e => {
+      if (!reboundPage.includes(routeName.value)) return
+      const y = e.changedTouches[0].clientY - startY <= maxMove ? e.changedTouches[0].clientY - startY : maxMove
+      app.style.transition = "none"
+      app.style.transform = `translateY(${0.3 * y}px)`
+    })
+    body.addEventListener("touchend", e => {
+      const y = e.changedTouches[0].clientY - startY
+      app.style.transition = "transform .6s"
+      app.style.transform = `translateY(0px)`
+    })
+  }, 300);
 });
 
 const transitionName = computed(() => store.state.transitionName || '')
