@@ -102,7 +102,7 @@ onActivated(() => {
         display: flex;
         flex-direction: column;
 
-        ::v-deep .van-tabs__nav {
+        :deep(.van-tabs__nav) {
             position: relative;
 
             &::after {
@@ -117,11 +117,11 @@ onActivated(() => {
             }
         }
 
-        ::v-deep .van-tab {
+        :deep(.van-tab) {
             margin-left: 0.36rem;
         }
 
-        ::v-deep .van-tabs__content {
+        :deep(.van-tabs__content) {
             flex: 1;
 
             .van-swipe-item {

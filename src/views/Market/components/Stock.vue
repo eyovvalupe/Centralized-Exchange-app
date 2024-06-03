@@ -109,18 +109,18 @@ const list = ref([
         .stock_tabs {
             height: 1.90rem;
 
-            ::v-deep .van-tab {
+            :deep(.van-tab) {
                 margin: 0 0.24rem 0 0 !important;
                 padding: 0;
             }
 
-            ::v-deep .van-tabs__nav {
+            :deep(.van-tabs__nav) {
                 &::after {
                     display: none;
                 }
             }
 
-            ::v-deep .van-tabs__wrap {
+            :deep(.van-tabs__wrap) {
                 height: 100%;
 
                 .van-tabs__nav {
@@ -129,11 +129,11 @@ const list = ref([
                 }
             }
 
-            ::v-deep .van-tabs__line {
+            :deep(.van-tabs__line) {
                 display: none;
             }
 
-            ::v-deep .van-tab--active {
+            :deep(.van-tab--active) {
                 .stock_tab {
                     border: 1px solid #014CFA;
                 }
