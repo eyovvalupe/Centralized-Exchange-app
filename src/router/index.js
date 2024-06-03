@@ -21,6 +21,33 @@ const routes = [
       pageType: 'tab'
     }
   },
+  { // 市场
+    path: "/market",
+    name: "market",
+    component: () => import("../views/Market/Market.vue"),
+    meta: {
+      keepAlive: true,
+      pageType: 'tab'
+    }
+  },
+  { // 搜索
+    path: "/search",
+    name: "search",
+    component: () => import("../views/Market/Search.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 市场详情
+    path: "/market_info",
+    name: "market_info",
+    component: () => import("../views/Market/MarketInfo.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   {
     // 登录
     path: "/login",
@@ -74,6 +101,13 @@ router.beforeEach((to, from) => {
     store.commit('setTransitionName', 'slide-left')
     return;
   }
+
+  if (from.meta.pageType == "child" && to.meta.pageType == "child") {
+    store.commit('setTransitionName', 'slide-right')
+    return;
+  }
+
+
 
   if (to.meta.pageType == "login") {
     store.commit('setTransitionName', 'slide-bottom')

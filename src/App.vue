@@ -2,11 +2,11 @@
   <router-view v-slot="{ Component }">
     <div class="app_scroll">
       <transition :name="transitionName">
-        <keep-alive v-if="$route.meta.keepAlive">
-          <component :is="Component" :key="$route.name" />
-        </keep-alive>
-        <component :is="Component" :key="$route.name" v-else />
+        <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
       </transition>
+      <keep-alive>
+        <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+      </keep-alive>
     </div>
   </router-view>
 
@@ -37,7 +37,7 @@ if (theme.value) {
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user"].includes(route.name) && !loading.value;
+  return ["home", "user", "market", "market_info"].includes(route.name) && !loading.value;
 });
 
 
@@ -85,7 +85,9 @@ const transitionName = computed(() => store.state.transitionName || '')
 .slide-top-enter-active,
 .slide-top-leave-active,
 .slide-bottom-enter-active,
-.slide-bottom-leave-active {
+.slide-bottom-leave-active,
+.opacity-enter-active,
+.opacity-leave-active {
   transition: all ease 0.2s;
 }
 
@@ -151,5 +153,23 @@ const transitionName = computed(() => store.state.transitionName || '')
 
 .slide-top-leave-to {
   transform: translateY(100%);
+}
+
+
+
+.opacity-enter-from {
+  opacity: 0;
+}
+
+.opacity-enter-to {
+  opacity: 1;
+}
+
+.opacity-leave-from {
+  opacity: 1;
+}
+
+.opacity-leave-to {
+  opacity: 0;
 }
 </style>

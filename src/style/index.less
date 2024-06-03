@@ -48,6 +48,23 @@ body,
 }
 
 
+// 涨跌效果
+.up {
+    color: @up !important;
+}
+
+.up_bg {
+    background-color: @up !important;
+}
+
+.down_bg {
+    background-color: @down !important;
+}
+
+.down {
+    color: @down !important;
+}
+
 // 页面
 .app_scroll {
     width: 100%;
@@ -76,10 +93,23 @@ input {
     // overflow: hidden;
 }
 
+
 @keyframes ripple {
     from {
         transform: translate(-50%, -50%) scale(0);
         background: rgba(1, 76, 250, .15);
+    }
+
+    to {
+        transform: translate(-50%, -50%) scale(1.5);
+        background: transparent;
+    }
+}
+
+@keyframes ripple2 {
+    from {
+        transform: translate(-50%, -50%) scale(0);
+        background: rgba(227, 227, 227, 0.15);
     }
 
     to {
@@ -102,4 +132,8 @@ input {
 
 .ripple_button:active::after {
     animation: ripple .3s ease;
+}
+
+.ripple_button2:active::after {
+    animation: ripple2 .3s ease;
 }

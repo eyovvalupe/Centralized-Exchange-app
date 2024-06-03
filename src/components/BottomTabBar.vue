@@ -2,10 +2,10 @@
 <template>
     <div class="max-width  bottom_nav">
         <div @click="handleClick(item)" class="ripple_button bottom_nav_item"
-            :class="[activeRoute == item.route ? 'bottom_nav_active' : '']" v-for="(item, i) in navs" :key="i">
+            :class="[checkActive(item) ? 'bottom_nav_active' : '']" v-for="(item, i) in navs" :key="i">
             <div class="bottom_nav_icon">
-                <img v-if="activeRoute != item.route" :src="item.icon" :alt="item.name">
-                <img v-if="activeRoute == item.route" :src="item.icon2" :alt="item.name">
+                <img v-if="!checkActive(item)" :src="item.icon" :alt="item.name">
+                <img v-if="checkActive(item)" :src="item.icon2" :alt="item.name">
             </div>
 
             <div class="bottom_nav_name">{{ item.name }}</div>
@@ -24,7 +24,7 @@ const activeRoute = computed(() => route.name)
 
 const navs = ref([
     { name: '首页', route: 'home', icon: '/static/img/bottom/bottom_1.png', icon2: '/static/img/bottom/bottom_1_1.png' },
-    { name: '市场', route: '', icon: '/static/img/bottom/bottom_2.png', icon2: '/static/img/bottom/bottom_2_2.png' },
+    { name: '市场', route: 'market', children: ['market_info'], icon: '/static/img/bottom/bottom_2.png', icon2: '/static/img/bottom/bottom_2_2.png' },
     { name: '交易', route: '', icon: '/static/img/bottom/bottom_3.png', icon2: '/static/img/bottom/bottom_3_3.png' },
     { name: '钱包', route: '', icon: '/static/img/bottom/bottom_4.png', icon2: '/static/img/bottom/bottom_4_4.png' },
     { name: '用户', route: 'user', icon: '/static/img/bottom/bottom_5.png', icon2: '/static/img/bottom/bottom_5_5.png' },
@@ -36,6 +36,11 @@ const handleClick = item => {
         name: item.route
     })
     _playVoice()
+}
+
+const checkActive = item => {
+    if (activeRoute.value == item.route || (item.children && item.children.includes(activeRoute.value))) return true
+    return false
 }
 
 </script>
