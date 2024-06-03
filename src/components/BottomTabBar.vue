@@ -25,7 +25,7 @@ const activeRoute = computed(() => route.name)
 const navs = ref([
     { name: '首页', route: 'home', icon: '/static/img/bottom/bottom_1.png', icon2: '/static/img/bottom/bottom_1_1.png' },
     { name: '市场', route: '', icon: '/static/img/bottom/bottom_2.png', icon2: '/static/img/bottom/bottom_2_2.png' },
-    { name: '交易', route: '', icon: '/static/img/bottom/bottom_3.png', icon2: '/static/img/bottom/bottom_3_3.png' },
+    { name: '交易', route: 'trade', icon: '/static/img/bottom/bottom_3.png', icon2: '/static/img/bottom/bottom_3_3.png' },
     { name: '钱包', route: '', icon: '/static/img/bottom/bottom_4.png', icon2: '/static/img/bottom/bottom_4_4.png' },
     { name: '用户', route: 'user', icon: '/static/img/bottom/bottom_5.png', icon2: '/static/img/bottom/bottom_5_5.png' },
 ])
