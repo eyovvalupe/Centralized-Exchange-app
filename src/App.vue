@@ -37,7 +37,7 @@ if (theme.value) {
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "market", "market_info"].includes(route.name) && !loading.value;
+  return ["home", "user", "trade", "market", "market_info"].includes(route.name) && !loading.value;
 });
 
 

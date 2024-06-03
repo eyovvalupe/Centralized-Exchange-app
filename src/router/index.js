@@ -79,6 +79,16 @@ const routes = [
     }
   },
   {
+    // 交易
+    path: "/trade",
+    name: "trade",
+    component: () => import("../views/trade/trade.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
     // 找不到路由时
     path: "/:pathMatch(.*)*",
     redirect: "/",
