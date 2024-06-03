@@ -9,7 +9,7 @@
       </div>
 
       <div class="ripple_button top_lang" @click="router.push({ name: 'language' })">
-        <img src="@/assets/common/language.png" alt="language">
+        <img src="/static/img/common/language.png" alt="language">
       </div>
     </div>
 
@@ -23,7 +23,7 @@
       <div class="form_title">用户名</div>
       <div class="form_item margin_item">
         <div class="form_item_user" v-show="form.username">
-          <img src="@/assets/user/user.png" alt="user">
+          <img src="/static/img/user/user.png" alt="user">
         </div>
         <input maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text" class="item_input">
       </div>
@@ -34,8 +34,8 @@
         <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="请输入您的密码" type="text"
           class="item_input">
         <div class="ripple_button form_item_icon" @click="showPass = !showPass">
-          <img v-show="!showPass" src="@/assets/user/eye-off.png" alt="off">
-          <img v-show="showPass" src="@/assets/user/eye-open.png" alt="open">
+          <img v-show="!showPass" src="/static/img/user/eye-off.png" alt="off">
+          <img v-show="showPass" src="/static/img/user/eye-open.png" alt="open">
         </div>
       </div>
     </div>

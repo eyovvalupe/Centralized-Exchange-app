@@ -5,15 +5,15 @@
         <!-- 客服 -->
         <div class=" server">
             <div class="ripple_button server_btn">
-                <img class="server_icon" src="@/assets/common/server.png" alt="server">
+                <img class="server_icon" src="/static/img/common/server.png" alt="server">
             </div>
         </div>
 
         <!-- 用户 -->
         <div class="user">
             <div class="avatar">
-                <img v-if="token" src="@/assets/user/avatar.png" alt="avatar">
-                <img v-else src="@/assets/user/unlogin.png" alt="avatar">
+                <img v-if="token" src="/static/img/user/avatar.png" alt="avatar">
+                <img v-else src="/static/img/user/unlogin.png" alt="avatar">
             </div>
             <!-- 已登录 -->
             <div v-if="token" class="user_box userinfo">
@@ -24,7 +24,7 @@
 
                     <div class="ripple_button user_status_up" v-if="userInfo.role == 'guest'">
                         <div class="user_status_upicon">
-                            <img src="@/assets/user/update.png" alt="up">
+                            <img src="/static/img/user/update.png" alt="up">
                         </div>
                         <span>升级投资账户</span>
                     </div>
@@ -44,7 +44,7 @@
             <!-- 注册 -->
             <div class="ripple_button nav active_nav" v-if="!token">
                 <div class="nav_icon">
-                    <img src="@/assets/user/register.png" alt="icon">
+                    <img src="/static/img/user/register.png" alt="icon">
                 </div>
                 <span class="nav_title">注册模拟账户，领取投资模拟金</span>
                 <div class="nav_content"></div>
@@ -53,7 +53,7 @@
             <!-- 身份认证 -->
             <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']">
                 <div class="nav_icon">
-                    <img src="@/assets/user/iden.png" alt="icon">
+                    <img src="/static/img/user/iden.png" alt="icon">
                 </div>
                 <span class="nav_title">身份认证</span>
                 <div class="nav_content"></div>
@@ -62,7 +62,7 @@
             <!-- 收款账户 -->
             <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']">
                 <div class="nav_icon">
-                    <img src="@/assets/user/account.png" alt="icon">
+                    <img src="/static/img/user/account.png" alt="icon">
                 </div>
                 <span class="nav_title">收款账户</span>
                 <div class="nav_content"></div>
@@ -71,7 +71,7 @@
             <!-- 安全 -->
             <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']">
                 <div class="nav_icon">
-                    <img src="@/assets/user/safe.png" alt="icon">
+                    <img src="/static/img/user/safe.png" alt="icon">
                 </div>
                 <span class="nav_title">安全</span>
                 <div class="nav_content">
@@ -83,17 +83,23 @@
             <!-- 语言 -->
             <div class="ripple_button nav" @click="jump('language')">
                 <div class="nav_icon">
-                    <img src="@/assets/user/lang.png" alt="icon">
+                    <img src="/static/img/user/lang.png" alt="icon">
                 </div>
                 <span class="nav_title">语言</span>
                 <div class="nav_content">
                     <div class="nav_lang_icon">
-                        <img src="@/assets/common/en.png" alt="en">
+                        <img src="/static/img/common/en.png" alt="en">
                     </div>
                     <span>English</span>
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
+        </div>
+
+
+        <div>
+            <button @click="changeTheme('main')">红色主题</button>
+            <button @click="changeTheme('green')">绿色主题</button>
         </div>
         <!-- 退出登录 -->
         <div class="ripple_button loginout" v-if="token" @click="loginout">退出登录</div>
@@ -130,6 +136,13 @@ const jump = name => {
     router.push({
         name
     })
+}
+
+const changeTheme = val => {
+    store.commit('setTheme', val)
+    setTimeout(() => {
+        location.reload()
+    }, 300)
 }
 
 </script>

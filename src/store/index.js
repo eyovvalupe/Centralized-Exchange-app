@@ -8,11 +8,15 @@ import router from "@/router/index";
 
 export default createStore({
   state: {
+    theme: '',
     transitionName: '', // 页面过渡动画名字
     token: "",
     userInfo: {}, // 用户详情
   },
   mutations: {
+    setTheme(state, data) {
+      state.theme = data;
+    },
     setTransitionName(state, data) {
       state.transitionName = data;
     },

@@ -15,16 +15,6 @@
 
 <script setup>
 import { ref, computed } from "vue"
-import icon1 from "@/assets/bottom/bottom_1.png"
-import icon11 from "@/assets/bottom/bottom_1_1.png"
-import icon2 from "@/assets/bottom/bottom_2.png"
-import icon22 from "@/assets/bottom/bottom_2_2.png"
-import icon3 from "@/assets/bottom/bottom_3.png"
-import icon33 from "@/assets/bottom/bottom_3_3.png"
-import icon4 from "@/assets/bottom/bottom_4.png"
-import icon44 from "@/assets/bottom/bottom_4_4.png"
-import icon5 from "@/assets/bottom/bottom_5.png"
-import icon55 from "@/assets/bottom/bottom_5_5.png"
 import { useRoute } from "vue-router";
 import router from "@/router"
 import { _playVoice } from "@/utils/voice"
@@ -33,11 +23,11 @@ const route = useRoute();
 const activeRoute = computed(() => route.name)
 
 const navs = ref([
-    { name: '首页', route: 'home', icon: icon1, icon2: icon11 },
-    { name: '市场', route: '', icon: icon2, icon2: icon22 },
-    { name: '交易', route: '', icon: icon3, icon2: icon33 },
-    { name: '钱包', route: '', icon: icon4, icon2: icon44 },
-    { name: '用户', route: 'user', icon: icon5, icon2: icon55 },
+    { name: '首页', route: 'home', icon: '/static/img/bottom/bottom_1.png', icon2: '/static/img/bottom/bottom_1_1.png' },
+    { name: '市场', route: '', icon: '/static/img/bottom/bottom_2.png', icon2: '/static/img/bottom/bottom_2_2.png' },
+    { name: '交易', route: '', icon: '/static/img/bottom/bottom_3.png', icon2: '/static/img/bottom/bottom_3_3.png' },
+    { name: '钱包', route: '', icon: '/static/img/bottom/bottom_4.png', icon2: '/static/img/bottom/bottom_4_4.png' },
+    { name: '用户', route: 'user', icon: '/static/img/bottom/bottom_5.png', icon2: '/static/img/bottom/bottom_5_5.png' },
 ])
 
 const handleClick = item => {

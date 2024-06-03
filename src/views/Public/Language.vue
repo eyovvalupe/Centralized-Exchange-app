@@ -21,14 +21,12 @@
 import Top from "@/components/Top.vue"
 import { Checkbox, CheckboxGroup } from "vant"
 import { ref } from "vue"
-import enPng from "@/assets/common/en.png"
-import cnPng from "@/assets/common/cn.png"
 import router from "@/router"
 
 const checked = ref(['en'])
 const navs = ref([
-    { name: 'English', icon: enPng, val: 'en' },
-    { name: '中文繁体', icon: cnPng, val: 'cn' },
+    { name: 'English', icon: '/static/img/common/en.png', val: 'en' },
+    { name: '中文繁体', icon: '/static/img/common/cn.png', val: 'cn' },
 ])
 
 const clickItem = item => {

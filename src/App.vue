@@ -19,24 +19,28 @@ import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import { useRoute } from "vue-router";
 
-
+const loading = ref(true); // 控制全局组件加载
 const BottomTabBar = defineAsyncComponent(() =>
   import("@/components/BottomTabBar.vue")
 );
 console.error("---storage---");
 console.error(store.state)
 
-// if (store.state.token) {
-//   store.dispatch("updateUserInfo");
-// }
+// 引入主题
+const theme = computed(() => store.state.theme || '')
+console.log(theme.value)
+if (theme.value) {
+  import(`@/style/theme/${theme.value}.less`)
+}
 
+// 路由监听
 const route = useRoute();
-
-const loading = ref(true);
+const routeName = computed(() => route.name)
 const showBottom = computed(() => {
   return ["home", "user"].includes(route.name) && !loading.value;
 });
-const routeName = computed(() => route.name)
+
+
 
 onMounted(() => {
   setTimeout(() => {
