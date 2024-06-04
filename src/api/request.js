@@ -2,10 +2,11 @@ import axios from "axios";
 import store from "@/store/index";
 import { showToast } from "vant";
 import router from "@/router/index"
+import { BASE_ADDRESS } from "@/config"
 
 
 const instance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? "/api" : '',
+  baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
   transformRequest: [function (data, headers) {
     if (headers['Content-Type'] == "multipart/form-data") return data
     return JSON.stringify(data);
