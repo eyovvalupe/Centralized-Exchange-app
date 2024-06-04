@@ -43,7 +43,7 @@ const showBottom = computed(() => {
   return ["home", "user", "trade", "market", "market_info"].includes(route.name) && !loading.value;
 });
 
-// 预加载tab页面
+// 预加载 tab 页面
 Promise.all([
   import('./views/Home/Home.vue'),
   import('./views/Market/Market.vue'),
@@ -57,7 +57,7 @@ Promise.all([
 })
 
 const boundFunc = () => {
-  const reboundPage = ['user']
+  const reboundPage = ['user','trade']
   // 回弹效果
   let startY = 0
   const maxMove = 200
