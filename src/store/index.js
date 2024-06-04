@@ -5,6 +5,7 @@ import {
   memberInfo,
 } from "@/api/api";
 import router from "@/router/index";
+import market from './market'
 
 export default createStore({
   state: {
@@ -12,6 +13,7 @@ export default createStore({
     transitionName: '', // 页面过渡动画名字
     token: "",
     userInfo: {}, // 用户详情
+    ...market.state,
   },
   mutations: {
     setTheme(state, data) {
@@ -26,6 +28,7 @@ export default createStore({
     setUserInfo(state, data) {
       state.userInfo = data;
     },
+    ...market.mutations,
   },
   actions: {
     reset({ commit }) {

@@ -1,5 +1,18 @@
 // 常用工具类
 
+// 转换数字显示  带单位(K,M,B)
+export const _formatNumber = (num, tail = 2) => {
+  if (isNaN(num)) return ''
+  if (num >= 1.0e+9) {
+    return (num / 1.0e+9).toFixed(tail) + "B";
+  } else if (num >= 1.0e+6) {
+    return (num / 1.0e+6).toFixed(tail) + "M";
+  } else if (num >= 1.0e+3) {
+    return (num / 1.0e+3).toFixed(tail) + "K";
+  } else {
+    return num.toFixed(tail);
+  }
+}
 
 // 复制
 export const _copyTxt = (txt) => {

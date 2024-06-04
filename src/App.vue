@@ -1,6 +1,8 @@
 <template>
   <router-view v-slot="{ Component }">
-    <div class="app_scroll">
+    <Loading size="48" style="position: fixed;top:50%;left:50%;transform: translateX(-50%) translateY(-50%);"
+      :loading="loading" />
+    <div class="app_scroll" v-if="!loading">
       <transition :name="transitionName">
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
       </transition>
@@ -14,9 +16,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref, defineAsyncComponent, computed } from "vue";
+import { ref, defineAsyncComponent, computed } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
+import Loading from "@/components/Loaidng.vue";
 import { useRoute } from "vue-router";
 
 const loading = ref(true); // 控制全局组件加载
@@ -27,11 +30,11 @@ console.error("---storage---");
 console.error(store.state)
 
 // 引入主题
-const theme = computed(() => store.state.theme || '')
-console.log(theme.value)
-if (theme.value) {
-  import(`@/style/theme/${theme.value}.less`)
-}
+// const theme = computed(() => store.state.theme || '')
+
+// if (theme.value) {
+//   import(`@/style/theme/${theme.value}.less`)
+// }
 
 // 路由监听
 const route = useRoute();
@@ -40,35 +43,42 @@ const showBottom = computed(() => {
   return ["home", "user", "trade", "market", "market_info"].includes(route.name) && !loading.value;
 });
 
-
-
-onMounted(() => {
+// 预加载tab页面
+Promise.all([
+  import('./views/Home/Home.vue'),
+  import('./views/Market/Market.vue'),
+  import('./views/User/User.vue'),
+  import('./views/trade/trade.vue'),
+]).finally(() => {
+  loading.value = false;
   setTimeout(() => {
-    loading.value = false;
+    boundFunc
+  }, 500)
+})
 
-    const reboundPage = ['user']
-    // 回弹效果
-    let startY = 0
-    const maxMove = 200
-    const body = document.querySelector('#app')
-    const app = document.querySelector('.app_scroll')
-    body.addEventListener('touchstart', e => {
-      if (!reboundPage.includes(routeName.value)) return
-      startY = e.changedTouches[0].clientY
-    })
-    body.addEventListener('touchmove', e => {
-      if (!reboundPage.includes(routeName.value)) return
-      const y = e.changedTouches[0].clientY - startY <= maxMove ? e.changedTouches[0].clientY - startY : maxMove
-      app.style.transition = "none"
-      app.style.transform = `translateY(${0.3 * y}px)`
-    })
-    body.addEventListener("touchend", e => {
-      const y = e.changedTouches[0].clientY - startY
-      app.style.transition = "transform .6s"
-      app.style.transform = `translateY(0px)`
-    })
-  }, 300);
-});
+const boundFunc = () => {
+  const reboundPage = ['user']
+  // 回弹效果
+  let startY = 0
+  const maxMove = 200
+  const body = document.querySelector('#app')
+  const app = document.querySelector('.app_scroll')
+  body.addEventListener('touchstart', e => {
+    if (!reboundPage.includes(routeName.value)) return
+    startY = e.changedTouches[0].clientY
+  })
+  body.addEventListener('touchmove', e => {
+    if (!reboundPage.includes(routeName.value)) return
+    const y = e.changedTouches[0].clientY - startY <= maxMove ? e.changedTouches[0].clientY - startY : maxMove
+    app.style.transition = "none"
+    app.style.transform = `translateY(${0.3 * y}px)`
+  })
+  body.addEventListener("touchend", e => {
+    const y = e.changedTouches[0].clientY - startY
+    app.style.transition = "transform .6s"
+    app.style.transform = `translateY(0px)`
+  })
+}
 
 const transitionName = computed(() => store.state.transitionName || '')
 </script>
@@ -88,7 +98,7 @@ const transitionName = computed(() => store.state.transitionName || '')
 .slide-bottom-leave-active,
 .opacity-enter-active,
 .opacity-leave-active {
-  transition: all ease 0.2s;
+  transition: all ease-in 0.3s;
 }
 
 .slide-right-enter-from {

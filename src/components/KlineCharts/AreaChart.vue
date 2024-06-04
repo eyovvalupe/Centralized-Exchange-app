@@ -6,9 +6,16 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue"
+import { onMounted, defineProps } from "vue"
 import { init } from 'klinecharts'
 import { klineConfig } from './kline.conf';
+
+const props = defineProps({
+    showY: {
+        type: Boolean,
+        default: false
+    }
+})
 
 onMounted(() => {
     const chart = init('chat_area')
@@ -17,7 +24,7 @@ onMounted(() => {
     chart?.setOffsetRightDistance(0) // 设置右边距
     chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
     chart?.setMaxOffsetRightDistance(0) // 设置右边最大空出的边距
-    chart?.setStyles({
+    const selfStyle = {
         grid: {
             vertical: {
                 show: false
@@ -66,7 +73,11 @@ onMounted(() => {
                 },
             }
         },
-    })
+    }
+    if (props.showY) {
+        delete selfStyle.yAxis
+    }
+    chart?.setStyles()
     chart.applyNewData(genData())
     chart.setStyles({
         candle: { type: 'area' }

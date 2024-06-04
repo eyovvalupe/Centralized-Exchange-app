@@ -2,13 +2,13 @@
 <template>
     <div class="market_stock">
         <!-- 折线图 -->
-        <div class="stock_chatsline">
+        <div class="padding_block stock_chatsline">
             <div class="title">$38,552.62</div>
             <div class="subtitle up">+$1,439.58(3.88%)</div>
             <AreaChart />
         </div>
         <!-- tabs -->
-        <div class="stock_tabs_box">
+        <div class="padding_block stock_tabs_box">
             <Tabs class="stock_tabs" v-model:active="active" shrink sticky>
                 <Tab v-for="(item, i) in list" :key="i">
                     <template #title>
@@ -30,27 +30,27 @@
         </div>
 
         <!-- 总览 -->
-        <div class="rank_box">
+        <div class="padding_block rank_box">
             <div class="rank_title"><span>市场总览</span></div>
             <DistributionMap />
         </div>
 
         <!-- 排行 -->
         <div class="rank_box">
-            <div class="rank_title">
+            <div class="padding_block  rank_title">
                 <span>最活跃</span>
                 <span class="rannk_more">
                     更多
                     <Icon name="arrow" />
                 </span>
             </div>
-            <div class="tr th">
+            <div class="padding_block  tr th">
                 <div class="td td5">名称</div>
                 <div class="td td2">行情</div>
                 <div class="td td2 td_r">涨跌幅</div>
             </div>
             <div class="tr" v-for="i in 5" :key="i">
-                <StockItem />
+                <StockItem :item="{}" />
             </div>
         </div>
     </div>
@@ -77,7 +77,12 @@ const list = ref([
 
 <style lang="less" scoped>
 .market_stock {
-    padding: 0 0.3rem;
+    padding: 0;
+
+    .padding_block {
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
+    }
 
     .stock_chatsline {
         width: 100%;
@@ -87,7 +92,7 @@ const list = ref([
         .title {
             position: absolute;
             top: 0;
-            left: 0;
+            left: 0.3rem;
             font-size: 0.6rem;
             letter-spacing: -0.5px;
             color: #111111;
@@ -96,7 +101,7 @@ const list = ref([
         .subtitle {
             position: absolute;
             top: 0.64rem;
-            left: 0;
+            left: 0.3rem;
             font-size: 0.28rem;
             color: #18B762;
         }

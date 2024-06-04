@@ -14,9 +14,19 @@
         </div>
 
         <!-- Tabs -->
-        <Tabs class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'" shrink>
-            <Tab v-for="(item, i) in navs" :title="item.name" :key="item.key">
-                <component :is="domObj[item.dom]" :key="item.key" />
+        <Tabs class="tabs" @change="changeTab" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
+            shrink>
+            <Tab :title="'自选'">
+                <Optional ref="OptionalRef" />
+            </Tab>
+            <Tab :title="'股票'">
+                <Stock />
+            </Tab>
+            <Tab :title="'理财'">
+                <Financial />
+            </Tab>
+            <Tab :title="'IPO'">
+                <IPO />
             </Tab>
         </Tabs>
     </div>
@@ -24,37 +34,22 @@
 
 <script setup>
 import { Tab, Tabs } from 'vant';
-import { ref, defineAsyncComponent, onActivated, onMounted } from "vue"
+import { ref, defineAsyncComponent } from "vue"
 import router from "@/router"
-
-const Optional = defineAsyncComponent(() => import("./components/Optional.vue"));
-const Stock = defineAsyncComponent(() => import("./components/Stock.vue"));
-const Financial = defineAsyncComponent(() => import("./components/Financial.vue"));
-const IPO = defineAsyncComponent(() => import("./components/IPO.vue"));
-
-
-const domObj = {
-    Optional,
-    Stock,
-    Financial,
-    IPO
-}
+import Optional from "./components/Optional.vue"
+import Stock from "./components/Stock.vue"
+import Financial from "./components/Financial.vue"
+import IPO from "./components/IPO.vue"
 
 const active = ref(1)
-const navs = ref([
-    { name: '自选', dom: 'Optional', key: 1 },
-    { name: '股票', dom: 'Stock', key: 2 },
-    { name: '理财', dom: 'Financial', key: 3 },
-    { name: 'IPO', dom: 'IPO', key: 4 },
-])
-
-
-onMounted(() => {
-    console.error('onMounted')
-})
-onActivated(() => {
-    console.error('Activated')
-})
+const OptionalRef = ref()
+const changeTab = key => {
+    switch (key) {
+        case 0:
+            OptionalRef.value.init()
+            break
+    }
+}
 
 </script>
 

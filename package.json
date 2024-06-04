@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "klinecharts": "^9.8.9",
     "mitt": "^3.0.1",
+    "socket.io-client": "^2.3.0",
     "vant": "^4.8.5",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",

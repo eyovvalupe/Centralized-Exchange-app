@@ -29,4 +29,18 @@ export const _login = (data = {}) => {
   });
 };
 
+// 自选列表
+export const _watchlist = (data = {}) => {
+  return http.post(`/anon/v1/market/watchlist/list`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+
+// 搜索股票
+export const _search = (data = {}) => {
+  return http.post(`/anon/v1/market/search`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+
 export const memberInfo = () => { }

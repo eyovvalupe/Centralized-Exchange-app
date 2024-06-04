@@ -97,17 +97,13 @@
         </div>
 
 
-        <div>
-            <button @click="changeTheme('main')">红色主题</button>
-            <button @click="changeTheme('green')">绿色主题</button>
-        </div>
         <!-- 退出登录 -->
         <div class="ripple_button loginout" v-if="token" @click="loginout">退出登录</div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { computed } from "vue"
 import { Icon, showConfirmDialog } from 'vant';
 import router from "@/router";
 import store from "@/store";
@@ -138,12 +134,7 @@ const jump = name => {
     })
 }
 
-const changeTheme = val => {
-    store.commit('setTheme', val)
-    setTimeout(() => {
-        location.reload()
-    }, 300)
-}
+
 
 </script>
 
