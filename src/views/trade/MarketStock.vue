@@ -140,7 +140,7 @@ window.onscroll = () => {
 }; 
 
 const showDetailPopup = () =>{
-  emit('update');
+  // emit('update');
 }
 
 const onChange = (val) => {
