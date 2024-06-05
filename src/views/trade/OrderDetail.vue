@@ -3,14 +3,185 @@
     <div class="detail-title">
       订单详情
     </div>
-    <div>
+
+    <div class="detail-t-title">
+      <div class="detail-flex">
+        <div class="detail-flex-title">
+          可售股票
+        </div>
+        <div class="detail-num" style="color: #014CFA;margin-top: 0.38rem;">
+          8720
+        </div>
+      </div>
+      <div class="detail-flex">
+        <div class="detail-flex-title">
+          盈亏/盈亏比
+        </div>
+        <div class="detail-num" style="color: #e8503a; margin-top: 0.06rem;">
+          39.520
+        </div>
+        <div class="detail-num" style="color: #e8503a;">
+          -0.70%
+        </div>
+      </div>
+    </div>
+
+    <div class="dashed-line"></div>
+
+    <div class="detail-body">
+      <div class="detail-box">
+        <div class="left-text">
+          订单号
+        </div>
+        <div class="right-text">
+          <span style="vertical-align: middle;">10098734927294873</span>
+          <img src="/static/img/trade/copy.png" alt="" class="copy-img">
+        </div>
+      </div>
+
+      <div class="detail-box">
+        <div class="left-text">
+          股票
+        </div>
+        <div class="right-text" style="line-height: 0.45rem;">
+          <div>
+            ADORWELD
+          </div>
+          <div style="color: #9ea3ae;">
+            Ador Welding Limited
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-box">
+        <div class="left-text">
+          开仓
+        </div>
+        <div class="right-text" style="display: flex;">
+          <div class="detail-flex-1 detail-red-box">
+            买涨
+          </div>
+          <div class="detail-flex-1 detail-blue-box">
+            全仓
+          </div>
+          <div class="detail-flex-1">
+            10X
+          </div>
+        </div>
+      </div>
+
+
+      <div class="detail-box">
+        <div class="left-text">
+          价格
+        </div>
+        <div class="right-text" style="display: flex;">
+          <div class="detail-flex-1">
+          </div>
+          <div class="detail-flex-1 detail-blue-box">
+            限价
+          </div>
+          <div class="detail-flex-1">
+            99.88
+          </div>
+        </div>
+      </div>
+
+
+      <div class="detail-box">
+        <div class="left-text">
+          开仓数量
+        </div>
+        <div class="right-text">
+          20000
+        </div>
+      </div>
+
+      <div class="detail-box">
+        <div class="left-text">
+          手续费
+        </div>
+        <div class="right-text">
+          54.32
+        </div>
+      </div>
+
+      <div class="detail-box">
+        <div class="left-text">
+          止赢/止损
+        </div>
+        <div class="right-text">
+          <div class="win-lose-box">
+            无
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-box">
+        <div class="left-text">
+          订单价值
+        </div>
+        <div class="right-text">
+          20000
+        </div>
+      </div>
+
+      <div class="detail-box">
+        <div class="left-text">
+          保证金
+        </div>
+        <div class="right-text">
+          10000
+        </div>
+      </div>
+
+      <div class="detail-box">
+        <div class="left-text">
+          持仓利息
+        </div>
+        <div class="right-text">
+          20000
+        </div>
+      </div>
       
     </div>
+
+    <div style="position: relative;">
+      <div class="risk-line">
+        <div>
+          逐仓分险线
+        </div>
+        <div class="prcent-num">
+          -18%
+        </div>
+      </div>
+
+      <div class="risk-line-dashed"></div>
+
+      <div class="all-risk-line">
+        <div class="risk-text">
+          全仓风险线
+        </div>
+        <div class="prcent-num" style="font-weight: 500;font-size: 0.28rem;">
+          ----
+        </div>
+      </div>
+    </div>
+
+    
+
+    <div style="padding: 0 0.32rem;">
+      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;">平仓</Button>
+      <Button size="large" color="#f2f2f2" round style="margin-bottom: 0.32rem;color: #999999;">订单更新</Button>
+    </div>
+    
+
   </div>
 </template>
 
 <script setup>
   import { ref } from "vue";
+  import { Button } from 'vant';
 
 </script>
 
@@ -18,16 +189,151 @@
   .order-detail {
     .detail-title {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 0.4rem;
       color: #121826;
-      font-size: 16px;
+      font-size: 0.32rem;
       font-style: normal;
       font-weight: 500;
-      line-height: 22px;
-      margin-bottom: 18px;
+      line-height: 0.44rem;
+      margin-bottom: 0.36rem;
     }
     .van-popup__close-icon--top-right {
-      top: 20px;
+      top: 0.4rem;
+    }
+    .detail-t-title {
+      display: flex;
+      margin-bottom: 0.44rem;
+      .detail-flex {
+        flex: 1;
+        .detail-flex-title {
+          color: #9EA3AE;
+          text-align: center;
+          font-size: 0.28rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 0.48rem;
+        }
+        .detail-num {
+          text-align: center;
+          font-size: 0.52rem;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 0.56rem;
+        }
+      }
+    }
+    .dashed-line {
+      width: 3.44rem;
+      border-bottom: 0.02rem dashed #cbcbcb;
+      margin: auto;
+    }
+
+    .detail-body {
+      padding: 0 0.32rem;
+      .detail-box {
+        display: flex;
+        border-bottom: 0.02rem solid #f5f5f5;
+        height: 1rem;
+        width: 100%;
+        .left-text {
+          flex: 1;
+          color: #8F92A1;
+          text-align: left;
+          font-size: 0.28rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 1rem;
+        }
+        .right-text {
+          flex: 1;
+          color: #121826;
+          text-align: right;
+          font-size: 0.28rem;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 1rem;
+          position: relative;
+          .win-lose-box {
+            width: 1.16rem;
+            height: 0.44rem;
+            color: #014CFA;
+            background-color: #ecf1fe;
+            position: absolute;
+            right: 0;
+            line-height: 0.44rem;
+            text-align: center;
+            top: 0.28rem;
+          }
+          .copy-img {
+            display: inline-block;
+            width: 0.3rem !important;
+            height: 0.3rem !important;
+            vertical-align: middle;
+            margin-left: 0.1rem;
+          }
+        }
+        .detail-flex-1 {
+          flex: 1;
+        }
+        .detail-red-box {
+          width: 1.16rem;
+          height: 0.44rem;
+          background-color: #fbf1ef;
+          color: #e8503a;
+          margin: auto;
+          text-align: center;
+          line-height: 0.44rem;
+        }
+        .detail-blue-box {
+          width: 1.16rem;
+          height: 0.44rem;
+          background-color: #ecf1fe;
+          color: #014cfa;
+          margin: auto;
+          text-align: center;
+          line-height: 0.44rem;
+          margin-left: 0.18rem;
+        }
+      }
+    }
+    .risk-line {
+      display: flex;
+      justify-content: right;
+      margin-top: 0.6rem;
+      color: #014CFA;
+      font-size: 0.24rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 0.36rem;
+    }
+    .prcent-num {
+      font-weight: 600;
+      margin-left: 0.26rem;
+      font-size: 0.36rem;
+      margin-right: 0.32rem;
+      width: 1rem;
+      text-align: right;
+    }
+    .risk-line-dashed {
+      width: 3.44rem;
+      border-bottom: 0.02rem dashed #cbcbcb;
+      position: absolute;
+      right: 0.32rem;
+      top: 0.42rem;
+    }
+    .all-risk-line {
+      display: flex;
+      justify-content: right;
+      margin-top: 0.1rem;
+      margin-bottom: 1.46rem;
+      .risk-text {
+        color: #333;
+        text-align: center;
+        font-size: 0.24rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 0.36rem;
+      }
     }
   }
 </style>
