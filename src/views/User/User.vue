@@ -103,7 +103,7 @@
 </template>
 
 <script setup>
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import { Icon, showConfirmDialog } from 'vant';
 import router from "@/router";
 import store from "@/store";
@@ -135,7 +135,14 @@ const jump = name => {
 }
 
 
-
+// 预加载页面
+store.commit('setPageLoading', true)
+Promise.all([
+    import('@/views/Public/Login.vue'),
+    import('@/views/Public/Language.vue'),
+]).finally(() => {
+    store.commit('setPageLoading', false)
+})
 </script>
 
 <style lang="less" scoped>

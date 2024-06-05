@@ -44,4 +44,25 @@ export const _search = (data = {}) => {
   });
 };
 
+// 获取股票基本信息
+export const _basic = (data = {}) => {
+  return http.post(`/anon/v1/item/basic`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+
+// 获取股票详情
+export const _profile = (data = {}) => {
+  return http.post(`/anon/v1/item/stock/profile`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+
+// 获取K线历史数据
+export const _kline = (data = {}) => {
+  return http.get(`/anon/v1/ticker/kline?symbol=${data.symbol}&period=${data.period}&page=${data.page}`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+
 export const memberInfo = () => { }

@@ -1,8 +1,8 @@
 <template>
   <router-view v-slot="{ Component }">
-    <Loading size="48" style="position: fixed;top:50%;left:50%;transform: translateX(-50%) translateY(-50%);"
-      :loading="loading" />
-    <div class="app_scroll" v-if="!loading">
+    <Loading v-show="pageLoading" size="48"
+      style="position: fixed;top:30%;left:50%;transform: translateX(-50%) translateY(-50%);" :loading="pageLoading" />
+    <div class="app_scroll" v-show="!pageLoading">
       <transition :name="transitionName">
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
       </transition>
@@ -22,7 +22,6 @@ import store from "@/store/index";
 import Loading from "@/components/Loaidng.vue";
 import { useRoute } from "vue-router";
 
-const loading = ref(true); // 控制全局组件加载
 const BottomTabBar = defineAsyncComponent(() =>
   import("@/components/BottomTabBar.vue")
 );
@@ -36,28 +35,33 @@ console.error(store.state)
 //   import(`@/style/theme/${theme.value}.less`)
 // }
 
+const fullWindow = computed(() => store.state.fullscreen) // 全屏状态
+store.commit('setFullscreen', false)
+
 // 路由监听
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "trade", "market", "market_info"].includes(route.name) && !loading.value;
+  return ["home", "user", "trade", "market", "market_info"].includes(route.name) && !pageLoading.value && !fullWindow.value;
 });
 
 // 预加载 tab 页面
+const pageLoading = computed(() => store.state.pageLoading)
+store.commit('setPageLoading', true)
 Promise.all([
-  import('./views/Home/Home.vue'),
-  import('./views/Market/Market.vue'),
-  import('./views/User/User.vue'),
-  import('./views/trade/trade.vue'),
+  import('@/views/Home/Home.vue'),
+  import('@/views/Market/Market.vue'),
+  import('@/views/User/User.vue'),
+  import('@/views/trade/trade.vue'),
 ]).finally(() => {
-  loading.value = false;
+  store.commit('setPageLoading', false)
   setTimeout(() => {
-    boundFunc
+    boundFunc()
   }, 500)
 })
 
 const boundFunc = () => {
-  const reboundPage = ['user','trade']
+  const reboundPage = ['user', 'trade']
   // 回弹效果
   let startY = 0
   const maxMove = 200

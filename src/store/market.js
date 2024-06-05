@@ -16,6 +16,11 @@ export default {
         },
         setCurrStock(state, data) {
             state.currStock = data;
+            // 当前股票有更新，则同步到列表里去
+            const index = state.marketWatchList.findIndex(item => item.symbol == data.symbol)
+            if (index >= 0) {
+                state.marketWatchList[index] = data
+            }
         },
     }
 }

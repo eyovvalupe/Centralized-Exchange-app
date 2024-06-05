@@ -3,6 +3,7 @@
 // 转换数字显示  带单位(K,M,B)
 export const _formatNumber = (num, tail = 2) => {
   if (isNaN(num)) return ''
+  num = Number(num)
   if (num >= 1.0e+9) {
     return (num / 1.0e+9).toFixed(tail) + "B";
   } else if (num >= 1.0e+6) {
@@ -10,6 +11,7 @@ export const _formatNumber = (num, tail = 2) => {
   } else if (num >= 1.0e+3) {
     return (num / 1.0e+3).toFixed(tail) + "K";
   } else {
+    console.error('??', num)
     return num.toFixed(tail);
   }
 }

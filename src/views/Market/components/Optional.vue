@@ -28,9 +28,9 @@ let socket = null
 const subs = () => {
     socket = startSocket(() => {
         const keys = watchList.value.map(item => item.symbol)
-        socket && socket.emit('realtime', keys.join(',')) // 价格变化
 
-        socket.on('realtime', res => {
+        socket && socket.emit('realtime', keys.join(',')) // 价格变化
+        socket && socket.on('realtime', res => {
             if (res.code == 200) {
                 const arr = watchList.value.map(item => { // 数据和观察列表里的数据融合
                     const target = res.data.find(a => a.symbols == item.symbol)
@@ -42,7 +42,49 @@ const subs = () => {
                 store.commit('setMarketWatchList', arr || [])
             }
         })
+
+        socket && socket.emit('snapshot', keys.join(',')) // 快照数据
+        socket && socket.on('snapshot', res => {
+            if (res.code == 200) {
+                const target = watchList.value.find(item => item.symbols == res.symbols)
+                if (target) {
+                    target.points = getSnapshotLine(res.data)
+                }
+            }
+        })
     })
+}
+
+function getSnapshotLine(data) {
+    let str = ''
+    const w = 69
+    const h = 25
+    let min = null
+    let max = null
+    data.map((item, index) => {
+        if (min === null) {
+            min = item.price
+        }
+        if (max === null) {
+            max = item.price
+        }
+        if (item.price < min) {
+            min = item.price
+        }
+        if (item.price > max) {
+            max = item.price
+        }
+        str += `${index},${item.price} `
+    })
+    let _str = '' // 最终字符串
+    const gap = max - min || min // 最大与最小值的间隙
+    str.split(' ').map(item => {
+        const _item = item.split(',')
+        if (item.length) {
+            _str += `${((_item[0] / 1) * (w / data.length)).toFixed(2)},${((_item[1] / 1 - min) * (h / gap)).toFixed(2)} `
+        }
+    })
+    return _str.substring(0, _str.length - 1)
 }
 
 
@@ -51,6 +93,9 @@ const watchList = computed(() => store.state.marketWatchList || [])
 const getWatchList = () => { // 获取订阅列表
     if (loading.value) return
     loading.value = true
+    if (watchList.value.length) {
+        subs()
+    }
     _watchlist().then(res => {
         if (res.code == 200) {
             if (watchList.value.length) { // 有历史数据就更新

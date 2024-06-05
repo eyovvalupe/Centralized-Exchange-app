@@ -1,7 +1,8 @@
 
 // 时间转换为 yyyy-mm-dd hh:mm:ss 格式
-export function getTimestr(timestamp) {
-  if (!timestamp) return "";
+// key==2  返回 hh:mm:ss
+export function getTimestr(timestamp, key) {
+  if (!timestamp) return " ";
   if (isNaN(Number(timestamp))) return timestamp;
   timestamp = Number(timestamp); // 原始时间戳
   // 获取本地时区的偏移量
@@ -20,5 +21,7 @@ export function getTimestr(timestamp) {
   const hours = String(currentDate.getHours()).padStart(2, "0"); // 补0
   const minutes = String(currentDate.getMinutes()).padStart(2, "0"); // 补0
   const seconds = String(currentDate.getSeconds()).padStart(2, "0"); // 补0
+
+  if (key == 2) return `${hours}:${minutes}:${seconds}`
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

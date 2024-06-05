@@ -40,6 +40,7 @@ import Optional from "./components/Optional.vue"
 import Stock from "./components/Stock.vue"
 import Financial from "./components/Financial.vue"
 import IPO from "./components/IPO.vue"
+import store from "@/store"
 
 const active = ref(1)
 const OptionalRef = ref()
@@ -51,6 +52,15 @@ const changeTab = key => {
     }
 }
 
+
+// 预加载页面
+store.commit('setPageLoading', true)
+Promise.all([
+    import('@/views/Market/MarketInfo.vue'),
+    import('@/views/Market/Search.vue'),
+]).finally(() => {
+    store.commit('setPageLoading', false)
+})
 </script>
 
 <style lang="less" scoped>

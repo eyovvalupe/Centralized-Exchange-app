@@ -9,6 +9,8 @@ import market from './market'
 
 export default createStore({
   state: {
+    fullscreen: false, // 是否是全屏状态
+    pageLoading: true, // 页面加载状态
     theme: '',
     transitionName: '', // 页面过渡动画名字
     token: "",
@@ -16,6 +18,12 @@ export default createStore({
     ...market.state,
   },
   mutations: {
+    setFullscreen(state, data) {
+      state.fullscreen = data;
+    },
+    setPageLoading(state, data) {
+      state.pageLoading = data;
+    },
     setTheme(state, data) {
       state.theme = data;
     },
