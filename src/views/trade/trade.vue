@@ -56,8 +56,8 @@
       v-model:show="showBottom"
       position="bottom"
       closeable
-      class="detail-box"
-      :style="{ height: '80%' }"
+      class="detail-popup"
+      style="height: 85%;"
     >
     <OrderDetail/>
   </Popup>
@@ -96,6 +96,7 @@
 <style lang="less">
   .trade {
     position: relative;
+    padding-bottom: 1.4rem;
       .header{
         display: flex;
         justify-content: space-between;
@@ -180,6 +181,16 @@
     }
 }
 
+
+@media (min-width: 751px) {
+    .detail-popup {
+        max-width: 375px;
+        position: absolute;
+        padding-bottom: 3rem !important;
+    }
+}
+
+
   .trade-popup {
     min-height: 4.4rem;
     padding: 0 0.32rem;
@@ -236,8 +247,9 @@
     }
   }
 
-  .detail-box {
-    border-radius: 10.16rem;
+  .detail-popup {
+    border-radius: 0.36rem;
+    padding-bottom: 1.5rem;
   }
 
 </style>

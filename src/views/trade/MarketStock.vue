@@ -1,11 +1,10 @@
 <template>
   <div class="opentrade">   
 
-      <Sticky>
+      <Sticky class="opentrade-sticky">
         <img src="/static/img/trade/open.png" alt="" class="open-img" :style="{ top: openHeaderTop }">
           <Tabs class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓">
-              开仓
             </Tab>
             <Tab title="持仓">          
             </Tab>
@@ -109,6 +108,9 @@
         </div>
     </div>
 
+    <!-- 开仓 -->
+    <OpenPosition v-if="active === 0"/>
+
   </div>
 </template>
 
@@ -116,6 +118,7 @@
 import { ref } from "vue";
 import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky } from 'vant';
 import { defineEmits, onMounted } from 'vue';
+import OpenPosition from './OpenPosition.vue'
 
 const active =ref(1)
 const emit = defineEmits(['update']);
@@ -129,7 +132,7 @@ let prevScrollPos = window.pageYOffset;
 
 window.onscroll = () => { 
   const currentScrollPos = window.pageYOffset; 
-  if (currentScrollPos >= 100) {
+  if (currentScrollPos >= 115) {
     headerTop.value = '0px'; 
     openHeaderTop.value = '0.12rem'; 
   } else {
@@ -140,7 +143,7 @@ window.onscroll = () => {
 }; 
 
 const showDetailPopup = () =>{
-  // emit('update');
+  emit('update');
 }
 
 const onChange = (val) => {
@@ -148,7 +151,11 @@ const onChange = (val) => {
 }
 
 const showButton = (i) =>{
-  buttonShow.value = !buttonShow.value
+  if (currentNum.value === i) {
+    buttonShow.value = !buttonShow.value
+  } else {
+    buttonShow.value = true
+  }
   currentNum.value = i
 }
 
@@ -291,6 +298,9 @@ const showButton = (i) =>{
           margin-left: 0.36rem;
           font-size: 0.28rem;
       }
+      .van-tab:first-of-type {
+        margin-left: 0.72rem;
+      }
 
       .van-tabs__content {
           flex: 1;
@@ -321,7 +331,7 @@ const showButton = (i) =>{
     font-style: normal;
     font-weight: 500 !important;
     line-height: 0.4rem !important;
-    border-radius: 0 7px 0 7px;
+    border-radius: 0 0.14rem 0 0.14rem;
   }
   .button-show {
     display: flex;
