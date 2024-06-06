@@ -1,26 +1,33 @@
 <template>
   <div class="opentrade">   
 
-      <Sticky class="opentrade-sticky">
-        <img src="/static/img/trade/open.png" alt="" class="open-img" :style="{ top: openHeaderTop }">
-          <Tabs class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
+    <div>
+      <!-- <div style="position: fixed; top: 0;width: 100%;"> -->
+        <div class="opentrade-sticky">
+        <img src="/static/img/trade/open.png" alt="" class="open-img">
+        <div style="padding-left: 0.7rem; padding-right: 0.3rem;background-color: white;">
+          <Tabs class="tabs" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓">
             </Tab>
             <Tab title="持仓">          
             </Tab>
             <Tab title="查询">
-                查询
             </Tab>
           </Tabs>
-
-        <div class="risk-box" :style="{ top: headerTop }">
+        </div>
+          
+        <div class="risk-box">
           <img src="/static/img/trade/risk.png" alt="" class="risk-img">
           <span>风险线</span>
         </div> 
-    </Sticky>
+      </div>
+    <!-- </div> -->
+    </div>
+
+    <Loading v-if="loading"></Loading>
 
     <!-- 持仓 -->
-    <div v-if="active === 1">
+    <div v-if="active === 1  && !loading">
       <div class="header-grid">
           <div style="padding: 0 0.3rem; display: flex;" class="bottom-grid">
             <div class="header-f-left">股票/状态</div>
@@ -109,14 +116,18 @@
     </div>
 
     <!-- 开仓 -->
-    <OpenPosition v-if="active === 0"/>
+    <OpenPosition v-if="active === 0 && !loading"/>
+
+    <!-- 查询 -->
+    <div v-if="active === 2 && !loading"></div>
+
 
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky } from 'vant';
+import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky, Loading, button } from 'vant';
 import { defineEmits, onMounted } from 'vue';
 import OpenPosition from './OpenPosition.vue'
 
@@ -124,30 +135,27 @@ const active =ref(1)
 const emit = defineEmits(['update']);
 const buttonShow = ref(false)
 const currentNum = ref(null)
+const loading = ref(false)
 
-const headerTop = ref('2.25rem'); 
-const openHeaderTop = ref('2.43rem'); 
-let prevScrollPos = window.pageYOffset; 
-
-
-window.onscroll = () => { 
-  const currentScrollPos = window.pageYOffset; 
-  if (currentScrollPos >= 115) {
-    headerTop.value = '0px'; 
-    openHeaderTop.value = '0.12rem'; 
-  } else {
-    headerTop.value = '2.25rem'; 
-    openHeaderTop.value = '2.43rem'; 
-  }
-  prevScrollPos = currentScrollPos; 
-}; 
 
 const showDetailPopup = () =>{
   emit('update');
 }
 
+onMounted(() => {
+  loading.value = true;
+  setTimeout(() => {
+    loading.value = false;
+  }, 1000);
+});
+
 const onChange = (val) => {
   active.value = val
+  loading.value = true
+
+  setTimeout(() => {
+      loading.value = false;
+  }, 1000);
 }
 
 const showButton = (i) =>{
@@ -163,6 +171,10 @@ const showButton = (i) =>{
 
 <style lang="less">
 .opentrade {
+  .van-loading {
+      left: 47%;
+      margin-top: 2rem !important;
+  }
   .header-grid {
     padding-bottom: 0.12rem;
     background: white;
@@ -235,7 +247,7 @@ const showButton = (i) =>{
   }
   .risk-box {
     position: absolute;
-    top: 2.25rem;
+    top: 0rem;
     right: 0.3rem;
     .risk-img {
       width: 0.52rem !important;
@@ -281,6 +293,7 @@ const showButton = (i) =>{
         position: absolute;
         width: 100%;
         left: 0px;
+        height: 0.88rem;
 
           &::after {
               content: '';
@@ -299,7 +312,7 @@ const showButton = (i) =>{
           font-size: 0.28rem;
       }
       .van-tab:first-of-type {
-        margin-left: 0.72rem;
+        margin-left: 0.15rem;
       }
 
       .van-tabs__content {
@@ -353,6 +366,9 @@ const showButton = (i) =>{
         margin-bottom: 0.12rem;
       }
     }
+  }
+  .opentrade-sticky {
+    position: relative;
   }
 }
 </style>

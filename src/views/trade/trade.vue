@@ -1,5 +1,5 @@
 <template>
-  <main class="trade">
+  <div class="trade">
       <div class="header">
         <div class="title">
           交易
@@ -10,7 +10,7 @@
         </div>
       </div>
 
-      <Tabs v-model:active="active" type="line" animated @change="onChange" class="stock-tab">
+      <Tabs v-model:active="active" type="line" @change="onChange" class="stock-tab">
         <Tab title="股票">
         </Tab>
         <Tab title="IPO">
@@ -62,7 +62,7 @@
     <OrderDetail/>
   </Popup>
 
-  </main>
+  </div>
 </template>
 
 <script setup>
@@ -131,7 +131,7 @@
         width: 0.34rem !important;
         height: 0.34rem !important;
         position: absolute;
-        top: 2.43rem;
+        top: 0.18rem;
         z-index: 99;
         left: 0.3rem;
       }
