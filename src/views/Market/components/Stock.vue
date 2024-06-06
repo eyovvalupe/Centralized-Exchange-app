@@ -5,7 +5,7 @@
         <div class="padding_block stock_chatsline">
             <div class="title">$38,552.62</div>
             <div class="subtitle up">+$1,439.58(3.88%)</div>
-            <AreaChart />
+            <!-- <AreaChart /> -->
         </div>
         <!-- tabs -->
         <div class="padding_block stock_tabs_box">
@@ -32,7 +32,7 @@
         <!-- 总览 -->
         <div class="padding_block rank_box">
             <div class="rank_title"><span>市场总览</span></div>
-            <DistributionMap />
+            <!-- <DistributionMap /> -->
         </div>
 
         <!-- 排行 -->
@@ -50,7 +50,7 @@
                 <div class="td td2 td_r">涨跌幅</div>
             </div>
             <div class="tr" v-for="i in 5" :key="i">
-                <StockItem :item="{}" />
+                <!-- <StockItem :item="{}" /> -->
             </div>
         </div>
     </div>

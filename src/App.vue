@@ -3,7 +3,7 @@
     <Loading v-show="pageLoading" size="48"
       style="position: fixed;top:30%;left:50%;transform: translateX(-50%) translateY(-50%);" :loading="pageLoading" />
     <div class="app_scroll" v-show="!pageLoading">
-      <transition :name="transitionName">
+      <transition :name="transitionName" :mode="'in-out'">
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
       </transition>
       <keep-alive>
@@ -42,7 +42,7 @@ store.commit('setFullscreen', false)
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "trade", "market", "market_info"].includes(route.name) && !pageLoading.value && !fullWindow.value;
+  return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules"].includes(route.name) && !pageLoading.value && !fullWindow.value;
 });
 
 // 预加载 tab 页面
@@ -102,11 +102,12 @@ const transitionName = computed(() => store.state.transitionName || '')
 .slide-bottom-leave-active,
 .opacity-enter-active,
 .opacity-leave-active {
-  transition: all ease-in 0.3s;
+  transition: all ease 0.3s;
 }
 
 .slide-right-enter-from {
-  transform: translateX(0);
+  // transform: translateX(0);
+  opacity: 0;
 }
 
 .slide-right-enter-to {
@@ -114,15 +115,17 @@ const transitionName = computed(() => store.state.transitionName || '')
 }
 
 .slide-right-leave-from {
-  transform: translateX(0);
+  // transform: translateX(0);
 }
 
 .slide-right-leave-to {
   transform: translateX(-100%);
+  opacity: 0;
 }
 
 .slide-bottom-enter-from {
-  transform: translateY(0);
+  // transform: translateY(0);
+  opacity: 0;
 }
 
 .slide-bottom-enter-to {
@@ -130,15 +133,17 @@ const transitionName = computed(() => store.state.transitionName || '')
 }
 
 .slide-bottom-leave-from {
-  transform: translateY(0);
+  // transform: translateY(0);
 }
 
 .slide-bottom-leave-to {
   transform: translateY(-100%);
+  opacity: 0;
 }
 
 .slide-left-enter-from {
   transform: translateX(-200%);
+  opacity: 0;
 }
 
 .slide-left-enter-to {
@@ -146,15 +151,17 @@ const transitionName = computed(() => store.state.transitionName || '')
 }
 
 .slide-left-leave-from {
-  transform: translateX(0);
+  // transform: translateX(0);
 }
 
 .slide-left-leave-to {
   transform: translateX(100%);
+  opacity: 0;
 }
 
 .slide-top-enter-from {
   transform: translateY(-200%);
+  opacity: 0
 }
 
 .slide-top-enter-to {
@@ -167,6 +174,7 @@ const transitionName = computed(() => store.state.transitionName || '')
 
 .slide-top-leave-to {
   transform: translateY(100%);
+  opacity: 0;
 }
 
 

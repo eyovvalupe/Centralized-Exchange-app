@@ -77,7 +77,6 @@ onBeforeUnmount(() => {
 
 const initLoading = ref(false)
 const initData = async () => { // 初始化数据
-    console.log(currPeriod.value)
     page.value = 1
     const query = {
         symbol: props.symbol,
@@ -109,11 +108,10 @@ const subs = () => { // 订阅新数据
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
             if (res.code == 200 && res.symbols == params.symbols && res.period == params.period) {
-                res.data.map(item => {
-                    chart.updateData({
-                        ...item,
-                        timestamp: item.timestamp * 1000
-                    })
+                const item = res.data[0]
+                chart.updateData({
+                    ...item,
+                    timestamp: item.timestamp * 1000
                 })
             }
         })
@@ -136,7 +134,6 @@ const loadMoreData = async () => { // 加载更多
     if (datas && datas.length) { // 有数据
         if (query.symbol == props.symbol && query.period == currPeriod.value) { // 而且是当前选项
             chart.applyMoreData(datas) // 追加更多数据
-            console.error('追加更多数据', datas)
             setTimeout(() => {
                 chart.resize()
             }, 100)
@@ -146,7 +143,7 @@ const loadMoreData = async () => { // 加载更多
 }
 
 const getData = (params) => { // 获取数据
-    const key = `${params.symbol} _${params.period} _${params.page} `
+    const key = `${params.symbol}_${params.period}_${params.page}`
     return new Promise(resolve => {
         let rs = []
         // 先从session里找
@@ -157,8 +154,14 @@ const getData = (params) => { // 获取数据
             } catch { }
         }
         if (rs && rs.length) {
-            resolve(rs)
-            return
+            // 判断数据存储的时间
+            const t = Number(sessionStorage.getItem(key + '_time') || 0)
+            if (Date.now() - t > 1 * 60 * 1000) { // 大于5分钟了就去重新请求
+
+            } else {
+                resolve(rs)
+                return
+            }
         }
         _kline(params).then(res => {
             if (res.code == 200) {
@@ -168,6 +171,7 @@ const getData = (params) => { // 获取数据
                 }).reverse()
                 resolve(dd)
                 // 把结果放到sessionData
+                sessionStorage.setItem(key + '_time', Date.now())
                 sessionStorage.setItem(key, JSON.stringify(dd))
             } else {
                 resolve([])
@@ -244,7 +248,7 @@ defineExpose({
         }
 
         50% {
-            opacity: 0.5;
+            opacity: 0.2;
         }
 
         100% {

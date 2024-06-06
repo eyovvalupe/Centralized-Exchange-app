@@ -48,6 +48,25 @@ const routes = [
       pageType: 'child'
     }
   },
+  { // 产品详情
+    path: "/financial_info",
+    name: "financial_info",
+    component: () => import("../views/Market/FinancialInfo.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+
+  { // 交易规则
+    path: "/trading_rules",
+    name: "trading_rules",
+    component: () => import("../views/Market/TradingRules.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   {
     // 登录
     path: "/login",

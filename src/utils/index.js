@@ -11,7 +11,6 @@ export const _formatNumber = (num, tail = 2) => {
   } else if (num >= 1.0e+3) {
     return (num / 1.0e+3).toFixed(tail) + "K";
   } else {
-    console.error('??', num)
     return num.toFixed(tail);
   }
 }

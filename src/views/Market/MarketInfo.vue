@@ -64,8 +64,8 @@
         <div class="market_content">
             <!-- 功能项 -->
             <div class="funcs">
-                <div class="ripple_button tab active_tab">图表</div>
-                <div class="ripple_button tab">概述</div>
+                <div class="ripple_button tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">图表</div>
+                <div class="ripple_button tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">概述</div>
                 <div style="flex: 1;"></div>
                 <div class="icon fullscreen" @click="fullScreen(true)">
                     <img src="/static/img/market/fullscreen.png" alt="fullscreen">
@@ -76,7 +76,7 @@
             </div>
 
             <!-- 详情 -->
-            <div class="info">
+            <div v-show="activeTab == 1" class="info">
                 <div class="left">
                     <div class="price" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{ item.price }}
                     </div>
@@ -90,12 +90,13 @@
                 </div>
                 <div class="right">
                     <b>{{ item.market || '--' }}</b>
-                    <div>{{ item.market_status == 'open' ? '开市' : (item.market_status == 'close' ? '闭市' : '--') }}</div>
+                    <div>{{ item.market_status == 'open' ? '开市' : (item.market_status == 'close' ? '闭市' : '--') }}
+                    </div>
                 </div>
             </div>
 
             <!-- 图表 -->
-            <div class="chart_box">
+            <div v-if="activeTab == 1" class="chart_box">
                 <div class="tabs">
                     <div class="tab" :class="{ 'active_tab': timeType == 'Time' }" @click="changeType('Time')">Time
                     </div>
@@ -110,7 +111,7 @@
                 </div>
                 <div class="chart_container" :class="{ 'fullscreen_container': fullWindow }">
                     <!-- 分时图 -->
-                    <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" />
+                    <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
                     <!-- K线图 -->
                     <KlineChart ref="KlineChartRef" v-if="timeType != 'Time'" :symbol="item.symbol"
                         :period="timeType" />
@@ -120,11 +121,35 @@
                     </div>
                 </div>
             </div>
+
+            <!-- 概览 -->
+            <div class="intro_box" v-if="activeTab == 2">
+                <div class="intro_title">{{ item.symbol || '--' }}</div>
+                <div class="intro_content">{{ item.business_summary ||
+                    '--' }}</div>
+                <div class="intro_area">
+                    <span>日范围</span>
+                    <div class="intro_area_box">
+                        <span>10.40</span>
+                        <span>——</span>
+                        <span>50.40</span>
+                    </div>
+                </div>
+                <div class="intro_area">
+                    <span>年范围</span>
+                    <div class="intro_area_box">
+                        <span>10.40</span>
+                        <span>——</span>
+                        <span>50.40</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
 
         <!-- 交易按钮 -->
-        <div class="max-width ripple_button ripple_button2 submit">
+        <div @click="showBuy = true" class="max-width ripple_button ripple_button2 submit">
             <span>交易</span>
         </div>
 
@@ -137,11 +162,24 @@
                 </div>
             </div>
         </Popup>
+
+        <!-- 下单弹窗 -->
+        <teleport to="body">
+            <ActionSheet v-model:show="showBuy" close-on-click-action>
+                <div style="padding: 1.16rem 0 0.6rem 0;background-color: #fff;">
+                    <div style="height:0.96rem;border-bottom:1px solid #F5F5F5;display: flex;align-items: center;justify-content: center;color: #333333;font-weight: 400;"
+                        v-for="(item, i) in actions" :key="i">
+                        {{ item.name }}
+                    </div>
+                </div>
+            </ActionSheet>
+        </teleport>
+
     </div>
 </template>
 
 <script setup>
-import { Icon, Popup } from "vant"
+import { Icon, Popup, ActionSheet } from "vant"
 import router from "@/router"
 import { computed, ref } from "vue"
 import store from "@/store";
@@ -150,6 +188,14 @@ import KlineChart from "@/components/KlineCharts/KlineChart.vue"
 import { _formatNumber } from "@/utils/index"
 import { _basic, _profile } from "@/api/api"
 import { getTimestr } from "@/utils/time"
+
+const activeTab = ref(1)
+const showBuy = ref(false) // 购买弹窗
+const actions = ref([
+    { name: '股票买涨', key: 'up' },
+    { name: '股票买跌', key: 'down' },
+])
+
 
 // 股票信息
 const item = computed(() => store.state.currStock || {})
@@ -325,17 +371,19 @@ const fullScreen = (key) => {
                 color: #061023;
                 font-size: 0.32rem;
                 font-weight: 400;
-                margin-right: 0.32rem
+                margin-right: 0.32rem;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 0.6rem;
+                height: 0.72rem;
             }
 
             .active_tab {
-                height: 0.72rem;
                 background-color: #F6F8FF;
                 border-radius: 0.48rem;
                 color: #014CFA;
-                padding: 0 0.6rem;
-                display: flex;
-                align-items: center;
             }
 
             .icon {
@@ -475,6 +523,46 @@ const fullScreen = (key) => {
             }
         }
 
+    }
+
+    .intro_box {
+        padding-top: 0.4rem;
+
+        .intro_title {
+            color: #000;
+            font-size: 0.36rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+
+        .intro_content {
+            font-size: 0.28rem;
+            font-weight: 400;
+            color: #121826;
+            line-height: 0.54rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .intro_area {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 0.6rem;
+            margin-bottom: 0.28rem;
+            font-size: 0.28rem;
+            color: #121826;
+            font-weight: 400;
+
+            .intro_area_box {
+                width: 2.6rem;
+                font-size: 0.2rem;
+                font-weight: 500;
+                color: #000;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+        }
     }
 }
 

@@ -34,7 +34,9 @@ export const useSocket = () => {
         console.log("socket disconnected...");
       });
     } else {
-      fn && fn()
+      setTimeout(() => { // 先返回socket 再执行
+        fn && fn()
+      })
     }
     return socket;
   }

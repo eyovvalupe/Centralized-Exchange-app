@@ -65,4 +65,11 @@ export const _kline = (data = {}) => {
   });
 };
 
+// 获取分时图历史数据
+export const _time = (data = {}) => {
+  return http.get(`/anon/v1/ticker/time?symbol=${data.symbol}`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+
 export const memberInfo = () => { }

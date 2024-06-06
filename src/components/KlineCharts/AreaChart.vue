@@ -1,29 +1,46 @@
 <!-- 折线图 -->
 <template>
-    <div class="chat_area" id="chat_area">
+    <div class="chat_area_box">
+        <div class="chat_area" id="chat_area"></div>
 
+        <!-- 加载 -->
+        <div class="chat_area_loading" v-show="loading">
+            <div class="lines">
+                <div class="item item_1"></div>
+                <div class="item item_2"></div>
+                <div class="item item_3"></div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { onMounted, defineProps } from "vue"
+import { onMounted, defineProps, computed, ref } from "vue"
 import { init } from 'klinecharts'
 import { klineConfig } from './kline.conf';
+import { _time } from "@/api/api"
+import { useSocket } from '@/utils/ws'
+
+const { startSocket } = useSocket()
+let socket = null
 
 const props = defineProps({
+    symbol: '',
     showY: {
         type: Boolean,
         default: false
     }
 })
+const symbol = computed(() => props.symbol || '')
+let chart = ''
 
 onMounted(() => {
-    const chart = init('chat_area')
+    chart = init('chat_area')
     chart.setStyles(klineConfig)
-    chart?.setScrollEnabled(false) // 是否滚动
-    chart?.setOffsetRightDistance(0) // 设置右边距
+    chart?.setScrollEnabled(true) // 是否滚动
+    chart?.setOffsetRightDistance(props.showY ? 50 : 0) // 设置右边距
     chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
-    chart?.setMaxOffsetRightDistance(0) // 设置右边最大空出的边距
+    chart?.setMaxOffsetRightDistance(props.showY ? 50 : 0) // 设置右边最大空出的边距
     const selfStyle = {
         grid: {
             vertical: {
@@ -31,35 +48,36 @@ onMounted(() => {
             }
         },
         xAxis: {
-            show: false,
+            show: props.showY,
             size: 'auto'
         },
         yAxis: {
-            show: false
+            show: props.showY
         },
         candle: {
+            type: 'area',
             area: {
                 point: {
-                    show: false
+                    show: props.showY
                 }
             },
             priceMark: {
-                show: false
+                show: props.showY
             },
             tooltip: {
                 offsetLeft: 2,
                 offsetTop: 3,
                 offsetRight: 2,
                 offsetBottom: 3,
-                showRule: 'none', /// ,follow_cross
+                showRule: 'follow_cross', /// ,follow_cross
                 showType: 'rect',
                 custom: [
-                    // { title: 'time', value: '{time}' },
+                    { title: 'time', value: '{time}' },
                     // { title: 'open', value: '{open}' },
                     // { title: 'high', value: '{high}' },
                     // { title: 'low', value: '{low}' },
                     // { title: 'close', value: '{close}' },
-                    // { title: 'volume', value: '{volume}' }
+                    { title: 'price', value: '{open}' }
                 ],
                 text: {
                     size: 10,
@@ -77,43 +95,164 @@ onMounted(() => {
     if (props.showY) {
         delete selfStyle.yAxis
     }
-    chart?.setStyles()
-    chart.applyNewData(genData())
-    chart.setStyles({
-        candle: { type: 'area' }
-    })
+    chart.setStyles(selfStyle)
+    initData()
 })
 
-
-
-function genData(timestamp = new Date().getTime(), length = 800) {
-    let basePrice = 5000
-    timestamp = Math.floor(timestamp / 1000 / 60) * 60 * 1000 - length * 60 * 1000
-    const dataList = []
-    for (let i = 0; i < length; i++) {
-        const prices = []
-        for (let j = 0; j < 4; j++) {
-            prices.push(basePrice + Math.random() * 60 - 30)
+const loading = ref(false)
+const initData = async () => {
+    const query = symbol.value
+    loading.value = true
+    if (!symbol.value) return
+    const datas = await getData({ symbol: query })
+    loading.value = false
+    if (query == symbol.value) { // 当前股票
+        if (datas && datas.length) {
+            chart.applyNewData(datas) // 重设图表数据
+            subs()
+            setTimeout(() => {
+                chart.resize()
+            }, 1000)
+            // 订阅新数据
+            // subs()
+        } else {
+            console.error('没有数据')
         }
-        prices.sort()
-        const open = +(prices[Math.round(Math.random() * 3)].toFixed(2))
-        const high = +(prices[3].toFixed(2))
-        const low = +(prices[0].toFixed(2))
-        const close = +(prices[Math.round(Math.random() * 3)].toFixed(2))
-        const volume = Math.round(Math.random() * 100) + 10
-        const turnover = (open + high + low + close) / 4 * volume
-        dataList.push({ timestamp, open, high, low, close, volume, turnover })
-
-        basePrice = close
-        timestamp += 60 * 1000
     }
-    return dataList
 }
+
+const subs = () => { // 订阅新数据
+    socket = startSocket(() => {
+        const query = props.symbol
+        socket && socket.emit('time', query) // 分时
+        socket && socket.on('time', res => {
+            if (res.code == 200 && res.symbols == query) {
+                const item = res.data[0]
+                chart.updateData({
+                    ...item,
+                    open: item.price,
+                    close: item.price,
+                    high: item.price,
+                    low: item.price,
+                    timestamp: item.timestamp * 1000
+                })
+            }
+        })
+    })
+}
+
+const getData = (params) => { // 获取数据
+    const key = `${params.symbol}_time`
+    return new Promise(resolve => {
+        let rs = []
+        // 先从session里找
+        const s_rs = sessionStorage.getItem(key)
+        if (s_rs) {
+            try {
+                rs = JSON.parse(s_rs)
+            } catch { }
+        }
+        if (rs && rs.length) {
+            // 判断数据存储的时间
+            const t = Number(sessionStorage.getItem(key + '_time') || 0)
+            if (Date.now() - t > 1 * 60 * 1000) { // 大于5分钟了就去重新请求
+
+            } else {
+                resolve(rs)
+                return
+            }
+        }
+        _time(params).then(res => {
+            if (res.code == 200) {
+                const dd = res.data.map(item => {
+                    item.open = item.price
+                    item.close = item.price
+                    item.high = item.price
+                    item.low = item.price
+                    item.timestamp *= 1000
+                    return item
+                }).reverse()
+                resolve(dd)
+                // 把结果放到sessionData
+                sessionStorage.setItem(key + '_time', Date.now())
+                sessionStorage.setItem(key, JSON.stringify(dd))
+            } else {
+                resolve([])
+            }
+        }).catch(() => {
+            resolve([])
+        })
+    })
+}
+
+
 </script>
 
 <style lang="less" scoped>
-.chat_area {
+.chat_area_box {
     width: 100%;
     height: 100%;
+    position: relative;
+
+    .chat_area {
+        width: 100%;
+        height: 100%;
+    }
+
+    .chat_area_loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        z-index: 99;
+        border-right: 1px solid #7F939E;
+        border-bottom: 1px solid #7F939E;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .lines {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            position: relative;
+            left: -2rem;
+            top: 2rem;
+            animation: loading 2s ease-out infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.2;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .item {
+            width: 1rem;
+            height: 2rem;
+            border-left: 1px solid #7F939E;
+            border-top: 1px solid #7F939E;
+            position: relative;
+        }
+
+        .item_2 {
+            top: -2rem;
+        }
+
+        .item_3 {
+            top: -4rem;
+        }
+    }
 }
 </style>
