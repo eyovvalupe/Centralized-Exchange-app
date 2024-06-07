@@ -1,8 +1,10 @@
 <template>
   <div class="opentrade">   
 
-    <div>
-      <!-- <div style="position: fixed; top: 0;width: 100%;"> -->
+    <div ref="placeholder" class="placeholder"></div>
+
+    <!-- <div> -->
+      <div ref="stickyElement" :class="{ 'fixed': isFixed }" class="opentrade-sticky">
         <div class="opentrade-sticky">
         <img src="/static/img/trade/open.png" alt="" class="open-img">
         <div style="padding-left: 0.7rem; padding-right: 0.3rem;background-color: white;">
@@ -16,13 +18,23 @@
           </Tabs>
         </div>
           
-        <div class="risk-box">
+        <div class="risk-box" v-if="active !== 2">
           <img src="/static/img/trade/risk.png" alt="" class="risk-img">
           <span>风险线</span>
         </div> 
+
+        <div class="date-risk-box" v-if="active === 2">
+          <img src="/static/img/trade/risk.png" alt="" class="date-risk-img">
+          <span>风险线</span>
+        </div> 
+
+        <div class="date-box" v-if="active === 2" @click="goToDate">
+          <img src="/static/img/trade/time.png" alt="" class="date-img">
+          <span>日期</span>
+        </div> 
       </div>
-    <!-- </div> -->
     </div>
+    <!-- </div> -->
 
     <Loading v-if="loading"></Loading>
 
@@ -85,11 +97,11 @@
                   <img src="/static/img/trade/detail.png" alt="">
                   订单详情
                 </div>
-                <div style="background-color: #627eea;">
+                <div style="background-color: #627eea;" @click="updateDetailPopup(i)">
                   <img src="/static/img/trade/update.png" alt="">
                   更新
                 </div>
-                <div style="background-color: #014cfa;">
+                <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
                   <img src="/static/img/trade/close.png" alt="">
                   平仓
                 </div>
@@ -100,11 +112,11 @@
                   <img src="/static/img/trade/detail.png" alt="">
                   订单详情
                 </div>
-                <div style="background-color: #627eea;">
+                <div style="background-color: #627eea;" @click="updateDetailPopup">
                   <img src="/static/img/trade/update.png" alt="">
                   更新
                 </div>
-                <div style="background-color: #014cfa;">
+                <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
                   <img src="/static/img/trade/close.png" alt="">
                   平仓
                 </div>
@@ -119,7 +131,93 @@
     <OpenPosition v-if="active === 0 && !loading"/>
 
     <!-- 查询 -->
-    <div v-if="active === 2 && !loading"></div>
+    <div v-if="active === 2 && !loading">
+      <div class="header-grid">
+          <div style="padding: 0 0.3rem; display: flex;" class="bottom-grid">
+            <div class="header-f-left">股票/状态</div>
+            <div>开仓/可售</div>
+            <div>现价/成本</div>
+            <div class="header-f-right">盈亏/盈亏比</div>
+          </div>
+        </div>
+
+        <div v-for="i in 3" :key="i">
+          <SwipeCell>
+            <div class="content-grid grid-item-hover" @click="showInquiryButton(i)">
+              <div style="padding: 0 0.3rem; display: flex;">
+                <div class="grid-item">
+                  <div class="f-text f-weight f-left" style="font-weight: 500;">
+                    HADCRXO
+                  </div>
+                  <div class="f-left" style="display: flex;">
+                    <div style="line-height: 0.4rem ">
+                      10X
+                    </div>
+                    <div class="close-button" v-if="i === 1 || i === 3">
+                      锁仓
+                    </div>
+                  </div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text button">
+                    买涨
+                  </div>
+                  <div class="special-color">
+                    1000
+                  </div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text">
+                    21.970
+                  </div>
+                  <div>
+                    29.999
+                  </div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text f-weight red">
+                    39.520
+                  </div>
+                  <div class="f-weight red">
+                    -0.7%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="currentInquiryNum === i && buttonInquiryShow" class="button-show">
+              <div style="background: #F7931F;" @click="showDetailPopup(i)">
+                  <img src="/static/img/trade/detail.png" alt="">
+                  订单详情
+                </div>
+                <div style="background-color: #627eea;" @click="updateDetailPopup">
+                  <img src="/static/img/trade/update.png" alt="">
+                  更新
+                </div>
+                <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
+                  <img src="/static/img/trade/close.png" alt="">
+                  平仓
+                </div>
+            </div>
+            <template #right>
+              <div class="button-style">
+                <div style="background: #F7931F;" @click="showDetailPopup">
+                  <img src="/static/img/trade/detail.png" alt="">
+                  订单详情
+                </div>
+                <div style="background-color: #627eea;" @click="updateDetailPopup">
+                  <img src="/static/img/trade/update.png" alt="">
+                  更新
+                </div>
+                <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
+                  <img src="/static/img/trade/close.png" alt="">
+                  平仓
+                </div>
+              </div>
+            </template>
+          </SwipeCell>
+          
+        </div>
+    </div>
 
 
   </div>
@@ -130,16 +228,50 @@ import { ref } from "vue";
 import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky, Loading, button } from 'vant';
 import { defineEmits, onMounted } from 'vue';
 import OpenPosition from './OpenPosition.vue'
+import { useRouter, useRoute } from 'vue-router';
 
 const active =ref(1)
+
+const route = useRoute();
+if (route.query.type === 'date') {
+  active.value = 2
+}
+
 const emit = defineEmits(['update']);
 const buttonShow = ref(false)
+const buttonInquiryShow = ref(false)
 const currentNum = ref(null)
+const currentInquiryNum = ref(null)
 const loading = ref(false)
+
+const isFixed = ref(false);
+const stickyElement = ref(null);
+
+window.onscroll = () => { 
+  if (stickyElement.value) {
+    const scrollY = window.scrollY;
+    const stickyRect = stickyElement.value.getBoundingClientRect();
+    isFixed.value = true;
+    stickyElement.value.style.top = `0px`;
+  }
+}
+
+const router = useRouter();
+const goToDate = () =>{
+  router.push({ name: 'date' });
+}
 
 
 const showDetailPopup = () =>{
   emit('update');
+}
+
+const updateDetailPopup = ()=>{
+  emit('updateDetail');
+}
+
+const updateClosePositionPopup = ()=>{
+  emit('updateClosePosition')
 }
 
 onMounted(() => {
@@ -150,6 +282,9 @@ onMounted(() => {
 });
 
 const onChange = (val) => {
+  if (Object.keys(route.query).length > 0) {
+    router.push({ path: route.path, query: {} });
+  }
   active.value = val
   loading.value = true
 
@@ -167,10 +302,29 @@ const showButton = (i) =>{
   currentNum.value = i
 }
 
+const showInquiryButton = (i) =>{
+  if (currentInquiryNum.value === i) {
+    buttonInquiryShow.value = !buttonInquiryShow.value
+  } else {
+    buttonInquiryShow.value = true
+  }
+  currentInquiryNum.value = i
+}
+
 </script>
 
 <style lang="less">
 .opentrade {
+  .opentrade-sticky {
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+    transition: all 0.1s ease;
+  }
+  .fixed {
+    position: fixed;
+    width: 100%;
+  }
   .van-loading {
       left: 47%;
       margin-top: 2rem !important;
@@ -255,6 +409,42 @@ const showButton = (i) =>{
       margin-right: 0.08rem;
       vertical-align: middle;
     } 
+    span {
+      vertical-align: middle;
+      color: #0953FA;
+      font-size: 0.24rem;
+      font-style: normal;
+      font-weight: 400;
+    }
+  }
+  .date-risk-box {
+    position: absolute;
+    top: 0rem;
+    right: 1.6rem;
+    .date-risk-img {
+      width: 0.52rem !important;
+      height: 0.52rem !important;
+      margin-right: 0.08rem;
+      vertical-align: middle;
+    }
+    span {
+      vertical-align: middle;
+      color: #0953FA;
+      font-size: 0.24rem;
+      font-style: normal;
+      font-weight: 400;
+    }
+  }
+  .date-box {
+    position: absolute;
+    top: 0rem;
+    right: 0.3rem;
+    .date-img {
+      width: 0.52rem !important;
+      height: 0.52rem !important;
+      margin-right: 0.08rem;
+      vertical-align: middle;
+    }
     span {
       vertical-align: middle;
       color: #0953FA;
@@ -367,8 +557,17 @@ const showButton = (i) =>{
       }
     }
   }
-  .opentrade-sticky {
+  .opentrade-sticky-wrapper {
     position: relative;
+    width: 100%;
+  }
+  .opentrade-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
   }
 }
 </style>

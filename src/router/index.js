@@ -108,6 +108,26 @@ const routes = [
     }
   },
   {
+    // 日期查询
+    path: "/date",
+    name: "date",
+    component: () => import("../views/trade/Deta.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
+    // IPO 详情
+    path: "/ipodetail",
+    name: "ipodetail",
+    component: () => import("../views/trade/IPODetail.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
     // 找不到路由时
     path: "/:pathMatch(.*)*",
     redirect: "/",

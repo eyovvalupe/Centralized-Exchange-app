@@ -1,5 +1,5 @@
 <template>
-  <router-view v-slot="{ Component }">
+  <router-view v-slot="{ Component }" :key="$route.fullPath">
     <Loading v-show="pageLoading" size="48"
       style="position: fixed;top:30%;left:50%;transform: translateX(-50%) translateY(-50%);" :loading="pageLoading" />
     <div class="app_scroll" v-show="!pageLoading">
@@ -13,6 +13,9 @@
   </router-view>
 
   <BottomTabBar v-if="showBottom" />
+
+  <DateBottom v-if="showDateBottom"/>
+
 </template>
 
 <script setup>
@@ -20,6 +23,7 @@ import { ref, defineAsyncComponent, computed } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import Loading from "@/components/Loaidng.vue";
+import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
 
 const BottomTabBar = defineAsyncComponent(() =>
@@ -45,6 +49,11 @@ const showBottom = computed(() => {
   return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules"].includes(route.name) && !pageLoading.value && !fullWindow.value;
 });
 
+const showDateBottom = computed(() => {
+  return ["date"].includes(route.name);
+});
+
+
 // 预加载 tab 页面
 const pageLoading = computed(() => store.state.pageLoading)
 store.commit('setPageLoading', true)
@@ -61,7 +70,7 @@ Promise.all([
 })
 
 const boundFunc = () => {
-  const reboundPage = ['user', 'trade']
+  const reboundPage = ['user', 'trade', 'date']
   // 回弹效果
   let startY = 0
   const maxMove = 200
@@ -193,5 +202,13 @@ const transitionName = computed(() => store.state.transitionName || '')
 
 .opacity-leave-to {
   opacity: 0;
+}
+
+.date-bottom{
+  width: 100%;
+  height: 71px;
+  background-color: #f7f7f7;
+  position: fixed;
+  bottom: 0;
 }
 </style>

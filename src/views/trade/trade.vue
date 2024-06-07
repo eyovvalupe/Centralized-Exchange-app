@@ -14,12 +14,12 @@
         <Tab title="股票">
         </Tab>
         <Tab title="IPO">
-          IPO
         </Tab>
       </Tabs>
 
 
-      <MarketStock @update="handleUpdate" v-if="active === 0"/>
+      <MarketStock @update="handleUpdate" @updateDetail="handleUpdateDetail" @updateClosePosition="handleClosePosition" v-if="active === 0"/>
+      <IPOStock v-if="active === 1"/>
 
     <Popup v-model:show="show" position="top" class="trade-popup">
       <div class="popup-title">
@@ -62,6 +62,27 @@
     <OrderDetail/>
   </Popup>
 
+
+  <Popup
+      v-model:show="showUpdateBottom"
+      position="bottom"
+      closeable
+      class="detail-popup"
+      style="height: 90%;"
+    >
+    <OrderUpdate/>
+  </Popup>
+
+  <Popup
+      v-model:show="showClosePositionBottom"
+      position="bottom"
+      closeable
+      class="detail-popup"
+      style="height: 90%;"
+    >
+    <OrderClosePosition/>
+  </Popup>
+
   </div>
 </template>
 
@@ -70,17 +91,36 @@
   import { Tab, Tabs, Popup, Sticky } from 'vant';
   import MarketStock from './MarketStock.vue'
   import OrderDetail from './OrderDetail.vue'
+  import OrderUpdate from './OrderUpdate.vue'
+  import IPOStock from './IPOStock.vue'
+  import OrderClosePosition from './OrderClosePosition.vue'
+  import { useRouter, useRoute } from 'vue-router';
 
   const active =ref(0)
+  const route = useRoute();
+  const router = useRouter();
+  if (route.query.type === 'ipodetail') {
+    active.value = 1
+  }
+
   const show = ref(false)
   const showBottom = ref(false)
+  const showUpdateBottom = ref(false)
+  const showClosePositionBottom = ref(false)
 
   const handleUpdate = (data) => {
-    showDetailPopup()
+    //订单详情
+    showBottom.value = true;
   };
 
-  const showDetailPopup = () => {
-    showBottom.value = true;
+  const handleUpdateDetail = (data) => {
+    //更新
+    showUpdateBottom.value = true
+  };
+
+  const handleClosePosition = (data)=>{
+    //平仓
+    showClosePositionBottom.value = true
   }
 
   const showPopup = () => {
@@ -88,6 +128,9 @@
   }
 
   const onChange = (val) => {
+    if (Object.keys(route.query).length > 0) {
+      router.push({ path: route.path, query: {} });
+    }
     active.value = val
   }
 
@@ -248,7 +291,10 @@
   }
 
   .detail-popup {
-    border-radius: 0.36rem;
+    border-top-left-radius: 0.36rem;
+    border-top-right-radius: 0.36rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     padding-bottom: 1.5rem;
   }
 

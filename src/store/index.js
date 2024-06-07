@@ -6,6 +6,7 @@ import {
 } from "@/api/api";
 import router from "@/router/index";
 import market from './market'
+import trade from './trade'
 
 export default createStore({
   state: {
@@ -16,6 +17,7 @@ export default createStore({
     token: "",
     userInfo: {}, // 用户详情
     ...market.state,
+    ...trade.state
   },
   mutations: {
     setFullscreen(state, data) {
@@ -37,6 +39,7 @@ export default createStore({
       state.userInfo = data;
     },
     ...market.mutations,
+    ...trade.mutations
   },
   actions: {
     reset({ commit }) {
