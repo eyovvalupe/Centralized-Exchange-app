@@ -1,7 +1,7 @@
 <!-- 底部导航 -->
 <template>
     <div class="max-width  bottom_nav">
-        <div @touchstart="handleClick(item)" class="ripple_button bottom_nav_item"
+        <div @touchstart="handleClick(item)" @click="handleClick(item)" class="ripple_button bottom_nav_item"
             :class="[checkActive(item) ? 'bottom_nav_active' : '']" v-for="(item, i) in navs" :key="i">
             <div class="bottom_nav_icon">
                 <img v-if="!checkActive(item)" :src="item.icon" :alt="item.name">
