@@ -14,8 +14,8 @@
         </div>
 
         <!-- Tabs -->
-        <Tabs class="tabs" @change="changeTab" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
-            shrink>
+        <Tabs class="tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated
+            :color="'#014CFA'" shrink>
             <Tab :title="'自选'">
                 <Optional ref="OptionalRef" />
             </Tab>
@@ -34,13 +34,14 @@
 
 <script setup>
 import { Tab, Tabs } from 'vant';
-import { ref, defineAsyncComponent } from "vue"
+import { ref, onDeactivated, computed } from "vue"
 import router from "@/router"
 import Optional from "./components/Optional.vue"
 import Stock from "./components/Stock.vue"
 import Financial from "./components/Financial.vue"
 import IPO from "./components/IPO.vue"
 import store from "@/store"
+import { useSocket } from '@/utils/ws'
 
 const active = ref(1)
 const OptionalRef = ref()
@@ -54,12 +55,24 @@ const changeTab = key => {
 
 
 // 预加载页面
+const pageLoading = computed(() => store.state.pageLoading)
 store.commit('setPageLoading', true)
 Promise.all([
     import('@/views/Market/MarketInfo.vue'),
     import('@/views/Market/Search.vue'),
 ]).finally(() => {
     store.commit('setPageLoading', false)
+})
+
+
+const { startSocket } = useSocket()
+onDeactivated(() => {
+    // 取消订阅
+    const socket = startSocket(() => {
+        socket && socket.emit('realtime', '') // 价格变化
+        socket && socket.emit('snapshot', '') // 快照数据
+        console.error('取消订阅')
+    })
 })
 </script>
 

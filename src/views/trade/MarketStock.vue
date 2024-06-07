@@ -1,122 +1,122 @@
 <template>
-  <div class="opentrade">   
+  <div class="opentrade">
 
     <div>
       <!-- <div style="position: fixed; top: 0;width: 100%;"> -->
-        <div class="opentrade-sticky">
+      <div class="opentrade-sticky">
         <img src="/static/img/trade/open.png" alt="" class="open-img">
         <div style="padding-left: 0.7rem; padding-right: 0.3rem;background-color: white;">
           <Tabs class="tabs" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓">
             </Tab>
-            <Tab title="持仓">          
+            <Tab title="持仓">
             </Tab>
             <Tab title="查询">
             </Tab>
           </Tabs>
         </div>
-          
+
         <div class="risk-box">
           <img src="/static/img/trade/risk.png" alt="" class="risk-img">
           <span>风险线</span>
-        </div> 
+        </div>
       </div>
-    <!-- </div> -->
+      <!-- </div> -->
     </div>
 
     <Loading v-if="loading"></Loading>
 
     <!-- 持仓 -->
-    <div v-if="active === 1  && !loading">
+    <div v-if="active === 1 && !loading">
       <div class="header-grid">
-          <div style="padding: 0 0.3rem; display: flex;" class="bottom-grid">
-            <div class="header-f-left">股票/状态</div>
-            <div>开仓/可售</div>
-            <div>现价/成本</div>
-            <div class="header-f-right">盈亏/盈亏比</div>
-          </div>
+        <div style="padding: 0 0.3rem; display: flex;" class="bottom-grid">
+          <div class="header-f-left">股票/状态</div>
+          <div>开仓/可售</div>
+          <div>现价/成本</div>
+          <div class="header-f-right">盈亏/盈亏比</div>
         </div>
+      </div>
 
-        <div v-for="i in 12" :key="i">
-          <SwipeCell>
-            <div class="content-grid grid-item-hover" @click="showButton(i)">
-              <div style="padding: 0 0.3rem; display: flex;">
-                <div class="grid-item">
-                  <div class="f-text f-weight f-left" style="font-weight: 500;">
-                    HADCRXO
-                  </div>
-                  <div class="f-left" style="display: flex;">
-                    <div style="line-height: 0.4rem ">
-                      10X
-                    </div>
-                    <div class="close-button" v-if="i === 1 || i === 3">
-                      锁仓
-                    </div>
-                  </div>
+      <div v-for="i in 12" :key="i">
+        <SwipeCell>
+          <div class="content-grid grid-item-hover" @click="showButton(i)">
+            <div style="padding: 0 0.3rem; display: flex;">
+              <div class="grid-item">
+                <div class="f-text f-weight f-left" style="font-weight: 500;">
+                  HADCRXO
                 </div>
-                <div class="grid-item">
-                  <div class="f-text button">
-                    买涨
+                <div class="f-left" style="display: flex;">
+                  <div style="line-height: 0.4rem ">
+                    10X
                   </div>
-                  <div class="special-color">
-                    1000
-                  </div>
-                </div>
-                <div class="grid-item">
-                  <div class="f-text">
-                    21.970
-                  </div>
-                  <div>
-                    29.999
-                  </div>
-                </div>
-                <div class="grid-item">
-                  <div class="f-text f-weight red">
-                    39.520
-                  </div>
-                  <div class="f-weight red">
-                    -0.7%
+                  <div class="close-button" v-if="i === 1 || i === 3">
+                    锁仓
                   </div>
                 </div>
               </div>
-            </div>
-            <div v-if="currentNum === i && buttonShow" class="button-show">
-              <div style="background: #F7931F;" @click="showDetailPopup(i)">
-                  <img src="/static/img/trade/detail.png" alt="">
-                  订单详情
+              <div class="grid-item">
+                <div class="f-text button">
+                  买涨
                 </div>
-                <div style="background-color: #627eea;">
-                  <img src="/static/img/trade/update.png" alt="">
-                  更新
-                </div>
-                <div style="background-color: #014cfa;">
-                  <img src="/static/img/trade/close.png" alt="">
-                  平仓
-                </div>
-            </div>
-            <template #right>
-              <div class="button-style">
-                <div style="background: #F7931F;" @click="showDetailPopup">
-                  <img src="/static/img/trade/detail.png" alt="">
-                  订单详情
-                </div>
-                <div style="background-color: #627eea;">
-                  <img src="/static/img/trade/update.png" alt="">
-                  更新
-                </div>
-                <div style="background-color: #014cfa;">
-                  <img src="/static/img/trade/close.png" alt="">
-                  平仓
+                <div class="special-color">
+                  1000
                 </div>
               </div>
-            </template>
-          </SwipeCell>
-          
-        </div>
+              <div class="grid-item">
+                <div class="f-text">
+                  21.970
+                </div>
+                <div>
+                  29.999
+                </div>
+              </div>
+              <div class="grid-item">
+                <div class="f-text f-weight red">
+                  39.520
+                </div>
+                <div class="f-weight red">
+                  -0.7%
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-if="currentNum === i && buttonShow" class="button-show">
+            <div style="background: #F7931F;" @click="showDetailPopup(i)">
+              <img src="/static/img/trade/detail.png" alt="">
+              订单详情
+            </div>
+            <div style="background-color: #627eea;">
+              <img src="/static/img/trade/update.png" alt="">
+              更新
+            </div>
+            <div style="background-color: #014cfa;">
+              <img src="/static/img/trade/close.png" alt="">
+              平仓
+            </div>
+          </div>
+          <template #right>
+            <div class="button-style">
+              <div style="background: #F7931F;" @click="showDetailPopup">
+                <img src="/static/img/trade/detail.png" alt="">
+                订单详情
+              </div>
+              <div style="background-color: #627eea;">
+                <img src="/static/img/trade/update.png" alt="">
+                更新
+              </div>
+              <div style="background-color: #014cfa;">
+                <img src="/static/img/trade/close.png" alt="">
+                平仓
+              </div>
+            </div>
+          </template>
+        </SwipeCell>
+
+      </div>
     </div>
 
     <!-- 开仓 -->
-    <OpenPosition v-if="active === 0 && !loading"/>
+    <OpenPosition v-if="active === 0 && !loading" />
 
     <!-- 查询 -->
     <div v-if="active === 2 && !loading"></div>
@@ -127,18 +127,18 @@
 
 <script setup>
 import { ref } from "vue";
-import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky, Loading, button } from 'vant';
+import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky, Loading, Button } from 'vant';
 import { defineEmits, onMounted } from 'vue';
 import OpenPosition from './OpenPosition.vue'
 
-const active =ref(1)
+const active = ref(1)
 const emit = defineEmits(['update']);
 const buttonShow = ref(false)
 const currentNum = ref(null)
 const loading = ref(false)
 
 
-const showDetailPopup = () =>{
+const showDetailPopup = () => {
   emit('update');
 }
 
@@ -154,11 +154,11 @@ const onChange = (val) => {
   loading.value = true
 
   setTimeout(() => {
-      loading.value = false;
+    loading.value = false;
   }, 1000);
 }
 
-const showButton = (i) =>{
+const showButton = (i) => {
   if (currentNum.value === i) {
     buttonShow.value = !buttonShow.value
   } else {
@@ -172,13 +172,15 @@ const showButton = (i) =>{
 <style lang="less">
 .opentrade {
   .van-loading {
-      left: 47%;
-      margin-top: 2rem !important;
+    left: 47%;
+    margin-top: 2rem !important;
   }
+
   .header-grid {
     padding-bottom: 0.12rem;
     background: white;
     border-bottom: 0.02rem solid #e8e8e8;
+
     .bottom-grid div {
       color: #9EA3AE;
       font-size: 0.28rem;
@@ -189,26 +191,33 @@ const showButton = (i) =>{
       text-align: center;
     }
   }
+
   .header-f-left {
     text-align: left !important;
     width: 100%;
   }
+
   .header-f-right {
     text-align: right !important;
     width: 100%;
   }
+
   .grid-item-hover {
     background-color: white;
   }
+
   .grid-item-hover :hover {
     background: #E5E5E5 !important;
   }
+
   .content-grid {
     border-bottom: 0.02rem solid #e8e8e8;
+
     .grid-item {
       padding: 0.2rem 0;
       width: 25%;
     }
+
     div {
       color: #000;
       text-align: center;
@@ -218,13 +227,16 @@ const showButton = (i) =>{
       font-weight: 400;
       line-height: 0.3rem;
     }
+
     .f-text {
       margin-bottom: 0.1rem;
     }
+
     .f-left {
       text-align: left;
       width: 100%;
     }
+
     .button {
       height: 0.4rem;
       color: #18B762;
@@ -234,27 +246,33 @@ const showButton = (i) =>{
       margin: auto;
       margin-bottom: 0.08rem;
     }
+
     .f-weight {
       font-weight: 600;
       font-size: 0.32rem;
     }
+
     .special-color {
       color: #014cfa;
     }
+
     .red {
       color: #e8503a;
     }
   }
+
   .risk-box {
     position: absolute;
     top: 0rem;
     right: 0.3rem;
+
     .risk-img {
       width: 0.52rem !important;
       height: 0.52rem !important;
       margin-right: 0.08rem;
       vertical-align: middle;
-    } 
+    }
+
     span {
       vertical-align: middle;
       color: #0953FA;
@@ -263,8 +281,9 @@ const showButton = (i) =>{
       font-weight: 400;
     }
   }
+
   .button-style {
-    div{
+    div {
       width: 1.22rem;
       height: 1.28rem;
       flex-shrink: 0;
@@ -274,6 +293,7 @@ const showButton = (i) =>{
       font-weight: 500;
       text-align: center;
       display: inline-block;
+
       img {
         width: 0.4rem !important;
         height: 0.4rem !important;
@@ -284,55 +304,60 @@ const showButton = (i) =>{
       }
     }
   }
+
   .tabs {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 
-      .van-tabs__nav {
-        position: absolute;
+    .van-tabs__nav {
+      position: absolute;
+      width: 100%;
+      left: 0px;
+      height: 0.88rem;
+
+      &::after {
+        content: '';
         width: 100%;
-        left: 0px;
-        height: 0.88rem;
+        height: 0.02rem;
+        background-color: #3B82F6;
+        position: absolute;
+        bottom: 0.32rem;
+        left: 0;
+        opacity: 0.3;
+      }
+    }
 
-          &::after {
-              content: '';
-              width: 100%;
-              height: 0.02rem;
-              background-color: #3B82F6;
-              position: absolute;
-              bottom: 0.32rem;
-              left: 0;
-              opacity: 0.3;
-          }
-      }
+    .van-tab {
+      margin-left: 0.36rem;
+      font-size: 0.28rem;
+    }
 
-      .van-tab {
-          margin-left: 0.36rem;
-          font-size: 0.28rem;
-      }
-      .van-tab:first-of-type {
-        margin-left: 0.15rem;
-      }
+    .van-tab:first-of-type {
+      margin-left: 0.15rem;
+    }
 
-      .van-tabs__content {
-          flex: 1;
+    .van-tabs__content {
+      flex: 1;
 
-          .van-swipe-item {
-              padding-bottom: 0.2rem;
-          }
+      .van-swipe-item {
+        padding-bottom: 0.2rem;
       }
+    }
 
-      .van-tabs__wrap {
-        height: 0.88rem;
-      }
-      .van-tabs__line {
-        bottom: 0.3rem;
-      }
-      .van-tabs__track {
-        height: 0;
-      } 
+    .van-tabs__wrap {
+      height: 0.88rem;
+    }
+
+    .van-tabs__line {
+      bottom: 0.3rem;
+    }
+
+    .van-tabs__track {
+      height: 0;
+    }
   }
+
   .close-button {
     margin-left: 0.26rem;
     background-color: #fdf8ef;
@@ -346,8 +371,10 @@ const showButton = (i) =>{
     line-height: 0.4rem !important;
     border-radius: 0 0.14rem 0 0.14rem;
   }
+
   .button-show {
     display: flex;
+
     div {
       flex: 1;
       height: 1.12rem !important;
@@ -358,6 +385,7 @@ const showButton = (i) =>{
       font-weight: 500;
       line-height: 0.3rem;
       padding-left: 0.32rem;
+
       img {
         height: 0.4rem !important;
         margin-top: 0.22rem;
@@ -367,6 +395,7 @@ const showButton = (i) =>{
       }
     }
   }
+
   .opentrade-sticky {
     position: relative;
   }

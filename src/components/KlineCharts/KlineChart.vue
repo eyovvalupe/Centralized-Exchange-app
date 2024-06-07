@@ -94,7 +94,7 @@ const initData = async () => { // 初始化数据
             chart.loadMore(loadMoreData)
             setTimeout(() => {
                 chart.resize()
-            }, 1000)
+            }, 100)
             // 订阅新数据
             subs()
         } else {
@@ -107,7 +107,7 @@ const subs = () => { // 订阅新数据
         const params = { symbols: props.symbol, period: currPeriod.value }
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
-            if (res.code == 200 && res.symbols == params.symbols && res.period == params.period) {
+            if (res.code == 200 && res.symbols == props.symbols && res.period == props.period) {
                 const item = res.data[0]
                 chart.updateData({
                     ...item,
@@ -187,7 +187,7 @@ const getData = (params) => { // 获取数据
 const resetSize = () => {
     setTimeout(() => {
         chart.resize()
-    }, 600)
+    }, 500)
 }
 
 

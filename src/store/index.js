@@ -71,6 +71,7 @@ export default createStore({
           .catch(() => resolve(false));
       });
     },
+    ...market.actions,
   },
   plugins: [createPersistedState()],
 });
