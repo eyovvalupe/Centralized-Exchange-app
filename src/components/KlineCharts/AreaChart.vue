@@ -15,8 +15,8 @@
 </template>
 
 <script setup>
-import { onMounted, defineProps, computed, ref } from "vue"
-import { init } from 'klinecharts'
+import { onMounted, defineProps, computed, ref, onBeforeUnmount, watch } from "vue"
+import { init, dispose } from 'klinecharts'
 import { klineConfig } from './kline.conf';
 import { _time } from "@/api/api"
 import { useSocket } from '@/utils/ws'
@@ -32,77 +32,91 @@ const props = defineProps({
     }
 })
 const symbol = computed(() => props.symbol || '')
+watch(symbol, val => {
+    setTimeout(() => {
+        initData()
+    }, 0)
+})
 let chart = ''
 
 onMounted(() => {
-    chart = init('chat_area')
-    chart.setStyles(klineConfig)
-    chart?.setScrollEnabled(true) // 是否滚动
-    chart?.setOffsetRightDistance(props.showY ? 50 : 0) // 设置右边距
-    chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
-    chart?.setMaxOffsetRightDistance(props.showY ? 50 : 0) // 设置右边最大空出的边距
-    const selfStyle = {
-        grid: {
-            vertical: {
-                show: false
-            }
-        },
-        xAxis: {
-            show: props.showY,
-            size: 'auto'
-        },
-        yAxis: {
-            show: props.showY
-        },
-        candle: {
-            type: 'area',
-            area: {
-                point: {
-                    show: props.showY
+    if (symbol.value) {
+        chart = init('chat_area')
+        chart.setStyles(klineConfig)
+        chart?.setScrollEnabled(true) // 是否滚动
+        chart?.setOffsetRightDistance(props.showY ? 50 : 0) // 设置右边距
+        chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
+        chart?.setMaxOffsetRightDistance(props.showY ? 50 : 0) // 设置右边最大空出的边距
+        const selfStyle = {
+            grid: {
+                vertical: {
+                    show: false
                 }
             },
-            priceMark: {
+            xAxis: {
+                show: props.showY,
+                size: 'auto'
+            },
+            yAxis: {
                 show: props.showY
             },
-            tooltip: {
-                offsetLeft: 2,
-                offsetTop: 3,
-                offsetRight: 2,
-                offsetBottom: 3,
-                showRule: 'follow_cross', /// ,follow_cross
-                showType: 'rect',
-                custom: [
-                    { title: 'time', value: '{time}' },
-                    // { title: 'open', value: '{open}' },
-                    // { title: 'high', value: '{high}' },
-                    // { title: 'low', value: '{low}' },
-                    // { title: 'close', value: '{close}' },
-                    { title: 'price', value: '{open}' }
-                ],
-                text: {
-                    size: 10,
-                    family: 'Helvetica Neue',
-                    weight: 'normal',
-                    color: '#121826',
-                    marginLeft: 8,
-                    marginTop: 4,
-                    marginRight: 8,
-                    marginBottom: 4
+            candle: {
+                type: 'area',
+                area: {
+                    point: {
+                        show: props.showY
+                    }
                 },
-            }
-        },
+                priceMark: {
+                    show: props.showY
+                },
+                tooltip: {
+                    offsetLeft: 2,
+                    offsetTop: 3,
+                    offsetRight: 2,
+                    offsetBottom: 3,
+                    showRule: 'follow_cross', /// ,follow_cross
+                    showType: 'rect',
+                    custom: [
+                        { title: 'time', value: '{time}' },
+                        // { title: 'open', value: '{open}' },
+                        // { title: 'high', value: '{high}' },
+                        // { title: 'low', value: '{low}' },
+                        // { title: 'close', value: '{close}' },
+                        { title: 'price', value: '{open}' }
+                    ],
+                    text: {
+                        size: 10,
+                        family: 'Helvetica Neue',
+                        weight: 'normal',
+                        color: '#121826',
+                        marginLeft: 8,
+                        marginTop: 4,
+                        marginRight: 8,
+                        marginBottom: 4
+                    },
+                }
+            },
+        }
+        if (props.showY) {
+            delete selfStyle.yAxis
+        }
+        chart.setStyles(selfStyle)
     }
-    if (props.showY) {
-        delete selfStyle.yAxis
-    }
-    chart.setStyles(selfStyle)
     initData()
 })
+onBeforeUnmount(() => {
+    dispose('chat_area')
+    socket && socket.emit('time', '') // 取消订阅
+})
 
-const loading = ref(false)
+
+const loading = ref(true)
+let timeout = null
 const initData = async () => {
     const query = symbol.value
     loading.value = true
+    if (timeout) clearTimeout(timeout)
     if (!symbol.value) return
     const datas = await getData({ symbol: query })
     loading.value = false
@@ -110,11 +124,9 @@ const initData = async () => {
         if (datas && datas.length) {
             chart.applyNewData(datas) // 重设图表数据
             subs()
-            setTimeout(() => {
+            timeout = setTimeout(() => {
                 chart.resize()
-            }, 1000)
-            // 订阅新数据
-            // subs()
+            }, 300)
         } else {
             console.error('没有数据')
         }
@@ -126,7 +138,7 @@ const subs = () => { // 订阅新数据
         const query = props.symbol
         socket && socket.emit('time', query) // 分时
         socket && socket.on('time', res => {
-            if (res.code == 200 && res.symbols == query) {
+            if (res.code == 200 && res.symbols == props.symbol) {
                 const item = res.data[0]
                 chart.updateData({
                     ...item,

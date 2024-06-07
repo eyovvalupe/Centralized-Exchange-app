@@ -72,4 +72,11 @@ export const _time = (data = {}) => {
   });
 };
 
+// 获取市场排序数据
+export const _sort = (data = {}) => {
+  return http.post(`/anon/v1/market/stock/sort`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+
 export const memberInfo = () => { }

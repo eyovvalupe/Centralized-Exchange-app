@@ -225,7 +225,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky, Loading, button } from 'vant';
+import { Tab, Tabs, Grid, GridItem, SwipeCell, Sticky, Loading, Button } from 'vant';
 import { defineEmits, onMounted } from 'vue';
 import OpenPosition from './OpenPosition.vue'
 import { useRouter, useRoute } from 'vue-router';

@@ -22,7 +22,7 @@
                             }}%
                         </div>
                         <div v-else class="item_num" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{
-                            (props.item.price).toFixed(2) }}
+                            props.item.ratio }}
                         </div>
                     </transition>
                     <div v-else class="item_percent nodata_percent">--</div>
