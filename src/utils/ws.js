@@ -5,12 +5,12 @@ let socket = null;
 export const useSocket = () => {
   // const socket = ref(null);
   /**
-   * 启动socket
+   * 启动 socket
    * @param fn 回调函数
    * @returns
    */
   function startSocket(fn) {
-    // 启动socket
+    // 启动 socket
     if (!socket) {
       const WS_API = BASE_SOCKET + "/api";
       socket = io(WS_API, {
@@ -34,7 +34,7 @@ export const useSocket = () => {
         console.log("socket disconnected...");
       });
     } else {
-      setTimeout(() => { // 先返回socket 再执行
+      setTimeout(() => { // 先返回 socket 再执行
         fn && fn()
       })
     }

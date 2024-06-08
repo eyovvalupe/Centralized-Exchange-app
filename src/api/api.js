@@ -58,7 +58,7 @@ export const _profile = (data = {}) => {
   });
 };
 
-// 获取K线历史数据
+// 获取 K 线历史数据
 export const _kline = (data = {}) => {
   return http.get(`/anon/v1/ticker/kline?symbol=${data.symbol}&period=${data.period}&page=${data.page}`, data, {
     custom: { auth: false, toast: true },
@@ -76,6 +76,20 @@ export const _time = (data = {}) => {
 export const _sort = (data = {}) => {
   return http.post(`/anon/v1/market/stock/sort`, data, {
     custom: { auth: false, toast: true },
+  });
+};
+
+// 订单列表
+export const _stocksList = (data = {}) => {
+  return http.post(`/authc/v1/stocks/list`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
+//交易参数
+export const _stocksPara = (data = {}) => {
+  return http.post(`/authc/v1/stocks/para`, data, {
+    custom: { auth: true, toast: true },
   });
 };
 

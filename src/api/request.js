@@ -22,11 +22,12 @@ instance.interceptors.request.use(
       const token = store.state.token;
       if (token) {
         config.headers.token = token;
+        config.headers.auth = token;
       } else {
         router.replace({
           name: 'login'
         })
-        throw new Error("当前token已失效,请重新登录");
+        throw new Error("当前 token 已失效，请重新登录");
       }
     }
     config.headers["Content-Type"] = "application/json"

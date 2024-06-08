@@ -186,7 +186,7 @@
     }
 
     .van-slider__button-wrapper {
-      z-index: 99999!important;
+      z-index: 999!important;
     }
 
     .risk-line {
@@ -245,14 +245,12 @@
       border-radius: 0.16rem;
       border: 0.02rem solid #eceff3;
     }
-    .van-number-keyboard {
-      margin-bottom: 1rem;
-    }
     @media (min-width: 751px) {
       .van-number-keyboard {
         max-width: 375px;
         position: absolute;
-        padding-bottom: 3.2rem !important;
+        left: 50%;
+        transform: translateX(-50%);
       }
     }
   }
