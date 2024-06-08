@@ -17,17 +17,15 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     config.sslVerify = false;
-    // config.headers["deviceId"] = store.state.deviceId;
-    if (config?.custom?.auth) {
-      const token = store.state.token;
-      if (token) {
-        config.headers.token = token;
-      } else {
-        router.replace({
-          name: 'login'
-        })
-        throw new Error("当前token已失效,请重新登录");
-      }
+    const token = store.state.token;
+    if (token) {
+      config.headers.auth = token;
+    }
+    if (config?.custom?.auth && !token) {
+      router.replace({
+        name: 'login'
+      })
+      throw new Error("当前token已失效,请重新登录");
     }
     config.headers["Content-Type"] = "application/json"
     if (config && config.custom && config.custom["Content-Type"]) {
@@ -47,11 +45,11 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   function (response) {
+    console.log(`--- 请求 ${response.config.url} 返回 ---`, response.data);
     let res = response.data;
     const custom = response.config?.custom;
     if (res.code != 200) {
       if (res.code == 401) {
-        console.error(location.href)
         if (
           location.href.includes("/login")
         ) {

@@ -5,26 +5,21 @@
         <div class="title">市场</div>
         <!-- 搜索 -->
         <div class="search_box" @click="router.push({ name: 'search' })">
-            <div class="search">
-                <div class="search_icon">
-                    <img src="/static/img/common/search.png" alt="🔍">
-                </div>
-                <span>搜索</span>
-            </div>
+            <img src="/static/img/common/search_box.png" alt="🔍">
         </div>
 
         <!-- Tabs -->
         <Tabs class="tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated
             :color="'#014CFA'" shrink>
-            <Tab :title="'自选'">
-                <Optional ref="OptionalRef" />
+            <Tab :title="'自选'" class="optional">
+                <Optional v-if="activated" ref="OptionalRef" />
             </Tab>
-            <Tab :title="'股票'">
+            <!-- <Tab :title="'股票'">
                 <Stock />
             </Tab>
             <Tab :title="'理财'">
                 <Financial />
-            </Tab>
+            </Tab> -->
             <Tab :title="'IPO'">
                 <IPO />
             </Tab>
@@ -34,7 +29,7 @@
 
 <script setup>
 import { Tab, Tabs } from 'vant';
-import { ref, onDeactivated, computed } from "vue"
+import { ref, onDeactivated, computed, onActivated } from "vue"
 import router from "@/router"
 import Optional from "./components/Optional.vue"
 import Stock from "./components/Stock.vue"
@@ -43,16 +38,16 @@ import IPO from "./components/IPO.vue"
 import store from "@/store"
 import { useSocket } from '@/utils/ws'
 
-const active = ref(1)
+const active = ref(0)
 const OptionalRef = ref()
 const changeTab = key => {
+    active.value = key
     switch (key) {
         case 0:
             OptionalRef.value.init()
             break
     }
 }
-
 
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading)
@@ -62,15 +57,31 @@ Promise.all([
     import('@/views/Market/Search.vue'),
 ]).finally(() => {
     store.commit('setPageLoading', false)
+
+    setTimeout(() => {
+        changeTab(0)
+    }, 0)
 })
 
 
 const { startSocket } = useSocket()
+const activated = ref(false)
+onActivated(() => {
+    activated.value = true
+    setTimeout(() => {
+        if (active.value == 0) {
+            OptionalRef.value && OptionalRef.value.init()
+        }
+    }, 500)
+})
 onDeactivated(() => {
+    activated.value = false
     // 取消订阅
     const socket = startSocket(() => {
         socket && socket.emit('realtime', '') // 价格变化
         socket && socket.emit('snapshot', '') // 快照数据
+        socket && socket.off('realtime')
+        socket && socket.off('snapshot')
         console.error('取消订阅')
     })
 })
@@ -92,26 +103,12 @@ onDeactivated(() => {
     }
 
     .search_box {
-        padding: 0.28rem 0.3rem 0.48rem 0.3rem;
-
-        .search {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0 0.32rem;
-            height: 0.8rem;
-            background-color: #F4F5F7;
-            color: #9EA3AE;
-            font-size: 0.32rem;
-            font-weight: 400;
-            border-radius: 0.2rem;
-
-            .search_icon {
-                width: 0.48rem;
-                height: 0.48rem;
-                margin-right: 0.12rem;
-            }
-        }
+        position: absolute;
+        z-index: 9;
+        top: 0.2rem;
+        right: 0.24rem;
+        width: 0.8rem;
+        height: 0.8rem;
     }
 
     .tabs {
@@ -119,6 +116,10 @@ onDeactivated(() => {
         overflow: hidden;
         display: flex;
         flex-direction: column;
+
+        :deep(.van-tabs__wrap) {
+            padding: 0 0.32rem;
+        }
 
         :deep(.van-tabs__nav) {
             position: relative;

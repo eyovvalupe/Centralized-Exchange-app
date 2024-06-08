@@ -137,8 +137,9 @@ const subs = () => { // 订阅新数据
     socket = startSocket(() => {
         const query = props.symbol
         socket && socket.emit('time', query) // 分时
+        socket && socket.off('time')
         socket && socket.on('time', res => {
-            if (res.code == 200 && res.symbols == props.symbol) {
+            if (res.code == 200 && res.symbol == props.symbol) {
                 const item = res.data[0]
                 chart.updateData({
                     ...item,

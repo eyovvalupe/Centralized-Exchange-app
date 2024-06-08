@@ -79,4 +79,18 @@ export const _sort = (data = {}) => {
   });
 };
 
+// 添加自选
+export const _add = (data = {}) => {
+  return http.post(`/anon/v1/market/watchlist/add`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
+// 移除自选
+export const _del = (data = {}) => {
+  return http.post(`/anon/v1/market/watchlist/del`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
 export const memberInfo = () => { }

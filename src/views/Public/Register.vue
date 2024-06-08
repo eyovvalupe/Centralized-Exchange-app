@@ -107,9 +107,12 @@ const submit = () => {
   if (loading.value) return
   loading.value = true
   _login(form.value).then(res => {
-    store.commit('setToken', res.data.auth)
-    store.commit('setUserInfo', res.data)
+    store.dispatch('reset')
     showNotify({ type: 'success', message: '登录成功' })
+    setTimeout(() => {
+      store.commit('setToken', res.data.auth)
+      store.commit('setUserInfo', res.data)
+    }, 100)
     setTimeout(() => {
       router.push({
         name: 'user'

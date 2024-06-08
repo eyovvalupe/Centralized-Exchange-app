@@ -2,29 +2,29 @@
 <template>
   <div class="page page_home">
     <!-- banner -->
-    <Banner class="home_banner" />
+    <Banner v-if="activated" :isFixed="isFixed" class="home_banner" />
 
     <!-- 首页推荐数据 -->
-    <Recommend @ready="readyRecommendData" class="home_recommend" />
+    <Recommend v-if="activated" :isFixed="isFixed" @ready="readyRecommendData" class="home_recommend" />
 
     <!-- Tabs -->
-    <Tabs v-if="!pageLoading" sticky class="tabs" @change="changeTab" v-model:active="active" :swipeable="false"
-      animated :color="'#014CFA'" shrink>
+    <Tabs @scroll="tabScroll" v-if="!pageLoading" sticky class="tabs" @change="changeTab" v-model:active="active"
+      :swipeable="false" animated :color="'#014CFA'" shrink>
       <Tab :title="'活跃'">
-        <StockTable :key="'vol'" :loading="loading" :list="marketVolumeList" />
+        <StockTable v-if="activated" :key="'vol'" :loading="loading" :list="marketVolumeList" />
       </Tab>
       <Tab :title="'涨幅'">
-        <StockTable :key="'up'" :loading="loading" :list="marketUpList" />
+        <StockTable v-if="activated" :key="'up'" :loading="loading" :list="marketUpList" />
       </Tab>
       <Tab :title="'跌幅'">
-        <StockTable :key="'down'" :loading="loading" :list="marketDownList" />
+        <StockTable v-if="activated" :key="'down'" :loading="loading" :list="marketDownList" />
       </Tab>
     </Tabs>
   </div>
 </template>
 
 <script setup>
-import { onDeactivated, ref, computed } from "vue"
+import { onDeactivated, ref, computed, onActivated } from "vue"
 import { Tab, Tabs } from 'vant';
 import Banner from "./components/Banner.vue"
 import Recommend from "./components/Recommend.vue"
@@ -33,7 +33,8 @@ import StockTable from "@/components/StockTable.vue"
 import store from "@/store";
 import { _sort } from "@/api/api"
 
-const bannerRef = ref()
+// const bannerRef = ref()
+const isFixed = ref(false)
 
 // tabs
 const active = ref(-1)
@@ -57,14 +58,19 @@ const changeTab = (key, scrollToTop = true) => {
       break
   }
 }
+const tabScroll = e => {
+  // isFixed.value = e.isFixed
+}
+
 const marketVolumeList = computed(() => store.state.marketVolumeList || []) // 活跃列表
 const marketUpList = computed(() => store.state.marketUpList || []) // 涨幅列表
 const marketDownList = computed(() => store.state.marketDownList || []) // 跌幅列表
 const loading = ref(false)
 const subs = (list, key) => { // 订阅ws
+  console.error('--订阅首页')
   store.dispatch('subList', {
     commitKey: key,
-    proxyListValue: list
+    proxyListValue: list.value
   })
 }
 // 获取列表数据
@@ -124,11 +130,19 @@ const readyRecommendData = () => { // 推荐数据准备好了，一起监听
   changeTab(active.value, false)
 }
 const { startSocket } = useSocket()
+
+const activated = ref(false)
+onActivated(() => {
+  activated.value = true
+})
 onDeactivated(() => {
+  activated.value = false
   // 取消订阅
   const socket = startSocket(() => {
     socket && socket.emit('realtime', '') // 价格变化
     socket && socket.emit('snapshot', '') // 快照数据
+    socket && socket.off('realtime')
+    socket && socket.off('snapshot')
     console.error('取消订阅')
   })
 })

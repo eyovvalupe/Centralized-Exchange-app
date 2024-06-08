@@ -42,6 +42,13 @@ export default {
             state.marketSearchList = data.list;
         },
         setCurrStock(state, data) {
+            if (!data.symbol) { // 只更新部分数据
+                state.currStock = {
+                    ...state.currStock,
+                    ...data
+                }
+                return
+            }
             state.currStock = data;
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
@@ -68,14 +75,15 @@ export default {
         subList({ commit, state }, { commitKey, proxyListValue }) {
             const socket = startSocket(() => {
                 const keys = Array.from(new Set([
-                    ...proxyListValue.value.map(item => item.symbol),
+                    ...proxyListValue.map(item => item.symbol),
                     ...state.marketWatchKeys
                 ]))
 
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
+                socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {
                     if (res.code == 200) {
-                        const arr = proxyListValue.value.map(item => { // 数据和观察列表里的数据融合
+                        const arr = proxyListValue.map(item => { // 数据和观察列表里的数据融合
                             const target = res.data.find(a => a.symbols == item.symbol)
                             if (target) {
                                 Object.assign(item, target)
@@ -102,12 +110,15 @@ export default {
                 })
 
                 socket && socket.emit('snapshot', keys.join(',')) // 快照数据
+                socket && socket.off('snapshot')
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
-                        const target = proxyListValue.value.find(item => item.symbols == res.symbols)
+                        const target = proxyListValue.find(item => item.symbols == res.symbols)
                         if (target) {
                             target.points = _getSnapshotLine(res.data)
+                            commit(commitKey, proxyListValue)
                         }
+
 
                         setTimeout(() => {
                             // 根据不同页面，同步页面内模块的数据
