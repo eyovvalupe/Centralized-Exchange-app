@@ -1,73 +1,85 @@
 <!-- 首页推荐数据 -->
 <template>
-    <div class="recommend_box">
-        <!--  tabs-->
-        <div class="recommend_tabs">
-            <div class="recommend_tab" :class="{ 'active_tab': active == 1 }" @click="active = 1">数据</div>
-            <div class="recommend_tab" :class="{ 'active_tab': active == 2 }" @click="active = 2">新闻</div>
-        </div>
-
-        <transition :name="'slide-right'">
-            <!-- 图表 -->
-            <div v-if="active == 1" class="recommend_charts">
-                <!-- 折线图 -->
-                <div class="padding_block stock_chatsline" v-if="!pageLoading && marketRecommndList.length">
-                    <!-- <div class="title">$38,552.62</div>
-                    <div class="subtitle up">+$1,439.58(3.88%)</div> -->
-                    <AreaChart :symbol="activeStockSymbol" />
-                </div>
-                <!-- 横向滚动 -->
-                <div class="padding_block stock_tabs_box">
-                    <Loading v-if="!marketRecommndList.length && loading" :loading="loading" />
-                    <Tabs v-if="marketRecommndList.length" class="stock_tabs" v-model:active="activeStock" shrink
-                        sticky>
-                        <Tab v-for="(item, i) in marketRecommndList" :key="i">
-                            <template #title>
-                                <div class="stock_tab">
-                                    <div class="tab_title">{{ item.symbol || '--' }}</div>
-                                    <div class="tab_subtitle">{{ item.name || '--' }}</div>
-                                    <div class="tab_num">{{ item.price ? (item.price).toFixed(2) : '--' }}</div>
-                                    <div class="tab_num"
-                                        :class="[item.ratio === undefined ? '' : (item.ratio > 0 ? 'up' : 'down')]">
-                                        {{ item.ratio === undefined ? '--' : (item.ratio *
-                                            100).toFixed(2)
-                                        }}%</div>
-
-                                    <div class="tab_line">
-                                        <SparkLine style="width:100%;height:100%" :points="item.points"
-                                            :ratio="item.ratio" />
-                                    </div>
-                                </div>
-                            </template>
-                        </Tab>
-                    </Tabs>
-                </div>
+    <div>
+        <div v-if="!isFixed" class="recommend_box">
+            <!--  tabs-->
+            <div class="recommend_tabs">
+                <div class="recommend_tab" :class="{ 'active_tab': active == 1 }" @click="active = 1">数据</div>
+                <div class="recommend_tab" :class="{ 'active_tab': active == 2 }" @click="active = 2">新闻</div>
             </div>
 
-            <!-- 新闻 -->
-            <div v-else class="news_list">
-                <div class="news_item" v-for="i in 10" :key="i">
-                    <div class="title">Bitcoin Analyst Explain Why Price is Rallying AgainBitcoin Analyst Explain Why
-                        Price is
-                        Rallying Again</div>
-                    <div class="time">
-                        06:28
-                        <span>PM</span>
+            <transition :name="'slide-right'">
+                <!-- 图表 -->
+                <div v-if="active == 1" class="recommend_charts">
+                    <!-- 折线图 -->
+                    <div class="padding_block stock_chatsline" v-if="!pageLoading && marketRecommndList.length">
+                        <!-- <div class="title">$38,552.62</div>
+                    <div class="subtitle up">+$1,439.58(3.88%)</div> -->
+                        <AreaChart :symbol="activeStockSymbol" />
+                    </div>
+                    <!-- 横向滚动 -->
+                    <div class="padding_block stock_tabs_box">
+                        <Loading v-if="!marketRecommndList.length && loading" :loading="loading" />
+                        <Tabs v-if="marketRecommndList.length" class="stock_tabs" v-model:active="activeStock" shrink
+                            sticky>
+                            <Tab v-for="(item, i) in marketRecommndList" :key="i">
+                                <template #title>
+                                    <div class="stock_tab">
+                                        <div class="tab_title">{{ item.symbol || '--' }}</div>
+                                        <div class="tab_subtitle">{{ item.name || '--' }}</div>
+                                        <div class="tab_num">{{ item.price ? (item.price).toFixed(2) : '--' }}</div>
+                                        <div class="tab_num"
+                                            :class="[item.ratio === undefined ? '' : (item.ratio > 0 ? 'up' : 'down')]">
+                                            {{ item.ratio === undefined ? '--' : (item.ratio *
+                                                100).toFixed(2)
+                                            }}%</div>
+
+                                        <div class="tab_line">
+                                            <SparkLine style="width:100%;height:100%" :points="item.points"
+                                                :ratio="item.ratio" />
+                                        </div>
+                                    </div>
+                                </template>
+                            </Tab>
+                        </Tabs>
                     </div>
                 </div>
-            </div>
-        </transition>
 
+                <!-- 新闻 -->
+                <div v-else class="news_list">
+                    <div class="news_item" v-for="i in 10" :key="i">
+                        <div class="title">Bitcoin Analyst Explain Why Price is Rallying AgainBitcoin Analyst Explain
+                            Why
+                            Price is
+                            Rallying Again</div>
+                        <div class="time">
+                            06:28
+                            <span>PM</span>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+
+        </div>
+
+        <data v-if="isFixed" style="height:8.4rem"></data>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, defineEmits, onMounted } from "vue"
+import { ref, computed, defineEmits, onMounted, defineProps } from "vue"
 import { Tab, Tabs } from 'vant';
 import store from "@/store"
 import Loading from "@/components/Loaidng.vue";
 import SparkLine from "@/components/SparkLine.vue"
 import AreaChart from "@/components/KlineCharts/AreaChart.vue"
+
+const props = defineProps({
+    isFixed: { // 为True的时候 展示为虚拟dom
+        type: Boolean,
+        default: false
+    }
+})
 
 const emits = defineEmits(['ready'])
 const active = ref(1)
@@ -92,6 +104,7 @@ onMounted(() => {
 })
 setTimeout(() => {
     loading.value = false
+    console.error('---订阅推荐列表')
     store.commit('setMarketWatchKeys', rs.map(item => item.symbol))
     store.commit('setMarketRecommndList', rs)
     setTimeout(() => {
@@ -112,11 +125,10 @@ setTimeout(() => {
         margin-bottom: .4rem;
 
         .recommend_tab {
-            font-size: 0.32rem;
+            font-size: 0.28rem;
             color: #061023;
-            margin-right: 0.4rem;
-            padding: 0 0.6rem;
-            height: 0.72rem;
+            padding: 0 0.4rem;
+            height: 0.6rem;
             border-radius: 0.48rem;
             display: flex;
             align-items: center;

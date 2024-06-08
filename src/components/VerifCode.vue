@@ -15,7 +15,7 @@
             </div>
             <!-- 输入 -->
             <div class="ipt_box">
-                <input ref="iptRef" type="number" @input="() => code = code.toString().slice(0, 4)" v-model.trim="code"
+                <input ref="iptRef" type="text" @input="() => code = code.toString().slice(0, 4)" v-model.trim="code"
                     placeholder="输入验证码">
             </div>
         </div>

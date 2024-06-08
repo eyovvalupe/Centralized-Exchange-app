@@ -1,22 +1,33 @@
 <!-- banner -->
 <template>
-    <Swipe class="banner_box" lazy-render :initial-swipe="currIndex" :autoplay="3000" loop indicator-color="white"
-        @change="onChange">
-        <SwipeItem v-for="(item, i) in banners" :key="i">
-            <div class="banner_item">{{ i }}</div>
-        </SwipeItem>
-        <template #indicator="{ active, total }">
-            <div class="custom-indicator">
-                <div v-for="i in total" :key="i" class="indicator" :class="{ 'active_indicator': active == i - 1 }">
+    <div>
+        <Swipe v-if="!isFixed" class="banner_box" lazy-render :initial-swipe="currIndex" :autoplay="3000" loop
+            indicator-color="white" @change="onChange">
+            <SwipeItem v-for="(item, i) in banners" :key="i">
+                <div class="banner_item">{{ i }}</div>
+            </SwipeItem>
+            <template #indicator="{ active, total }">
+                <div class="custom-indicator">
+                    <div v-for="i in total" :key="i" class="indicator" :class="{ 'active_indicator': active == i - 1 }">
+                    </div>
                 </div>
-            </div>
-        </template>
-    </Swipe>
+            </template>
+        </Swipe>
+
+        <div v-if="isFixed" style="height: 7.4rem;"></div>
+    </div>
 </template>
 
 <script setup>
 import { Swipe, SwipeItem } from 'vant';
-import { ref, onMounted } from "vue"
+import { ref, onMounted, defineProps } from "vue"
+
+const props = defineProps({
+    isFixed: { // 为True的时候 展示为虚拟dom
+        type: Boolean,
+        default: false
+    }
+})
 
 const banners = ref([{}, {}, {}])
 

@@ -42,9 +42,10 @@ export default createStore({
     ...trade.mutations
   },
   actions: {
-    reset({ commit }) {
+    reset({ commit }) { // 重置相关数据
       commit("setToken", "");
       commit("setUserInfo", {});
+      commit("setMarketWatchList", []);
     },
     updateUserInfo({ commit }) {
       // 更新个人信息

@@ -83,12 +83,26 @@ export const _sort = (data = {}) => {
 export const _stocksList = (data = {}) => {
   return http.post(`/authc/v1/stocks/list`, data, {
     custom: { auth: true, toast: true },
+  })
+};
+
+// 添加自选
+export const _add = (data = {}) => {
+  return http.post(`/anon/v1/market/watchlist/add`, data, {
+    custom: { auth: true, toast: true },
   });
 };
 
 //交易参数
 export const _stocksPara = (data = {}) => {
   return http.post(`/authc/v1/stocks/para`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
+// 移除自选
+export const _del = (data = {}) => {
+  return http.post(`/anon/v1/market/watchlist/del`, data, {
     custom: { auth: true, toast: true },
   });
 };

@@ -1,9 +1,9 @@
 <template>
-  <router-view v-slot="{ Component }" :key="$route.fullPath">
+  <router-view v-slot="{ Component }">
     <Loading v-show="pageLoading" size="48"
       style="position: fixed;top:30%;left:50%;transform: translateX(-50%) translateY(-50%);" :loading="pageLoading" />
     <div class="app_scroll" v-show="!pageLoading">
-      <transition :name="transitionName" :mode="'in-out'">
+      <transition :name="transitionName">
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
       </transition>
       <keep-alive>
@@ -14,7 +14,7 @@
 
   <BottomTabBar v-if="showBottom" />
 
-  <DateBottom v-if="showDateBottom"/>
+  <DateBottom v-if="showDateBottom" />
 
 </template>
 
@@ -204,7 +204,7 @@ const transitionName = computed(() => store.state.transitionName || '')
   opacity: 0;
 }
 
-.date-bottom{
+.date-bottom {
   width: 100%;
   height: 71px;
   background-color: #f7f7f7;

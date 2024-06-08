@@ -48,11 +48,11 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   function (response) {
+    console.log(`--- 请求 ${response.config.url} 返回 ---`, response.data);
     let res = response.data;
     const custom = response.config?.custom;
     if (res.code != 200) {
       if (res.code == 401) {
-        console.error(location.href)
         if (
           location.href.includes("/login")
         ) {

@@ -78,7 +78,8 @@
             <!-- 详情 -->
             <div v-show="activeTab == 1" class="info">
                 <div class="left">
-                    <div class="price" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{ item.price }}
+                    <div class="price" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{ item.price ||
+                        item.close || '--' }}
                     </div>
                     <div class="time">
                         Update time <span>{{ item.timestamp ? getTimestr(item.timestamp * 1000, 2) : '--' }}</span>
