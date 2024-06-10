@@ -5,6 +5,9 @@
             <Icon name="arrow-left" />
         </div>
         <span>{{ props.title }}</span>
+        <div class="right">
+            <slot name="right"></slot>
+        </div>
     </div>
 </template>
 
@@ -52,6 +55,11 @@ const clickLeft = () => {
         left: 0.32rem;
         width: 0.4rem;
         height: 0.4rem;
+    }
+
+    .right {
+        position: absolute;
+        right: 0.32rem;
     }
 }
 </style>

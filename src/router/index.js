@@ -66,6 +66,15 @@ const routes = [
       pageType: 'child'
     }
   },
+  { // 用户认证
+    path: "/kyc",
+    name: "kyc",
+    component: () => import("../views/User/Kyc/Index.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   { // 市场
     path: "/market",
     name: "market",

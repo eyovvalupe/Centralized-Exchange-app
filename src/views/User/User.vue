@@ -51,7 +51,7 @@
                 <Icon class="nav_more" name="arrow" />
             </div>
             <!-- 身份认证 -->
-            <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']">
+            <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']" @click="jump('kyc', true)">
                 <div class="nav_icon">
                     <img src="/static/img/user/iden.png" alt="icon">
                 </div>
