@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 
 import {
-  memberInfo,
+  _userinfo,
 } from "@/api/api";
 import router from "@/router/index";
 import market from './market'
@@ -50,24 +50,12 @@ export default createStore({
     updateUserInfo({ commit }) {
       // 更新个人信息
       return new Promise((resolve) => {
-        memberInfo()
+        _userinfo()
           .then((res) => {
+            console.error('--用户信息', res.data)
             if (res.code == 200 && res.data) {
               commit("setUserInfo", res.data || {});
               resolve(res.data);
-              if (res.data.id) {
-                if (!res.data.loginPasswordStatus) {
-                  // 去设置密码
-                  router.replace({
-                    name: "setPassword",
-                  });
-                } else if (!res.data.payPasswordStatus) {
-                  // 去设置支付密码
-                  router.replace({
-                    name: "setPayPwd",
-                  });
-                }
-              }
             } else {
               resolve(false);
             }

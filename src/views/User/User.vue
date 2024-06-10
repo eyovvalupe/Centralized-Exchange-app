@@ -69,7 +69,7 @@
                 <Icon class="nav_more" name="arrow" />
             </div>
             <!-- 安全 -->
-            <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']">
+            <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']" @click="jump('safety', true)">
                 <div class="nav_icon">
                     <img src="/static/img/user/safe.png" alt="icon">
                 </div>
@@ -103,10 +103,11 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue"
+import { computed } from "vue"
 import { Icon, showConfirmDialog } from 'vant';
 import router from "@/router";
 import store from "@/store";
+import { _logout } from "@/api/api"
 
 const token = computed(() => store.state.token)
 const userInfo = computed(() => store.state.userInfo || {})
@@ -121,14 +122,18 @@ const loginout = () => {
         cancelButtonColor: '#323233'
     })
         .then(() => {
-            store.dispatch('reset')
-            router.push({
-                name: 'login'
-            })
+            _logout()
+            setTimeout(() => {
+                store.dispatch('reset')
+                router.push({
+                    name: 'login'
+                })
+            }, 200)
         }).catch(() => { })
 }
 
-const jump = name => {
+const jump = (name, needLogin) => {
+    if (needLogin && !token.value) return
     router.push({
         name
     })
@@ -137,12 +142,26 @@ const jump = name => {
 
 // 预加载页面
 store.commit('setPageLoading', true)
-Promise.all([
-    import('@/views/Public/Login.vue'),
+const loadingList = [
     import('@/views/Public/Language.vue'),
-]).finally(() => {
+]
+if (!token.value) {
+    loadingList.push(import('@/views/Public/Login.vue'))
+}
+Promise.all(loadingList).finally(() => {
     store.commit('setPageLoading', false)
 })
+
+// 延迟加载
+if (token.value) {
+    setTimeout(() => {
+        Promise.all([
+            import('@/views/User/Safety.vue')
+        ]).finally(() => {
+            console.error('子页面加载完成')
+        })
+    }, 1000)
+}
 </script>
 
 <style lang="less" scoped>

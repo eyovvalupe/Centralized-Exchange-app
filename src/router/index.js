@@ -21,6 +21,51 @@ const routes = [
       pageType: 'tab'
     }
   },
+  { // 安全
+    path: "/safety",
+    name: "safety",
+    component: () => import("../views/User/Safety.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 修改登录密码
+    path: "/password",
+    name: "password",
+    component: () => import("../views/User/LoginPassword.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 操作成功
+    path: "/success",
+    name: "success",
+    component: () => import("../views/User/Success.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 谷歌验证码绑定
+    path: "/google",
+    name: "google",
+    component: () => import("../views/User/Google.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 谷歌验证码-已绑定
+    path: "/googleCode",
+    name: "googleCode",
+    component: () => import("../views/User/GoogleCode.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   { // 市场
     path: "/market",
     name: "market",
@@ -72,6 +117,16 @@ const routes = [
     path: "/login",
     name: "login",
     component: () => import("../views/Public/Login.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'login'
+    }
+  },
+  {
+    // 忘记密码
+    path: "/fogot",
+    name: "fogot",
+    component: () => import("../views/Public/Fogot.vue"),
     meta: {
       keepAlive: false,
       pageType: 'login'

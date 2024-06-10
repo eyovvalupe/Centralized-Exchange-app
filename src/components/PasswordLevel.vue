@@ -5,14 +5,14 @@
             <div class="level level_active" v-for="i in levels" :key="i"></div>
             <div class="level" v-for="i in (4 - levels)" :key="i"></div>
         </div>
-        <span>
+        <span v-if="levels">
             {{ levelsMap[levels] }}
         </span>
     </div>
 </template>
 
 <script setup>
-import { ref, defineProps, computed } from "vue"
+import { defineProps, computed } from "vue"
 
 const props = defineProps({
     password: {
@@ -23,17 +23,35 @@ const props = defineProps({
 
 const levelsMap = {
     0: '弱',
+    1: '弱',
     2: '中等',
+    3: '中等',
     4: '优秀'
 }
 const levels = computed(() => {
-    if (props.password.length < 6) {
-        return 0
-    }
-    if (props.password.length < 10) {
-        return 2
-    }
-    return 4
+    const password = props.password
+
+
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    const hasSpecialChars = /[\W_]/.test(password);
+
+    // 初始评估等级为0（弱）
+    let strength = 0;
+    // 如果密码长度大于等于最小长度，增加评估等级
+    if (password.length >= minLength) strength += 1;
+    // 如果密码包含大写字母，增加评估等级
+    if (hasUpperCase) strength += 1;
+    // 如果密码包含小写字母，增加评估等级
+    if (hasLowerCase) strength += 1;
+    // 如果密码包含数字，增加评估等级
+    if (hasNumbers) strength += 1;
+    // 如果密码包含特殊字符，增加评估等级
+    if (hasSpecialChars) strength += 1;
+
+    return strength > 4 ? 4 : strength
 })
 </script>
 
@@ -60,7 +78,8 @@ const levels = computed(() => {
     }
 }
 
-.password_level_2 {
+.password_level_2,
+.password_level_3 {
     color: #E53E00;
 
     .levels {

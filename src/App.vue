@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { ref, defineAsyncComponent, computed } from "vue";
+import { defineAsyncComponent, computed } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import Loading from "@/components/Loaidng.vue";
@@ -38,6 +38,11 @@ console.error(store.state)
 // if (theme.value) {
 //   import(`@/style/theme/${theme.value}.less`)
 // }
+
+const token = computed(() => store.state.token)
+if (token.value) { // 更新用户信息
+  store.dispatch('updateUserInfo')
+}
 
 const fullWindow = computed(() => store.state.fullscreen) // 全屏状态
 store.commit('setFullscreen', false)

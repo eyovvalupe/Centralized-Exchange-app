@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "klinecharts": "^9.8.9",
     "mitt": "^3.0.1",
+    "qrcode": "^1.5.3",
     "socket.io-client": "^2.3.0",
     "vant": "^4.9.1",
     "vue": "^3.2.13",

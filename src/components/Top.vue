@@ -1,7 +1,7 @@
 <!-- 顶部菜单 -->
 <template>
     <div class="max-width top">
-        <div class="ripple_button back" @click="router.back()">
+        <div class="ripple_button back" @click="clickLeft">
             <Icon name="arrow-left" />
         </div>
         <span>{{ props.title }}</span>
@@ -18,7 +18,13 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    backFunc: Function
 })
+
+const clickLeft = () => {
+    if (props.backFunc) return props.backFunc()
+    router.back()
+}
 </script>
 
 
