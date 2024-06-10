@@ -16,12 +16,25 @@
 
   <DateBottom v-if="showDateBottom" />
 
+  <Popup
+    v-model:show="showOpenPositionBottom"
+    position="bottom"
+    closeable
+    class="detail-popup"
+    style="height: 90%"
+    @close="closePopup"
+    v-if="showOpenPositionBottom"
+  >
+    <component :is="popupComponent" />
+  </Popup>
+
 </template>
 
 <script setup>
 import { ref, defineAsyncComponent, computed } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
+import { Popup } from 'vant';
 import Loading from "@/components/Loaidng.vue";
 import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
@@ -38,6 +51,13 @@ console.error(store.state)
 // if (theme.value) {
 //   import(`@/style/theme/${theme.value}.less`)
 // }
+
+//弹窗组件
+const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom)
+const popupComponent = computed(() => store.state.popupComponent)
+const closePopup = ()=>{
+  store.dispatch('closePopup')
+}
 
 const fullWindow = computed(() => store.state.fullscreen) // 全屏状态
 store.commit('setFullscreen', false)

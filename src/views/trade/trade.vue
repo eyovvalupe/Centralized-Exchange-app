@@ -42,35 +42,6 @@
       </div>
     </Popup>
 
-    <Popup
-      v-model:show="showBottom"
-      position="bottom"
-      closeable
-      class="detail-popup"
-      style="height: 85%"
-    >
-      <OrderDetail />
-    </Popup>
-
-    <Popup
-      v-model:show="showUpdateBottom"
-      position="bottom"
-      closeable
-      class="detail-popup"
-      style="height: 90%"
-    >
-      <OrderUpdate />
-    </Popup>
-
-    <Popup
-      v-model:show="showClosePositionBottom"
-      position="bottom"
-      closeable
-      class="detail-popup"
-      style="height: 90%"
-    >
-      <OrderClosePosition />
-    </Popup>
   </div>
 </template>
 
@@ -101,17 +72,17 @@ const showClosePositionBottom = ref(false);
 
 const handleUpdate = (data) => {
   //订单详情
-  showBottom.value = true;
+  store.dispatch('openPopup',OrderDetail)
 };
 
 const handleUpdateDetail = (data) => {
   //更新
-  showUpdateBottom.value = true;
+  store.dispatch('openPopup',OrderUpdate)
 };
 
 const handleClosePosition = (data) => {
   //平仓
-  showClosePositionBottom.value = true;
+  store.dispatch('openPopup',OrderClosePosition)
 };
 
 const showPopup = () => {

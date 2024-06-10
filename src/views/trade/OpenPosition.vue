@@ -103,29 +103,42 @@
 
       <span class="grop-title" style="color: #014cfa">全仓 VS 逐仓</span>
       <div style="display: flex; margin-top: 0.12rem; margin-bottom: 0.2rem">
-        <!-- <div class="small-select">
-          <span style="margin-left: 0.2rem">全仓</span>
-          <img src="/static/img/trade/down.png" class="down-img" />
-        </div> -->
 
-        <DropdownMenu class="small-select">
-          <DropdownItem v-model="value1" :options="option1" />
-        </DropdownMenu>
+        <div>
+          <div class="small-select" @click="allSelect">
+            <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
+            <img src="/static/img/trade/down.png" class="down-img"/>
+          </div>
+          <div class="select-box" v-if="showAllSelect">
+            <div class="select-box-item"  v-for="i in option1" :class="{'selected-class': selectedOption === i.value}"  :key="i.value" @click="smallSelect(i.value)">
+              {{ i.text }}
+            </div>
+          </div>
+        </div>
 
-        <DropdownMenu class="big-selcet">
-          <DropdownItem v-model="value2" :options="option2" />
-        </DropdownMenu>
 
-        <!-- <div class="big-selcet">
-          200 X
-          <img src="/static/img/trade/down.png" class="down-img" />
-        </div> -->
+        <div style="flex: 1;">
+          <div class="big-selcet" @click="leverSelect" >
+            {{ selectedLeverOptionText }}
+            <img src="/static/img/trade/down.png" class="down-img"/>
+          </div>
+
+          <div class="select-box" v-if="showLeverSelect">
+            <div class="select-box-item bigslect" v-for="i in option2" :class="{'selected-class': selectedLeverOption === i.value}"  :key="i.value" @click="bigLeverSelect(i.value)">
+              {{ i.text }}
+            </div>
+          </div>
+        </div>
+
+        
+
+
       </div>
       <span class="grop-title">数量</span>
-      <Field v-model="sliderValue" class="num-input num-right-text" />
+      <Field v-model="numValue" class="num-input num-right-text"  type="number" @change="inputChange"/>
 
       <div class="position-account">
-        可买数量 <span style="color: #333">0</span>
+        可买数量 <span style="color: #333">{{ roundedQuantity }}</span>
       </div>
 
       <Slider
@@ -145,10 +158,10 @@
       <div class="position-bottom">
         <div>
           <span class="position-pay">支付 </span
-          ><span class="pay-num">872000.12</span>
+          ><span class="pay-num">{{ amount }}</span>
         </div>
         <div class="position-line-dashed"></div>
-        <div class="position-fee">保证金 30000 + 手续费 20</div>
+        <div class="position-fee">保证金 {{ paymentAmount }} + 手续费 {{ openfee }}</div>
       </div>
 
       <Button
@@ -156,7 +169,8 @@
         color="#18b762"
         round
         v-if="isDownActive && token"
-        @click="openPositPopup"
+        @click="openPositPopup('down')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
         >买跌</Button
       >
       <Button
@@ -164,7 +178,8 @@
         color="#e8503a"
         round
         v-if="isUpActive && token"
-        @click="openPositPopup"
+        @click="openPositPopup('up')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
         >买涨</Button
       >
 
@@ -188,36 +203,17 @@
       >
     </div>
 
-    <Popup
-      v-model:show="showOpenPositionBottom"
-      position="bottom"
-      closeable
-      class="detail-popup"
-      style="height: 90%"
-    >
-      <OpenPositionPopup />
-    </Popup>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import {
-  Tab,
-  Tabs,
-  Field,
-  CellGroup,
-  Slider,
-  Button,
-  Loading,
-  Popup,
-  DropdownMenu,
-  DropdownItem,
-} from "vant";
-import { _search, _stocksPara } from "@/api/api";
+import { ref, computed, onMounted, watch, nextTick } from "vue";
+import { Tab,Tabs,Field,CellGroup,Slider,Button,Loading,Popup, showToast} from "vant";
+import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
 import OpenPositionPopup from "./OpenPositionPopup";
 import store from "@/store";
+import Decimal from 'decimal.js';
 
 const token = computed(() => store.state.token);
 const router = useRouter();
@@ -245,21 +241,48 @@ const value = ref("");
 const priceValue = ref("");
 const loseValue = ref("");
 const marketValue = ref("");
-const sliderValue = ref(20);
+const sliderValue = ref(0);
 const loading = ref(false);
 const percentages = [25, 50, 75, 100];
 const stockCo = ref([]);
 const showOpenPositionBottom = ref(false);
-const value1 = ref(0);
-const value2 = ref(0);
+const showAllSelect = ref(false)
+const showLeverSelect = ref(false)
 const option1 = [
   { text: "全仓", value: 0 },
   { text: "逐仓", value: 1 },
 ];
-
 const option2 = ref([]);
+const selectedOption = ref(option1[0].value)
+const selectedLeverOption = ref('')
+const selectedLeverOptionText = ref('')
+const roundedQuantity = ref(0)
+
+//数量输入框的值
+const minOrder = ref(0)
+const numValue = ref(0)
+const increment = ref(0)
+const lastValidValue = ref(0); // 保存上一个有效值
+
 const isUpActive = ref(true);
 const isDownActive = ref(false);
+const paymentAmount = ref(0)
+const stockPrice = ref(0)
+const amount = ref(0)
+
+//手续费
+const openfee = ref(0)
+const closefee = ref(0)
+const ofee = ref(0)
+const cfee = ref(0)
+
+const commToken = ref('')
+
+
+const selectedOptionText = computed(() => {
+  const selected = option1.find(option => option.value === selectedOption.value)
+  return selected ? selected.text : ''
+})
 
 const activateUp = () => {
   isUpActive.value = true;
@@ -272,8 +295,48 @@ const activateDown = () => {
 };
 
 const onSliderChange = (newValue) => {
+  //滚动滑动条
   sliderValue.value = newValue;
+  getnumval(newValue)
 };
+
+const getnumval = (newValue)=>{
+  //根据滑动条计算数量输入框中的值
+  try {
+    const percentage = new Decimal(newValue).div(100);
+    const calculatedValue = percentage.mul(roundedQuantity.value);
+
+    // 百位数取整
+    const roundedValue = calculatedValue.div(100).floor().mul(100);
+    numValue.value = roundedValue.toNumber();
+
+    if (numValue.value  !== 0) {
+      getPay()
+    }
+
+  } catch (error) {
+    console.error('Error calculating value:', error);
+  }
+}
+
+const getPay = ()=> {
+  //保证金 数量*股票单价/杠杆
+  const result = new Decimal(numValue.value)
+      .mul(stockPrice.value)
+      .div(selectedLeverOption.value)
+      .toFixed(2); 
+  paymentAmount.value = result
+  //手续费计算
+  //开仓手续费  数量*手续费
+  openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
+  //平仓手续费
+  closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
+  amount.value = new Decimal(numValue.value)
+      .mul(stockPrice.value)
+      .div(selectedLeverOption.value)
+    .plus( new Decimal(numValue.value).mul(ofee.value))
+    .toFixed(2); 
+}
 
 const handleInput = () => {
   //股票搜索
@@ -292,7 +355,14 @@ const onChange = (val) => {
 const getData = () => {
   //股票搜索
   if (value.value.length === 0) {
+    //输入框清空
     stockCo.value = [];
+    roundedQuantity.value = 0
+    sliderValue.value = 0
+    numValue.value = 0
+    paymentAmount.value = 0
+    openfee.value = 0
+    amount.value = 0
     return;
   }
   _search({
@@ -301,11 +371,52 @@ const getData = () => {
     .then((res) => {
       if (res.code == 200 && res.data) {
         stockCo.value = res.data;
+        //获取股票价格
+        getPrice(res.data[0])
       }
     })
     .catch((error) => {})
     .finally(() => {});
 };
+
+const getPrice = (val)=>{
+  let price;
+  let amount;
+  //获取股票价格
+  if (val.symbol) {
+    // 发起 API 请求获取股票价格和钱包余额
+    const getPrice = _basic({ symbol: val.symbol }).then(res => {
+        if (res.code == 200) {
+            console.log(res, 'res');
+            price = new Decimal(100); // 假设股票价格为 100
+            stockPrice.value = price
+        }
+    });
+
+    const getBalance = _walletBalance({ currency: 'main' }).then(res => {
+        if (res.code == 200) {
+            amount = new Decimal(res.data[0].amount);
+        }
+    });
+    
+    // 计算可用数量
+    Promise.all([getPrice, getBalance]).then(() => {
+        if (price !== undefined && amount !== undefined) {
+            const availableQuantity = amount.div(price);
+            // 百位数取整
+            roundedQuantity.value = availableQuantity.div(100).floor().mul(100);
+            //数量输入框中的金额
+            // getnumval(sliderValue.value)
+            getslide()
+            getPay()
+        } else {
+            console.error('获取价格或余额失败');
+        }
+    }).catch(error => {
+        console.error('请求失败', error);
+    });
+  }
+}
 
 const getStockslist = ()=>{
   //交易参数
@@ -313,6 +424,7 @@ const getStockslist = ()=>{
   })
     .then((res) => {
       if (res.code == 200 && res.data) {
+        //杠杆参数
         const str = res.data.lever;
         const lever = str.split(',')
         const levernum = lever.map((num, index) => {
@@ -322,13 +434,75 @@ const getStockslist = ()=>{
           };
         });
         option2.value = levernum
-        console.log(levernum,'levernum')
-        value2.value = levernum[0].value
+        selectedLeverOption.value = levernum[0].value
+        selectedLeverOptionText.value = levernum[0].text
+        //volume 最低数量 和倍数增加的处理
+        const volume = res.data.volume.split(',')
+        minOrder.value = new Decimal(volume[0]);
+        increment.value = new Decimal(volume[1]);
+        numValue.value =  minOrder.value
+
+        //手续费
+        const fee = res.data.fee.split(',')
+        ofee.value = new Decimal(fee[0]).plus(new Decimal(fee[2]))
+        cfee.value = new Decimal(fee[1])
+
+        //开仓手续费  数量*手续费
+        openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
+        //平仓手续费
+        closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
       }
     })
     .catch((error) => {})
     .finally(() => {});
 
+}
+
+const validateInputValue = () => {
+  if (numValue.value === '') {
+    return;
+  }
+
+  let decimalValue;
+
+  try {
+    decimalValue = new Decimal(numValue.value);
+  } catch (error) {
+    return;
+  }
+
+  if (!decimalValue.mod(increment.value).equals(0)) {
+    // 如果值不是递增量的倍数，则恢复到上一个有效值
+    console.error(`Input value ${numValue.value} is not a multiple of the increment ${increment.value}`);
+    if (lastValidValue.value == 0) {
+      numValue.value = minOrder.value;
+      return
+    }
+    numValue.value = lastValidValue.value;
+  } else {
+    // 更新上一个有效值
+    lastValidValue.value = numValue.value;
+  }
+
+  if (new Decimal(numValue.value) > new Decimal(roundedQuantity.value) && roundedQuantity.value != 0) {
+    numValue.value = roundedQuantity.value
+  }
+
+  getPay()
+  getslide()
+};
+
+const getslide = ()=>{
+  //滑动条值
+  if (new Decimal(numValue.value) > new Decimal(roundedQuantity.value)) {
+    sliderValue.value = 100
+    return
+  }
+  if (new Decimal(roundedQuantity.value).div(new Decimal(numValue.value)).floor() == 1) {
+    sliderValue.value = 100
+  } else {
+    sliderValue.value = new Decimal(numValue.value).div(new Decimal(roundedQuantity.value)).mul(100).floor();
+  }
 }
 
 
@@ -342,9 +516,71 @@ const jump = (name) => {
   });
 };
 
-const openPositPopup = () => {
-  showOpenPositionBottom.value = true;
+const openPositPopup = (val) => {
+  if (new Decimal(numValue.value) > new Decimal(roundedQuantity.value)) {
+    showToast('超出最大可买');
+    return
+  }
+  //存选择的数据
+  const data = {
+    'stockCo':stockCo.value,
+    'selectedOptionText': selectedOptionText.value,
+    'selectedLeverOptionText': selectedLeverOptionText.value,
+    'selectedLeverOption': selectedLeverOption.value,
+    'numValue':numValue.value,
+    'paymentAmount': paymentAmount.value,
+    'amount': amount.value,
+    'openfee': openfee.value,
+    'button':val,
+    'active': active.value
+  }
+  store.commit('setUpOrder', data);
+  //买涨按钮
+  store.dispatch('openPopup',OpenPositionPopup)
+  getcommToken()
 };
+
+const getcommToken = () =>{
+  //点击按钮获取 token
+  _commToken({ }).then(res => {
+        if (res.code == 200) {
+          commToken.value = res.data
+          store.commit('setCommToken', commToken.value);
+        }
+    });
+}
+
+const allSelect = ()=>{
+  showAllSelect.value = !showAllSelect.value
+}
+
+const leverSelect = ()=>{
+  showLeverSelect.value = !showLeverSelect.value
+}
+
+const smallSelect = (val)=>{
+  //全仓下拉框点击选择
+  selectedOption.value = val
+  showAllSelect.value = false
+}
+
+const bigLeverSelect = (val)=>{
+  //倍数下拉框点击选择
+  selectedLeverOption.value = val
+  const selected = option2.value.find(option => option.value === val)
+  if (selected) {
+    selectedLeverOptionText.value = selected.text
+  }
+  showLeverSelect.value = false
+
+  getPay()
+}
+
+const inputChange = ()=>{
+  getslide()
+}
+
+
 </script>
 
 <style lang="less">
@@ -470,42 +706,31 @@ const openPositPopup = () => {
       }
     }
 
-    // .small-select {
-    //   width: 1.48rem;
-    //   height: 0.88rem;
-    //   flex-shrink: 0;
-    //   border-radius: 0.12rem;
-    //   border: 0.02rem solid #d0d8e2;
-    //   margin-right: 0.24rem;
-    //   line-height: 0.88rem;
-    //   position: relative;
-    //   color: #333333;
-    // }
     .small-select {
-      .van-dropdown-menu__bar {
+      width: 1.48rem;
+      height: 0.88rem;
+      flex-shrink: 0;
+      border-radius: 0.12rem;
+      border: 0.02rem solid #d0d8e2;
+      margin-right: 0.24rem;
+      line-height: 0.88rem;
+      position: relative;
+      color: #333333;
+    }
+    .select-box {
+      .select-box-item {
         width: 1.48rem;
         height: 0.88rem;
-        border: 0.02rem solid #d0d8e2;
-        border-radius: 0.12rem;
-        color: #333333;
         line-height: 0.88rem;
-        background-color: transparent;
-        margin-right: 12px;
-        box-shadow: none;
+        margin-left: 0.2rem;
       }
-    }
-
-    .big-selcet {
-      .van-dropdown-menu__bar {
-        width: 257px;
-        height: 0.88rem;
-        border: 0.02rem solid #d0d8e2;
-        border-radius: 0.12rem;
-        color: #333333;
-        line-height: 0.88rem;
-        background-color: transparent;
-        margin-right: 12px;
-        box-shadow: none;
+      .bigslect {
+        width: 100%;
+        text-align: center;
+        padding-right: 20px;
+      }
+      .selected-class {
+        color: #1e5eff;
       }
     }
 
@@ -521,16 +746,16 @@ const openPositPopup = () => {
     .van-dropdown-item {
       z-index: 9999!important;
     }
-    // .big-selcet {
-    //   flex: 1;
-    //   height: 0.88rem;
-    //   border-radius: 0.12rem;
-    //   border: 0.02rem solid #d0d8e2;
-    //   line-height: 0.88rem;
-    //   text-align: center;
-    //   position: relative;
-    //   color: #333333;
-    // }
+    .big-selcet {
+      width: 100%;
+      height: 0.88rem;
+      border-radius: 0.12rem;
+      border: 0.02rem solid #d0d8e2;
+      line-height: 0.88rem;
+      text-align: center;
+      position: relative;
+      color: #333333;
+    }
     .down-img {
       display: inline-block;
       width: 0.32rem !important;

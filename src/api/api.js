@@ -107,4 +107,25 @@ export const _del = (data = {}) => {
   });
 };
 
+//钱包余额
+export const _walletBalance = (data = {}) => {
+  return http.post(`authc/v1/wallet/balance`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
+//开仓
+export const _stocksBuy = (data = {}) => {
+  return http.post(`authc/v1/stocks/buy`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
+//SessionToken
+export const _commToken = (data = {}) => {
+  return http.post(`/anon/v1/comm/token`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
 export const memberInfo = () => { }
