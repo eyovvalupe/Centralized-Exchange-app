@@ -29,6 +29,31 @@ export const _login = (data = {}) => {
     custom: { auth: false, toast: false },
   });
 };
+// 退出登录
+export const _logout = (data = {}) => {
+  return http.post(`/authc/v1/user/logout`, data, {
+    custom: { auth: false, toast: false },
+  });
+};
+
+// 获取用户信息
+export const _userinfo = (data = {}) => {
+  return http.post(`/authc/v1/user/get`, data, {
+    custom: { auth: true, toast: false },
+  });
+};
+// 谷歌验证器状态
+export const _google = (data = {}) => {
+  return http.post(`/authc/v1/user/google/get`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 绑定谷歌验证器
+export const _googleBind = (data = {}) => {
+  return http.post(`/authc/v1/user/google/bind`, data, {
+    custom: { auth: true, toast: false },
+  });
+};
 
 // 自选列表
 export const _watchlist = (data = {}) => {
@@ -109,7 +134,13 @@ export const _del = (data = {}) => {
 
 //钱包余额
 export const _walletBalance = (data = {}) => {
-  return http.post(`authc/v1/wallet/balance`, data, {
+  return http.post(`authc/v1/wallet/balance`, data, { custom: { auth: true, toast: true },
+});
+}
+
+// 修改密码
+export const _updatepw = (data = {}) => {
+  return http.post(`/authc/v1/user/updatepw`, data, {
     custom: { auth: true, toast: true },
   });
 };
@@ -125,6 +156,13 @@ export const _stocksBuy = (data = {}) => {
 export const _commToken = (data = {}) => {
   return http.post(`/anon/v1/comm/token`, data, {
     custom: { auth: true, toast: true },
+  });
+};
+
+// 忘记密码
+export const _forgetpw = (data = {}) => {
+  return http.post(`/anon/v1/user/forgetpw`, data, {
+    custom: { auth: false, toast: true },
   });
 };
 

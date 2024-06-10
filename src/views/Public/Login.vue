@@ -41,7 +41,7 @@
     </div>
 
     <!-- 忘记密码 -->
-    <div class="fogot">忘记密码？</div>
+    <div class="fogot" @click="router.replace({ name: 'fogot' })">忘记密码？</div>
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
@@ -232,7 +232,7 @@ Promise.all([
   .fogot {
     color: #014CFA;
     font-weight: 400;
-    padding-left: 0.32rem;
+    padding-left: 0.44rem;
     margin: 0.2rem 0 1.14rem 0;
   }
 

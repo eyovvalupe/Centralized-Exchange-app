@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, defineAsyncComponent, computed } from "vue";
+import { defineAsyncComponent, computed } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import { Popup } from 'vant';
@@ -57,6 +57,12 @@ const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom
 const popupComponent = computed(() => store.state.popupComponent)
 const closePopup = ()=>{
   store.dispatch('closePopup')
+}
+
+
+const token = computed(() => store.state.token)
+if (token.value) { // 更新用户信息
+  store.dispatch('updateUserInfo')
 }
 
 const fullWindow = computed(() => store.state.fullscreen) // 全屏状态
