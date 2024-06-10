@@ -10,10 +10,10 @@
         </div>
         <div class="right-text" style="line-height: 0.45rem;">
           <div>
-            ADORWELD
+            {{ orderList.stockCo[0].symbol }}
           </div>
           <div style="color: #9ea3ae;">
-            Ador Welding Limited
+            {{ orderList.stockCo[0].name }}
           </div>
         </div>
       </div>
@@ -23,14 +23,17 @@
           开仓
         </div>
         <div class="right-text" style="display: flex;">
-          <div class="detail-flex-1 detail-red-box">
+          <div class="detail-flex-1 detail-red-box" v-if="orderList.button === 'up'">
             买涨
           </div>
+          <div class="detail-flex-1 detail-green-box" v-else>
+            买跌
+          </div>
           <div class="detail-flex-1 detail-blue-box">
-            全仓
+            {{ orderList.selectedOptionText }}
           </div>
           <div class="detail-flex-1">
-            10X
+            {{ orderList.selectedLeverOptionText }}
           </div>
         </div>
       </div>
@@ -40,14 +43,19 @@
         <div class="left-text">
           价格
         </div>
-        <div class="right-text" style="display: flex;">
+        <div class="right-text" style="display: flex;" v-if="orderList.active != 0">
           <div class="detail-flex-1">
           </div>
-          <div class="detail-flex-1 detail-blue-box">
+          <div class="detail-flex-1 detail-blue-box" >
             限价
           </div>
           <div class="detail-flex-1">
             99.88
+          </div>
+        </div>
+        <div class="right-text" v-else>
+          <div class="win-lose-box">
+            市价
           </div>
         </div>
       </div>
@@ -58,7 +66,7 @@
           开仓数量
         </div>
         <div class="right-text">
-          20000
+          {{ orderList.numValue }}
         </div>
       </div>
 
@@ -77,10 +85,10 @@
       <div class="position-bottom">
         <div>
           <span class="position-pay">支付 </span
-          ><span class="pay-num">872000.12</span>
+          ><span class="pay-num">{{ orderList.paymentAmount }}</span>
         </div>
         <div class="position-line-dashed"></div>
-        <div class="position-fee">保证金 30000 + 手续费 20</div>
+        <div class="position-fee">保证金 30000 + 手续费 {{ orderList.openfee }}</div>
       </div>
 
       <div class="ipo-code">
@@ -106,6 +114,8 @@
         color="#014cfa"
         round
         style="margin-top: 30px;"
+        @click="openStock"
+        :disabled = 'value == 0 || value.length === 0'
         >开仓</Button
       >
 
@@ -114,14 +124,64 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { Button, Field, Slider, PasswordInput, NumberKeyboard } from "vant";
+import { _stocksBuy } from "@/api/api";
+import store from "@/store";
 
 const loseValue = ref("");
 const addValue = ref("");
 const percentages = [25, 50, 75, 100];
 const value = ref("");
 const showKeyboard = ref(true);
+
+const orderList = computed(() => store.state.orderList)
+const getcommToken = computed(() => store.state.commToken)
+
+const openStock = ()=>{
+  let lever_type;
+  let offset;
+  let price_type;
+  if (orderList.value.selectedOptionText === '全仓') {
+    lever_type = 'cross'
+  } else {
+    lever_type = 'isolated'
+  }
+  if (orderList.value.button === 'up') {
+    offset = 'long'
+  } else {
+    offset = 'short'
+  }
+  if (orderList.value.active === 0) {
+    price_type = 'market'
+  } else {
+    price_type = 'limit'
+  }
+  const data = {
+    market:'',
+    symbol:orderList.value.stockCo[0].symbol,
+    offset: offset,
+    volume: orderList.value.numValue,
+    lever_type: lever_type,
+    lever: orderList.value.selectedLeverOption,
+    price_type: price_type,
+    price:'',
+    stop_profit: false,
+    stop_profit_type:'',
+    stop_profit_price:'',
+    stop_loss:'',
+    stop_loss_type:'',
+    stop_loss_price:'',
+    token:getcommToken.value,
+    safeword:value.value
+  }
+
+  _stocksBuy({ ...data }).then(res => {
+        if (res.code == 200) {
+            console.log(res,'res')
+        }
+    });
+}
 
 </script>
 
@@ -269,7 +329,6 @@ const showKeyboard = ref(true);
     .van-number-keyboard {
       max-width: 375px;
       position: absolute;
-      padding-bottom: 3.2rem !important;
     }
   }
   .close-price-num {
@@ -331,6 +390,15 @@ const showKeyboard = ref(true);
           height: 0.44rem;
           background-color: #fbf1ef;
           color: #e8503a;
+          margin: auto;
+          text-align: center;
+          line-height: 0.44rem;
+        }
+        .detail-green-box {
+          width: 1.16rem;
+          height: 0.44rem;
+          background-color: #eff9f2;
+          color: #18b762;
           margin: auto;
           text-align: center;
           line-height: 0.44rem;
