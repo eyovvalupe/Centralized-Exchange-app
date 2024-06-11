@@ -9,6 +9,9 @@
             </div>
 
             <div class="bottom_nav_name">{{ item.name }}</div>
+
+            <!-- 角标 -->
+            <div v-if="item.route == 'user'" class="nav_num">2</div>
         </div>
     </div>
 </template>
@@ -68,6 +71,7 @@ const checkActive = item => {
         align-items: center;
         justify-content: center;
         color: #636468;
+        position: relative;
 
         .bottom_nav_name {
             font-size: 0.24rem;
@@ -79,6 +83,22 @@ const checkActive = item => {
             width: 0.48rem;
             height: 0.48rem;
             object-fit: contain;
+        }
+
+        .nav_num {
+            width: 0.32rem;
+            height: 0.32rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #FF3B30;
+            font-size: 0.2rem;
+            color: #fff;
+            font-weight: 400;
+            border-radius: 50%;
+            position: absolute;
+            top: 0.26rem;
+            right: 0.3rem;
         }
     }
 

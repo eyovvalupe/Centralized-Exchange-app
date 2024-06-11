@@ -18,17 +18,17 @@ instance.interceptors.request.use(
   function (config) {
     config.sslVerify = false;
     // config.headers["deviceId"] = store.state.deviceId;
-    if (config?.custom?.auth) {
-      const token = store.state.token;
-      if (token) {
-        config.headers.token = token;
-        config.headers.auth = token;
-      } else {
-        router.replace({
-          name: 'login'
-        })
-        throw new Error("当前 token 已失效，请重新登录");
-      }
+    const token = store.state.token;
+    if (token) {
+      config.headers.token = token;
+      config.headers.auth = token;
+    }
+    if (config?.custom?.auth && !token) {
+      router.replace({
+        name: 'login'
+      })
+      throw new Error("当前 token 已失效，请重新登录");
+      return
     }
     config.headers["Content-Type"] = "application/json"
     if (config && config.custom && config.custom["Content-Type"]) {

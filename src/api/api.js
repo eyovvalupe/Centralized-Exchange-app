@@ -32,7 +32,7 @@ export const _login = (data = {}) => {
 // 退出登录
 export const _logout = (data = {}) => {
   return http.post(`/authc/v1/user/logout`, data, {
-    custom: { auth: false, toast: false },
+    custom: { auth: true, toast: false },
   });
 };
 
@@ -134,8 +134,9 @@ export const _del = (data = {}) => {
 
 //钱包余额
 export const _walletBalance = (data = {}) => {
-  return http.post(`authc/v1/wallet/balance`, data, { custom: { auth: true, toast: true },
-});
+  return http.post(`authc/v1/wallet/balance`, data, {
+    custom: { auth: true, toast: true },
+  });
 }
 
 // 修改密码
@@ -175,7 +176,25 @@ export const _stocksGet = (data = {}) => {
 
 //平仓
 export const _stocksSell = (data = {}) => {
-  return http.post(`authc/v1/stocks/sell`, data, {
+  return http.post(`authc/v1/stocks/sell`, data, {custom: { auth: true, toast: true },
+  });
+};
+
+// KYC 状态查询
+export const _kycGet = (data = {}) => {
+  return http.post(`/authc/v1/user/kyc/get`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// KYC L1 提交
+export const _kyc1 = (data = {}) => {
+  return http.post(`/authc/v1/user/kyc/l1/set`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// KYC L2 提交
+export const _kyc2 = (data = {}) => {
+  return http.post(`/authc/v1/user/kyc/l2/set`, data, {
     custom: { auth: true, toast: true },
   });
 };

@@ -83,9 +83,11 @@ onUnmounted(() => {
 const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 function getShow() {
     show.value = false
-    const rect = root.value.getBoundingClientRect()
-    if (rect && rect.top > -rect.height && rect.top < totalHeight) {
-        show.value = true
+    if (root.value) {
+        const rect = root.value.getBoundingClientRect()
+        if (rect && rect.top > -rect.height && rect.top < totalHeight) {
+            show.value = true
+        }
     }
 }
 
