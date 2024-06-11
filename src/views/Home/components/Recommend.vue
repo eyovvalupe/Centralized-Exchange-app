@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineEmits, onMounted } from "vue"
+import { ref, computed, onMounted } from "vue"
 import { Tab, Tabs } from 'vant';
 import store from "@/store"
 import Loading from "@/components/Loaidng.vue";

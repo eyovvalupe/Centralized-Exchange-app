@@ -8,7 +8,7 @@
 import StockTable from "@/components/StockTable.vue"
 // import router from "@/router"
 import store from "@/store";
-import { defineExpose, computed, ref } from "vue"
+import { computed, ref } from "vue"
 import { _watchlist, _del } from "@/api/api"
 import { showLoadingToast, closeToast, showToast } from 'vant'
 import { useSocket } from '@/utils/ws'

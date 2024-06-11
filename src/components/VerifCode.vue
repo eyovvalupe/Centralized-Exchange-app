@@ -24,7 +24,7 @@
 
 <script setup>
 import { Dialog, showToast, Loading } from "vant"
-import { ref, defineExpose, defineEmits } from "vue"
+import { ref } from "vue"
 import { _verifcode } from "@/api/api"
 
 const emits = defineEmits(['submit'])

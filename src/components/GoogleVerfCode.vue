@@ -20,7 +20,7 @@
 
 <script setup>
 import { Popup, PasswordInput, NumberKeyboard, Button } from "vant"
-import { ref, computed, defineExpose, defineEmits, watch } from "vue"
+import { ref, computed, watch } from "vue"
 const emits = defineEmits(['submit'])
 
 const loading = ref(false)

@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch, onBeforeUnmount, defineExpose } from "vue"
+import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue"
 import { init, dispose } from 'klinecharts'
 import { klineConfig } from './kline.conf';
 import { _kline } from "@/api/api"

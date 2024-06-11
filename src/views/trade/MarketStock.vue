@@ -3,28 +3,15 @@
     <div ref="placeholder" class="placeholder"></div>
 
     <!-- <div> -->
-    <div
-      ref="stickyElement"
-      :class="{ fixed: isFixed }"
-      class="opentrade-sticky"
-    >
+    <div ref="stickyElement" :class="{ fixed: isFixed }" class="opentrade-sticky">
       <div class="opentrade-sticky">
         <img src="/static/img/trade/open.png" alt="" class="open-img" />
-        <div
-          style="
+        <div style="
             padding-left: 0.7rem;
             padding-right: 0.3rem;
             background-color: white;
-          "
-        >
-          <Tabs
-            class="tabs"
-            v-model:active="active"
-            :swipeable="false"
-            :color="'#014CFA'"
-            shrink
-            @change="onChange"
-          >
+          ">
+          <Tabs class="tabs" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓"> </Tab>
             <Tab title="持仓"> </Tab>
             <Tab title="查询"> </Tab>
@@ -114,10 +101,7 @@
                 <img src="/static/img/trade/update.png" alt="" />
                 更新
               </div>
-              <div
-                style="background-color: #014cfa"
-                @click="updateClosePositionPopup"
-              >
+              <div style="background-color: #014cfa" @click="updateClosePositionPopup">
                 <img src="/static/img/trade/close.png" alt="" />
                 平仓
               </div>
@@ -130,7 +114,8 @@
     <!-- 未登录 -->
     <div class="no-data-box" v-if="!token && active === 1">
       <img src="/static/img/trade/no-data.png" class="no-data-img">
-      <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="jump('login')">马上登录</span></p>
+      <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="jump('login')">马上登录</span>
+      </p>
     </div>
 
 
@@ -153,10 +138,7 @@
 
       <div v-for="i in 3" :key="i">
         <SwipeCell>
-          <div
-            class="content-grid grid-item-hover"
-            @click="showInquiryButton(i)"
-          >
+          <div class="content-grid grid-item-hover" @click="showInquiryButton(i)">
             <div style="padding: 0 0.3rem; display: flex">
               <div class="grid-item">
                 <div class="f-text f-weight f-left" style="font-weight: 500">
@@ -205,10 +187,7 @@
                 <img src="/static/img/trade/update.png" alt="" />
                 更新
               </div>
-              <div
-                style="background-color: #014cfa"
-                @click="updateClosePositionPopup"
-              >
+              <div style="background-color: #014cfa" @click="updateClosePositionPopup">
                 <img src="/static/img/trade/close.png" alt="" />
                 平仓
               </div>
@@ -232,7 +211,7 @@ import {
   Loading,
   Button,
 } from "vant";
-import { defineEmits, onMounted } from "vue";
+import { onMounted } from "vue";
 import OpenPosition from "./OpenPosition.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useSocket } from "@/utils/ws";
@@ -278,43 +257,43 @@ const goToDate = () => {
 
 const showDetailPopup = () => {
   //订单详情
-  store.dispatch('openPopup',OrderDetail)
-  store.commit('setPopupHeight','90%')
-  store.commit('setkeyborader',false)
+  store.dispatch('openPopup', OrderDetail)
+  store.commit('setPopupHeight', '90%')
+  store.commit('setkeyborader', false)
 };
 
 const updateDetailPopup = () => {
   //更新
-  store.dispatch('openPopup',OrderUpdate)
-  store.commit('setPopupHeight','90%')
-  store.commit('setkeyborader',true)
+  store.dispatch('openPopup', OrderUpdate)
+  store.commit('setPopupHeight', '90%')
+  store.commit('setkeyborader', true)
 };
 
 const updateClosePositionPopup = () => {
   //平仓
-  store.dispatch('openPopup',OrderClosePosition)
-  store.commit('setPopupHeight','90%')
-  store.commit('setkeyborader',true)
+  store.dispatch('openPopup', OrderClosePosition)
+  store.commit('setPopupHeight', '90%')
+  store.commit('setkeyborader', true)
 };
 
 const subscribeOrders = () => {
   // socket = startSocket(() => {
-    //这里是 stocksorder 的处理
-    // console.log(token)
-    // socket.emit('user', token.value)
-    // socket.emit('user', token.value)
-    // socket.emit('stocksorder','#all')
-    // socket.emit('stocksorder', JSON.stringify({token: token.value, subscribe: '#all'}))
-    // socket.on('stocksorder', res => {
-    //   console.log(res)
-    // })
+  //这里是 stocksorder 的处理
+  // console.log(token)
+  // socket.emit('user', token.value)
+  // socket.emit('user', token.value)
+  // socket.emit('stocksorder','#all')
+  // socket.emit('stocksorder', JSON.stringify({token: token.value, subscribe: '#all'}))
+  // socket.on('stocksorder', res => {
+  //   console.log(res)
+  // })
 
-    //这里是参考 realtime 的处理
-    // ------------------
-    // socket.emit('realtime','INFY,HDFCBANK,RELIANCE,HAL,BAJFINANCE,SBIN,LT,IDEA,ICICIBANK,M_M,TCS,WIPRO,BHARTIARTL,ARE_M,BEL,RECLTD,PFC,ADANIENT,TATAMOTORS,TATASTEEL,ITC,POWERGRID,IRB,HINDUNILVR,RVNL,AXISBANK,BHEL,MAZDOCK,INDIGO,NHPC,NTPC,COCHINSHIP,HCLTECH,AVANTIFEED,ADANIPORTS,KOTAKBANK,JIOFIN,TECHM,IRFC,IIFL,TITAN,GAIL,COFORGE,TATAPOWER,ADANIENSOL,BPCL,SAIL,ADANIPOWER,GESHIP,ZOMATO,HERITGFOOD,DIXON,APLAPOLLO,INDUSINDBK,ONGC,EXIDEIND,IOC,BANKBARODA,VEDL,NCC,SUNPHARMA,BSOFT,HUDCO,LTIM,BIOCON,HINDALCO,MOTHERSON,CANBK,ASIANPAINT,BDL,DRREDDY,MASTEK,BAJAJFINSV,HINDPETRO,UNOMINDA,MANKIND,COALINDIA,KNRCON,ABFRL,PRAJIND,PERSISTENT,INDUSTOWER,TEJASNET,GRSE,DLF,IREDA,HEROMOTOCO,LTTS,PNB,YESBANK,ABCAPITAL,DABUR,JSWSTEEL,MPHASIS,JBMA,VBL,ADANIGREEN,ASHOKLEY,PAYTM,RAMCOCEM,NIFTY50,SENSEX,LRGCAP,MIDCAP,SMLCAP,NIFTY500,NIFTYMIDCAP100,INDIAVIX,NIFTYBANK')
-    // socket.on('realtime', res => {
-    //   console.log(res)
-    // })
+  //这里是参考 realtime 的处理
+  // ------------------
+  // socket.emit('realtime','INFY,HDFCBANK,RELIANCE,HAL,BAJFINANCE,SBIN,LT,IDEA,ICICIBANK,M_M,TCS,WIPRO,BHARTIARTL,ARE_M,BEL,RECLTD,PFC,ADANIENT,TATAMOTORS,TATASTEEL,ITC,POWERGRID,IRB,HINDUNILVR,RVNL,AXISBANK,BHEL,MAZDOCK,INDIGO,NHPC,NTPC,COCHINSHIP,HCLTECH,AVANTIFEED,ADANIPORTS,KOTAKBANK,JIOFIN,TECHM,IRFC,IIFL,TITAN,GAIL,COFORGE,TATAPOWER,ADANIENSOL,BPCL,SAIL,ADANIPOWER,GESHIP,ZOMATO,HERITGFOOD,DIXON,APLAPOLLO,INDUSINDBK,ONGC,EXIDEIND,IOC,BANKBARODA,VEDL,NCC,SUNPHARMA,BSOFT,HUDCO,LTIM,BIOCON,HINDALCO,MOTHERSON,CANBK,ASIANPAINT,BDL,DRREDDY,MASTEK,BAJAJFINSV,HINDPETRO,UNOMINDA,MANKIND,COALINDIA,KNRCON,ABFRL,PRAJIND,PERSISTENT,INDUSTOWER,TEJASNET,GRSE,DLF,IREDA,HEROMOTOCO,LTTS,PNB,YESBANK,ABCAPITAL,DABUR,JSWSTEEL,MPHASIS,JBMA,VBL,ADANIGREEN,ASHOKLEY,PAYTM,RAMCOCEM,NIFTY50,SENSEX,LRGCAP,MIDCAP,SMLCAP,NIFTY500,NIFTYMIDCAP100,INDIAVIX,NIFTYBANK')
+  // socket.on('realtime', res => {
+  //   console.log(res)
+  // })
   // });
 };
 
@@ -324,7 +303,7 @@ const onChange = (val) => {
     router.push({ path: route.path, query: {} });
   }
   active.value = val;
-  
+
   if (token.value === '') {
     loading.value = false;
     return
@@ -392,18 +371,22 @@ const jump = (name) => {
     z-index: 1000;
     transition: all 0.1s ease;
   }
+
   .fixed {
     position: fixed;
     width: 100%;
   }
+
   .van-loading {
     left: 47%;
     margin-top: 2rem !important;
   }
+
   .header-grid {
     padding-bottom: 0.12rem;
     background: white;
     border-bottom: 0.02rem solid #e8e8e8;
+
     .bottom-grid div {
       color: #9ea3ae;
       font-size: 0.28rem;
@@ -414,26 +397,33 @@ const jump = (name) => {
       text-align: center;
     }
   }
+
   .header-f-left {
     text-align: left !important;
     width: 100%;
   }
+
   .header-f-right {
     text-align: right !important;
     width: 100%;
   }
+
   .grid-item-hover {
     background-color: white;
   }
+
   .grid-item-hover :hover {
     background: #e5e5e5 !important;
   }
+
   .content-grid {
     border-bottom: 0.02rem solid #e8e8e8;
+
     .grid-item {
       padding: 0.2rem 0;
       width: 25%;
     }
+
     div {
       color: #000;
       text-align: center;
@@ -443,13 +433,16 @@ const jump = (name) => {
       font-weight: 400;
       line-height: 0.3rem;
     }
+
     .f-text {
       margin-bottom: 0.1rem;
     }
+
     .f-left {
       text-align: left;
       width: 100%;
     }
+
     .button {
       height: 0.4rem;
       color: #18b762;
@@ -459,27 +452,33 @@ const jump = (name) => {
       margin: auto;
       margin-bottom: 0.08rem;
     }
+
     .f-weight {
       font-weight: 600;
       font-size: 0.32rem;
     }
+
     .special-color {
       color: #014cfa;
     }
+
     .red {
       color: #e8503a;
     }
   }
+
   .risk-box {
     position: absolute;
     top: 0rem;
     right: 0.3rem;
+
     .risk-img {
       width: 0.52rem !important;
       height: 0.52rem !important;
       margin-right: 0.08rem;
       vertical-align: middle;
     }
+
     span {
       vertical-align: middle;
       color: #0953fa;
@@ -488,16 +487,19 @@ const jump = (name) => {
       font-weight: 400;
     }
   }
+
   .date-risk-box {
     position: absolute;
     top: 0rem;
     right: 1.6rem;
+
     .date-risk-img {
       width: 0.52rem !important;
       height: 0.52rem !important;
       margin-right: 0.08rem;
       vertical-align: middle;
     }
+
     span {
       vertical-align: middle;
       color: #0953fa;
@@ -506,16 +508,19 @@ const jump = (name) => {
       font-weight: 400;
     }
   }
+
   .date-box {
     position: absolute;
     top: 0rem;
     right: 0.3rem;
+
     .date-img {
       width: 0.52rem !important;
       height: 0.52rem !important;
       margin-right: 0.08rem;
       vertical-align: middle;
     }
+
     span {
       vertical-align: middle;
       color: #0953fa;
@@ -524,6 +529,7 @@ const jump = (name) => {
       font-weight: 400;
     }
   }
+
   .button-style {
     div {
       width: 1.22rem;
@@ -535,6 +541,7 @@ const jump = (name) => {
       font-weight: 500;
       text-align: center;
       display: inline-block;
+
       img {
         width: 0.4rem !important;
         height: 0.4rem !important;
@@ -545,6 +552,7 @@ const jump = (name) => {
       }
     }
   }
+
   .tabs {
     flex: 1;
     display: flex;
@@ -572,6 +580,7 @@ const jump = (name) => {
       margin-left: 0.36rem;
       font-size: 0.28rem;
     }
+
     .van-tab:first-of-type {
       margin-left: 0.15rem;
     }
@@ -587,13 +596,16 @@ const jump = (name) => {
     .van-tabs__wrap {
       height: 0.88rem;
     }
+
     .van-tabs__line {
       bottom: 0.3rem;
     }
+
     .van-tabs__track {
       height: 0;
     }
   }
+
   .close-button {
     margin-left: 0.26rem;
     background-color: #fdf8ef;
@@ -607,8 +619,10 @@ const jump = (name) => {
     line-height: 0.4rem !important;
     border-radius: 0 0.14rem 0 0.14rem;
   }
+
   .button-show {
     display: flex;
+
     div {
       flex: 1;
       height: 1.12rem !important;
@@ -619,6 +633,7 @@ const jump = (name) => {
       font-weight: 500;
       line-height: 0.3rem;
       padding-left: 0.32rem;
+
       img {
         height: 0.4rem !important;
         margin-top: 0.22rem;
@@ -628,10 +643,12 @@ const jump = (name) => {
       }
     }
   }
+
   .opentrade-sticky-wrapper {
     position: relative;
     width: 100%;
   }
+
   .opentrade-sticky {
     position: -webkit-sticky;
     position: sticky;
@@ -644,9 +661,10 @@ const jump = (name) => {
 
 .no-data-box {
   position: relative;
+
   .no-data-img {
-    width: 211px!important;
-    height: 108px!important;
+    width: 211px !important;
+    height: 108px !important;
     position: absolute;
     top: 140px;
     bottom: 0;
@@ -654,6 +672,7 @@ const jump = (name) => {
     right: 0;
     margin: 0 auto;
   }
+
   .no-data-text {
     color: #a5afba;
     text-align: center;
