@@ -9,7 +9,7 @@
       <Field v-model="loseValue" class="lose-field"/>
 
       <div class="account-monkey">
-        可买数量 <span class="account-num-monkey">0</span>
+        可卖数量 <span class="account-num-monkey">0</span>
       </div>
 
 
@@ -64,6 +64,9 @@
         @focus="showKeyboard = true"
         :gutter="16"
       />
+
+      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;">确定</Button>
+
       <!-- 数字键盘 -->
       <NumberKeyboard
         v-model="value"
@@ -71,6 +74,8 @@
         @blur="showKeyboard = false"
       />
     </div>
+
+    
 
 
   </div>
@@ -83,15 +88,54 @@
 
   const loseValue = ref('')
   const addValue = ref('')
-  const sliderValue = ref(20)
+  const sliderValue = ref(0)
   const percentages = [25, 50, 75, 100];
   const value = ref('');
-  const showKeyboard = ref(true);
+  const showKeyboard = ref(false);
 
 
   const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
   };
+
+//   const getPrice = (val)=>{
+//     let price;
+//     let amount;
+//     //获取股票价格
+//     if (val.symbol) {
+//       // 发起 API 请求获取股票价格和钱包余额
+//       const getPrice = _basic({ symbol: val.symbol }).then(res => {
+//           if (res.code == 200) {
+//               console.log(res, 'res');
+//               price = new Decimal(100); // 假设股票价格为 100
+//               stockPrice.value = price
+//           }
+//       });
+
+//       const getBalance = _walletBalance({ currency: 'main' }).then(res => {
+//           if (res.code == 200) {
+//               amount = new Decimal(res.data[0].amount);
+//           }
+//       });
+      
+//       // 计算可用数量
+//       Promise.all([getPrice, getBalance]).then(() => {
+//           if (price !== undefined && amount !== undefined) {
+//               const availableQuantity = amount.div(price);
+//               // 百位数取整
+//               roundedQuantity.value = availableQuantity.div(100).floor().mul(100);
+//               //数量输入框中的金额
+//               // getnumval(sliderValue.value)
+//               getslide()
+//               getPay()
+//           } else {
+//               console.error('获取价格或余额失败');
+//           }
+//       }).catch(error => {
+//           console.error('请求失败', error);
+//       });
+//     }
+// }
 
 </script>
 
@@ -210,13 +254,13 @@
       width: 3.44rem;
       border-bottom: 0.02rem dashed #cbcbcb;
       position: absolute;
-      right: 0.32rem;
+      right: 0;
       top: 0.42rem;
     }
     .all-risk-line {
       display: flex;
       justify-content: right;
-      margin-top: 0.1rem;
+      margin-top: 0.16rem;
       .risk-text {
         color: #333;
         text-align: center;

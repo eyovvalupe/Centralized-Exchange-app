@@ -6,7 +6,13 @@ export default {
       showOpenPositionBottom: false,
       popupComponent: null,
       orderList: {},
-      commToken: null
+      commToken: null,
+      popupHeight: '90%',
+      keyborader: false,
+      allSelect: 0,
+      option2:[],
+      selectedLeverOption: 0,
+      orderNo:''
     },
     mutations: {
       setDates(state,data) {
@@ -24,6 +30,28 @@ export default {
       },
       setCommToken(state,data) {
         state.commToken = data
+      },
+      setPopupHeight(state,data) {
+        state.popupHeight = data
+      },
+      setkeyborader(state,data) {
+        state.keyborader = data
+      },
+      setAllSelect(state,data) {
+        state.allSelect = data
+      },
+      setOption2(state,data) {
+        state.option2 = data
+      },
+      setSelectedLeverOption(state,data) {
+        state.selectedLeverOption = data
+      },
+      clearState(state,data) {
+        state.allSelect = 0
+        state.selectedLeverOption = state.option2[0].value
+      },
+      setOrderNo(state,data) {
+        state.orderNo = data
       }
     },
     actions: {

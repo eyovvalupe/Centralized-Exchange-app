@@ -10,7 +10,7 @@
           可售股票
         </div>
         <div class="detail-num" style="color: #014CFA;margin-top: 0.38rem;">
-          8720
+          {{ detaiList.unsold_volume }}
         </div>
       </div>
       <div class="detail-flex">
@@ -18,10 +18,10 @@
           盈亏/盈亏比
         </div>
         <div class="detail-num" style="color: #e8503a; margin-top: 0.06rem;">
-          39.520
+          {{ detaiList.profit }}
         </div>
         <div class="detail-num" style="color: #e8503a;">
-          -0.70%
+          {{ detaiList.ratio }}
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
           订单号
         </div>
         <div class="right-text">
-          <span style="vertical-align: middle;">10098734927294873</span>
+          <span style="vertical-align: middle;">{{ detaiList.order_no  }}</span>
           <img src="/static/img/trade/copy.png" alt="" class="copy-img">
         </div>
       </div>
@@ -45,7 +45,7 @@
         </div>
         <div class="right-text" style="line-height: 0.45rem;">
           <div>
-            ADORWELD
+            {{ detaiList.symbol }}
           </div>
           <div style="color: #9ea3ae;">
             Ador Welding Limited
@@ -58,14 +58,17 @@
           开仓
         </div>
         <div class="right-text" style="display: flex;">
-          <div class="detail-flex-1 detail-red-box">
+          <div class="detail-flex-1 detail-red-box" v-if="detaiList.offset === 'long' ">
             买涨
           </div>
+          <div class="detail-flex-1 detail-green-box" v-else>
+            买跌
+          </div>
           <div class="detail-flex-1 detail-blue-box">
-            全仓
+            {{ detaiList.lever_type ==='cross'?'全仓':'逐仓 ' }}
           </div>
           <div class="detail-flex-1">
-            10X
+            {{detaiList.lever}}X
           </div>
         </div>
       </div>
@@ -75,14 +78,19 @@
         <div class="left-text">
           价格
         </div>
-        <div class="right-text" style="display: flex;">
+        <div class="right-text" style="display: flex;" v-if="detaiList.price_type === 'limit'">
           <div class="detail-flex-1">
           </div>
           <div class="detail-flex-1 detail-blue-box">
             限价
           </div>
           <div class="detail-flex-1">
-            99.88
+            {{ detaiList.price }}
+          </div>
+        </div>
+        <div class="right-text" v-else>
+          <div class="win-lose-box">
+            市价
           </div>
         </div>
       </div>
@@ -93,7 +101,7 @@
           开仓数量
         </div>
         <div class="right-text">
-          20000
+          {{ detaiList.open_volume }}
         </div>
       </div>
 
@@ -102,7 +110,7 @@
           手续费
         </div>
         <div class="right-text">
-          54.32
+          {{ detaiList.fee }}
         </div>
       </div>
 
@@ -112,7 +120,7 @@
         </div>
         <div class="right-text">
           <div class="win-lose-box">
-            无
+            {{detaiList.stop_loss_price > 0 || detaiList.stop_loss_price && detaiList.stop_loss_price.length > 0 ? '有':"无"}}
           </div>
         </div>
       </div>
@@ -131,7 +139,7 @@
           保证金
         </div>
         <div class="right-text">
-          10000
+          {{ detaiList.margin }}
         </div>
       </div>
 
@@ -149,7 +157,7 @@
     <div style="position: relative;">
       <div class="risk-line">
         <div>
-          逐仓分险线
+          逐仓风险线
         </div>
         <div class="prcent-num">
           -18%
@@ -171,8 +179,8 @@
     
 
     <div style="padding: 0 0.32rem;">
-      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;">平仓</Button>
-      <Button size="large" color="#f2f2f2" round style="margin-bottom: 0.32rem;color: #999999;">订单更新</Button>
+      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;" @click="updateClosePositionPopup">平仓</Button>
+      <Button size="large" color="#f2f2f2" round style="margin-bottom: 0.32rem;color: #999999;" @click="updateDetailPopup">订单更新</Button>
     </div>
     
 
@@ -182,6 +190,38 @@
 <script setup>
   import { ref } from "vue";
   import { Button } from 'vant';
+  import { _stocksGet } from "@/api/api";
+  import OrderUpdate from "./OrderUpdate.vue";
+  import OrderClosePosition from "./OrderClosePosition.vue";
+  import store from "@/store";
+
+  const detaiList = ref({})
+
+  const getcommToken = () =>{
+    // _stocksGet({ order_no:'' }).then(res => {
+    //       if (res.code == 200) {
+            
+    //       }
+    //   });
+  }
+
+
+  const updateClosePositionPopup = () => {
+    store.dispatch('closePopup')
+    //平仓
+    store.dispatch('openPopup',OrderClosePosition)
+    store.commit('setPopupHeight','90%')
+    store.commit('setkeyborader',true)
+  };
+
+
+  const updateDetailPopup = () => {
+    store.dispatch('closePopup')
+    //更新
+    store.dispatch('openPopup',OrderUpdate)
+    store.commit('setPopupHeight','90%')
+    store.commit('setkeyborader',true)
+  };
 
 </script>
 
@@ -236,7 +276,7 @@
         height: 1rem;
         width: 100%;
         .left-text {
-          flex: 1;
+          width: 2rem;
           color: #8F92A1;
           text-align: left;
           font-size: 0.28rem;
@@ -280,6 +320,15 @@
           height: 0.44rem;
           background-color: #fbf1ef;
           color: #e8503a;
+          margin: auto;
+          text-align: center;
+          line-height: 0.44rem;
+        }
+        .detail-green-box {
+          width: 1.16rem;
+          height: 0.44rem;
+          background-color: #eff9f2;
+          color: #18b762;
           margin: auto;
           text-align: center;
           line-height: 0.44rem;

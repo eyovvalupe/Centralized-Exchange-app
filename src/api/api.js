@@ -166,4 +166,18 @@ export const _forgetpw = (data = {}) => {
   });
 };
 
+//订单详情
+export const _stocksGet = (data = {}) => {
+  return http.post(`authc/v1/stocks/get`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
+//平仓
+export const _stocksSell = (data = {}) => {
+  return http.post(`authc/v1/stocks/sell`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
 export const memberInfo = () => { }

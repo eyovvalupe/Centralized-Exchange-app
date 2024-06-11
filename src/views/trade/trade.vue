@@ -19,9 +19,6 @@
     </Tabs>
 
     <MarketStock
-      @update="handleUpdate"
-      @updateDetail="handleUpdateDetail"
-      @updateClosePosition="handleClosePosition"
       v-if="active === 0"
     />
     <IPOStock v-if="active === 1" />
@@ -49,10 +46,7 @@
 import { ref, computed } from "vue";
 import { Tab, Tabs, Popup, Sticky } from "vant";
 import MarketStock from "./MarketStock.vue";
-import OrderDetail from "./OrderDetail.vue";
-import OrderUpdate from "./OrderUpdate.vue";
 import IPOStock from "./IPOStock.vue";
-import OrderClosePosition from "./OrderClosePosition.vue";
 import { useRouter, useRoute } from "vue-router";
 import store from "@/store";
 
@@ -70,20 +64,6 @@ const showBottom = ref(false);
 const showUpdateBottom = ref(false);
 const showClosePositionBottom = ref(false);
 
-const handleUpdate = (data) => {
-  //订单详情
-  store.dispatch('openPopup',OrderDetail)
-};
-
-const handleUpdateDetail = (data) => {
-  //更新
-  store.dispatch('openPopup',OrderUpdate)
-};
-
-const handleClosePosition = (data) => {
-  //平仓
-  store.dispatch('openPopup',OrderClosePosition)
-};
 
 const showPopup = () => {
   show.value = true;
@@ -245,7 +225,11 @@ const onChange = (val) => {
   border-top-right-radius: 0.36rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  padding-bottom: 1.5rem;
+  padding-bottom: 1.2rem;
+}
+
+.keypadding {
+  padding-bottom: 5rem !important;
 }
 
 @media (min-width: 751px) {

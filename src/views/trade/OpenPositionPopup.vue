@@ -43,17 +43,27 @@
         <div class="left-text">
           价格
         </div>
-        <div class="right-text" style="display: flex;" v-if="orderList.active != 0">
+        <div class="right-text" style="display: flex;" v-if="orderList.active === 1">
           <div class="detail-flex-1">
           </div>
           <div class="detail-flex-1 detail-blue-box" >
             限价
           </div>
           <div class="detail-flex-1">
-            99.88
+            {{ orderList.priceValue }}
           </div>
         </div>
-        <div class="right-text" v-else>
+        <div class="right-text" style="display: flex;" v-if="orderList.active === 2 && orderList.marketprice">
+          <div class="detail-flex-1">
+          </div>
+          <div class="detail-flex-1 detail-blue-box" >
+            限价
+          </div>
+          <div class="detail-flex-1">
+            {{ orderList.marketValue }}
+          </div>
+        </div>
+        <div class="right-text" v-if="orderList.active === 0 || (orderList.active === 2 && !orderList.marketprice)">
           <div class="win-lose-box">
             市价
           </div>
@@ -76,7 +86,7 @@
         </div>
         <div class="right-text">
           <div class="win-lose-box">
-            无
+            {{orderList.active === 2?'有':'无'}}
           </div>
         </div>
       </div>
@@ -85,10 +95,10 @@
       <div class="position-bottom">
         <div>
           <span class="position-pay">支付 </span
-          ><span class="pay-num">{{ orderList.paymentAmount }}</span>
+          ><span class="pay-num">{{ orderList.amount }}</span>
         </div>
         <div class="position-line-dashed"></div>
-        <div class="position-fee">保证金 30000 + 手续费 {{ orderList.openfee }}</div>
+        <div class="position-fee">保证金 {{ orderList.paymentAmount }} + 手续费 {{ orderList.openfee }}</div>
       </div>
 
       <div class="ipo-code">
@@ -133,7 +143,7 @@ const loseValue = ref("");
 const addValue = ref("");
 const percentages = [25, 50, 75, 100];
 const value = ref("");
-const showKeyboard = ref(true);
+const showKeyboard = ref(false);
 
 const orderList = computed(() => store.state.orderList)
 const getcommToken = computed(() => store.state.commToken)
@@ -142,36 +152,53 @@ const openStock = ()=>{
   let lever_type;
   let offset;
   let price_type;
+  let price;
+
   if (orderList.value.selectedOptionText === '全仓') {
     lever_type = 'cross'
   } else {
     lever_type = 'isolated'
   }
+
   if (orderList.value.button === 'up') {
     offset = 'long'
   } else {
     offset = 'short'
   }
+
   if (orderList.value.active === 0) {
     price_type = 'market'
+  } else if (orderList.value.active === 2){
+    if (orderList.value.marketprice) {
+      price_type = 'limit'
+    } else {
+      price_type = 'market'
+    }
   } else {
     price_type = 'limit'
   }
+
+  if (orderList.value.active === 1) {
+    price = orderList.value.priceValue
+  } else if (orderList.value.active === 2) {
+    price = orderList.value.marketValue
+  } else {
+    price = ''
+  }
   const data = {
-    market:'',
     symbol:orderList.value.stockCo[0].symbol,
     offset: offset,
-    volume: orderList.value.numValue,
+    volume: Number(orderList.value.numValue),
     lever_type: lever_type,
     lever: orderList.value.selectedLeverOption,
     price_type: price_type,
-    price:'',
-    stop_profit: false,
-    stop_profit_type:'',
-    stop_profit_price:'',
-    stop_loss:'',
-    stop_loss_type:'',
-    stop_loss_price:'',
+    // price: price,
+    // stop_profit: false,
+    // stop_profit_type:'price',
+    // stop_profit_price:'',
+    // stop_loss:false,
+    // stop_loss_type:'price',
+    // stop_loss_price:orderList.value.loseValue,
     token:getcommToken.value,
     safeword:value.value
   }
@@ -346,7 +373,7 @@ const openStock = ()=>{
         height: 1rem;
         width: 100%;
         .left-text {
-          flex: 1;
+          width: 2rem;
           color: #8F92A1;
           text-align: left;
           font-size: 0.28rem;

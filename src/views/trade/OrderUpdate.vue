@@ -66,6 +66,9 @@
         @focus="showKeyboard = true"
         :gutter="16"
       />
+
+      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;">确定</Button>
+
       <!-- 数字键盘 -->
       <NumberKeyboard
         v-model="value"
@@ -85,10 +88,10 @@
 
   const loseValue = ref('')
   const addValue = ref('')
-  const sliderValue = ref(20)
+  const sliderValue = ref(0)
   const percentages = [25, 50, 75, 100];
   const value = ref('');
-  const showKeyboard = ref(true);
+  const showKeyboard = ref(false);
 
 
   const onSliderChange = (newValue) => {

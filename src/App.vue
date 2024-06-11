@@ -20,8 +20,8 @@
     v-model:show="showOpenPositionBottom"
     position="bottom"
     closeable
-    class="detail-popup"
-    style="height: 90%"
+    :style="{height: popupHeight}"
+    :class="['detail-popup', { keypadding: keyborader }]"
     @close="closePopup"
     v-if="showOpenPositionBottom"
   >
@@ -54,7 +54,9 @@ console.error(store.state)
 
 //弹窗组件
 const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom)
+const popupHeight = computed(() => store.state.popupHeight)
 const popupComponent = computed(() => store.state.popupComponent)
+const keyborader = computed(() => store.state.keyborader)
 const closePopup = ()=>{
   store.dispatch('closePopup')
 }

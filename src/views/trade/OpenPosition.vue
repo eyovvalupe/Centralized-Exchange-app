@@ -44,6 +44,7 @@
         v-model="priceValue"
         class="num-input num-right-text"
         style="margin-bottom: 0.2rem"
+        type="number"
         v-if="active === 1"
       />
 
@@ -60,12 +61,14 @@
         <Field
           v-model="marketValue"
           style="margin-bottom: 0.2rem"
-          :class="['price-num-input', { pricenlarged: marketValue.length > 0 }]"
+          :class="['price-num-input',{pricenlarged:!marketprice}]"
+          :disabled="!marketprice"
         />
         <div
-          :class="['market-button', { marketenlarged: marketValue.length > 0 }]"
+          :class="['market-button', { marketenlarged: marketprice }]"
+          @click="changePrice"
         >
-          市场
+         {{ marketprice?'限价':'市价'}}
         </div>
       </div>
 
@@ -75,6 +78,7 @@
           src="/static/img/trade/blue-stock.png"
           class="stock-img"
           v-if="value.length > 0"
+          @click="openPopup"
         />
         <img src="/static/img/trade/white-stock.png" class="stock-img" v-else />
       </div>
@@ -109,11 +113,7 @@
             <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
             <img src="/static/img/trade/down.png" class="down-img"/>
           </div>
-          <div class="select-box" v-if="showAllSelect">
-            <div class="select-box-item"  v-for="i in option1" :class="{'selected-class': selectedOption === i.value}"  :key="i.value" @click="smallSelect(i.value)">
-              {{ i.text }}
-            </div>
-          </div>
+
         </div>
 
 
@@ -121,12 +121,6 @@
           <div class="big-selcet" @click="leverSelect" >
             {{ selectedLeverOptionText }}
             <img src="/static/img/trade/down.png" class="down-img"/>
-          </div>
-
-          <div class="select-box" v-if="showLeverSelect">
-            <div class="select-box-item bigslect" v-for="i in option2" :class="{'selected-class': selectedLeverOption === i.value}"  :key="i.value" @click="bigLeverSelect(i.value)">
-              {{ i.text }}
-            </div>
           </div>
         </div>
 
@@ -168,18 +162,61 @@
         size="large"
         color="#18b762"
         round
-        v-if="isDownActive && token"
+        v-if="isDownActive && token && active === 0"
         @click="openPositPopup('down')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
         >买跌</Button
       >
       <Button
         size="large"
+        color="#18b762"
+        round
+        v-if="isDownActive && token && active === 1"
+        @click="openPositPopup('down')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === ''"
+        >买跌</Button
+      >
+
+      <Button
+        size="large"
+        color="#18b762"
+        round
+        v-if="isDownActive && token && active === 2"
+        @click="openPositPopup('down')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')"
+        >买跌</Button
+      >
+
+
+
+      <Button
+        size="large"
         color="#e8503a"
         round
-        v-if="isUpActive && token"
+        v-if="isUpActive && token && active === 0"
         @click="openPositPopup('up')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
+        >买涨</Button
+      >
+
+
+      <Button
+        size="large"
+        color="#e8503a"
+        round
+        v-if="isUpActive && token && active === 1"
+        @click="openPositPopup('up')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === ''"
+        >买涨</Button
+      >
+
+      <Button
+        size="large"
+        color="#e8503a"
+        round
+        v-if="isUpActive && token && active === 2"
+        @click="openPositPopup('up')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')"
         >买涨</Button
       >
 
@@ -212,6 +249,9 @@ import { Tab,Tabs,Field,CellGroup,Slider,Button,Loading,Popup, showToast} from "
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
 import OpenPositionPopup from "./OpenPositionPopup";
+import OpenSelect from "./components/OpenSelect.vue";
+import LeverSelect from "./components/LeverSelect.vue";
+import StockPopup from './StockPopup.vue'
 import store from "@/store";
 import Decimal from 'decimal.js';
 
@@ -246,16 +286,12 @@ const loading = ref(false);
 const percentages = [25, 50, 75, 100];
 const stockCo = ref([]);
 const showOpenPositionBottom = ref(false);
-const showAllSelect = ref(false)
 const showLeverSelect = ref(false)
 const option1 = [
   { text: "全仓", value: 0 },
   { text: "逐仓", value: 1 },
 ];
 const option2 = ref([]);
-const selectedOption = ref(option1[0].value)
-const selectedLeverOption = ref('')
-const selectedLeverOptionText = ref('')
 const roundedQuantity = ref(0)
 
 //数量输入框的值
@@ -278,11 +314,28 @@ const cfee = ref(0)
 
 const commToken = ref('')
 
+//修改市价和限价
+const marketprice = ref(false)
+
 
 const selectedOptionText = computed(() => {
-  const selected = option1.find(option => option.value === selectedOption.value)
+  const selected = option1.find(option => option.value === store.state.allSelect)
   return selected ? selected.text : ''
 })
+
+const selectedLeverOptionText = computed(() => {
+  const selected = option2.value.find(option => option.value === store.state.selectedLeverOption)
+  return selected ? selected.text : ''
+})
+
+const selectedLeverOption = computed(() => {
+  return store.state.selectedLeverOption
+})
+
+// 监听 selectedLeverOption 的变化，并调用 getPay
+watch(selectedLeverOption, (newValue, oldValue) => {
+  getPay();
+});
 
 const activateUp = () => {
   isUpActive.value = true;
@@ -345,24 +398,35 @@ const handleInput = () => {
 
 const onChange = (val) => {
   active.value = val;
-  loading.value = true;
+  store.commit('clearState')
+  value.value = ''
+  priceValue.value = ''
+  loseValue.value = ''
+  marketValue.value = ''
+  clear()
+  // loading.value = true;
 
-  setTimeout(() => {
-    loading.value = false;
-  }, 1000);
+  // setTimeout(() => {
+  //   loading.value = false;
+  // }, 1000);
 };
+
+const clear = ()=>{
+  //输入框清空
+  stockCo.value = [];
+  roundedQuantity.value = 0
+  sliderValue.value = 0
+  numValue.value = minOrder.value
+  paymentAmount.value = 0
+  openfee.value = 0
+  amount.value = 0
+}
 
 const getData = () => {
   //股票搜索
   if (value.value.length === 0) {
     //输入框清空
-    stockCo.value = [];
-    roundedQuantity.value = 0
-    sliderValue.value = 0
-    numValue.value = 0
-    paymentAmount.value = 0
-    openfee.value = 0
-    amount.value = 0
+    clear()
     return;
   }
   _search({
@@ -434,8 +498,9 @@ const getStockslist = ()=>{
           };
         });
         option2.value = levernum
-        selectedLeverOption.value = levernum[0].value
-        selectedLeverOptionText.value = levernum[0].text
+        store.commit('setOption2',levernum)
+        store.commit('selectedLeverOption',levernum[0].value)
+
         //volume 最低数量 和倍数增加的处理
         const volume = res.data.volume.split(',')
         minOrder.value = new Decimal(volume[0]);
@@ -458,50 +523,19 @@ const getStockslist = ()=>{
 
 }
 
-const validateInputValue = () => {
-  if (numValue.value === '') {
-    return;
-  }
-
-  let decimalValue;
-
-  try {
-    decimalValue = new Decimal(numValue.value);
-  } catch (error) {
-    return;
-  }
-
-  if (!decimalValue.mod(increment.value).equals(0)) {
-    // 如果值不是递增量的倍数，则恢复到上一个有效值
-    console.error(`Input value ${numValue.value} is not a multiple of the increment ${increment.value}`);
-    if (lastValidValue.value == 0) {
-      numValue.value = minOrder.value;
-      return
-    }
-    numValue.value = lastValidValue.value;
-  } else {
-    // 更新上一个有效值
-    lastValidValue.value = numValue.value;
-  }
-
-  if (new Decimal(numValue.value) > new Decimal(roundedQuantity.value) && roundedQuantity.value != 0) {
-    numValue.value = roundedQuantity.value
-  }
-
-  getPay()
-  getslide()
-};
 
 const getslide = ()=>{
   //滑动条值
-  if (new Decimal(numValue.value) > new Decimal(roundedQuantity.value)) {
-    sliderValue.value = 100
-    return
-  }
-  if (new Decimal(roundedQuantity.value).div(new Decimal(numValue.value)).floor() == 1) {
-    sliderValue.value = 100
-  } else {
-    sliderValue.value = new Decimal(numValue.value).div(new Decimal(roundedQuantity.value)).mul(100).floor();
+  if (new Decimal(numValue.value)) {
+    if (new Decimal(numValue.value).gt(roundedQuantity.value)) {
+      sliderValue.value = 100
+      return
+    }
+    if (roundedQuantity.value.div(new Decimal(numValue.value)).floor() == 1) {
+      sliderValue.value = 100
+    } else {
+      sliderValue.value = new Decimal(numValue.value).div(roundedQuantity.value).mul(100).floor();
+    }
   }
 }
 
@@ -517,10 +551,22 @@ const jump = (name) => {
 };
 
 const openPositPopup = (val) => {
-  if (new Decimal(numValue.value) > new Decimal(roundedQuantity.value)) {
+  const numValueDecimal = new Decimal(numValue.value);
+  if (numValueDecimal.gt(roundedQuantity.value)) {
     showToast('超出最大可买');
     return
   }
+
+  if (numValueDecimal.lt(minOrder.value)) {
+    showToast('低于最小可买');
+    return
+  }
+
+  if (!numValueDecimal.mod(increment.value).equals(0)) {
+    showToast('当前值不是递增量的倍数');
+    return
+  }
+  
   //存选择的数据
   const data = {
     'stockCo':stockCo.value,
@@ -532,11 +578,17 @@ const openPositPopup = (val) => {
     'amount': amount.value,
     'openfee': openfee.value,
     'button':val,
-    'active': active.value
+    'active': active.value,
+    'priceValue': priceValue.value,
+    'marketValue': marketValue.value,
+    'marketprice': marketprice.value,
+    'loseValue': loseValue.value
   }
   store.commit('setUpOrder', data);
   //买涨按钮
   store.dispatch('openPopup',OpenPositionPopup)
+  store.commit('setPopupHeight','90%')
+  store.commit('setkeyborader',true)
   getcommToken()
 };
 
@@ -551,33 +603,35 @@ const getcommToken = () =>{
 }
 
 const allSelect = ()=>{
-  showAllSelect.value = !showAllSelect.value
+  store.dispatch('openPopup',OpenSelect)
+  store.commit('setPopupHeight','30%')
+  store.commit('setkeyborader',false)
 }
 
 const leverSelect = ()=>{
-  showLeverSelect.value = !showLeverSelect.value
-}
-
-const smallSelect = (val)=>{
-  //全仓下拉框点击选择
-  selectedOption.value = val
-  showAllSelect.value = false
-}
-
-const bigLeverSelect = (val)=>{
-  //倍数下拉框点击选择
-  selectedLeverOption.value = val
-  const selected = option2.value.find(option => option.value === val)
-  if (selected) {
-    selectedLeverOptionText.value = selected.text
-  }
-  showLeverSelect.value = false
-
-  getPay()
+  // showLeverSelect.value = !showLeverSelect.value
+  store.dispatch('openPopup',LeverSelect)
+  store.commit('setPopupHeight','50%')
+  store.commit('setkeyborader',false)
 }
 
 const inputChange = ()=>{
+  if (numValue.value == '' || !numValue.value) {
+    numValue.value = minOrder.value
+  }
   getslide()
+  getPay();
+}
+
+const changePrice = ()=>{
+  marketprice.value = !marketprice.value
+  marketValue.value = ''
+}
+
+const openPopup = ()=>{
+  store.dispatch('openPopup',StockPopup)
+  store.commit('setPopupHeight','80%')
+  store.commit('setkeyborader',false)
 }
 
 
@@ -675,10 +729,10 @@ const inputChange = ()=>{
       border-radius: 0.12rem;
       border: 0.02rem solid #d0d8e2;
       margin-top: 0.2rem;
-      background: #f9fafb;
+      background: white;
     }
     .pricenlarged {
-      background: white;
+      background: #f9fafb;
     }
     .market-button {
       width: 1.9rem;
@@ -895,7 +949,10 @@ const inputChange = ()=>{
   border-top-right-radius: 0.36rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  padding-bottom: 1.5rem;
+  padding-bottom: 1.2rem;
+}
+.keypadding {
+  padding-bottom: 5rem !important;
 }
 
 @media (min-width: 751px) {

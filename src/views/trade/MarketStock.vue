@@ -238,6 +238,9 @@ import { useRouter, useRoute } from "vue-router";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
 import { _stocksList } from "@/api/api"
+import OrderDetail from "./OrderDetail.vue";
+import OrderUpdate from "./OrderUpdate.vue";
+import OrderClosePosition from "./OrderClosePosition.vue";
 
 const token = computed(() => store.state.token);
 const { startSocket } = useSocket();
@@ -274,15 +277,24 @@ const goToDate = () => {
 };
 
 const showDetailPopup = () => {
-  emit("update");
+  //订单详情
+  store.dispatch('openPopup',OrderDetail)
+  store.commit('setPopupHeight','90%')
+  store.commit('setkeyborader',false)
 };
 
 const updateDetailPopup = () => {
-  emit("updateDetail");
+  //更新
+  store.dispatch('openPopup',OrderUpdate)
+  store.commit('setPopupHeight','90%')
+  store.commit('setkeyborader',true)
 };
 
 const updateClosePositionPopup = () => {
-  emit("updateClosePosition");
+  //平仓
+  store.dispatch('openPopup',OrderClosePosition)
+  store.commit('setPopupHeight','90%')
+  store.commit('setkeyborader',true)
 };
 
 const subscribeOrders = () => {
@@ -296,6 +308,7 @@ const subscribeOrders = () => {
     // socket.on('stocksorder', res => {
     //   console.log(res)
     // })
+
     //这里是参考 realtime 的处理
     // ------------------
     // socket.emit('realtime','INFY,HDFCBANK,RELIANCE,HAL,BAJFINANCE,SBIN,LT,IDEA,ICICIBANK,M_M,TCS,WIPRO,BHARTIARTL,ARE_M,BEL,RECLTD,PFC,ADANIENT,TATAMOTORS,TATASTEEL,ITC,POWERGRID,IRB,HINDUNILVR,RVNL,AXISBANK,BHEL,MAZDOCK,INDIGO,NHPC,NTPC,COCHINSHIP,HCLTECH,AVANTIFEED,ADANIPORTS,KOTAKBANK,JIOFIN,TECHM,IRFC,IIFL,TITAN,GAIL,COFORGE,TATAPOWER,ADANIENSOL,BPCL,SAIL,ADANIPOWER,GESHIP,ZOMATO,HERITGFOOD,DIXON,APLAPOLLO,INDUSINDBK,ONGC,EXIDEIND,IOC,BANKBARODA,VEDL,NCC,SUNPHARMA,BSOFT,HUDCO,LTIM,BIOCON,HINDALCO,MOTHERSON,CANBK,ASIANPAINT,BDL,DRREDDY,MASTEK,BAJAJFINSV,HINDPETRO,UNOMINDA,MANKIND,COALINDIA,KNRCON,ABFRL,PRAJIND,PERSISTENT,INDUSTOWER,TEJASNET,GRSE,DLF,IREDA,HEROMOTOCO,LTTS,PNB,YESBANK,ABCAPITAL,DABUR,JSWSTEEL,MPHASIS,JBMA,VBL,ADANIGREEN,ASHOKLEY,PAYTM,RAMCOCEM,NIFTY50,SENSEX,LRGCAP,MIDCAP,SMLCAP,NIFTY500,NIFTYMIDCAP100,INDIAVIX,NIFTYBANK')
@@ -306,15 +319,6 @@ const subscribeOrders = () => {
 };
 
 
-// 获取列表数据
-const getData = () => {
-  // _stocksList({
-  //   page: 1
-  // }).then(res => {
-  //   console.log(res,'res')
-  // })
-}
-
 const onChange = (val) => {
   if (Object.keys(route.query).length > 0) {
     router.push({ path: route.path, query: {} });
@@ -324,6 +328,12 @@ const onChange = (val) => {
   if (token.value === '') {
     loading.value = false;
     return
+  }
+
+  if (val === 1) {
+    //持仓
+  } else {
+    //取消订阅
   }
 
   loading.value = true;
@@ -357,12 +367,13 @@ onMounted(() => {
     return
   }
   loading.value = true;
-  getData()
   setTimeout(() => {
     loading.value = false;
   }, 1000);
 
-  subscribeOrders();
+  if (active.value === 1) {
+    subscribeOrders();
+  }
 });
 
 const jump = (name) => {
