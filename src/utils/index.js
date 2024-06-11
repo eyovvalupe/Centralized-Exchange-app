@@ -1,5 +1,80 @@
 // 常用工具类
 
+// 压缩图片
+export const _compressImg = (base64, multiple, fn) => { // , useImg, targetObj
+  // 第一个参数就是需要加密的base65，
+  // 第二个是压缩系数 0-1，
+  // 第三个压缩后的回调 用来获取处理后的 base64
+  if (!base64) {
+    return
+  }
+  // const _this = this
+  const length = base64.length / 1024
+  // 压缩方法
+  let newImage = new Image()
+  let quality = 0.6    // 压缩系数0-1之间
+  newImage.src = base64
+  newImage.setAttribute('crossOrigin', 'Anonymous') // url为外域时需要
+  let imgWidth,
+    imgHeight
+  let w = undefined
+  newImage.onload = function () {
+    // 这里面的 this 指向 newImage
+    // 通过改变图片宽高来实现压缩
+    w = this.width * multiple
+    imgWidth = this.width
+    imgHeight = this.height
+    let canvas = document.createElement('canvas')
+    let ctx = canvas.getContext('2d')
+    if (Math.max(imgWidth, imgHeight) > w) {
+      if (imgWidth > imgHeight) {
+        canvas.width = w
+        // 等比例缩小
+        canvas.height = w * (imgHeight / imgWidth)
+      } else {
+        canvas.height = w
+        // 等比例缩小
+        canvas.width = w * (imgWidth / imgHeight)
+      }
+    } else {
+      canvas.width = imgWidth
+      canvas.height = imgHeight
+      // quality 设置转换为base64编码后图片的质量，取值范围为0-1  没什么压缩效果
+      // 还是得通过设置 canvas 的宽高来压缩
+      quality = 0.6
+    }
+    const size = Math.floor(base64.length / 1024)
+    if (size < 50) {
+      quality = 0.9
+    } else if (size < 150) {
+      quality = 0.8
+    } else {
+
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.drawImage(this, 0, 0, canvas.width, canvas.height) //  // 这里面的 this 指向 newImage
+    let smallBase64 = canvas.toDataURL('image/jpeg', quality) // 压缩语句
+    // 如想确保图片压缩到自己想要的尺寸,如要求在50-150kb之间，请加以下语句，quality初始值根据情况自定
+    // while (smallBase64.length / 1024 > 150) {
+    // quality -= 0.01;
+    // smallBase64 = canvas.toDataURL("image/jpeg", quality);
+    // }
+    // 防止最后一次压缩低于最低尺寸，只要quality递减合理，无需考虑
+    // while (smallBase64.length / 1024 < 50) {
+    // quality += 0.001;
+    // smallBase64 = canvas.toDataURL("image/jpeg", quality);
+    // }
+
+    // 必须通过回调函数返回，否则无法及时拿到该值，回调函数异步执行
+    console.log(`压缩前：${length}KB`)
+    console.log(`压缩后：${smallBase64.length / 1024} KB`)
+    fn(smallBase64)
+    // return smallBase64
+    // useImg(smallBase64, targetObj)
+  }
+}
+
 
 // 转换为缩略图
 export const _getSnapshotLine = (data) => {
@@ -69,71 +144,6 @@ export const _copyTxt = (txt) => {
 };
 
 
-// 精度计算
-export const _jia = (arg1, arg2) => {
-  let r1, r2, m;
-  try {
-    r1 = arg1.toString().split(".")[1].length;
-  } catch {
-    r1 = 0;
-  }
-  try {
-    r2 = arg2.toString().split(".")[1].length;
-  } catch {
-    r2 = 0;
-  }
-  m = Math.pow(10, Math.max(r1, r2));
-  return (arg1 * m + arg2 * m) / m;
-};
-export const _jian = (arg2, arg1) => {
-  let r1, r2, m, n;
-  try {
-    r1 = arg1.toString().split(".")[1].length;
-  } catch {
-    r1 = 0;
-  }
-  try {
-    r2 = arg2.toString().split(".")[1].length;
-  } catch {
-    r2 = 0;
-  }
-  m = Math.pow(10, Math.max(r1, r2));
-  n = r1 >= r2 ? r1 : r2;
-  return ((arg2 * m - arg1 * m) / m).toFixed(n);
-};
-export const _cheng = (arg1, arg2) => {
-  let m = 0,
-    s1 = arg1.toString(),
-    s2 = arg2.toString();
-  try {
-    m += s1.split(".")[1].length;
-  } catch { }
-  try {
-    m += s2.split(".")[1].length;
-  } catch { }
-  return (
-    (Number(s1.replace(".", "")) * Number(s2.replace(".", ""))) /
-    Math.pow(10, m)
-  );
-};
-export const _chu = (arg1, arg2) => {
-  let t1 = 0,
-    t2 = 0,
-    r1,
-    r2;
-  try {
-    t1 = arg1.toString().split(".")[1].length;
-  } catch { }
-  try {
-    t2 = arg2.toString().split(".")[1].length;
-  } catch { }
-  r1 = Number(arg1.toString().replace(".", ""));
-  r2 = Number(arg2.toString().replace(".", ""));
-  return (r1 / r2) * Math.pow(10, t2 - t1);
-};
-
-
-
 // 隐藏手机号
 export const _hiddenPhone = (str) => {
   if (!str) return "**";
@@ -178,9 +188,4 @@ export const _getObjectURL = (file) => {
     url = window.webkitURL.createObjectURL(file)
   }
   return url
-}
-
-// 播放提示音
-export const _voice = (type = 1) => {
-
 }

@@ -49,6 +49,7 @@ const clickLeft = () => {
     font-weight: 400;
     text-align: center;
     line-height: 1.05;
+    z-index: 999;
 
     .back {
         position: absolute;

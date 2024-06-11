@@ -75,6 +75,15 @@ const routes = [
       pageType: 'child'
     }
   },
+  { // 提交成功
+    path: "/submit",
+    name: "submit",
+    component: () => import("../views/User/Kyc/Submit.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   { // 市场
     path: "/market",
     name: "market",

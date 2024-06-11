@@ -2,96 +2,96 @@
 <template>
     <div class="page page_user">
 
-        <!-- 客服 -->
-        <div class=" server">
-            <div class="ripple_button server_btn">
-                <img class="server_icon" src="/static/img/common/server.png" alt="server">
-            </div>
-        </div>
-
         <!-- 用户 -->
         <div class="user">
             <div class="avatar">
-                <img v-if="token" src="/static/img/user/avatar.png" alt="avatar">
-                <img v-else src="/static/img/user/unlogin.png" alt="avatar">
+                <img src="/static/img/user/avatar.png" alt="avatar">
+                <!-- <img v-else src="/static/img/user/unlogin.png" alt="avatar"> -->
             </div>
+
             <!-- 已登录 -->
             <div v-if="token" class="user_box userinfo">
                 <div class="name">{{ userInfo.username || '--' }}</div>
-                <div class="user_status_box">
-                    <div class="user_status user_status_un" v-if="!userInfo.kyc">未认证</div>
-                    <div class="user_status user_status_ed" v-if="userInfo.kyc">已认证</div>
-
-                    <div class="ripple_button user_status_up" v-if="userInfo.role == 'guest'">
-                        <div class="user_status_upicon">
-                            <img src="/static/img/user/update.png" alt="up">
-                        </div>
-                        <span>升级投资账户</span>
-                    </div>
-                </div>
+                <div class="id">ID:23424</div>
             </div>
             <!-- 未登录 -->
             <div v-else class="user_box unlogin" @click="jump('login')">
-                <div class="ripple_button unlogin_btn">
-                    登录 / 注册
-                </div>
+                <span>登录/注册新用户</span>
             </div>
+        </div>
 
+        <!-- 账户升级 -->
+        <div class="banner">
+            <img src="/static/img/user/user_banner.png" alt="banner">
+
+            <div class="title">注册模拟交易账户</div>
+            <div class="title title2">无风险尝试投资体验</div>
         </div>
 
         <!-- 功能项 -->
         <div class="navs">
-            <!-- 注册 -->
-            <div class="ripple_button nav active_nav" v-if="!token">
-                <div class="nav_icon">
-                    <img src="/static/img/user/register.png" alt="icon">
+            <div class="ripple_button nav" @click="jump('kyc', true)">
+                <div class="icon">
+                    <img src="/static/img/user/iden.png" alt="img">
                 </div>
-                <span class="nav_title">注册模拟账户，领取投资模拟金</span>
-                <div class="nav_content"></div>
-                <Icon class="nav_more" name="arrow" />
-            </div>
-            <!-- 身份认证 -->
-            <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']" @click="jump('kyc', true)">
-                <div class="nav_icon">
-                    <img src="/static/img/user/iden.png" alt="icon">
-                </div>
-                <span class="nav_title">身份认证</span>
-                <div class="nav_content"></div>
-                <Icon class="nav_more" name="arrow" />
-            </div>
-            <!-- 收款账户 -->
-            <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']">
-                <div class="nav_icon">
-                    <img src="/static/img/user/account.png" alt="icon">
-                </div>
-                <span class="nav_title">收款账户</span>
-                <div class="nav_content"></div>
-                <Icon class="nav_more" name="arrow" />
-            </div>
-            <!-- 安全 -->
-            <div class="ripple_button nav" :class="[token ? '' : 'disabled_nav']" @click="jump('safety', true)">
-                <div class="nav_icon">
-                    <img src="/static/img/user/safe.png" alt="icon">
-                </div>
-                <span class="nav_title">安全</span>
-                <div class="nav_content">
-                    <span class="tip tip_red" v-if="!userInfo.googlebind">谷歌验证器未绑定</span>
-                    <span class="tip tip_green" v-if="userInfo.googlebind">谷歌验证器已绑定</span>
+                <div class="content">
+                    <div class="title">身份认证</div>
+                    <div class="info">进行身份认证</div>
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <!-- 语言 -->
+            <div class="ripple_button nav">
+                <div class="icon">
+                    <img src="/static/img/user/account.png" alt="img">
+                </div>
+                <div class="content">
+                    <div class="title">收款账户</div>
+                    <div class="info">收款银行卡添加</div>
+                </div>
+                <div class="cards">
+                    <img src="/static/img/user/cards.png" alt="🥧">
+                </div>
+                <Icon class="nav_more" name="arrow" />
+            </div>
+            <div class="ripple_button nav" @click="jump('safety', true)">
+                <div class="icon">
+                    <img src="/static/img/user/safe.png" alt="img">
+                </div>
+                <div class="content">
+                    <div class="title">安全</div>
+                    <div class="info">谷歌验证码安全认证</div>
+                </div>
+                <div class="gg" v-if="token">
+                    <span style="color: #FF3B30" v-if="!userInfo.googlebind">谷歌验证器未绑定</span>
+                    <span style="color: #18B762;" v-if="userInfo.googlebind">谷歌验证器已绑定</span>
+                </div>
+                <Icon class="nav_more" name="arrow" />
+            </div>
             <div class="ripple_button nav" @click="jump('language')">
-                <div class="nav_icon">
-                    <img src="/static/img/user/lang.png" alt="icon">
+                <div class="icon">
+                    <img src="/static/img/user/lang.png" alt="img">
                 </div>
-                <span class="nav_title">语言</span>
-                <div class="nav_content">
-                    <div class="nav_lang_icon">
-                        <img src="/static/img/common/en.png" alt="en">
+                <div class="content">
+                    <div class="title">语言</div>
+                    <div class="info">多语言选择</div>
+                </div>
+                <div class="lang">
+                    <div class="lang_icon">
+                        <img src="/static/img/common/en.png" alt="English">
                     </div>
                     <span>English</span>
                 </div>
+                <Icon class="nav_more" name="arrow" />
+            </div>
+            <div class="ripple_button nav">
+                <div class="icon">
+                    <img src="/static/img/user/server.png" alt="img">
+                </div>
+                <div class="content">
+                    <div class="title">客服</div>
+                    <div class="info">联系客服</div>
+                </div>
+                <div class="nums">2</div>
                 <Icon class="nav_more" name="arrow" />
             </div>
         </div>
@@ -133,7 +133,12 @@ const loginout = () => {
 }
 
 const jump = (name, needLogin) => {
-    if (needLogin && !token.value) return
+    if (needLogin && !token.value) {
+        router.push({
+            name: 'login'
+        })
+        return
+    }
     router.push({
         name
     })
@@ -166,192 +171,179 @@ if (token.value) {
 
 <style lang="less" scoped>
 .page_user {
-    padding-bottom: 1.8rem;
+    padding: 0.56rem 0.32rem 1.8rem 0.32rem;
     position: relative;
-
-    .server {
-        display: flex;
-        padding-right: 0.64rem;
-        align-items: center;
-        justify-content: flex-end;
-        height: 1.12rem;
-
-        .server_btn {
-            width: 0.8rem;
-            height: 0.8rem;
-
-            .server_icon {
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-
-    }
 
     .user {
         display: flex;
         align-items: center;
-        padding: 0.4rem 0.3rem 0.16rem 0.3rem;
 
         .avatar {
-            width: 1.4rem;
-            height: 1.4rem;
-            margin-right: 0.4rem;
+            width: 1.14rem;
+            height: 1.14rem;
+            margin-right: 0.14rem;
         }
 
         .user_box {
             flex: 1;
-        }
 
-        .unlogin {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            color: #061023;
-            font-size: 0.48rem;
-
-            .unlogin_btn {
-                overflow: hidden;
-                line-height: 1rem;
-            }
-        }
-
-        .userinfo {
             .name {
+                font-size: 0.36rem;
+                font-weight: 400;
+                line-height: 0.6rem;
                 color: #061023;
-                font-size: 0.48rem;
                 margin-bottom: 0.08rem;
             }
 
-            .user_status_box {
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-
-                .user_status {
-                    margin-right: 0.6rem;
-                    height: 0.44rem;
-                    padding: 0 0.3rem;
-                    display: flex;
-                    align-items: center;
-                    white-space: nowrap;
-                }
-
-                .user_status_un {
-                    color: #333;
-                    background-color: rgba(33, 33, 33, 0.08);
-                }
-
-                .user_status_ed {
-                    color: #014CFA;
-                    background-color: rgba(1, 76, 250, 0.08);
-                }
-
-                .user_status_up {
-                    flex: 1;
-                    display: flex;
-                    align-items: center;
-                    justify-content: flex-start;
-                    color: #014CFA;
-                    overflow: hidden;
-                    height: 0.6rem;
-
-                    .user_status_upicon {
-                        width: 0.32rem;
-                        height: 0.32rem;
-                        margin-right: 0.12rem;
-                    }
-                }
+            .id {
+                color: #014CFA;
+                font-weight: 400;
+                font-size: 0.28rem;
+                line-height: 0.4rem;
+                background-color: rgba(1, 76, 250, 0.08);
+                display: inline-block;
+                padding: 0 0.1rem;
+                border-radius: 0.04rem;
             }
+        }
+
+        .unlogin {
+            font-size: 0.36rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #061023;
+            font-weight: 400;
+            padding-left: 0.15rem;
+        }
+    }
+
+    .banner {
+        margin-top: 0.2rem;
+        height: 2.03rem;
+        color: #FFFFFF;
+        position: relative;
+        width: calc(100% + 0.12rem);
+
+        >img {
+            object-fit: initial !important;
+        }
+
+        .title {
+            position: absolute;
+            font-weight: 700;
+            font-size: 0.36rem;
+            color: #fff;
+            left: 0.3rem;
+            top: 0.6rem;
+        }
+
+        .title2 {
+            left: 1.2rem;
+            top: 1.2rem;
         }
     }
 
     .navs {
-        padding: 0.44rem 0.48rem 0 0.3rem;
+        margin-top: 0.2rem;
 
         .nav {
-            height: 1.12rem;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #F4F4F4;
+            height: 1.28rem;
+            color: #7E848D;
+            font-size: 0.28rem;
             overflow: hidden;
 
-            .nav_icon {
-                width: 0.48rem;
-                height: 0.48rem;
+            .icon {
+                width: 0.64rem;
+                height: 0.64rem;
                 margin-right: 0.3rem;
-            }
-
-            .nav_title {
-                font-weight: 400;
-                color: #1E1E2D;
-            }
-
-            .nav_content {
-                flex: 1;
+                border-radius: 50%;
                 display: flex;
                 align-items: center;
-                justify-content: flex-end;
-                padding: 0 0.24rem;
+                justify-content: center;
+
+                >img {
+                    width: 0.48rem !important;
+                    height: 0.48rem !important;
+                }
+            }
+
+            .content {
+                flex: 1;
+                font-weight: 400;
+                margin-right: 0.2rem;
+                overflow: hidden;
+
+                .title {
+                    color: #1E1E2D;
+                    font-size: 0.32rem;
+                }
+
+                .info {
+                    font-size: 0.24rem;
+                    color: #C2C2C2;
+                    margin-top: 0.2rem;
+                }
+            }
+
+            .nav_more {
+                margin-left: 0.3rem;
+            }
+
+            .cards {
+                width: 1.36rem;
+                height: 0.52rem;
+            }
+
+            .gg {
+                font-weight: 500;
+                font-size: 0.24rem;
+            }
+
+            .lang {
+                display: flex;
+                align-items: center;
+                font-weight: 500;
                 color: #1E1E2D;
                 font-size: 0.24rem;
-                font-weight: 500;
 
-                .nav_lang_icon {
+                .lang_icon {
                     width: 0.48rem;
                     height: 0.48rem;
-                    margin-right: 0.24rem;
-                }
-
-                .tip {
-                    font-size: 0.24rem;
-                }
-
-                .tip_red {
-                    color: #FF3B30;
-                }
-
-                .tip_green {
-                    color: #18B762;
+                    margin-right: 0.2rem;
                 }
             }
 
-            .nav_more {
-                font-size: 0.28rem;
-                color: #7E848D;
-            }
-        }
-
-        .disabled_nav {
-            opacity: 0.5;
-
-            &::after {
-                display: none;
-            }
-        }
-
-        .active_nav {
-            .nav_title {
-                color: #014CFA;
-            }
-
-            .nav_more {
-                color: #014CFA;
+            .nums {
+                width: 0.32rem;
+                height: 0.32rem;
+                background-color: #FF3B30;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.2rem;
+                color: #fff;
+                font-weight: 400;
             }
         }
     }
 
     .loginout {
-        position: absolute;
-        bottom: 0;
         width: 100%;
-        text-align: center;
-        font-weight: 400;
+        height: 1.12rem;
+        border-radius: 1.3rem;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.28rem;
         color: #014CFA;
-        bottom: 2rem;
+        font-weight: 400;
+        margin-top: 1.2rem;
         overflow: hidden;
-        line-height: 0.7rem;
     }
 }
 </style>
