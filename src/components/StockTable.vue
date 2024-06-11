@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue"
+import { defineEmits } from "vue"
 import Loading from "./Loaidng.vue"
 import StockItem from "./StockItem.vue"
 import NoData from "./NoData.vue"

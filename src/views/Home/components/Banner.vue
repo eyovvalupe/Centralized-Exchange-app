@@ -20,7 +20,7 @@
 
 <script setup>
 import { Swipe, SwipeItem } from 'vant';
-import { ref, onMounted, defineProps } from "vue"
+import { ref, onMounted } from "vue"
 
 const props = defineProps({
     isFixed: { // 为True的时候 展示为虚拟dom

@@ -42,7 +42,7 @@
 
 <script setup>
 import SparkLine from "./SparkLine.vue"
-import { ref, defineProps, computed, watch, onMounted, onUnmounted, defineEmits } from "vue"
+import { ref, computed, watch, onMounted, onUnmounted, defineEmits } from "vue"
 import router from "@/router"
 import { SwipeCell } from 'vant';
 import store from "@/store"

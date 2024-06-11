@@ -5,7 +5,6 @@
 
 <script setup>
 import { Loading } from 'vant';
-import { defineProps } from "vue"
 const props = defineProps({
     loading: false,
     size: 48
