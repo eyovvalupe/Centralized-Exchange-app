@@ -1,6 +1,6 @@
 <template>
     <div class="date-bottom">
-      <div style="display: flex;justify-content: space-between;">
+      <div style="display: flex;justify-content: space-between;padding: 0.32rem;">
         <div class="date-text-box">
           <div style="margin-bottom: 0.08rem;">开始：{{ startDate }}</div>
           <div>结束：{{ endDate }}</div>
@@ -43,11 +43,10 @@
   <style lang="less">
   .date-bottom{
     width: 100%;
-    height: 1.42rem;
+    height: 71px;
     background-color: #f7f7f7;
     position: fixed;
     bottom: 0;
-    padding: 0.32rem;
     .date-text-box {
       color: #000;
       font-size: 0.24rem;
@@ -67,6 +66,9 @@
   @media (min-width: 751px) {
     .date-bottom {
       max-width: 375px;
+      left: 50%;
+      transform: translateX(-50%);
+      position: fixed;
     }
   }
   </style>

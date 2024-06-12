@@ -39,6 +39,14 @@
       </div>
     </Popup>
 
+
+    <teleport to="body">
+      <Popup v-model:show="showOpenPositionBottom" position="bottom" closeable :style="{ height: popupHeight }"
+        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
+        <component :is="popupComponent" />
+      </Popup>
+    </teleport>
+
   </div>
 </template>
 
@@ -75,6 +83,17 @@ const onChange = (val) => {
   }
   active.value = val;
 };
+
+
+//弹窗组件
+const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom)
+const popupHeight = computed(() => store.state.popupHeight)
+const popupComponent = computed(() => store.state.popupComponent)
+const keyborader = computed(() => store.state.keyborader)
+const closePopup = () => {
+  store.dispatch('closePopup')
+}
+
 </script>
 
 <style lang="less">

@@ -26,6 +26,11 @@
         ref="calendar"
       />
     </PullRefresh>
+
+    <teleport to="body">
+      <DateBottom />
+    </teleport>
+
   </div>
 </template>
 
@@ -33,6 +38,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { Calendar, Icon, PullRefresh } from 'vant';
+import DateBottom from '@/views/trade/DateBottom.vue'
 import store from "@/store";
 
 const router = useRouter();
