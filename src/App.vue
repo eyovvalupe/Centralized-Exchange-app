@@ -14,13 +14,6 @@
 
   <BottomTabBar v-if="showBottom" />
 
-  <DateBottom v-if="showDateBottom" />
-
-  <Popup v-model:show="showOpenPositionBottom" position="bottom" closeable :style="{ height: popupHeight }"
-    :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
-    <component :is="popupComponent" />
-  </Popup>
-
 </template>
 
 <script setup>
@@ -29,7 +22,7 @@ import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import { Popup } from 'vant';
 import Loading from "@/components/Loaidng.vue";
-import DateBottom from '@/views/trade/DateBottom.vue'
+// import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
 
 const BottomTabBar = defineAsyncComponent(() =>
@@ -44,15 +37,6 @@ console.error(store.state)
 // if (theme.value) {
 //   import(`@/style/theme/${theme.value}.less`)
 // }
-
-//弹窗组件
-const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom)
-const popupHeight = computed(() => store.state.popupHeight)
-const popupComponent = computed(() => store.state.popupComponent)
-const keyborader = computed(() => store.state.keyborader)
-const closePopup = () => {
-  store.dispatch('closePopup')
-}
 
 
 const token = computed(() => store.state.token)
@@ -70,9 +54,6 @@ const showBottom = computed(() => {
   return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules",'assets'].includes(route.name) && !fullWindow.value;
 });
 
-const showDateBottom = computed(() => {
-  return ["date"].includes(route.name);
-});
 
 
 // 预加载 tab 页面
@@ -224,13 +205,5 @@ const transitionName = computed(() => store.state.transitionName || '')
 
 .opacity-leave-to {
   opacity: 0;
-}
-
-.date-bottom {
-  width: 100%;
-  height: 71px;
-  background-color: #f7f7f7;
-  position: fixed;
-  bottom: 0;
 }
 </style>
