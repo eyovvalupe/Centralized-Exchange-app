@@ -21,7 +21,7 @@ htmlContent = htmlContent.replace(jsScriptTagsRegex, '');
 htmlContent = htmlContent.replace(cssLinkTagsRegex, '');
 
 // 将 JavaScript 和 CSS 文件的引用添加到 HTML 文件末尾
-htmlContent = htmlContent.replace('</body>', jsScriptTags.join('') + cssLinkTags.join('') + '</body>');
+htmlContent = htmlContent.replace('</body>', jsScriptTags.join('') + cssLinkTags.join('') + '<script>console.error("' + new Date() + '")</script></body>');
 
 // 将更新后的 HTML 文件内容写回到文件中
 fs.writeFileSync(htmlFilePath, htmlContent, 'utf8');
