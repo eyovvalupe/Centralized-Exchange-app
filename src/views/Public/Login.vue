@@ -103,9 +103,18 @@ const submit = () => {
     }, 100)
     setTimeout(() => {
       store.dispatch('updateUserInfo')
-      router.push({
-        name: 'user'
-      })
+      if (route.query.reurl) {
+        router.replace({
+          name: route.query.reurl,
+          query: {
+            redata: route.query.redata,
+          }
+        })
+      } else {
+        router.push({
+          name: 'user'
+        })
+      }
     }, 300)
   }).catch(err => {
     if (err.code == '1001') { // 弹出验证码
