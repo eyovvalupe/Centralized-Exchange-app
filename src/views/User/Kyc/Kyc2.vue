@@ -2,6 +2,10 @@
 <template>
     <div class="kyc_2">
         <Top :title="''">
+            <!-- 从注册来的 -->
+            <template #right v-if="from == 'register'">
+                <span @click="nextStep" style="color: #014CFA;font-weight: 400;font-size: 0.28rem;">跳过</span>
+            </template>
             <!-- 提交过认证信息 -->
             <template #right v-if="kycInfo.idimg_1">
                 <div class="kyc_status">
@@ -174,7 +178,7 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Uploader, Button, showLoadingToast, closeToast } from 'vant';
+import { Uploader, Button, showLoadingToast, closeToast, showNotify } from 'vant';
 import { ref, computed } from "vue";
 import { UPLOAD_ADDRESS } from "@/config.js"
 import axios from "axios"
@@ -182,6 +186,10 @@ import Loaidng from "@/components/Loaidng.vue"
 import { _compressImg } from "@/utils/index"
 import { _kyc2, _kycGet } from "@/api/api"
 import router from "@/router"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+const from = ref(route.query.from) // 'register'-表示从注册来
 
 
 const loading = ref(false)
@@ -216,9 +224,16 @@ const submit = () => {
         idimg_3: files.value.hand.url,
     }).then(res => {
         if (res.code == 200) {
-            router.replace({
-                name: 'submit'
-            })
+            if (from.value = 'register') {
+                setTimeout(() => {
+                    showNotify({ type: 'success', message: '提交成功' })
+                }, 300)
+                nextStep()
+            } else {
+                router.replace({
+                    name: 'submit'
+                })
+            }
         }
     }).finally(() => {
         loading.value = false
@@ -247,6 +262,13 @@ const getKyc = () => {
     })
 }
 getKyc()
+
+
+const nextStep = () => {
+    router.replace({
+        name: 'user'
+    })
+}
 
 
 // 图片处理

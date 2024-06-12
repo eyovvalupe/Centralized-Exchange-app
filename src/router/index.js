@@ -161,6 +161,26 @@ const routes = [
     }
   },
   {
+    // 注册
+    path: "/safePassword",
+    name: "safePassword",
+    component: () => import("../views/Public/SafePassword.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'login'
+    }
+  },
+  {
+    // 注册成功
+    path: "/registerSuccess",
+    name: "registerSuccess",
+    component: () => import("../views/Public/RegisterSuccess.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 语言
     path: "/language",
     name: "language",

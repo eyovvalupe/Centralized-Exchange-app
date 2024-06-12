@@ -58,7 +58,8 @@ instance.interceptors.response.use(
         ) {
           return;
         } else {
-          router.replace({
+          store.dispatch('reset')
+          router.push({
             name: 'login'
           })
           return;

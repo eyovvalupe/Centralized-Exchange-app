@@ -69,6 +69,17 @@ const checkGG = (name) => {
     jump(name)
 }
 
+
+// 预加载页面
+store.commit('setPageLoading', true)
+const loadingList = [
+    import('@/views/User/LoginPassword.vue'),
+    import('@/views/User/Google.vue'),
+]
+Promise.all(loadingList).finally(() => {
+    store.commit('setPageLoading', false)
+})
+
 </script>
 
 <style lang="less" scoped>

@@ -161,7 +161,8 @@ Promise.all(loadingList).finally(() => {
 if (token.value) {
     setTimeout(() => {
         Promise.all([
-            import('@/views/User/Safety.vue')
+            import('@/views/User/Safety.vue'),
+            import('@/views/User/Kyc/Index.vue')
         ]).finally(() => {
             console.error('子页面加载完成')
         })

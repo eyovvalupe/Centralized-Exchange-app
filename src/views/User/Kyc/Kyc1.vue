@@ -2,6 +2,10 @@
 <template>
     <div class="kyc_1">
         <Top :title="''">
+            <!-- 从注册来的 -->
+            <template #right v-if="from == 'register'">
+                <span @click="nextStep" style="color: #014CFA;font-weight: 400;font-size: 0.28rem;">跳过</span>
+            </template>
             <!-- 提交过认证信息 -->
             <template #right v-if="kycInfo.name">
                 <div class="kyc_status">
@@ -31,8 +35,8 @@
 
         <Button v-if="!pageLoading && !kycInfo.name" @click="submit" :loading="loading" :disabled="disabled" round
             color="#014CFA" class="submit" type="primary">继续</Button>
-        <Button v-if="!pageLoading && kycInfo.name && kycInfo.status == 'success'" round color="#014CFA" class="submit"
-            type="primary" @click="next">继续</Button>
+        <Button v-if="!pageLoading && kycInfo.name" round color="#014CFA" class="submit" type="primary"
+            @click="next">继续</Button>
 
 
         <!-- 日期选择 -->
@@ -50,6 +54,10 @@ import { ref, computed } from 'vue'
 import { _kyc1, _kycGet } from "@/api/api"
 import router from '@/router';
 import store from '@/store';
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+const from = ref(route.query.from) // 'register'-表示从注册来
 
 const userInfo = computed(() => store.state.userInfo || {})
 
@@ -83,9 +91,13 @@ const submit = () => {
     loading.value = true
     _kyc1(form.value).then(res => {
         if (res.code == 200) {
-            router.replace({
-                name: 'submit'
-            })
+            if (from.value == 'register') {
+                nextStep()
+            } else {
+                router.replace({
+                    name: 'submit'
+                })
+            }
         }
     }).finally(() => {
         loading.value = false
@@ -108,8 +120,9 @@ const getKyc = () => {
             form.value.name = res.data.name
             form.value.idnum = res.data.idnum
             form.value.birthday = res.data.birthday
-            currentDate.value = res.data.birthday.split(',')
-
+            if (res.data.birthday) {
+                currentDate.value = res.data.birthday.split(',')
+            }
         }
     }).finally(() => {
         closeToast()
@@ -119,8 +132,12 @@ getKyc()
 
 const next = () => { // 审核成功后 点击继续跳转2
     const u = JSON.parse(JSON.stringify(userInfo.value))
-    ukyc = 2
+    u.kyc = 2
     store.commit('setUserInfo', u)
+}
+
+const nextStep = () => {
+    next()
 }
 </script>
 

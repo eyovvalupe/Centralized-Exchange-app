@@ -71,6 +71,10 @@ import { _login } from "@/api/api"
 import VerifCode from "@/components/VerifCode.vue"
 import store from "@/store"
 
+// 进入页面则重置登录状态信息
+store.commit("setToken", "");
+store.commit("setUserInfo", {});
+
 const route = useRoute()
 const verifCodeRef = ref()
 
@@ -98,9 +102,19 @@ const submit = () => {
       store.commit('setUserInfo', res.data)
     }, 100)
     setTimeout(() => {
-      router.push({
-        name: 'user'
-      })
+      store.dispatch('updateUserInfo')
+      if (route.query.reurl) {
+        router.replace({
+          name: route.query.reurl,
+          query: {
+            redata: route.query.redata,
+          }
+        })
+      } else {
+        router.push({
+          name: 'user'
+        })
+      }
     }, 300)
   }).catch(err => {
     if (err.code == '1001') { // 弹出验证码
