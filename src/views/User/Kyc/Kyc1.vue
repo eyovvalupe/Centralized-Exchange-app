@@ -35,8 +35,8 @@
 
         <Button v-if="!pageLoading && !kycInfo.name" @click="submit" :loading="loading" :disabled="disabled" round
             color="#014CFA" class="submit" type="primary">继续</Button>
-        <Button v-if="!pageLoading && kycInfo.name && kycInfo.status == 'success'" round color="#014CFA" class="submit"
-            type="primary" @click="next">继续</Button>
+        <Button v-if="!pageLoading && kycInfo.name" round color="#014CFA" class="submit" type="primary"
+            @click="next">继续</Button>
 
 
         <!-- 日期选择 -->
@@ -49,7 +49,7 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Button, Popup, DatePicker, showLoadingToast, closeToast, showNotify } from "vant"
+import { Button, Popup, DatePicker, showLoadingToast, closeToast } from "vant"
 import { ref, computed } from 'vue'
 import { _kyc1, _kycGet } from "@/api/api"
 import router from '@/router';
@@ -92,9 +92,6 @@ const submit = () => {
     _kyc1(form.value).then(res => {
         if (res.code == 200) {
             if (from.value == 'register') {
-                setTimeout(() => {
-                    showNotify({ type: 'success', message: '提交成功' })
-                }, 300)
                 nextStep()
             } else {
                 router.replace({
@@ -135,14 +132,12 @@ getKyc()
 
 const next = () => { // 审核成功后 点击继续跳转2
     const u = JSON.parse(JSON.stringify(userInfo.value))
-    ukyc = 2
+    u.kyc = 2
     store.commit('setUserInfo', u)
 }
 
 const nextStep = () => {
-    router.replace({
-        name: 'user',
-    })
+    next()
 }
 </script>
 
