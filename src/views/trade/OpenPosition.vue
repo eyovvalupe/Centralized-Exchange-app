@@ -374,21 +374,23 @@ const getnumval = (newValue)=>{
 
 const getPay = ()=> {
   //保证金 数量*股票单价/杠杆
-  const result = new Decimal(numValue.value)
-      .mul(stockPrice.value)
-      .div(selectedLeverOption.value)
-      .toFixed(2); 
-  paymentAmount.value = result
-  //手续费计算
-  //开仓手续费  数量*手续费
-  openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
-  //平仓手续费
-  closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
-  amount.value = new Decimal(numValue.value)
-      .mul(stockPrice.value)
-      .div(selectedLeverOption.value)
-    .plus( new Decimal(numValue.value).mul(ofee.value))
-    .toFixed(2); 
+  if (numValue.value) {
+    const result = new Decimal(numValue.value)
+        .mul(stockPrice.value)
+        .div(selectedLeverOption.value)
+        .toFixed(2); 
+    paymentAmount.value = result
+    //手续费计算
+    //开仓手续费  数量*手续费
+    openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
+    //平仓手续费
+    closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
+    amount.value = new Decimal(numValue.value)
+        .mul(stockPrice.value)
+        .div(selectedLeverOption.value)
+      .plus( new Decimal(numValue.value).mul(ofee.value))
+      .toFixed(2);
+  }
 }
 
 const handleInput = () => {
@@ -526,7 +528,7 @@ const getStockslist = ()=>{
 
 const getslide = ()=>{
   //滑动条值
-  if (new Decimal(numValue.value)) {
+  if (numValue.value && new Decimal(numValue.value)) {
     if (new Decimal(numValue.value).gt(roundedQuantity.value)) {
       sliderValue.value = 100
       return
@@ -541,12 +543,15 @@ const getslide = ()=>{
 
 
 onMounted(() => {
-  getStockslist()
+  if (token.value) {
+    getStockslist()
+  }
 });
 
 const jump = (name) => {
   router.push({
     name,
+    query:{reurl:'trade',redata:'1'}
   });
 };
 

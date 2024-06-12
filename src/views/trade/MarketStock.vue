@@ -230,6 +230,9 @@ const route = useRoute();
 if (route.query.type === "date") {
   active.value = 2;
 }
+if (route.query.redata === "1") {
+  active.value = 0;
+}
 
 const emit = defineEmits(["update"]);
 const buttonShow = ref(false);
@@ -358,6 +361,7 @@ onMounted(() => {
 const jump = (name) => {
   router.push({
     name,
+    query:{reurl:'trade'}
   });
 };
 
