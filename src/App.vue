@@ -74,7 +74,7 @@ store.commit('setFullscreen', false)
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules"].includes(route.name) && !pageLoading.value && !fullWindow.value;
+  return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules",'assets'].includes(route.name) && !pageLoading.value && !fullWindow.value;
 });
 
 const showDateBottom = computed(() => {
@@ -90,6 +90,7 @@ Promise.all([
   import('@/views/Market/Market.vue'),
   import('@/views/User/User.vue'),
   import('@/views/trade/trade.vue'),
+  import('@/views/assets/Assets.vue'),
 ]).finally(() => {
   store.commit('setPageLoading', false)
   setTimeout(() => {
@@ -98,7 +99,7 @@ Promise.all([
 })
 
 const boundFunc = () => {
-  const reboundPage = ['user', 'trade', 'date']
+  const reboundPage = ['user', 'trade', 'date','assets','ipodetail']
   // 回弹效果
   let startY = 0
   const maxMove = 200

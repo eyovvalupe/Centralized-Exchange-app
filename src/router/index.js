@@ -57,7 +57,7 @@ const routes = [
       pageType: 'child'
     }
   },
-  { // 谷歌验证码-已绑定
+  { // 谷歌验证码 - 已绑定
     path: "/googleCode",
     name: "googleCode",
     component: () => import("../views/User/GoogleCode.vue"),
@@ -195,6 +195,16 @@ const routes = [
     path: "/ipodetail",
     name: "ipodetail",
     component: () => import("../views/trade/IPODetail.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
+    // 资产
+    path: "/assets",
+    name: "assets",
+    component: () => import("../views/assets/Assets.vue"),
     meta: {
       keepAlive: false,
       pageType: 'tab'
