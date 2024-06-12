@@ -123,7 +123,7 @@
         size="large"
         color="#014cfa"
         round
-        style="margin-top: 30px;"
+        style="margin-top: 0.6rem;"
         @click="openStock"
         :disabled = 'value == 0 || value.length === 0'
         >开仓</Button

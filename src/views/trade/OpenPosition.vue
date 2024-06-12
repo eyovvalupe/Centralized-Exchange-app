@@ -225,7 +225,7 @@
         color="#014cfa"
         round
         v-if="!token"
-        style="margin-bottom: 17px"
+        style="margin-bottom: 0.34rem"
         @click="jump('login')"
         >登陆</Button
       >
@@ -786,7 +786,7 @@ const openPopup = ()=>{
       .bigslect {
         width: 100%;
         text-align: center;
-        padding-right: 20px;
+        padding-right: 0.4rem;
       }
       .selected-class {
         color: #1e5eff;

@@ -667,10 +667,10 @@ const jump = (name) => {
   position: relative;
 
   .no-data-img {
-    width: 211px !important;
-    height: 108px !important;
+    width: 4.22rem !important;
+    height: 2.16rem !important;
     position: absolute;
-    top: 140px;
+    top: 2.8rem;
     bottom: 0;
     left: 0;
     right: 0;
@@ -680,11 +680,11 @@ const jump = (name) => {
   .no-data-text {
     color: #a5afba;
     text-align: center;
-    font-size: 14px;
+    font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
     position: absolute;
-    top: 250px;
+    top: 5rem;
     bottom: 0;
     left: 0;
     right: 0;

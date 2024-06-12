@@ -42,31 +42,31 @@
       line-height: 0.44rem;
       margin-bottom: 0.36rem;
       text-align: left;
-      margin-left: 15px;
+      margin-left: 0.3rem;
     }
     .select-box {
       display: flex;
-      padding:  0 15px;
-      margin-top: 35px;
+      padding:  0 0.3rem;
+      margin-top: 0.7rem;
       .select-box-item {
-        width: 170px;
-        height: 37px;
-        border-radius: 4px;
-        border: 1px solid #f2f2f2;
+        width: 3.5rem;
+        height: 0.74rem;
+        border-radius: 0.08rem;
+        border: 0.02rem solid #f2f2f2;
         text-align: center;
-        line-height: 37px;
+        line-height: 0.74rem;
         color: #061023;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-style: normal;
         font-weight: 600;
         background-color: #f2f2f2;
       }
       .select-box-item:first-of-type {
-        margin-right: 15px;
+        margin-right: 0.3rem;
       }
       .selected-class {
         color: #1a59f6;
-        border: 1px solid #1A59F6;
+        border: 0.02rem solid #1A59F6;
         background-color: white;
         position: relative;
       }
@@ -75,18 +75,18 @@
     .checkmark {
       width: 0;
       height: 0;
-      border-top: 20px solid #1a59f6;
-      border-left: 20px solid transparent;
+      border-top: 0.4rem solid #1a59f6;
+      border-left: 0.4rem solid transparent;
       position: absolute;
       top: 0;
       right: 0;
       &:after {
         content: "✓";
         position: absolute;
-        top: -30px;
+        top: -0.6rem;
         right: 0px;
         color: white;
-        font-size: 12px;
+        font-size: 0.24rem;
         font-weight: normal;
       }
     }

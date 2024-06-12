@@ -40,23 +40,23 @@
       line-height: 0.44rem;
       margin-bottom: 0.36rem;
       text-align: left;
-      margin-left: 15px;
+      margin-left: 0.3rem;
     }
     .select-box {
-      margin-top: 35px;
+      margin-top: 0.7rem;
       .select-box-item {
         width: 100%;
-        height: 48px;
+        height: 0.96rem;
         text-align: center;
-        line-height: 48px;
+        line-height: 0.96rem;
         color: #333333;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
-        border-bottom: 1px solid #f4f5f7;
+        border-bottom: 0.02rem solid #f4f5f7;
       }
       .select-box-item:first-of-type {
-        margin-right: 15px;
+        margin-right: 0.3rem;
       }
       .selected-class {
         color: #014cfa;

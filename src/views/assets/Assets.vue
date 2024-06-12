@@ -70,7 +70,7 @@
         <div class="assets-s-box-text">充值</div>
       </div>
       <div :style="threeImage" class="assets-s-box">
-        <img src="/static/img/assets/pay.png" alt="" class="assets-s-box-img" style="margin-bottom: 7px;">
+        <img src="/static/img/assets/pay.png" alt="" class="assets-s-box-img" style="margin-bottom: 0.14rem;">
         <div class="assets-s-box-p">
           100,000
         </div>
@@ -90,7 +90,7 @@
 
     <div class="assets-b-box">
       <SwipeCell>
-        <div class="assets-b-box-b" style="border-top: 1px solid #eaeaea;">
+        <div class="assets-b-box-b" style="border-top: 0.02rem solid #eaeaea;">
           <div class="assets-b-box-b-t">
             现金账户
           </div>
@@ -100,7 +100,7 @@
         </div>
         <template #right>
           <div class="assets-right-div">
-            <div class="assets-right-div-left-box" style="border-top: 1px solid #eaeaea;">
+            <div class="assets-right-div-left-box" style="border-top: 0.02rem solid #eaeaea;">
             </div>
             <div class="assets-right-i-div" style="background-color: #3f845f;">
               <img src="/static/img/assets/money.png" alt="" class="assets-right-i-div-img">
@@ -278,43 +278,43 @@ const selectTab = (val) => {
     line-height: 1.12rem;
   }
   .assets-tab {
-    height: 36px;
+    height: 0.72rem;
     display: flex;
     padding: 0 0.3rem;
-    margin-bottom: 15px;
+    margin-bottom: 0.3rem;
     .assets-tab-item {
-      height: 36px;
-      line-height: 36px;
+      height: 0.72rem;
+      line-height: 0.72rem;
       text-align: center;
-      font-size: 16px;
+      font-size: 0.32rem;
       font-style: normal;
       font-weight: 400;
       position: relative;
-      margin: 0 10px;
+      margin: 0 0.2rem;
     }
     .highlight {
-      height: 36px;
-      border-radius: 24px;
+      height: 0.72rem;
+      border-radius: 0.48rem;
       background: #F6F8FF;
-      font-size: 16px;
+      font-size: 0.32rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 36px;
+      line-height: 0.72rem;
       color: #014cfa;
-      padding: 0 23px;
+      padding: 0 0.46rem;
       margin: 0 !important;
-      margin-right: 10px !important;
+      margin-right: 0.2rem !important;
     }
   }
   .assets-box {
-    padding: 0 16px;
-    margin-bottom: 15px;
+    padding: 0 0.32rem;
+    margin-bottom: 0.3rem;
     .t-box {
       width: 100%;
       height: 4.34rem;
       background-size: cover;
       background-position: center;
-      padding: 20px;
+      padding: 0.4rem;
     }
     .assets-t-title {
       display: flex;
@@ -322,133 +322,133 @@ const selectTab = (val) => {
       .assets-all {
         color: #FFF;
         text-align: center;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
-        line-height: 30px;
-        margin-right: 17px;
+        line-height: 0.6rem;
+        margin-right: 0.34rem;
       }
       .eye-o {
-        font-size: 14px;
-        line-height: 30px;
+        font-size: 0.28rem;
+        line-height: 0.6rem;
         color: white;
         font-weight: 600;
       }
       .assets-account-button {
-        width: 98px;
-        height: 30px;
-        border-radius: 15px;
+        width: 1.96rem;
+        height: 0.6rem;
+        border-radius: 0.3rem;
         background: #FFF;
         color: #000;
         text-align: center;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
-        line-height: 30px;
+        line-height: 0.6rem;
       }
     }
     .assets-price {
       color: #FFF;
-      font-size: 34px;
+      font-size: 0.68rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 48px;
-      margin-bottom: 10px;
-      margin-top: 20px;
+      line-height: 0.96rem;
+      margin-bottom: 0.2rem;
+      margin-top: 0.4rem;
     }
     .assets-b {
       flex: 1;
       position: relative;
       .r-line {
-        width: 1px;
-        height: 22px;
+        width: 0.02rem;
+        height: 0.44rem;
         background-color: #ffffff;
         position: absolute;
         right: 0px;
-        top: 5px;
+        top: 0.1rem;
       }
       .assets-t {
         color: #FFF;
         text-align: center;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
-        line-height: 24px;
+        line-height: 0.48rem;
       }
       .assets-p {
         color: #FFF;
         text-align: center;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
-        line-height: 24px;
+        line-height: 0.48rem;
       }
     }
     .assets-dj {
       text-align: right;
       color: #FFF;
       text-align: right;
-      font-size: 14px;
+      font-size: 0.28re m;
       font-style: normal;
       font-weight: 400;
-      line-height: 24px;
-      margin-top: 3px;
+      line-height: 0.48rem;
+      margin-top: 0.06rem;
     }
   }
   .assets-m-box {
     display: flex;
     justify-content: space-between;
-    padding: 0 16px;
-    margin-bottom: 23px;
+    padding: 0 0.32rem;
+    margin-bottom: 0.46rem;
     .assets-s-box {
-      width: 104px;
-      height: 100px;
+      width: 2.08rem;
+      height: 2rem;
       background-size: cover;
       background-position: center;
-      padding: 10px;
+      padding: 0.2rem;
       .assets-s-box-text {
         color: #FFF;
         text-align: right;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
-        line-height: 20px;
+        line-height: 0.4rem;
       }
       .assets-s-box-p {
         color: #FFF;
         text-align: right;
-        font-size: 12px;
+        font-size: 0.24rem;
         font-style: normal;
         font-weight: 400;
-        line-height: 20px;
+        line-height: 0.4rem;
       }
       .assets-s-box-img {
-        width: 35px!important;
-        height: 35px!important;
-        margin-bottom: 21px;
+        width: 0.7rem!important;
+        height: 0.7rem!important;
+        margin-bottom: 0.42rem;
       }
     }
   }
   .assets-b-box {
-    padding: 0 16px;
+    padding: 0 0.32rem;
     .assets-b-box-b {
-      height: 59px;
-      border-bottom: 1px solid #eaeaea;
+      height: 1.18rem;
+      border-bottom: 0.02rem solid #eaeaea;
       display: flex;
-      line-height: 59px;
+      line-height: 1.18rem;
       justify-content:space-between;
     }
     .assets-b-box-b-t {
       color: #061023;
       text-align: center;
-      font-size: 16px;
+      font-size: 0.32rem;
       font-style: normal;
       font-weight: 400;
     }
     .assets-b-box-b-p {
       color: #061023;
       text-align: center;
-      font-size: 16px;
+      font-size: 0.32re m;
       font-style: normal;
       font-weight: 400;
     }
@@ -456,28 +456,28 @@ const selectTab = (val) => {
   .assets-right-div {
     display: flex;
     .assets-right-i-div {
-      width: 62px;
-      height: 59px;
+      width: 1.24rem;
+      height: 1.18rem;
       color: #FFF;
       text-align: center;
-      font-size: 12px;
+      font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 20px;
+      line-height: 0.4rem;
       .assets-right-i-div-img {
-        width: 22px!important;
-        height: 22px!important;
+        width: 0.44rem!important;
+        height: 0.44rem!important;
         display: block;
         margin: auto;
-        margin-top: 10px;
-        margin-bottom: 2px;
+        margin-top: 0.2rem;
+        margin-bottom: 0.04rem;
       }
     }
     .assets-right-div-left-box {
       background-color: white; 
-      width: 26px;
-      height: 59px;
-      border-bottom: 1px solid #eaeaea;
+      width: 0.52rem;
+      height: 1.18rem;
+      border-bottom: 0.02rem solid #eaeaea;
     }
   }
 }
