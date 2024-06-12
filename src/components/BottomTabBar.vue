@@ -1,7 +1,7 @@
 <!-- 底部导航 -->
 <template>
     <div class="max-width  bottom_nav">
-        <div @touchstart="handleClick(item)" @click="handleClick(item)" class="ripple_button bottom_nav_item"
+        <div @touchstart="handleClick(item, $event)" @click="handleClick(item)" class="ripple_button bottom_nav_item"
             :class="[checkActive(item) ? 'bottom_nav_active' : '']" v-for="(item, i) in navs" :key="i">
             <div class="bottom_nav_icon">
                 <img v-if="!checkActive(item)" :src="item.icon" :alt="item.name">
@@ -21,20 +21,37 @@ import { ref, computed } from "vue"
 import { useRoute } from "vue-router";
 import router from "@/router"
 import { _playVoice } from "@/utils/voice"
+import icon1 from "@/assets/bottom/bottom_1.png"
+import icon11 from "@/assets/bottom/bottom_1_1.png"
+import icon2 from "@/assets/bottom/bottom_2.png"
+import icon22 from "@/assets/bottom/bottom_2_2.png"
+import icon3 from "@/assets/bottom/bottom_3.png"
+import icon33 from "@/assets/bottom/bottom_3_3.png"
+import icon4 from "@/assets/bottom/bottom_4.png"
+import icon44 from "@/assets/bottom/bottom_4_4.png"
+import icon5 from "@/assets/bottom/bottom_5.png"
+import icon55 from "@/assets/bottom/bottom_5_5.png"
 
 const route = useRoute();
 const activeRoute = computed(() => route.name)
 
 const navs = ref([
-    { name: '首页', route: 'home', icon: '/static/img/bottom/bottom_1.png', icon2: '/static/img/bottom/bottom_1_1.png' },
-    { name: '市场', route: 'market', children: ['market_info', 'financial_info', 'trading_rules'], icon: '/static/img/bottom/bottom_2.png', icon2: '/static/img/bottom/bottom_2_2.png' },
-    { name: '交易', route: 'trade', icon: '/static/img/bottom/bottom_3.png', icon2: '/static/img/bottom/bottom_3_3.png' },
-    { name: '资产', route: 'assets', icon: '/static/img/bottom/bottom_4.png', icon2: '/static/img/bottom/bottom_4_4.png' },
-    { name: '用户', route: 'user', icon: '/static/img/bottom/bottom_5.png', icon2: '/static/img/bottom/bottom_5_5.png' },
+    { name: '首页', route: 'home', icon: icon1, icon2: icon11 },
+    { name: '市场', route: 'market', children: ['market_info', 'financial_info', 'trading_rules'], icon: icon2, icon2: icon22 },
+    { name: '交易', route: 'trade', icon: icon3, icon2: icon33 },
+    { name: '钱包', route: 'assets', icon: icon4, icon2: icon44 },
+    { name: '用户', route: 'user', icon: icon5, icon2: icon55 },
 ])
 
-const handleClick = item => {
+const touchLoading = ref(false)
+const handleClick = (item, e) => {
     if (!item.route) return
+    if (touchLoading.value) return
+    console.error(e)
+    touchLoading.value = true
+    setTimeout(() => {
+        touchLoading.value = false
+    }, 300)
     router.push({
         name: item.route
     })
