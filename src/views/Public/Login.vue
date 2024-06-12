@@ -71,6 +71,10 @@ import { _login } from "@/api/api"
 import VerifCode from "@/components/VerifCode.vue"
 import store from "@/store"
 
+// 进入页面则重置登录状态信息
+store.commit("setToken", "");
+store.commit("setUserInfo", {});
+
 const route = useRoute()
 const verifCodeRef = ref()
 
@@ -98,6 +102,7 @@ const submit = () => {
       store.commit('setUserInfo', res.data)
     }, 100)
     setTimeout(() => {
+      store.dispatch('updateUserInfo')
       router.push({
         name: 'user'
       })

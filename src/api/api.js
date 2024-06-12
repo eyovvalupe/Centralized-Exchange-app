@@ -176,7 +176,8 @@ export const _stocksGet = (data = {}) => {
 
 //平仓
 export const _stocksSell = (data = {}) => {
-  return http.post(`authc/v1/stocks/sell`, data, {custom: { auth: true, toast: true },
+  return http.post(`authc/v1/stocks/sell`, data, {
+    custom: { auth: true, toast: true },
   });
 };
 
@@ -196,6 +197,19 @@ export const _kyc1 = (data = {}) => {
 export const _kyc2 = (data = {}) => {
   return http.post(`/authc/v1/user/kyc/l2/set`, data, {
     custom: { auth: true, toast: true },
+  });
+};
+
+// SessionToken
+export const _sessionToken = (data = {}) => {
+  return http.post(`/anon/v1/comm/token`, data, {
+    custom: { auth: false, toast: false },
+  });
+};
+// 用户注册
+export const _register = (data = {}) => {
+  return http.post(`/anon/v1/user/register`, data, {
+    custom: { auth: false, toast: false },
   });
 };
 

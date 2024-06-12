@@ -1,7 +1,11 @@
 <!-- 谷歌验证器 -->
 <template>
     <div class="page page_google">
-        <Top :title="''" />
+        <Top :title="''">
+            <template #right v-if="from == 'register'">
+                <span @click="nextStep" style="color: #014CFA;font-weight: 400;font-size: 0.28rem;">跳过</span>
+            </template>
+        </Top>
 
         <div class="title">绑定谷歌验证器</div>
         <div class="subtitle">谷歌验证器密钥</div>
@@ -27,13 +31,18 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { PasswordInput, NumberKeyboard, Button, showToast, showLoadingToast, closeToast } from "vant"
+import { PasswordInput, NumberKeyboard, Button, showToast, showLoadingToast, closeToast, showNotify } from "vant"
 import { ref, computed, watch } from "vue"
 import { _google, _googleBind } from "@/api/api"
 import QRCode from "qrcode"
 import { _copyTxt } from "@/utils/index"
 import router from '@/router';
 import store from '@/store';
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+const from = ref(route.query.from) // 'register'-表示从注册来
+
 
 const loading = ref(false)
 const disabled = computed(() => {
@@ -85,11 +94,15 @@ const goBind = () => {
         if (res.code == 200) {
             store.dispatch('updateUserInfo')
             setTimeout(() => {
-                showToast('绑定成功')
+                showNotify({ type: 'success', message: '绑定成功' })
             }, 300)
-            router.replace({
-                name: 'googleCode'
-            })
+            if (from.value == 'register') {
+                nextStep()
+            } else {
+                router.replace({
+                    name: 'googleCode'
+                })
+            }
         }
     }).catch(err => {
         errText.value = err.message
@@ -114,6 +127,13 @@ const blur = () => { // 失去焦点
 const copy = () => {
     _copyTxt(gg.value.googlesecret)
     showToast('复制成功')
+}
+
+const nextStep = () => {
+    router.replace({
+        name: 'kyc',
+        query: route.query
+    })
 }
 </script>
 

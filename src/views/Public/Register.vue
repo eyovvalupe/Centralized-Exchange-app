@@ -53,7 +53,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box">
-      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
+      <Button @click="submit" :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
     </div>
 
     <!-- 去注册 -->
@@ -66,85 +66,48 @@
     </div>
 
 
-    <!-- 验证码 -->
-    <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
   </div>
 
 
 </template>
 
 <script setup>
-import { Icon, Button, showToast, showNotify, Checkbox } from "vant"
+import { Icon, Button, showToast, Checkbox } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
-import { _login } from "@/api/api"
-import VerifCode from "@/components/VerifCode.vue"
 import PasswordLevel from "@/components/PasswordLevel.vue"
 import store from "@/store"
 
+// 进入页面则重置登录状态信息
+store.commit("setToken", "");
+store.commit("setUserInfo", {});
+
 const route = useRoute()
-const verifCodeRef = ref()
 
 const showPass = ref(false) // 密码显示
 const checked = ref(false) // 同意协议
 const form = ref({ // 表单
   username: '',
   password: '',
-  safeword: '', // 交易密码
-  confirmSafe: '', // 确认交易密码
   guest: false,
-  verifcode: '',
-  token: '',
   invateCode: ''
 })
 
-const loading = ref(false) // 加载
 const disabled = computed(() => { // 提交按钮禁用
   return !(form.value.username && form.value.password)
 })
 
 // 提交
 const submit = () => {
-  if (loading.value) return
-  loading.value = true
-  _login(form.value).then(res => {
-    store.dispatch('reset')
-    showNotify({ type: 'success', message: '登录成功' })
-    setTimeout(() => {
-      store.commit('setToken', res.data.auth)
-      store.commit('setUserInfo', res.data)
-    }, 100)
-    setTimeout(() => {
-      router.push({
-        name: 'user'
-      })
-    }, 300)
-  }).catch(err => {
-    if (err.code == '1001') { // 弹出验证码
-      if (form.value.verifcode) { // 如果输入了验证码，旧提示验证码错误
-        showToast(err.message)
-      }
-      setTimeout(() => {
-        verifCodeRef.value.open()
-      }, 1000)
-    } else {
-      showToast(err.message || "网络异常")
-    }
-  }).finally(() => {
-    setTimeout(() => {
-      form.value.verifcode = ''
-      loading.value = false
-    }, 1000)
-  })
+  if (!checked.value) return showToast('请先同意隐私政策和用户条款')
+  sessionStorage.setItem('registerForm', JSON.stringify(form.value))
+  setTimeout(() => {
+    router.push({
+      name: 'safePassword'
+    })
+  }, 100)
 }
-
-// 通过验证码提交
-const submitCode = code => {
-  form.value.verifcode = code
-  submit()
-}
-
 
 
 // 返回

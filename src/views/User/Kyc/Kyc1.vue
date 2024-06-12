@@ -2,6 +2,10 @@
 <template>
     <div class="kyc_1">
         <Top :title="''">
+            <!-- 从注册来的 -->
+            <template #right v-if="from == 'register'">
+                <span @click="nextStep" style="color: #014CFA;font-weight: 400;font-size: 0.28rem;">跳过</span>
+            </template>
             <!-- 提交过认证信息 -->
             <template #right v-if="kycInfo.name">
                 <div class="kyc_status">
@@ -45,11 +49,15 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Button, Popup, DatePicker, showLoadingToast, closeToast } from "vant"
+import { Button, Popup, DatePicker, showLoadingToast, closeToast, showNotify } from "vant"
 import { ref, computed } from 'vue'
 import { _kyc1, _kycGet } from "@/api/api"
 import router from '@/router';
 import store from '@/store';
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+const from = ref(route.query.from) // 'register'-表示从注册来
 
 const userInfo = computed(() => store.state.userInfo || {})
 
@@ -83,9 +91,16 @@ const submit = () => {
     loading.value = true
     _kyc1(form.value).then(res => {
         if (res.code == 200) {
-            router.replace({
-                name: 'submit'
-            })
+            if (from.value == 'register') {
+                setTimeout(() => {
+                    showNotify({ type: 'success', message: '提交成功' })
+                }, 300)
+                nextStep()
+            } else {
+                router.replace({
+                    name: 'submit'
+                })
+            }
         }
     }).finally(() => {
         loading.value = false
@@ -108,8 +123,9 @@ const getKyc = () => {
             form.value.name = res.data.name
             form.value.idnum = res.data.idnum
             form.value.birthday = res.data.birthday
-            currentDate.value = res.data.birthday.split(',')
-
+            if (res.data.birthday) {
+                currentDate.value = res.data.birthday.split(',')
+            }
         }
     }).finally(() => {
         closeToast()
@@ -121,6 +137,12 @@ const next = () => { // 审核成功后 点击继续跳转2
     const u = JSON.parse(JSON.stringify(userInfo.value))
     ukyc = 2
     store.commit('setUserInfo', u)
+}
+
+const nextStep = () => {
+    router.replace({
+        name: 'user',
+    })
 }
 </script>
 

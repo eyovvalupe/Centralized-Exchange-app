@@ -41,15 +41,18 @@ const levels = computed(() => {
     // 初始评估等级为0（弱）
     let strength = 0;
     // 如果密码长度大于等于最小长度，增加评估等级
-    if (password.length >= minLength) strength += 1;
-    // 如果密码包含大写字母，增加评估等级
-    if (hasUpperCase) strength += 1;
-    // 如果密码包含小写字母，增加评估等级
-    if (hasLowerCase) strength += 1;
-    // 如果密码包含数字，增加评估等级
-    if (hasNumbers) strength += 1;
-    // 如果密码包含特殊字符，增加评估等级
-    if (hasSpecialChars) strength += 1;
+    if (password.length >= minLength) {
+        // 如果密码包含大写字母，增加评估等级
+        if (hasUpperCase) strength += 1;
+        // 如果密码包含小写字母，增加评估等级
+        if (hasLowerCase) strength += 1;
+        // 如果密码包含数字，增加评估等级
+        if (hasNumbers) strength += 1;
+        // 如果密码包含特殊字符，增加评估等级
+        if (hasSpecialChars) strength += 1;
+    } else {
+        strength = password.length ? 1 : 0
+    }
 
     return strength > 4 ? 4 : strength
 })
