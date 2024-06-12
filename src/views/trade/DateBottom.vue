@@ -43,7 +43,7 @@
   <style lang="less">
   .date-bottom{
     width: 100%;
-    height: 71px;
+    height: 1.42rem;
     background-color: #f7f7f7;
     position: fixed;
     bottom: 0;
