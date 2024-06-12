@@ -16,15 +16,8 @@
 
   <DateBottom v-if="showDateBottom" />
 
-  <Popup
-    v-model:show="showOpenPositionBottom"
-    position="bottom"
-    closeable
-    :style="{height: popupHeight}"
-    :class="['detail-popup', { keypadding: keyborader }]"
-    @close="closePopup"
-    v-if="showOpenPositionBottom"
-  >
+  <Popup v-model:show="showOpenPositionBottom" position="bottom" closeable :style="{ height: popupHeight }"
+    :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
     <component :is="popupComponent" />
   </Popup>
 
@@ -57,7 +50,7 @@ const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom
 const popupHeight = computed(() => store.state.popupHeight)
 const popupComponent = computed(() => store.state.popupComponent)
 const keyborader = computed(() => store.state.keyborader)
-const closePopup = ()=>{
+const closePopup = () => {
   store.dispatch('closePopup')
 }
 
@@ -74,7 +67,7 @@ store.commit('setFullscreen', false)
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules"].includes(route.name) && !pageLoading.value && !fullWindow.value;
+  return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules"].includes(route.name) && !fullWindow.value;
 });
 
 const showDateBottom = computed(() => {

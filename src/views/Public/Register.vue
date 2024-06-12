@@ -4,7 +4,7 @@
 
     <!-- 返回和语言 -->
     <div class="max-width top">
-      <div class="ripple_button top_back" @click="router.back()">
+      <div class="ripple_button top_back" @click="goBack">
         <Icon name="cross" />
       </div>
 
@@ -57,7 +57,7 @@
     </div>
 
     <!-- 去注册 -->
-    <div class="go_register" @click="router.replace({ name: 'login' })">
+    <div class="go_register" @click="goLogin">
       <div class="server_icon">
         <img src="/static/img/common/server.png" alt="server">
       </div>
@@ -77,11 +77,13 @@
 import { Icon, Button, showToast, showNotify, Checkbox } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
+import { useRoute } from "vue-router"
 import { _login } from "@/api/api"
 import VerifCode from "@/components/VerifCode.vue"
 import PasswordLevel from "@/components/PasswordLevel.vue"
 import store from "@/store"
 
+const route = useRoute()
 const verifCodeRef = ref()
 
 const showPass = ref(false) // 密码显示
@@ -141,6 +143,32 @@ const submit = () => {
 const submitCode = code => {
   form.value.verifcode = code
   submit()
+}
+
+
+
+// 返回
+const goBack = () => {
+  if (route.query.reurl) {
+    router.replace({
+      name: route.query.reurl,
+      query: {
+        redata: route.query.redata,
+      }
+    })
+  } else {
+    router.back()
+  }
+}
+// 跳转登录
+const goLogin = () => {
+  router.replace({
+    name: 'login',
+    query: {
+      reurl: route.query.reurl,
+      redata: route.query.redata,
+    }
+  })
 }
 </script>
 
