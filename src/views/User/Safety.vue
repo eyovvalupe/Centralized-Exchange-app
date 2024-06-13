@@ -74,7 +74,7 @@ const checkGG = (name) => {
 store.commit('setPageLoading', true)
 const loadingList = [
     import('@/views/User/LoginPassword.vue'),
-    import('@/views/User/Google.vue'),
+    import('@/views/User/Google/Google.vue'),
 ]
 Promise.all(loadingList).finally(() => {
     store.commit('setPageLoading', false)

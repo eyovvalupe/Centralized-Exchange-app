@@ -6,7 +6,8 @@ import { BASE_ADDRESS } from "@/config"
 
 
 const instance = axios.create({
-  baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
+  // baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
+  baseURL: BASE_ADDRESS,
   transformRequest: [function (data, headers) {
     if (headers['Content-Type'] == "multipart/form-data") return data
     return JSON.stringify(data);
@@ -20,7 +21,6 @@ instance.interceptors.request.use(
     // config.headers["deviceId"] = store.state.deviceId;
     const token = store.state.token;
     if (token) {
-      config.headers.token = token;
       config.headers.auth = token;
     }
     if (config?.custom?.auth && !token) {
@@ -30,6 +30,7 @@ instance.interceptors.request.use(
       throw new Error("当前 token 已失效，请重新登录");
       return
     }
+    config.headers.lang = 'EN'
     config.headers["Content-Type"] = "application/json"
     if (config && config.custom && config.custom["Content-Type"]) {
       config.headers["Content-Type"] = config.custom["Content-Type"];

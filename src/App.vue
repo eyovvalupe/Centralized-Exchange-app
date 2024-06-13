@@ -51,7 +51,7 @@ store.commit('setFullscreen', false)
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules",'assets'].includes(route.name) && !fullWindow.value;
+  return ["home", "user", "trade", "market", "market_info", "financial_info", "trading_rules", 'assets', 'account'].includes(route.name) && !fullWindow.value;
 });
 
 
@@ -73,7 +73,7 @@ Promise.all([
 })
 
 const boundFunc = () => {
-  const reboundPage = ['user', 'trade', 'date','assets','ipodetail']
+  const reboundPage = ['user', 'trade', 'date', 'assets', 'ipodetail']
   // 回弹效果
   let startY = 0
   const maxMove = 200

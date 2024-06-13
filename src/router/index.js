@@ -51,7 +51,7 @@ const routes = [
   { // 谷歌验证码绑定
     path: "/google",
     name: "google",
-    component: () => import("../views/User/Google.vue"),
+    component: () => import("../views/User/Google/Google.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -60,7 +60,7 @@ const routes = [
   { // 谷歌验证码 - 已绑定
     path: "/googleCode",
     name: "googleCode",
-    component: () => import("../views/User/GoogleCode.vue"),
+    component: () => import("../views/User/Google/GoogleCode.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -79,6 +79,42 @@ const routes = [
     path: "/submit",
     name: "submit",
     component: () => import("../views/User/Kyc/Submit.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 收款账户
+    path: "/account",
+    name: "account",
+    component: () => import("../views/User/Account/Account.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 认证检测
+    path: "/check",
+    name: "check",
+    component: () => import("../views/User/Account/Check.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 添加银行卡
+    path: "/bank",
+    name: "bank",
+    component: () => import("../views/User/Account/Bank.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  { // 添加加密货币
+    path: "/crypto",
+    name: "crypto",
+    component: () => import("../views/User/Account/Crypto.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'

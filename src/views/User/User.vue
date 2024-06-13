@@ -40,7 +40,7 @@
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <div class="ripple_button nav">
+            <div class="ripple_button nav" @click="jump('account', true)">
                 <div class="icon">
                     <img src="/static/img/user/account.png" alt="img">
                 </div>
@@ -162,6 +162,7 @@ if (token.value) {
     setTimeout(() => {
         Promise.all([
             import('@/views/User/Safety.vue'),
+            import('@/views/User/Account/Account.vue'),
             import('@/views/User/Kyc/Index.vue')
         ]).finally(() => {
             console.error('子页面加载完成')
