@@ -176,9 +176,6 @@ Promise.all([
 })
 
 
-setTimeout(() => {
-  verifCodeRef.value.open()
-}, 3000)
 </script>
 
 <style lang="less" scoped>
