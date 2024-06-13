@@ -2,7 +2,7 @@
 <template>
     <div class="max-width top">
         <div class="ripple_button back" @click="clickLeft">
-            <Icon name="arrow-left" />
+            <Icon :name="props.icon" />
         </div>
         <span>{{ props.title }}</span>
         <div class="right">
@@ -19,6 +19,10 @@ const props = defineProps({
     title: { // 标题
         type: String,
         default: ''
+    },
+    icon: {
+        type: String,
+        default: 'arrow-left'
     },
     backFunc: Function
 })

@@ -7,6 +7,7 @@ import { BASE_ADDRESS } from "@/config"
 
 const instance = axios.create({
   baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
+  // baseURL: BASE_ADDRESS,
   transformRequest: [function (data, headers) {
     if (headers['Content-Type'] == "multipart/form-data") return data
     return JSON.stringify(data);

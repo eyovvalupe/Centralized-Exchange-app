@@ -1,29 +1,45 @@
 <!-- 谷歌验证器 -->
 <template>
     <div class="page page_google">
-        <Top :title="''">
+        <Top :title="'谷歌验证器'">
             <template #right v-if="from == 'register'">
                 <span @click="nextStep" style="color: #014CFA;font-weight: 400;font-size: 0.28rem;">跳过</span>
             </template>
         </Top>
 
-        <div class="title">绑定谷歌验证器</div>
-        <div class="subtitle">谷歌验证器密钥</div>
         <div class="qrcode">
             <img :src="gg.qrcode" alt="qrcode" v-if="gg.qrcode">
         </div>
+
+
         <div class="code_box">
             <div class="code">{{ gg.googlesecret }}</div>
-            <div class="ripple_button btn" @click="copy" v-if="gg.googlesecret">复制</div>
+            <div class="refresh" @click="getGoogle">
+                <img src="/static/img/common/refresh.png" alt="⚪">
+            </div>
+        </div>
+        <div class="tip">(Please back up your key in case you lose it)</div>
+
+        <div class="ripple_button copy" @click="copy" v-if="gg.googlesecret">复制</div>
+
+        <div class="subtitle">
+            <span>Google verification code</span>
+            <span class="ripple_button clear" @click="clear">Clear</span>
         </div>
 
-        <div class="subtitle">请输入上方密钥生成的验证码</div>
         <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :class="{ 'error_ipt': errText }"
             :value="val" :length="6" :gutter="'0.16rem'" :mask="false" />
         <div class="error_text" v-if="errText">{{ errText }}</div>
 
-        <Button :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" :loading="loading" :disabled="disabled"
-            round color="#014CFA" class="submit" type="primary" @click="goBind">绑定</Button>
+        <div class="cautions">
+            <div style="margin-bottom: 0.24rem;">Cautions</div>
+            <div style="margin-bottom: 0.24rem;">1.Download Google Authenticator App</div>
+            <div>2. Scan the QR code above and enter the verification code to complete the binding</div>
+        </div>
+
+        <Button :style="{ marginBottom: showKeyboard ? '5rem' : '1rem', marginTop: showKeyboard ? '0.4rem' : '1rem' }"
+            :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
+            @click="goBind">绑定</Button>
 
         <NumberKeyboard @blur="blur" :show="showKeyboard" v-model="val" />
     </div>
@@ -62,6 +78,8 @@ watch(val, v => {
 // 获取谷歌状态
 const gg = ref({})
 const getGoogle = () => {
+    if (loading.value) return
+    loading.value = true
     showLoadingToast({
         duration: 0,
         loadingType: 'spinner',
@@ -76,6 +94,7 @@ const getGoogle = () => {
                 })
         }
     }).finally(() => {
+        loading.value = false
         closeToast()
     })
 }
@@ -124,6 +143,11 @@ const focus = () => { // 聚焦
 const blur = () => { // 失去焦点
     showKeyboard.value = false
 }
+const clear = () => {
+    val.value = ''
+    errText.value = ''
+    showKeyboard.value = false
+}
 const copy = () => {
     _copyTxt(gg.value.googlesecret)
     showToast('复制成功')
@@ -141,68 +165,77 @@ const nextStep = () => {
 .page_google {
     padding: 1.52rem 0.32rem 0.4rem 0.32rem;
 
-    .title {
-        color: #0D0D12;
-        font-weight: 600;
-        font-size: 0.56rem;
-        line-height: 0.8rem;
-        margin-bottom: 0.4rem;
-    }
+
 
     .qrcode {
-        width: 3.2rem;
-        height: 3.2rem;
-        margin: 0 auto 0.32rem auto;
-    }
-
-    .subtitle {
-        font-weight: 400;
-        font-size: 0.28rem;
-        color: #666D80;
-        line-height: 0.42rem;
-        margin-bottom: 0.4rem;
+        width: 3.3rem;
+        height: 3.3rem;
+        margin: 0 auto 0.4rem auto;
+        border: 1px solid #ddd;
     }
 
     .code_box {
+        font-size: 0.28rem;
+        line-height: 0.33rem;
+        color: #000000;
         display: flex;
         align-items: center;
-        margin-bottom: 2rem;
+        justify-content: center;
+        margin-bottom: 0.2rem;
 
-        .code {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #F8FAFB;
-            border: 1px solid #D0D8E2;
-            border-radius: 0.08rem;
-            height: 0.76rem;
-            color: #333333;
-            font-size: 0.32rem;
-        }
-
-        .btn {
-            margin-left: 0.22rem;
-            border: 1px solid #0063F5;
-            background-color: #ECF4FF;
-            height: 0.76rem;
-            border-radius: 0.08rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #0063F5;
-            font-weight: 400;
-            font-size: 0.28rem;
-            padding: 0 0.52rem;
+        .refresh {
+            width: 0.24rem;
+            height: 0.24rem;
+            margin-left: 0.12rem;
+            line-height: 1;
         }
     }
+
+    .tip {
+        font-size: 0.24rem;
+        line-height: 0.28rem;
+        color: #999999;
+        font-weight: 400;
+        margin-bottom: 0.3rem;
+        text-align: center
+    }
+
+    .copy {
+        border: 1px solid #DDDDDD;
+        width: 2.4rem;
+        height: 0.72rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333333;
+        font-weight: 400;
+        font-size: 0.24rem;
+        border-radius: 0.08rem;
+        overflow: hidden;
+        margin: 0 auto 0.4rem auto;
+    }
+
+    .subtitle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 400;
+        font-size: 0.24rem;
+        color: #000000;
+        margin-bottom: 0.24rem;
+
+        .clear {
+            color: #1552F0;
+            overflow: hidden;
+        }
+    }
+
 
     .submit {
         width: 100%;
         height: 1.12rem;
         border-radius: 1.2rem;
         font-size: 0.28rem;
-        margin-top: 1.2rem;
     }
 
     .code_ipt {
@@ -235,6 +268,17 @@ const nextStep = () => {
         font-weight: 400;
         font-size: 0.28rem;
         line-height: 0.42rem;
+    }
+
+    .cautions {
+        padding: 0.4rem 0.3rem;
+        background-color: #F6F6F6;
+        border-radius: 0.08rem;
+        margin-top: 0.4rem;
+        font-weight: 400;
+        font-size: 0.28rem;
+        line-height: 0.35rem;
+        color: #000000;
     }
 }
 </style>

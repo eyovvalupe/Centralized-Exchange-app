@@ -40,7 +40,7 @@ const navs = ref([
     { name: '市场', route: 'market', children: ['market_info', 'financial_info', 'trading_rules'], icon: icon2, icon2: icon22 },
     { name: '交易', route: 'trade', icon: icon3, icon2: icon33 },
     { name: '钱包', route: 'assets', icon: icon4, icon2: icon44 },
-    { name: '用户', route: 'user', icon: icon5, icon2: icon55 },
+    { name: '用户', route: 'user', children: ['account'], icon: icon5, icon2: icon55 },
 ])
 
 const touchLoading = ref(false)
