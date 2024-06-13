@@ -77,10 +77,16 @@
 <script setup>
 import { ref } from 'vue';
 import { Icon } from 'vant';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
+const route = useRoute();
 const router = useRouter();
+
 const goTotrade = () => {
+  if (route.query.type === "market") {
+    router.push({ name: 'market'});
+    return
+  }
   router.push({ name: 'trade', query: { type: 'ipodetail' } });
 };
 

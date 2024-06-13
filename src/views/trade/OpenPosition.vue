@@ -25,6 +25,7 @@
           class="tabs"
           v-model:active="active"
           :swipeable="false"
+          animated
           :color="'#014CFA'"
           shrink
           @change="onChange"
@@ -42,18 +43,24 @@
       <span class="grop-title" v-if="active === 1">价格</span>
       <Field
         v-model="priceValue"
-        class="num-input num-right-text"
+        :class="['num-input',{'focusinput': isFocused === 1}]"
         style="margin-bottom: 0.2rem"
         type="number"
+        input-align="right"
+        @focus="handleFocus(1)" 
+        @blur="handleBlur(1)"
         v-if="active === 1"
       />
 
       <span class="grop-title" v-if="active === 2">止损</span>
       <Field
         v-model="loseValue"
-        class="num-input num-right-text"
+        :class="['num-input',{'focusinput': isFocused === 2}]"
+        input-align="right"
         style="margin-bottom: 0.2rem"
         v-if="active === 2"
+        @focus="handleFocus(2)" 
+        @blur="handleBlur(2)"
       />
 
       <span class="grop-title" v-if="active === 2">价格</span>
@@ -61,8 +68,10 @@
         <Field
           v-model="marketValue"
           style="margin-bottom: 0.2rem"
-          :class="['price-num-input',{pricenlarged:!marketprice}]"
+          :class="['price-num-input',{pricenlarged:!marketprice},{'focusinput': isFocused ===3}]"
           :disabled="!marketprice"
+          @focus="handleFocus(3)" 
+          @blur="handleBlur(3)"
         />
         <div
           :class="['market-button', { marketenlarged: marketprice }]"
@@ -89,9 +98,12 @@
           'num-input',
           'stock-input-text',
           { enlarged: value.length > 0 },
+          {'focusinput': isFocused === 4}
         ]"
         style="margin-bottom: 0.2rem"
-        @input="handleInput"
+        @input="handleInput(4)"
+        @focus="handleFocus(4)" 
+        @blur="handleBlur"
       >
         <template #button v-if="value.length > 0 && stockCo.length > 0">
           <div class="co-text">
@@ -129,7 +141,8 @@
 
       </div>
       <span class="grop-title">数量</span>
-      <Field v-model="numValue" class="num-input num-right-text"  type="number" @change="inputChange"/>
+      <Field v-model="numValue" type="number" input-align="right" @change="inputChange"  @focus="handleFocus(5)" 
+      @blur="handleBlur(5)" :class="['num-input',{'focusinput': isFocused === 5}]" />
 
       <div class="position-account">
         可买数量 <span style="color: #333">{{ roundedQuantity }}</span>
@@ -295,8 +308,8 @@ const option2 = ref([]);
 const roundedQuantity = ref(0)
 
 //数量输入框的值
-const minOrder = ref(0)
-const numValue = ref(0)
+const minOrder = ref('')
+const numValue = ref('')
 const increment = ref(0)
 const lastValidValue = ref(0); // 保存上一个有效值
 
@@ -316,6 +329,8 @@ const commToken = ref('')
 
 //修改市价和限价
 const marketprice = ref(false)
+
+const isFocused = ref();
 
 
 const selectedOptionText = computed(() => {
@@ -363,7 +378,7 @@ const getnumval = (newValue)=>{
     const roundedValue = calculatedValue.div(100).floor().mul(100);
     numValue.value = roundedValue.toNumber();
 
-    if (numValue.value  !== 0) {
+    if (numValue.value  !== 0 || numValue.value  !== '') {
       getPay()
     }
 
@@ -374,7 +389,7 @@ const getnumval = (newValue)=>{
 
 const getPay = ()=> {
   //保证金 数量*股票单价/杠杆
-  if (numValue.value) {
+  if (numValue.value != '' && numValue.value) {
     const result = new Decimal(numValue.value)
         .mul(stockPrice.value)
         .div(selectedLeverOption.value)
@@ -394,8 +409,21 @@ const getPay = ()=> {
 }
 
 const handleInput = () => {
-  //股票搜索
-  getData();
+  if (token.value) {
+    //股票搜索
+    getData();
+  } else {
+    jump('login')
+  }
+};
+
+
+const handleFocus = (val) => {
+  isFocused.value = val
+};
+
+const handleBlur = (val) => {
+  isFocused.value = null
 };
 
 const onChange = (val) => {
@@ -528,7 +556,7 @@ const getStockslist = ()=>{
 
 const getslide = ()=>{
   //滑动条值
-  if (numValue.value && new Decimal(numValue.value)) {
+  if (numValue.value && numValue.value  !== 0 &&  new Decimal(numValue.value)) {
     if (new Decimal(numValue.value).gt(roundedQuantity.value)) {
       sliderValue.value = 100
       return
@@ -759,11 +787,11 @@ const openPopup = ()=>{
       background: #014cfa;
       color: white;
     }
-    .num-right-text {
-      .van-field__control {
-        text-align: right;
-      }
-    }
+    // .num-right-text {
+    //   .van-field__control {
+    //     text-align: right;
+    //   }
+    // }
 
     .small-select {
       width: 1.48rem;
@@ -947,6 +975,19 @@ const openPopup = ()=>{
       height: 0.4rem !important;
     }
   }
+
+  input:focus {
+    color: #014cfa;
+    caret-color: #014cfa; /* 光标颜色 */
+  }
+
+  input:focus::placeholder {
+    color: #014cfa; /* 占位符颜色 */
+  }
+
+  .focusinput {
+    border-color: #014cfa !important;
+  }
 }
 
 .detail-popup {
@@ -963,10 +1004,10 @@ const openPopup = ()=>{
 @media (min-width: 751px) {
   .detail-popup {
     max-width: 375px;
-    position: fixed;
+    position: fixed !important;
     padding-bottom: 3rem !important;
-    left: 50%;
-    transform: translateX(-50%);
+    left: 50% !important;
+    transform: translateX(-50%) !important;
   }
 }
 </style>

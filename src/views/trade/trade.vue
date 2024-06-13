@@ -8,18 +8,14 @@
       </div>
     </div>
 
-    <Tabs
-      v-model:active="active"
-      type="line"
-      @change="onChange"
-      class="stock-tab"
-    >
-      <Tab title="股票"> </Tab>
-      <Tab title="IPO"> </Tab>
-    </Tabs>
+     <!--  tabs-->
+     <div class="trade-recommend_tabs">
+        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
+        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
+    </div>
 
     <MarketStock
-      v-if="active === 0"
+      v-show="active === 0"
     />
     <IPOStock v-if="active === 1" />
 
@@ -100,11 +96,35 @@ const closePopup = () => {
 .trade {
   position: relative;
   padding-bottom: 1.4rem;
+  min-height: 100%;
   .header {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.28rem;
     padding: 0 0.3rem;
+  }
+  .trade-recommend_tabs {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: .32rem;
+      padding: 0 0.3rem;
+
+      .trade-recommend_tab {
+          font-size: 0.28rem;
+          color: #061023;
+          padding: 0 0.4rem;
+          height: 0.6rem;
+          border-radius: 0.48rem;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+      }
+
+      .active_tab {
+          color: #014CFA;
+          background-color: #F6F8FF;
+      }
   }
   .title {
     height: 1.12rem;
@@ -179,7 +199,7 @@ const closePopup = () => {
 @media (min-width: 751px) {
   .trade-popup {
     max-width: 375px;
-    position: absolute;
+    position: absolute!important;
   }
 }
 
@@ -254,9 +274,9 @@ const closePopup = () => {
 @media (min-width: 751px) {
   .detail-popup {
     max-width: 375px;
-    position: fixed;
+    position: fixed !important;
     padding-bottom: 3rem !important;
-    left: 50%;
+    left: 50% !important;
     transform: translateX(-50%);
   }
 }

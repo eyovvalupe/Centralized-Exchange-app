@@ -5,13 +5,13 @@
     <!-- <div> -->
     <div ref="stickyElement" :class="{ fixed: isFixed }" class="opentrade-sticky">
       <div class="opentrade-sticky">
-        <img src="/static/img/trade/open.png" alt="" class="open-img" />
+        <img src="/static/img/trade/open.png" alt="" class="open-img" @click="openleft"/>
         <div style="
             padding-left: 0.7rem;
             padding-right: 0.3rem;
             background-color: white;
           ">
-          <Tabs class="tabs" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink @change="onChange">
+          <Tabs class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓"> </Tab>
             <Tab title="持仓"> </Tab>
             <Tab title="查询"> </Tab>
@@ -196,6 +196,21 @@
         </SwipeCell>
       </div>
     </div>
+
+
+    <!-- 侧边栏 -->
+    <teleport to="body">
+      <Popup
+        v-model:show="showLeft"
+        position="left"
+        class="left-popup"
+        :style="{ width: '85%', height: '100%' }"
+        @close = 'leftclose'
+      >
+        <Optional v-if="showLeft" ref="OptionalRef" />
+      </Popup>
+    </teleport>
+   
   </div>
 </template>
 
@@ -210,6 +225,7 @@ import {
   Sticky,
   Loading,
   Button,
+  Popup
 } from "vant";
 import { onMounted } from "vue";
 import OpenPosition from "./OpenPosition.vue";
@@ -220,6 +236,7 @@ import { _stocksList } from "@/api/api"
 import OrderDetail from "./OrderDetail.vue";
 import OrderUpdate from "./OrderUpdate.vue";
 import OrderClosePosition from "./OrderClosePosition.vue";
+import Optional from "../../views/Market/components/Optional.vue"
 
 const token = computed(() => store.state.token);
 const { startSocket } = useSocket();
@@ -243,6 +260,9 @@ const loading = ref(false);
 
 const isFixed = ref(false);
 const stickyElement = ref(null);
+
+const showLeft = ref(false)
+const OptionalRef = ref()
 
 window.onscroll = () => {
   if (stickyElement.value) {
@@ -364,6 +384,24 @@ const jump = (name) => {
     query:{reurl:'trade'}
   });
 };
+
+const openleft = ()=>{
+  showLeft.value = true
+  setTimeout(() => {
+    OptionalRef.value && OptionalRef.value.init()
+  }, 500)
+}
+
+const leftclose = ()=>{
+  // 取消订阅
+  const socket = startSocket(() => {
+        socket && socket.emit('realtime', '') // 价格变化
+        socket && socket.emit('snapshot', '') // 快照数据
+        socket && socket.off('realtime')
+        socket && socket.off('snapshot')
+        console.error('取消订阅')
+    })
+}
 
 </script>
 
@@ -689,6 +727,17 @@ const jump = (name) => {
     left: 0;
     right: 0;
     margin: 0 auto;
+  }
+}
+
+
+@media (min-width: 751px) {
+  .left-popup {
+    max-width: 350px!important;
+    position: fixed !important;
+    top: 50% !important;
+    left: calc(50% - 187.5px) !important;
+    transform: translateY(-50%) !important;
   }
 }
 </style>

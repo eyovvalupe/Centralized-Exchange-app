@@ -278,28 +278,29 @@ const selectTab = (val) => {
     line-height: 1.12rem;
   }
   .assets-tab {
-    height: 0.72rem;
     display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: .32rem;
     padding: 0 0.3rem;
-    margin-bottom: 0.3rem;
     .assets-tab-item {
-      height: 0.72rem;
-      line-height: 0.72rem;
+      height: 0.6rem;
+      line-height: 0.6rem;
       text-align: center;
-      font-size: 0.32rem;
+      font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
       position: relative;
       margin: 0 0.2rem;
     }
     .highlight {
-      height: 0.72rem;
+      height: 0.6rem;
+      line-height: 0.6rem;
       border-radius: 0.48rem;
       background: #F6F8FF;
-      font-size: 0.32rem;
+      font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 0.72rem;
       color: #014cfa;
       padding: 0 0.46rem;
       margin: 0 !important;

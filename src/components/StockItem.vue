@@ -64,14 +64,16 @@ const props = defineProps({
     }
 })
 
-// 虚拟dom
+// 虚拟 dom
 const show = ref(false)
 const root = ref()
 let scrollParent = {}
 onMounted(() => {
     setTimeout(() => {
         scrollParent = document.querySelector(props.scrollBox)
-        scrollParent.addEventListener('scroll', getShow)
+        if (scrollParent && scrollParent.addEventListener) {
+            scrollParent.addEventListener('scroll', getShow)
+        }
         getShow()
     }, 500)
 })

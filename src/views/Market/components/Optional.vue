@@ -17,7 +17,7 @@ const { startSocket } = useSocket()
 
 const token = computed(() => store.state.token || '')
 const loading = ref(false)
-const subs = () => { // 订阅ws
+const subs = () => { // 订阅 ws
     store.dispatch('subList', {
         commitKey: 'setMarketWatchList',
         proxyListValue: watchList.value

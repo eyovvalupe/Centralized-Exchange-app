@@ -292,9 +292,9 @@
     @media (min-width: 751px) {
       .van-number-keyboard {
         max-width: 375px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
       }
     }
     .close-price-num {

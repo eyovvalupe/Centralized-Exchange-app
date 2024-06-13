@@ -43,7 +43,7 @@
       margin-left: 0.3rem;
     }
     .select-box {
-      margin-top: 0.7rem;
+      margin-top: 1rem;
       .select-box-item {
         width: 100%;
         height: 0.96rem;

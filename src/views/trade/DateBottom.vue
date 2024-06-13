@@ -66,9 +66,9 @@
   @media (min-width: 751px) {
     .date-bottom {
       max-width: 375px;
-      left: 50%;
-      transform: translateX(-50%);
-      position: fixed;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      position: fixed !important;
     }
   }
   </style>
