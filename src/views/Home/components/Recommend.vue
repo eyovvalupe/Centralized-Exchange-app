@@ -73,6 +73,7 @@ import store from "@/store"
 import Loading from "@/components/Loaidng.vue";
 import SparkLine from "@/components/SparkLine.vue"
 import AreaChart from "@/components/KlineCharts/AreaChart.vue"
+import { _news } from "@/api/api"
 
 const props = defineProps({
     isFixed: { // 为True的时候 展示为虚拟dom
@@ -112,6 +113,16 @@ setTimeout(() => {
     }, 0)
 }, 1000)
 
+
+
+// 新闻
+const news = ref([])
+_news().then(res => {
+    console.error(res)
+    if (res.code == 200) {
+        news.value = res.data || []
+    }
+})
 </script>
 
 <style lang="less" scoped>

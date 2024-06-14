@@ -213,4 +213,24 @@ export const _register = (data = {}) => {
   });
 };
 
+// 新闻列表
+export const _news = (data = {}) => {
+  return http.post(`/anon/v1/market/news`, data, {
+    custom: { auth: false, toast: false },
+  });
+};
+
+// 新增支付方式 
+export const _addAccount = (data = {}) => {
+  return http.post(`/authc/v1/withdraw/account/add`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 收款账户列表 
+export const _listAccount = (data = {}) => {
+  return http.post(`/authc/v1/withdraw/account/list`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
 export const memberInfo = () => { }

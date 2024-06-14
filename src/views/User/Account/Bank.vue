@@ -5,7 +5,7 @@
 
         <div class="subtitle">持卡人姓名</div>
         <div class="item">
-            <span style="flex: 1;">LUCK</span>
+            <span style="flex: 1;">{{ name || '--' }}</span>
             <div class="icon_ok">
                 <img src="/static/img/user/ok.png" alt="ok">
             </div>
@@ -13,21 +13,93 @@
         </div>
         <div class="subtitle">银行</div>
         <div class="item">
-            <input type="text" class="ipt" maxlength="50">
+            <input v-model="form.bank_name" type="text" class="ipt" maxlength="50">
         </div>
         <div class="subtitle">卡号</div>
         <div class="item">
-            <input type="text" class="ipt" maxlength="50">
+            <input v-model.trim="form.bank_card_number" type="text" class="ipt" maxlength="50">
         </div>
 
         <div style="flex: 1;"></div>
-        <Button class="submit" type="primary" round color="#014CFA">保存</Button>
+        <Button class="submit" :disabled="!(form.bank_name && form.bank_card_number)" :loading="loading" type="primary"
+            round color="#014CFA" @click="next">保存</Button>
+
+        <!-- 谷歌验证 -->
+        <GoogleVerfCode ref="googleRef" @submit="submit" />
     </div>
 </template>
 
 <script setup>
+import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
-import { Button } from "vant"
+import { Button, showNotify } from "vant"
+import { ref } from "vue"
+import { _kycGet, _addAccount, _sessionToken } from "@/api/api"
+import router from "@/router";
+
+const googleRef = ref()
+
+const loading = ref(false)
+const form = ref({
+    channel: 'bank',
+    // currency: null,
+    // network: null,
+    // address: null,
+    account_name: '',
+    bank_name: '',
+    bank_card_number: '',
+})
+
+// 提交
+const submit = (googleCode) => {
+    if (loading.value) return
+    loading.value = true
+    _addAccount({
+        ...form.value,
+        googlecode: googleCode,
+        token: sessionToken.value
+    }).then(res => {
+        if (res.code == 200) {
+            showNotify({ type: 'success', message: '添加成功' })
+            setTimeout(() => {
+                router.back()
+            }, 200)
+        }
+    }).finally(() => {
+        loading.value = false
+    })
+}
+const next = () => {
+    googleRef.value.open()
+}
+
+// sessionToken
+const sessionToken = ref('')
+const getSessionToken = () => {
+    loading.value = true
+    return new Promise(resolve => {
+        _sessionToken().then(res => {
+            if (res?.code == 200) {
+                sessionToken.value = res.data
+                resolve(true)
+            } else {
+                resolve(false)
+            }
+        }).catch(() => {
+            resolve(false)
+        }).finally(() => {
+            loading.value = false
+        })
+    })
+}
+getSessionToken()
+
+// 获取真实姓名
+const name = ref('')
+_kycGet().then(res => {
+    name.value = res?.data?.name || ''
+    form.value.account_name = res?.data?.name || ''
+})
 </script>
 
 <style lang="less" scoped>
