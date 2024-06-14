@@ -135,7 +135,7 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { Button, Field, Slider, PasswordInput, NumberKeyboard } from "vant";
+import { Button, Field, Slider, PasswordInput, NumberKeyboard, showToast } from "vant";
 import { _stocksBuy } from "@/api/api";
 import store from "@/store";
 
@@ -192,20 +192,21 @@ const openStock = ()=>{
     lever_type: lever_type,
     lever: orderList.value.selectedLeverOption,
     price_type: price_type,
-    // price: price,
-    // stop_profit: false,
-    // stop_profit_type:'price',
-    // stop_profit_price:'',
-    // stop_loss:false,
-    // stop_loss_type:'price',
-    // stop_loss_price:orderList.value.loseValue,
+    price: price,
+    stop_profit: false,
+    stop_profit_type:'price',
+    stop_profit_price:'',
+    stop_loss:false,
+    stop_loss_type:'price',
+    stop_loss_price:orderList.value.loseValue,
     token:getcommToken.value,
     safeword:value.value
   }
 
   _stocksBuy({ ...data }).then(res => {
         if (res.code == 200) {
-            console.log(res,'res')
+          showToast('开仓成功');
+          store.dispatch('closePopup')
         }
     });
 }

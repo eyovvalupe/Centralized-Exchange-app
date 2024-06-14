@@ -36,6 +36,8 @@
     </div>
     <!-- </div> -->
 
+    <!-- <Loading v-if="loading"></Loading> -->
+
     <transition name="slide-right">
       <!-- 持仓 -->
       <!-- 已登录 -->
@@ -187,8 +189,6 @@
 
     </transition>
 
-    <Loading v-if="loading"></Loading>
-
     
 
     <!-- 未登录 -->
@@ -301,24 +301,20 @@ const updateClosePositionPopup = () => {
 };
 
 const subscribeOrders = () => {
-  // socket = startSocket(() => {
-  //这里是 stocksorder 的处理
-  // console.log(token)
-  // socket.emit('user', token.value)
-  // socket.emit('user', token.value)
+  socket = startSocket(() => {
+  // 这里是 stocksorder 的处理
   // socket.emit('stocksorder','#all')
-  // socket.emit('stocksorder', JSON.stringify({token: token.value, subscribe: '#all'}))
   // socket.on('stocksorder', res => {
   //   console.log(res)
   // })
 
-  //这里是参考 realtime 的处理
+  // 这里是参考 realtime 的处理
   // ------------------
   // socket.emit('realtime','INFY,HDFCBANK,RELIANCE,HAL,BAJFINANCE,SBIN,LT,IDEA,ICICIBANK,M_M,TCS,WIPRO,BHARTIARTL,ARE_M,BEL,RECLTD,PFC,ADANIENT,TATAMOTORS,TATASTEEL,ITC,POWERGRID,IRB,HINDUNILVR,RVNL,AXISBANK,BHEL,MAZDOCK,INDIGO,NHPC,NTPC,COCHINSHIP,HCLTECH,AVANTIFEED,ADANIPORTS,KOTAKBANK,JIOFIN,TECHM,IRFC,IIFL,TITAN,GAIL,COFORGE,TATAPOWER,ADANIENSOL,BPCL,SAIL,ADANIPOWER,GESHIP,ZOMATO,HERITGFOOD,DIXON,APLAPOLLO,INDUSINDBK,ONGC,EXIDEIND,IOC,BANKBARODA,VEDL,NCC,SUNPHARMA,BSOFT,HUDCO,LTIM,BIOCON,HINDALCO,MOTHERSON,CANBK,ASIANPAINT,BDL,DRREDDY,MASTEK,BAJAJFINSV,HINDPETRO,UNOMINDA,MANKIND,COALINDIA,KNRCON,ABFRL,PRAJIND,PERSISTENT,INDUSTOWER,TEJASNET,GRSE,DLF,IREDA,HEROMOTOCO,LTTS,PNB,YESBANK,ABCAPITAL,DABUR,JSWSTEEL,MPHASIS,JBMA,VBL,ADANIGREEN,ASHOKLEY,PAYTM,RAMCOCEM,NIFTY50,SENSEX,LRGCAP,MIDCAP,SMLCAP,NIFTY500,NIFTYMIDCAP100,INDIAVIX,NIFTYBANK')
   // socket.on('realtime', res => {
   //   console.log(res)
   // })
-  // });
+  });
 };
 
 
@@ -335,15 +331,16 @@ const onChange = (val) => {
 
   if (val === 1) {
     //持仓
+    // subscribeOrders()
   } else {
     //取消订阅
   }
 
-  loading.value = true;
+  // loading.value = true;
 
-  setTimeout(() => {
-    loading.value = false;
-  }, 1000);
+  // setTimeout(() => {
+  //   loading.value = false;
+  // }, 1000);
 };
 
 const showButton = (i) => {
@@ -375,7 +372,7 @@ onMounted(() => {
   }, 1000);
 
   if (active.value === 1) {
-    subscribeOrders();
+    // subscribeOrders();
   }
 });
 

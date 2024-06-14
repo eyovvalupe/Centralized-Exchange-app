@@ -319,47 +319,6 @@ const getPrice = (val)=>{
   }
 }
 
-const getStockslist = ()=>{
-  //交易参数
-  _stocksPara({
-  })
-    .then((res) => {
-      if (res.code == 200 && res.data) {
-        //杠杆参数
-        const str = res.data.lever;
-        const lever = str.split(',')
-        const levernum = lever.map((num, index) => {
-          return {
-            text: `${num}x`,
-            value: `${num}`
-          };
-        });
-        option2.value = levernum
-        store.commit('setOption2',levernum)
-        store.commit('selectedLeverOption',levernum[0].value)
-
-        //volume 最低数量 和倍数增加的处理
-        const volume = res.data.volume.split(',')
-        minOrder.value = new Decimal(volume[0]);
-        increment.value = new Decimal(volume[1]);
-        numValue.value =  minOrder.value
-
-        //手续费
-        const fee = res.data.fee.split(',')
-        ofee.value = new Decimal(fee[0]).plus(new Decimal(fee[2]))
-        cfee.value = new Decimal(fee[1])
-
-        //开仓手续费  数量*手续费
-        openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
-        //平仓手续费
-        closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
-      }
-    })
-    .catch((error) => {})
-    .finally(() => {});
-
-}
-
 
 const getslide = ()=>{
   //滑动条值
@@ -376,12 +335,6 @@ const getslide = ()=>{
   }
 }
 
-
-// onMounted(() => {
-//   if (token.value) {
-//     getStockslist()
-//   }
-// });
 
 const jump = (name) => {
   router.push({
@@ -464,10 +417,10 @@ const openPopup = ()=>{
   .position-header {
     display: flex;
     .up-botton {
-      width: 1.32rem;
-      height: 0.56rem;
+      width: 1.2rem;
+      height: 0.5rem;
       color: #014cfa;
-      line-height: 0.56rem;
+      line-height: 0.5rem;
       text-align: center;
       position: relative;
       background-size: cover;

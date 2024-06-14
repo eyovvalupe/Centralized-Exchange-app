@@ -6,9 +6,9 @@
             <span>认购</span>
         </div>
 
-        <span class="grop-title" style="margin-top: 30px;display: block;">认购名称</span>
+        <span class="grop-title" style="margin-top: 0.6rem;display: block;">认购名称</span>
         <Field v-model="nameVal" input-align="right"  @focus="handleFocus(1)" 
-        @blur="handleBlur(1)" :class="['num-input',{'focusinput': isFocused === 1}]"  style="margin-bottom: 20px;"/>
+        @blur="handleBlur(1)" :class="['num-input',{'focusinput': isFocused === 1}]"  style="margin-bottom: 0.4rem;"/>
 
         <div class="subscription-m-box">
             <div class="vip-subscription">
@@ -23,7 +23,7 @@
         @blur="handleBlur(5)" :class="['num-input',{'focusinput': isFocused === 5}]" />
   
         <div class="position-account">
-          可买数量 <span style="color: #333">{{ roundedQuantity }}</span>
+          可买数量 <span style="color: #333">0</span>
         </div>
   
         <Slider
@@ -70,133 +70,35 @@
   <script setup>
   import { ref, computed } from "vue";
   import { Tab,Tabs,Field,Slider,Button,Loading, showToast ,Icon} from "vant";
-  import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
   import { useRouter, useRoute } from "vue-router";
   import store from "@/store";
   import Decimal from 'decimal.js';
   
   const router = useRouter();
-  
-  const active = ref(0);
-  const value = ref("");
-  const priceValue = ref("");
-  const loseValue = ref("");
-  const marketValue = ref("");
+
   const sliderValue = ref(0);
   const loading = ref(false);
   const percentages = [25, 50, 75, 100];
-  const stockCo = ref([]);
-  const showOpenPositionBottom = ref(false);
-  const showLeverSelect = ref(false)
-  const option1 = [
-    { text: "全仓", value: 0 },
-    { text: "逐仓", value: 1 },
-  ];
-  const option2 = ref([]);
-  const roundedQuantity = ref(0)
   
-  //数量输入框的值
-  const minOrder = ref('')
+  //输入框的值
   const numValue = ref('')
   const nameVal = ref('')
   const vipVal = ref('')
-  const increment = ref(0)
-  const lastValidValue = ref(0); // 保存上一个有效值
-  
-  const isUpActive = ref(true);
-  const isDownActive = ref(false);
-  const paymentAmount = ref(0)
-  const stockPrice = ref(0)
-  const amount = ref(0)
-  
-  //手续费
-  const openfee = ref(0)
-  const closefee = ref(0)
-  const ofee = ref(0)
-  const cfee = ref(0)
-  
-  const commToken = ref('')
-  
-  //修改市价和限价
-  const marketprice = ref(false)
+
   
   const isFocused = ref();
 
 
   const goTotrade = () => {
-        router.push({ name: 'trade'});
-    };
-  
-  
-  const selectedOptionText = computed(() => {
-    const selected = option1.find(option => option.value === store.state.allSelect)
-    return selected ? selected.text : ''
-  })
-  
-  const selectedLeverOptionText = computed(() => {
-    const selected = option2.value.find(option => option.value === store.state.selectedLeverOption)
-    return selected ? selected.text : ''
-  })
-  
-  const selectedLeverOption = computed(() => {
-    return store.state.selectedLeverOption
-  })
-  
-  const activateUp = () => {
-    isUpActive.value = true;
-    isDownActive.value = false;
+    router.push({ name: 'trade'});
   };
-  
-  const activateDown = () => {
-    isUpActive.value = false;
-    isDownActive.value = true;
-  };
+
+
   
   const onSliderChange = (newValue) => {
     //滚动滑动条
     sliderValue.value = newValue;
-    getnumval(newValue)
   };
-  
-  const getnumval = (newValue)=>{
-    //根据滑动条计算数量输入框中的值
-    try {
-      const percentage = new Decimal(newValue).div(100);
-      const calculatedValue = percentage.mul(roundedQuantity.value);
-  
-      // 百位数取整
-      const roundedValue = calculatedValue.div(100).floor().mul(100);
-      numValue.value = roundedValue.toNumber();
-  
-      if (numValue.value  !== 0 || numValue.value  !== '') {
-        getPay()
-      }
-  
-    } catch (error) {
-      console.error('Error calculating value:', error);
-    }
-  }
-  
-  const getPay = ()=> {
-    //保证金 数量*股票单价/杠杆
-    if (numValue.value != '' && numValue.value) {
-      const result = new Decimal(numValue.value)
-          .mul(stockPrice.value)
-          .div(selectedLeverOption.value)
-          .toFixed(2); 
-      paymentAmount.value = result
-      //手续费计算
-      //开仓手续费  数量*手续费
-      openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
-      //平仓手续费
-      closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
-      amount.value = new Decimal(numValue.value)
-          .mul(stockPrice.value)
-          .div(selectedLeverOption.value)
-        .plus( new Decimal(numValue.value).mul(ofee.value))
-        .toFixed(2);
-    }
-  }
   
   const handleFocus = (val) => {
     isFocused.value = val
@@ -206,22 +108,6 @@
     isFocused.value = null
   };
   
-  
-  
-  const getslide = ()=>{
-    //滑动条值
-    if (numValue.value && numValue.value  !== 0 &&  new Decimal(numValue.value)) {
-      if (new Decimal(numValue.value).gt(roundedQuantity.value)) {
-        sliderValue.value = 100
-        return
-      }
-      if (roundedQuantity.value.div(new Decimal(numValue.value)).floor() == 1) {
-        sliderValue.value = 100
-      } else {
-        sliderValue.value = new Decimal(numValue.value).div(roundedQuantity.value).mul(100).floor();
-      }
-    }
-  }
   
   const openPositPopup = () => {
     router.push({
@@ -263,10 +149,10 @@
     .position-header {
       display: flex;
       .up-botton {
-        width: 1.32rem;
-        height: 0.56rem;
+        width: 1.2rem;
+        height: 0.5rem;
         color: #014cfa;
-        line-height: 0.56rem;
+        line-height: 0.5rem;
         text-align: center;
         position: relative;
         background-size: cover;
@@ -570,28 +456,28 @@
       border-color: #014cfa !important;
     }
     .subscription-total {
-        margin-bottom: 40px;
-        margin-top: 13px;
+        margin-bottom: 0.8rem;
+        margin-top: 0.26rem;
         .subscription-text {
             position: relative;
             text-align: right;
             color: #343434;
-            font-size: 14px;
+            font-size: 0.28rem;
             font-style: normal;
             font-weight: 400;
-            line-height: 36px;
-            height: 36px;
+            line-height: 0.72rem;
+            height: 0.72rem;
         }
         .subscription-total-text {
             text-align: right;
             color: #343434;
-            font-size: 18px;
+            font-size: 0.36rem;
             font-style: normal;
             font-weight: 600;
-            line-height: 40px;
+            line-height: 0.8rem;
         }
         .subscription-position-line-dashed {
-            width: 172px;
+            width: 3.44rem;
             border-bottom: 0.02rem dashed #cbcbcb;
             position: absolute;
             right: 0;
@@ -600,20 +486,20 @@
     }
     .subscription-m-box {
         display: flex;
-        width: 343px;
-        height: 44px;
-        border-radius: 6px;
-        border: 1px solid #D0D8E2;
-        margin-bottom: 20px;
-        padding-left: 20px;
+        width: 6.86rem;
+        height: 0.88rem;
+        border-radius: 0.12rem;
+        border: 0.02rem solid #D0D8E2;
+        margin-bottom: 0.4rem;
+        padding-left: 0.4rem;
         .vip-subscription {
             display: flex;
-            width: 150px;
+            width: 3rem;
             justify-content:space-between;
             span{
                 text-align: center;
-                line-height: 44px;
-                font-size: 14px;
+                line-height: 0.88rem;
+                font-size: 0.28rem;
                 font-style: normal;
                 font-weight: 400;
             }
@@ -622,11 +508,11 @@
                 width: 0.32rem !important;
                 height: 0.32rem !important;
                 vertical-align: middle;
-                margin-top: 14px;
+                margin-top: 0.28rem;
             }
         }
         .vip-input {
-            margin-right: 2px;
+            margin-right: 0.04rem;
         }
     }
   }
