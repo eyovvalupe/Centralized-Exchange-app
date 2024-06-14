@@ -1,136 +1,187 @@
 <template>
-  <div class="open-position">
-    <div class="position-header">
-      <div
-        class="up-botton"
-        :style="isUpActive ? activeBackgroundImageStyle : backgroundImageStyle"
-        @click="activateUp"
-      >
-        买涨
-      </div>
-      <div
-        class="down-button"
-        :style="
-          isDownActive
-            ? activeBlueBackgroundImageStyle
-            : blueBackgroundImageStyle
-        "
-        @click="activateDown"
-      >
-        买跌
-      </div>
-
-      <div class="position-tabs">
-        <Tabs
-          class="tabs"
-          v-model:active="active"
-          :swipeable="false"
-          animated
-          :color="'#014CFA'"
-          shrink
-          @change="onChange"
-        >
-          <Tab title="市价"> </Tab>
-          <Tab title="限价"> </Tab>
-          <Tab title="止盈/止损"> </Tab>
-        </Tabs>
-      </div>
-    </div>
-
-    <!-- <Loading v-if="loading"></Loading> -->
-
-    <transition name="slide-right">
-      <div v-if="active === 1">
-        <span class="grop-title">价格</span>
-        <Field
-          v-model="priceValue"
-          :class="['num-input',{'focusinput': isFocused === 1}]"
-          style="margin-bottom: 0.2rem"
-          type="number"
-          input-align="right"
-          @focus="handleFocus(1)" 
-          @blur="handleBlur(1)"
+  <div class="common-open-position">
+        <div class="stock-box">
+        <span class="grop-title">股票</span>
+        <img
+          src="/static/img/trade/blue-stock.png"
+          class="stock-img"
+          v-if="value.length > 0"
+          @click="openPopup"
         />
-        <Common @update-value="handleUpdateValue" ref="childComponentRef"/>
+        <img src="/static/img/trade/white-stock.png" class="stock-img" v-else />
       </div>
 
-      <div v-else-if="active === 2">
-        <span class="grop-title" >止损</span>
-        <Field
-          v-model="loseValue"
-          :class="['num-input',{'focusinput': isFocused === 2}]"
-          input-align="right"
-          style="margin-bottom: 0.2rem"
-          @focus="handleFocus(2)" 
-          @blur="handleBlur(2)"
-        />
+      <Field
+        v-model="value"
+        :class="[
+          'num-input',
+          'stock-input-text',
+          { enlarged: value.length > 0 },
+          {'focusinput': isFocused === 4}
+        ]"
+        style="margin-bottom: 0.2rem"
+        @input="handleInput(4)"
+        @focus="handleFocus(4)" 
+        @blur="handleBlur"
+      >
+        <template #button v-if="value.length > 0 && stockCo.length > 0">
+          <div class="co-text">
+            <div>
+              {{ stockCo[0].symbol }}
+            </div>
+            <div style="color: #9ea3ae">
+              {{ stockCo[0].name }}
+            </div>
+          </div>
+        </template>
+      </Field>
 
-        <span class="grop-title">价格</span>
-        <div style="display: flex">
-          <Field
-            v-model="marketValue"
-            style="margin-bottom: 0.2rem"
-            :class="['price-num-input',{pricenlarged:!marketprice},{'focusinput': isFocused ===3}]"
-            :disabled="!marketprice"
-            @focus="handleFocus(3)" 
-            @blur="handleBlur(3)"
-          />
-          <div
-            :class="['market-button', { marketenlarged: marketprice }]"
-            @click="changePrice"
-          >
-          {{ marketprice?'限价':'市价'}}
+      <span class="grop-title" style="color: #014cfa">全仓 VS 逐仓</span>
+      <div style="display: flex; margin-top: 0.12rem; margin-bottom: 0.2rem">
+
+        <div>
+          <div class="small-select" @click="allSelect">
+            <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
+            <img src="/static/img/trade/down.png" class="down-img"/>
+          </div>
+
+        </div>
+
+
+        <div style="flex: 1;">
+          <div class="big-selcet" @click="leverSelect" >
+            {{ selectedLeverOptionText }}
+            <img src="/static/img/trade/down.png" class="down-img"/>
           </div>
         </div>
-        <Common @update-value="handleUpdateValue" ref="childComponentRef"/>
+
+      </div>
+      <span class="grop-title">数量</span>
+      <Field v-model="numValue" type="number" input-align="right" @change="inputChange"  @focus="handleFocus(5)" 
+      @blur="handleBlur(5)" :class="['num-input',{'focusinput': isFocused === 5}]" />
+
+      <div class="position-account">
+        可买数量 <span style="color: #333">{{ roundedQuantity }}</span>
       </div>
 
-      <div v-else>
-        <Common @update-value="handleUpdateValue" ref="childComponentRef"/>
+      <Slider
+        v-model="sliderValue"
+        bar-height="0.08rem"
+        active-color="#f2f2f2"
+        inactive-color="#f2f2f2"
+        @change="onSliderChange"
+      />
+      <div class="percentages">
+        <div v-for="percent in percentages" :key="percent" class="percentage">
+          <div class="line"></div>
+          {{ percent }}%
+        </div>
       </div>
-    </transition>
 
-    <!-- <div class="position-box" v-if="!loading"> -->
-      
-      
-    <!-- </div> -->
+      <div class="position-bottom">
+        <div>
+          <span class="position-pay">支付 </span
+          ><span class="pay-num">{{ amount }}</span>
+        </div>
+        <div class="position-line-dashed"></div>
+        <div class="position-fee">保证金 {{ paymentAmount }} + 手续费 {{ openfee }}</div>
+      </div>
+
+      <Button
+        size="large"
+        color="#18b762"
+        round
+        v-if="isDownActive && token && active === 0"
+        @click="openPositPopup('down')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
+        >买跌</Button
+      >
+      <Button
+        size="large"
+        color="#18b762"
+        round
+        v-if="isDownActive && token && active === 1"
+        @click="openPositPopup('down')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === ''"
+        >买跌</Button
+      >
+
+      <Button
+        size="large"
+        color="#18b762"
+        round
+        v-if="isDownActive && token && active === 2"
+        @click="openPositPopup('down')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')"
+        >买跌</Button
+      >
+
+      <Button
+        size="large"
+        color="#e8503a"
+        round
+        v-if="isUpActive && token && active === 0"
+        @click="openPositPopup('up')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
+        >买涨</Button
+      >
+
+      <Button
+        size="large"
+        color="#e8503a"
+        round
+        v-if="isUpActive && token && active === 1"
+        @click="openPositPopup('up')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === ''"
+        >买涨</Button
+      >
+
+      <Button
+        size="large"
+        color="#e8503a"
+        round
+        v-if="isUpActive && token && active === 2"
+        @click="openPositPopup('up')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')"
+        >买涨</Button
+      >
+
+      <Button
+        size="large"
+        color="#014cfa"
+        round
+        v-if="!token"
+        style="margin-bottom: 0.34rem"
+        @click="jump('login')"
+        >登陆</Button
+      >
+      <Button
+        size="large"
+        color="#f2f2f2"
+        round
+        v-if="!token"
+        style="color: #999999"
+        @click="jump('register')"
+        >注册</Button
+      >
 
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from "vue";
+import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose } from "vue";
 import { Tab,Tabs,Field,CellGroup,Slider,Button,Loading,Popup, showToast} from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
-import OpenPositionPopup from "./OpenPositionPopup";
-import OpenSelect from "./components/OpenSelect.vue";
-import LeverSelect from "./components/LeverSelect.vue";
-import StockPopup from './StockPopup.vue'
+import OpenPositionPopup from "../OpenPositionPopup";
+import OpenSelect from "./OpenSelect.vue";
+import LeverSelect from "./LeverSelect.vue";
+import StockPopup from '../StockPopup.vue'
 import store from "@/store";
 import Decimal from 'decimal.js';
-import Common from './components/Common.vue'
 
 const token = computed(() => store.state.token);
 const router = useRouter();
-
-const backgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/light-blue.png)`,
-}));
-
-const activeBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/left-blue.png)`,
-  color: "white",
-}));
-
-const activeBlueBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/blue.png)`,
-}));
-
-const blueBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/right-white.png)`,
-  color: "#014cfa",
-}));
 
 const active = ref(0);
 const value = ref("");
@@ -174,7 +225,7 @@ const commToken = ref('')
 const marketprice = ref(false)
 
 const isFocused = ref();
-const childComponentRef = ref(null);
+const emit = defineEmits(['update-value']);
 
 
 const selectedOptionText = computed(() => {
@@ -191,10 +242,10 @@ const selectedLeverOption = computed(() => {
   return store.state.selectedLeverOption
 })
 
-// // 监听 selectedLeverOption 的变化，并调用 getPay
-// watch(selectedLeverOption, (newValue, oldValue) => {
-//   getPay();
-// });
+// 监听 selectedLeverOption 的变化，并调用 getPay
+watch(selectedLeverOption, (newValue, oldValue) => {
+  getPay();
+});
 
 const activateUp = () => {
   isUpActive.value = true;
@@ -252,6 +303,15 @@ const getPay = ()=> {
   }
 }
 
+const handleInput = () => {
+  if (token.value) {
+    //股票搜索
+    getData();
+  } else {
+    jump('login')
+  }
+};
+
 
 const handleFocus = (val) => {
   isFocused.value = val
@@ -261,24 +321,37 @@ const handleBlur = (val) => {
   isFocused.value = null
 };
 
-const onChange = (val) => {
-  active.value = val;
-  store.commit('clearState')
-  value.value = ''
-  priceValue.value = ''
-  loseValue.value = ''
-  marketValue.value = ''
-  marketprice.value = false
-  if (childComponentRef.value) {
-    childComponentRef.value.clear();
+const clear = ()=>{
+  //输入框清空
+  stockCo.value = [];
+  roundedQuantity.value = 0
+  sliderValue.value = 0
+  numValue.value = minOrder.value
+  paymentAmount.value = 0
+  openfee.value = 0
+  amount.value = 0
+}
+
+const getData = () => {
+  //股票搜索
+  if (value.value.length === 0) {
+    //输入框清空
+    clear()
+    return;
   }
-  // loading.value = true;
-
-  // setTimeout(() => {
-  //   loading.value = false;
-  // }, 1000);
+  _search({
+    symbol: value.value,
+  })
+    .then((res) => {
+      if (res.code == 200 && res.data) {
+        stockCo.value = res.data;
+        //获取股票价格
+        getPrice(res.data[0])
+      }
+    })
+    .catch((error) => {})
+    .finally(() => {});
 };
-
 
 const getPrice = (val)=>{
   let price;
@@ -377,11 +450,11 @@ const getslide = ()=>{
 }
 
 
-// onMounted(() => {
-//   if (token.value) {
-//     getStockslist()
-//   }
-// });
+onMounted(() => {
+  if (token.value) {
+    getStockslist()
+  }
+});
 
 const jump = (name) => {
   router.push({
@@ -390,22 +463,50 @@ const jump = (name) => {
   });
 };
 
-
-const handleUpdateValue = (value)=>{
-  const data = {
-    'active': active.value,
-    'priceValue': priceValue.value,
-    'marketValue': marketValue.value,
-    'marketprice': marketprice.value,
-    'loseValue': loseValue.value
+const openPositPopup = (val) => {
+  const numValueDecimal = new Decimal(numValue.value);
+  if (numValueDecimal.gt(roundedQuantity.value)) {
+    showToast('超出最大可买');
+    return
   }
-  store.commit('setUpOrder', {...data, ...value});
-  //买涨按钮
-  store.dispatch('openPopup',OpenPositionPopup)
-  store.commit('setPopupHeight','90%')
-  store.commit('setkeyborader',true)
-  getcommToken()
-}
+
+  if (numValueDecimal.lt(minOrder.value)) {
+    showToast('低于最小可买');
+    return
+  }
+
+  if (!numValueDecimal.mod(increment.value).equals(0)) {
+    showToast('当前值不是递增量的倍数');
+    return
+  }
+  
+  //存选择的数据
+  const data = {
+    'stockCo':stockCo.value,
+    'selectedOptionText': selectedOptionText.value,
+    'selectedLeverOptionText': selectedLeverOptionText.value,
+    'selectedLeverOption': selectedLeverOption.value,
+    'numValue':numValue.value,
+    'paymentAmount': paymentAmount.value,
+    'amount': amount.value,
+    'openfee': openfee.value,
+    'button':val,
+    // 'active': active.value,
+    // 'priceValue': priceValue.value,
+    // 'marketValue': marketValue.value,
+    // 'marketprice': marketprice.value,
+    // 'loseValue': loseValue.value
+  }
+
+  emit('update-value', data);
+
+  // store.commit('setUpOrder', data);
+  // //买涨按钮
+  // store.dispatch('openPopup',OpenPositionPopup)
+  // store.commit('setPopupHeight','90%')
+  // store.commit('setkeyborader',true)
+  // getcommToken()
+};
 
 const getcommToken = () =>{
   //点击按钮获取 token
@@ -447,14 +548,18 @@ const openPopup = ()=>{
   store.dispatch('openPopup',StockPopup)
   store.commit('setPopupHeight','80%')
   store.commit('setkeyborader',false)
-}
+};
 
+// 使用 defineExpose 暴露方法
+defineExpose({
+  clear
+});
 
 </script>
 
 <style lang="less">
-.open-position {
-  padding: 0 0.3rem;
+.common-open-position {
+  padding: 0;
   padding-bottom: 0.76rem;
   background-color: white;
   .van-loading {

@@ -36,165 +36,166 @@
     </div>
     <!-- </div> -->
 
-    <Loading v-if="loading"></Loading>
+    <transition name="slide-right">
+      <!-- 持仓 -->
+      <!-- 已登录 -->
+      <div v-if="active === 1 && !loading && token">
+        <div class="header-grid">
+          <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
+            <div class="header-f-left">股票/状态</div>
+            <div>开仓/可售</div>
+            <div>现价/成本</div>
+            <div class="header-f-right">盈亏/盈亏比</div>
+          </div>
+        </div>
 
-    <!-- 持仓 -->
-    <!-- 已登录 -->
-    <div v-if="active === 1 && !loading && token">
-      <div class="header-grid">
-        <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
-          <div class="header-f-left">股票/状态</div>
-          <div>开仓/可售</div>
-          <div>现价/成本</div>
-          <div class="header-f-right">盈亏/盈亏比</div>
+        <div v-for="i in 12" :key="i">
+          <SwipeCell>
+            <div class="content-grid grid-item-hover" @click="showButton(i)">
+              <div style="padding: 0 0.3rem; display: flex">
+                <div class="grid-item">
+                  <div class="f-text f-weight f-left" style="font-weight: 500">
+                    HADCRXO
+                  </div>
+                  <div class="f-left" style="display: flex">
+                    <div style="line-height: 0.4rem">10X</div>
+                    <div class="close-button" v-if="i === 1 || i === 3">锁仓</div>
+                  </div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text button">买涨</div>
+                  <div class="special-color">1000</div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text">21.970</div>
+                  <div>29.999</div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text f-weight red">39.520</div>
+                  <div class="f-weight red">-0.7%</div>
+                </div>
+              </div>
+            </div>
+            <!-- <div v-if="currentNum === i && buttonShow" class="button-show">
+                <div style="background: #F7931F;" @click="showDetailPopup(i)">
+                    <img src="/static/img/trade/detail.png" alt="">
+                    订单详情
+                  </div>
+                  <div style="background-color: #627eea;" @click="updateDetailPopup(i)">
+                    <img src="/static/img/trade/update.png" alt="">
+                    更新
+                  </div>
+                  <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
+                    <img src="/static/img/trade/close.png" alt="">
+                    平仓
+                  </div>
+              </div> -->
+            <template #right>
+              <div class="button-style">
+                <div style="background: #f7931f" @click="showDetailPopup">
+                  <img src="/static/img/trade/detail.png" alt="" />
+                  订单详情
+                </div>
+                <div style="background-color: #627eea" @click="updateDetailPopup">
+                  <img src="/static/img/trade/update.png" alt="" />
+                  更新
+                </div>
+                <div style="background-color: #014cfa" @click="updateClosePositionPopup">
+                  <img src="/static/img/trade/close.png" alt="" />
+                  平仓
+                </div>
+              </div>
+            </template>
+          </SwipeCell>
+        </div>
+      </div>
+      <!-- 开仓 -->
+      <OpenPosition v-else-if="active === 0 && !loading" />
+
+
+      <!-- 查询 -->
+      <div v-else-if="active === 2 && !loading">
+        <div class="header-grid">
+          <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
+            <div class="header-f-left">股票/状态</div>
+            <div>开仓/可售</div>
+            <div>现价/成本</div>
+            <div class="header-f-right">盈亏/盈亏比</div>
+          </div>
+        </div>
+
+        <div v-for="i in 3" :key="i">
+          <SwipeCell>
+            <div class="content-grid grid-item-hover" @click="showInquiryButton(i)">
+              <div style="padding: 0 0.3rem; display: flex">
+                <div class="grid-item">
+                  <div class="f-text f-weight f-left" style="font-weight: 500">
+                    HADCRXO
+                  </div>
+                  <div class="f-left" style="display: flex">
+                    <div style="line-height: 0.4rem">10X</div>
+                    <div class="close-button" v-if="i === 1 || i === 3">锁仓</div>
+                  </div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text button">买涨</div>
+                  <div class="special-color">1000</div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text">21.970</div>
+                  <div>29.999</div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text f-weight red">39.520</div>
+                  <div class="f-weight red">-0.7%</div>
+                </div>
+              </div>
+            </div>
+            <!-- <div v-if="currentInquiryNum === i && buttonInquiryShow" class="button-show">
+                <div style="background: #F7931F;" @click="showDetailPopup(i)">
+                    <img src="/static/img/trade/detail.png" alt="">
+                    订单详情
+                  </div>
+                  <div style="background-color: #627eea;" @click="updateDetailPopup">
+                    <img src="/static/img/trade/update.png" alt="">
+                    更新
+                  </div>
+                  <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
+                    <img src="/static/img/trade/close.png" alt="">
+                    平仓
+                  </div>
+              </div> -->
+            <template #right>
+              <div class="button-style">
+                <div style="background: #f7931f" @click="showDetailPopup">
+                  <img src="/static/img/trade/detail.png" alt="" />
+                  订单详情
+                </div>
+                <div style="background-color: #627eea" @click="updateDetailPopup">
+                  <img src="/static/img/trade/update.png" alt="" />
+                  更新
+                </div>
+                <div style="background-color: #014cfa" @click="updateClosePositionPopup">
+                  <img src="/static/img/trade/close.png" alt="" />
+                  平仓
+                </div>
+              </div>
+            </template>
+          </SwipeCell>
         </div>
       </div>
 
-      <div v-for="i in 12" :key="i">
-        <SwipeCell>
-          <div class="content-grid grid-item-hover" @click="showButton(i)">
-            <div style="padding: 0 0.3rem; display: flex">
-              <div class="grid-item">
-                <div class="f-text f-weight f-left" style="font-weight: 500">
-                  HADCRXO
-                </div>
-                <div class="f-left" style="display: flex">
-                  <div style="line-height: 0.4rem">10X</div>
-                  <div class="close-button" v-if="i === 1 || i === 3">锁仓</div>
-                </div>
-              </div>
-              <div class="grid-item">
-                <div class="f-text button">买涨</div>
-                <div class="special-color">1000</div>
-              </div>
-              <div class="grid-item">
-                <div class="f-text">21.970</div>
-                <div>29.999</div>
-              </div>
-              <div class="grid-item">
-                <div class="f-text f-weight red">39.520</div>
-                <div class="f-weight red">-0.7%</div>
-              </div>
-            </div>
-          </div>
-          <!-- <div v-if="currentNum === i && buttonShow" class="button-show">
-              <div style="background: #F7931F;" @click="showDetailPopup(i)">
-                  <img src="/static/img/trade/detail.png" alt="">
-                  订单详情
-                </div>
-                <div style="background-color: #627eea;" @click="updateDetailPopup(i)">
-                  <img src="/static/img/trade/update.png" alt="">
-                  更新
-                </div>
-                <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
-                  <img src="/static/img/trade/close.png" alt="">
-                  平仓
-                </div>
-            </div> -->
-          <template #right>
-            <div class="button-style">
-              <div style="background: #f7931f" @click="showDetailPopup">
-                <img src="/static/img/trade/detail.png" alt="" />
-                订单详情
-              </div>
-              <div style="background-color: #627eea" @click="updateDetailPopup">
-                <img src="/static/img/trade/update.png" alt="" />
-                更新
-              </div>
-              <div style="background-color: #014cfa" @click="updateClosePositionPopup">
-                <img src="/static/img/trade/close.png" alt="" />
-                平仓
-              </div>
-            </div>
-          </template>
-        </SwipeCell>
-      </div>
-    </div>
+    </transition>
+
+    <Loading v-if="loading"></Loading>
+
+    
 
     <!-- 未登录 -->
     <div class="no-data-box" v-if="!token && active === 1">
       <img src="/static/img/trade/no-data.png" class="no-data-img">
       <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="jump('login')">马上登录</span>
       </p>
-    </div>
-
-
-
-
-    <!-- 开仓 -->
-    <OpenPosition v-if="active === 0 && !loading" />
-
-
-    <!-- 查询 -->
-    <div v-if="active === 2 && !loading">
-      <div class="header-grid">
-        <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
-          <div class="header-f-left">股票/状态</div>
-          <div>开仓/可售</div>
-          <div>现价/成本</div>
-          <div class="header-f-right">盈亏/盈亏比</div>
-        </div>
-      </div>
-
-      <div v-for="i in 3" :key="i">
-        <SwipeCell>
-          <div class="content-grid grid-item-hover" @click="showInquiryButton(i)">
-            <div style="padding: 0 0.3rem; display: flex">
-              <div class="grid-item">
-                <div class="f-text f-weight f-left" style="font-weight: 500">
-                  HADCRXO
-                </div>
-                <div class="f-left" style="display: flex">
-                  <div style="line-height: 0.4rem">10X</div>
-                  <div class="close-button" v-if="i === 1 || i === 3">锁仓</div>
-                </div>
-              </div>
-              <div class="grid-item">
-                <div class="f-text button">买涨</div>
-                <div class="special-color">1000</div>
-              </div>
-              <div class="grid-item">
-                <div class="f-text">21.970</div>
-                <div>29.999</div>
-              </div>
-              <div class="grid-item">
-                <div class="f-text f-weight red">39.520</div>
-                <div class="f-weight red">-0.7%</div>
-              </div>
-            </div>
-          </div>
-          <!-- <div v-if="currentInquiryNum === i && buttonInquiryShow" class="button-show">
-              <div style="background: #F7931F;" @click="showDetailPopup(i)">
-                  <img src="/static/img/trade/detail.png" alt="">
-                  订单详情
-                </div>
-                <div style="background-color: #627eea;" @click="updateDetailPopup">
-                  <img src="/static/img/trade/update.png" alt="">
-                  更新
-                </div>
-                <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
-                  <img src="/static/img/trade/close.png" alt="">
-                  平仓
-                </div>
-            </div> -->
-          <template #right>
-            <div class="button-style">
-              <div style="background: #f7931f" @click="showDetailPopup">
-                <img src="/static/img/trade/detail.png" alt="" />
-                订单详情
-              </div>
-              <div style="background-color: #627eea" @click="updateDetailPopup">
-                <img src="/static/img/trade/update.png" alt="" />
-                更新
-              </div>
-              <div style="background-color: #014cfa" @click="updateClosePositionPopup">
-                <img src="/static/img/trade/close.png" alt="" />
-                平仓
-              </div>
-            </div>
-          </template>
-        </SwipeCell>
-      </div>
     </div>
 
 

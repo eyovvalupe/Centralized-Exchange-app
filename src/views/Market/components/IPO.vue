@@ -55,8 +55,8 @@
           <span>详情</span>
           <Icon name="arrow" class="market_ipo-b-arrow"/>
         </div>
-        <div class="market_ipo-b-detail-button" v-if="i == 3" style="background: #999999;color: white;">认购</div>
-        <div class="market_ipo-b-detail-button" v-else>认购</div>
+        <div class="market_ipo-b-detail-button" v-if="i == 3" style="background: #999999;color: white;" @click="openSubscription">认购</div>
+        <div class="market_ipo-b-detail-button" v-else @click="openSubscription">认购</div>
       </div>
 
 
@@ -71,12 +71,21 @@ import { Icon } from 'vant';
 import { useRouter, useRoute } from 'vue-router';
 import { CountDown } from 'vant';
 import { ref } from "vue"
+import { defineProps } from 'vue';
 
 const router = useRouter();
 const time = ref(30 * 60 * 60 * 1000);
 
+const props = defineProps({
+  type: String
+});
+
 const opendetail = ()=>{
-  router.push({ name: 'ipodetail',query:{type:'market'} });
+  router.push({ name: 'ipodetail',query:{type: props.type} });
+}
+
+const openSubscription = ()=>{
+  router.push({ name: 'subscription'});
 }
 
 </script>

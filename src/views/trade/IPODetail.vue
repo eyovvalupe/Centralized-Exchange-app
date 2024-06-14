@@ -85,9 +85,11 @@ const router = useRouter();
 const goTotrade = () => {
   if (route.query.type === "market") {
     router.push({ name: 'market'});
-    return
+  } else if (route.query.type === "trade"){
+    router.push({ name: 'trade'});
+  } else {
+    router.push({ name: 'trade', query: { type: 'ipodetail' } });
   }
-  router.push({ name: 'trade', query: { type: 'ipodetail' } });
 };
 
 </script>

@@ -232,7 +232,7 @@ const routes = [
     name: "trade",
     component: () => import("../views/trade/trade.vue"),
     meta: {
-      keepAlive: false,
+      keepAlive: true,
       pageType: 'tab'
     }
   },
@@ -261,6 +261,26 @@ const routes = [
     path: "/assets",
     name: "assets",
     component: () => import("../views/assets/Assets.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
+    // 认购
+    path: "/subscription",
+    name: "subscription",
+    component: () => import("../views/trade/Subscription.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
+    // 认购成功
+    path: "/subscriptionSuccess",
+    name: "subscriptionSuccess",
+    component: () => import("../views/trade/components/Success.vue"),
     meta: {
       keepAlive: false,
       pageType: 'tab'

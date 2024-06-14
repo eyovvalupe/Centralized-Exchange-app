@@ -14,10 +14,23 @@
         <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
     </div>
 
-    <MarketStock
-      v-show="active === 0"
-    />
-    <IPOStock v-if="active === 1" />
+    <transition :name="'slide-right'">
+        <MarketStock
+          v-if="active === 0"
+        />
+        <div class="trade-tabs" v-else-if="active === 1" >
+          <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
+            :color="'#014CFA'" shrink>
+            <Tab :title="'IPO'" class="optional">
+              <IPO :type="'trade'"/>
+            </Tab>
+            <Tab :title="'中签'">
+                <IPOStock />
+            </Tab>
+        </Tabs>
+        </div>
+    </transition>
+
 
     <Popup v-model:show="show" position="top" class="trade-popup">
       <div class="popup-title">交易</div>
@@ -52,11 +65,13 @@ import { Tab, Tabs, Popup, Sticky } from "vant";
 import MarketStock from "./MarketStock.vue";
 import IPOStock from "./IPOStock.vue";
 import { useRouter, useRoute } from "vue-router";
+import IPO from "../Market/components/IPO.vue"
 import store from "@/store";
 
 const token = computed(() => store.state.token);
 
 const active = ref(0);
+const ipoActive = ref(0);
 const route = useRoute();
 const router = useRouter();
 if (route.query.type === "ipodetail") {
@@ -79,6 +94,10 @@ const onChange = (val) => {
   }
   active.value = val;
 };
+
+const ipoOnChange = (val)=>{
+  ipoActive.value = val
+}
 
 
 //弹窗组件
@@ -192,6 +211,50 @@ const closePopup = () => {
       > .van-tabs__line {
         height: 0;
       }
+    }
+  }
+  .trade-tabs {
+    background: white;
+    .tabs {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+
+        .van-tabs__wrap {
+            padding: 0 0.32rem;
+        }
+
+        .van-tabs__nav {
+            position: relative;
+
+            &::after {
+                content: '';
+                width: 100%;
+                height: 1px;
+                background-color: #3B82F6;
+                position: absolute;
+                bottom: 16px;
+                left: 0;
+                opacity: 0.3;
+            }
+        }
+
+        .van-tab {
+            margin-left: 0.36rem;
+        }
+        .van-tab:first-of-type {
+          margin-left: 0.1rem;
+        }
+
+        .van-tabs__content {
+            flex: 1;
+
+            .van-swipe-item {
+                overflow-y: auto;
+                padding-bottom: 0.2rem;
+            }
+        }
     }
   }
 }

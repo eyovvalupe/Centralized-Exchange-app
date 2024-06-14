@@ -21,7 +21,7 @@
                 <Financial />
             </Tab> -->
             <Tab :title="'IPO'">
-                <IPO />
+                <IPO :type="'market'" />
             </Tab>
         </Tabs>
     </div>
