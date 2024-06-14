@@ -160,6 +160,7 @@ Promise.all(loadingList).finally(() => {
 // 延迟加载
 if (token.value) {
     setTimeout(() => {
+        store.commit('setPageLoading', false)
         Promise.all([
             import('@/views/User/Safety.vue'),
             import('@/views/User/Account/Account.vue'),

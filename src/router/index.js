@@ -260,7 +260,7 @@ const routes = [
     // 资产
     path: "/assets",
     name: "assets",
-    component: () => import("../views/assets/Assets.vue"),
+    component: () => import("../views/Assets/Assets.vue"),
     meta: {
       keepAlive: false,
       pageType: 'tab'
