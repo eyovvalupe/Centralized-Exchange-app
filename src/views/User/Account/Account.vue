@@ -12,6 +12,19 @@
             </template>
         </Top>
 
+        <div class="list">
+            <div class="subtitle" v-if="bankList.length">银行卡</div>
+            <div class="item" v-for="(item, i) in bankList" :key="i">
+                <div>{{ item.bankName }}</div>
+                <div>{{ item.bankCardNumber }}</div>
+            </div>
+            <div class="subtitle" v-if="cryptoList.length">加密货币</div>
+            <div class="item" v-for="(item, i) in cryptoList" :key="i">
+                <div>{{ item.symbol }}-{{ item.network }}</div>
+                <div>{{ item.address }}</div>
+            </div>
+        </div>
+
         <Popup round v-model:show="showBottom" position="bottom" teleport="body">
             <div class="page_account_bottoms">
                 <div @click="jump('bank')" class="ripple_button bottom" style="border-bottom:1px solid #F5F5F5">银行卡
@@ -32,13 +45,20 @@ import { computed, ref } from "vue"
 import router from "@/router";
 import { Popup, Icon } from 'vant';
 
+store.dispatch('updateAccountList')
+
 const userInfo = computed(() => store.state.userInfo || {})
+const accountList = computed(() => store.state.accountList || []) // 收款方式列表
+const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行卡
+const cryptoList = computed(() => accountList.value.filter(item => item.channel == 'crypto')) // 加密货币
+
+
 const showBottom = ref(false)
 
 // 添加
 const goAdd = () => {
     if (!userInfo.value.googlebind || userInfo.value.kyc != 2) { // 跳转认证
-        router.push({
+        return router.push({
             name: 'check'
         })
     }
@@ -58,6 +78,23 @@ const jump = name => {
 <style lang="less" scoped>
 .page_account {
     padding: 1.12rem 0.32rem 1.4rem 0.32rem;
+
+    .list {
+        .subtitle {
+            margin-bottom: 0.08rem;
+            font-size: 0.28rem;
+            line-height: 0.44rem;
+            color: #111111;
+        }
+
+        .item {
+            margin-bottom: 0.28rem;
+            height: 2.8rem;
+            border-radius: 0.2rem;
+            background: linear-gradient(90deg, #5174EC 0%, #819DFF 100%);
+            color: #fff;
+        }
+    }
 
     .add_box {
         display: flex;

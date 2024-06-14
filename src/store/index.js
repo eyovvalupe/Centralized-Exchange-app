@@ -3,6 +3,7 @@ import createPersistedState from "vuex-persistedstate";
 
 import {
   _userinfo,
+  _listAccount,
 } from "@/api/api";
 import router from "@/router/index";
 import market from './market'
@@ -16,6 +17,7 @@ export default createStore({
     transitionName: '', // 页面过渡动画名字
     token: "",
     userInfo: {}, // 用户详情
+    accountList: [], // 收款方式列表
     ...market.state,
     ...trade.state
   },
@@ -38,6 +40,9 @@ export default createStore({
     setUserInfo(state, data) {
       state.userInfo = data;
     },
+    setAccountList(state, data) {
+      state.accountList = data;
+    },
     ...market.mutations,
     ...trade.mutations
   },
@@ -55,6 +60,21 @@ export default createStore({
             console.error('--用户信息', res.data)
             if (res.code == 200 && res.data) {
               commit("setUserInfo", res.data || {});
+              resolve(res.data);
+            } else {
+              resolve(false);
+            }
+          })
+          .catch(() => resolve(false));
+      });
+    },
+    updateAccountList({ commit }) {
+      // 更新收款方式列表
+      return new Promise((resolve) => {
+        _listAccount()
+          .then((res) => {
+            if (res.code == 200 && res.data) {
+              commit("setAccountList", res.data || {});
               resolve(res.data);
             } else {
               resolve(false);

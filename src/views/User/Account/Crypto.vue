@@ -8,51 +8,139 @@
             <div class="iten_icon">
                 <img src="/static/img/crypto/usdt.png" alt="usdt">
             </div>
-            <div class="ipt">USDT</div>
+            <div class="ipt">{{ form.currency }}</div>
             <Icon style="transform: rotate(90deg);" name="play" />
         </div>
-        <div class="subtitle">网络</div>
-        <div class="item">
-
-            <div class="ipt">TRC20</div>
+        <div class="subtitle" v-show="form.currency == 'USDT'">网络</div>
+        <div class="item" @click="showNet = true" v-show="form.currency == 'USDT'">
+            <div class="ipt">{{ form.network }}</div>
             <Icon style="transform: rotate(90deg);" name="play" />
         </div>
         <div class="subtitle">地址</div>
         <div class="item">
-            <input type="text" class="ipt" maxlength="50">
+            <input type="text" v-model.trim="form.address" class="ipt" maxlength="50">
         </div>
 
         <div style="flex: 1;"></div>
-        <Button class="submit" type="primary" round color="#014CFA">保存</Button>
+        <Button :disabled="!form.address" class="submit" :loading="loading" type="primary" round color="#014CFA"
+            @click="next">保存</Button>
 
 
-        <!-- 货币 -->
+        <!-- 币种 -->
         <Popup round v-model:show="showCrypto" position="bottom">
             <div class="bottoms">
-                <div class="bottom active_bottom">
+                <div @click="chooseCurrency(item)" class="bottom" :class="{ 'active_bottom': form.currency == item }"
+                    v-for="item in currencyMap" :key="item">
                     <div class="bottom_icon">
-                        <img src="/static/img/crypto/usdt.png" alt="usdt">
+                        <img :src="`/static/img/crypto/${item}.png`" alt="usdt">
                     </div>
-                    <span>USDT</span>
-                </div>
-                <div class="bottom">
-                    <div class="bottom_icon">
-                        <img src="/static/img/crypto/usdt.png" alt="usdt">
-                    </div>
-                    <span>USDT</span>
+                    <span>{{ item }}</span>
                 </div>
                 <Icon @click="showCrypto = false" class="close" name="cross" />
             </div>
         </Popup>
+
+        <!-- 网络 -->
+        <Popup round v-model:show="showNet" position="bottom">
+            <div class="bottoms">
+                <div @click="chooseNet(item)" class="bottom" :class="{ 'active_bottom': form.network == item }"
+                    v-for="item in networkMap" :key="item">
+                    <!-- <div class="bottom_icon">
+                        <img :src="`/static/img/crypto/${item}.png`" alt="usdt">
+                    </div> -->
+                    <span>{{ item }}</span>
+                </div>
+                <Icon @click="showNet = false" class="close" name="cross" />
+            </div>
+        </Popup>
+
+        <!-- 谷歌验证 -->
+        <GoogleVerfCode ref="googleRef" @submit="submit" />
     </div>
 </template>
 
 <script setup>
+import { Button, Icon, Popup, showNotify } from "vant"
+import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
-import { Button, Icon, Popup } from "vant"
 import { ref } from "vue"
+import { _addAccount, _sessionToken } from "@/api/api"
+import router from "@/router";
 
+
+// 币种
 const showCrypto = ref(false)
+const currencyMap = ['USDT', 'BTC', 'ETH']
+const chooseCurrency = (item) => {
+    form.value.currency = item
+    showCrypto.value = false
+}
+// 网络
+const showNet = ref(false)
+const networkMap = ['TRC20', 'ERC20']
+const chooseNet = (item) => {
+    form.value.network = item
+    showNet.value = false
+}
+
+
+const googleRef = ref()
+
+const loading = ref(false)
+const form = ref({
+    channel: 'crypto',
+    currency: 'USDT',
+    network: 'TRC20',
+    address: '',
+    // account_name: null,
+    // bank_name: null,
+    // bank_card_number: null,
+})
+
+// 提交
+const submit = (googleCode) => {
+    if (loading.value) return
+    loading.value = true
+    const params = {
+        ...form.value,
+        googlecode: googleCode,
+        token: sessionToken.value
+    }
+    _addAccount(params).then(res => {
+        if (res.code == 200) {
+            showNotify({ type: 'success', message: '添加成功' })
+            setTimeout(() => {
+                router.back()
+            }, 200)
+        }
+    }).finally(() => {
+        loading.value = false
+    })
+}
+const next = () => {
+    googleRef.value.open()
+}
+
+// sessionToken
+const sessionToken = ref('')
+const getSessionToken = () => {
+    loading.value = true
+    return new Promise(resolve => {
+        _sessionToken().then(res => {
+            if (res?.code == 200) {
+                sessionToken.value = res.data
+                resolve(true)
+            } else {
+                resolve(false)
+            }
+        }).catch(() => {
+            resolve(false)
+        }).finally(() => {
+            loading.value = false
+        })
+    })
+}
+getSessionToken()
 </script>
 
 <style lang="less" scoped>
