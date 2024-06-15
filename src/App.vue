@@ -73,7 +73,7 @@ Promise.all([
 })
 
 const boundFunc = () => {
-  const reboundPage = ['user', 'trade', 'date', 'assets', 'ipodetail']
+  const reboundPage = ['user', 'trade', 'date', 'ipodetail']
   // 回弹效果
   let startY = 0
   const maxMove = 200
