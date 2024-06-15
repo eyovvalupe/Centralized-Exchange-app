@@ -116,6 +116,7 @@ const closePopup = () => {
   position: relative;
   padding-bottom: 1.4rem;
   min-height: 100%;
+  overflow-y: auto;
   .header {
     display: flex;
     justify-content: space-between;

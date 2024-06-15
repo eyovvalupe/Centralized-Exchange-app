@@ -68,6 +68,7 @@ const selectTab = (val) => {
   position: relative;
   padding-bottom: 1.4rem;
   background-color: white;
+  overflow-y: auto;
 
   .header {
     display: flex;

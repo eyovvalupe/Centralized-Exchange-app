@@ -75,6 +75,7 @@
   import Decimal from 'decimal.js';
   
   const router = useRouter();
+  const route = useRoute();
 
   const sliderValue = ref(0);
   const loading = ref(false);
@@ -90,7 +91,11 @@
 
 
   const goTotrade = () => {
-    router.push({ name: 'trade'});
+    if (route.query.type === "market") {
+      router.push({ name: 'market'});
+    } else if (route.query.type === "trade"){
+      router.push({ name: 'trade'});
+    }
   };
 
 

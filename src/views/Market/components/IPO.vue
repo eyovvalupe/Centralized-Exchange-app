@@ -85,7 +85,7 @@ const opendetail = ()=>{
 }
 
 const openSubscription = ()=>{
-  router.push({ name: 'subscription'});
+  router.push({ name: 'subscription', query:{type: props.type}});
 }
 
 </script>
