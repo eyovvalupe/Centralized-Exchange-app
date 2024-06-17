@@ -25,7 +25,7 @@
         </div>
 
         <div class="assets-dj">
-          <div class="assets-dj-b">
+          <div class="assets-dj-b" @click="topUp">
             <img src="/static/img/assets/cash-one.png" alt="" />
             <div style="line-height: 0.8rem">充值</div>
             <div class="r-line"></div>
@@ -38,7 +38,7 @@
               <div class="r-line"></div>
             </div>
           </div>
-          <div class="assets-dj-b">
+          <div class="assets-dj-b" @click="exchange">
             <img src="/static/img/assets/cash-three.png" alt="" />
             <div style="line-height: 0.8rem">兑换</div>
           </div>
@@ -75,16 +75,26 @@ import { ref, computed } from "vue";
 import { Icon, SwipeCell, Tabs, Tab } from "vant";
 import Balance from "./Balance.vue";
 import Record from "./Record.vue";
+import QuickExchange from "./QuickExchange.vue";
+import { useRouter, useRoute } from 'vue-router';
 
 const backgroundImageStyle = computed(() => ({
   backgroundImage: `url(/static/img/assets/cash.png)`,
 }));
 
 const active = ref(0);
+const router = useRouter();
 
 const changeTab = (val) => {
   active.value = val;
 };
+
+const exchange = ()=>{
+  router.push({ name: 'exchange'});
+}
+const topUp = ()=>{
+  router.push({ name: 'loan'});
+}
 </script>
 
 <style lang="less">

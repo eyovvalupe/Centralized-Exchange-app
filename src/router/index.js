@@ -262,7 +262,7 @@ const routes = [
     name: "assets",
     component: () => import("../views/Assets/Assets.vue"),
     meta: {
-      keepAlive: false,
+      keepAlive: true,
       pageType: 'tab'
     }
   },
@@ -281,6 +281,36 @@ const routes = [
     path: "/subscriptionSuccess",
     name: "subscriptionSuccess",
     component: () => import("../views/trade/components/Success.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
+    // 划转
+    path: "/transfer",
+    name: "transfer",
+    component: () => import("../views/Assets/components/Transfer.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
+    // 快速兑换
+    path: "/exchange",
+    name: "exchange",
+    component: () => import("../views/Assets/components/QuickExchange.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
+    // 借贷
+    path: "/loan",
+    name: "loan",
+    component: () => import("../views/Assets/components/Loan.vue"),
     meta: {
       keepAlive: false,
       pageType: 'tab'

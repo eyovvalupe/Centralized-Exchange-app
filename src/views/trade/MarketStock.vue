@@ -302,11 +302,12 @@ const updateClosePositionPopup = () => {
 
 const subscribeOrders = () => {
   socket = startSocket(() => {
+    console.log(898989)
   // 这里是 stocksorder 的处理
-  // socket.emit('stocksorder','#all')
-  // socket.on('stocksorder', res => {
-  //   console.log(res)
-  // })
+  socket.emit('stocksorder','#all')
+  socket.on('stocksorder', res => {
+    console.log(res)
+  })
 
   // 这里是参考 realtime 的处理
   // ------------------

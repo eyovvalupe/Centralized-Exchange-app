@@ -9,7 +9,7 @@
                         <div class="assets-all">资产合计</div>
                         <Icon name="eye-o" class="eye-o" />
                     </div>
-                    <div class="assets-account-button">
+                    <div class="assets-account-button" @click="goTransfer">
                         账户间划转
                     </div>
                 </div>
@@ -197,6 +197,9 @@
 <script setup>
 import { computed } from "vue";
 import { Icon, SwipeCell } from 'vant';
+import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter();
 
 const backgroundImageStyle = computed(() => ({
     backgroundImage: `url(/static/img/assets/one.png)`,
@@ -213,6 +216,11 @@ const threeImage = computed(() => ({
 const fourImage = computed(() => ({
     backgroundImage: `url(/static/img/assets/four.png)`,
 }));
+
+
+const goTransfer = () =>{
+    router.push({ name: 'transfer'});
+}
 </script>
 
 <style lang="less" scoped>
@@ -284,7 +292,7 @@ const fourImage = computed(() => ({
                 height: 0.44rem;
                 background-color: #ffffff;
                 position: absolute;
-                right: 0px;
+                right: 0;
                 top: 0.1rem;
             }
 
