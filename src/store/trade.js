@@ -1,8 +1,8 @@
 // 交易
 export default {
     state: {
-      startDate: null,
-      endDate: null,
+      startDate: '',
+      endDate: '',
       showOpenPositionBottom: false,
       popupComponent: null,
       orderList: {},
@@ -12,7 +12,10 @@ export default {
       allSelect: 0,
       option2:[],
       selectedLeverOption: 0,
-      orderNo:''
+      orderNo:'',
+      isUpActive: true,
+      isDownActive: false,
+      unsold_volume: 0
     },
     mutations: {
       setDates(state,data) {
@@ -52,7 +55,14 @@ export default {
       },
       setOrderNo(state,data) {
         state.orderNo = data
-      }
+      },
+      setActive (state,data) {
+        state.isUpActive = data
+        state.isDownActive = !data
+      },
+      setUnsoldVolume(state,data) {
+        state.unsold_volume = data
+      },
     },
     actions: {
       openPopup({ commit }, component) {

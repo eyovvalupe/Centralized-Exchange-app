@@ -156,8 +156,13 @@ const numValue = ref('')
 const increment = ref(0)
 const lastValidValue = ref(0); // 保存上一个有效值
 
-const isUpActive = ref(true);
-const isDownActive = ref(false);
+const isUpActive = computed(() => {
+  return store.state.isUpActive
+});
+const isDownActive = computed(() => {
+  return store.state.isDownActive
+});
+
 const paymentAmount = ref(0)
 const stockPrice = ref(0)
 const amount = ref(0)
@@ -197,13 +202,11 @@ const selectedLeverOption = computed(() => {
 // });
 
 const activateUp = () => {
-  isUpActive.value = true;
-  isDownActive.value = false;
+  store.commit('setActive',true)
 };
 
 const activateDown = () => {
-  isUpActive.value = false;
-  isDownActive.value = true;
+  store.commit('setActive',false)
 };
 
 const onSliderChange = (newValue) => {
@@ -278,46 +281,6 @@ const onChange = (val) => {
   //   loading.value = false;
   // }, 1000);
 };
-
-
-const getPrice = (val)=>{
-  let price;
-  let amount;
-  //获取股票价格
-  if (val.symbol) {
-    // 发起 API 请求获取股票价格和钱包余额
-    const getPrice = _basic({ symbol: val.symbol }).then(res => {
-        if (res.code == 200) {
-            console.log(res, 'res');
-            price = new Decimal(100); // 假设股票价格为 100
-            stockPrice.value = price
-        }
-    });
-
-    const getBalance = _walletBalance({ currency: 'main' }).then(res => {
-        if (res.code == 200) {
-            amount = new Decimal(res.data[0].amount);
-        }
-    });
-    
-    // 计算可用数量
-    Promise.all([getPrice, getBalance]).then(() => {
-        if (price !== undefined && amount !== undefined) {
-            const availableQuantity = amount.div(price);
-            // 百位数取整
-            roundedQuantity.value = availableQuantity.div(100).floor().mul(100);
-            //数量输入框中的金额
-            // getnumval(sliderValue.value)
-            getslide()
-            getPay()
-        } else {
-            console.error('获取价格或余额失败');
-        }
-    }).catch(error => {
-        console.error('请求失败', error);
-    });
-  }
-}
 
 
 const getslide = ()=>{
@@ -410,10 +373,10 @@ const openPopup = ()=>{
   padding: 0 0.3rem;
   padding-bottom: 0.76rem;
   background-color: white;
-  .van-loading {
-    left: 47%;
-    margin-top: 2rem !important;
-  }
+  // .van-loading {
+  //   left: 47%;
+  //   margin-top: 2rem !important;
+  // }
   .position-header {
     display: flex;
     .up-botton {

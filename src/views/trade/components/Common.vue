@@ -2,13 +2,15 @@
   <div class="common-open-position">
         <div class="stock-box">
         <span class="grop-title">股票</span>
-        <img
-          src="/static/img/trade/blue-stock.png"
-          class="stock-img"
-          v-if="value.length > 0"
-          @click="openPopup"
-        />
-        <img src="/static/img/trade/white-stock.png" class="stock-img" v-else />
+          <Loading type="spinner" class="stock-img" v-if="loading" color="#004DFF"/>
+          <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" />
+          <img
+            src="/static/img/trade/blue-stock.png"
+            class="stock-img"
+            v-if="value.length > 0 && stockCo.length > 0"
+            @click="openPopup"
+          />
+        
       </div>
 
       <Field
@@ -93,7 +95,7 @@
         round
         v-if="isDownActive && token && active === 0"
         @click="openPositPopup('down')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || stockCo.length ===0"
         >买跌</Button
       >
       <Button
@@ -102,7 +104,7 @@
         round
         v-if="isDownActive && token && active === 1"
         @click="openPositPopup('down')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === ''"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === '' || stockCo.length ===0"
         >买跌</Button
       >
 
@@ -112,7 +114,7 @@
         round
         v-if="isDownActive && token && active === 2"
         @click="openPositPopup('down')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '') || stockCo.length ===0"
         >买跌</Button
       >
 
@@ -122,7 +124,7 @@
         round
         v-if="isUpActive && token && active === 0"
         @click="openPositPopup('up')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || stockCo.length ===0"
         >买涨</Button
       >
 
@@ -132,7 +134,7 @@
         round
         v-if="isUpActive && token && active === 1"
         @click="openPositPopup('up')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === ''"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === '' || stockCo.length ===0"
         >买涨</Button
       >
 
@@ -142,7 +144,7 @@
         round
         v-if="isUpActive && token && active === 2"
         @click="openPositPopup('up')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')"
+        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')|| stockCo.length ===0"
         >买涨</Button
       >
 
@@ -207,8 +209,14 @@ const numValue = ref('')
 const increment = ref(0)
 const lastValidValue = ref(0); // 保存上一个有效值
 
-const isUpActive = ref(true);
-const isDownActive = ref(false);
+const isUpActive = computed(() => {
+  return store.state.isUpActive
+});
+
+const isDownActive = computed(() => {
+  return store.state.isDownActive
+});
+
 const paymentAmount = ref(0)
 const stockPrice = ref(0)
 const amount = ref(0)
@@ -247,15 +255,6 @@ watch(selectedLeverOption, (newValue, oldValue) => {
   getPay();
 });
 
-const activateUp = () => {
-  isUpActive.value = true;
-  isDownActive.value = false;
-};
-
-const activateDown = () => {
-  isUpActive.value = false;
-  isDownActive.value = true;
-};
 
 const onSliderChange = (newValue) => {
   //滚动滑动条
@@ -270,7 +269,7 @@ const getnumval = (newValue)=>{
     const calculatedValue = percentage.mul(roundedQuantity.value);
 
     // 百位数取整
-    const roundedValue = calculatedValue.div(100).floor().mul(100);
+    const roundedValue = calculatedValue.div(increment.value).floor().mul(increment.value);
     numValue.value = roundedValue.toNumber();
 
     if (numValue.value  !== 0 || numValue.value  !== '') {
@@ -339,52 +338,55 @@ const getData = () => {
     clear()
     return;
   }
-  _search({
-    symbol: value.value,
-  })
-    .then((res) => {
-      if (res.code == 200 && res.data) {
-        stockCo.value = res.data;
-        //获取股票价格
-        getPrice(res.data[0])
-      }
-    })
-    .catch((error) => {})
-    .finally(() => {});
+    // TV18BRDCST
+    loading.value = true
+    getPrice(value.value)
 };
 
 const getPrice = (val)=>{
   let price;
-  let amount;
+  let amountNum;
   //获取股票价格
-  if (val.symbol) {
+  if (val) {
     // 发起 API 请求获取股票价格和钱包余额
-    const getPrice = _basic({ symbol: val.symbol }).then(res => {
+    const getPrice = _basic({ symbol: val }).then(res => {
         if (res.code == 200) {
-            console.log(res, 'res');
-            price = new Decimal(100); // 假设股票价格为 100
+            stockCo.value = [res.data];
+            price = new Decimal(res.data.price);
             stockPrice.value = price
+            loading.value = false
+        } else if (res.code == 510) {
+          loading.value = false
+          stockCo.value = [];
+          stockPrice.value = ''
+        } else {
+          loading.value = false
+          stockCo.value = [];
+          stockPrice.value = ''
         }
-    });
+    })
 
-    const getBalance = _walletBalance({ currency: 'main' }).then(res => {
+    const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
         if (res.code == 200) {
-            amount = new Decimal(res.data[0].amount);
+          // amountNum = new Decimal(res.data[0].amount);
+          amountNum = new Decimal(500000);
         }
     });
     
     // 计算可用数量
     Promise.all([getPrice, getBalance]).then(() => {
-        if (price !== undefined && amount !== undefined) {
-            const availableQuantity = amount.div(price);
-            // 百位数取整
-            roundedQuantity.value = availableQuantity.div(100).floor().mul(100);
+        if (price !== undefined && amountNum !== undefined) {
+            const availableQuantity = amountNum.div(price);
+            // 取整
+            roundedQuantity.value = availableQuantity.floor();
             //数量输入框中的金额
             // getnumval(sliderValue.value)
             getslide()
             getPay()
         } else {
             console.error('获取价格或余额失败');
+            paymentAmount.value = 0
+            amount.value = 0
         }
     }).catch(error => {
         console.error('请求失败', error);
@@ -562,10 +564,10 @@ defineExpose({
   padding: 0;
   padding-bottom: 0.76rem;
   background-color: white;
-  .van-loading {
-    left: 47%;
-    margin-top: 2rem !important;
-  }
+  // .van-loading {
+  //   left: 47%;
+  //   margin-top: 2rem !important;
+  // }
   .position-header {
     display: flex;
     .up-botton {

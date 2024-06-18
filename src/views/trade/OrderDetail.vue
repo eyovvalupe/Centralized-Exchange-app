@@ -110,7 +110,7 @@
           手续费
         </div>
         <div class="right-text">
-          {{ detaiList.fee }}
+          {{ detaiList.fees }}
         </div>
       </div>
 
@@ -130,7 +130,7 @@
           订单价值
         </div>
         <div class="right-text">
-          20000
+          
         </div>
       </div>
 
@@ -148,7 +148,7 @@
           持仓利息
         </div>
         <div class="right-text">
-          20000
+          
         </div>
       </div>
       
@@ -160,7 +160,7 @@
           逐仓风险线
         </div>
         <div class="prcent-num">
-          -18%
+          ----
         </div>
       </div>
 
@@ -188,7 +188,7 @@
 </template>
 
 <script setup>
-  import { ref } from "vue";
+  import { ref, computed, onMounted } from "vue";
   import { Button } from 'vant';
   import { _stocksGet } from "@/api/api";
   import OrderUpdate from "./OrderUpdate.vue";
@@ -196,14 +196,19 @@
   import store from "@/store";
 
   const detaiList = ref({})
+  const order_no = computed(() => store.state.orderNo);
 
-  const getcommToken = () =>{
-    // _stocksGet({ order_no:'' }).then(res => {
-    //       if (res.code == 200) {
-            
-    //       }
-    //   });
+  const getData = () =>{
+    _stocksGet({ order_no: order_no.value}).then(res => {
+        if (res.code == 200) {
+          detaiList.value = res.data
+        }
+    });
   }
+
+  onMounted(() => {
+    getData()
+  });
 
 
   const updateClosePositionPopup = () => {

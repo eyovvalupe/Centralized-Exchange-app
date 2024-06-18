@@ -132,10 +132,10 @@
     padding: 0 0.3rem;
     padding-bottom: 0.76rem;
     background-color: white;
-    .van-loading {
-      left: 47%;
-      margin-top: 2rem !important;
-    }
+    // .van-loading {
+    //   left: 47%;
+    //   margin-top: 2rem !important;
+    // }
     .arrow-left {
         position: absolute;
         left: 0.3rem;

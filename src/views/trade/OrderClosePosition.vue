@@ -6,10 +6,11 @@
 
     <div class="order-update-box">
       <div class="order-lose-title">数量</div>
-      <Field v-model="loseValue" class="lose-field"/>
+      <Field v-model="loseValue" class="lose-field" type="number" @focus="handleFocus(1)" 
+      @blur="handleBlur(1)" :class="[{'focusinput': isFocused === 1}]"/>
 
       <div class="account-monkey">
-        可卖数量 <span class="account-num-monkey">0</span>
+        可卖数量 <span class="account-num-monkey">{{ unsold_volume }}</span>
       </div>
 
 
@@ -65,7 +66,7 @@
         :gutter="16"
       />
 
-      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;">确定</Button>
+      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;" :disabled="loseValue === '' || value === ''" @click="sure">确定</Button>
 
       <!-- 数字键盘 -->
       <NumberKeyboard
@@ -83,8 +84,16 @@
 </template>
 
 <script setup>
-  import { ref } from "vue";
-  import { Button, Field, Slider, PasswordInput, NumberKeyboard } from 'vant';
+  import { ref,computed, watch } from "vue";
+  import { Button, Field, Slider, PasswordInput, NumberKeyboard, showToast } from 'vant';
+  import store from "@/store";
+  import Decimal from 'decimal.js';
+  import { _stocksSell } from "@/api/api";
+
+
+  const order_no = computed(() => store.state.orderNo);
+  const unsold_volume = computed(() => store.state.unsold_volume);
+  const getcommToken = computed(() => store.state.commToken)
 
   const loseValue = ref('')
   const addValue = ref('')
@@ -93,49 +102,45 @@
   const value = ref('');
   const showKeyboard = ref(false);
 
+  const isFocused = ref();
+
 
   const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
+
+    const result = new Decimal(newValue).mul(new Decimal(unsold_volume.value)).div(100);
+    loseValue.value = result.floor();
   };
 
-//   const getPrice = (val)=>{
-//     let price;
-//     let amount;
-//     //获取股票价格
-//     if (val.symbol) {
-//       // 发起 API 请求获取股票价格和钱包余额
-//       const getPrice = _basic({ symbol: val.symbol }).then(res => {
-//           if (res.code == 200) {
-//               console.log(res, 'res');
-//               price = new Decimal(100); // 假设股票价格为 100
-//               stockPrice.value = price
-//           }
-//       });
+  const handleFocus = (val) => {
+    isFocused.value = val
+  };
 
-//       const getBalance = _walletBalance({ currency: 'main' }).then(res => {
-//           if (res.code == 200) {
-//               amount = new Decimal(res.data[0].amount);
-//           }
-//       });
-      
-//       // 计算可用数量
-//       Promise.all([getPrice, getBalance]).then(() => {
-//           if (price !== undefined && amount !== undefined) {
-//               const availableQuantity = amount.div(price);
-//               // 百位数取整
-//               roundedQuantity.value = availableQuantity.div(100).floor().mul(100);
-//               //数量输入框中的金额
-//               // getnumval(sliderValue.value)
-//               getslide()
-//               getPay()
-//           } else {
-//               console.error('获取价格或余额失败');
-//           }
-//       }).catch(error => {
-//           console.error('请求失败', error);
-//       });
-//     }
-// }
+  const handleBlur = (val) => {
+    isFocused.value = null
+  };
+
+
+  const sure = ()=>{
+    if (new Decimal(loseValue.value).gt(unsold_volume.value)) {
+      showToast('超出最大可卖金额');
+      return
+    }
+    const data = {
+      order_no:order_no.value,
+      volume: loseValue.value,
+      token: getcommToken.value,
+      safeword: value.value
+    }
+    _stocksSell({ ...data }).then(res => {
+        if (res.code == 200) {
+          showToast('平仓成功');
+          store.dispatch('closePopup')
+        }
+    });
+  }
+
+
 
 </script>
 
@@ -305,6 +310,19 @@
       font-weight: 600;
       line-height: 0.56rem;
       margin-top: 0.56rem;
+    }
+
+    input:focus {
+      color: #014cfa;
+      caret-color: #014cfa; /* 光标颜色 */
+    }
+
+    input:focus::placeholder {
+      // color: #014cfa; /* 占位符颜色 */
+    }
+
+    .focusinput {
+      border-color: #014cfa !important;
     }
     
   }

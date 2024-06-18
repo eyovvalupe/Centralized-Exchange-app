@@ -6,14 +6,16 @@
 
     <div class="order-update-box">
       <div class="order-lose-title">止损</div>
-      <Field v-model="loseValue" class="lose-field"/>
+      <Field v-model="loseValue" class="lose-field" type="number" @focus="handleFocus(1)" 
+      @blur="handleBlur(1)" :class="[{'focusinput': isFocused === 1}]"/>
 
 
       <div class="order-lose-title">增加保证金</div>
-      <Field v-model="addValue" class="lose-field"/>
+      <Field v-model="addValue" class="lose-field" type="number" @focus="handleFocus(2)" 
+      @blur="handleBlur(2)" :class="[{'focusinput': isFocused === 2}]"/>
 
       <div class="account-monkey">
-        账户金额 100000
+        账户金额 {{ amount }}
       </div>
 
 
@@ -39,7 +41,7 @@
           逐仓分险线
         </div>
         <div class="prcent-num">
-          -18%
+          ----
         </div>
       </div>
 
@@ -67,7 +69,7 @@
         :gutter="16"
       />
 
-      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;">确定</Button>
+      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;" :disabled="loseValue === '' || value===''  ||  amount ===0 " @click="update">确定</Button>
 
       <!-- 数字键盘 -->
       <NumberKeyboard
@@ -83,8 +85,11 @@
 </template>
 
 <script setup>
-  import { ref } from "vue";
-  import { Button, Field, Slider, PasswordInput, NumberKeyboard } from 'vant';
+  import { ref, computed, onMounted } from "vue";
+  import { Button, Field, Slider, PasswordInput, NumberKeyboard, showToast } from 'vant';
+  import { _stocksGet, _walletBalance, _stocksUpdate } from "@/api/api";
+  import store from "@/store";
+  import Decimal from 'decimal.js';
 
   const loseValue = ref('')
   const addValue = ref('')
@@ -92,10 +97,59 @@
   const percentages = [25, 50, 75, 100];
   const value = ref('');
   const showKeyboard = ref(false);
+  const isFocused = ref();
 
+
+  const order_no = computed(() => store.state.orderNo);
+  const getcommToken = computed(() => store.state.commToken)
+  const amount = ref(500)
+
+
+  const getData = () =>{
+    _walletBalance({ currency: 'stock' }).then(res => {
+        if (res.code == 200) {
+          // amount.value = res.data[0].amount
+        }
+    });
+  }
+
+  onMounted(() => {
+    getData()
+  });
 
   const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
+    const result = new Decimal(sliderValue.value).mul(amount.value).div(100);
+    addValue.value = result.floor();
+  };
+
+  const update = ()=>{
+    if (new Decimal(addValue.value).gt(amount.value)) {
+      showToast('超出最大可增加金额');
+      return
+    }
+    const data = {
+      order_no:order_no.value,
+      amount: loseValue.value,
+      stop_loss_price: addValue.value,
+      token: getcommToken.value,
+      safeword: value.value
+    }
+    _stocksUpdate({ ...data }).then(res => {
+        if (res.code == 200) {
+          showToast('更新成功');
+          store.dispatch('closePopup')
+        }
+    });
+  }
+
+
+  const handleFocus = (val) => {
+    isFocused.value = val
+  };
+
+  const handleBlur = (val) => {
+    isFocused.value = null
   };
 
 </script>
@@ -255,6 +309,18 @@
         left: 50% !important;
         transform: translateX(-50%) !important;
       }
+    }
+    input:focus {
+      color: #014cfa;
+      caret-color: #014cfa; /* 光标颜色 */
+    }
+
+    input:focus::placeholder {
+      // color: #014cfa; /* 占位符颜色 */
+    }
+
+    .focusinput {
+      border-color: #014cfa !important;
     }
   }
 </style>

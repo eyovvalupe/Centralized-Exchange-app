@@ -193,11 +193,6 @@ const openStock = ()=>{
     lever: orderList.value.selectedLeverOption,
     price_type: price_type,
     price: price,
-    stop_profit: false,
-    stop_profit_type:'price',
-    stop_profit_price:'',
-    stop_loss:false,
-    stop_loss_type:'price',
     stop_loss_price:orderList.value.loseValue,
     token:getcommToken.value,
     safeword:value.value

@@ -44,37 +44,38 @@
       <div v-if="active === 1 && !loading && token">
         <div class="header-grid">
           <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
-            <div class="header-f-left">股票/状态</div>
+            <div class="header-f-left" style="width: 2.4rem">股票/状态</div>
             <div>开仓/可售</div>
             <div>现价/成本</div>
             <div class="header-f-right">盈亏/盈亏比</div>
           </div>
         </div>
 
-        <div v-for="i in 12" :key="i">
+        <div v-for="(i,key) in dataList" :key="key">
           <SwipeCell>
             <div class="content-grid grid-item-hover" @click="showButton(i)">
               <div style="padding: 0 0.3rem; display: flex">
-                <div class="grid-item">
-                  <div class="f-text f-weight f-left" style="font-weight: 500">
-                    HADCRXO
+                <div class="grid-item" style="width: 2.4rem">
+                  <div class="f-text f-weight f-left" style="font-weight: 500;">
+                    {{ i.symbol }}
                   </div>
                   <div class="f-left" style="display: flex">
-                    <div style="line-height: 0.4rem">10X</div>
-                    <div class="close-button" v-if="i === 1 || i === 3">锁仓</div>
+                    <div style="line-height: 0.4rem">{{ i.lever }}X</div>
+                    <div class="close-button">{{ getStatusText(i.status) }}</div>
                   </div>
                 </div>
                 <div class="grid-item">
-                  <div class="f-text button">买涨</div>
-                  <div class="special-color">1000</div>
+                  <div class="f-text button" style="color: #e8503a;background-color: #fbf1ef;" v-if="i.offset === 'long'">买涨</div>
+                  <div class="f-text button" v-else>买跌</div>
+                  <div class="special-color">{{ i.unsold_volume }}</div>
                 </div>
                 <div class="grid-item">
-                  <div class="f-text">21.970</div>
-                  <div>29.999</div>
+                  <div class="f-text">{{ i.open_price }}</div>
+                  <div>{{ i.settled_price }}</div>
                 </div>
                 <div class="grid-item">
-                  <div class="f-text f-weight red">39.520</div>
-                  <div class="f-weight red">-0.7%</div>
+                  <div class="f-text f-weight red">{{ i.profit }}</div>
+                  <div class="f-weight red">{{ i.ratio }}</div>
                 </div>
               </div>
             </div>
@@ -94,15 +95,19 @@
               </div> -->
             <template #right>
               <div class="button-style">
-                <div style="background: #f7931f" @click="showDetailPopup">
+                <div style="background: #f7931f" @click="showDetailPopup(i)">
                   <img src="/static/img/trade/detail.png" alt="" />
                   订单详情
                 </div>
-                <div style="background-color: #627eea" @click="updateDetailPopup">
+                <div style="background-color: #627eea" @click="updateDetailPopup(i)" v-if="i.status === 'none' || i.status === 'lock' || i.status === 'open'">
                   <img src="/static/img/trade/update.png" alt="" />
                   更新
                 </div>
-                <div style="background-color: #014cfa" @click="updateClosePositionPopup">
+                <div style="background-color: #f2f2f2;color: #999999;" v-else>
+                  <img src="/static/img/trade/no-update.png" alt="" />
+                  更新
+                </div>
+                <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
                   <img src="/static/img/trade/close.png" alt="" />
                   平仓
                 </div>
@@ -117,74 +122,77 @@
 
       <!-- 查询 -->
       <div v-else-if="active === 2 && !loading">
-        <div class="header-grid">
-          <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
-            <div class="header-f-left">股票/状态</div>
-            <div>开仓/可售</div>
-            <div>现价/成本</div>
-            <div class="header-f-right">盈亏/盈亏比</div>
+        <PullRefresh v-model="reloading" @refresh="onRefresh">
+            <div class="header-grid">
+            <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
+              <div class="header-f-left" style="width: 2.4rem">股票/状态</div>
+              <div>开仓/可售</div>
+              <div>现价/成本</div>
+              <div class="header-f-right">盈亏/盈亏比</div>
+            </div>
           </div>
-        </div>
 
-        <div v-for="i in 3" :key="i">
-          <SwipeCell>
-            <div class="content-grid grid-item-hover" @click="showInquiryButton(i)">
-              <div style="padding: 0 0.3rem; display: flex">
-                <div class="grid-item">
-                  <div class="f-text f-weight f-left" style="font-weight: 500">
-                    HADCRXO
+          <div v-for="i in 3" :key="i">
+            <SwipeCell>
+              <div class="content-grid grid-item-hover" @click="showInquiryButton(i)">
+                <div style="padding: 0 0.3rem; display: flex">
+                  <div class="grid-item" style="width: 2.4rem">
+                    <div class="f-text f-weight f-left" style="font-weight: 500">
+                      HADCRXO
+                    </div>
+                    <div class="f-left" style="display: flex">
+                      <div style="line-height: 0.4rem">10X</div>
+                      <div class="close-button" v-if="i === 1 || i === 3">锁仓</div>
+                    </div>
                   </div>
-                  <div class="f-left" style="display: flex">
-                    <div style="line-height: 0.4rem">10X</div>
-                    <div class="close-button" v-if="i === 1 || i === 3">锁仓</div>
+                  <div class="grid-item">
+                    <div class="f-text button">买涨</div>
+                    <div class="special-color">1000</div>
                   </div>
-                </div>
-                <div class="grid-item">
-                  <div class="f-text button">买涨</div>
-                  <div class="special-color">1000</div>
-                </div>
-                <div class="grid-item">
-                  <div class="f-text">21.970</div>
-                  <div>29.999</div>
-                </div>
-                <div class="grid-item">
-                  <div class="f-text f-weight red">39.520</div>
-                  <div class="f-weight red">-0.7%</div>
+                  <div class="grid-item">
+                    <div class="f-text">21.970</div>
+                    <div>29.999</div>
+                  </div>
+                  <div class="grid-item">
+                    <div class="f-text f-weight red">39.520</div>
+                    <div class="f-weight red">-0.7%</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <!-- <div v-if="currentInquiryNum === i && buttonInquiryShow" class="button-show">
-                <div style="background: #F7931F;" @click="showDetailPopup(i)">
-                    <img src="/static/img/trade/detail.png" alt="">
+              <!-- <div v-if="currentInquiryNum === i && buttonInquiryShow" class="button-show">
+                  <div style="background: #F7931F;" @click="showDetailPopup(i)">
+                      <img src="/static/img/trade/detail.png" alt="">
+                      订单详情
+                    </div>
+                    <div style="background-color: #627eea;" @click="updateDetailPopup">
+                      <img src="/static/img/trade/update.png" alt="">
+                      更新
+                    </div>
+                    <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
+                      <img src="/static/img/trade/close.png" alt="">
+                      平仓
+                    </div>
+                </div> -->
+              <template #right>
+                <div class="button-style">
+                  <div style="background: #f7931f" @click="showDetailPopup(i)">
+                    <img src="/static/img/trade/detail.png" alt="" />
                     订单详情
                   </div>
-                  <div style="background-color: #627eea;" @click="updateDetailPopup">
-                    <img src="/static/img/trade/update.png" alt="">
+                  <div style="background-color: #627eea" @click="updateDetailPopup(i)">
+                    <img src="/static/img/trade/update.png" alt="" />
                     更新
                   </div>
-                  <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
-                    <img src="/static/img/trade/close.png" alt="">
+                  <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
+                    <img src="/static/img/trade/close.png" alt="" />
                     平仓
                   </div>
-              </div> -->
-            <template #right>
-              <div class="button-style">
-                <div style="background: #f7931f" @click="showDetailPopup">
-                  <img src="/static/img/trade/detail.png" alt="" />
-                  订单详情
                 </div>
-                <div style="background-color: #627eea" @click="updateDetailPopup">
-                  <img src="/static/img/trade/update.png" alt="" />
-                  更新
-                </div>
-                <div style="background-color: #014cfa" @click="updateClosePositionPopup">
-                  <img src="/static/img/trade/close.png" alt="" />
-                  平仓
-                </div>
-              </div>
-            </template>
-          </SwipeCell>
-        </div>
+              </template>
+            </SwipeCell>
+          </div>
+        </PullRefresh>
+        
       </div>
 
     </transition>
@@ -216,7 +224,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import {
   Tab,
   Tabs,
@@ -226,14 +234,16 @@ import {
   Sticky,
   Loading,
   Button,
-  Popup
+  Popup,
+  PullRefresh,
+  showToast
 } from "vant";
-import { onMounted } from "vue";
+import { onMounted, onDeactivated } from "vue";
 import OpenPosition from "./OpenPosition.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
-import { _stocksList } from "@/api/api"
+import { _stocksList, _commToken } from "@/api/api"
 import OrderDetail from "./OrderDetail.vue";
 import OrderUpdate from "./OrderUpdate.vue";
 import OrderClosePosition from "./OrderClosePosition.vue";
@@ -245,9 +255,6 @@ let socket = null;
 const active = ref(1);
 
 const route = useRoute();
-if (route.query.type === "date") {
-  active.value = 2;
-}
 if (route.query.redata === "1") {
   active.value = 0;
 }
@@ -264,6 +271,45 @@ const stickyElement = ref(null);
 
 const showLeft = ref(false)
 const OptionalRef = ref()
+const count = ref(1)
+
+
+const reloading = ref(false)
+
+const formatDate = (date) => {
+  if (date != '') {
+    const daysOfWeek = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    const dayOfWeek = daysOfWeek[d.getDay()];
+
+    return `${year}-${month}-${day}`;
+  } else {
+    return ''
+  }
+};
+
+//持仓 data
+const dataList = ref([])
+const startDate = computed(() => formatDate(store.state.startDate))
+const endDate = computed(() => formatDate(store.state.endDate))
+
+// 定义一个状态对象
+const statusMapping = {
+  none: '开仓',
+  lock: '锁定',
+  open: '持仓',
+  done: '平仓',
+  fail: '失败',
+  cancel: '已取消'
+};
+
+// 定义一个方法来根据 `status` 的值获取对应的中文状态
+const getStatusText = (status) => {
+  return statusMapping[status] || status;
+};
 
 window.onscroll = () => {
   if (stickyElement.value) {
@@ -279,21 +325,29 @@ const goToDate = () => {
   router.push({ name: "date" });
 };
 
-const showDetailPopup = () => {
+const showDetailPopup = (i) => {
+  store.commit('setOrderNo', i.order_no)
   //订单详情
   store.dispatch('openPopup', OrderDetail)
   store.commit('setPopupHeight', '90%')
   store.commit('setkeyborader', false)
+
 };
 
-const updateDetailPopup = () => {
+const updateDetailPopup = (i) => {
+  store.commit('setOrderNo', i.order_no)
+  getcommToken()
   //更新
   store.dispatch('openPopup', OrderUpdate)
   store.commit('setPopupHeight', '90%')
   store.commit('setkeyborader', true)
 };
 
-const updateClosePositionPopup = () => {
+const updateClosePositionPopup = (i) => {
+  console.log(i,'i')
+  store.commit('setOrderNo', i.order_no)
+  store.commit('setUnsoldVolume', i.unsold_volume)
+  getcommToken()
   //平仓
   store.dispatch('openPopup', OrderClosePosition)
   store.commit('setPopupHeight', '90%')
@@ -302,21 +356,40 @@ const updateClosePositionPopup = () => {
 
 const subscribeOrders = () => {
   socket = startSocket(() => {
-    console.log(898989)
-  // 这里是 stocksorder 的处理
-  socket.emit('stocksorder','#all')
-  socket.on('stocksorder', res => {
-    console.log(res)
-  })
-
-  // 这里是参考 realtime 的处理
-  // ------------------
-  // socket.emit('realtime','INFY,HDFCBANK,RELIANCE,HAL,BAJFINANCE,SBIN,LT,IDEA,ICICIBANK,M_M,TCS,WIPRO,BHARTIARTL,ARE_M,BEL,RECLTD,PFC,ADANIENT,TATAMOTORS,TATASTEEL,ITC,POWERGRID,IRB,HINDUNILVR,RVNL,AXISBANK,BHEL,MAZDOCK,INDIGO,NHPC,NTPC,COCHINSHIP,HCLTECH,AVANTIFEED,ADANIPORTS,KOTAKBANK,JIOFIN,TECHM,IRFC,IIFL,TITAN,GAIL,COFORGE,TATAPOWER,ADANIENSOL,BPCL,SAIL,ADANIPOWER,GESHIP,ZOMATO,HERITGFOOD,DIXON,APLAPOLLO,INDUSINDBK,ONGC,EXIDEIND,IOC,BANKBARODA,VEDL,NCC,SUNPHARMA,BSOFT,HUDCO,LTIM,BIOCON,HINDALCO,MOTHERSON,CANBK,ASIANPAINT,BDL,DRREDDY,MASTEK,BAJAJFINSV,HINDPETRO,UNOMINDA,MANKIND,COALINDIA,KNRCON,ABFRL,PRAJIND,PERSISTENT,INDUSTOWER,TEJASNET,GRSE,DLF,IREDA,HEROMOTOCO,LTTS,PNB,YESBANK,ABCAPITAL,DABUR,JSWSTEEL,MPHASIS,JBMA,VBL,ADANIGREEN,ASHOKLEY,PAYTM,RAMCOCEM,NIFTY50,SENSEX,LRGCAP,MIDCAP,SMLCAP,NIFTY500,NIFTYMIDCAP100,INDIAVIX,NIFTYBANK')
-  // socket.on('realtime', res => {
-  //   console.log(res)
-  // })
+    console.error('开始订阅')
+    // 这里是 stocksorder 的处理
+    socket && socket.emit('user', token.value)
+    socket && socket.emit('stocksorder','#all')
+    socket && socket.off('user')
+    socket && socket.off('stocksorder')
+    socket.on('stocksorder', res => {
+      console.log(res.data,'res.data')
+      if (res && res.data.length > 0) {
+        dataList.value = res.data
+      } else {
+        dataList.value = []
+      }
+    })
   });
 };
+
+const onRefresh = ()=>{
+  reloading.value = true;
+  count.value++
+  store.commit('setDates', ['','']);
+
+  getStocksList(true)
+}
+
+
+const getcommToken = () =>{
+  //点击按钮获取 token
+  _commToken({ }).then(res => {
+        if (res.code == 200) {
+          store.commit('setCommToken', res.data);
+        }
+    });
+}
 
 
 const onChange = (val) => {
@@ -324,6 +397,8 @@ const onChange = (val) => {
     router.push({ path: route.path, query: {} });
   }
   active.value = val;
+  count.val = 1
+  store.commit('setDates', ['','']);
 
   if (token.value === '') {
     loading.value = false;
@@ -332,17 +407,65 @@ const onChange = (val) => {
 
   if (val === 1) {
     //持仓
-    // subscribeOrders()
+    subscribeOrders()
   } else {
     //取消订阅
+    const socket = startSocket(() => {
+      socket && socket.emit('user', '')
+      socket && socket.emit('stocksorder', '')
+      socket && socket.off('user')
+      socket && socket.off('stocksorder')
+      console.error('取消订阅')
+    })
+    if (val === 2) {
+      //查询
+      getStocksList(false)
+    }
   }
-
-  // loading.value = true;
-
-  // setTimeout(() => {
-  //   loading.value = false;
-  // }, 1000);
 };
+
+
+// 监听时间的变化
+watch([startDate, endDate], (newValues, oldValues) => {
+  getStocksList(false);
+});
+
+const getStocksList = (val)=>{
+  // 查询
+  
+  const data = {
+    page: count.value,
+    symbol:'',
+    start_time: startDate.value,
+    end_time: endDate.value
+  }
+  _stocksList({ ...data }).then(res => {
+      if (res.code == 200) {
+        if(val === true) {
+          reloading.value = false;
+        }
+      } else {
+        reloading.value = false;
+      }
+  });
+}
+
+if (route.query.type === "date") {
+  active.value = 2;
+  getStocksList(false)
+}
+
+
+onDeactivated(() => {
+  // 取消订阅
+  const socket = startSocket(() => {
+      socket && socket.emit('user', '')
+      socket && socket.emit('stocksorder', '')
+      socket && socket.off('user')
+      socket && socket.off('stocksorder')
+      console.error('取消订阅')
+    })
+})
 
 const showButton = (i) => {
   if (currentNum.value === i) {
@@ -373,7 +496,7 @@ onMounted(() => {
   }, 1000);
 
   if (active.value === 1) {
-    // subscribeOrders();
+    subscribeOrders();
   }
 });
 
@@ -418,10 +541,10 @@ const leftclose = ()=>{
     width: 100%;
   }
 
-  .van-loading {
-    left: 47%;
-    margin-top: 2rem !important;
-  }
+  // .van-loading {
+  //   left: 47%;
+  //   margin-top: 2rem !important;
+  // }
 
   .header-grid {
     padding-bottom: 0.12rem;

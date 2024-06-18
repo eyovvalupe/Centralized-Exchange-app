@@ -6,7 +6,7 @@
           <div>结束：{{ endDate }}</div>
         </div>
         <div class="date-button-box">
-          <Button color="#0953fa">确认</Button>
+          <Button color="#0953fa" @click="goTrade">确认</Button>
         </div>
       </div>
     </div>
@@ -16,9 +16,11 @@
   import { Button } from 'vant';
   import { ref, computed } from "vue";
   import store from "@/store";
+  import { useRouter } from 'vue-router';
 
   const startDate = computed(() => formatDate(store.state.startDate))
   const endDate = computed(() => formatDate(store.state.endDate))
+  const router = useRouter();
 
 
   const formatDate = (date) => {
@@ -35,6 +37,10 @@
       return ''
     }
   };
+
+  const goTrade = ()=>{
+    router.push({ name: 'trade', query: { type: 'date' } });
+  }
 
   
   
