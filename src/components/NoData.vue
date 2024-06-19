@@ -33,6 +33,9 @@ const props = defineProps({
     .nodata_icon {
         width: 4.14rem;
         height: auto;
+        img {
+            width: 100%;
+        }
     }
 }
 </style>

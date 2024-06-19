@@ -15,7 +15,8 @@ export default {
       orderNo:'',
       isUpActive: true,
       isDownActive: false,
-      unsold_volume: 0
+      unsold_volume: 0,
+      currentActive: '0'
     },
     mutations: {
       setDates(state,data) {
@@ -62,6 +63,9 @@ export default {
       },
       setUnsoldVolume(state,data) {
         state.unsold_volume = data
+      },
+      setCurrentActive(state,data) {
+        state.currentActive = data
       },
     },
     actions: {

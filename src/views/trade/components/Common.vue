@@ -22,9 +22,9 @@
           {'focusinput': isFocused === 4}
         ]"
         style="margin-bottom: 0.2rem"
-        @input="handleInput(4)"
+        @input="handleInput()"
         @focus="handleFocus(4)" 
-        @blur="handleBlur"
+        @blur="handleBlur(4)"
       >
         <template #button v-if="value.length > 0 && stockCo.length > 0">
           <div class="co-text">
@@ -66,13 +66,17 @@
         可买数量 <span style="color: #333">{{ roundedQuantity }}</span>
       </div>
 
-      <Slider
-        v-model="sliderValue"
-        bar-height="0.08rem"
-        active-color="#f2f2f2"
-        inactive-color="#f2f2f2"
-        @change="onSliderChange"
-      />
+
+      <div class="slider-container">
+        <Slider
+          v-model="sliderValue"
+          bar-height="0.08rem"
+          active-color="#014cfa"
+          inactive-color="#f2f2f2"
+          @change="onSliderChange"
+        />
+      </div>
+      
       <div class="percentages">
         <div v-for="percent in percentages" :key="percent" class="percentage">
           <div class="line"></div>
@@ -93,7 +97,7 @@
         size="large"
         color="#18b762"
         round
-        v-if="isDownActive && token && active === 0"
+        v-if="isDownActive && token && active === '0'"
         @click="openPositPopup('down')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || stockCo.length ===0"
         >买跌</Button
@@ -102,7 +106,7 @@
         size="large"
         color="#18b762"
         round
-        v-if="isDownActive && token && active === 1"
+        v-if="isDownActive && token && active === '1'"
         @click="openPositPopup('down')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === '' || stockCo.length ===0"
         >买跌</Button
@@ -112,7 +116,7 @@
         size="large"
         color="#18b762"
         round
-        v-if="isDownActive && token && active === 2"
+        v-if="isDownActive && token && active === '2'"
         @click="openPositPopup('down')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '') || stockCo.length ===0"
         >买跌</Button
@@ -122,7 +126,7 @@
         size="large"
         color="#e8503a"
         round
-        v-if="isUpActive && token && active === 0"
+        v-if="isUpActive && token && active === '0'"
         @click="openPositPopup('up')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || stockCo.length ===0"
         >买涨</Button
@@ -132,7 +136,7 @@
         size="large"
         color="#e8503a"
         round
-        v-if="isUpActive && token && active === 1"
+        v-if="isUpActive && token && active === '1'"
         @click="openPositPopup('up')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === '' || stockCo.length ===0"
         >买涨</Button
@@ -142,7 +146,7 @@
         size="large"
         color="#e8503a"
         round
-        v-if="isUpActive && token && active === 2"
+        v-if="isUpActive && token && active === '2'"
         @click="openPositPopup('up')"
         :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')|| stockCo.length ===0"
         >买涨</Button
@@ -184,8 +188,8 @@ import Decimal from 'decimal.js';
 
 const token = computed(() => store.state.token);
 const router = useRouter();
+const active = computed(() => store.state.currentActive);
 
-const active = ref(0);
 const value = ref("");
 const priceValue = ref("");
 const loseValue = ref("");
@@ -428,6 +432,9 @@ const getStockslist = ()=>{
         openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
         //平仓手续费
         closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
+
+
+        emit('already');
       }
     })
     .catch((error) => {})
@@ -448,6 +455,8 @@ const getslide = ()=>{
     } else {
       sliderValue.value = new Decimal(numValue.value).div(roundedQuantity.value).mul(100).floor();
     }
+  } else {
+    sliderValue.value = 0
   }
 }
 
@@ -845,7 +854,7 @@ defineExpose({
   }
 
   .van-slider__button {
-    width: 0.06rem;
+    width: 0.1rem;
     height: 0.48rem;
     background-color: #014cfa;
     border-radius: inherit;
@@ -854,6 +863,7 @@ defineExpose({
 
   .van-slider__button-wrapper {
     z-index: 999 !important;
+    padding: 0.24rem;
   }
 
   .stock-box {

@@ -4,7 +4,9 @@
       订单详情
     </div>
 
-    <div class="detail-t-title">
+    <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+    <div v-show="!loading">
+      <div class="detail-t-title">
       <div class="detail-flex">
         <div class="detail-flex-title">
           可售股票
@@ -176,12 +178,17 @@
       </div>
     </div>
 
-    
-
     <div style="padding: 0 0.32rem;">
       <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;" @click="updateClosePositionPopup">平仓</Button>
       <Button size="large" color="#f2f2f2" round style="margin-bottom: 0.32rem;color: #999999;" @click="updateDetailPopup">订单更新</Button>
     </div>
+
+    </div>
+
+   
+    
+
+    
     
 
   </div>
@@ -189,7 +196,7 @@
 
 <script setup>
   import { ref, computed, onMounted } from "vue";
-  import { Button } from 'vant';
+  import { Button, Loading } from 'vant';
   import { _stocksGet } from "@/api/api";
   import OrderUpdate from "./OrderUpdate.vue";
   import OrderClosePosition from "./OrderClosePosition.vue";
@@ -198,11 +205,15 @@
   const detaiList = ref({})
   const order_no = computed(() => store.state.orderNo);
 
+  const loading = ref(true)
+
   const getData = () =>{
     _stocksGet({ order_no: order_no.value}).then(res => {
         if (res.code == 200) {
           detaiList.value = res.data
+          loading.value = false
         }
+        loading.value = false
     });
   }
 
@@ -232,6 +243,12 @@
 
 <style lang="less">
   .order-detail {
+    .position-loading {
+      margin-top: 2rem !important;
+      .van-loading__spinner {
+        left: 47%;
+      }
+    }
     .detail-title {
       text-align: center;
       margin-top: 0.4rem;

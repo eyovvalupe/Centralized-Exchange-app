@@ -4,7 +4,8 @@
       更新订单
     </div>
 
-    <div class="order-update-box">
+    <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+    <div class="order-update-box" v-show="!loading">
       <div class="order-lose-title">止损</div>
       <Field v-model="loseValue" class="lose-field" type="number" @focus="handleFocus(1)" 
       @blur="handleBlur(1)" :class="[{'focusinput': isFocused === 1}]"/>
@@ -12,7 +13,7 @@
 
       <div class="order-lose-title">增加保证金</div>
       <Field v-model="addValue" class="lose-field" type="number" @focus="handleFocus(2)" 
-      @blur="handleBlur(2)" :class="[{'focusinput': isFocused === 2}]"/>
+      @blur="handleBlur(2)" :class="[{'focusinput': isFocused === 2}]" @input="handleInput()"/>
 
       <div class="account-monkey">
         账户金额 {{ amount }}
@@ -102,20 +103,39 @@
 
   const order_no = computed(() => store.state.orderNo);
   const getcommToken = computed(() => store.state.commToken)
-  const amount = ref(500)
+  const amount = ref(0)
+  const loading = ref(true)
 
 
   const getData = () =>{
     _walletBalance({ currency: 'stock' }).then(res => {
         if (res.code == 200) {
-          // amount.value = res.data[0].amount
+          amount.value = res.data[0].amount
+          loading.value = false
         }
+        loading.value = false
     });
   }
 
   onMounted(() => {
     getData()
   });
+
+
+  const handleInput = ()=>{
+    if (addValue.value !== '') {
+      const add = new Decimal(addValue.value);
+      const amountval = new Decimal(amount.value);
+      if (new Decimal(addValue.value).gt(new Decimal(amount.value))) {
+        sliderValue.value = 100
+        return
+      }
+      const result = add.div(amountval).mul(100);
+      sliderValue.value = result.toNumber();
+    } else {
+      sliderValue.value = 0
+    }
+  }
 
   const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
