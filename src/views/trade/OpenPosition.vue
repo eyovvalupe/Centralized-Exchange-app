@@ -281,6 +281,10 @@ watch([active], ([newActive]) => {
     transitionName.value = 'slide-right';
   } else if (previousActive.value === '2' && newActive === '1') {
     transitionName.value = 'slide-left';
+  } else if (previousActive.value === '2' && newActive === '0') {
+    transitionName.value = 'slide-left';
+  } else if (previousActive.value === '0' && newActive === '2') {
+    transitionName.value = 'slide-right';
   }
 });
 
@@ -307,7 +311,12 @@ const onChange = (val) => {
   }
   store.commit('setCurrentActive',val)
 
-  loading.value = true;
+  if (token.value) {
+    loading.value = true;
+  } else {
+    loading.value = false;
+  }
+  
 };
 
 

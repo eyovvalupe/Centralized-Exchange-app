@@ -287,6 +287,10 @@ watch([active], ([newActive]) => {
     transitionName.value = 'slide-right';
   } else if (previousActive.value === '2' && newActive === '1') {
     transitionName.value = 'slide-left';
+  } else if (previousActive.value === '2' && newActive === '0') {
+    transitionName.value = 'slide-left';
+  } else if (previousActive.value === '0' && newActive === '2') {
+    transitionName.value = 'slide-right';
   }
 });
 
