@@ -56,7 +56,10 @@
 
         <!-- 列表 -->
         <div class="tabs">
-            <div class="ripple_button tab" @click="rightSwitch1 = !rightSwitch1">
+            <div ref="tab1" :key="1" class="ripple_button tab" @click="rightSwitch1 = !rightSwitch1">
+                <div class="tab_icon">
+                    <img src="/static/img/user/safe.png" alt="img">
+                </div>
                 <div :class="{ 'open_tab': rightSwitch1 == true }">现金账户</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch1 == true }">
@@ -89,7 +92,10 @@
                     </div>
                 </div>
             </div>
-            <div class="ripple_button tab" @click="rightSwitch2 = !rightSwitch2">
+            <div ref="tab2" :key="2" class="ripple_button tab" @click="rightSwitch2 = !rightSwitch2">
+                <div class="tab_icon">
+                    <img src="/static/img/user/safe.png" alt="img">
+                </div>
                 <div :class="{ 'open_tab': rightSwitch2 == true }">股票</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
@@ -110,7 +116,10 @@
                     </div>
                 </div>
             </div>
-            <div class="ripple_button tab" @click="rightSwitch3 = !rightSwitch3">
+            <div ref="tab3" :key="3" class="ripple_button tab" @click="rightSwitch3 = !rightSwitch3">
+                <div class="tab_icon">
+                    <img src="/static/img/user/safe.png" alt="img">
+                </div>
                 <div :class="{ 'open_tab': rightSwitch3 == true }">合约</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
@@ -131,7 +140,10 @@
                     </div>
                 </div>
             </div>
-            <div class="ripple_button tab" @click="rightSwitch4 = !rightSwitch4">
+            <div ref="tab4" :key="4" class="ripple_button tab" @click="rightSwitch4 = !rightSwitch4">
+                <div class="tab_icon">
+                    <img src="/static/img/user/safe.png" alt="img">
+                </div>
                 <div :class="{ 'open_tab': rightSwitch4 == true }">IPO</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
@@ -159,24 +171,33 @@
 
 <script setup>
 import { Icon } from "vant"
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
+import { useClickAway } from '@vant/use';
 
 const hidden = ref(true) // 隐藏数字
+
+// 功能区域控制
+const tab1 = ref()
+const tab2 = ref()
+const tab3 = ref()
+const tab4 = ref()
 const rightSwitch1 = ref(false)
 const rightSwitch2 = ref(false)
 const rightSwitch3 = ref(false)
 const rightSwitch4 = ref(false)
-
+useClickAway(tab1, () => { rightSwitch1.value = false })
+useClickAway(tab2, () => { rightSwitch2.value = false })
+useClickAway(tab3, () => { rightSwitch3.value = false })
+useClickAway(tab4, () => { rightSwitch4.value = false })
 </script>
 
 <style lang="less" scoped>
 .page_assets_overview {
-    height: 100%;
-    overflow-y: auto;
+    padding-bottom: 1rem;
 
     .overview {
         background-size: 100% 100%;
-        margin: 0.4rem 0.32rem 0.36rem 0.32rem;
+        margin: 0.2rem 0.32rem 0.36rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
 
         .top {
@@ -249,7 +270,7 @@ const rightSwitch4 = ref(false)
     }
 
     .btns {
-        margin: 0.36rem 0.32rem 0.4rem 0.32rem;
+        margin: 0.16rem 0.32rem 0.4rem 0.32rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -291,6 +312,12 @@ const rightSwitch4 = ref(false)
             >div {
                 transition: all ease .2s;
                 overflow: hidden;
+            }
+
+            .tab_icon {
+                width: 0.32rem;
+                height: 0.32rem;
+                margin-right: 0.2rem;
             }
 
             .open_tab {

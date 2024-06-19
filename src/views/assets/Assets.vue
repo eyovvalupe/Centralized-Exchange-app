@@ -1,35 +1,39 @@
 <!-- 资产页 -->
 <template>
     <div class="page page_assets">
-        <Tabs v-if="pageLoading" class="tab_content" v-model:active="active" type="card" animated shrink>
-            <Tab title="总资产" name="overview">
-                <div class="tab_body">
-                    <PullRefresh class="refresh_box" v-model="loading" @refresh="onRefresh">
+        <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
+            <div class="page_title">资产</div>
+            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
+                animated shrink>
+                <Tab title="总资产" name="overview">
+                    <div class="tab_body">
                         <Overview />
-                    </PullRefresh>
-                </div>
-            </Tab>
-            <Tab title="现金账户" name="cash">
-                <div class="tab_body">
-                    现金账户
-                </div>
-            </Tab>
-            <Tab title="股票" name="stock">
-                <div class="tab_body">
-                    股票
-                </div>
-            </Tab>
-            <Tab title="合约" name="contract">
-                <div class="tab_body">
-                    合约
-                </div>
-            </Tab>
-            <Tab title="IPO" name="ipo">
-                <div class="tab_body">
-                    IPO
-                </div>
-            </Tab>
-        </Tabs>
+
+                    </div>
+                </Tab>
+                <Tab title="现金账户" name="cash">
+                    <div class="tab_body">
+                        <Cash />
+                    </div>
+                </Tab>
+                <Tab title="股票" name="stock">
+                    <div class="tab_body">
+                        股票
+                    </div>
+                </Tab>
+                <Tab title="合约" name="contract">
+                    <div class="tab_body">
+                        合约
+                    </div>
+                </Tab>
+                <Tab title="IPO" name="ipo">
+                    <div class="tab_body">
+                        IPO
+                    </div>
+                </Tab>
+            </Tabs>
+        </PullRefresh>
+
     </div>
 </template>
 
@@ -37,9 +41,11 @@
 import { Tab, Tabs, PullRefresh } from "vant"
 import { ref, onMounted } from "vue"
 import Overview from "./page/Overview.vue"
+import Cash from "./page/Cash.vue"
 
 const active = ref('overview')
 const loading = ref(false)
+const disabled = ref(false)
 const pageLoading = ref(false)
 
 const onRefresh = () => {
@@ -53,6 +59,19 @@ const onRefresh = () => {
 onMounted(() => {
     setTimeout(() => {
         pageLoading.value = true
+        // 下拉刷新状态监听
+        setTimeout(() => {
+            const bodys = document.querySelectorAll('.tab_body')
+            bodys.forEach(item => {
+                item.addEventListener('scroll', (e) => {
+                    if (e.target.scrollTop > 0) {
+                        disabled.value = true
+                    } else {
+                        disabled.value = false
+                    }
+                })
+            })
+        }, 500)
     }, 100)
 })
 </script>
@@ -60,6 +79,14 @@ onMounted(() => {
 <style lang="less" scoped>
 .page_assets {
     padding: 0.36rem 0;
+
+    .page_title {
+        padding: 0 0.32rem 0.32rem 0.32rem;
+        font-weight: 600;
+        color: #0D0D12;
+        line-height: 0.5rem;
+        font-size: 0.5rem;
+    }
 
     .tab_content {
         ::v-deep(.van-tabs__nav--card) {
@@ -83,7 +110,9 @@ onMounted(() => {
         }
 
         ::v-deep(.van-tabs__wrap) {
-            height: 0.6rem;
+            height: 0.8rem;
+            border-bottom: 1px solid #F6F8FF;
+            padding-bottom: 0.2rem;
         }
 
         ::v-deep(.van-tabs__nav--card) {
@@ -98,14 +127,14 @@ onMounted(() => {
     }
 
     .tab_body {
-        height: calc(100vh - 2.5rem);
-        border: 1px solid red;
+        height: calc(100vh - 3.4rem);
         width: 100%;
+        overflow-y: auto;
+    }
 
-        .refresh_box {
-            width: 100%;
-            height: 100%;
-        }
+    .refresh_box {
+        width: 100%;
+        height: 100%;
     }
 }
 </style>
