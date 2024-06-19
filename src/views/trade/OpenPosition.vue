@@ -23,38 +23,44 @@
       <div class="position-tabs">
         <Tabs
           class="tabs"
-          v-model:active="active"
+          v-model="active"
           :swipeable="false"
           animated
           :color="'#014CFA'"
           shrink
           @change="onChange"
         >
-          <Tab title="市价"> </Tab>
-          <Tab title="限价"> </Tab>
-          <Tab title="止盈/止损"> </Tab>
+          <Tab title="市价" name="0"> </Tab>
+          <Tab title="限价" name="1"> </Tab>
+          <Tab title="止盈/止损" name="2"> </Tab>
         </Tabs>
       </div>
     </div>
 
-    <!-- <Loading v-if="loading"></Loading> -->
+    
 
-    <transition name="slide-right">
-      <div v-if="active === 1">
-        <span class="grop-title">价格</span>
-        <Field
-          v-model="priceValue"
-          :class="['num-input',{'focusinput': isFocused === 1}]"
-          style="margin-bottom: 0.2rem"
-          type="number"
-          input-align="right"
-          @focus="handleFocus(1)" 
-          @blur="handleBlur(1)"
-        />
-        <Common @update-value="handleUpdateValue" ref="childComponentRef"/>
+    <transition :name="transitionName">
+      <div v-if="active === '1'">
+        <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+        <div v-show="!loading">
+          <span class="grop-title">价格</span>
+          <Field
+            v-model="priceValue"
+            :class="['num-input',{'focusinput': isFocused === 1}]"
+            style="margin-bottom: 0.2rem"
+            type="number"
+            input-align="right"
+            @focus="handleFocus(1)" 
+            @blur="handleBlur(1)"
+          />
+          <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already"/>
+        </div>
+        
       </div>
 
-      <div v-else-if="active === 2">
+      <div v-else-if="active === '2'">
+        <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+        <div v-show="!loading">
         <span class="grop-title" >止损</span>
         <Field
           v-model="loseValue"
@@ -82,11 +88,15 @@
           {{ marketprice?'限价':'市价'}}
           </div>
         </div>
-        <Common @update-value="handleUpdateValue" ref="childComponentRef"/>
+        <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already"/>
+      </div>
       </div>
 
       <div v-else>
-        <Common @update-value="handleUpdateValue" ref="childComponentRef"/>
+        <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+        <div v-show="!loading">
+        <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already"/>
+      </div>
       </div>
     </transition>
 
@@ -115,24 +125,28 @@ const token = computed(() => store.state.token);
 const router = useRouter();
 
 const backgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/light-blue.png)`,
+  backgroundImage: `url(/static/img/trade/light-blue.svg)`,
+  color: "#999999",
 }));
 
 const activeBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/left-blue.png)`,
+  backgroundImage: `url(/static/img/trade/left-blue.svg)`,
   color: "white",
 }));
 
 const activeBlueBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/blue.png)`,
+  backgroundImage: `url(/static/img/trade/blue.svg)`,
+  color: "white",
 }));
 
 const blueBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/right-white.png)`,
-  color: "#014cfa",
+  backgroundImage: `url(/static/img/trade/right-white.svg)`,
+  color: "#999999",
 }));
 
-const active = ref(0);
+const active = ref('0');
+const previousActive = ref('0');
+
 const value = ref("");
 const priceValue = ref("");
 const loseValue = ref("");
@@ -255,6 +269,25 @@ const getPay = ()=> {
   }
 }
 
+const transitionName = ref('slide-left');
+
+
+watch([active], ([newActive]) => {
+  if (previousActive.value === '0' && newActive === '1') {
+    transitionName.value = 'slide-right';
+  } else if (previousActive.value === '1' && newActive === '0') {
+    transitionName.value = 'slide-left';
+  } else if (previousActive.value === '1' && newActive === '2') {
+    transitionName.value = 'slide-right';
+  } else if (previousActive.value === '2' && newActive === '1') {
+    transitionName.value = 'slide-left';
+  } else if (previousActive.value === '2' && newActive === '0') {
+    transitionName.value = 'slide-left';
+  } else if (previousActive.value === '0' && newActive === '2') {
+    transitionName.value = 'slide-right';
+  }
+});
+
 
 const handleFocus = (val) => {
   isFocused.value = val
@@ -265,6 +298,7 @@ const handleBlur = (val) => {
 };
 
 const onChange = (val) => {
+  previousActive.value = active.value;
   active.value = val;
   store.commit('clearState')
   value.value = ''
@@ -275,12 +309,20 @@ const onChange = (val) => {
   if (childComponentRef.value) {
     childComponentRef.value.clear();
   }
-  // loading.value = true;
+  store.commit('setCurrentActive',val)
 
-  // setTimeout(() => {
-  //   loading.value = false;
-  // }, 1000);
+  if (token.value) {
+    loading.value = true;
+  } else {
+    loading.value = false;
+  }
+  
 };
+
+
+const already = ()=>{
+  loading.value = false;
+}
 
 
 const getslide = ()=>{
@@ -377,6 +419,12 @@ const openPopup = ()=>{
   //   left: 47%;
   //   margin-top: 2rem !important;
   // }
+  .position-loading {
+      margin-top: 2rem !important;
+      .van-loading__spinner {
+        left: 47%;
+      }
+    }
   .position-header {
     display: flex;
     .up-botton {

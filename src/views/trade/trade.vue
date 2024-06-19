@@ -1,18 +1,21 @@
 <template>
   <div class="trade">
     <div class="header">
-      <div class="title">交易</div>
+      <!-- <div class="title">交易</div> -->
+      <img src="/static/img/trade/open.png" alt="" class="open-img" @click="openleft"/>
+      <!--  tabs-->
+     <div class="trade-recommend_tabs">
+        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
+        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
+    </div>
+
       <div class="value" @click="showPopup">
         <img src="/static/img/trade/value.png" alt="" class="value-img" />
         <span style="vertical-align: middle">持仓价值</span>
       </div>
     </div>
 
-     <!--  tabs-->
-     <div class="trade-recommend_tabs">
-        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
-        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
-    </div>
+     
 
     <transition :name="'slide-right'">
         <MarketStock
@@ -56,6 +59,21 @@
       </Popup>
     </teleport>
 
+
+
+     <!-- 侧边栏 -->
+     <teleport to="body">
+      <Popup
+        v-model:show="showLeft"
+        position="left"
+        class="left-popup"
+        :style="{ width: '85%', height: '100%' }"
+        @close = 'leftclose'
+      >
+        <Optional v-if="showLeft" ref="OptionalRef" />
+      </Popup>
+    </teleport>
+
   </div>
 </template>
 
@@ -67,8 +85,12 @@ import IPOStock from "./IPOStock.vue";
 import { useRouter, useRoute } from "vue-router";
 import IPO from "../Market/components/IPO.vue"
 import store from "@/store";
+import Optional from "../../views/Market/components/Optional.vue"
+import { useSocket } from "@/utils/ws";
 
 const token = computed(() => store.state.token);
+
+const { startSocket } = useSocket();
 
 const active = ref(0);
 const ipoActive = ref(0);
@@ -82,6 +104,9 @@ const show = ref(false);
 const showBottom = ref(false);
 const showUpdateBottom = ref(false);
 const showClosePositionBottom = ref(false);
+
+const showLeft = ref(false)
+const OptionalRef = ref()
 
 
 const showPopup = () => {
@@ -109,6 +134,25 @@ const closePopup = () => {
   store.dispatch('closePopup')
 }
 
+
+const openleft = ()=>{
+  showLeft.value = true
+  setTimeout(() => {
+    OptionalRef.value && OptionalRef.value.init()
+  }, 500)
+}
+
+
+const leftclose = ()=>{
+  // 取消订阅
+  const socket = startSocket(() => {
+        socket && socket.emit('realtime', '') // 价格变化
+        socket && socket.emit('snapshot', '') // 快照数据
+        socket && socket.off('realtime')
+        socket && socket.off('snapshot')
+        console.error('取消订阅')
+    })
+}
 </script>
 
 <style lang="less">
@@ -120,15 +164,15 @@ const closePopup = () => {
   .header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 0.28rem;
+    margin-bottom: 0.2rem;
     padding: 0 0.3rem;
   }
   .trade-recommend_tabs {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      margin-bottom: .32rem;
-      padding: 0 0.3rem;
+      // margin-bottom: .32rem;
+      // padding: 0 0.3rem;
 
       .trade-recommend_tab {
           font-size: 0.28rem;
@@ -173,10 +217,10 @@ const closePopup = () => {
   .open-img {
     width: 0.34rem !important;
     height: 0.34rem !important;
-    position: absolute;
-    top: 0.18rem;
-    z-index: 99;
-    left: 0.3rem;
+    width: 0.4rem !important;
+    height: 0.4rem !important;
+    margin-top: 0.3rem;
+    margin-right: 0.3rem;
   }
   .stock-tab {
     .van-tabs__nav--line {

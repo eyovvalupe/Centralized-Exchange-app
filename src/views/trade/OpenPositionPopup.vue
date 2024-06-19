@@ -43,7 +43,7 @@
         <div class="left-text">
           价格
         </div>
-        <div class="right-text" style="display: flex;" v-if="orderList.active === 1">
+        <div class="right-text" style="display: flex;" v-if="orderList.active === '1'">
           <div class="detail-flex-1">
           </div>
           <div class="detail-flex-1 detail-blue-box" >
@@ -53,7 +53,7 @@
             {{ orderList.priceValue }}
           </div>
         </div>
-        <div class="right-text" style="display: flex;" v-if="orderList.active === 2 && orderList.marketprice">
+        <div class="right-text" style="display: flex;" v-if="orderList.active === '2' && orderList.marketprice">
           <div class="detail-flex-1">
           </div>
           <div class="detail-flex-1 detail-blue-box" >
@@ -63,7 +63,7 @@
             {{ orderList.marketValue }}
           </div>
         </div>
-        <div class="right-text" v-if="orderList.active === 0 || (orderList.active === 2 && !orderList.marketprice)">
+        <div class="right-text" v-if="orderList.active === '0' || (orderList.active === '2' && !orderList.marketprice)">
           <div class="win-lose-box">
             市价
           </div>
@@ -86,7 +86,7 @@
         </div>
         <div class="right-text">
           <div class="win-lose-box">
-            {{orderList.active === 2?'有':'无'}}
+            {{orderList.active === '2'?'有':'无'}}
           </div>
         </div>
       </div>
@@ -166,9 +166,9 @@ const openStock = ()=>{
     offset = 'short'
   }
 
-  if (orderList.value.active === 0) {
+  if (orderList.value.active === '0') {
     price_type = 'market'
-  } else if (orderList.value.active === 2){
+  } else if (orderList.value.active === '2'){
     if (orderList.value.marketprice) {
       price_type = 'limit'
     } else {
@@ -178,9 +178,9 @@ const openStock = ()=>{
     price_type = 'limit'
   }
 
-  if (orderList.value.active === 1) {
+  if (orderList.value.active === '1') {
     price = orderList.value.priceValue
-  } else if (orderList.value.active === 2) {
+  } else if (orderList.value.active === '2') {
     price = orderList.value.marketValue
   } else {
     price = ''

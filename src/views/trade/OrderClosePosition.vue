@@ -7,7 +7,7 @@
     <div class="order-update-box">
       <div class="order-lose-title">数量</div>
       <Field v-model="loseValue" class="lose-field" type="number" @focus="handleFocus(1)" 
-      @blur="handleBlur(1)" :class="[{'focusinput': isFocused === 1}]"/>
+      @blur="handleBlur(1)" :class="[{'focusinput': isFocused === 1}]" @input="handleInput()"/>
 
       <div class="account-monkey">
         可卖数量 <span class="account-num-monkey">{{ unsold_volume }}</span>
@@ -140,6 +140,20 @@
     });
   }
 
+  const handleInput = ()=>{
+    if (loseValue.value !== '') {
+      const lose = new Decimal(loseValue.value);
+      const volume = new Decimal(unsold_volume.value);
+      if (new Decimal(loseValue.value).gt(new Decimal(unsold_volume.value))) {
+        sliderValue.value = 100
+        return
+      }
+      const result = lose.div(volume).mul(100);
+      sliderValue.value = result.toNumber();
+    } else {
+      sliderValue.value = 0
+    }
+  }
 
 
 </script>
