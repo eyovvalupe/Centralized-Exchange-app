@@ -38,10 +38,10 @@
     <transition :name="transitionName">
       <!-- 持仓 -->
       <!-- 已登录 -->
-      <div v-if="active === '1' && token">
+      <div v-if="active === '1'">
 
         <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
-        <div v-show="!loading">
+        <div v-show="!loading && token">
           <div class="header-grid">
             <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
               <div class="header-f-left" style="width: 2.4rem">股票/状态</div>
@@ -116,6 +116,16 @@
             </SwipeCell>
           </div>
         </div>
+
+
+        <!-- 未登录 -->
+        <div class="no-data-box" v-show="!loading && !token">
+          <img src="/static/img/trade/no-data.png" class="no-data-img">
+          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="jump('login')">马上登录</span>
+          </p>
+        </div>
+
+        
       </div>
       <!-- 开仓 -->
       <div  v-else-if="active ==='0'">
@@ -206,15 +216,6 @@
       </div>
 
     </transition>
-
-    
-
-    <!-- 未登录 -->
-    <div class="no-data-box" v-if="!token && active === '1'">
-      <img src="/static/img/trade/no-data.png" class="no-data-img">
-      <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="jump('login')">马上登录</span>
-      </p>
-    </div>
 
    
   </div>
