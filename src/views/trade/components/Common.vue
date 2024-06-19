@@ -18,7 +18,7 @@
         :class="[
           'num-input',
           'stock-input-text',
-          { enlarged: value.length > 0 },
+          { enlarged: value.length > 0 && token },
           {'focusinput': isFocused === 4}
         ]"
         style="margin-bottom: 0.2rem"
@@ -175,7 +175,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose } from "vue";
+import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose, onUpdated } from "vue";
 import { Tab,Tabs,Field,CellGroup,Slider,Button,Loading,Popup, showToast} from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
@@ -310,8 +310,6 @@ const handleInput = () => {
   if (token.value) {
     //股票搜索
     getData();
-  } else {
-    jump('login')
   }
 };
 
@@ -462,6 +460,14 @@ const getslide = ()=>{
 
 
 onMounted(() => {
+  if (token.value) {
+    getStockslist()
+  } else {
+    emit('already');
+  }
+});
+
+onUpdated(() => {
   if (token.value) {
     getStockslist()
   } else {
