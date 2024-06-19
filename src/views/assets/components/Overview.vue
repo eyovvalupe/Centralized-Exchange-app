@@ -218,8 +218,8 @@ const fourImage = computed(() => ({
 }));
 
 
-const goTransfer = () =>{
-    router.push({ name: 'transfer'});
+const goTransfer = () => {
+    router.push({ name: 'transfer' });
 }
 </script>
 
