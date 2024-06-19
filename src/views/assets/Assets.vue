@@ -1,121 +1,111 @@
+<!-- 资产页 -->
 <template>
-  <div class="assets">
-    <div class="header">
-      <div class="title">资产</div>
+    <div class="page page_assets">
+        <Tabs v-if="pageLoading" class="tab_content" v-model:active="active" type="card" animated shrink>
+            <Tab title="总资产" name="overview">
+                <div class="tab_body">
+                    <PullRefresh class="refresh_box" v-model="loading" @refresh="onRefresh">
+                        <Overview />
+                    </PullRefresh>
+                </div>
+            </Tab>
+            <Tab title="现金账户" name="cash">
+                <div class="tab_body">
+                    现金账户
+                </div>
+            </Tab>
+            <Tab title="股票" name="stock">
+                <div class="tab_body">
+                    股票
+                </div>
+            </Tab>
+            <Tab title="合约" name="contract">
+                <div class="tab_body">
+                    合约
+                </div>
+            </Tab>
+            <Tab title="IPO" name="ipo">
+                <div class="tab_body">
+                    IPO
+                </div>
+            </Tab>
+        </Tabs>
     </div>
-
-    <div class="assets-tab">
-      <div :class="['assets-tab-item', { highlight: selectedTab === i.val }]" v-for="i in tab" :key="i.val"
-        @click="selectTab(i.val)">
-        {{ i.text }}
-      </div>
-    </div>
-
-
-    <transition :name="transitionName">
-      <Overview v-if="selectedTab == 0"></Overview>
-      <Cash v-else-if="selectedTab == 1" />
-    </transition>
-
-
-  </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import Overview from "./components/Overview.vue";
-import Cash from "./components/Cash.vue"
+import { Tab, Tabs, PullRefresh } from "vant"
+import { ref, onMounted } from "vue"
+import Overview from "./page/Overview.vue"
 
-const transitionName = ref('slide-right')
+const active = ref('overview')
+const loading = ref(false)
+const pageLoading = ref(false)
 
-// 当前选中的标签
-const selectedTab = ref(0);
-const tab = [
-  {
-    text: '总资产',
-    val: 0
-  },
-  {
-    text: '现金账户',
-    val: 1
-  },
-  {
-    text: '股票',
-    val: 2
-  },
-  {
-    text: '合约',
-    val: 3
-  },
-  {
-    text: 'IPO',
-    val: 4
-  },
-]
-const selectTab = (val) => {
-  if (val > selectedTab.value) {
-    transitionName.value = 'slide-right'
-  } else {
-    transitionName.value = 'slide-left'
-  }
-  selectedTab.value = val;
-};
+const onRefresh = () => {
+    console.error('刷新')
+    setTimeout(() => {
+        console.error('刷新成功');
+        loading.value = false;
+    }, 1000);
+}
 
+onMounted(() => {
+    setTimeout(() => {
+        pageLoading.value = true
+    }, 100)
+})
 </script>
 
-<style lang="less">
-.assets {
-  position: relative;
-  padding-bottom: 1.4rem;
-  background-color: white;
-  overflow-y: auto;
+<style lang="less" scoped>
+.page_assets {
+    padding: 0.36rem 0;
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.28rem;
-    padding: 0 0.3rem;
-  }
+    .tab_content {
+        ::v-deep(.van-tabs__nav--card) {
+            border: none;
+        }
 
-  .title {
-    height: 1.12rem;
-    color: #0d0d12;
-    font-size: 0.56rem;
-    font-weight: 600;
-    line-height: 1.12rem;
-  }
+        ::v-deep(.van-tab--card) {
+            border-right: none;
+            color: #061023;
+        }
 
-  .assets-tab {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: .32rem;
-    padding: 0 0.3rem;
+        ::v-deep(.van-tab--card.van-tab--active) {
+            background-color: #F6F8FF;
+            border-radius: 0.3rem;
+            color: #014CFA;
+            font-weight: 500
+        }
 
-    .assets-tab-item {
-      height: 0.6rem;
-      line-height: 0.6rem;
-      text-align: center;
-      font-size: 0.28rem;
-      font-style: normal;
-      font-weight: 400;
-      position: relative;
-      margin: 0 0.2rem;
+        ::v-deep(.van-tab--shrink) {
+            padding: 0 0.3rem;
+        }
+
+        ::v-deep(.van-tabs__wrap) {
+            height: 0.6rem;
+        }
+
+        ::v-deep(.van-tabs__nav--card) {
+            height: 0.6rem;
+        }
+
+        ::v-deep(.van-tab) {
+            line-height: 0.6rem;
+            font-size: 0.3rem;
+        }
+
     }
 
-    .highlight {
-      height: 0.6rem;
-      line-height: 0.6rem;
-      border-radius: 0.48rem;
-      background: #F6F8FF;
-      font-size: 0.28rem;
-      font-style: normal;
-      font-weight: 400;
-      color: #014cfa;
-      padding: 0 0.46rem;
-      margin: 0 !important;
-      margin-right: 0.2rem !important;
+    .tab_body {
+        height: calc(100vh - 2.5rem);
+        border: 1px solid red;
+        width: 100%;
+
+        .refresh_box {
+            width: 100%;
+            height: 100%;
+        }
     }
-  }
 }
 </style>
