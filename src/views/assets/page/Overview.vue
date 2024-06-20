@@ -34,19 +34,19 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class="btn" :style="{ backgroundImage: `url(/static/img/assets/two.png)` }">
+            <div class="ripple_button btn" :style="{ backgroundImage: `url(/static/img/assets/two.png)` }">
                 <div class="icon">
                     <img src="/static/img/assets/money.png" alt="img">
                 </div>
                 <div class="name">充值</div>
             </div>
-            <div class="btn" :style="{ backgroundImage: `url(/static/img/assets/three.png)` }">
+            <div class="ripple_button btn" :style="{ backgroundImage: `url(/static/img/assets/three.png)` }">
                 <div class="icon">
                     <img src="/static/img/assets/pay.png" alt="img">
                 </div>
                 <div class="name">提现</div>
             </div>
-            <div class="btn" :style="{ backgroundImage: `url(/static/img/assets/four.png)` }">
+            <div class="ripple_button btn" :style="{ backgroundImage: `url(/static/img/assets/four.png)` }">
                 <div class="icon">
                     <img src="/static/img/assets/trans.png" alt="img">
                 </div>
@@ -280,6 +280,7 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
             height: 1.7rem;
             background-size: 100% 100%;
             padding: 0.24rem;
+            overflow: hidden;
 
             .icon {
                 width: 0.7rem;

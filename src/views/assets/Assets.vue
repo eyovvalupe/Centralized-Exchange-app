@@ -6,13 +6,12 @@
             <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
                 animated shrink>
                 <Tab title="总资产" name="overview">
-                    <div class="tab_body">
+                    <div class="tab_body" v-if="active == 'overview'">
                         <Overview />
-
                     </div>
                 </Tab>
                 <Tab title="现金账户" name="cash">
-                    <div class="tab_body">
+                    <div class="tab_body" v-if="active == 'cash'">
                         <Cash />
                     </div>
                 </Tab>

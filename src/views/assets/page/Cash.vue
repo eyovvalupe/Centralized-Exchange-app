@@ -143,7 +143,6 @@ const changeTab = val => {
 
     .cash_tab_content {
         padding: 0 0.32rem 0.32rem 0.32rem;
-        width: 100%;
 
         .cash_tab_item {
             height: 1.2rem;
