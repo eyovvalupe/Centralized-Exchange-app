@@ -26,14 +26,14 @@
             </div>
         </div>
         <div class="cash_tab_content">
-            <div class="cash_tab_item" v-for="i in 4" :key="i">
+            <div class="cash_tab_item" v-for="i in 2" :key="i">
                 <span>美元</span>
                 <span>23,213.00</span>
             </div>
         </div>
 
         <teleport to="body">
-            <FloatingPanel v-if="assetsPage" class="page_assets_cash_drag" :content-draggable="false"
+            <FloatingPanel v-if="assetsPage" class="page_assets_cash_drag" :content-draggable="true"
                 :anchors="[200, dragH]">
                 <template #header>
                     <div class="drag_header">
@@ -167,8 +167,8 @@ const changeTab = val => {
 }
 
 .page_assets_cash_drag {
-    background-color: #f5f5f5;
-    z-index: 99;
+    background-color: #f5f5f5 !important;
+    z-index: 99 !important;
 
     .drag_header {
         min-height: 50px;
