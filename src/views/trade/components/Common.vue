@@ -467,14 +467,6 @@ onMounted(() => {
   }
 });
 
-onUpdated(() => {
-  if (token.value) {
-    getStockslist()
-  } else {
-    emit('already');
-  }
-});
-
 const jump = (name) => {
   router.push({
     name,
