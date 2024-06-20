@@ -5,14 +5,14 @@
         <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
             <div class="top">
                 <div class="title">资产合计</div>
+            </div>
+            <div class="money">
+                <span>{{ hidden ? '****' : '43534535.00' }}</span>
+
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
                 </div>
-                <div class="ripple_button btn">账户间划转</div>
-            </div>
-            <div class="money">
-                {{ hidden ? '****' : '43534535.00' }}
             </div>
             <div class="navs">
                 <div class="nav">
@@ -34,23 +34,50 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class="ripple_button btn" :style="{ backgroundImage: `url(/static/img/assets/two.png)` }">
-                <div class="icon">
-                    <img src="/static/img/assets/money.png" alt="img">
+            <div class="btn">
+                <div class="ripple_button icon_box">
+                    <div class="btn_icon">
+                        <img src="/static/img/user/record.png" alt="img">
+                    </div>
                 </div>
-                <div class="name">充值</div>
+                <span>充值</span>
             </div>
-            <div class="ripple_button btn" :style="{ backgroundImage: `url(/static/img/assets/three.png)` }">
-                <div class="icon">
-                    <img src="/static/img/assets/pay.png" alt="img">
+            <div class="btn btn2">
+                <div class="ripple_button icon_box">
+                    <span class="color_text">$ 100,000.00</span>
+                    <span>$ 100,000.00</span>
+
+                    <div class="process">
+                        <div class="left">
+                            <div class="ball"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="name">提现</div>
+                <span>提现</span>
             </div>
-            <div class="ripple_button btn" :style="{ backgroundImage: `url(/static/img/assets/four.png)` }">
-                <div class="icon">
-                    <img src="/static/img/assets/trans.png" alt="img">
+            <div class="btn">
+                <div class="ripple_button icon_box">
+                    <div class="btn_icon">
+                        <img src="/static/img/user/lang.png" alt="img">
+                    </div>
                 </div>
-                <div class="name">现金账户兑换</div>
+                <span>划转</span>
+            </div>
+            <div class="btn">
+                <div class="ripple_button icon_box">
+                    <div class="btn_icon">
+                        <img src="/static/img/user/server.png" alt="img">
+                    </div>
+                </div>
+                <span>兑换</span>
+            </div>
+            <div class="btn">
+                <div class="ripple_button icon_box">
+                    <div class="btn_icon">
+                        <img src="/static/img/user/safe.png" alt="img">
+                    </div>
+                </div>
+                <span>借贷</span>
             </div>
         </div>
 
@@ -94,7 +121,7 @@
             </div>
             <div ref="tab2" :key="2" class="ripple_button tab" @click="rightSwitch2 = !rightSwitch2">
                 <div class="tab_icon">
-                    <img src="/static/img/user/safe.png" alt="img">
+                    <img src="/static/img/user/record.png" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch2 == true }">股票</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">1000</div>
@@ -118,7 +145,7 @@
             </div>
             <div ref="tab3" :key="3" class="ripple_button tab" @click="rightSwitch3 = !rightSwitch3">
                 <div class="tab_icon">
-                    <img src="/static/img/user/safe.png" alt="img">
+                    <img src="/static/img/user/lang.png" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch3 == true }">合约</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">1000</div>
@@ -142,7 +169,7 @@
             </div>
             <div ref="tab4" :key="4" class="ripple_button tab" @click="rightSwitch4 = !rightSwitch4">
                 <div class="tab_icon">
-                    <img src="/static/img/user/safe.png" alt="img">
+                    <img src="/static/img/user/server.png" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch4 == true }">IPO</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">1000</div>
@@ -174,7 +201,7 @@ import { Icon } from "vant"
 import { ref, onMounted } from "vue"
 import { useClickAway } from '@vant/use';
 
-const hidden = ref(true) // 隐藏数字
+const hidden = ref(false) // 隐藏数字
 
 // 功能区域控制
 const tab1 = ref()
@@ -201,9 +228,7 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
 
         .top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+
             font-size: 0.28rem;
             font-weight: 400;
 
@@ -214,29 +239,7 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
                 margin-right: 0.32rem;
             }
 
-            .eyes {
-                width: 0.32rem;
-                height: 0.32rem;
-                color: #fff;
-                font-size: 0.32rem;
-            }
 
-            .btn {
-                overflow: hidden;
-                margin-left: auto;
-                height: 0.6rem;
-                border-radius: 0.3rem;
-                background-color: #fff;
-                padding: 0 0.3rem;
-                display: flex;
-                align-items: center;
-                color: #000;
-
-                &:active {
-                    background: rgba(1, 76, 250, 0.5);
-                    color: #fff;
-                }
-            }
         }
 
         .money {
@@ -245,6 +248,17 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
             color: #fff;
             margin-top: 0.3rem;
             margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-right: 0.86rem;
+
+            .eyes {
+                width: 0.32rem;
+                height: 0.32rem;
+                color: #fff;
+                font-size: 0.32rem;
+            }
         }
 
         .navs {
@@ -270,30 +284,83 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
     }
 
     .btns {
-        margin: 0.16rem 0.32rem 0.4rem 0.32rem;
+        margin: 0.16rem 0.32rem 0.1rem 0.32rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
 
         .btn {
-            width: 2.08rem;
-            height: 1.7rem;
-            background-size: 100% 100%;
-            padding: 0.24rem;
-            overflow: hidden;
+            width: 31%;
+            font-size: 0.24rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 0.3rem;
 
-            .icon {
-                width: 0.7rem;
-                height: 0.7rem;
+            .icon_box {
+                overflow: hidden;
+                width: 100%;
+                height: 0.8rem;
+                background-color: #f2f2f2;
+                margin-bottom: 0.1rem;
+                border-radius: 0.12rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .btn_icon {
+                    width: 0.38rem;
+                    height: 0.38rem;
+                }
             }
+        }
 
-            .name {
-                text-align: right;
-                font-weight: 400;
-                font-size: 0.24rem;
-                margin-top: 0.2rem;
-                color: #fff;
-                padding-right: 0.06rem;
+        .btn2 {
+            width: 65.4%;
+
+            .icon_box {
+                padding: 0 0.3rem;
+                justify-content: space-between;
+                font-weight: 600;
+                position: relative;
+                color: #333;
+
+                .color_text {
+                    background: linear-gradient(to right, #F4DF6B, #6BD45F, #6BD45F, #6BD45F);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                    text-fill-color: transparent;
+                }
+
+                .process {
+                    background-color: #dadada;
+                    width: 100%;
+                    position: absolute;
+                    bottom: 0;
+                    height: 0.1rem;
+                    left: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .left {
+                        height: 100%;
+                        width: 50%;
+                        background: linear-gradient(to right, #F4DF6B, #98D450, #6BD45F);
+                        position: relative;
+
+                        .ball {
+                            background-color: #6BD45F;
+                            width: 0.3rem;
+                            height: 0.3rem;
+                            border-radius: 50%;
+                            position: absolute;
+                            right: 0;
+                            bottom: -0.12rem;
+                        }
+                    }
+                }
             }
         }
     }
@@ -304,7 +371,7 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
 
         .tab {
             overflow: hidden;
-            height: 1.2rem;
+            height: 1rem;
             border-bottom: 1px solid #EAEAEA;
             display: flex;
             align-items: center;

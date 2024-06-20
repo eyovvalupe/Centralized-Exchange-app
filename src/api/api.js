@@ -233,9 +233,17 @@ export const _listAccount = (data = {}) => {
   });
 };
 
-//订单更新
+// 订单更新
 export const _stocksUpdate = (data = {}) => {
-  return http.post(`authc/v1/stocks/update`, data, {
+  return http.post(`/authc/v1/stocks/update`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+
+
+// 总资产
+export const _assets = (data = {}) => {
+  return http.post(`/authc/v1/account/assets`, data, {
     custom: { auth: true, toast: true },
   });
 };

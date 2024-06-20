@@ -1,10 +1,10 @@
-<!-- 现金账户 -->
+<!-- 股票账户 -->
 <template>
-    <div class="page_assets_cash">
+    <div class="page_assets_stock">
         <!-- 总览 -->
         <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
             <div class="top">
-                <div class="title">总资金</div>
+                <div class="title">持仓资金</div>
             </div>
             <div class="money">
                 <span>{{ hidden ? '****' : '43534535.00' }}</span>
@@ -21,50 +21,25 @@
                 </div>
                 <div class="line"></div>
                 <div class="nav">
-                    <div>冻结</div>
+                    <div>可借资金</div>
                     <div class="num">{{ hidden ? '****' : '232424.00' }}</div>
                 </div>
             </div>
         </div>
 
-        <!-- 内容 -->
-        <Tabs class="cash_tabs" @change="changeTab" v-model:active="activeTab" :swipeable="false" animated
-            :color="'#014CFA'" shrink>
-            <Tab :title="'余额'">
-                <div class="cash_tab_content">
-                    <div class="cash_tab_item" v-for="i in 20" :key="i"></div>
-                </div>
-            </Tab>
-            <Tab :title="'充值记录'">
-                <div class="cash_tab_content">
-                    <RechargeItem v-for="i in 20" :key="i" />
-                </div>
-            </Tab>
-            <Tab :title="'提现记录'">
-                <div class="cash_tab_content">
-                    <WithdrawItem v-for="i in 20" :key="i" />
-                </div>
-            </Tab>
-        </Tabs>
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue"
-import { Icon, Tabs, Tab } from "vant"
-import RechargeItem from "./components/RechargeItem"
-import WithdrawItem from "./components/WithdrawItem"
+import { Icon } from "vant"
 
 const hidden = ref(false)
 
-const activeTab = ref(0)
-const changeTab = val => {
-    console.error(val)
-}
 </script>
 
 <style lang="less" scoped>
-.page_assets_cash {
+.page_assets_stock {
     .overview {
         background-size: 100% 100%;
         margin: 0.2rem 0.32rem 0.36rem 0.32rem;
@@ -126,52 +101,5 @@ const changeTab = val => {
         }
     }
 
-    .cash_tab_content {
-        padding: 0 0.32rem 0.32rem 0.32rem;
-
-        .cash_tab_item {
-            height: 1.2rem;
-            border-bottom: 1px solid #EAEAEA;
-        }
-    }
-
-    .cash_tabs {
-        flex: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-
-        :deep(.van-tabs__wrap) {
-            padding: 0 0.32rem !important;
-        }
-
-        :deep(.van-tabs__nav) {
-            position: relative;
-
-            &::after {
-                content: '';
-                width: 100%;
-                height: 1px;
-                background-color: #3B82F6;
-                position: absolute;
-                bottom: 16px;
-                left: 0;
-                opacity: 0.3;
-            }
-        }
-
-        :deep(.van-tab) {
-            margin-left: 0.36rem;
-        }
-
-        :deep(.van-tabs__content) {
-            flex: 1;
-
-            .van-swipe-item {
-                overflow-y: auto;
-                padding-bottom: 0.2rem;
-            }
-        }
-    }
 }
 </style>
