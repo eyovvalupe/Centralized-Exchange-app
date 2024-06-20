@@ -2,14 +2,14 @@
 <template>
     <div class="withdraw_item">
         <div class="icon">
-            <img src="/static/img/crypto/usdt.png" alt="icon">
+            <img src="/static/img/crypto/USDT.png" alt="icon">
         </div>
         <div style="flex:1;text-align: left;">
             <div class="name">充值USDT</div>
             <div class="date">2024/04/14</div>
         </div>
         <div style="text-align: left;">
-            <div class="rate">充值USDT</div>
+            <div class="rate">查看汇率 →</div>
             <div class="date">15:00:18</div>
         </div>
         <div style="flex:1;display: flex;flex-direction: column;align-items: flex-end;">
@@ -23,15 +23,15 @@
 .withdraw_item {
     width: 100%;
     border-bottom: 1px solid #EAEAEA;
-    height: 1.2rem;
+    height: 1.4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-weight: 400;
 
     .icon {
-        width: 0.72rem;
-        height: 0.72rem;
+        width: 0.5rem;
+        height: 0.5rem;
         margin-right: 0.4rem;
     }
 

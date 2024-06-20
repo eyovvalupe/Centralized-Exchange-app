@@ -2,19 +2,16 @@
 <template>
     <div class="page_assets_cash">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/cash.png)` }">
+        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
             <div class="top">
-                <div class="title">现金账户</div>
+                <div class="title">总资金</div>
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
                 </div>
-                <div class="ripple_button btn">充值</div>
-                <div class="ripple_button btn">提现</div>
-                <div class="ripple_button btn">兑换</div>
             </div>
             <div class="money">
-                {{ hidden ? '****' : '43534535.00' }}
+                <span>{{ hidden ? '****' : '43534535.00' }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
@@ -34,7 +31,10 @@
             :color="'#014CFA'" shrink>
             <Tab :title="'余额'">
                 <div class="cash_tab_content">
-                    <div class="cash_tab_item" v-for="i in 20" :key="i"></div>
+                    <div class="cash_tab_item" v-for="i in 20" :key="i">
+                        <span>美元</span>
+                        <span>23,213.00</span>
+                    </div>
                 </div>
             </Tab>
             <Tab :title="'充值记录'">
@@ -57,7 +57,7 @@ import { Icon, Tabs, Tab } from "vant"
 import RechargeItem from "./components/RechargeItem"
 import WithdrawItem from "./components/WithdrawItem"
 
-const hidden = ref(true)
+const hidden = ref(false)
 
 const activeTab = ref(0)
 const changeTab = val => {
@@ -69,17 +69,16 @@ const changeTab = val => {
 .page_assets_cash {
     .overview {
         background-size: 100% 100%;
-        margin: 0.2rem 0.32rem 0.36rem 0.32rem;
+        margin: 0.2rem 0.32rem 0.24rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
 
         .top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+
             font-size: 0.28rem;
             font-weight: 400;
-
-
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
 
             .title {
                 color: #fff;
@@ -93,22 +92,6 @@ const changeTab = val => {
                 font-size: 0.32rem;
             }
 
-            .btn {
-                overflow: hidden;
-                margin-left: auto;
-                height: 0.6rem;
-                border-radius: 0.3rem;
-                background-color: #fff;
-                padding: 0 0.3rem;
-                display: flex;
-                align-items: center;
-                color: #000;
-
-                &:active {
-                    background: rgba(1, 76, 250, 0.5);
-                    color: #fff;
-                }
-            }
         }
 
         .money {
@@ -147,6 +130,9 @@ const changeTab = val => {
         .cash_tab_item {
             height: 1.2rem;
             border-bottom: 1px solid #EAEAEA;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 
@@ -162,6 +148,7 @@ const changeTab = val => {
 
         :deep(.van-tabs__nav) {
             position: relative;
+            height: 1rem;
 
             &::after {
                 content: '';
