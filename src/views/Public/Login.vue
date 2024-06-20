@@ -74,6 +74,7 @@ import store from "@/store"
 // 进入页面则重置登录状态信息
 store.commit("setToken", "");
 store.commit("setUserInfo", {});
+store.commit('clearState')
 
 const route = useRoute()
 const verifCodeRef = ref()

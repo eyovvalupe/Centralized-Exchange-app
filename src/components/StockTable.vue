@@ -8,7 +8,7 @@
         </div> -->
         <Loading v-show="!props.list.length && props.loading" />
         <div class="tr" v-for="(item, i) in props.list" :key="i">
-            <StockItem :deleteItem="props.deleteItem" @remove="remove" :scrollBox="props.scrollBox" :item="item" />
+            <StockItem :deleteItem="props.deleteItem" :type="props.type" @remove="remove" :scrollBox="props.scrollBox" :item="item" />
         </div>
         <NoData v-if="!props.loading && !props.list.length" />
     </div>
@@ -36,6 +36,10 @@ const props = defineProps({
     deleteItem: { // 是否可以滑动删除
         type: Boolean,
         default: false
+    },
+    type: { //从交易页面侧边栏点击
+        type:String,
+        default: ''
     }
 })
 

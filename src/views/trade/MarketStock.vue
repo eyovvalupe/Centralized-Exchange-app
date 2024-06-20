@@ -15,7 +15,7 @@
           </Tabs>
         </div>
 
-        <div class="risk-box" v-if="active !== '2' && active !== '0'">
+        <!-- <div class="risk-box" v-if="active !== '2' && active !== '0'">
           <img src="/static/img/trade/risk.png" alt="" class="risk-img" />
           <span>风险线</span>
         </div>
@@ -23,7 +23,7 @@
         <div class="date-risk-box" v-if="active === '2'">
           <img src="/static/img/trade/risk.png" alt="" class="date-risk-img" />
           <span>风险线</span>
-        </div>
+        </div> -->
 
         <div class="date-box" v-if="active === '2'" @click="goToDate">
           <img src="/static/img/trade/time.png" alt="" class="date-img" />
@@ -44,7 +44,7 @@
         <div v-show="!loading && token">
           <div class="header-grid">
             <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
-              <div class="header-f-left" style="width: 2.4rem">股票/状态</div>
+              <div class="header-f-left" style="width: 2.2rem">股票/状态</div>
               <div>开仓/可售</div>
               <div>现价/成本</div>
               <div class="header-f-right">盈亏/盈亏比</div>
@@ -52,19 +52,19 @@
           </div>
 
           <div v-for="(i,key) in dataList" :key="key">
-            <SwipeCell>
-              <div class="content-grid grid-item-hover" @click="showButton(i)">
-                <div style="padding: 0 0.3rem; display: flex">
-                  <div class="grid-item" style="width: 2.4rem">
+            <!-- <SwipeCell> -->
+              <div class="content-grid grid-item-hover ripple_button"  @click="showButton(i)">
+                <div :style="currentNum === i.order_no && buttonShow ?{padding: '0'}:{padding: '0 0.3rem'}" class="flex">
+                  <div class="grid-item" style="width: 2.2rem" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
                     <div class="f-text f-weight f-left" style="font-weight: 500;">
                       {{ i.symbol }}
                     </div>
                     <div class="f-left" style="display: flex">
                       <div style="line-height: 0.4rem">{{ i.lever }}X</div>
-                      <div class="close-button">{{ getStatusText(i.status) }}</div>
+                      <div class="close-button" v-if="getStatusText(i.status) !== '持仓'">{{ getStatusText(i.status) }}</div>
                     </div>
                   </div>
-                  <div class="grid-item">
+                  <div class="grid-item" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
                     <div class="f-text button" style="color: #e8503a;background-color: #fbf1ef;" v-if="i.offset === 'long'">买涨</div>
                     <div class="f-text button" v-else>买跌</div>
                     <div class="special-color">{{ i.unsold_volume }}</div>
@@ -77,24 +77,9 @@
                     <div class="f-text f-weight red">{{ i.profit }}</div>
                     <div class="f-weight red">{{ i.ratio }}</div>
                   </div>
-                </div>
-              </div>
-              <!-- <div v-if="currentNum === i && buttonShow" class="button-show">
-                  <div style="background: #F7931F;" @click="showDetailPopup(i)">
-                      <img src="/static/img/trade/detail.png" alt="">
-                      订单详情
-                    </div>
-                    <div style="background-color: #627eea;" @click="updateDetailPopup(i)">
-                      <img src="/static/img/trade/update.png" alt="">
-                      更新
-                    </div>
-                    <div style="background-color: #014cfa;" @click="updateClosePositionPopup">
-                      <img src="/static/img/trade/close.png" alt="">
-                      平仓
-                    </div>
-                </div> -->
-              <template #right>
-                <div class="button-style">
+
+              <div v-if="currentNum === i.order_no && buttonShow">
+                <div class="button-style" style="width: 4rem">
                   <div style="background: #f7931f" @click="showDetailPopup(i)">
                     <img src="/static/img/trade/detail.png" alt="" />
                     订单详情
@@ -112,8 +97,13 @@
                     平仓
                   </div>
                 </div>
-              </template>
-            </SwipeCell>
+              </div>
+
+
+                </div>
+              </div>
+              
+            <!-- </SwipeCell> -->
           </div>
         </div>
 
@@ -130,7 +120,7 @@
       <!-- 开仓 -->
       <div  v-else-if="active ==='0'">
         <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
-        <OpenPosition v-show="!loading"/>
+        <OpenPosition v-show="!loading" ref="OpenPositionRef"/>
       </div>
      
 
@@ -143,7 +133,7 @@
             <PullRefresh v-model="reloading" @refresh="onRefresh">
               <div class="header-grid">
               <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
-                <div class="header-f-left" style="width: 2.4rem">股票/状态</div>
+                <div class="header-f-left" style="width: 2.2rem">股票/状态</div>
                 <div>开仓/可售</div>
                 <div>现价/成本</div>
                 <div class="header-f-right">盈亏/盈亏比</div>
@@ -154,7 +144,7 @@
               <SwipeCell>
                 <div class="content-grid grid-item-hover" @click="showInquiryButton(i)">
                   <div style="padding: 0 0.3rem; display: flex">
-                    <div class="grid-item" style="width: 2.4rem">
+                    <div class="grid-item" style="width: 2.2rem">
                       <div class="f-text f-weight f-left" style="font-weight: 500">
                         HADCRXO
                       </div>
@@ -222,7 +212,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, nextTick } from "vue";
 import {
   Tab,
   Tabs,
@@ -276,6 +266,7 @@ const count = ref(1)
 const reloading = ref(false)
 
 const transitionName = ref('slide-left');
+const OpenPositionRef = ref(null);
 
 
 watch([active], ([newActive]) => {
@@ -330,12 +321,12 @@ const getStatusText = (status) => {
 };
 
 window.onscroll = () => {
-  if (stickyElement.value) {
-    const scrollY = window.scrollY;
-    const stickyRect = stickyElement.value.getBoundingClientRect();
-    isFixed.value = scrollY > stickyRect.top;
-    stickyElement.value.style.top = isFixed.value ? `${scrollY}px` : '';
-  }
+  // if (stickyElement.value) {
+  //   const scrollY = window.scrollY;
+  //   const stickyRect = stickyElement.value.getBoundingClientRect();
+  //   isFixed.value = scrollY > stickyRect.top;
+  //   stickyElement.value.style.top = isFixed.value ? `${scrollY}px` : '';
+  // }
 };
 
 const router = useRouter();
@@ -412,7 +403,7 @@ const getcommToken = () =>{
 }
 
 
-const onChange = (val) => {
+const onChange = async(val) => {
   if (Object.keys(route.query).length > 0) {
     router.push({ path: route.path, query: {} });
   }
@@ -444,8 +435,13 @@ const onChange = (val) => {
       //查询
       loading.value = false;
       // getStocksList(false)
-    } else {
+    } else if (val === '0') {
       loading.value = false;
+      await nextTick(); // 确保 DOM 已更新
+      if (OpenPositionRef.value) {
+        console.log(OpenPositionRef.value, 'OpenPositionRef.value');
+        OpenPositionRef.value.clearChild();
+      }
     }
   }
 };
@@ -494,12 +490,12 @@ onDeactivated(() => {
 })
 
 const showButton = (i) => {
-  if (currentNum.value === i) {
+  if (currentNum.value === i.order_no) {
     buttonShow.value = !buttonShow.value;
   } else {
     buttonShow.value = true;
   }
-  currentNum.value = i;
+  currentNum.value = i.order_no;
 };
 
 const showInquiryButton = (i) => {
@@ -556,6 +552,18 @@ const jump = (name) => {
     }
   }
 
+  .open_tab {
+    width: 0 !important;
+  }
+  .flex {
+    display: flex;
+    justify-content: space-between;
+    >div {
+        transition: all ease .2s;
+        overflow: hidden;
+    }
+  }
+
   .header-grid {
     padding-bottom: 0.12rem;
     background: white;
@@ -563,10 +571,10 @@ const jump = (name) => {
 
     .bottom-grid div {
       color: #9ea3ae;
-      font-size: 0.28rem;
+      font-size: 0.26rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 0.48rem;
+      // line-height: 0.48rem;
       width: 25%;
       text-align: center;
     }
@@ -587,11 +595,13 @@ const jump = (name) => {
   }
 
   .grid-item-hover :hover {
-    background: #e5e5e5 !important;
+    // background: #e5e5e5 !important;
   }
 
   .content-grid {
     border-bottom: 0.02rem solid #e8e8e8;
+    overflow: hidden;
+    height: 1.22rem;
 
     .grid-item {
       padding: 0.2rem 0;
@@ -600,7 +610,6 @@ const jump = (name) => {
       overflow: hidden;
       text-overflow: ellipsis;
     }
-
     div {
       color: #000;
       text-align: center;

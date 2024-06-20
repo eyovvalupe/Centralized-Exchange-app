@@ -109,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from "vue";
+import { ref, computed, onMounted, watch, nextTick, defineExpose } from "vue";
 import { Tab,Tabs,Field,CellGroup,Slider,Button,Loading,Popup, showToast} from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
@@ -306,9 +306,7 @@ const onChange = (val) => {
   loseValue.value = ''
   marketValue.value = ''
   marketprice.value = false
-  if (childComponentRef.value) {
-    childComponentRef.value.clear();
-  }
+  clearChild()
   store.commit('setCurrentActive',val)
 
   if (token.value) {
@@ -318,6 +316,12 @@ const onChange = (val) => {
   }
   
 };
+
+const clearChild = ()=>{
+  if (childComponentRef.value) {
+    childComponentRef.value.clear();
+  }
+}
 
 
 const already = ()=>{
@@ -406,6 +410,11 @@ const openPopup = ()=>{
   store.commit('setPopupHeight','80%')
   store.commit('setkeyborader',false)
 }
+
+
+defineExpose({
+  clearChild,
+});
 
 
 </script>

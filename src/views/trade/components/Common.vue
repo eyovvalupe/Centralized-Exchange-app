@@ -84,14 +84,14 @@
         </div>
       </div>
 
-      <div class="position-bottom">
+      <!-- <div class="position-bottom">
         <div>
           <span class="position-pay">支付 </span
           ><span class="pay-num">{{ amount }}</span>
         </div>
         <div class="position-line-dashed"></div>
         <div class="position-fee">保证金 {{ paymentAmount }} + 手续费 {{ openfee }}</div>
-      </div>
+      </div> -->
 
       <Button
         size="large"
@@ -175,7 +175,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose, onUpdated } from "vue";
+import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose, onUpdated, onBeforeUnmount,onDeactivated } from "vue";
 import { Tab,Tabs,Field,CellGroup,Slider,Button,Loading,Popup, showToast} from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
@@ -253,6 +253,73 @@ const selectedLeverOptionText = computed(() => {
 const selectedLeverOption = computed(() => {
   return store.state.selectedLeverOption
 })
+
+
+const chooseSymbol = computed(() => {
+  return store.state.chooseSymbol
+})
+
+
+const getPrice = (val)=>{
+  let price;
+  let amountNum;
+  //获取股票价格
+  if (val) {
+    // 发起 API 请求获取股票价格和钱包余额
+    const getPrice = _basic({ symbol: val }).then(res => {
+        if (res.code == 200) {
+            stockCo.value = [res.data];
+            price = new Decimal(res.data.price);
+            stockPrice.value = price
+            loading.value = false
+        } else if (res.code == 510) {
+          loading.value = false
+          stockCo.value = [];
+          stockPrice.value = ''
+        } else {
+          loading.value = false
+          stockCo.value = [];
+          stockPrice.value = ''
+        }
+    })
+
+    const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
+        if (res.code == 200) {
+          amountNum = new Decimal(res.data[0].amount);
+          // amountNum = new Decimal(500000);
+        }
+    });
+    
+    // 计算可用数量
+    Promise.all([getPrice, getBalance]).then(() => {
+        if (price !== undefined && amountNum !== undefined) {
+            const availableQuantity = amountNum.div(price);
+            // 取整
+            roundedQuantity.value = availableQuantity.floor();
+            //数量输入框中的金额
+            // getnumval(sliderValue.value)
+            getslide()
+            getPay()
+        } else {
+            console.error('获取价格或余额失败');
+            paymentAmount.value = 0
+            amount.value = 0
+        }
+    }).catch(error => {
+        console.error('请求失败', error);
+    });
+  }
+}
+
+const handleSymbolChange = () => {
+  value.value = chooseSymbol.value;
+  if (value.value != '' && token.value) {
+    loading.value = true;
+    getPrice(value.value);
+  }
+};
+
+watch(chooseSymbol, handleSymbolChange, { immediate: true });
 
 // 监听 selectedLeverOption 的变化，并调用 getPay
 watch(selectedLeverOption, (newValue, oldValue) => {
@@ -344,57 +411,6 @@ const getData = () => {
     loading.value = true
     getPrice(value.value)
 };
-
-const getPrice = (val)=>{
-  let price;
-  let amountNum;
-  //获取股票价格
-  if (val) {
-    // 发起 API 请求获取股票价格和钱包余额
-    const getPrice = _basic({ symbol: val }).then(res => {
-        if (res.code == 200) {
-            stockCo.value = [res.data];
-            price = new Decimal(res.data.price);
-            stockPrice.value = price
-            loading.value = false
-        } else if (res.code == 510) {
-          loading.value = false
-          stockCo.value = [];
-          stockPrice.value = ''
-        } else {
-          loading.value = false
-          stockCo.value = [];
-          stockPrice.value = ''
-        }
-    })
-
-    const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
-        if (res.code == 200) {
-          // amountNum = new Decimal(res.data[0].amount);
-          amountNum = new Decimal(500000);
-        }
-    });
-    
-    // 计算可用数量
-    Promise.all([getPrice, getBalance]).then(() => {
-        if (price !== undefined && amountNum !== undefined) {
-            const availableQuantity = amountNum.div(price);
-            // 取整
-            roundedQuantity.value = availableQuantity.floor();
-            //数量输入框中的金额
-            // getnumval(sliderValue.value)
-            getslide()
-            getPay()
-        } else {
-            console.error('获取价格或余额失败');
-            paymentAmount.value = 0
-            amount.value = 0
-        }
-    }).catch(error => {
-        console.error('请求失败', error);
-    });
-  }
-}
 
 const getStockslist = ()=>{
   //交易参数
@@ -817,6 +833,7 @@ defineExpose({
     margin-top: 0.2rem;
     width: 100%;
     z-index: 7;
+    margin-bottom: 0.8rem;
     .line {
       width: 0.06rem;
       height: 0.2rem;
