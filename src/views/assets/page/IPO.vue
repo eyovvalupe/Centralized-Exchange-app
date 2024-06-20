@@ -5,14 +5,13 @@
         <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
             <div class="top">
                 <div class="title">持仓资金</div>
-            </div>
-            <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
-
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
                 </div>
+            </div>
+            <div class="money">
+                <span>{{ hidden ? '****' : '43534535.00' }}</span>
             </div>
         </div>
 
@@ -38,14 +37,21 @@ const hidden = ref(false)
 
             font-size: 0.28rem;
             font-weight: 400;
-
-
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
 
             .title {
                 color: #fff;
                 margin-right: 0.32rem;
             }
 
+            .eyes {
+                width: 0.32rem;
+                height: 0.32rem;
+                color: #fff;
+                font-size: 0.32rem;
+            }
 
         }
 
@@ -55,17 +61,6 @@ const hidden = ref(false)
             color: #fff;
             margin-top: 0.3rem;
             margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-right: 0.86rem;
-
-            .eyes {
-                width: 0.32rem;
-                height: 0.32rem;
-                color: #fff;
-                font-size: 0.32rem;
-            }
         }
 
         .navs {

@@ -5,14 +5,13 @@
         <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
             <div class="top">
                 <div class="title">总资金</div>
-            </div>
-            <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
-
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
                 </div>
+            </div>
+            <div class="money">
+                <span>{{ hidden ? '****' : '43534535.00' }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
@@ -32,7 +31,10 @@
             :color="'#014CFA'" shrink>
             <Tab :title="'余额'">
                 <div class="cash_tab_content">
-                    <div class="cash_tab_item" v-for="i in 20" :key="i"></div>
+                    <div class="cash_tab_item" v-for="i in 20" :key="i">
+                        <span>美元</span>
+                        <span>23,213.00</span>
+                    </div>
                 </div>
             </Tab>
             <Tab :title="'充值记录'">
@@ -67,21 +69,28 @@ const changeTab = val => {
 .page_assets_cash {
     .overview {
         background-size: 100% 100%;
-        margin: 0.2rem 0.32rem 0.36rem 0.32rem;
+        margin: 0.2rem 0.32rem 0.24rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
 
         .top {
 
             font-size: 0.28rem;
             font-weight: 400;
-
-
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
 
             .title {
                 color: #fff;
                 margin-right: 0.32rem;
             }
 
+            .eyes {
+                width: 0.32rem;
+                height: 0.32rem;
+                color: #fff;
+                font-size: 0.32rem;
+            }
 
         }
 
@@ -91,17 +100,6 @@ const changeTab = val => {
             color: #fff;
             margin-top: 0.3rem;
             margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-right: 0.86rem;
-
-            .eyes {
-                width: 0.32rem;
-                height: 0.32rem;
-                color: #fff;
-                font-size: 0.32rem;
-            }
         }
 
         .navs {
@@ -132,6 +130,9 @@ const changeTab = val => {
         .cash_tab_item {
             height: 1.2rem;
             border-bottom: 1px solid #EAEAEA;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 
@@ -147,6 +148,7 @@ const changeTab = val => {
 
         :deep(.van-tabs__nav) {
             position: relative;
+            height: 1rem;
 
             &::after {
                 content: '';

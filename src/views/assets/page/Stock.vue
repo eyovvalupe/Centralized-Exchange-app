@@ -5,14 +5,13 @@
         <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
             <div class="top">
                 <div class="title">持仓资金</div>
-            </div>
-            <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
-
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
                 </div>
+            </div>
+            <div class="money">
+                <span>{{ hidden ? '****' : '43534535.00' }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
@@ -27,12 +26,23 @@
             </div>
         </div>
 
+        <!-- 列表 -->
+        <div class="th">
+            <div class="td td12">股票/状态</div>
+            <div class="td">开仓/数量</div>
+            <div class="td">现价/成本</div>
+            <div class="td">盈亏/盈亏比</div>
+        </div>
+        <div style="padding: 0 0.32rem;">
+            <StockItem v-for="i in 20" :key="i" />
+        </div>
     </div>
 </template>
 
 <script setup>
 import { ref } from "vue"
 import { Icon } from "vant"
+import StockItem from "./components/StockItem.vue"
 
 const hidden = ref(false)
 
@@ -49,14 +59,21 @@ const hidden = ref(false)
 
             font-size: 0.28rem;
             font-weight: 400;
-
-
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
 
             .title {
                 color: #fff;
                 margin-right: 0.32rem;
             }
 
+            .eyes {
+                width: 0.32rem;
+                height: 0.32rem;
+                color: #fff;
+                font-size: 0.32rem;
+            }
 
         }
 
@@ -66,17 +83,6 @@ const hidden = ref(false)
             color: #fff;
             margin-top: 0.3rem;
             margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-right: 0.86rem;
-
-            .eyes {
-                width: 0.32rem;
-                height: 0.32rem;
-                color: #fff;
-                font-size: 0.32rem;
-            }
         }
 
         .navs {
@@ -101,5 +107,27 @@ const hidden = ref(false)
         }
     }
 
+    .th {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 0.72rem;
+        color: #9EA3AE;
+        font-size: 0.28rem;
+        font-weight: 400;
+        border-bottom: 1px solid #E8E8E8;
+        padding: 0 0.32rem;
+        text-align: center;
+
+        .td {
+            flex: 10;
+
+        }
+
+        .td12 {
+            flex: 12;
+            text-align: left;
+        }
+    }
 }
 </style>

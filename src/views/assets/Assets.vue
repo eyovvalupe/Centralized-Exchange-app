@@ -13,13 +13,13 @@
             <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
                 animated shrink>
                 <Tab title="总资产" name="overview">
-                    <div class="tab_body" v-if="active == 'overview'">
-                        <Overview />
+                    <div class="tab_body">
+                        <Overview ref="overviewRef" @setLoading="val => loading = val" v-if="active == 'overview'" />
                     </div>
                 </Tab>
                 <Tab title="现金账户" name="cash">
-                    <div class="tab_body" v-if="active == 'cash'">
-                        <Cash />
+                    <div class="tab_body">
+                        <Cash v-if="active == 'cash'" />
                     </div>
                 </Tab>
                 <Tab title="股票" name="stock">
@@ -45,7 +45,7 @@
 
 <script setup>
 import { Tab, Tabs, PullRefresh } from "vant"
-import { ref, onMounted } from "vue"
+import { ref, onMounted, onActivated } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
@@ -57,9 +57,7 @@ const disabled = ref(false)
 const pageLoading = ref(false)
 
 const onRefresh = () => {
-    console.error('刷新')
     setTimeout(() => {
-        console.error('刷新成功');
         loading.value = false;
     }, 1000);
 }
@@ -81,6 +79,14 @@ onMounted(() => {
             })
         }, 500)
     }, 100)
+})
+
+
+const overviewRef = ref()
+onActivated(() => {
+    console.error('激活')
+    console.error(overviewRef.value)
+    overviewRef.value && overviewRef.value.getAssets()
 })
 </script>
 

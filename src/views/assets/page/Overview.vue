@@ -5,14 +5,13 @@
         <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
             <div class="top">
                 <div class="title">资产合计</div>
-            </div>
-            <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
-
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
                 </div>
+            </div>
+            <div class="money">
+                <span>{{ hidden ? '****' : '43534535.00' }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
@@ -198,9 +197,11 @@
 
 <script setup>
 import { Icon } from "vant"
-import { ref, onMounted } from "vue"
+import { ref } from "vue"
 import { useClickAway } from '@vant/use';
+import { _assets } from "@/api/api"
 
+const emits = defineEmits(['setLoading'])
 const hidden = ref(false) // 隐藏数字
 
 // 功能区域控制
@@ -216,6 +217,21 @@ useClickAway(tab1, () => { rightSwitch1.value = false })
 useClickAway(tab2, () => { rightSwitch2.value = false })
 useClickAway(tab3, () => { rightSwitch3.value = false })
 useClickAway(tab4, () => { rightSwitch4.value = false })
+
+
+// 刷新总资产
+const getAssets = () => {
+    emits('setLoading', true)
+    _assets().then(res => {
+        console.error('--总资产', res)
+    }).finally(() => {
+        emits('setLoading', false)
+    })
+}
+
+defineExpose({
+    getAssets
+})
 </script>
 
 <style lang="less" scoped>
@@ -231,14 +247,21 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
 
             font-size: 0.28rem;
             font-weight: 400;
-
-
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
 
             .title {
                 color: #fff;
                 margin-right: 0.32rem;
             }
 
+            .eyes {
+                width: 0.32rem;
+                height: 0.32rem;
+                color: #fff;
+                font-size: 0.32rem;
+            }
 
         }
 
@@ -248,17 +271,6 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
             color: #fff;
             margin-top: 0.3rem;
             margin-bottom: 0.25rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-right: 0.86rem;
-
-            .eyes {
-                width: 0.32rem;
-                height: 0.32rem;
-                color: #fff;
-                font-size: 0.32rem;
-            }
         }
 
         .navs {
