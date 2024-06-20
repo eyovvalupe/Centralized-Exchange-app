@@ -61,6 +61,10 @@ const props = defineProps({
     deleteItem: { // 是否可以滑动删除
         type: Boolean,
         default: false
+    },
+    type: { //从交易页面侧边栏点击
+        type:String,
+        default: ''
     }
 })
 
@@ -115,14 +119,20 @@ watch(price, (newVal, oldVal) => {
 
 const goInfo = () => {
     store.commit('setCurrStock', props.item)
-    setTimeout(() => {
+    if (props.type === 'trade') {
+        store.commit('setShowLeft',false)
+        store.commit('setChooseSymbol',props.item.symbol)
+        return
+    } else {
+        setTimeout(() => {
         router.push({
             name: 'market_info',
             query: {
                 symbol: props.item.symbol
-            }
-        })
-    }, 100)
+                }
+            })
+        }, 100)
+    } 
 }
 
 

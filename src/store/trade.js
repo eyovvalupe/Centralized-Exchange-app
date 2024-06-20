@@ -4,6 +4,7 @@ export default {
       startDate: '',
       endDate: '',
       showOpenPositionBottom: false,
+      showLeft: false,
       popupComponent: null,
       orderList: {},
       commToken: null,
@@ -16,7 +17,8 @@ export default {
       isUpActive: true,
       isDownActive: false,
       unsold_volume: 0,
-      currentActive: '0'
+      currentActive: '0',
+      chooseSymbol: ''
     },
     mutations: {
       setDates(state,data) {
@@ -25,6 +27,9 @@ export default {
       },
       setShowOpenPositionBottom(state, payload) {
         state.showOpenPositionBottom = payload;
+      },
+      setShowLeft(state, payload) {
+        state.showLeft = payload;
       },
       setPopupComponent(state, component) {
         state.popupComponent = component;
@@ -66,6 +71,12 @@ export default {
       },
       setCurrentActive(state,data) {
         state.currentActive = data
+      },
+      setChooseSymbol(state,data) {
+        state.chooseSymbol = data
+      },
+      clearState(state,data) {
+        state.chooseSymbol = ''
       },
     },
     actions: {

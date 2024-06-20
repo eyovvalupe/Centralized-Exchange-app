@@ -2,17 +2,26 @@
   <div class="trade">
     <div class="header">
       <!-- <div class="title">交易</div> -->
-      <img src="/static/img/trade/open.png" alt="" class="open-img" @click="openleft"/>
-      <!--  tabs-->
-     <div class="trade-recommend_tabs">
-        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
-        <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
-    </div>
-
-      <div class="value" @click="showPopup">
-        <img src="/static/img/trade/value.png" alt="" class="value-img" />
-        <span style="vertical-align: middle">持仓价值</span>
+      <div style="display: flex;">
+        <img src="/static/img/trade/open.png" alt="" class="open-img" @click="openleft"/>
+          <!--  tabs-->
+        <div class="trade-recommend_tabs">
+            <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
+            <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
+        </div>
       </div>
+      
+
+    <div style="display: flex;">
+      <div class="value" @click="showPopup" style="margin-right: 0.2rem;">
+        <img src="/static/img/trade/value.png" alt="" class="value-img" />
+        <!-- <span style="vertical-align: middle">持仓价值</span> -->
+      </div>
+      <div class="value">
+        <img src="/static/img/trade/risk.png" alt="" class="value-img" />
+      </div>
+    </div>
+      
     </div>
 
      
@@ -70,7 +79,21 @@
         :style="{ width: '85%', height: '100%' }"
         @close = 'leftclose'
       >
-        <Optional v-if="showLeft" ref="OptionalRef" />
+        <div class="optional-box">
+          <!-- 搜索框 -->
+          <div class="search_box">
+              <div class="icon">
+                  <img src="/static/img/common/search.png" alt="🔍">
+              </div>
+              <input ref="iptRef" @keydown="keydown" @keydown.enter="resetData" placeholder="搜索" type="text"
+                  enterkeyhint="search" v-model.trim="search" class="search">
+              <div class="close" v-show="search" @click="clearData">
+                  <Icon name="cross" />
+              </div>
+          </div>
+          <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+          <Optional v-if="showLeft && !loading" ref="OptionalRef" />
+        </div>
       </Popup>
     </teleport>
 
@@ -79,16 +102,18 @@
 
 <script setup>
 import { ref, computed } from "vue";
-import { Tab, Tabs, Popup, Sticky } from "vant";
+import { Tab, Tabs, Popup, Sticky,Loading } from "vant";
 import MarketStock from "./MarketStock.vue";
 import IPOStock from "./IPOStock.vue";
 import { useRouter, useRoute } from "vue-router";
 import IPO from "../Market/components/IPO.vue"
 import store from "@/store";
-import Optional from "../../views/Market/components/Optional.vue"
+import Optional from "../trade/components/Optional.vue"
 import { useSocket } from "@/utils/ws";
+import { _search, _watchlist } from "@/api/api"
 
 const token = computed(() => store.state.token);
+const loading = ref(false);
 
 const { startSocket } = useSocket();
 
@@ -105,7 +130,7 @@ const showBottom = ref(false);
 const showUpdateBottom = ref(false);
 const showClosePositionBottom = ref(false);
 
-const showLeft = ref(false)
+const search = ref('')
 const OptionalRef = ref()
 
 
@@ -127,6 +152,7 @@ const ipoOnChange = (val)=>{
 
 //弹窗组件
 const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom)
+const showLeft = computed(() => store.state.showLeft)
 const popupHeight = computed(() => store.state.popupHeight)
 const popupComponent = computed(() => store.state.popupComponent)
 const keyborader = computed(() => store.state.keyborader)
@@ -136,7 +162,9 @@ const closePopup = () => {
 
 
 const openleft = ()=>{
-  showLeft.value = true
+  store.commit('setShowLeft',true)
+  // store.commit('setMarketWatchList', [])
+  getWatchList()
   setTimeout(() => {
     OptionalRef.value && OptionalRef.value.init()
   }, 500)
@@ -144,6 +172,8 @@ const openleft = ()=>{
 
 
 const leftclose = ()=>{
+  store.commit('setShowLeft',false)
+  search.value = ''
   // 取消订阅
   const socket = startSocket(() => {
         socket && socket.emit('realtime', '') // 价格变化
@@ -152,6 +182,88 @@ const leftclose = ()=>{
         socket && socket.off('snapshot')
         console.error('取消订阅')
     })
+}
+
+const watchList = computed(() => store.state.marketWatchList || [])
+const getWatchList = () => { // 获取订阅列表
+    if (loading.value) return
+    loading.value = true
+    // if (watchList.value.length) {
+    //     subs()
+    // }
+    _watchlist().then(res => {
+        if (res.code == 200) {
+            if (watchList.value.length) { // 有历史数据就更新
+                const rs = res.data.map(item => {
+                    const target = watchList.value.find(a => a.symbol == item.symbol)
+                    if (target) {
+                        Object.assign(target, item)
+                        item = target
+                    }
+                    return item
+                })
+                store.commit('setMarketWatchList', rs || [])
+            } else { // 没有就直接提交
+                store.commit('setMarketWatchList', res.data || [])
+            }
+
+            setTimeout(() => {
+                subs()
+            }, 1000)
+        }
+    }).finally(() => {
+        loading.value = false
+    })
+}
+
+
+const subs = () => { // 订阅 ws
+    store.dispatch('subList', {
+        commitKey: 'setMarketWatchList',
+        proxyListValue: watchList.value
+    })
+}
+
+
+// 搜索相关
+const getData = () => { // 获取数据
+    loading.value = true
+    _search({
+        symbol: search.value
+    }).then(res => {
+        store.commit('setMarketWatchList', res.data)
+        store.dispatch('subList', {
+            commitKey: 'setMarketWatchKeys',
+            proxyListValue: res.data
+        })
+        loading.value = false
+    }).finally(() => {
+        loading.value = false
+    })
+}
+
+const resetData = () => { // 搜索
+    // store.commit('setMarketSearch', {
+    //     search: '',
+    //     list: []
+    // })
+    getData()
+}
+
+const clearData = () => { // 重置搜索
+    search.value = ''
+}
+
+let timeout = null
+const keydown = () => { // 输入事件监听
+    setTimeout(() => {
+        console.error(search.value)
+        if (timeout) clearTimeout(timeout)
+        if (!search.value) return
+        timeout = setTimeout(() => {
+          getData()
+        }, 500)
+    }, 0)
 }
 </script>
 
@@ -212,7 +324,6 @@ const leftclose = ()=>{
     width: 0.52rem !important;
     height: 0.52rem !important;
     vertical-align: middle;
-    margin-right: 0.08rem;
   }
   .open-img {
     width: 0.34rem !important;
@@ -387,5 +498,49 @@ const leftclose = ()=>{
     left: 50% !important;
     transform: translateX(-50%);
   }
+}
+
+.optional-box {
+  .position-loading {
+    margin-top: 2rem !important;
+    .van-loading__spinner {
+      left: 45%;
+    }
+  }
+  .search_box {
+        display: flex;
+        align-items: center;
+        padding: 0 0.4rem;
+        margin: 0.2rem 0.15rem 0.4rem 0.15rem;
+        height: 0.8rem;
+        background-color: #F4F5F7;
+        border-radius: 0.2rem;
+
+        &:has(.search:focus) {
+            border: 1px solid #014CFA;
+        }
+
+        .icon {
+            width: 0.48rem;
+            height: 0.48rem;
+            img {
+              width: 0.48rem !important;
+              height: 0.48rem !important;
+            }
+        }
+
+        .close {
+            width: 0.24rem;
+            height: 0.24rem;
+            color: #121826;
+        }
+
+        .search {
+            flex: 1;
+            margin: 0 0.16rem;
+            font-size: 0.32rem;
+            font-weight: 400;
+        }
+    }
 }
 </style>
