@@ -2,39 +2,78 @@
 <template>
     <div class="page page_assets">
         <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
-            <div class="page_title">
-                <span>资产</span>
-                <!-- 客服 -->
-                <div class="customer">
-                    <img src="/static/img/common/server.png" alt="🔍">
-                </div>
-            </div>
 
             <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
                 animated shrink>
-                <Tab title="总资产" name="overview">
+                <Tab name="overview">
+                    <template #title>
+                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'overview' }">
+                            <div class="mytab_title_icon">
+                                <img v-show="active != 'overview'" src="/static/img/user/iden-1.png" alt="img">
+                                <img v-show="active == 'overview'" src="/static/img/user/iden-2.png" alt="img">
+                            </div>
+                            <span v-show="active == 'overview'">总资产</span>
+                        </div>
+                    </template>
+
                     <div class="tab_body">
                         <Overview ref="overviewRef" @setLoading="val => loading = val" v-if="active == 'overview'" />
                     </div>
                 </Tab>
-                <Tab title="现金账户" name="cash">
+                <Tab name="cash">
+                    <template #title>
+                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'cash' }">
+                            <div class="mytab_title_icon">
+                                <img v-show="active != 'cash'" src="/static/img/user/google-1.png" alt="img">
+                                <img v-show="active == 'cash'" src="/static/img/user/google-2.png" alt="img">
+                            </div>
+                            <span v-show="active == 'cash'">现金账户</span>
+                        </div>
+                    </template>
                     <div class="tab_body">
                         <Cash v-if="active == 'cash'" />
                     </div>
                 </Tab>
-                <Tab title="股票" name="stock">
+                <Tab name="stock">
+                    <template #title>
+                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'stock' }">
+                            <div class="mytab_title_icon">
+                                <img v-show="active != 'stock'" src="/static/img/user/iden-1.png" alt="img">
+                                <img v-show="active == 'stock'" src="/static/img/user/iden-2.png" alt="img">
+                            </div>
+                            <span v-show="active == 'stock'">股票</span>
+                        </div>
+                    </template>
                     <div class="tab_body">
                         <Stock v-if="active == 'stock'" />
                     </div>
                 </Tab>
-                <Tab title="合约" name="contract">
+                <Tab name="contract">
+                    <template #title>
+                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'contract' }">
+                            <div class="mytab_title_icon">
+                                <img v-show="active != 'contract'" src="/static/img/user/google-1.png" alt="img">
+                                <img v-show="active == 'contract'" src="/static/img/user/google-2.png" alt="img">
+                            </div>
+                            <span v-show="active == 'contract'">合约</span>
+                        </div>
+                    </template>
                     <div class="tab_body">
                         合约
                     </div>
                 </Tab>
-                <Tab title="IPO" name="ipo">
+                <Tab name="ipo">
+                    <template #title>
+                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
+                            <div class="mytab_title_icon">
+                                <img v-show="active != 'ipo'" src="/static/img/user/iden-1.png" alt="img">
+                                <img v-show="active == 'ipo'" src="/static/img/user/iden-2.png" alt="img">
+                            </div>
+                            <span v-show="active == 'ipo'">IPO</span>
+                        </div>
+                    </template>
                     <div class="tab_body">
-                        <IPO />
+                        <IPO v-if="active == 'ipo'" />
                     </div>
                 </Tab>
             </Tabs>
@@ -44,7 +83,7 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, PullRefresh } from "vant"
+import { Tab, Tabs, PullRefresh, Icon } from "vant"
 import { ref, onMounted, onActivated } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
@@ -84,15 +123,13 @@ onMounted(() => {
 
 const overviewRef = ref()
 onActivated(() => {
-    console.error('激活')
-    console.error(overviewRef.value)
     overviewRef.value && overviewRef.value.getAssets()
 })
 </script>
 
 <style lang="less" scoped>
 .page_assets {
-    padding: 0;
+    padding: 0.24rem 0 0 0;
 
     .page_title {
         padding: 0 0.24rem 0 0.32rem;
@@ -120,12 +157,15 @@ onActivated(() => {
         ::v-deep(.van-tab--card) {
             border-right: none;
             color: #061023;
+            background-color: #f5f5f5;
+            border-radius: 0.3rem;
+            margin-left: 0.1rem;
+            transition: all ease .2s;
         }
 
         ::v-deep(.van-tab--card.van-tab--active) {
-            background-color: #F6F8FF;
-            border-radius: 0.3rem;
-            color: #014CFA;
+            background-color: #014CFA;
+            color: #fff;
             font-weight: 500
         }
 
@@ -150,8 +190,32 @@ onActivated(() => {
 
     }
 
+    .mytab_title {
+        display: flex;
+        align-items: center;
+
+        >span {
+            margin-left: 0.08rem;
+        }
+
+        .mytab_title_icon {
+            width: 0.32rem;
+            height: 0.32rem;
+            line-height: 1;
+            position: relative;
+            top: -0.02rem;
+        }
+    }
+
+    .mytab_title_active {
+        .mytab_title_icon {
+            width: 0.28rem;
+            height: 0.28rem;
+        }
+    }
+
     .tab_body {
-        height: calc(100vh - 3.5rem);
+        height: calc(100vh - 2.5rem);
         width: 100%;
         overflow-y: auto;
     }

@@ -34,7 +34,7 @@
         <!-- 按钮 -->
         <div class="btns">
             <div class="btn">
-                <div class="ripple_button icon_box">
+                <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/record.png" alt="img">
                     </div>
@@ -42,9 +42,9 @@
                 <span>充值</span>
             </div>
             <div class="btn btn2">
-                <div class="ripple_button icon_box">
-                    <span class="color_text">$ 100,000.00</span>
-                    <span>$ 100,000.00</span>
+                <div class="icon_box">
+                    <span class="color_text"><span class="tip">可提</span> 100,000.00</span>
+                    <span><span class="tip">冻结</span> 100,000.00</span>
 
                     <div class="process">
                         <div class="left">
@@ -55,7 +55,7 @@
                 <span>提现</span>
             </div>
             <div class="btn">
-                <div class="ripple_button icon_box">
+                <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/lang.png" alt="img">
                     </div>
@@ -63,7 +63,7 @@
                 <span>划转</span>
             </div>
             <div class="btn">
-                <div class="ripple_button icon_box">
+                <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/server.png" alt="img">
                     </div>
@@ -71,7 +71,7 @@
                 <span>兑换</span>
             </div>
             <div class="btn">
-                <div class="ripple_button icon_box">
+                <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/safe.png" alt="img">
                     </div>
@@ -89,7 +89,7 @@
                 <div :class="{ 'open_tab': rightSwitch1 == true }">现金账户</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch1 == true }">
-                    <Icon name="arrow" />
+                    <Icon name="weapp-nav" />
                 </div>
                 <div class="rights" style="width:4.8rem" :class="{ 'open_tab': rightSwitch1 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -125,7 +125,7 @@
                 <div :class="{ 'open_tab': rightSwitch2 == true }">股票</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
-                    <Icon name="arrow" />
+                    <Icon name="weapp-nav" />
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch2 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -149,7 +149,7 @@
                 <div :class="{ 'open_tab': rightSwitch3 == true }">合约</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
-                    <Icon name="arrow" />
+                    <Icon name="weapp-nav" />
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch3 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -173,7 +173,7 @@
                 <div :class="{ 'open_tab': rightSwitch4 == true }">IPO</div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">1000</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
-                    <Icon name="arrow" />
+                    <Icon name="weapp-nav" />
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch4 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -197,11 +197,13 @@
 
 <script setup>
 import { Icon } from "vant"
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { useClickAway } from '@vant/use';
 import { _assets } from "@/api/api"
+import store from "@/store"
 
 const emits = defineEmits(['setLoading'])
+const token = computed(() => store.state.token || '')
 const hidden = ref(false) // 隐藏数字
 
 // 功能区域控制
@@ -221,6 +223,7 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
 
 // 刷新总资产
 const getAssets = () => {
+    if (!token.value) return
     emits('setLoading', true)
     _assets().then(res => {
         console.error('--总资产', res)
@@ -309,6 +312,11 @@ defineExpose({
             text-align: center;
             margin-bottom: 0.3rem;
 
+            &:active {
+                opacity: 0.8;
+                transform: scale(0.98)
+            }
+
             .icon_box {
                 overflow: hidden;
                 width: 100%;
@@ -324,6 +332,11 @@ defineExpose({
                     width: 0.38rem;
                     height: 0.38rem;
                 }
+
+                .tip {
+                    font-size: 0.2rem;
+                    font-weight: 400;
+                }
             }
         }
 
@@ -335,14 +348,10 @@ defineExpose({
                 justify-content: space-between;
                 font-weight: 600;
                 position: relative;
-                color: #333;
+                color: #666;
 
                 .color_text {
-                    background: linear-gradient(to right, #F4DF6B, #6BD45F, #6BD45F, #6BD45F);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    text-fill-color: transparent;
+                    color: #59ba4e;
                 }
 
                 .process {
@@ -381,13 +390,28 @@ defineExpose({
         border-top: 1px solid #EAEAEA;
         padding: 0 0.32rem;
 
+
+
+
         .tab {
             overflow: hidden;
             height: 1rem;
-            border-bottom: 1px solid #EAEAEA;
+            // border-bottom: 1px solid #EAEAEA;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: space-between;
+
+            &::before {
+                content: '';
+                width: 85vw;
+                position: absolute;
+                height: 0;
+                border-bottom: 1px solid #EAEAEA;
+                bottom: 0;
+                right: 0;
+                z-index: 1;
+            }
 
             >div {
                 transition: all ease .2s;
@@ -398,6 +422,7 @@ defineExpose({
                 width: 0.32rem;
                 height: 0.32rem;
                 margin-right: 0.2rem;
+
             }
 
             .open_tab {
@@ -405,7 +430,9 @@ defineExpose({
             }
 
             .more {
-                font-size: 0.32rem;
+                font-size: 0.24rem;
+                color: #666;
+                transform: rotate(90deg)
             }
 
             .amount {
