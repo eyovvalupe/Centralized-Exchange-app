@@ -447,8 +447,8 @@ defineExpose({
       background-position: center;
     }
     .down-button {
-      width: 1.32rem;
-      height: 0.56rem;
+      width: 1.2rem;
+      height: 0.5rem;
       color: white;
       line-height: 0.56rem;
       text-align: center;
