@@ -90,6 +90,7 @@ import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
 import IPO from "./page/IPO.vue"
 
+
 const active = ref('overview')
 const loading = ref(false)
 const disabled = ref(false)

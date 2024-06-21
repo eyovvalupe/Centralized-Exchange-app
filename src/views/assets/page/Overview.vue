@@ -54,7 +54,7 @@
                 </div>
                 <span>提现</span>
             </div>
-            <div class="btn">
+            <div class="btn" @click="jump('transfer')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/lang.png" alt="img">
@@ -204,6 +204,7 @@ import { ref, computed, onMounted } from "vue"
 import { useClickAway } from '@vant/use';
 import { _assets } from "@/api/api"
 import store from "@/store"
+import router from "@/router"
 
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
@@ -250,6 +251,12 @@ const refresh = () => {
 defineExpose({
     refresh
 })
+
+const jump = (name) => {
+    router.push({
+        name
+    })
+}
 </script>
 
 <style lang="less" scoped>
