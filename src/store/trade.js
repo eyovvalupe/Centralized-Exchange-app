@@ -14,11 +14,7 @@ export default {
       option2:[
         {
           text: `1x`,
-          value: `1`
-        },
-        {
-          text: `2x`,
-          value: `2`
+          value: 1
         }
       ],
       selectedLeverOption: 0,
@@ -28,7 +24,11 @@ export default {
       unsold_volume: 0,
       currentActive: '0',
       chooseSymbol: '',
-      currentSymbol: {}
+      currentSymbol: {},
+      currentNumber: 0,
+      previousChooseSymbol:'',
+      previousTabSymbol:'',
+      roundedQuantity:0
     },
     mutations: {
       setDates(state,data) {
@@ -97,7 +97,19 @@ export default {
           stockPrice:0,
           symbol:''
         }
-      }
+      },
+      setCurrentNumber(state,data){
+        state.currentNumber = data
+      },
+      setPreviousChooseSymbol(state,data){
+        state.previousChooseSymbol = data
+      },
+      setPreviousTabSymbol(state,data){
+        state.previousTabSymbol = data
+      },
+      setRoundedQuantity(state,data){
+        state.roundedQuantity = data
+      },
     },
     actions: {
       openPopup({ commit }, component) {

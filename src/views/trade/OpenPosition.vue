@@ -53,7 +53,7 @@
             @focus="handleFocus(1)" 
             @blur="handleBlur(1)"
           />
-          <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already"/>
+          <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already" :priceValue="priceValue"/>
         </div>
         
       </div>
@@ -88,7 +88,7 @@
           {{ marketprice?'限价':'市价'}}
           </div>
         </div>
-        <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already"/>
+        <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already" :loseValue="loseValue" :marketValue="marketValue" :marketprice="marketprice"/>
       </div>
       </div>
 
@@ -210,10 +210,23 @@ const selectedLeverOption = computed(() => {
   return store.state.selectedLeverOption
 })
 
-// // 监听 selectedLeverOption 的变化，并调用 getPay
-// watch(selectedLeverOption, (newValue, oldValue) => {
-//   getPay();
-// });
+const chooseSymbol = computed(() => {
+  return store.state.chooseSymbol
+})
+
+const previousChooseSymbol = computed(()=>{
+  return store.state.previousChooseSymbol
+})
+
+
+//点击左边的侧边栏，修改股票 input
+const handleSymbolChange = () => {
+  if (chooseSymbol.value !== previousChooseSymbol.value) {
+    loading.value = true
+  }
+};
+watch(chooseSymbol, handleSymbolChange, { immediate: true });
+
 
 const activateUp = () => {
   store.commit('setActive',true)
@@ -300,7 +313,7 @@ const handleBlur = (val) => {
 const onChange = (val) => {
   previousActive.value = active.value;
   active.value = val;
-  store.commit('clearState')
+  // store.commit('clearState')
   value.value = ''
   priceValue.value = ''
   loseValue.value = ''
@@ -312,7 +325,11 @@ const onChange = (val) => {
   if (token.value) {
     loading.value = true;
   } else {
-    loading.value = false;
+    loading.value = true;
+
+    setTimeout(()=>{
+      loading.value = false;
+    },500)
   }
   
 };

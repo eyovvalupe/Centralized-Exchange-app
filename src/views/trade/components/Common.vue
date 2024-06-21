@@ -97,28 +97,9 @@
         size="large"
         color="#18b762"
         round
-        v-if="isDownActive && token && active === '0'"
+        v-if="isDownActive"
         @click="openPositPopup('down')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || stockCo.length ===0"
-        >买跌</Button
-      >
-      <Button
-        size="large"
-        color="#18b762"
-        round
-        v-if="isDownActive && token && active === '1'"
-        @click="openPositPopup('down')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === '' || stockCo.length ===0"
-        >买跌</Button
-      >
-
-      <Button
-        size="large"
-        color="#18b762"
-        round
-        v-if="isDownActive && token && active === '2'"
-        @click="openPositPopup('down')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '') || stockCo.length ===0"
+        :disabled="downdisable(active)"
         >买跌</Button
       >
 
@@ -126,31 +107,12 @@
         size="large"
         color="#e8503a"
         round
-        v-if="isUpActive && token && active === '0'"
+        v-if="isUpActive && token"
         @click="openPositPopup('up')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || stockCo.length ===0"
+        :disabled="downdisable(active)"
         >买涨</Button
       >
 
-      <Button
-        size="large"
-        color="#e8503a"
-        round
-        v-if="isUpActive && token && active === '1'"
-        @click="openPositPopup('up')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || priceValue === '' || stockCo.length ===0"
-        >买涨</Button
-      >
-
-      <Button
-        size="large"
-        color="#e8503a"
-        round
-        v-if="isUpActive && token && active === '2'"
-        @click="openPositPopup('up')"
-        :disabled="value.length === 0 || numValue.length === 0 || numValue === 0 || loseValue === '' || (marketprice && marketValue == '')|| stockCo.length ===0"
-        >买涨</Button
-      >
 
       <Button
         size="large"
@@ -210,6 +172,39 @@ const option2 = computed(() => {
 })
 
 const roundedQuantity = ref(0)
+const saveRoundedQuantity = computed(()=>{
+  return store.state.roundedQuantity
+})
+
+
+const props = defineProps({
+  priceValue: '',
+  loseValue:'',
+  marketValue:'',
+  marketprice: false
+})
+
+const downdisable = (val)=>{
+  if (val == '0') {
+    if (value.length === 0 || numValue.length === 0 || numValue == 0 || stockCo.length ===0){
+      return true
+    } else {
+      return false
+    }
+  } else if (val == '1') {
+    if (value.length === 0 || numValue.length === 0 || numValue == 0 || stockCo.length ===0 || props.priceValue == ''){
+      return true
+    } else {
+      return false
+    }
+  } else if (val == '2') {
+    if (value.length === 0 || numValue.length === 0 || numValue == 0 || stockCo.length ===0 || props.loseValue == '' || (props.marketprice && props.marketValue == '')){
+      return true
+    } else {
+      return false
+    }
+  }
+}
 
 //数量输入框的值
 const minOrder = ref('')
@@ -228,6 +223,7 @@ const isDownActive = computed(() => {
 const paymentAmount = ref(0)
 const stockPrice = ref(0)
 const amount = ref(0)
+const currentNumber = computed(()=>{return store.state.currentNumber})
 
 //手续费
 const openfee = ref(0)
@@ -243,19 +239,29 @@ const marketprice = ref(false)
 const isFocused = ref();
 const emit = defineEmits(['update-value']);
 
+const previousChooseSymbol = computed(()=>{
+  return store.state.previousChooseSymbol
+})
+
+
+const previousTabSymbol = computed(()=>{
+  return store.state.previousTabSymbol
+})
+
 
 const selectedOptionText = computed(() => {
   const selected = option1.find(option => option.value === store.state.allSelect)
   return selected ? selected.text : ''
 })
 
-const selectedLeverOptionText = computed(() => {
-  const selected = option2.value.find(option => option.value === store.state.selectedLeverOption)
-  return selected ? selected.text : '1x'
-})
 
 const selectedLeverOption = computed(() => {
   return store.state.selectedLeverOption
+})
+
+const selectedLeverOptionText = computed(() => {
+  const selected = option2.value.find(option => option.value == selectedLeverOption.value)
+  return selected ? selected.text : option2.value[0].text
 })
 
 
@@ -270,11 +276,10 @@ const currentSymbol = computed(() => {
 
 const getPrice = (val)=>{
   let price;
-  let amountNum;
   //获取股票价格
   if (val) {
     // 发起 API 请求获取股票价格和钱包余额
-    const getPrice = _basic({ symbol: val }).then(res => {
+    _basic({ symbol: val }).then(res => {
         if (res.code == 200) {
             stockCo.value = [res.data];
             price = new Decimal(res.data.price);
@@ -295,69 +300,96 @@ const getPrice = (val)=>{
           symbol:val
         }
         store.commit('setCurrentSymbol',data)
+        getAccount(stockPrice.value)
     })
-    
-    getAccount(stockPrice.value)
-
   }
 }
 
 const getAccount = (price)=>{
+  let amountNum;
   // 计算可用数量
   if (token.value) {
       const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
           if (res.code == 200) {
-            amountNum = new Decimal(res.data[0].amount);
-            // amountNum = new Decimal(500000);
-          }
+              amountNum = new Decimal(res.data[0].amount);
+              if (price !== undefined && price !== '' && price !== 0 && amountNum !== undefined) {
+                  const availableQuantity = amountNum.div(stockPrice.value);
+                  // 取整
+                  roundedQuantity.value = availableQuantity.floor();
+                  store.commit('setRoundedQuantity', roundedQuantity.value)
+
+                  if (currentNumber.value > minOrder.value) {
+                    numValue.value = currentNumber.value
+                    getslide()
+                  } else {
+                    numValue.value = minOrder.value
+                    getslide()
+                  }
+
+              } else {
+                  console.error('获取价格或余额失败');
+                  paymentAmount.value = 0
+                  amount.value = 0
+                  store.commit('setRoundedQuantity', new Decimal(0))
+                  getslide()
+              }
+              emit('already');
+            } else {
+              emit('already');
+            }
       });
-      
-      // 计算可用数量
-      // Promise.all([getPrice, getBalance]).then(() => {
-          if (price !== undefined && price !== '' && amountNum !== undefined) {
-              const availableQuantity = amountNum.div(stockPrice.value);
-              // 取整
-              roundedQuantity.value = availableQuantity.floor();
-              //数量输入框中的金额
-              // getnumval(sliderValue.value)
-              getslide()
-              getPay()
-          } else {
-              console.error('获取价格或余额失败');
-              paymentAmount.value = 0
-              amount.value = 0
-          }
-      // }).catch(error => {
-      //     console.error('请求失败', error);
-      // });
+    } else {
+      emit('already');
     }
 }
 
-const handleSymbolChange = () => {
-  setTimeout(() => {
-    value.value = chooseSymbol.value;
-    if (value.value != '') {
-      loading.value = true;
-      getPrice(value.value);
-    }
-  }, 200)
-};
 
+//点击左边的侧边栏，修改股票 input
+const handleSymbolChange = () => {
+  if (chooseSymbol.value !== previousChooseSymbol.value) {
+    store.commit('setPreviousChooseSymbol',chooseSymbol.value)
+    setTimeout(() => {
+      value.value = chooseSymbol.value;
+      if (value.value !== '') {
+        loading.value = true;
+        getPrice(value.value);
+      }
+    }, 200);
+  }
+};
 watch(chooseSymbol, handleSymbolChange, { immediate: true });
 
+
 watch([active, currentSymbol],()=>{
+  //切换顶部 tab，存储股票数据
   setTimeout(() => {
-    value.value = currentSymbol.value.symbol;
-    stockPrice.value = currentSymbol.value.stockPrice;
-    stockCo.value = currentSymbol.value.stockCo
-    getAccount(stockPrice.value)
-  }, 200);
+    value.value = currentSymbol.value.symbol || '';
+    stockPrice.value = currentSymbol.value.stockPrice || 0;
+    stockCo.value = currentSymbol.value.stockCo || []
+    if (saveRoundedQuantity.value == 0) {
+      roundedQuantity.value = 0
+    } else {
+      roundedQuantity.value = saveRoundedQuantity.value
+    }
+    store.commit('setPreviousTabSymbol',value.value)
+    if (value.value !== previousTabSymbol.value) {
+      getAccount(stockPrice.value)
+    }
+    
+    if (new Decimal(roundedQuantity.value).equals(0)) {
+      numValue.value = 0
+      return
+    }
+    
+  }, 300);
 }, { immediate: true })
 
 // 监听 selectedLeverOption 的变化，并调用 getPay
-watch(selectedLeverOption, (newValue, oldValue) => {
-  getPay();
-});
+// watch(selectedLeverOption, (newValue, oldValue) => {
+//   if (token.value) {
+//     getPay();
+//   }
+// });
 
 
 const onSliderChange = (newValue) => {
@@ -380,15 +412,17 @@ const getnumval = (newValue)=>{
       // 百位数取整
       const roundedValue = calculatedValue.div(increment.value).floor().mul(increment.value);
       numValue.value = roundedValue.toNumber();
+      store.commit('setCurrentNumber',numValue.value)
     } else {
       const roundedValue = calculatedValue.div(100).floor().mul(100);
       numValue.value = roundedValue.toNumber();
+      store.commit('setCurrentNumber',numValue.value)
     }
     
 
-    if (numValue.value  !== 0 || numValue.value  !== '') {
-      getPay()
-    }
+    // if (numValue.value  !== 0 || numValue.value  !== '') {
+    //   getPay()
+    // }
 
   } catch (error) {
     console.error('Error calculating value:', error);
@@ -397,10 +431,16 @@ const getnumval = (newValue)=>{
 
 const getPay = ()=> {
   //保证金 数量*股票单价/杠杆
-  if (numValue.value != '' && numValue.value) {
+  let lever
+  if (selectedLeverOption.value && new Decimal(selectedLeverOption.value) && selectedLeverOption.value!=0) {
+    lever = new Decimal(selectedLeverOption.value)
+  } else {
+    lever = 1
+  }
+  if (numValue.value != '' && numValue.value != 0) {
     const result = new Decimal(numValue.value)
         .mul(stockPrice.value)
-        .div(selectedLeverOption.value)
+        .div(lever)
         .toFixed(2); 
     paymentAmount.value = result
     //手续费计算
@@ -410,7 +450,7 @@ const getPay = ()=> {
     closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
     amount.value = new Decimal(numValue.value)
         .mul(stockPrice.value)
-        .div(selectedLeverOption.value)
+        .div(lever)
       .plus( new Decimal(numValue.value).mul(ofee.value))
       .toFixed(2);
   }
@@ -428,10 +468,11 @@ const handleFocus = (val) => {
 
 const handleBlur = (val) => {
   isFocused.value = null
-  if (val === 5) {
+  if (val === 5 && numValue.value!= '') {
     const numValueDecimal = new Decimal(numValue.value);
     if (numValueDecimal.gt(roundedQuantity.value)) {
       numValue.value = roundedQuantity.value
+      store.commit('setCurrentNumber',numValue.value)
     }
   }
 };
@@ -441,7 +482,9 @@ const clear = ()=>{
   stockCo.value = [];
   roundedQuantity.value = 0
   sliderValue.value = 0
-  numValue.value = minOrder.value
+
+  // numValue.value = minOrder.value
+
   paymentAmount.value = 0
   openfee.value = 0
   amount.value = 0
@@ -482,8 +525,16 @@ const getStockslist = ()=>{
         const volume = res.data.volume.split(',')
         minOrder.value = new Decimal(volume[0]);
         increment.value = new Decimal(volume[1]);
-        numValue.value =  minOrder.value
 
+
+        if (currentNumber.value > minOrder.value) {
+          numValue.value = currentNumber.value
+          getslide()
+        } else {
+          numValue.value = minOrder.value
+          getslide()
+        }
+        
         //手续费
         const fee = res.data.fee.split(',')
         ofee.value = new Decimal(fee[0]).plus(new Decimal(fee[2]))
@@ -493,7 +544,6 @@ const getStockslist = ()=>{
         openfee.value = new Decimal(numValue.value).mul(ofee.value).toFixed(2);
         //平仓手续费
         closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
-
 
         emit('already');
       }
@@ -511,11 +561,7 @@ const getslide = ()=>{
       sliderValue.value = 100
       return
     }
-    if (roundedQuantity.value.div(new Decimal(numValue.value)).floor() == 1) {
-      sliderValue.value = 100
-    } else {
-      sliderValue.value = new Decimal(numValue.value).div(roundedQuantity.value).mul(100).floor();
-    }
+    sliderValue.value = new Decimal(numValue.value).div(roundedQuantity.value).mul(100).floor();
   } else if (new Decimal(roundedQuantity.value).equals(0)) {
     sliderValue.value = 0
   } else {
@@ -535,11 +581,11 @@ onMounted(() => {
 const jump = (name) => {
   router.push({
     name,
-    query:{reurl:'trade',redata:'1'}
+    query:{reurl:'trade'}
   });
 };
 
-const openPositPopup = (val) => {
+const openPositPopup = async(val) => {
   const numValueDecimal = new Decimal(numValue.value);
   if (numValueDecimal.gt(roundedQuantity.value)) {
     showToast('超出最大可买');
@@ -555,6 +601,8 @@ const openPositPopup = (val) => {
     showToast('当前值不是递增量的倍数');
     return
   }
+
+  await getPay()
   
   //存选择的数据
   const data = {
@@ -566,22 +614,10 @@ const openPositPopup = (val) => {
     'paymentAmount': paymentAmount.value,
     'amount': amount.value,
     'openfee': openfee.value,
-    'button':val,
-    // 'active': active.value,
-    // 'priceValue': priceValue.value,
-    // 'marketValue': marketValue.value,
-    // 'marketprice': marketprice.value,
-    // 'loseValue': loseValue.value
+    'button':val
   }
 
   emit('update-value', data);
-
-  // store.commit('setUpOrder', data);
-  // //买涨按钮
-  // store.dispatch('openPopup',OpenPositionPopup)
-  // store.commit('setPopupHeight','90%')
-  // store.commit('setkeyborader',true)
-  // getcommToken()
 };
 
 const getcommToken = () =>{
@@ -611,8 +647,9 @@ const inputChange = ()=>{
   if (numValue.value == '' || !numValue.value) {
     numValue.value = minOrder.value
   }
+  store.commit('setCurrentNumber',numValue.value)
   getslide()
-  getPay();
+  // getPay();
 }
 
 const changePrice = ()=>{
