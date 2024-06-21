@@ -2,7 +2,7 @@
 <template>
     <div class="page_assets_cash">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
+        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/bg_2.png)` }">
             <div class="top">
                 <div class="title">总资金</div>
                 <div class="eyes" @click="hidden = !hidden">
@@ -11,89 +11,113 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
+                <span>{{ hidden ? '****' : (mainWallet.amount || '0.00') }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
                     <div>借贷</div>
-                    <div class="num">{{ hidden ? '***' : '232424.00' }}</div>
+                    <div class="num">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
                     <div>冻结</div>
-                    <div class="num">{{ hidden ? '****' : '232424.00' }}</div>
+                    <div class="num">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
                 </div>
             </div>
         </div>
         <div class="cash_tab_content">
-            <div class="cash_tab_item" v-for="i in 2" :key="i">
-                <span>美元</span>
-                <span>23,213.00</span>
+            <div class="cash_tab_item" v-for="(item, i) in showWallet" :key="i">
+                <span>{{ item.currency }}</span>
+                <span>{{ item.amount }}</span>
             </div>
         </div>
 
-        <teleport to="body">
-            <FloatingPanel v-if="assetsPage" class="page_assets_cash_drag" :content-draggable="true"
-                :anchors="[200, dragH]">
-                <template #header>
-                    <div class="drag_header">
-                        <Icon class="drag_header_icon" name="arrow-up" />
 
-                        <span>历史记录</span>
-                    </div>
-                </template>
+        <!-- 充提记录 -->
+        <div class="fix_block">
+            <div class="ripple_button fix_block_header" @click="openRecord">
+                <Icon name="arrow-up" class="arrow" :class="{ 'arrow_active': openList }" />
+                <span>充提记录</span>
+            </div>
 
-                <!-- 内容 -->
-                <Tabs class="cash_tabs" @change="changeTab" v-model:active="activeTab" :swipeable="false" animated
-                    :color="'#014CFA'" shrink>
-                    <!-- <Tab :title="'余额'">
-                        <div class="cash_tab_content">
-                            <div class="cash_tab_item" v-for="i in 20" :key="i">
-                                <span>美元</span>
-                                <span>23,213.00</span>
-                            </div>
-                        </div>
-                    </Tab> -->
-                    <Tab :title="'充值记录'">
-                        <div class="cash_tab_content">
-                            <RechargeItem v-for="i in 20" :key="i" />
-                        </div>
-                    </Tab>
-                    <Tab :title="'提现记录'">
-                        <div class="cash_tab_content">
-                            <WithdrawItem v-for="i in 20" :key="i" />
-                        </div>
-                    </Tab>
-                </Tabs>
-            </FloatingPanel>
-        </teleport>
+            <div class="cash_tab_content list" :class="{ 'open_list': openList }">
+                <RechargeItem v-for="i in 2" :key="i" />
+                <WithdrawItem v-for="i in 2" :key="i" />
+            </div>
+        </div>
 
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
-import { Icon, Tabs, Tab, FloatingPanel } from "vant"
+import { ref, computed, onMounted } from "vue"
+import { Icon } from "vant"
+import { _balance, _depositList } from "@/api/api"
+import store from "@/store"
 import RechargeItem from "./components/RechargeItem"
 import WithdrawItem from "./components/WithdrawItem"
-import { useRoute } from "vue-router"
 
-const route = useRoute()
+const emits = defineEmits(['setLoading'])
+const token = computed(() => store.state.token || '')
 
 const hidden = ref(false)
-const dragH = computed(() => {
-    return document.body.clientHeight * 0.8 || 400
-})
-const assetsPage = computed(() => route.name == 'assets')
+const openList = ref(false)
 
-const activeTab = ref(0)
-const changeTab = val => {
-    console.error(val)
+
+// 刷新现金钱包
+const assets = computed(() => store.state.assets || {})
+const wallet = computed(() => store.state.wallet || [])
+const showWallet = computed(() => (store.state.wallet || []).filter(a => a.currency != 'main')) // 除了主钱包外的其他钱包
+const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 除了主钱包外的其他钱包
+const getAssets = () => {
+    if (!token.value) return
+    // emits('setLoading', true)
+    _balance().then(res => {
+        console.error('--现金钱包', res)
+        if (res.code == 200) {
+            store.commit('setWallet', res.data)
+        }
+    }).finally(() => {
+        emits('setLoading', false)
+    })
 }
+
+
+// 获取充值记录
+const getDepositList = () => {
+    _depositList().then(res => {
+        console.error('充值记录', res)
+    })
+}
+
+// 打开记录
+const openRecord = () => {
+    openList.value = !openList.value
+    if (openList.value) {
+        getDepositList()
+    }
+}
+
+onMounted(() => {
+    getAssets()
+})
+
+const refresh = () => {
+    openList.value = false
+    getAssets()
+}
+defineExpose({
+    refresh
+})
 </script>
 
 <style lang="less" scoped>
 .page_assets_cash {
+    height: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0);
+    position: relative;
+    padding-bottom: 1.5rem;
+
     .overview {
         background-size: 100% 100%;
         margin: 0.2rem 0.32rem 0.24rem 0.32rem;
@@ -150,78 +174,60 @@ const changeTab = val => {
             }
         }
     }
-}
-</style>
 
-<style lang="less">
-.cash_tab_content {
-    padding: 0 0.32rem 0.32rem 0.32rem;
+    .cash_tab_content {
+        padding: 0 0.32rem 0.32rem 0.32rem;
 
-    .cash_tab_item {
-        height: 1.2rem;
-        border-bottom: 1px solid #EAEAEA;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-}
-
-.page_assets_cash_drag {
-    background-color: #f5f5f5 !important;
-    z-index: 99 !important;
-
-    .drag_header {
-        min-height: 50px;
-        height: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        color: #666;
-        font-size: 0.3rem;
-        padding-left: 0.4rem;
-
-        >span {
-            margin-left: 0.2rem;
+        .cash_tab_item {
+            height: 1.2rem;
+            border-bottom: 1px solid #EAEAEA;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 
-    .cash_tabs {
-        flex: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+    .fix_block {
+        width: 100%;
+        position: absolute;
+        z-index: 99;
+        left: 0;
+        bottom: 0;
+        border-top-left-radius: 0.4rem;
+        border-top-right-radius: 0.4rem;
+        background-color: #fff;
+        box-shadow: -2px 0 5px #ddd;
 
-        :deep(.van-tabs__wrap) {
-            padding: 0 0.32rem !important;
-        }
+        .fix_block_header {
+            height: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 0.4rem;
+            font-size: 0.3rem;
+            overflow: hidden;
 
-        :deep(.van-tabs__nav) {
-            position: relative;
-            height: 1rem;
+            .arrow {
+                margin-right: 0.2rem;
+                transition: all ease .8s;
+            }
 
-            &::after {
-                content: '';
-                width: 100%;
-                height: 1px;
-                background-color: #3B82F6;
-                position: absolute;
-                bottom: 16px;
-                left: 0;
-                opacity: 0.3;
+            .arrow_active {
+                transform: rotate(180deg);
             }
         }
 
-        :deep(.van-tab) {
-            margin-left: 0.36rem;
+        .list {
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            transition: all ease .3s;
         }
 
-        :deep(.van-tabs__content) {
-            flex: 1;
-
-            .van-swipe-item {
-                overflow-y: auto;
-                padding-bottom: 0.2rem;
-            }
+        .open_list {
+            height: calc(100vh - 5.5rem);
+            padding: 0 0.32rem 0.32rem 0.32rem;
+            overflow-y: auto;
         }
     }
 }

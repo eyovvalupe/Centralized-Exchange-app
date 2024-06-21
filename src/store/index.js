@@ -8,6 +8,7 @@ import {
 import router from "@/router/index";
 import market from './market'
 import trade from './trade'
+import assets from "./assets";
 
 export default createStore({
   state: {
@@ -19,7 +20,8 @@ export default createStore({
     userInfo: {}, // 用户详情
     accountList: [], // 收款方式列表
     ...market.state,
-    ...trade.state
+    ...trade.state,
+    ...assets.state,
   },
   mutations: {
     setFullscreen(state, data) {
@@ -44,7 +46,8 @@ export default createStore({
       state.accountList = data;
     },
     ...market.mutations,
-    ...trade.mutations
+    ...trade.mutations,
+    ...assets.mutations,
   },
   actions: {
     reset({ commit }) { // 重置相关数据
@@ -84,7 +87,8 @@ export default createStore({
       });
     },
     ...market.actions,
-    ...trade.actions
+    ...trade.actions,
+    ...assets.actions,
   },
   plugins: [createPersistedState()],
 });

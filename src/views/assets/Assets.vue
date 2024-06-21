@@ -5,8 +5,8 @@
 
             <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
                 animated shrink>
-                <Tab name="overview">
-                    <template #title>
+                <Tab :title="'总资产'" name="overview">
+                    <!-- <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'overview' }">
                             <div class="mytab_title_icon">
                                 <img v-show="active != 'overview'" src="/static/img/user/iden-1.png" alt="img">
@@ -14,14 +14,14 @@
                             </div>
                             <span v-show="active == 'overview'">总资产</span>
                         </div>
-                    </template>
+                    </template> -->
 
                     <div class="tab_body">
                         <Overview ref="overviewRef" @setLoading="val => loading = val" v-if="active == 'overview'" />
                     </div>
                 </Tab>
-                <Tab name="cash">
-                    <template #title>
+                <Tab :title="'现金账户'" name="cash">
+                    <!-- <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'cash' }">
                             <div class="mytab_title_icon">
                                 <img v-show="active != 'cash'" src="/static/img/user/google-1.png" alt="img">
@@ -29,13 +29,13 @@
                             </div>
                             <span v-show="active == 'cash'">现金账户</span>
                         </div>
-                    </template>
+                    </template> -->
                     <div class="tab_body">
-                        <Cash v-if="active == 'cash'" />
+                        <Cash ref="cashRef" @setLoading="val => loading = val" v-if="active == 'cash'" />
                     </div>
                 </Tab>
-                <Tab name="stock">
-                    <template #title>
+                <Tab :title="'股票'" name="stock">
+                    <!-- <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'stock' }">
                             <div class="mytab_title_icon">
                                 <img v-show="active != 'stock'" src="/static/img/user/iden-1.png" alt="img">
@@ -43,13 +43,13 @@
                             </div>
                             <span v-show="active == 'stock'">股票</span>
                         </div>
-                    </template>
+                    </template> -->
                     <div class="tab_body">
-                        <Stock v-if="active == 'stock'" />
+                        <Stock ref="stockRef" @setLoading="val => loading = val" v-if="active == 'stock'" />
                     </div>
                 </Tab>
-                <Tab name="contract">
-                    <template #title>
+                <Tab :title="'合约'" name="contract">
+                    <!-- <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'contract' }">
                             <div class="mytab_title_icon">
                                 <img v-show="active != 'contract'" src="/static/img/user/google-1.png" alt="img">
@@ -57,13 +57,13 @@
                             </div>
                             <span v-show="active == 'contract'">合约</span>
                         </div>
-                    </template>
+                    </template> -->
                     <div class="tab_body">
                         合约
                     </div>
                 </Tab>
-                <Tab name="ipo">
-                    <template #title>
+                <Tab :title="'IPO'" name="ipo">
+                    <!-- <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
                             <div class="mytab_title_icon">
                                 <img v-show="active != 'ipo'" src="/static/img/user/iden-1.png" alt="img">
@@ -71,9 +71,9 @@
                             </div>
                             <span v-show="active == 'ipo'">IPO</span>
                         </div>
-                    </template>
+                    </template> -->
                     <div class="tab_body">
-                        <IPO v-if="active == 'ipo'" />
+                        <IPO ref="ipoRef" @setLoading="val => loading = val" v-if="active == 'ipo'" />
                     </div>
                 </Tab>
             </Tabs>
@@ -84,7 +84,7 @@
 
 <script setup>
 import { Tab, Tabs, PullRefresh, Icon } from "vant"
-import { ref, onMounted, onActivated } from "vue"
+import { ref, onMounted } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
@@ -95,10 +95,18 @@ const loading = ref(false)
 const disabled = ref(false)
 const pageLoading = ref(false)
 
+
+const overviewRef = ref()
+const cashRef = ref()
 const onRefresh = () => {
-    setTimeout(() => {
-        loading.value = false;
-    }, 1000);
+    switch (active.value) {
+        case 'overview':
+            overviewRef.value && overviewRef.value.refresh()
+            break
+        case 'cash':
+            cashRef.value && cashRef.value.refresh()
+            break
+    }
 }
 
 onMounted(() => {
@@ -121,10 +129,7 @@ onMounted(() => {
 })
 
 
-const overviewRef = ref()
-onActivated(() => {
-    overviewRef.value && overviewRef.value.getAssets()
-})
+
 </script>
 
 <style lang="less" scoped>
@@ -157,15 +162,19 @@ onActivated(() => {
         ::v-deep(.van-tab--card) {
             border-right: none;
             color: #061023;
-            background-color: #f5f5f5;
-            border-radius: 0.3rem;
-            margin-left: 0.1rem;
-            transition: all ease .2s;
+            // background-color: #f5f5f5;
+            // border-radius: 0.3rem;
+            // margin-left: 0.1rem;
+            // transition: all ease .2s;
         }
 
         ::v-deep(.van-tab--card.van-tab--active) {
-            background-color: #014CFA;
-            color: #fff;
+            // background-color: #014CFA;
+            // color: #fff;
+
+            background-color: #F6F8FF;
+            border-radius: 0.3rem;
+            color: #014CFA;
             font-weight: 500
         }
 
