@@ -2,7 +2,7 @@
 <template>
     <div class="page_assets_overview">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
+        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/bg_1.png)` }">
             <div class="top">
                 <div class="title">资产合计</div>
                 <div class="eyes" @click="hidden = !hidden">
@@ -11,22 +11,22 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
+                <span>{{ hidden ? '****' : (assets.total || '0.00') }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
                     <div>现金</div>
-                    <div class="num">{{ hidden ? '***' : '232424.00' }}</div>
+                    <div class="num">{{ hidden ? '***' : (assets.money || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
                     <div>保证金</div>
-                    <div class="num">{{ hidden ? '****' : '232424.00' }}</div>
+                    <div class="num">{{ hidden ? '****' : (assets.margin || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
                     <div>冻结</div>
-                    <div class="num">{{ hidden ? '****' : '232424.00' }}</div>
+                    <div class="num">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
                 </div>
             </div>
         </div>
@@ -43,8 +43,8 @@
             </div>
             <div class="btn btn2">
                 <div class="icon_box">
-                    <span class="color_text"><span class="tip">可提</span> 100,000.00</span>
-                    <span><span class="tip">冻结</span> 100,000.00</span>
+                    <span class="color_text"><span class="tip">可提</span> {{ (assets.money || '0.00') }}</span>
+                    <span><span class="tip">冻结</span> {{ (assets.frozen || '0.00') }}</span>
 
                     <div class="process">
                         <div class="left">
@@ -84,10 +84,11 @@
         <div class="tabs">
             <div ref="tab1" :key="1" class="ripple_button tab" @click="rightSwitch1 = !rightSwitch1">
                 <div class="tab_icon">
-                    <img src="/static/img/user/safe.png" alt="img">
+                    <img src="/static/img/assets/cash_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch1 == true }">现金账户</div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">1000</div>
+                <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">{{ (assets.money || '0.00') }}
+                </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch1 == true }">
                     <Icon name="weapp-nav" />
                 </div>
@@ -120,10 +121,11 @@
             </div>
             <div ref="tab2" :key="2" class="ripple_button tab" @click="rightSwitch2 = !rightSwitch2">
                 <div class="tab_icon">
-                    <img src="/static/img/user/record.png" alt="img">
+                    <img src="/static/img/assets/stock_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch2 == true }">股票</div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">1000</div>
+                <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ (assets.stock || '0.00') }}
+                </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
                     <Icon name="weapp-nav" />
                 </div>
@@ -144,10 +146,11 @@
             </div>
             <div ref="tab3" :key="3" class="ripple_button tab" @click="rightSwitch3 = !rightSwitch3">
                 <div class="tab_icon">
-                    <img src="/static/img/user/lang.png" alt="img">
+                    <img src="/static/img/assets/contract_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch3 == true }">合约</div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">1000</div>
+                <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ (assets.contract || '0.00') }}
+                </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
                     <Icon name="weapp-nav" />
                 </div>
@@ -168,10 +171,10 @@
             </div>
             <div ref="tab4" :key="4" class="ripple_button tab" @click="rightSwitch4 = !rightSwitch4">
                 <div class="tab_icon">
-                    <img src="/static/img/user/server.png" alt="img">
+                    <img src="/static/img/assets/ipo_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch4 == true }">IPO</div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">1000</div>
+                <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">{{ (assets.ipo || '0.00') }}</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
                     <Icon name="weapp-nav" />
                 </div>
@@ -197,7 +200,7 @@
 
 <script setup>
 import { Icon } from "vant"
-import { ref, computed } from "vue"
+import { ref, computed, onMounted } from "vue"
 import { useClickAway } from '@vant/use';
 import { _assets } from "@/api/api"
 import store from "@/store"
@@ -222,18 +225,30 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
 
 
 // 刷新总资产
+const assets = computed(() => store.state.assets || {})
 const getAssets = () => {
     if (!token.value) return
-    emits('setLoading', true)
+    // emits('setLoading', true)
     _assets().then(res => {
         console.error('--总资产', res)
+        if (res.code == 200) {
+            store.commit('setAssets', res.data)
+        }
     }).finally(() => {
         emits('setLoading', false)
     })
 }
 
+onMounted(() => {
+    getAssets()
+})
+
+const refresh = () => {
+    getAssets()
+}
+
 defineExpose({
-    getAssets
+    refresh
 })
 </script>
 

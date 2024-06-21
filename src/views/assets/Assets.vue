@@ -31,7 +31,7 @@
                         </div>
                     </template> -->
                     <div class="tab_body">
-                        <Cash v-if="active == 'cash'" />
+                        <Cash ref="cashRef" @setLoading="val => loading = val" v-if="active == 'cash'" />
                     </div>
                 </Tab>
                 <Tab :title="'股票'" name="stock">
@@ -45,7 +45,7 @@
                         </div>
                     </template> -->
                     <div class="tab_body">
-                        <Stock v-if="active == 'stock'" />
+                        <Stock ref="stockRef" @setLoading="val => loading = val" v-if="active == 'stock'" />
                     </div>
                 </Tab>
                 <Tab :title="'合约'" name="contract">
@@ -73,7 +73,7 @@
                         </div>
                     </template> -->
                     <div class="tab_body">
-                        <IPO v-if="active == 'ipo'" />
+                        <IPO ref="ipoRef" @setLoading="val => loading = val" v-if="active == 'ipo'" />
                     </div>
                 </Tab>
             </Tabs>
@@ -84,7 +84,7 @@
 
 <script setup>
 import { Tab, Tabs, PullRefresh, Icon } from "vant"
-import { ref, onMounted, onActivated } from "vue"
+import { ref, onMounted } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
@@ -95,10 +95,18 @@ const loading = ref(false)
 const disabled = ref(false)
 const pageLoading = ref(false)
 
+
+const overviewRef = ref()
+const cashRef = ref()
 const onRefresh = () => {
-    setTimeout(() => {
-        loading.value = false;
-    }, 1000);
+    switch (active.value) {
+        case 'overview':
+            overviewRef.value && overviewRef.value.refresh()
+            break
+        case 'cash':
+            cashRef.value && cashRef.value.refresh()
+            break
+    }
 }
 
 onMounted(() => {
@@ -121,10 +129,7 @@ onMounted(() => {
 })
 
 
-const overviewRef = ref()
-onActivated(() => {
-    overviewRef.value && overviewRef.value.getAssets()
-})
+
 </script>
 
 <style lang="less" scoped>

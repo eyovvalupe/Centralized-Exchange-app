@@ -247,5 +247,17 @@ export const _assets = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
+// 现金账户
+export const _balance = (data = {}) => {
+  return http.post(`/authc/v1/wallet/balance`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 充值记录
+export const _depositList = (data = {}) => {
+  return http.post(`/authc/v1/wallet/deposit/list`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
 
 export const memberInfo = () => { }

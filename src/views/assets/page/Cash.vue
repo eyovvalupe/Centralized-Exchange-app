@@ -2,7 +2,7 @@
 <template>
     <div class="page_assets_cash">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
+        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/bg_2.png)` }">
             <div class="top">
                 <div class="title">总资金</div>
                 <div class="eyes" @click="hidden = !hidden">
@@ -11,31 +11,31 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
+                <span>{{ hidden ? '****' : (mainWallet.amount || '0.00') }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
                     <div>借贷</div>
-                    <div class="num">{{ hidden ? '***' : '232424.00' }}</div>
+                    <div class="num">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
                     <div>冻结</div>
-                    <div class="num">{{ hidden ? '****' : '232424.00' }}</div>
+                    <div class="num">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
                 </div>
             </div>
         </div>
-        <!-- <div class="cash_tab_content">
-            <div class="cash_tab_item" v-for="i in 2" :key="i">
-                <span>美元</span>
-                <span>23,213.00</span>
+        <div class="cash_tab_content">
+            <div class="cash_tab_item" v-for="(item, i) in showWallet" :key="i">
+                <span>{{ item.currency }}</span>
+                <span>{{ item.amount }}</span>
             </div>
-        </div> -->
+        </div>
 
 
         <!-- 充提记录 -->
         <div class="fix_block">
-            <div class="ripple_button fix_block_header" @click="openList = !openList">
+            <div class="ripple_button fix_block_header" @click="openRecord">
                 <Icon name="arrow-up" class="arrow" :class="{ 'arrow_active': openList }" />
                 <span>充提记录</span>
             </div>
@@ -50,14 +50,65 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, onMounted } from "vue"
 import { Icon } from "vant"
+import { _balance, _depositList } from "@/api/api"
+import store from "@/store"
 import RechargeItem from "./components/RechargeItem"
 import WithdrawItem from "./components/WithdrawItem"
 
+const emits = defineEmits(['setLoading'])
+const token = computed(() => store.state.token || '')
 
 const hidden = ref(false)
 const openList = ref(false)
+
+
+// 刷新现金钱包
+const assets = computed(() => store.state.assets || {})
+const wallet = computed(() => store.state.wallet || [])
+const showWallet = computed(() => (store.state.wallet || []).filter(a => a.currency != 'main')) // 除了主钱包外的其他钱包
+const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 除了主钱包外的其他钱包
+const getAssets = () => {
+    if (!token.value) return
+    // emits('setLoading', true)
+    _balance().then(res => {
+        console.error('--现金钱包', res)
+        if (res.code == 200) {
+            store.commit('setWallet', res.data)
+        }
+    }).finally(() => {
+        emits('setLoading', false)
+    })
+}
+
+
+// 获取充值记录
+const getDepositList = () => {
+    _depositList().then(res => {
+        console.error('充值记录', res)
+    })
+}
+
+// 打开记录
+const openRecord = () => {
+    openList.value = !openList.value
+    if (openList.value) {
+        getDepositList()
+    }
+}
+
+onMounted(() => {
+    getAssets()
+})
+
+const refresh = () => {
+    openList.value = false
+    getAssets()
+}
+defineExpose({
+    refresh
+})
 </script>
 
 <style lang="less" scoped>
@@ -65,6 +116,7 @@ const openList = ref(false)
     height: 100%;
     border-top: 1px solid rgba(0, 0, 0, 0);
     position: relative;
+    padding-bottom: 1.5rem;
 
     .overview {
         background-size: 100% 100%;
