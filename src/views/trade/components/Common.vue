@@ -311,19 +311,21 @@ const getAccount = (price)=>{
   if (token.value) {
       const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
           if (res.code == 200) {
-              amountNum = new Decimal(50000);
+              amountNum = new Decimal(res.data[0].amount);
               if (price !== undefined && price !== '' && price !== 0 && amountNum !== undefined) {
                   const availableQuantity = amountNum.div(stockPrice.value);
                   // 取整
                   roundedQuantity.value = availableQuantity.floor();
                   store.commit('setRoundedQuantity', roundedQuantity.value)
-              //数量输入框中的金额
-              //数量输入框中的金额
-              // getnumval(sliderValue.value)
-                  //数量输入框中的金额
-              // getnumval(sliderValue.value)
-                  getslide()
-                  // getPay()
+
+                  if (currentNumber.value > minOrder.value) {
+                    numValue.value = currentNumber.value
+                    getslide()
+                  } else {
+                    numValue.value = minOrder.value
+                    getslide()
+                  }
+
               } else {
                   console.error('获取价格或余额失败');
                   paymentAmount.value = 0
