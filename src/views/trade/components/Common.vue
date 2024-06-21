@@ -2,7 +2,7 @@
   <div class="common-open-position">
         <div class="stock-box">
         <span class="grop-title">股票</span>
-          <Loading type="spinner" class="stock-img" v-if="loading" color="#004DFF"/>
+          <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF"/>
           <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" />
           <img
             src="/static/img/trade/blue-stock.png"
@@ -18,7 +18,7 @@
         :class="[
           'num-input',
           'stock-input-text',
-          { enlarged: value.length > 0 && token },
+          { enlarged: value.length > 0 },
           {'focusinput': isFocused === 4}
         ]"
         style="margin-bottom: 0.2rem"
@@ -191,6 +191,7 @@ const router = useRouter();
 const active = computed(() => store.state.currentActive);
 
 const value = ref("");
+
 const priceValue = ref("");
 const loseValue = ref("");
 const marketValue = ref("");
@@ -204,7 +205,10 @@ const option1 = [
   { text: "全仓", value: 0 },
   { text: "逐仓", value: 1 },
 ];
-const option2 = ref([]);
+const option2 = computed(() => {
+  return store.state.option2
+})
+
 const roundedQuantity = ref(0)
 
 //数量输入框的值
@@ -247,7 +251,7 @@ const selectedOptionText = computed(() => {
 
 const selectedLeverOptionText = computed(() => {
   const selected = option2.value.find(option => option.value === store.state.selectedLeverOption)
-  return selected ? selected.text : ''
+  return selected ? selected.text : '1x'
 })
 
 const selectedLeverOption = computed(() => {
@@ -257,6 +261,10 @@ const selectedLeverOption = computed(() => {
 
 const chooseSymbol = computed(() => {
   return store.state.chooseSymbol
+})
+
+const currentSymbol = computed(() => {
+  return store.state.currentSymbol
 })
 
 
@@ -275,51 +283,76 @@ const getPrice = (val)=>{
         } else if (res.code == 510) {
           loading.value = false
           stockCo.value = [];
-          stockPrice.value = ''
+          stockPrice.value = 0
         } else {
           loading.value = false
           stockCo.value = [];
-          stockPrice.value = ''
+          stockPrice.value = 0
         }
+        const data = {
+          stockCo: stockCo.value,
+          stockPrice: stockPrice.value != '' ? stockPrice.value.toNumber():'',
+          symbol:val
+        }
+        store.commit('setCurrentSymbol',data)
     })
-
-    const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
-        if (res.code == 200) {
-          amountNum = new Decimal(res.data[0].amount);
-          // amountNum = new Decimal(500000);
-        }
-    });
     
-    // 计算可用数量
-    Promise.all([getPrice, getBalance]).then(() => {
-        if (price !== undefined && amountNum !== undefined) {
-            const availableQuantity = amountNum.div(price);
-            // 取整
-            roundedQuantity.value = availableQuantity.floor();
-            //数量输入框中的金额
-            // getnumval(sliderValue.value)
-            getslide()
-            getPay()
-        } else {
-            console.error('获取价格或余额失败');
-            paymentAmount.value = 0
-            amount.value = 0
-        }
-    }).catch(error => {
-        console.error('请求失败', error);
-    });
+    getAccount(stockPrice.value)
+
   }
 }
 
+const getAccount = (price)=>{
+  // 计算可用数量
+  if (token.value) {
+      const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
+          if (res.code == 200) {
+            amountNum = new Decimal(res.data[0].amount);
+            // amountNum = new Decimal(500000);
+          }
+      });
+      
+      // 计算可用数量
+      // Promise.all([getPrice, getBalance]).then(() => {
+          if (price !== undefined && price !== '' && amountNum !== undefined) {
+              const availableQuantity = amountNum.div(stockPrice.value);
+              // 取整
+              roundedQuantity.value = availableQuantity.floor();
+              //数量输入框中的金额
+              // getnumval(sliderValue.value)
+              getslide()
+              getPay()
+          } else {
+              console.error('获取价格或余额失败');
+              paymentAmount.value = 0
+              amount.value = 0
+          }
+      // }).catch(error => {
+      //     console.error('请求失败', error);
+      // });
+    }
+}
+
 const handleSymbolChange = () => {
-  value.value = chooseSymbol.value;
-  if (value.value != '' && token.value) {
-    loading.value = true;
-    getPrice(value.value);
-  }
+  setTimeout(() => {
+    value.value = chooseSymbol.value;
+    if (value.value != '') {
+      loading.value = true;
+      getPrice(value.value);
+    }
+  }, 200)
 };
 
 watch(chooseSymbol, handleSymbolChange, { immediate: true });
+
+watch([active, currentSymbol],()=>{
+  setTimeout(() => {
+    value.value = currentSymbol.value.symbol;
+    stockPrice.value = currentSymbol.value.stockPrice;
+    stockCo.value = currentSymbol.value.stockCo
+    getAccount(stockPrice.value)
+  }, 200);
+}, { immediate: true })
 
 // 监听 selectedLeverOption 的变化，并调用 getPay
 watch(selectedLeverOption, (newValue, oldValue) => {
@@ -330,7 +363,11 @@ watch(selectedLeverOption, (newValue, oldValue) => {
 const onSliderChange = (newValue) => {
   //滚动滑动条
   sliderValue.value = newValue;
-  getnumval(newValue)
+  if (new Decimal(roundedQuantity.value).equals(0)) {
+    sliderValue.value = 0
+  } else {
+    getnumval(newValue)
+  }
 };
 
 const getnumval = (newValue)=>{
@@ -339,9 +376,15 @@ const getnumval = (newValue)=>{
     const percentage = new Decimal(newValue).div(100);
     const calculatedValue = percentage.mul(roundedQuantity.value);
 
-    // 百位数取整
-    const roundedValue = calculatedValue.div(increment.value).floor().mul(increment.value);
-    numValue.value = roundedValue.toNumber();
+    if (increment.value) {
+      // 百位数取整
+      const roundedValue = calculatedValue.div(increment.value).floor().mul(increment.value);
+      numValue.value = roundedValue.toNumber();
+    } else {
+      const roundedValue = calculatedValue.div(100).floor().mul(100);
+      numValue.value = roundedValue.toNumber();
+    }
+    
 
     if (numValue.value  !== 0 || numValue.value  !== '') {
       getPay()
@@ -374,10 +417,8 @@ const getPay = ()=> {
 }
 
 const handleInput = () => {
-  if (token.value) {
     //股票搜索
     getData();
-  }
 };
 
 
@@ -387,6 +428,12 @@ const handleFocus = (val) => {
 
 const handleBlur = (val) => {
   isFocused.value = null
+  if (val === 5) {
+    const numValueDecimal = new Decimal(numValue.value);
+    if (numValueDecimal.gt(roundedQuantity.value)) {
+      numValue.value = roundedQuantity.value
+    }
+  }
 };
 
 const clear = ()=>{
@@ -459,7 +506,7 @@ const getStockslist = ()=>{
 
 const getslide = ()=>{
   //滑动条值
-  if (numValue.value && numValue.value  !== 0 &&  new Decimal(numValue.value)) {
+  if (numValue.value && numValue.value  !== 0 &&  new Decimal(numValue.value) && !new Decimal(roundedQuantity.value).equals(0)) {
     if (new Decimal(numValue.value).gt(roundedQuantity.value)) {
       sliderValue.value = 100
       return
@@ -469,6 +516,8 @@ const getslide = ()=>{
     } else {
       sliderValue.value = new Decimal(numValue.value).div(roundedQuantity.value).mul(100).floor();
     }
+  } else if (new Decimal(roundedQuantity.value).equals(0)) {
+    sliderValue.value = 0
   } else {
     sliderValue.value = 0
   }

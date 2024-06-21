@@ -404,6 +404,7 @@ const getcommToken = () =>{
 
 
 const onChange = async(val) => {
+
   if (Object.keys(route.query).length > 0) {
     router.push({ path: route.path, query: {} });
   }
@@ -411,6 +412,19 @@ const onChange = async(val) => {
   active.value = val;
   count.val = 1
   store.commit('setDates', ['','']);
+
+  if (val === '0') {
+    await nextTick(); // 确保 DOM 已更新
+    if (OpenPositionRef.value) {
+      OpenPositionRef.value.clearChild();
+    }
+    setTimeout(() => {
+      store.commit('clearCurrentSymbol')
+      store.commit('clearChooseSymbol')
+    },5)
+    
+  }
+
 
   if (token.value === '') {
     loading.value = false;
@@ -437,11 +451,6 @@ const onChange = async(val) => {
       // getStocksList(false)
     } else if (val === '0') {
       loading.value = false;
-      await nextTick(); // 确保 DOM 已更新
-      if (OpenPositionRef.value) {
-        console.log(OpenPositionRef.value, 'OpenPositionRef.value');
-        OpenPositionRef.value.clearChild();
-      }
     }
   }
 };

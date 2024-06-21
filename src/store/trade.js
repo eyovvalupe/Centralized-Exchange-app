@@ -11,14 +11,24 @@ export default {
       popupHeight: '90%',
       keyborader: false,
       allSelect: 0,
-      option2:[],
+      option2:[
+        {
+          text: `1x`,
+          value: `1`
+        },
+        {
+          text: `2x`,
+          value: `2`
+        }
+      ],
       selectedLeverOption: 0,
       orderNo:'',
       isUpActive: true,
       isDownActive: false,
       unsold_volume: 0,
       currentActive: '0',
-      chooseSymbol: ''
+      chooseSymbol: '',
+      currentSymbol: {}
     },
     mutations: {
       setDates(state,data) {
@@ -75,9 +85,19 @@ export default {
       setChooseSymbol(state,data) {
         state.chooseSymbol = data
       },
-      clearState(state,data) {
+      clearChooseSymbol(state,data) {
         state.chooseSymbol = ''
       },
+      setCurrentSymbol(state,data) {
+        state.currentSymbol = data
+      },
+      clearCurrentSymbol(state,data) {
+        state.currentSymbol = {
+          stockCo: [],
+          stockPrice:0,
+          symbol:''
+        }
+      }
     },
     actions: {
       openPopup({ commit }, component) {
