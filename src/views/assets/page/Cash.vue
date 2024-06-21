@@ -25,75 +25,47 @@
                 </div>
             </div>
         </div>
-        <div class="cash_tab_content">
+        <!-- <div class="cash_tab_content">
             <div class="cash_tab_item" v-for="i in 2" :key="i">
                 <span>美元</span>
                 <span>23,213.00</span>
             </div>
+        </div> -->
+
+
+        <!-- 充提记录 -->
+        <div class="fix_block">
+            <div class="ripple_button fix_block_header" @click="openList = !openList">
+                <Icon name="arrow-up" class="arrow" :class="{ 'arrow_active': openList }" />
+                <span>充提记录</span>
+            </div>
+
+            <div class="cash_tab_content list" :class="{ 'open_list': openList }">
+                <RechargeItem v-for="i in 2" :key="i" />
+                <WithdrawItem v-for="i in 2" :key="i" />
+            </div>
         </div>
-
-        <teleport to="body">
-            <FloatingPanel v-if="assetsPage" class="page_assets_cash_drag" :content-draggable="true"
-                :anchors="[200, dragH]">
-                <template #header>
-                    <div class="drag_header">
-                        <Icon class="drag_header_icon" name="arrow-up" />
-
-                        <span>历史记录</span>
-                    </div>
-                </template>
-
-                <!-- 内容 -->
-                <Tabs class="cash_tabs" @change="changeTab" v-model:active="activeTab" :swipeable="false" animated
-                    :color="'#014CFA'" shrink>
-                    <!-- <Tab :title="'余额'">
-                        <div class="cash_tab_content">
-                            <div class="cash_tab_item" v-for="i in 20" :key="i">
-                                <span>美元</span>
-                                <span>23,213.00</span>
-                            </div>
-                        </div>
-                    </Tab> -->
-                    <Tab :title="'充值记录'">
-                        <div class="cash_tab_content">
-                            <RechargeItem v-for="i in 20" :key="i" />
-                        </div>
-                    </Tab>
-                    <Tab :title="'提现记录'">
-                        <div class="cash_tab_content">
-                            <WithdrawItem v-for="i in 20" :key="i" />
-                        </div>
-                    </Tab>
-                </Tabs>
-            </FloatingPanel>
-        </teleport>
 
     </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue"
-import { Icon, Tabs, Tab, FloatingPanel } from "vant"
+import { Icon } from "vant"
 import RechargeItem from "./components/RechargeItem"
 import WithdrawItem from "./components/WithdrawItem"
-import { useRoute } from "vue-router"
 
-const route = useRoute()
 
 const hidden = ref(false)
-const dragH = computed(() => {
-    return document.body.clientHeight * 0.8 || 400
-})
-const assetsPage = computed(() => route.name == 'assets')
-
-const activeTab = ref(0)
-const changeTab = val => {
-    console.error(val)
-}
+const openList = ref(false)
 </script>
 
 <style lang="less" scoped>
 .page_assets_cash {
+    height: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0);
+    position: relative;
+
     .overview {
         background-size: 100% 100%;
         margin: 0.2rem 0.32rem 0.24rem 0.32rem;
@@ -150,78 +122,60 @@ const changeTab = val => {
             }
         }
     }
-}
-</style>
 
-<style lang="less">
-.cash_tab_content {
-    padding: 0 0.32rem 0.32rem 0.32rem;
+    .cash_tab_content {
+        padding: 0 0.32rem 0.32rem 0.32rem;
 
-    .cash_tab_item {
-        height: 1.2rem;
-        border-bottom: 1px solid #EAEAEA;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-}
-
-.page_assets_cash_drag {
-    background-color: #f5f5f5 !important;
-    z-index: 99 !important;
-
-    .drag_header {
-        min-height: 50px;
-        height: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        color: #666;
-        font-size: 0.3rem;
-        padding-left: 0.4rem;
-
-        >span {
-            margin-left: 0.2rem;
+        .cash_tab_item {
+            height: 1.2rem;
+            border-bottom: 1px solid #EAEAEA;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
     }
 
-    .cash_tabs {
-        flex: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
+    .fix_block {
+        width: 100%;
+        position: absolute;
+        z-index: 99;
+        left: 0;
+        bottom: 0;
+        border-top-left-radius: 0.4rem;
+        border-top-right-radius: 0.4rem;
+        background-color: #fff;
+        box-shadow: -2px 0 5px #ddd;
 
-        :deep(.van-tabs__wrap) {
-            padding: 0 0.32rem !important;
-        }
+        .fix_block_header {
+            height: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 0.4rem;
+            font-size: 0.3rem;
+            overflow: hidden;
 
-        :deep(.van-tabs__nav) {
-            position: relative;
-            height: 1rem;
+            .arrow {
+                margin-right: 0.2rem;
+                transition: all ease .8s;
+            }
 
-            &::after {
-                content: '';
-                width: 100%;
-                height: 1px;
-                background-color: #3B82F6;
-                position: absolute;
-                bottom: 16px;
-                left: 0;
-                opacity: 0.3;
+            .arrow_active {
+                transform: rotate(180deg);
             }
         }
 
-        :deep(.van-tab) {
-            margin-left: 0.36rem;
+        .list {
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            transition: all ease .3s;
         }
 
-        :deep(.van-tabs__content) {
-            flex: 1;
-
-            .van-swipe-item {
-                overflow-y: auto;
-                padding-bottom: 0.2rem;
-            }
+        .open_list {
+            height: calc(100vh - 5.5rem);
+            padding: 0 0.32rem 0.32rem 0.32rem;
+            overflow-y: auto;
         }
     }
 }

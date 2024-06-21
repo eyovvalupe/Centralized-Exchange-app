@@ -240,6 +240,7 @@ defineExpose({
 <style lang="less" scoped>
 .page_assets_overview {
     padding-bottom: 1rem;
+    border-top: 1px solid rgba(0, 0, 0, 0);
 
     .overview {
         background-size: 100% 100%;
