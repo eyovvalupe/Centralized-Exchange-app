@@ -120,8 +120,8 @@ export const _add = (data = {}) => {
 
 //交易参数
 export const _stocksPara = (data = {}) => {
-  return http.post(`/authc/v1/stocks/para`, data, {
-    custom: { auth: true, toast: true },
+  return http.post(`/anon/v1/stocks/para`, data, {
+    custom: { auth: false, toast: true },
   });
 };
 

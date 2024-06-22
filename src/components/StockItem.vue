@@ -120,8 +120,14 @@ watch(price, (newVal, oldVal) => {
 const goInfo = () => {
     store.commit('setCurrStock', props.item)
     if (props.type === 'trade') {
+        const data = [
+            {
+                name:props.item.name,
+                symbol:props.item.symbol,
+            }
+        ]
         store.commit('setShowLeft',false)
-        store.commit('setChooseSymbol',props.item.symbol)
+        store.commit('setChooseSymbol',data)
         return
     } else {
         setTimeout(() => {

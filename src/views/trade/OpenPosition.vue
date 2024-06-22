@@ -111,7 +111,7 @@
 <script setup>
 import { ref, computed, onMounted, watch, nextTick, defineExpose } from "vue";
 import { Tab,Tabs,Field,CellGroup,Slider,Button,Loading,Popup, showToast} from "vant";
-import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
+import { _search, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
 import OpenPositionPopup from "./OpenPositionPopup";
 import OpenSelect from "./components/OpenSelect.vue";
@@ -187,8 +187,6 @@ const closefee = ref(0)
 const ofee = ref(0)
 const cfee = ref(0)
 
-const commToken = ref('')
-
 //修改市价和限价
 const marketprice = ref(false)
 
@@ -221,7 +219,7 @@ const previousChooseSymbol = computed(()=>{
 
 //点击左边的侧边栏，修改股票 input
 const handleSymbolChange = () => {
-  if (chooseSymbol.value !== previousChooseSymbol.value) {
+  if (chooseSymbol.value !== previousChooseSymbol.value && chooseSymbol.value.length > 0) {
     loading.value = true
   }
 };
@@ -388,12 +386,7 @@ const handleUpdateValue = (value)=>{
 
 const getcommToken = () =>{
   //点击按钮获取 token
-  _commToken({ }).then(res => {
-        if (res.code == 200) {
-          commToken.value = res.data
-          store.commit('setCommToken', commToken.value);
-        }
-    });
+  store.dispatch('updateSessionToken')
 }
 
 const allSelect = ()=>{
@@ -510,14 +503,6 @@ defineExpose({
         text-align: center;
         caret-color: #014cfa;
       }
-    }
-
-    .num-input.enlarged {
-      width: 100%;
-      height: 1.14rem;
-      border-radius: 0.12rem;
-      border: 0.02rem solid #d0d8e2;
-      margin: 0.2rem 0;
     }
 
     .num-input {
@@ -677,14 +662,6 @@ defineExpose({
     height: 0.48rem;
     background: #014cfa;
   }
-  .co-text {
-    color: #333;
-    text-align: center;
-    font-size: 0.28rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 0.36rem;
-  }
   .percentages {
     display: flex;
     justify-content: space-between;
@@ -737,15 +714,6 @@ defineExpose({
 
   .van-slider__button-wrapper {
     z-index: 999 !important;
-  }
-
-  .stock-box {
-    display: flex;
-    justify-content: space-between;
-    .stock-img {
-      width: 0.4rem !important;
-      height: 0.4rem !important;
-    }
   }
 
   input:focus {

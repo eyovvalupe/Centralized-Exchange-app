@@ -212,14 +212,6 @@
         }
       }
   
-      .num-input.enlarged {
-        width: 100%;
-        height: 1.14rem;
-        border-radius: 0.12rem;
-        border: 0.02rem solid #d0d8e2;
-        margin: 0.2rem 0;
-      }
-  
       .num-input {
         width: 100%;
         height: 0.88rem;
@@ -437,15 +429,6 @@
   
     .van-slider__button-wrapper {
       z-index: 999 !important;
-    }
-  
-    .stock-box {
-      display: flex;
-      justify-content: space-between;
-      .stock-img {
-        width: 0.4rem !important;
-        height: 0.4rem !important;
-      }
     }
   
     input:focus {

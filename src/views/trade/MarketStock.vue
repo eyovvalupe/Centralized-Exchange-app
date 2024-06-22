@@ -32,7 +32,7 @@
 
         <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
         <div v-show="!loading && token">
-          <div class="header-grid">
+          <div class="header-grid" v-if="dataList.length > 0">
             <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
               <div class="header-f-left" style="width: 2.2rem">股票/状态</div>
               <div>开仓/可售</div>
@@ -98,6 +98,10 @@
         </div>
 
 
+        <!-- 没数据 -->
+        <NoData v-if="!loading && token && dataList.length === 0" />
+
+
         <!-- 未登录 -->
         <div class="no-data-box" v-show="!loading && !token">
           <img src="/static/img/trade/no-data.png" class="no-data-img">
@@ -109,8 +113,7 @@
       </div>
       <!-- 开仓 -->
       <div  v-else-if="active ==='0'">
-        <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
-        <OpenPosition v-show="!loading" ref="OpenPositionRef"/>
+        <OpenPosition ref="OpenPositionRef"/>
       </div>
      
 
@@ -120,7 +123,7 @@
         <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
 
         <div v-show="!loading && token">
-          <div class="header-grid">
+          <div class="header-grid" v-if="inquireData.length > 0">
             <div style="padding: 0 0.3rem; display: flex" class="bottom-grid">
               <div class="header-f-left" style="width: 2.2rem">股票/状态</div>
               <div>开仓/可售</div>
@@ -131,7 +134,6 @@
 
           <PullRefresh v-model="reloading" @refresh="onRefresh">
           <div v-for="(i,key) in inquireData" :key="key" style="min-height: 100%;">
-            <!-- <SwipeCell> -->
             
               <div class="content-grid grid-item-hover ripple_button"  @click="showButton(i)">
                 <div :style="currentNum === i.order_no && buttonShow ?{padding: '0'}:{padding: '0 0.3rem'}" class="flex">
@@ -182,12 +184,12 @@
 
                 </div>
               </div>
-            
-              
-            <!-- </SwipeCell> -->
           </div>
         </PullRefresh>
         </div>
+
+        <!-- 没数据 -->
+        <NoData v-if="!loading && token && inquireData.length === 0" />
       
 
 
@@ -232,6 +234,7 @@ import OrderDetail from "./OrderDetail.vue";
 import OrderUpdate from "./OrderUpdate.vue";
 import OrderClosePosition from "./OrderClosePosition.vue";
 import Optional from "../../views/Market/components/Optional.vue"
+import NoData from "@/components/NoData.vue"
 
 const token = computed(() => store.state.token);
 const { startSocket } = useSocket();

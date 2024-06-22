@@ -4,7 +4,7 @@
       <span class="grop-title">股票</span>
       <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
       <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" />
-      <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="value.length > 0 && stockCo.length > 0"
+      <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="stockCo.length > 0"
         @click="openPopup" />
 
     </div>
@@ -12,10 +12,10 @@
     <Field v-model="value" :class="[
       'num-input',
       'stock-input-text',
-      { enlarged: value.length > 0 },
+      { enlarged: enlarged },
       { 'focusinput': isFocused === 4 }
-    ]" style="margin-bottom: 0.2rem" @input="handleInput()" @focus="handleFocus(4)" @blur="handleBlur(4)">
-      <template #button v-if="value.length > 0 && stockCo.length > 0">
+    ]" style="margin-bottom: 0.2rem;margin-top: 0.05rem;" @input="handleInput" @focus="handleFocus(4)" @blur="handleBlur(4)" placeholder="股票代码">
+      <template #button v-if="stockCo.length > 0">
         <div class="co-text">
           <div>
             {{ stockCo[0].symbol }}
@@ -77,11 +77,24 @@
         <div class="position-fee">保证金 {{ paymentAmount }} + 手续费 {{ openfee }}</div>
       </div> -->
 
-    <Button size="large" color="#18b762" round v-if="isDownActive && token" @click="openPositPopup('down')"
-      :disabled="downdisable(active)">买跌</Button>
+    <Button size="large" color="rgb(242, 242, 242)" round v-if="isDownActive && token && downdisable(active)" style="
+    color: rgb(153, 153, 153);">
+      <span>买跌</span>
+      <span class="yuan"></span>
+    </Button>
 
-    <Button size="large" color="#e8503a" round v-if="isUpActive && token" @click="openPositPopup('up')"
-      :disabled="downdisable(active)">买涨</Button>
+    <Button size="large" color="#e8503a" round v-if="isDownActive && token && !downdisable(active)" @click="openPositPopup('down')"
+    >买跌</Button>
+
+
+    <Button size="large" color="rgb(242, 242, 242)" round v-if="isUpActive && token && downdisable(active)" style="
+    color: rgb(153, 153, 153);">
+      <span>买涨</span>
+      <span class="yuan" style="background-color: #18b762;"></span>
+    </Button>
+
+    <Button size="large" color="#18b762" round v-if="isUpActive && token && !downdisable(active)" @click="openPositPopup('up')"
+    >买涨</Button>
 
 
     <Button size="large" color="#014cfa" round v-if="!token" style="margin-bottom: 0.34rem"
@@ -103,6 +116,7 @@ import LeverSelect from "./LeverSelect.vue";
 import StockPopup from '../StockPopup.vue'
 import store from "@/store";
 import Decimal from 'decimal.js';
+import { debounce } from 'lodash';
 
 const token = computed(() => store.state.token);
 const router = useRouter();
@@ -142,19 +156,19 @@ const props = defineProps({
 
 const downdisable = (val) => {
   if (val == '0') {
-    if (value.length === 0 || numValue.length === 0 || numValue == 0 || stockCo.length === 0) {
+    if (numValue.value.length === 0 || numValue.value == 0 || stockCo.value.length === 0) {
       return true
     } else {
       return false
     }
   } else if (val == '1') {
-    if (value.length === 0 || numValue.length === 0 || numValue == 0 || stockCo.length === 0 || props.priceValue == '') {
+    if (numValue.value.length === 0 || numValue.value == 0 || stockCo.value.length === 0 || props.priceValue == '') {
       return true
     } else {
       return false
     }
   } else if (val == '2') {
-    if (value.length === 0 || numValue.length === 0 || numValue == 0 || stockCo.length === 0 || props.loseValue == '' || (props.marketprice && props.marketValue == '')) {
+    if (numValue.value.length === 0 || numValue.value == 0 || stockCo.value.length === 0 || props.loseValue == '' || (props.marketprice && props.marketValue == '')) {
       return true
     } else {
       return false
@@ -187,10 +201,11 @@ const closefee = ref(0)
 const ofee = ref(0)
 const cfee = ref(0)
 
-const commToken = ref('')
-
 //修改市价和限价
 const marketprice = ref(false)
+
+//输入框变大
+const enlarged = ref(false)
 
 const isFocused = ref();
 const emit = defineEmits(['update-value']);
@@ -265,9 +280,13 @@ const getPrice = (val) => {
       }
       store.commit('setCurrentSymbol', data)
       getAccount(stockPrice.value)
+      
     })
   }
 }
+
+// 使用 lodash 的 debounce 函数包装搜索函数
+const debouncedSearch = debounce(getPrice, 300);
 
 const getAccount = (price) => {
   let amountNum;
@@ -282,19 +301,21 @@ const getAccount = (price) => {
           // 取整
           roundedQuantity.value = availableQuantity.floor();
           store.commit('setRoundedQuantity', roundedQuantity.value)
-
-          // if (currentNumber.value > minOrder.value) {
-          //   numValue.value = currentNumber.value
-          //   getslide()
-          // } else {
-          //   numValue.value = minOrder.value
-          //   getslide()
-          // }
+          if (currentNumber.value > minOrder.value) {
+            numValue.value = currentNumber.value
+            getslide()
+          } else {
+            numValue.value = minOrder.value
+            getslide()
+          }
 
         } else {
           console.error('获取价格或余额失败');
           paymentAmount.value = 0
           amount.value = 0
+          numValue.value = 0
+          roundedQuantity.value = 0
+          store.commit('setCurrentNumber', 0)
           store.commit('setRoundedQuantity', new Decimal(0))
           getslide()
         }
@@ -311,14 +332,13 @@ const getAccount = (price) => {
 
 //点击左边的侧边栏，修改股票 input
 const handleSymbolChange = () => {
-  if (chooseSymbol.value !== previousChooseSymbol.value) {
+  if (chooseSymbol.value !== previousChooseSymbol.value && chooseSymbol.value.length > 0) {
     store.commit('setPreviousChooseSymbol', chooseSymbol.value)
     setTimeout(() => {
-      value.value = chooseSymbol.value;
-      if (value.value !== '') {
-        loading.value = true;
-        getPrice(value.value);
-      }
+      enlarged.value = true
+      loading.value = true
+      stockCo.value = chooseSymbol.value || []
+      debouncedSearch(chooseSymbol.value[0].symbol);
     }, 200);
   }
 };
@@ -328,17 +348,20 @@ watch(chooseSymbol, handleSymbolChange, { immediate: true });
 watch([active, currentSymbol], () => {
   //切换顶部 tab，存储股票数据
   setTimeout(() => {
-    value.value = currentSymbol.value.symbol || '';
     stockPrice.value = currentSymbol.value.stockPrice || 0;
     stockCo.value = currentSymbol.value.stockCo || []
+    if (stockCo.value.length > 0) {
+      value.value = '';
+    } else {
+      value.value = currentSymbol.value.symbol
+    }
+    if (stockCo.value.length > 0) {
+      enlarged.value = true
+    }
     if (saveRoundedQuantity.value == 0) {
       roundedQuantity.value = 0
     } else {
       roundedQuantity.value = saveRoundedQuantity.value
-    }
-    store.commit('setPreviousTabSymbol', value.value)
-    if (value.value !== previousTabSymbol.value) {
-      getAccount(stockPrice.value)
     }
 
     if (new Decimal(roundedQuantity.value).equals(0)) {
@@ -351,9 +374,9 @@ watch([active, currentSymbol], () => {
     } else {
       numValue.value = currentMinOrder.value
     }
-    sliderValue.value = currentSliderValue.value
+    getslide()
 
-  }, 300);
+  }, 400);
 }, { immediate: true })
 
 
@@ -424,6 +447,9 @@ const handleInput = () => {
 
 const handleFocus = (val) => {
   isFocused.value = val
+  if (val == 4) {
+    enlarged.value = true
+  }
 };
 
 const handleBlur = (val) => {
@@ -434,6 +460,9 @@ const handleBlur = (val) => {
       numValue.value = roundedQuantity.value
       store.commit('setCurrentNumber', numValue.value)
     }
+  }
+  if (val == 4 && value.value.length === 0 && stockCo.value.length === 0) {
+    enlarged.value = false
   }
 };
 
@@ -454,12 +483,21 @@ const getData = () => {
   //股票搜索
   if (value.value.length === 0) {
     //输入框清空
+    const data = {
+      stockCo: [],
+      stockPrice: '',
+      symbol: ''
+    }
+    store.commit('setCurrentSymbol', data)
+    store.commit('setChooseSymbol',[])
     clear()
     return;
   }
   // TV18BRDCST
   loading.value = true
-  getPrice(value.value)
+
+  debouncedSearch(value.value);
+  // getPrice(value.value)
 };
 
 const getStockslist = () => {
@@ -513,15 +551,13 @@ const getStockslist = () => {
         // emit('already');
       }
     })
-    .catch((error) => { })
-    .finally(() => { });
 
 }
 
 
 const getslide = () => {
   //滑动条值
-  if (numValue.value && numValue.value !== 0 && new Decimal(numValue.value) && !new Decimal(roundedQuantity.value).equals(0)) {
+  if (numValue.value && numValue.value !== 0 && new Decimal(numValue.value) && roundedQuantity.value && !new Decimal(roundedQuantity.value).equals(0)) {
     if (new Decimal(numValue.value).gt(roundedQuantity.value)) {
       sliderValue.value = 100
       return
@@ -538,12 +574,8 @@ const getslide = () => {
 
 
 onMounted(() => {
-  if (token.value) {
-    emit('already');
-    getStockslist()
-  } else {
-    emit('already');
-  }
+  emit('already');
+  getStockslist()
 });
 
 const jump = (name) => {
@@ -587,16 +619,6 @@ const openPositPopup = async (val) => {
 
   emit('update-value', data);
 };
-
-const getcommToken = () => {
-  //点击按钮获取 token
-  _commToken({}).then(res => {
-    if (res.code == 200) {
-      commToken.value = res.data
-      store.commit('setCommToken', commToken.value);
-    }
-  });
-}
 
 const allSelect = () => {
   store.dispatch('openPopup', OpenSelect)
@@ -648,6 +670,15 @@ defineExpose({
   //   left: 47%;
   //   margin-top: 2rem !important;
   // }
+  .yuan {
+    width: 15px;
+    height: 15px;
+    background-color: #e8503a;
+    border-radius: 15px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: top;
+  }
   .position-header {
     display: flex;
 
@@ -722,7 +753,8 @@ defineExpose({
     height: 1.14rem;
     border-radius: 0.12rem;
     border: 0.02rem solid #d0d8e2;
-    margin: 0.2rem 0;
+    margin-bottom: 0.2rem;
+    margin-top: 0.05rem !important;
   }
 
   .num-input {
@@ -905,7 +937,7 @@ defineExpose({
 
   .co-text {
     color: #333;
-    text-align: center;
+    text-align: right;
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -975,8 +1007,8 @@ defineExpose({
     justify-content: space-between;
 
     .stock-img {
-      width: 0.4rem !important;
-      height: 0.4rem !important;
+      width: 0.5rem !important;
+      height: 0.5rem !important;
     }
   }
 

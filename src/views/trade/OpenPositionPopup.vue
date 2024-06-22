@@ -146,7 +146,7 @@ const value = ref("");
 const showKeyboard = ref(false);
 
 const orderList = computed(() => store.state.orderList)
-const getcommToken = computed(() => store.state.commToken)
+const getcommToken = computed(() => store.state.sessionToken)
 
 const openStock = ()=>{
   let lever_type;

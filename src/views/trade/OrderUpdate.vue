@@ -102,7 +102,7 @@
 
 
   const order_no = computed(() => store.state.orderNo);
-  const getcommToken = computed(() => store.state.commToken)
+  const getcommToken = computed(() => store.state.sessionToken)
   const amount = ref(0)
   const loading = ref(true)
 
