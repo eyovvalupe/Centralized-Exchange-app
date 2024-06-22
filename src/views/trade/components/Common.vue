@@ -288,7 +288,7 @@ const getPrice = (val) => {
 }
 
 // 使用 lodash 的 debounce 函数包装搜索函数
-const debouncedSearch = debounce(getPrice, 300);
+const debouncedSearch = debounce(getPrice, 800);
 
 const getAccount = (price) => {
   let amountNum;
@@ -483,7 +483,18 @@ const clear = () => {
 
 const getData = () => {
   //股票搜索
-  if (value.value.length === 0) {
+
+  if (value.value === '') {
+    loading.value = false
+    debouncedSearch.cancel(); 
+  } else {
+    loading.value = true
+    if (value.value.length > 0) {
+      debouncedSearch(value.value);
+    }
+  }
+
+  if (value.value === '') {
     //输入框清空
     const data = {
       stockCo: [],
@@ -495,10 +506,6 @@ const getData = () => {
     clear()
     return;
   }
-  // TV18BRDCST
-  loading.value = true
-
-  debouncedSearch(value.value);
   // getPrice(value.value)
 };
 
