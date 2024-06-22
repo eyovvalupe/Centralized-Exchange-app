@@ -267,6 +267,8 @@ const OpenPositionRef = ref(null);
 
 const inquireData = ref([])
 
+let hasSubscribed = false; // 用于跟踪是否已订阅
+
 
 watch([active], ([newActive]) => {
   if (previousActive.value === '0' && newActive === '1') {
@@ -423,16 +425,17 @@ const onChange = async(val) => {
     
   }
 
-
   if (token.value === '') {
     loading.value = false;
     return
   }
 
-  loading.value = true;
-
-  if (val === '1') {
+  if (val === '1'  && !hasSubscribed) {
+    loading.value = true
     //持仓
+    subscribeOrders()
+    hasSubscribed = true; // 标记为已订阅
+  } else if(val === '1'){
     subscribeOrders()
   } else {
     //取消订阅
@@ -445,7 +448,7 @@ const onChange = async(val) => {
     })
     if (val === '2') {
       //查询
-      loading.value = true;
+      // loading.value = true;
       getStocksList(false)
     } else if (val === '0') {
       loading.value = false;
@@ -534,10 +537,6 @@ onMounted(() => {
     loading.value = false;
     return
   }
-  loading.value = true;
-  setTimeout(() => {
-    loading.value = false;
-  }, 1000);
 
   if (active.value === '1') {
     subscribeOrders();
