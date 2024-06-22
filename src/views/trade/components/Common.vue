@@ -583,6 +583,7 @@ const getslide = ()=>{
 
 onMounted(() => {
   if (token.value) {
+    emit('already');
     getStockslist()
   } else {
     emit('already');
