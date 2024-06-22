@@ -154,6 +154,8 @@ const props = defineProps({
   marketprice: false
 })
 
+const first = ref(false)
+
 const downdisable = (val) => {
   if (val == '0') {
     if (numValue.value.length === 0 || numValue.value == 0 || stockCo.value.length === 0) {
@@ -294,8 +296,8 @@ const getAccount = (price) => {
   if (token.value) {
     const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
       if (res.code == 200) {
-        // amountNum = new Decimal(res.data[0].amount);
-        amountNum = new Decimal(50000);
+        amountNum = new Decimal(res.data[0].amount);
+        // amountNum = new Decimal(50000);
         if (price !== undefined && price !== '' && price !== 0 && amountNum !== undefined) {
           const availableQuantity = amountNum.div(stockPrice.value);
           // 取整
@@ -576,6 +578,12 @@ const getslide = () => {
 onMounted(() => {
   emit('already');
   getStockslist()
+
+  if (first.value == false) {
+    getPrice(currentSymbol.value.symbol)
+    first.value = true
+  }
+  
 });
 
 const jump = (name) => {
