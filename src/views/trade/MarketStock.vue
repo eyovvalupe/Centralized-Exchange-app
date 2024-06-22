@@ -399,11 +399,7 @@ const onRefresh = ()=>{
 
 const getcommToken = () =>{
   //点击按钮获取 token
-  _commToken({ }).then(res => {
-        if (res.code == 200) {
-          store.commit('setCommToken', res.data);
-        }
-    });
+  store.dispatch('updateSessionToken')
 }
 
 
