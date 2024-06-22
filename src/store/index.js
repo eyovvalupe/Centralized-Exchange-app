@@ -92,7 +92,7 @@ export default createStore({
       });
     },
     updateSessionToken({ commit }) {
-      // 更新收款方式列表
+      // 更新sessionToken
       return new Promise((resolve) => {
         _sessionToken()
           .then((res) => {
