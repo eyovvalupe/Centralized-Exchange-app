@@ -4,6 +4,7 @@ import createPersistedState from "vuex-persistedstate";
 import {
   _userinfo,
   _listAccount,
+  _sessionToken,
 } from "@/api/api";
 import router from "@/router/index";
 import market from './market'
@@ -19,6 +20,7 @@ export default createStore({
     token: "",
     userInfo: {}, // 用户详情
     accountList: [], // 收款方式列表
+    sessionToken: '', // 关键请求token
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -44,6 +46,9 @@ export default createStore({
     },
     setAccountList(state, data) {
       state.accountList = data;
+    },
+    setSessionToken(state, data) {
+      state.sessionToken = data;
     },
     ...market.mutations,
     ...trade.mutations,
@@ -78,6 +83,21 @@ export default createStore({
           .then((res) => {
             if (res.code == 200 && res.data) {
               commit("setAccountList", res.data || {});
+              resolve(res.data);
+            } else {
+              resolve(false);
+            }
+          })
+          .catch(() => resolve(false));
+      });
+    },
+    updateSessionToken({ commit }) {
+      // 更新收款方式列表
+      return new Promise((resolve) => {
+        _sessionToken()
+          .then((res) => {
+            if (res.code == 200 && res.data) {
+              commit("setSessionToken", res.data || '');
               resolve(res.data);
             } else {
               resolve(false);

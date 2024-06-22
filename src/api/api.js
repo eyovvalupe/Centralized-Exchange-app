@@ -259,5 +259,11 @@ export const _depositList = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
+// 划转
+export const _transfer = (data = {}) => {
+  return http.post(`/authc/v1/account/transfer`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
 
 export const memberInfo = () => { }

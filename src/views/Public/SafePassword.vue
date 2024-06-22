@@ -40,7 +40,7 @@
 import Top from "@/components/Top.vue"
 import { computed, ref, watch } from "vue";
 import { PasswordInput, NumberKeyboard, Button, showToast } from "vant"
-import { _sessionToken, _register } from "@/api/api"
+import { _register } from "@/api/api"
 import router from "@/router"
 import VerifCode from "@/components/VerifCode.vue"
 import store from "@/store"
@@ -96,7 +96,7 @@ const submit = async () => {
         return
     }
     if (!sessionToken.value) {
-        const rs = await getSessionToken()
+        const rs = await store.dispatch('updateSessionToken')
         if (!rs) return showToast('网络异常，请重试')
     }
     if (loading.value) return
@@ -146,23 +146,9 @@ const submitCode = code => {
     submit()
 }
 
-const sessionToken = ref('')
+const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
-    loading.value = true
-    return new Promise(resolve => {
-        _sessionToken().then(res => {
-            if (res?.code == 200) {
-                sessionToken.value = res.data
-                resolve(true)
-            } else {
-                resolve(false)
-            }
-        }).catch(() => {
-            resolve(false)
-        }).finally(() => {
-            loading.value = false
-        })
-    })
+    store.dispatch('updateSessionToken')
 }
 getSessionToken()
 

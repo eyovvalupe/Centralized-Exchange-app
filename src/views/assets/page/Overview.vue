@@ -229,13 +229,7 @@ useClickAway(tab4, () => { rightSwitch4.value = false })
 const assets = computed(() => store.state.assets || {})
 const getAssets = () => {
     if (!token.value) return
-    // emits('setLoading', true)
-    _assets().then(res => {
-        console.error('--总资产', res)
-        if (res.code == 200) {
-            store.commit('setAssets', res.data)
-        }
-    }).finally(() => {
+    store.dispatch('updateAssets').finally(() => {
         emits('setLoading', false)
     })
 }

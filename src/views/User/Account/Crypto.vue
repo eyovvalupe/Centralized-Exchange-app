@@ -64,8 +64,9 @@ import { Button, Icon, Popup, showNotify } from "vant"
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
 import { ref } from "vue"
-import { _addAccount, _sessionToken } from "@/api/api"
+import { _addAccount } from "@/api/api"
 import router from "@/router";
+import store from "@/store";
 
 
 // 币种
@@ -122,22 +123,11 @@ const next = () => {
 }
 
 // sessionToken
-const sessionToken = ref('')
+const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
     loading.value = true
-    return new Promise(resolve => {
-        _sessionToken().then(res => {
-            if (res?.code == 200) {
-                sessionToken.value = res.data
-                resolve(true)
-            } else {
-                resolve(false)
-            }
-        }).catch(() => {
-            resolve(false)
-        }).finally(() => {
-            loading.value = false
-        })
+    store.dispatch("updateSessionToken").finally(() => {
+        loading.value = false
     })
 }
 getSessionToken()

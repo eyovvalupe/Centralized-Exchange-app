@@ -3,10 +3,11 @@
     <div class="page page_trnsfer">
         <Top :title="'划转'" />
 
+        <!-- 表单 -->
         <div class="form">
-            <div class="item">
+            <div class="item" @click="openDialog('from')">
                 <div class="item_pre">从</div>
-                <div class="item_content">现金账户</div>
+                <div class="item_content">{{ _accountMap[form.from] }}</div>
                 <div class="more">
                     <img src="/static/img/assets/more.png" alt="more">
                 </div>
@@ -14,15 +15,15 @@
 
             <div class="trans">
                 <div class="line"></div>
-                <div class="trans_icon">
+                <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
                     <img src="/static/img/assets/transfer.png" alt="img">
                 </div>
                 <div class="line"></div>
             </div>
 
-            <div class="item">
+            <div class="item" @click="openDialog('to')">
                 <div class="item_pre">到</div>
-                <div class="item_content">股票账户</div>
+                <div class="item_content">{{ _accountMap[form.to] }}</div>
                 <div class="more">
                     <img src="/static/img/assets/more.png" alt="more">
                 </div>
@@ -30,28 +31,145 @@
 
             <div class="subtitle">数量</div>
             <div class="item">
-                <input type="number" placeholder="请输入" class="ipt">
-                <div class="btn">最大</div>
+                <input v-model="form.amount" type="number" placeholder="请输入" class="ipt">
+                <div class="btn" @click="maxIpt">最大</div>
             </div>
             <div class="tip">
                 <span>最多可转</span>
-                <span class="num">123123USDT</span>
+                <span class="num">{{ balance }}</span>
             </div>
         </div>
 
-        <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" :disabled="!disabled" round color="#014CFA" class="submit"
+            type="primary">确定</Button>
 
+        <!-- 账户选择弹窗 -->
+        <Popup class="self_van_popup" v-model:show="showDialog" position="bottom" teleport="body"
+            :safe-area-inset-bottom="true">
+            <div class="transfer_accounr_dialog">
+                <div class="close_icon">
+                    <img src="/static/img/common/close.png" alt="x">
+                </div>
+                <div @click="clickItem(item)" class="transfer_dialog_item" v-for="(item, i) in showAccountMapList"
+                    :key="i">
+                    {{ item.value }}
+                </div>
+            </div>
+        </Popup>
 
+        <!-- 安全密码弹窗 -->
+        <SafePassword @submit="submit" ref="safeRef" />
     </div>
 </template>
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button } from "vant"
-import { ref } from "vue"
+import { Button, Popup, showNotify } from "vant"
+import { ref, computed } from "vue"
+import { _accountMap, _accountMapList } from "@/utils/dataMap"
+import store from "@/store"
+import SafePassword from "@/components/SafePassword.vue"
+import { _transfer } from "@/api/api"
 
+const assets = computed(() => store.state.assets || {})
+const balance = computed(() => {
+    return assets.value[form.value.from] || 0
+})
+console.error(assets.value)
+
+// 表单
 const loading = ref(false)
-const disabled = ref(false)
+const disabled = computed(() => {
+    return !(balance.value && balance.value >= form.value.amount)
+})
+const form = ref({
+    from: 'money',
+    to: 'stock',
+    amount: "",
+})
+const maxIpt = () => {
+    form.value.amount = balance.value
+}
+
+// 表单提交
+const safeRef = ref()
+const openSafePass = () => {
+    safeRef.value.open()
+}
+const submit = s => {
+    const params = {
+        ...form.value,
+        safeword: s,
+        token: sessionToken.value
+    }
+    if (loading.value) return
+    loading.value = true
+    _transfer(params).then(res => {
+        if (res.code == 200) {
+            showNotify({ type: 'success', message: '划转成功' });
+            form.value.amount = ''
+            store.dispatch('updateAssets') // 更新资产
+        }
+    }).finally(() => {
+        getSessionToken()
+        loading.value = false
+    })
+}
+
+
+// 弹窗
+const transing = ref(false) // 转换动画中
+const goTransing = () => {
+    transing.value = true
+    setTimeout(() => {
+        transing.value = false
+    }, 500)
+}
+const transAccount = () => {
+    goTransing()
+    const to = form.value.to
+    form.value.to = form.value.from
+    form.value.from = to
+}
+const showDialog = ref(false)
+const clickKey = ref('from') // 从哪里点开弹窗
+const openDialog = key => {
+    clickKey.value = key
+    showDialog.value = true
+}
+const showAccountMapList = computed(() => {
+    const filterKey = clickKey.value == 'from' ? form.value.from : form.value.to
+    return _accountMapList.filter(item => item.key != filterKey)
+})
+const clickItem = item => { // 选择账户
+    if (clickKey.value == 'from') {
+        if (item.key == form.value.to) {
+            form.value.to = form.value.from
+            goTransing()
+        }
+        form.value.from = item.key
+    } else if (clickKey.value == 'to') {
+        if (item.key == form.value.from) {
+            form.value.from = form.value.to
+            goTransing()
+        }
+        form.value.to = item.key
+    }
+    showDialog.value = false
+}
+
+
+
+
+// sessionToken
+const sessionToken = computed(() => store.state.sessionToken || '')
+const getSessionToken = () => {
+    loading.value = true
+    store.dispatch("updateSessionToken").finally(() => {
+        loading.value = false
+    })
+}
+getSessionToken()
 </script>
 
 <style lang="less" scoped>
@@ -114,6 +232,16 @@ const disabled = ref(false)
                 margin: 0 0.48rem;
             }
 
+            .transing_icon {
+                transition: all ease .5s;
+                transform: rotate(360deg);
+            }
+
+            .transing_stop {
+                transition: none;
+                transform: rotate(0deg);
+            }
+
             .line {
                 flex: 1;
                 height: 1px;
@@ -148,6 +276,33 @@ const disabled = ref(false)
         width: 100%;
         height: 1.12rem;
         margin: 1.2rem 0 0.4rem 0;
+    }
+}
+</style>
+
+<style lang="less" scoped>
+.transfer_accounr_dialog {
+    background-color: #fff;
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+    overflow: hidden;
+    padding: 0.68rem 0.32rem 0.8rem 0.32rem;
+    position: relative;
+
+    .close_icon {
+        position: absolute;
+        width: 0.4rem;
+        height: 0.4rem;
+        top: 0.24rem;
+        right: 0.32rem;
+    }
+
+    .transfer_dialog_item {
+        height: 1.12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #F5F5F5;
     }
 }
 </style>
