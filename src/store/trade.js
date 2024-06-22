@@ -7,7 +7,6 @@ export default {
       showLeft: false,
       popupComponent: null,
       orderList: {},
-      commToken: null,
       popupHeight: '90%',
       keyborader: false,
       allSelect: 0,
@@ -23,7 +22,7 @@ export default {
       isDownActive: false,
       unsold_volume: 0,
       currentActive: '0',
-      chooseSymbol: '',
+      chooseSymbol: [],
       currentSymbol: {},
       currentNumber: 0,
       previousChooseSymbol:'',
@@ -48,9 +47,6 @@ export default {
       },
       setUpOrder(state,data) {
         state.orderList = data
-      },
-      setCommToken(state,data) {
-        state.commToken = data
       },
       setPopupHeight(state,data) {
         state.popupHeight = data
@@ -88,7 +84,7 @@ export default {
         state.chooseSymbol = data
       },
       clearChooseSymbol(state,data) {
-        state.chooseSymbol = ''
+        state.chooseSymbol = []
       },
       setCurrentSymbol(state,data) {
         state.currentSymbol = data

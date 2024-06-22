@@ -93,7 +93,7 @@
 
   const order_no = computed(() => store.state.orderNo);
   const unsold_volume = computed(() => store.state.unsold_volume);
-  const getcommToken = computed(() => store.state.commToken)
+  const getcommToken = computed(() => store.state.sessionToken)
 
   const loseValue = ref('')
   const addValue = ref('')
