@@ -25,3 +25,19 @@ export function getTimestr(timestamp, key) {
   if (key == 2) return `${hours}:${minutes}:${seconds}`
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+
+// 时间字符转换  20240622105805 ->yyyy-mm-dd hh:mm:ss
+export function strTime2Str(str) {
+  if (!str) return str
+  // 将时间戳分割为各部分
+  const year = str.slice(0, 4);
+  const month = str.slice(4, 6);
+  const day = str.slice(6, 8);
+  const hour = str.slice(8, 10);
+  const minute = str.slice(10, 12);
+  const second = str.slice(12, 14);
+
+  // 组合成所需的格式
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}

@@ -1,8 +1,9 @@
 <!-- 输入安全密码 -->
 <template>
-    <Popup v-model:show="show" position="bottom" teleport="body" :safe-area-inset-bottom="true"
+    <Popup class="self_van_popup" v-model:show="show" position="bottom" teleport="body" :safe-area-inset-bottom="true"
         :close-on-popstate="true" :close-on-click-overlay="false">
         <div class="safepassword_dialog" :class="{ 'typing_dialog': showKeyboard }">
+            <slot name="top"></slot>
             <div class="title">输入安全密码</div>
             <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
             <PasswordInput :focused="showKeyboard" @focus="showKeyboard = true" class="code_ipt" :value="val"
@@ -60,6 +61,8 @@ defineExpose({
 .safepassword_dialog {
     background-color: #fff;
     padding: 0.64rem 0.32rem;
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
 
     .btns {
         display: flex;
@@ -75,7 +78,7 @@ defineExpose({
     }
 
     .title {
-        font-size: 0.32rem;
+        font-size: 0.28rem;
         line-height: 0.44rem;
         color: #121826;
         margin-bottom: 0.4rem;

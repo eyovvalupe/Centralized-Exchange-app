@@ -265,5 +265,29 @@ export const _transfer = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
+// 划转记录
+export const _transferLog = (data = {}) => {
+  return http.post(`/authc/v1/account/transfer/log`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 兑换汇率
+export const _swapRate = (data = {}) => {
+  return http.post(`/authc/v1/wallet/swap/query`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 兑换
+export const _converter = (data = {}) => {
+  return http.post(`/authc/v1/wallet/swap/converter`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 借贷参数
+export const _loanPara = (data = {}) => {
+  return http.post(`/anon/v1/account/loan/para`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
 
 export const memberInfo = () => { }

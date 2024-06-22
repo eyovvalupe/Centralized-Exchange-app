@@ -52,7 +52,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue"
 import { Icon } from "vant"
-import { _balance, _depositList } from "@/api/api"
+import { _depositList } from "@/api/api"
 import store from "@/store"
 import RechargeItem from "./components/RechargeItem"
 import WithdrawItem from "./components/WithdrawItem"
@@ -66,18 +66,12 @@ const openList = ref(false)
 
 // 刷新现金钱包
 const assets = computed(() => store.state.assets || {})
-const wallet = computed(() => store.state.wallet || [])
 const showWallet = computed(() => (store.state.wallet || []).filter(a => a.currency != 'main')) // 除了主钱包外的其他钱包
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 除了主钱包外的其他钱包
 const getAssets = () => {
     if (!token.value) return
     // emits('setLoading', true)
-    _balance().then(res => {
-        console.error('--现金钱包', res)
-        if (res.code == 200) {
-            store.commit('setWallet', res.data)
-        }
-    }).finally(() => {
+    store.dispatch('updateWallet').finally(() => {
         emits('setLoading', false)
     })
 }

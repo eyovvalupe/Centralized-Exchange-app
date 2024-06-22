@@ -277,6 +277,46 @@ const routes = [
     }
   },
   {
+    // 划转
+    path: "/transferRecord",
+    name: "transferRecord",
+    component: () => import("../views/Assets/TransferRecord.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
+    // 兑换
+    path: "/swap",
+    name: "swap",
+    component: () => import("../views/Assets/Swap.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
+    // 兑换记录
+    path: "/swapRecord",
+    name: "swapRecord",
+    component: () => import("../views/Assets/SwapRecord.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
+    // 借贷
+    path: "/loan",
+    name: "loan",
+    component: () => import("../views/Assets/Loan.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 认购
     path: "/subscription",
     name: "subscription",

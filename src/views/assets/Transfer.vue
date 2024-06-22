@@ -1,7 +1,13 @@
 <!-- 划转 -->
 <template>
     <div class="page page_trnsfer">
-        <Top :title="'划转'" />
+        <Top :title="'划转'">
+            <template #right>
+                <div class="top-record" @click="goRecord">
+                    <img src="/static/img/user/record.png" alt="img">
+                </div>
+            </template>
+        </Top>
 
         <!-- 表单 -->
         <div class="form">
@@ -40,14 +46,14 @@
             </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" :disabled="!disabled" round color="#014CFA" class="submit"
+        <Button @click="openSafePass" :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
             type="primary">确定</Button>
 
         <!-- 账户选择弹窗 -->
         <Popup class="self_van_popup" v-model:show="showDialog" position="bottom" teleport="body"
             :safe-area-inset-bottom="true">
             <div class="transfer_accounr_dialog">
-                <div class="close_icon">
+                <div class="close_icon" @click="showDialog = false">
                     <img src="/static/img/common/close.png" alt="x">
                 </div>
                 <div @click="clickItem(item)" class="transfer_dialog_item" v-for="(item, i) in showAccountMapList"
@@ -70,17 +76,17 @@ import { _accountMap, _accountMapList } from "@/utils/dataMap"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
 import { _transfer } from "@/api/api"
+import router from "@/router"
 
 const assets = computed(() => store.state.assets || {})
 const balance = computed(() => {
     return assets.value[form.value.from] || 0
 })
-console.error(assets.value)
 
 // 表单
 const loading = ref(false)
 const disabled = computed(() => {
-    return !(balance.value && balance.value >= form.value.amount)
+    return !(balance.value && form.value.amount && form.value.amount > 0 && balance.value >= form.value.amount)
 })
 const form = ref({
     from: 'money',
@@ -170,6 +176,15 @@ const getSessionToken = () => {
     })
 }
 getSessionToken()
+
+
+
+// 跳转记录
+const goRecord = () => {
+    router.push({
+        name: 'transferRecord'
+    })
+}
 </script>
 
 <style lang="less" scoped>
@@ -177,6 +192,11 @@ getSessionToken()
     padding: 1.4rem 0.32rem 1.5rem 0.32rem;
 
     position: relative;
+
+    .top-record {
+        width: 0.4rem;
+        height: 0.4rem;
+    }
 
     .form {
         .item {
@@ -286,7 +306,7 @@ getSessionToken()
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
     overflow: hidden;
-    padding: 0.68rem 0.32rem 0.8rem 0.32rem;
+    padding: 0.86rem 0.32rem 0.8rem 0.32rem;
     position: relative;
 
     .close_icon {
@@ -298,6 +318,7 @@ getSessionToken()
     }
 
     .transfer_dialog_item {
+        overflow: auto;
         height: 1.12rem;
         display: flex;
         align-items: center;

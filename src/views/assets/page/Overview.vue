@@ -62,7 +62,7 @@
                 </div>
                 <span>划转</span>
             </div>
-            <div class="btn">
+            <div class="btn" @click="jump('swap')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/server.png" alt="img">
@@ -70,7 +70,7 @@
                 </div>
                 <span>兑换</span>
             </div>
-            <div class="btn">
+            <div class="btn" @click="jump('loan')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/safe.png" alt="img">
