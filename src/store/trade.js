@@ -28,7 +28,9 @@ export default {
       currentNumber: 0,
       previousChooseSymbol:'',
       previousTabSymbol:'',
-      roundedQuantity:0
+      roundedQuantity:0,
+      minOrder:0,
+      sliderValue:0
     },
     mutations: {
       setDates(state,data) {
@@ -109,6 +111,12 @@ export default {
       },
       setRoundedQuantity(state,data){
         state.roundedQuantity = data
+      },
+      setMinOrder(state,data){
+        state.minOrder = data
+      },
+      setSliderValue(state,data){
+        state.sliderValue = data
       },
     },
     actions: {

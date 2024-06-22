@@ -323,13 +323,13 @@ const onChange = (val) => {
   store.commit('setCurrentActive',val)
 
   if (token.value) {
-    loading.value = true;
+    // loading.value = true;
   } else {
-    loading.value = true;
+    // loading.value = true;
 
-    setTimeout(()=>{
-      loading.value = false;
-    },500)
+    // setTimeout(()=>{
+    //   loading.value = false;
+    // },500)
   }
   
 };

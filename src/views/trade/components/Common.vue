@@ -97,7 +97,7 @@
         size="large"
         color="#18b762"
         round
-        v-if="isDownActive"
+        v-if="isDownActive && token"
         @click="openPositPopup('down')"
         :disabled="downdisable(active)"
         >买跌</Button
@@ -273,6 +273,14 @@ const currentSymbol = computed(() => {
   return store.state.currentSymbol
 })
 
+const currentMinOrder = computed(() => {
+  return store.state.minOrder
+})
+
+const currentSliderValue = computed(() => {
+  return store.state.sliderValue
+})
+
 
 const getPrice = (val)=>{
   let price;
@@ -311,20 +319,21 @@ const getAccount = (price)=>{
   if (token.value) {
       const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
           if (res.code == 200) {
-              amountNum = new Decimal(res.data[0].amount);
+              // amountNum = new Decimal(res.data[0].amount);
+              amountNum = new Decimal(50000);
               if (price !== undefined && price !== '' && price !== 0 && amountNum !== undefined) {
                   const availableQuantity = amountNum.div(stockPrice.value);
                   // 取整
                   roundedQuantity.value = availableQuantity.floor();
                   store.commit('setRoundedQuantity', roundedQuantity.value)
 
-                  if (currentNumber.value > minOrder.value) {
-                    numValue.value = currentNumber.value
-                    getslide()
-                  } else {
-                    numValue.value = minOrder.value
-                    getslide()
-                  }
+                  // if (currentNumber.value > minOrder.value) {
+                  //   numValue.value = currentNumber.value
+                  //   getslide()
+                  // } else {
+                  //   numValue.value = minOrder.value
+                  //   getslide()
+                  // }
 
               } else {
                   console.error('获取价格或余额失败');
@@ -380,16 +389,16 @@ watch([active, currentSymbol],()=>{
       numValue.value = 0
       return
     }
+
+    if (currentNumber.value > currentMinOrder.value) {
+      numValue.value = currentNumber.value
+    } else {
+      numValue.value = currentMinOrder.value
+    }
+    sliderValue.value = currentSliderValue.value
     
   }, 300);
 }, { immediate: true })
-
-// 监听 selectedLeverOption 的变化，并调用 getPay
-// watch(selectedLeverOption, (newValue, oldValue) => {
-//   if (token.value) {
-//     getPay();
-//   }
-// });
 
 
 const onSliderChange = (newValue) => {
@@ -418,11 +427,6 @@ const getnumval = (newValue)=>{
       numValue.value = roundedValue.toNumber();
       store.commit('setCurrentNumber',numValue.value)
     }
-    
-
-    // if (numValue.value  !== 0 || numValue.value  !== '') {
-    //   getPay()
-    // }
 
   } catch (error) {
     console.error('Error calculating value:', error);
@@ -527,10 +531,15 @@ const getStockslist = ()=>{
         increment.value = new Decimal(volume[1]);
 
 
-        if (currentNumber.value > minOrder.value) {
+        store.commit('setMinOrder',minOrder.value)
+
+        if (roundedQuantity.value ==0) {
+          numValue.value = 0
+          sliderValue.value = 0
+        } else if (currentNumber.value > minOrder.value) {
           numValue.value = currentNumber.value
           getslide()
-        } else {
+        } else if (currentNumber.value < minOrder.value){
           numValue.value = minOrder.value
           getslide()
         }
@@ -545,7 +554,7 @@ const getStockslist = ()=>{
         //平仓手续费
         closefee.value = new Decimal(cfee.value).mul(numValue.value).toFixed(2);
 
-        emit('already');
+        // emit('already');
       }
     })
     .catch((error) => {})
@@ -567,6 +576,8 @@ const getslide = ()=>{
   } else {
     sliderValue.value = 0
   }
+
+  store.commit('setSliderValue',sliderValue.value)
 }
 
 
