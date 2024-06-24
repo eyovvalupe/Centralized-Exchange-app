@@ -12,3 +12,10 @@ export const _accountMapList = [
   { key: "stock", value: "股票账户" },
   { key: "contract", value: "合约账户" },
 ]
+
+
+// 借贷状态
+export const _loanStatusMap = {
+  "open": "借贷中",
+  "done": "已还款"
+}

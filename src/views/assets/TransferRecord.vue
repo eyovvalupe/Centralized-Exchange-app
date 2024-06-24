@@ -12,7 +12,7 @@
                     <span>{{ _accountMap[item.to] || '--' }}</span>
                 </div>
                 <div class="amount">{{ item.amount }}</div>
-                <div class="date">{{ strTime2Str(item.date) || '--' }}</div>
+                <div class="date">{{ item.created || '--' }}</div>
             </div>
             <LoadingMore :loading="loading" :finish="finish" v-if="(finish && list.length) || (!finish)" />
         </div>
@@ -23,27 +23,48 @@
 import Top from '@/components/Top.vue';
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { _transferLog } from "@/api/api"
 import { _accountMap } from "@/utils/dataMap"
-import { strTime2Str } from "@/utils/time"
 
 const loading = ref(false)
 const finish = ref(false)
 const list = ref([])
 
+const page = ref(0)
 const getData = () => {
     if (loading.value || finish.value) return
     loading.value = true
-    _transferLog().then(res => {
-        list.value = res.data || []
-        finish.value = true
+    page.value++
+    _transferLog({
+        page: page.value
+    }).then(res => {
+        list.value.push(...(res.data || []))
+        if (!res.data?.length) {
+            finish.value = true
+        }
     }).finally(() => {
         loading.value = false
     })
 }
 
 getData()
+
+
+onMounted(() => {
+    const moreDom = document.querySelector('.loading_more')
+    const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+    document.querySelector('.list').addEventListener('scroll', () => {
+        const rect = moreDom.getBoundingClientRect()
+        if (rect.top <= totalHeight) {
+            // 加载更多
+            getData()
+        }
+    })
+})
+onUnmounted(() => {
+    document.querySelector('.list').removeEventListener('scroll', () => { })
+})
 </script>
 
 <style lang="less" scoped>

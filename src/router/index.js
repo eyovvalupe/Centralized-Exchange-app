@@ -317,6 +317,16 @@ const routes = [
     }
   },
   {
+    // 借贷记录
+    path: "/loanRecord",
+    name: "loanRecord",
+    component: () => import("../views/Assets/LoanRecord.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 认购
     path: "/subscription",
     name: "subscription",

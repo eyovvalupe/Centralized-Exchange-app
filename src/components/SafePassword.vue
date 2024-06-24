@@ -105,6 +105,6 @@ defineExpose({
 }
 
 .typing_dialog {
-    padding: 0.64rem 0.32rem 5.64rem 0.32rem;
+    padding: 0.32rem 0.32rem 5.64rem 0.32rem;
 }
 </style>

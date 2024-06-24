@@ -273,7 +273,7 @@ export const _transferLog = (data = {}) => {
 };
 // 兑换汇率
 export const _swapRate = (data = {}) => {
-  return http.post(`/authc/v1/wallet/swap/query`, data, {
+  return http.post(`/anon/v1/wallet/swap/query`, data, {
     custom: { auth: true, toast: true },
   });
 };
@@ -283,9 +283,33 @@ export const _converter = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
+// 兑换记录
+export const _converterLog = (data = {}) => {
+  return http.post(`/authc/v1/wallet/swap/log`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
 // 借贷参数
 export const _loanPara = (data = {}) => {
-  return http.post(`/anon/v1/account/loan/para`, data, {
+  return http.post(`/anon/v1/account/loan/config`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 借贷手续费
+export const _loanRate = (data = {}) => {
+  return http.post(`/anon/v1/account/loan/config/get`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 借贷
+export const _loan = (data = {}) => {
+  return http.post(`/authc/v1/account/loan`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 借贷记录
+export const _loanLog = (data = {}) => {
+  return http.post(`/authc/v1/account/loan/log`, data, {
     custom: { auth: true, toast: true },
   });
 };

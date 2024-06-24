@@ -82,18 +82,18 @@ const boundFunc = () => {
   body.addEventListener('touchstart', e => {
     if (!reboundPage.includes(routeName.value)) return
     startY = e.changedTouches[0].clientY
-  })
+  }, { passive: true })
   body.addEventListener('touchmove', e => {
     if (!reboundPage.includes(routeName.value)) return
     const y = e.changedTouches[0].clientY - startY <= maxMove ? e.changedTouches[0].clientY - startY : maxMove
     app.style.transition = "none"
     app.style.transform = `translateY(${0.3 * y}px)`
-  })
+  }, { passive: true })
   body.addEventListener("touchend", e => {
     const y = e.changedTouches[0].clientY - startY
     app.style.transition = "transform .6s"
     app.style.transform = `translateY(0px)`
-  })
+  }, { passive: true })
 }
 
 const transitionName = computed(() => store.state.transitionName || '')
