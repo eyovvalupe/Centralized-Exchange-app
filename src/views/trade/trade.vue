@@ -26,22 +26,31 @@
 
      
 
-    <transition :name="'slide-right'">
+    <transition :name="transitionName">
         <MarketStock
           v-if="active === 0"
         />
-        <div class="trade-tabs" v-else-if="active === 1" >
+        <div class="trade-tabs" v-else="active === 1" >
           <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
             :color="'#014CFA'" shrink>
             <Tab :title="'IPO'" class="optional">
-              <IPO :type="'trade'"/>
             </Tab>
             <Tab :title="'中签'">
-                <IPOStock />
             </Tab>
         </Tabs>
         </div>
     </transition>
+
+    <transition :name="ipoTransitionName">
+      <div v-if="ipoActive === 0 && active === 1">
+        <IPO :type="'trade'"/>
+      </div>
+      <div v-else-if="ipoActive === 1 && active === 1">
+        <IPOStock />
+      </div>
+    
+    </transition>
+
 
 
     <Popup v-model:show="show" position="top" class="trade-popup">
@@ -101,7 +110,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import { Tab, Tabs, Popup, Sticky,Loading } from "vant";
 import MarketStock from "./MarketStock.vue";
 import IPOStock from "./IPOStock.vue";
@@ -118,12 +127,39 @@ const loading = ref(false);
 const { startSocket } = useSocket();
 
 const active = ref(0);
+const previousActive = ref(0)
 const ipoActive = ref(0);
 const route = useRoute();
 const router = useRouter();
 if (route.query.type === "ipodetail") {
   active.value = 1;
 }
+if (route.query.type === 'winning') {
+  active.value = 1;
+  ipoActive.value = 1
+}
+
+
+const transitionName = ref('slide-left');
+const ipoTransitionName = ref('slide-left');
+
+
+watch([active], ([newActive]) => {
+  if (previousActive.value === 0 && newActive === 1) {
+    transitionName.value = 'slide-right';
+  } else if (previousActive.value === 1 && newActive === 0) {
+    transitionName.value = 'slide-left';
+  }
+});
+
+
+watch([ipoActive], ([newActive]) => {
+  if (newActive === 0) {
+    ipoTransitionName.value = 'slide-left';
+  } else if (newActive === 1) {
+    ipoTransitionName.value = 'slide-right';
+  }
+});
 
 const show = ref(false);
 const showBottom = ref(false);
@@ -142,10 +178,14 @@ const onChange = (val) => {
   if (Object.keys(route.query).length > 0) {
     router.push({ path: route.path, query: {} });
   }
+  previousActive.value = active.value;
   active.value = val;
 };
 
 const ipoOnChange = (val)=>{
+  if (Object.keys(route.query).length > 0) {
+    router.push({ path: route.path, query: {} });
+  }
   ipoActive.value = val
 }
 
