@@ -239,7 +239,6 @@ const openDialog = key => {
 }
 const showAccountMapList = computed(() => {
     const filterKey = clickKey.value == 'from' ? form.value.from : form.value.to
-    console.error(filterKey)
     return wallet.value.filter(item => item.currency != filterKey)
 })
 const clickItem = item => { // 选择账户

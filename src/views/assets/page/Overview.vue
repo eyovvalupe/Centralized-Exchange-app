@@ -41,7 +41,7 @@
                 </div>
                 <span>充值</span>
             </div>
-            <div class="btn btn2">
+            <div class="btn btn2" @click="jump('withdraw')">
                 <div class="icon_box">
                     <span class="color_text"><span class="tip">可提</span> {{ (assets.money || '0.00') }}</span>
                     <span><span class="tip">冻结</span> {{ (assets.frozen || '0.00') }}</span>
