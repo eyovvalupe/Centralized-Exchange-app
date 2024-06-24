@@ -139,7 +139,7 @@ const disabled = computed(() => {
 })
 const form = ref({
     from: 'main',
-    to: 'usdt',
+    to: 'USDT',
     amount: "",
     toAmount: "",
 })
@@ -176,7 +176,7 @@ const submit = s => {
             store.dispatch('updateWallet') // 更新钱包
         }
     }).finally(() => {
-        getSessionToken()
+        // getSessionToken()
         loading.value = false
     })
 }

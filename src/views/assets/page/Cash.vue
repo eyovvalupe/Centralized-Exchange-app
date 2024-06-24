@@ -67,7 +67,7 @@ const openList = ref(false)
 // 刷新现金钱包
 const assets = computed(() => store.state.assets || {})
 const showWallet = computed(() => (store.state.wallet || []).filter(a => a.currency != 'main')) // 除了主钱包外的其他钱包
-const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 除了主钱包外的其他钱包
+const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
 const getAssets = () => {
     if (!token.value) return
     // emits('setLoading', true)

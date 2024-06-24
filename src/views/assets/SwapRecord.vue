@@ -6,13 +6,26 @@
         <div class="list">
             <NoData v-if="!loading && !list.length" />
             <div class="item" v-for="(item, i) in list" :key="i">
-                <div class="top">
-                    <span>{{ _accountMap[item.from] || '--' }}</span>
-                    <span>→</span>
-                    <span>{{ _accountMap[item.to] || '--' }}</span>
+                <div class="date">{{ item.created || '--' }}</div>
+                <div class="item_box">
+                    <div class="top">
+                        <div class="currency_icon">
+                            <img :src="`/static/img/crypto/${item.from.toUpperCase()}.png`" alt="currency">
+                        </div>
+                        <span>{{ item.from.toUpperCase() }}</span>
+                    </div>
+                    <div class="amount">{{ item.amount_to }}</div>
                 </div>
-                <div class="amount">{{ item.amount }}</div>
-                <div class="date">{{ strTime2Str(item.date) || '--' }}</div>
+                <div>→</div>
+                <div class="item_box">
+                    <div class="top" style="justify-content: flex-end;">
+                        <div class="currency_icon">
+                            <img :src="`/static/img/crypto/${item.to.toUpperCase()}.png`" alt="currency">
+                        </div>
+                        <span>{{ item.to.toUpperCase() }}</span>
+                    </div>
+                    <div class="amount">{{ item.amount_from }}</div>
+                </div>
             </div>
             <LoadingMore :loading="loading" :finish="finish" v-if="(finish && list.length) || (!finish)" />
         </div>
@@ -23,32 +36,48 @@
 import Top from '@/components/Top.vue';
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
-import { ref } from 'vue'
-import { _transferLog } from "@/api/api"
+import { ref, onMounted, onUnmounted } from 'vue'
+import { _converterLog } from "@/api/api"
 import { _accountMap } from "@/utils/dataMap"
-import { strTime2Str } from "@/utils/time"
 
 const loading = ref(false)
 const finish = ref(false)
 const list = ref([])
 
+const page = ref(0)
 const getData = () => {
     if (loading.value || finish.value) return
     loading.value = true
-    // _transferLog().then(res => {
-    //     list.value = res.data || []
-    //     finish.value = true
-    // }).finally(() => {
-    //     loading.value = false
-    // })
-    setTimeout(() => {
-        list.value = []
-        finish.value = true
+    page.value++
+    _converterLog({
+        page: page.value
+    }).then(res => {
+        list.value.push(...(res.data || []))
+        if (!res.data?.length) {
+            finish.value = true
+        }
+    }).finally(() => {
         loading.value = false
-    }, 1000);
+    })
 }
 
 getData()
+
+
+onMounted(() => {
+    const moreDom = document.querySelector('.loading_more')
+    const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+    document.querySelector('.list').addEventListener('scroll', () => {
+        const rect = moreDom.getBoundingClientRect()
+        if (rect.top <= totalHeight) {
+            // 加载更多
+            getData()
+        }
+    })
+})
+onUnmounted(() => {
+    document.querySelector('.list').removeEventListener('scroll', () => { })
+})
 </script>
 
 <style lang="less" scoped>
@@ -63,38 +92,51 @@ getData()
         overflow-y: auto;
 
         .item {
-            height: 2.2rem;
+            height: 2rem;
             border-bottom: 1px dashed #CBCBCB;
             display: flex;
-            flex-direction: column;
             justify-content: space-between;
-            padding: 0.2rem 0 0.28rem 0;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 0.2rem 0 0.2rem 0;
+            color: #343434;
+            font-size: 0.32rem;
 
-            .top {
+            .item_box {
+                flex: 1;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
-                justify-content: space-between;
-                color: #343434;
-                font-size: 0.32rem;
+                justify-content: center;
+
+                .top {
+                    display: flex;
+                    align-items: center;
+                    width: 100%;
+
+                    .currency_icon {
+                        width: 0.4rem;
+                        height: 0.4rem;
+                        margin-right: 0.1rem;
+                    }
+                }
             }
 
             .amount {
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
                 font-size: 0.4rem;
                 line-height: 0.48rem;
                 color: #000000;
                 font-weight: 700;
-                padding-top: 0.2rem;
+                margin-top: 0.2rem;
             }
 
             .date {
+                width: 100%;
                 font-size: 0.28rem;
                 color: #919193;
                 line-height: 0.36rem;
                 font-weight: 400;
+                margin-bottom: 0.2rem
             }
         }
     }
