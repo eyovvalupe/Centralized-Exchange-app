@@ -8,10 +8,33 @@
     <div class="ipo-box">
       <div class="ipo-co-f">
         <div class="h-co-title">
-          Bharti Hexacom LIMITED IPO
+          {{ data.company_name }}
         </div>
-        <div class="ipo-up-button">
+        <div class="ipo-up-button" v-if="data.status == 'listed'">
           已上市
+        </div>
+        <div class="ipo-up-button" v-else>
+          发行中
+        </div>
+      </div>
+
+
+      <div class="ipo-box-flex">
+        <div class="ipo-title">
+          股票代码
+        </div>
+        <div class="ipo-text">
+          2024-04-12
+        </div>
+      </div>
+
+
+      <div class="ipo-box-flex">
+        <div class="ipo-title">
+          认购价格
+        </div>
+        <div class="ipo-text">
+          {{ data.price_range }}
         </div>
       </div>
 
@@ -20,7 +43,7 @@
           认购开始日期
         </div>
         <div class="ipo-text">
-          2024-04-12
+          {{ data.issue_start_Date }}
         </div>
       </div>
 
@@ -29,7 +52,7 @@
           认购结束日期
         </div>
         <div class="ipo-text">
-          2024-04-14
+          {{ data.issue_end_Date }}
         </div>
       </div>
 
@@ -38,17 +61,17 @@
           上市日期
         </div>
         <div class="ipo-text">
-          2024-04-14
+          {{ data.listing_date }}
         </div>
       </div>
 
 
       <div class="ipo-box-flex">
         <div class="ipo-title">
-          价格
+          上市价格
         </div>
         <div class="ipo-text">
-          87.3-90.2 INR
+          {{ data.listing_price }}
         </div>
       </div>
 
@@ -57,13 +80,23 @@
           最低认购数量
         </div>
         <div class="ipo-text">
-          20000
+          {{ data.minimum }}
         </div>
       </div>
 
       <div class="ipo-box-flex">
         <div class="ipo-title">
-          认购杠杆
+          VIP 认购
+        </div>
+        <div class="ipo-text">
+          10 倍
+        </div>
+      </div>
+
+
+      <div class="ipo-box-flex">
+        <div class="ipo-title">
+          VIP 利息
         </div>
         <div class="ipo-text">
           10 倍
@@ -75,22 +108,41 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { Icon } from 'vant';
 import { useRouter, useRoute } from 'vue-router';
+import {_ipoGet} from '@/api/api'
+import store from "@/store";
 
 const route = useRoute();
 const router = useRouter();
+const data = ref({})
+
+const id = computed(()=>{
+  return store.state.ipoId
+})
 
 const goTotrade = () => {
   if (route.query.type === "market") {
     router.push({ name: 'market'});
-  } else if (route.query.type === "trade"){
-    router.push({ name: 'trade'});
+  } else if (route.query.type === "winning") {
+    router.push({ name: 'trade', query: { type: 'winning' } });
   } else {
     router.push({ name: 'trade', query: { type: 'ipodetail' } });
   }
 };
+
+const getList = ()=>{
+  _ipoGet({id:id.value}).then(res => {
+    if (res.code == 200) {
+      data.value = res.data
+    }
+  })
+}
+
+onMounted(()=>{
+  getList()
+})
 
 </script>
 

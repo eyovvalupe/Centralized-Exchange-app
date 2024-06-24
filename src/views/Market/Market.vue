@@ -21,7 +21,7 @@
                 <Financial />
             </Tab> -->
             <Tab :title="'IPO'">
-                <IPO :type="'market'" />
+                <IPO :type="'market'" ref="IPORef"/>
             </Tab>
         </Tabs>
     </div>
@@ -40,11 +40,15 @@ import { useSocket } from '@/utils/ws'
 
 const active = ref(0)
 const OptionalRef = ref()
+const IPORef = ref()
 const changeTab = key => {
     active.value = key
     switch (key) {
         case 0:
             OptionalRef.value.init()
+            break
+        case 1:
+            IPORef.value.init()
             break
     }
 }

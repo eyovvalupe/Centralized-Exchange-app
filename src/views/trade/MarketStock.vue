@@ -8,7 +8,7 @@
         <div style="
             background-color: white;
           ">
-          <Tabs class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
+          <Tabs class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓" name="0"> </Tab>
             <Tab title="持仓" name="1"> </Tab>
             <Tab title="查询" name="2"> </Tab>
@@ -239,7 +239,7 @@ import NoData from "@/components/NoData.vue"
 const token = computed(() => store.state.token);
 const { startSocket } = useSocket();
 let socket = null;
-const active = ref(0);
+const active = ref('0');
 const previousActive = ref('0');
 
 const route = useRoute();

@@ -313,5 +313,35 @@ export const _loanLog = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
+//IPO 列表
+export const _ipoList = (data = {}) => {
+  return http.post(`anon/v1/ipo/list`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+//IPO 记录详情
+export const _ipoGet = (data = {}) => {
+  return http.post(`anon/v1/ipo/get`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
+//认购参数
+export const _orderPara = (data = {}) => {
+  return http.post(`authc/v1/ipo/order/para`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+//认购
+export const _orderBuy = (data = {}) => {
+  return http.post(`authc/v1/ipo/order/buy`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+//我的订单
+export const _orderList = (data = {}) => {
+  return http.post(`authc/v1/ipo/order/list`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
 
 export const memberInfo = () => { }

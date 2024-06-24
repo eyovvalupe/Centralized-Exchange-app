@@ -6,13 +6,18 @@
         </div>
         <div class="title">认购成功</div>
 
-        <Button @click="router.back()" round color="#014CFA" class="submit" type="primary">完成</Button>
+        <Button @click="gotrade" round color="#014CFA" class="submit" type="primary">完成</Button>
     </div>
 </template>
 
 <script setup>
 import { Button } from 'vant'
-import router from "@/router"
+import { useRouter, useRoute } from 'vue-router';
+
+const router = useRouter();
+const gotrade = ()=>{
+    router.push({ name: 'trade', query: { type: 'ipodetail' } });
+}
 </script>
 
 <style lang="less" scoped>

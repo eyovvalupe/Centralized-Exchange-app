@@ -1,98 +1,219 @@
 <!-- IPO -->
 <template>
   <div class="market_ipo">
-    <div class="market_ipo-all">
+    <div class="market_ipo-all" @click="ipoPopup">
       <span>
-        已上市
+        {{ textSelect }}
       </span>
       <img src="/static/img/trade/down.png" class="market_ipo-down-img"/>
     </div>
 
-    <div class="market_ipo-box" v-for="i in 4" :key="i">
 
-      <div class="market_ipo-box-header">
-        <div class="market_ipo-box-header-title">Bharti Hexacom LIMITED IPO</div>
-        <div class="market_ipo-box-header-button" v-if="i == 2" style="background: #333333;color: white;">预售中</div>
-        <div class="market_ipo-box-header-button" v-if="i == 3" style="background: #ebebeb;color: #838383;">已结束</div>
-        <div class="market_ipo-box-header-button" v-if="i == 1 || i ==4">认购中</div>
-      </div>
+    <Loading v-show="loading" type="spinner" class="market-ipo-loading"></Loading>
 
-      <div class="market_ipo-box-time" v-if="i == 2">
-        <CountDown :time="time" >
-          <template #default="timeData">
-            <span class="block">{{ timeData.hours }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.minutes }}</span>
-            <span class="colon">:</span>
-            <span class="block">{{ timeData.seconds }}</span>
-        </template>
-        </CountDown>
-      </div>
+    <PullRefresh v-model="reloading" @refresh="onRefresh" v-if="dataList.length > 0 && !loading > 0" >
+      <div class="market_ipo-box" v-for="(i,key) in dataList" :key="key" >
 
-      <div class="market_ipo-m-box">
-        <div>
-          <div class="market_ipo-m-box-p">324.43 - 754.34</div>
-          <div class="market_ipo-m-box-t">认购价格</div>
+        <div class="market_ipo-box-header">
+          <div class="market_ipo-box-header-title">{{ i.company_name }}</div>
+          <div class="market_ipo-box-header-button" v-if="i == 2" style="background: #333333;color: white;">预售中</div>
+          <div class="market_ipo-box-header-button" v-if="i == 3" style="background: #ebebeb;color: #838383;">已结束</div>
+          <div class="market_ipo-box-header-button" v-if="i == 1 || i ==4">认购中</div>
         </div>
 
-        <div>
-          <div class="market_ipo-m-box-p">04-25</div>
-          <div class="market_ipo-m-box-t">
-            认购日期
+        <!-- <div class="market_ipo-box-time" v-if="i == 2">
+          <CountDown :time="time" >
+            <template #default="timeData">
+              <span class="block">{{ timeData.hours }}</span>
+              <span class="colon">:</span>
+              <span class="block">{{ timeData.minutes }}</span>
+              <span class="colon">:</span>
+              <span class="block">{{ timeData.seconds }}</span>
+          </template>
+          </CountDown>
+        </div> -->
+
+        <div class="market_ipo-m-box">
+          <div>
+            <div class="market_ipo-m-box-p">{{ i.price_range }}</div>
+            <div class="market_ipo-m-box-t">认购价格</div>
+          </div>
+
+          <div>
+            <div class="market_ipo-m-box-p">{{ i.issue_start_date }}-{{ i.issue_end_date }}</div>
+            <div class="market_ipo-m-box-t">
+              认购日期
+            </div>
+          </div>
+
+          <div>
+            <div class="market_ipo-m-box-p">12344.00</div>
+            <div class="market_ipo-m-box-t">上市价格</div>
           </div>
         </div>
 
-        <div>
-          <div class="market_ipo-m-box-p">12344.00</div>
-          <div class="market_ipo-m-box-t">上市价格</div>
+        <div class="market_ipo-m-box-line"></div>
+
+        <div class="market_ipo-b">
+          <div class="market_ipo-b-detail" @click="opendetail(i.id)">
+            <span>详情</span>
+            <Icon name="arrow" class="market_ipo-b-arrow"/>
+          </div>
+          <div class="market_ipo-b-detail-button" v-if="i.status == 'none'" style="background: #999999;color: white;">认购</div>
+          <div class="market_ipo-b-detail-button" v-else @click="openSubscription(i.id)">认购</div>
+          <!-- <div class="market_ipo-b-detail-button" v-if="i.status == 'lssuing'" @click="openSubscription">认购</div> -->
         </div>
+
+
       </div>
+    </PullRefresh>
 
-      <div class="market_ipo-m-box-line"></div>
 
-      <div class="market_ipo-b">
-        <div class="market_ipo-b-detail" @click="opendetail">
-          <span>详情</span>
-          <Icon name="arrow" class="market_ipo-b-arrow"/>
+    <!-- 数据列表为空 -->
+    <NoData v-if="dataList.length === 0 && !loading" />
+
+
+    
+
+    <!-- 下拉框 -->
+    <teleport to="body">
+      <Popup
+        v-model:show="showPopup"
+        position="bottom"
+        :style="{height: '40%' }"
+        class="market_ipo-popup"
+        closeable
+      >
+        <div class="market_ipo-box">
+            <div v-for="(i,key) in option" :key="key" class="market_ipo-box-item" :class="{'selected-class': selectedOption === i.value}" @click="select(i.value)">
+              {{ i.text }}
+            </div>
         </div>
-        <div class="market_ipo-b-detail-button" v-if="i == 3" style="background: #999999;color: white;" @click="openSubscription">认购</div>
-        <div class="market_ipo-b-detail-button" v-else @click="openSubscription">认购</div>
-      </div>
-
-
-    </div>
-
+      </Popup>
+    </teleport>
     
 
   </div>
 </template>
 <script setup>
-import { Icon } from 'vant';
+import { Icon, Loading, Popup, PullRefresh } from 'vant';
 import { useRouter, useRoute } from 'vue-router';
 import { CountDown } from 'vant';
-import { ref } from "vue"
+import { onMounted, ref, computed } from "vue"
 import { defineProps } from 'vue';
+import {_ipoList} from '@/api/api'
+import NoData from "@/components/NoData.vue"
+import store from "@/store";
 
 const router = useRouter();
 const time = ref(30 * 60 * 60 * 1000);
+const dataList = ref([])
+const loading = ref(false)
+const showPopup = ref(false)
+const option = [
+  {text:'所有',value:''},
+  {text:'发行中',value:'lssuing'},
+  {text:'已上市',value:'listed'},
+]
+const selectedOption = ref('')
+const page = ref(1)
+const reloading = ref(false)
 
 const props = defineProps({
   type: String
 });
 
-const opendetail = ()=>{
+const opendetail = (id)=>{
+  store.commit('setIpoId',id)
   router.push({ name: 'ipodetail',query:{type: props.type} });
 }
 
 const openSubscription = ()=>{
+  store.commit('setIpoId',id)
+  store.dispatch('updateSessionToken')
   router.push({ name: 'subscription', query:{type: props.type}});
 }
+
+const getList = ()=>{
+  const data = {
+    status: selectedOption.value,
+    vip:'',
+    page: page.value
+  }
+  _ipoList({...data}).then(res => {
+        if (res.code == 200) {
+          if (reloading.value) {
+            dataList.value = dataList.value.concat(res.data);
+            loading.value = false
+            reloading.value = false
+          } else {
+            dataList.value = res.data
+            loading.value = false
+          }
+        } else {
+          loading.value = falses
+          reloading.value = false
+        }
+    }).finally(() => {
+        loading.value = false
+        reloading.value = false
+    })
+}
+
+onMounted(()=>{
+  page.value = 1
+  loading.value = true
+  getList()
+})
+
+
+const ipoPopup = ()=>{
+  showPopup.value = true
+}
+
+const select = (i)=>{
+  selectedOption.value = i
+  showPopup.value = false
+  page.value = 1
+  getList()
+}
+
+const textSelect = computed(() => {
+  const selected = option.find(i => i.value === selectedOption.value)
+  return selected ? selected.text : ''
+})
+
+const onRefresh = ()=>{
+  reloading.value = true
+  page.value++
+  getList()
+}
+
+
+const init = () => {
+  page.value = 1
+  loading.value = true
+  getList()
+}
+
+defineExpose({
+    init
+})
 
 </script>
 
 <style lang="less">
   .market_ipo {
     padding: 0 0.3rem;
+    width: 100%;
+    overflow: hidden;
+    height: 100%;
+    .market-ipo-loading {
+      margin-top: 2rem !important;
+      .van-loading__spinner {
+        left: 45%;
+      }
+    }
     .market_ipo-all {
       width: 3.06rem;
       height: 0.72rem;
@@ -220,6 +341,35 @@ const openSubscription = ()=>{
         display: inline-block;
         margin: 0 0.08rem;
         color: #9798a7;
+      }
+    }
+  }
+  .market_ipo-popup {
+    border-top-left-radius: 0.36rem;
+    border-top-right-radius: 0.36rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-bottom: 1.2rem;
+    .market_ipo-box {
+      margin-top: 1rem;
+      .market_ipo-box-item {
+        width: 100%;
+        height: 0.96rem;
+        text-align: center;
+        line-height: 0.96rem;
+        color: #333333;
+        font-size: 0.28rem;
+        font-style: normal;
+        font-weight: 400;
+        border-bottom: 0.02rem solid #f4f5f7;
+      }
+      .market_ipo-box-item:first-of-type {
+        margin-right: 0.3rem;
+      }
+      .selected-class {
+        color: #014cfa;
+        background-color: #f4f5f7;
+        position: relative;
       }
     }
   }

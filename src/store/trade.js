@@ -29,7 +29,8 @@ export default {
       previousTabSymbol:'',
       roundedQuantity:0,
       minOrder:0,
-      sliderValue:0
+      sliderValue:0,
+      ipoId:''
     },
     mutations: {
       setDates(state,data) {
@@ -113,6 +114,9 @@ export default {
       },
       setSliderValue(state,data){
         state.sliderValue = data
+      },
+      setIpoId(state,data){
+        state.ipoId = data
       },
     },
     actions: {

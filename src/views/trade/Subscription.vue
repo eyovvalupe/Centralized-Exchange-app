@@ -40,6 +40,30 @@
           </div>
         </div>
   
+        
+
+        
+          <div class="subscription-ipo-code">
+          <div class="grop-title" style="margin: 0.2rem 0;">交易密码</div>
+            <PasswordInput
+              :value="password"
+              :focused="showKeyboard"
+              @focus="showKeyboard = true"
+              :gutter="16"
+            />
+            <teleport to="body">
+              <!-- 数字键盘 -->
+              <NumberKeyboard
+                v-model="password"
+                :show="showKeyboard"
+                @blur="showKeyboard = false"
+              />
+            </teleport>
+          </div>
+        
+
+
+
         <div class="subscription-total">
             <div class="subscription-text">
                 <span>锁定金额</span><span>₹ 2000000</span>
@@ -68,11 +92,13 @@
   </template>
   
   <script setup>
-  import { ref, computed } from "vue";
-  import { Tab,Tabs,Field,Slider,Button,Loading, showToast ,Icon} from "vant";
+  import { ref, computed, onMounted } from "vue";
+  import { Tab,Tabs,Field,Slider,Button,Loading, showToast ,Icon, PasswordInput, NumberKeyboard} from "vant";
   import { useRouter, useRoute } from "vue-router";
   import store from "@/store";
   import Decimal from 'decimal.js';
+  import {_orderPara, _orderBuy} from '@/api/api'
+
   
   const router = useRouter();
   const route = useRoute();
@@ -86,15 +112,22 @@
   const nameVal = ref('')
   const vipVal = ref('')
 
+  const password = ref('')
+
   
   const isFocused = ref();
+  const showKeyboard = ref(false);
 
+  const id = computed(()=>{
+    return store.state.ipoId
+  })
+  const sessionToken = computed(() => store.state.sessionToken || '')
 
   const goTotrade = () => {
     if (route.query.type === "market") {
       router.push({ name: 'market'});
     } else if (route.query.type === "trade"){
-      router.push({ name: 'trade'});
+      router.push({ name: 'trade', query: { type: 'ipodetail' } });
     }
   };
 
@@ -115,15 +148,39 @@
   
   
   const openPositPopup = () => {
-    router.push({
-      name:'subscriptionSuccess'
-    });
+    const data = {
+      ipoid:id,
+      volume:numValue.value,
+      keyword:vipVal.value,
+      safeword: password.value,
+      token:sessionToken.value
+    }
+    _orderBuy().then(res => {
+      if (res.code == 200) {
+          router.push({
+          name:'subscriptionSuccess'
+        });
+      }
+    })
   };
   
 
   const inputChange = ()=>{
     
   }
+
+  const getList = ()=>{
+    _orderPara().then(res => {
+      if (res.code == 200) {
+        
+      }
+    })
+  }
+
+
+  onMounted(()=>{
+    // getList()
+  })
   
   </script>
   
@@ -502,6 +559,16 @@
         .vip-input {
             margin-right: 0.04rem;
         }
+    }
+    .subscription-ipo-code{
+      margin-top: 0.26rem;
+    }
+    .van-password-input {
+      margin: 0;
+    }
+    .van-password-input__security li {
+      border-radius: 0.16rem;
+      border: 0.02rem solid #eceff3;
     }
   }
   </style>
