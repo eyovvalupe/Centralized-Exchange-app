@@ -19,3 +19,10 @@ export const _loanStatusMap = {
   "open": "借贷中",
   "done": "已还款"
 }
+
+// 提现状态
+export const _withdrawStatusMap = {
+  "review": "审核中",
+  "success": "成功",
+  "failed": "失败"
+}

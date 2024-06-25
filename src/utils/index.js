@@ -163,9 +163,9 @@ export const _hiddenIden = (str) => {
 export const _hiddenAccount = (str) => {
   if (!str) return "**";
   if (str.length > 8) {
-    return str.substr(0, 3) + "****" + str.substr(str.length - 3, 3);
+    return str.substr(0, 3) + "***" + str.substr(str.length - 3, 3);
   }
-  return str.substr(0, 2) + "****" + str.substr(str.length - 2, 2);
+  return str.substr(0, 2) + "***" + str.substr(str.length - 2, 2);
 };
 // 隐藏名字
 export const _hiddenName = (str) => {

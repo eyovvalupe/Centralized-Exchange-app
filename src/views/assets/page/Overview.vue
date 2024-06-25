@@ -43,9 +43,16 @@
             </div>
             <div class="btn btn2" @click="jump('withdraw')">
                 <div class="icon_box">
-                    <span class="color_text"><span class="tip">可提</span> {{ (assets.money || '0.00') }}</span>
-                    <span style="display: flex;flex-direction: column;"><span class="tip">冻结</span> {{ (assets.frozen ||
-                        '0.00') }}</span>
+                    <div class="color_text">
+                        <div class="withdraw_icon">
+                            <img src="/static/img/assets/withdraw_icon.svg" alt="icon">
+                        </div>
+                        <span>{{ (assets.money || '0.00') }}</span>
+                    </div>
+                    <div style="display: flex;flex-direction: column;">
+                        <span class="tip">冻结</span>
+                        <span>{{ (assets.frozen || '0.00') }}</span>
+                    </div>
 
                     <div class="process">
                         <div class="left">
@@ -58,7 +65,7 @@
             <div class="btn" @click="jump('transfer')">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/user/lang.png" alt="img">
+                        <img src="/static/img/assets/trans_icon.svg" alt="img">
                     </div>
                 </div>
                 <span>划转</span>
@@ -66,7 +73,7 @@
             <div class="btn" @click="jump('swap')">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/user/server.png" alt="img">
+                        <img src="/static/img/assets/swap_icon.svg" alt="img">
                     </div>
                 </div>
                 <span>兑换</span>
@@ -74,7 +81,7 @@
             <div class="btn" @click="jump('loan')">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/user/safe.png" alt="img">
+                        <img src="/static/img/assets/loan_icon.svg" alt="img">
                     </div>
                 </div>
                 <span>借贷</span>
@@ -94,7 +101,7 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">{{ (assets.money || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch1 == true }">
-                    <Icon name="weapp-nav" />
+                    <img src="/static/img/assets/more_icon.svg" alt="img">
                 </div>
                 <div class="rights" style="width:4.8rem" :class="{ 'open_tab': rightSwitch1 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -134,7 +141,7 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ (assets.stock || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
-                    <Icon name="weapp-nav" />
+                    <img src="/static/img/assets/more_icon.svg" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch2 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -162,7 +169,7 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ (assets.contract || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
-                    <Icon name="weapp-nav" />
+                    <img src="/static/img/assets/more_icon.svg" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch3 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -189,7 +196,7 @@
                 </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">{{ (assets.ipo || '0.00') }}</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
-                    <Icon name="weapp-nav" />
+                    <img src="/static/img/assets/more_icon.svg" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch4 != true }">
                     <div class="right" style="background-color: #3F845F;">
@@ -382,6 +389,14 @@ const jump = (name) => {
 
                 .color_text {
                     color: #59ba4e;
+                    display: flex;
+                    align-items: center;
+
+                    .withdraw_icon {
+                        width: 0.28rem;
+                        height: 0.28rem;
+                        margin-right: 0.1rem;
+                    }
                 }
 
                 .process {
@@ -466,9 +481,8 @@ const jump = (name) => {
             }
 
             .more {
-                font-size: 0.24rem;
-                color: #666;
-                transform: rotate(90deg)
+                width: 0.24rem;
+                height: 0.24rem
             }
 
             .amount {

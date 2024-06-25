@@ -313,33 +313,51 @@ export const _loanLog = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
-//IPO 列表
+// IPO 列表
 export const _ipoList = (data = {}) => {
-  return http.post(`anon/v1/ipo/list`, data, {
+  return http.post(`/anon/v1/ipo/list`, data, {
     custom: { auth: false, toast: true },
   });
 };
-//IPO 记录详情
+// IPO 记录详情
 export const _ipoGet = (data = {}) => {
-  return http.post(`anon/v1/ipo/get`, data, {
+  return http.post(`/anon/v1/ipo/get`, data, {
     custom: { auth: false, toast: true },
   });
 };
-//认购参数
+// 认购参数
 export const _orderPara = (data = {}) => {
-  return http.post(`authc/v1/ipo/order/para`, data, {
+  return http.post(`/authc/v1/ipo/order/para`, data, {
     custom: { auth: true, toast: true },
   });
 };
-//认购
+// 认购
 export const _orderBuy = (data = {}) => {
-  return http.post(`authc/v1/ipo/order/buy`, data, {
+  return http.post(`/authc/v1/ipo/order/buy`, data, {
     custom: { auth: true, toast: true },
   });
 };
-//我的订单
+// 我的订单
 export const _orderList = (data = {}) => {
-  return http.post(`authc/v1/ipo/order/list`, data, {
+  return http.post(`/authc/v1/ipo/order/list`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 提现手续费
+export const _withdrawFee = (data = {}) => {
+  return http.post(`/authc/v1/wallet/withdraw/fee`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 提现
+export const _withdraw = (data = {}) => {
+  return http.post(`/authc/v1/wallet/withdraw`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 提现记录
+export const _withdrawList = (data = {}) => {
+  return http.post(`/authc/v1/wallet/withdraw/list`, data, {
     custom: { auth: true, toast: true },
   });
 };

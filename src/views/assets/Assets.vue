@@ -197,7 +197,7 @@ onMounted(() => {
 
         ::v-deep(.van-tab) {
             line-height: 0.6rem;
-            font-size: 0.3rem;
+            font-size: 0.32rem;
         }
 
     }

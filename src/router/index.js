@@ -337,6 +337,16 @@ const routes = [
     }
   },
   {
+    // 提现记录
+    path: "/withdrawRecord",
+    name: "withdrawRecord",
+    component: () => import("../views/Assets/WithdrawRecord.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 认购
     path: "/subscription",
     name: "subscription",
