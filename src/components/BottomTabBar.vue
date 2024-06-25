@@ -31,15 +31,17 @@ import icon4 from "@/assets/bottom/bottom_4.png"
 import icon44 from "@/assets/bottom/bottom_4_4.png"
 import icon5 from "@/assets/bottom/bottom_5.png"
 import icon55 from "@/assets/bottom/bottom_5_5.png"
+import store from "@/store";
 
 const route = useRoute();
 const activeRoute = computed(() => route.name)
+const token = computed(() => store.state.token)
 
 const navs = ref([
     { name: '首页', route: 'home', icon: icon1, icon2: icon11 },
     { name: '市场', route: 'market', children: ['market_info', 'financial_info', 'trading_rules'], icon: icon2, icon2: icon22 },
     { name: '交易', route: 'trade', icon: icon3, icon2: icon33 },
-    { name: '钱包', route: 'assets', children: ['transfer'], icon: icon4, icon2: icon44 },
+    { name: '资产', route: 'assets', children: ['transfer'], icon: icon4, icon2: icon44, needLogin: true },
     { name: '用户', route: 'user', children: ['account'], icon: icon5, icon2: icon55 },
 ])
 
@@ -47,15 +49,20 @@ const touchLoading = ref(false)
 const handleClick = (item, e) => {
     if (!item.route) return
     if (touchLoading.value) return
-    console.error(e)
     touchLoading.value = true
     setTimeout(() => {
         touchLoading.value = false
     }, 300)
+    _playVoice()
+    if (item.needLogin && !token.value) {
+        return router.push({
+            name: 'login'
+        })
+    }
     router.push({
         name: item.route
     })
-    _playVoice()
+
 }
 
 const checkActive = item => {
