@@ -2,28 +2,55 @@
 <template>
     <div class="page page_user">
 
-        <div class="user-header">
+        <!-- <div class="user-header">
             <div style="margin-right: 0.4rem;margin-top: 0.04rem;">
                 <Icon name="comment-o" />
             </div>
             <div>
                 <Icon name="point-gift-o" />
             </div>
-        </div>
+        </div> -->
 
-        <div class="user-banner">
+        <div class="user-banner" @click="testBanner" v-if="!test && !token">
             <img src="/static/img/user/bg.png" alt="banner">
-            <span class="banner-title">开始免费试用</span>
         </div>
 
-        <div class="user-login" v-if="token">
-            <div>
-                <img src="/static/img/user/user.svg" alt="">
-                <span>{{ userInfo.username || '--' }}</span>
-            </div>
-           
-            <Icon name="arrow" class="arrow-right"/>
+        <div class="user-banner" @click="testBanner" v-if="test && !token">
+            <img src="/static/img/user/already.png" alt="banner">
         </div>
+
+        <div class="user-login-login-box" v-if="token || test">
+            <div class="user-login-login" >
+                <div style="display: flex;" v-if="test">
+                    <div class="login-user-box">T</div>
+                    <!-- <img src="/static/img/user/user.svg" alt=""> -->
+                    <span>Test</span>
+                </div>
+
+                <div style="display: flex;" v-else>
+                    <div class="login-user-box">{{getFirstCharacter(userInfo.username)}}</div>
+                    <!-- <img src="/static/img/user/user.svg" alt=""> -->
+                    <span>{{ userInfo.username || '--' }}</span>
+                </div>
+            
+                <Icon name="arrow" class="arrow-right"/>
+            </div>
+            <div class="user-fllower">
+                <div class="user-fllower-flex">
+                    <div class="user-fllower-num">0</div>
+                    <div class="user-fllower-title">已发表</div>
+                </div>
+                <div class="user-fllower-flex">
+                    <div class="user-fllower-num">0</div>
+                    <div class="user-fllower-title">粉丝</div>
+                </div>
+                <div class="user-fllower-flex">
+                    <div class="user-fllower-num">0</div>
+                    <div class="user-fllower-title">正在关注</div>
+                </div>
+            </div>
+        </div>
+
 
         <div class="user-login" v-else @click="jump('login')">
             <div>
@@ -40,7 +67,7 @@
                     <img src="/static/img/user/user.svg" alt="">
                     <Icon name="arrow" class="arrow-right"/>
                 </div>
-                <div class="user-sub">订阅</div>
+                <div class="user-sub">市场奖金</div>
                 <div class="user-small-title">
                     充分发挥 TradingView 的强大功能
                 </div>
@@ -64,7 +91,7 @@
                 <img src="/static/img/user/user.svg" alt="">
                 <Icon name="arrow" class="arrow-right"/>
             </div>
-            <div class="user-sub">新闻</div>
+            <div class="user-sub">收款账户</div>
             <div class="user-small-title">
                 随时了解市场动态
             </div>
@@ -77,7 +104,7 @@
                     <img src="/static/img/user/user.svg" alt="">
                     <Icon name="arrow" class="arrow-right"/>
                 </div>
-                <div class="user-sub">经纪商</div>
+                <div class="user-sub">身份认证</div>
                 <div class="user-small-title">
                     使用热门经纪商交易
                 </div>
@@ -88,7 +115,7 @@
                     <img src="/static/img/user/user.svg" alt="">
                     <Icon name="arrow" class="arrow-right"/>
                 </div>
-                <div class="user-sub">日历</div>
+                <div class="user-sub">客服</div>
                 <div class="user-small-title">
                     塑造市场的事件
                 </div>
@@ -100,20 +127,14 @@
             <div class="user-flex">
                 <div class="user-item">
                     <img src="/static/img/user/user.svg" alt="">
-                    <span>主题</span>
+                    <span>语言</span>
                 </div>
                 <Icon name="arrow" class="arrow-right"/>
             </div>
             <div class="user-flex">
                 <div class="user-item">
                     <img src="/static/img/user/user.svg" alt="">
-                    <span>给我们评分</span>
-                </div>
-            </div>
-            <div class="user-flex">
-                <div class="user-item">
-                    <img src="/static/img/user/user.svg" alt="">
-                    <span>帮助中心</span>
+                    <span>安全</span>
                 </div>
             </div>
             <div class="user-flex">
@@ -127,14 +148,17 @@
 
 
         <!-- 退出登录 -->
-        <div class="ripple_button loginout" v-if="token" @click="loginout">退出登录</div>
+        <div class="loginout" v-if="token || test" @click="loginout">
+            <img src="/static/img/user/out.svg" alt="">
+            退出登录
+        </div>
       
         
     </div>
 </template>
 
 <script setup>
-import { computed } from "vue"
+import { computed, ref } from "vue"
 import { Icon, showConfirmDialog } from 'vant';
 import router from "@/router";
 import store from "@/store";
@@ -143,24 +167,50 @@ import { _logout } from "@/api/api"
 const token = computed(() => store.state.token)
 const userInfo = computed(() => store.state.userInfo || {})
 
+const test = ref(false)
+
+
+const testBanner = ()=>{
+    test.value = true
+}
+
+
+const getFirstCharacter = (username) => {
+  return username ? username.charAt(0) : '-';
+};
+
 
 const loginout = () => {
-    showConfirmDialog({
-        title: '退出登录',
-        message:
-            '您当前确定要退出吗？',
-        confirmButtonColor: '#014CFA',
-        cancelButtonColor: '#323233'
-    })
-        .then(() => {
-            _logout()
-            setTimeout(() => {
-                store.dispatch('reset')
-                router.push({
-                    name: 'login'
-                })
-            }, 200)
-        }).catch(() => { })
+    if (token.value) {
+        showConfirmDialog({
+            title: '退出登录',
+            message:
+                '您当前确定要退出吗？',
+            confirmButtonColor: '#014CFA',
+            cancelButtonColor: '#323233'
+        })
+            .then(() => {
+                _logout()
+                setTimeout(() => {
+                    store.dispatch('reset')
+                    router.push({
+                        name: 'login'
+                    })
+                }, 200)
+            }).catch(() => { })
+    } else if (test.value){
+        showConfirmDialog({
+            title: '退出登录',
+            message:
+                '您当前确定要退出吗？',
+            confirmButtonColor: '#014CFA',
+            cancelButtonColor: '#323233'
+        })
+            .then(() => {
+              test.value = false
+            }).catch(() => { })
+    }
+    
 }
 
 const jump = (name, needLogin) => {
@@ -339,20 +389,67 @@ if (token.value) {
             }
         }
     }
+    .user-login-login-box {
+        background-color: #f1f3f9;
+        padding: 0.2rem 0.3rem;
+        border-radius: 0.2rem;
+        margin-bottom: 0.2rem;
+    }
+    .user-login-login {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.2rem;
+        .arrow-right {
+            margin-top: 0.08rem;
+            color: #797b81;
+        }
+        .login-user-box {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.2rem;
+            background-color: #667d7f;
+            color: white;
+            line-height: 0.88rem;
+            text-align: center;
+            margin-right: 0.4rem;
+            font-size: 0.6rem;
+            font-weight: 900;
+        }
+        span {
+            font-size: 0.36rem;
+            font-weight: 700;
+            line-height: 0.6rem;
+        }
+    }   
 
     .loginout {
-        width: 100%;
-        height: 1.12rem;
-        border-radius: 1.3rem;
-        background-color: #fff;
+        margin-top: 0.2rem;
+        border-bottom: 0.02rem solid #f4f4f4;
         display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.28rem;
-        color: #014CFA;
-        font-weight: 400;
-        margin-top: 1.2rem;
-        overflow: hidden;
+        color: #eb4e3d;
+        padding: 0.2rem 0;
+        line-height: 0.4rem;
+        img {
+            width: 0.4rem !important;
+            height: 0.4rem !important;
+            vertical-align: middle;
+            margin-right: 0.2rem;
+        }
+    }
+    .user-fllower {
+        display: flex;
+        .user-fllower-flex {
+            flex: 1;
+            .user-fllower-num {
+                font-size: 0.28rem;
+                font-weight: 600;
+                margin-bottom: 0.06rem;
+            }
+            .user-fllower-title {
+                font-size: 0.24rem;
+                color: #767880;
+            }
+        }
     }
     
 }
