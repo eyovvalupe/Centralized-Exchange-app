@@ -15,7 +15,7 @@ const routes = [
   { // 用户
     path: "/user",
     name: "user",
-    component: () => import("../views/User/User.vue"),
+    component: () => import("../views/User/NewUser.vue"),
     meta: {
       keepAlive: true,
       pageType: 'tab'
