@@ -27,8 +27,14 @@
                 </div>
             </div>
             <div class="tip">
-                <span>可用余额: </span>
-                <span class="num">{{ balance }}</span>
+                <div>
+                    <span>手续费: </span>
+                    <span class="num">--</span>
+                </div>
+                <div>
+                    <span>可用余额: </span>
+                    <span class="num">{{ balance }}</span>
+                </div>
             </div>
         </div>
 
@@ -74,6 +80,12 @@ const balance = computed(() => { // main钱包余额
     if (main) b = main.amount
     return b
 })
+
+// 收款方式
+// store.dispatch('updateAccountList')
+const accountList = computed(() => store.state.accountList || []) // 收款方式列表
+
+console.error('收款方式', accountList.value)
 
 // 表单
 const form = ref({
@@ -191,7 +203,7 @@ const goRecord = () => {
         .tip {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: space-between;
             font-weight: 400;
             font-size: 0.24rem;
             color: #707070;

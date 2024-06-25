@@ -32,7 +32,7 @@
                 <div @click="chooseCurrency(item)" class="bottom" :class="{ 'active_bottom': form.currency == item }"
                     v-for="item in currencyMap" :key="item">
                     <div class="bottom_icon">
-                        <img :src="`/static/img/crypto/${item}.png`" alt="usdt">
+                        <img :src="`/static/img/crypto/${item.toUpperCase()}.png`" alt="usdt">
                     </div>
                     <span>{{ item }}</span>
                 </div>
@@ -71,7 +71,7 @@ import store from "@/store";
 
 // 币种
 const showCrypto = ref(false)
-const currencyMap = ['USDT', 'BTC', 'ETH']
+const currencyMap = ['USDT', 'USD', 'BTC', 'ETH']
 const chooseCurrency = (item) => {
     form.value.currency = item
     showCrypto.value = false

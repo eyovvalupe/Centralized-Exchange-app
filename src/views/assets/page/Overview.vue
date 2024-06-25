@@ -44,7 +44,8 @@
             <div class="btn btn2" @click="jump('withdraw')">
                 <div class="icon_box">
                     <span class="color_text"><span class="tip">可提</span> {{ (assets.money || '0.00') }}</span>
-                    <span><span class="tip">冻结</span> {{ (assets.frozen || '0.00') }}</span>
+                    <span style="display: flex;flex-direction: column;"><span class="tip">冻结</span> {{ (assets.frozen ||
+                        '0.00') }}</span>
 
                     <div class="process">
                         <div class="left">
@@ -86,7 +87,10 @@
                 <div class="tab_icon">
                     <img src="/static/img/assets/cash_icon.svg" alt="img">
                 </div>
-                <div :class="{ 'open_tab': rightSwitch1 == true }">现金账户</div>
+                <div :class="{ 'open_tab': rightSwitch1 == true }">
+                    <div>现金账户</div>
+                    <div class="tab_info">我是账户说明文字</div>
+                </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">{{ (assets.money || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch1 == true }">
@@ -123,7 +127,10 @@
                 <div class="tab_icon">
                     <img src="/static/img/assets/stock_icon.svg" alt="img">
                 </div>
-                <div :class="{ 'open_tab': rightSwitch2 == true }">股票</div>
+                <div :class="{ 'open_tab': rightSwitch2 == true }">
+                    <div>股票</div>
+                    <div class="tab_info">股票账户</div>
+                </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ (assets.stock || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
@@ -148,7 +155,10 @@
                 <div class="tab_icon">
                     <img src="/static/img/assets/contract_icon.svg" alt="img">
                 </div>
-                <div :class="{ 'open_tab': rightSwitch3 == true }">合约</div>
+                <div :class="{ 'open_tab': rightSwitch3 == true }">
+                    <div>合约</div>
+                    <div class="tab_info">合约账户</div>
+                </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ (assets.contract || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
@@ -173,7 +183,10 @@
                 <div class="tab_icon">
                     <img src="/static/img/assets/ipo_icon.svg" alt="img">
                 </div>
-                <div :class="{ 'open_tab': rightSwitch4 == true }">IPO</div>
+                <div :class="{ 'open_tab': rightSwitch4 == true }">
+                    <div>IPO</div>
+                    <div class="tab_info">IPO</div>
+                </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">{{ (assets.ipo || '0.00') }}</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
                     <Icon name="weapp-nav" />
@@ -440,6 +453,12 @@ const jump = (name) => {
                 height: 0.32rem;
                 margin-right: 0.2rem;
 
+            }
+
+            .tab_info {
+                font-size: 0.2rem;
+                color: #666;
+                margin-top: 0.1rem;
             }
 
             .open_tab {
