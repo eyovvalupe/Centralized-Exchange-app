@@ -26,3 +26,9 @@ export const _withdrawStatusMap = {
   "success": "成功",
   "failed": "失败"
 }
+
+// 加密币种
+export const _currencyMapList = ['USDT', 'USD', 'BTC', 'ETH']
+
+// 加密网络
+export const _networkMapList = ['TRC20', 'ERC20']
