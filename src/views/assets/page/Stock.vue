@@ -2,7 +2,7 @@
 <template>
     <div class="page_assets_stock">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/one.png)` }">
+        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/bg_3.png)` }">
             <div class="top">
                 <div class="title">持仓资金</div>
                 <div class="eyes" @click="hidden = !hidden">
