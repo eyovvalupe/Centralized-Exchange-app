@@ -24,7 +24,7 @@
           股票代码
         </div>
         <div class="ipo-text">
-          2024-04-12
+          
         </div>
       </div>
 
@@ -34,7 +34,7 @@
           认购价格
         </div>
         <div class="ipo-text">
-          {{ data.price_range }}
+          {{ data.issue_price_min }}
         </div>
       </div>
 
@@ -43,7 +43,7 @@
           认购开始日期
         </div>
         <div class="ipo-text">
-          {{ data.issue_start_Date }}
+          {{ data.issue_start_date }}
         </div>
       </div>
 
@@ -52,7 +52,7 @@
           认购结束日期
         </div>
         <div class="ipo-text">
-          {{ data.issue_end_Date }}
+          {{ data.issue_end_date }}
         </div>
       </div>
 
@@ -89,7 +89,7 @@
           VIP 认购
         </div>
         <div class="ipo-text">
-          10 倍
+          {{data.lever}}倍
         </div>
       </div>
 
@@ -99,7 +99,7 @@
           VIP 利息
         </div>
         <div class="ipo-text">
-          10 倍
+          
         </div>
       </div>
 
