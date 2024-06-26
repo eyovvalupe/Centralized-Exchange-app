@@ -33,7 +33,7 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class="btn">
+            <div class="btn" @click="jump('topUp')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/user/record.png" alt="img">
@@ -90,7 +90,7 @@
 
         <!-- 列表 -->
         <div class="tabs">
-            <div ref="tab1" :key="1" class="ripple_button tab" @click="rightSwitch1 = !rightSwitch1">
+            <div ref="tab1" :key="1" class="tab" @click="rightSwitch1 = !rightSwitch1">
                 <div class="tab_icon">
                     <img src="/static/img/assets/cash_icon.svg" alt="img">
                 </div>
@@ -101,28 +101,28 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">{{ (assets.money || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch1 == true }">
-                    <img src="/static/img/assets/more_icon.svg" alt="img">
+                    <img src="/static/img/common/menu.svg" alt="img">
                 </div>
                 <div class="rights" style="width:4.8rem" :class="{ 'open_tab': rightSwitch1 != true }">
-                    <div class="right" style="background-color: #3F845F;">
+                    <div class="right" style="background-color: #18B565;">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FE9C43;">
+                    <div class="right" style="background-color: #F29100;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
                         <div>提现</div>
                     </div>
-                    <div class="right" style="background-color: #2685CA;">
+                    <div class="right" style="background-color: #014CFA;">
                         <div class="right_icon">
                             <img src="/static/img/assets/down.png" alt="img">
                         </div>
                         <div>转入</div>
                     </div>
-                    <div class="right" style="background-color: #E25C5C;">
+                    <div class="right" style="background-color: #E8503A;">
                         <div class="right_icon">
                             <img src="/static/img/assets/up.png" alt="img">
                         </div>
@@ -130,7 +130,7 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab2" :key="2" class="ripple_button tab" @click="rightSwitch2 = !rightSwitch2">
+            <div ref="tab2" :key="2" class="tab" @click="rightSwitch2 = !rightSwitch2">
                 <div class="tab_icon">
                     <img src="/static/img/assets/stock_icon.svg" alt="img">
                 </div>
@@ -141,16 +141,16 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ (assets.stock || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
-                    <img src="/static/img/assets/more_icon.svg" alt="img">
+                    <img src="/static/img/common/menu.svg" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch2 != true }">
-                    <div class="right" style="background-color: #3F845F;">
+                    <div class="right" style="background-color: #18B565;">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FE9C43;">
+                    <div class="right" style="background-color: #F29100;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -158,7 +158,7 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab3" :key="3" class="ripple_button tab" @click="rightSwitch3 = !rightSwitch3">
+            <div ref="tab3" :key="3" class="tab" @click="rightSwitch3 = !rightSwitch3">
                 <div class="tab_icon">
                     <img src="/static/img/assets/contract_icon.svg" alt="img">
                 </div>
@@ -169,16 +169,16 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ (assets.contract || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
-                    <img src="/static/img/assets/more_icon.svg" alt="img">
+                    <img src="/static/img/common/menu.svg" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch3 != true }">
-                    <div class="right" style="background-color: #3F845F;">
+                    <div class="right" style="background-color: #18B565;">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FE9C43;">
+                    <div class="right" style="background-color: #F29100;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -186,7 +186,7 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab4" :key="4" class="ripple_button tab" @click="rightSwitch4 = !rightSwitch4">
+            <div ref="tab4" :key="4" class="tab" @click="rightSwitch4 = !rightSwitch4">
                 <div class="tab_icon">
                     <img src="/static/img/assets/ipo_icon.svg" alt="img">
                 </div>
@@ -196,16 +196,16 @@
                 </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">{{ (assets.ipo || '0.00') }}</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
-                    <img src="/static/img/assets/more_icon.svg" alt="img">
+                    <img src="/static/img/common/menu.svg" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch4 != true }">
-                    <div class="right" style="background-color: #3F845F;">
+                    <div class="right" style="background-color: #18B565;">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FE9C43;">
+                    <div class="right" style="background-color: #F29100;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>

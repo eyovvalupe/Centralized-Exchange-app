@@ -347,6 +347,36 @@ const routes = [
     }
   },
   {
+    // 充值
+    path: "/topUp",
+    name: "topUp",
+    component: () => import("../views/Assets/TopUp.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
+    // 充值中
+    path: "/recharging",
+    name: "recharging",
+    component: () => import("../views/Assets/Recharging.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
+    // 充值详情
+    path: "/topUpItem",
+    name: "topUpItem",
+    component: () => import("../views/Assets/TopUpItem.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 认购
     path: "/subscription",
     name: "subscription",

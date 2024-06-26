@@ -361,5 +361,23 @@ export const _withdrawList = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
+// 获取充值地址
+export const _paycode = (data = {}) => {
+  return http.post(`/authc/v1/wallet/crypto/paycode`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 充值
+export const _deposit = (data = {}) => {
+  return http.post(`/authc/v1/wallet/deposit`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 充值单详情
+export const _depositInfo = (data = {}) => {
+  return http.post(`/authc/v1/wallet/deposit/get`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
 
 export const memberInfo = () => { }

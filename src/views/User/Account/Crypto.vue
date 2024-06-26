@@ -30,7 +30,7 @@
         <Popup round v-model:show="showCrypto" position="bottom">
             <div class="bottoms">
                 <div @click="chooseCurrency(item)" class="bottom" :class="{ 'active_bottom': form.currency == item }"
-                    v-for="item in currencyMap" :key="item">
+                    v-for="item in _currencyMapList" :key="item">
                     <div class="bottom_icon">
                         <img :src="`/static/img/crypto/${item.toUpperCase()}.png`" alt="usdt">
                     </div>
@@ -44,7 +44,7 @@
         <Popup round v-model:show="showNet" position="bottom">
             <div class="bottoms">
                 <div @click="chooseNet(item)" class="bottom" :class="{ 'active_bottom': form.network == item }"
-                    v-for="item in networkMap" :key="item">
+                    v-for="item in _networkMapList" :key="item">
                     <!-- <div class="bottom_icon">
                         <img :src="`/static/img/crypto/${item}.png`" alt="usdt">
                     </div> -->
@@ -67,18 +67,17 @@ import { ref } from "vue"
 import { _addAccount } from "@/api/api"
 import router from "@/router";
 import store from "@/store";
+import { _currencyMapList, _networkMapList } from "@/utils/dataMap.js"
 
 
 // 币种
 const showCrypto = ref(false)
-const currencyMap = ['USDT', 'USD', 'BTC', 'ETH']
 const chooseCurrency = (item) => {
     form.value.currency = item
     showCrypto.value = false
 }
 // 网络
 const showNet = ref(false)
-const networkMap = ['TRC20', 'ERC20']
 const chooseNet = (item) => {
     form.value.network = item
     showNet.value = false
