@@ -5,7 +5,9 @@
       <span>IPO 详情</span>
     </div>
 
-    <div class="ipo-box">
+
+    <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+    <div class="ipo-box" v-if="!loading">
       <div class="ipo-co-f">
         <div class="h-co-title">
           {{ data.company_name }}
@@ -24,7 +26,7 @@
           股票代码
         </div>
         <div class="ipo-text">
-          2024-04-12
+          
         </div>
       </div>
 
@@ -34,7 +36,7 @@
           认购价格
         </div>
         <div class="ipo-text">
-          {{ data.price_range }}
+          {{ data.issue_price_min }}
         </div>
       </div>
 
@@ -43,7 +45,7 @@
           认购开始日期
         </div>
         <div class="ipo-text">
-          {{ data.issue_start_Date }}
+          {{ data.issue_start_date }}
         </div>
       </div>
 
@@ -52,7 +54,7 @@
           认购结束日期
         </div>
         <div class="ipo-text">
-          {{ data.issue_end_Date }}
+          {{ data.issue_end_date }}
         </div>
       </div>
 
@@ -89,7 +91,7 @@
           VIP 认购
         </div>
         <div class="ipo-text">
-          10 倍
+          {{data.lever}}倍
         </div>
       </div>
 
@@ -99,7 +101,7 @@
           VIP 利息
         </div>
         <div class="ipo-text">
-          10 倍
+          
         </div>
       </div>
 
@@ -109,7 +111,7 @@
 
 <script setup>
 import { computed, ref, onMounted } from 'vue';
-import { Icon } from 'vant';
+import { Icon, Loading } from 'vant';
 import { useRouter, useRoute } from 'vue-router';
 import {_ipoGet} from '@/api/api'
 import store from "@/store";
@@ -117,6 +119,7 @@ import store from "@/store";
 const route = useRoute();
 const router = useRouter();
 const data = ref({})
+const loading = ref(false)
 
 const id = computed(()=>{
   return store.state.ipoId
@@ -136,11 +139,17 @@ const getList = ()=>{
   _ipoGet({id:id.value}).then(res => {
     if (res.code == 200) {
       data.value = res.data
+      loading.value = false
+    } else {
+      loading.value = false
     }
+  }).finally(()=>{
+    loading.value = false
   })
 }
 
 onMounted(()=>{
+  loading.value = true
   getList()
 })
 
@@ -155,6 +164,12 @@ onMounted(()=>{
     position: absolute;
     left: 0.3rem;
     top: 0.36rem;
+  }
+  .position-loading {
+    margin-top: 2rem !important;
+    .van-loading__spinner {
+      left: 45%;
+    }
   }
   .ipo-detail-header {
     padding: 0.3rem 0;

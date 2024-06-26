@@ -35,12 +35,12 @@
 
         <div class="market_ipo-m-box">
           <div>
-            <div class="market_ipo-m-box-p">{{ i.price_range }}</div>
+            <div class="market_ipo-m-box-p">{{ i.issue_price_min }}</div>
             <div class="market_ipo-m-box-t">认购价格</div>
           </div>
 
           <div>
-            <div class="market_ipo-m-box-p">{{ i.issue_start_date }}-{{ i.issue_end_date }}</div>
+            <div class="market_ipo-m-box-p">{{ i.issue_start_date }}</div>
             <div class="market_ipo-m-box-t">
               认购日期
             </div>
@@ -128,7 +128,7 @@ const opendetail = (id)=>{
   router.push({ name: 'ipodetail',query:{type: props.type} });
 }
 
-const openSubscription = ()=>{
+const openSubscription = (id)=>{
   store.commit('setIpoId',id)
   store.dispatch('updateSessionToken')
   router.push({ name: 'subscription', query:{type: props.type}});
