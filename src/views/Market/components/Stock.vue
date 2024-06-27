@@ -4,16 +4,7 @@
         <!-- 结果列表 -->
         <div class="list">
             <Loading v-show="!stockList.length && loading" />
-            <div class="item" v-for="(item, i) in stockList" :key="i" @click="goItem(item)">
-                <div class="info">
-                    <div class="title">{{ item.symbol || '--' }}</div>
-                    <div class="text">{{ item.name || '--' }}</div>
-                </div>
-                <div class="ripple_button star" @click.stop="collect(item)">
-                    <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
-                    <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
-                </div>
-            </div>
+            <StockItem :scrollBox="'.market_stock'" :item="item" v-for="(item, i) in stockList" :key="i" />
         </div>
     </div>
 </template>
@@ -27,18 +18,26 @@ import Loading from "@/components/Loaidng.vue"
 import store from "@/store"
 import router from "@/router"
 import { _add, _del } from '@/api/api'
+import StockItem from "@/components/StockItem.vue"
 
 const loading = ref(false)
 const token = computed(() => store.state.token)
 
 // 搜索相关
-const stockList = ref([])
+const stockList = computed(() => store.state.marketStockList || [])
 const getData = () => { // 获取数据
     loading.value = true
     _search({
         symbol: ""
     }).then(res => {
-        stockList.value = res.data || []
+        store.commit('setMarketStockList', res.data || [])
+        store.commit('setMarketWatchKeys', res.data.map(item => item.symbol))
+        setTimeout(() => {
+            store.dispatch("subList", {
+                commitKey: "setMarketStockList",
+                proxyListValue: stockList.value
+            })
+        }, 0)
     }).finally(() => {
         loading.value = false
     })
@@ -71,7 +70,6 @@ const collect = item => {
             name: 'login'
         })
     } else {
-        console.error('收藏', item.watchlist)
         if (collectLoading.value) return
         collectLoading.value = true
         if (!reqMap[item.watchlist || 0]) return collectLoading.value = false
@@ -110,6 +108,8 @@ defineExpose({
 <style lang="less" scoped>
 .market_stock {
     padding-bottom: 0.6rem;
+    height: 100%;
+    overflow-y: auto;
 
     .list {
         padding: 0 0.32rem;

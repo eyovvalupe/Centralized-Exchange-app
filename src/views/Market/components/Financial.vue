@@ -26,7 +26,6 @@ const list = ref([
 ])
 
 const goInfo = item => {
-    console.error(item)
     router.push({
         name: 'financial_info'
     })

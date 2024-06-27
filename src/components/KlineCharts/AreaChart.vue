@@ -5,11 +5,12 @@
 
         <!-- 加载 -->
         <div class="chat_area_loading" v-show="loading">
-            <div class="lines">
+            <!-- <div class="lines">
                 <div class="item item_1"></div>
                 <div class="item item_2"></div>
                 <div class="item item_3"></div>
-            </div>
+            </div> -->
+            <L type="spinner" :loading="loading" />
         </div>
     </div>
 </template>
@@ -20,6 +21,7 @@ import { init, dispose } from 'klinecharts'
 import { klineConfig } from './kline.conf';
 import { _time } from "@/api/api"
 import { useSocket } from '@/utils/ws'
+import Loading from "../LoadingMore"
 
 const { startSocket } = useSocket()
 let socket = null
@@ -220,8 +222,8 @@ const getData = (params) => { // 获取数据
         height: 100%;
         background-color: #fff;
         z-index: 99;
-        border-right: 1px solid #7F939E;
-        border-bottom: 1px solid #7F939E;
+        // border-right: 1px solid #7F939E;
+        // border-bottom: 1px solid #7F939E;
         display: flex;
         align-items: center;
         justify-content: center;

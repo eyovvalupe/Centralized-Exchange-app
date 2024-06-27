@@ -67,8 +67,8 @@ export const _compressImg = (base64, multiple, fn) => { // , useImg, targetObj
     // }
 
     // 必须通过回调函数返回，否则无法及时拿到该值，回调函数异步执行
-    console.log(`压缩前：${length}KB`)
-    console.log(`压缩后：${smallBase64.length / 1024} KB`)
+    // console.log(`压缩前：${length}KB`)
+    // console.log(`压缩后：${smallBase64.length / 1024} KB`)
     fn(smallBase64)
     // return smallBase64
     // useImg(smallBase64, targetObj)
