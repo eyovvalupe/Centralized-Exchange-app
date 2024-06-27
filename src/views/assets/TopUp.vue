@@ -9,6 +9,12 @@
             </template>
         </Top>
 
+
+        <Tabs v-model:active="active" shrink>
+            <Tab title="虚拟货币"></Tab>
+            <Tab title="银行卡" disabled></Tab>
+        </Tabs>
+
         <div class="form">
             <div class="subtitle">充值金额</div>
             <div class="item">
@@ -61,7 +67,11 @@ import Top from "@/components/Top.vue"
 import router from "@/router"
 import { ref, computed } from "vue"
 import store from "@/store";
-import { Popup, Button } from "vant"
+import { Popup, Button, Tabs, Tab } from "vant"
+import { useRoute } from "vue-router"
+
+const active = ref(0)
+const route = useRoute()
 
 const loading = ref(false)
 const disabled = computed(() => {
@@ -70,7 +80,7 @@ const disabled = computed(() => {
 // 表单
 const form = ref({
     amount: '',
-    from: 'main'
+    from: ''
 })
 // 手续费
 const fee = ref('--')
@@ -79,8 +89,9 @@ const fee = ref('--')
 const showDialog = ref(false)
 // 钱包
 const wallet = computed(() => { // 可选钱包列表
-    return store.state.wallet.filter(item => !['stock', 'contract', form.value.from].includes(item.currency)) || []
+    return store.state.wallet.filter(item => !['stock', 'contract', 'main', form.value.from].includes(item.currency)) || []
 })
+form.value.from = route.query.currency || wallet.value[0].currency // 初始化默认币种
 const clickItem = item => {
     form.value.from = item.currency
     showDialog.value = false
@@ -114,6 +125,8 @@ const goTopUp = () => {
     }
 
     .form {
+        margin-top: 0.5rem;
+
         .item {
             width: 100%;
             height: 1.12rem;

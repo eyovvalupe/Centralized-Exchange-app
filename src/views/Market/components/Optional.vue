@@ -1,7 +1,13 @@
 <!-- 自选 -->
 <template>
-    <StockTable @remove="remove" :deleteItem="!!(token)" :scroll-box="'.optional'" class="market_optional"
-        :loading="loading" :list="watchList" />
+    <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
+        <Tab :title="'股票'">
+            <StockTable @remove="remove" :deleteItem="!!(token)" :scroll-box="'.optional'" class="market_optional"
+                :loading="loading" :list="watchList" />
+        </Tab>
+        <Tab :title="'合约'"></Tab>
+    </Tabs>
+
 </template>
 
 <script setup>
@@ -10,10 +16,11 @@ import StockTable from "@/components/StockTable.vue"
 import store from "@/store";
 import { computed, ref } from "vue"
 import { _watchlist, _del } from "@/api/api"
-import { showLoadingToast, closeToast, showToast } from 'vant'
+import { showLoadingToast, closeToast, showToast, Tabs, Tab } from 'vant'
 import { useSocket } from '@/utils/ws'
 const { startSocket } = useSocket()
 
+const active = ref(0)
 
 const token = computed(() => store.state.token || '')
 const loading = ref(false)
@@ -100,3 +107,16 @@ const remove = item => {
     })
 }
 </script>
+
+<style lang="less" scoped>
+.option_tab {
+    :deep(.van-tabs__nav--line) {
+        padding-bottom: 0;
+    }
+
+    :deep(.van-tabs__line) {
+        bottom: 0;
+    }
+
+}
+</style>

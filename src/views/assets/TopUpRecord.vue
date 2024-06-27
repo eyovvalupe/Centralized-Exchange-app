@@ -1,11 +1,11 @@
-<!-- 提现记录 -->
+<!-- 充值记录 -->
 <template>
-    <div class="page page_transfer_record">
-        <Top :title="'提现记录'" />
+    <div class="page page_topup_record">
+        <Top :title="'充值记录'" />
 
         <div class="list">
             <NoData v-if="!loading && !list.length" />
-            <WithdrawItem :item="item" v-for="(item, i) in list" :key="i" />
+            <RechargeItem :item="item" v-for="(item, i) in list" :key="i" />
             <LoadingMore :loading="loading" :finish="finish" v-if="(finish && list.length) || (!finish)" />
         </div>
     </div>
@@ -16,8 +16,9 @@ import Top from '@/components/Top.vue';
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import { ref, onMounted, onUnmounted } from 'vue'
-import { _withdrawList } from "@/api/api"
-import WithdrawItem from "./page/components/WithdrawItem"
+import RechargeItem from "./page/components/RechargeItem.vue"
+import { _depositList } from "@/api/api"
+
 
 const loading = ref(false)
 const finish = ref(false)
@@ -28,7 +29,7 @@ const getData = () => {
     if (loading.value || finish.value) return
     loading.value = true
     page.value++
-    _withdrawList({
+    _depositList({
         page: page.value
     }).then(res => {
         list.value.push(...(res.data || []))
@@ -62,7 +63,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="less" scoped>
-.page_transfer_record {
+.page_topup_record {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -71,6 +72,7 @@ onUnmounted(() => {
     .list {
         flex: 1;
         overflow-y: auto;
+
     }
 }
 </style>

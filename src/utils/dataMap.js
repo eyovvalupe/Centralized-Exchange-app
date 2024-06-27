@@ -27,6 +27,13 @@ export const _withdrawStatusMap = {
   "failed": "失败"
 }
 
+// 提现状态
+export const _topUpStatusMap = {
+  "review": "审核中",
+  "success": "成功",
+  "failed": "失败"
+}
+
 // 加密币种
 export const _currencyMapList = ['USDT', 'USD', 'BTC', 'ETH']
 
