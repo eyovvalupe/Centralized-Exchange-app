@@ -327,8 +327,8 @@ export const _ipoGet = (data = {}) => {
 };
 // 认购参数
 export const _orderPara = (data = {}) => {
-  return http.post(`/authc/v1/ipo/order/para`, data, {
-    custom: { auth: true, toast: true },
+  return http.post(`/anon/v1/ipo/order/para`, data, {
+    custom: { auth: false, toast: true },
   });
 };
 // 认购
@@ -340,6 +340,12 @@ export const _orderBuy = (data = {}) => {
 // 我的订单
 export const _orderList = (data = {}) => {
   return http.post(`/authc/v1/ipo/order/list`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
+// 订单详情
+export const _orderGet = (data = {}) => {
+  return http.post(`/authc/v1/ipo/order/get`, data, {
     custom: { auth: true, toast: true },
   });
 };

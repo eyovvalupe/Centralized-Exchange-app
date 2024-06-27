@@ -6,10 +6,10 @@
 
       <PullRefresh v-model="reloading" @refresh="onRefresh" v-if="dataList.length > 0 && !loading && token" >
 
-        <div class="ipocontent" v-for="(i,key) in dataList" :key="key" @click="ipodetail(i.id)" v-if="!loading && token">
+        <div class="ipocontent" v-for="(i,key) in dataList" :key="key" @click="ipodetail(i.order_no)" v-if="!loading && token">
             <div class="bug-ing">认购中</div>
-            <img src="/static/img/trade/no.png" alt="" class="already-img" v-if="i===2">
-            <img src="/static/img/trade/already.png" alt="" class="already-img" v-else>
+            <img src="/static/img/trade/no.png" alt="" class="already-img" v-if="i.status == 'failure'">
+            <img src="/static/img/trade/already.png" alt="" class="already-img" v-if="i.status == 'success'">
             <div class="ipo-co">
                 <span class="co-span">{{ i.company_name }}</span>
                 <span class="ipo-up" v-if="i.status == 'listed'">
@@ -19,9 +19,13 @@
                   发行中
                 </span>
             </div>
-            <div class="ipo-price">
+            <div class="ipo-price" v-if="i.status == 'listed'">
                 <span>上市价格</span>
                 <span class="m-l">{{ i.listed_price }}</span>
+            </div>
+            <div class="ipo-price" v-else>
+                <span>发行价格</span>
+                <span class="m-l">{{ i.issue_price }}</span>
             </div>
             <div class="ipo-price">
                 <span>认购数量</span>
@@ -29,15 +33,15 @@
             </div>
             <div class="ipo-price">
                 <span>中签数量</span>
-                <span class="m-l" style="color: #0953fa;">2000 股</span>
+                <span class="m-l" style="color: #0953fa;">{{ i.winning || 0 }} 股</span>
             </div>
             <div class="ipo-price">
                 <span>认购日期</span>
-                <span class="m-l">2024-04-25</span>
+                <span class="m-l">{{ i.created }}</span>
             </div>
             <div class="ipo-price">
                 <span>上市日期</span>
-                <span class="m-l">2024-04-25 13:50:20</span>
+                <span class="m-l">--</span>
             </div>
         </div>
 
@@ -74,7 +78,7 @@ const reloading = ref(false)
 
 const ipodetail = (id) =>{
   store.commit('setIpoId',id)
-  router.push({ name: 'ipodetail',query:{type: 'winning'}  });
+  router.push({ name: 'winningIPODetail',query:{type: 'winning'}  });
 }
 
 const getlist = ()=>{
@@ -94,9 +98,9 @@ const getlist = ()=>{
 }
 
 onMounted(()=>{
-  loading.value = false
+  loading.value = true
   page.value = 1
-  // getlist()
+  getlist()
 })
 
 

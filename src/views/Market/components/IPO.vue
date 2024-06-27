@@ -55,7 +55,7 @@
 
         <div class="market_ipo-m-box">
           <div>
-            <div class="market_ipo-m-box-p">{{ i.issue_price_min }}</div>
+            <div class="market_ipo-m-box-p">{{ i.issue_price_max }}</div>
             <div class="market_ipo-m-box-t">认购价格</div>
           </div>
 
@@ -65,7 +65,7 @@
           </div>
 
           <div>
-            <div class="market_ipo-m-box-p">12344.00</div>
+            <div class="market_ipo-m-box-p">---</div>
             <div class="market_ipo-m-box-t">上市价格</div>
           </div>
         </div>
@@ -73,13 +73,13 @@
         <div class="market_ipo-m-box-line"></div>
 
         <div class="market_ipo-b">
-          <div class="market_ipo-b-detail" @click="opendetail(i.id)">
+          <div class="market_ipo-b-detail" @click="opendetail(i)">
             <span>详情</span>
             <Icon name="arrow" class="market_ipo-b-arrow" />
           </div>
           <div
             class="market_ipo-b-detail-button"
-            v-if="i.status == 'none'"
+            v-if="i.status == 'none' || i.status == 'listed'"
             style="background: #999999; color: white"
           >
             认购
@@ -87,7 +87,7 @@
           <div
             class="market_ipo-b-detail-button"
             v-else
-            @click="openSubscription(i.id)"
+            @click="openSubscription(i)"
           >
             认购
           </div>
@@ -151,14 +151,16 @@ const props = defineProps({
   type: String,
 });
 
-const opendetail = (id) => {
-  store.commit("setIpoId", id);
+const opendetail = (val) => {
+  store.commit("setIpoId", val.id);
+  store.commit('setIpoDetail',val)
   router.push({ name: "ipodetail", query: { type: props.type } });
 };
 
-const openSubscription = (id) => {
-  store.commit("setIpoId", id);
-  store.dispatch("updateSessionToken");
+const openSubscription = (val) => {
+  store.commit("setIpoId", val.id);
+  store.commit('setIpoDetail',val)
+  // store.dispatch("updateSessionToken");
   router.push({ name: "subscription", query: { type: props.type } });
 };
 

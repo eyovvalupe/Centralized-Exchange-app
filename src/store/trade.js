@@ -30,7 +30,8 @@ export default {
       roundedQuantity:0,
       minOrder:0,
       sliderValue:0,
-      ipoId:''
+      ipoId:'',
+      ipoDetail:{}
     },
     mutations: {
       setDates(state,data) {
@@ -117,6 +118,9 @@ export default {
       },
       setIpoId(state,data){
         state.ipoId = data
+      },
+      setIpoDetail(state,data){
+        state.ipoDetail = data
       },
     },
     actions: {

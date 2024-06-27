@@ -7,29 +7,30 @@
         </div>
 
         <span class="grop-title" style="margin-top: 0.6rem;display: block;">认购名称</span>
-        <Field v-model="nameVal" input-align="right"  @focus="handleFocus(1)" 
-        @blur="handleBlur(1)" :class="['num-input',{'focusinput': isFocused === 1}]"  style="margin-bottom: 0.4rem;"/>
+        <div class="ipo-company-name">{{ ipoDetail.company_name }}</div>
+        <!-- <Field v-model="nameVal" input-align="right"  @focus="handleFocus(1)" 
+        @blur="handleBlur(1)" :class="['num-input',{'focusinput': isFocused === 1}]"  style="margin-bottom: 0.4rem;"/> -->
 
-        <div class="subscription-m-box">
-            <div class="vip-subscription">
-                <span>VIP 认购码</span>
+        <div class="subscription-m-box" :class="textSelect === '普通申购'?'add':''">
+            <div class="vip-subscription" @click="vipSubscription">
+                <span>{{ textSelect }}</span>
                 <img src="/static/img/trade/down.png" class="subscription-down-img">
             </div>
-            <Field class="vip-input" v-model="vipVal" type="number" input-align="right" placeholder="请输入VIP认购码"/>
+            <Field class="vip-input" v-model="vipVal" :disabled="textSelect === '普通申购'"  input-align="right" :placeholder="placeholderText"/>
         </div>
         
         <span class="grop-title">认购数量</span>
-        <Field v-model="numValue" type="number" input-align="right" @change="inputChange"  @focus="handleFocus(5)" 
+        <Field v-model="numValue" type="number" input-align="right" @input="inputChange"  @focus="handleFocus(5)" 
         @blur="handleBlur(5)" :class="['num-input',{'focusinput': isFocused === 5}]" />
   
         <div class="position-account">
-          可买数量 <span style="color: #333">0</span>
+          可买数量 <span style="color: #333">{{ availableNum }}</span>
         </div>
   
         <Slider
           v-model="sliderValue"
           bar-height="0.08rem"
-          active-color="#f2f2f2"
+          active-color="#014cfa"
           inactive-color="#f2f2f2"
           @change="onSliderChange"
         />
@@ -65,16 +66,20 @@
 
 
         <div class="subscription-total">
-            <div class="subscription-text">
-                <span>锁定金额</span><span>₹ 2000000</span>
+          <div class="subscription-text">
+                <span style="margin-right: 0.08rem;">申购数量</span><span>{{ subscriptionQuantity }}</span>
                 <div class="subscription-position-line-dashed"></div>
             </div>
             <div class="subscription-text">
-                <span>手续费</span><span>₹ 2000000</span>
+                <span style="margin-right: 0.08rem;">锁定金额</span><span>{{ lockmonkey }}</span>
+                <div class="subscription-position-line-dashed"></div>
+            </div>
+            <div class="subscription-text">
+                <span style="margin-right: 0.08rem;">手续费</span><span>{{ fee }}</span>
                 <div class="subscription-position-line-dashed"></div>
             </div>
             <div class="subscription-total-text">
-                <span>合计</span><span>₹ 2000000</span>
+                <span style="margin-right: 0.08rem;">合计</span><span>{{ all }}</span>
             </div>
             
         </div>
@@ -84,8 +89,33 @@
           color="#014cfa"
           round
           @click="openPositPopup()"
+          :disabled="(textSelect != '普通申购' && vipVal == '') || numValue == '' || password == ''"
           >认购</Button
         >
+
+
+        <!-- 下拉框 -->
+      <teleport to="body">
+        <Popup
+          v-model:show="showPopup"
+          position="bottom"
+          :style="{ height: '30%' }"
+          class="market_ipo-popup"
+          closeable
+        >
+          <div class="market_ipo-box">
+            <div
+              v-for="(i, key) in option"
+              :key="key"
+              class="market_ipo-box-item"
+              :class="{ 'selected-class': selectedOption === i.value }"
+              @click="select(i.value)"
+            >
+              {{ i.text }}
+            </div>
+          </div>
+        </Popup>
+      </teleport>
         
   
     </div>
@@ -93,11 +123,11 @@
   
   <script setup>
   import { ref, computed, onMounted } from "vue";
-  import { Tab,Tabs,Field,Slider,Button,Loading, showToast ,Icon, PasswordInput, NumberKeyboard} from "vant";
+  import { Tab,Tabs,Field,Slider,Button,Loading, showToast ,Icon, PasswordInput, NumberKeyboard, Popup} from "vant";
   import { useRouter, useRoute } from "vue-router";
   import store from "@/store";
   import Decimal from 'decimal.js';
-  import {_orderPara, _orderBuy} from '@/api/api'
+  import {_orderPara, _orderBuy, _walletBalance, _commToken} from '@/api/api'
 
   
   const router = useRouter();
@@ -117,11 +147,42 @@
   
   const isFocused = ref();
   const showKeyboard = ref(false);
+  const showPopup = ref(false)
+
+  const option = [
+    {text:'普通申购',value:'0'},
+    {text:'VIP 申购',value:'1'}
+  ]
+  const selectedOption = ref("0");
+
+  const textSelect = computed(() => {
+    const selected = option.find((i) => i.value === selectedOption.value);
+    return selected ? selected.text : "";
+  });
+
+  //可买数量
+  const availableNum = ref(0)
+  //主账户金额
+  const amount = ref(0)
+  //申购数量
+  const subscriptionQuantity = ref(0)
+  //锁定金额
+  const lockmonkey = ref(0)
+  //手续费
+  const fee = ref(0)
+  //设置手续费
+  const setFee = ref(0)
+  //合计
+  const all = ref(0)
 
   const id = computed(()=>{
     return store.state.ipoId
   })
-  const sessionToken = computed(() => store.state.sessionToken || '')
+
+  const ipoDetail = computed(()=>{
+    return store.state.ipoDetail
+  })
+  // const sessionToken = computed(() => store.state.sessionToken || '')
 
   const goTotrade = () => {
     if (route.query.type === "market") {
@@ -131,11 +192,22 @@
     }
   };
 
+  const placeholderText = computed(() => {
+    if (textSelect.value === '普通申购') {
+      return ''
+    }
+    return `请输入 ${textSelect.value}`;
+  });
+
 
   
   const onSliderChange = (newValue) => {
     //滚动滑动条
     sliderValue.value = newValue;
+    const result = new Decimal(sliderValue.value).mul(new Decimal(availableNum.value)).div(100) 
+    numValue.value = result.floor().toNumber();
+
+    getPrice()
   };
   
   const handleFocus = (val) => {
@@ -146,40 +218,100 @@
     isFocused.value = null
   };
   
-  
-  const openPositPopup = () => {
+  const buy = (val)=>{
     const data = {
-      ipoid:id,
+      ipoid:id.value,
       volume:numValue.value,
       keyword:vipVal.value,
       safeword: password.value,
-      token:sessionToken.value
+      token:val
     }
-    _orderBuy().then(res => {
+    console.log(data,'data')
+    _orderBuy({ ...data }).then(res => {
       if (res.code == 200) {
           router.push({
           name:'subscriptionSuccess'
         });
       }
     })
+  }
+  
+  const openPositPopup = () => {
+    if (new Decimal(numValue.value).gt(new Decimal(availableNum.value))) {
+      showToast('超出最大可买');
+      return
+    }
+    _commToken().then((res=>{
+      if (res.code == 200) {
+        buy(res.data)
+      }
+    }))
+    
   };
+
+  const vipSubscription = ()=>{
+    showPopup.value = true
+    vipVal.value = ''
+  }
+
+  const select = (i)=>{
+    selectedOption.value = i;
+    showPopup.value = false;
+  }
   
 
   const inputChange = ()=>{
-    
+    if (numValue.value!='') {
+      //输入框换算滚动滑动条
+      const result = new Decimal(numValue.value).div(new Decimal(availableNum.value)).mul(100).floor().toNumber()
+      if (result >= 100) {
+        sliderValue.value = 100;
+        return
+      }
+      sliderValue.value = result;
+
+
+      getPrice()
+    }
+  }
+
+  const getPrice = ()=>{
+    if (numValue.value !='') {
+      //锁定金额 = 数量 * 最高价
+      lockmonkey.value = new Decimal(numValue.value).mul(new Decimal(ipoDetail.value.issue_price_max))
+      //申购数量 = 数量*杠杆
+      subscriptionQuantity.value = new Decimal(numValue.value).mul(new Decimal(ipoDetail.value.lever))
+      //手续费 = （最高价 -1）*数量 * 杠杆 *手续费
+      fee.value = (new Decimal(ipoDetail.value.issue_price_max).minus(1)).mul(subscriptionQuantity.value).mul(new Decimal(setFee.value))
+      //合计 
+      all.value = fee.value.plus(lockmonkey.value).toNumber();
+    }
   }
 
   const getList = ()=>{
     _orderPara().then(res => {
       if (res.code == 200) {
-        
+        setFee.value = res.data.fee
+      }
+    })
+  }
+
+  const getBalance = ()=>{
+    _walletBalance({currency:'main'}).then(res => {
+      if (res.code == 200) {
+        console.log(ipoDetail.value,'ipoDetail.value')
+        amount.value = res.data[0].amount
+        const issue_price_max = ipoDetail.value.issue_price_max
+        availableNum.value = new Decimal(amount.value).div(new Decimal(issue_price_max)).floor();
       }
     })
   }
 
 
   onMounted(()=>{
-    // getList()
+    getList()
+    //获得主账户
+    getBalance()
   })
   
   </script>
@@ -193,6 +325,28 @@
     //   left: 47%;
     //   margin-top: 2rem !important;
     // }
+    .ipo-company-name {
+      width: 100%;
+      height: 0.88rem;
+      border-radius: 0.12rem;
+      border: 0.02rem solid #d0d8e2;
+      margin-bottom: 0.4rem;
+      background-color: #f9fafb;
+      margin-top: 0.2rem;
+      color: #333;
+      text-align: right;
+      font-size: 0.28rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 0.88rem;
+      padding-right: 0.32rem;
+    }
+    .add {
+      background-color: #f9fafb;
+      .vip-input{
+        background-color: #f9fafb;
+      }
+    }
     .arrow-left {
         position: absolute;
         left: 0.3rem;
@@ -486,6 +640,7 @@
   
     .van-slider__button-wrapper {
       z-index: 999 !important;
+      padding: 0.24rem;
     }
   
     input:focus {
