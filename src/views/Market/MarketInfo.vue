@@ -9,7 +9,7 @@
                 </div>
                 <div class="title">
                     <div>{{ item.symbol || '--' }}</div>
-                    <div class="info">{{ item.name || '--' }}</div>
+                    <!-- <div class="info">{{ item.name || '--' }}</div> -->
                 </div>
                 <div class="search" @click="router.push({ name: 'search' })">
                     <img src="/static/img/common/search_box.png" alt="🔍">
@@ -64,37 +64,21 @@
         <div class="market_content">
             <!-- 功能项 -->
             <div class="funcs">
-                <div class="ripple_button tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">图表</div>
-                <div class="ripple_button tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">概述</div>
+                <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">图表</div>
+                <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">概述</div>
                 <div style="flex: 1;"></div>
-                <div class="icon fullscreen" @click="fullScreen(true)">
+                <!-- <div class="icon fullscreen" @click="fullScreen(true)">
                     <img src="/static/img/market/fullscreen.png" alt="fullscreen">
-                </div>
+                </div> -->
                 <div class="icon star">
                     <img src="/static/img/market/stared.png" alt="⭐">
                 </div>
+                <div @click="showBuy = true" class="ripple_button ripple_button2 submit_btn">
+                    <span>交易</span>
+                </div>
             </div>
 
-            <!-- 详情 -->
-            <div v-show="activeTab == 1" class="info">
-                <div class="left">
-                    <div class="price" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{ item.price ||
-                        item.close || '--' }}
-                    </div>
-                    <div class="time">
-                        Update time <span>{{ item.timestamp ? getTimestr(item.timestamp * 1000, 2) : '--' }}</span>
-                    </div>
-                </div>
-                <div class="mid" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
-                    <div>--</div>
-                    <div>{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%' }}</div>
-                </div>
-                <div class="right">
-                    <b>{{ item.market || '--' }}</b>
-                    <div>{{ item.market_status == 'open' ? '开市' : (item.market_status == 'close' ? '闭市' : '--') }}
-                    </div>
-                </div>
-            </div>
+
 
             <!-- 图表 -->
             <div v-if="activeTab == 1" class="chart_box">
@@ -126,6 +110,26 @@
             <!-- 概览 -->
             <div class="intro_box" v-if="activeTab == 2">
                 <div class="intro_title">{{ item.symbol || '--' }}</div>
+                <!-- 详情 -->
+                <div class="info">
+                    <div class="left">
+                        <div class="price" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{ item.price ||
+                            item.close || '--' }}
+                        </div>
+                        <div class="time">
+                            Update time <span>{{ item.timestamp ? getTimestr(item.timestamp * 1000, 2) : '--' }}</span>
+                        </div>
+                    </div>
+                    <div class="mid" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
+                        <div>--</div>
+                        <div>{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%' }}</div>
+                    </div>
+                    <div class="right">
+                        <b>{{ item.market || '--' }}</b>
+                        <div>{{ item.market_status == 'open' ? '开市' : (item.market_status == 'close' ? '闭市' : '--') }}
+                        </div>
+                    </div>
+                </div>
                 <div class="intro_content">{{ item.business_summary ||
                     '--' }}</div>
                 <div class="intro_area">
@@ -150,9 +154,9 @@
 
 
         <!-- 交易按钮 -->
-        <div @click="showBuy = true" class="max-width ripple_button ripple_button2 submit">
+        <!-- <div @click="showBuy = true" class="max-width ripple_button ripple_button2 submit">
             <span>交易</span>
-        </div>
+        </div> -->
 
 
         <!-- 时间选择弹窗 -->
@@ -256,12 +260,11 @@ const fullScreen = (key) => {
 
 <style lang="less" scoped>
 .page_marketinfo {
-    padding: 2.6rem 0.3rem 3.72rem 0.3rem;
+    padding: 1.8rem 0.3rem 1.5rem 0.3rem;
 
     .info_header {
-        height: 2.6rem;
         width: calc(100% - 0.6rem);
-        border-bottom: 0.2rem solid #F9FAFB;
+        border-bottom: 0.1rem solid #F9FAFB;
         position: fixed;
         top: 0;
         left: 50%;
@@ -271,7 +274,7 @@ const fullScreen = (key) => {
 
         .top {
             display: flex;
-            height: 1.36rem;
+            height: 0.8rem;
             align-items: center;
             justify-content: space-between;
 
@@ -297,13 +300,13 @@ const fullScreen = (key) => {
             }
 
             .search {
-                width: 0.8rem;
-                height: 0.8rem;
+                width: 0.6rem;
+                height: 0.6rem;
             }
         }
 
         .count {
-            padding: 0.1rem 0;
+            padding: 0.1rem 0 0.05rem 0;
             display: flex;
 
             .count_item {
@@ -311,9 +314,9 @@ const fullScreen = (key) => {
                 flex-shrink: 0;
                 overflow: hidden;
                 color: #55555E;
-                font-size: 0.28rem;
+                font-size: 0.24rem;
                 font-weight: 400;
-                line-height: 0.4rem;
+                line-height: 0.36rem;
                 white-space: nowrap;
 
                 .num {
@@ -367,30 +370,42 @@ const fullScreen = (key) => {
         .funcs {
             display: flex;
             align-items: center;
+            margin-bottom: 0.2rem;
 
             .tab {
                 color: #061023;
-                font-size: 0.32rem;
+                font-size: 0.28rem;
                 font-weight: 400;
                 margin-right: 0.32rem;
                 overflow: hidden;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 0 0.6rem;
-                height: 0.72rem;
+                padding: 0 0.2rem;
+                // height: 0.72rem;
             }
 
             .active_tab {
-                background-color: #F6F8FF;
+                // background-color: #F6F8FF;
                 border-radius: 0.48rem;
                 color: #014CFA;
+                font-weight: bold;
             }
 
             .icon {
-                width: 0.8rem;
-                height: 0.8rem;
+                width: 0.5rem;
+                height: 0.5rem;
                 margin-left: 0.2rem;
+            }
+
+            .submit_btn {
+                padding: 0.12rem 0.4rem;
+                color: #fff;
+                background-color: #014CFA;
+                border-radius: 0.5rem;
+                font-weight: 600;
+                font-size: 0.26rem;
+                margin-left: 0.3rem;
             }
         }
 
@@ -446,26 +461,26 @@ const fullScreen = (key) => {
 
         .chart_box {
             width: 100%;
-            height: 6.16rem;
+            height: calc(100vh - 4.4rem);
             display: flex;
             flex-direction: column;
             overflow: hidden;
 
             .tabs {
-                height: 0.64rem;
+                height: 0.48rem;
                 margin-bottom: 0.24rem;
                 display: flex;
                 align-items: center;
 
                 .tab {
-                    height: 0.64rem;
+                    height: 0.48rem;
                     background-color: #EFF6FF;
                     display: flex;
                     align-items: center;
                     justify-content: center;
                     border-radius: 0.3rem;
                     color: #0A54F9;
-                    font-size: 0.28rem;
+                    font-size: 0.24rem;
                     font-weight: 400;
                     margin-right: 0.18rem;
                     padding: 0 0.16rem;

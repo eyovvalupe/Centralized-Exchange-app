@@ -1,6 +1,6 @@
 <!-- 市场 -->
 <template>
-    <div class="page page_market">
+    <div class="page page_market ">
         <!-- 标题 -->
         <div class="title">市场</div>
         <!-- 搜索 -->
@@ -9,19 +9,19 @@
         </div>
 
         <!-- Tabs -->
-        <Tabs class="tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated
-            :color="'#014CFA'" shrink>
+        <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
+            :swipeable="false" animated shrink>
             <Tab :title="'自选'" class="optional">
                 <Optional v-if="activated" ref="OptionalRef" />
             </Tab>
-            <!-- <Tab :title="'股票'">
-                <Stock />
+            <Tab :title="'股票'">
+                <Stock ref="StockRef" />
             </Tab>
-            <Tab :title="'理财'">
+            <!-- <Tab :title="'理财'">
                 <Financial />
             </Tab> -->
             <Tab :title="'IPO'">
-                <IPO :type="'market'" ref="IPORef"/>
+                <IPO :type="'market'" ref="IPORef" />
             </Tab>
         </Tabs>
     </div>
@@ -40,6 +40,7 @@ import { useSocket } from '@/utils/ws'
 
 const active = ref(0)
 const OptionalRef = ref()
+const StockRef = ref()
 const IPORef = ref()
 const changeTab = key => {
     active.value = key
@@ -48,6 +49,9 @@ const changeTab = key => {
             OptionalRef.value.init()
             break
         case 1:
+            StockRef.value.getData()
+            break
+        case 2:
             IPORef.value.init()
             break
     }
@@ -97,6 +101,7 @@ onDeactivated(() => {
     flex-direction: column;
     padding-bottom: 1.4rem;
 
+
     .title {
         height: 1.12rem;
         color: #0D0D12;
@@ -121,36 +126,51 @@ onDeactivated(() => {
         display: flex;
         flex-direction: column;
 
-        :deep(.van-tabs__wrap) {
-            padding: 0 0.32rem;
+        :deep(.van-tab__panel) {
+            height: calc(100vh - 3.4rem);
+            overflow-y: auto;
         }
 
-        :deep(.van-tabs__nav) {
-            position: relative;
+        :deep(.van-tabs__nav--card) {
+            border: none;
+        }
 
-            &::after {
-                content: '';
-                width: 100%;
-                height: 1px;
-                background-color: #3B82F6;
-                position: absolute;
-                bottom: 16px;
-                left: 0;
-                opacity: 0.3;
-            }
+        :deep(.van-tab--card) {
+            border-right: none;
+            color: #061023;
+            // background-color: #f5f5f5;
+            // border-radius: 0.3rem;
+            // margin-left: 0.1rem;
+            // transition: all ease .2s;
+        }
+
+        :deep(.van-tab--card.van-tab--active) {
+            // background-color: #014CFA;
+            // color: #fff;
+
+            background-color: #F6F8FF;
+            border-radius: 0.3rem;
+            color: #014CFA;
+            font-weight: 500
+        }
+
+        :deep(.van-tab--shrink) {
+            padding: 0 0.3rem;
+        }
+
+        :deep(.van-tabs__wrap) {
+            height: 0.8rem;
+            border-bottom: 1px solid #F6F8FF;
+            padding-bottom: 0.2rem;
+        }
+
+        :deep(.van-tabs__nav--card) {
+            height: 0.6rem;
         }
 
         :deep(.van-tab) {
-            margin-left: 0.36rem;
-        }
-
-        :deep(.van-tabs__content) {
-            flex: 1;
-
-            .van-swipe-item {
-                overflow-y: auto;
-                padding-bottom: 0.2rem;
-            }
+            line-height: 0.6rem;
+            font-size: 0.28rem;
         }
     }
 }

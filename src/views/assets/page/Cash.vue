@@ -206,6 +206,7 @@ defineExpose({
 <style lang="less" scoped>
 .page_assets_cash {
     height: 100%;
+    overflow-y: hidden;
     border-top: 1px solid rgba(0, 0, 0, 0);
     position: relative;
     padding-bottom: 1.5rem;

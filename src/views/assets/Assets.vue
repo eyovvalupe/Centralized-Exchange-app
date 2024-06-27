@@ -158,11 +158,11 @@ onMounted(() => {
     }
 
     .tab_content {
-        ::v-deep(.van-tabs__nav--card) {
+        :deep(.van-tabs__nav--card) {
             border: none;
         }
 
-        ::v-deep(.van-tab--card) {
+        :deep(.van-tab--card) {
             border-right: none;
             color: #061023;
             // background-color: #f5f5f5;
@@ -171,7 +171,7 @@ onMounted(() => {
             // transition: all ease .2s;
         }
 
-        ::v-deep(.van-tab--card.van-tab--active) {
+        :deep(.van-tab--card.van-tab--active) {
             // background-color: #014CFA;
             // color: #fff;
 
@@ -181,23 +181,23 @@ onMounted(() => {
             font-weight: 500
         }
 
-        ::v-deep(.van-tab--shrink) {
+        :deep(.van-tab--shrink) {
             padding: 0 0.3rem;
         }
 
-        ::v-deep(.van-tabs__wrap) {
+        :deep(.van-tabs__wrap) {
             height: 0.8rem;
             border-bottom: 1px solid #F6F8FF;
             padding-bottom: 0.2rem;
         }
 
-        ::v-deep(.van-tabs__nav--card) {
+        :deep(.van-tabs__nav--card) {
             height: 0.6rem;
         }
 
-        ::v-deep(.van-tab) {
+        :deep(.van-tab) {
             line-height: 0.6rem;
-            font-size: 0.32rem;
+            font-size: 0.28rem;
         }
 
     }
