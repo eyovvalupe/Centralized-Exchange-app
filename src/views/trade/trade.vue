@@ -134,7 +134,7 @@ const router = useRouter();
 if (route.query.type === "ipodetail") {
   active.value = 1;
 }
-if (route.query.type === 'winning') {
+if (route.query.type === 'winning' || route.query.redata === 'winning') {
   active.value = 1;
   ipoActive.value = 1
 }

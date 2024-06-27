@@ -1,7 +1,7 @@
 <template>
     <div class="ipostock">
 
-        <Loading v-show="loading && token" type="spinner" class="market-ipo-loading"></Loading>
+      <Loading v-show="loading && token" type="spinner" class="market-ipo-loading"></Loading>
 
 
       <PullRefresh v-model="reloading" @refresh="onRefresh" v-if="dataList.length > 0 && !loading && token" >
@@ -98,9 +98,11 @@ const getlist = ()=>{
 }
 
 onMounted(()=>{
-  loading.value = true
-  page.value = 1
-  getlist()
+  if(token.value) {
+    loading.value = true
+    page.value = 1
+    getlist()
+  }
 })
 
 
