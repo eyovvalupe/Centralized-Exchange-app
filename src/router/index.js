@@ -377,6 +377,16 @@ const routes = [
     }
   },
   {
+    // 充值列表
+    path: "/topUpRecord",
+    name: "topUpRecord",
+    component: () => import("../views/Assets/TopUpRecord.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 认购
     path: "/subscription",
     name: "subscription",

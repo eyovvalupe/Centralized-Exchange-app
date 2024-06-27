@@ -16,7 +16,7 @@
             <div class="navs">
                 <div class="nav">
                     <div>现金</div>
-                    <div class="num">{{ hidden ? '***' : (assets.money || '0.00') }}</div>
+                    <div class="num">{{ hidden ? '****' : (assets.money || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
@@ -434,8 +434,6 @@ const jump = (name) => {
     .tabs {
         border-top: 1px solid #EAEAEA;
         padding: 0 0.32rem;
-
-
 
 
         .tab {

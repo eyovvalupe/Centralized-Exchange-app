@@ -71,19 +71,21 @@ const getData = () => {
 getData()
 
 
+const scrolHandle = () => {
+    const rect = moreDom.getBoundingClientRect()
+    if (rect.top <= totalHeight) {
+        // 加载更多
+        getData()
+    }
+}
+
 onMounted(() => {
     const moreDom = document.querySelector('.loading_more')
     const totalHeight = window.innerHeight || document.documentElement.clientHeight;
-    document.querySelector('.list').addEventListener('scroll', () => {
-        const rect = moreDom.getBoundingClientRect()
-        if (rect.top <= totalHeight) {
-            // 加载更多
-            getData()
-        }
-    })
+    document.querySelector('.list').addEventListener('scroll', scrolHandle)
 })
 onUnmounted(() => {
-    document.querySelector('.list').removeEventListener('scroll', () => { })
+    document.querySelector('.list').removeEventListener('scroll', scrolHandle)
 })
 </script>
 

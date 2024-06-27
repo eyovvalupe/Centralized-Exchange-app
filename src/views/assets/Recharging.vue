@@ -38,7 +38,9 @@
             </div>
         </div>
 
-        <div class="tip">请扫码支付后，点击完成</div>
+        <Circle class="circle" size="60px" v-if="s && !loading" v-model:current-rate="currentRate" :rate="0"
+            :text="s + 's'" />
+        <div class="tip">请扫码支付后，点击完成 <span v-if="s && !loading">（支付时间：{{ s }}s）</span></div>
         <Button @click="openSure" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
 
     </div>
@@ -49,7 +51,7 @@ import Top from "@/components/Top.vue"
 import { _networkMapList } from "@/utils/dataMap.js"
 import { useRoute } from "vue-router"
 import { ref, computed } from "vue"
-import { Button, showNotify, showToast, showConfirmDialog } from "vant"
+import { Button, showNotify, showToast, showConfirmDialog, Circle } from "vant"
 import { _copyTxt } from "@/utils/index.js"
 import Loading from "@/components/Loaidng.vue"
 import { _paycode, _deposit } from "@/api/api"
@@ -88,12 +90,32 @@ const getAddress = () => {
         if (res.code == 200) {
             address.value = res.data?.address || '1234567890'
             drawQrcode()
+            startCountDown()
         }
     }).finally(() => {
         loading.value = false
     })
 }
 getAddress()
+
+// 倒计时
+const s = ref(0)
+const max = 60
+const currentRate = computed(() => {
+    return s.value * 100 / 60
+})
+let interval = null
+const startCountDown = () => {
+    s.value = max
+    interval && clearInterval(interval)
+    interval = setInterval(() => {
+        s.value--
+        if (s.value == 0) {
+            clearInterval(interval)
+        }
+    }, 1000);
+}
+
 
 // 生成二维码
 const qrcodeRef = ref()
@@ -295,12 +317,17 @@ getSessionToken()
         }
     }
 
+    .circle {
+        margin: 0.9rem auto 0.2rem auto;
+        display: block;
+    }
+
     .tip {
         font-weight: 400;
         color: #8F92A1;
         font-size: 0.24rem;
         line-height: 0.32rem;
-        margin: 0.9rem 0 0.4rem 0;
+        margin: 0 0 0.4rem 0;
         text-align: center;
     }
 
