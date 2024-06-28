@@ -1,31 +1,38 @@
 <!-- 市场 -->
 <template>
     <div class="page page_market ">
-        <PullRefresh  class="refresh_box" v-model="reloading" @refresh="onRefresh">
-            <!-- 标题 -->
-            <div class="title">市场</div>
-            <!-- 搜索 -->
-            <div class="search_box" @click="router.push({ name: 'search' })">
-                <img src="/static/img/common/search_box.png" alt="🔍">
-            </div>
 
-            <!-- Tabs -->
-            <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
-                :swipeable="false" animated shrink>
-                <Tab :title="'自选'" class="optional">
-                    <Optional v-if="activated && active == 0" ref="OptionalRef" />
-                </Tab>
-                <Tab :title="'股票'">
-                    <Stock v-if="active == 1" ref="StockRef" />
-                </Tab>
-                <!-- <Tab :title="'理财'">
-                    <Financial />
-                </Tab> -->
-                <Tab :title="'IPO'">
-                    <IPO v-if="active == 2" :type="'market'" ref="IPORef"  @reloading="setReloading"/>
-                </Tab>
-            </Tabs>
-        </PullRefresh>
+        <transition :name="detailTransition">
+            <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'"/>
+            <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'"/>
+            <PullRefresh  class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
+                <!-- 标题 -->
+                <div class="title">市场</div>
+                <!-- 搜索 -->
+                <div class="search_box" @click="router.push({ name: 'search' })">
+                    <img src="/static/img/common/search_box.png" alt="🔍">
+                </div>
+
+                <!-- Tabs -->
+                <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
+                    :swipeable="false" animated shrink>
+                    <Tab :title="'自选'" class="optional">
+                        <Optional v-if="activated && active == 0" ref="OptionalRef" />
+                    </Tab>
+                    <Tab :title="'股票'">
+                        <Stock v-if="active == 1" ref="StockRef" />
+                    </Tab>
+                    <!-- <Tab :title="'理财'">
+                        <Financial />
+                    </Tab> -->
+                    <Tab :title="'IPO'">
+                        <IPO v-if="active == 2" :type="'market'" ref="IPORef"  @reloading="setReloading"  @showOpenDetail="showOpenDetail"/>
+                    </Tab>
+                </Tabs>
+            </PullRefresh>
+        </transition>
+
+       
     </div>
 </template>
 
@@ -39,18 +46,23 @@ import Financial from "./components/Financial.vue"
 import IPO from "./components/IPO.vue"
 import store from "@/store"
 import { useSocket } from '@/utils/ws'
+import IPODetail from '@/views/trade/IPODetail.vue'
+import Subscription from '@/views/trade/Subscription.vue'
 
 const active = ref(0)
 const OptionalRef = ref()
 const StockRef = ref()
 const IPORef = ref()
 const reloading = ref(false)
+const detail = ref(null)
+const detailTransition = ref('slide-right');
+
 const changeTab = key => {
     active.value = key
     setTimeout(() => {
         switch (key) {
             case 0:
-                OptionalRef.value.init()
+            OptionalRef.value && OptionalRef.value.init()
                 break
             case 1:
                 StockRef.value.getData()
@@ -60,6 +72,24 @@ const changeTab = key => {
                 break
         }
     }, 200)
+}
+
+
+watch([detail], ([newActive]) => {
+  if (newActive) {
+    detailTransition.value = 'slide-right';
+  } else {
+    detailTransition.value = 'slide-left';
+  }
+});
+
+
+const showOpenDetail = (val)=>{
+  detail.value = val
+}
+
+const closeOpenDetail = ()=>{
+  detail.value = false
 }
 
 // 预加载页面
