@@ -4,9 +4,7 @@
       <Loading v-show="loading && token" type="spinner" class="market-ipo-loading"></Loading>
 
 
-      <PullRefresh v-model="reloading" @refresh="onRefresh" v-if="dataList.length > 0 && !loading && token" >
-
-        <div class="ipocontent" v-for="(i,key) in dataList" :key="key" @click="ipodetail(i.order_no)" v-if="!loading && token">
+        <div class="ipocontent" v-for="(i,key) in dataList" :key="key" @click="ipodetail(i.order_no)" v-if="dataList.length > 0 && !loading && token" >
             <div class="bug-ing">认购中</div>
             <img src="/static/img/trade/no.png" alt="" class="already-img" v-if="i.status == 'failure'">
             <img src="/static/img/trade/already.png" alt="" class="already-img" v-if="i.status == 'success'">
@@ -45,8 +43,6 @@
             </div>
         </div>
 
-      </PullRefresh>
-
 
       <!-- 数据列表为空 -->
       <NoData v-if="dataList.length === 0 && !loading && token" />
@@ -64,7 +60,7 @@
 <script setup>
 import { useRouter, useRoute } from 'vue-router';
 import {_orderList} from '@/api/api'
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, defineEmits} from 'vue';
 import { Loading, PullRefresh } from 'vant';
 import store from "@/store";
 import NoData from "@/components/NoData.vue"
@@ -75,6 +71,8 @@ const dataList = ref([])
 const loading = ref(false)
 const token = computed(() => store.state.token);
 const reloading = ref(false)
+const hasInit = ref(false); // 用于跟踪是否初始化
+const emit = defineEmits();
 
 const ipodetail = (id) =>{
   store.commit('setIpoId',id)
@@ -91,19 +89,34 @@ const getlist = ()=>{
       dataList.value = res.data
       loading.value = false
     }
+    emit('reloading')
   }).finally(() => {
       loading.value = false
       reloading.value = false
+      emit('reloading')
   })
 }
 
-onMounted(()=>{
+
+onMounted(() => {
   if(token.value) {
-    loading.value = true
-    page.value = 1
-    getlist()
+    page.value = 1;
+    if (!hasInit.value) {
+      loading.value = true
+      hasInit.value = true
+    }
+    getlist();
   }
-})
+});
+
+
+const init = () => {
+  if(token.value) {
+    page.value = 1;
+    loading.value = false
+    getlist();
+  }
+};
 
 
 const onRefresh = ()=>{
@@ -119,6 +132,11 @@ const jump = (name) => {
     query:{reurl:'trade',redata:'winning'}
   });
 };
+
+
+defineExpose({
+  init,onRefresh
+});
 
 </script>
 

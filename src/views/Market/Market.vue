@@ -52,8 +52,11 @@ const changeTab = key => {
             StockRef.value.getData()
             break
         case 2:
-            IPORef.value.init()
-            break
+            if (IPORef.value && IPORef.value.init()) {
+                IPORef.value.init()
+                break
+            }
+            
     }
 }
 

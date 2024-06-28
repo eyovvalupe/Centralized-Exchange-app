@@ -1,5 +1,7 @@
 <template>
   <div class="trade">
+
+    <PullRefresh :disabled="disabled" class="refresh_box" v-model="reloading" @refresh="onRefresh">
     <div class="header">
       <!-- <div class="title">交易</div> -->
       <div style="display: flex;">
@@ -9,6 +11,14 @@
             <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
             <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
         </div>
+        <!-- <Tabs type="card" class="tab_content tabs"  @change="onChange" v-model:active="active"
+            :swipeable="false" animated shrink>
+            <Tab :title="'自选'" class="optional">
+                
+            </Tab>
+            <Tab :title="'股票'">
+            </Tab>
+        </Tabs> -->
       </div>
       
 
@@ -29,29 +39,24 @@
     <transition :name="transitionName">
         <MarketStock
           v-if="active === 0"
+          @updateActive="updateActive"
+          ref="marketRef"
+          @reloading="setReloading"
         />
         <div class="trade-tabs" v-else="active === 1" >
           <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
             :color="'#014CFA'" shrink>
             <Tab :title="'IPO'" class="optional">
+              <IPO :type="'trade'" ref="IPORef" @reloading="setReloading"/>
             </Tab>
             <Tab :title="'中签'">
+              <IPOStock ref="IPOStockRef" @reloading="setReloading"/>
             </Tab>
         </Tabs>
         </div>
     </transition>
 
-    <transition :name="ipoTransitionName">
-      <div v-if="ipoActive === 0 && active === 1">
-        <IPO :type="'trade'"/>
-      </div>
-      <div v-else-if="ipoActive === 1 && active === 1">
-        <IPOStock />
-      </div>
-    
-    </transition>
-
-
+  </PullRefresh>
 
     <Popup v-model:show="show" position="top" class="trade-popup">
       <div class="popup-title">交易</div>
@@ -111,7 +116,7 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
-import { Tab, Tabs, Popup, Sticky,Loading } from "vant";
+import { Tab, Tabs, Popup, Sticky,Loading, PullRefresh, Icon } from "vant";
 import MarketStock from "./MarketStock.vue";
 import IPOStock from "./IPOStock.vue";
 import { useRouter, useRoute } from "vue-router";
@@ -131,6 +136,14 @@ const previousActive = ref(0)
 const ipoActive = ref(0);
 const route = useRoute();
 const router = useRouter();
+const IPORef = ref()
+const IPOStockRef = ref()
+const marketRef = ref()
+const disabled = ref(false)
+const reloading = ref(false)
+
+const marketActive = ref('0')
+
 if (route.query.type === "ipodetail") {
   active.value = 1;
 }
@@ -191,6 +204,14 @@ const ipoOnChange = (val)=>{
     router.push({ path: route.path, query: {} });
   }
   ipoActive.value = val
+  switch (val) {
+      case 0:
+      IPORef.value && IPORef.value.init()
+          break
+      case 1:
+      IPOStockRef.value && IPOStockRef.value.init()
+          break
+    }
 }
 
 
@@ -308,6 +329,36 @@ const keydown = () => { // 输入事件监听
           getData()
         }, 500)
     }, 0)
+}
+
+//下拉刷新
+const onRefresh = ()=>{
+  if (active.value === 0) {
+   if (marketActive.value == '2') {
+    marketRef.value && marketRef.value.onRefresh()
+   } else {
+    setTimeout(()=>{
+      reloading.value = false
+    },500)
+   }
+  } else if(active.value === 1){
+      switch (ipoActive.value) {
+        case 0:
+        IPORef.value && IPORef.value.onRefresh()
+            break
+        case 1:
+        IPOStockRef.value && IPOStockRef.value.onRefresh()
+            break
+      }
+  }
+}
+
+const updateActive = (val)=>{
+  marketActive.value = val
+}
+
+const setReloading = ()=>{
+  reloading.value = false
 }
 </script>
 

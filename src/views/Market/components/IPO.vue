@@ -14,12 +14,7 @@
       class="market-ipo-loading"
     ></Loading>
 
-    <PullRefresh
-      v-model="reloading"
-      @refresh="onRefresh"
-      v-if="dataList.length > 0 && !loading > 0"
-    >
-      <div class="market_ipo-box" v-for="(i, key) in dataList" :key="key">
+      <div class="market_ipo-box" v-for="(i, key) in dataList" :key="key" v-if="dataList.length > 0 && !loading">
         <div class="market_ipo-box-header">
           <div class="market_ipo-box-header-title">{{ i.company_name }}</div>
           <div
@@ -94,7 +89,6 @@
           <!-- <div class="market_ipo-b-detail-button" v-if="i.status == 'lssuing'" @click="openSubscription">认购</div> -->
         </div>
       </div>
-    </PullRefresh>
 
     <!-- 数据列表为空 -->
     <NoData v-if="dataList.length === 0 && !loading" />
@@ -127,11 +121,14 @@
 import { Icon, Loading, Popup, PullRefresh } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import { CountDown } from "vant";
-import { onMounted, ref, computed } from "vue";
+import { onMounted, ref, computed, defineEmits } from "vue";
 import { defineProps } from "vue";
 import { _ipoList } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import store from "@/store";
+
+
+const hasInit = ref(false); // 用于跟踪是否初始化
 
 const router = useRouter();
 const time = ref(30 * 60 * 60 * 1000);
@@ -147,6 +144,7 @@ const selectedOption = ref("");
 const page = ref(1);
 const reloading = ref(false);
 const token = computed(() => store.state.token)
+const emit = defineEmits();
 
 const props = defineProps({
   type: String,
@@ -192,16 +190,21 @@ const getList = () => {
         loading.value = falses;
         reloading.value = false;
       }
+      emit('reloading')
     })
     .finally(() => {
       loading.value = false;
       reloading.value = false;
+      emit('reloading')
     });
 };
 
 onMounted(() => {
   page.value = 1;
-  loading.value = true;
+  if (!hasInit.value) {
+    loading.value = true
+    hasInit.value = true
+  }
   getList();
 });
 
@@ -229,12 +232,12 @@ const onRefresh = () => {
 
 const init = () => {
   page.value = 1;
-  loading.value = true;
+  loading.value = false
   getList();
 };
 
 defineExpose({
-  init,
+  init,onRefresh
 });
 </script>
 

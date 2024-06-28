@@ -132,9 +132,7 @@
             </div>
           </div>
 
-          <PullRefresh v-model="reloading" @refresh="onRefresh">
           <div v-for="(i,key) in inquireData" :key="key" style="min-height: 100%;">
-            
               <div class="content-grid grid-item-hover ripple_button"  @click="showButton(i)">
                 <div :style="currentNum === i.order_no && buttonShow ?{padding: '0'}:{padding: '0 0.3rem'}" class="flex">
                   <div class="grid-item" style="width: 2.2rem" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
@@ -185,7 +183,6 @@
                 </div>
               </div>
           </div>
-        </PullRefresh>
         </div>
 
         <!-- 没数据 -->
@@ -247,7 +244,7 @@ if (route.query.redata === "1") {
   active.value = '0';
 }
 
-const emit = defineEmits(["update"]);
+const emit = defineEmits();
 const buttonShow = ref(false);
 const buttonInquiryShow = ref(false);
 const currentNum = ref(null);
@@ -407,6 +404,7 @@ const onChange = async(val) => {
   if (Object.keys(route.query).length > 0) {
     router.push({ path: route.path, query: {} });
   }
+  emit('updateActive',val)
   previousActive.value = active.value;
   active.value = val;
   count.val = 1
@@ -487,12 +485,16 @@ const getStocksList = (val)=>{
 
           inquireData.value = res.data
         }
+        emit('reloading')
       } else {
         reloading.value = false;
         loading.value = false
         inquireData.value = []
+        emit('reloading')
       }
-  });
+  }).finally(()=>{
+    emit('reloading')
+  })
 }
 
 
@@ -548,6 +550,11 @@ const jump = (name) => {
     query:{reurl:'trade'}
   });
 };
+
+
+defineExpose({
+  onRefresh
+});
 
 </script>
 
