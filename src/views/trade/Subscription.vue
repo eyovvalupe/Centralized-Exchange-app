@@ -149,9 +149,13 @@
   const showKeyboard = ref(false);
   const showPopup = ref(false)
 
+  const ipoDetail = computed(()=>{
+    return store.state.ipoDetail
+  })
+
   const option = [
     {text:'普通申购',value:'0'},
-    {text:'VIP 申购',value:'1'}
+    {text:`VIP 申购-${ipoDetail.value.lever}X`,value:'1'}
   ]
   const selectedOption = ref("0");
 
@@ -178,10 +182,6 @@
   const id = computed(()=>{
     return store.state.ipoId
   })
-
-  const ipoDetail = computed(()=>{
-    return store.state.ipoDetail
-  })
   // const sessionToken = computed(() => store.state.sessionToken || '')
 
   const goTotrade = () => {
@@ -196,7 +196,7 @@
     if (textSelect.value === '普通申购') {
       return ''
     }
-    return `请输入 ${textSelect.value}`;
+    return `请输入 VIP 认购密钥`;
   });
 
 
@@ -226,12 +226,13 @@
       safeword: password.value,
       token:val
     }
-    console.log(data,'data')
     _orderBuy({ ...data }).then(res => {
       if (res.code == 200) {
           router.push({
           name:'subscriptionSuccess'
         });
+      } else {
+        showToast(res.message);
       }
     })
   }
@@ -257,6 +258,7 @@
   const select = (i)=>{
     selectedOption.value = i;
     showPopup.value = false;
+    getPrice()
   }
   
 
@@ -277,14 +279,25 @@
 
   const getPrice = ()=>{
     if (numValue.value !='') {
-      //锁定金额 = 数量 * 最高价
-      lockmonkey.value = new Decimal(numValue.value).mul(new Decimal(ipoDetail.value.issue_price_max))
-      //申购数量 = 数量*杠杆
-      subscriptionQuantity.value = new Decimal(numValue.value).mul(new Decimal(ipoDetail.value.lever))
-      //手续费 = （最高价 -1）*数量 * 杠杆 *手续费
-      fee.value = (new Decimal(ipoDetail.value.issue_price_max).minus(1)).mul(subscriptionQuantity.value).mul(new Decimal(setFee.value))
-      //合计 
-      all.value = fee.value.plus(lockmonkey.value).toNumber();
+      if (textSelect.value === '普通申购') {
+        //锁定金额 = 数量 * 最高价
+        lockmonkey.value = new Decimal(numValue.value).mul(new Decimal(ipoDetail.value.issue_price_max))
+        //申购数量 = 数量*杠杆
+        subscriptionQuantity.value = new Decimal(numValue.value).mul(new Decimal(1))
+        //手续费 = （最高价 -1）*数量 * 杠杆 *手续费
+        fee.value = 0
+        //合计 
+        all.value = lockmonkey.value.toNumber();
+      } else {
+        //锁定金额 = 数量 * 最高价
+        lockmonkey.value = new Decimal(numValue.value).mul(new Decimal(ipoDetail.value.issue_price_max))
+        //申购数量 = 数量*杠杆
+        subscriptionQuantity.value = new Decimal(numValue.value).mul(new Decimal(ipoDetail.value.lever))
+        //手续费 = （最高价 -1）*数量 * 杠杆 *手续费
+        fee.value = (new Decimal(ipoDetail.value.issue_price_max).minus(1)).mul(subscriptionQuantity.value).mul(new Decimal(setFee.value))
+        //合计 
+        all.value = fee.value.plus(lockmonkey.value).toNumber();
+      }
     }
   }
 
@@ -694,7 +707,7 @@
         padding-left: 0.4rem;
         .vip-subscription {
             display: flex;
-            width: 3rem;
+            width: 5rem;
             justify-content:space-between;
             span{
                 text-align: center;

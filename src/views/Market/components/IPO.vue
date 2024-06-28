@@ -166,7 +166,7 @@ const openSubscription = (val) => {
     router.push({ name: "subscription", query: { type: props.type } });
   } else {
     router.push({
-      name: 'login',query:{reurl:'trade',redata:'winning'}
+      name: 'login',query:{reurl:'trade',redata:'ipo'}
     });
   }
 };

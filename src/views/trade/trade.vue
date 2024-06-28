@@ -138,6 +138,10 @@ if (route.query.type === 'winning' || route.query.redata === 'winning') {
   active.value = 1;
   ipoActive.value = 1
 }
+if (route.query.redata === 'ipo') {
+  active.value = 1;
+  ipoActive.value = 0
+}
 
 
 const transitionName = ref('slide-left');
