@@ -15,6 +15,7 @@ export default {
         marketDownList: [], // 首页跌幅列表
 
         marketRecommndList: [], // 首页推荐列表
+        marketStockList: [], // 股票页列表
 
         marketWatchKeys: [], // 除了列表，还需要额外监听的股票
     },
@@ -33,6 +34,9 @@ export default {
         },
         setMarketRecommndList(state, data) {
             state.marketRecommndList = data;
+        },
+        setMarketStockList(state, data) {
+            state.marketStockList = data;
         },
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
@@ -78,7 +82,6 @@ export default {
                     ...proxyListValue.map(item => item.symbol),
                     ...state.marketWatchKeys
                 ]))
-
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {

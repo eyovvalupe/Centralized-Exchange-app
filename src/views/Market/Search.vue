@@ -53,7 +53,6 @@ const getData = () => { // 获取数据
     _search({
         symbol: search.value
     }).then(res => {
-        console.error(res)
         store.commit('setMarketSearch', {
             search: search.value,
             list: res.data || []
@@ -76,7 +75,6 @@ const clearData = () => { // 重置搜索
 let timeout = null
 const keydown = () => { // 输入事件监听
     setTimeout(() => {
-        console.error(search.value)
         if (timeout) clearTimeout(timeout)
         if (!search.value) return
         timeout = setTimeout(() => {
@@ -121,7 +119,6 @@ const collect = item => {
             name: 'login'
         })
     } else {
-        console.error('收藏', item.watchlist)
         if (collectLoading.value) return
         collectLoading.value = true
         if (!reqMap[item.watchlist || 0]) return collectLoading.value = false

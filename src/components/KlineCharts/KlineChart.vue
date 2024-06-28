@@ -5,14 +5,15 @@
 
         <!-- 加载更多数据时的loading -->
         <div class="more_loading" v-show="moreLoading">
-            <Loading color="#1989fa" type="spinner" />
+            <L color="#1989fa" type="spinner" />
         </div>
 
         <!-- 初始化时的骨架屏 -->
         <div class="init_loading" v-show="initLoading">
-            <div v-for="i in 30" :key="i" class="init_item"
+            <!-- <div v-for="i in 30" :key="i" class="init_item"
                 :style="{ height: (Math.random() * (1.2 - 0.6) + 0.6) + 'rem', top: (Math.random() * 1 - 0.5) + 'rem' }">
-            </div>
+            </div> -->
+            <L type="spinner" :loading="initLoading" />
         </div>
     </div>
 
@@ -23,9 +24,10 @@ import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue"
 import { init, dispose } from 'klinecharts'
 import { klineConfig } from './kline.conf';
 import { _kline } from "@/api/api"
-import { Loading } from 'vant';
+import { Loading as L } from 'vant';
 import { useSocket } from '@/utils/ws'
 import store from "@/store";
+import Loading from "../LoadingMore"
 
 const { startSocket } = useSocket()
 let socket = null
@@ -75,7 +77,7 @@ onBeforeUnmount(() => {
     socket && socket.emit('kline', '') // 取消订阅
 })
 
-
+const vol = ref(null) // 技术指标
 const initLoading = ref(false)
 const initData = async () => { // 初始化数据
     page.value = 1
@@ -96,6 +98,13 @@ const initData = async () => { // 初始化数据
             store.commit('setCurrStock', datas[datas.length - 1] || {})
             chart.loadMore(loadMoreData)
             setTimeout(() => {
+                if (!vol.value) {
+                    vol.value = chart.createIndicator('VOL')
+                } else {
+                    chart.overrideIndicator({
+                        name: vol.value
+                    })
+                }
                 chart.resize()
             }, 100)
             // 订阅新数据
@@ -235,8 +244,8 @@ defineExpose({
         justify-content: space-around;
         top: 0;
         left: 0;
-        border-right: 1px solid #7F939E;
-        border-bottom: 1px solid #7F939E;
+        // border-right: 1px solid #7F939E;
+        // border-bottom: 1px solid #7F939E;
         z-index: 9;
 
         .init_item {

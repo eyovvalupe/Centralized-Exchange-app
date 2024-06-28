@@ -105,7 +105,6 @@ onMounted(() => {
 })
 setTimeout(() => {
     loading.value = false
-    console.error('---订阅推荐列表')
     store.commit('setMarketWatchKeys', rs.map(item => item.symbol))
     store.commit('setMarketRecommndList', rs)
     setTimeout(() => {
@@ -118,7 +117,6 @@ setTimeout(() => {
 // 新闻
 const news = ref([])
 _news().then(res => {
-    console.error(res)
     if (res.code == 200) {
         news.value = res.data || []
     }

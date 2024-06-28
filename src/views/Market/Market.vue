@@ -12,16 +12,16 @@
         <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
             :swipeable="false" animated shrink>
             <Tab :title="'自选'" class="optional">
-                <Optional v-if="activated" ref="OptionalRef" />
+                <Optional v-if="activated && active == 0" ref="OptionalRef" />
             </Tab>
             <Tab :title="'股票'">
-                <Stock ref="StockRef" />
+                <Stock v-if="active == 1" ref="StockRef" />
             </Tab>
             <!-- <Tab :title="'理财'">
                 <Financial />
             </Tab> -->
             <Tab :title="'IPO'">
-                <IPO :type="'market'" ref="IPORef" />
+                <IPO v-if="active == 2" :type="'market'" ref="IPORef" />
             </Tab>
         </Tabs>
     </div>
@@ -44,20 +44,19 @@ const StockRef = ref()
 const IPORef = ref()
 const changeTab = key => {
     active.value = key
-    switch (key) {
-        case 0:
-            OptionalRef.value.init()
-            break
-        case 1:
-            StockRef.value.getData()
-            break
-        case 2:
-            if (IPORef.value && IPORef.value.init()) {
-                IPORef.value.init()
+    setTimeout(() => {
+        switch (key) {
+            case 0:
+                OptionalRef.value.init()
                 break
-            }
-            
-    }
+            case 1:
+                StockRef.value.getData()
+                break
+            case 2:
+                IPORef.value && IPORef.value.init()
+                break
+        }
+    }, 200)
 }
 
 // 预加载页面
@@ -93,7 +92,6 @@ onDeactivated(() => {
         socket && socket.emit('snapshot', '') // 快照数据
         socket && socket.off('realtime')
         socket && socket.off('snapshot')
-        console.error('取消订阅')
     })
 })
 </script>

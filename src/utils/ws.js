@@ -23,7 +23,6 @@ export const useSocket = () => {
           }
         }
       });
-      console.error(socket)
       socket.on("connect", () => {
         console.log("socket connect...");
         if (typeof fn === "function") {

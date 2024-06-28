@@ -85,7 +85,6 @@ const getGoogle = () => {
         loadingType: 'spinner',
     })
     _google().then(res => {
-        console.error(res)
         if (res.code == 200) {
             gg.value = res.data
             QRCode.toDataURL(res.data.googlesecretqr)

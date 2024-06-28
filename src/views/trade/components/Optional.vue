@@ -1,7 +1,6 @@
 <!-- 自选 -->
 <template>
-    <StockTable :scroll-box="'.optional'" class="market_optional"
-        :loading="loading" :list="watchList" :type="type" />
+    <StockTable :scroll-box="'.optional'" class="market_optional" :loading="loading" :list="watchList" :type="type" />
 </template>
 
 <script setup>
@@ -71,7 +70,6 @@ defineExpose({
 // 移除收藏
 const removeLoading = ref(false)
 const remove = item => {
-    console.error(item)
     if (removeLoading.value) return
     removeLoading.value = true
     showLoadingToast({

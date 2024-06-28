@@ -76,7 +76,6 @@ defineExpose({
 // 移除收藏
 const removeLoading = ref(false)
 const remove = item => {
-    console.error(item)
     if (removeLoading.value) return
     removeLoading.value = true
     showLoadingToast({

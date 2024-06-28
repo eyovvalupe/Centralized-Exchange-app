@@ -67,7 +67,6 @@ const marketUpList = computed(() => store.state.marketUpList || []) // 涨幅列
 const marketDownList = computed(() => store.state.marketDownList || []) // 跌幅列表
 const loading = ref(false)
 const subs = (list, key) => { // 订阅ws
-  console.error('--订阅首页')
   store.dispatch('subList', {
     commitKey: key,
     proxyListValue: list.value
@@ -143,7 +142,6 @@ onDeactivated(() => {
     socket && socket.emit('snapshot', '') // 快照数据
     socket && socket.off('realtime')
     socket && socket.off('snapshot')
-    console.error('取消订阅')
   })
 })
 </script>

@@ -137,7 +137,6 @@ const getList = () => {
     _depositList({ // 充值记录
         page: 1
     }).then(res => {
-        console.error('充值记录', res)
         depositList.value = res.data || []
     }).finally(() => {
         i++
@@ -149,7 +148,6 @@ const getList = () => {
     _withdrawList({ // 提现记录
         page: 1
     }).then(res => {
-        console.error('提现记录', res)
         withdrawList.value = res.data || []
     }).finally(() => {
         i++
