@@ -257,6 +257,16 @@ const routes = [
     }
   },
   {
+    // 中签 IPO 详情
+    path: "/winningIPODetail",
+    name: "winningIPODetail",
+    component: () => import("../views/trade/winningIPODetail.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'tab'
+    }
+  },
+  {
     // 资产
     path: "/assets",
     name: "assets",

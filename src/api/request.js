@@ -52,7 +52,7 @@ instance.interceptors.response.use(
     console.log(`--- 请求 ${response.config.url} 返回 ---`, response.data);
     let res = response.data;
     const custom = response.config?.custom;
-    if (res.code != 200 && res.code != 510) {
+    if (res.code != 200 && res.code != 510 && res.code !=400) {
       if (res.code == 401) {
         if (
           location.href.includes("/login")

@@ -2,7 +2,7 @@
   <div class="ipo-detail-box">
     <div class="ipo-detail-header">
       <Icon name="arrow-left" class="arrow-left" @click="goTotrade" />
-      <span>IPO 详情</span>
+      <span>中签详情</span>
     </div>
 
     <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
@@ -17,13 +17,13 @@
 
       <div class="ipo-box-flex">
         <div class="ipo-title">股票代码</div>
-        <div class="ipo-text"></div>
+        <div class="ipo-text">{{ data.symbol }}</div>
       </div>
 
       <div class="ipo-box-flex">
         <div class="ipo-title">认购价格</div>
         <div class="ipo-text">
-          {{ ipoDetail.issue_price_max }}
+          {{ data.issue_price }}
         </div>
       </div>
 
@@ -56,9 +56,9 @@
       </div>
 
       <div class="ipo-box-flex">
-        <div class="ipo-title">最低认购数量</div>
+        <div class="ipo-title">认购数量</div>
         <div class="ipo-text">
-          {{ data.minimum }}
+          {{ data.volume }}
         </div>
       </div>
 
@@ -79,7 +79,7 @@
 import { computed, ref, onMounted } from "vue";
 import { Icon, Loading } from "vant";
 import { useRouter, useRoute } from "vue-router";
-import { _ipoGet } from "@/api/api";
+import { _orderGet } from "@/api/api";
 import store from "@/store";
 
 const route = useRoute();
@@ -92,8 +92,8 @@ const id = computed(() => {
 });
 
 const ipoDetail = computed(()=>{
-    return store.state.ipoDetail
-  })
+  return store.state.ipoDetail
+})
 
 const goTotrade = () => {
   if (route.query.type === "market") {
@@ -106,7 +106,7 @@ const goTotrade = () => {
 };
 
 const getList = () => {
-  _ipoGet({ id: id.value })
+  _orderGet({ order_no: id.value })
     .then((res) => {
       if (res.code == 200) {
         data.value = res.data;
