@@ -38,7 +38,7 @@
 
 <script setup>
 import { Tab, Tabs, PullRefresh } from 'vant';
-import { ref, onDeactivated, computed, onActivated } from "vue"
+import { ref, onDeactivated, computed, onActivated, watch } from "vue"
 import router from "@/router"
 import Optional from "./components/Optional.vue"
 import Stock from "./components/Stock.vue"
