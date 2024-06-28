@@ -67,7 +67,14 @@ import NoData from "@/components/NoData.vue"
 
 const router = useRouter();
 const page = ref(1)
-const dataList = ref([])
+const dataList = computed(()=>{
+  return store.state.ipoWinDataList
+});
+
+const hasIpoWinData = computed(()=>{
+  return store.state.hasIpoWinData
+}); // 用于跟踪是否初始化
+
 const loading = ref(false)
 const token = computed(() => store.state.token);
 const reloading = ref(false)
@@ -82,11 +89,12 @@ const ipodetail = (id) =>{
 const getlist = ()=>{
   _orderList({page:page.value}).then(res => {
     if (reloading.value) {
-      dataList.value = dataList.value.concat(res.data);
+      const data = dataList.value.concat(res.data);
+      store.commit('setIpoWinDataList',data)
       loading.value = false
       reloading.value = false
     } else {
-      dataList.value = res.data
+      store.commit('setIpoWinDataList',res.data)
       loading.value = false
     }
     emit('reloading')
@@ -101,9 +109,8 @@ const getlist = ()=>{
 onMounted(() => {
   if(token.value) {
     page.value = 1;
-    if (!hasInit.value) {
+    if (!hasIpoWinData.value) {
       loading.value = true
-      hasInit.value = true
     }
     getlist();
   }

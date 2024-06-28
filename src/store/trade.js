@@ -33,7 +33,9 @@ export default {
       ipoId:'',
       ipoDetail:{},
       ipoDataList:[],
-      hasIpoData: false
+      hasIpoData: false,
+      ipoWinDataList:[],
+      hasIpoWinData: false,
     },
     mutations: {
       setDates(state,data) {
@@ -129,6 +131,12 @@ export default {
       },
       setHasIpoData(state,data){
         state.hasIpoData = true
+      },
+      setIpoWinDataList(state,data){
+        state.ipoWinDataList = data
+      },
+      setHasIpoWinData(state,data){
+        state.hasIpoWinData = true
       },
     },
     actions: {
