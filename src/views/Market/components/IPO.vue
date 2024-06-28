@@ -9,12 +9,12 @@
     </div>
 
     <Loading
-      v-show="loading"
+      v-show="ipoLoading"
       type="spinner"
       class="market-ipo-loading"
     ></Loading>
 
-      <div class="market_ipo-box" v-for="(i, key) in dataList" :key="key" v-if="dataList.length > 0 && !loading">
+      <div class="market_ipo-box" v-for="(i, key) in dataList" :key="key" v-if="dataList.length > 0 && !ipoLoading">
         <div class="market_ipo-box-header">
           <div class="market_ipo-box-header-title">{{ i.company_name }}</div>
           <div
@@ -91,7 +91,7 @@
       </div>
 
     <!-- 数据列表为空 -->
-    <NoData v-if="dataList.length === 0 && !loading" />
+    <NoData v-if="dataList.length === 0 && !ipoLoading" />
 
     <!-- 下拉框 -->
     <teleport to="body">
@@ -132,8 +132,9 @@ const hasInit = ref(false); // 用于跟踪是否初始化
 
 const router = useRouter();
 const time = ref(30 * 60 * 60 * 1000);
-const dataList = ref([]);
-const loading = ref(false);
+const dataList = computed(()=>{
+  return store.state.ipoDataList
+});
 const showPopup = ref(false);
 const option = [
   { text: "所有", value: "" },
@@ -148,6 +149,7 @@ const emit = defineEmits();
 
 const props = defineProps({
   type: String,
+  ipoLoading: Boolean
 });
 
 const opendetail = (val) => {
@@ -179,32 +181,27 @@ const getList = () => {
     .then((res) => {
       if (res.code == 200) {
         if (reloading.value) {
-          dataList.value = dataList.value.concat(res.data);
-          loading.value = false;
+          const data = dataList.value.concat(res.data);
+          store.commit('setIpoDataList',data)
           reloading.value = false;
         } else {
-          dataList.value = res.data;
-          loading.value = false;
+          store.commit('setIpoDataList',res.data)
         }
       } else {
-        loading.value = falses;
         reloading.value = false;
       }
       emit('reloading')
+      emit('ipoloading')
     })
     .finally(() => {
-      loading.value = false;
       reloading.value = false;
       emit('reloading')
+      emit('ipoloading')
     });
 };
 
 onMounted(() => {
   page.value = 1;
-  if (!hasInit.value) {
-    loading.value = true
-    hasInit.value = true
-  }
   getList();
 });
 
@@ -232,7 +229,6 @@ const onRefresh = () => {
 
 const init = () => {
   page.value = 1;
-  loading.value = false
   getList();
 };
 
@@ -247,6 +243,7 @@ defineExpose({
   width: 100%;
   overflow: hidden;
   height: 100%;
+  overflow-y: scroll;
   .market-ipo-loading {
     margin-top: 2rem !important;
     .van-loading__spinner {

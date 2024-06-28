@@ -31,7 +31,8 @@ export default {
       minOrder:0,
       sliderValue:0,
       ipoId:'',
-      ipoDetail:{}
+      ipoDetail:{},
+      ipoDataList:[]
     },
     mutations: {
       setDates(state,data) {
@@ -122,6 +123,9 @@ export default {
       setIpoDetail(state,data){
         state.ipoDetail = data
       },
+      setIpoDataList(state,data){
+        state.ipoDataList = data
+      }
     },
     actions: {
       openPopup({ commit }, component) {

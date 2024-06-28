@@ -47,7 +47,7 @@
           <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
             :color="'#014CFA'" shrink>
             <Tab :title="'IPO'" class="optional">
-              <IPO :type="'trade'" ref="IPORef" @reloading="setReloading"/>
+              <IPO :type="'trade'" ref="IPORef" @reloading="setReloading" :ipoLoading="ipoLoading" @ipoloading="ipoloading"/>
             </Tab>
             <Tab :title="'中签'">
               <IPOStock ref="IPOStockRef" @reloading="setReloading"/>
@@ -141,6 +141,9 @@ const IPOStockRef = ref()
 const marketRef = ref()
 const disabled = ref(false)
 const reloading = ref(false)
+const ipoLoading = ref(false)
+
+const hasInit = ref(false); // 用于跟踪是否初始化
 
 const marketActive = ref('0')
 
@@ -197,7 +200,16 @@ const onChange = (val) => {
   }
   previousActive.value = active.value;
   active.value = val;
+
+  // if (val == 1 && !hasInit.value){
+  //   ipoLoading.value = true
+  //   hasInit.value = true
+  // }
 };
+
+const ipoloading = ()=>{
+  ipoLoading.value = false
+}
 
 const ipoOnChange = (val)=>{
   if (Object.keys(route.query).length > 0) {
