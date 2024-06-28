@@ -32,7 +32,8 @@ export default {
       sliderValue:0,
       ipoId:'',
       ipoDetail:{},
-      ipoDataList:[]
+      ipoDataList:[],
+      hasIpoData: false
     },
     mutations: {
       setDates(state,data) {
@@ -125,7 +126,10 @@ export default {
       },
       setIpoDataList(state,data){
         state.ipoDataList = data
-      }
+      },
+      setHasIpoData(state,data){
+        state.hasIpoData = true
+      },
     },
     actions: {
       openPopup({ commit }, component) {

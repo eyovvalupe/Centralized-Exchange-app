@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, defineEmits } from "vue";
 import { Icon, Loading } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import { _ipoGet } from "@/api/api";
@@ -86,6 +86,7 @@ const route = useRoute();
 const router = useRouter();
 const data = ref({});
 const loading = ref(false);
+const emit = defineEmits();
 
 const id = computed(() => {
   return store.state.ipoId;
@@ -96,13 +97,14 @@ const ipoDetail = computed(()=>{
   })
 
 const goTotrade = () => {
-  if (route.query.type === "market") {
-    router.push({ name: "market" });
-  } else if (route.query.type === "winning") {
-    router.push({ name: "trade", query: { type: "winning" } });
-  } else {
-    router.push({ name: "trade", query: { type: "ipodetail" } });
-  }
+  emit('closeOpenDetail')
+  // if (route.query.type === "market") {
+  //   router.push({ name: "market" });
+  // } else if (route.query.type === "winning") {
+  //   router.push({ name: "trade", query: { type: "winning" } });
+  // } else {
+  //   router.push({ name: "trade", query: { type: "ipodetail" } });
+  // }
 };
 
 const getList = () => {

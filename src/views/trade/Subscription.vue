@@ -122,7 +122,7 @@
   </template>
   
   <script setup>
-  import { ref, computed, onMounted } from "vue";
+  import { ref, computed, onMounted, defineEmits } from "vue";
   import { Tab,Tabs,Field,Slider,Button,Loading, showToast ,Icon, PasswordInput, NumberKeyboard, Popup} from "vant";
   import { useRouter, useRoute } from "vue-router";
   import store from "@/store";
@@ -178,6 +178,7 @@
   const setFee = ref(0)
   //合计
   const all = ref(0)
+  const emit = defineEmits();
 
   const id = computed(()=>{
     return store.state.ipoId
@@ -185,11 +186,12 @@
   // const sessionToken = computed(() => store.state.sessionToken || '')
 
   const goTotrade = () => {
-    if (route.query.type === "market") {
-      router.push({ name: 'market'});
-    } else if (route.query.type === "trade"){
-      router.push({ name: 'trade', query: { type: 'ipodetail' } });
-    }
+    emit('closeOpenDetail')
+    // if (route.query.type === "market") {
+    //   router.push({ name: 'market'});
+    // } else if (route.query.type === "trade"){
+    //   router.push({ name: 'trade', query: { type: 'ipodetail' } });
+    // }
   };
 
   const placeholderText = computed(() => {

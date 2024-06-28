@@ -232,7 +232,7 @@ const routes = [
     name: "trade",
     component: () => import("../views/trade/trade.vue"),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
       pageType: 'tab'
     }
   },

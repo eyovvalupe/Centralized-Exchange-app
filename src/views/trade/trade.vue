@@ -1,63 +1,177 @@
 <template>
   <div class="trade">
 
-    <PullRefresh :disabled="disabled" class="refresh_box" v-model="reloading" @refresh="onRefresh">
-    <div class="header">
-      <!-- <div class="title">交易</div> -->
-      <div style="display: flex;">
-        <img src="/static/img/trade/open.png" alt="" class="open-img" @click="openleft"/>
-          <!--  tabs-->
-        <div class="trade-recommend_tabs">
-            <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
-            <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
+    <Popup v-model:show="show" position="top" class="trade-popup">
+      <div class="popup-title">交易</div>
+      <div class="total-value">总持仓价值</div>
+      <div class="num">98148.56</div>
+      <div class="popup-flex">
+        <div class="flex-box">
+          <div class="t-flex">持仓收益</div>
+          <div class="b-num">+4578.25</div>
         </div>
-        <!-- <Tabs type="card" class="tab_content tabs"  @change="onChange" v-model:active="active"
-            :swipeable="false" animated shrink>
-            <Tab :title="'自选'" class="optional">
-                
-            </Tab>
-            <Tab :title="'股票'">
-            </Tab>
-        </Tabs> -->
-      </div>
-      
-
-    <div style="display: flex;">
-      <div class="value" @click="showPopup" style="margin-right: 0.2rem;">
-        <img src="/static/img/trade/value.png" alt="" class="value-img" />
-        <!-- <span style="vertical-align: middle">持仓价值</span> -->
-      </div>
-      <div class="value">
-        <img src="/static/img/trade/risk.png" alt="" class="value-img" />
-      </div>
-    </div>
-      
-    </div>
-
-     
-
-    <transition :name="transitionName">
-        <MarketStock
-          v-if="active === 0"
-          @updateActive="updateActive"
-          ref="marketRef"
-          @reloading="setReloading"
-        />
-        <div class="trade-tabs" v-else="active === 1" >
-          <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
-            :color="'#014CFA'" shrink>
-            <Tab :title="'IPO'" class="optional">
-              <IPO :type="'trade'" ref="IPORef" @reloading="setReloading" :ipoLoading="ipoLoading" @ipoloading="ipoloading"/>
-            </Tab>
-            <Tab :title="'中签'">
-              <IPOStock ref="IPOStockRef" @reloading="setReloading"/>
-            </Tab>
-        </Tabs>
+        <div class="flex-box">
+          <div class="t-flex">持仓收益率</div>
+          <div class="b-num">+48.23%</div>
         </div>
+      </div>
+    </Popup>
+
+
+    <teleport to="body">
+      <Popup v-model:show="showOpenPositionBottom" position="bottom" closeable :style="{ height: popupHeight }"
+        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
+        <component :is="popupComponent" />
+      </Popup>
+    </teleport>
+
+
+
+     <!-- 侧边栏 -->
+     <teleport to="body">
+      <Popup
+        v-model:show="showLeft"
+        position="left"
+        class="left-popup"
+        :style="{ width: '85%', height: '100%' }"
+        @close = 'leftclose'
+      >
+        <div class="optional-box">
+          <!-- 搜索框 -->
+          <div class="search_box">
+              <div class="icon">
+                  <img src="/static/img/common/search.png" alt="🔍">
+              </div>
+              <input ref="iptRef" @keydown="keydown" @keydown.enter="resetData" placeholder="搜索" type="text"
+                  enterkeyhint="search" v-model.trim="search" class="search">
+              <div class="close" v-show="search" @click="clearData">
+                  <Icon name="cross" />
+              </div>
+          </div>
+          <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+          <Optional v-if="showLeft && !loading" ref="OptionalRef" />
+        </div>
+      </Popup>
+    </teleport>
+
+
+    <!-- 详情页面 -->
+    <transition :name="detailTransition">
+      <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'"/>
+      <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'"/>
+      <PullRefresh :disabled="disabled" class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
+          <div class="header">
+            <!-- <div class="title">交易</div> -->
+            <div style="display: flex;">
+              <img src="/static/img/trade/open.png" alt="" class="open-img" @click="openleft"/>
+                <!--  tabs-->
+              <div class="trade-recommend_tabs">
+                  <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
+                  <div class="trade-recommend_tab" :class="{ 'active_tab': active == 1 }" @click="onChange(1)">IPO</div>
+              </div>
+              <!-- <Tabs type="card" class="tab_content tabs"  @change="onChange" v-model:active="active"
+                  :swipeable="false" animated shrink>
+                  <Tab :title="'自选'" class="optional">
+                      
+                  </Tab>
+                  <Tab :title="'股票'">
+                  </Tab>
+              </Tabs> -->
+            </div>
+            
+
+          <div style="display: flex;">
+            <div class="value" @click="showPopup" style="margin-right: 0.2rem;">
+              <img src="/static/img/trade/value.png" alt="" class="value-img" />
+              <!-- <span style="vertical-align: middle">持仓价值</span> -->
+            </div>
+            <div class="value">
+              <img src="/static/img/trade/risk.png" alt="" class="value-img" />
+            </div>
+          </div>
+            
+          </div>
+
+          
+
+          <transition :name="transitionName">
+              <MarketStock
+                v-if="active === 0"
+                @updateActive="updateActive"
+                ref="marketRef"
+                @reloading="setReloading"
+              />
+              <div class="trade-tabs" v-else="active === 1" >
+                <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
+                  :color="'#014CFA'" shrink>
+                  <Tab :title="'IPO'" class="optional">
+                    <IPO :type="'trade'" ref="IPORef" @reloading="setReloading" :ipoLoading="ipoLoading" @ipoloading="ipoloading"  @showOpenDetail="showOpenDetail"/>
+                  </Tab>
+                  <Tab :title="'中签'">
+                    <IPOStock ref="IPOStockRef" @reloading="setReloading"/>
+                  </Tab>
+              </Tabs>
+              </div>
+          </transition>
+
+        </PullRefresh>
+      
     </transition>
 
-  </PullRefresh>
 
+    <Popup v-model:show="show" position="top" class="trade-popup">
+      <div class="popup-title">交易</div>
+      <div class="total-value">总持仓价值</div>
+      <div class="num">98148.56</div>
+      <div class="popup-flex">
+        <div class="flex-box">
+          <div class="t-flex">持仓收益</div>
+          <div class="b-num">+4578.25</div>
+        </div>
+        <div class="flex-box">
+          <div class="t-flex">持仓收益率</div>
+          <div class="b-num">+48.23%</div>
+        </div>
+      </div>
+    </Popup>
+
+
+    <teleport to="body">
+      <Popup v-model:show="showOpenPositionBottom" position="bottom" closeable :style="{ height: popupHeight }"
+        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
+        <component :is="popupComponent" />
+      </Popup>
+    </teleport>
+
+
+
+     <!-- 侧边栏 -->
+     <teleport to="body">
+      <Popup
+        v-model:show="showLeft"
+        position="left"
+        class="left-popup"
+        :style="{ width: '85%', height: '100%' }"
+        @close = 'leftclose'
+      >
+        <div class="optional-box">
+          <!-- 搜索框 -->
+          <div class="search_box">
+              <div class="icon">
+                  <img src="/static/img/common/search.png" alt="🔍">
+              </div>
+              <input ref="iptRef" @keydown="keydown" @keydown.enter="resetData" placeholder="搜索" type="text"
+                  enterkeyhint="search" v-model.trim="search" class="search">
+              <div class="close" v-show="search" @click="clearData">
+                  <Icon name="cross" />
+              </div>
+          </div>
+          <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+          <Optional v-if="showLeft && !loading" ref="OptionalRef" />
+        </div>
+      </Popup>
+    </teleport>
+    
     <Popup v-model:show="show" position="top" class="trade-popup">
       <div class="popup-title">交易</div>
       <div class="total-value">总持仓价值</div>
@@ -125,6 +239,8 @@ import store from "@/store";
 import Optional from "../trade/components/Optional.vue"
 import { useSocket } from "@/utils/ws";
 import { _search, _watchlist } from "@/api/api"
+import IPODetail from '@/views/trade/IPODetail.vue'
+import Subscription from '@/views/trade/Subscription.vue'
 
 const token = computed(() => store.state.token);
 const loading = ref(false);
@@ -144,6 +260,8 @@ const reloading = ref(false)
 const ipoLoading = ref(false)
 
 const hasInit = ref(false); // 用于跟踪是否初始化
+//详情页面
+const detail = ref(null)
 
 const marketActive = ref('0')
 
@@ -163,6 +281,8 @@ if (route.query.redata === 'ipo') {
 const transitionName = ref('slide-left');
 const ipoTransitionName = ref('slide-left');
 
+const detailTransition = ref('slide-right');
+
 
 watch([active], ([newActive]) => {
   if (previousActive.value === 0 && newActive === 1) {
@@ -178,6 +298,15 @@ watch([ipoActive], ([newActive]) => {
     ipoTransitionName.value = 'slide-left';
   } else if (newActive === 1) {
     ipoTransitionName.value = 'slide-right';
+  }
+});
+
+
+watch([detail], ([newActive]) => {
+  if (newActive) {
+    detailTransition.value = 'slide-right';
+  } else {
+    detailTransition.value = 'slide-left';
   }
 });
 
@@ -372,6 +501,16 @@ const updateActive = (val)=>{
 const setReloading = ()=>{
   reloading.value = false
 }
+
+
+const showOpenDetail = (val)=>{
+  detail.value = val
+}
+
+const closeOpenDetail = ()=>{
+  detail.value = false
+}
+
 </script>
 
 <style lang="less">

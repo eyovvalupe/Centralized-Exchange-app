@@ -115,6 +115,7 @@
         </div>
       </Popup>
     </teleport>
+
   </div>
 </template>
 <script setup>
@@ -128,7 +129,9 @@ import NoData from "@/components/NoData.vue";
 import store from "@/store";
 
 
-const hasInit = ref(false); // 用于跟踪是否初始化
+const hasIpoData = computed(()=>{
+  return store.state.hasIpoData
+}); // 用于跟踪是否初始化
 
 const router = useRouter();
 const time = ref(30 * 60 * 60 * 1000);
@@ -144,26 +147,28 @@ const option = [
 const selectedOption = ref("");
 const page = ref(1);
 const reloading = ref(false);
+const ipoLoading = ref(false)
 const token = computed(() => store.state.token)
 const emit = defineEmits();
 
 const props = defineProps({
-  type: String,
-  ipoLoading: Boolean
+  type: String
 });
 
 const opendetail = (val) => {
   store.commit("setIpoId", val.id);
   store.commit('setIpoDetail',val)
-  router.push({ name: "ipodetail", query: { type: props.type } });
+  emit('showOpenDetail','1')
+  // router.push({ name: "ipodetail", query: { type: props.type } });
 };
 
 const openSubscription = (val) => {
   if (token.value) {
     store.commit("setIpoId", val.id);
     store.commit('setIpoDetail',val)
+    emit('showOpenDetail','2')
     // store.dispatch("updateSessionToken");
-    router.push({ name: "subscription", query: { type: props.type } });
+    // router.push({ name: "subscription", query: { type: props.type } });
   } else {
     router.push({
       name: 'login',query:{reurl:'trade',redata:'ipo'}
@@ -185,23 +190,27 @@ const getList = () => {
           store.commit('setIpoDataList',data)
           reloading.value = false;
         } else {
+          store.commit('setHasIpoData')
           store.commit('setIpoDataList',res.data)
         }
       } else {
         reloading.value = false;
       }
+      ipoLoading.value = false
       emit('reloading')
-      emit('ipoloading')
     })
     .finally(() => {
       reloading.value = false;
+      ipoLoading.value = false
       emit('reloading')
-      emit('ipoloading')
     });
 };
 
 onMounted(() => {
   page.value = 1;
+  if (!hasIpoData.value) {
+    ipoLoading.value = true
+  }
   getList();
 });
 
@@ -229,6 +238,9 @@ const onRefresh = () => {
 
 const init = () => {
   page.value = 1;
+  if (!hasIpoData.value) {
+    ipoLoading.value = true
+  }
   getList();
 };
 
