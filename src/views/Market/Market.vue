@@ -1,34 +1,36 @@
 <!-- 市场 -->
 <template>
     <div class="page page_market ">
-        <!-- 标题 -->
-        <div class="title">市场</div>
-        <!-- 搜索 -->
-        <div class="search_box" @click="router.push({ name: 'search' })">
-            <img src="/static/img/common/search_box.png" alt="🔍">
-        </div>
+        <PullRefresh  class="refresh_box" v-model="reloading" @refresh="onRefresh">
+            <!-- 标题 -->
+            <div class="title">市场</div>
+            <!-- 搜索 -->
+            <div class="search_box" @click="router.push({ name: 'search' })">
+                <img src="/static/img/common/search_box.png" alt="🔍">
+            </div>
 
-        <!-- Tabs -->
-        <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
-            :swipeable="false" animated shrink>
-            <Tab :title="'自选'" class="optional">
-                <Optional v-if="activated && active == 0" ref="OptionalRef" />
-            </Tab>
-            <Tab :title="'股票'">
-                <Stock v-if="active == 1" ref="StockRef" />
-            </Tab>
-            <!-- <Tab :title="'理财'">
-                <Financial />
-            </Tab> -->
-            <Tab :title="'IPO'">
-                <IPO v-if="active == 2" :type="'market'" ref="IPORef" />
-            </Tab>
-        </Tabs>
+            <!-- Tabs -->
+            <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
+                :swipeable="false" animated shrink>
+                <Tab :title="'自选'" class="optional">
+                    <Optional v-if="activated && active == 0" ref="OptionalRef" />
+                </Tab>
+                <Tab :title="'股票'">
+                    <Stock v-if="active == 1" ref="StockRef" />
+                </Tab>
+                <!-- <Tab :title="'理财'">
+                    <Financial />
+                </Tab> -->
+                <Tab :title="'IPO'">
+                    <IPO v-if="active == 2" :type="'market'" ref="IPORef"  @reloading="setReloading"/>
+                </Tab>
+            </Tabs>
+        </PullRefresh>
     </div>
 </template>
 
 <script setup>
-import { Tab, Tabs } from 'vant';
+import { Tab, Tabs, PullRefresh } from 'vant';
 import { ref, onDeactivated, computed, onActivated } from "vue"
 import router from "@/router"
 import Optional from "./components/Optional.vue"
@@ -42,6 +44,7 @@ const active = ref(0)
 const OptionalRef = ref()
 const StockRef = ref()
 const IPORef = ref()
+const reloading = ref(false)
 const changeTab = key => {
     active.value = key
     setTimeout(() => {
@@ -94,6 +97,20 @@ onDeactivated(() => {
         socket && socket.off('snapshot')
     })
 })
+
+const onRefresh = ()=>{
+    if (active.value == 2) {
+        IPORef.value && IPORef.value.onRefresh()
+    } else {
+        setTimeout(()=>{
+            reloading.value = false
+        },500)
+    }
+}
+
+const setReloading = ()=>{
+  reloading.value = false
+}
 </script>
 
 <style lang="less" scoped>
