@@ -146,6 +146,7 @@ const option = [
 const selectedOption = ref("");
 const page = ref(1);
 const reloading = ref(false);
+const token = computed(() => store.state.token)
 
 const props = defineProps({
   type: String,
@@ -158,10 +159,16 @@ const opendetail = (val) => {
 };
 
 const openSubscription = (val) => {
-  store.commit("setIpoId", val.id);
-  store.commit('setIpoDetail',val)
-  // store.dispatch("updateSessionToken");
-  router.push({ name: "subscription", query: { type: props.type } });
+  if (token.value) {
+    store.commit("setIpoId", val.id);
+    store.commit('setIpoDetail',val)
+    // store.dispatch("updateSessionToken");
+    router.push({ name: "subscription", query: { type: props.type } });
+  } else {
+    router.push({
+      name: 'login',query:{reurl:'trade',redata:'winning'}
+    });
+  }
 };
 
 const getList = () => {
