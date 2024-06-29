@@ -23,48 +23,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="list_item" @click="changeCheck(i)" :class="{ 'list_item_active2': checkedList[i] }"
-                v-for="(item, i) in props.list" :key="i">
-                <div class="symbol">{{ item.symbol }}</div>
-                <div class="name">{{ item.name || '--' }}</div>
-                <div class="price">{{ item.price ? (item.price).toFixed(2) : '--' }}</div>
-                <div class="percent" :class="[updown(item) === 0 ? '' : (updown(item) > 0 ? 'up' : 'down')]">{{
-                    ((item.ratio || 0) *
-                        100).toFixed(2) }}%</div>
-
-                <div class="sparkLine">
-                    <SparkLine v-if="item.points" style="width:100%;height:0.45rem" :points="item.points"
-                        :ratio="item.ratio" />
-                </div>
-
-                <div class="checked" v-if="checkedList[i]">
-                    <div class="ok">
-                        <img src="/static/img/common/ok.png" alt="√">
-                    </div>
-                </div>
-            </div>
-
-            <div class="list_item" @click="changeCheck(i)" :class="{ 'list_item_active3': checkedList[i] }"
-                v-for="(item, i) in props.list" :key="i">
-                <div class="symbol">{{ item.symbol }}</div>
-                <div class="name">{{ item.name || '--' }}</div>
-                <div class="price">{{ item.price ? (item.price).toFixed(2) : '--' }}</div>
-                <div class="percent" :class="[updown(item) === 0 ? '' : (updown(item) > 0 ? 'up' : 'down')]">{{
-                    ((item.ratio || 0) *
-                        100).toFixed(2) }}%</div>
-
-                <div class="sparkLine">
-                    <SparkLine v-if="item.points" style="width:100%;height:0.45rem" :points="item.points"
-                        :ratio="item.ratio" />
-                </div>
-
-                <div class="checked" v-if="checkedList[i]">
-                    <div class="ok">
-                        <img src="/static/img/common/ok.png" alt="√">
-                    </div>
-                </div>
-            </div>
         </div>
         <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
             @click="submit">一键添加至自选</Button>
@@ -100,7 +58,7 @@ const updown = item => {
     return item.ratio > 0 ? 1 : -1
 }
 
-const checkedList = ref([true, true, true])
+const checkedList = ref(props.list.map(() => true))
 const changeCheck = i => {
     if (checkedList.value[i]) {
         checkedList.value[i] = !checkedList.value[i]

@@ -79,7 +79,7 @@ onMounted(() => {
             scrollParent.addEventListener('scroll', getShow)
         }
         getShow()
-    }, 500)
+    }, 100)
 })
 onUnmounted(() => {
     if (scrollParent && scrollParent.removeEventListener) {

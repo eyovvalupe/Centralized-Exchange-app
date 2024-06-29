@@ -10,9 +10,8 @@
 </template>
 
 <script setup>
-import Top from "@/components/Top"
-import { Icon, showToast, showLoadingToast, closeToast } from "vant"
-import { ref, computed, onMounted } from "vue"
+import { showToast, showLoadingToast, closeToast } from "vant"
+import { ref, computed } from "vue"
 import { _search } from "@/api/api"
 import Loading from "@/components/Loaidng.vue"
 import store from "@/store"
@@ -30,7 +29,11 @@ const getData = () => { // 获取数据
     _search({
         symbol: ""
     }).then(res => {
-        store.commit('setMarketStockList', res.data || [])
+        const arr = res.data.map(item => {
+            const target = stockList.value.find(a => a.symbol == item.symbol)
+            return target || item
+        })
+        store.commit('setMarketStockList', arr || [])
         store.commit('setMarketWatchKeys', res.data.map(item => item.symbol))
         setTimeout(() => {
             store.dispatch("subList", {
