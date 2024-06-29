@@ -417,6 +417,16 @@ const routes = [
     }
   },
   {
+    // 关于
+    path: "/about",
+    name: "about",
+    component: () => import("../views/User/About.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 找不到路由时
     path: "/:pathMatch(.*)*",
     redirect: "/",
