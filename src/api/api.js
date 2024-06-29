@@ -57,8 +57,8 @@ export const _googleBind = (data = {}) => {
 
 // 自选列表
 export const _watchlist = (data = {}) => {
-  return http.post(`/anon/v1/market/watchlist/list`, data, {
-    custom: { auth: false, toast: true },
+  return http.post(`authc/v1/market/watchlist/list`, data, {
+    custom: { auth: true, toast: true },
   });
 };
 
@@ -113,7 +113,7 @@ export const _stocksList = (data = {}) => {
 
 // 添加自选
 export const _add = (data = {}) => {
-  return http.post(`/anon/v1/market/watchlist/add`, data, {
+  return http.post(`/authc/v1/market/watchlist/add`, data, {
     custom: { auth: true, toast: true },
   });
 };
@@ -127,7 +127,7 @@ export const _stocksPara = (data = {}) => {
 
 // 移除自选
 export const _del = (data = {}) => {
-  return http.post(`/anon/v1/market/watchlist/del`, data, {
+  return http.post(`/authc/v1/market/watchlist/del`, data, {
     custom: { auth: true, toast: true },
   });
 };
@@ -156,7 +156,7 @@ export const _stocksBuy = (data = {}) => {
 //SessionToken
 export const _commToken = (data = {}) => {
   return http.post(`/anon/v1/comm/token`, data, {
-    custom: { auth: true, toast: true },
+    custom: { auth: false, toast: true },
   });
 };
 
@@ -274,7 +274,7 @@ export const _transferLog = (data = {}) => {
 // 兑换汇率
 export const _swapRate = (data = {}) => {
   return http.post(`/anon/v1/wallet/swap/query`, data, {
-    custom: { auth: true, toast: true },
+    custom: { auth: false, toast: true },
   });
 };
 // 兑换
@@ -292,13 +292,13 @@ export const _converterLog = (data = {}) => {
 // 借贷参数
 export const _loanPara = (data = {}) => {
   return http.post(`/anon/v1/account/loan/config`, data, {
-    custom: { auth: true, toast: true },
+    custom: { auth: false, toast: true },
   });
 };
 // 借贷手续费
 export const _loanRate = (data = {}) => {
   return http.post(`/anon/v1/account/loan/config/get`, data, {
-    custom: { auth: true, toast: true },
+    custom: { auth: false, toast: true },
   });
 };
 // 借贷
@@ -385,5 +385,10 @@ export const _depositInfo = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
-
+// 自选推荐
+export const _watchlistDefault = (data = {}) => {
+  return http.post(`/anon/v1/market/watchlist/default`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
 export const memberInfo = () => { }

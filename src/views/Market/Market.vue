@@ -3,9 +3,9 @@
     <div class="page page_market ">
 
         <transition :name="detailTransition">
-            <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'"/>
-            <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'"/>
-            <PullRefresh  class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
+            <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'" />
+            <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
+            <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
                 <!-- 标题 -->
                 <div class="title">市场</div>
                 <!-- 搜索 -->
@@ -14,8 +14,8 @@
                 </div>
 
                 <!-- Tabs -->
-                <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
-                    :swipeable="false" animated shrink>
+                <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
+                    v-model:active="active" :swipeable="false" animated shrink>
                     <Tab :title="'自选'" class="optional">
                         <Optional v-if="activated && active == 0" ref="OptionalRef" />
                     </Tab>
@@ -26,13 +26,14 @@
                         <Financial />
                     </Tab> -->
                     <Tab :title="'IPO'">
-                        <IPO v-if="active == 2" :type="'market'" ref="IPORef"  @reloading="setReloading"  @showOpenDetail="showOpenDetail"/>
+                        <IPO v-if="active == 2" :type="'market'" ref="IPORef" @reloading="setReloading"
+                            @showOpenDetail="showOpenDetail" />
                     </Tab>
                 </Tabs>
             </PullRefresh>
         </transition>
 
-       
+
     </div>
 </template>
 
@@ -62,7 +63,7 @@ const changeTab = key => {
     setTimeout(() => {
         switch (key) {
             case 0:
-            OptionalRef.value && OptionalRef.value.init()
+                OptionalRef.value && OptionalRef.value.init()
                 break
             case 1:
                 StockRef.value.getData()
@@ -76,20 +77,20 @@ const changeTab = key => {
 
 
 watch([detail], ([newActive]) => {
-  if (newActive) {
-    detailTransition.value = 'slide-right';
-  } else {
-    detailTransition.value = 'slide-left';
-  }
+    if (newActive) {
+        detailTransition.value = 'slide-right';
+    } else {
+        detailTransition.value = 'slide-left';
+    }
 });
 
 
-const showOpenDetail = (val)=>{
-  detail.value = val
+const showOpenDetail = (val) => {
+    detail.value = val
 }
 
-const closeOpenDetail = ()=>{
-  detail.value = false
+const closeOpenDetail = () => {
+    detail.value = false
 }
 
 // 预加载页面
@@ -128,18 +129,18 @@ onDeactivated(() => {
     })
 })
 
-const onRefresh = ()=>{
+const onRefresh = () => {
     if (active.value == 2) {
         IPORef.value && IPORef.value.onRefresh()
     } else {
-        setTimeout(()=>{
+        setTimeout(() => {
             reloading.value = false
-        },500)
+        }, 500)
     }
 }
 
-const setReloading = ()=>{
-  reloading.value = false
+const setReloading = () => {
+    reloading.value = false
 }
 </script>
 
@@ -208,7 +209,7 @@ const setReloading = ()=>{
 
         :deep(.van-tabs__wrap) {
             height: 0.8rem;
-            border-bottom: 1px solid #F6F8FF;
+            border-bottom: 1px solid rgba(0, 0, 0, 0);
             padding-bottom: 0.2rem;
         }
 

@@ -19,7 +19,7 @@
                         <div v-if="props.item.ratio !== undefined" class="item_percent"
                             :class="[updown === 0 ? '' : (updown > 0 ? 'up_bg' : 'down_bg')]">
                             <transition :name="'opacity'">
-                                <span v-if="mode == 1">{{ ((props.item.ratio | 0) * 100).toFixed(2) }}%</span>
+                                <span v-if="mode == 1">{{ ((props.item.ratio || 0) * 100).toFixed(2) }}%</span>
                                 <span v-else-if="mode == 2">{{ (props.item.price || 0).toFixed(2) }}</span>
                                 <span v-else>{{ _formatNumber(props.item.volume) }}</span>
                             </transition>

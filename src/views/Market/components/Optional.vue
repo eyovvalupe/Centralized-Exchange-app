@@ -2,8 +2,9 @@
 <template>
     <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
         <Tab :title="'股票'">
-            <StockTable @remove="remove" :deleteItem="!!(token)" :scroll-box="'.optional'" class="market_optional"
-                :loading="loading" :list="watchList" />
+            <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" :scroll-box="'.optional'"
+                class="market_optional" :loading="loading" :list="watchList" />
+            <StockRecommend @init="init" :loading="loading" v-if="!watchList.length" :list="marketSrockRecommendList" />
         </Tab>
         <Tab :title="'合约'"></Tab>
     </Tabs>
@@ -12,10 +13,11 @@
 
 <script setup>
 import StockTable from "@/components/StockTable.vue"
+import StockRecommend from "@/components/StockRecommend.vue"
 // import router from "@/router"
 import store from "@/store";
 import { computed, ref } from "vue"
-import { _watchlist, _del } from "@/api/api"
+import { _watchlist, _del, _watchlistDefault } from "@/api/api"
 import { showLoadingToast, closeToast, showToast, Tabs, Tab } from 'vant'
 import { useSocket } from '@/utils/ws'
 const { startSocket } = useSocket()
@@ -42,7 +44,7 @@ const getWatchList = () => { // 获取订阅列表
     _watchlist().then(res => {
         if (res.code == 200) {
             if (watchList.value.length) { // 有历史数据就更新
-                const rs = res.data.map(item => {
+                const rs = res.data.stock.map(item => {
                     const target = watchList.value.find(a => a.symbol == item.symbol)
                     if (target) {
                         Object.assign(target, item)
@@ -55,9 +57,15 @@ const getWatchList = () => { // 获取订阅列表
                 store.commit('setMarketWatchList', res.data || [])
             }
 
-            setTimeout(() => {
-                subs()
-            }, 1000)
+            if (!res.data.length) { // 还没有添加自选
+                setTimeout(() => {
+                    openRecommendList()
+                }, 100)
+            } else { // 有数据就订阅
+                setTimeout(() => {
+                    subs()
+                }, 500)
+            }
         }
     }).finally(() => {
         loading.value = false
@@ -65,7 +73,35 @@ const getWatchList = () => { // 获取订阅列表
 }
 
 const init = () => {
-    getWatchList()
+    if (token.value) {
+        getWatchList()
+    } else {
+        // 打开推荐列表
+        openRecommendList()
+    }
+}
+
+
+// 推荐列表
+const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
+const openRecommendList = () => {
+    console.error('---推荐列表')
+    loading.value = true
+    _watchlistDefault().then(res => {
+        console.error('推荐列表', res)
+        if (res.code == 200) {
+            store.commit('setMarketSrockRecommendList', res.data.stock || [])
+
+            setTimeout(() => {
+                store.dispatch('subList', {
+                    commitKey: 'setMarketSrockRecommendList',
+                    proxyListValue: marketSrockRecommendList.value
+                })
+            }, 500)
+        }
+    }).finally(() => {
+        loading.value = false
+    })
 }
 
 defineExpose({
@@ -105,16 +141,19 @@ const remove = item => {
         removeLoading.value = false
     })
 }
+
 </script>
 
 <style lang="less" scoped>
 .option_tab {
     :deep(.van-tabs__nav--line) {
         padding-bottom: 0;
+        border-bottom: 1px solid #3B82F6 !important;
+        margin: 0 0.32rem;
     }
 
     :deep(.van-tabs__line) {
-        bottom: 0;
+        bottom: -1px;
     }
 
 }

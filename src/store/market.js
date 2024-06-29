@@ -16,6 +16,7 @@ export default {
 
         marketRecommndList: [], // 首页推荐列表
         marketStockList: [], // 股票页列表
+        marketSrockRecommendList: [], // 推荐股票列表
 
         marketWatchKeys: [], // 除了列表，还需要额外监听的股票
     },
@@ -37,6 +38,9 @@ export default {
         },
         setMarketStockList(state, data) {
             state.marketStockList = data;
+        },
+        setMarketSrockRecommendList(state, data) {
+            state.marketSrockRecommendList = data;
         },
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
@@ -82,6 +86,7 @@ export default {
                     ...proxyListValue.map(item => item.symbol),
                     ...state.marketWatchKeys
                 ]))
+                console.error('订阅', keys)
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {
