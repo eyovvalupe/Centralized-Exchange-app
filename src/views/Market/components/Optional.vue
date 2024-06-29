@@ -3,8 +3,8 @@
     <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
         <Tab :title="'股票'">
             <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" :scroll-box="'.optional'"
-                class="market_optional" :loading="loading" :list="watchList" />
-            <StockRecommend @init="init" :loading="loading" v-if="!watchList.length" :list="marketSrockRecommendList" />
+                class="market_optional" :list="watchList" />
+            <StockRecommend @init="init" v-if="!watchList.length" :list="marketSrockRecommendList" />
         </Tab>
         <Tab :title="'合约'"></Tab>
     </Tabs>
@@ -85,12 +85,16 @@ const init = () => {
 // 推荐列表
 const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
 const openRecommendList = () => {
-    console.error('---推荐列表')
+    if (loading.value) return
     loading.value = true
     _watchlistDefault().then(res => {
-        console.error('推荐列表', res)
         if (res.code == 200) {
-            store.commit('setMarketSrockRecommendList', res.data.stock || [])
+
+            const arr = res.data.stock.map(item => {
+                const target = marketSrockRecommendList.value.find(a => a.symbol == item.symbol)
+                return target || item
+            })
+            store.commit('setMarketSrockRecommendList', arr || [])
 
             setTimeout(() => {
                 store.dispatch('subList', {
@@ -146,6 +150,11 @@ const remove = item => {
 
 <style lang="less" scoped>
 .option_tab {
+    :deep(.van-tab__panel) {
+        height: calc(100vh - 4.2rem) !important;
+        overflow-y: auto;
+    }
+
     :deep(.van-tabs__nav--line) {
         padding-bottom: 0;
         border-bottom: 1px solid #3B82F6 !important;

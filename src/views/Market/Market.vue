@@ -72,7 +72,7 @@ const changeTab = key => {
                 IPORef.value && IPORef.value.init()
                 break
         }
-    }, 200)
+    }, 100)
 }
 
 
@@ -116,7 +116,7 @@ onActivated(() => {
         if (active.value == 0) {
             OptionalRef.value && OptionalRef.value.init()
         }
-    }, 500)
+    }, 100)
 })
 onDeactivated(() => {
     activated.value = false
