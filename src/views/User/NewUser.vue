@@ -22,12 +22,13 @@
             </div>
         </div> -->
 
-        <div class="user-login" v-if="token">
+        <div class="user-login" v-if="token || test">
             <div style="display: flex;">
                 <img src="/static/img/user/user-block.png" alt="">
                 <!-- <span v-if="test">Test</span> -->
                 <div class="user-login-block">
-                    <span style="font-weight: 500;">{{ userInfo.username || '--' }}</span>
+                    <span style="font-weight: 500;" v-if="test">Test</span>
+                    <span style="font-weight: 500;" v-else>{{ userInfo.username || '--' }}</span>
                     <div class="id">ID:23424</div>
                 </div>
                 
@@ -59,13 +60,13 @@
             <img src="/static/img/user/bg.png" alt="banner">
         </div> -->
 
-        <div class="user-banner" @click="testBanner" v-if="!token">
+        <div class="user-banner" @click="testBanner" v-if="!test && !token">
             <img src="/static/img/user/bg.png" alt="banner">
         </div>
         <div v-else style="height: 0.28rem;"></div>
 
 
-        <div class="user-comman">
+        <div class="user-comman" >
             <div class="user-b-box" style="margin-right: 0.2rem;">
                 <div class="user-flex">
                     <img src="/static/img/user/user.svg" alt="">
@@ -188,7 +189,7 @@
             <img src="/static/img/user/out.svg" alt="">
             退出登录
         </div> -->
-        <div class="ripple_button loginout" v-if="token" @click="loginout">退出登录</div>
+        <div class="ripple_button loginout" v-if="token || test" @click="loginout">退出登录</div>
       
         
     </div>
