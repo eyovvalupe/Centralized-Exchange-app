@@ -5,23 +5,6 @@
         <!-- 标题 -->
         <!-- <div class="title">用户</div> -->
 
-
-        <!-- <div class="user-login-login-box" v-if="token || test">
-            <div class="user-login-login" >
-                <div style="display: flex;" v-if="test">
-                    <div class="login-user-box">T</div>
-                    <span>Test</span>
-                </div>
-
-                <div style="display: flex;" v-else>
-                    <div class="login-user-box">{{getFirstCharacter(userInfo.username)}}</div>
-                    <span>{{ userInfo.username || '--' }}</span>
-                </div>
-            
-                <Icon name="arrow" class="arrow-right"/>
-            </div>
-        </div> -->
-
         <div class="user-login" v-if="token || test">
             <div style="display: flex;">
                 <img src="/static/img/user/user-block.png" alt="">
@@ -47,27 +30,14 @@
             <Icon name="arrow" class="arrow-right"/>
         </div>
 
-        <!-- <div class="user-header">
-            <div style="margin-right: 0.4rem;margin-top: 0.04rem;">
-                <Icon name="comment-o" />
-            </div>
-            <div>
-                <Icon name="point-gift-o" />
-            </div>
-        </div> -->
-
-        <!-- <div class="user-banner" @click="testBanner" v-if="!test && !token">
-            <img src="/static/img/user/bg.png" alt="banner">
-        </div> -->
-
         <div class="user-banner" @click="testBanner" v-if="!test && !token">
             <img src="/static/img/user/bg.png" alt="banner">
         </div>
         <div v-else style="height: 0.28rem;"></div>
 
 
-        <div class="user-comman" >
-            <div class="user-b-box" style="margin-right: 0.2rem;">
+        <div class="user-comman">
+            <div class="user-b-box ripple_button" style="margin-right: 0.2rem;">
                 <div class="user-flex">
                     <img src="/static/img/user/user.svg" alt="">
                     <Icon name="arrow" class="arrow-right"/>
@@ -78,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="user-b-box">
+            <div class="user-b-box ripple_button">
                 <div class="user-flex">
                     <img src="/static/img/user/server.png" alt="">
 
@@ -94,21 +64,22 @@
             </div>
         </div>
 
-
         <div class="user-h-box" @click="jump('account', true)">
-            <div class="user-flex">
-                <img src="/static/img/user/account.png" alt="">
-                <Icon name="arrow" class="arrow-right"/>
-            </div>
-            <div class="user-sub">收款账户</div>
-            <div class="user-small-title">
-                收款银行卡添加
+            <div class="ripple_button">
+                <div class="user-flex">
+                    <img src="/static/img/user/account.png" alt="">
+                    <Icon name="arrow" class="arrow-right"/>
+                </div>
+                <div class="user-sub">收款账户</div>
+                <div class="user-small-title">
+                    收款银行卡添加
+                </div>
             </div>
         </div>
 
 
         <div class="user-comman">
-            <div class="user-b-box" style="margin-right: 0.2rem;" @click="jump('kyc', true)">
+            <div class="user-b-box ripple_button" style="margin-right: 0.2rem;" @click="jump('kyc', true)">
                 <div class="user-flex">
                     <img src="/static/img/user/iden.png" alt="">
                     <div style="display: flex;">
@@ -126,7 +97,7 @@
                 </div>
             </div>
 
-            <div class="user-b-box" @click="jump('googleCode', true)">
+            <div class="user-b-box ripple_button" @click="jump('googleCode', true)">
                 <div class="user-flex">
                     <img src="/static/img/user/Google-lock.png" alt="">
                    <div style="display: flex;">
@@ -185,10 +156,6 @@
 
 
         <!-- 退出登录 -->
-        <!-- <div class="loginout" v-if="token || test" @click="loginout">
-            <img src="/static/img/user/out.svg" alt="">
-            退出登录
-        </div> -->
         <div class="ripple_button loginout" v-if="token || test" @click="loginout">退出登录</div>
       
         
@@ -379,6 +346,8 @@ if (token.value) {
     .user-comman{
         display: flex;
         margin-bottom: 0.28rem;
+        position: relative;
+        overflow: hidden;
         .user-b-box 
         {
             flex: 1;
@@ -427,6 +396,8 @@ if (token.value) {
         padding: 0.2rem 0.3rem;
         border-radius: 0.2rem;
         margin-bottom: 0.28rem;
+        position: relative;
+        overflow: hidden;
         .user-flex {
             display: flex;
             justify-content: space-between;
