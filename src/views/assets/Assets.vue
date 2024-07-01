@@ -5,7 +5,7 @@
 
             <div class="page_title">资产</div>
 
-            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card"
+            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
                 animated shrink>
                 <Tab :title="'总资产'" name="overview">
                     <!-- <template #title>

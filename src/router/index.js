@@ -360,7 +360,7 @@ const routes = [
     // 充值
     path: "/topUp",
     name: "topUp",
-    component: () => import("../views/Assets/Amount.vue"),
+    component: () => import("../views/Assets/TopUp.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'

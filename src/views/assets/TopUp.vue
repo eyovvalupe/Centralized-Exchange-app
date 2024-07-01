@@ -33,7 +33,7 @@
             </div>
             <div class="tip">
                 <div>
-                    <span>手续费: </span>
+                    <span>手续费：</span>
                     <span class="num">{{ loading ? '--' : fee }}</span>
                 </div>
             </div>
@@ -91,7 +91,7 @@ const showDialog = ref(false)
 const wallet = computed(() => { // 可选钱包列表
     return store.state.wallet.filter(item => !['stock', 'contract', 'main', form.value.from].includes(item.currency)) || []
 })
-form.value.from = route.query.currency || wallet.value[0].currency // 初始化默认币种
+form.value.from = route.query.currency || wallet.value.length > 0 && wallet.value[0].currency || 'BTC' // 初始化默认币种
 const clickItem = item => {
     form.value.from = item.currency
     showDialog.value = false
