@@ -3,7 +3,7 @@
     <div class="page page_user">
 
         <!-- 标题 -->
-        <div class="title">用户</div>
+        <!-- <div class="title">用户</div> -->
 
 
         <!-- <div class="user-login-login-box" v-if="token || test">
@@ -59,9 +59,10 @@
             <img src="/static/img/user/bg.png" alt="banner">
         </div> -->
 
-        <div class="user-banner" @click="testBanner">
+        <div class="user-banner" @click="testBanner" v-if="!token">
             <img src="/static/img/user/bg.png" alt="banner">
         </div>
+        <div v-else style="height: 0.28rem;"></div>
 
 
         <div class="user-comman">
@@ -93,7 +94,7 @@
         </div>
 
 
-        <div class="user-h-box">
+        <div class="user-h-box" @click="jump('account', true)">
             <div class="user-flex">
                 <img src="/static/img/user/account.png" alt="">
                 <Icon name="arrow" class="arrow-right"/>
@@ -256,9 +257,22 @@ const jump = (name, needLogin) => {
         })
         return
     }
-    router.push({
-        name
-    })
+    if (name == 'googleCode') {
+        if (token.value && !userInfo.value.googlebind) {
+            router.push({
+                name: 'google'
+            })
+        } else if (token.value && userInfo.value.googlebind){
+            router.push({
+                name: 'googleCode'
+            })
+        }
+    } else {
+        router.push({
+            name
+        })
+    }
+    
 }
 
 
@@ -321,7 +335,7 @@ if (token.value) {
 
     .user-login {
         background-color: #f2f3f8;
-        margin-top: 0.2rem;
+        margin-top: 0.32rem;
         padding: 0.3rem;
         padding-top: 0.18rem!important;
         border-radius: 0.2rem;
