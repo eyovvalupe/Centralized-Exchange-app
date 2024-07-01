@@ -139,77 +139,79 @@ const backFunc = ()=>{
     }
     .amount-coin {
         display: flex;
-        margin-bottom: 20px;
+        margin-bottom: 0.4rem;
         padding: 0 0.32rem;
         div {
-            width: 80px;
-            line-height: 30px;
-            height: 30px;
+            width: 1.6rem;
+            line-height: 0.6rem;
+            height: 0.6rem;
             text-align: center;
             background: #979797;
             color: white;
-            border-radius: 6px;
+            border-radius: 0.12rem;
             font-weight: 600;
-            margin-right: 10px;
+            margin-right: 0.2rem;
         }
     }
     .amount-line {
         padding: 0 0.32rem;
         .amount-line-text {
-            font-size: 16px;
+            font-size: 0.32rem;
             font-style: normal;
-            margin-bottom: 10px;
+            margin-bottom: 0.2rem;
         }
         .amount-line-box {
             display: flex;
             justify-content: center;
             div {
-                width: 90px;
-                line-height: 40px;
-                height: 40px;
+                width: 1.8rem;
+                line-height: 0.8rem;
+                height: 0.8rem;
                 text-align: center;
                 background: #dfe0fb;
                 color: #8e90f3;
-                border-radius: 6px;
+                border-radius: 0.12rem;
                 font-weight: 600;
-                margin-right: 10px;
+                margin-right: 0.2rem;
             }
         }
     }
     .amount-money {
         text-align: center;
-        margin-top: 50px;
-        font-size: 50px;
+        margin-top: 1rem;
+        font-size: 1rem;
         font-weight: 800;
     }
     .amount-commission {
         text-align: center;
-        margin-top: 30px;
-        font-size: 16px;
+        margin-top: 0.6rem;
+        font-size: 0.32rem;
     }
     .amount-send {
         width: 100%;
-        height: 60px;
+        height: 1.2rem;
         background: #d8d8d8;
         position: relative;
         padding-right: 0.32rem;
-        margin-top: 57px;
         text-align: center;
+        position: absolute;
+        bottom: 244px;
+        left: 0;
         span{
-            line-height: 60px;
+            line-height: 1.2rem;
             color: white;
-            font-size: 20px;
+            font-size: 0.4rem;
         }
         .amount-right {
             display: inline-block;
-            width: 20px;
-            height: 20px;
+            width: 0.4rem;
+            height: 0.4rem;
             // background-color: white;
             border-radius: 50%;
             position: absolute;
             right: 0.32rem;
-            top: 19px;
-            line-height: 20px;
+            top: 0.38rem;
+            line-height: 0.4rem;
             color: #d8d8d8;
         }
     }

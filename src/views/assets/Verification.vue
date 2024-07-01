@@ -97,42 +97,42 @@ const backFunc = ()=>{
     .send-money {
         text-align: center;
         span {
-            font-size: 16px;
+            font-size: 0.32rem;
             color: #8e8e93;
         }
     }
     .amount-money {
         text-align: center;
-        margin-top: 20px;
-        font-size: 50px;
+        margin-top: 0.4rem;
+        font-size: 1rem;
         font-weight: 800;
     }
     .code-img-box {
         width: 100%;
         display: flex;
         justify-content: center;
-        margin-top: 10px;
+        margin-top: 0.2rem;
         .code-img {
-            width: 200px !important;
-            height: 200px !important;
+            width: 4rem !important;
+            height: 4rem !important;
         }
     }  
     .code-text {
         text-align: center;
-        font-size: 14px;
+        font-size: 0.28rem;
         font-weight: 700;
-        margin-top: 10px;
-        margin-bottom: 20px;
+        margin-top: 0.2rem;
+        margin-bottom: 0.4rem;
     } 
     .circle-box {
         display: flex;
         justify-content: center;
         .circle-box-text {
-            margin-left: 20px;
-            margin-top: 5px;
+            margin-left: 0.4rem;
+            margin-top: 0.1rem;
             .circle-box-text-p {
-                font-size: 18px;
-                margin-bottom: 5px;
+                font-size: 0.36rem;
+                margin-bottom: 0.1rem;
             }
         }
     }
@@ -140,37 +140,37 @@ const backFunc = ()=>{
     .amount-line {
         padding: 0 0.32rem;
         .amount-line-text {
-            font-size: 16px;
+            font-size: 0.32rem;
             font-style: normal;
-            margin-bottom: 10px;
+            margin-bottom: 0.2rem;
         }
         .amount-line-box {
             display: flex;
             justify-content: center;
             div {
-                width: 90px;
-                line-height: 40px;
-                height: 40px;
+                width: 1.8rem;
+                line-height: 0.8rem;
+                height: 0.8rem;
                 text-align: center;
                 background: #dfe0fb;
                 color: #8e90f3;
-                border-radius: 6px;
+                border-radius: 0.12rem;
                 font-weight: 600;
-                margin-right: 10px;
+                margin-right: 0.2rem;
             }
         }
     }
     .verification-weight-text {
-        margin-top: 15px;
+        margin-top: 0.3rem;
         text-align: center;
-        font-size: 22px;
+        font-size: 0.44rem;
         font-weight: 600;
     }
     .verification-text {
-        margin-top: 15px;
+        margin-top: 0.3rem;
         text-align: center;
-        font-size: 16px;
-        margin-bottom: 50px;
+        font-size: 0.32rem;
+        margin-bottom: 1rem;
         color: #8e8e93;
     }
     
