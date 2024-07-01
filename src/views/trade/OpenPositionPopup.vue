@@ -352,6 +352,8 @@ const openStock = ()=>{
     .van-number-keyboard {
       max-width: 375px;
       position: absolute !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
     }
   }
   .close-price-num {

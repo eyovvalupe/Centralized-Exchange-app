@@ -4,6 +4,7 @@ export default {
     state: {
         assets: {}, // 总资产
         wallet: [], // 现金钱包
+    rechargeAmount: ''// 充值金额
     },
     mutations: {
         setAssets(state, data) {
@@ -11,6 +12,9 @@ export default {
         },
         setWallet(state, data) {
             state.wallet = data;
+        },
+        setRechargeAmount(state, data) {
+            state.rechargeAmount = data;
         },
     },
     actions: {

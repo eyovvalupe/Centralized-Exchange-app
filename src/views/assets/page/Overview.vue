@@ -275,7 +275,7 @@ const jump = (name) => {
 
 <style lang="less" scoped>
 .page_assets_overview {
-    padding-bottom: 1rem;
+    padding-bottom: 1.6rem;
     border-top: 1px solid rgba(0, 0, 0, 0);
 
     .overview {

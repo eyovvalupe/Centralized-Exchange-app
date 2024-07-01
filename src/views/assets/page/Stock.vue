@@ -50,6 +50,7 @@ const hidden = ref(false)
 
 <style lang="less" scoped>
 .page_assets_stock {
+    padding-bottom: 1.6rem;
     .overview {
         background-size: 100% 100%;
         margin: 0.2rem 0.32rem 0.36rem 0.32rem;

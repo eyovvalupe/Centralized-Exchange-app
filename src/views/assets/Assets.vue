@@ -5,7 +5,7 @@
 
             <div class="page_title">资产</div>
 
-            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
+            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card"
                 animated shrink>
                 <Tab :title="'总资产'" name="overview">
                     <!-- <template #title>
@@ -227,7 +227,7 @@ onMounted(() => {
     }
 
     .tab_body {
-        height: calc(100vh - 3.7rem);
+        // height: calc(100vh - 3.7rem);
         width: 100%;
         overflow-y: auto;
     }
