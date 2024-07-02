@@ -19,5 +19,6 @@ import router from "@/router"
 <style lang="less" scoped>
 .page_about {
     padding-top: 1.12rem;
+    height: 100%;
 }
 </style>
