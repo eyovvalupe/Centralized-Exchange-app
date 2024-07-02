@@ -270,7 +270,7 @@ const routes = [
     // 资产
     path: "/assets",
     name: "assets",
-    component: () => import("../views/Assets/Assets.vue"),
+    component: () => import("../views/assets/Assets.vue"),
     meta: {
       keepAlive: true,
       pageType: 'tab'
@@ -280,7 +280,7 @@ const routes = [
     // 划转
     path: "/transfer",
     name: "transfer",
-    component: () => import("../views/Assets/Transfer.vue"),
+    component: () => import("../views/assets/Transfer.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -290,7 +290,7 @@ const routes = [
     // 划转
     path: "/transferRecord",
     name: "transferRecord",
-    component: () => import("../views/Assets/TransferRecord.vue"),
+    component: () => import("../views/assets/TransferRecord.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -300,7 +300,7 @@ const routes = [
     // 兑换
     path: "/swap",
     name: "swap",
-    component: () => import("../views/Assets/Swap.vue"),
+    component: () => import("../views/assets/Swap.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -310,7 +310,7 @@ const routes = [
     // 兑换记录
     path: "/swapRecord",
     name: "swapRecord",
-    component: () => import("../views/Assets/SwapRecord.vue"),
+    component: () => import("../views/assets/SwapRecord.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -320,7 +320,7 @@ const routes = [
     // 借贷
     path: "/loan",
     name: "loan",
-    component: () => import("../views/Assets/Loan.vue"),
+    component: () => import("../views/assets/Loan.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -330,7 +330,7 @@ const routes = [
     // 借贷记录
     path: "/loanRecord",
     name: "loanRecord",
-    component: () => import("../views/Assets/LoanRecord.vue"),
+    component: () => import("../views/assets/LoanRecord.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -340,7 +340,7 @@ const routes = [
     // 提现
     path: "/withdraw",
     name: "withdraw",
-    component: () => import("../views/Assets/Withdraw.vue"),
+    component: () => import("../views/assets/Withdraw.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -350,7 +350,7 @@ const routes = [
     // 提现记录
     path: "/withdrawRecord",
     name: "withdrawRecord",
-    component: () => import("../views/Assets/WithdrawRecord.vue"),
+    component: () => import("../views/assets/WithdrawRecord.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -360,7 +360,7 @@ const routes = [
     // 充值
     path: "/topUp",
     name: "topUp",
-    component: () => import("../views/Assets/TopUp.vue"),
+    component: () => import("../views/assets/TopUp.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -370,7 +370,7 @@ const routes = [
     // 充值中
     path: "/recharging",
     name: "recharging",
-    component: () => import("../views/Assets/Recharging.vue"),
+    component: () => import("../views/assets/Recharging.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -380,7 +380,7 @@ const routes = [
     // 充值详情
     path: "/topUpItem",
     name: "topUpItem",
-    component: () => import("../views/Assets/TopUpItem.vue"),
+    component: () => import("../views/assets/TopUpItem.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -390,7 +390,7 @@ const routes = [
     // 充值列表
     path: "/topUpRecord",
     name: "topUpRecord",
-    component: () => import("../views/Assets/TopUpRecord.vue"),
+    component: () => import("../views/assets/TopUpRecord.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'
@@ -430,7 +430,7 @@ const routes = [
     // 充值
     path: "/verification",
     name: "verification",
-    component: () => import("../views/Assets/Verification.vue"),
+    component: () => import("../views/assets/Verification.vue"),
     meta: {
       keepAlive: false,
       pageType: 'child'

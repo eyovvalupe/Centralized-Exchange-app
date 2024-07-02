@@ -9,79 +9,45 @@
                 </div>
                 <div class="title">
                     <div>{{ item.symbol || '--' }}</div>
-                    <!-- <div class="info">{{ item.name || '--' }}</div> -->
+                    <div class="info">{{ item.name || '--' }}</div>
                 </div>
-                <div class="search" @click="router.push({ name: 'search' })">
+                <div class="search star">
+                    <img src="/static/img/market/stared.png" alt="⭐">
+                </div>
+                <!-- <div class="search" @click="router.push({ name: 'search' })">
                     <img src="/static/img/common/search_box.png" alt="🔍">
-                </div>
+                </div> -->
             </div>
-            <div class="count">
-                <div class="count_item flex10">
-                    <div style="margin-bottom: 0.1rem;">
-                        <span>开</span>
-                        <span class="num">{{ item.open || '--' }}</span>
-                    </div>
-                    <div>
-                        <span>闭</span>
-                        <span class="num">{{ item.close || '--' }}</span>
-                    </div>
+            <div class="header-price van-row van-row--justify-space-between">
+                <h1 class="info van-col van-col--10 align-content"
+                    :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
+                    <template v-if="item.price || item.close">
+                        {{ Number(item.price || item.close).toFixed(2) }}
+                    </template>
+                    <span v-else>--</span>
+                </h1>
+                <div class="ratio align-content van-col van-col--7"
+                    :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
+                    <div class="ratio_price">{{ Number(item.price * (item.ratio || 0)).toFixed(2) }}</div>
+                    <div>{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%'
+                        }}</div>
                 </div>
-                <div class="count_item flex10">
-                    <div style="margin-bottom: 0.1rem;">
-                        <span>高</span>
-                        <span class="num">{{ item.high || '--' }}</span>
+                <div class="count van-col van-col--5">
+                    <div class="count_item">
+                        <div class="txt">最高</div>
+                        <span>{{ item.high || '--' }}</span>
                     </div>
-                    <div>
-                        <span>低</span>
-                        <span class="num">{{ item.low || '--' }}</span>
-                    </div>
-                </div>
-                <div class="count_item flex12">
-                    <div style="margin-bottom: 0.1rem;">
-                        <span>量</span>
-                        <span class="num">{{ _formatNumber(item.amount) || '--' }}</span>
-                    </div>
-                    <div>
-                        <span>换</span>
-                        <span class="num">{{ item.ratio ? `${(item.ratio * 100).toFixed(2)}%` : '--' }}</span>
-                    </div>
-                </div>
-                <div class="count_item flex12">
-                    <div style="margin-bottom: 0.1rem;">
-                        <span>市盈</span>
-                        <span class="num">{{ item.trailing_pe ? `${Number(item.trailing_pe).toFixed(2)}%` : '--'
-                            }}</span>
-                    </div>
-                    <div>
-                        <span>市值</span>
-                        <span class="num">{{ item.market_cap ? _formatNumber(item.market_cap) : '--' }}</span>
+                    <div class="count_item">
+                        <div class="txt">最低</div>
+                        <span>{{ item.low || '--' }}</span>
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- 内容 -->
         <div class="market_content">
-            <!-- 功能项 -->
-            <div class="funcs">
-                <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">图表</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">概述</div>
-                <div style="flex: 1;"></div>
-                <!-- <div class="icon fullscreen" @click="fullScreen(true)">
-                    <img src="/static/img/market/fullscreen.png" alt="fullscreen">
-                </div> -->
-                <div class="icon star">
-                    <img src="/static/img/market/stared.png" alt="⭐">
-                </div>
-                <div @click="showBuy = true" class="ripple_button ripple_button2 submit_btn">
-                    <span>交易</span>
-                </div>
-            </div>
-
-
-
             <!-- 图表 -->
-            <div v-if="activeTab == 1" class="chart_box">
+            <div class="chart_box">
                 <div class="tabs">
                     <div class="tab" :class="{ 'active_tab': timeType == 'Time' }" @click="changeType('Time')">Time
                     </div>
@@ -93,6 +59,9 @@
                     <div class="tab" :class="{ 'active_tab': timeType == '1D' }" @click="changeType('1D')">1D</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1W' }" @click="changeType('1W')">1W</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1M' }" @click="changeType('1M')">1M</div>
+                    <div class="full-tab" @click="fullScreen(true)">
+                        <Icon name="enlarge" />
+                    </div>
                 </div>
                 <div class="chart_container" :class="{ 'fullscreen_container': fullWindow }">
                     <!-- 分时图 -->
@@ -106,59 +75,22 @@
                     </div>
                 </div>
             </div>
-
-            <!-- 概览 -->
-            <div class="intro_box" v-if="activeTab == 2">
-                <div class="intro_title">{{ item.symbol || '--' }}</div>
-                <!-- 详情 -->
-                <div class="info">
-                    <div class="left">
-                        <div class="price" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{ item.price ||
-                            item.close || '--' }}
-                        </div>
-                        <div class="time">
-                            Update time <span>{{ item.timestamp ? getTimestr(item.timestamp * 1000, 2) : '--' }}</span>
-                        </div>
-                    </div>
-                    <div class="mid" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
-                        <div>--</div>
-                        <div>{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%' }}</div>
-                    </div>
-                    <div class="right">
-                        <b>{{ item.market || '--' }}</b>
-                        <div>{{ item.market_status == 'open' ? '开市' : (item.market_status == 'close' ? '闭市' : '--') }}
-                        </div>
-                    </div>
-                </div>
-                <div class="intro_content">{{ item.business_summary ||
-                    '--' }}</div>
-                <div class="intro_area">
-                    <span>日范围</span>
-                    <div class="intro_area_box">
-                        <span>10.40</span>
-                        <span>——</span>
-                        <span>50.40</span>
-                    </div>
-                </div>
-                <div class="intro_area">
-                    <span>年范围</span>
-                    <div class="intro_area_box">
-                        <span>10.40</span>
-                        <span>——</span>
-                        <span>50.40</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
-
-
         <!-- 交易按钮 -->
-        <!-- <div @click="showBuy = true" class="max-width ripple_button ripple_button2 submit">
-            <span>交易</span>
-        </div> -->
-
-
+        <div class="bot-buysell van-row van-row--justify-space-between align-content">
+            <div class="txt-center van-col van-col--6">
+                <span class="icon-heyue">
+                    <img src="/static/img/market/heyue.png">
+                </span>
+                <span class="fn-12">合约</span>
+            </div>
+            <div @click="showBuy = true" class="submit btn-red  van-col van-col--8">
+                买涨
+            </div>
+            <div @click="showBuy = true" class="submit btn-green  van-col van-col--8">
+                买跌
+            </div>
+        </div>
         <!-- 时间选择弹窗 -->
         <Popup v-model:show="showPicker" round position="bottom">
             <div class="times_list">
@@ -260,7 +192,11 @@ const fullScreen = (key) => {
 
 <style lang="less" scoped>
 .page_marketinfo {
-    padding: 1.8rem 0.3rem 1.5rem 0.3rem;
+    padding: 2.8rem 0 0 0;
+
+    .has_padding_x {
+        padding: 0 0.3rem;
+    }
 
     .info_header {
         width: calc(100% - 0.6rem);
@@ -274,14 +210,13 @@ const fullScreen = (key) => {
 
         .top {
             display: flex;
-            height: 0.8rem;
+            min-height: 1rem;
             align-items: center;
             justify-content: space-between;
 
             .back {
                 width: 0.4rem;
                 height: 0.4rem;
-                margin-right: 0.4rem;
             }
 
             .title {
@@ -296,6 +231,11 @@ const fullScreen = (key) => {
                     font-size: 0.24rem;
                     line-height: 0.32rem;
                     color: #8F92A1;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    text-align: center;
+                    
                 }
             }
 
@@ -305,19 +245,26 @@ const fullScreen = (key) => {
             }
         }
 
-        .count {
-            padding: 0.1rem 0 0.05rem 0;
-            display: flex;
+        .header-price {
+            .info {
+                align-items: center;
+                margin: 0;
+            }
+        }
 
+        .count {
             .count_item {
-                flex: 1;
-                flex-shrink: 0;
-                overflow: hidden;
                 color: #55555E;
                 font-size: 0.24rem;
                 font-weight: 400;
                 line-height: 0.36rem;
-                white-space: nowrap;
+
+                .txt {
+                    flex: none;
+                    display: block;
+                    width: 100%;
+                    color: #bbb;
+                }
 
                 .num {
                     color: #000;
@@ -334,17 +281,12 @@ const fullScreen = (key) => {
             }
         }
     }
-
+    h1.info{
+        font-size:.6rem;
+     }
     .submit {
-        overflow: hidden;
-        width: calc(100% - 0.6rem);
-        position: fixed;
-        bottom: 2rem;
-        left: 50%;
-        transform: translateX(-50%);
         color: #fff;
-        background-color: #014CFA;
-        height: 1.12rem;
+        height: .8rem;
         border-radius: 1.2rem;
         display: flex;
         align-items: center;
@@ -352,6 +294,52 @@ const fullScreen = (key) => {
         font-weight: 600;
         font-size: 0.28rem;
         z-index: 100;
+        margin-right: .2rem;
+    }
+    .btn-green{
+        background: #18b762;
+    }
+    .btn-red{
+        background: #f3485e;
+    }
+.ratio, .info{
+    display: flex;
+    flex-direction: column;
+  justify-content: center;
+  vertical-align: middle;
+}
+.ratio{
+    font-size: .4rem;
+    line-height: .5rem;
+}
+    .bot-buysell {
+        background: #ffffffde;
+        // position:fixed;
+        // bottom: 0;
+        // z-index: 1;
+        width: 100%;
+        padding: .2rem 0;
+        padding-bottom: calc(.2rem + constant(safe-area-inset-bottom));
+        /*兼容 IOS<11.2*/
+        padding-bottom: calc(.2rem + env(safe-area-inset-bottom));
+        /*兼容 IOS>11.2*/
+    }
+
+    // .ratio_price {
+    //     font-size: 22px;
+    // }
+
+    .align-content {
+        align-content: center;
+    }
+
+    .txt-center {
+        text-align: center;
+    }
+
+    .icon-heyue {
+        display: block;
+        height: .6rem;
     }
 
     @media (min-width: 751px) {
@@ -365,12 +353,10 @@ const fullScreen = (key) => {
     }
 
     .market_content {
-        padding: 0.4rem 0 0 0;
 
         .funcs {
             display: flex;
             align-items: center;
-            margin-bottom: 0.2rem;
 
             .tab {
                 color: #061023;
@@ -461,14 +447,14 @@ const fullScreen = (key) => {
 
         .chart_box {
             width: 100%;
-            height: calc(100vh - 4.4rem);
+            height: calc(var(--app-height) - 4.7rem);
             display: flex;
             flex-direction: column;
             overflow: hidden;
 
             .tabs {
+                padding-left: .2rem;
                 height: 0.48rem;
-                margin-bottom: 0.24rem;
                 display: flex;
                 align-items: center;
 
@@ -484,7 +470,7 @@ const fullScreen = (key) => {
                     font-weight: 400;
                     margin-right: 0.18rem;
                     padding: 0 0.16rem;
-                    min-width: 1rem;
+                    min-width: calc(100vw / 7.95);
 
                 }
 
@@ -494,7 +480,10 @@ const fullScreen = (key) => {
                 }
             }
 
-
+            .full-tab {
+                color: #333;
+                font-size: 20px;
+            }
 
             .chart_container {
                 flex: 1;

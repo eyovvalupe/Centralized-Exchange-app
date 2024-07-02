@@ -21,19 +21,27 @@ export const klineConfig = {
         }
     },
     separator: {
-        size: 0,
-        color: "#888888",
+        size: 1,
+        color: "#EEF1FA",
         fill: true,
-        activeBackgroundColor: "rgba(230, 230, 230, .15)"
     },
     candle: {
         type: "area", // area, candle_solid
         tooltip: {
-            showRule: "follow_cross", // none
+            showRule: "always", // none
+            // showRule: "follow_cross", // none
             showType: "rect",
+            custom: [
+                // { title: "time", value: "{time}" },
+                { title: "open", value: "{open}" },
+                { title: "high", value: "{high}" },
+                { title: "low", value: "{low}" },
+                { title: "close", value: "{close}" },
+                { title: "volume", value: "{volume}" }
+            ],
             rect: {
                 // 'fixed' | 'pointer'
-                position: "fixed",
+                position: "pointer",
                 paddingLeft: 4,
                 paddingRight: 4,
                 paddingTop: 4,
@@ -44,9 +52,19 @@ export const klineConfig = {
                 offsetBottom: 4,
                 borderRadius: 4,
                 borderSize: 1,
-                borderColor: "#f2f3f5",
-                color: "#FEFEFE"
-            }
+                borderColor: "#f5f5f5",
+                color: "#ffffffbd"
+            },
+            text: {
+                size: 12,
+                family: 'Helvetica Neue',
+                weight: 'normal',
+                color: '#333',
+                marginLeft: 8,
+                marginTop: 4,
+                marginRight: 8,
+                marginBottom: 4
+              },
         },
         bar: {
             upColor,
@@ -139,29 +157,17 @@ export const klineConfig = {
         }
     },
     indicator: {
-        tooltip: {
-            showRule: "none", // 'none'
-            showType: "standard",
-            custom: [
-                { title: "time", value: "{time}" },
-                { title: "open", value: "{open}" },
-                { title: "high", value: "{high}" },
-                { title: "low", value: "{low}" },
-                { title: "close", value: "{close}" },
-                { title: "volume", value: "{volume}" }
-            ]
-        },
         bars: [
             {
                 // 'fill' | 'stroke' | 'stroke_fill'
-                style: "fill",
+                style: "stroke_fill",
                 // 'solid' | 'dashed'
-                borderStyle: "solid",
-                borderSize: 1,
-                borderDashedValue: [2, 2],
-                upColor: "rgba(85, 200, 96, .5)",
-                downColor: "rgba(253, 73, 56, .5)",
-                noChangeColor: "rgba(125, 145, 157, .5)"
+                borderStyle: "dashed",
+                borderSize: 0,
+                borderDashedValue: [1, 1],
+                upColor: "rgba(85, 200, 96, 1)",
+                downColor: "rgba(253, 73, 56, 1)",
+                noChangeColor: "rgba(125, 145, 157, 1)"
             }
         ],
         lines: [
@@ -169,7 +175,7 @@ export const klineConfig = {
                 // 'solid' | 'dashed'
                 style: "solid",
                 smooth: false,
-                size: 1,
+                size: 0,
                 dashedValue: [2, 2],
                 color: "rgba(0,0,0,0)" // '#FF9600'
             },
