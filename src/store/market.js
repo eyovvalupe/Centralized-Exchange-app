@@ -6,6 +6,7 @@ const { startSocket } = useSocket()
 
 export default {
     state: {
+        marketWatchListKeys: [], // 当前订阅的列表key
         marketWatchList: [], // 当前订阅的列表数据
         marketSearchStr: '', // 当前搜索的文本
         marketSearchList: [], // 当前搜索的结果
@@ -17,8 +18,11 @@ export default {
         marketRecommndList: [], // 首页推荐列表
         marketStockList: [], // 股票页列表
         marketSrockRecommendList: [], // 推荐股票列表
+        marketRankList: [], // 排行列表
 
         marketWatchKeys: [], // 除了列表，还需要额外监听的股票
+        proxyListValue: [], // 始终监听的列表
+        commitKey: "", // 始终监听的列表key
     },
     mutations: {
         setMarketWatchList(state, data) {
@@ -45,9 +49,18 @@ export default {
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
         },
+        setMarketRankList(state, data) {
+            state.marketRankList = data;
+            const arr = Array.from(new Set(data.map(item => item.symbol)))
+            // 设置keys
+            state.marketWatchKeys = Array.from(new Set(state.marketWatchKeys.concat(arr)))
+        },
         setMarketSearch(state, data) {
             state.marketSearchStr = data.search;
             state.marketSearchList = data.list;
+        },
+        setMarketSearchList(state, data) {
+            state.marketSearchList = data;
         },
         setCurrStock(state, data) {
             if (!data.symbol) { // 只更新部分数据
@@ -57,6 +70,8 @@ export default {
                 }
                 return
             }
+            // 兼容后端的symbols 和 symbol
+            data.symbol = data.symbols || data.symbol
             state.currStock = data;
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
@@ -81,24 +96,50 @@ export default {
     },
     actions: {
         subList({ commit, state }, { commitKey, proxyListValue }) {
+            let proxyKeys = []
+            if (proxyListValue) {
+                proxyKeys = proxyListValue.map(item => item.symbol)
+            }
             const socket = startSocket(() => {
                 const keys = Array.from(new Set([
-                    ...proxyListValue.map(item => item.symbol),
-                    ...state.marketWatchKeys
+                    ...proxyKeys,
+                    ...state.marketWatchKeys,
+                    ...state.marketWatchListKeys
                 ]))
-                console.error('订阅', keys)
+                if (proxyListValue) { // 如果有始终监听的数据，则放进store
+                    state.proxyListValue = proxyListValue
+                    state.commitKey = commitKey
+                    state.marketWatchListKeys = proxyKeys
+                }
+                console.error('订阅：', keys)
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {
                     if (res.code == 200) {
-                        const arr = proxyListValue.map(item => { // 数据和观察列表里的数据融合
-                            const target = res.data.find(a => a.symbols == item.symbol)
-                            if (target) {
-                                Object.assign(item, target)
+                        if (proxyListValue) {
+                            const arr = proxyListValue.map(item => { // 数据和观察列表里的数据融合
+                                const target = res.data.find(a => a.symbols == item.symbol)
+                                if (target) {
+                                    Object.assign(item, target)
+                                }
+                                return item
+                            })
+                            if (commitKey) {
+                                commit(commitKey, arr || [])
                             }
-                            return item
-                        })
-                        commit(commitKey, arr || [])
+                        }
+                        if (state.commitKey) {
+                            const arr2 = state.proxyListValue.map(item => { // 数据和观察列表里的数据融合
+                                const target = res.data.find(a => {
+                                    return a.symbols == item.symbol
+                                })
+                                if (target) {
+                                    Object.assign(item, target)
+                                }
+                                return item
+                            })
+                            commit(state.commitKey, arr2 || [])
+                        }
 
                         setTimeout(() => {
                             // 根据不同页面，同步页面内模块的数据
@@ -121,10 +162,21 @@ export default {
                 socket && socket.off('snapshot')
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
-                        const target = proxyListValue.find(item => item.symbols == res.symbols)
-                        if (target) {
-                            target.points = _getSnapshotLine(res.data)
-                            commit(commitKey, proxyListValue)
+                        if (proxyListValue) {
+                            const target = proxyListValue.find(item => item.symbols == res.symbols)
+                            if (target) {
+                                target.points = _getSnapshotLine(res.data)
+                                if (commitKey) {
+                                    commit(commitKey, proxyListValue)
+                                }
+                            }
+                        }
+                        if (state.commitKey) {
+                            const target = state.proxyListValue.find(item => item.symbols == res.symbols)
+                            if (target) {
+                                target.points = _getSnapshotLine(res.data)
+                                commit(state.commitKey, state.proxyListValue)
+                            }
                         }
 
 
