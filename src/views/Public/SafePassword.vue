@@ -119,6 +119,8 @@ const submit = async () => {
                     name: 'registerSuccess'
                 })
             }, 300)
+        } else {
+            showToast(res.message)
         }
     }).catch(err => {
         if (err.code == '1001') { // 弹出验证码

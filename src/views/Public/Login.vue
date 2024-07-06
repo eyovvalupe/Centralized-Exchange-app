@@ -96,6 +96,7 @@ const submit = () => {
   if (loading.value) return
   loading.value = true
   _login(form.value).then(res => {
+    if (res.code != 200) return showToast(res.message)
     store.dispatch('reset')
     showNotify({ type: 'success', message: '登录成功' })
     setTimeout(() => {
