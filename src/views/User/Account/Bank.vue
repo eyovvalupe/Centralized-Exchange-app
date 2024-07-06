@@ -33,7 +33,7 @@
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
 import { Button, showNotify } from "vant"
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { _kycGet, _addAccount } from "@/api/api"
 import router from "@/router";
 import store from "@/store";

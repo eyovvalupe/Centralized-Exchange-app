@@ -63,7 +63,7 @@
 import { Button, Icon, Popup, showNotify } from "vant"
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { _addAccount } from "@/api/api"
 import router from "@/router";
 import store from "@/store";
