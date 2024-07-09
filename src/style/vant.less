@@ -15,7 +15,30 @@
     font-weight: 400;
 }
 
+.van-button--disabled {
+    // 按钮不置灰
+    opacity: 1 !important;
+}
+
+.van-button--primary {
+
+    // 按钮点击变色
+    &:active {
+        background-color: #0039BC !important;
+    }
+}
+
 .self_van_popup {
     // 弹窗
     background-color: rgba(0, 0, 0, 0) !important;
+}
+
+@media (min-width: 751px) {
+
+    .van-popup {
+        max-width: 375px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+    }
+
 }

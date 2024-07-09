@@ -65,9 +65,7 @@
                         </div>
                         <div class="more_card">更改</div>
 
-                        <div class="checked" style="background-image: url('/static/img/user/check_bg.png');">
-                            <img src="/static/img/common/ok.png" alt="img">
-                        </div>
+
                     </div>
                 </div>
                 <div v-else>
@@ -112,18 +110,18 @@
                     <input v-model.trim="searchStr" type="text" placeholder="搜索" />
                     <Icon name="search" />
                 </div> -->
-                <div class="tabs">
+                <!-- <div class="tabs">
                     <div class="tab" :class="{ 'active_tab': form.from.toUpperCase() != 'MAIN' }">加密货币</div>
                     <div class="tab" :class="{ 'active_tab': form.from.toUpperCase() == 'MAIN' }">银行卡</div>
-                </div>
+                </div> -->
                 <div class="list">
-                    <div class="add_item">
+                    <div class="add_item" @click="goAddAccount">
                         <Icon style="font-size:0.48rem;" name="add-o" />
                         <span style="margin-left: 0.2rem;color:#999999;font-size: 0.24rem;">添加收款账户</span>
                     </div>
-                    <div @click="clickAccountItem(item)" class="dialog_account_item" v-for="(item, i) in searchList"
-                        :key="i">
-
+                    <div @click="clickAccountItem(item)"
+                        :class="{ 'dialog_account_item_active': currAccount.id == item.id }" class="dialog_account_item"
+                        v-for="(item, i) in searchList" :key="i">
                         <div class="card_icon">
                             <img v-if="item.bankName" src="/static/img/user/card_type_b.png" alt="img">
                             <img v-else src="/static/img/user/card_type_c.png" alt="img">
@@ -135,10 +133,10 @@
                                 `${item.bankName}` }}</div>
 
                         </div>
-                    </div>
-                    <div class="add_account" v-if="!searchList.length" @click="goAddAccount">
-                        <Icon name="add-o" />
-                        <span style="margin-left: 0.08rem;">添加收款方式</span>
+                        <div v-if="currAccount.id == item.id" class="checked"
+                            style="background-image: url('/static/img/user/check_bg.png');">
+                            <img src="/static/img/common/ok.png" alt="img">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -160,6 +158,7 @@ import { _withdrawFee, _withdraw } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
 import { _hiddenAccount } from "@/utils/index"
 
+store.dispatch('updateWallet') // 更新钱包
 
 const focus = ref(false)
 const loading = ref(false)
@@ -243,7 +242,7 @@ const balance = computed(() => { // main钱包余额
 })
 
 // 收款方式
-// store.dispatch('updateAccountList')
+store.dispatch('updateAccountList')
 const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 // 可用钱包列表
 const showAccount = computed(() => {
@@ -306,9 +305,19 @@ const goRecord = () => {
 }
 // 跳转添加
 const goAddAccount = () => {
-    router.push({
-        name: 'account'
-    })
+    // todo 权限校验
+    if (form.value.from == 'main') {
+        router.push({
+            name: 'bank'
+        })
+    } else {
+        router.push({
+            name: 'crypto',
+            query: {
+                currency: form.value.from
+            }
+        })
+    }
 }
 </script>
 
@@ -380,7 +389,7 @@ const goAddAccount = () => {
                 padding: 0 0.2rem;
 
                 .item_tip {
-                    font-size: 0.2rem;
+                    font-size: 0.24rem;
                     font-weight: 400;
                     color: #A4ACB9;
                     pointer-events: none;
@@ -389,6 +398,7 @@ const goAddAccount = () => {
                     left: 0.2rem;
                     top: 50%;
                     transform: translateY(-50%);
+                    transition: all ease .2s;
 
                     span {
                         color: #111111;
@@ -399,6 +409,7 @@ const goAddAccount = () => {
                     color: #1A59F6;
                     position: absolute;
                     right: 0.24rem;
+                    font-size: 0.24rem;
                 }
             }
 
@@ -408,11 +419,11 @@ const goAddAccount = () => {
                 line-height: 0;
                 color: #061023;
                 font-weight: 500;
-                font-size: 0.28rem;
+                font-size: 0.26rem;
 
                 .currency_icon {
-                    width: 0.44rem;
-                    height: 0.44rem;
+                    width: 0.4rem;
+                    height: 0.4rem;
                     margin-right: 0.12rem;
                 }
             }
@@ -437,7 +448,6 @@ const goAddAccount = () => {
         }
 
         .active_item {
-            height: 1.2rem;
 
             .item_content {
                 border: 1px solid #014CFA;
@@ -447,6 +457,7 @@ const goAddAccount = () => {
                 .item_tip {
                     top: 0.24rem;
                     left: 0.36rem;
+                    font-size: 0.2rem;
 
                     span {
                         color: #A4ACB9;
@@ -456,7 +467,7 @@ const goAddAccount = () => {
         }
 
         .subtitle {
-            font-size: 0.32rem;
+            font-size: 0.28rem;
             color: #061023;
             font-weight: 400;
             line-height: 0.5rem;
@@ -501,7 +512,7 @@ const goAddAccount = () => {
                 align-items: center;
                 justify-content: space-between;
                 position: relative;
-                border: 1px solid #1A59F6;
+                background-color: #F6F7FA;
                 padding: 0 0.4rem 0 0.36rem;
                 overflow: hidden;
 
@@ -522,14 +533,14 @@ const goAddAccount = () => {
 
                 .card {
                     flex: 1;
-                    margin: 0 0.16rem;
+                    margin: 0 0.2rem 0 0.36rem;
                     text-align: left;
-                    font-size: 0.28rem;
+                    font-size: 0.24rem;
                     color: #061023;
                     font-weight: 500;
 
                     .code {
-                        font-size: 0.4rem;
+                        font-size: 0.32rem;
                         margin-bottom: 0.1rem;
                         font-weight: 400;
                     }
@@ -541,22 +552,7 @@ const goAddAccount = () => {
                     font-weight: 400;
                 }
 
-                .checked {
-                    position: absolute;
-                    top: -0.04rem;
-                    right: -0.04rem;
-                    background-size: 100% 100%;
-                    width: 0.46rem;
-                    height: 0.42rem;
 
-                    >img {
-                        width: 0.18rem !important;
-                        height: 0.12rem !important;
-                        position: absolute;
-                        right: 0.06rem;
-                        top: 0.08rem;
-                    }
-                }
             }
         }
     }
@@ -704,16 +700,40 @@ const goAddAccount = () => {
 
         .card {
             flex: 1;
-            margin: 0 0.16rem;
+            margin: 0 0.2rem 0 0.36rem;
             text-align: left;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
             color: #061023;
             font-weight: 500;
+            line-height: 1;
 
             .code {
-                font-size: 0.4rem;
+                font-size: 0.32rem;
                 margin-bottom: 0.1rem;
                 font-weight: 400;
+            }
+        }
+
+
+    }
+
+    .dialog_account_item_active {
+        border: 1px solid #1A59F6;
+
+        .checked {
+            position: absolute;
+            top: -0.04rem;
+            right: -0.04rem;
+            background-size: 100% 100%;
+            width: 0.46rem;
+            height: 0.42rem;
+
+            >img {
+                width: 0.18rem !important;
+                height: 0.12rem !important;
+                position: absolute;
+                right: 0.06rem;
+                top: 0.08rem;
             }
         }
     }

@@ -6,7 +6,7 @@
         <div class="subtitle">加密货币</div>
         <div class="item" @click="showCrypto = true">
             <div class="iten_icon">
-                <img src="/static/img/crypto/usdt.png" alt="usdt">
+                <img :src="`/static/img/crypto/${form.currency}.png`" alt="usdt">
             </div>
             <div class="ipt">{{ form.currency }}</div>
             <Icon style="transform: rotate(90deg);" name="play" />
@@ -68,6 +68,9 @@ import { _addAccount } from "@/api/api"
 import router from "@/router";
 import store from "@/store";
 import { _currencyMapList, _networkMapList } from "@/utils/dataMap.js"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
 
 
 // 币种
@@ -89,7 +92,7 @@ const googleRef = ref()
 const loading = ref(false)
 const form = ref({
     channel: 'crypto',
-    currency: 'USDT',
+    currency: route.query.currency || 'USDT',
     network: 'TRC20',
     address: '',
     // account_name: null,
