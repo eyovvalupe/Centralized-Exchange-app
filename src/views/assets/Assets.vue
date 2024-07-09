@@ -85,7 +85,7 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, PullRefresh, Icon } from "vant"
+import { Tab, Tabs, PullRefresh } from "vant"
 import { ref, onMounted } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
@@ -234,7 +234,7 @@ onMounted(() => {
 
     .refresh_box {
         width: 100%;
-        height: 100%;
+
     }
 }
 </style>

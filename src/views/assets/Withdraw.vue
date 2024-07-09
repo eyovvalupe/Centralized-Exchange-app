@@ -14,23 +14,23 @@
             <div class="subtitle">金额</div>
             <div class="item" :class="{ 'active_item': focus }">
 
-                <div class="item_box item_currency">
-                    <div class="currency" @click="showDialog = true">
+                <div class="item_box item_currency" @click="showDialog = true">
+                    <div class="currency">
                         <div class="currency_icon">
                             <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
                         </div>
                         <span>{{ form.from.toUpperCase() }}</span>
                     </div>
-                    <div class="more" @click="showDialog = true">
+                    <div class="more">
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
                 </div>
 
                 <div class="item_box item_content">
                     <span class="item_tip" v-show="!form.amount || focus">可提金额：<span>{{ balance }}</span></span>
-                    <input @focus="focus = true" @blur="focus = false" @change="changeAmount" type="number"
+                    <input class="ipt" @focus="focus = true" @blur="focus = false" @change="changeAmount" type="number"
                         v-model="form.amount" placeholder="">
-                    <span v-show="focus" class="all" @click="maxIpt">全部</span>
+                    <span class="all" @click="maxIpt">全部</span>
                 </div>
 
             </div>
@@ -43,7 +43,7 @@
 
 
             <!-- 提款方式 -->
-            <div class="subtitle" style="margin-top:0.8rem">收款账户</div>
+            <div class="subtitle" style="margin-top:0.24rem">收款账户</div>
             <div class="account_box">
 
                 <div v-if="showAccount.length">
@@ -89,11 +89,17 @@
                 <div class="close_icon" @click="showDialog = false">
                     <img src="/static/img/common/close.png" alt="x">
                 </div>
-                <div @click="clickItem(item)" class="swap_dialog_item" v-for="(item, i) in wallet" :key="i">
+                <div class="title">币种选择</div>
+                <div @click="clickItem(item)" class="swap_dialog_item"
+                    :class="{ 'swap_dialog_item_active': form.from == item.currency }" v-for="(item, i) in wallet"
+                    :key="i">
                     <div class="icon">
                         <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
                     </div>
                     <span>{{ item.currency.toUpperCase() }}</span>
+
+
+                    <Icon v-if="form.from == item.currency" class="check_icon" name="success" />
                 </div>
             </div>
         </Popup>
@@ -145,6 +151,9 @@
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef">
         </SafePassword>
+
+        <!-- 充提记录 -->
+        <RaWrecords :bottom="'0'" ref="RaWrecordsRef" />
     </div>
 </template>
 
@@ -157,8 +166,10 @@ import router from "@/router"
 import { _withdrawFee, _withdraw } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
 import { _hiddenAccount } from "@/utils/index"
+import RaWrecords from "@/components/RaWrecords.vue"
 
 store.dispatch('updateWallet') // 更新钱包
+const RaWrecordsRef = ref()
 
 const focus = ref(false)
 const loading = ref(false)
@@ -172,6 +183,7 @@ const form = ref({
     account: '',
 })
 const maxIpt = () => {
+    console.error('??', balance.value)
     form.value.amount = balance.value
     setTimeout(() => {
         getFee()
@@ -232,7 +244,7 @@ const getFee = () => {
 
 // 钱包
 const wallet = computed(() => { // 可选钱包列表
-    return store.state.wallet.filter(item => !['stock', 'contract', form.value.from].includes(item.currency)) || []
+    return store.state.wallet.filter(item => !['stock', 'contract'].includes(item.currency)) || []
 })
 const balance = computed(() => { // main钱包余额
     let b = 0
@@ -299,9 +311,10 @@ getSessionToken()
 
 // 跳转记录
 const goRecord = () => {
-    router.push({
-        name: 'withdrawRecord'
-    })
+    // router.push({
+    //     name: 'withdrawRecord'
+    // })
+    RaWrecordsRef.value && RaWrecordsRef.value.openRecord()
 }
 // 跳转添加
 const goAddAccount = () => {
@@ -388,6 +401,10 @@ const goAddAccount = () => {
                 height: 100%;
                 padding: 0 0.2rem;
 
+                .ipt {
+                    font-size: 0.24rem;
+                }
+
                 .item_tip {
                     font-size: 0.24rem;
                     font-weight: 400;
@@ -448,11 +465,15 @@ const goAddAccount = () => {
         }
 
         .active_item {
+            height: 1rem;
 
             .item_content {
                 border: 1px solid #014CFA;
-                padding-left: 0.5rem;
                 padding-top: 0.2rem;
+
+                .ipt {
+                    font-size: 0.28rem;
+                }
 
                 .item_tip {
                     top: 0.24rem;
@@ -540,7 +561,7 @@ const goAddAccount = () => {
                     font-weight: 500;
 
                     .code {
-                        font-size: 0.32rem;
+                        font-size: 0.28rem;
                         margin-bottom: 0.1rem;
                         font-weight: 400;
                     }
@@ -558,9 +579,12 @@ const goAddAccount = () => {
     }
 
     .submit {
-        width: 100%;
+        width: calc(100% - 0.64rem);
         height: 1.12rem;
-        margin: 1.2rem 0 0.4rem 0;
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
     }
 }
 </style>
@@ -601,11 +625,24 @@ const goAddAccount = () => {
         justify-content: center;
         border-bottom: 1px solid #F5F5F5;
         overflow: hidden;
+        position: relative;
 
         .icon {
             width: 0.4rem;
             height: 0.4rem;
             margin-right: 0.24rem;
+        }
+    }
+
+    .swap_dialog_item_active {
+        color: #014CFA;
+        font-weight: 600;
+
+        .check_icon {
+            position: absolute;
+            right: 0.24rem;
+            color: #014CFA;
+            font-size: 0.28rem;
         }
     }
 
@@ -708,7 +745,7 @@ const goAddAccount = () => {
             line-height: 1;
 
             .code {
-                font-size: 0.32rem;
+                font-size: 0.28rem;
                 margin-bottom: 0.1rem;
                 font-weight: 400;
             }

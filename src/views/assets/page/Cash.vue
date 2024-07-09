@@ -54,54 +54,24 @@
             </div>
         </div>
 
-
         <!-- 充提记录 -->
-        <div class="fix_block">
-            <div class="ripple_button fix_block_header" @click="openRecord">
-                <Icon name="arrow-up" class="arrow" :class="{ 'arrow_active': openList }" />
-                <span v-show="!openList">充提记录</span>
-            </div>
-
-            <div class="list_box list" :class="{ 'open_list': openList }">
-                <Tabs v-if="openList" style="width:100%" :lazy-render="false" v-model:active="currTab" type="card"
-                    sticky animated shrink>
-                    <Tab :title="'充值记录'" name="1">
-                        <div>
-                            <Loaidng :loading="listLoading && !depositList.length" />
-                            <RechargeItem v-for="(item, i) in depositList" :item="item" :key="i" />
-                            <NoData v-if="!listLoading && !depositList.length" />
-                        </div>
-                    </Tab>
-                    <Tab :title="'提现记录'" name="2">
-                        <div>
-                            <Loaidng :loading="listLoading && !withdrawList.length" />
-                            <WithdrawItem v-for="(item, i) in withdrawList" :item="item" :key="i" />
-                            <NoData v-if="!listLoading && !withdrawList.length" />
-                        </div>
-                    </Tab>
-                </Tabs>
-            </div>
-        </div>
-
+        <RaWrecords :bottom="'1.4rem'" :hiddenBeforeOpen="false" ref="RaWrecordsRef" />
     </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue"
-import { Icon, Tabs, Tab } from "vant"
-import { _depositList, _withdrawList } from "@/api/api"
+import { Icon } from "vant"
 import store from "@/store"
-import RechargeItem from "./components/RechargeItem"
-import WithdrawItem from "./components/WithdrawItem"
-import Loaidng from "@/components/Loaidng.vue"
-import NoData from "@/components/NoData.vue"
+import RaWrecords from "@/components/RaWrecords.vue"
 import router from "@/router"
 
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
-
 const hidden = ref(false)
-const openList = ref(false)
+
+const RaWrecordsRef = ref()
+
 
 
 // 刷新现金钱包
@@ -125,46 +95,6 @@ const switchOpen = (i, e) => {
         return i == index ? item : false
     })
     e.stopPropagation()
-}
-
-// 获取充值记录
-const listLoading = ref(false)
-const depositList = ref([])
-const withdrawList = ref([])
-const getList = () => {
-    listLoading.value = true
-    let i = 0
-    _depositList({ // 充值记录
-        page: 1
-    }).then(res => {
-        depositList.value = res.data || []
-    }).finally(() => {
-        i++
-        if (i == 2) {
-            listLoading.value = false
-        }
-    })
-
-    _withdrawList({ // 提现记录
-        page: 1
-    }).then(res => {
-        withdrawList.value = res.data || []
-    }).finally(() => {
-        i++
-        if (i == 2) {
-            listLoading.value = false
-        }
-    })
-}
-
-
-// 打开记录
-const currTab = ref(1) // 1-充值记录  2-提现记录
-const openRecord = () => {
-    openList.value = !openList.value
-    if (openList.value) {
-        getList()
-    }
 }
 
 // 跳转充值
@@ -193,7 +123,7 @@ onUnmounted(() => {
 })
 
 const refresh = () => {
-    openList.value = false
+    RaWrecordsRef.value && RaWrecordsRef.value.close()
     getAssets()
 }
 defineExpose({
@@ -279,48 +209,7 @@ defineExpose({
     }
 
 
-    .fix_block {
-        width: 100%;
-        position: absolute;
-        z-index: 99;
-        left: 0;
-        bottom: 0;
-        border-top-left-radius: 0.4rem;
-        border-top-right-radius: 0.4rem;
-        background-color: #fff;
-        box-shadow: -2px 0 5px #ddd;
 
-        .fix_block_header {
-            height: 0.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0 0.4rem;
-            font-size: 0.3rem;
-            overflow: hidden;
-
-            .arrow {
-                margin-right: 0.2rem;
-                transition: all ease .8s;
-            }
-
-            .arrow_active {
-                transform: rotate(180deg);
-            }
-        }
-
-        .list {
-            height: 0;
-            padding: 0;
-            overflow: hidden;
-            transition: all ease .3s;
-        }
-
-        .open_list {
-            height: calc(100vh - 5.5rem);
-            overflow-y: auto;
-        }
-    }
 
 
     .list_box {

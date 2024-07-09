@@ -156,6 +156,20 @@ input {
 .ripple_button2:active::after {
     animation: ripple2 .3s ease;
 }
-.fn-12{
+
+.fn-12 {
     font-size: 12px;
+}
+
+
+/* 针对 Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 针对 Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }
