@@ -116,11 +116,11 @@ setTimeout(() => {
 
 // 新闻
 const news = ref([])
-_news().then(res => {
-    if (res.code == 200) {
-        news.value = res.data || []
-    }
-})
+// _news().then(res => {
+//     if (res.code == 200) {
+//         news.value = res.data || []
+//     }
+// })
 </script>
 
 <style lang="less" scoped>

@@ -88,7 +88,7 @@ const getAddress = () => {
         network: form.value.network
     }).then(res => {
         if (res.code == 200) {
-            address.value = res.data?.address || '1234567890'
+            address.value = res.data?.address || ''
             drawQrcode()
             startCountDown()
         }

@@ -24,7 +24,7 @@ const root = ref()
 
 const props = defineProps({
     points: {
-        type: String,
+        type: [Number, String],
         default: ''
     },
     ratio: {

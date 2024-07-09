@@ -10,7 +10,7 @@
                 <div class="item item_2"></div>
                 <div class="item item_3"></div>
             </div> -->
-            <L type="spinner" :loading="loading" />
+            <Loading type="spinner" :loading="loading" />
         </div>
     </div>
 </template>
@@ -21,7 +21,7 @@ import { init, dispose } from 'klinecharts'
 import { klineConfig } from './kline.conf';
 import { _time } from "@/api/api"
 import { useSocket } from '@/utils/ws'
-import Loading from "../LoadingMore"
+import { Loading } from "vant"
 
 const { startSocket } = useSocket()
 let socket = null

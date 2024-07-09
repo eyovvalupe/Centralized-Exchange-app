@@ -357,6 +357,16 @@ const routes = [
     }
   },
   {
+    // 提现详情
+    path: "/withdrawInfo",
+    name: "withdrawInfo",
+    component: () => import("../views/Assets/WithdrawRecordInfo.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 充值
     path: "/topUp",
     name: "topUp",
