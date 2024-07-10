@@ -187,8 +187,8 @@ onMounted(() => {
 
         :deep(.van-tabs__wrap) {
             height: 0.8rem;
-            border-bottom: 1px solid #F6F8FF;
-            padding-bottom: 0.2rem;
+            // border-bottom: 1px solid #F6F8FF;
+            padding-bottom: 0.34rem;
         }
 
         :deep(.van-tabs__nav--card) {

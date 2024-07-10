@@ -13,9 +13,7 @@ body,
     user-select: none;
     font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, v, sans-serif;
 
-    div {
-        box-sizing: border-box;
-    }
+
 
     img {
         width: 100%;
@@ -35,6 +33,12 @@ body,
 body::-webkit-scrollbar {
     width: 0;
     height: 0;
+}
+
+div {
+    box-sizing: border-box;
+    transition: all ease .3s;
+    font-size: 0.28rem;
 }
 
 div::-webkit-scrollbar {

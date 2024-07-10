@@ -403,6 +403,7 @@ const goAddAccount = () => {
 
                 .ipt {
                     font-size: 0.24rem;
+                    height: 100%;
                 }
 
                 .item_tip {
@@ -620,6 +621,7 @@ const goAddAccount = () => {
 
     .swap_dialog_item {
         height: 1.12rem;
+        line-height: 0;
         display: flex;
         align-items: center;
         justify-content: center;

@@ -377,6 +377,16 @@ const routes = [
     }
   },
   {
+    // 充值-虚拟货币
+    path: "/topUpCrypto",
+    name: "topUpCrypto",
+    component: () => import("../views/Assets/TopUpCrypto.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 充值中
     path: "/recharging",
     name: "recharging",
