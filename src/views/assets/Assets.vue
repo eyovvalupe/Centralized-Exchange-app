@@ -3,9 +3,15 @@
     <div class="page page_assets">
         <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
 
-            <div class="page_title">资产</div>
+            <div class="page_title">
+                <span>资产</span>
 
-            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
+                <div class="record_icon">
+                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                </div>
+            </div>
+
+            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card"
                 animated shrink>
                 <Tab :title="'总资产'" name="overview">
                     <!-- <template #title>
@@ -36,44 +42,44 @@
                         <Cash ref="cashRef" @setLoading="val => loading = val" v-if="active == 'cash'" />
                     </div>
                 </Tab>
-                <Tab :title="'股票'" name="stock">
-                    <!-- <template #title>
+                <Tab name="stock">
+                    <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'stock' }">
-                            <div class="mytab_title_icon">
+                            <div class="mytab_title_icon" v-show="active != 'stock'">
                                 <img v-show="active != 'stock'" src="/static/img/user/iden-1.png" alt="img">
-                                <img v-show="active == 'stock'" src="/static/img/user/iden-2.png" alt="img">
+                                <!-- <img v-show="active == 'stock'" src="/static/img/user/iden-2.png" alt="img"> -->
                             </div>
                             <span v-show="active == 'stock'">股票</span>
                         </div>
-                    </template> -->
+                    </template>
                     <div class="tab_body">
                         <Stock ref="stockRef" @setLoading="val => loading = val" v-if="active == 'stock'" />
                     </div>
                 </Tab>
-                <Tab :title="'合约'" name="contract">
-                    <!-- <template #title>
+                <Tab name="contract">
+                    <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'contract' }">
-                            <div class="mytab_title_icon">
+                            <div class="mytab_title_icon" v-show="active != 'contract'">
                                 <img v-show="active != 'contract'" src="/static/img/user/google-1.png" alt="img">
-                                <img v-show="active == 'contract'" src="/static/img/user/google-2.png" alt="img">
+                                <!-- <img v-show="active == 'contract'" src="/static/img/user/google-2.png" alt="img"> -->
                             </div>
                             <span v-show="active == 'contract'">合约</span>
                         </div>
-                    </template> -->
+                    </template>
                     <div class="tab_body">
                         合约
                     </div>
                 </Tab>
-                <Tab :title="'IPO'" name="ipo">
-                    <!-- <template #title>
+                <Tab name="ipo">
+                    <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
-                            <div class="mytab_title_icon">
+                            <div class="mytab_title_icon" v-show="active != 'ipo'">
                                 <img v-show="active != 'ipo'" src="/static/img/user/iden-1.png" alt="img">
-                                <img v-show="active == 'ipo'" src="/static/img/user/iden-2.png" alt="img">
+                                <!-- <img v-show="active == 'ipo'" src="/static/img/user/iden-2.png" alt="img"> -->
                             </div>
                             <span v-show="active == 'ipo'">IPO</span>
                         </div>
-                    </template> -->
+                    </template>
                     <div class="tab_body">
                         <IPO ref="ipoRef" @setLoading="val => loading = val" v-if="active == 'ipo'" />
                     </div>
@@ -85,7 +91,7 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, PullRefresh, Icon } from "vant"
+import { Tab, Tabs, PullRefresh } from "vant"
 import { ref, onMounted } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
@@ -150,10 +156,17 @@ onMounted(() => {
         align-items: center;
         justify-content: space-between;
         margin-bottom: 0.1rem;
+        position: relative;
 
-        .customer {
-            width: 0.8rem;
-            height: 0.8rem;
+        .record_icon {
+            width: 0.6rem;
+            height: 0.6rem;
+            padding: 0.1rem;
+            border-radius: 50%;
+            background-color: #EAF0F3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 
@@ -187,8 +200,8 @@ onMounted(() => {
 
         :deep(.van-tabs__wrap) {
             height: 0.8rem;
-            border-bottom: 1px solid #F6F8FF;
-            padding-bottom: 0.2rem;
+            // border-bottom: 1px solid #F6F8FF;
+            padding-bottom: 0.34rem;
         }
 
         :deep(.van-tabs__nav--card) {
@@ -205,6 +218,7 @@ onMounted(() => {
     .mytab_title {
         display: flex;
         align-items: center;
+        transition: all ease .3s;
 
         >span {
             margin-left: 0.08rem;
@@ -227,14 +241,14 @@ onMounted(() => {
     }
 
     .tab_body {
-        // height: calc(100vh - 3.7rem);
+        height: calc(100vh - 3.7rem);
         width: 100%;
         overflow-y: auto;
     }
 
     .refresh_box {
         width: 100%;
-        height: 100%;
+
     }
 }
 </style>

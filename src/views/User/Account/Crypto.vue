@@ -11,8 +11,8 @@
             <div class="ipt">{{ form.currency }}</div>
             <Icon style="transform: rotate(90deg);" name="play" />
         </div>
-        <div class="subtitle" v-show="form.currency == 'USDT'">网络</div>
-        <div class="item" @click="showNet = true" v-show="form.currency == 'USDT'">
+        <div class="subtitle" v-show="['USDT', 'BTC', 'ETH'].includes(form.currency)">网络</div>
+        <div class="item" @click="showNet = true" v-show="['USDT', 'BTC', 'ETH'].includes(form.currency)">
             <div class="ipt">{{ form.network }}</div>
             <Icon style="transform: rotate(90deg);" name="play" />
         </div>
@@ -44,7 +44,7 @@
         <Popup round v-model:show="showNet" position="bottom">
             <div class="bottoms">
                 <div @click="chooseNet(item)" class="bottom" :class="{ 'active_bottom': form.network == item }"
-                    v-for="item in _networkMapList" :key="item">
+                    v-for="item in currNetwork" :key="item">
                     <!-- <div class="bottom_icon">
                         <img :src="`/static/img/crypto/${item}.png`" alt="usdt">
                     </div> -->
@@ -73,19 +73,6 @@ import { useRoute } from "vue-router"
 const route = useRoute()
 
 
-// 币种
-const showCrypto = ref(false)
-const chooseCurrency = (item) => {
-    form.value.currency = item
-    showCrypto.value = false
-}
-// 网络
-const showNet = ref(false)
-const chooseNet = (item) => {
-    form.value.network = item
-    showNet.value = false
-}
-
 
 const googleRef = ref()
 
@@ -93,12 +80,35 @@ const loading = ref(false)
 const form = ref({
     channel: 'crypto',
     currency: route.query.currency || 'USDT',
-    network: 'TRC20',
+    network: '',
     address: '',
     // account_name: null,
     // bank_name: null,
     // bank_card_number: null,
 })
+
+// 币种
+const showCrypto = ref(false)
+const chooseCurrency = (item) => {
+    form.value.currency = item
+    showCrypto.value = false
+    initNetwork()
+}
+// 网络
+const showNet = ref(false)
+const chooseNet = (item) => {
+    form.value.network = item
+    showNet.value = false
+}
+const currNetwork = computed(() => {
+    return _networkMapList[form.value.currency.toUpperCase()] || []
+})
+const initNetwork = () => {
+    form.value.network = currNetwork.value[0]
+}
+initNetwork()
+
+
 
 // 提交
 const submit = (googleCode) => {

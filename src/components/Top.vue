@@ -48,8 +48,8 @@ const clickLeft = () => {
     justify-content: center;
     padding: 0 0.8rem;
     color: #121826;
-    font-size: 0.36rem;
-    font-weight: 400;
+    font-size: 0.32rem;
+    font-weight: 500;
     text-align: center;
     line-height: 1.05;
     z-index: 999;
@@ -59,6 +59,9 @@ const clickLeft = () => {
         left: 0.32rem;
         width: 0.4rem;
         height: 0.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .right {

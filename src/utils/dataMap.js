@@ -38,4 +38,8 @@ export const _topUpStatusMap = {
 export const _currencyMapList = ['USDT', 'USD', 'BTC', 'ETH']
 
 // 加密网络
-export const _networkMapList = ['TRC20', 'ERC20']
+export const _networkMapList = {
+  USDT: ['Trc20', 'Erc20'],
+  ETH: ['Ethereum'],
+  BTC: ['Legacy', 'SegWit']
+}

@@ -11,44 +11,46 @@
 
         <div class="form">
             <div class="amount">
-                <div>{{ form.currency }}</div>
+                <div>{{ form.currency }} -- {{ form.network }}</div>
                 <div class="num">{{ form.amount }}</div>
             </div>
-            <div class="subtitle">充币网络</div>
-            <div class="net_box">
-                <div @click="changeNet(item)" class="net" :class="{ 'active_net': form.network == item }"
-                    v-for="item in _networkMapList" :key="item">
-                    <span>{{ item }}</span>
-                    <div class="ok" v-if="form.network == item">
-                        <img src="/static/img/common/ok.png" alt="ok">
-                    </div>
-
-                </div>
-            </div>
-            <div class="subtitle">充币地址</div>
             <div class="qrcode_box">
                 <Loading :loading="loading" v-show="loading" />
                 <div id="qrcode" ref="qrcodeRef" v-show="!loading"></div>
             </div>
-            <div class="address">
+            <div class="address" @click="copy">
                 <span>{{ address }}</span>
-                <div class="ripple_button copy_icon" @click="copy">
+                <div class="ripple_button copy_icon">
                     <img src="/static/img/common/copy.png" alt="img">
                 </div>
             </div>
         </div>
 
-        <Circle class="circle" size="60px" v-if="s && !loading" v-model:current-rate="currentRate" :rate="0"
-            :text="s + 's'" />
-        <div class="tip">请扫码支付后，点击完成 <span v-if="s && !loading">（支付时间：{{ s }}s）</span></div>
-        <Button @click="openSure" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
+        <div class="circle_box">
+            <Circle class="circle" :start-position="'right'" :stroke-linecap="'butt'" :stroke-width="150"
+                :layer-color="'#E5E5E5'" :color="'#014CFA'" size="60px" v-if="s && !loading"
+                v-model:current-rate="currentRate" :rate="0" :text="''" />
+            <div class="time_box">
+                <div class="time">{{ s ? s + 's' : '--' }}</div>
+                <div>超时时间</div>
+            </div>
+        </div>
+        <div class="tip">
+            <div>提示：请在1分钟内完成充值</div>
+            <div>{{ s ? s + 's' : '--' }}后二维码刷新</div>
+        </div>
+        <div class="btns">
+            <Button round color="#EFF6FF" class="submit" type="info" @click="router.back()">
+                <span style="color:#014CFA">取消</span>
+            </Button>
+            <Button @click="openSure" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
+        </div>
 
     </div>
 </template>
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { _networkMapList } from "@/utils/dataMap.js"
 import { useRoute } from "vue-router"
 import { ref, computed } from "vue"
 import { Button, showNotify, showToast, showConfirmDialog, Circle } from "vant"
@@ -65,7 +67,7 @@ const loading = ref(false)
 const form = ref({
     amount: route.query.amount,
     currency: route.query.currency,
-    network: _networkMapList[0],
+    network: route.query.network,
 })
 const address = ref('')
 const changeNet = item => { // 切换网络
@@ -112,6 +114,7 @@ const startCountDown = () => {
         s.value--
         if (s.value == 0) {
             clearInterval(interval)
+            getAddress()
         }
     }, 1000);
 }
@@ -121,12 +124,13 @@ const startCountDown = () => {
 const qrcodeRef = ref()
 const drawQrcode = () => {
     setTimeout(() => {
-        new QRCode(document.getElementById("qrcode"), {
+        if (!qrcodeRef.value || !address.value) return
+        new QRCode(qrcodeRef.value, {
             text: address.value,
             width: 128,
             height: 128,
         });
-    }, 50)
+    }, 100)
 }
 
 
@@ -205,9 +209,10 @@ getSessionToken()
             font-weight: 400;
 
             .num {
-                font-weight: 500;
+                font-weight: 600;
                 font-size: 1rem;
                 line-height: 1.4rem;
+                font-family: fangsong;
             }
         }
 
@@ -242,18 +247,16 @@ getSessionToken()
         }
 
         .address {
-            border: 1px solid #DFE2E4;
-            height: 1rem;
             border-radius: 0.08rem;
             padding: 0 0.4rem 0 0.24rem;
             display: flex;
             align-items: center;
-            margin-top: 0.4rem;
+            justify-content: center;
+            margin-top: 0.2rem;
 
             >span {
                 white-space: nowrap;
                 overflow: hidden;
-                flex: 1;
                 text-overflow: ellipsis;
                 color: #121212;
                 font-weight: 400;
@@ -261,80 +264,61 @@ getSessionToken()
             }
 
             .copy_icon {
-                width: 0.48rem;
-                height: 0.48rem;
-                margin-left: 0.3rem;
+                width: 0.4rem;
+                height: 0.4rem;
+                margin-left: 0.1rem;
                 overflow: hidden;
-            }
-        }
-
-        .net_box {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            .net {
-                height: 0.74rem;
-                background-color: #F2F2F2;
-                width: 3.3rem;
-                border-radius: 0.08rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 0.28rem;
-                color: #061023;
-                line-height: 0;
-                margin-bottom: 0.4rem;
-                position: relative;
-                overflow: hidden;
-            }
-
-            .active_net {
-                border: 1px solid #1A59F6;
-                color: #1A59F6;
-
-                .ok {
-                    width: 0.2rem;
-                    height: 0.2rem;
-                    position: absolute;
-                    right: 0.02rem;
-                    top: 0.02rem;
-                    z-index: 22;
-                }
-
-                &::after {
-                    content: "";
-                    width: 1rem;
-                    height: 1rem;
-                    background-color: #1A59F6;
-                    position: absolute;
-                    right: -0.65rem;
-                    top: -0.65rem;
-                    transform: rotate(-48deg);
-                    z-index: 11;
-                }
             }
         }
     }
 
-    .circle {
-        margin: 0.9rem auto 0.2rem auto;
-        display: block;
+    .circle_box {
+        margin: 0.9rem auto 0.5rem auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .circle {
+            display: block;
+        }
+
+        .time_box {
+            margin-left: 0.2rem;
+            text-align: center;
+            color: #666;
+            font-size: 0.24rem;
+            font-weight: 400;
+
+            .time {
+                color: #000;
+                font-size: 0.32rem;
+                font-weight: 600;
+                margin-bottom: 0.2rem;
+            }
+        }
     }
+
 
     .tip {
         font-weight: 400;
-        color: #8F92A1;
+        color: #191B1E;
         font-size: 0.24rem;
         line-height: 0.32rem;
         margin: 0 0 0.4rem 0;
         text-align: center;
     }
 
-    .submit {
-        width: 100%;
-        height: 1.12rem;
-        margin: 0 0 0.4rem 0;
+    .btns {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 1rem 0 0.4rem 0;
+
+        .submit {
+            width: 47%;
+            height: 1.12rem;
+        }
     }
+
 }
 </style>

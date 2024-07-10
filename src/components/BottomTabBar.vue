@@ -20,7 +20,7 @@
 import { ref, computed } from "vue"
 import { useRoute } from "vue-router";
 import router from "@/router"
-import { _playVoice } from "@/utils/voice"
+// import { _playVoice } from "@/utils/voice"
 import icon1 from "@/assets/bottom/bottom_1.png"
 import icon11 from "@/assets/bottom/bottom_1_1.png"
 import icon2 from "@/assets/bottom/bottom_2.png"
@@ -53,7 +53,7 @@ const handleClick = (item, e) => {
     setTimeout(() => {
         touchLoading.value = false
     }, 300)
-    _playVoice()
+    // _playVoice()
     if (item.needLogin && !token.value) {
         return router.push({
             name: 'login'

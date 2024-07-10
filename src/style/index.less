@@ -13,9 +13,7 @@ body,
     user-select: none;
     font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, v, sans-serif;
 
-    div {
-        box-sizing: border-box;
-    }
+
 
     img {
         width: 100%;
@@ -35,6 +33,12 @@ body,
 body::-webkit-scrollbar {
     width: 0;
     height: 0;
+}
+
+div {
+    box-sizing: border-box;
+    transition: all ease .3s;
+    font-size: 0.28rem;
 }
 
 div::-webkit-scrollbar {
@@ -104,6 +108,11 @@ input {
     outline: none;
     background-color: rgba(0, 0, 0, 0);
     font-size: 0.28rem;
+    transition: all ease .2s;
+
+    &:focus {
+        color: #014cfa !important;
+    }
 }
 
 // 点击水波纹
@@ -156,6 +165,20 @@ input {
 .ripple_button2:active::after {
     animation: ripple2 .3s ease;
 }
-.fn-12{
+
+.fn-12 {
     font-size: 12px;
+}
+
+
+/* 针对 Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 针对 Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
 }

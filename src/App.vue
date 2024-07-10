@@ -123,16 +123,16 @@ watch(token, () => {
 }
 
 .slide-right-enter-from {
-  // transform: translateX(0);
+  transform: translateX(-100%);
   opacity: 0;
 }
 
 .slide-right-enter-to {
-  transform: translateX(-100%);
+  transform: translateX(0);
 }
 
 .slide-right-leave-from {
-  // transform: translateX(0);
+  transform: translateX(0);
 }
 
 .slide-right-leave-to {
@@ -141,16 +141,16 @@ watch(token, () => {
 }
 
 .slide-bottom-enter-from {
-  // transform: translateY(0);
+  transform: translateY(-100%);
   opacity: 0;
 }
 
 .slide-bottom-enter-to {
-  transform: translateY(-100%);
+  transform: translateY(0);
 }
 
 .slide-bottom-leave-from {
-  // transform: translateY(0);
+  transform: translateY(0);
 }
 
 .slide-bottom-leave-to {
@@ -159,16 +159,16 @@ watch(token, () => {
 }
 
 .slide-left-enter-from {
-  transform: translateX(-200%);
+  transform: translateX(-100%);
   opacity: 0;
 }
 
 .slide-left-enter-to {
-  transform: translateX(-100%);
+  transform: translateX(0);
 }
 
 .slide-left-leave-from {
-  // transform: translateX(0);
+  transform: translateX(0);
 }
 
 .slide-left-leave-to {
@@ -177,12 +177,12 @@ watch(token, () => {
 }
 
 .slide-top-enter-from {
-  transform: translateY(-200%);
+  transform: translateY(-100%);
   opacity: 0
 }
 
 .slide-top-enter-to {
-  transform: translateY(-100%);
+  transform: translateY(0);
 }
 
 .slide-top-leave-from {
