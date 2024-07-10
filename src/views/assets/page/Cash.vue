@@ -2,7 +2,7 @@
 <template>
     <div class="page_assets_cash">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/bg_2.png)` }">
+        <div class="overview">
             <div class="top">
                 <div class="title">总资金</div>
                 <div class="eyes" @click="hidden = !hidden">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="amount" :class="{ 'open_amount': switchs[i] == true }">{{ item.amount }}</div>
                 <div class="more" :class="{ 'open_tab': switchs[i] == true }">
-                    <img src="/static/img/common/menu.svg" alt="img">
+                    <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': switchs[i] != true }">
                     <div class="right" style="background-color: #18B565;" @click="goTopUp(item.currency.toUpperCase())">
@@ -44,7 +44,7 @@
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #F29100;">
+                    <div class="right" style="background-color: #FF9500;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -141,8 +141,10 @@ defineExpose({
 
     .overview {
         background-size: 100% 100%;
-        margin: 0.2rem 0.32rem 0.24rem 0.32rem;
+        margin: 0 0.32rem 0.24rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
+        background-color: #1A59F6;
+        border-radius: 0.32rem;
 
         .top {
 

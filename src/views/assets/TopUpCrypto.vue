@@ -10,7 +10,10 @@
         </Top>
 
         <div class="form">
-            <div class="subtitle">币种</div>
+            <div class="subtitle">
+                <span>币种</span>
+                <span style="margin-left: 0.6rem">网络</span>
+            </div>
             <div class="item">
                 <div class="select_item border_item" @click="showDialog = true">
                     <div class="currency">
@@ -80,7 +83,7 @@
                     <img src="/static/img/common/close.png" alt="x">
                 </div>
                 <div @click="clickNetItem(item)" class="swap_dialog_item"
-                    :class="{ 'swap_dialog_item_active': form.network == item }" v-for="(item, i) in _networkMapList"
+                    :class="{ 'swap_dialog_item_active': form.network == item }" v-for="(item, i) in currNetwork"
                     :key="i">
                     <span>{{ item.toUpperCase() }}</span>
 
@@ -88,6 +91,13 @@
                 </div>
             </div>
         </Popup>
+
+
+        <!-- 充提记录 -->
+        <RaWrecords :bottom="'0'" ref="RaWrecordsRef" />
+
+        <!-- 安全密码弹窗 -->
+        <SafePassword @submit="submit" ref="safeRef"></SafePassword>
     </div>
 </template>
 
@@ -99,7 +109,12 @@ import store from "@/store";
 import { Popup, Button, Icon } from "vant"
 import { useRoute } from "vue-router"
 import { _networkMapList } from "@/utils/dataMap.js"
+import RaWrecords from "@/components/RaWrecords.vue"
+import SafePassword from "@/components/SafePassword.vue"
 
+const safeRef = ref()
+
+const RaWrecordsRef = ref()
 const route = useRoute()
 const loading = ref(false)
 const disabled = computed(() => {
@@ -109,34 +124,46 @@ const disabled = computed(() => {
 const form = ref({
     amount: '',
     currency: '',
-    network: _networkMapList[0],
+    network: '',
 })
 
 // 货币选择
 const showDialog = ref(false)
 // 钱包
 const wallet = computed(() => { // 可选钱包列表
-    return store.state.wallet.filter(item => !['stock', 'contract', 'main'].includes(item.currency)) || []
+    return store.state.wallet.filter(item => !['stock', 'contract', 'main', 'USD'].includes(item.currency)) || []
 })
 form.value.currency = route.query.currency || wallet.value.length > 0 && wallet.value[0].currency || 'BTC' // 初始化默认币种
 const clickItem = item => {
     form.value.currency = item.currency
     showDialog.value = false
+    initNetwork()
 }
 
 // 网络选择
+const currNetwork = computed(() => {
+    return _networkMapList[form.value.currency.toUpperCase()] || []
+})
+const initNetwork = () => {
+    form.value.network = currNetwork.value[0]
+}
 const showNetDialog = ref(false)
 const clickNetItem = item => {
     form.value.network = item
     showNetDialog.value = false
 }
+initNetwork()
 
 const goRecord = () => {
-    router.push({
-        name: 'topUpRecord'
-    })
+    // router.push({
+    //     name: 'topUpRecord'
+    // })
+    RaWrecordsRef.value && RaWrecordsRef.value.openRecord()
 }
 const goTopUp = () => {
+    safeRef.value.open()
+}
+const submit = () => {
     router.push({
         name: 'recharging',
         query: {
@@ -229,7 +256,7 @@ const goTopUp = () => {
             padding: 0 0.4rem 0 0.76rem;
 
             &:has(.ipt:focus) {
-                border: 1px solid #014CFA;
+                // border: 1px solid #014CFA;
             }
         }
 
@@ -242,11 +269,16 @@ const goTopUp = () => {
         }
 
         .subtitle {
+            display: flex;
             font-size: 0.28rem;
             color: #333333;
             font-weight: 400;
             line-height: 0.36rem;
             margin: 0rem 0 0.12rem 0;
+
+            >span {
+                flex: 1;
+            }
         }
 
         .act_body {

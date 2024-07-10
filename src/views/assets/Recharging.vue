@@ -40,7 +40,7 @@
             <div>{{ s ? s + 's' : '--' }}后二维码刷新</div>
         </div>
         <div class="btns">
-            <Button round color="#EFF6FF" class="submit" type="info">
+            <Button round color="#EFF6FF" class="submit" type="info" @click="router.back()">
                 <span style="color:#014CFA">取消</span>
             </Button>
             <Button @click="openSure" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>

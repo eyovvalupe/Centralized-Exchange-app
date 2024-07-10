@@ -36,44 +36,44 @@
                         <Cash ref="cashRef" @setLoading="val => loading = val" v-if="active == 'cash'" />
                     </div>
                 </Tab>
-                <Tab :title="'股票'" name="stock">
-                    <!-- <template #title>
+                <Tab name="stock">
+                    <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'stock' }">
-                            <div class="mytab_title_icon">
+                            <div class="mytab_title_icon" v-show="active != 'stock'">
                                 <img v-show="active != 'stock'" src="/static/img/user/iden-1.png" alt="img">
-                                <img v-show="active == 'stock'" src="/static/img/user/iden-2.png" alt="img">
+                                <!-- <img v-show="active == 'stock'" src="/static/img/user/iden-2.png" alt="img"> -->
                             </div>
                             <span v-show="active == 'stock'">股票</span>
                         </div>
-                    </template> -->
+                    </template>
                     <div class="tab_body">
                         <Stock ref="stockRef" @setLoading="val => loading = val" v-if="active == 'stock'" />
                     </div>
                 </Tab>
-                <Tab :title="'合约'" name="contract">
-                    <!-- <template #title>
+                <Tab name="contract">
+                    <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'contract' }">
-                            <div class="mytab_title_icon">
+                            <div class="mytab_title_icon" v-show="active != 'contract'">
                                 <img v-show="active != 'contract'" src="/static/img/user/google-1.png" alt="img">
-                                <img v-show="active == 'contract'" src="/static/img/user/google-2.png" alt="img">
+                                <!-- <img v-show="active == 'contract'" src="/static/img/user/google-2.png" alt="img"> -->
                             </div>
                             <span v-show="active == 'contract'">合约</span>
                         </div>
-                    </template> -->
+                    </template>
                     <div class="tab_body">
                         合约
                     </div>
                 </Tab>
-                <Tab :title="'IPO'" name="ipo">
-                    <!-- <template #title>
+                <Tab name="ipo">
+                    <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
-                            <div class="mytab_title_icon">
+                            <div class="mytab_title_icon" v-show="active != 'ipo'">
                                 <img v-show="active != 'ipo'" src="/static/img/user/iden-1.png" alt="img">
-                                <img v-show="active == 'ipo'" src="/static/img/user/iden-2.png" alt="img">
+                                <!-- <img v-show="active == 'ipo'" src="/static/img/user/iden-2.png" alt="img"> -->
                             </div>
                             <span v-show="active == 'ipo'">IPO</span>
                         </div>
-                    </template> -->
+                    </template>
                     <div class="tab_body">
                         <IPO ref="ipoRef" @setLoading="val => loading = val" v-if="active == 'ipo'" />
                     </div>
@@ -205,6 +205,7 @@ onMounted(() => {
     .mytab_title {
         display: flex;
         align-items: center;
+        transition: all ease .3s;
 
         >span {
             margin-left: 0.08rem;

@@ -2,7 +2,7 @@
 <template>
     <div class="page_assets_ipo">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/bg_5.png)` }">
+        <div class="overview">
             <div class="top">
                 <div class="title">持仓资金</div>
                 <div class="eyes" @click="hidden = !hidden">
@@ -30,8 +30,10 @@ const hidden = ref(false)
 .page_assets_ipo {
     .overview {
         background-size: 100% 100%;
-        margin: 0.2rem 0.32rem 0.36rem 0.32rem;
+        margin: 0 0.32rem 0.36rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
+        background-color: #25253D;
+        border-radius: 0.32rem;
 
         .top {
 

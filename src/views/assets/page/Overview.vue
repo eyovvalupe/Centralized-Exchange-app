@@ -2,7 +2,7 @@
 <template>
     <div class="page_assets_overview">
         <!-- 总览 -->
-        <div class="overview" :style="{ backgroundImage: `url(/static/img/assets/bg_1.png)` }">
+        <div class="overview">
             <div class="top">
                 <div class="title">资产合计</div>
                 <div class="eyes" @click="hidden = !hidden">
@@ -25,9 +25,14 @@
                 </div>
                 <div class="line"></div>
                 <div class="nav">
-                    <div>冻结</div>
-                    <div class="num">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
+                    <div>借贷</div>
+                    <div class="num">{{ hidden ? '****' : (assets.loan || '0.00') }}</div>
                 </div>
+
+            </div>
+            <div class="frozen">
+                <div class="num">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
+                <div>冻结</div>
             </div>
         </div>
 
@@ -36,7 +41,7 @@
             <div class="btn" @click="jump('topUp')">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/user/record.png" alt="img">
+                        <img src="/static/img/assets/recharge_icon.png" alt="img">
                     </div>
                 </div>
                 <span>充值</span>
@@ -44,12 +49,13 @@
             <div class="btn btn2" @click="jump('withdraw')">
                 <div class="icon_box">
                     <div class="color_text">
-                        <div class="withdraw_icon">
+                        <!-- <div class="withdraw_icon">
                             <img src="/static/img/assets/withdraw_icon.svg" alt="icon">
-                        </div>
+                        </div> -->
+                        <span style=" font-size: 0.2rem;font-weight: 400;color:#666;margin-right:0.04rem">可提现</span>
                         <span>{{ (assets.money || '0.00') }}</span>
                     </div>
-                    <div style="display: flex;flex-direction: column;">
+                    <div>
                         <span class="tip">冻结</span>
                         <span>{{ (assets.frozen || '0.00') }}</span>
                     </div>
@@ -65,7 +71,7 @@
             <div class="btn" @click="jump('transfer')">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/assets/trans_icon.svg" alt="img">
+                        <img src="/static/img/assets/trans_icon.png" alt="img">
                     </div>
                 </div>
                 <span>划转</span>
@@ -73,7 +79,7 @@
             <div class="btn" @click="jump('swap')">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/assets/swap_icon.svg" alt="img">
+                        <img src="/static/img/assets/swap_icon.png" alt="img">
                     </div>
                 </div>
                 <span>兑换</span>
@@ -81,7 +87,7 @@
             <div class="btn" @click="jump('loan')">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/assets/loan_icon.svg" alt="img">
+                        <img src="/static/img/assets/loan_icon.png" alt="img">
                     </div>
                 </div>
                 <span>借贷</span>
@@ -101,7 +107,7 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">{{ (assets.money || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch1 == true }">
-                    <img src="/static/img/common/menu.svg" alt="img">
+                    <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:4.8rem" :class="{ 'open_tab': rightSwitch1 != true }">
                     <div class="right" style="background-color: #18B565;">
@@ -110,7 +116,7 @@
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #F29100;">
+                    <div class="right" style="background-color: #FF9500;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -122,7 +128,7 @@
                         </div>
                         <div>转入</div>
                     </div>
-                    <div class="right" style="background-color: #E8503A;">
+                    <div class="right" style="background-color: #FF453A;">
                         <div class="right_icon">
                             <img src="/static/img/assets/up.png" alt="img">
                         </div>
@@ -141,7 +147,7 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ (assets.stock || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
-                    <img src="/static/img/common/menu.svg" alt="img">
+                    <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch2 != true }">
                     <div class="right" style="background-color: #18B565;">
@@ -150,7 +156,7 @@
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #F29100;">
+                    <div class="right" style="background-color: #FF9500;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -169,7 +175,7 @@
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ (assets.contract || '0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
-                    <img src="/static/img/common/menu.svg" alt="img">
+                    <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch3 != true }">
                     <div class="right" style="background-color: #18B565;">
@@ -178,7 +184,7 @@
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #F29100;">
+                    <div class="right" style="background-color: #FF9500;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -196,7 +202,7 @@
                 </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">{{ (assets.ipo || '0.00') }}</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
-                    <img src="/static/img/common/menu.svg" alt="img">
+                    <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch4 != true }">
                     <div class="right" style="background-color: #18B565;">
@@ -205,7 +211,7 @@
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #F29100;">
+                    <div class="right" style="background-color: #FF9500;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -281,7 +287,9 @@ const jump = (name) => {
     .overview {
         background-size: 100% 100%;
         margin: 0 0.32rem 0.36rem 0.32rem;
-        padding: 0.4rem 0.3rem 0.24rem 0.3rem;
+        padding: 0.4rem 0.3rem 0.36rem 0.3rem;
+        background-color: #5050FF;
+        border-radius: 0.32rem;
 
         .top {
 
@@ -333,6 +341,21 @@ const jump = (name) => {
                 flex: 1;
             }
         }
+
+        .frozen {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: #fff;
+            font-weight: 400;
+            font-size: 0.24rem;
+            padding-right: 0.4rem;
+            margin-top: 0.18rem;
+
+            .num {
+                margin-right: 0.1rem;
+            }
+        }
     }
 
     .btns {
@@ -345,7 +368,7 @@ const jump = (name) => {
         .btn {
             width: 31%;
             font-size: 0.24rem;
-            color: #666;
+            color: #333;
             text-align: center;
             margin-bottom: 0.3rem;
 
@@ -358,12 +381,13 @@ const jump = (name) => {
                 overflow: hidden;
                 width: 100%;
                 height: 0.8rem;
-                background-color: #f2f2f2;
+                background-color: #EAF0F3;
                 margin-bottom: 0.1rem;
                 border-radius: 0.12rem;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
 
                 .btn_icon {
                     width: 0.38rem;
@@ -373,6 +397,7 @@ const jump = (name) => {
                 .tip {
                     font-size: 0.2rem;
                     font-weight: 400;
+                    margin-right: 0.04rem;
                 }
             }
         }
@@ -385,7 +410,7 @@ const jump = (name) => {
                 justify-content: space-between;
                 font-weight: 600;
                 position: relative;
-                color: #666;
+                color: #000;
 
                 .color_text {
                     color: #59ba4e;
