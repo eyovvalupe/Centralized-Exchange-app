@@ -367,7 +367,7 @@ const jump = (name) => {
 
         .btn {
             width: 31%;
-            font-size: 0.24rem;
+            font-size: 0.28rem;
             color: #333;
             text-align: center;
             margin-bottom: 0.3rem;

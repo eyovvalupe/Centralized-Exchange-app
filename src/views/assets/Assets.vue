@@ -3,9 +3,15 @@
     <div class="page page_assets">
         <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
 
-            <div class="page_title">资产</div>
+            <div class="page_title">
+                <span>资产</span>
 
-            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card" sticky
+                <div class="record_icon">
+                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                </div>
+            </div>
+
+            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card"
                 animated shrink>
                 <Tab :title="'总资产'" name="overview">
                     <!-- <template #title>
@@ -150,10 +156,17 @@ onMounted(() => {
         align-items: center;
         justify-content: space-between;
         margin-bottom: 0.1rem;
+        position: relative;
 
-        .customer {
-            width: 0.8rem;
-            height: 0.8rem;
+        .record_icon {
+            width: 0.6rem;
+            height: 0.6rem;
+            padding: 0.1rem;
+            border-radius: 50%;
+            background-color: #EAF0F3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 
@@ -228,7 +241,7 @@ onMounted(() => {
     }
 
     .tab_body {
-        // height: calc(100vh - 3.7rem);
+        height: calc(100vh - 3.7rem);
         width: 100%;
         overflow-y: auto;
     }

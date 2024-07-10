@@ -256,7 +256,7 @@ const submit = () => {
             padding: 0 0.4rem 0 0.76rem;
 
             &:has(.ipt:focus) {
-                // border: 1px solid #014CFA;
+                border: 1px solid #014CFA;
             }
         }
 
