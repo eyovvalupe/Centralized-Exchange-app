@@ -57,12 +57,15 @@
     </div>
 
     <!-- 去注册 -->
-    <div class="go_register" @click="goLogin">
-      <div class="server_icon">
+    <div class="go_register">
+      <div class="server_icon" @click="goChat">
         <img src="/static/img/common/server.png" alt="server">
       </div>
-      有账号吗？
+      <span @click="goLogin">
+        有账号吗？
       <span>去登录</span>
+      </span>
+
     </div>
 
 
@@ -131,6 +134,11 @@ const goLogin = () => {
       reurl: route.query.reurl,
       redata: route.query.redata,
     }
+  })
+}
+const goChat = () => {
+  router.push({
+    name: 'chat'
   })
 }
 </script>

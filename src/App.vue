@@ -17,13 +17,14 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent, computed } from "vue";
+import { defineAsyncComponent, computed, watch, onMounted } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import { Popup } from 'vant';
 import Loading from "@/components/Loaidng.vue";
 // import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
+import { serviceChat } from '@/utils/serviceChat'
 
 const BottomTabBar = defineAsyncComponent(() =>
   import("@/components/BottomTabBar.vue")
@@ -97,6 +98,10 @@ const boundFunc = () => {
 }
 
 const transitionName = computed(() => store.state.transitionName || '')
+watch(token, () => {
+  serviceChat.destroy()
+  serviceChat.init()
+}, { immediate: true })
 </script>
 
 <style lang="less">

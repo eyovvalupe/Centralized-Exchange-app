@@ -227,6 +227,16 @@ const routes = [
     }
   },
   {
+    // 客服
+    path: "/chat",
+    name: "chat",
+    component: () => import("../views/Chat/Index.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 交易
     path: "/trade",
     name: "trade",

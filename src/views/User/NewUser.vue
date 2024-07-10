@@ -48,7 +48,7 @@
                 </div>
             </div>
 
-            <div class="user-b-box ripple_button">
+            <div class="user-b-box ripple_button" @click="jump('chat', false)">
                 <div class="user-flex">
                     <img src="/static/img/user/server.png" alt="">
 
@@ -163,12 +163,13 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue"
+import { computed, watch, ref } from "vue"
 import { Icon, showConfirmDialog } from 'vant';
 import router from "@/router";
 import store from "@/store";
+import storeChat from "@/store/chat";
 import { _logout } from "@/api/api"
-
+const isConnected=computed(()=>storeChat.state.isConnected);
 const token = computed(() => store.state.token)
 const userInfo = computed(() => store.state.userInfo || {})
 
@@ -269,6 +270,7 @@ if (token.value) {
         })
     }, 1000)
 }
+
 </script>
 
 <style lang="less" scoped>

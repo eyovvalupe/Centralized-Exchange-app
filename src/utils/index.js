@@ -159,6 +159,14 @@ export const _hiddenIden = (str) => {
   if (!str) return "**";
   return str.substr(0, 4) + "****" + str.substr(str.length - 4, 4);
 };
+export function generateUUID() {
+  // 生成一个32字符的UUID字符串，没有连字符
+  return 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0,
+      v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 // 隐藏账号
 export const _hiddenAccount = (str) => {
   if (!str) return "**";
@@ -188,4 +196,37 @@ export const _getObjectURL = (file) => {
     url = window.webkitURL.createObjectURL(file)
   }
   return url
+}
+
+export function generateRandomString(length) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+export function randomStringWithTimestamp(length) {
+  const randomString = generateRandomString(length);
+  const timestamp = Date.now();
+  return `${randomString}${timestamp}`;
+}
+// 时间转换
+export const transferTime = (time) => {
+  const date = new Date(time);
+  const currentDate = new Date();
+  const isToday = date.getDate() === currentDate.getDate() && date.getMonth() === currentDate.getMonth() && date.getFullYear() === currentDate.getFullYear();
+  if (isToday) {
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  } else {
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${month}-${day} ${hours}:${minutes}`;
+  }
 }
