@@ -55,7 +55,7 @@
         </div>
 
         <!-- 充提记录 -->
-        <RaWrecords :bottom="'1.4rem'" :hiddenBeforeOpen="false" ref="RaWrecordsRef" />
+        <RaWrecords v-if="route.name == 'assets'" :bottom="'1.4rem'" :hiddenBeforeOpen="false" ref="RaWrecordsRef" />
     </div>
 </template>
 
@@ -65,7 +65,9 @@ import { Icon } from "vant"
 import store from "@/store"
 import RaWrecords from "@/components/RaWrecords.vue"
 import router from "@/router"
+import { useRoute } from "vue-router"
 
+const route = useRoute()
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
 const hidden = ref(false)

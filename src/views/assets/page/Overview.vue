@@ -84,7 +84,7 @@
                 </div>
                 <span>兑换</span>
             </div>
-            <div class="btn" @click="jump('loan')">
+            <div class="btn" @click="jump('loanList')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/loan_icon.png" alt="img">

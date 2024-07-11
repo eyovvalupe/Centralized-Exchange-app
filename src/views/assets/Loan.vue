@@ -4,7 +4,7 @@
         <Top :title="'借贷'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/record.png" alt="img">
+                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                 </div>
             </template>
         </Top>
@@ -216,19 +216,23 @@ const getConfig = () => {
 getConfig()
 
 // 获取汇率
+let getRateTimeout = null
 const getRate = () => {
-    loading.value = true
-    _loanRate({
-        lever: lever.value[leverIndex.value],
-        days: days.value[currDayIndex.value]
-    }).then(res => {
-        if (res.code == 200) {
-            fee.value = res.data.fee || 0
-            interest.value = res.data.interest || 0
-        }
-    }).finally(() => {
-        loading.value = false
-    })
+    if (getRateTimeout) clearTimeout(getRateTimeout)
+    getRateTimeout = setTimeout(() => {
+        loading.value = true
+        _loanRate({
+            lever: lever.value[leverIndex.value],
+            days: days.value[currDayIndex.value]
+        }).then(res => {
+            if (res.code == 200) {
+                fee.value = res.data.fee || 0
+                interest.value = res.data.interest || 0
+            }
+        }).finally(() => {
+            loading.value = false
+        })
+    }, 500)
 }
 
 
@@ -288,13 +292,23 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page_loadn {
-    padding: 1.4rem 0.32rem 1.5rem 0.32rem;
+    padding: 1.4rem 0.38rem 0.5rem 0.38rem;
 
     position: relative;
 
     .top-record {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 0.64rem;
+        height: 0.64rem;
+        border-radius: 50%;
+        background-color: #EAF0F3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 0.36rem !important;
+            height: 0.36rem !important;
+        }
     }
 
     .form {
@@ -304,7 +318,7 @@ onMounted(() => {
             color: #333333;
             font-size: 0.28rem;
             font-weight: 400;
-            margin-bottom: 0.12rem;
+            margin-bottom: 0.16rem;
         }
 
         .money {
@@ -353,6 +367,10 @@ onMounted(() => {
             justify-content: space-between;
             border-radius: 0.32rem;
             padding: 0 0.4rem 0 0.76rem;
+
+            &:has(.ipt:focus) {
+                border: 1px solid #014CFA;
+            }
 
             .ipt {
                 width: 50px;

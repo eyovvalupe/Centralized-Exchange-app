@@ -328,6 +328,16 @@ const routes = [
   },
   {
     // 借贷
+    path: "/loanList",
+    name: "loanList",
+    component: () => import("../views/Assets/LoanList.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
+    // 借贷
     path: "/loan",
     name: "loan",
     component: () => import("../views/Assets/Loan.vue"),
