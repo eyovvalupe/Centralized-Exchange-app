@@ -20,10 +20,18 @@
                 </div>
                 <div class="line"></div>
                 <div class="nav">
+                    <div>冻结</div>
+                    <div class="num">{{ hidden ? '***' : '232424.00' }}</div>
+                </div>
+                <div class="line"></div>
+                <div class="nav">
                     <div>可借资金</div>
                     <div class="num">{{ hidden ? '****' : '232424.00' }}</div>
                 </div>
             </div>
+
+            <!-- 借贷按钮 -->
+            <div class="loan_btn">借贷</div>
         </div>
 
         <!-- 列表 -->
@@ -58,6 +66,22 @@ const hidden = ref(false)
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
         background-color: #3629B7;
         border-radius: 0.32rem;
+        position: relative;
+
+        .loan_btn {
+            position: absolute;
+            top: 0.2rem;
+            right: 0.6rem;
+            height: 0.6rem;
+            color: #fff;
+            font-size: 0.28rem;
+            border-radius: 0.3rem;
+            padding: 0 0.4rem;
+            display: flex;
+            align-items: center;
+            background-color: #EB4E3D;
+        }
+
         .top {
 
             font-size: 0.28rem;
@@ -90,7 +114,7 @@ const hidden = ref(false)
 
         .navs {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
             line-height: 0.44rem;
 

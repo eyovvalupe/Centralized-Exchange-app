@@ -20,19 +20,22 @@
                 </div>
                 <div class="line"></div>
                 <div class="nav">
-                    <div>保证金</div>
+                    <div>持仓金额</div>
                     <div class="num">{{ hidden ? '****' : (assets.margin || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
-                    <div>借贷</div>
-                    <div class="num">{{ hidden ? '****' : (assets.loan || '0.00') }}</div>
+                    <div>
+                        <span>借贷</span>
+                        <span class="num" style="margin-left:0.15rem">{{ hidden ? '****' : (assets.loan || '0.00')
+                            }}</span>
+                    </div>
+                    <div>
+                        <span>冻结</span>
+                        <span class="num" style="margin-left:0.15rem">{{ hidden ? '****' : (assets.frozen || '0.00')
+                            }}</span>
+                    </div>
                 </div>
-
-            </div>
-            <div class="frozen">
-                <div class="num">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
-                <div>冻结</div>
             </div>
         </div>
 
@@ -292,7 +295,7 @@ const jump = (name) => {
         border-radius: 0.32rem;
 
         .top {
-
+            padding-left: 0.3rem;
             font-size: 0.28rem;
             font-weight: 400;
             display: flex;
@@ -314,6 +317,7 @@ const jump = (name) => {
         }
 
         .money {
+            padding-left: 0.3rem;
             font-size: 0.68rem;
             font-weight: 500;
             color: #fff;
@@ -323,7 +327,7 @@ const jump = (name) => {
 
         .navs {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
             line-height: 0.44rem;
 

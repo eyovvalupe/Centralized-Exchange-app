@@ -49,7 +49,7 @@
         }
 
         .name {
-            font-size: 0.32rem;
+            font-size: 0.28rem;
             font-weight: 500;
             color: #061023;
             line-height: 0.44rem;
@@ -59,7 +59,7 @@
         .num {
             color: #6C7B90;
             font-weight: 600;
-            font-size: 0.32rem;
+            font-size: 0.28rem;
             line-height: 0.44rem;
         }
 
