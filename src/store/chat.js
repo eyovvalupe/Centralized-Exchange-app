@@ -1,17 +1,19 @@
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
 import { generateUUID } from '@/utils'
-import {  getList } from "@/api/chat";
+import { getList } from "@/api/chat";
 import storeChat from "@/store/chat"
 export default createStore({
   state: {
-    nologinid:null,
+    nologinid: null,
     isConnected: false,
-    hasNewMessage: 0,
+    readMessageTime: new Date().valueOf(),
+    messageNum: 0,
+    hasNewMessage: [],
     messageList: []
   },
   getters: {
-    getMessageList(state){
+    getMessageList(state) {
       return state.messageList
     },
     getNologinid(state) {
@@ -22,21 +24,44 @@ export default createStore({
     }
   },
   mutations: {
-    setConnected(state, payload){
-      state.isConnected=payload;
+    setMessageNum(state, payload) {
+      state.messageNum = payload;
+    },
+    setConnected(state, payload) {
+      state.isConnected = payload;
     },
     setToken(state, token) {
       state.token = token;
     },
-    sethasNewMessage(state, num){
-      state.hasNewMessage = num;
+    setNewMessageList(state, arr) {
+      if (arr.length === 1) {
+        // 点击发送 所有的都已读
+        const all_not_read = state.hasNewMessage.concat(arr);
+        if (arr[0].direction === 'send') {
+          state.messageList = state.messageList.concat(all_not_read)
+          state.hasNewMessage = [];
+        } else {
+          state.hasNewMessage = all_not_read;
+        }
+      } else {
+        let readed = [];
+        let notRead = []
+        arr.forEach(item => {
+          if (item.time > state.readMessageTime) {
+            notRead.push(item)
+          } else {
+            readed.push(item)
+          }
+        });
+        state.hasNewMessage = notRead;
+        state.messageList = readed;
+      }
     },
-    setMessageList(state, arr) {
-      state.hasNewMessage = arr.length;
-      state.messageList = state.messageList.concat(arr);
+    setreadMessageTime(state, time) {
+      state.readMessageTime = time;
     },
     // 历史消息
-    setHistoryMsg(state,item) {
+    setHistoryMsg(state, item) {
       state.messageList = item.reverse();
     },
   },
@@ -45,21 +70,21 @@ export default createStore({
       // 更新sessionToken
       return new Promise((resolve) => {
         getList({
-          nologinid:storeChat.getters.getNologinid,
+          nologinid: storeChat.getters.getNologinid,
           lasttime: Date.now()
         }).then((res) => {
-            if (res.code == 200 && res.data) {
-              commit("setHistoryMsg", res.data || '');
-              resolve(res.data);
-            } else {
-              resolve(false);
-            }
-          })
+          if (res.code == 200 && res.data) {
+            commit("setHistoryMsg", res.data || '');
+            resolve(res.data);
+          } else {
+            resolve(false);
+          }
+        })
           .catch(() => resolve(false));
       });
     },
   },
   plugins: [createPersistedState({
-    paths:['nologinid']
+    paths: ['nologinid','messageNum']
   })],
 });

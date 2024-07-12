@@ -1,17 +1,27 @@
 <template>
   <div class="msg-content">
     <div v-if="!messageList || !messageList.length">
-       <p class="no-message">--------- 暂无消息 ---------</p>
+      <p class="no-message">--------- 暂无消息 ---------</p>
     </div>
     <template v-else>
       <div class="msg-item" v-for="item in messageList" :key="item.msgid" :class="item.direction">
-      <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div>
-      <div class="msg-item-con">
-        <div class="con" v-html="item.content"></div>
-        <div class="time">{{ transferTime(item.time) }}</div>
+       <small v-show="false"> {{ storeChat.state.readMessageTime }}****{{ item.time }}***{{ storeChat.state.readMessageTime > item.time }}</small>
+        <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div>
+        <div class="msg-item-con">
+          <div class="con">{{ item.content }}</div>
+          <div class="time">{{ transferTime(item.time) }}</div>
+        </div>
+        <!-- <div class="avatar" v-if="item.direction === 'send'"><img :src="avatarMy" :alt="item.msgid"></div> -->
       </div>
-      <div class="avatar" v-if="item.direction === 'send'"><img :src="avatarMy" :alt="item.msgid"></div>
-    </div>
+      <div id="hasNewMessage" v-if="hasNewMessage.length">{{ hasNewMessage.length }}条未读消息</div>
+      <div class="msg-item" v-for="item in hasNewMessage" :key="item.msgid" :class="item.direction">
+        <div class="avatar"><img :src="avatar" :alt="item.msgid"></div>
+        <div class="msg-item-con">
+          <div class="con">{{ item.content }}</div>
+          <div class="time">{{ transferTime(item.time) }}</div>
+        </div>
+      </div>
+
     </template>
 
   </div>
@@ -22,15 +32,16 @@ import { computed, ref } from 'vue'
 import { transferTime } from '@/utils'
 import storeChat from "@/store/chat"
 import avatar from '@/assets/avatar.png'
-import avatarMy from '@/assets/avatar-my.png'
+// import avatarMy from '@/assets/avatar-my.png'
 const messageList = computed(() => storeChat.getters.getMessageList)
+const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
 </script>
 
 <style lang="less" scoped>
 .msg-content {
+
   .msg-item {
     display: flex;
-    margin: 5px;
 
     .avatar {
       img {
@@ -41,15 +52,16 @@ const messageList = computed(() => storeChat.getters.getMessageList)
 
     .msg-item-con {
       .con {
-        background: #f5f5f5;
+        color: #333;
         padding: 3px 6px;
         min-height: 30px;
-        line-height:25px;
+        line-height: 22px;
         border-radius: 8px;
-        font-weight: 500;
+        border-top-right-radius: 0;
         position: relative;
         box-shadow: 0 2px 3px #d4d4d4;
-        :deep(p){
+
+        :deep(p) {
           margin: 0 !important;
           padding: 0 !important;
         }
@@ -64,25 +76,24 @@ const messageList = computed(() => storeChat.getters.getMessageList)
 
     &.send {
       justify-content: flex-end;
-
       .msg-item-con {
-        margin: 0 10px 5px 5px;
+        margin: 0 5px 5px 5px;
         text-align: right;
 
       }
 
       .con {
-        background: #edf1ff;
-        color: #3293e0;
+        background: #449742;
+        color: #fff;
 
-        &::before {
-          content: "";
-          position: absolute;
-          top: 7px;
-          right: -15px;
-          border: 8px solid transparent;
-          border-left: 8px solid #edf1ff;
-        }
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   top: 0;
+        //   right: -15px;
+        //   border: 8px solid transparent;
+        //   border-left: 8px solid #449742;
+        // }
       }
     }
 
@@ -98,11 +109,20 @@ const messageList = computed(() => storeChat.getters.getMessageList)
         top: 7px;
         left: -15px;
         border: 8px solid transparent;
-        border-right: 8px solid #f5f5f5;
+        border-right: 8px solid #f2f2f2;
       }
     }
   }
-  .no-message{
+
+  #hasNewMessage {
+    text-align: center;
+    background: #f5f5f5;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    color: #959494;
+  }
+
+  .no-message {
     text-align: center;
     color: #999;
   }

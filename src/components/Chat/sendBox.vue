@@ -17,6 +17,7 @@ import storeUser from "@/store"
 import storeChat from "@/store/chat"
 import send_icon from '@/assets/send.png'
 import sendImg_icon from '@/assets/sendImg.png'
+const emit = defineEmits(['scrollToBottom'])
 const message=ref('');
 const token=computed(()=>storeUser.state.token);
 const isConnected=computed(()=>storeChat.state.isConnected);
@@ -25,12 +26,13 @@ const sendMessage=()=>{
     showToast('网络错误,请稍等')
     return
   }
-  const obj={ type: 'text',nologinid: storeChat.getters.getNologinid, content: message.value.replace(/\n/g,"<br />") }
+  const obj={ type: 'text',nologinid: storeChat.getters.getNologinid, content: message.value }
   if(token.value){
     obj.auth = token.value;
   }
   serviceChat.sendMessage('send',obj)
   message.value = ""
+  emit('scrollToBottom');
 }
 const uploadImg=(event)=>{
   const file = event.target.files
@@ -72,15 +74,13 @@ const uploadImg=(event)=>{
   justify-content: space-between;
   align-content:center ;
   .textarea{
-    border-radius: 10px;
-    padding: 5px;
-    line-height: 22px;
-    width: calc(100% - 100px);
-    border:1px solid #ccc;
+    border: none;
+    line-height: 36px;
+    width: calc(100% - 80px);
   }
   #fileInput{
-    width: 100%;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     position: absolute;
     z-index: 9;
     opacity: 0;
@@ -91,14 +91,14 @@ const uploadImg=(event)=>{
     flex-direction: column;
     justify-content: center;
     img{
-     max-height: 25px;
+     max-height: 22px;
      flex-shrink: 0;
      vertical-align: middle;
   }
   }
   .icon-right{
     img{
-     max-height: 32px;
+     max-height: 22px;
      flex-shrink: 0;
      vertical-align: middle;
   }

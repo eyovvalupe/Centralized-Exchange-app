@@ -99,8 +99,8 @@ const boundFunc = () => {
 
 const transitionName = computed(() => store.state.transitionName || '')
 watch(token, () => {
-  serviceChat.destroy()
-  serviceChat.init()
+  serviceChat.destroyNum()
+  serviceChat.initNum()
 }, { immediate: true })
 </script>
 
