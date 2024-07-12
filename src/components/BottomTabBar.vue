@@ -11,7 +11,8 @@
             <div class="bottom_nav_name">{{ item.name }}</div>
 
             <!-- 角标 -->
-            <div v-if="item.route == 'user'" class="nav_num">2</div>
+            <div v-if="item.route == 'user' && storeChat.state.messageNum > 0" class="nav_num">{{
+                storeChat.state.messageNum }}</div>
         </div>
     </div>
 </template>
@@ -32,6 +33,7 @@ import icon44 from "@/assets/bottom/bottom_4_4.png"
 import icon5 from "@/assets/bottom/bottom_5.png"
 import icon55 from "@/assets/bottom/bottom_5_5.png"
 import store from "@/store";
+import storeChat from '@/store/chat'
 
 const route = useRoute();
 const activeRoute = computed(() => route.name)

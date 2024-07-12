@@ -70,7 +70,9 @@ class Service {
       })
       this.socketNum.on('receive', message => {
         console.log(message);
- 
+        const num=message.data.num;
+        storeChat.commit('setMessageNum', num)
+        console.log('连接成功')
       })
     }
   }

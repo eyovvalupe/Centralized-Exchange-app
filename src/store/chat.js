@@ -8,6 +8,7 @@ export default createStore({
     nologinid: null,
     isConnected: false,
     readMessageTime: new Date().valueOf(),
+    messageNum: 0,
     hasNewMessage: [],
     messageList: []
   },
@@ -23,6 +24,9 @@ export default createStore({
     }
   },
   mutations: {
+    setMessageNum(state, payload) {
+      state.messageNum = payload;
+    },
     setConnected(state, payload) {
       state.isConnected = payload;
     },
@@ -81,6 +85,6 @@ export default createStore({
     },
   },
   plugins: [createPersistedState({
-    paths: ['nologinid']
+    paths: ['nologinid','messageNum']
   })],
 });

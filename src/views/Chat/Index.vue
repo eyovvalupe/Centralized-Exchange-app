@@ -14,23 +14,22 @@
 </template>
 
 <script setup>
-import { serviceChat } from '@/utils/serviceChat'
 import Top from "@/components/Top.vue"
 import loading from '@/components/Chat/loading.vue'
 import messageBox from '@/components/Chat/messageBox.vue'
 import sendBox from '@/components/Chat/sendBox.vue'
 import { apiMsgRead } from '@/api/chat'
-import { ref, nextTick, computed, onMounted, watch } from 'vue'
+import { ref, nextTick, computed, onUnmounted } from 'vue'
 import storeChat from "@/store/chat"
+import { serviceChat } from '@/utils/serviceChat'
 
+serviceChat.init();
 const chatLoading = ref(true);
 let childScroll = false;
-storeChat.commit('setHistoryMsg', [])
 storeChat.dispatch('updateMessage').then(res => {
     nextTick(scrollToBottom)
     chatLoading.value = false
 })
-serviceChat.init();
 const isConnected = computed(() => storeChat.state.isConnected)
 const messageList = computed(() => storeChat.getters.getMessageList)
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
@@ -38,12 +37,12 @@ const scrollContainer = ref(null);
 const isReadMessage = (currTime) => {
     apiMsgRead({ nologinid: storeChat.getters.getNologinid }).then((res) => {
         const { lasttime } = res.data
-        storeChat.commit('setreadMessageTime', currTime ? lasttime : new Date().valueOf())
+        storeChat.commit('setreadMessageTime', currTime ? lasttime : new Date().valueOf()+1000)
         const tmp_arr = messageList.value.concat(hasNewMessage.value);
         storeChat.commit('setNewMessageList', tmp_arr)
     })
 }
-
+isReadMessage(true);
 const setRead = () => {
     if (hasNewMessage.value.length) {
         isReadMessage();
@@ -84,6 +83,10 @@ const sendEvent = () => {
     isReadMessage();
     scrollToBottom()
 }
+onUnmounted(()=>{
+    storeChat.commit('setHistoryMsg', [])
+    serviceChat.destroy();
+})
 // watch(hasNewMessage, (val) => {
 //     if (val.length) {
 //         scrollToBottom();

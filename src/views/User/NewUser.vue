@@ -53,7 +53,7 @@
                     <img src="/static/img/user/server.png" alt="">
 
                     <div style="display: flex;">
-                        <div class="nums">2</div>
+                        <div class="nums" v-if="messageNum>0">{{messageNum}}</div>
                         <Icon name="arrow" class="arrow-right"/>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ import router from "@/router";
 import store from "@/store";
 import storeChat from "@/store/chat";
 import { _logout } from "@/api/api"
-const isConnected=computed(()=>storeChat.state.isConnected);
+const messageNum=computed(()=>storeChat.state.messageNum);
 const token = computed(() => store.state.token)
 const userInfo = computed(() => store.state.userInfo || {})
 
