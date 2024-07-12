@@ -5,8 +5,14 @@
             :class="{ 'fix_block_open': openList, 'hidden_fix_block': props.hiddenBeforeOpen && !openList }"
             :style="{ bottom: bottom }">
             <div class="fix_block_header" @click="openRecord">
-                <Icon name="arrow-up" class="arrow" :class="{ 'arrow_active': openList }" />
-                <span v-show="!openList">充提记录</span>
+                <Icon name="arrow-up" class="arrow" v-show="openList" :class="{ 'arrow_active': openList }" />
+                <div v-show="!openList" class="header_box">
+                    <div class="header_box_icon">
+                        <img src="/static/img/common/time_icon.png" alt="img">
+
+                        <div class="header_num">2</div>
+                    </div>
+                </div>
             </div>
 
             <div class="list_box list" :class="{ 'open_list': openList }">
@@ -118,13 +124,15 @@ defineExpose({
     box-shadow: -2px 0 5px #ddd;
 
     .fix_block_header {
-        height: 0.8rem;
+        height: 1.6rem;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         padding: 0 0.4rem;
         font-size: 0.3rem;
         overflow: hidden;
+        position: relative;
+
 
         .arrow {
             margin-right: 0.2rem;
@@ -133,6 +141,44 @@ defineExpose({
 
         .arrow_active {
             transform: rotate(180deg);
+        }
+
+        .header_box {
+            background: linear-gradient(270deg, #504BFF 0%, #53B4FF 100%);
+            width: 2.24rem;
+            height: 0.92rem;
+            border-radius: 0.3rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .header_box_icon {
+                width: 0.48rem;
+                height: 0.48rem;
+                position: relative;
+
+                .header_num {
+                    background-color: #fff;
+                    height: 0.24rem;
+                    font-size: 0.2rem;
+                    line-height: 0.24rem;
+                    font-weight: 200;
+                    padding: 0 0.1rem;
+                    border-radius: 0.2rem;
+                    position: absolute;
+                    top: -0.1rem;
+                    right: -0.16rem;
+                }
+            }
+        }
+    }
+
+    .fix_block_open {
+        .fix_block_header {
+            height: 0.8rem;
         }
     }
 
@@ -192,7 +238,7 @@ defineExpose({
 }
 
 .hidden_fix_block {
-    bottom: -1.5rem !important;
+    bottom: -2rem !important;
 }
 
 @media (min-width: 751px) {

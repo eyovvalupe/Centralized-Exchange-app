@@ -15,13 +15,18 @@
         <div class="list">
             <div class="subtitle" v-if="bankList.length">银行卡</div>
             <div class="item" v-for="(item, i) in bankList" :key="i">
-                <div>{{ item.bankName }}</div>
-                <div>{{ item.bankCardNumber }}</div>
+                <div class="title" style="font-size: 0.32rem;">{{ item.bankName }}</div>
+                <div class="address">{{ item.bankCardNumber }}</div>
             </div>
             <div class="subtitle" v-if="cryptoList.length">加密货币</div>
-            <div class="item" v-for="(item, i) in cryptoList" :key="i">
-                <div>{{ item.symbol }}-{{ item.network }}</div>
-                <div>{{ item.address }}</div>
+            <div class="item" :class="['item_' + item.symbol]" v-for="(item, i) in cryptoList" :key="i">
+                <div class="title">
+                    <div class="item_icon">
+                        <img :src="`/static/img/crypto/${item.symbol}_fff.png`" alt="img">
+                    </div>
+                    <span>{{ item.symbol }}-{{ item.network }}</span>
+                </div>
+                <div class="address">{{ item.address }}</div>
             </div>
         </div>
 
@@ -89,10 +94,48 @@ const jump = name => {
 
         .item {
             margin-bottom: 0.28rem;
-            height: 2.8rem;
+            height: 2.4rem;
             border-radius: 0.2rem;
-            background: linear-gradient(90deg, #5174EC 0%, #819DFF 100%);
+            background: linear-gradient(90deg, #3e50d8 0%, #325EED 100%);
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+
+            .title {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 0.2rem 0 0 0.32rem;
+                flex: 1;
+                font-size: 0.36rem;
+
+                .item_icon {
+                    width: 0.8rem;
+                    height: 0.8rem;
+                    margin-right: 0.2rem;
+                }
+            }
+
+            .address {
+                height: 0.8rem;
+                background-color: rgba(0, 0, 0, 0.3);
+                display: flex;
+                align-items: center;
+                padding-left: 0.32rem;
+            }
+        }
+
+        .item_ETH {
+            background: linear-gradient(90deg, #5174EC 0%, #819DFF 100%);
+        }
+
+        .item_BTC {
+            background: linear-gradient(90deg, #FEA735 0.28%, #FE7235 100%);
+        }
+
+        .item_USDT {
+            background: linear-gradient(90deg, #397D54 0%, #73C088 100%);
         }
     }
 

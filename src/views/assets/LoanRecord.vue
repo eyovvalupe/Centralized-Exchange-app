@@ -8,7 +8,7 @@
             <div class="item" v-for="(item, i) in list" :key="i">
                 <div class="top">
                     <div class="date">{{ item.created }}</div>
-                    <div class="status">{{ _loanStatusMap[item.status] || '--' }}</div>
+                    <div class="status">{{ _loanStatusMap[item.status || 'open'] || '--' }}</div>
                 </div>
 
                 <div class="bottom">
@@ -29,8 +29,9 @@
                     <div class="right">
                         <div class="amount">{{ item.amount }} <span style="font-size: 0.28rem;">MAIN</span></div>
 
-                        <div class="btn" v-if="item.status == 'open'">去归还: {{ item.repayment }}</div>
-                        <div class="tip" v-if="item.status == 'done'">还款时间：{{ item.deadline }}</div>
+                        <!-- <div class="btn" v-if="item.status == 'open'">去归还: {{ item.repayment }}</div> -->
+                        <div class="btn" v-if="i % 2 == 0">去归还: {{ item.repayment }}</div>
+                        <div class="tip" v-else>还款时间：{{ item.deadline }}</div>
                     </div>
                 </div>
             </div>
@@ -157,8 +158,13 @@ onUnmounted(() => {
 
                     .btn {
                         color: #014CFA;
-                        font-size: 0.28rem;
-                        text-decoration: underline;
+                        font-size: 0.24rem;
+                        height: 0.46rem;
+                        border-radius: 0.46rem;
+                        background-color: aliceblue;
+                        display: flex;
+                        align-items: center;
+                        padding: 0 0.24rem;
                     }
 
                     .tip {

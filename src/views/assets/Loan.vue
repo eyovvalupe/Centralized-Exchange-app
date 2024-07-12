@@ -4,25 +4,41 @@
         <Top :title="'借贷'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/record.png" alt="img">
+                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                 </div>
             </template>
         </Top>
 
         <!-- 表单 -->
         <div class="form">
-            <div class="subtitle">借款抵押</div>
+            <div class="subtitle">
+                <span>借款到</span>
+
+                <div class="account_box">
+                    <span>股票账户</span>
+                    <div class="more_icon">
+                        <img src="/static/img/assets/more.png" alt="img">
+                    </div>
+                </div>
+            </div>
             <div class="item">
                 <input v-model="bj" class="ipt" type="number" placeholder="请输入">
-                <span class="all" @click="bj = mainWallet.amount">全部</span>
+                <span class="all" @click="bj = amount">全部</span>
                 <div class="item_icon">
                     <img src="/static/img/crypto/MAIN.png" alt="img">
                 </div>
                 <span>MAIN</span>
             </div>
-            <div class="tip" style="margin-top: 0.12rem;">
-                <span>最大可抵押</span>
-                <span class="num">{{ mainWallet.amount || '0.00' }}</span>
+            <div class="tip"
+                style="margin-top: 0.12rem;display: flex;align-items: center;justify-content: space-between;">
+                <div>
+                    <span>最大可借</span>
+                    <span class="num">{{ amount || '0.00' }} </span>
+                </div>
+                <div>
+                    <span>可用抵押余额</span>
+                    <span class="num">{{ mainWallet.amount }} </span>
+                </div>
             </div>
             <!-- 滑块 -->
             <div class="slider_box" @touchmove="sliderMove">
@@ -38,8 +54,8 @@
                     </div>
                 </div>
             </div>
-            <div class="subtitle">借款金额</div>
-            <div class="money">{{ amount }}</div>
+            <!-- <div class="subtitle">借款金额</div>
+            <div class="money">{{ amount }}</div> -->
             <div class="subtitle">期限</div>
             <!-- 期限 -->
             <div class="dates">
@@ -48,6 +64,10 @@
                         item
                     }}天
                 </div>
+            </div>
+            <div class="tip">
+                <span>抵押本金</span>
+                <span class="num">{{ bj2 }}</span>
             </div>
             <div class="tip">
                 <span>手续费</span>
@@ -72,10 +92,10 @@
             <template #top>
                 <div class="loan_comfirm_box">
                     <div class="loan_comfirm_title">借款确认</div>
-                    <div class="loan_confirm_amount">{{ amount }} <span style="font-size: 0.4rem;">MAIN</span></div>
+                    <div class="loan_confirm_amount">{{ bj }} <span style="font-size: 0.4rem;">MAIN</span></div>
                     <div class="loan_confirm_item">
                         <span>借款抵押</span>
-                        <span class="value">{{ bj }}</span>
+                        <span class="value">{{ bj2 }}</span>
                     </div>
                     <div class="loan_confirm_item">
                         <span>杠杆</span>
@@ -159,16 +179,20 @@ const changeDate = i => {
 
 // 借款金额
 const bj = ref("")
-const amount = computed(() => {
-    if (!bj.value) return 0
-    return new Decimal(bj.value).mul(lever.value[leverIndex.value] || 0)
+const bj2 = computed(() => { // 本金
+    if (!bj.value) return '--'
+    return new Decimal(bj.value).div(lever.value[leverIndex.value] || 0).toFixed(2)
+})
+const amount = computed(() => { // 最大可借
+    if (!mainWallet.value.amount) return 0
+    return new Decimal(mainWallet.value.amount).mul(lever.value[leverIndex.value] || 0)
 })
 
 // 手续费
 const fee = ref(0)
 const showFee = computed(() => {
     if (!bj.value) return '--'
-    return new Decimal(amount.value).mul(fee.value)
+    return new Decimal(bj.value).mul(fee.value)
 })
 
 // 隔夜利息
@@ -181,7 +205,7 @@ const showInterest = computed(() => {
 // 归还
 const returnAmount = computed(() => {
     if (!bj.value) return '--'
-    return new Decimal(amount.value).mul(interest.value).plus(showFee.value).plus(amount.value)
+    return new Decimal(bj.value).mul(interest.value).plus(showFee.value).plus(bj.value)
 })
 
 const returnDate = computed(() => {
@@ -216,19 +240,23 @@ const getConfig = () => {
 getConfig()
 
 // 获取汇率
+let getRateTimeout = null
 const getRate = () => {
-    loading.value = true
-    _loanRate({
-        lever: lever.value[leverIndex.value],
-        days: days.value[currDayIndex.value]
-    }).then(res => {
-        if (res.code == 200) {
-            fee.value = res.data.fee || 0
-            interest.value = res.data.interest || 0
-        }
-    }).finally(() => {
-        loading.value = false
-    })
+    if (getRateTimeout) clearTimeout(getRateTimeout)
+    getRateTimeout = setTimeout(() => {
+        loading.value = true
+        _loanRate({
+            lever: lever.value[leverIndex.value],
+            days: days.value[currDayIndex.value]
+        }).then(res => {
+            if (res.code == 200) {
+                fee.value = res.data.fee || 0
+                interest.value = res.data.interest || 0
+            }
+        }).finally(() => {
+            loading.value = false
+        })
+    }, 500)
 }
 
 
@@ -288,13 +316,23 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page_loadn {
-    padding: 1.4rem 0.32rem 1.5rem 0.32rem;
+    padding: 1.4rem 0.38rem 0.5rem 0.38rem;
 
     position: relative;
 
     .top-record {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 0.64rem;
+        height: 0.64rem;
+        border-radius: 50%;
+        background-color: #EAF0F3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 0.36rem !important;
+            height: 0.36rem !important;
+        }
     }
 
     .form {
@@ -304,7 +342,23 @@ onMounted(() => {
             color: #333333;
             font-size: 0.28rem;
             font-weight: 400;
-            margin-bottom: 0.12rem;
+            margin-bottom: 0.24rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
+            .account_box {
+                display: flex;
+                align-items: center;
+                margin-left: 0.4rem;
+                color: #000;
+
+                .more_icon {
+                    width: 0.28rem;
+                    height: 0.28rem;
+                    margin-left: 0.1rem;
+                }
+            }
         }
 
         .money {
@@ -353,6 +407,10 @@ onMounted(() => {
             justify-content: space-between;
             border-radius: 0.32rem;
             padding: 0 0.4rem 0 0.76rem;
+
+            &:has(.ipt:focus) {
+                border: 1px solid #014CFA;
+            }
 
             .ipt {
                 width: 50px;
