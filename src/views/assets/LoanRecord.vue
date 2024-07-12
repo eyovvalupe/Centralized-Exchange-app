@@ -1,37 +1,51 @@
 <!--借贷记录 -->
 <template>
     <div class="page page_loan_record">
-        <Top :title="'借贷记录'" />
-
+        <Top :title="'借贷订单'" />
+        <div class="tabs">
+            <div class="tab">借贷</div>
+            <div class="tab active_tab">订单</div>
+        </div>
         <div class="list">
             <NoData v-if="!loading && !list.length" />
             <div class="item" v-for="(item, i) in list" :key="i">
-                <div class="top">
-                    <div class="date">{{ item.created }}</div>
-                    <div class="status">{{ _loanStatusMap[item.status || 'open'] || '--' }}</div>
+                <div class="item_box top">
+                    <div class="title">股票账户</div>
+                    <div class="status" :class="['status_' + item.status]">{{ _loanStatusMap[item.status || 'open'] ||
+                        '--' }}</div>
                 </div>
 
-                <div class="bottom">
+                <div class="item_box mid">
                     <div class="left">
+                        <div class="date">{{ item.created }}</div>
                         <div>
+                            <span>杠杆</span>
+                            <span class="value">{{ item.lever }}x</span>
+                            <span style="margin: 0 0.2rem">|</span>
+                            <span>期限</span>
+                            <span class="value">{{ item.days }}天</span>
+                        </div>
+                        <div><span>利息</span>
+                            <span class="value">{{ item.interest }}</span>
+                        </div>
+                    </div>
+                    <div class="amount">+ {{ item.amount }}</div>
+                </div>
+
+                <div class="item_box bottom">
+                    <div>
+                        <div class="btn" v-if="item.status == 'open'">提前还款</div>
+                    </div>
+                    <div class="return">
+                        <div style="margin-bottom: 0.12rem">
                             <span>冻结本金</span>
                             <span class="value">{{ item.frozen }}</span>
                         </div>
                         <div>
-                            <span>杠杆</span>
-                            <span class="value">{{ item.lever }}x</span>
+                            <span class="value" style="font-weight: 600">{{ item.deadline }}</span>
+                            <span>归还</span>
+                            <span class="value" style="font-weight: 600">{{ item.repayment }}</span>
                         </div>
-                        <div>
-                            <span>期限</span>
-                            <span class="value">{{ item.days }}天</span>
-                        </div>
-                    </div>
-                    <div class="right">
-                        <div class="amount">{{ item.amount }} <span style="font-size: 0.28rem;">MAIN</span></div>
-
-                        <!-- <div class="btn" v-if="item.status == 'open'">去归还: {{ item.repayment }}</div> -->
-                        <div class="btn" v-if="i % 2 == 0">去归还: {{ item.repayment }}</div>
-                        <div class="tip" v-else>还款时间：{{ item.deadline }}</div>
                     </div>
                 </div>
             </div>
@@ -95,7 +109,32 @@ onUnmounted(() => {
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1.2rem 0.32rem 0.2rem 0.32rem;
+    padding: 2.3rem 0.32rem 0.2rem 0.32rem;
+
+    .tabs {
+        position: absolute;
+        height: 0.8rem;
+        display: flex;
+        align-items: center;
+        top: 1.2rem;
+
+        .tab {
+            padding: 0 0.6rem;
+            font-size: 0.28rem;
+            color: #061023;
+            font-weight: 400;
+            height: 0.64rem;
+            display: flex;
+            align-items: center;
+            border-radius: 0.48rem;
+        }
+
+        .active_tab {
+            background-color: #F6F8FF;
+            color: #014CFA;
+            font-weight: 600;
+        }
+    }
 
     .list {
         flex: 1;
@@ -103,75 +142,87 @@ onUnmounted(() => {
 
         .item {
             border-bottom: 1px dashed #CBCBCB;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 0.2rem 0 0.28rem 0;
+            padding: 0.2rem 0;
+            font-size: 0.28rem;
+            font-weight: 400;
+            color: rgba(139, 139, 139, 1);
 
-            .top {
+            .item_box {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin-bottom: 0.1rem;
+            }
 
-                .date {
-                    font-size: 0.28rem;
-                    font-weight: 400;
-                    color: #919193;
-                }
+            .top {
+                margin-bottom: 0.2rem;
+            }
 
-                .status {
-                    color: #333333;
-                    font-weight: bold;
-                    font-size: 0.28rem;
+            .title {
+                color: #343434;
+                font-weight: 600;
+            }
+
+            .status {
+                height: 0.44rem;
+                padding: 0 0.16rem;
+                color: rgba(18, 24, 38, 1);
+                background-color: rgba(18, 24, 38, 0.08);
+                font-size: 0.24rem;
+                display: flex;
+                align-items: center;
+            }
+
+            .status_open {
+                color: rgba(232, 80, 58, 1);
+                background-color: rgba(232, 80, 58, 0.08);
+            }
+
+            .status_done {
+                color: rgba(1, 76, 250, 1);
+                background-color: rgba(1, 76, 250, 0.08);
+            }
+
+            .left {
+                >div {
+                    margin-bottom: 0.16rem;
                 }
             }
 
+            .date {
+                color: rgba(145, 145, 147, 1);
+                font-weight: 400;
+            }
+
+            .value {
+                color: rgba(51, 51, 51, 1);
+                font-weight: 500;
+                margin: 0 0.04rem;
+            }
+
+            .amount {
+                font-size: 0.32rem;
+                color: rgba(0, 0, 0, 1);
+                font-weight: 600;
+            }
+
+            .return {
+                text-align: right;
+            }
+
             .bottom {
+                margin-top: 0.2rem;
+            }
+
+            .btn {
+                height: 0.6rem;
+                border-radius: 0.5rem;
+                padding: 0 0.4rem;
+                color: #fff;
+                font-weight: 500;
+                font-size: 0.24rem;
+                background-color: #014CFA;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-
-                .left {
-                    color: #919193;
-                    font-size: 0.28rem;
-                    font-weight: 400;
-                    line-height: 0.48rem;
-
-                    .value {
-                        color: #333;
-                        margin-left: 0.2rem;
-                    }
-                }
-
-                .right {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-end;
-
-                    .amount {
-                        color: #000;
-                        font-weight: 700;
-                        font-size: 0.36rem;
-                        margin-bottom: 0.2rem;
-                    }
-
-                    .btn {
-                        color: #014CFA;
-                        font-size: 0.24rem;
-                        height: 0.46rem;
-                        border-radius: 0.46rem;
-                        background-color: aliceblue;
-                        display: flex;
-                        align-items: center;
-                        padding: 0 0.24rem;
-                    }
-
-                    .tip {
-                        font-size: 0.24rem;
-                        color: #919193;
-                    }
-                }
             }
         }
     }
