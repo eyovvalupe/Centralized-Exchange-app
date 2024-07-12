@@ -45,6 +45,8 @@ getData()
 
 
 const scrollHandle = () => {
+    const moreDom = document.querySelector('.loading_more')
+    const totalHeight = window.innerHeight || document.documentElement.clientHeight;
     const rect = moreDom.getBoundingClientRect()
     if (rect.top <= totalHeight) {
         // 加载更多
@@ -53,8 +55,6 @@ const scrollHandle = () => {
 }
 
 onMounted(() => {
-    const moreDom = document.querySelector('.loading_more')
-    const totalHeight = window.innerHeight || document.documentElement.clientHeight;
     document.querySelector('.list').addEventListener('scroll', scrollHandle)
 })
 onUnmounted(() => {

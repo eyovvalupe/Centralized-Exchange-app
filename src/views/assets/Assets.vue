@@ -6,7 +6,7 @@
             <div class="page_title">
                 <span>资产</span>
 
-                <div class="record_icon">
+                <div class="record_icon" @click="openRecordPopup">
                     <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                 </div>
             </div>
@@ -87,6 +87,8 @@
             </Tabs>
         </PullRefresh>
 
+        <!-- 记录弹窗 -->
+        <RecordList ref="RecordListRef" />
     </div>
 </template>
 
@@ -97,13 +99,17 @@ import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
 import IPO from "./page/IPO.vue"
+import RecordList from "@/components/RecordList.vue"
 
-
+const RecordListRef = ref()
 const active = ref('overview')
 const loading = ref(false)
 const disabled = ref(false)
 const pageLoading = ref(false)
 
+const openRecordPopup = () => {
+    RecordListRef.value && RecordListRef.value.open()
+}
 
 const overviewRef = ref()
 const cashRef = ref()
