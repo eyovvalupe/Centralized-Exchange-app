@@ -261,6 +261,7 @@ const getAssets = () => {
     store.dispatch('updateAssets').finally(() => {
         emits('setLoading', false)
     })
+    store.dispatch('updateWallet')
 }
 
 onMounted(() => {

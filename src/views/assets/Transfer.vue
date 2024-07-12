@@ -4,20 +4,29 @@
         <Top :title="'划转'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/record.png" alt="img">
+                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                 </div>
             </template>
         </Top>
 
         <!-- 表单 -->
         <div class="form">
-            <div class="item" @click="openDialog('from')">
-                <div class="item_pre">从</div>
-                <div class="item_content">{{ _accountMap[form.from] }}</div>
-                <div class="more">
-                    <img src="/static/img/assets/more.png" alt="more">
+            <div class="subtitle">从</div>
+            <div class="item_box">
+                <div class="item ipt_item">
+                    <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
+                    <input @focus="focus = true" @blur="focus = false" v-model="form.amount" type="number"
+                        :placeholder="``" class="ipt">
+                    <div class="btn" @click="maxIpt">全部</div>
+                </div>
+                <div class="item account_item">
+                    <div class="item_content" @click="openDialog('from')">{{ _accountMap[form.from] }}</div>
+                    <div class="more" @click="openDialog('from')">
+                        <img src="/static/img/assets/more.png" alt="more">
+                    </div>
                 </div>
             </div>
+
 
             <div class="trans">
                 <div class="line"></div>
@@ -27,23 +36,19 @@
                 <div class="line"></div>
             </div>
 
-            <div class="item" @click="openDialog('to')">
-                <div class="item_pre">到</div>
-                <div class="item_content">{{ _accountMap[form.to] }}</div>
-                <div class="more">
-                    <img src="/static/img/assets/more.png" alt="more">
+            <div class="subtitle">到</div>
+            <div class="item_box">
+                <div class="item ipt_item">
+                    <div class="ipt">{{ form.amount || '--' }}</div>
+                </div>
+                <div class="item account_item">
+                    <div class="item_content" @click="openDialog('to')">{{ _accountMap[form.to] }}</div>
+                    <div class="more" @click="openDialog('to')">
+                        <img src="/static/img/assets/more.png" alt="more">
+                    </div>
                 </div>
             </div>
 
-            <div class="subtitle">数量</div>
-            <div class="item">
-                <input v-model="form.amount" type="number" placeholder="请输入" class="ipt">
-                <div class="btn" @click="maxIpt">最大</div>
-            </div>
-            <div class="tip">
-                <span>最多可转</span>
-                <span class="num">{{ balance }}</span>
-            </div>
         </div>
 
         <Button @click="openSafePass" :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
@@ -56,9 +61,13 @@
                 <div class="close_icon" @click="showDialog = false">
                     <img src="/static/img/common/close.png" alt="x">
                 </div>
-                <div @click="clickItem(item)" class="transfer_dialog_item" v-for="(item, i) in showAccountMapList"
-                    :key="i">
-                    {{ item.value }}
+                <div @click="clickItem(item)" class="transfer_dialog_item"
+                    :class="{ 'transfer_dialog_item_active': (clickKey == 'from' ? (form.from == item.key) : (form.to == item.key)) }"
+                    v-for="(item, i) in _accountMapList" :key="i">
+                    <span>{{ item.value }}</span>
+
+                    <Icon v-if="(clickKey == 'from' ? (form.from == item.key) : (form.to == item.key))"
+                        class="check_icon" name="success" />
                 </div>
             </div>
         </Popup>
@@ -70,7 +79,7 @@
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, showNotify } from "vant"
+import { Button, Popup, showNotify, Icon } from "vant"
 import { ref, computed } from "vue"
 import { _accountMap, _accountMapList } from "@/utils/dataMap"
 import store from "@/store"
@@ -78,6 +87,9 @@ import SafePassword from "@/components/SafePassword.vue"
 import { _transfer } from "@/api/api"
 import router from "@/router"
 
+const focus = ref(false) // 是否在输入中
+
+store.dispatch('updateAssets') // 更新资产
 const assets = computed(() => store.state.assets || {})
 const balance = computed(() => {
     return assets.value[form.value.from] || 0
@@ -143,10 +155,6 @@ const openDialog = key => {
     clickKey.value = key
     showDialog.value = true
 }
-const showAccountMapList = computed(() => {
-    const filterKey = clickKey.value == 'from' ? form.value.from : form.value.to
-    return _accountMapList.filter(item => item.key != filterKey)
-})
 const clickItem = item => { // 选择账户
     if (clickKey.value == 'from') {
         if (item.key == form.value.to) {
@@ -194,21 +202,47 @@ const goRecord = () => {
     position: relative;
 
     .top-record {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 0.64rem;
+        height: 0.64rem;
+        border-radius: 50%;
+        background-color: #EAF0F3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 0.36rem !important;
+            height: 0.36rem !important;
+        }
     }
 
     .form {
+        .item_box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 0.88rem;
+
+            &:has(.ipt:focus) {
+                height: 1.12rem;
+            }
+        }
+
         .item {
             width: 100%;
-            height: 1.12rem;
+            height: 100%;
             border: 1px solid #D0D8E2;
-            border-radius: 0.32rem;
-            padding: 0 0.4rem 0 0.76rem;
+            border-radius: 0.12rem;
+            padding: 0 0.24rem 0 0.56rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-weight: 400;
+
+            &:has(.ipt:focus) {
+                padding-top: 0.3rem;
+                border: 1px solid #014CFA;
+            }
 
             .item_pre {
                 width: 1rem;
@@ -217,9 +251,9 @@ const goRecord = () => {
             }
 
             .item_content {
-                flex: 1;
                 font-size: 0.28rem;
                 color: #000;
+                white-space: nowrap;
             }
 
             .more {
@@ -231,17 +265,59 @@ const goRecord = () => {
                 flex: 1;
                 color: #292929;
                 font-size: 0.28rem;
+                width: 2rem;
             }
 
             .btn {
                 color: #1A59F6;
-                font-size: 0.28rem;
-                margin-left: 0.4rem;
+                font-size: 0.24rem;
+                margin: 0 0.24rem;
+                white-space: nowrap;
             }
         }
 
+        .ipt_item {
+            flex: 7;
+            position: relative;
+
+            &:has(.ipt:focus) {
+                .ipt_tip {
+                    transform: translateY(-200%);
+                    font-size: 0.2rem;
+
+                    span {
+                        color: #A4ACB9;
+                    }
+                }
+            }
+
+            .ipt_tip {
+                position: absolute;
+                font-size: 0.24rem;
+                font-weight: 400;
+                color: #A4ACB9;
+                left: 0.32rem;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                transition: all ease .2s;
+
+                span {
+                    color: #111111;
+                }
+            }
+
+
+        }
+
+        .account_item {
+            height: 100% !important;
+            flex: 4;
+            margin-left: 0.2rem;
+        }
+
         .trans {
-            margin: 0.26rem 0 0.46rem 0;
+            margin: 0.56rem 0 0.26rem 0;
             padding: 0 0.2rem;
             display: flex;
             align-items: center;
@@ -274,7 +350,7 @@ const goRecord = () => {
             color: #333333;
             font-weight: 400;
             line-height: 0.36rem;
-            margin: 0.9rem 0 0.12rem 0;
+            margin: 0.4rem 0 0.12rem 0;
         }
 
         .tip {
@@ -295,7 +371,7 @@ const goRecord = () => {
     .submit {
         width: 100%;
         height: 1.12rem;
-        margin: 1.2rem 0 0.4rem 0;
+        margin: 2.4rem 0 0.4rem 0;
     }
 }
 </style>
@@ -324,6 +400,18 @@ const goRecord = () => {
         align-items: center;
         justify-content: center;
         border-bottom: 1px solid #F5F5F5;
+    }
+
+    .transfer_dialog_item_active {
+        color: #014CFA;
+        font-weight: 600;
+
+        .check_icon {
+            position: absolute;
+            right: 0.64rem;
+            color: #014CFA;
+            font-size: 0.28rem;
+        }
     }
 }
 </style>

@@ -27,7 +27,7 @@
                 </div>
 
                 <div class="item_box item_content">
-                    <span class="item_tip" v-show="!form.amount || focus">可提金额：<span>{{ balance }}</span></span>
+                    <span class="item_tip" v-show="form.amount === '' || focus">可提金额 <span>{{ balance }}</span></span>
                     <input class="ipt" @focus="focus = true" @blur="focus = false" @change="changeAmount" type="number"
                         v-model="form.amount" placeholder="">
                     <span class="all" @click="maxIpt">全部</span>

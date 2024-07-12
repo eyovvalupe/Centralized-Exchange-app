@@ -4,7 +4,7 @@
         <Top :title="'兑换'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/record.png" alt="img">
+                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                 </div>
             </template>
         </Top>
@@ -12,24 +12,26 @@
         <!-- 表单 -->
         <div class="form">
             <div class="subtitle">支付</div>
-            <div class="item">
-                <div class="item_content">
-                    <input @input="changeAmount" type="number" v-model="form.amount" placeholder="请输入">
-                    <span class="all" @click="maxIpt">全部</span>
-                </div>
-                <div class="currency" @click="openDialog('from')">
-                    <div class="currency_icon">
-                        <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
+            <div class="item_box">
+                <div class="item ipt_item">
+                    <div class="item_content">
+                        <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
+                        <input @focus="focus = true" @blur="focus = false" class="ipt" @input="changeAmount"
+                            type="number" v-model="form.amount" placeholder="">
+                        <span class="all" @click="maxIpt">全部</span>
                     </div>
-                    <span>{{ form.from.toUpperCase() }}</span>
                 </div>
-                <div class="more" @click="openDialog('from')">
-                    <img src="/static/img/assets/more.png" alt="more">
+                <div class="item account_item" @click="openDialog('from')">
+                    <div class="currency">
+                        <div class="currency_icon">
+                            <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
+                        </div>
+                        <span>{{ form.from.toUpperCase() }}</span>
+                    </div>
+                    <div class="more">
+                        <img src="/static/img/assets/more.png" alt="more">
+                    </div>
                 </div>
-            </div>
-            <div class="tip">
-                <span>可用余额</span>
-                <span class="num">{{ balance }}</span>
             </div>
 
             <div class="trans">
@@ -41,29 +43,37 @@
             </div>
 
             <div class="subtitle">预计收到</div>
-            <div class="item">
-                <div class="item_content">
-                    <input @input="changeToAmount" type="number" v-model="form.toAmount" placeholder="请输入">
-                </div>
-                <div class="currency" @click="openDialog('to')">
-                    <div class="currency_icon">
-                        <img :src="`/static/img/crypto/${form.to.toUpperCase()}.png`" alt="currency">
+            <div class="item_box">
+                <div class="item ipt_item no_tip_ipt">
+                    <div class="item_content">
+                        <input class="ipt" @input="changeToAmount" type="number" v-model="form.toAmount"
+                            placeholder="请输入">
                     </div>
-                    <span>{{ form.to.toUpperCase() }}</span>
                 </div>
-                <div class="more" @click="openDialog('to')">
-                    <img src="/static/img/assets/more.png" alt="more">
+                <div class="item account_item" @click="openDialog('to')">
+                    <div class="currency">
+                        <div class="currency_icon">
+                            <img :src="`/static/img/crypto/${form.to.toUpperCase()}.png`" alt="currency">
+                        </div>
+                        <span>{{ form.to.toUpperCase() }}</span>
+                    </div>
+                    <div class="more">
+                        <img src="/static/img/assets/more.png" alt="more">
+                    </div>
                 </div>
             </div>
+
             <div class="tip">
-                <span class="num">实时汇率：</span>
-                <span v-if="!rate">--</span>
+                <span>1{{ form.from.toUpperCase() }}≈</span>
+                <span class="num">{{ rate || '--' }}{{ form.to.toUpperCase() }}</span>
+
+                <!-- <span v-if="!rate">--</span>
                 <template v-if="rate">
                     <span>1{{ form.from.toUpperCase() }}≈</span>
                     <span class="num">{{ rate }}{{ form.to.toUpperCase() }}</span>
 
                     <div class="refresh_box" v-show="!loading">{{ timeDown }}s后更新</div>
-                </template>
+                </template> -->
             </div>
 
         </div>
@@ -78,11 +88,16 @@
                 <div class="close_icon" @click="showDialog = false">
                     <img src="/static/img/common/close.png" alt="x">
                 </div>
-                <div @click="clickItem(item)" class="swap_dialog_item" v-for="(item, i) in showAccountMapList" :key="i">
+                <div @click="clickItem(item)" class="swap_dialog_item"
+                    :class="{ 'swap_dialog_item_active': (clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency)) }"
+                    v-for="(item, i) in wallet" :key="i">
                     <div class="icon">
                         <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
                     </div>
                     <span>{{ item.currency.toUpperCase() }}</span>
+
+                    <Icon v-if="(clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency))"
+                        class="check_icon" name="success" />
                 </div>
             </div>
         </Popup>
@@ -114,7 +129,7 @@
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, showNotify } from "vant"
+import { Button, Popup, showNotify, Icon } from "vant"
 import { ref, computed } from "vue"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
@@ -122,6 +137,9 @@ import { _converter, _swapRate } from "@/api/api"
 import router from "@/router"
 import Decimal from 'decimal.js';
 
+const focus = ref(false)
+
+store.dispatch('updateWallet')
 const wallet = computed(() => {
     return store.state.wallet.filter(item => !['stock', 'contract'].includes(item.currency)) || []
 })
@@ -170,7 +188,7 @@ const submit = s => {
     loading.value = true
     _converter(params).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '划转成功' });
+            showNotify({ type: 'success', message: '兑换成功' });
             form.value.amount = ''
             form.value.toAmount = ''
             store.dispatch('updateWallet') // 更新钱包
@@ -191,7 +209,6 @@ const getRate = () => {
     if (timeout) clearTimeout(timeout)
     if (interval) clearInterval(interval)
     timeDown.value = 10
-    loading.value = true
     _swapRate({
         ...form.value,
         amount: form.value.amount || 0
@@ -208,8 +225,6 @@ const getRate = () => {
                 }
             }, 1000)
         }
-    }).finally(() => {
-        loading.value = false
     })
 }
 getRate()
@@ -218,6 +233,7 @@ getRate()
 const transing = ref(false) // 转换动画中
 const goTransing = () => {
     transing.value = true
+    rate.value = ''
     setTimeout(() => {
         transing.value = false
     }, 500)
@@ -237,10 +253,6 @@ const openDialog = key => {
     clickKey.value = key
     showDialog.value = true
 }
-const showAccountMapList = computed(() => {
-    const filterKey = clickKey.value == 'from' ? form.value.from : form.value.to
-    return wallet.value.filter(item => item.currency != filterKey)
-})
 const clickItem = item => { // 选择账户
     if (clickKey.value == 'from') {
         if (item.currency == form.value.to) {
@@ -297,21 +309,46 @@ const goRecord = () => {
     position: relative;
 
     .top-record {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 0.64rem;
+        height: 0.64rem;
+        border-radius: 50%;
+        background-color: #EAF0F3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 0.36rem !important;
+            height: 0.36rem !important;
+        }
     }
 
     .form {
+        .item_box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 0.88rem;
+
+            &:has(.ipt:focus) {
+                height: 1.12rem;
+            }
+        }
+
         .item {
             width: 100%;
-            height: 1.12rem;
+            height: 100%;
             border: 1px solid #D0D8E2;
-            border-radius: 0.32rem;
-            padding: 0 0.4rem 0 0.76rem;
+            border-radius: 0.12rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-weight: 400;
+
+            &:has(.ipt:focus) {
+                padding-top: 0.3rem;
+                border: 1px solid #014CFA;
+            }
 
             .item_pre {
                 width: 1rem;
@@ -333,7 +370,7 @@ const goRecord = () => {
                 .all {
                     color: #1A59F6;
                     position: absolute;
-                    right: 0.24rem;
+                    right: 0;
                 }
             }
 
@@ -344,8 +381,8 @@ const goRecord = () => {
                 line-height: 0;
 
                 .currency_icon {
-                    width: 0.56rem;
-                    height: 0.56rem;
+                    width: 0.4rem;
+                    height: 0.4rem;
                     margin-right: 0.12rem;
                 }
             }
@@ -359,6 +396,7 @@ const goRecord = () => {
                 flex: 1;
                 color: #292929;
                 font-size: 0.28rem;
+                width: 2rem;
             }
 
             .btn {
@@ -368,8 +406,56 @@ const goRecord = () => {
             }
         }
 
+        .ipt_item {
+            flex: 7;
+            position: relative;
+            padding: 0 0.24rem 0 0.36rem;
+
+            &:has(.ipt:focus) {
+                .ipt_tip {
+                    transform: translateY(-200%);
+                    font-size: 0.2rem;
+
+                    span {
+                        color: #A4ACB9;
+                    }
+                }
+            }
+
+            .ipt_tip {
+                position: absolute;
+                font-size: 0.24rem;
+                font-weight: 400;
+                color: #A4ACB9;
+                left: 0rem;
+                top: 50%;
+                transform: translateY(-50%);
+                pointer-events: none;
+                transition: all ease .2s;
+
+                span {
+                    color: #111111;
+                }
+            }
+
+
+        }
+
+        .no_tip_ipt {
+            &:has(.ipt:focus) {
+                padding-top: 0;
+            }
+        }
+
+        .account_item {
+            padding: 0 0.24rem;
+            height: 100% !important;
+            flex: 4;
+            margin-left: 0.2rem;
+        }
+
         .trans {
-            margin: 0.4rem 0;
+            margin: 0.7rem 0 0.5rem 0;
             padding: 0 0.2rem;
             display: flex;
             align-items: center;
@@ -446,7 +532,7 @@ const goRecord = () => {
     .submit {
         width: 100%;
         height: 1.12rem;
-        margin: 1.2rem 0 0.4rem 0;
+        margin: 2.2rem 0 0.4rem 0;
     }
 }
 </style>
@@ -475,11 +561,24 @@ const goRecord = () => {
         justify-content: center;
         border-bottom: 1px solid #F5F5F5;
         overflow: hidden;
+        position: relative;
 
         .icon {
             width: 0.4rem;
             height: 0.4rem;
             margin-right: 0.24rem;
+        }
+    }
+
+    .swap_dialog_item_active {
+        color: #014CFA;
+        font-weight: 600;
+
+        .check_icon {
+            position: absolute;
+            right: 0.24rem;
+            color: #014CFA;
+            font-size: 0.28rem;
         }
     }
 
