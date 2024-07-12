@@ -3,17 +3,18 @@
         <Top :title="'在线客服'" />
         <div class="layout-chat">
             <loading v-show="!isConnected || chatLoading" />
-            <div class="chat-con" @scroll="handleScroll" ref="scrollContainer">
+            <div class="chat-con" @touchstart="setRead" @scroll="handleScroll" ref="scrollContainer">
                 <messageBox />
             </div>
             <div class="chat-send">
-                <sendBox />
+                <sendBox @scrollToBottom="sendEvent" />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { serviceChat } from '@/utils/serviceChat'
 import Top from "@/components/Top.vue"
 import loading from '@/components/Chat/loading.vue'
 import messageBox from '@/components/Chat/messageBox.vue'
@@ -21,40 +22,73 @@ import sendBox from '@/components/Chat/sendBox.vue'
 import { apiMsgRead } from '@/api/chat'
 import { ref, nextTick, computed, onMounted, watch } from 'vue'
 import storeChat from "@/store/chat"
-const chatLoading=ref(true);
+
+const chatLoading = ref(true);
+let childScroll = false;
 storeChat.commit('setHistoryMsg', [])
-storeChat.dispatch('updateMessage').then(res=>{
+storeChat.dispatch('updateMessage').then(res => {
+    nextTick(scrollToBottom)
     chatLoading.value = false
-    scrollToBottom();
 })
-
+serviceChat.init();
 const isConnected = computed(() => storeChat.state.isConnected)
+const messageList = computed(() => storeChat.getters.getMessageList)
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
-
 const scrollContainer = ref(null);
-const scrollToBottom = () => {
-    nextTick(() => {
-        setTimeout(() => {
-            scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-            console.log(scrollContainer.value.scrollHeight, scrollContainer.value.offsetHeight)
-        }, 300);
+const isReadMessage = (currTime) => {
+    apiMsgRead({ nologinid: storeChat.getters.getNologinid }).then((res) => {
+        const { lasttime } = res.data
+        storeChat.commit('setreadMessageTime', currTime ? lasttime : new Date().valueOf())
+        const tmp_arr = messageList.value.concat(hasNewMessage.value);
+        storeChat.commit('setNewMessageList', tmp_arr)
     })
-    storeChat.commit('sethasNewMessage', 0)
+}
+
+const setRead = () => {
+    if (hasNewMessage.value.length) {
+        isReadMessage();
+    }
+}
+const scrollToBottom = () => {
+    setTimeout(() => {
+        const hasNewMessageDom = document.getElementById('hasNewMessage');
+        // 计算子节点相对于父节点的高度距离
+        if (hasNewMessageDom) {
+            childScroll = true;
+            hasNewMessageDom.scrollIntoView({
+                behavior: 'smooth', // 平滑滚动
+                block: 'center',    // 将元素滚动到父容器的中心位置
+                inline: 'nearest'   // 水平方向的滚动对齐方式
+            });
+        } else {
+            scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+        }
+        setTimeout(() => {
+            childScroll = false;
+        }, 1000);
+        console.log(scrollContainer.value.scrollHeight, scrollContainer.value.offsetHeight)
+    }, 500);
 };
 const handleScroll = () => {
+    if (childScroll) {
+        return
+    }
     const container = scrollContainer.value;
-    if (hasNewMessage.value && container.scrollTop + container.offsetHeight === container.scrollHeight) {
+    if (hasNewMessage.value.length && container.scrollTop + container.offsetHeight === container.scrollHeight) {
         console.log('已滚动到底部');
-        apiMsgRead({ nologinid: storeChat.getters.getNologinid }).then(() => {
-            scrollToBottom()
-        })
+        isReadMessage();
     }
 };
-watch(hasNewMessage, (val) => {
-    if (val) {
-        scrollToBottom();
-    }
-})
+const sendEvent = () => {
+    childScroll = true;
+    isReadMessage();
+    scrollToBottom()
+}
+// watch(hasNewMessage, (val) => {
+//     if (val.length) {
+//         scrollToBottom();
+//     }
+// }, { deep: true })
 </script>
 
 <style lang="less">
@@ -66,14 +100,16 @@ watch(hasNewMessage, (val) => {
 
     .chat-con {
         height: calc(100vh - 2.25rem);
-        background: #f5f5f5;
-        padding: 10px;
+        padding: 10px 0;
         overflow-y: auto;
     }
 
     .chat-send {
+        border: 1px solid #D0D8E2;
+        border-radius: 10px;
         background: #fff;
-        padding: 10px;
+        margin: 10px;
+        padding: 0 10px;
     }
 }
 </style>
