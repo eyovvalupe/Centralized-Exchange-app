@@ -12,32 +12,15 @@
         <!-- 表单 -->
         <div class="form">
             <div class="subtitle">
-                <span>借款到</span>
-
-                <div class="account_box">
-                    <span>股票账户</span>
-                    <div class="more_icon">
-                        <img src="/static/img/assets/more.png" alt="img">
-                    </div>
-                </div>
+                <span>抵押</span>
             </div>
             <div class="item">
-                <input v-model="bj" class="ipt" type="number" placeholder="请输入">
-                <span class="all" @click="bj = amount">全部</span>
-                <div class="item_icon">
-                    <img src="/static/img/crypto/MAIN.png" alt="img">
+                <div class="border_item account_box">
+                    <span>资金账户</span>
+                    <div class="more_icon"><img src="/static/img/assets/more.png" alt="img"></div>
                 </div>
-                <span>MAIN</span>
-            </div>
-            <div class="tip"
-                style="margin-top: 0.12rem;display: flex;align-items: center;justify-content: space-between;">
-                <div>
-                    <span>最大可借</span>
-                    <span class="num">{{ amount || '0.00' }} </span>
-                </div>
-                <div>
-                    <span>可用抵押余额</span>
-                    <span class="num">{{ mainWallet.amount }} </span>
+                <div class="border_item ipt_box">
+                    <input @input="inputNum('bj')" v-model="bj" class="ipt" type="number" placeholder="金额">
                 </div>
             </div>
             <!-- 滑块 -->
@@ -54,8 +37,18 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="subtitle">借款金额</div>
-            <div class="money">{{ amount }}</div> -->
+            <div class="subtitle">
+                <span>借款账户</span>
+            </div>
+            <div class="item">
+                <div class="border_item account_box">
+                    <span>股票</span>
+                    <div class="more_icon"><img src="/static/img/assets/more.png" alt="img"></div>
+                </div>
+                <div class="border_item ipt_box">
+                    <input @input="inputNum('amount')" v-model="amount" class="ipt" type="number" placeholder="借款金额">
+                </div>
+            </div>
             <div class="subtitle">期限</div>
             <!-- 期限 -->
             <div class="dates">
@@ -64,10 +57,6 @@
                         item
                     }}天
                 </div>
-            </div>
-            <div class="tip">
-                <span>抵押本金</span>
-                <span class="num">{{ bj2 }}</span>
             </div>
             <div class="tip">
                 <span>手续费</span>
@@ -92,17 +81,21 @@
             <template #top>
                 <div class="loan_comfirm_box">
                     <div class="loan_comfirm_title">借款确认</div>
-                    <div class="loan_confirm_amount">{{ bj }} <span style="font-size: 0.4rem;">MAIN</span></div>
+                    <div class="loan_confirm_amount">{{ amount }} <span style="font-size: 0.4rem;">MAIN</span></div>
                     <div class="loan_confirm_item">
-                        <span>借款抵押</span>
-                        <span class="value">{{ bj2 }}</span>
+                        <span>抵押资金账户</span>
+                        <span class="value">{{ bj }}</span>
+                    </div>
+                    <div class="loan_confirm_item">
+                        <span>借款股票账户</span>
+                        <span class="value">{{ amount }}</span>
                     </div>
                     <div class="loan_confirm_item">
                         <span>杠杆</span>
                         <span class="value">{{ lever[leverIndex] }}x</span>
                     </div>
                     <div class="loan_confirm_item">
-                        <span>期限</span>
+                        <span>借款期限</span>
                         <span class="value">{{ days[currDayIndex] }}天</span>
                     </div>
                     <div class="loan_confirm_item">
@@ -127,16 +120,17 @@
 import Top from "@/components/Top.vue"
 import { _loanPara, _loanRate, _loan } from "@/api/api"
 import { ref, computed, onMounted } from "vue"
-import { Button, showNotify } from "vant"
+import { Button, showNotify, showToast } from "vant"
 import store from "@/store"
 import Decimal from 'decimal.js';
 import SafePassword from "@/components/SafePassword.vue"
 import router from "@/router"
 
+store.dispatch('updateWallet')
 
 const loading = ref(false)
 const disabled = computed(() => {
-    return bj.value <= 0
+    return !(bj.value > 0)
 })
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
 
@@ -150,6 +144,7 @@ const sliderWidth = computed(() => {
 const sliderTo = i => { // 点击滑块
     leverIndex.value = i
     setTimeout(() => {
+        inputNum('bj')
         getRate()
     }, 0)
 }
@@ -178,34 +173,44 @@ const changeDate = i => {
 
 
 // 借款金额
-const bj = ref("")
-const bj2 = computed(() => { // 本金
-    if (!bj.value) return '--'
-    return new Decimal(bj.value).div(lever.value[leverIndex.value] || 0).toFixed(2)
-})
-const amount = computed(() => { // 最大可借
-    if (!mainWallet.value.amount) return 0
-    return new Decimal(mainWallet.value.amount).mul(lever.value[leverIndex.value] || 0)
-})
+const amount = ref('') // 借款金额
+const bj = ref("") // 本金
+const inputNum = key => {
+    if (key == 'bj') { //输入本金
+        if (bj.value) {
+            amount.value = new Decimal(bj.value).mul(lever.value[leverIndex.value]).toFixed(2)
+        } else {
+            amount.value = ''
+        }
+    }
+    if (key == 'amount') { // 输入借款
+        if (amount.value) {
+            bj.value = new Decimal(amount.value).div(lever.value[leverIndex.value]).toFixed(2)
+        } else {
+            bj.value = ''
+        }
+    }
+}
+// 最大可借 mainWallet.value.amount
 
 // 手续费
 const fee = ref(0)
 const showFee = computed(() => {
-    if (!bj.value) return '--'
-    return new Decimal(bj.value).mul(fee.value)
+    if (!amount.value) return '--'
+    return new Decimal(amount.value).mul(fee.value)
 })
 
 // 隔夜利息
 const interest = ref(0)
 const showInterest = computed(() => {
-    if (!bj.value) return '--'
+    if (!amount.value) return '--'
     return new Decimal(interest.value).mul(100) + '%'
 })
 
 // 归还
 const returnAmount = computed(() => {
-    if (!bj.value) return '--'
-    return new Decimal(bj.value).mul(interest.value).plus(showFee.value).plus(bj.value)
+    if (!amount.value) return '--'
+    return new Decimal(amount.value).mul(interest.value).plus(showFee.value).plus(amount.value)
 })
 
 const returnDate = computed(() => {
@@ -263,13 +268,16 @@ const getRate = () => {
 // 表单提交
 const safeRef = ref()
 const openSafePass = () => {
+    if (mainWallet.value.amount < bj.value) {
+        return showToast('余额不足')
+    }
     safeRef.value.open()
 }
 const submit = s => {
     const params = {
-        lever: lever.value[leverIndex.value],
-        days: days.value[currDayIndex.value],
-        amount: bj.value,
+        lever: Number(lever.value[leverIndex.value]),
+        days: Number(days.value[currDayIndex.value]),
+        amount: Number(amount.value),
         safeword: s,
         token: sessionToken.value
     }
@@ -278,6 +286,7 @@ const submit = s => {
     _loan(params).then(res => {
         if (res.code == 200) {
             showNotify({ type: 'success', message: '借贷成功' });
+            amount.value = ''
             bj.value = ''
             leverIndex.value = 0
             currDayIndex.value = 0
@@ -347,18 +356,6 @@ onMounted(() => {
             align-items: center;
             justify-content: flex-start;
 
-            .account_box {
-                display: flex;
-                align-items: center;
-                margin-left: 0.4rem;
-                color: #000;
-
-                .more_icon {
-                    width: 0.28rem;
-                    height: 0.28rem;
-                    margin-left: 0.1rem;
-                }
-            }
         }
 
         .money {
@@ -400,36 +397,48 @@ onMounted(() => {
         }
 
         .item {
-            border: 1px solid #D0D8E2;
-            height: 1.12rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-radius: 0.32rem;
-            padding: 0 0.4rem 0 0.76rem;
+            margin-bottom: 0.4rem;
 
-            &:has(.ipt:focus) {
-                border: 1px solid #014CFA;
-            }
-
-            .ipt {
-                width: 50px;
-                flex: 1;
-                color: #292929;
-                font-size: 0.32rem;
-                font-weight: 400;
-            }
-
-            .all {
-                color: #1A59F6;
+            .account_box {
+                width: 2.4rem;
+                margin-right: 0.2rem;
+                color: #000000;
                 font-size: 0.28rem;
-                font-weight: 500;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .more_icon {
+                    width: 0.3rem;
+                    height: 0.3rem;
+                    position: absolute;
+                    right: 0.16rem;
+                }
             }
 
-            .item_icon {
-                width: 0.56rem;
-                height: 0.56rem;
-                margin: 0 0.1rem 0 0.6rem;
+            .ipt_box {
+                flex: 1;
+                padding: 0 0 0 0.2rem;
+                display: flex;
+                align-items: center;
+
+                .ipt {
+                    height: 100%;
+                }
+            }
+
+            .border_item {
+                border: 1px solid #D0D8E2;
+                height: 0.88rem;
+                border-radius: 0.12rem;
+
+                &:has(.ipt:focus) {
+                    border: 1px solid #014CFA;
+                }
             }
         }
 
@@ -448,7 +457,7 @@ onMounted(() => {
         }
 
         .slider_box {
-            margin: 0.4rem 0;
+            margin: 0.8rem 0 0.4rem 0;
 
             .slider {
                 width: 100%;
@@ -550,9 +559,11 @@ onMounted(() => {
         font-size: 0.28rem;
         color: #8F92A1;
         height: 0.48rem;
+        font-weight: 400;
 
         .value {
             color: #000000;
+            font-weight: 500;
         }
     }
 
