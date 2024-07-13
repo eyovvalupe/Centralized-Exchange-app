@@ -58,7 +58,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .google_dialog {
-    background-color: #fff;
+    background-color: #FEFEFE;
     padding: 0.64rem 0.32rem;
 
     .btns {
@@ -96,12 +96,13 @@ defineExpose({
 
         :deep(.van-password-input__item) {
             border: 1px solid #ECEFF3;
+            background-color: #fff;
             width: 1rem;
             height: 1rem;
             box-sizing: border-box;
             border-radius: 0.16rem;
 
-            &:has(*) {
+            &:has(.van-password-input__cursor) {
                 border: 1px solid #014CFA;
             }
         }

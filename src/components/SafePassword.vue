@@ -2,19 +2,23 @@
 <template>
     <Popup class="self_van_popup" v-model:show="show" position="bottom" teleport="body" :safe-area-inset-bottom="true"
         :close-on-popstate="true" :close-on-click-overlay="false">
-        <div class="safepassword_dialog" :class="{ 'typing_dialog': showKeyboard }">
+        <!--  :class="{ 'typing_dialog': showKeyboard }" -->
+        <div class="safepassword_dialog">
             <slot name="top"></slot>
-            <div class="title">输入安全密码</div>
+            <div class="title">输入交易密码</div>
             <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
-            <PasswordInput :focused="showKeyboard" @focus="showKeyboard = true" class="code_ipt" :value="val"
-                :length="6" :gutter="'0.16rem'" :mask="true" />
+            <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
+                :gutter="'0.16rem'" :mask="true" /> -->
+            <input type="password" v-model="val" ref="iptDom" class="pass_ipt" enterkeyhint="done"
+                @keydown.enter="submit">
             <div class="btns">
                 <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
                         style="color: #014CFA;">取消</span></Button>
                 <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="btn" type="primary"
                     @click="submit">确定</Button>
             </div>
-            <NumberKeyboard @blur="showKeyboard = false" :show="showKeyboard" v-model="val" />
+
+            <!-- <NumberKeyboard @blur="showKeyboard = false" :show="showKeyboard" v-model="val" /> -->
         </div>
     </Popup>
 </template>
@@ -23,20 +27,21 @@
 import { Popup, PasswordInput, NumberKeyboard, Button } from "vant"
 import { ref, computed, watch } from "vue"
 const emits = defineEmits(['submit'])
+const iptDom = ref()
 
 const loading = ref(false)
 const disabled = computed(() => {
-    return !(val.value && val.value.length == 6)
+    return !(val.value)
 })
 
 const show = ref(false)
 const showKeyboard = ref(true)
 const val = ref('')
-watch(val, v => {
-    if (v && v.length == 6) {
-        showKeyboard.value = false
-    }
-})
+// watch(val, v => {
+//     if (v && v.length == 6) {
+//         showKeyboard.value = false
+//     }
+// })
 
 const close = () => {
     show.value = false
@@ -45,6 +50,8 @@ const open = () => {
     val.value = ''
     show.value = true
     showKeyboard.value = true
+    focus()
+
 }
 const submit = () => {
     if (disabled.value) return
@@ -52,14 +59,22 @@ const submit = () => {
     emits('submit', val.value)
 }
 
+const focus = () => {
+    showKeyboard.value = true
+    setTimeout(() => {
+        iptDom.value && iptDom.value.focus()
+    }, 300)
+}
+
 defineExpose({
-    open
+    open,
+    close
 })
 </script>
 
 <style lang="less" scoped>
 .safepassword_dialog {
-    background-color: #fff;
+    background-color: #FEFEFE;
     padding: 0.64rem 0.32rem;
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
@@ -85,18 +100,33 @@ defineExpose({
         text-align: center;
     }
 
+    .pass_ipt {
+        height: 0.88rem;
+        border: 1px solid #D0D8E2;
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+        border-radius: 0.12rem;
+        padding: 0 0.4rem;
+
+        &:focus {
+            border: 1px solid #014CFA;
+        }
+    }
+
     .code_ipt {
         padding: 0;
         margin: 0;
 
         :deep(.van-password-input__item) {
             border: 1px solid #ECEFF3;
+            background-color: #fff;
             width: 1rem;
             height: 1rem;
             box-sizing: border-box;
             border-radius: 0.16rem;
 
-            &:has(*) {
+            &:has(.van-password-input__cursor) {
                 border: 1px solid #014CFA;
             }
         }

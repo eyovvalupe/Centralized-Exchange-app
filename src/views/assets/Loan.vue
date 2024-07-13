@@ -10,7 +10,7 @@
             </div>
             <div class="item">
                 <div class="border_item account_box">
-                    <span>资金账户</span>
+                    <span>现金账户</span>
                 </div>
                 <div class="border_item ipt_box" :class="{ 'err_ipt': errStatus }">
                     <input @blur="errStatus = false" @input="inputNum('bj')" v-model="bj" class="ipt" type="number"
@@ -101,27 +101,32 @@
         <SafePassword @submit="submit" ref="safeRef">
             <template #top>
                 <div class="loan_comfirm_box">
-                    <div class="loan_comfirm_title">借款确认</div>
-                    <div class="loan_confirm_amount">{{ amount }} <span style="font-size: 0.4rem;">MAIN</span></div>
-                    <div class="loan_confirm_item">
-                        <span>抵押资金账户</span>
-                        <span class="value">{{ bj }}</span>
+                    <div class="loan_comfirm_title">
+                        <span>借款确认</span>
+                        <div class="close_icon" @click="closeSafeRef">
+                            <img src="/static/img/common/close.png" alt="x">
+                        </div>
                     </div>
+                    <div class="loan_confirm_amount">{{ amount }}</div>
                     <div class="loan_confirm_item">
-                        <span>借款股票账户</span>
-                        <span class="value">{{ amount }}</span>
+                        <span>冻结</span>
+                        <span class="value">
+                            <span class="tag" style="margin-right:0.2rem">现金账户</span>
+                            <span>{{ bj }}</span>
+                        </span>
                     </div>
                     <div class="loan_confirm_item">
                         <span>杠杆</span>
-                        <span class="value">{{ lever[leverIndex] }}x</span>
+                        <span class="value">
+                            <span class="tag">{{ lever[leverIndex] }}x</span>
+                        </span>
                     </div>
                     <div class="loan_confirm_item">
-                        <span>锁定本金</span>
-                        <span class="value">{{ bj }}</span>
-                    </div>
-                    <div class="loan_confirm_item">
-                        <span>借款期限</span>
-                        <span class="value">{{ days[currDayIndex] }}天</span>
+                        <span>还款日期</span>
+                        <span class="value">
+                            <span>{{ returnDate }}</span>
+                            <span style="margin-left: 0.2rem">{{ days[currDayIndex] }}天</span>
+                        </span>
                     </div>
                     <div class="loan_confirm_item">
                         <span>手续费</span>
@@ -131,10 +136,9 @@
                         <span>隔夜利息</span>
                         <span class="value">{{ showInterest }}</span>
                     </div>
-                    <div class="loan_confirm_tip">
-                        <span>{{ returnDate }} 归还</span>
+                    <!-- <div class="loan_confirm_tip">
                         <span class="value">{{ returnAmount }}</span>
-                    </div>
+                    </div> -->
                 </div>
             </template>
         </SafePassword>
@@ -310,6 +314,9 @@ const getRate = () => {
 // 表单提交
 const showDialog = ref(false)
 const safeRef = ref()
+const closeSafeRef = () => {
+    safeRef.value.close()
+}
 const openSafePass = () => {
     if (!bj.value || bj.value <= 0) {
         errStatus.value = true
@@ -592,18 +599,33 @@ onBeforeUnmount(() => {
 
 <style lang="less" scoped>
 .loan_comfirm_box {
+    padding-bottom: 0.6rem;
+
     .loan_comfirm_title {
         color: #061023;
         font-size: 0.32rem;
         text-align: center;
         margin-bottom: 0.4rem;
+        position: relative;
+        justify-content: center;
+        top: -0.3rem;
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        .close_icon {
+            position: absolute;
+            right: 0;
+            width: 0.3rem;
+            height: 0.3rem;
+        }
     }
 
     .loan_confirm_amount {
         font-size: 0.64rem;
         color: #000000;
         font-weight: 700;
-        margin-bottom: 0.3rem;
+        margin: 0.1rem 0 0.4rem 0;
         text-align: center;
     }
 
@@ -613,18 +635,33 @@ onBeforeUnmount(() => {
         justify-content: space-between;
         font-size: 0.28rem;
         color: #8F92A1;
-        height: 0.48rem;
+        height: 1rem;
+        padding-top: 0.12rem;
         font-weight: 400;
+        border-bottom: 1px solid #F5F5F5;
 
         .value {
             color: #000000;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+
+            .tag {
+                height: 0.44rem;
+                color: #014CFA;
+                background-color: rgba(1, 76, 250, 0.08);
+                border-radius: 0.04rem;
+                padding: 0 0.2rem;
+                display: flex;
+                align-items: center;
+                font-size: 0.24rem;
+            }
         }
     }
 
     .loan_confirm_tip {
         border-top: 1px dashed #CBCBCB;
-        padding-top: 0.05rem;
+        padding-top: 0.1rem;
         margin-top: 0.05rem;
         margin-bottom: 0.2rem;
         text-align: right;
