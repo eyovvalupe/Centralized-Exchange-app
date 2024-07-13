@@ -37,9 +37,9 @@
             </div>
 
             <div class="subtitle">充值金额</div>
-            <div class="item border_item">
+            <div class="item border_item" :class="{ 'err_ipt': errStatus }">
                 <div class="item_content">
-                    <input class="ipt" type="number" v-model="form.amount" placeholder="请输入">
+                    <input class="ipt" @blur="errStatus = false" type="number" v-model="form.amount" placeholder="请输入">
                 </div>
                 <div>{{ form.currency.toUpperCase() }}</div>
             </div>
@@ -51,8 +51,7 @@
 
         </div>
 
-        <Button @click="goTopUp" :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
-            type="primary">确定</Button>
+        <Button @click="goTopUp" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
 
 
         <!-- 账户种类选择弹窗 -->
@@ -94,7 +93,7 @@
 
 
         <!-- 充提记录 -->
-        <RaWrecords :bottom="'0'" ref="RaWrecordsRef" />
+        <RecordList ref="RecordListRef" />
 
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef"></SafePassword>
@@ -106,20 +105,17 @@ import Top from "@/components/Top.vue"
 import router from "@/router"
 import { ref, computed } from "vue"
 import store from "@/store";
-import { Popup, Button, Icon } from "vant"
+import { Popup, Button, Icon, showToast } from "vant"
 import { useRoute } from "vue-router"
 import { _networkMapList } from "@/utils/dataMap.js"
-import RaWrecords from "@/components/RaWrecords.vue"
+import RecordList from "@/components/RecordList.vue"
 import SafePassword from "@/components/SafePassword.vue"
 
 const safeRef = ref()
 
-const RaWrecordsRef = ref()
+const RecordListRef = ref()
 const route = useRoute()
 const loading = ref(false)
-const disabled = computed(() => {
-    return !(form.value.amount && form.value.amount > 0)
-})
 // 表单
 const form = ref({
     amount: '',
@@ -158,9 +154,14 @@ const goRecord = () => {
     // router.push({
     //     name: 'topUpRecord'
     // })
-    RaWrecordsRef.value && RaWrecordsRef.value.openRecord()
+    RecordListRef.value && RecordListRef.value.open()
 }
+const errStatus = ref(false)
 const goTopUp = () => {
+    if (!form.value.amount || form.value.amount <= 0) {
+        errStatus.value = true
+        return showToast('请输入金额')
+    }
     safeRef.value.open()
 }
 const submit = () => {
@@ -258,6 +259,10 @@ const submit = () => {
             &:has(.ipt:focus) {
                 border: 1px solid #014CFA;
             }
+        }
+
+        .err_ipt {
+            border: 1px solid #E8503A;
         }
 
         .select_item {

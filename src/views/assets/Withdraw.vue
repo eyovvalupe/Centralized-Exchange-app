@@ -26,10 +26,10 @@
                     </div>
                 </div>
 
-                <div class="item_box item_content">
+                <div class="item_box item_content" :class="{ 'err_ipt': errStatus }">
                     <span class="item_tip" v-show="form.amount === '' || focus">可提金额 <span>{{ balance }}</span></span>
-                    <input class="ipt" @focus="focus = true" @blur="focus = false" @change="changeAmount" type="number"
-                        v-model="form.amount" placeholder="">
+                    <input class="ipt" @focus="focus = true" @blur="errStatus = focus = false" @change="changeAmount"
+                        type="number" v-model="form.amount" placeholder="">
                     <span class="all" @click="maxIpt">全部</span>
                 </div>
 
@@ -78,8 +78,7 @@
             </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
-            type="primary">提现</Button>
+        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">提现</Button>
 
 
         <!-- 账户种类选择弹窗 -->
@@ -153,7 +152,7 @@
         </SafePassword>
 
         <!-- 充提记录 -->
-        <RaWrecords :bottom="'0'" ref="RaWrecordsRef" />
+        <RecordList ref="RecordListRef" />
     </div>
 </template>
 
@@ -161,21 +160,18 @@
 import Top from "@/components/Top.vue"
 import { ref, computed } from "vue"
 import store from "@/store"
-import { Icon, Button, Popup, showNotify } from "vant"
+import { Icon, Button, Popup, showNotify, showToast } from "vant"
 import router from "@/router"
 import { _withdrawFee, _withdraw } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
 import { _hiddenAccount } from "@/utils/index"
-import RaWrecords from "@/components/RaWrecords.vue"
+import RecordList from "@/components/RecordList.vue"
 
 store.dispatch('updateWallet') // 更新钱包
-const RaWrecordsRef = ref()
+const RecordListRef = ref()
 
 const focus = ref(false)
 const loading = ref(false)
-const disabled = computed(() => {
-    return !(form.value.amount && form.value.amount > 0 && form.value.amount <= balance.value)
-})
 // 表单
 const form = ref({
     amount: '',
@@ -197,7 +193,18 @@ const changeAmount = () => {
 
 // 提交
 const safeRef = ref()
+const errStatus = ref(false)
 const openSafePass = () => {
+    if (!form.value.amount || form.value.amount <= 0) {
+        errStatus.value = true
+        return showToast('请输入金额')
+    }
+    if (form.value.amount > balance.value) {
+        return showToast('余额不足')
+    }
+    if (!showAccount.value.length) {
+        return showToast('请添加收款账户')
+    }
     safeRef.value.open()
 }
 const submit = s => {
@@ -314,7 +321,7 @@ const goRecord = () => {
     // router.push({
     //     name: 'withdrawRecord'
     // })
-    RaWrecordsRef.value && RaWrecordsRef.value.openRecord()
+    RecordListRef.value && RecordListRef.value.open(1)
 }
 // 跳转添加
 const goAddAccount = () => {
@@ -376,6 +383,10 @@ const goAddAccount = () => {
                 align-items: center;
                 border-radius: 6px;
                 border: 1px solid #D0D8E2;
+            }
+
+            .err_ipt {
+                border: 1px solid #E8503A;
             }
 
             .item_currency {
@@ -487,6 +498,8 @@ const goAddAccount = () => {
                 }
             }
         }
+
+
 
         .subtitle {
             font-size: 0.28rem;

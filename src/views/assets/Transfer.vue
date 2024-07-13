@@ -13,9 +13,9 @@
         <div class="form">
             <div class="subtitle">从</div>
             <div class="item_box">
-                <div class="item ipt_item">
+                <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
                     <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
-                    <input @focus="focus = true" @blur="focus = false" v-model="form.amount" type="number"
+                    <input @focus="focus = true" @blur="errStatus = focus = false" v-model="form.amount" type="number"
                         :placeholder="``" class="ipt">
                     <div class="btn" @click="maxIpt">全部</div>
                 </div>
@@ -38,7 +38,7 @@
 
             <div class="subtitle">到</div>
             <div class="item_box">
-                <div class="item ipt_item">
+                <div class="item ipt_item" style="background-color: #f5f5f5">
                     <div class="ipt">{{ form.amount || '--' }}</div>
                 </div>
                 <div class="item account_item">
@@ -51,8 +51,7 @@
 
         </div>
 
-        <Button @click="openSafePass" :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
-            type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
 
         <!-- 账户选择弹窗 -->
         <Popup class="self_van_popup" v-model:show="showDialog" position="bottom" teleport="body"
@@ -72,6 +71,9 @@
             </div>
         </Popup>
 
+        <!-- 充提记录 -->
+        <RecordList ref="RecordListRef" />
+
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef" />
     </div>
@@ -79,13 +81,13 @@
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, showNotify, Icon } from "vant"
+import { Button, Popup, showNotify, Icon, showToast } from "vant"
 import { ref, computed } from "vue"
 import { _accountMap, _accountMapList } from "@/utils/dataMap"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
 import { _transfer } from "@/api/api"
-import router from "@/router"
+import RecordList from "@/components/RecordList.vue"
 
 const focus = ref(false) // 是否在输入中
 
@@ -97,9 +99,6 @@ const balance = computed(() => {
 
 // 表单
 const loading = ref(false)
-const disabled = computed(() => {
-    return !(balance.value && form.value.amount && form.value.amount > 0 && balance.value >= form.value.amount)
-})
 const form = ref({
     from: 'money',
     to: 'stock',
@@ -111,7 +110,15 @@ const maxIpt = () => {
 
 // 表单提交
 const safeRef = ref()
+const errStatus = ref(false)
 const openSafePass = () => {
+    if (!form.value.amount || form.value.amount <= 0) {
+        errStatus.value = true
+        return showToast('请输入金额')
+    }
+    if (balance.value < form.value.amount) {
+        return showToast('余额不足')
+    }
     safeRef.value.open()
 }
 const submit = s => {
@@ -188,10 +195,12 @@ getSessionToken()
 
 
 // 跳转记录
+const RecordListRef = ref()
 const goRecord = () => {
-    router.push({
-        name: 'transferRecord'
-    })
+    // router.push({
+    //     name: 'transferRecord'
+    // })
+    RecordListRef.value && RecordListRef.value.open(2)
 }
 </script>
 
@@ -308,6 +317,10 @@ const goRecord = () => {
             }
 
 
+        }
+
+        .err_ipt {
+            border: 1px solid #E8503A;
         }
 
         .account_item {

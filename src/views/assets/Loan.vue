@@ -1,13 +1,7 @@
 <!-- 借贷 -->
 <template>
     <div class="page page_loadn">
-        <Top :title="'借贷'">
-            <template #right>
-                <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
-                </div>
-            </template>
-        </Top>
+        <Top :title="'借贷'"></Top>
 
         <!-- 表单 -->
         <div class="form">
@@ -17,16 +11,16 @@
             <div class="item">
                 <div class="border_item account_box">
                     <span>资金账户</span>
-                    <div class="more_icon"><img src="/static/img/assets/more.png" alt="img"></div>
                 </div>
-                <div class="border_item ipt_box">
-                    <input @input="inputNum('bj')" v-model="bj" class="ipt" type="number" placeholder="金额">
+                <div class="border_item ipt_box" :class="{ 'err_ipt': errStatus }">
+                    <input @blur="errStatus = false" @input="inputNum('bj')" v-model="bj" class="ipt" type="number"
+                        placeholder="金额">
                 </div>
             </div>
             <!-- 滑块 -->
-            <div class="slider_box" @touchmove="sliderMove">
+            <div class="slider_box" @mousedown="startMove = true" @mousemove="mousemove" @touchmove="sliderMove">
                 <div class="slider">
-                    <div class="slider_inner" :style="{ width: `${sliderWidth}%` }">
+                    <div class="slider_inner" :style="{ width: `${moveWith ? moveWith + 'px' : sliderWidth + '%'}` }">
                         <div class="slider_ball"></div>
                     </div>
                 </div>
@@ -41,12 +35,15 @@
                 <span>借款账户</span>
             </div>
             <div class="item">
-                <div class="border_item account_box">
+                <div class="border_item account_box" @click="showDialog = true">
                     <span>股票</span>
                     <div class="more_icon"><img src="/static/img/assets/more.png" alt="img"></div>
                 </div>
-                <div class="border_item ipt_box">
-                    <input @input="inputNum('amount')" v-model="amount" class="ipt" type="number" placeholder="借款金额">
+                <div class="border_item ipt_box" style="background-color: #f5f5f5">
+                    <div class="ipt">
+                        <span>{{ amount || '--' }}</span>
+                    </div>
+                    <!-- <input @input="inputNum('amount')" v-model="amount" class="ipt" type="number" placeholder="借款金额"> -->
                 </div>
             </div>
             <div class="subtitle">期限</div>
@@ -72,9 +69,33 @@
             </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
-            type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
 
+
+        <!-- 账户选择弹窗 -->
+        <Popup class="self_van_popup" v-model:show="showDialog" position="bottom" teleport="body"
+            :safe-area-inset-bottom="true">
+            <div class="swap_accounr_dialog">
+                <div class="close_icon" @click="showDialog = false">
+                    <img src="/static/img/common/close.png" alt="x">
+                </div>
+                <div @click="showDialog = false" class="swap_dialog_item swap_dialog_item_active">
+                    <span>股票账户</span>
+                    <Icon class="check_icon" name="success" />
+                </div>
+                <!-- <div @click="clickItem(item)" class="swap_dialog_item"
+                    :class="{ 'swap_dialog_item_active': (clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency)) }"
+                    v-for="(item, i) in wallet" :key="i">
+                    <div class="icon">
+                        <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
+                    </div>
+                    <span>{{ item.currency.toUpperCase() }}</span>
+
+                    <Icon v-if="(clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency))"
+                        class="check_icon" name="success" />
+                </div> -->
+            </div>
+        </Popup>
 
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef">
@@ -93,6 +114,10 @@
                     <div class="loan_confirm_item">
                         <span>杠杆</span>
                         <span class="value">{{ lever[leverIndex] }}x</span>
+                    </div>
+                    <div class="loan_confirm_item">
+                        <span>锁定本金</span>
+                        <span class="value">{{ bj }}</span>
                     </div>
                     <div class="loan_confirm_item">
                         <span>借款期限</span>
@@ -119,37 +144,55 @@
 <script setup>
 import Top from "@/components/Top.vue"
 import { _loanPara, _loanRate, _loan } from "@/api/api"
-import { ref, computed, onMounted } from "vue"
-import { Button, showNotify, showToast } from "vant"
+import { ref, computed, onMounted, onBeforeUnmount } from "vue"
+import { Button, showNotify, showToast, Icon, Popup } from "vant"
 import store from "@/store"
 import Decimal from 'decimal.js';
 import SafePassword from "@/components/SafePassword.vue"
-import router from "@/router"
 
 store.dispatch('updateWallet')
 
 const loading = ref(false)
-const disabled = computed(() => {
-    return !(bj.value > 0)
-})
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
 
 // 滑块配置
 const lever = ref([])
 const leverIndex = ref(0)
+const moveWith = ref(0)
 const sliderWidth = computed(() => {
     const val = leverIndex.value * 20
     return val <= 3 ? 3 : (val >= 99 ? 99 : val) // 两边收边
 })
 const sliderTo = i => { // 点击滑块
-    leverIndex.value = i
-    setTimeout(() => {
-        inputNum('bj')
-        getRate()
-    }, 0)
+    if (leverIndex.value != i) {
+        leverIndex.value = i
+        setTimeout(() => {
+            inputNum('bj')
+            getRate()
+        }, 0)
+    }
 }
 const totalWidth = ref(window.innerWidth || document.documentElement.clientWidth)
+if (totalWidth.value > 750) totalWidth.value = 375
 const leverWidthArr = ref([]) // 滑块位置数组
+const startMove = ref(false)
+const cancelListen = () => {
+    startMove.value = false
+    if (!moveWith.value) return
+    const x = moveWith.value / totalWidth.value
+    let i = 0
+    leverWidthArr.value.forEach((item, index) => {
+        if (x > item) {
+            i = index
+        }
+    })
+    moveWith.value = 0
+    sliderTo(i)
+}
+const mousemove = e => { // pc 拖动
+    if (!startMove.value) return
+    moveWith.value = e.offsetX
+}
 const sliderMove = e => { // 滑动
     const x = e.targetTouches[0].clientX / totalWidth.value
     let i = 0
@@ -173,6 +216,7 @@ const changeDate = i => {
 
 
 // 借款金额
+const errStatus = ref(false)
 const amount = ref('') // 借款金额
 const bj = ref("") // 本金
 const inputNum = key => {
@@ -234,9 +278,7 @@ const getConfig = () => {
             })
             days.value = res.data.days.split(',')
 
-            setTimeout(() => {
-                getRate()
-            }, 300)
+            getRate()
         }
     }).finally(() => {
         loading.value = false
@@ -261,13 +303,18 @@ const getRate = () => {
         }).finally(() => {
             loading.value = false
         })
-    }, 500)
+    }, 300)
 }
 
 
 // 表单提交
+const showDialog = ref(false)
 const safeRef = ref()
 const openSafePass = () => {
+    if (!bj.value || bj.value <= 0) {
+        errStatus.value = true
+        return showToast('请输入金额')
+    }
     if (mainWallet.value.amount < bj.value) {
         return showToast('余额不足')
     }
@@ -301,12 +348,6 @@ const submit = s => {
     })
 }
 
-// 查看记录
-const goRecord = () => {
-    router.push({
-        name: 'loanRecord'
-    })
-}
 
 
 // sessionToken
@@ -317,9 +358,13 @@ const getSessionToken = () => {
 getSessionToken()
 
 onMounted(() => {
+    document.body.addEventListener('mouseup', cancelListen)
     setTimeout(() => {
         totalWidth.value = document.querySelector('.form').clientWidth
     }, 500)
+})
+onBeforeUnmount(() => {
+    document.body.removeEventListener('mouseup', cancelListen)
 })
 </script>
 
@@ -365,7 +410,7 @@ onMounted(() => {
         }
 
         .dates {
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.4rem;
             display: flex;
             align-items: stretch;
 
@@ -428,6 +473,8 @@ onMounted(() => {
 
                 .ipt {
                     height: 100%;
+                    display: flex;
+                    align-items: center;
                 }
             }
 
@@ -439,6 +486,10 @@ onMounted(() => {
                 &:has(.ipt:focus) {
                     border: 1px solid #014CFA;
                 }
+            }
+
+            .err_ipt {
+                border: 1px solid #E8503A;
             }
         }
 
@@ -457,13 +508,15 @@ onMounted(() => {
         }
 
         .slider_box {
-            margin: 0.8rem 0 0.4rem 0;
+            padding: 0.8rem 0 0.4rem 0;
+
 
             .slider {
                 width: 100%;
                 height: 0.16rem;
                 background-color: #EEEEEE;
                 border-radius: 0.32rem;
+                cursor: pointer;
 
                 .slider_inner {
                     position: relative;
@@ -471,6 +524,7 @@ onMounted(() => {
                     background-color: #0066FF;
                     border-radius: 0.32rem;
                     transition: all ease .1s;
+                    pointer-events: none;
 
                     .slider_ball {
                         width: 0.36rem;
@@ -505,6 +559,7 @@ onMounted(() => {
                         position: absolute;
                         left: 0;
                         transform: translateX(-50%);
+                        pointer-events: none;
                     }
 
                     &:nth-child(1) {
@@ -581,5 +636,54 @@ onMounted(() => {
             margin-left: 0.2rem;
         }
     }
+}
+</style>
+
+<style lang="less" scoped>
+.swap_accounr_dialog {
+    background-color: #fff;
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+    overflow: hidden;
+    padding: 0.86rem 0.32rem 0.8rem 0.32rem;
+    position: relative;
+
+    .close_icon {
+        position: absolute;
+        width: 0.4rem;
+        height: 0.4rem;
+        top: 0.24rem;
+        right: 0.32rem;
+    }
+
+    .swap_dialog_item {
+        height: 1.12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #F5F5F5;
+        overflow: hidden;
+        position: relative;
+
+        .icon {
+            width: 0.4rem;
+            height: 0.4rem;
+            margin-right: 0.24rem;
+        }
+    }
+
+    .swap_dialog_item_active {
+        color: #014CFA;
+        font-weight: 600;
+
+        .check_icon {
+            position: absolute;
+            right: 0.24rem;
+            color: #014CFA;
+            font-size: 0.28rem;
+        }
+    }
+
+
 }
 </style>

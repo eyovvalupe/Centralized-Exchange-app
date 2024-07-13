@@ -13,10 +13,10 @@
         <div class="form">
             <div class="subtitle">支付</div>
             <div class="item_box">
-                <div class="item ipt_item">
+                <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
                     <div class="item_content">
                         <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
-                        <input @focus="focus = true" @blur="focus = false" class="ipt" @input="changeAmount"
+                        <input @focus="focus = true" @blur="errStatus = focus = false" class="ipt" @input="changeAmount"
                             type="number" v-model="form.amount" placeholder="">
                         <span class="all" @click="maxIpt">全部</span>
                     </div>
@@ -44,10 +44,10 @@
 
             <div class="subtitle">预计收到</div>
             <div class="item_box">
-                <div class="item ipt_item no_tip_ipt">
+                <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }">
                     <div class="item_content">
-                        <input class="ipt" @input="changeToAmount" type="number" v-model="form.toAmount"
-                            placeholder="请输入">
+                        <input class="ipt" @input="changeToAmount" @blur="errStatus = false" type="number"
+                            v-model="form.toAmount" placeholder="请输入">
                     </div>
                 </div>
                 <div class="item account_item" @click="openDialog('to')">
@@ -78,8 +78,7 @@
 
         </div>
 
-        <Button @click="openSafePass" :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
-            type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
 
         <!-- 账户选择弹窗 -->
         <Popup class="self_van_popup" v-model:show="showDialog" position="bottom" teleport="body"
@@ -124,18 +123,22 @@
                 </div>
             </template>
         </SafePassword>
+
+        <!-- 充提记录 -->
+        <RecordList ref="RecordListRef" />
     </div>
 </template>
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, showNotify, Icon } from "vant"
+import { Button, Popup, showNotify, Icon, showToast } from "vant"
 import { ref, computed } from "vue"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
 import { _converter, _swapRate } from "@/api/api"
 import router from "@/router"
 import Decimal from 'decimal.js';
+import RecordList from "@/components/RecordList.vue"
 
 const focus = ref(false)
 
@@ -152,9 +155,6 @@ const balance = computed(() => { // main钱包余额
 
 // 表单
 const loading = ref(false)
-const disabled = computed(() => {
-    return !(balance.value && form.value.amount && form.value.amount > 0 && balance.value >= form.value.amount)
-})
 const form = ref({
     from: 'main',
     to: 'USDT',
@@ -175,7 +175,15 @@ const changeToAmount = () => { // 改变to金额
 
 // 表单提交
 const safeRef = ref()
+const errStatus = ref(false)
 const openSafePass = () => {
+    if (!form.value.amount || form.value.amount <= 0) {
+        errStatus.value = true
+        return showToast('请输入金额')
+    }
+    if (balance.value < form.value.amount) {
+        return showToast('余额不足')
+    }
     safeRef.value.open()
 }
 const submit = s => {
@@ -295,10 +303,12 @@ const getSessionToken = () => {
 
 
 // 跳转记录
+const RecordListRef = ref()
 const goRecord = () => {
-    router.push({
-        name: 'swapRecord'
-    })
+    // router.push({
+    //     name: 'swapRecord'
+    // })
+    RecordListRef.value && RecordListRef.value.open(3)
 }
 </script>
 
@@ -439,6 +449,10 @@ const goRecord = () => {
             }
 
 
+        }
+
+        .err_ipt {
+            border: 1px solid #E8503A;
         }
 
         .no_tip_ipt {

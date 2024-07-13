@@ -9,11 +9,14 @@
                     <img src="/static/img/common/close.png" alt="img">
                 </div>
             </div>
-            <Tabs @change="init" v-model:active="active" :lazy-render="true">
+            <Tabs @change="init" v-model:active="active" :lazy-render="true" animated>
                 <Tab :title="titles[0]">
                     <div ref="list_0" class="list" :class="{ 'active_list': active == 0 }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i">{{ item }}</div>
+                        <div v-for="(item, i) in list" :key="i" class="list_0_item">
+                            <!-- <div class="date">2024-07-01</div> -->
+                            <div>{{ item }}</div>
+                        </div>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 0" />
                     </div>
@@ -70,8 +73,9 @@ const boforeClose = () => {
 }
 
 
-const title = computed(() => '标题')
+
 const titles = ['充值记录', '提现记录', '划转记录', '兑换记录']
+const title = computed(() => titles[active.value])
 const active = ref(0)
 const reqs = {
     0: _depositList,
@@ -191,6 +195,10 @@ defineExpose({
         height: 60vh;
         padding: 0.32rem;
         overflow-y: auto;
+    }
+
+    .list_0_item {
+        .date {}
     }
 }
 </style>
