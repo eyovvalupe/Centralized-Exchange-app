@@ -1,6 +1,7 @@
 
 // 时间转换为 yyyy-mm-dd hh:mm:ss 格式
 // key==2  返回 hh:mm:ss
+// key==1  返回 yyyy-mm-dd
 export function getTimestr(timestamp, key) {
   if (!timestamp) return " ";
   if (isNaN(Number(timestamp))) return timestamp;
@@ -22,6 +23,7 @@ export function getTimestr(timestamp, key) {
   const minutes = String(currentDate.getMinutes()).padStart(2, "0"); // 补0
   const seconds = String(currentDate.getSeconds()).padStart(2, "0"); // 补0
 
+  if (key == 1) return `${year}-${month}-${day}`;
   if (key == 2) return `${hours}:${minutes}:${seconds}`
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

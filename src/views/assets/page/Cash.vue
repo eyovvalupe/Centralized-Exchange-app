@@ -14,7 +14,7 @@
                 <span>{{ hidden ? '****' : (mainWallet.amount || '0.00') }}</span>
             </div>
             <div class="navs">
-                <div class="nav">
+                <!-- <div class="nav">
                     <div class="nav_icon">
                         <img src="/static/img/assets/cash_recharge_icon.png" alt="img">
                     </div>
@@ -26,30 +26,30 @@
                         <img src="/static/img/assets/cash_withdraw_icon.png" alt="img">
                     </div>
                     <span>提现</span>
-                </div>
-                <!-- <div class="nav">
-                    <div>借贷</div>
-                    <div class="num">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
+                </div> -->
+                <div class="nav">
+                    <div>借贷 </div>
+                    <div class="num" style="margin-left:0.1rem">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
-                    <div>冻结</div>
-                    <div class="num">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
-                </div> -->
+                    <div>冻结 </div>
+                    <div class="num" style="margin-left:0.1rem">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
+                </div>
             </div>
 
             <!-- 货币兑换 -->
-            <div class="currency_btn">
+            <!-- <div class="currency_btn">
                 <div class="btn_icon">
                     <img src="/static/img/assets/currency_icon.png" alt="img">
                 </div>
                 <span>货币兑换</span>
-            </div>
+            </div> -->
 
-            <div class="loan_box">
+            <!-- <div class="loan_box">
                 <div>借贷</div>
                 <div class="num">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
-            </div>
+            </div> -->
         </div>
         <div class="cash_tab_content tabs">
             <div class="tab_title">法币</div>
@@ -125,6 +125,7 @@ import RaWrecords from "@/components/RaWrecords.vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
 
+
 const route = useRoute()
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
@@ -145,6 +146,7 @@ const getAssets = () => {
     store.dispatch('updateWallet').finally(() => {
         emits('setLoading', false)
     })
+    store.dispatch('updateOrderHint')
 }
 
 
@@ -238,31 +240,34 @@ defineExpose({
 
         .navs {
             display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            border-top: 1px solid rgba(255, 255, 255, 0.4);
+            align-items: center;
+            justify-content: center;
+            // border-top: 1px solid rgba(255, 255, 255, 0.4);
             padding: 0.2rem 0;
+            margin-top: 0.3rem;
+
 
             .line {
                 width: 1px;
-                height: 0.44rem;
+                height: 0.4rem;
                 background-color: rgba(255, 255, 255, 0.4);
             }
 
             .nav {
+                flex: 1;
                 color: #fff;
                 font-weight: 400;
                 font-size: 0.24rem;
                 text-align: center;
-                flex: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                margin: 0 0.5rem;
 
                 .nav_icon {
-                    width: 0.6rem;
-                    height: 0.6rem;
-                    margin-right: 0.1rem;
+                    width: 0.7rem;
+                    height: 0.7rem;
+                    margin-right: 0.18rem;
                 }
             }
         }
@@ -275,7 +280,7 @@ defineExpose({
             border-radius: 0.6rem;
             padding: 0 0.2rem;
             color: #fff;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
             font-weight: 400;
             display: flex;
             align-items: center;
@@ -283,8 +288,8 @@ defineExpose({
             background-color: #EB4E3D;
 
             .btn_icon {
-                width: 0.5rem;
-                height: 0.5rem;
+                width: 0.4rem;
+                height: 0.4rem;
                 margin-right: 0.1rem;
             }
         }
@@ -296,6 +301,9 @@ defineExpose({
             color: #fff;
             font-weight: 400;
             font-size: 0.24rem;
+            position: absolute;
+            left: 4.8rem;
+            bottom: 0.2rem;
 
             .num {
                 font-size: 0.28rem;

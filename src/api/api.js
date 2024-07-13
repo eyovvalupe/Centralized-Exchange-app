@@ -391,4 +391,10 @@ export const _watchlistDefault = (data = {}) => {
     custom: { auth: false, toast: true },
   });
 };
+// 正在充值和提现的订单笔数
+export const _accountHint = (data = {}) => {
+  return http.post(`/authc/v1/account/hint`, data, {
+    custom: { auth: true, toast: true },
+  });
+};
 export const memberInfo = () => { }

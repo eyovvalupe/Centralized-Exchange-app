@@ -1,7 +1,7 @@
 <!-- 充提记录弹窗 -->
 <template>
     <Teleport to="#app">
-        <div class="fix_block_record"
+        <div v-if="hintNum" class="fix_block_record"
             :class="{ 'fix_block_open': openList, 'hidden_fix_block': props.hiddenBeforeOpen && !openList }"
             :style="{ bottom: bottom }">
             <div class="fix_block_header" @click="openRecord">
@@ -10,7 +10,7 @@
                     <div class="header_box_icon">
                         <img src="/static/img/common/time_icon.png" alt="img">
 
-                        <div class="header_num">2</div>
+                        <div class="header_num">{{ hintNum }}</div>
                     </div>
                 </div>
             </div>
@@ -40,14 +40,17 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { _depositList, _withdrawList } from "@/api/api"
 import RechargeItem from "@/views/Assets/page/components/RechargeItem"
 import WithdrawItem from "@/views/Assets/page/components/WithdrawItem"
 import Loaidng from "@/components/Loaidng.vue"
 import NoData from "@/components/NoData.vue"
 import { Icon, Tabs, Tab } from "vant"
+import store from "@/store"
 
+
+const hintNum = computed(() => store.state.hintNum || 0)
 const props = defineProps({
     bottom: { // 初始位置
         type: String,
@@ -124,7 +127,7 @@ defineExpose({
     box-shadow: -2px 0 5px #ddd;
 
     .fix_block_header {
-        height: 1.6rem;
+        height: 1rem;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -145,8 +148,8 @@ defineExpose({
 
         .header_box {
             background: linear-gradient(270deg, #504BFF 0%, #53B4FF 100%);
-            width: 2.24rem;
-            height: 0.92rem;
+            width: 1.5rem;
+            height: 0.62rem;
             border-radius: 0.3rem;
             position: absolute;
             left: 50%;

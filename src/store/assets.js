@@ -1,10 +1,11 @@
 // 市场
-import { _assets, _balance } from "@/api/api"
+import { _assets, _balance, _accountHint } from "@/api/api"
 export default {
     state: {
         assets: {}, // 总资产
         wallet: [], // 现金钱包
-    rechargeAmount: ''// 充值金额
+        rechargeAmount: '', // 充值金额
+        hintNum: 0, // 待处理的订单笔数
     },
     mutations: {
         setAssets(state, data) {
@@ -15,6 +16,9 @@ export default {
         },
         setRechargeAmount(state, data) {
             state.rechargeAmount = data;
+        },
+        setHintNum(state, data) {
+            state.hintNum = data;
         },
     },
     actions: {
@@ -40,6 +44,25 @@ export default {
                     .then((res) => {
                         if (res.code == 200 && res.data) {
                             commit("setWallet", res.data || []);
+                            resolve(res.data);
+                        } else {
+                            resolve(false);
+                        }
+                    })
+                    .catch(() => resolve(false));
+            });
+        },
+        updateOrderHint({ commit }) {
+            // 更新待处理订单笔数
+            return new Promise((resolve) => {
+                _accountHint()
+                    .then((res) => {
+                        if (res.code == 200 && res.data) {
+                            console.error('--待处理', res.data)
+                            let count = 0
+                            if (res.data.deposit) count += res.data.deposit
+                            if (res.data.deposit) count += res.data.withdraw
+                            commit("setHintNum", count);
                             resolve(res.data);
                         } else {
                             resolve(false);

@@ -14,7 +14,8 @@
                     <div ref="list_0" class="list" :class="{ 'active_list': active == 0 }">
                         <NoData v-if="!loading && !list.length" />
                         <div v-for="(item, i) in list" :key="i" class="list_0_item">
-                            <!-- <div class="date">2024-07-01</div> -->
+                            <div class="date" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">{{
+                                getDate(item.date) }}</div>
                             <div>{{ item }}</div>
                         </div>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
@@ -165,6 +166,15 @@ const destoryWatch = () => {
 defineExpose({
     open
 })
+
+
+// 获取日期
+const getDate = str => {
+    if (str) {
+        return str.split(' ')[0] || str
+    }
+    return str
+}
 </script>
 
 <style lang="less">
@@ -198,7 +208,13 @@ defineExpose({
     }
 
     .list_0_item {
-        .date {}
+        .date {
+            color: #343434;
+            font-size: 0.28rem;
+            font-weight: 600;
+            line-height: 0.48rem;
+            padding: 0.36rem 0;
+        }
     }
 }
 </style>

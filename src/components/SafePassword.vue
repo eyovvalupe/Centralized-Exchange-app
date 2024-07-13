@@ -9,13 +9,12 @@
             <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
             <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
-            <input type="password" v-model="val" ref="iptDom" class="pass_ipt" enterkeyhint="done"
-                @keydown.enter="submit">
+            <input type="password" @blur="errStatus = false" :class="{ 'err_ipt': errStatus }" v-model="val"
+                ref="iptDom" class="pass_ipt" enterkeyhint="done" @keydown.enter="submit">
             <div class="btns">
                 <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
                         style="color: #014CFA;">取消</span></Button>
-                <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="btn" type="primary"
-                    @click="submit">确定</Button>
+                <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">确定</Button>
             </div>
 
             <!-- <NumberKeyboard @blur="showKeyboard = false" :show="showKeyboard" v-model="val" /> -->
@@ -24,15 +23,16 @@
 </template>
 
 <script setup>
-import { Popup, PasswordInput, NumberKeyboard, Button } from "vant"
+import { Popup, PasswordInput, NumberKeyboard, Button, showToast } from "vant"
 import { ref, computed, watch } from "vue"
 const emits = defineEmits(['submit'])
 const iptDom = ref()
 
+const errStatus = ref(false)
 const loading = ref(false)
-const disabled = computed(() => {
-    return !(val.value)
-})
+// const disabled = computed(() => {
+//     return !(val.value)
+// })
 
 const show = ref(false)
 const showKeyboard = ref(true)
@@ -54,7 +54,11 @@ const open = () => {
 
 }
 const submit = () => {
-    if (disabled.value) return
+    if (!val.value) {
+        errStatus.value = true
+        showToast('请输入密码')
+        return
+    }
     close()
     emits('submit', val.value)
 }
@@ -112,6 +116,10 @@ defineExpose({
         &:focus {
             border: 1px solid #014CFA;
         }
+    }
+
+    .err_ipt {
+        border: 1px solid #E8503A;
     }
 
     .code_ipt {

@@ -100,6 +100,7 @@ import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
 import IPO from "./page/IPO.vue"
 import RecordList from "@/components/RecordList.vue"
+import store from "@/store"
 
 const RecordListRef = ref()
 const active = ref('overview')
@@ -125,25 +126,36 @@ const onRefresh = () => {
 }
 
 onMounted(() => {
+    // 下拉刷新状态监听
     setTimeout(() => {
-        pageLoading.value = true
-        // 下拉刷新状态监听
-        setTimeout(() => {
-            const bodys = document.querySelectorAll('.tab_body')
-            bodys.forEach(item => {
-                item.addEventListener('scroll', (e) => {
-                    if (e.target.scrollTop > 0) {
-                        disabled.value = true
-                    } else {
-                        disabled.value = false
-                    }
-                })
+        const bodys = document.querySelectorAll('.tab_body')
+        bodys.forEach(item => {
+            item.addEventListener('scroll', (e) => {
+                if (e.target.scrollTop > 0) {
+                    disabled.value = true
+                } else {
+                    disabled.value = false
+                }
             })
-        }, 500)
-    }, 100)
+        })
+    }, 500)
 })
 
-
+// 预加载页面
+store.commit('setPageLoading', true)
+const loadingList = [
+    import('@/views/Assets/Loan.vue'),
+    import('@/views/Assets/TopUp.vue'),
+    import('@/views/Assets/Transfer.vue'),
+    import('@/views/Assets/Withdraw.vue'),
+    import('@/views/Assets/Swap.vue'),
+]
+Promise.all(loadingList).finally(() => {
+    store.commit('setPageLoading', false)
+    setTimeout(() => {
+        pageLoading.value = true
+    }, 100)
+})
 
 </script>
 
@@ -185,14 +197,9 @@ onMounted(() => {
             border-right: none;
             color: #061023;
             // background-color: #f5f5f5;
-            // border-radius: 0.3rem;
-            // margin-left: 0.1rem;
-            // transition: all ease .2s;
         }
 
         :deep(.van-tab--card.van-tab--active) {
-            // background-color: #014CFA;
-            // color: #fff;
 
             background-color: #F6F8FF;
             border-radius: 0.3rem;
@@ -206,7 +213,6 @@ onMounted(() => {
 
         :deep(.van-tabs__wrap) {
             height: 0.8rem;
-            // border-bottom: 1px solid #F6F8FF;
             padding-bottom: 0.34rem;
         }
 

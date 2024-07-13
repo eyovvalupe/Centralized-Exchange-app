@@ -72,9 +72,9 @@ const hidden = ref(false)
             position: absolute;
             top: 0.2rem;
             right: 0.6rem;
-            height: 0.6rem;
+            height: 0.52rem;
             color: #fff;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
             border-radius: 0.3rem;
             padding: 0 0.4rem;
             display: flex;

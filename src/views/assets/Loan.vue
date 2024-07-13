@@ -1,7 +1,7 @@
 <!-- 借贷 -->
 <template>
     <div class="page page_loadn">
-        <Top :title="'借贷'"></Top>
+        <!-- <Top :title="'借贷'"></Top> -->
 
         <!-- 表单 -->
         <div class="form">
@@ -9,12 +9,18 @@
                 <span>抵押</span>
             </div>
             <div class="item">
-                <div class="border_item account_box">
+                <div class="border_item account_box" style="background-color: #f5f5f5">
+                    <div class="item_icon">
+                        <img src="/static/img/assets/cash_icon.svg" alt="img">
+                    </div>
                     <span>现金账户</span>
                 </div>
                 <div class="border_item ipt_box" :class="{ 'err_ipt': errStatus }">
-                    <input @blur="errStatus = false" @input="inputNum('bj')" v-model="bj" class="ipt" type="number"
-                        placeholder="金额">
+                    <div class="ipt_tip" v-show="bj === '' || focus">可抵押 <span>{{ mainWallet.amount || '--' }}</span>
+                    </div>
+                    <input @focus="focus = true" @blur="focus = errStatus = false" @input="inputNum('bj')" v-model="bj"
+                        class="ipt" type="number" placeholder="">
+                    <span class="all" @click="putAll">全部</span>
                 </div>
             </div>
             <!-- 滑块 -->
@@ -35,7 +41,10 @@
                 <span>借款账户</span>
             </div>
             <div class="item">
-                <div class="border_item account_box" @click="showDialog = true">
+                <div class="border_item account_box" @click="showDialog = true" style="padding-right:0.24rem">
+                    <div class="item_icon">
+                        <img src="/static/img/assets/stock_icon.svg" alt="img">
+                    </div>
                     <span>股票</span>
                     <div class="more_icon"><img src="/static/img/assets/more.png" alt="img"></div>
                 </div>
@@ -55,7 +64,7 @@
                     }}天
                 </div>
             </div>
-            <div class="tip">
+            <!-- <div class="tip">
                 <span>手续费</span>
                 <span class="num">{{ loading ? '--' : showFee }}</span>
             </div>
@@ -66,7 +75,7 @@
             <div class="tip">
                 <span>{{ returnDate }} 归还</span>
                 <span class="num">{{ loading ? '--' : returnAmount }}</span>
-            </div>
+            </div> -->
         </div>
 
         <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
@@ -156,6 +165,7 @@ import SafePassword from "@/components/SafePassword.vue"
 
 store.dispatch('updateWallet')
 
+const focus = ref(false)
 const loading = ref(false)
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
 
@@ -223,6 +233,12 @@ const changeDate = i => {
 const errStatus = ref(false)
 const amount = ref('') // 借款金额
 const bj = ref("") // 本金
+const putAll = () => {
+    bj.value = mainWallet.value.amount
+    setTimeout(() => {
+        inputNum('bj')
+    }, 0)
+}
 const inputNum = key => {
     if (key == 'bj') { //输入本金
         if (bj.value) {
@@ -377,9 +393,9 @@ onBeforeUnmount(() => {
 
 <style lang="less" scoped>
 .page_loadn {
-    padding: 1.4rem 0.38rem 0.5rem 0.38rem;
-
+    padding: 0.4rem 0.38rem 0 0.38rem;
     position: relative;
+    overflow: hidden;
 
     .top-record {
         width: 0.64rem;
@@ -453,6 +469,11 @@ onBeforeUnmount(() => {
             align-items: center;
             justify-content: space-between;
             margin-bottom: 0.4rem;
+            height: 0.88rem;
+
+            &:has(.ipt:focus) {
+                height: 1.12rem;
+            }
 
             .account_box {
                 width: 2.4rem;
@@ -478,17 +499,63 @@ onBeforeUnmount(() => {
                 display: flex;
                 align-items: center;
 
+                position: relative;
+
                 .ipt {
                     height: 100%;
                     display: flex;
                     align-items: center;
                 }
+
+                &:has(.ipt:focus) {
+                    padding-top: 0.3rem;
+
+                    .ipt_tip {
+                        transform: translateY(-200%);
+                        font-size: 0.2rem;
+
+                        span {
+                            color: #A4ACB9;
+                        }
+                    }
+                }
+
+                .ipt_tip {
+                    position: absolute;
+                    font-size: 0.24rem;
+                    font-weight: 400;
+                    color: #A4ACB9;
+                    left: 0.4rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    pointer-events: none;
+                    transition: all ease .2s;
+
+                    span {
+                        color: #111111;
+                    }
+                }
+
+                .all {
+                    color: #1A59F6;
+                    position: absolute;
+                    right: 0.32rem;
+                }
             }
 
             .border_item {
                 border: 1px solid #D0D8E2;
-                height: 0.88rem;
+
                 border-radius: 0.12rem;
+                height: 100%;
+
+                .item_icon {
+                    width: 0.26rem;
+                    height: 0.26rem;
+                    margin-right: 0.08rem;
+                    position: relative;
+                    top: -0.02rem;
+                }
 
                 &:has(.ipt:focus) {
                     border: 1px solid #014CFA;
@@ -515,7 +582,7 @@ onBeforeUnmount(() => {
         }
 
         .slider_box {
-            padding: 0.8rem 0 0.4rem 0;
+            padding: 0.6rem 0 0.5rem 0;
 
 
             .slider {

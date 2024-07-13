@@ -224,6 +224,8 @@
             </div>
         </div>
 
+        <!-- 账户检测 -->
+        <AccountCheck ref="AccountCheckRef" />
     </div>
 </template>
 
@@ -234,10 +236,12 @@ import { useClickAway } from '@vant/use';
 import { _assets } from "@/api/api"
 import store from "@/store"
 import router from "@/router"
+import AccountCheck from "@/components/AccountCheck.vue"
 
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
 const hidden = ref(false) // 隐藏数字
+const AccountCheckRef = ref()
 
 // 功能区域控制
 const tab1 = ref()
@@ -277,9 +281,11 @@ defineExpose({
 })
 
 const jump = (name) => {
-    router.push({
-        name
-    })
+    if (AccountCheckRef.value.check()) {
+        router.push({
+            name
+        })
+    }
 }
 </script>
 
