@@ -16,7 +16,7 @@
                         <div v-for="(item, i) in list" :key="i" class="list_0_item">
                             <div class="date" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">{{
                                 getDate(item.date) }}</div>
-                            <div>{{ item }}</div>
+                            <RechargeItem :item="item" />
                         </div>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 0" />
@@ -25,7 +25,9 @@
                 <Tab :title="titles[1]">
                     <div ref="list_1" class="list" :class="{ 'active_list': active == 1 }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i">{{ item }}</div>
+                        <div v-for="(item, i) in list" :key="i">
+                            <WithdrawItem :item="item" />
+                        </div>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 1" />
                     </div>
@@ -33,7 +35,9 @@
                 <Tab :title="titles[2]">
                     <div ref="list_2" class="list" :class="{ 'active_list': active == 2 }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i">{{ item }}</div>
+                        <div v-for="(item, i) in list" :key="i">
+                            <TransferItem :item="item" />
+                        </div>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 2" />
                     </div>
@@ -41,7 +45,9 @@
                 <Tab :title="titles[3]">
                     <div ref="list_3" class="list" :class="{ 'active_list': active == 3 }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i">{{ item }}</div>
+                        <div v-for="(item, i) in list" :key="i">
+                            <SwapItem :item="item" />
+                        </div>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 3" />
                     </div>
@@ -57,6 +63,10 @@ import { ref, computed } from "vue"
 import { _depositList, _withdrawList, _transferLog, _converterLog } from "@/api/api"
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
+import RechargeItem from "./RecordItem/RechargeItem.vue"
+import WithdrawItem from "./RecordItem/WithdrawItem.vue"
+import TransferItem from "./RecordItem/TransferItem.vue"
+import SwapItem from "./RecordItem/SwapItem.vue"
 
 const showBottom = ref(false)
 const open = (tabIndex = 0) => {
@@ -110,10 +120,11 @@ const getData = () => { // 获取数据
 
         }
     }
+    const saveActive = active.value
     reqs[active.value]({
         page: page.value
     }).then(res => {
-
+        if (saveActive != active.value) return // 不是当前列表的请求返回
         if (!res.data?.length) {
             finish.value = true
         }

@@ -52,7 +52,7 @@ store.commit('setFullscreen', false)
 const route = useRoute();
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "trade", "market", "financial_info", "trading_rules", 'assets', 'account', 'transfer'].includes(route.name) && !fullWindow.value;
+  return ["home", "user", "trade", "market", "financial_info", "trading_rules", 'assets', 'transfer'].includes(route.name) && !fullWindow.value;
 });
 
 
