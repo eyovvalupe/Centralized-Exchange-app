@@ -5,19 +5,36 @@
     </div>
     <template v-else>
       <div class="msg-item" v-for="item in messageList" :key="item.msgid" :class="item.direction">
-       <small v-show="false"> {{ storeChat.state.readMessageTime }}****{{ item.time }}***{{ storeChat.state.readMessageTime > item.time }}</small>
+        <small v-show="false"> {{ storeChat.state.readMessageTime }}****{{ item.time }}***{{
+          storeChat.state.readMessageTime > item.time }}</small>
         <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div>
         <div class="msg-item-con">
-          <div class="con">{{ item.content }}</div>
+          <div class="con" :class="item.type">
+            <template v-if="item.type !== 'img'">
+              {{ item.content }}
+            </template>
+            <van-image v-else class="send-conimg" Lazyload :src="item.content" fit="scale-down">
+              <template v-slot:loading>
+                <van-loading type="spinner" size="20" />
+              </template>
+            </van-image>
+          </div>
           <div class="time">{{ transferTime(item.time) }}</div>
         </div>
         <!-- <div class="avatar" v-if="item.direction === 'send'"><img :src="avatarMy" :alt="item.msgid"></div> -->
       </div>
       <div id="hasNewMessage" v-if="hasNewMessage.length">{{ hasNewMessage.length }}条未读消息</div>
       <div class="msg-item" v-for="item in hasNewMessage" :key="item.msgid" :class="item.direction">
-        <div class="avatar"><img :src="avatar" :alt="item.msgid"></div>
+        <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div>
         <div class="msg-item-con">
-          <div class="con">{{ item.content }}</div>
+          <div class="con" :class="item.type">
+            <template v-if="item.type !== 'img'">
+              {{ item.content }}
+            </template>
+            <van-image v-else class="send-conimg" :src="item.content1" fit="scale-down">
+              <template v-slot:error>加载失败</template>
+            </van-image>
+          </div>
           <div class="time">{{ transferTime(item.time) }}</div>
         </div>
       </div>
@@ -29,6 +46,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { Lazyload, Image as VanImage } from 'vant';
 import { transferTime } from '@/utils'
 import storeChat from "@/store/chat"
 import avatar from '@/assets/avatar.png'
@@ -53,7 +71,7 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
     .msg-item-con {
       .con {
         color: #333;
-        padding: 3px 6px;
+        padding: 5px;
         min-height: 30px;
         line-height: 22px;
         border-radius: 8px;
@@ -76,6 +94,7 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
 
     &.send {
       justify-content: flex-end;
+
       .msg-item-con {
         margin: 0 5px 5px 5px;
         text-align: right;
@@ -85,6 +104,11 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
       .con {
         background: #449742;
         color: #fff;
+
+        &.img {
+          box-shadow: none !important;
+          background: transparent !important;
+        }
 
         // &::before {
         //   content: "";
@@ -111,6 +135,10 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
         border: 8px solid transparent;
         border-right: 8px solid #f2f2f2;
       }
+    }
+    .send-conimg {
+      max-height: 10rem;
+      max-width: 10rem;
     }
   }
 

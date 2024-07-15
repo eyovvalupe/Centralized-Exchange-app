@@ -183,7 +183,13 @@ export const _hiddenName = (str) => {
   }
   return str.substr(0, 1) + "*";
 };
-
+// 随机文件名
+export function randomFileName(originalName) {
+  const timestamp = Date.now();
+  const randomNum = Math.floor(Math.random() * 1000);
+  const extension = originalName.split('.').pop();
+  return `${timestamp}-${randomNum}.${extension}`;
+}
 
 // 文件转url展示
 export const _getObjectURL = (file) => {

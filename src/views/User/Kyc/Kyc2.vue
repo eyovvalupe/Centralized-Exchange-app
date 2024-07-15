@@ -297,7 +297,7 @@ const afterRead = (file, { name }) => {
             const base64result = base64Img.substr(base64Img.indexOf(',') + 1);
             axios.put(apiUrl, JSON.stringify({ content: base64result, message: `upload ${fileName}` }), {
                 headers: {
-                    Authorization: "Token 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"
+                    Authorization:process.env.VUE_APP_UPLOAD_TOKEN
                 }
             }).then(res => {
                 const { content: { download_url } } = res.data
