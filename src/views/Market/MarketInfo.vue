@@ -26,13 +26,13 @@
                     </template>
                     <span v-else>--</span>
                 </h1>
-                <div class="ratio align-content van-col van-col--7"
+                <div style="display: flex;align-items: center;" class="ratio "
                     :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
                     <div class="ratio_price">{{ Number(item.price * (item.ratio || 0)).toFixed(2) }}</div>
                     <div>{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%'
                         }}</div>
                 </div>
-                <div class="count van-col van-col--5">
+                <!-- <div class="count van-col van-col--5">
                     <div class="count_item">
                         <div class="txt">最高</div>
                         <span>{{ item.high || '--' }}</span>
@@ -41,7 +41,7 @@
                         <div class="txt">最低</div>
                         <span>{{ item.low || '--' }}</span>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <!-- 内容 -->
@@ -193,7 +193,7 @@ const fullScreen = (key) => {
 
 <style lang="less" scoped>
 .page_marketinfo {
-    padding: 2.8rem 0 0 0;
+    padding: 1.8rem 0 0 0;
 
     .has_padding_x {
         padding: 0 0.3rem;
@@ -201,7 +201,7 @@ const fullScreen = (key) => {
 
     .info_header {
         width: calc(100% - 0.6rem);
-        border-bottom: 0.1rem solid #F9FAFB;
+        // border-bottom: 0.1rem solid #F9FAFB;
         position: fixed;
         top: 0;
         left: 50%;
@@ -247,6 +247,8 @@ const fullScreen = (key) => {
         }
 
         .header-price {
+            padding-top: 0.1rem;
+
             .info {
                 align-items: center;
                 margin: 0;
@@ -308,7 +310,6 @@ const fullScreen = (key) => {
         background: #f3485e;
     }
 
-    .ratio,
     .info {
         display: flex;
         flex-direction: column;
@@ -334,9 +335,9 @@ const fullScreen = (key) => {
         /*兼容 IOS>11.2*/
     }
 
-    // .ratio_price {
-    //     font-size: 22px;
-    // }
+    .ratio_price {
+        margin-right: 0.3rem
+    }
 
     .align-content {
         align-content: center;
@@ -456,7 +457,7 @@ const fullScreen = (key) => {
 
         .chart_box {
             width: 100%;
-            height: calc(var(--app-height) - 4.7rem);
+            height: calc(var(--app-height) - 3.2rem);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -478,7 +479,7 @@ const fullScreen = (key) => {
                     font-size: 0.24rem;
                     font-weight: 400;
                     margin-right: 0.18rem;
-                    padding: 0 0.16rem;
+                    padding: 0 0.12rem;
                     min-width: calc(100vw / 7.95);
 
                 }
