@@ -54,8 +54,8 @@
         <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
 
         <!-- 账户选择弹窗 -->
-        <Popup class="self_van_popup" v-model:show="showDialog" position="bottom" teleport="body"
-            :safe-area-inset-bottom="true">
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+            v-model:show="showDialog" position="bottom" teleport="body">
             <div class="transfer_accounr_dialog">
                 <div class="close_icon" @click="showDialog = false">
                     <img src="/static/img/common/close.png" alt="x">
@@ -88,7 +88,9 @@ import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
 import { _transfer } from "@/api/api"
 import RecordList from "@/components/RecordList.vue"
+import { useRoute } from "vue-router"
 
+const route = useRoute()
 const focus = ref(false) // 是否在输入中
 
 store.dispatch('updateAssets') // 更新资产
@@ -100,8 +102,8 @@ const balance = computed(() => {
 // 表单
 const loading = ref(false)
 const form = ref({
-    from: 'money',
-    to: 'stock',
+    from: route.query.from || 'money',
+    to: route.query.to || 'stock',
     amount: "",
 })
 const maxIpt = () => {

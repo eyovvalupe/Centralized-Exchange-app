@@ -41,7 +41,7 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class="btn" @click="jump('topUp')">
+            <div class="btn" @click="jump('topUp', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/recharge_icon.png" alt="img">
@@ -49,7 +49,7 @@
                 </div>
                 <span>充值</span>
             </div>
-            <div class="btn btn2" @click="jump('withdraw')">
+            <div class="btn btn2" @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="color_text">
                         <!-- <div class="withdraw_icon">
@@ -113,25 +113,26 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:4.8rem" :class="{ 'open_tab': rightSwitch1 != true }">
-                    <div class="right" style="background-color: #18B565;">
+                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;">
+                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
                         <div>提现</div>
                     </div>
-                    <div class="right" style="background-color: #014CFA;">
+                    <div class="right" style="background-color: #014CFA;"
+                        @click="jump('transfer', false, { from: 'stock', to: 'money' })">
                         <div class="right_icon">
                             <img src="/static/img/assets/down.png" alt="img">
                         </div>
                         <div>转入</div>
                     </div>
-                    <div class="right" style="background-color: #FF453A;">
+                    <div class="right" style="background-color: #FF453A;" @click="jump('transfer')">
                         <div class="right_icon">
                             <img src="/static/img/assets/up.png" alt="img">
                         </div>
@@ -153,13 +154,13 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch2 != true }">
-                    <div class="right" style="background-color: #18B565;">
+                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;">
+                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -181,13 +182,13 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch3 != true }">
-                    <div class="right" style="background-color: #18B565;">
+                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;">
+                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -208,13 +209,13 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch4 != true }">
-                    <div class="right" style="background-color: #18B565;">
+                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;">
+                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -280,12 +281,14 @@ defineExpose({
     refresh
 })
 
-const jump = (name) => {
-    if (AccountCheckRef.value.check()) {
-        router.push({
-            name
-        })
+const jump = (name, check = false, query) => {
+    if (check) {
+        if (!AccountCheckRef.value.check()) return
     }
+    router.push({
+        name,
+        query
+    })
 }
 </script>
 
@@ -470,6 +473,7 @@ const jump = (name) => {
     .tabs {
         border-top: 1px solid #EAEAEA;
         padding: 0 0.32rem;
+        margin-bottom: 0.6rem;
 
 
         .tab {

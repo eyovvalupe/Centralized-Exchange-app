@@ -27,7 +27,8 @@
 
 
         <!-- 币种 -->
-        <Popup round v-model:show="showCrypto" position="bottom">
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" round v-model:show="showCrypto"
+            position="bottom">
             <div class="bottoms">
                 <div @click="chooseCurrency(item)" class="bottom" :class="{ 'active_bottom': form.currency == item }"
                     v-for="item in _currencyMapList" :key="item">
@@ -41,7 +42,8 @@
         </Popup>
 
         <!-- 网络 -->
-        <Popup round v-model:show="showNet" position="bottom">
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" round v-model:show="showNet"
+            position="bottom">
             <div class="bottoms">
                 <div @click="chooseNet(item)" class="bottom" :class="{ 'active_bottom': form.network == item }"
                     v-for="item in currNetwork" :key="item">

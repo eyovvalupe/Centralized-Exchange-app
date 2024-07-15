@@ -40,7 +40,7 @@
 
 
         <!-- 日期选择 -->
-        <Popup v-model:show="showBottom" position="bottom">
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBottom" position="bottom">
             <DatePicker @cancel="cancelDate" @confirm="confirmDate" v-model="currentDate" title="选择日期"
                 :min-date="minDate" :max-date="maxDate" />
         </Popup>

@@ -1,7 +1,7 @@
 <!-- 谷歌验证弹窗 -->
 <template>
-    <Popup v-model:show="show" position="bottom" teleport="body" :safe-area-inset-bottom="true"
-        :close-on-popstate="true" :close-on-click-overlay="false">
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="bottom"
+        teleport="body" :close-on-popstate="true" :close-on-click-overlay="false">
         <div class="google_dialog" :class="{ 'typing_dialog': showKeyboard }">
             <div class="title">输入谷歌验证码</div>
             <div class="subtitle">正在进行谷歌验证码</div>

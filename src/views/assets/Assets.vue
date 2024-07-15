@@ -128,16 +128,17 @@ const onRefresh = () => {
 onMounted(() => {
     // 下拉刷新状态监听
     setTimeout(() => {
-        const bodys = document.querySelectorAll('.tab_body')
-        bodys.forEach(item => {
-            item.addEventListener('scroll', (e) => {
-                if (e.target.scrollTop > 0) {
-                    disabled.value = true
-                } else {
-                    disabled.value = false
-                }
-            })
-        })
+        // const bodys = document.querySelectorAll('.tab_body')
+        // bodys.forEach(item => {
+        // item.addEventListener('scroll', (e) => {
+        //     console.error(e.target.scrollTop)
+        //     if (e.target.scrollTop > 0) {
+        //         disabled.value = true
+        //     } else {
+        //         disabled.value = false
+        //     }
+        // })
+        // })
     }, 500)
 })
 
@@ -162,6 +163,8 @@ Promise.all(loadingList).finally(() => {
 <style lang="less" scoped>
 .page_assets {
     padding: 0.24rem 0 0 0;
+    height: 100%;
+    overflow-y: auto;
 
     .page_title {
         padding: 0 0.24rem 0 0.32rem;
@@ -253,9 +256,9 @@ Promise.all(loadingList).finally(() => {
     }
 
     .tab_body {
-        height: calc(100vh - 3.7rem);
-        width: 100%;
-        overflow-y: auto;
+        // height: calc(100vh - 3.7rem);
+        // width: 100%;
+        // overflow-y: auto;
     }
 
     .refresh_box {

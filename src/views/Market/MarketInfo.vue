@@ -92,7 +92,8 @@
             </div>
         </div>
         <!-- 时间选择弹窗 -->
-        <Popup v-model:show="showPicker" round position="bottom">
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round
+            position="bottom">
             <div class="times_list">
                 <div v-for="item in minList" :key="item" @click="chooseTime(item)" class="ripple_button item"
                     :class="{ 'active_item': currMin == item }">{{ item }}
@@ -235,7 +236,7 @@ const fullScreen = (key) => {
                     text-overflow: ellipsis;
                     overflow: hidden;
                     text-align: center;
-                    
+
                 }
             }
 
@@ -281,9 +282,11 @@ const fullScreen = (key) => {
             }
         }
     }
-    h1.info{
-        font-size:.6rem;
-     }
+
+    h1.info {
+        font-size: .6rem;
+    }
+
     .submit {
         color: #fff;
         height: .8rem;
@@ -296,22 +299,28 @@ const fullScreen = (key) => {
         z-index: 100;
         margin-right: .2rem;
     }
-    .btn-green{
+
+    .btn-green {
         background: #18b762;
     }
-    .btn-red{
+
+    .btn-red {
         background: #f3485e;
     }
-.ratio, .info{
-    display: flex;
-    flex-direction: column;
-  justify-content: center;
-  vertical-align: middle;
-}
-.ratio{
-    font-size: .4rem;
-    line-height: .5rem;
-}
+
+    .ratio,
+    .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        vertical-align: middle;
+    }
+
+    .ratio {
+        font-size: .4rem;
+        line-height: .5rem;
+    }
+
     .bot-buysell {
         background: #ffffffde;
         // position:fixed;

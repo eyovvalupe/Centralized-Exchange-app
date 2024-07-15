@@ -82,8 +82,8 @@
 
 
         <!-- 账户选择弹窗 -->
-        <Popup class="self_van_popup" v-model:show="showDialog" position="bottom" teleport="body"
-            :safe-area-inset-bottom="true">
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+            v-model:show="showDialog" position="bottom" teleport="body">
             <div class="swap_accounr_dialog">
                 <div class="close_icon" @click="showDialog = false">
                     <img src="/static/img/common/close.png" alt="x">

@@ -1,7 +1,7 @@
 <!-- 记录列表 -->
 <template>
-    <Popup :before-close="boforeClose" teleport="body" v-model:show="showBottom" position="bottom"
-        style="background-color: rgba(0,0,0,0)">
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" :before-close="boforeClose" teleport="body"
+        v-model:show="showBottom" position="bottom" style="background-color: rgba(0,0,0,0)">
         <div class="record_list_popup">
             <div class="title">
                 <span>{{ title }}</span>

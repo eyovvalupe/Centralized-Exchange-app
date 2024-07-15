@@ -39,17 +39,50 @@
             </div>
 
             <!-- 货币兑换 -->
-            <!-- <div class="currency_btn">
-                <div class="btn_icon">
+            <div class="currency_btn " @click="jump('swap')">
+                <!-- <div class="btn_icon">
                     <img src="/static/img/assets/currency_icon.png" alt="img">
-                </div>
-                <span>货币兑换</span>
-            </div> -->
+                </div> -->
+                <span>兑换</span>
+            </div>
 
             <!-- <div class="loan_box">
                 <div>借贷</div>
                 <div class="num">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
             </div> -->
+        </div>
+        <!-- 按钮 -->
+        <div class="btns">
+            <div class="btn" @click="jump('topUp', true)">
+                <div class="icon_box">
+                    <div class="btn_icon">
+                        <img src="/static/img/assets/recharge_icon.png" alt="img">
+                    </div>
+                </div>
+                <span>充值</span>
+            </div>
+            <div class="btn btn2" @click="jump('withdraw', true)">
+                <div class="icon_box">
+                    <div class="color_text">
+                        <!-- <div class="withdraw_icon">
+                            <img src="/static/img/assets/withdraw_icon.svg" alt="icon">
+                        </div> -->
+                        <span style=" font-size: 0.2rem;font-weight: 400;color:#666;margin-right:0.04rem">可提现</span>
+                        <span>{{ (assets.money || '0.00') }}</span>
+                    </div>
+                    <div>
+                        <span class="tip">冻结</span>
+                        <span>{{ (assets.frozen || '0.00') }}</span>
+                    </div>
+
+                    <div class="process">
+                        <div class="left">
+                            <div class="ball"></div>
+                        </div>
+                    </div>
+                </div>
+                <span>提现</span>
+            </div>
         </div>
         <div class="cash_tab_content tabs">
             <div class="tab_title">法币</div>
@@ -114,6 +147,9 @@
 
         <!-- 充提记录 -->
         <RaWrecords v-if="route.name == 'assets'" :bottom="'1.4rem'" :hiddenBeforeOpen="false" ref="RaWrecordsRef" />
+
+        <!-- 账户检测 -->
+        <AccountCheck ref="AccountCheckRef" />
     </div>
 </template>
 
@@ -124,6 +160,7 @@ import store from "@/store"
 import RaWrecords from "@/components/RaWrecords.vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
+import AccountCheck from "@/components/AccountCheck.vue"
 
 
 const route = useRoute()
@@ -192,6 +229,17 @@ const refresh = () => {
 defineExpose({
     refresh
 })
+
+const AccountCheckRef = ref()
+const jump = (name, check = false, query) => {
+    if (check) {
+        if (!AccountCheckRef.value.check()) return
+    }
+    router.push({
+        name,
+        query
+    })
+}
 </script>
 
 <style lang="less" scoped>
@@ -276,7 +324,8 @@ defineExpose({
             position: absolute;
             top: 0.3rem;
             right: 0.4rem;
-            height: 0.6rem;
+            height: 0.56rem;
+            min-width: 1.2rem;
             border-radius: 0.6rem;
             padding: 0 0.2rem;
             color: #fff;
@@ -285,7 +334,7 @@ defineExpose({
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #EB4E3D;
+            background-color: #000;
 
             .btn_icon {
                 width: 0.4rem;
@@ -313,8 +362,107 @@ defineExpose({
         }
     }
 
+    .btns {
+        margin: 0.16rem 0.32rem 0.1rem 0.32rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .btn {
+            width: 31%;
+            font-size: 0.28rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 0.3rem;
+
+            &:active {
+                opacity: 0.8;
+                transform: scale(0.98)
+            }
+
+            .icon_box {
+                overflow: hidden;
+                width: 100%;
+                height: 0.8rem;
+                background-color: #EAF0F3;
+                margin-bottom: 0.1rem;
+                border-radius: 0.12rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+
+                .btn_icon {
+                    width: 0.38rem;
+                    height: 0.38rem;
+                }
+
+                .tip {
+                    font-size: 0.2rem;
+                    font-weight: 400;
+                    margin-right: 0.04rem;
+                }
+            }
+        }
+
+        .btn2 {
+            width: 65.4%;
+
+            .icon_box {
+                padding: 0 0.3rem;
+                justify-content: space-between;
+                font-weight: 600;
+                position: relative;
+                color: #000;
+
+                .color_text {
+                    color: #59ba4e;
+                    display: flex;
+                    align-items: center;
+
+                    .withdraw_icon {
+                        width: 0.28rem;
+                        height: 0.28rem;
+                        margin-right: 0.1rem;
+                    }
+                }
+
+                .process {
+                    background-color: #dadada;
+                    width: 100%;
+                    position: absolute;
+                    bottom: 0;
+                    height: 0.1rem;
+                    left: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .left {
+                        height: 100%;
+                        width: 50%;
+                        background: linear-gradient(to right, #F4DF6B, #98D450, #6BD45F);
+                        position: relative;
+
+                        .ball {
+                            background-color: #6BD45F;
+                            width: 0.3rem;
+                            height: 0.3rem;
+                            border-radius: 50%;
+                            position: absolute;
+                            right: 0;
+                            bottom: -0.12rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     .cash_tab_content {
         padding: 0 0.32rem 0.32rem 0.32rem;
+        margin-bottom: 1rem;
 
         .cash_tab_item {
             height: 1.2rem;
@@ -339,7 +487,7 @@ defineExpose({
         .tab_title {
             border-bottom: 1px solid #EAEAEA;
             line-height: 0.48rem;
-            padding: 0.3rem 0;
+            padding: 0 0 0.3rem 0;
             color: #121826;
             font-size: 0.28rem;
         }

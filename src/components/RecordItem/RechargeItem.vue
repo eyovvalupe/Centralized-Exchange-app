@@ -47,6 +47,7 @@ const props = defineProps({
         padding: 0.0.16rem;
         flex: 1;
         text-align: left;
+        line-height: 1.2;
 
         .item_title {
             width: 100%;
@@ -88,6 +89,7 @@ const props = defineProps({
             align-items: center;
             font-size: 0.24rem;
             margin-top: 0.1rem;
+            height: 0.42rem;
         }
 
         .status_success {

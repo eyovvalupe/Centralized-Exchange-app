@@ -1,7 +1,7 @@
 <!-- 输入安全密码 -->
 <template>
-    <Popup class="self_van_popup" v-model:show="show" position="bottom" teleport="body" :safe-area-inset-bottom="true"
-        :close-on-popstate="true" :close-on-click-overlay="false">
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="show"
+        position="bottom" teleport="body" :close-on-popstate="true" :close-on-click-overlay="false">
         <!--  :class="{ 'typing_dialog': showKeyboard }" -->
         <div class="safepassword_dialog">
             <slot name="top"></slot>

@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : '43534535.00' }}</span>
+                <span>{{ hidden ? '****' : '435345.00' }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
@@ -23,15 +23,11 @@
                     <div>冻结</div>
                     <div class="num">{{ hidden ? '***' : '232424.00' }}</div>
                 </div>
-                <div class="line"></div>
-                <div class="nav">
-                    <div>可借资金</div>
-                    <div class="num">{{ hidden ? '****' : '232424.00' }}</div>
-                </div>
             </div>
 
             <!-- 借贷按钮 -->
-            <div class="loan_btn">借贷</div>
+            <div class="loan_btn" @click="jump('loanList')">借贷</div>
+            <div class="loan_max">可借资金 223423.00</div>
         </div>
 
         <!-- 列表 -->
@@ -51,9 +47,16 @@
 import { ref } from "vue"
 import { Icon } from "vant"
 import StockItem from "./components/StockItem.vue"
+import router from "@/router"
 
 const hidden = ref(false)
 
+
+const jump = (name) => {
+    router.push({
+        name
+    })
+}
 </script>
 
 <style lang="less" scoped>
@@ -70,7 +73,7 @@ const hidden = ref(false)
 
         .loan_btn {
             position: absolute;
-            top: 0.2rem;
+            top: 0.4rem;
             right: 0.6rem;
             height: 0.52rem;
             color: #fff;
@@ -79,7 +82,16 @@ const hidden = ref(false)
             padding: 0 0.4rem;
             display: flex;
             align-items: center;
-            background-color: #EB4E3D;
+            background-color: #000;
+        }
+
+        .loan_max {
+            position: absolute;
+            top: 1.2rem;
+            right: 0.2rem;
+            color: #fff;
+            font-size: 0.24rem;
+            font-weight: 400
         }
 
         .top {
@@ -115,7 +127,7 @@ const hidden = ref(false)
         .navs {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             line-height: 0.44rem;
 
             .line {
@@ -129,7 +141,7 @@ const hidden = ref(false)
                 font-weight: 400;
                 font-size: 0.24rem;
                 text-align: center;
-                flex: 1;
+                margin: 0 0.48rem;
             }
         }
     }

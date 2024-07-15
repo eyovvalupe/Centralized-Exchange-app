@@ -42,8 +42,8 @@
 <script setup>
 import { ref, computed } from "vue"
 import { _depositList, _withdrawList } from "@/api/api"
-import RechargeItem from "@/views/Assets/page/components/RechargeItem"
-import WithdrawItem from "@/views/Assets/page/components/WithdrawItem"
+import RechargeItem from "./RecordItem/RechargeItem"
+import WithdrawItem from "./RecordItem/WithdrawItem"
 import Loaidng from "@/components/Loaidng.vue"
 import NoData from "@/components/NoData.vue"
 import { Icon, Tabs, Tab } from "vant"

@@ -1,13 +1,19 @@
 <!-- 认证状态检测 -->
 <template>
-    <Popup :before-close="boforeClose" teleport="body" v-model:show="showBottom" position="bottom"
-        style="background-color: rgba(0,0,0,0)">
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" :before-close="boforeClose" teleport="body"
+        v-model:show="showBottom" position="bottom" style="background-color: rgba(0,0,0,0)">
         <div class="account_check_popup">
             <div class="close_icon" @click="close">
                 <img src="/static/img/common/close.png" alt="img">
             </div>
+            <div class="account_check_popup_title">身份验证</div>
 
             <div class="ac_body">
+                <div class="fake_user" v-if="userInfo.role == 'guest'">
+                    <div class="fake_icon_box"></div>
+                    <div>模拟账号升级</div>
+                    <div class="fake_btn">立刻升级→</div>
+                </div>
                 <div class="ac_title">请完成以下验证，继续下一步</div>
                 <div class="ac_item" :class="{ 'ac_item_active': userInfo.googlebind }" @click="jump('google')">
                     <div class="ac_icon">
@@ -30,6 +36,8 @@
                     </div>
                 </div>
             </div>
+
+            <div class="close_btn" @click="close">关闭</div>
         </div>
     </Popup>
 </template>
@@ -51,7 +59,7 @@ const close = () => {
 }
 
 const check = () => {
-    const val = userInfo.value.googlebind && userInfo.value.kyc == 2
+    const val = userInfo.value.googlebind && userInfo.value.kyc == 2 && userInfo.role == 'user'
     if (!val) {
         open()
     }
@@ -74,16 +82,20 @@ defineExpose({
 <style lang="less">
 .account_check_popup {
     background-color: #fff;
-    border-top-left-radius: 0.24rem;
-    border-top-right-radius: 0.24rem;
     overflow: hidden;
-    padding: 0.64rem 0.32rem;
+    padding: 0.2rem 0.32rem 0.64rem 0.32rem;
     position: relative;
+    height: 100vh;
+
+    .account_check_popup_title {
+        text-align: center;
+        line-height: 0.64rem;
+    }
 
     .close_icon {
         position: absolute;
         top: 0.32rem;
-        right: 0.32rem;
+        left: 0.32rem;
         width: 0.32rem;
         height: 0.32rem;
     }
@@ -94,6 +106,7 @@ defineExpose({
             color: #000000;
             line-height: 0.64rem;
             margin-bottom: 0.32rem;
+            margin-top: 0.6rem;
         }
 
         .ac_item {
@@ -138,6 +151,49 @@ defineExpose({
                 color: #fff;
             }
         }
+
+        .fake_user {
+            margin-top: 0.6rem;
+            height: 2rem;
+            background-color: #F6F7FA;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.8rem 0 0.32rem;
+
+            .fake_icon_box {
+                width: 0.96rem;
+                height: 0.96rem;
+                background-color: #D9E4FF;
+                padding: 0.16rem;
+                border-radius: 0.16rem;
+                margin-right: 0.6rem;
+            }
+
+            .fake_btn {
+                background-color: #014CFA;
+                height: 0.68rem;
+                display: flex;
+                align-items: center;
+                padding: 0 0.24rem;
+                border-radius: 0.4rem;
+                color: #fff;
+                font-size: 0.24rem;
+                margin-left: 0.6rem;
+            }
+        }
+    }
+
+    .close_btn {
+        width: calc(100% - 0.64rem);
+        height: 1.12rem;
+        background-color: #F2F2F2;
+        border-radius: 1.12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 1.12rem;
     }
 }
 </style>
