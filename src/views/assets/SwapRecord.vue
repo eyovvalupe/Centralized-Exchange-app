@@ -7,7 +7,7 @@
             <NoData v-if="!loading && !list.length" />
             <div class="item" v-for="(item, i) in list" :key="i">
                 <div class="date">{{ item.created || '--' }}</div>
-                <div class="item_box">
+                <div class="item_box" v-if="item.from">
                     <div class="top">
                         <div class="currency_icon">
                             <img :src="`/static/img/crypto/${item.from.toUpperCase()}.png`" alt="currency">

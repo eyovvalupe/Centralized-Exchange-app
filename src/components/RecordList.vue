@@ -11,43 +11,55 @@
             </div>
             <Tabs @change="init" v-model:active="active" :lazy-render="true" animated>
                 <Tab :title="titles[0]">
-                    <div ref="list_0" class="list" :class="{ 'active_list': active == 0 }">
+                    <div ref="list_0" class="list"
+                        :class="{ 'active_list': active == 0, 'list_down': scrollDir == 'down' }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i" class="list_0_item">
-                            <div class="date" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">{{
-                                getDate(item.date) }}</div>
-                            <RechargeItem :item="item" />
-                        </div>
+                        <template v-if="active == 0">
+                            <div v-for="(item, i) in list" :key="i" class="list_0_item">
+                                <div class="date" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">{{
+                                    getDate(item.date) }}</div>
+                                <RechargeItem :item="item" />
+                            </div>
+                        </template>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 0" />
                     </div>
                 </Tab>
                 <Tab :title="titles[1]">
-                    <div ref="list_1" class="list" :class="{ 'active_list': active == 1 }">
+                    <div ref="list_1" class="list"
+                        :class="{ 'active_list': active == 1, 'list_down': scrollDir == 'down' }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i">
-                            <WithdrawItem :item="item" />
-                        </div>
+                        <template v-if="active == 1">
+                            <div v-for="(item, i) in list" :key="i">
+                                <WithdrawItem :item="item" />
+                            </div>
+                        </template>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 1" />
                     </div>
                 </Tab>
                 <Tab :title="titles[2]">
-                    <div ref="list_2" class="list" :class="{ 'active_list': active == 2 }">
+                    <div ref="list_2" class="list"
+                        :class="{ 'active_list': active == 2, 'list_down': scrollDir == 'down' }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i">
-                            <TransferItem :item="item" />
-                        </div>
+                        <template v-if="active == 2">
+                            <div v-for="(item, i) in list" :key="i">
+                                <TransferItem :item="item" />
+                            </div>
+                        </template>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 2" />
                     </div>
                 </Tab>
                 <Tab :title="titles[3]">
-                    <div ref="list_3" class="list" :class="{ 'active_list': active == 3 }">
+                    <div ref="list_3" class="list"
+                        :class="{ 'active_list': active == 3, 'list_down': scrollDir == 'down' }">
                         <NoData v-if="!loading && !list.length" />
-                        <div v-for="(item, i) in list" :key="i">
-                            <SwapItem :item="item" />
-                        </div>
+                        <template v-if="active == 3">
+                            <div v-for="(item, i) in list" :key="i">
+                                <SwapItem :item="item" />
+                            </div>
+                        </template>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"
                             v-if="((finish && list.length) || (!finish)) && active == 3" />
                     </div>
@@ -107,6 +119,9 @@ const init = () => {
     list.value = []
     initWatch()
     getData()
+    setTimeout(() => {
+        lastTop.value = 0
+    }, 100)
 }
 const getData = () => { // 获取数据
     if (loading.value || finish.value) return
@@ -139,7 +154,25 @@ const getData = () => { // 获取数据
     })
 }
 
-const scrollHandle = () => {
+const lastTop = ref(0)
+const scrollDir = ref('up')
+const aniTransition = ref(false)
+const scrollHandle = (event) => {
+    // 获取当前滚动位置
+    let scrollTop = event.target.scrollTop;
+    if (!aniTransition.value) {
+        aniTransition.value = true
+        if (scrollTop >= lastTop.value) {
+            scrollDir.value = 'down'
+        } else {
+            scrollDir.value = 'up'
+        }
+        setTimeout(() => {
+            aniTransition.value = false
+        }, 300)
+    }
+    // 更新上一次滚动位置
+    lastTop.value = scrollTop;
     const rect = moreDom.getBoundingClientRect()
     if (rect.top <= totalHeight) {
         // 加载更多
@@ -195,6 +228,11 @@ const getDate = str => {
     border-top-right-radius: 0.24rem;
     overflow: hidden;
 
+    &:has(.list_down) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
     .title {
         display: flex;
         align-items: center;
@@ -216,6 +254,11 @@ const getDate = str => {
         height: 60vh;
         padding: 0.32rem;
         overflow-y: auto;
+        transition: all ease .3s;
+    }
+
+    .list_down {
+        height: calc(100vh - 1.88rem);
     }
 
     .list_0_item {

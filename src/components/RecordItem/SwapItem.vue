@@ -3,18 +3,18 @@
     <div class="swap_item">
         <div class="left">
             <div class="item_title">
-                <div class="currency_icon">
+                <div class="currency_icon" v-if="item.from">
                     <img :src="`/static/img/crypto/${item.from.toUpperCase()}.png`" :alt="item.from.toUpperCase()">
                 </div>
-                <span class="item_name">{{ item.from.toUpperCase() }}</span>
+                <span class="item_name" v-if="item.from">{{ item.from.toUpperCase() }}</span>
                 <span>{{ item.amount_from }}</span>
                 <div class="icon_box">
                     <img src="/static/img/account/to.png" alt="to">
                 </div>
-                <div class="currency_icon">
+                <div class="currency_icon" v-if="item.to">
                     <img :src="`/static/img/crypto/${item.to.toUpperCase()}.png`" :alt="item.from.toUpperCase()">
                 </div>
-                <span class="item_name">{{ item.to.toUpperCase() }}</span>
+                <span class="item_name" v-if="item.to">{{ item.to.toUpperCase() }}</span>
                 <span>{{ item.amount_to }}</span>
             </div>
             <div class="time">{{ item.created }}</div>

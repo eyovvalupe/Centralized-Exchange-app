@@ -97,6 +97,9 @@
 
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef"></SafePassword>
+
+        <!-- 账号验证 -->
+        <AccountCheck ref="AccountCheckRef" />
     </div>
 </template>
 
@@ -110,6 +113,7 @@ import { useRoute } from "vue-router"
 import { _networkMapList } from "@/utils/dataMap.js"
 import RecordList from "@/components/RecordList.vue"
 import SafePassword from "@/components/SafePassword.vue"
+import AccountCheck from "@/components/AccountCheck.vue"
 
 const safeRef = ref()
 
@@ -157,12 +161,15 @@ const goRecord = () => {
     RecordListRef.value && RecordListRef.value.open()
 }
 const errStatus = ref(false)
+const AccountCheckRef = ref()
 const goTopUp = () => {
     if (!form.value.amount || form.value.amount <= 0) {
         errStatus.value = true
         return showToast('请输入金额')
     }
-    safeRef.value.open()
+    if (AccountCheckRef.value.check()) {
+        safeRef.value.open()
+    }
 }
 const submit = () => {
     router.push({

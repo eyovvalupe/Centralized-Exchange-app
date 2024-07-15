@@ -6,6 +6,7 @@ export default {
         wallet: [], // 现金钱包
         rechargeAmount: '', // 充值金额
         hintNum: 0, // 待处理的订单笔数
+        loanNum: 0, // 借贷重的订单数
     },
     mutations: {
         setAssets(state, data) {
@@ -19,6 +20,9 @@ export default {
         },
         setHintNum(state, data) {
             state.hintNum = data;
+        },
+        setLoadNum(state, data) {
+            state.loanNum = data;
         },
     },
     actions: {
@@ -63,6 +67,7 @@ export default {
                             if (res.data.deposit) count += res.data.deposit
                             if (res.data.deposit) count += res.data.withdraw
                             commit("setHintNum", count);
+                            commit("setLoadNum", res.data.loan || 0)
                             resolve(res.data);
                         } else {
                             resolve(false);

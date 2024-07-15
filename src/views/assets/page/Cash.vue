@@ -53,7 +53,7 @@
         </div>
         <!-- 按钮 -->
         <div class="btns">
-            <div class="btn" @click="jump('topUp', true)">
+            <div class="ripple_button btn" @click="jump('topUp', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/recharge_icon.png" alt="img">
@@ -61,7 +61,7 @@
                 </div>
                 <span>充值</span>
             </div>
-            <div class="btn btn2" @click="jump('withdraw', true)">
+            <div class="ripple_button btn btn2" @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="color_text">
                         <!-- <div class="withdraw_icon">
@@ -86,7 +86,7 @@
         </div>
         <div class="cash_tab_content tabs">
             <div class="tab_title">法币</div>
-            <div class="tab" @click="switchOpen(i, $event)" v-for="(item, i) in currencyWallet" :key="i">
+            <div class="ripple_button tab" @click="switchOpen(i, $event)" v-for="(item, i) in currencyWallet" :key="i">
                 <div class="tab_icon">
                     <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="img">
                 </div>
@@ -98,13 +98,13 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': switchs[i] != true }">
-                    <div class="right" style="background-color: #18B565;" @click="goTopUp(item.currency.toUpperCase())">
+                    <div class="right" style="background-color: #32D74B;" @click="goTopUp(item.currency.toUpperCase())">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;">
+                    <div class="right" style="background-color: #5E5CE6;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -113,8 +113,8 @@
                 </div>
             </div>
             <div class="tab_title">加密货币</div>
-            <div class="tab" @click="switchOpen(i + currencyWallet.length, $event)" v-for="(item, i) in showWallet"
-                :key="i">
+            <div class="ripple_button tab" @click="switchOpen(i + currencyWallet.length, $event)"
+                v-for="(item, i) in showWallet" :key="i">
                 <div class="tab_icon">
                     <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="img">
                 </div>
@@ -129,13 +129,13 @@
                 </div>
                 <div class="rights" style="width:2.4rem"
                     :class="{ 'open_tab': switchs[i + currencyWallet.length] != true }">
-                    <div class="right" style="background-color: #18B565;" @click="goTopUp(item.currency.toUpperCase())">
+                    <div class="right" style="background-color: #32D74B;" @click="goTopUp(item.currency.toUpperCase())">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;">
+                    <div class="right" style="background-color: #5E5CE6;">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -148,8 +148,6 @@
         <!-- 充提记录 -->
         <RaWrecords v-if="route.name == 'assets'" :bottom="'1.4rem'" :hiddenBeforeOpen="false" ref="RaWrecordsRef" />
 
-        <!-- 账户检测 -->
-        <AccountCheck ref="AccountCheckRef" />
     </div>
 </template>
 
@@ -230,11 +228,7 @@ defineExpose({
     refresh
 })
 
-const AccountCheckRef = ref()
 const jump = (name, check = false, query) => {
-    if (check) {
-        if (!AccountCheckRef.value.check()) return
-    }
     router.push({
         name,
         query
@@ -371,10 +365,11 @@ const jump = (name, check = false, query) => {
 
         .btn {
             width: 31%;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
             color: #333;
             text-align: center;
             margin-bottom: 0.3rem;
+            overflow: hidden;
 
             &:active {
                 opacity: 0.8;
@@ -386,7 +381,7 @@ const jump = (name, check = false, query) => {
                 width: 100%;
                 height: 0.8rem;
                 background-color: #EAF0F3;
-                margin-bottom: 0.1rem;
+                margin-bottom: 0.16rem;
                 border-radius: 0.12rem;
                 display: flex;
                 align-items: center;
@@ -394,8 +389,8 @@ const jump = (name, check = false, query) => {
 
 
                 .btn_icon {
-                    width: 0.38rem;
-                    height: 0.38rem;
+                    width: 0.42rem;
+                    height: 0.42rem;
                 }
 
                 .tip {

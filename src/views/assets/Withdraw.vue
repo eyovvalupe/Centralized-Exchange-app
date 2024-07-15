@@ -15,7 +15,7 @@
             <div class="item" :class="{ 'active_item': focus }">
 
                 <div class="item_box item_currency" @click="showDialog = true">
-                    <div class="currency">
+                    <div class="currency" v-if="form.from">
                         <div class="currency_icon">
                             <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
                         </div>
@@ -153,6 +153,9 @@
 
         <!-- 充提记录 -->
         <RecordList ref="RecordListRef" />
+
+        <!-- 账号验证 -->
+        <AccountCheck ref="AccountCheckRef" />
     </div>
 </template>
 
@@ -166,6 +169,7 @@ import { _withdrawFee, _withdraw } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
 import { _hiddenAccount } from "@/utils/index"
 import RecordList from "@/components/RecordList.vue"
+import AccountCheck from "@/components/AccountCheck.vue"
 
 store.dispatch('updateWallet') // 更新钱包
 const RecordListRef = ref()
@@ -194,6 +198,7 @@ const changeAmount = () => {
 // 提交
 const safeRef = ref()
 const errStatus = ref(false)
+const AccountCheckRef = ref()
 const openSafePass = () => {
     if (!form.value.amount || form.value.amount <= 0) {
         errStatus.value = true
@@ -205,7 +210,9 @@ const openSafePass = () => {
     if (!showAccount.value.length) {
         return showToast('请添加收款账户')
     }
-    safeRef.value.open()
+    if (AccountCheckRef.value.check()) {
+        safeRef.value.open()
+    }
 }
 const submit = s => {
     if (loading.value) return

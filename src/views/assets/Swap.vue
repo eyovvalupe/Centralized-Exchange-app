@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="item account_item" @click="openDialog('from')">
-                    <div class="currency">
+                    <div class="currency" v-if="form.from">
                         <div class="currency_icon">
                             <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
                         </div>

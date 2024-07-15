@@ -41,7 +41,7 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class="btn" @click="jump('topUp', true)">
+            <div class="ripple_button btn" @click="jump('topUp', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/recharge_icon.png" alt="img">
@@ -49,7 +49,7 @@
                 </div>
                 <span>充值</span>
             </div>
-            <div class="btn btn2" @click="jump('withdraw', true)">
+            <div class="ripple_button btn btn2" @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="color_text">
                         <!-- <div class="withdraw_icon">
@@ -71,23 +71,23 @@
                 </div>
                 <span>提现</span>
             </div>
-            <div class="btn" @click="jump('transfer')">
+            <div class="ripple_button btn" @click="jump('transfer')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/trans_icon.png" alt="img">
                     </div>
                 </div>
-                <span>划转</span>
+                <span>账户划转</span>
             </div>
-            <div class="btn" @click="jump('swap')">
+            <div class="ripple_button btn" @click="jump('swap')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/swap_icon.png" alt="img">
                     </div>
                 </div>
-                <span>兑换</span>
+                <span>货币兑换</span>
             </div>
-            <div class="btn" @click="jump('loanList')">
+            <div class="ripple_button btn" @click="jump('loanList')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/loan_icon.png" alt="img">
@@ -99,7 +99,7 @@
 
         <!-- 列表 -->
         <div class="tabs">
-            <div ref="tab1" :key="1" class="tab" @click="rightSwitch1 = !rightSwitch1">
+            <div ref="tab1" :key="1" class="ripple_button tab" @click="rightSwitch1 = !rightSwitch1">
                 <div class="tab_icon">
                     <img src="/static/img/assets/cash_icon.svg" alt="img">
                 </div>
@@ -113,19 +113,19 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:4.8rem" :class="{ 'open_tab': rightSwitch1 != true }">
-                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
+                    <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
+                    <div class="right" style="background-color: #5E5CE6;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
                         <div>提现</div>
                     </div>
-                    <div class="right" style="background-color: #014CFA;"
+                    <div class="right" style="background-color: #FF9500;"
                         @click="jump('transfer', false, { from: 'stock', to: 'money' })">
                         <div class="right_icon">
                             <img src="/static/img/assets/down.png" alt="img">
@@ -140,7 +140,7 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab2" :key="2" class="tab" @click="rightSwitch2 = !rightSwitch2">
+            <div ref="tab2" :key="2" class="ripple_button tab" @click="rightSwitch2 = !rightSwitch2">
                 <div class="tab_icon">
                     <img src="/static/img/assets/stock_icon.svg" alt="img">
                 </div>
@@ -154,13 +154,13 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch2 != true }">
-                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
+                    <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
+                    <div class="right" style="background-color: #5E5CE6;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -168,7 +168,7 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab3" :key="3" class="tab" @click="rightSwitch3 = !rightSwitch3">
+            <div ref="tab3" :key="3" class="ripple_button tab" @click="rightSwitch3 = !rightSwitch3">
                 <div class="tab_icon">
                     <img src="/static/img/assets/contract_icon.svg" alt="img">
                 </div>
@@ -182,13 +182,13 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch3 != true }">
-                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
+                    <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
+                    <div class="right" style="background-color: #5E5CE6;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -196,7 +196,7 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab4" :key="4" class="tab" @click="rightSwitch4 = !rightSwitch4">
+            <div ref="tab4" :key="4" class="ripple_button tab" @click="rightSwitch4 = !rightSwitch4">
                 <div class="tab_icon">
                     <img src="/static/img/assets/ipo_icon.svg" alt="img">
                 </div>
@@ -209,13 +209,13 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch4 != true }">
-                    <div class="right" style="background-color: #18B565;" @click="jump('topUp', true)">
+                    <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
                         </div>
                         <div>充值</div>
                     </div>
-                    <div class="right" style="background-color: #FF9500;" @click="jump('withdraw', true)">
+                    <div class="right" style="background-color: #5E5CE6;" @click="jump('withdraw', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/pay.png" alt="img">
                         </div>
@@ -225,8 +225,6 @@
             </div>
         </div>
 
-        <!-- 账户检测 -->
-        <AccountCheck ref="AccountCheckRef" />
     </div>
 </template>
 
@@ -242,7 +240,6 @@ import AccountCheck from "@/components/AccountCheck.vue"
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
 const hidden = ref(false) // 隐藏数字
-const AccountCheckRef = ref()
 
 // 功能区域控制
 const tab1 = ref()
@@ -282,9 +279,6 @@ defineExpose({
 })
 
 const jump = (name, check = false, query) => {
-    if (check) {
-        if (!AccountCheckRef.value.check()) return
-    }
     router.push({
         name,
         query
@@ -381,10 +375,11 @@ const jump = (name, check = false, query) => {
 
         .btn {
             width: 31%;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
             color: #333;
             text-align: center;
             margin-bottom: 0.3rem;
+            overflow: hidden;
 
             &:active {
                 opacity: 0.8;
@@ -396,7 +391,7 @@ const jump = (name, check = false, query) => {
                 width: 100%;
                 height: 0.8rem;
                 background-color: #EAF0F3;
-                margin-bottom: 0.1rem;
+                margin-bottom: 0.16rem;
                 border-radius: 0.12rem;
                 display: flex;
                 align-items: center;
@@ -404,8 +399,8 @@ const jump = (name, check = false, query) => {
 
 
                 .btn_icon {
-                    width: 0.38rem;
-                    height: 0.38rem;
+                    width: 0.42rem;
+                    height: 0.42rem;
                 }
 
                 .tip {

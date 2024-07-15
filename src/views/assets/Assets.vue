@@ -6,8 +6,12 @@
             <div class="page_title">
                 <span>资产</span>
 
-                <div class="record_icon" @click="openRecordPopup">
-                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                <div class="record_icon_box" @click="openRecordPopup">
+                    <div class="record_icon">
+                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    </div>
+
+                    <span>记录</span>
                 </div>
             </div>
 
@@ -179,15 +183,20 @@ Promise.all(loadingList).finally(() => {
         margin-bottom: 0.1rem;
         position: relative;
 
-        .record_icon {
-            width: 0.6rem;
-            height: 0.6rem;
-            padding: 0.1rem;
-            border-radius: 50%;
-            background-color: #EAF0F3;
+        .record_icon_box {
             display: flex;
             align-items: center;
             justify-content: center;
+            line-height: 0;
+            font-size: 0.28rem;
+            font-weight: 400;
+
+            .record_icon {
+                width: 0.4rem;
+                height: 0.4rem;
+                border-radius: 50%;
+                margin-right: 0.04rem;
+            }
         }
     }
 
