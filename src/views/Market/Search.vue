@@ -131,10 +131,10 @@ const collect = item => {
         }).then(res => {
             if (res.code == 200) {
                 setTimeout(() => {
-                    showToast(item.watchlist ? '移除成功' : '添加成功')
+                    showToast(item.watchlist ? '添加成功' : '移除成功')
                 }, 300)
-                const i = searchList.value.findIndex(a => a.symbol == item.symbol)
-                if (i >= 0) {
+                const i = searchList.value.find(a => a.symbol == item.symbol)
+                if (i) {
                     i.watchlist = i.watchlist == 1 ? 0 : 1
                     store.commit('setMarketSearch', {
                         search: search.value,

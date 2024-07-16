@@ -1,6 +1,6 @@
 <!-- 市场 -->
 <template>
-    <div class="page page_market ">
+    <div class="page page_market " v-if="activated">
         <transition :name="detailTransition">
             <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'" />
             <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />

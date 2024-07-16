@@ -481,12 +481,14 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (from.meta.pageType == "tab" && to.meta.pageType == "child") {
+    console.error('右')
     store.commit('setTransitionName', 'slide-right')
     return;
   }
 
   if (from.meta.pageType == "child" && to.meta.pageType == "tab") {
-    store.commit('setTransitionName', 'slide-left')
+    console.error('左')
+    store.commit('setTransitionName', 'slide-right')
     return;
   }
 
@@ -494,7 +496,6 @@ router.beforeEach((to, from) => {
     store.commit('setTransitionName', 'slide-right')
     return;
   }
-
 
 
   if (to.meta.pageType == "login") {

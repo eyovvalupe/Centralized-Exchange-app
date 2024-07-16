@@ -230,7 +230,7 @@ const removeStock = item => {
                 color: #fff;
                 text-align: center;
                 padding: 0.08rem 0;
-                border-radius: 0.04rem;
+                border-radius: 0.08rem;
                 white-space: nowrap;
             }
 
