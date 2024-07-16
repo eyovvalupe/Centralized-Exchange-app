@@ -110,14 +110,16 @@ const price = computed(() => props.item.price | 0)
 
 const updownStatus = ref('')
 watch(price, (newVal, oldVal) => {
-    if (newVal > oldVal) { // 上升
-        updownStatus.value = 'up'
-    } else { // 下降
-        updownStatus.value = 'down'
+    if (newVal && oldVal) {
+        if (newVal > oldVal) { // 上升
+            updownStatus.value = 'up'
+        } else { // 下降
+            updownStatus.value = 'down'
+        }
+        setTimeout(() => {
+            updownStatus.value = ''
+        }, 1000)
     }
-    setTimeout(() => {
-        updownStatus.value = ''
-    }, 1000)
 })
 
 const goInfo = () => {

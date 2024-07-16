@@ -2,7 +2,8 @@
 <template>
     <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" class="market_optional"
         :list="watchList" />
-    <Tabs v-else class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
+    <Tabs v-else-if="!watchList.length && !loading" class="option_tab" v-model:active="active" :swipeable="false"
+        animated shrink>
         <Tab :title="'股票'">
             <StockRecommend @init="init" v-if="!watchList.length" :list="marketSrockRecommendList" />
         </Tab>
@@ -10,9 +11,11 @@
             <NoData />
         </Tab>
     </Tabs>
+    <Loaidng v-else :loading="loading" />
 </template>
 
 <script setup>
+import Loaidng from "@/components/Loaidng.vue"
 import NoData from "@/components/NoData.vue"
 import StockTable from "@/components/StockTable.vue"
 import StockRecommend from "@/components/StockRecommend.vue"
@@ -27,7 +30,7 @@ const { startSocket } = useSocket()
 const active = ref(0)
 
 const token = computed(() => store.state.token || '')
-const loading = ref(false)
+const loading = ref(true)
 const subs = () => { // 订阅 ws
     store.dispatch('subList', {
         commitKey: 'setMarketWatchList',
@@ -38,7 +41,6 @@ const subs = () => { // 订阅 ws
 
 const watchList = computed(() => store.state.marketWatchList || [])
 const getWatchList = () => { // 获取订阅列表
-    if (loading.value) return
     loading.value = true
     // if (watchList.value.length) {
     //     subs()
@@ -78,6 +80,7 @@ const init = () => {
     if (token.value) {
         getWatchList()
     } else {
+        loading.value = false
         // 打开推荐列表
         openRecommendList()
     }
@@ -87,11 +90,8 @@ const init = () => {
 // 推荐列表
 const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
 const openRecommendList = () => {
-    if (loading.value) return
-    loading.value = true
     _watchlistDefault().then(res => {
         if (res.code == 200) {
-            console.error('???', res)
             const arr = res.data.stock.map(item => {
                 const target = marketSrockRecommendList.value.find(a => a.symbol == item.symbol)
                 return target || item
@@ -105,8 +105,6 @@ const openRecommendList = () => {
                 })
             }, 500)
         }
-    }).finally(() => {
-        loading.value = false
     })
 }
 

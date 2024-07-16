@@ -1,13 +1,15 @@
 <!-- loading 组件封装 -->
 <template>
-    <Loading class="loading_dom" :size="props.size" type="spinner" v-show="props.loading" />
+    <Loading class="loading_dom" :size="props.size" :color="props.color" :type="props.type" v-show="props.loading" />
 </template>
 
 <script setup>
 import { Loading } from 'vant';
 const props = defineProps({
     loading: false,
-    size: 48
+    size: 48,
+    type: 'spinner',
+    color: ''
 })
 </script>
 

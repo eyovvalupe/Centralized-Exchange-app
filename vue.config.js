@@ -17,6 +17,7 @@ module.exports = defineConfig({
   productionSourceMap: false,
   lintOnSave: false,
   devServer: {
+    port: 3000,
     proxy: {
       "/api": {
         target: "http://62.112.10.184:8302",

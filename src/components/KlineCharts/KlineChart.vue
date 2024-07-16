@@ -69,7 +69,12 @@ onMounted(() => {
         // tooltip: {
         //     showRule: 'none'
         // },
-        candle: { type: 'candle_solid' }
+        candle: {
+            type: 'candle_solid',
+            margin: {
+                right: 0 // 设置右边距为0
+            }
+        }
     })
     setTimeout(() => {
         initData()
