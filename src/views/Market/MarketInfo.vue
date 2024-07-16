@@ -11,12 +11,14 @@
                     <div>{{ item.symbol || '--' }}</div>
                     <div class="info">{{ item.name || '--' }}</div>
                 </div>
-                <!-- <div class="search star">
-                    <img src="/static/img/market/stared.png" alt="⭐">
-                </div> -->
-                <!-- <div class="search" @click="router.push({ name: 'search' })">
-                    <img src="/static/img/common/search_box.png" alt="🔍">
-                </div> -->
+                <div class="title_shadow"></div>
+                <div class="search star" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
+                    <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
+                    <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
+                </div>
+                <div class="search" @click="fullScreen(true)">
+                    <Icon name="enlarge" />
+                </div>
             </div>
             <div class="header-price">
                 <h1 class="info" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
@@ -25,10 +27,12 @@
                     </template>
                     <span v-else>--</span>
                 </h1>
-                <div style="display: flex;align-items: center;" class="ratio "
+                <div style="display: flex;align-items: center;margin-left: 0.4rem" class="ratio "
                     :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
-                    <div class="ratio_price">{{ Number(item.price * (item.ratio || 0)).toFixed(2) }}</div>
-                    <div>{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%'
+                    <div class="ratio_price" v-if="Number(item.price * (item.ratio || 0))">{{ Number(item.price *
+                        (item.ratio ||
+                            0)).toFixed(2) }}</div>
+                    <div v-if="item.ratio">{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%'
                         }}</div>
                 </div>
                 <!-- <div class="count van-col van-col--5">
@@ -59,13 +63,13 @@
                     <div class="tab" :class="{ 'active_tab': timeType == '1W' }" @click="changeType('1W')">1W</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1M' }" @click="changeType('1M')">1M</div>
                     <div style="flex:1"></div>
-                    <div class="full-tab" @click="fullScreen(true)">
+                    <!-- <div class="full-tab" @click="fullScreen(true)">
                         <Icon name="enlarge" />
                     </div>
                     <div class="full-tab" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
                         <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
                         <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
-                    </div>
+                    </div> -->
                 </div>
                 <div class="chart_container" :class="{ 'fullscreen_container': fullWindow }">
                     <!-- 分时图 -->
@@ -268,14 +272,25 @@ const goBuy = key => {
             min-height: 1rem;
             align-items: center;
             justify-content: space-between;
+            position: relative;
 
             .back {
-                width: 0.4rem;
-                height: 0.4rem;
+                width: 0.36rem;
+                height: 0.36rem;
+                font-size: 0.36rem;
+            }
+
+            .title_shadow {
+                flex: 1;
             }
 
             .title {
-                flex: 1;
+                pointer-events: none;
+                position: absolute;
+                width: 100%;
+                top: 50%;
+                transform: translateY(-50%);
+                left: 0;
                 padding: 0 0.4rem;
                 text-align: center;
                 color: #061023;
@@ -295,8 +310,10 @@ const goBuy = key => {
             }
 
             .search {
-                width: 0.6rem;
-                height: 0.6rem;
+                width: 0.36rem;
+                height: 0.36rem;
+                font-size: 0.4rem;
+                margin-left: 0.2rem;
             }
         }
 
@@ -304,7 +321,7 @@ const goBuy = key => {
             padding-top: 0.1rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
 
             .info {
                 align-items: center;

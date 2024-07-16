@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component }">
-    <Loading v-show="pageLoading" size="48"
+    <Loading :color="'#1989fa'" :type="'circular'" v-show="pageLoading" size="48"
       style="position: fixed;top:30%;left:50%;transform: translateX(-50%) translateY(-50%);" :loading="pageLoading" />
     <div class="app_scroll" v-show="!pageLoading">
       <transition :name="transitionName">

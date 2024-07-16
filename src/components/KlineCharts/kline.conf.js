@@ -123,7 +123,7 @@ export const klineConfig = {
             },
             // 最新价标记
             last: {
-                show: true,
+                show: false,
                 upColor,
                 downColor,
                 noChangeColor,
