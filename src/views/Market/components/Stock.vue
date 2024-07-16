@@ -4,7 +4,7 @@
         <!-- 结果列表 -->
         <div class="list">
             <Loading v-show="!stockList.length && loading" />
-            <StockItem :scrollBox="'.market_stock'" :item="item" v-for="(item, i) in stockList" :key="i" />
+            <StockItem :scrollBox="'.page'" :item="item" v-for="(item, i) in stockList" :key="i" />
         </div>
     </div>
 </template>

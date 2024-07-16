@@ -24,7 +24,8 @@
       'stock-input-text',
       { enlarged: enlarged },
       { 'focusinput': isFocused === 4 }
-    ]" style="margin-bottom: 0.2rem;margin-top: 0.05rem;" @input="handleInput" @focus="handleFocus(4)" @blur="handleBlur(4)" placeholder="股票代码">
+    ]" style="margin-bottom: 0.2rem;margin-top: 0.05rem;" @input="handleInput" @focus="handleFocus(4)"
+      @blur="handleBlur(4)" placeholder="股票代码">
       <template #button v-if="stockCo.length > 0">
         <div class="co-text">
           <div>
@@ -100,7 +101,7 @@
 
 
 
-    <Button size="large" color="#e8503a" round v-if="isDownActive && token && !downdisable(active)" :disabled="downdisable(active)"
+    <Button size="large" color="#e8503a" round v-if="isDownActive && token && downdisable(active)"
       @click="openPositPopup('down')">买跌</Button>
     <Button size="large" color="#18b762" round v-if="isUpActive && token && !downdisable(active)"
       @click="openPositPopup('up')">买涨</Button>
@@ -129,11 +130,14 @@ import { debounce } from 'lodash';
 
 const token = computed(() => store.state.token);
 const router = useRouter();
+const route = useRoute()
 const active = computed(() => store.state.currentActive);
-
-const focus = ref(false);
-const value = ref("");
-
+const value = ref(route.query.symbol || '');
+setTimeout(() => {
+  if (value.value) {
+    handleInput()
+  }
+}, 0)
 const priceValue = ref("");
 const loseValue = ref("");
 const marketValue = ref("");

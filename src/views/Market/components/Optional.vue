@@ -1,17 +1,19 @@
 <!-- 自选 -->
 <template>
-    <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
+    <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" class="market_optional"
+        :list="watchList" />
+    <Tabs v-else class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
         <Tab :title="'股票'">
-            <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" :scroll-box="'.optional'"
-                class="market_optional" :list="watchList" />
             <StockRecommend @init="init" v-if="!watchList.length" :list="marketSrockRecommendList" />
         </Tab>
-        <Tab :title="'合约'"></Tab>
+        <Tab :title="'合约'">
+            <NoData />
+        </Tab>
     </Tabs>
-
 </template>
 
 <script setup>
+import NoData from "@/components/NoData.vue"
 import StockTable from "@/components/StockTable.vue"
 import StockRecommend from "@/components/StockRecommend.vue"
 // import router from "@/router"
@@ -44,7 +46,7 @@ const getWatchList = () => { // 获取订阅列表
     _watchlist().then(res => {
         if (res.code == 200) {
             if (watchList.value.length) { // 有历史数据就更新
-                const rs = res.data.stock.map(item => {
+                const rs = res.data.map(item => {
                     const target = watchList.value.find(a => a.symbol == item.symbol)
                     if (target) {
                         Object.assign(target, item)
@@ -89,7 +91,7 @@ const openRecommendList = () => {
     loading.value = true
     _watchlistDefault().then(res => {
         if (res.code == 200) {
-
+            console.error('???', res)
             const arr = res.data.stock.map(item => {
                 const target = marketSrockRecommendList.value.find(a => a.symbol == item.symbol)
                 return target || item
@@ -151,8 +153,8 @@ const remove = item => {
 <style lang="less" scoped>
 .option_tab {
     :deep(.van-tab__panel) {
-        height: calc(var(--app-height) - 4.2rem) !important;
-        overflow-y: auto;
+        // height: calc(var(--app-height) - 4.2rem) !important;
+        // overflow-y: auto;
     }
 
     :deep(.van-tabs__nav--line) {

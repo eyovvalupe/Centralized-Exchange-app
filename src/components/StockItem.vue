@@ -79,7 +79,10 @@ onMounted(() => {
             scrollParent.addEventListener('scroll', getShow)
         }
         getShow()
-    }, 100)
+        setTimeout(() => {
+            getShow()
+        }, 800)
+    }, 200)
 })
 onUnmounted(() => {
     if (scrollParent && scrollParent.removeEventListener) {
@@ -173,7 +176,7 @@ const removeStock = item => {
     align-items: center;
     height: 1.44rem;
     padding: 0 0.3rem;
-    // border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid #EAEAEA;
 
 
     .td5 {

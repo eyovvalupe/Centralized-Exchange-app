@@ -1,7 +1,6 @@
 <!-- 市场 -->
 <template>
     <div class="page page_market ">
-
         <transition :name="detailTransition">
             <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'" />
             <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
@@ -18,9 +17,11 @@
                     v-model:active="active" :swipeable="false" animated shrink>
                     <Tab :title="'自选'" class="optional">
                         <Optional v-if="activated && active == 0" ref="OptionalRef" />
+                        <div style="height:1rem"></div>
                     </Tab>
                     <Tab :title="'股票'">
                         <Stock v-if="active == 1" ref="StockRef" />
+                        <div style="height:1rem"></div>
                     </Tab>
                     <!-- <Tab :title="'理财'">
                         <Financial />
@@ -28,12 +29,11 @@
                     <Tab :title="'IPO'">
                         <IPO v-if="active == 2" :type="'market'" ref="IPORef" @reloading="setReloading"
                             @showOpenDetail="showOpenDetail" />
+                        <div style="height:1rem"></div>
                     </Tab>
                 </Tabs>
             </PullRefresh>
         </transition>
-
-
     </div>
 </template>
 
@@ -146,18 +146,23 @@ const setReloading = () => {
 
 <style lang="less" scoped>
 .page_market {
-    display: flex;
-    flex-direction: column;
     padding-bottom: 1.4rem;
-
+    height: 100%;
+    overflow-y: auto;
 
     .title {
+        padding: 0 0.24rem 0 0.32rem;
         height: 1.12rem;
-        color: #0D0D12;
-        font-size: 0.56rem;
         font-weight: 600;
-        line-height: 1.12rem;
-        padding: 0 0.3rem;
+        color: #0D0D12;
+        line-height: 0.5rem;
+        font-size: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0.1rem;
+        position: relative;
+
     }
 
     .search_box {
@@ -165,19 +170,16 @@ const setReloading = () => {
         z-index: 9;
         top: 0.2rem;
         right: 0.24rem;
-        width: 0.8rem;
-        height: 0.8rem;
+        width: 0.64rem;
+        height: 0.64rem;
     }
 
     .tabs {
-        flex: 1;
         overflow: hidden;
-        display: flex;
-        flex-direction: column;
 
         :deep(.van-tab__panel) {
-            height: calc(var(--app-height) - 3.4rem);
-            overflow-y: auto;
+            // height: calc(var(--app-height) - 3.4rem);
+            // overflow-y: auto;
         }
 
         :deep(.van-tabs__nav--card) {

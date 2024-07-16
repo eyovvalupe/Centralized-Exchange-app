@@ -66,6 +66,9 @@ onMounted(() => {
     chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
     chart?.setMaxOffsetRightDistance(50) // 设置右边最大空出的边距
     chart.setStyles({
+        // tooltip: {
+        //     showRule: 'none'
+        // },
         candle: { type: 'candle_solid' }
     })
     setTimeout(() => {
