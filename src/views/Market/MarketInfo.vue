@@ -463,10 +463,11 @@ const fullScreen = (key) => {
             overflow: hidden;
 
             .tabs {
-                padding-left: .2rem;
+                padding: 0 .2rem;
                 height: 0.48rem;
                 display: flex;
                 align-items: center;
+                justify-content: space-between;
 
                 .tab {
                     height: 0.48rem;
@@ -480,8 +481,7 @@ const fullScreen = (key) => {
                     font-weight: 400;
                     margin-right: 0.18rem;
                     padding: 0 0.12rem;
-                    min-width: calc(100vw / 7.95);
-
+                    min-width: 0.8rem;
                 }
 
                 .active_tab {
@@ -506,7 +506,7 @@ const fullScreen = (key) => {
                 position: fixed;
                 z-index: 9999;
                 width: 100vw;
-                height: 100vh;
+                height: var(--app-height);
                 top: 0;
                 // left: 100vw;
                 left: 0;

@@ -151,7 +151,7 @@ const remove = item => {
 <style lang="less" scoped>
 .option_tab {
     :deep(.van-tab__panel) {
-        height: calc(100vh - 4.2rem) !important;
+        height: calc(var(--app-height) - 4.2rem) !important;
         overflow-y: auto;
     }
 

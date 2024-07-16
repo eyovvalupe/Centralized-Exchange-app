@@ -193,7 +193,7 @@ defineExpose({
     }
 
     .open_list {
-        height: calc(100vh - 5.5rem);
+        height: calc(var(--app-height) - 5.5rem);
         overflow-y: auto;
     }
 

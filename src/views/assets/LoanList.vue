@@ -213,12 +213,12 @@ onUnmounted(() => {
     .loan_box {
         overflow-y: auto;
         width: 100%;
-        height: calc(100vh - 2.2rem);
+        height: calc(var(--app-height) - 2.2rem);
     }
 
     .list {
         overflow-y: auto;
-        height: calc(100vh - 2.4rem);
+        height: calc(var(--app-height) - 2.4rem);
         padding: 0 0.32rem;
 
         .item {

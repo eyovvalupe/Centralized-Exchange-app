@@ -265,7 +265,7 @@ Promise.all(loadingList).finally(() => {
     }
 
     .tab_body {
-        // height: calc(100vh - 3.7rem);
+        // height: calc(var(--app-height) - 3.7rem);
         // width: 100%;
         // overflow-y: auto;
     }

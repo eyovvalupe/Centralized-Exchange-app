@@ -37,7 +37,7 @@ const scrollContainer = ref(null);
 const isReadMessage = (currTime) => {
     apiMsgRead({ nologinid: storeChat.getters.getNologinid }).then((res) => {
         const { lasttime } = res.data
-        storeChat.commit('setreadMessageTime', currTime ? lasttime : new Date().valueOf()+1000)
+        storeChat.commit('setreadMessageTime', currTime ? lasttime : new Date().valueOf() + 1000)
         const tmp_arr = messageList.value.concat(hasNewMessage.value);
         storeChat.commit('setNewMessageList', tmp_arr)
     })
@@ -83,7 +83,7 @@ const sendEvent = () => {
     isReadMessage();
     scrollToBottom()
 }
-onUnmounted(()=>{
+onUnmounted(() => {
     storeChat.commit('setHistoryMsg', [])
     serviceChat.destroy();
 })
@@ -102,7 +102,7 @@ onUnmounted(()=>{
     overflow: hidden;
 
     .chat-con {
-        height: calc(100vh - 2.25rem);
+        height: calc(var(--app-height) - 2.25rem);
         padding: 10px 0;
         overflow-y: auto;
     }

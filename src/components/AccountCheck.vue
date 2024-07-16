@@ -135,7 +135,7 @@ defineExpose({
     overflow: hidden;
     padding: 0.2rem 0.32rem 0.64rem 0.32rem;
     position: relative;
-    height: 100vh;
+    height: var(--app-height);
 
     .account_check_popup_title {
         text-align: center;

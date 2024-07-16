@@ -176,7 +176,7 @@ const setReloading = () => {
         flex-direction: column;
 
         :deep(.van-tab__panel) {
-            height: calc(100vh - 3.4rem);
+            height: calc(var(--app-height) - 3.4rem);
             overflow-y: auto;
         }
 

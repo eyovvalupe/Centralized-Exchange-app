@@ -258,7 +258,7 @@ const getDate = str => {
     }
 
     .list_down {
-        height: calc(100vh - 1.88rem);
+        height: calc(var(--app-height) - 1.88rem);
     }
 
     .list_0_item {
