@@ -1,14 +1,25 @@
 <template>
   <div class="common-open-position">
     <div class="stock-box">
-      <span class="grop-title">股票</span>
+      <span class="grop-title" style="padding-top: 5px;">股票</span>
       <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
       <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" />
       <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="stockCo.length > 0" @click="openPopup" />
 
     </div>
-
-    <Field v-model="value" :class="[
+    <div class="animate-input num-input" :class="{ inputFocus: isFocused === 4 }">
+      <div class="ipt_tip">股票代码 </div>
+      <input v-model="value" @input="handleInput" @focus="handleFocus(4)" @blur="handleBlur(4)" placeholder="">
+      <div class="co-text" v-if="stockCo.length > 0" @click="openPopup">
+        <div>
+          {{ stockCo[0].symbol }}
+        </div>
+        <div style="color: #9ea3ae">
+          {{ stockCo[0].name }}
+        </div>
+      </div>
+    </div>
+    <!-- <Field v-model="value" :class="[
       'num-input',
       'stock-input-text',
       { enlarged: enlarged },
@@ -25,42 +36,53 @@
           </div>
         </div>
       </template>
-    </Field>
-
-    <span class="grop-title" style="color: #014cfa">全仓 VS 逐仓</span>
-    <div style="display: flex; margin-top: 0.12rem; margin-bottom: 0.2rem">
-
+</Field>-->
+    <div class="flex" style="margin-top: 15px;">
       <div>
+        <div class="grop-title  m-b-5" style="color: #014cfa">全仓 VS 逐仓</div>
         <div class="small-select" @click="allSelect">
           <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
           <img src="/static/img/trade/down.png" class="down-img" />
         </div>
-
       </div>
 
 
       <div style="flex: 1;">
-        <div class="big-selcet" @click="leverSelect">
-          {{ selectedLeverOptionText }}
-          <img src="/static/img/trade/down.png" class="down-img" />
-        </div>
-      </div>
+        <div class="flex flex-end">
+          <div class="grop-title right-text m-b-5">数量(%)</div>
 
+        </div>
+
+        <Field v-model="sliderValue" type="number" input-align="right" @change="inputChange" @focus="handleFocus(5)"
+          @blur="handleBlur(5)" :class="['num-input', { 'focusinput': isFocused === 5 }]" style="margin-top:0" />
+        <!-- <Field v-model="sliderValue" input-align="right" @focus="handleFocus(6)" class="num-input focusinput" style="margin-top:0" /> -->
+      </div>
     </div>
-    <span class="grop-title">数量</span>
-    <Field v-model="numValue" type="number" input-align="right" @change="inputChange" @focus="handleFocus(5)"
-      @blur="handleBlur(5)" :class="['num-input', { 'focusinput': isFocused === 5 }]" />
+
 
     <div class="position-account">
-      可买数量 <span style="color: #333">{{ roundedQuantity }}</span>
+      <!--  <div class="empty-left"></div>-->
+      <span class="btn_icon">
+        <span class="flex" @click="jump('transfer')">
+          <span><img src="/static/img/assets/trans_icon.png" alt="img"></span>
+          <label>划转</label>
+        </span>
+        <span class="flex" @click="jump('loanList')">
+          <span><img src="/static/img/assets/loan_icon.png" alt="img"></span>
+          <label>借贷</label>
+        </span>
+      </span>
+      <span class="flex"> 可买数量 <span style="color: #333">{{ roundedQuantity }}</span>
+        <span class="setall" @click="allNumber">全部</span>
+      </span>
     </div>
 
-
+    <div class="slider-container-box">
     <div class="slider-container">
       <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
         @change="onSliderChange" />
     </div>
-
+    </div>
     <div class="percentages">
       <div v-for="percent in percentages" :key="percent" class="percentage">
         <div class="line"></div>
@@ -77,22 +99,10 @@
         <div class="position-fee">保证金 {{ paymentAmount }} + 手续费 {{ openfee }}</div>
       </div> -->
 
-    <Button size="large" color="rgb(242, 242, 242)" round v-if="isDownActive && token && downdisable(active)" style="
-    color: rgb(153, 153, 153);">
-      <span>买跌</span>
-      <span class="yuan"></span>
-    </Button>
 
-    <Button size="large" color="#e8503a" round v-if="isDownActive && token && !downdisable(active)"
+
+    <Button size="large" color="#e8503a" round v-if="isDownActive && token && downdisable(active)"
       @click="openPositPopup('down')">买跌</Button>
-
-
-    <Button size="large" color="rgb(242, 242, 242)" round v-if="isUpActive && token && downdisable(active)" style="
-    color: rgb(153, 153, 153);">
-      <span>买涨</span>
-      <span class="yuan" style="background-color: #18b762;"></span>
-    </Button>
-
     <Button size="large" color="#18b762" round v-if="isUpActive && token && !downdisable(active)"
       @click="openPositPopup('up')">买涨</Button>
 
@@ -122,15 +132,12 @@ const token = computed(() => store.state.token);
 const router = useRouter();
 const route = useRoute()
 const active = computed(() => store.state.currentActive);
-
-
 const value = ref(route.query.symbol || '');
 setTimeout(() => {
   if (value.value) {
     handleInput()
   }
 }, 0)
-
 const priceValue = ref("");
 const loseValue = ref("");
 const marketValue = ref("");
@@ -267,7 +274,7 @@ const getPrice = (val) => {
   //获取股票价格
   if (val) {
     // 发起 API 请求获取股票价格和钱包余额
-    _basic({ symbol: val }).then(res => {
+    _basic({ symbol: val.toLocaleUpperCase() }).then(res => {
       if (res.code == 200) {
         stockCo.value = [res.data];
         price = new Decimal(res.data.price);
@@ -388,7 +395,6 @@ watch([active, currentSymbol], () => {
   }, 400);
 }, { immediate: true })
 
-
 const onSliderChange = (newValue) => {
   //滚动滑动条
   sliderValue.value = newValue;
@@ -398,7 +404,9 @@ const onSliderChange = (newValue) => {
     getnumval(newValue)
   }
 };
-
+const allNumber=()=>{
+  onSliderChange(100);
+}
 const getnumval = (newValue) => {
   //根据滑动条计算数量输入框中的值
   try {
@@ -470,8 +478,10 @@ const handleBlur = (val) => {
       store.commit('setCurrentNumber', numValue.value)
     }
   }
-  if (val == 4 && value.value.length === 0 && stockCo.value.length === 0) {
-    enlarged.value = false
+  if (val == 4) {
+    // enlarged.value = false
+    value.value = ''
+    loading.value = false
   }
 };
 
@@ -479,6 +489,7 @@ const clear = () => {
   //输入框清空
   stockCo.value = [];
   roundedQuantity.value = 0
+  value.value = ''
   sliderValue.value = 0
 
   // numValue.value = minOrder.value
@@ -490,13 +501,12 @@ const clear = () => {
 
 const getData = () => {
   //股票搜索
-
   if (value.value === '') {
     loading.value = false
     debouncedSearch.cancel();
   } else {
     loading.value = true
-    if (value.value.length > 0) {
+    if (value.value && value.value.length > 0) {
       debouncedSearch(value.value);
     }
   }
@@ -655,12 +665,15 @@ const leverSelect = () => {
   store.commit('setkeyborader', false)
 }
 
-const inputChange = () => {
-  if (numValue.value == '' || !numValue.value) {
-    numValue.value = minOrder.value
+const inputChange = (val) => {
+  // if (numValue.value == '' || !numValue.value) {
+  //   numValue.value = minOrder.value
+  // }
+  if (val > 100) {
+    sliderValue.value = 100
   }
-  store.commit('setCurrentNumber', numValue.value)
   getslide()
+  store.commit('setCurrentNumber', numValue.value)
   // getPay();
 }
 
@@ -684,7 +697,7 @@ defineExpose({
 
 <style lang="less">
 .common-open-position {
-  padding: 0;
+  padding: .25rem 0;
   padding-bottom: 0.76rem;
   background-color: white;
 
@@ -700,6 +713,48 @@ defineExpose({
     display: inline-block;
     margin-left: 10px;
     vertical-align: top;
+  }
+
+  .animate-input {
+    position: relative;
+    border: 1px solid #D0D8E2;
+    border-radius: 0.12rem;
+    height: 100%;
+    transition: all 1s;
+    height: 0.86rem;
+    padding: 0.1rem;
+
+    .ipt_tip {
+      color: #9ea3ae;
+      display: none;
+      font-size: 12px;
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+    }
+
+    &.inputFocus {
+      border: 1px solid #014CFA;
+
+      .ipt_tip {
+        display: block;
+      }
+
+      input {
+        width: 100%;
+        height: calc(100% - 0.2rem);
+        text-align: left;
+      }
+    }
+  }
+
+  .setall {
+    color: #014cfa;
+    // line-height: 0.35rem;
+    margin-left: .2rem;
   }
 
   .position-header {
@@ -753,6 +808,14 @@ defineExpose({
     font-style: normal;
     font-weight: 400;
     line-height: 0.36rem;
+
+    &.right-text {
+      text-align: right;
+    }
+  }
+
+  .m-b-5 {
+    margin-bottom: .1rem;
   }
 
   // .position-box {
@@ -778,15 +841,6 @@ defineExpose({
     border: 0.02rem solid #d0d8e2;
     margin-bottom: 0.2rem;
     margin-top: 0.05rem !important;
-  }
-
-  .num-input {
-    width: 100%;
-    height: 0.88rem;
-    border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
-    margin-top: 0.2rem;
-    transition: all 0.3s ease;
   }
 
   .price-num-input {
@@ -898,15 +952,43 @@ defineExpose({
     top: 0.28rem;
   }
 
-  // }
+  .slider-container-box{
+
+  }
   .position-account {
-    margin: 0.1rem 0;
+    margin: 0.1rem 0 1rem 0;
     text-align: right;
     color: #8f92a1;
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
     line-height: 0.48rem;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+
+    .empty-left {
+      width: 1rem;
+    }
+
+    .btn_icon {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+
+      span.flex {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-content: center;
+        margin-right: 10px;
+      }
+
+      img {
+        margin: 4px 5px 0 0;
+        height: 18px !important;
+      }
+    }
   }
 
   .position-bottom {
@@ -959,12 +1041,15 @@ defineExpose({
   }
 
   .co-text {
+    position: absolute;
+    right: .2rem;
+    top: .12rem;
+    height: .88rem;
     color: #333;
     text-align: right;
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 0.36rem;
   }
 
   .percentages {
@@ -1030,8 +1115,8 @@ defineExpose({
     justify-content: space-between;
 
     .stock-img {
-      width: 0.5rem !important;
-      height: 0.5rem !important;
+      width: 0.4rem !important;
+      height: 0.4rem !important;
     }
   }
 

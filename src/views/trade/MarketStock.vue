@@ -585,6 +585,9 @@ defineExpose({
   .flex {
     display: flex;
     justify-content: space-between;
+    &.flex-end{
+      justify-content: flex-end !important;
+    }
     >div {
         transition: all ease .2s;
         overflow: hidden;
