@@ -78,13 +78,13 @@
 
 
           <div style="display: flex;">
-            <div class="value" @click="showPopup" style="margin-right: 0.2rem;">
+            <div class="value" @click="showPopup">
               <img src="/static/img/trade/value.png" alt="" class="value-img" />
               <!-- <span style="vertical-align: middle">持仓价值</span> -->
             </div>
-            <div class="value">
+            <!-- <div class="value">
               <img src="/static/img/trade/risk.png" alt="" class="value-img" />
-            </div>
+            </div> -->
           </div>
 
         </div>
