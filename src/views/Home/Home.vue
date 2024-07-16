@@ -149,6 +149,8 @@ onDeactivated(() => {
 <style lang="less" scoped>
 .page_home {
   padding: 0 0 1.9rem 0;
+  height: 100%;
+  overflow-y: auto;
 
   .home_banner {
     padding-bottom: 0.2rem;

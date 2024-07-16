@@ -11,16 +11,15 @@
                     <div>{{ item.symbol || '--' }}</div>
                     <div class="info">{{ item.name || '--' }}</div>
                 </div>
-                <div class="search star">
+                <!-- <div class="search star">
                     <img src="/static/img/market/stared.png" alt="⭐">
-                </div>
+                </div> -->
                 <!-- <div class="search" @click="router.push({ name: 'search' })">
                     <img src="/static/img/common/search_box.png" alt="🔍">
                 </div> -->
             </div>
-            <div class="header-price van-row van-row--justify-space-between">
-                <h1 class="info van-col van-col--10 align-content"
-                    :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
+            <div class="header-price">
+                <h1 class="info" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
                     <template v-if="item.price || item.close">
                         {{ Number(item.price || item.close).toFixed(2) }}
                     </template>
@@ -59,8 +58,13 @@
                     <div class="tab" :class="{ 'active_tab': timeType == '1D' }" @click="changeType('1D')">1D</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1W' }" @click="changeType('1W')">1W</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1M' }" @click="changeType('1M')">1M</div>
+                    <div style="flex:1"></div>
                     <div class="full-tab" @click="fullScreen(true)">
                         <Icon name="enlarge" />
+                    </div>
+                    <div class="full-tab" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
+                        <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
+                        <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                     </div>
                 </div>
                 <div class="chart_container" :class="{ 'fullscreen_container': fullWindow }">
@@ -77,18 +81,19 @@
             </div>
         </div>
         <!-- 交易按钮 -->
-        <div class="bot-buysell van-row van-row--justify-space-between align-content">
-            <div class="txt-center van-col van-col--6">
-                <span class="icon-heyue">
-                    <img src="/static/img/market/heyue.png">
-                </span>
-                <span class="fn-12">合约</span>
-            </div>
-            <div @click="showBuy = true" class="submit btn-red  van-col van-col--8">
+        <div class="bot-buysell" :class="{ 'sell_key_open': switchKey }">
+            <div @click="goBuy(true)" class="submit btn-red  van-col van-col--8">
                 买涨
             </div>
-            <div @click="showBuy = true" class="submit btn-green  van-col van-col--8">
+            <div @click="goBuy(false)" class="submit btn-green  van-col van-col--8">
                 买跌
+            </div>
+
+            <div class="sell_key" @click="switchKey = !switchKey">
+                <div class="sell_key_icon">
+                    <img src="/static/img/trade/down.png" alt="img">
+                </div>
+                <span>{{ switchKey ? '收起' : '展开' }}</span>
             </div>
         </div>
         <!-- 时间选择弹窗 -->
@@ -117,15 +122,14 @@
 </template>
 
 <script setup>
-import { Icon, Popup, ActionSheet } from "vant"
+import { Icon, Popup, ActionSheet, showNotify } from "vant"
 import router from "@/router"
 import { computed, ref } from "vue"
 import store from "@/store";
 import AreaChart from "@/components/KlineCharts/AreaChart.vue"
 import KlineChart from "@/components/KlineCharts/KlineChart.vue"
 import { _formatNumber } from "@/utils/index"
-import { _basic, _profile } from "@/api/api"
-import { getTimestr } from "@/utils/time"
+import { _basic, _profile, _add, _del } from "@/api/api"
 
 const activeTab = ref(1)
 const showBuy = ref(false) // 购买弹窗
@@ -133,6 +137,38 @@ const actions = ref([
     { name: '股票买涨', key: 'up' },
     { name: '股票买跌', key: 'down' },
 ])
+
+// 添加自选
+const loading = ref(false)
+const addCollect = () => {
+    if (loading.value) return
+    loading.value = true
+    if (item.value.watchlist == 0) {
+        _add({
+            symbol: item.value.symbol
+        }).then(res => {
+            if (res.code == 200) {
+                store.commit('setCurrStock', { watchlist: 1 })
+                showNotify({ type: 'success', message: '添加成功' })
+            }
+        }).finally(() => {
+            loading.value = false
+        })
+    } else {
+        _del({
+            symbol: item.value.symbol
+        }).then(res => {
+            if (res.code == 200) {
+                store.commit('setCurrStock', { watchlist: 0 })
+                showNotify({ type: 'success', message: '移除成功' })
+            }
+        }).finally(() => {
+            loading.value = false
+        })
+    }
+
+
+}
 
 
 // 股票信息
@@ -178,6 +214,8 @@ const changeType = type => {
     timeType.value = type
 }
 
+// 投注折叠
+const switchKey = ref(false)
 
 // 全屏
 store.commit('setFullscreen', false)
@@ -189,11 +227,27 @@ const fullScreen = (key) => {
     if (KlineChartRef.value) KlineChartRef.value.resetSize()
     if (AreaChartRef.value) AreaChartRef.value.resetSize()
 }
+
+
+
+// 下单
+const goBuy = key => {
+    store.commit('setActive', key)
+    router.push({
+        name: 'trade',
+        query: {
+            symbol: item.value.symbol,
+        }
+    })
+}
 </script>
 
 <style lang="less" scoped>
 .page_marketinfo {
     padding: 1.8rem 0 0 0;
+    overflow: hidden;
+
+    position: relative;
 
     .has_padding_x {
         padding: 0 0.3rem;
@@ -248,6 +302,9 @@ const fullScreen = (key) => {
 
         .header-price {
             padding-top: 0.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
             .info {
                 align-items: center;
@@ -323,16 +380,57 @@ const fullScreen = (key) => {
     }
 
     .bot-buysell {
-        background: #ffffffde;
-        // position:fixed;
-        // bottom: 0;
-        // z-index: 1;
+        background-color: #fff;
+        z-index: 99;
+        border-top: 1px solid #efefef;
+        position: absolute;
         width: 100%;
-        padding: .2rem 0;
-        padding-bottom: calc(.2rem + constant(safe-area-inset-bottom));
-        /*兼容 IOS<11.2*/
-        padding-bottom: calc(.2rem + env(safe-area-inset-bottom));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        bottom: 0;
+        width: 100%;
+        padding: .2rem 1rem 0.2rem 0.2rem;
+        transition: all ease .3s;
+        transform: translateY(100%);
+
         /*兼容 IOS>11.2*/
+        .submit {
+            margin: 0 0.4rem;
+        }
+
+        .sell_key {
+            position: absolute;
+            bottom: 1.2rem;
+            right: 0;
+            padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+            border-radius: 0.1rem;
+            font-size: 0.2rem;
+            color: #999;
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+
+            .sell_key_icon {
+                width: 0.28rem;
+                height: 0.28rem;
+                margin-right: 0.05rem;
+                transition: all ease .3s;
+                transform: rotate(180deg)
+            }
+        }
+    }
+
+    .sell_key_open {
+        transform: translateY(0);
+
+        .sell_key {
+            background-color: rgba(0, 0, 0, 0);
+
+            .sell_key_icon {
+                transform: rotate(0deg)
+            }
+        }
     }
 
     .ratio_price {
@@ -457,7 +555,7 @@ const fullScreen = (key) => {
 
         .chart_box {
             width: 100%;
-            height: calc(var(--app-height) - 3.2rem);
+            height: calc(var(--app-height) - 1.8rem);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -467,7 +565,7 @@ const fullScreen = (key) => {
                 height: 0.48rem;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
+                justify-content: flex-start;
 
                 .tab {
                     height: 0.48rem;
@@ -492,7 +590,10 @@ const fullScreen = (key) => {
 
             .full-tab {
                 color: #333;
-                font-size: 20px;
+                font-size: 0.4rem;
+                width: 0.4rem;
+                height: 0.4rem;
+                margin-left: 0.2rem;
             }
 
             .chart_container {

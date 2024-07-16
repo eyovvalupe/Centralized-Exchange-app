@@ -4,8 +4,7 @@
       <span class="grop-title">股票</span>
       <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
       <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" />
-      <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="stockCo.length > 0"
-        @click="openPopup" />
+      <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="stockCo.length > 0" @click="openPopup" />
 
     </div>
 
@@ -14,7 +13,8 @@
       'stock-input-text',
       { enlarged: enlarged },
       { 'focusinput': isFocused === 4 }
-    ]" style="margin-bottom: 0.2rem;margin-top: 0.05rem;" @input="handleInput" @focus="handleFocus(4)" @blur="handleBlur(4)" placeholder="股票代码">
+    ]" style="margin-bottom: 0.2rem;margin-top: 0.05rem;" @input="handleInput" @focus="handleFocus(4)"
+      @blur="handleBlur(4)" placeholder="股票代码">
       <template #button v-if="stockCo.length > 0">
         <div class="co-text">
           <div>
@@ -83,8 +83,8 @@
       <span class="yuan"></span>
     </Button>
 
-    <Button size="large" color="#e8503a" round v-if="isDownActive && token && !downdisable(active)" @click="openPositPopup('down')"
-    >买跌</Button>
+    <Button size="large" color="#e8503a" round v-if="isDownActive && token && !downdisable(active)"
+      @click="openPositPopup('down')">买跌</Button>
 
 
     <Button size="large" color="rgb(242, 242, 242)" round v-if="isUpActive && token && downdisable(active)" style="
@@ -93,8 +93,8 @@
       <span class="yuan" style="background-color: #18b762;"></span>
     </Button>
 
-    <Button size="large" color="#18b762" round v-if="isUpActive && token && !downdisable(active)" @click="openPositPopup('up')"
-    >买涨</Button>
+    <Button size="large" color="#18b762" round v-if="isUpActive && token && !downdisable(active)"
+      @click="openPositPopup('up')">买涨</Button>
 
 
     <Button size="large" color="#014cfa" round v-if="!token" style="margin-bottom: 0.34rem"
@@ -120,9 +120,16 @@ import { debounce } from 'lodash';
 
 const token = computed(() => store.state.token);
 const router = useRouter();
+const route = useRoute()
 const active = computed(() => store.state.currentActive);
 
-const value = ref("");
+
+const value = ref(route.query.symbol || '');
+setTimeout(() => {
+  if (value.value) {
+    handleInput()
+  }
+}, 0)
 
 const priceValue = ref("");
 const loseValue = ref("");
@@ -282,7 +289,7 @@ const getPrice = (val) => {
       }
       store.commit('setCurrentSymbol', data)
       getAccount(stockPrice.value)
-      
+
     })
   }
 }
@@ -486,7 +493,7 @@ const getData = () => {
 
   if (value.value === '') {
     loading.value = false
-    debouncedSearch.cancel(); 
+    debouncedSearch.cancel();
   } else {
     loading.value = true
     if (value.value.length > 0) {
@@ -502,7 +509,7 @@ const getData = () => {
       symbol: ''
     }
     store.commit('setCurrentSymbol', data)
-    store.commit('setChooseSymbol',[])
+    store.commit('setChooseSymbol', [])
     clear()
     return;
   }
@@ -590,7 +597,7 @@ onMounted(() => {
     getPrice(currentSymbol.value.symbol)
     first.value = true
   }
-  
+
 });
 
 const jump = (name) => {
@@ -694,6 +701,7 @@ defineExpose({
     margin-left: 10px;
     vertical-align: top;
   }
+
   .position-header {
     display: flex;
 

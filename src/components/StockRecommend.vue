@@ -106,7 +106,7 @@ const submit = () => {
 <style lang="less" scoped>
 .recommend_list {
     padding: 0 0.32rem;
-    height: calc(var(--app-height) - 4.2rem);
+    // height: calc(var(--app-height) - 4.2rem);
     overflow: hidden;
     display: flex;
     flex-direction: column;

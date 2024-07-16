@@ -28,8 +28,8 @@ export const klineConfig = {
     candle: {
         type: "area", // area, candle_solid
         tooltip: {
-            showRule: "always", // none
-            // showRule: "follow_cross", // none
+            // showRule: "always", // none
+            showRule: "follow_cross", // none
             showType: "rect",
             custom: [
                 // { title: "time", value: "{time}" },
@@ -64,7 +64,7 @@ export const klineConfig = {
                 marginTop: 4,
                 marginRight: 8,
                 marginBottom: 4
-              },
+            },
         },
         bar: {
             upColor,
@@ -252,26 +252,26 @@ export const klineConfig = {
         reverse: false,
         // y轴线
         axisLine: {
-            show: true,
+            show: false,
             color: "#888", // #888
             size: 0.5
         },
-        // x轴分割文字
+        // y轴分割文字
         tickText: {
             show: true,
-            color: "#9EA3AE", // #D9D9D9
+            color: "#D9D9D9", // #D9D9D9
             family: "Helvetica Neue",
             weight: "normal",
             size: 12,
             marginStart: 0, // 4,
             marginEnd: 0 //4
         },
-        // x轴分割线
+        // y轴分割线
         tickLine: {
-            show: true,
+            show: false,
             size: 1,
             length: 3,
-            color: "#888888"
+            color: "red"
         }
     }
 };

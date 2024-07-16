@@ -166,7 +166,7 @@ Promise.all(loadingList).finally(() => {
 
 <style lang="less" scoped>
 .page_assets {
-    padding: 0.24rem 0 0 0;
+    // padding: 0.24rem 0 0 0;
     height: 100%;
     overflow-y: auto;
 
