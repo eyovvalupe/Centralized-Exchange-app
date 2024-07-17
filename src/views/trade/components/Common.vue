@@ -39,47 +39,45 @@
       </template>
 </Field>-->
     <div class="flex flex-between" style="margin: .4rem 0 .1rem 0;">
-      <div class="flex">
-        <span class="btn_icon">
-        <span class="flex" @click="jump('transfer')">
-          <span><img src="/static/img/assets/trans_icon.png" alt="img"></span>
-          <span class="grop-title" style="color: #014cfa">划转</span>
-        </span>
-        <span class="flex" @click="jump('loanList')">
-          <span><img src="/static/img/assets/loan_icon.png" alt="img"></span>
-          <span class="grop-title" style="color: #014cfa">借贷</span>
-        </span>
-      </span>
-      <!-- <div class="grop-title right-text">数量</div> -->
-      </div>
       <div class="grop-title" style="color: #014cfa">全仓 VS 逐仓</div>
-    </div>
-    <div class="flex flex-between">
-      <div class="animate-input num-input flex"
-        :class="{ hasval: !!numValue, inputFocus: isFocused === 5 || numValue }">
-        <div class="ipt_tip">可买数量: <b>{{ roundedQuantity }}</b> </div>
-        <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)" @blur="handleBlur(5)" ref="buyNumRef"
-          placeholder="">
-        <div class="link-text" @click="allNumber">
-          全部
-        </div>
+      <div class="right-input flex flex-between">
+        <div class="grop-title right-text">数量</div>
+        <span class="btn_icon">
+          <span class="flex" @click="jump('transfer')">
+            <span><img src="/static/img/assets/trans_icon.png" alt="img"></span>
+            <span class="grop-title" style="color: #014cfa">划转</span>
+          </span>
+          <span class="flex" @click="jump('loanList')">
+            <span><img src="/static/img/assets/loan_icon.png" alt="img"></span>
+            <span class="grop-title" style="color: #014cfa">借贷</span>
+          </span>
+        </span>
+
       </div>
+
+    </div>
+    <!-- {{ isFocused }}---{{  numValue }} -->
+    <div class="flex flex-between">
       <div class="small-select" @click="allSelect">
         <div class="abs-con">
           <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
           <img src="/static/img/trade/down.png" class="down-img" />
         </div>
       </div>
-    </div>
-
-    <div class="position-account">
-      <span class="flex"> 可买数量 <span style="color: #333">{{ roundedQuantity }}</span> </span>
+     
+      <div class="animate-input num-input flex"
+        :class="{ hasval: !!numValue, inputFocus: isFocused === 5 }">
+        <div class="ipt_tip" v-if="isFocused === 5 || !numValue ">可买 <b>{{ roundedQuantity }}</b> </div>
+        <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)" @blur="handleBlur(5)"
+          ref="buyNumRef" placeholder="">
+      </div>
     </div>
 
     <div class="slider-container-box">
       <div class="slider-container">
-        <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
-          @change="onSliderChange" />
+        <Slider :min="0" :max="100" v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa"
+          inactive-color="#f2f2f2" @change="onSliderChange">
+        </Slider>
       </div>
     </div>
     <div class="percentages">
@@ -100,10 +98,10 @@
 
 
 
-    <Button size="large" color="#e8503a" round v-if="isDownActive && token && !downdisable(active)"
+    <Button size="large" color="#e8503a" round v-if="isDownActive && token" :disabled="downdisable(active)"
       @click="openPositPopup('down')">买跌</Button>
-    <Button size="large" color="#18b762" round v-if="isUpActive && token && !downdisable(active)"
-      @click="openPositPopup('up')">买涨</Button>
+    <Button size="large" color="#18b762" round v-if="isUpActive && token" :disabled="downdisable(active)"
+      @click="openPositPopup('up')">买涨 </Button>
 
 
     <Button size="large" color="#014cfa" round v-if="!token" style="margin-bottom: 0.34rem"
@@ -157,7 +155,7 @@ const option2 = computed(() => {
 
 const roundedQuantity = ref(0)
 const saveRoundedQuantity = computed(() => {
-  return store.state.roundedQuantity
+  return token.value ? store.state.roundedQuantity : 0
 })
 
 
@@ -321,10 +319,11 @@ const getAccount = (price) => {
           roundedQuantity.value = availableQuantity.floor();
           store.commit('setRoundedQuantity', roundedQuantity.value)
           if (currentNumber.value > minOrder.value) {
-            numValue.value = currentNumber.value
+            numValue.value = currentNumber.value >0?currentNumber.value:''
             getslide()
           } else {
-            numValue.value = minOrder.value
+            numValue.value =''
+            // numValue.value = minOrder.value
             getslide()
           }
 
@@ -382,16 +381,15 @@ watch([active, currentSymbol], () => {
     } else {
       roundedQuantity.value = saveRoundedQuantity.value
     }
-
     if (new Decimal(roundedQuantity.value).equals(0)) {
       numValue.value = ''
       return
     }
 
-    if (currentNumber.value > currentMinOrder.value) {
+    if (currentNumber.value > currentMinOrder.value &&  currentMinOrder.value>0) {
       numValue.value = currentNumber.value
     } else {
-      numValue.value = currentMinOrder.value
+      // numValue.value = currentMinOrder.value
     }
     getslide()
 
@@ -415,18 +413,21 @@ const getnumval = (newValue) => {
   try {
     const percentage = new Decimal(newValue).div(100);
     const calculatedValue = percentage.mul(roundedQuantity.value);
-
+    let val=0;
     if (increment.value) {
       // 百位数取整
       const roundedValue = calculatedValue.div(increment.value).floor().mul(increment.value);
-      numValue.value = roundedValue.toNumber();
-      store.commit('setCurrentNumber', numValue.value)
+      val  = roundedValue.toNumber();
     } else {
       const roundedValue = calculatedValue.div(100).floor().mul(100);
-      numValue.value = roundedValue.toNumber();
-      store.commit('setCurrentNumber', numValue.value)
+      val = roundedValue.toNumber();
     }
-
+    if(val==0){
+      numValue.value =''
+    }else{
+       numValue.value =val
+    }
+    store.commit('setCurrentNumber', numValue.value)
   } catch (error) {
     console.error('Error calculating value:', error);
   }
@@ -602,7 +603,6 @@ const getslide = () => {
   } else {
     sliderValue.value = 0
   }
-
   store.commit('setSliderValue', sliderValue.value)
 }
 
@@ -674,9 +674,9 @@ const leverSelect = () => {
 }
 
 const inputChange = (val) => {
-  // if (numValue.value == '' || !numValue.value) {
-  //   numValue.value = minOrder.value
-  // }
+  if (numValue.value == 0 || !numValue.value) {
+    numValue.value =''
+  }
   getslide()
   store.commit('setCurrentNumber', numValue.value)
   // getPay();
@@ -720,6 +720,23 @@ defineExpose({
     vertical-align: top;
   }
 
+  .slider-container-box {
+    height: 1rem;
+    padding-top: .4rem;
+    // .slider-custom-num{
+    //  background: #014CFA;
+    //  color: #fff;
+    //  display: inline-block;
+    //  padding:0 .1rem;
+    //  width: .5rem;
+    //  height: .4rem;
+    //  font-size: 12px;
+    //  text-align: center;
+    //  line-height: .4rem;
+    //  border-radius: 10px;
+    // }
+  }
+
   .animate-input {
     position: relative;
     border: 1px solid #D0D8E2;
@@ -739,10 +756,10 @@ defineExpose({
       position: absolute;
       left: 0;
       top: 0;
-      padding: .1rem 0 0 .1rem;
+      padding: .1rem 0 0 .2rem;
       pointer-events: none;
       color: #9ea3ae;
-      text-align: center;
+      text-align: left;
       width: 100%;
       line-height: .66rem;
       font-size: 0.24rem;
@@ -770,9 +787,9 @@ defineExpose({
       .ipt_tip {
         display: block;
         right: 0;
-        text-align: left;
+
         line-height: .2rem;
-        font-size: 12px;
+        font-size: 0.2rem;
       }
 
       input {
@@ -912,28 +929,27 @@ defineExpose({
   // }
 
   .small-select {
-    width: 1.68rem;
+    width: 1.72rem !important;
     height: auto !important;
     border-radius: 0.12rem;
     border: 0.02rem solid #d0d8e2;
-    margin-right: 0 !important;
-    margin-left: 0.2rem !important;
     position: relative;
     color: #333333;
     position: relative;
     line-height: auto !important;
-    .abs-con{
+
+    .abs-con {
       display: flex;
-      width: 100%;
+      width: 80%;
       height: .3rem;
       line-height: auto !important;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    margin: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin: auto;
     }
   }
 
@@ -1009,9 +1025,13 @@ defineExpose({
     }
   }
 
-  .flex-between{
+  .flex-between {
     justify-content: space-between;
     align-content: center;
+  }
+
+  .right-input {
+    width: calc(100% - 2rem);
   }
 
   .position-account {
@@ -1097,8 +1117,8 @@ defineExpose({
   .percentages {
     display: flex;
     justify-content: space-between;
-    margin-top: 0.2rem;
-    width: 100%;
+    margin-top: 0 !important;
+    width: 98%;
     z-index: 7;
     margin-bottom: 0.8rem;
 
@@ -1107,8 +1127,8 @@ defineExpose({
       height: 0.2rem;
       position: absolute;
       right: 0;
-      top: -0.36rem;
-      background: white;
+      top: -1rem;
+      background: red;
       z-index: 88;
     }
   }

@@ -778,7 +778,7 @@ defineExpose({
       position: absolute;
       width: 100%;
       left: 0px;
-      height: 0.88rem;
+      height: 0.68rem;
 
       &::after {
         content: "";
