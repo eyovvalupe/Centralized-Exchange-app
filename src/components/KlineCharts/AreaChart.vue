@@ -29,6 +29,7 @@ let socket = null
 const props = defineProps({
     symbol: '',
     color: '',
+    rgbColor: '',
     showY: {
         type: Boolean,
         default: false
@@ -50,83 +51,7 @@ onMounted(() => {
         chart?.setOffsetRightDistance(props.showY ? 50 : 0) // 设置右边距
         chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
         chart?.setMaxOffsetRightDistance(props.showY ? 50 : 0) // 设置右边最大空出的边距
-        const selfStyle = {
-            grid: {
-                vertical: {
-                    show: false
-                }
-            },
-            xAxis: {
-                show: props.showY,
-                size: 'auto'
-            },
-            yAxis: {
-                show: props.showY
-            },
-            candle: {
-                type: 'area',
-                priceMark: {
-                    show: props.showY
-                },
-                area: {
-                    lineColor: props.color || "#3B82F6",
-                    point: {
-                        show: props.showY
-                    },
-                    lineSize: 2,
-                    backgroundColor: [
-                        {
-                            offset: 0,
-                            color: "rgba(59, 130, 246, 0)"
-                        },
-                        {
-                            offset: 1,
-                            color: "rgba(59, 130, 246, 0)"
-                        }
-                    ],
-                    smooth: true,
-                    point: {
-                        show: true,
-                        color: "rgba(59, 130, 246, 0)",
-                        radius: 4,
-                        rippleColor: "rgba(59, 130, 246, 0)", // getAlphaBlue(0.3),
-                        rippleRadius: 8,
-                        animation: true,
-                        animationDuration: 1000
-                    }
-                },
-                tooltip: {
-                    offsetLeft: 2,
-                    offsetTop: 3,
-                    offsetRight: 2,
-                    offsetBottom: 3,
-                    showRule: 'follow_cross', /// ,follow_cross
-                    showType: 'rect',
-                    custom: [
-                        { title: 'time', value: '{time}' },
-                        // { title: 'open', value: '{open}' },
-                        // { title: 'high', value: '{high}' },
-                        // { title: 'low', value: '{low}' },
-                        // { title: 'close', value: '{close}' },
-                        { title: 'price', value: '{open}' }
-                    ],
-                    text: {
-                        size: 10,
-                        family: 'Helvetica Neue',
-                        weight: 'normal',
-                        color: '#121826',
-                        marginLeft: 8,
-                        marginTop: 4,
-                        marginRight: 8,
-                        marginBottom: 4
-                    },
-                }
-            },
-        }
-        if (props.showY) {
-            delete selfStyle.yAxis
-        }
-        chart.setStyles(selfStyle)
+
     }
     initData()
 })
@@ -139,6 +64,85 @@ onBeforeUnmount(() => {
 const loading = ref(true)
 let timeout = null
 const initData = async () => {
+    // 样式
+    const selfStyle = {
+        grid: {
+            vertical: {
+                show: false
+            }
+        },
+        xAxis: {
+            show: props.showY,
+            size: 'auto'
+        },
+        yAxis: {
+            show: props.showY
+        },
+        candle: {
+            type: 'area',
+            priceMark: {
+                show: props.showY
+            },
+            area: {
+                lineColor: props.color || "#3B82F6",
+                point: {
+                    show: props.showY
+                },
+                lineSize: 2,
+                backgroundColor: [
+                    {
+                        offset: 0,
+                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(59, 130, 246, 0.01)"
+                    },
+                    {
+                        offset: 1,
+                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(59, 130, 246, 0.3)"
+                    }
+                ],
+                smooth: true,
+                point: {
+                    show: true,
+                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(59, 130, 246, 0.3)",
+                    radius: 4,
+                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(59, 130, 246, 0.3)", // getAlphaBlue(0.3),
+                    rippleRadius: 8,
+                    animation: true,
+                    animationDuration: 1000
+                }
+            },
+            tooltip: {
+                offsetLeft: 2,
+                offsetTop: 3,
+                offsetRight: 2,
+                offsetBottom: 3,
+                showRule: 'follow_cross', /// ,follow_cross
+                showType: 'rect',
+                custom: [
+                    { title: 'time', value: '{time}' },
+                    // { title: 'open', value: '{open}' },
+                    // { title: 'high', value: '{high}' },
+                    // { title: 'low', value: '{low}' },
+                    // { title: 'close', value: '{close}' },
+                    { title: 'price', value: '{open}' }
+                ],
+                text: {
+                    size: 10,
+                    family: 'Helvetica Neue',
+                    weight: 'normal',
+                    color: '#121826',
+                    marginLeft: 8,
+                    marginTop: 4,
+                    marginRight: 8,
+                    marginBottom: 4
+                },
+            }
+        },
+    }
+    if (props.showY) {
+        delete selfStyle.yAxis
+    }
+    chart.setStyles(selfStyle)
+    // 数据
     const query = symbol.value
     loading.value = true
     if (timeout) clearTimeout(timeout)

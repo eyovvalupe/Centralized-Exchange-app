@@ -4,7 +4,7 @@
         <!-- 头部 -->
         <div class="max-width info_header">
             <div class="top">
-                <div class="ripple_button back" @click="backFunc">
+                <div v-if="!props.innerPage" class="ripple_button back" @click="backFunc">
                     <Icon name="arrow-left" />
                 </div>
                 <div class="title">
@@ -12,11 +12,12 @@
                     <div class="info">{{ item.name || '--' }}</div>
                 </div>
                 <div class="title_shadow"></div>
-                <div class="search star" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
+                <div v-if="!props.innerPage" class="search star" @click="addCollect"
+                    :style="{ opacity: loading ? '0.5' : '1' }">
                     <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
                     <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                 </div>
-                <div class="search" @click="fullScreen(true)">
+                <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
                     <Icon name="enlarge" />
                 </div>
             </div>
@@ -722,6 +723,8 @@ const backFunc = () => {
 
     .info_header {
         position: relative;
+        background-color: rgba(0, 0, 0, 0);
+        pointer-events: none;
     }
 
     .market_content {
