@@ -28,6 +28,7 @@ let socket = null
 
 const props = defineProps({
     symbol: '',
+    color: '',
     showY: {
         type: Boolean,
         default: false
@@ -64,13 +65,35 @@ onMounted(() => {
             },
             candle: {
                 type: 'area',
-                area: {
-                    point: {
-                        show: props.showY
-                    }
-                },
                 priceMark: {
                     show: props.showY
+                },
+                area: {
+                    lineColor: props.color || "#3B82F6",
+                    point: {
+                        show: props.showY
+                    },
+                    lineSize: 2,
+                    backgroundColor: [
+                        {
+                            offset: 0,
+                            color: "rgba(59, 130, 246, 0)"
+                        },
+                        {
+                            offset: 1,
+                            color: "rgba(59, 130, 246, 0)"
+                        }
+                    ],
+                    smooth: true,
+                    point: {
+                        show: true,
+                        color: "rgba(59, 130, 246, 0)",
+                        radius: 4,
+                        rippleColor: "rgba(59, 130, 246, 0)", // getAlphaBlue(0.3),
+                        rippleRadius: 8,
+                        animation: true,
+                        animationDuration: 1000
+                    }
                 },
                 tooltip: {
                     offsetLeft: 2,

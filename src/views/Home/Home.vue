@@ -2,13 +2,13 @@
 <template>
   <div class="page page_home">
     <!-- banner -->
-    <Banner v-if="activated" :isFixed="isFixed" class="home_banner" />
+    <Banner v-if="activated" class="home_banner" />
 
     <!-- 首页推荐数据 -->
-    <Recommend v-if="activated" :isFixed="isFixed" @ready="readyRecommendData" class="home_recommend" />
+    <!-- <Recommend v-if="activated"  @ready="readyRecommendData" class="home_recommend" /> -->
 
     <!-- Tabs -->
-    <Tabs @scroll="tabScroll" v-if="!pageLoading" sticky class="tabs" @change="changeTab" v-model:active="active"
+    <!-- <Tabs @scroll="tabScroll" v-if="!pageLoading" sticky class="tabs" @change="changeTab" v-model:active="active"
       :swipeable="false" animated :color="'#014CFA'" shrink>
       <Tab :title="'活跃'">
         <StockTable v-if="activated" :key="'vol'" :loading="loading" :list="marketVolumeList" />
@@ -19,7 +19,7 @@
       <Tab :title="'跌幅'">
         <StockTable v-if="activated" :key="'down'" :loading="loading" :list="marketDownList" />
       </Tab>
-    </Tabs>
+    </Tabs> -->
   </div>
 </template>
 
@@ -33,8 +33,6 @@ import StockTable from "@/components/StockTable.vue"
 import store from "@/store";
 import { _sort } from "@/api/api"
 
-// const bannerRef = ref()
-const isFixed = ref(false)
 
 // tabs
 const active = ref(-1)
@@ -57,9 +55,6 @@ const changeTab = (key, scrollToTop = true) => {
       getData(marketDownList, 'setMarketDownList', 'down')
       break
   }
-}
-const tabScroll = e => {
-  // isFixed.value = e.isFixed
 }
 
 const marketVolumeList = computed(() => store.state.marketVolumeList || []) // 活跃列表
@@ -123,7 +118,7 @@ Promise.all([
 })
 
 
-changeTab(0) // 获取首屏数据
+// changeTab(0) // 获取首屏数据
 const readyRecommendData = () => { // 推荐数据准备好了，一起监听
   changeTab(active.value, false)
 }

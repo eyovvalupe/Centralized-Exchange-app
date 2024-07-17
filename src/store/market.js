@@ -111,7 +111,7 @@ export default {
                     state.commitKey = commitKey
                     state.marketWatchListKeys = proxyKeys
                 }
-                console.error('订阅：', keys)
+                // console.error('订阅：', keys)
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {
@@ -145,6 +145,7 @@ export default {
                             // 根据不同页面，同步页面内模块的数据
                             switch (router.currentRoute?.value?.name) {
                                 case 'home': // 首页-首页推荐列表
+                                case 'market':
                                     commit('setMarketRecommndList', state.marketRecommndList.map(item => {
                                         const target = res.data.find(a => a.symbols == item.symbol)
                                         if (target) {
@@ -185,6 +186,7 @@ export default {
                             let index = -1
                             switch (router.currentRoute?.value?.name) {
                                 case 'home': // 首页-首页推荐列表
+                                case 'market':
                                     index = state.marketRecommndList.findIndex(item => item.symbols == res.symbols)
                                     if (index >= 0) {
                                         state.marketRecommndList[index].points = _getSnapshotLine(res.data)

@@ -85,7 +85,7 @@
             </div>
         </div>
         <!-- 交易按钮 -->
-        <div class="bot-buysell" :class="{ 'sell_key_open': switchKey }">
+        <div class="bot-buysell" :class="{ 'sell_key_open': switchKey }" v-if="!props.innerPage">
             <div @click="goBuy(true)" class="submit btn-red  van-col van-col--8">
                 买涨
             </div>
@@ -101,17 +101,17 @@
             </div>
         </div>
         <!-- 时间选择弹窗 -->
-        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round
+        <!-- <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round
             position="bottom">
             <div class="times_list">
                 <div v-for="item in minList" :key="item" @click="chooseTime(item)" class="ripple_button item"
                     :class="{ 'active_item': currMin == item }">{{ item }}
                 </div>
             </div>
-        </Popup>
+        </Popup> -->
 
         <!-- 下单弹窗 -->
-        <teleport to="body">
+        <!-- <teleport to="body">
             <ActionSheet v-model:show="showBuy" close-on-click-action>
                 <div style="padding: 1.16rem 0 0.6rem 0;background-color: #fff;">
                     <div style="height:0.96rem;border-bottom:1px solid #F5F5F5;display: flex;align-items: center;justify-content: center;color: #333333;font-weight: 400;"
@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </ActionSheet>
-        </teleport>
+        </teleport> -->
 
     </div>
 </template>
@@ -135,7 +135,13 @@ import KlineChart from "@/components/KlineCharts/KlineChart.vue"
 import { _formatNumber } from "@/utils/index"
 import { _basic, _profile, _add, _del } from "@/api/api"
 
-const activeTab = ref(1)
+// const activeTab = ref(1)
+const props = defineProps({
+    innerPage: { // 作为内置展示页
+        type: Boolean,
+        default: false
+    }
+})
 const showBuy = ref(false) // 购买弹窗
 const actions = ref([
     { name: '股票买涨', key: 'up' },

@@ -2,18 +2,21 @@
 <template>
     <div class="market_stock">
 
+        <!-- 首页推荐数据 -->
+        <Recommend @ready="readyRecommendData" class="home_recommend" />
+
         <!-- 市场涨跌分布 -->
         <div class="total_box">
             <div class="total_title">
                 <span>市场涨跌分布</span>
-                <span style="color: #121826;margin-left: 0.1rem">总计 {{ count }}</span>
+                <span v-if="!overviewLoading || count" style="color: #121826;margin-left: 0.1rem">总计 {{ count }}</span>
             </div>
             <!-- <div class="total_subtitle">
                 <div class="percent">66</div>
                 <span>今天</span>
             </div> -->
-
-            <div class="table_box">
+            <Loading v-if="overviewLoading && !count" :loading="overviewLoading" :type="'spinner'" />
+            <div class="table_box" v-if="!overviewLoading || count">
                 <div class="table_list">
                     <div class="table_item" v-for="(key, i) in keySoft" :key="key">
                         <div class="table_item_num" :class="[i == 5 ? '' : (i < 5 ? 'item_red' : 'item_green')]">{{
@@ -60,6 +63,8 @@ import { ref, computed } from "vue"
 import { _sort, _marketOverview } from "@/api/api"
 import store from "@/store"
 import { _add, _del } from '@/api/api'
+import Recommend from '@/views/Home/components/Recommend.vue';
+import Loading from '@/components/Loaidng.vue';
 
 const loading = ref(false)
 
@@ -84,6 +89,9 @@ const changeTab = (key, scrollToTop = true) => {
             getData(marketDownList, 'setMarketDownList', 'down')
             break
     }
+}
+const readyRecommendData = () => { // 推荐数据准备好了，一起监听
+    changeTab(active.value, false)
 }
 
 // 获取列表数据
@@ -154,6 +162,13 @@ const overview = ref({
     '-4': 0,
     '-5': 0
 })
+try {
+    const d = JSON.parse(sessionStorage.getItem('overview_data') || '{}')
+    count.value = d.count || 0
+    for (let key in overview.value) {
+        overview.value[key] = d[key] || 0
+    }
+} catch { }
 const overviewTitleMap = ref({
     5: '涨停',
     4: '>7%',
@@ -185,15 +200,9 @@ const getFlex = position => {
         return (overview.value['-1'] + overview.value['-2'] + overview.value['-3'] + overview.value['-4'] + overview.value['-5']) || 1
     }
 }
-
+const overviewLoading = ref(false)
 const getOverviewData = () => {
-    try {
-        const d = sessionStorage.setItem('overview_data') || '{}'
-        count.value = d.count || 0
-        for (let key in overview.value) {
-            overview.value[key] = d[key] || 0
-        }
-    } catch { }
+    overviewLoading.value = true
     _marketOverview().then(res => {
         if (!res.data) return
         sessionStorage.setItem('overview_data', JSON.stringify(res.data))
@@ -201,6 +210,8 @@ const getOverviewData = () => {
         for (let key in overview.value) {
             overview.value[key] = res.data[key] || 0
         }
+    }).finally(() => {
+        overviewLoading.value = false
     })
 }
 

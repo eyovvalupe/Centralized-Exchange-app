@@ -373,7 +373,7 @@ const leftclose = () => {
     socket && socket.emit('snapshot', '') // 快照数据
     socket && socket.off('realtime')
     socket && socket.off('snapshot')
-    console.error('取消订阅')
+    // console.error('取消订阅')
   })
 }
 

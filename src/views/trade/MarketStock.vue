@@ -41,58 +41,63 @@
             </div>
           </div>
 
-          <div v-for="(i,key) in dataList" :key="key">
+          <div v-for="(i, key) in dataList" :key="key">
             <!-- <SwipeCell> -->
-              <div class="content-grid grid-item-hover ripple_button"  @click="showButton(i)">
-                <div :style="currentNum === i.order_no && buttonShow ?{padding: '0'}:{padding: '0 0.3rem'}" class="flex">
-                  <div class="grid-item" style="width: 2.2rem" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
-                    <div class="f-text f-weight f-left" style="font-weight: 500;">
-                      {{ i.symbol }}
+            <div class="content-grid grid-item-hover ripple_button" @click="showButton(i)">
+              <div :style="currentNum === i.order_no && buttonShow ? { padding: '0' } : { padding: '0 0.3rem' }"
+                class="flex">
+                <div class="grid-item" style="width: 2.2rem"
+                  :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
+                  <div class="f-text f-weight f-left" style="font-weight: 500;">
+                    {{ i.symbol }}
+                  </div>
+                  <div class="f-left" style="display: flex">
+                    <div style="line-height: 0.4rem">{{ i.lever }}X</div>
+                    <div class="close-button" v-if="getStatusText(i.status) !== '持仓'">{{ getStatusText(i.status) }}
                     </div>
-                    <div class="f-left" style="display: flex">
-                      <div style="line-height: 0.4rem">{{ i.lever }}X</div>
-                      <div class="close-button" v-if="getStatusText(i.status) !== '持仓'">{{ getStatusText(i.status) }}</div>
-                    </div>
-                  </div>
-                  <div class="grid-item" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
-                    <div class="f-text button" style="color: #e8503a;background-color: #fbf1ef;" v-if="i.offset === 'long'">买涨</div>
-                    <div class="f-text button" v-else>买跌</div>
-                    <div class="special-color">{{ i.unsold_volume }}</div>
-                  </div>
-                  <div class="grid-item">
-                    <div class="f-text">{{ i.open_price }}</div>
-                    <div>{{ i.settled_price }}</div>
-                  </div>
-                  <div class="grid-item">
-                    <div class="f-text f-weight red">{{ i.profit }}</div>
-                    <div class="f-weight red">{{ i.ratio }}</div>
-                  </div>
-
-              <div v-if="currentNum === i.order_no && buttonShow">
-                <div class="button-style" style="width: 4rem">
-                  <div style="background: #f7931f" @click="showDetailPopup(i)">
-                    <img src="/static/img/trade/detail.png" alt="" />
-                    订单详情
-                  </div>
-                  <div style="background-color: #627eea" @click="updateDetailPopup(i)" v-if="i.status === 'none' || i.status === 'lock' || i.status === 'open'">
-                    <img src="/static/img/trade/update.png" alt="" />
-                    更新
-                  </div>
-                  <div style="background-color: #f2f2f2;color: #999999;" v-else>
-                    <img src="/static/img/trade/no-update.png" alt="" />
-                    更新
-                  </div>
-                  <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
-                    <img src="/static/img/trade/close.png" alt="" />
-                    平仓
                   </div>
                 </div>
-              </div>
-
-
+                <div class="grid-item" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
+                  <div class="f-text button" style="color: #e8503a;background-color: #fbf1ef;"
+                    v-if="i.offset === 'long'">买涨</div>
+                  <div class="f-text button" v-else>买跌</div>
+                  <div class="special-color">{{ i.unsold_volume }}</div>
                 </div>
+                <div class="grid-item">
+                  <div class="f-text">{{ i.open_price }}</div>
+                  <div>{{ i.settled_price }}</div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text f-weight red">{{ i.profit }}</div>
+                  <div class="f-weight red">{{ i.ratio }}</div>
+                </div>
+
+                <div v-if="currentNum === i.order_no && buttonShow">
+                  <div class="button-style" style="width: 4rem">
+                    <div style="background: #f7931f" @click="showDetailPopup(i)">
+                      <img src="/static/img/trade/detail.png" alt="" />
+                      订单详情
+                    </div>
+                    <div style="background-color: #627eea" @click="updateDetailPopup(i)"
+                      v-if="i.status === 'none' || i.status === 'lock' || i.status === 'open'">
+                      <img src="/static/img/trade/update.png" alt="" />
+                      更新
+                    </div>
+                    <div style="background-color: #f2f2f2;color: #999999;" v-else>
+                      <img src="/static/img/trade/no-update.png" alt="" />
+                      更新
+                    </div>
+                    <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
+                      <img src="/static/img/trade/close.png" alt="" />
+                      平仓
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
-              
+            </div>
+
             <!-- </SwipeCell> -->
           </div>
         </div>
@@ -103,19 +108,20 @@
 
 
         <!-- 未登录 -->
-        <div class="no-data-box" v-show="!loading && !token"  style="height: 8rem;">
+        <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
           <img src="/static/img/trade/no-data.png" class="no-data-img">
-          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="jump('login')">马上登录</span>
+          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;"
+              @click="jump('login')">马上登录</span>
           </p>
         </div>
 
-        
+
       </div>
       <!-- 开仓 -->
-      <div  v-else-if="active ==='0'">
-        <OpenPosition ref="OpenPositionRef"/>
+      <div v-else-if="active === '0'">
+        <OpenPosition ref="OpenPositionRef" />
       </div>
-     
+
 
 
       <!-- 查询 -->
@@ -132,77 +138,83 @@
             </div>
           </div>
 
-          <div v-for="(i,key) in inquireData" :key="key" style="min-height: 100%;">
-              <div class="content-grid grid-item-hover ripple_button"  @click="showButton(i)">
-                <div :style="currentNum === i.order_no && buttonShow ?{padding: '0'}:{padding: '0 0.3rem'}" class="flex">
-                  <div class="grid-item" style="width: 2.2rem" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
-                    <div class="f-text f-weight f-left" style="font-weight: 500;">
-                      {{ i.symbol }}
+          <div v-for="(i, key) in inquireData" :key="key" style="min-height: 100%;">
+            <div class="content-grid grid-item-hover ripple_button" @click="showButton(i)">
+              <div :style="currentNum === i.order_no && buttonShow ? { padding: '0' } : { padding: '0 0.3rem' }"
+                class="flex">
+                <div class="grid-item" style="width: 2.2rem"
+                  :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
+                  <div class="f-text f-weight f-left" style="font-weight: 500;">
+                    {{ i.symbol }}
+                  </div>
+                  <div class="f-left" style="display: flex">
+                    <div style="line-height: 0.4rem">{{ i.lever }}X</div>
+                    <div class="close-button" v-if="getStatusText(i.status) !== '持仓'">{{ getStatusText(i.status) }}
                     </div>
-                    <div class="f-left" style="display: flex">
-                      <div style="line-height: 0.4rem">{{ i.lever }}X</div>
-                      <div class="close-button" v-if="getStatusText(i.status) !== '持仓'">{{ getStatusText(i.status) }}</div>
-                    </div>
-                  </div>
-                  <div class="grid-item" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
-                    <div class="f-text button" style="color: #e8503a;background-color: #fbf1ef;" v-if="i.offset === 'long'">买涨</div>
-                    <div class="f-text button" v-else>买跌</div>
-                    <div class="special-color">{{ i.unsold_volume }}</div>
-                  </div>
-                  <div class="grid-item">
-                    <div class="f-text">{{ i.open_price }}</div>
-                    <div>{{ i.settled_price }}</div>
-                  </div>
-                  <div class="grid-item">
-                    <div class="f-text f-weight red">{{ i.profit }}</div>
-                    <div class="f-weight red">{{ i.ratio }}</div>
-                  </div>
-
-              <div v-if="currentNum === i.order_no && buttonShow">
-                <div class="button-style" style="width: 4rem">
-                  <div style="background: #f7931f" @click="showDetailPopup(i)">
-                    <img src="/static/img/trade/detail.png" alt="" />
-                    订单详情
-                  </div>
-                  <div style="background-color: #627eea" @click="updateDetailPopup(i)" v-if="i.status === 'none' || i.status === 'lock' || i.status === 'open'">
-                    <img src="/static/img/trade/update.png" alt="" />
-                    更新
-                  </div>
-                  <div style="background-color: #f2f2f2;color: #999999;" v-else>
-                    <img src="/static/img/trade/no-update.png" alt="" />
-                    更新
-                  </div>
-                  <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
-                    <img src="/static/img/trade/close.png" alt="" />
-                    平仓
                   </div>
                 </div>
-              </div>
-
-
+                <div class="grid-item" :class="{ 'open_tab': currentNum === i.order_no && buttonShow }">
+                  <div class="f-text button" style="color: #e8503a;background-color: #fbf1ef;"
+                    v-if="i.offset === 'long'">买涨</div>
+                  <div class="f-text button" v-else>买跌</div>
+                  <div class="special-color">{{ i.unsold_volume }}</div>
                 </div>
+                <div class="grid-item">
+                  <div class="f-text">{{ i.open_price }}</div>
+                  <div>{{ i.settled_price }}</div>
+                </div>
+                <div class="grid-item">
+                  <div class="f-text f-weight red">{{ i.profit }}</div>
+                  <div class="f-weight red">{{ i.ratio }}</div>
+                </div>
+
+                <div v-if="currentNum === i.order_no && buttonShow">
+                  <div class="button-style" style="width: 4rem">
+                    <div style="background: #f7931f" @click="showDetailPopup(i)">
+                      <img src="/static/img/trade/detail.png" alt="" />
+                      订单详情
+                    </div>
+                    <div style="background-color: #627eea" @click="updateDetailPopup(i)"
+                      v-if="i.status === 'none' || i.status === 'lock' || i.status === 'open'">
+                      <img src="/static/img/trade/update.png" alt="" />
+                      更新
+                    </div>
+                    <div style="background-color: #f2f2f2;color: #999999;" v-else>
+                      <img src="/static/img/trade/no-update.png" alt="" />
+                      更新
+                    </div>
+                    <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
+                      <img src="/static/img/trade/close.png" alt="" />
+                      平仓
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
+            </div>
           </div>
         </div>
 
         <!-- 没数据 -->
         <NoData v-if="!loading && token && inquireData.length === 0" />
-      
+
 
 
         <!-- 未登录 -->
         <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
           <img src="/static/img/trade/no-data.png" class="no-data-img">
-          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="jump('login')">马上登录</span>
+          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;"
+              @click="jump('login')">马上登录</span>
           </p>
         </div>
-       
-        
+
+
       </div>
 
     </transition>
 
-   
+
   </div>
 </template>
 
@@ -284,7 +296,7 @@ watch([active], ([newActive]) => {
   } else if (previousActive.value === '0' && newActive === '2') {
     transitionName.value = 'slide-right';
   }
-},{immediate:true});
+}, { immediate: true });
 
 const formatDate = (date) => {
   if (date != '') {
@@ -354,7 +366,7 @@ const updateDetailPopup = (i) => {
 };
 
 const updateClosePositionPopup = (i) => {
-  console.log(i,'i')
+  console.log(i, 'i')
   store.commit('setOrderNo', i.order_no)
   store.commit('setUnsoldVolume', i.unsold_volume)
   getcommToken()
@@ -366,10 +378,10 @@ const updateClosePositionPopup = (i) => {
 
 const subscribeOrders = () => {
   socket = startSocket(() => {
-    console.error('开始订阅')
+    // console.error('开始订阅')
     // 这里是 stocksorder 的处理
     socket && socket.emit('user', token.value)
-    socket && socket.emit('stocksorder','#all')
+    socket && socket.emit('stocksorder', '#all')
     socket && socket.off('user')
     socket && socket.off('stocksorder')
     socket.on('stocksorder', res => {
@@ -385,30 +397,30 @@ const subscribeOrders = () => {
   });
 };
 
-const onRefresh = ()=>{
+const onRefresh = () => {
   reloading.value = true;
   count.value++
-  store.commit('setDates', ['','']);
+  store.commit('setDates', ['', '']);
 
   getStocksList(true)
 }
 
 
-const getcommToken = () =>{
+const getcommToken = () => {
   //点击按钮获取 token
   store.dispatch('updateSessionToken')
 }
 
 
-const onChange = async(val) => {
+const onChange = async (val) => {
   if (Object.keys(route.query).length > 0) {
     router.push({ path: route.path, query: {} });
   }
-  emit('updateActive',val)
+  emit('updateActive', val)
   previousActive.value = active.value;
   active.value = val;
   count.val = 1
-  store.commit('setDates', ['','']);
+  store.commit('setDates', ['', '']);
 
   if (val === '0') {
     await nextTick(); // 确保 DOM 已更新
@@ -419,7 +431,7 @@ const onChange = async(val) => {
     //   // store.commit('clearCurrentSymbol')
     //   // store.commit('clearChooseSymbol')
     // },5)
-    
+
   }
 
   if (token.value === '') {
@@ -427,12 +439,12 @@ const onChange = async(val) => {
     return
   }
 
-  if (val === '1'  && !hasSubscribed) {
+  if (val === '1' && !hasSubscribed) {
     loading.value = true
     //持仓
     subscribeOrders()
     hasSubscribed = true; // 标记为已订阅
-  } else if(val === '1'){
+  } else if (val === '1') {
     subscribeOrders()
   } else {
     //取消订阅
@@ -441,7 +453,7 @@ const onChange = async(val) => {
       socket && socket.emit('stocksorder', '')
       socket && socket.off('user')
       socket && socket.off('stocksorder')
-      console.error('取消订阅')
+      // console.error('取消订阅')
     })
     if (val === '2') {
       //查询
@@ -459,10 +471,10 @@ const onChange = async(val) => {
 //   getStocksList(false);
 // });
 
-const getStocksList = (val)=>{
+const getStocksList = (val) => {
   // 查询
   const data = {
-    symbol:'',
+    symbol: '',
     page: 1,
     start_time: startDate.value,
     end_time: endDate.value
@@ -473,46 +485,46 @@ const getStocksList = (val)=>{
     data.page = 1
   }
   _stocksList({ ...data }).then(res => {
-      if (res.code == 200) {
-        if(val === true) {
-          //下拉刷新
-          reloading.value = false;
-          loading.value = false
-          inquireData.value = inquireData.value.concat(res.data);
-        } else {
-          reloading.value = false;
-          loading.value = false
-
-          inquireData.value = res.data
-        }
-        emit('reloading')
+    if (res.code == 200) {
+      if (val === true) {
+        //下拉刷新
+        reloading.value = false;
+        loading.value = false
+        inquireData.value = inquireData.value.concat(res.data);
       } else {
         reloading.value = false;
         loading.value = false
-        inquireData.value = []
-        emit('reloading')
+
+        inquireData.value = res.data
       }
-  }).finally(()=>{
+      emit('reloading')
+    } else {
+      reloading.value = false;
+      loading.value = false
+      inquireData.value = []
+      emit('reloading')
+    }
+  }).finally(() => {
     emit('reloading')
   })
 }
 
 
 if (route.query.type === "date") {
-    active.value = '2';
-    getStocksList(false)
+  active.value = '2';
+  getStocksList(false)
 }
 
 
 onDeactivated(() => {
   // 取消订阅
   const socket = startSocket(() => {
-      socket && socket.emit('user', '')
-      socket && socket.emit('stocksorder', '')
-      socket && socket.off('user')
-      socket && socket.off('stocksorder')
-      console.error('取消订阅')
-    })
+    socket && socket.emit('user', '')
+    socket && socket.emit('stocksorder', '')
+    socket && socket.off('user')
+    socket && socket.off('stocksorder')
+    // console.error('取消订阅')
+  })
 })
 
 const showButton = (i) => {
@@ -547,7 +559,7 @@ onMounted(() => {
 const jump = (name) => {
   router.push({
     name,
-    query:{reurl:'trade'}
+    query: { reurl: 'trade' }
   });
 };
 
@@ -574,6 +586,7 @@ defineExpose({
 
   .position-loading {
     margin-top: 2rem !important;
+
     .van-loading__spinner {
       left: 45%;
     }
@@ -582,15 +595,18 @@ defineExpose({
   .open_tab {
     width: 0 !important;
   }
+
   .flex {
     display: flex;
     justify-content: space-between;
-    &.flex-end{
+
+    &.flex-end {
       justify-content: flex-end !important;
     }
+
     >div {
-        transition: all ease .2s;
-        overflow: hidden;
+      transition: all ease .2s;
+      overflow: hidden;
     }
   }
 
@@ -640,6 +656,7 @@ defineExpose({
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     div {
       color: #000;
       text-align: center;
@@ -907,7 +924,7 @@ defineExpose({
 
 @media (min-width: 751px) {
   .left-popup {
-    max-width: 350px!important;
+    max-width: 350px !important;
     position: fixed !important;
     top: 50% !important;
     left: calc(50% - 187.5px) !important;
