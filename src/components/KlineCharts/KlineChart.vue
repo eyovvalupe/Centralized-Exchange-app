@@ -118,7 +118,7 @@ const initData = async () => { // 初始化数据
             // 订阅新数据
             subs()
         } else {
-            console.error('没有数据')
+            // console.error('没有数据')
         }
     }
 }

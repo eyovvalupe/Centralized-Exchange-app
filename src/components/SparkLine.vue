@@ -1,6 +1,6 @@
 <!-- 折线图标 -->
 <template>
-    <div ref="root" class="stock-chart-svg_4vRMv" style="width:69px; height: 33px;">
+    <div ref="root" class="stock-chart-svg_4vRMv" style="width:100%; height: 100%;">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" :key="color">
             <!-- <line x1="0" y1="50%" x2="100%" y2="50%" stroke-dasharray="2 2"
                 :style="{ stroke: color, 'stroke-width': 1 }"></line> -->

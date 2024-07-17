@@ -78,28 +78,27 @@ export const klineConfig = {
             noChangeWickColor: noChangeColor
         },
         area: {
-            lineSize: 2,
-            lineColor: "#3B82F6",
-            backgroundColor: [
-                {
-                    offset: 0,
-                    color: "rgba(59, 130, 246, 0.01)"
-                },
-                {
-                    offset: 1,
-                    color: "rgba(59, 130, 246, 0.2)"
-                }
-            ],
-            smooth: true,
-            point: {
-                show: true,
-                color: "rgba(59, 130, 246, 0.5)",
-                radius: 4,
-                rippleColor: "rgba(59, 130, 246, 0.3)", // getAlphaBlue(0.3),
-                rippleRadius: 8,
-                animation: true,
-                animationDuration: 1000
-            }
+            // lineSize: 2,
+            // backgroundColor: [
+            //     {
+            //         offset: 0,
+            //         color: "rgba(59, 130, 246, 0)"
+            //     },
+            //     {
+            //         offset: 1,
+            //         color: "rgba(59, 130, 246, 0)"
+            //     }
+            // ],
+            // smooth: true,
+            // point: {
+            //     show: true,
+            //     color: "rgba(59, 130, 246, 0)",
+            //     radius: 4,
+            //     rippleColor: "rgba(59, 130, 246, 0)", // getAlphaBlue(0.3),
+            //     rippleRadius: 8,
+            //     animation: true,
+            //     animationDuration: 1000
+            // }
         },
         priceMark: {
             show: true,

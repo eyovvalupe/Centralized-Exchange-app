@@ -1,69 +1,71 @@
 <!-- 首页推荐数据 -->
 <template>
-    <div>
-        <div v-if="!isFixed" class="recommend_box">
-            <!--  tabs-->
-            <div class="recommend_tabs">
+    <div class="recommend_box">
+        <!--  tabs-->
+        <!-- <div class="recommend_tabs">
                 <div class="recommend_tab" :class="{ 'active_tab': active == 1 }" @click="active = 1">数据</div>
                 <div class="recommend_tab" :class="{ 'active_tab': active == 2 }" @click="active = 2">新闻</div>
+            </div> -->
+
+        <transition :name="'slide-right'">
+            <!-- 图表 -->
+            <div v-if="active == 1" class="recommend_charts">
+                <!-- 折线图 -->
+                <div class="padding_block stock_chatsline" v-if="!pageLoading && marketRecommndList.length">
+                    <div class="title" v-if="activeStockSymbol.price">{{ activeStockSymbol.price.toFixed(2) }}</div>
+                    <div class="subtitle" v-if="activeStockSymbol.ratio && !isNaN(activeStockSymbol.ratio)"
+                        :class="[(activeStockSymbol.ratio > 0 ? 'up' : 'down')]">{{
+                            activeStockSymbol.ratio > 0 ? '+' : '' }}{{ (activeStockSymbol.ratio * 100).toFixed(2) }}%
+                    </div>
+                    <AreaChart :symbol="activeStockSymbol.symbol"
+                        :color="activeStockSymbol.ratio > 0 ? '#18B762' : '#E8503A'" />
+                </div>
+                <!-- 横向滚动 -->
+                <div class="padding_block stock_tabs_box">
+                    <Loading v-if="!marketRecommndList.length && loading" :loading="loading" />
+                    <Tabs v-if="marketRecommndList.length && !loading" class="stock_tabs" v-model:active="activeStock"
+                        shrink sticky>
+                        <Tab v-for="(item, i) in marketRecommndList" :key="i">
+                            <template #title>
+                                <div class="stock_tab">
+                                    <div class="tab_title">{{ item.symbol || '--' }}</div>
+                                    <!-- <div class="tab_subtitle">{{ item.name || '--' }}</div> -->
+                                    <div style="display: flex;align-items: center;justify-content: space-between;">
+                                        <div class="tab_num" v-if="item.price">{{ item.price ?
+                                            (item.price).toFixed(2) : '--' }}</div>
+                                        <div class="tab_num" v-if="item.ratio"
+                                            :class="[(item.ratio > 0 ? 'up' : 'down')]">
+                                            {{ isNaN(item.ratio) ? '--' : (item.ratio * 100).toFixed(2) }}%</div>
+                                    </div>
+
+                                    <div class="tab_line">
+                                        <SparkLine style="width:100%;height:100%" :points="item.points"
+                                            :ratio="item.ratio" />
+                                    </div>
+                                </div>
+                            </template>
+                        </Tab>
+                    </Tabs>
+                </div>
             </div>
 
-            <transition :name="'slide-right'">
-                <!-- 图表 -->
-                <div v-if="active == 1" class="recommend_charts">
-                    <!-- 折线图 -->
-                    <div class="padding_block stock_chatsline" v-if="!pageLoading && marketRecommndList.length">
-                        <!-- <div class="title">$38,552.62</div>
-                    <div class="subtitle up">+$1,439.58(3.88%)</div> -->
-                        <AreaChart :symbol="activeStockSymbol" />
-                    </div>
-                    <!-- 横向滚动 -->
-                    <div class="padding_block stock_tabs_box">
-                        <Loading v-if="!marketRecommndList.length && loading" :loading="loading" />
-                        <Tabs v-if="marketRecommndList.length" class="stock_tabs" v-model:active="activeStock" shrink
-                            sticky>
-                            <Tab v-for="(item, i) in marketRecommndList" :key="i">
-                                <template #title>
-                                    <div class="stock_tab">
-                                        <div class="tab_title">{{ item.symbol || '--' }}</div>
-                                        <div class="tab_subtitle">{{ item.name || '--' }}</div>
-                                        <div class="tab_num">{{ item.price ? (item.price).toFixed(2) : '--' }}</div>
-                                        <div class="tab_num"
-                                            :class="[item.ratio === undefined ? '' : (item.ratio > 0 ? 'up' : 'down')]">
-                                            {{ item.ratio === undefined ? '--' : (item.ratio *
-                                                100).toFixed(2)
-                                            }}%</div>
-
-                                        <div class="tab_line">
-                                            <SparkLine style="width:100%;height:100%" :points="item.points"
-                                                :ratio="item.ratio" />
-                                        </div>
-                                    </div>
-                                </template>
-                            </Tab>
-                        </Tabs>
+            <!-- 新闻 -->
+            <div v-else class="news_list">
+                <div class="news_item" v-for="i in 10" :key="i">
+                    <div class="title">Bitcoin Analyst Explain Why Price is Rallying AgainBitcoin Analyst Explain
+                        Why
+                        Price is
+                        Rallying Again</div>
+                    <div class="time">
+                        06:28
+                        <span>PM</span>
                     </div>
                 </div>
+            </div>
+        </transition>
 
-                <!-- 新闻 -->
-                <div v-else class="news_list">
-                    <div class="news_item" v-for="i in 10" :key="i">
-                        <div class="title">Bitcoin Analyst Explain Why Price is Rallying AgainBitcoin Analyst Explain
-                            Why
-                            Price is
-                            Rallying Again</div>
-                        <div class="time">
-                            06:28
-                            <span>PM</span>
-                        </div>
-                    </div>
-                </div>
-            </transition>
-
-        </div>
-
-        <data v-if="isFixed" style="height:8.4rem"></data>
     </div>
+
 </template>
 
 <script setup>
@@ -75,23 +77,17 @@ import SparkLine from "@/components/SparkLine.vue"
 import AreaChart from "@/components/KlineCharts/AreaChart.vue"
 import { _news } from "@/api/api"
 
-const props = defineProps({
-    isFixed: { // 为True的时候 展示为虚拟dom
-        type: Boolean,
-        default: false
-    }
-})
 
 const emits = defineEmits(['ready'])
 const active = ref(1)
 const activeStock = ref(0)
 const activeStockSymbol = computed(() => {
     const target = marketRecommndList.value[activeStock.value]
-    if (target) return target.symbol
-    return ''
+    if (target) return target
+    return {}
 })
 
-const rs = JSON.parse(`[{"market":"IN","symbol":"NIFTY50","name":null,"type":"IN"},{"market":"IN","symbol":"SENSEX","name":null,"type":"IN"},{"market":"IN","symbol":"LRGCAP","name":null,"type":"IN"},{"market":"IN","symbol":"MIDCAP","name":null,"type":"IN"},{"market":"IN","symbol":"SMLCAP","name":null,"type":"IN"},{"market":"IN","symbol":"NIFTY500","name":null,"type":"IN"},{"market":"IN","symbol":"NIFTYMIDCAP100","name":null,"type":"IN"},{"market":"IN","symbol":"INDIAVIX","name":null,"type":"IN"},{"market":"IN","symbol":"NIFTYBANK","name":null,"type":"IN"}]`)
+const rs = JSON.parse(`[{"market":"NSE","symbol":"CHENNPETRO","name":"CHENNAI PETRO CP","ratio":"+12.01%"},{"market":"NSE","symbol":"HDFCBANK","name":"HDFC BANK","ratio":"−0.20%"},{"market":"NSE","symbol":"IREDA","name":"INDIAN RENEWABLE ENERGY","ratio":"−6.02%"},{"market":"NSE","symbol":"RVNL","name":"RAIL VIKAS NIGAM","ratio":"−0.32%"}]`)
 
 
 const loading = ref(true)
@@ -110,7 +106,7 @@ setTimeout(() => {
     setTimeout(() => {
         emits('ready')
     }, 0)
-}, 1000)
+}, 500)
 
 
 
@@ -125,7 +121,7 @@ const news = ref([])
 
 <style lang="less" scoped>
 .recommend_box {
-    padding: 0.2rem 0.34rem;
+    padding: 0.2rem 0.34rem 0.4rem 0.34rem;
 
     .recommend_tabs {
         display: flex;
@@ -158,7 +154,7 @@ const news = ref([])
             .title {
                 position: absolute;
                 top: 0;
-                left: 0.3rem;
+                left: 0rem;
                 font-size: 0.6rem;
                 letter-spacing: -0.5px;
                 color: #111111;
@@ -167,18 +163,16 @@ const news = ref([])
             .subtitle {
                 position: absolute;
                 top: 0.64rem;
-                left: 0.3rem;
+                left: 0rem;
                 font-size: 0.28rem;
-                color: #18B762;
             }
         }
 
         .stock_tabs_box {
-            margin: 0.4rem 0;
-            height: 1.90rem;
+            height: 1.60rem;
 
             .stock_tabs {
-                height: 1.90rem;
+                height: 1.5rem;
 
 
                 :deep(.van-tab) {
@@ -214,16 +208,16 @@ const news = ref([])
 
             .stock_tab {
                 width: 2.97rem;
-                height: 1.90rem;
-                border: 1px solid #EAEAEA;
+                height: 1.60rem;
+                border: 1px solid #F8F9FB;
                 border-radius: 0.08rem;
                 padding: 0.17rem;
                 position: relative;
-                background-color: #F2F6FF;
+                background-color: #F8F9FB;
 
                 .tab_title {
                     font-weight: 700;
-                    font-size: 0.2rem;
+                    font-size: 0.24rem;
                     color: #0D0D12;
                     line-height: 0.274rem;
                     margin-bottom: 0.06rem;
@@ -232,22 +226,24 @@ const news = ref([])
                 .tab_subtitle {
                     color: #818898;
                     font-weight: 400;
-                    font-size: 0.17rem;
+                    font-size: 0.2rem;
                     margin-bottom: 0.14rem;
                 }
 
                 .tab_num {
                     color: #0D0D12;
                     font-weight: 600;
-                    font-size: 0.17rem;
+                    font-size: 0.2rem;
                     line-height: 0.25rem;
                 }
 
                 .tab_line {
                     position: absolute;
                     bottom: 0;
-                    right: 0;
-                    width: 1.6rem;
+                    left: 50%;
+                    width: 1.4rem;
+                    transform: scaleX(2) translateX(-50%);
+                    transform-origin: 0 0;
                     height: 0.6rem;
                 }
             }
