@@ -552,7 +552,7 @@ const getStockslist = () => {
         });
         option2.value = levernum
         store.commit('setOption2', levernum)
-        store.commit('selectedLeverOption', levernum[0].value)
+        store.commit('setSelectedLeverOption', levernum[0].value)
 
         //volume 最低数量 和倍数增加的处理
         const volume = res.data.volume.split(',')
