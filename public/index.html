@@ -181,17 +181,20 @@
     }
     // rem
     (function (doc, win) {
+      const appdom= doc.getElementById("app");
       var docEl = doc.documentElement,
         resizeEvt =
           "orientationchange" in window ? "orientationchange" : "resize",
         recalc = function () {
           if (docEl.clientWidth > 750) {
             docEl.style.fontSize = "50px"; // 100% == 7.5rem
-            doc.getElementById("app").style.width = "375px";
+            appdom.style.width = "375px";
+            appdom.className= "large";
           } else {
             var width = docEl.clientWidth / 7.5;
             docEl.style.fontSize = width + "px";
-            doc.getElementById("app").style.width = "100%";
+            appdom.style.width = "100%";
+            appdom.className= "small";
           }
           docEl.style.setProperty('--app-height', `${window.innerHeight}px`)
         };

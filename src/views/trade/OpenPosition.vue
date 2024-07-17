@@ -1,15 +1,17 @@
 <template>
   <div class="open-position">
     <div class="position-header">
-      <div class="btn up-botton" :style="isUpActive ? activeBackgroundImageStyle : backgroundImageStyle"
-        @click="activateUp">
-        买涨
-      </div>
-      <div class="btn down-button" :style="isDownActive
-        ? activeBlueBackgroundImageStyle
-        : blueBackgroundImageStyle
-        " @click="activateDown">
-        买跌
+      <div class="btn flex">
+        <div class="up-botton" :style="isUpActive ? activeBackgroundImageStyle : backgroundImageStyle"
+          @click="activateUp">
+          买涨
+        </div>
+        <div class="down-button" :style="isDownActive
+          ? activeBlueBackgroundImageStyle
+          : blueBackgroundImageStyle
+          " @click="activateDown">
+          买跌
+        </div>
       </div>
 
       <div class="position-tabs">
@@ -397,7 +399,6 @@ defineExpose({
 
 <style lang="less">
 .open-position {
-  overflow-x: hidden;
   margin: 0 0.3rem;
   padding-bottom: 0.76rem;
   background-color: white;
@@ -415,7 +416,7 @@ defineExpose({
   }
 
   .btn {
-    margin-top: .22rem;
+    margin-top: .1rem;
   }
 
   .position-header {
@@ -425,23 +426,24 @@ defineExpose({
 
     .up-botton {
       width: 1.2rem;
-      height: 0.5rem;
       color: #014cfa;
-      line-height: 0.5rem;
+      height: .58rem;
+      line-height: .58rem;
       text-align: center;
       position: relative;
-      background-size: cover;
-      background-position: center;
+      background-size: 100% 100%;
+      background-position: top;
+      background-repeat: no-repeat;
     }
 
     .down-button {
       width: 1.2rem;
-      height: 0.5rem;
+      height: .58rem;
+      line-height: .58rem;
       color: white;
-      line-height: 0.56rem;
       text-align: center;
-      background-size: cover;
-      background-position: center;
+      background-size: 100% 100%;
+      background-position: top;
     }
 
     .position-tabs {
@@ -688,8 +690,8 @@ defineExpose({
       height: 0.2rem;
       position: absolute;
       right: 0;
-      top: -0.36rem;
-      background: white;
+      top: -.5rem;
+      background: #fff;
       z-index: 88;
     }
   }
