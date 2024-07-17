@@ -555,7 +555,7 @@ defineExpose({
     border-radius: 0.12rem;
     border: 0.02rem solid #d0d8e2;
     margin-right: 0.24rem;
-    line-height: 0.88rem;
+    // line-height: 0.88rem;
     position: relative;
     color: #333333;
   }
@@ -613,7 +613,7 @@ defineExpose({
     vertical-align: middle;
     position: absolute;
     right: 0.2rem;
-    top: 0.28rem;
+    // top: 0.28rem;
   }
   // }
   .position-account {
