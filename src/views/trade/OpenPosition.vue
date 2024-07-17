@@ -6,8 +6,8 @@
         买涨
       </div>
       <div class="btn down-button" :style="isDownActive
-          ? activeBlueBackgroundImageStyle
-          : blueBackgroundImageStyle
+        ? activeBlueBackgroundImageStyle
+        : blueBackgroundImageStyle
         " @click="activateDown">
         买跌
       </div>
@@ -381,11 +381,11 @@ const changePrice = () => {
   marketValue.value = ''
 }
 
-const openPopup = () => {
-  store.dispatch('openPopup', StockPopup)
-  store.commit('setPopupHeight', '80%')
-  store.commit('setkeyborader', false)
-}
+// const openPopup = () => {
+//   store.dispatch('openPopup', StockPopup)
+//   store.commit('setPopupHeight', '80%')
+//   store.commit('setkeyborader', false)
+// }
 
 
 defineExpose({
@@ -615,6 +615,7 @@ defineExpose({
     right: 0.2rem;
     // top: 0.28rem;
   }
+
   // }
   .position-account {
     margin: 0.1rem 0 .3rem 0;

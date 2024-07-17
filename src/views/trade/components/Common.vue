@@ -41,16 +41,16 @@
     <div class="flex flex-between" style="margin: .4rem 0 .1rem 0;">
       <div class="flex">
         <span class="btn_icon">
-        <span class="flex" @click="jump('transfer')">
-          <span><img src="/static/img/assets/trans_icon.png" alt="img"></span>
-          <span class="grop-title" style="color: #014cfa">划转</span>
+          <span class="flex" @click="jump('transfer')">
+            <span><img src="/static/img/assets/trans_icon.png" alt="img"></span>
+            <span class="grop-title" style="color: #014cfa">划转</span>
+          </span>
+          <span class="flex" @click="jump('loanList')">
+            <span><img src="/static/img/assets/loan_icon.png" alt="img"></span>
+            <span class="grop-title" style="color: #014cfa">借贷</span>
+          </span>
         </span>
-        <span class="flex" @click="jump('loanList')">
-          <span><img src="/static/img/assets/loan_icon.png" alt="img"></span>
-          <span class="grop-title" style="color: #014cfa">借贷</span>
-        </span>
-      </span>
-      <!-- <div class="grop-title right-text">数量</div> -->
+        <!-- <div class="grop-title right-text">数量</div> -->
       </div>
       <div class="grop-title" style="color: #014cfa">全仓 VS 逐仓</div>
     </div>
@@ -58,8 +58,8 @@
       <div class="animate-input num-input flex"
         :class="{ hasval: !!numValue, inputFocus: isFocused === 5 || numValue }">
         <div class="ipt_tip">可买数量: <b>{{ roundedQuantity }}</b> </div>
-        <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)" @blur="handleBlur(5)" ref="buyNumRef"
-          placeholder="">
+        <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)" @blur="handleBlur(5)"
+          ref="buyNumRef" placeholder="">
         <div class="link-text" @click="allNumber">
           全部
         </div>
@@ -688,8 +688,10 @@ const changePrice = () => {
 }
 
 const openPopup = () => {
+  if (!stockCo.value[0]) return
+  store.commit('setCurrStock', stockCo.value[0])
   store.dispatch('openPopup', StockPopup)
-  store.commit('setPopupHeight', '80%')
+  store.commit('setPopupHeight', '90%')
   store.commit('setkeyborader', false)
 };
 
@@ -922,18 +924,19 @@ defineExpose({
     color: #333333;
     position: relative;
     line-height: auto !important;
-    .abs-con{
+
+    .abs-con {
       display: flex;
       width: 100%;
       height: .3rem;
       line-height: auto !important;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-    margin: auto;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin: auto;
     }
   }
 
@@ -1009,7 +1012,7 @@ defineExpose({
     }
   }
 
-  .flex-between{
+  .flex-between {
     justify-content: space-between;
     align-content: center;
   }

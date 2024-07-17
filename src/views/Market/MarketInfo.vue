@@ -1,10 +1,10 @@
 <!-- 市场详情 -->
 <template>
-    <div class="page page_marketinfo">
+    <div class="page page_marketinfo" :class="{ 'innerpage_marketinfo': props.innerPage }">
         <!-- 头部 -->
         <div class="max-width info_header">
             <div class="top">
-                <div class="ripple_button back" @click="router.back()">
+                <div class="ripple_button back" @click="backFunc">
                     <Icon name="arrow-left" />
                 </div>
                 <div class="title">
@@ -250,6 +250,16 @@ const goBuy = key => {
         }
     })
 }
+
+// 返回
+const emits = defineEmits(['back'])
+const backFunc = () => {
+    if (props.innerPage) {
+        emits('back')
+    } else {
+        router.back()
+    }
+}
 </script>
 
 <style lang="less" scoped>
@@ -324,7 +334,7 @@ const goBuy = key => {
         }
 
         .header-price {
-            padding-top: 0.1rem;
+            padding: 0.1rem 0;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -701,6 +711,24 @@ const goBuy = key => {
                 align-items: center;
                 justify-content: space-between;
             }
+        }
+    }
+}
+
+.innerpage_marketinfo {
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
+
+    .info_header {
+        position: relative;
+    }
+
+    .market_content {
+        height: calc(100% - 1.8rem);
+
+        .chart_box {
+            height: 100%;
         }
     }
 }

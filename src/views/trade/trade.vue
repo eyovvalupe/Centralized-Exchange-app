@@ -19,13 +19,6 @@
     </Popup>
 
 
-    <teleport to="body">
-      <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showOpenPositionBottom"
-        position="bottom" closeable :style="{ height: popupHeight }"
-        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
-        <component :is="popupComponent" />
-      </Popup>
-    </teleport>
 
 
 
@@ -130,14 +123,6 @@
     </Popup>
 
 
-    <teleport to="body">
-      <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showOpenPositionBottom"
-        position="bottom" closeable :style="{ height: popupHeight }"
-        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
-        <component :is="popupComponent" />
-      </Popup>
-    </teleport>
-
 
 
     <!-- 侧边栏 -->
@@ -182,8 +167,9 @@
 
     <teleport to="body">
       <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showOpenPositionBottom"
-        position="bottom" closeable :style="{ height: popupHeight }"
-        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
+        position="bottom" :closeable="popupComponent.__name != 'StockPopup'" :style="{ height: popupHeight }"
+        :class="['detail-popup', { keypadding: keyborader }, 'detail_popup_' + popupComponent.__name]"
+        @close="closePopup" v-if="showOpenPositionBottom">
         <component :is="popupComponent" />
       </Popup>
     </teleport>
@@ -347,7 +333,9 @@ const ipoOnChange = (val) => {
 const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom)
 const showLeft = computed(() => store.state.showLeft)
 const popupHeight = computed(() => store.state.popupHeight)
-const popupComponent = computed(() => store.state.popupComponent)
+const popupComponent = computed(() => {
+  return store.state.popupComponent
+})
 const keyborader = computed(() => store.state.keyborader)
 const closePopup = () => {
   store.dispatch('closePopup')
@@ -738,6 +726,10 @@ const closeOpenDetail = () => {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   padding-bottom: 1.2rem;
+}
+
+.detail_popup_StockPopup {
+  padding-bottom: 0;
 }
 
 .keypadding {
