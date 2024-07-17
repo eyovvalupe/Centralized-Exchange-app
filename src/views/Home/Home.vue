@@ -111,7 +111,6 @@ const getData = (list, key, query) => {
   }).finally(() => {
     loading.value = false
   })
-
 }
 
 // 预加载页面

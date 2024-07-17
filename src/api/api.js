@@ -397,4 +397,10 @@ export const _accountHint = (data = {}) => {
     custom: { auth: true, toast: true },
   });
 };
+// 市场总览
+export const _marketOverview = (data = {}) => {
+  return http.post(`/anon/v1/market/overview`, data, {
+    custom: { auth: false, toast: true },
+  });
+};
 export const memberInfo = () => { }
