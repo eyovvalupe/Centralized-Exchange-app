@@ -4,7 +4,7 @@
         <Top :title="'语言'" />
 
         <CheckboxGroup class="lang_box" v-model="checked" :max="2">
-            <div class="ripple_button lang_item" v-for="(item, i) in navs" :key="i" @click="clickItem(item)">
+            <div class=" lang_item" v-for="(item, i) in navs" :key="i" @click="clickItem(item)">
                 <div class="logo">
                     <img :src="item.icon" alt="english">
                 </div>

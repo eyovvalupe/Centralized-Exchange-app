@@ -6,7 +6,7 @@
         <div class="verif_box">
             <div class="title">请填写图形验证码</div>
             <!-- 验证码 -->
-            <div @click="getCode" class="ripple_button" style="overflow: hidden;">
+            <div @click="getCode" class="" style="overflow: hidden;">
                 <div class="code">
                     <img v-if="codeImg && !loading" :src="codeImg" alt="code">
                     <Loading v-else type="spinner" />

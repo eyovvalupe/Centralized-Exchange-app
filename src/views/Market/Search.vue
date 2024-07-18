@@ -21,7 +21,7 @@
                     <div class="title">{{ item.symbol || '--' }}</div>
                     <div class="text">{{ item.name || '--' }}</div>
                 </div>
-                <div class="ripple_button star" @click.stop="collect(item)">
+                <div class=" star" @click.stop="collect(item)">
                     <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
                     <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                 </div>

@@ -1,18 +1,22 @@
 <!-- 充提记录弹窗 -->
 <template>
     <Teleport to="#app">
-        <div v-if="hintNum" class="fix_block_record"
+        <div class="fix_block_record" @click.stop="() => { }"
             :class="{ 'fix_block_open': openList, 'hidden_fix_block': props.hiddenBeforeOpen && !openList }"
             :style="{ bottom: bottom }">
-            <div class="fix_block_header" @click="openRecord">
-                <Icon name="arrow-up" class="arrow" v-show="openList" :class="{ 'arrow_active': openList }" />
-                <div v-show="!openList" class="header_box">
+            <div class="fix_block_header" @click="openRecord" v-show="!openList">
+                <!-- <Icon name="arrow-up" class="arrow" v-show="openList" :class="{ 'arrow_active': openList }" /> -->
+                <div class="header_box">
                     <div class="header_box_icon">
                         <img src="/static/img/common/time_icon.png" alt="img">
 
                         <div class="header_num">{{ hintNum }}</div>
                     </div>
                 </div>
+            </div>
+
+            <div class="close_icon" @click="close" v-if="openList">
+                <img src="/static/img/common/close.png" alt="img">
             </div>
 
             <div class="list_box list" :class="{ 'open_list': openList }">
@@ -70,6 +74,9 @@ const openRecord = () => {
     openList.value = !openList.value
     if (openList.value) {
         getList()
+        setTimeout(() => {
+            document.body.addEventListener('click', close)
+        }, 500)
     }
 }
 
@@ -105,6 +112,9 @@ const getList = () => {
 
 const close = () => {
     openList.value = false
+    setTimeout(() => {
+        document.body.removeEventListener('click', close)
+    }, 0)
 }
 
 defineExpose({
@@ -185,9 +195,19 @@ defineExpose({
         }
     }
 
+    .close_icon {
+        width: 0.32rem;
+        height: 0.32rem;
+        position: absolute;
+        right: 0.32rem;
+        top: 0.32rem;
+        z-index: 999;
+    }
+
+
     .list {
         height: 0;
-        padding: 0;
+        padding: 0 0 0 0;
         overflow: hidden;
         transition: all ease .3s;
     }
@@ -195,6 +215,7 @@ defineExpose({
     .open_list {
         height: calc(var(--app-height) - 5.5rem);
         overflow-y: auto;
+        padding: 0.32rem 0 0 0;
     }
 
     .van-tabs__nav--card {

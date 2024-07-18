@@ -4,21 +4,21 @@
         <Top :title="'安全'" />
 
         <div class="navs">
-            <div class="ripple_button nav" @click="checkGG('password')">
+            <div class=" nav" @click="checkGG('password')">
                 <div class="nav_icon">
                     <img src="/static/img/user/lock_icon.png" alt="🔒">
                 </div>
                 <div class="nav_title">登录密码</div>
                 <Icon name="arrow" />
             </div>
-            <div class="ripple_button nav">
+            <div class=" nav">
                 <div class="nav_icon">
                     <img src="/static/img/user/safe_icon.png" alt="🔒">
                 </div>
                 <div class="nav_title">交易密码</div>
                 <Icon name="arrow" />
             </div>
-            <div class="ripple_button nav" @click="goGG">
+            <div class=" nav" @click="goGG">
                 <div class="nav_icon">
                     <img src="/static/img/user/google_icon.png" alt="🔒">
                 </div>

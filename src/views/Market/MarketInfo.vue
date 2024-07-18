@@ -4,7 +4,7 @@
         <!-- 头部 -->
         <div class="max-width info_header">
             <div class="top">
-                <div v-if="!props.innerPage" class="ripple_button back" @click="backFunc">
+                <div v-if="!props.innerPage" class=" back" @click="backFunc">
                     <Icon name="arrow-left" />
                 </div>
                 <div class="title">
@@ -105,7 +105,7 @@
         <!-- <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round
             position="bottom">
             <div class="times_list">
-                <div v-for="item in minList" :key="item" @click="chooseTime(item)" class="ripple_button item"
+                <div v-for="item in minList" :key="item" @click="chooseTime(item)" class=" item"
                     :class="{ 'active_item': currMin == item }">{{ item }}
                 </div>
             </div>
