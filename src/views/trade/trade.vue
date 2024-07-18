@@ -68,7 +68,7 @@
                   </Tab>
               </Tabs> -->
           </div>
-          <div class="value" @click="showPopup">
+          <div class="value value-line" @click="showPopup">
               <span class="value-img"><img src="/static/img/trade/value.png" alt=""  /></span>
               <span>持仓价值</span>
             </div>
@@ -78,7 +78,7 @@
 
         <transition :name="transitionName">
           <MarketStock v-if="active === 0" @updateActive="updateActive" ref="marketRef" @reloading="setReloading" />
-          <div class="trade-tabs" v-else="active === 1">
+          <div class="trade-tabs" v-else-if="active === 1">
             <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
               :color="'#014CFA'" shrink>
               <Tab :title="'IPO'" class="optional">
@@ -114,31 +114,6 @@
       </div>
     </Popup>
 
-
-
-
-    <!-- 侧边栏 -->
-    <teleport to="body">
-      <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showLeft" position="left"
-        class="left-popup" :style="{ width: '85%', height: '100%' }" @close='leftclose'>
-        <div class="optional-box">
-          <!-- 搜索框 -->
-          <div class="search_box">
-            <div class="icon">
-              <img src="/static/img/common/search.png" alt="🔍">
-            </div>
-            <input ref="iptRef" @keydown="keydown" @keydown.enter="resetData" placeholder="搜索" type="text"
-              enterkeyhint="search" v-model.trim="search" class="search">
-            <div class="close" v-show="search" @click="clearData">
-              <Icon name="cross" />
-            </div>
-          </div>
-          <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
-          <Optional v-if="showLeft && !loading" ref="OptionalRef" />
-        </div>
-      </Popup>
-    </teleport>
-
     <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="top"
       class="trade-popup">
       <div class="popup-title">交易</div>
@@ -163,30 +138,6 @@
         :class="['detail-popup', { keypadding: keyborader }, 'detail_popup_' + popupComponent.__name]"
         @close="closePopup" v-if="showOpenPositionBottom">
         <component :is="popupComponent" />
-      </Popup>
-    </teleport>
-
-
-
-    <!-- 侧边栏 -->
-    <teleport to="body">
-      <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showLeft" position="left"
-        class="left-popup" :style="{ width: '85%', height: '100%' }" @close='leftclose'>
-        <div class="optional-box">
-          <!-- 搜索框 -->
-          <div class="search_box">
-            <div class="icon">
-              <img src="/static/img/common/search.png" alt="🔍">
-            </div>
-            <input ref="iptRef" @keydown="keydown" @keydown.enter="resetData" placeholder="搜索" type="text"
-              enterkeyhint="search" v-model.trim="search" class="search">
-            <div class="close" v-show="search" @click="clearData">
-              <Icon name="cross" />
-            </div>
-          </div>
-          <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
-          <Optional v-if="showLeft && !loading && token" ref="OptionalRef" />
-        </div>
       </Popup>
     </teleport>
 
@@ -531,6 +482,8 @@ const closeOpenDetail = () => {
     font-size: 0.24rem;
     font-style: normal;
     font-weight: 400;
+  }
+  .value-line{
     line-height: 1.14rem;
     height: 1.12rem;
   }

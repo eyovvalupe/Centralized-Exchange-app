@@ -6,11 +6,12 @@
       <!-- <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" /> -->
       <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="stockCo.length > 0" @click="openPopup" />
     </div>
-    <div class="animate-input num-input"
+    <div class="animate-input num-input symbol-name"
       :class="{ hasval: !!value || stockCo.length > 0, inputFocus: isFocused === 4 || value }">
       <div class="ipt_tip">股票代码 </div>
       <input v-model="value" @input="handleInput" @focus="handleFocus(4)" @blur="handleBlur(4)" ref="stockNameRef"
-        placeholder="">
+        placeholder="" />
+      <div class="matchName" v-html="matchName.symbolHtml"></div>
       <div class="co-text" v-if="stockCo.length > 0 && isFocused !== 4">
         <div>
           {{ stockCo[0].symbol }}
@@ -43,8 +44,8 @@
       <div class="right-input flex flex-between">
         <div class="grop-title right-text">数量</div>
         <span class="btn_icon">
-          <span class="grop-title link-text mr-10"  @click="jump('transfer')">账户划转</span>
-          <span class="grop-title right-text link-text" @click="jump('loanList')">借贷</span>
+          <span class="grop-title link-text mr-10" @click="jump('transfer', true)">账户划转</span>
+          <span class="grop-title right-text link-text" @click="jump('loanList', true)">借贷</span>
         </span>
 
       </div>
@@ -60,7 +61,8 @@
       </div>
 
       <div class="animate-input num-input flex" :class="{ hasval: !!numValue, inputFocus: isFocused === 5 }">
-        <div class="ipt_tip" v-if="isFocused === 5 || !numValue">可买 <b>{{ roundedQuantity }}</b> </div>
+        <div class="ipt_tip" v-if="isFocused === 5 || !numValue">最大可{{ isUpActive ? '买' : '卖' }} {{ roundedQuantity }}
+        </div>
         <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)" @blur="handleBlur(5)"
           ref="buyNumRef" placeholder="">
       </div>
@@ -70,6 +72,11 @@
       <div class="slider-container">
         <Slider :min="0" :max="100" v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa"
           inactive-color="#f2f2f2" @change="onSliderChange">
+          <template #button>
+            <div class="slider-custom-num">
+              <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
+            </div>
+          </template>
         </Slider>
       </div>
     </div>
@@ -89,8 +96,7 @@
         <div class="position-fee">保证金 {{ paymentAmount }} + 手续费 {{ openfee }}</div>
       </div> -->
 
-
-
+    <div class="m-b-5" style="height: .5rem;"></div>
     <Button size="large" color="#e8503a" round v-if="isDownActive && token" :disabled="downdisable(active)"
       @click="openPositPopup('down')">买跌</Button>
     <Button size="large" color="#18b762" round v-if="isUpActive && token" :disabled="downdisable(active)"
@@ -106,7 +112,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose, onUpdated, onBeforeUnmount, onDeactivated } from "vue";
+import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose, onUpdated, onBeforeUnmount, onDeactivated, reactive } from "vue";
 import { Tab, Tabs, Field, CellGroup, Slider, Button, Loading, Popup, showToast } from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
@@ -123,11 +129,11 @@ const router = useRouter();
 const route = useRoute()
 const active = computed(() => store.state.currentActive);
 const value = ref(route.query.symbol || '');
-setTimeout(() => {
-  if (value.value) {
-    handleInput()
-  }
-}, 0)
+// setTimeout(() => {
+//   if (value.value) {
+//     handleInput()
+//   }
+// }, 0)
 const stockNameRef = ref();
 const priceValue = ref("");
 const loseValue = ref("");
@@ -258,39 +264,21 @@ const currentMinOrder = computed(() => {
 const currentSliderValue = computed(() => {
   return store.state.sliderValue
 })
-
-
+const matchName = reactive({ symbol: '', symbolHtml: '' });
 const getPrice = (val) => {
-  let price;
+  // let price;
   //获取股票价格
   if (val) {
+    const Reg = new RegExp(val, 'i');
     // 发起 API 请求获取股票价格和钱包余额
-    _basic({ symbol: val.toLocaleUpperCase() }).then(res => {
-      if (res.code == 200) {
-        stockCo.value = [res.data];
-        price = new Decimal(res.data.price);
-        stockPrice.value = price
-        isFocused.value = null
-        value.value = ''
-        stockNameRef.value && stockNameRef.value.blur();
-        loading.value = false
-      } else if (res.code == 510) {
-        loading.value = false
-        stockCo.value = [];
-        stockPrice.value = 0
-      } else {
-        loading.value = false
-        stockCo.value = [];
-        stockPrice.value = 0
+    loading.value = true
+    _search({ symbol: val.toLocaleUpperCase(), mode: 'right' }).then(res => {
+      if (res.code == 200 && res.data.length) {
+        const symbolStr = res.data[0].symbol;
+        matchName.symbol = symbolStr;
+        matchName.symbolHtml = symbolStr.replace(Reg, `<b class='keyword'>${val}</b>`);
       }
-      const data = {
-        stockCo: stockCo.value,
-        stockPrice: stockPrice.value != '' ? stockPrice.value.toNumber() : '',
-        symbol: val
-      }
-      store.commit('setCurrentSymbol', data)
-      getAccount(stockPrice.value)
-
+      loading.value = false
     })
   }
 }
@@ -302,7 +290,7 @@ const getAccount = (price) => {
   let amountNum;
   // 计算可用数量
   if (token.value) {
-    const getBalance = _walletBalance({ currency: 'stock' }).then(res => {
+    _walletBalance({ currency: 'stock' }).then(res => {
       if (res.code == 200) {
         amountNum = new Decimal(res.data[0].amount);
         // amountNum = new Decimal(50000);
@@ -341,6 +329,7 @@ const getAccount = (price) => {
 }
 
 
+getAccount(stockPrice.value || currentSymbol.value.stockPrice)
 //点击左边的侧边栏，修改股票 input
 const handleSymbolChange = () => {
   if (chooseSymbol.value !== previousChooseSymbol.value && chooseSymbol.value.length > 0) {
@@ -454,6 +443,10 @@ const getPay = () => {
 }
 
 const handleInput = () => {
+  value.value = value.value.toLocaleUpperCase()
+  matchName.symbolHtml =matchName.symbol= ''
+  roundedQuantity.value=0
+  numValue.value=''
   //股票搜索
   getData();
 };
@@ -463,7 +456,10 @@ const handleFocus = (val) => {
   isFocused.value = val
   if (val == 4) {
     if (stockCo.value[0] && stockCo.value[0].symbol) {
-      value.value = stockCo.value[0].symbol;
+       value.value = stockCo.value[0].symbol;
+       setTimeout(() => {
+        matchName.symbol = matchName.symbolHtml = value.value 
+       }, 500);
     }
   }
 };
@@ -480,10 +476,35 @@ const handleBlur = (val) => {
   }
   if (val == 4) {
     // enlarged.value = false
-    if (stockCo.value[0] && stockCo.value[0].symbol) {
-      value.value = ''
+    if (matchName.symbol) {
+      loading.value = true
+      const symbol = matchName.symbol;
+      _basic({ symbol }).then(res => {
+        if (res.code == 200 && res.data) {
+          console.log(res.data)
+          stockCo.value = [res.data];
+          isFocused.value = null
+          matchName.symbol = matchName.symbolHtml = value.value = ''
+          stockPrice.value = new Decimal(res.data.price);
+          stockNameRef.value && stockNameRef.value.blur();
+          const data = {
+            stockCo: stockCo.value,
+            stockPrice: stockPrice.value != '' ? stockPrice.value.toNumber() : '',
+            symbol
+          }
+          store.commit('setCurrentSymbol', data)
+          getAccount(stockPrice.value)
+          loading.value = false
+        } else {
+          loading.value = false
+          stockCo.value = [];
+          stockPrice.value = 0
+        }
+      })
+    } else {
+      loading.value = false
     }
-    loading.value = false
+
   }
 }
 
@@ -502,12 +523,14 @@ const clear = () => {
 }
 
 const getData = () => {
+  stockCo.value = [];
+  stockPrice.value = 0
   //股票搜索
   if (value.value === '') {
+    matchName.symbol = matchName.symbolHtml = ''
     loading.value = false
     debouncedSearch.cancel();
   } else {
-    loading.value = true
     if (value.value && value.value.length > 0) {
       debouncedSearch(value.value);
     }
@@ -611,9 +634,13 @@ onMounted(() => {
 
 });
 
-const jump = (name) => {
+const jump = (name, needLogin) => {
+  let routname = name;
+  if (needLogin && !token.value) {
+    routname = 'login';
+  }
   router.push({
-    name,
+    name: routname,
     query: { reurl: 'trade' }
   });
 };
@@ -716,24 +743,40 @@ defineExpose({
   }
 
   .slider-container-box {
+    margin-top: .2rem;
     height: 1rem;
-    padding-top: .4rem;
-    // .slider-custom-num{
-    //  background: #014CFA;
-    //  color: #fff;
-    //  display: inline-block;
-    //  padding:0 .1rem;
-    //  width: .5rem;
-    //  height: .4rem;
-    //  font-size: 12px;
-    //  text-align: center;
-    //  line-height: .4rem;
-    //  border-radius: 10px;
-    // }
-  }
-  .link-text {
-      color: #014CFA;
+    padding: .4rem 0 0 0;
+
+    .slider-custom-num {
+      position: relative;
+      background: #014CFA;
+      color: #fff;
+      display: inline-block;
+      width: .05rem;
+      height: .5rem;
+      font-size: 12px;
+      text-align: center;
+      line-height: .4rem;
+      border-radius: 10px;
+
+      .number {
+        color: #014CFA;
+        position: absolute;
+        top: -0.4rem;
+        left: -0.1rem;
+        font-size: .2rem;
+      }
     }
+  }
+
+  .link-text {
+    color: #014CFA;
+  }
+
+  [contenteditable="true"]:focus {
+    outline: none;
+  }
+
   .animate-input {
     position: relative;
     border: 1px solid #D0D8E2;
@@ -742,7 +785,28 @@ defineExpose({
     transition: all 1s;
     padding: 0.1rem;
 
+    &.symbol-name {
+      .matchName {
+        top: 0.33rem;
+        left: 0.13rem;
+        position: absolute;
+        border: none;
+        height: 0.68rem;
+        line-height: 0.68rem;
+        z-index: 0;
+        color: #b7b7b7;
 
+        .keyword {
+          color: #fff;
+          font-weight: normal;
+        }
+      }
+
+      input {
+        position: relative;
+        z-index: 1;
+      }
+    }
 
     .ipt_tip {
       position: absolute;
