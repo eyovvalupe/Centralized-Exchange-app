@@ -71,11 +71,13 @@ import { _loanLog } from "@/api/api"
 import { _loanStatusMap } from "@/utils/dataMap"
 import Loan from "./Loan.vue"
 import { Tab, Tabs } from 'vant';
+import { useRoute } from "vue-router"
 
+const route = useRoute()
 const loading = ref(false)
 const finish = ref(false)
 const list = ref([])
-const active = ref(0)
+const active = ref(Number(route.query.tab) || 0)
 const pageLoading = ref(true)
 
 const page = ref(0)
@@ -127,7 +129,6 @@ const changeTab = (val) => {
 onMounted(() => {
     setTimeout(() => {
         pageLoading.value = false
-
     }, 200)
     setTimeout(() => {
         moreDom = document.querySelector('.loading_more')

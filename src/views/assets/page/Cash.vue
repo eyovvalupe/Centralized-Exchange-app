@@ -123,7 +123,7 @@
                 </div>
                 <div class="amount" :class="{ 'open_amount': switchs[i + currencyWallet.length] == true }">{{
                     item.amount
-                }}</div>
+                    }}</div>
                 <div class="more" :class="{ 'open_tab': switchs[i + currencyWallet.length] == true }">
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>

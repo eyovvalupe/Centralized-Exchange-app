@@ -11,25 +11,30 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : '435345.00' }}</span>
+                <span>{{ hidden ? '****' : assets.stock }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
-                    <div>借贷</div>
-                    <div class="num">{{ hidden ? '***' : '232424.00' }}</div>
+                    <div>现金</div>
+                    <div class="num">{{ hidden ? '***' : assets.money }}</div>
                 </div>
                 <div class="line"></div>
-                <div class="nav">
-                    <div>冻结</div>
-                    <div class="num">{{ hidden ? '***' : '232424.00' }}</div>
+                <div class="nav" @click="jump('loanList', { tab: 1 })">
+                    <div>
+                        <span>借贷</span>
+
+                        <div class="hint">{{ loanNum }}</div>
+                    </div>
+                    <div class="num">{{ hidden ? '***' : assets.loan }}</div>
                 </div>
             </div>
 
             <!-- 借贷按钮 -->
-            <div class="loan_btn" @click="jump('loanList')">借贷</div>
-            <div class="loan_max">可借资金 223423.00</div>
+            <div class="loan_btn" @click="jump('loanList')">借贷申请</div>
+            <div class="loan_max">可借资金 0.00</div>
         </div>
 
+        <div class="subtitle">持仓</div>
         <!-- 列表 -->
         <div class="th">
             <div class="td td12">股票/状态</div>
@@ -44,17 +49,23 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { Icon } from "vant"
 import StockItem from "./components/StockItem.vue"
 import router from "@/router"
+import store from "@/store"
+
+store.dispatch('updateOrderHint')
 
 const hidden = ref(false)
+const assets = computed(() => store.state.assets || {})
+// const wallet = computed(() => store.state.wallet || [])
+const loanNum = computed(() => store.state.loanNum || 0)
 
-
-const jump = (name) => {
+const jump = (name, query) => {
     router.push({
-        name
+        name,
+        query
     })
 }
 </script>
@@ -87,11 +98,13 @@ const jump = (name) => {
 
         .loan_max {
             position: absolute;
-            top: 1.2rem;
+            top: 1.04rem;
             right: 0.2rem;
             color: #fff;
             font-size: 0.24rem;
-            font-weight: 400
+            font-weight: 400;
+            text-align: center;
+            min-width: 2.4rem;
         }
 
         .top {
@@ -142,8 +155,32 @@ const jump = (name) => {
                 font-size: 0.24rem;
                 text-align: center;
                 margin: 0 0.48rem;
+                position: relative;
+
+                .hint {
+                    background-color: #fff;
+                    height: 0.24rem;
+                    font-size: 0.2rem;
+                    line-height: 0.24rem;
+                    font-weight: 200;
+                    padding: 0 0.1rem;
+                    border-radius: 0.2rem;
+                    position: absolute;
+                    top: -0.1rem;
+                    right: -0.32rem;
+                    color: #000
+                }
             }
         }
+    }
+
+    .subtitle {
+        border-bottom: 1px solid #EAEAEA;
+        line-height: 0.48rem;
+        padding: 0 0 0.2rem 0.32rem;
+        color: #121826;
+        font-size: 0.28rem;
+        margin-bottom: 0.1rem;
     }
 
     .th {
@@ -155,7 +192,7 @@ const jump = (name) => {
         font-size: 0.28rem;
         font-weight: 400;
         border-bottom: 1px solid #E8E8E8;
-        padding: 0 0.32rem;
+        margin: 0 0.32rem;
         text-align: center;
 
         .td {
