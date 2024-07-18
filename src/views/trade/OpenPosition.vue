@@ -30,9 +30,14 @@
         <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
         <div v-show="!loading">
           <span class="grop-title">价格</span>
-          <Field v-model="priceValue" :class="['num-input', { 'focusinput': isFocused === 1 }]"
-            style="margin-bottom: 0.2rem" type="number" input-align="right" @focus="handleFocus(1)"
-            @blur="handleBlur(1)" />
+          <!-- <Field v-model="priceValue" :class="['num-input', { 'focusinput': isFocused === 1 }]"
+            style="margin-bottom: 0.2rem" type="number" @focus="handleFocus(1)"
+            @blur="handleBlur(1)" placeholder="满足价格才能成交" /> -->
+          <div class="animate-input num-input flex left-text" :class="{ hasval: !!priceValue, inputFocus: isFocused === 1 }">
+            <div class="ipt_tip" v-if="isFocused === 1 || !priceValue">满足价格才能成交</div>
+            <input v-model="priceValue" type="number"  @focus="handleFocus(1)" @blur="handleBlur(1)" placeholder="">
+            <div class="link-text cur-price">市价</div>
+          </div>
           <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already"
             :priceValue="priceValue" />
         </div>
@@ -492,6 +497,84 @@ defineExpose({
     }
   }
 
+  .animate-input {
+    position: relative;
+    border: 1px solid #D0D8E2;
+    border-radius: 0.12rem;
+    height: 100%;
+    transition: all 1s;
+    padding: 0.1rem;
+
+    &.symbol-name {
+      .matchName {
+        top: 0.33rem;
+        left: 0.13rem;
+        position: absolute;
+        border: none;
+        height: 0.68rem;
+        line-height: 0.68rem;
+        z-index: 0;
+        color: #b7b7b7;
+
+        .keyword {
+          color: #fff;
+          font-weight: normal;
+        }
+      }
+
+      input {
+        position: relative;
+        z-index: 1;
+      }
+    }
+
+    .ipt_tip {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: .1rem 0 0 .2rem;
+      pointer-events: none;
+      color: #9ea3ae;
+      text-align: left;
+      width: 100%;
+      line-height: .66rem;
+      font-size: 0.24rem;
+      z-index: 0;
+      transition: all .2s;
+    }
+
+    input {
+      width: 100%;
+      height: 100%;
+    }
+
+    &.hasval {
+      .ipt_tip {
+        display: none;
+      }
+    }
+
+    &.inputFocus {
+      padding-top: .3rem;
+      border: 1px solid #014CFA;
+      height: 1.1rem;
+
+      .ipt_tip {
+        display: block;
+        right: 0;
+
+        line-height: .2rem;
+        font-size: 0.2rem;
+      }
+
+      input {
+        width: 100%;
+        height: .68rem;
+        text-align: left;
+      }
+    }
+  }
+
   .num-input {
     width: 100%;
     height: 0.88rem;
@@ -508,7 +591,17 @@ defineExpose({
       }
     }
   }
-
+  .cur-price{
+    text-align: center;
+    width: 1rem;
+    line-height: .66rem;
+  }
+  .link-text {
+    color: #014CFA;
+  }
+  .left-text {
+   text-align: left;
+  }
   .price-num-input {
     width: 4.9rem;
     height: 0.88rem;
