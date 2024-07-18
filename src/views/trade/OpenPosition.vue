@@ -1,18 +1,18 @@
 <template>
   <div class="open-position">
     <div class="position-header">
-     <div class="btn flex">
-      <div class="up-botton" :style="isUpActive ? activeBackgroundImageStyle : backgroundImageStyle"
-        @click="activateUp">
-        买涨
-      </div>
-      <div class="down-button" :style="isDownActive
+      <div class="btn flex">
+        <div class="up-botton" :style="isUpActive ? activeBackgroundImageStyle : backgroundImageStyle"
+          @click="activateUp">
+          买涨
+        </div>
+        <div class="down-button" :style="isDownActive
           ? activeBlueBackgroundImageStyle
           : blueBackgroundImageStyle
-        " @click="activateDown">
-        买跌
+          " @click="activateDown">
+          买跌
+        </div>
       </div>
-     </div>
 
       <div class="position-tabs">
         <Tabs class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
@@ -383,11 +383,11 @@ const changePrice = () => {
   marketValue.value = ''
 }
 
-const openPopup = () => {
-  store.dispatch('openPopup', StockPopup)
-  store.commit('setPopupHeight', '80%')
-  store.commit('setkeyborader', false)
-}
+// const openPopup = () => {
+//   store.dispatch('openPopup', StockPopup)
+//   store.commit('setPopupHeight', '80%')
+//   store.commit('setkeyborader', false)
+// }
 
 
 defineExpose({
@@ -415,6 +415,7 @@ defineExpose({
       left: 47%;
     }
   }
+
   .btn {
     margin-top: .1rem;
   }
@@ -616,6 +617,7 @@ defineExpose({
     right: 0.2rem;
     // top: 0.28rem;
   }
+
   // }
   .position-account {
     margin: 0.1rem 0 .3rem 0;
@@ -689,7 +691,7 @@ defineExpose({
       position: absolute;
       right: 0;
       top: -.5rem;
-      background:#fff;
+      background: #fff;
       z-index: 88;
     }
   }

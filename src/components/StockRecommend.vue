@@ -24,8 +24,8 @@
                 </div>
             </div>
         </div>
-        <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
-            @click="submit">一键添加至自选</Button>
+        <!-- <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
+            @click="submit">一键添加至自选</Button> -->
     </div>
 </template>
 
@@ -38,7 +38,7 @@ import { _add } from "@/api/api"
 import store from "@/store"
 import router from "@/router"
 
-const emits = defineEmits(['init'])
+const emits = defineEmits(['init', 'change'])
 const token = computed(() => store.state.token || '')
 
 const props = defineProps({
@@ -58,13 +58,21 @@ const updown = item => {
     return item.ratio > 0 ? 1 : -1
 }
 
-const checkedList = ref(props.list.map(() => true))
+const checkedList = ref([])
 const changeCheck = i => {
     if (checkedList.value[i]) {
         checkedList.value[i] = !checkedList.value[i]
     } else {
         checkedList.value[i] = true
     }
+
+    const keys = []
+    checkedList.value.map((item, i) => {
+        if (item) {
+            keys.push(props.list[i].symbol)
+        }
+    })
+    emits('change', keys)
 }
 
 
@@ -164,24 +172,27 @@ const submit = () => {
         }
 
         .list_item_active {
-            border: 1px solid #3B6BEE;
+            // border: 1px solid #3B6BEE;
+            background-color: #F5F7F8;
 
             .checked {
                 position: absolute;
-                top: -1.4rem;
-                right: -1.4rem;
-                width: 2rem;
-                height: 2rem;
-                background-color: #3B6BEE;
-                transform: rotate(-50deg);
+                top: 0.1rem;
+                right: 0.1rem;
+                width: 0.36rem;
+                height: 0.36rem;
+                border-radius: 50%;
+                background-color: #000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                opacity: 0.9;
 
                 .ok {
-                    width: 0.24rem;
-                    height: 0.24rem;
-                    position: absolute;
-                    transform: rotate(50deg);
-                    top: 0.8rem;
-                    left: 0.05rem;
+                    width: 0.16rem;
+                    height: 0.16rem;
+                    text-align: center;
+                    line-height: 0;
                 }
             }
         }

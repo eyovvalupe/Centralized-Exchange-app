@@ -481,13 +481,11 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (from.meta.pageType == "tab" && to.meta.pageType == "child") {
-    console.error('右')
     store.commit('setTransitionName', 'slide-right')
     return;
   }
 
   if (from.meta.pageType == "child" && to.meta.pageType == "tab") {
-    console.error('左')
     store.commit('setTransitionName', 'slide-right')
     return;
   }

@@ -19,13 +19,6 @@
     </Popup>
 
 
-    <teleport to="body">
-      <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showOpenPositionBottom"
-        position="bottom" closeable :style="{ height: popupHeight }"
-        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
-        <component :is="popupComponent" />
-      </Popup>
-    </teleport>
 
 
 
@@ -122,14 +115,6 @@
     </Popup>
 
 
-    <teleport to="body">
-      <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showOpenPositionBottom"
-        position="bottom" closeable :style="{ height: popupHeight }"
-        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
-        <component :is="popupComponent" />
-      </Popup>
-    </teleport>
-
 
 
     <!-- 侧边栏 -->
@@ -175,7 +160,8 @@
     <teleport to="body">
       <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showOpenPositionBottom"
         position="bottom" closeable :style="{ height: popupHeight }"
-        :class="['detail-popup', { keypadding: keyborader }]" @close="closePopup" v-if="showOpenPositionBottom">
+        :class="['detail-popup', { keypadding: keyborader }, 'detail_popup_' + popupComponent.__name]"
+        @close="closePopup" v-if="showOpenPositionBottom">
         <component :is="popupComponent" />
       </Popup>
     </teleport>
@@ -339,7 +325,9 @@ const ipoOnChange = (val) => {
 const showOpenPositionBottom = computed(() => store.state.showOpenPositionBottom)
 const showLeft = computed(() => store.state.showLeft)
 const popupHeight = computed(() => store.state.popupHeight)
-const popupComponent = computed(() => store.state.popupComponent)
+const popupComponent = computed(() => {
+  return store.state.popupComponent
+})
 const keyborader = computed(() => store.state.keyborader)
 const closePopup = () => {
   store.dispatch('closePopup')
@@ -735,8 +723,16 @@ const closeOpenDetail = () => {
   padding-bottom: 1.2rem;
 }
 
+.detail_popup_StockPopup {
+  padding-bottom: 0 !important;
+}
+
 .keypadding {
   padding-bottom: 5rem !important;
+}
+
+.detail_popup_StockPopup {
+  padding-bottom: 0 !important;
 }
 
 @media (min-width: 751px) {
@@ -746,6 +742,10 @@ const closeOpenDetail = () => {
     padding-bottom: 3rem !important;
     left: 50% !important;
     transform: translateX(-50%);
+  }
+
+  .detail_popup_StockPopup {
+    padding-bottom: 0 !important;
   }
 }
 

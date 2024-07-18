@@ -1,10 +1,10 @@
 <!-- 市场详情 -->
 <template>
-    <div class="page page_marketinfo">
+    <div class="page page_marketinfo" :class="{ 'innerpage_marketinfo': props.innerPage }">
         <!-- 头部 -->
         <div class="max-width info_header">
             <div class="top">
-                <div class="ripple_button back" @click="router.back()">
+                <div v-if="!props.innerPage" class="ripple_button back" @click="backFunc">
                     <Icon name="arrow-left" />
                 </div>
                 <div class="title">
@@ -12,11 +12,12 @@
                     <div class="info">{{ item.name || '--' }}</div>
                 </div>
                 <div class="title_shadow"></div>
-                <div class="search star" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
+                <div v-if="!props.innerPage" class="search star" @click="addCollect"
+                    :style="{ opacity: loading ? '0.5' : '1' }">
                     <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
                     <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                 </div>
-                <div class="search" @click="fullScreen(true)">
+                <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
                     <Icon name="enlarge" />
                 </div>
             </div>
@@ -250,6 +251,16 @@ const goBuy = key => {
         }
     })
 }
+
+// 返回
+const emits = defineEmits(['back'])
+const backFunc = () => {
+    if (props.innerPage) {
+        emits('back')
+    } else {
+        router.back()
+    }
+}
 </script>
 
 <style lang="less" scoped>
@@ -324,7 +335,7 @@ const goBuy = key => {
         }
 
         .header-price {
-            padding-top: 0.1rem;
+            padding: 0.1rem 0;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -701,6 +712,26 @@ const goBuy = key => {
                 align-items: center;
                 justify-content: space-between;
             }
+        }
+    }
+}
+
+.innerpage_marketinfo {
+    width: 100%;
+    height: 100%;
+    padding-top: 0;
+
+    .info_header {
+        position: relative;
+        background-color: rgba(0, 0, 0, 0);
+        pointer-events: none;
+    }
+
+    .market_content {
+        height: calc(100% - 1.8rem);
+
+        .chart_box {
+            height: 100%;
         }
     }
 }

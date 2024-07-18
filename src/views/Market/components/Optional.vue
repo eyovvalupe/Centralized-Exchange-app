@@ -2,15 +2,34 @@
 <template>
     <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" class="market_optional"
         :list="watchList" />
-    <Tabs v-else-if="!watchList.length && !loading" class="option_tab" v-model:active="active" :swipeable="false"
-        animated shrink>
-        <Tab :title="'股票'">
-            <StockRecommend @init="init" v-if="!watchList.length" :list="marketSrockRecommendList" />
-        </Tab>
-        <Tab :title="'合约'">
-            <NoData />
-        </Tab>
-    </Tabs>
+    <div v-else-if="!watchList.length && !loading" style="position: relative">
+        <Button round plain class="addBtn" :loading="addLoading" @click="addOptional"><span style="font-size: 0.24rem;"
+                :style="{ color: stockList.length ? '#014CFA' : '#999' }">一键添加至自选</span></Button>
+        <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
+            <Tab>
+                <template #title>
+                    <div>
+                        <span>股票</span>
+                        <span>({{ stockList.length }})</span>
+                    </div>
+                </template>
+                <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
+                <NoData v-if="!marketSrockRecommendList.length" />
+            </Tab>
+            <Tab :title="'合约'">
+                <template #title>
+                    <div>
+                        <span>股票</span>
+                        <span>({{ contractList.length }})</span>
+                    </div>
+                </template>
+                <!-- <StockRecommend @change="changeStockList" @init="init"
+                    :list="marketSrockRecommendList" /> -->
+                <NoData />
+            </Tab>
+        </Tabs>
+    </div>
+
     <Loaidng v-else :loading="loading" />
 </template>
 
@@ -22,8 +41,8 @@ import StockRecommend from "@/components/StockRecommend.vue"
 // import router from "@/router"
 import store from "@/store";
 import { computed, ref } from "vue"
-import { _watchlist, _del, _watchlistDefault } from "@/api/api"
-import { showLoadingToast, closeToast, showToast, Tabs, Tab } from 'vant'
+import { _watchlist, _del, _watchlistDefault, _add } from "@/api/api"
+import { showLoadingToast, closeToast, showToast, Tabs, Tab, Button, showNotify } from 'vant'
 import { useSocket } from '@/utils/ws'
 const { startSocket } = useSocket()
 
@@ -107,6 +126,33 @@ const openRecommendList = () => {
         }
     })
 }
+// 推荐股票选择
+const stockList = ref([])
+const contractList = ref([])
+const changeStockList = arr => {
+    stockList.value = arr
+}
+const changeContractList = arr => {
+    contractList.value = arr
+}
+// 添加自选
+const addLoading = ref(false)
+const addOptional = () => {
+    if (!stockList.value.length && !contractList.value.length) return
+    const keys = [...stockList.value, ...contractList.value]
+    if (addLoading.value) return
+    addLoading.value = true
+    _add({
+        symbol: keys.join(',')
+    }).then(res => {
+        if (res.code == 200) {
+            showNotify({ type: 'success', message: '添加成功' })
+            init()
+        }
+    }).finally(() => {
+        addLoading.value = false
+    })
+}
 
 defineExpose({
     init
@@ -149,6 +195,13 @@ const remove = item => {
 </script>
 
 <style lang="less" scoped>
+.addBtn {
+    position: absolute;
+    right: 0.24rem;
+    height: 0.48rem;
+    z-index: 9999;
+}
+
 .option_tab {
     :deep(.van-tab__panel) {
         // height: calc(var(--app-height) - 4.2rem) !important;

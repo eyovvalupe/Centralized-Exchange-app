@@ -3,7 +3,7 @@
     <div class="market_stock">
 
         <!-- 首页推荐数据 -->
-        <Recommend @ready="readyRecommendData" class="home_recommend" />
+        <!-- <Recommend @ready="readyRecommendData" class="home_recommend" /> -->
 
         <!-- 市场涨跌分布 -->
         <div class="total_box">

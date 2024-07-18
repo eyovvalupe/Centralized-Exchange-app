@@ -1,6 +1,6 @@
 <template>
   <div class="stockPopup">
-    <!-- <MarketInfo :innerPage="true" /> -->
+    <MarketInfo @back="back" :innerPage="true" />
   </div>
 </template>
 
@@ -9,9 +9,14 @@ import { ref, computed } from "vue";
 import store from "@/store";
 import MarketInfo from "../Market/MarketInfo.vue"
 
-
+const back = () => {
+  store.commit('setShowOpenPositionBottom', false)
+}
 </script>
 
 <style lang="less">
-.stockPopup {}
+.stockPopup {
+  height: 100%;
+  width: 100%;
+}
 </style>

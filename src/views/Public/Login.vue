@@ -96,28 +96,31 @@ const submit = () => {
   if (loading.value) return
   loading.value = true
   _login(form.value).then(res => {
-    if (res.code != 200) return showToast(res.message)
-    store.dispatch('reset')
-    showNotify({ type: 'success', message: '登录成功' })
-    setTimeout(() => {
-      store.commit('setToken', res.data.auth)
-      store.commit('setUserInfo', res.data)
-    }, 100)
-    setTimeout(() => {
-      store.dispatch('updateUserInfo')
-      if (route.query.reurl) {
-        router.replace({
-          name: route.query.reurl,
-          query: {
-            redata: route.query.redata,
-          }
-        })
-      } else {
-        router.push({
-          name: 'user'
-        })
-      }
-    }, 300)
+    if (res && res.code == 200) {
+      store.dispatch('reset')
+      showNotify({ type: 'success', message: '登录成功' })
+      setTimeout(() => {
+        store.commit('setToken', res.data.auth)
+        store.commit('setUserInfo', res.data)
+      }, 100)
+      setTimeout(() => {
+        store.dispatch('updateUserInfo')
+        if (route.query.reurl) {
+          router.replace({
+            name: route.query.reurl,
+            query: {
+              redata: route.query.redata,
+            }
+          })
+        } else {
+          router.push({
+            name: 'user'
+          })
+        }
+      }, 300)
+    } else {
+      return showToast(res.message || '登录异常')
+    }
   }).catch(err => {
     if (err.code == '1001') { // 弹出验证码
       if (form.value.verifcode) { // 如果输入了验证码，旧提示验证码错误

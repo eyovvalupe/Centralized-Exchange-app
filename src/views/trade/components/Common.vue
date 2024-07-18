@@ -58,10 +58,9 @@
           <img src="/static/img/trade/down.png" class="down-img" />
         </div>
       </div>
-     
-      <div class="animate-input num-input flex"
-        :class="{ hasval: !!numValue, inputFocus: isFocused === 5 }">
-        <div class="ipt_tip" v-if="isFocused === 5 || !numValue ">可买 <b>{{ roundedQuantity }}</b> </div>
+
+      <div class="animate-input num-input flex" :class="{ hasval: !!numValue, inputFocus: isFocused === 5 }">
+        <div class="ipt_tip" v-if="isFocused === 5 || !numValue">可买 <b>{{ roundedQuantity }}</b> </div>
         <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)" @blur="handleBlur(5)"
           ref="buyNumRef" placeholder="">
       </div>
@@ -313,10 +312,10 @@ const getAccount = (price) => {
           roundedQuantity.value = availableQuantity.floor();
           store.commit('setRoundedQuantity', roundedQuantity.value)
           if (currentNumber.value > minOrder.value) {
-            numValue.value = currentNumber.value >0?currentNumber.value:''
+            numValue.value = currentNumber.value > 0 ? currentNumber.value : ''
             getslide()
           } else {
-            numValue.value =''
+            numValue.value = ''
             // numValue.value = minOrder.value
             getslide()
           }
@@ -380,7 +379,7 @@ watch([active, currentSymbol], () => {
       return
     }
 
-    if (currentNumber.value > currentMinOrder.value &&  currentMinOrder.value>0) {
+    if (currentNumber.value > currentMinOrder.value && currentMinOrder.value > 0) {
       numValue.value = currentNumber.value
     } else {
       // numValue.value = currentMinOrder.value
@@ -407,19 +406,19 @@ const getnumval = (newValue) => {
   try {
     const percentage = new Decimal(newValue).div(100);
     const calculatedValue = percentage.mul(roundedQuantity.value);
-    let val=0;
+    let val = 0;
     if (increment.value) {
       // 百位数取整
       const roundedValue = calculatedValue.div(increment.value).floor().mul(increment.value);
-      val  = roundedValue.toNumber();
+      val = roundedValue.toNumber();
     } else {
       const roundedValue = calculatedValue.div(100).floor().mul(100);
       val = roundedValue.toNumber();
     }
-    if(val==0){
-      numValue.value =''
-    }else{
-       numValue.value =val
+    if (val == 0) {
+      numValue.value = ''
+    } else {
+      numValue.value = val
     }
     store.commit('setCurrentNumber', numValue.value)
   } catch (error) {
@@ -669,7 +668,7 @@ const leverSelect = () => {
 
 const inputChange = (val) => {
   if (numValue.value == 0 || !numValue.value) {
-    numValue.value =''
+    numValue.value = ''
   }
   getslide()
   store.commit('setCurrentNumber', numValue.value)
@@ -682,8 +681,10 @@ const changePrice = () => {
 }
 
 const openPopup = () => {
+  if (!stockCo.value[0]) return
+  store.commit('setCurrStock', stockCo.value[0])
   store.dispatch('openPopup', StockPopup)
-  store.commit('setPopupHeight', '80%')
+  store.commit('setPopupHeight', '90%')
   store.commit('setkeyborader', false)
 };
 
