@@ -118,55 +118,21 @@ input {
     }
 }
 
-// 点击水波纹
+// 点击效果
 .ripple_button {
     position: relative;
-    // overflow: hidden;
 }
 
-
-@keyframes ripple {
-    from {
-        transform: translate(-50%, -50%) scale(0);
-        background: rgba(1, 76, 250, .2);
-    }
-
-    to {
-        transform: translate(-50%, -50%) scale(1.5);
-        background: transparent;
-    }
+.ripple_button:active {
+    background-color: rgba(1, 76, 250, .2) !important;
 }
 
-@keyframes ripple2 {
-    from {
-        transform: translate(-50%, -50%) scale(0);
-        background: rgba(227, 227, 227, 0.15);
-    }
-
-    to {
-        transform: translate(-50%, -50%) scale(1.5);
-        background: transparent;
-    }
+.ripple_text {
+    position: relative;
 }
 
-.ripple_button::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    padding-top: 100%;
-    background: transparent;
-    border-radius: 50%;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%)
-}
-
-.ripple_button:active::after {
-    animation: ripple .3s ease;
-}
-
-.ripple_button2:active::after {
-    animation: ripple2 .3s ease;
+.ripple_text:active {
+    background-color: rgba(1, 76, 250, .2) !important;
 }
 
 .fn-12 {
@@ -185,9 +151,11 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
-.mr-5{
+
+.mr-5 {
     margin-right: .1rem;
 }
-.mr-10{
+
+.mr-10 {
     margin-right: .2rem;
 }

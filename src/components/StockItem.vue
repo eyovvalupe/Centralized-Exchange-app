@@ -1,7 +1,7 @@
 <!-- 股票单个元素 -->
 <template>
     <div ref="root" style="width:100%">
-        <SwipeCell v-if="show" class="stock_item_box" :class="'stock_item_' + updownStatus">
+        <SwipeCell class="stock_item_box" :class="'stock_item_' + updownStatus">
             <div class="stock_item" @click="goInfo">
                 <div class="td5">
                     <div class="item_name">{{ props.item.symbol }}</div>
@@ -36,7 +36,7 @@
                 </div>
             </template>
         </SwipeCell>
-        <div style="height: 1.44rem;" v-if="!show"></div>
+        <!-- <div style="height: 1.44rem;" v-if="!show"></div> -->
     </div>
 </template>
 
@@ -68,37 +68,6 @@ const props = defineProps({
     }
 })
 
-// 虚拟 dom
-const show = ref(false)
-const root = ref()
-let scrollParent = {}
-onMounted(() => {
-    setTimeout(() => {
-        scrollParent = document.querySelector(props.scrollBox)
-        if (scrollParent && scrollParent.addEventListener) {
-            scrollParent.addEventListener('scroll', getShow)
-        }
-        getShow()
-        setTimeout(() => {
-            getShow()
-        }, 800)
-    }, 200)
-})
-onUnmounted(() => {
-    if (scrollParent && scrollParent.removeEventListener) {
-        scrollParent.removeEventListener('scroll', getShow)
-    }
-})
-const totalHeight = window.innerHeight || document.documentElement.clientHeight;
-function getShow() {
-    show.value = false
-    if (root.value) {
-        const rect = root.value.getBoundingClientRect()
-        if (rect && rect.top > -rect.height && rect.top < totalHeight) {
-            show.value = true
-        }
-    }
-}
 
 const mode = ref(1)
 const updown = computed(() => { // 1-涨 -1-跌 0-平

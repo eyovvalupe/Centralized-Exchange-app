@@ -1,15 +1,15 @@
 <!-- 记录列表 -->
 <template>
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" :before-close="boforeClose" teleport="body"
-        v-model:show="showBottom" position="bottom" style="background-color: rgba(0,0,0,0)">
-        <div class="record_list_popup">
+    <Popup close-on-click-overlay :safe-area-inset-top="true" :safe-area-inset-bottom="true" :before-close="boforeClose"
+        teleport="body" v-model:show="showBottom" position="bottom" style="background-color: rgba(0,0,0,0)">
+        <div class="record_list_popup" @click.stop="() => { }">
             <div class="title">
                 <span>{{ title }}</span>
                 <div class="close_icon" @click="close">
                     <img src="/static/img/common/close.png" alt="img">
                 </div>
             </div>
-            <Tabs @change="init" v-model:active="active" :lazy-render="true" animated>
+            <Tabs @change="init" v-model:active="active" :lazy-render="true" animated type="card" class="rsl_tabs">
                 <Tab :title="titles[0]">
                     <div ref="list_0" class="list"
                         :class="{ 'active_list': active == 0, 'list_down': scrollDir == 'down' }">
@@ -86,13 +86,19 @@ const open = (tabIndex = 0) => {
     showBottom.value = true
     setTimeout(() => {
         init()
-    }, 0)
+        document.body.addEventListener('click', close)
+    }, 500)
 }
 const close = () => {
+    boforeClose()
     showBottom.value = false
 }
 const boforeClose = () => {
+
     destoryWatch()
+    setTimeout(() => {
+        document.body.removeEventListener('click', close)
+    }, 0)
 }
 
 
@@ -227,6 +233,44 @@ const getDate = str => {
     border-top-left-radius: 0.24rem;
     border-top-right-radius: 0.24rem;
     overflow: hidden;
+
+    .rsl_tabs {
+        .van-tabs__nav--card {
+            border: none;
+        }
+
+        .van-tab--card {
+            border-right: none;
+            color: #061023;
+            // background-color: #f5f5f5;
+        }
+
+        .van-tab--card.van-tab--active {
+
+            background-color: #F6F8FF;
+            border-radius: 0.3rem;
+            color: #014CFA;
+            font-weight: 500
+        }
+
+        .van-tab--shrink {
+            padding: 0 0.3rem;
+        }
+
+        .van-tabs__wrap {
+            height: 0.8rem;
+            padding-bottom: 0.34rem;
+        }
+
+        .van-tabs__nav--card {
+            height: 0.6rem;
+        }
+
+        .van-tab {
+            line-height: 0.6rem;
+            font-size: 0.28rem;
+        }
+    }
 
     &:has(.list_down) {
         border-top-left-radius: 0;

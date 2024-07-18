@@ -43,7 +43,7 @@
 
           <div v-for="(i, key) in dataList" :key="key">
             <!-- <SwipeCell> -->
-            <div class="content-grid grid-item-hover ripple_button" @click="showButton(i)">
+            <div class="content-grid grid-item-hover " @click="showButton(i)">
               <div :style="currentNum === i.order_no && buttonShow ? { padding: '0' } : { padding: '0 0.3rem' }"
                 class="flex">
                 <div class="grid-item" style="width: 2.2rem"
@@ -139,7 +139,7 @@
           </div>
 
           <div v-for="(i, key) in inquireData" :key="key" style="min-height: 100%;">
-            <div class="content-grid grid-item-hover ripple_button" @click="showButton(i)">
+            <div class="content-grid grid-item-hover " @click="showButton(i)">
               <div :style="currentNum === i.order_no && buttonShow ? { padding: '0' } : { padding: '0 0.3rem' }"
                 class="flex">
                 <div class="grid-item" style="width: 2.2rem"

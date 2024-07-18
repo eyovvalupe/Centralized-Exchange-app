@@ -28,8 +28,8 @@
                     <span>提现</span>
                 </div> -->
                 <div class="nav">
-                    <div>借贷 </div>
-                    <div class="num" style="margin-left:0.1rem">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
+                    <div>现金余额 </div>
+                    <div class="num" style="margin-left:0.1rem">{{ hidden ? '***' : (assets.money || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
@@ -43,7 +43,7 @@
                 <!-- <div class="btn_icon">
                     <img src="/static/img/assets/currency_icon.png" alt="img">
                 </div> -->
-                <span>兑换</span>
+                <span>货币兑换</span>
             </div>
 
             <!-- <div class="loan_box">
@@ -53,7 +53,7 @@
         </div>
         <!-- 按钮 -->
         <div class="btns">
-            <div class="ripple_button btn" @click="jump('topUp', true)">
+            <div class=" btn" @click="jump('topUp', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/recharge_icon.png" alt="img">
@@ -61,7 +61,7 @@
                 </div>
                 <span>充值</span>
             </div>
-            <div class="ripple_button btn btn2" @click="jump('withdraw', true)">
+            <div class=" btn btn2" @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="color_text">
                         <!-- <div class="withdraw_icon">
@@ -86,7 +86,7 @@
         </div>
         <div class="cash_tab_content tabs">
             <div class="tab_title">法币</div>
-            <div class="ripple_button tab" @click="switchOpen(i, $event)" v-for="(item, i) in currencyWallet" :key="i">
+            <div class=" tab" @click="switchOpen(i, $event)" v-for="(item, i) in currencyWallet" :key="i">
                 <div class="tab_icon">
                     <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="img">
                 </div>
@@ -112,9 +112,9 @@
                     </div>
                 </div>
             </div>
-            <div class="tab_title">加密货币</div>
-            <div class="ripple_button tab" @click="switchOpen(i + currencyWallet.length, $event)"
-                v-for="(item, i) in showWallet" :key="i">
+            <div class="tab_title" style="margin-top: 0.4rem;">加密货币</div>
+            <div class=" tab" @click="switchOpen(i + currencyWallet.length, $event)" v-for="(item, i) in showWallet"
+                :key="i">
                 <div class="tab_icon">
                     <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="img">
                 </div>
@@ -482,7 +482,7 @@ const jump = (name, check = false, query) => {
         .tab_title {
             border-bottom: 1px solid #EAEAEA;
             line-height: 0.48rem;
-            padding: 0 0 0.3rem 0;
+            padding: 0 0 0.2rem 0;
             color: #121826;
             font-size: 0.28rem;
         }

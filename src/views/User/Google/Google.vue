@@ -20,11 +20,11 @@
         </div>
         <div class="tip">(Please back up your key in case you lose it)</div>
 
-        <div class="ripple_button copy" @click="copy" v-if="gg.googlesecret">复制</div>
+        <div class=" copy" @click="copy" v-if="gg.googlesecret">复制</div>
 
         <div class="subtitle">
             <span>Google verification code</span>
-            <span class="ripple_button clear" @click="clear">Clear</span>
+            <span class=" clear" @click="clear">Clear</span>
         </div>
 
         <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :class="{ 'error_ipt': errText }"

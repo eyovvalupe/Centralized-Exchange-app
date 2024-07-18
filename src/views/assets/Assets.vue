@@ -190,10 +190,14 @@ Promise.all(loadingList).finally(() => {
             line-height: 0;
             font-size: 0.28rem;
             font-weight: 400;
+            color: #0953fa;
+            font-size: 0.24rem;
 
             .record_icon {
-                width: 0.4rem;
-                height: 0.4rem;
+                background-color: #EAF0F3;
+                width: 0.52rem;
+                height: 0.52rem;
+                padding: 0.06rem;
                 border-radius: 50%;
                 margin-right: 0.04rem;
             }

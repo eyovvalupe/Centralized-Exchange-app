@@ -20,7 +20,7 @@
             </div>
             <div class="address" @click="copy">
                 <span>{{ address }}</span>
-                <div class="ripple_button copy_icon">
+                <div class=" copy_icon">
                     <img src="/static/img/common/copy.png" alt="img">
                 </div>
             </div>

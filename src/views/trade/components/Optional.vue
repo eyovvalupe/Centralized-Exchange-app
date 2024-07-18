@@ -21,7 +21,8 @@ const loading = ref(false)
 const subs = () => { // 订阅 ws
     store.dispatch('subList', {
         commitKey: 'setMarketWatchList',
-        proxyListValue: watchList.value
+        listKey: 'marketWatchList',
+        // proxyListValue: watchList.value
     })
 }
 

@@ -30,7 +30,7 @@
 
         <!-- 功能项 -->
         <div class="navs">
-            <div class="ripple_button nav" @click="jump('kyc', true)">
+            <div class=" nav" @click="jump('kyc', true)">
                 <div class="icon">
                     <img src="/static/img/user/iden.png" alt="img">
                 </div>
@@ -40,7 +40,7 @@
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <div class="ripple_button nav" @click="jump('account', true)">
+            <div class=" nav" @click="jump('account', true)">
                 <div class="icon">
                     <img src="/static/img/user/account.png" alt="img">
                 </div>
@@ -53,7 +53,7 @@
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <div class="ripple_button nav" @click="jump('safety', true)">
+            <div class=" nav" @click="jump('safety', true)">
                 <div class="icon">
                     <img src="/static/img/user/safe.png" alt="img">
                 </div>
@@ -67,7 +67,7 @@
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <div class="ripple_button nav" @click="jump('language')">
+            <div class=" nav" @click="jump('language')">
                 <div class="icon">
                     <img src="/static/img/user/lang.png" alt="img">
                 </div>
@@ -83,7 +83,7 @@
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <div class="ripple_button nav">
+            <div class=" nav">
                 <div class="icon">
                     <img src="/static/img/user/server.png" alt="img">
                 </div>
@@ -98,7 +98,7 @@
 
 
         <!-- 退出登录 -->
-        <div class="ripple_button loginout" v-if="token" @click="loginout">退出登录</div>
+        <div class=" loginout" v-if="token" @click="loginout">退出登录</div>
     </div>
 </template>
 

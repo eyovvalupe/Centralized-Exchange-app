@@ -101,7 +101,6 @@ onMounted(() => {
 })
 setTimeout(() => {
     loading.value = false
-    store.commit('setMarketWatchKeys', rs.map(item => item.symbol))
     store.commit('setMarketRecommndList', rs)
     setTimeout(() => {
         emits('ready')

@@ -4,11 +4,11 @@
 
     <!-- 返回和语言 -->
     <div class="max-width top">
-      <div class="ripple_button top_back" @click="goBack">
+      <div class=" top_back" @click="goBack">
         <Icon name="cross" />
       </div>
 
-      <div class="ripple_button top_lang" @click="router.push({ name: 'language' })">
+      <div class=" top_lang" @click="router.push({ name: 'language' })">
         <img src="/static/img/common/language.png" alt="language">
       </div>
     </div>
@@ -30,7 +30,7 @@
           class="item_input">
         <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="密码最小8个字符" type="text"
           class="item_input">
-        <div class="ripple_button form_item_icon" @click="showPass = !showPass">
+        <div class=" form_item_icon" @click="showPass = !showPass">
           <img v-show="!showPass" src="/static/img/user/eye-off.png" alt="off">
           <img v-show="showPass" src="/static/img/user/eye-open.png" alt="open">
         </div>
@@ -45,7 +45,7 @@
     </div>
 
     <!-- 协议 -->
-    <label class="ripple_button register_doc" @click="checked = !checked">
+    <label class=" register_doc" @click="checked = !checked">
       <Checkbox :icon-size="'0.36rem'" @click.stop="() => { }" class="register_doc_check" checked-color="#014CFA"
         shape="square" v-model="checked"></Checkbox>
       我同意<span>隐私政策</span>和<span>用户条款</span>
@@ -63,7 +63,7 @@
       </div>
       <span @click="goLogin">
         有账号吗？
-      <span>去登录</span>
+        <span>去登录</span>
       </span>
 
     </div>

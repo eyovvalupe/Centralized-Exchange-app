@@ -1,7 +1,7 @@
 <!-- 顶部菜单 -->
 <template>
     <div class="max-width top">
-        <div class="ripple_button back" @click="clickLeft">
+        <div class=" back" @click="clickLeft">
             <Icon :name="props.icon" />
         </div>
         <span>{{ props.title }}</span>

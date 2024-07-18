@@ -41,7 +41,7 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class="ripple_button btn" @click="jump('topUp', true)">
+            <div class=" btn" @click="jump('topUp', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/recharge_icon.png" alt="img">
@@ -49,7 +49,7 @@
                 </div>
                 <span>充值</span>
             </div>
-            <div class="ripple_button btn btn2" @click="jump('withdraw', true)">
+            <div class=" btn btn2" @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="color_text">
                         <!-- <div class="withdraw_icon">
@@ -71,7 +71,7 @@
                 </div>
                 <span>提现</span>
             </div>
-            <div class="ripple_button btn" @click="jump('transfer')">
+            <div class=" btn" @click="jump('transfer')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/trans_icon.png" alt="img">
@@ -79,7 +79,7 @@
                 </div>
                 <span>账户划转</span>
             </div>
-            <div class="ripple_button btn" @click="jump('swap')">
+            <div class=" btn" @click="jump('swap')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/swap_icon.png" alt="img">
@@ -87,7 +87,7 @@
                 </div>
                 <span>货币兑换</span>
             </div>
-            <div class="ripple_button btn" @click="jump('loanList')">
+            <div class=" btn" @click="jump('loanList')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/loan_icon.png" alt="img">
@@ -99,13 +99,13 @@
 
         <!-- 列表 -->
         <div class="tabs">
-            <div ref="tab1" :key="1" class="ripple_button tab" @click="rightSwitch1 = !rightSwitch1">
+            <div ref="tab1" :key="1" class=" tab" @click="rightSwitch1 = !rightSwitch1">
                 <div class="tab_icon">
                     <img src="/static/img/assets/cash_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch1 == true }">
                     <div>现金账户</div>
-                    <div class="tab_info">我是账户说明文字</div>
+                    <div class="tab_info">现金账户币种合计</div>
                 </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch1 == true }">{{ (assets.money || '0.00') }}
                 </div>
@@ -140,13 +140,13 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab2" :key="2" class="ripple_button tab" @click="rightSwitch2 = !rightSwitch2">
+            <div ref="tab2" :key="2" class=" tab" @click="rightSwitch2 = !rightSwitch2">
                 <div class="tab_icon">
                     <img src="/static/img/assets/stock_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch2 == true }">
                     <div>股票</div>
-                    <div class="tab_info">股票账户</div>
+                    <div class="tab_info">股票账户余额+持仓金额</div>
                 </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ (assets.stock || '0.00') }}
                 </div>
@@ -168,13 +168,13 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab3" :key="3" class="ripple_button tab" @click="rightSwitch3 = !rightSwitch3">
+            <div ref="tab3" :key="3" class=" tab" @click="rightSwitch3 = !rightSwitch3">
                 <div class="tab_icon">
                     <img src="/static/img/assets/contract_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch3 == true }">
                     <div>合约</div>
-                    <div class="tab_info">合约账户</div>
+                    <div class="tab_info">合约账户余额+持仓金额</div>
                 </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ (assets.contract || '0.00') }}
                 </div>
@@ -196,13 +196,13 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab4" :key="4" class="ripple_button tab" @click="rightSwitch4 = !rightSwitch4">
+            <div ref="tab4" :key="4" class=" tab" @click="rightSwitch4 = !rightSwitch4">
                 <div class="tab_icon">
                     <img src="/static/img/assets/ipo_icon.svg" alt="img">
                 </div>
                 <div :class="{ 'open_tab': rightSwitch4 == true }">
                     <div>IPO</div>
-                    <div class="tab_info">IPO</div>
+                    <div class="tab_info">IPO冻结金额</div>
                 </div>
                 <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">{{ (assets.ipo || '0.00') }}</div>
                 <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">

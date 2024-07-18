@@ -14,10 +14,10 @@
                     <span style="font-weight: 500;" v-else>{{ userInfo.username || '--' }}</span>
                     <div class="id">ID:23424</div>
                 </div>
-                
+
             </div>
-           
-            <Icon name="arrow" class="arrow-right"/>
+
+            <Icon name="arrow" class="arrow-right" />
         </div>
 
 
@@ -26,8 +26,8 @@
                 <img src="/static/img/user/user-block.png" alt="">
                 <span>登录/注册新用户</span>
             </div>
-           
-            <Icon name="arrow" class="arrow-right"/>
+
+            <Icon name="arrow" class="arrow-right" />
         </div>
 
         <div class="user-banner" @click="testBanner" v-if="!test && !token">
@@ -37,10 +37,10 @@
 
 
         <div class="user-comman">
-            <div class="user-b-box ripple_button" style="margin-right: 0.2rem;">
+            <div class="user-b-box " style="margin-right: 0.2rem;">
                 <div class="user-flex">
                     <img src="/static/img/user/user.svg" alt="">
-                    <Icon name="arrow" class="arrow-right"/>
+                    <Icon name="arrow" class="arrow-right" />
                 </div>
                 <div class="user-sub">推荐朋友</div>
                 <div class="user-small-title">
@@ -48,13 +48,13 @@
                 </div>
             </div>
 
-            <div class="user-b-box ripple_button" @click="jump('chat', false)">
+            <div class="user-b-box " @click="jump('chat', false)">
                 <div class="user-flex">
                     <img src="/static/img/user/server.png" alt="">
 
                     <div style="display: flex;">
-                        <div class="nums" v-if="messageNum>0">{{messageNum}}</div>
-                        <Icon name="arrow" class="arrow-right"/>
+                        <div class="nums" v-if="messageNum > 0">{{ messageNum }}</div>
+                        <Icon name="arrow" class="arrow-right" />
                     </div>
                 </div>
                 <div class="user-sub">客服</div>
@@ -65,10 +65,10 @@
         </div>
 
         <div class="user-h-box" @click="jump('account', true)">
-            <div class="ripple_button">
+            <div class="">
                 <div class="user-flex">
                     <img src="/static/img/user/account.png" alt="">
-                    <Icon name="arrow" class="arrow-right"/>
+                    <Icon name="arrow" class="arrow-right" />
                 </div>
                 <div class="user-sub">收款账户</div>
                 <div class="user-small-title">
@@ -79,17 +79,17 @@
 
 
         <div class="user-comman">
-            <div class="user-b-box ripple_button" style="margin-right: 0.2rem;" @click="jump('kyc', true)">
+            <div class="user-b-box " style="margin-right: 0.2rem;" @click="jump('kyc', true)">
                 <div class="user-flex">
                     <img src="/static/img/user/iden.png" alt="">
                     <div style="display: flex;">
                         <span v-if="token">
-                            <span class="red-text" v-if="userInfo.kyc!=1 || userInfo.kyc!=2">未认证</span>
+                            <span class="red-text" v-if="userInfo.kyc != 1 || userInfo.kyc != 2">未认证</span>
                             <span class="red-text" v-else>已认证</span>
                         </span>
-                        <Icon name="arrow" class="arrow-right"/>
+                        <Icon name="arrow" class="arrow-right" />
                     </div>
-                    
+
                 </div>
                 <div class="user-sub">身份认证</div>
                 <div class="user-small-title">
@@ -97,14 +97,15 @@
                 </div>
             </div>
 
-            <div class="user-b-box ripple_button" @click="jump('googleCode', true)">
+            <div class="user-b-box " @click="jump('googleCode', true)">
                 <div class="user-flex">
                     <img src="/static/img/user/Google-lock.png" alt="">
-                   <div style="display: flex;">
+                    <div style="display: flex;">
                         <span class="red-text" v-if="token && !userInfo.googlebind">谷歌验证器未绑定</span>
-                        <span class="red-text" style="color: #18B762;" v-if="token && userInfo.googlebind">谷歌验证器已绑定</span>
-                        <Icon name="arrow" class="arrow-right"/>
-                   </div>
+                        <span class="red-text" style="color: #18B762;"
+                            v-if="token && userInfo.googlebind">谷歌验证器已绑定</span>
+                        <Icon name="arrow" class="arrow-right" />
+                    </div>
                 </div>
                 <div class="user-sub">谷歌验证器</div>
                 <div class="user-small-title">
@@ -115,7 +116,7 @@
 
 
         <div class="navs">
-            <div class="ripple_button nav" @click="jump('language')" style="border-bottom: 0.02rem solid #eaeaea;">
+            <div class=" nav" @click="jump('language')" style="border-bottom: 0.02rem solid #eaeaea;">
                 <div class="icon">
                     <img src="/static/img/user/lang.png" alt="img">
                 </div>
@@ -130,7 +131,7 @@
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <div class="ripple_button nav" @click="jump('safety', true)" style="border-bottom: 0.02rem solid #eaeaea;">
+            <div class=" nav" @click="jump('safety', true)" style="border-bottom: 0.02rem solid #eaeaea;">
                 <div class="icon">
                     <img src="/static/img/user/safe.png" alt="img">
                 </div>
@@ -143,7 +144,7 @@
                 </div>
                 <Icon class="nav_more" name="arrow" />
             </div>
-            <div class="ripple_button nav" @click="jump('about')">
+            <div class=" nav" @click="jump('about')">
                 <div class="icon">
                     <img src="/static/img/user/about.png" alt="img">
                 </div>
@@ -156,9 +157,9 @@
 
 
         <!-- 退出登录 -->
-        <div class="ripple_button loginout" v-if="token || test" @click="loginout">退出登录</div>
-      
-        
+        <div class=" loginout" v-if="token || test" @click="loginout">退出登录</div>
+
+
     </div>
 </template>
 
@@ -169,20 +170,20 @@ import router from "@/router";
 import store from "@/store";
 import storeChat from "@/store/chat";
 import { _logout } from "@/api/api"
-const messageNum=computed(()=>storeChat.state.messageNum);
+const messageNum = computed(() => storeChat.state.messageNum);
 const token = computed(() => store.state.token)
 const userInfo = computed(() => store.state.userInfo || {})
 
 const test = ref(false)
 
 
-const testBanner = ()=>{
+const testBanner = () => {
     test.value = true
 }
 
 
 const getFirstCharacter = (username) => {
-  return username ? username.charAt(0) : '-';
+    return username ? username.charAt(0) : '-';
 };
 
 
@@ -204,7 +205,7 @@ const loginout = () => {
                     })
                 }, 200)
             }).catch(() => { })
-    } else if (test.value){
+    } else if (test.value) {
         showConfirmDialog({
             title: '退出登录',
             message:
@@ -213,10 +214,10 @@ const loginout = () => {
             cancelButtonColor: '#323233'
         })
             .then(() => {
-              test.value = false
+                test.value = false
             }).catch(() => { })
     }
-    
+
 }
 
 const jump = (name, needLogin) => {
@@ -231,7 +232,7 @@ const jump = (name, needLogin) => {
             router.push({
                 name: 'google'
             })
-        } else if (token.value && userInfo.value.googlebind){
+        } else if (token.value && userInfo.value.googlebind) {
             router.push({
                 name: 'googleCode'
             })
@@ -241,7 +242,7 @@ const jump = (name, needLogin) => {
             name
         })
     }
-    
+
 }
 
 
@@ -277,6 +278,7 @@ if (token.value) {
 .page_user {
     padding: 0rem 0.32rem 1.8rem 0.32rem;
     position: relative;
+
     .title {
         height: 1.12rem;
         color: #0D0D12;
@@ -284,16 +286,20 @@ if (token.value) {
         font-weight: 600;
         line-height: 1.12rem;
     }
+
     .user-header {
         display: flex;
         justify-content: right;
         margin-bottom: 0.4rem;
-        div{
+
+        div {
             font-size: 0.4rem;
         }
     }
+
     .user-banner {
         position: relative;
+
         .banner-title {
             position: absolute;
             left: 0.2rem;
@@ -307,17 +313,19 @@ if (token.value) {
         background-color: #f2f3f8;
         margin-top: 0.32rem;
         padding: 0.3rem;
-        padding-top: 0.18rem!important;
+        padding-top: 0.18rem !important;
         border-radius: 0.2rem;
         display: flex;
         justify-content: space-between;
         height: 1.6rem;
-        img{
+
+        img {
             width: 0.96rem !important;
             height: 0.96rem !important;
             margin-right: 0.48rem;
             vertical-align: middle;
         }
+
         span {
             line-height: 1rem;
             display: inline-block;
@@ -325,15 +333,18 @@ if (token.value) {
             font-size: 0.36rem;
             font-weight: 400;
         }
+
         .arrow-right {
-            margin-top: 0.04rem!important;
+            margin-top: 0.04rem !important;
             color: #797b81;
         }
+
         .user-login-block {
             span {
                 line-height: 0.6rem;
                 margin-bottom: 0.14rem;
             }
+
             .id {
                 color: #014CFA;
                 font-weight: 400;
@@ -345,30 +356,35 @@ if (token.value) {
             }
         }
     }
-    .user-comman{
+
+    .user-comman {
         display: flex;
         margin-bottom: 0.28rem;
         position: relative;
         overflow: hidden;
-        .user-b-box 
-        {
+
+        .user-b-box {
             flex: 1;
             background-color: #f2f3f8;
             padding: 0.2rem 0.3rem;
             border-radius: 0.2rem;
         }
+
         .user-flex {
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.2rem;
+
             img {
                 width: 0.4rem !important;
             }
+
             .arrow-right {
                 color: #797b81;
                 margin-left: 0.24rem;
                 margin-top: 0.02rem;
             }
+
             .nums {
                 width: 0.32rem;
                 height: 0.32rem;
@@ -382,17 +398,20 @@ if (token.value) {
                 font-weight: 400;
             }
         }
+
         .user-sub {
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.48rem;
         }
+
         .user-small-title {
             font-size: 0.24rem;
             line-height: 0.32rem;
             color: #4f5156;
         }
     }
+
     .user-h-box {
         background-color: #f2f3f8;
         padding: 0.2rem 0.3rem;
@@ -400,65 +419,79 @@ if (token.value) {
         margin-bottom: 0.28rem;
         position: relative;
         overflow: hidden;
+
         .user-flex {
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.1rem;
+
             img {
                 width: 0.48rem !important;
             }
+
             .arrow-right {
                 margin-top: 0.08rem;
                 color: #797b81;
             }
         }
+
         .user-sub {
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.48rem;
         }
+
         .user-small-title {
             font-size: 0.24rem;
             line-height: 0.32rem;
             color: #4f5156;
         }
     }
-    .user-bottom{
+
+    .user-bottom {
         margin-top: 0.4rem;
-        .user-flex{
+
+        .user-flex {
             border-bottom: 0.02rem solid #f4f4f4;
             display: flex;
             justify-content: space-between;
             padding: 0.2rem 0;
+
             .user-item {
                 img {
                     width: 0.4rem !important;
                     vertical-align: middle;
                     margin-right: 0.2rem;
                 }
+
                 span {
                     vertical-align: middle;
                 }
             }
+
             .arrow-right {
                 margin-top: 0.08rem;
                 color: #797b81;
             }
         }
     }
+
     .user-login-login-box {
         background-color: #f2f3f8;
         padding: 0.2rem 0.3rem;
         border-radius: 0.2rem;
     }
+
     .user-login-login {
         display: flex;
         justify-content: space-between;
         margin-bottom: 0.2rem;
+
         .arrow-right {
             margin-top: 0.08rem;
             color: #797b81;
         }
+
         .login-user-box {
             width: 1rem;
             height: 1rem;
@@ -471,12 +504,13 @@ if (token.value) {
             font-size: 0.6rem;
             font-weight: 900;
         }
+
         span {
             font-size: 0.36rem;
             font-weight: 700;
             line-height: 0.6rem;
         }
-    }   
+    }
 
     // .loginout {
     //     margin-top: 0.2rem;
@@ -505,21 +539,26 @@ if (token.value) {
         font-weight: 400;
         overflow: hidden;
     }
+
     .user-fllower {
         display: flex;
+
         .user-fllower-flex {
             flex: 1;
+
             .user-fllower-num {
                 font-size: 0.28rem;
                 font-weight: 600;
                 margin-bottom: 0.06rem;
             }
+
             .user-fllower-title {
                 font-size: 0.24rem;
                 color: #767880;
             }
         }
     }
+
     .navs {
         margin-top: 0.2rem;
 
@@ -594,6 +633,7 @@ if (token.value) {
             }
         }
     }
+
     .red-text {
         color: #FF3B30;
         font-size: 0.2rem;

@@ -12,7 +12,7 @@
                     type="password" class="item_input">
                 <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="请输入您的新密码" type="text"
                     class="item_input">
-                <div class="ripple_button form_item_icon" @click="showPass = !showPass">
+                <div class=" form_item_icon" @click="showPass = !showPass">
                     <img v-show="!showPass" src="/static/img/user/eye-off.png" alt="off">
                     <img v-show="showPass" src="/static/img/user/eye-open.png" alt="open">
                 </div>
@@ -27,7 +27,7 @@
                     type="password" class="item_input">
                 <input maxlength="20" v-show="showPass2" v-model.trim="form.password2" placeholder="请再次输入您的新密码"
                     type="text" class="item_input">
-                <div class="ripple_button form_item_icon" @click="showPass2 = !showPass2">
+                <div class=" form_item_icon" @click="showPass2 = !showPass2">
                     <img v-show="!showPass2" src="/static/img/user/eye-off.png" alt="off">
                     <img v-show="showPass2" src="/static/img/user/eye-open.png" alt="open">
                 </div>

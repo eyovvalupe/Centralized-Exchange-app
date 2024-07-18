@@ -341,7 +341,8 @@ const getWatchList = (callback) => { // 获取订阅列表
 const subs = () => { // 订阅 ws
   store.dispatch('subList', {
     commitKey: 'setMarketWatchList',
-    proxyListValue: watchList.value
+    listKey: 'marketWatchList'
+    // proxyListValue: watchList.value
   })
 }
 
@@ -353,10 +354,6 @@ const getData = () => { // 获取数据
     symbol: search.value
   }).then(res => {
     store.commit('setMarketWatchList', res.data)
-    store.dispatch('subList', {
-      commitKey: 'setMarketWatchKeys',
-      proxyListValue: res.data
-    })
     loading.value = false
   }).finally(() => {
     loading.value = false
