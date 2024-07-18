@@ -399,6 +399,7 @@ defineExpose({
 
 <style lang="less">
 .open-position {
+  color: #333;
   margin: 0 0.3rem;
   padding-bottom: 0.76rem;
   background-color: white;
@@ -467,7 +468,6 @@ defineExpose({
   }
 
   .grop-title {
-    color: #333;
     text-align: center;
     font-size: 0.28rem;
     font-style: normal;

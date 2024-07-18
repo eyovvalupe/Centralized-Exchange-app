@@ -75,18 +75,10 @@
                   </Tab>
               </Tabs> -->
           </div>
-
-
-          <div style="display: flex;">
-            <div class="value" @click="showPopup">
-              <img src="/static/img/trade/value.png" alt="" class="value-img" />
-              <!-- <span style="vertical-align: middle">持仓价值</span> -->
+          <div class="value" @click="showPopup">
+              <span class="value-img"><img src="/static/img/trade/value.png" alt=""  /></span>
+              <span>持仓价值</span>
             </div>
-            <!-- <div class="value">
-              <img src="/static/img/trade/risk.png" alt="" class="value-img" />
-            </div> -->
-          </div>
-
         </div>
 
 
@@ -207,7 +199,7 @@
             </div>
           </div>
           <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
-          <Optional v-if="showLeft && !loading" ref="OptionalRef" />
+          <Optional v-if="showLeft && !loading && token" ref="OptionalRef" />
         </div>
       </Popup>
     </teleport>
@@ -352,15 +344,12 @@ const keyborader = computed(() => store.state.keyborader)
 const closePopup = () => {
   store.dispatch('closePopup')
 }
-
-
 const openleft = () => {
   store.commit('setShowLeft', true)
   // store.commit('setMarketWatchList', [])
-  getWatchList()
-  setTimeout(() => {
-    OptionalRef.value && OptionalRef.value.init()
-  }, 500)
+  if (token.value && OptionalRef.value) {
+    getWatchList(OptionalRef.value.init)
+  }
 }
 
 
@@ -378,7 +367,7 @@ const leftclose = () => {
 }
 
 const watchList = computed(() => store.state.marketWatchList || [])
-const getWatchList = () => { // 获取订阅列表
+const getWatchList = (callback) => { // 获取订阅列表
   if (loading.value) return
   loading.value = true
   // if (watchList.value.length) {
@@ -399,7 +388,7 @@ const getWatchList = () => { // 获取订阅列表
       } else { // 没有就直接提交
         store.commit('setMarketWatchList', res.data || [])
       }
-
+      callback && callback()
       setTimeout(() => {
         subs()
       }, 1000)
@@ -547,21 +536,27 @@ const closeOpenDetail = () => {
   }
 
   .value {
+    display: flex;
+    justify-content: center;
+    align-content: center;
     color: #0953fa;
     font-size: 0.24rem;
     font-style: normal;
     font-weight: 400;
-    line-height: normal;
-    flex: 1;
+    line-height: 1.14rem;
     height: 1.12rem;
-    line-height: 1.12rem;
-    text-align: right;
   }
 
   .value-img {
-    width: 0.52rem !important;
-    height: 0.52rem !important;
-    vertical-align: middle;
+    height: 1.12rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    img{
+      width: 0.52rem !important;
+      height: 0.52rem !important;
+    }
   }
 
   .open-img {
