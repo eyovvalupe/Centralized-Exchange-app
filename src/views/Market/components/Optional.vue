@@ -53,7 +53,8 @@ const loading = ref(true)
 const subs = () => { // 订阅 ws
     store.dispatch('subList', {
         commitKey: 'setMarketWatchList',
-        proxyListValue: watchList.value
+        listKey: 'marketWatchList',
+        // proxyListValue: watchList.value
     })
 }
 
@@ -120,7 +121,8 @@ const openRecommendList = () => {
             setTimeout(() => {
                 store.dispatch('subList', {
                     commitKey: 'setMarketSrockRecommendList',
-                    proxyListValue: marketSrockRecommendList.value
+                    listKey: 'marketSrockRecommendList',
+                    // proxyListValue: marketSrockRecommendList.value
                 })
             }, 500)
         }

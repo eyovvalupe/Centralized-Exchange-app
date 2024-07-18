@@ -46,13 +46,13 @@ const changeTab = (key, scrollToTop = true) => {
   }
   switch (key) {
     case 0:
-      getData(marketVolumeList, 'setMarketVolumeList', 'volume')
+      getData(marketVolumeList, 'setMarketVolumeList', 'volume', 'marketVolumeList')
       break
     case 1:
-      getData(marketUpList, 'setMarketUpList', 'up')
+      getData(marketUpList, 'setMarketUpList', 'up', 'marketUpList')
       break
     case 2:
-      getData(marketDownList, 'setMarketDownList', 'down')
+      getData(marketDownList, 'setMarketDownList', 'down', 'marketDownList')
       break
   }
 }
@@ -61,18 +61,19 @@ const marketVolumeList = computed(() => store.state.marketVolumeList || []) // �
 const marketUpList = computed(() => store.state.marketUpList || []) // 涨幅列表
 const marketDownList = computed(() => store.state.marketDownList || []) // 跌幅列表
 const loading = ref(false)
-const subs = (list, key) => { // 订阅ws
+const subs = (listKey, key) => { // 订阅ws
   store.dispatch('subList', {
     commitKey: key,
-    proxyListValue: list.value
+    listKey: listKey,
+    // proxyListValue: list.value
   })
 }
 // 获取列表数据
-const getData = (list, key, query) => {
+const getData = (list, key, query, listKey) => {
   if (loading.value) return
   loading.value = true
   if (list.value.length) {
-    subs(list, key)
+    subs(listKey, key)
   }
   _sort({
     orderby: query
@@ -100,7 +101,7 @@ const getData = (list, key, query) => {
       }
 
       setTimeout(() => {
-        subs(list, key)
+        subs(listKey, key)
       }, 0)
     }
   }).finally(() => {

@@ -44,12 +44,18 @@
             shrink>
             <Tab :title="'活跃'">
                 <StockTable :key="'vol'" :loading="loading" :list="marketVolumeList" />
+                <LoadingMore ref="more_1" class="active_more" :loading="loading" :finish="finish"
+                    v-if="((finish && marketVolumeList.length) || (!finish)) && active == 0" />
             </Tab>
             <Tab :title="'涨幅'">
                 <StockTable :key="'up'" :loading="loading" :list="marketUpList" />
+                <LoadingMore ref="more_2" class="active_more" :loading="loading" :finish="finish"
+                    v-if="((finish && marketUpList.length) || (!finish)) && active == 1" />
             </Tab>
             <Tab :title="'跌幅'">
                 <StockTable :key="'down'" :loading="loading" :list="marketDownList" />
+                <LoadingMore ref="more_3" class="active_more" :loading="loading" :finish="finish"
+                    v-if="((finish && marketDownList.length) || (!finish)) && active == 2" />
             </Tab>
         </Tabs>
 
@@ -59,88 +65,102 @@
 <script setup>
 import { Tab, Tabs } from 'vant';
 import StockTable from "@/components/StockTable.vue"
-import { ref, computed } from "vue"
+import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { _sort, _marketOverview } from "@/api/api"
 import store from "@/store"
 import { _add, _del } from '@/api/api'
 import Recommend from '@/views/Home/components/Recommend.vue';
 import Loading from '@/components/Loaidng.vue';
+import LoadingMore from "@/components/LoadingMore.vue"
 
 const loading = ref(false)
+const finish = ref(false)
+const page = ref(0)
 
 // tabs
 const active = ref(-1)
-const changeTab = (key, scrollToTop = true) => {
-    if (scrollToTop) {
-        try {
-            //   document.querySelector('.page').scrollTo({ top: document.querySelector('.home_banner').clientHeight, behavior: 'smooth' });
-        } catch {
-            console.error('滚动失败')
-        }
-    }
+const changeTab = (key) => {
+    page.value = 0
+    loading.value = false
+    finish.value = false
     switch (key) {
         case 0:
-            getData(marketVolumeList, 'setMarketVolumeList', 'volume')
+            getData(marketVolumeList, 'setMarketVolumeList', 'volume', 'marketVolumeList')
             break
         case 1:
-            getData(marketUpList, 'setMarketUpList', 'up')
+            getData(marketUpList, 'setMarketUpList', 'up', 'marketUpList')
             break
         case 2:
-            getData(marketDownList, 'setMarketDownList', 'down')
+            getData(marketDownList, 'setMarketDownList', 'down', 'marketDownList')
             break
     }
+    setTimeout(() => { // 加载更多元素
+        target = document.querySelector('.loading_more')
+    }, 500)
 }
 const readyRecommendData = () => { // 推荐数据准备好了，一起监听
-    changeTab(active.value, false)
+    changeTab(active.value)
 }
 
 // 获取列表数据
 const marketVolumeList = computed(() => store.state.marketVolumeList || []) // 活跃列表
 const marketUpList = computed(() => store.state.marketUpList || []) // 涨幅列表
 const marketDownList = computed(() => store.state.marketDownList || []) // 跌幅列表
-const subs = (list, key) => { // 订阅ws
+const subs = (listKey, key) => { // 订阅ws
     store.dispatch('subList', {
         commitKey: key,
-        proxyListValue: list.value
+        listKey: listKey,
+        // proxyListValue: list.value
     })
 }
-const getData = (list, key, query) => {
-    if (loading.value) return
+const getData = (list, key, query, listKey) => {
+    if (loading.value || finish.value) return
     loading.value = true
-    if (list.value.length) {
-        subs(list, key)
+    page.value++
+    let arr = JSON.parse(JSON.stringify(list.value))
+    if (page.value == 1) {
+        arr = []
+    }
+    if (arr.length) {
+        subs(listKey, key)
     }
     _sort({
-        orderby: query
+        orderby: query,
+        page: page.value
     }).then(res => {
         if (res.code == 200) {
+            if (!res.data.length) {
+                finish.value = true
+                console.error('没有了')
+            }
             res.data = res.data.map(item => {
                 item.ratio = undefined // 弃用接口里的该字段
                 return item
             })
-            if (list.value.length) { // 有历史数据就更新
-                const rs = res.data.map(item => {
-                    const target = list.value.find(a => a.symbol == item.symbol)
-                    if (target) {
-                        item = {
-                            ...target,
-                            ...item,
-                            ratio: target.ratio
-                        }
+            const rs = res.data.map(item => {
+                const target = list.value.find(a => a.symbol == item.symbol)
+                if (target) {
+                    item = {
+                        ...target,
+                        ...item,
+                        ratio: target.ratio
                     }
-                    return item
-                })
-                store.commit(key, rs || [])
-            } else { // 没有就直接提交
-                store.commit(key, res.data || [])
-            }
+                }
+                return item
+            })
+            arr.push(...rs)
+            console.error('--->', arr)
+            store.commit(key, arr || [])
 
             setTimeout(() => {
-                subs(list, key)
-            }, 0)
+                console.error(list.value.length)
+                subs(listKey, key)
+            }, 200)
         }
     }).finally(() => {
-        loading.value = false
+        setTimeout(() => {
+            loading.value = false
+        }, 300)
     })
 }
 
@@ -216,12 +236,46 @@ const getOverviewData = () => {
 }
 
 const initData = () => {
-    changeTab(active.value)
+    // changeTab(active.value)
     getOverviewData()
 }
 
 defineExpose({
     initData
+})
+
+
+// 滚动监听
+const more_1 = ref()
+const more_2 = ref()
+const more_3 = ref()
+const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+let target = null
+const scrollHandler = () => {
+    const rect = target.getBoundingClientRect()
+    if (rect.top <= totalHeight) {
+        console.error('加载更多')
+        // 加载更多
+        switch (active.value) {
+            case 0:
+                getData(marketVolumeList, 'setMarketVolumeList', 'volume', 'marketVolumeList')
+                break
+            case 1:
+                getData(marketUpList, 'setMarketUpList', 'up', 'marketUpList')
+                break
+            case 2:
+                getData(marketDownList, 'setMarketDownList', 'down', 'marketDownList')
+                break
+        }
+    }
+}
+onMounted(() => {
+    setTimeout(() => {
+        document.querySelector('.page').addEventListener('scroll', scrollHandler)
+    }, 500)
+})
+onBeforeUnmount(() => {
+    document.querySelector('.page').removeEventListener('scroll', scrollHandler)
 })
 </script>
 

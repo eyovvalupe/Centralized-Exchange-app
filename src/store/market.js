@@ -4,25 +4,30 @@ import { _getSnapshotLine } from "@/utils/index"
 import router from "@/router"
 const { startSocket } = useSocket()
 
+// 不同页面对应的监听列表 key
+const pageKeys = {
+    'home': [],
+    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList'],
+    'trade': ['marketWatchList', 'marketRankList']
+}
+
 export default {
     state: {
-        marketWatchListKeys: [], // 当前订阅的列表key
-        marketWatchList: [], // 当前订阅的列表数据
+        currStock: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
         marketSearchList: [], // 当前搜索的结果
-        currStock: {}, // 当前股票的数据
+
+        marketWatchList: [], // 当前订阅的列表数据
         marketVolumeList: [], // 首页活跃列表
         marketUpList: [], // 首页涨幅列表
         marketDownList: [], // 首页跌幅列表
-
         marketRecommndList: [], // 首页推荐列表
         marketStockList: [], // 股票页列表
         marketSrockRecommendList: [], // 推荐股票列表
         marketRankList: [], // 排行列表
 
-        marketWatchKeys: [], // 除了列表，还需要额外监听的股票
-        proxyListValue: [], // 始终监听的列表
-        commitKey: "", // 始终监听的列表key
+        marketWatchKeys: [], // 除了主列表，还需要额外监听的股票 symbol数组
+
     },
     mutations: {
         setMarketWatchList(state, data) {
@@ -30,6 +35,7 @@ export default {
         },
         setMarketVolumeList(state, data) {
             state.marketVolumeList = data;
+            console.error('--设置成功', state.marketVolumeList.length)
         },
         setMarketUpList(state, data) {
             state.marketUpList = data;
@@ -95,8 +101,9 @@ export default {
         },
     },
     actions: {
-        subList({ commit, state }, { commitKey, proxyListValue }) {
+        subList({ commit, state }, { commitKey, listKey }) {
             let proxyKeys = []
+            const proxyListValue = state[listKey]
             if (proxyListValue) {
                 proxyKeys = proxyListValue.map(item => item.symbol)
             }
@@ -104,58 +111,23 @@ export default {
                 const keys = Array.from(new Set([
                     ...proxyKeys,
                     ...state.marketWatchKeys,
-                    ...state.marketWatchListKeys
                 ]))
-                if (proxyListValue) { // 如果有始终监听的数据，则放进store
-                    state.proxyListValue = proxyListValue
-                    state.commitKey = commitKey
-                    state.marketWatchListKeys = proxyKeys
-                }
-                // console.error('订阅：', keys)
+                console.error('订阅：', keys)
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {
                     if (res.code == 200) {
-                        if (proxyListValue) {
-                            const arr = proxyListValue.map(item => { // 数据和观察列表里的数据融合
+                        // 根据不同页面，同步页面内模块的数据
+                        (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                            const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
                                 const target = res.data.find(a => a.symbols == item.symbol)
                                 if (target) {
                                     Object.assign(item, target)
                                 }
                                 return item
                             })
-                            if (commitKey) {
-                                commit(commitKey, arr || [])
-                            }
-                        }
-                        if (state.commitKey) {
-                            const arr2 = state.proxyListValue.map(item => { // 数据和观察列表里的数据融合
-                                const target = res.data.find(a => {
-                                    return a.symbols == item.symbol
-                                })
-                                if (target) {
-                                    Object.assign(item, target)
-                                }
-                                return item
-                            })
-                            commit(state.commitKey, arr2 || [])
-                        }
-
-                        setTimeout(() => {
-                            // 根据不同页面，同步页面内模块的数据
-                            switch (router.currentRoute?.value?.name) {
-                                case 'home': // 首页-首页推荐列表
-                                case 'market':
-                                    commit('setMarketRecommndList', state.marketRecommndList.map(item => {
-                                        const target = res.data.find(a => a.symbols == item.symbol)
-                                        if (target) {
-                                            Object.assign(item, target)
-                                        }
-                                        return item
-                                    }))
-                                    break
-                            }
-                        }, 300)
+                            state[ck] = arr
+                        })
                     }
                 })
 
@@ -163,38 +135,13 @@ export default {
                 socket && socket.off('snapshot')
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
-                        if (proxyListValue) {
-                            const target = proxyListValue.find(item => item.symbols == res.symbols)
+                        // 根据不同页面，同步页面内模块的数据
+                        (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                            const target = state[ck].find(item => item.symbols == res.symbols)
                             if (target) {
                                 target.points = _getSnapshotLine(res.data)
-                                if (commitKey) {
-                                    commit(commitKey, proxyListValue)
-                                }
                             }
-                        }
-                        if (state.commitKey) {
-                            const target = state.proxyListValue.find(item => item.symbols == res.symbols)
-                            if (target) {
-                                target.points = _getSnapshotLine(res.data)
-                                commit(state.commitKey, state.proxyListValue)
-                            }
-                        }
-
-
-                        setTimeout(() => {
-                            // 根据不同页面，同步页面内模块的数据
-                            let index = -1
-                            switch (router.currentRoute?.value?.name) {
-                                case 'home': // 首页-首页推荐列表
-                                case 'market':
-                                    index = state.marketRecommndList.findIndex(item => item.symbols == res.symbols)
-                                    if (index >= 0) {
-                                        state.marketRecommndList[index].points = _getSnapshotLine(res.data)
-                                        commit('setMarketRecommndList', state.marketRecommndList)
-                                    }
-                                    break
-                            }
-                        }, 300)
+                        })
                     }
                 })
             })
