@@ -35,7 +35,6 @@ export default {
         },
         setMarketVolumeList(state, data) {
             state.marketVolumeList = data;
-            console.error('--设置成功', state.marketVolumeList.length)
         },
         setMarketUpList(state, data) {
             state.marketUpList = data;
@@ -112,7 +111,7 @@ export default {
                     ...proxyKeys,
                     ...state.marketWatchKeys,
                 ]))
-                console.error('订阅：', keys)
+                // console.error('订阅：', keys)
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {

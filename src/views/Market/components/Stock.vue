@@ -131,7 +131,6 @@ const getData = (list, key, query, listKey) => {
         if (res.code == 200) {
             if (!res.data.length) {
                 finish.value = true
-                console.error('没有了')
             }
             res.data = res.data.map(item => {
                 item.ratio = undefined // 弃用接口里的该字段
@@ -149,11 +148,9 @@ const getData = (list, key, query, listKey) => {
                 return item
             })
             arr.push(...rs)
-            console.error('--->', arr)
             store.commit(key, arr || [])
 
             setTimeout(() => {
-                console.error(list.value.length)
                 subs(listKey, key)
             }, 200)
         }
@@ -254,7 +251,6 @@ let target = null
 const scrollHandler = () => {
     const rect = target.getBoundingClientRect()
     if (rect.top <= totalHeight) {
-        console.error('加载更多')
         // 加载更多
         switch (active.value) {
             case 0:
