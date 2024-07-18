@@ -1,17 +1,18 @@
 <template>
     <div class="openSelect">
       <div class="detail-update-title">保证金模式</div>
-  
       <div class="select-box">
         <div class="select-box-item"  v-for="i in option1" :class="{'selected-class': selectedOption === i.value}"  :key="i.value"  @click="smallSelect(i.value)">
             {{ i.text }}
-            <div v-if="selectedOption === i.value" class="checkmark"></div>
+            <Icon v-if="selectedOption === i.value"  class="check_icon" name="success" />
         </div>
       </div>
+      
     </div>
   </template>
   
   <script setup>
+  import {  Icon } from "vant"
   import { ref, computed } from "vue";
   import store from "@/store";
   
@@ -44,31 +45,37 @@
       text-align: left;
       margin-left: 0.3rem;
     }
+    .transfer_dialog_item {
+        overflow: auto;
+        height: 1.12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #F5F5F5;
+    }
+
     .select-box {
-      display: flex;
       padding:  0 0.3rem;
       margin-top: 0.7rem;
       .select-box-item {
-        width: 3.5rem;
-        height: 0.74rem;
-        border-radius: 0.08rem;
-        border: 0.02rem solid #f2f2f2;
-        text-align: center;
-        line-height: 0.74rem;
-        color: #061023;
-        font-size: 0.28rem;
-        font-style: normal;
-        font-weight: 600;
-        background-color: #f2f2f2;
-      }
-      .select-box-item:first-of-type {
-        margin-right: 0.3rem;
+        overflow: auto;
+        height: 1.12rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #F5F5F5;
+        // background-color: #f2f2f2;
       }
       .selected-class {
-        color: #1a59f6;
-        border: 0.02rem solid #1A59F6;
-        background-color: white;
-        position: relative;
+        color: #014CFA;
+        font-weight: 600;
+
+        .check_icon {
+            position: absolute;
+            right: 0.64rem;
+            color: #014CFA;
+            font-size: 0.28rem;
+        }
       }
     }
 

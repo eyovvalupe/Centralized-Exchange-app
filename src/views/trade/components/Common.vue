@@ -3,7 +3,7 @@
     <div class="stock-box" style="margin: 0 0px 0.1rem;">
       <span class="grop-title">股票</span>
       <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
-      <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" />
+      <!-- <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" /> -->
       <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="stockCo.length > 0" @click="openPopup" />
     </div>
     <div class="animate-input num-input"
@@ -39,18 +39,12 @@
       </template>
 </Field>-->
     <div class="flex flex-between" style="margin: .4rem 0 .1rem 0;">
-      <div class="grop-title" style="color: #014cfa">全仓 VS 逐仓</div>
+      <div class="grop-title link-text">全仓 VS 逐仓</div>
       <div class="right-input flex flex-between">
         <div class="grop-title right-text">数量</div>
         <span class="btn_icon">
-          <span class="flex" @click="jump('transfer')">
-            <span><img src="/static/img/assets/trans_icon.png" alt="img"></span>
-            <span class="grop-title" style="color: #014cfa">划转</span>
-          </span>
-          <span class="flex" @click="jump('loanList')">
-            <span><img src="/static/img/assets/loan_icon.png" alt="img"></span>
-            <span class="grop-title" style="color: #014cfa">借贷</span>
-          </span>
+          <span class="grop-title link-text mr-10"  @click="jump('transfer')">账户划转</span>
+          <span class="grop-title right-text link-text" @click="jump('loanList')">借贷</span>
         </span>
 
       </div>
@@ -737,7 +731,9 @@ defineExpose({
     //  border-radius: 10px;
     // }
   }
-
+  .link-text {
+      color: #014CFA;
+    }
   .animate-input {
     position: relative;
     border: 1px solid #D0D8E2;
@@ -746,12 +742,7 @@ defineExpose({
     transition: all 1s;
     padding: 0.1rem;
 
-    .link-text {
-      color: #014CFA;
-      width: .8rem;
-      text-align: center;
-      line-height: .68rem;
-    }
+
 
     .ipt_tip {
       position: absolute;
@@ -852,7 +843,6 @@ defineExpose({
   }
 
   .grop-title {
-    color: #333;
     text-align: center;
     font-size: 0.28rem;
     font-style: normal;
