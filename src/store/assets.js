@@ -62,7 +62,6 @@ export default {
                 _accountHint()
                     .then((res) => {
                         if (res.code == 200 && res.data) {
-                            console.error('--待处理', res.data)
                             let count = 0
                             if (res.data.deposit) count += res.data.deposit
                             if (res.data.deposit) count += res.data.withdraw

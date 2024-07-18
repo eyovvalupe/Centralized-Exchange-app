@@ -4,7 +4,12 @@
         <Top :title="'划转'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    <div class="top-record-icon">
+                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    </div>
+                    <span>
+                        记录
+                    </span>
                 </div>
             </template>
         </Top>
@@ -13,17 +18,21 @@
         <div class="form">
             <div class="subtitle">从</div>
             <div class="item_box">
+                <div class="item account_item">
+                    <div class="account_item_icon">
+                        <img src="/static/img/crypto/MAIN.png" alt="icon">
+                    </div>
+                    <div class="item_content" @click="openDialog('from')">{{ _accountMap[form.from] }}</div>
+                    <div class="more" @click="openDialog('from')">
+                        <img src="/static/img/assets/more.png" alt="more">
+                    </div>
+                </div>
+
                 <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
                     <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
                     <input @focus="focus = true" @blur="errStatus = focus = false" v-model="form.amount" type="number"
                         :placeholder="``" class="ipt">
                     <div class="btn" @click="maxIpt">全部</div>
-                </div>
-                <div class="item account_item">
-                    <div class="item_content" @click="openDialog('from')">{{ _accountMap[form.from] }}</div>
-                    <div class="more" @click="openDialog('from')">
-                        <img src="/static/img/assets/more.png" alt="more">
-                    </div>
                 </div>
             </div>
 
@@ -33,19 +42,23 @@
                 <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
                     <img src="/static/img/assets/transfer.png" alt="img">
                 </div>
-                <div class="line"></div>
+                <div class="line" style="flex:12"></div>
             </div>
 
             <div class="subtitle">到</div>
             <div class="item_box">
-                <div class="item ipt_item" style="background-color: #f5f5f5">
-                    <div class="ipt">{{ form.amount || '--' }}</div>
-                </div>
                 <div class="item account_item">
+                    <div class="account_item_icon">
+                        <img src="/static/img/crypto/MAIN.png" alt="icon">
+                    </div>
                     <div class="item_content" @click="openDialog('to')">{{ _accountMap[form.to] }}</div>
                     <div class="more" @click="openDialog('to')">
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
+                </div>
+
+                <div class="item ipt_item" style="background-color: #f5f5f5">
+                    <div class="ipt">{{ form.amount || '--' }}</div>
                 </div>
             </div>
 
@@ -213,18 +226,22 @@ const goRecord = () => {
     position: relative;
 
     .top-record {
-        width: 0.64rem;
-        height: 0.64rem;
         border-radius: 50%;
-        background-color: #EAF0F3;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #0953fa;
+        font-size: 0.24rem;
 
-        img {
-            width: 0.36rem !important;
-            height: 0.36rem !important;
+        .top-record-icon {
+            background-color: #EAF0F3;
+            width: 0.52rem;
+            height: 0.52rem;
+            padding: 0.06rem;
+            border-radius: 50%;
+            margin-right: 0.04rem;
         }
+
     }
 
     .form {
@@ -244,7 +261,7 @@ const goRecord = () => {
             height: 100%;
             border: 1px solid #D0D8E2;
             border-radius: 0.12rem;
-            padding: 0 0.24rem 0 0.56rem;
+            padding: 0 0.24rem 0 0.24rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -314,7 +331,7 @@ const goRecord = () => {
                 transition: all ease .2s;
 
                 span {
-                    color: #111111;
+                    // color: #111111;
                 }
             }
 
@@ -328,7 +345,13 @@ const goRecord = () => {
         .account_item {
             height: 100% !important;
             flex: 4;
-            margin-left: 0.2rem;
+            margin-right: 0.2rem;
+
+            .account_item_icon {
+                width: 0.4rem;
+                height: 0.4rem;
+                margin-right: 0.1rem;
+            }
         }
 
         .trans {

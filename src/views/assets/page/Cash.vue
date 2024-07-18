@@ -123,7 +123,7 @@
                 </div>
                 <div class="amount" :class="{ 'open_amount': switchs[i + currencyWallet.length] == true }">{{
                     item.amount
-                    }}</div>
+                }}</div>
                 <div class="more" :class="{ 'open_tab': switchs[i + currencyWallet.length] == true }">
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
@@ -246,7 +246,7 @@ const jump = (name, check = false, query) => {
         background-size: 100% 100%;
         margin: 0 0.32rem 0.24rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
-        background-color: #1A59F6;
+        background-color: #5050FF;
         border-radius: 0.32rem;
         position: relative;
 

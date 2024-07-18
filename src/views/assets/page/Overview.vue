@@ -295,7 +295,7 @@ const jump = (name, check = false, query) => {
         background-size: 100% 100%;
         margin: 0 0.32rem 0.36rem 0.32rem;
         padding: 0.4rem 0.3rem 0.36rem 0.3rem;
-        background-color: #5050FF;
+        background-color: #1A59F6;
         border-radius: 0.32rem;
 
         .top {

@@ -2,7 +2,7 @@
 <template>
     <Teleport to="#app">
         <div class="fix_block_record" @click.stop="() => { }"
-            :class="{ 'fix_block_open': openList, 'hidden_fix_block': props.hiddenBeforeOpen && !openList }"
+            :class="{ 'fix_block_open': openList, 'hidden_fix_block': props.hiddenBeforeOpen && !openList, 'fix_block_down': scrollDir == 'down' }"
             :style="{ bottom: bottom }">
             <div class="fix_block_header" @click="openRecord" v-show="!openList">
                 <!-- <Icon name="arrow-up" class="arrow" v-show="openList" :class="{ 'arrow_active': openList }" /> -->
@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { _depositList, _withdrawList } from "@/api/api"
 import RechargeItem from "./RecordItem/RechargeItem"
 import WithdrawItem from "./RecordItem/WithdrawItem"
@@ -63,6 +63,10 @@ const props = defineProps({
     hiddenBeforeOpen: { // 未打开前隐藏
         type: Boolean,
         default: true
+    },
+    scrollFather: {
+        type: String,
+        default: '.page'
     }
 })
 
@@ -122,6 +126,27 @@ defineExpose({
     close
 })
 
+const lastTop = ref(0)
+const scrollDir = ref('up')
+const scrollHanler = (event) => {
+    // 获取当前滚动位置
+    let scrollTop = event.target.scrollTop;
+    if (scrollTop >= lastTop.value) {
+        scrollDir.value = 'down'
+    } else {
+        scrollDir.value = 'up'
+    }
+    // 更新上一次滚动位置
+    lastTop.value = scrollTop;
+}
+
+onMounted(() => {
+    document.querySelector(props.scrollFather)?.addEventListener('scroll', scrollHanler)
+})
+onBeforeUnmount(() => {
+    document.querySelector(props.scrollFather)?.removeEventListener('scroll', scrollHanler)
+})
+
 </script>
 
 <style lang="less">
@@ -135,6 +160,7 @@ defineExpose({
     border-top-right-radius: 0.4rem;
     background-color: #fff;
     box-shadow: -2px 0 5px #ddd;
+    transform: translateY(0);
 
     .fix_block_header {
         height: 1rem;
@@ -189,11 +215,7 @@ defineExpose({
         }
     }
 
-    .fix_block_open {
-        .fix_block_header {
-            height: 0.8rem;
-        }
-    }
+
 
     .close_icon {
         width: 0.32rem;
@@ -261,8 +283,18 @@ defineExpose({
     }
 }
 
+.fix_block_open {
+    .fix_block_header {
+        height: 0.8rem;
+    }
+}
+
 .hidden_fix_block {
     bottom: -2rem !important;
+}
+
+.fix_block_down {
+    transform: translateY(100%)
 }
 
 @media (min-width: 751px) {

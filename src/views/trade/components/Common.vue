@@ -444,9 +444,9 @@ const getPay = () => {
 
 const handleInput = () => {
   value.value = value.value.toLocaleUpperCase()
-  matchName.symbolHtml =matchName.symbol= ''
-  roundedQuantity.value=0
-  numValue.value=''
+  matchName.symbolHtml = matchName.symbol = ''
+  roundedQuantity.value = 0
+  numValue.value = ''
   //股票搜索
   getData();
 };
@@ -456,10 +456,10 @@ const handleFocus = (val) => {
   isFocused.value = val
   if (val == 4) {
     if (stockCo.value[0] && stockCo.value[0].symbol) {
-       value.value = stockCo.value[0].symbol;
-       setTimeout(() => {
-        matchName.symbol = matchName.symbolHtml = value.value 
-       }, 500);
+      value.value = stockCo.value[0].symbol;
+      setTimeout(() => {
+        matchName.symbol = matchName.symbolHtml = value.value
+      }, 500);
     }
   }
 };

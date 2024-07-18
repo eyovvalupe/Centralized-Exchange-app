@@ -4,7 +4,12 @@
         <Top :title="'兑换'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    <div class="top-record-icon">
+                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    </div>
+                    <span>
+                        记录
+                    </span>
                 </div>
             </template>
         </Top>
@@ -13,14 +18,6 @@
         <div class="form">
             <div class="subtitle">支付</div>
             <div class="item_box">
-                <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
-                    <div class="item_content">
-                        <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
-                        <input @focus="focus = true" @blur="errStatus = focus = false" class="ipt" @input="changeAmount"
-                            type="number" v-model="form.amount" placeholder="">
-                        <span class="all" @click="maxIpt">全部</span>
-                    </div>
-                </div>
                 <div class="item account_item" @click="openDialog('from')">
                     <div class="currency" v-if="form.from">
                         <div class="currency_icon">
@@ -32,6 +29,14 @@
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
                 </div>
+                <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
+                    <div class="item_content">
+                        <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
+                        <input @focus="focus = true" @blur="errStatus = focus = false" class="ipt" @input="changeAmount"
+                            type="number" v-model="form.amount" placeholder="">
+                        <span class="all" @click="maxIpt">全部</span>
+                    </div>
+                </div>
             </div>
 
             <div class="trans">
@@ -39,17 +44,11 @@
                 <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
                     <img src="/static/img/assets/transfer.png" alt="img">
                 </div>
-                <div class="line"></div>
+                <div class="line" style="flex:12"></div>
             </div>
 
             <div class="subtitle">预计收到</div>
             <div class="item_box">
-                <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }">
-                    <div class="item_content">
-                        <input class="ipt" @input="changeToAmount" @blur="errStatus = false" type="number"
-                            v-model="form.toAmount" placeholder="请输入">
-                    </div>
-                </div>
                 <div class="item account_item" @click="openDialog('to')">
                     <div class="currency">
                         <div class="currency_icon">
@@ -61,11 +60,17 @@
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
                 </div>
+                <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }"
+                    style="background-color: #f5f5f5">
+                    <div class="item_content">
+                        {{ form.toAmount || '--' }}
+                    </div>
+                </div>
             </div>
 
             <div class="tip">
-                <span>1{{ form.from.toUpperCase() }}≈</span>
-                <span class="num">{{ rate || '--' }}{{ form.to.toUpperCase() }}</span>
+                <span>1 {{ form.from.toUpperCase() }} ≈ </span>
+                <span class="num">{{ rate || '--' }} {{ form.to.toUpperCase() }}</span>
 
                 <!-- <span v-if="!rate">--</span>
                 <template v-if="rate">
@@ -104,6 +109,11 @@
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef">
             <template #top>
+                <div
+                    style="position: absolute;width:100%;font-size: 0.32rem;text-align: center;pointer-events: none;top:0.32rem">
+                    兑换确认</div>
+            </template>
+            <!-- <template #top>
                 <div class="swap_comfirm_box">
                     <div class="comfirm_title">兑换确认</div>
                     <div class="confirm_box">
@@ -121,7 +131,7 @@
                     </div>
                     <div class="comfirn_tip">实际到账以实时汇率为准</div>
                 </div>
-            </template>
+            </template> -->
         </SafePassword>
 
         <!-- 充提记录 -->
@@ -163,6 +173,7 @@ const form = ref({
 })
 const maxIpt = () => {
     form.value.amount = balance.value
+    changeAmount()
 }
 const changeAmount = () => { // 改变from金额
     if (!rate.value || !form.value.amount) return form.value.toAmount = ""
@@ -319,18 +330,22 @@ const goRecord = () => {
     position: relative;
 
     .top-record {
-        width: 0.64rem;
-        height: 0.64rem;
         border-radius: 50%;
-        background-color: #EAF0F3;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #0953fa;
+        font-size: 0.24rem;
 
-        img {
-            width: 0.36rem !important;
-            height: 0.36rem !important;
+        .top-record-icon {
+            background-color: #EAF0F3;
+            width: 0.52rem;
+            height: 0.52rem;
+            padding: 0.06rem;
+            border-radius: 50%;
+            margin-right: 0.04rem;
         }
+
     }
 
     .form {
@@ -444,7 +459,7 @@ const goRecord = () => {
                 transition: all ease .2s;
 
                 span {
-                    color: #111111;
+                    // color: #111111;
                 }
             }
 
@@ -465,7 +480,7 @@ const goRecord = () => {
             padding: 0 0.24rem;
             height: 100% !important;
             flex: 4;
-            margin-left: 0.2rem;
+            margin-right: 0.2rem;
         }
 
         .trans {
