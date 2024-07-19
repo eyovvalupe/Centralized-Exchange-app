@@ -17,9 +17,9 @@
                     <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
                     <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                 </div>
-                <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
+                <!-- <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
                     <Icon name="enlarge" />
-                </div>
+                </div> -->
             </div>
             <div class="header-price">
                 <h1 class="info" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
@@ -64,10 +64,10 @@
                     <div class="tab" :class="{ 'active_tab': timeType == '1W' }" @click="changeType('1W')">1W</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1M' }" @click="changeType('1M')">1M</div>
                     <div style="flex:1"></div>
-                    <!-- <div class="full-tab" @click="fullScreen(true)">
+                    <div class="full-tab" @click="fullScreen(true)">
                         <Icon name="enlarge" />
                     </div>
-                    <div class="full-tab" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
+                    <!-- <div class="full-tab" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
                         <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
                         <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                     </div> -->
@@ -85,43 +85,94 @@
                 </div>
             </div>
         </div>
-        <!-- 交易按钮 -->
-        <div class="bot-buysell" :class="{ 'sell_key_open': switchKey }" v-if="!props.innerPage">
-            <div @click="goBuy(true)" class="submit btn-red  van-col van-col--8">
-                买涨
-            </div>
-            <div @click="goBuy(false)" class="submit btn-green  van-col van-col--8">
-                买跌
-            </div>
-
-            <div class="sell_key" @click="switchKey = !switchKey">
-                <div class="sell_key_icon">
-                    <img src="/static/img/trade/down.png" alt="img">
-                </div>
-                <span>{{ switchKey ? '收起' : '展开' }}</span>
-            </div>
+        <!-- 操作 -->
+        <div class="market_bottom" v-if="!props.innerPage">
+            <div class="symbol">{{ item.symbol || '--' }}</div>
+            <div class="time_type">{{ timeType }}</div>
+            <div class="bottom_line"></div>
+            <div class="bottom_btn" @click="showBuy = true">交易</div>
+            <div class="bottom_btn" @click="showInfo = true">数据详情</div>
         </div>
         <!-- 时间选择弹窗 -->
-        <!-- <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round
             position="bottom">
             <div class="times_list">
                 <div v-for="item in minList" :key="item" @click="chooseTime(item)" class=" item"
                     :class="{ 'active_item': currMin == item }">{{ item }}
                 </div>
             </div>
-        </Popup> -->
-
-        <!-- 下单弹窗 -->
-        <!-- <teleport to="body">
-            <ActionSheet v-model:show="showBuy" close-on-click-action>
-                <div style="padding: 1.16rem 0 0.6rem 0;background-color: #fff;">
-                    <div style="height:0.96rem;border-bottom:1px solid #F5F5F5;display: flex;align-items: center;justify-content: center;color: #333333;font-weight: 400;"
-                        v-for="(item, i) in actions" :key="i">
-                        {{ item.name }}
+        </Popup>
+        <!-- 交易弹窗 -->
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBuy" round position="bottom"
+            closeable>
+            <div class="buy_popup">
+                <div class="buy_name">交易</div>
+                <div class="buy_popup_btn" @click="goBuy(true)">
+                    <span>买涨</span>
+                    <div class="btn_icon">
+                        <img src="/static/img/market/market.png" alt="img">
                     </div>
                 </div>
-            </ActionSheet>
-        </teleport> -->
+                <div class="buy_popup_btn buy_popup_btn2" @click="goBuy(false)">
+                    <span>买跌</span>
+                    <div class="btn_icon">
+                        <img src="/static/img/market/market.png" alt="img">
+                    </div>
+                </div>
+            </div>
+        </Popup>
+
+        <!-- 数据弹窗 -->
+        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo" round
+            position="bottom" closeable>
+            <div class="info_popup">
+                <div class="info_name">数据</div>
+                <div class="info_price">
+                    <div class="info_num" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
+                        <template v-if="item.price || item.close">
+                            {{ Number(item.price || item.close).toFixed(2) }}
+                        </template>
+                        <span v-else>--</span>
+                    </div>
+                    <div style="display: flex;align-items: center;margin-left: 0.4rem"
+                        :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
+                        <div v-if="Number(item.price * (item.ratio || 0))">{{ Number(item.price *
+                            (item.ratio ||
+                                0)).toFixed(2) }}</div>
+                        <div v-if="item.ratio" style="margin-left:0.32rem">{{ item.ratio === undefined ? '--' :
+                            (item.ratio *
+                                100).toFixed(2) + '%'
+                            }}</div>
+                    </div>
+                </div>
+                <div class="info_items">
+                    <div class="info_item">
+                        <div class="name">开</div>
+                        <div>{{ item.open }}</div>
+                    </div>
+                    <div class="info_item">
+                        <div class="name">高</div>
+                        <div>{{ item.high }}</div>
+                    </div>
+                    <div class="info_item">
+                        <div class="name">量</div>
+                        <div>{{ _formatNumber(item.volume) }}</div>
+                    </div>
+                    <div class="info_item">
+                        <div class="name">收</div>
+                        <div>{{ item.close }}</div>
+                    </div>
+                    <div class="info_item">
+                        <div class="name">低</div>
+                        <div>{{ item.low }}</div>
+                    </div>
+                    <div class="info_item">
+                        <div class="name">额</div>
+                        <div>{{ _formatNumber(item.amount) }}</div>
+                    </div>
+                </div>
+            </div>
+        </Popup>
 
     </div>
 </template>
@@ -143,11 +194,6 @@ const props = defineProps({
         default: false
     }
 })
-const showBuy = ref(false) // 购买弹窗
-const actions = ref([
-    { name: '股票买涨', key: 'up' },
-    { name: '股票买跌', key: 'down' },
-])
 
 // 添加自选
 const loading = ref(false)
@@ -243,6 +289,7 @@ const fullScreen = (key) => {
 
 // 下单
 const goBuy = key => {
+    showBuy.value = false
     store.commit('setActive', key)
     router.push({
         name: 'trade',
@@ -261,6 +308,11 @@ const backFunc = () => {
         router.back()
     }
 }
+
+
+// 弹窗
+const showBuy = ref(false)
+const showInfo = ref(false)
 </script>
 
 <style lang="less" scoped>
@@ -327,10 +379,13 @@ const backFunc = () => {
             }
 
             .search {
-                width: 0.36rem;
-                height: 0.36rem;
+                width: 0.64rem;
+                height: 0.64rem;
+                padding: 0.12rem;
                 font-size: 0.4rem;
                 margin-left: 0.2rem;
+                background-color: #EAF0F3;
+                border-radius: 50%;
             }
         }
 
@@ -413,47 +468,6 @@ const backFunc = () => {
         line-height: .5rem;
     }
 
-    .bot-buysell {
-        background-color: #fff;
-        z-index: 99;
-        border-top: 1px solid #efefef;
-        position: absolute;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        bottom: 0;
-        width: 100%;
-        padding: .2rem 1rem 0.2rem 0.2rem;
-        transition: all ease .3s;
-        transform: translateY(100%);
-
-        /*兼容 IOS>11.2*/
-        .submit {
-            margin: 0 0.4rem;
-        }
-
-        .sell_key {
-            position: absolute;
-            bottom: 1.2rem;
-            right: 0;
-            padding: 0.2rem 0.4rem 0.2rem 0.4rem;
-            border-radius: 0.1rem;
-            font-size: 0.2rem;
-            color: #999;
-            display: flex;
-            align-items: center;
-            background-color: #fff;
-
-            .sell_key_icon {
-                width: 0.28rem;
-                height: 0.28rem;
-                margin-right: 0.05rem;
-                transition: all ease .3s;
-                transform: rotate(180deg)
-            }
-        }
-    }
 
     .sell_key_open {
         transform: translateY(0);
@@ -589,7 +603,7 @@ const backFunc = () => {
 
         .chart_box {
             width: 100%;
-            height: calc(var(--app-height) - 1.8rem);
+            height: calc(var(--app-height) - 2.6rem);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -624,10 +638,18 @@ const backFunc = () => {
 
             .full-tab {
                 color: #333;
-                font-size: 0.4rem;
-                width: 0.4rem;
-                height: 0.4rem;
+                font-size: 0.32rem;
+                width: 0.48rem;
+                height: 0.48rem;
                 margin-left: 0.2rem;
+                background-color: #EAF0F3;
+                border-radius: 50%;
+                padding: 0.08rem;
+                display: center;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                line-height: 0;
             }
 
             .chart_container {
@@ -673,6 +695,38 @@ const backFunc = () => {
             }
         }
 
+    }
+
+    .market_bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 0.32rem;
+        border-top: 1px solid #EAEEF3;
+        height: 0.8rem;
+        font-size: 0.28rem;
+
+        .symbol {
+            color: #061023;
+        }
+
+        .time_type {
+            color: #8F92A1;
+            margin: 0 0.3rem;
+            font-size: 0.24rem;
+        }
+
+        .bottom_line {
+            flex: 1;
+            height: 0.32rem;
+            border-left: 1px solid #EAEEF3;
+        }
+
+        .bottom_btn {
+            color: #014CFA;
+            font-size: 0.24rem;
+            margin-left: 0.32rem;
+        }
     }
 
     .intro_box {
@@ -752,6 +806,83 @@ const backFunc = () => {
     .active_item {
         background-color: #F4F5F7;
         color: #014CFA;
+    }
+}
+
+.buy_popup {
+    padding: 0.8rem 0.32rem 0.2rem 0.32rem;
+
+    .buy_name {
+        color: #121826;
+        margin-bottom: 0.54rem;
+        padding-left: 0.24rem;
+    }
+
+    .buy_popup_btn {
+        height: 0.9rem;
+        border-radius: 0.9rem;
+        background-color: #E8503A;
+        color: #fff;
+        font-size: 0.28rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.54rem;
+        position: relative;
+
+        .btn_icon {
+            width: 0.4rem;
+            height: 0.4rem;
+            position: absolute;
+            right: 0.64rem;
+        }
+    }
+
+    .buy_popup_btn2 {
+        background-color: #18B762;
+    }
+}
+
+.info_popup {
+    padding: 0.8rem 0.32rem 0.2rem 0.32rem;
+
+    .info_name {
+        color: #121826;
+        margin-bottom: 0.54rem;
+        padding-left: 0.24rem;
+    }
+
+    .info_price {
+        display: flex;
+        align-items: flex-end;
+        font-size: 0.32rem;
+
+        .info_num {
+            font-size: 0.46rem;
+            font-weight: 600;
+            flex: 1;
+        }
+    }
+
+    .info_items {
+        margin: 0.32rem 0 0 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .info_item {
+            margin-bottom: 0.32rem;
+            width: 31%;
+            height: 1.08rem;
+            background: #F2F3F8;
+            padding: 0.2rem;
+
+            .name {
+                padding-left: 0.1rem;
+                margin-bottom: 0.15rem;
+            }
+        }
     }
 }
 </style>
