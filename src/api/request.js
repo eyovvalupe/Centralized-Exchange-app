@@ -24,7 +24,7 @@ instance.interceptors.request.use(
       config.headers.auth = token;
     }
     if (config?.custom?.auth && !token) {
-      router.replace({
+      router.push({
         name: 'login'
       })
       throw new Error("当前 token 已失效，请重新登录");
@@ -65,7 +65,7 @@ instance.interceptors.response.use(
           })
           return;
         }
-      } else if (res.code ==400) {
+      } else if (res.code == 400) {
         showToast(res.message)
         return
       }

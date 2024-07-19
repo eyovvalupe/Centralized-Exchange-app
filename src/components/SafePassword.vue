@@ -1,7 +1,7 @@
 <!-- 输入安全密码 -->
 <template>
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="show"
-        position="bottom" teleport="body" :close-on-popstate="true" :close-on-click-overlay="false">
+    <Popup :safe-area-inset-top="true" close-on-click-overlay :safe-area-inset-bottom="true" class="self_van_popup"
+        v-model:show="show" position="bottom" teleport="body" :close-on-popstate="true" closeable>
         <!--  :class="{ 'typing_dialog': showKeyboard }" -->
         <div class="safepassword_dialog">
             <slot name="top"></slot>
@@ -12,8 +12,8 @@
             <input type="password" @blur="errStatus = false" :class="{ 'err_ipt': errStatus }" v-model="val"
                 ref="iptDom" class="pass_ipt" enterkeyhint="done" @keydown.enter="submit">
             <div class="btns">
-                <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
-                        style="color: #014CFA;">取消</span></Button>
+                <!-- <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
+                        style="color: #014CFA;">取消</span></Button> -->
                 <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">确定</Button>
             </div>
 
@@ -79,9 +79,11 @@ defineExpose({
 <style lang="less" scoped>
 .safepassword_dialog {
     background-color: #FEFEFE;
-    padding: 0.64rem 0.32rem;
+    padding: 0.96rem 0.32rem;
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
+
+    position: relative;
 
     .btns {
         display: flex;
@@ -92,7 +94,7 @@ defineExpose({
         .btn {
             height: 0.96rem;
             border-radius: 0.96rem;
-            width: 45%;
+            width: 100%;
         }
     }
 
@@ -100,8 +102,8 @@ defineExpose({
         font-size: 0.28rem;
         line-height: 0.44rem;
         color: #121826;
-        margin-bottom: 0.4rem;
-        text-align: center;
+        margin-bottom: 0.2rem;
+        text-align: left;
     }
 
     .pass_ipt {

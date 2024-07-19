@@ -50,8 +50,7 @@
                     <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'stock' }">
                             <div class="mytab_title_icon" v-show="active != 'stock'">
-                                <img v-show="active != 'stock'" src="/static/img/user/iden-1.png" alt="img">
-                                <!-- <img v-show="active == 'stock'" src="/static/img/user/iden-2.png" alt="img"> -->
+                                <img v-show="active != 'stock'" src="/static/img/assets/stock_icon.svg" alt="img">
                             </div>
                             <span v-show="active == 'stock'">股票</span>
                         </div>
@@ -64,8 +63,7 @@
                     <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'contract' }">
                             <div class="mytab_title_icon" v-show="active != 'contract'">
-                                <img v-show="active != 'contract'" src="/static/img/user/google-1.png" alt="img">
-                                <!-- <img v-show="active == 'contract'" src="/static/img/user/google-2.png" alt="img"> -->
+                                <img v-show="active != 'contract'" src="/static/img/assets/contract_icon.svg" alt="img">
                             </div>
                             <span v-show="active == 'contract'">合约</span>
                         </div>
@@ -78,8 +76,7 @@
                     <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
                             <div class="mytab_title_icon" v-show="active != 'ipo'">
-                                <img v-show="active != 'ipo'" src="/static/img/user/iden-1.png" alt="img">
-                                <!-- <img v-show="active == 'ipo'" src="/static/img/user/iden-2.png" alt="img"> -->
+                                <img v-show="active != 'ipo'" src="/static/img/assets/ipo_icon.svg" alt="img">
                             </div>
                             <span v-show="active == 'ipo'">IPO</span>
                         </div>

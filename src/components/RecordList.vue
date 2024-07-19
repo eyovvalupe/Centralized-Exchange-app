@@ -3,13 +3,11 @@
     <Popup close-on-click-overlay :safe-area-inset-top="true" :safe-area-inset-bottom="true" :before-close="boforeClose"
         teleport="body" v-model:show="showBottom" position="bottom" style="background-color: rgba(0,0,0,0)">
         <div class="record_list_popup" @click.stop="() => { }">
-            <div class="title">
-                <span>{{ title }}</span>
-                <div class="close_icon" @click="close">
-                    <img src="/static/img/common/close.png" alt="img">
-                </div>
+            <div class="close_icon" @click="close">
+                <img src="/static/img/common/close.png" alt="img">
             </div>
-            <Tabs @change="init" v-model:active="active" :lazy-render="true" animated type="card" class="rsl_tabs">
+            <Tabs @change="init" shrink v-model:active="active" :lazy-render="true" animated type="card"
+                class="rsl_tabs">
                 <Tab :title="titles[0]">
                     <div ref="list_0" class="list"
                         :class="{ 'active_list': active == 0, 'list_down': scrollDir == 'down' }">
@@ -233,6 +231,7 @@ const getDate = str => {
     border-top-left-radius: 0.24rem;
     border-top-right-radius: 0.24rem;
     overflow: hidden;
+    padding-top: 0.4rem;
 
     .rsl_tabs {
         .van-tabs__nav--card {
@@ -277,21 +276,13 @@ const getDate = str => {
         border-top-right-radius: 0;
     }
 
-    .title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        height: 1rem;
-        font-size: 0.28rem;
-        color: #121826;
-
-        .close_icon {
-            width: 0.32rem;
-            height: 0.32rem;
-            position: absolute;
-            right: 0.4rem;
-        }
+    .close_icon {
+        width: 0.32rem;
+        height: 0.32rem;
+        position: absolute;
+        right: 0.24rem;
+        top: 0.2rem;
+        z-index: 999;
     }
 
     .list {

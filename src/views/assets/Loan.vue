@@ -532,7 +532,7 @@ onBeforeUnmount(() => {
                     transition: all ease .2s;
 
                     span {
-                        color: #111111;
+                        // color: #111111;
                     }
                 }
 
