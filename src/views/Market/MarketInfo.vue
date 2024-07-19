@@ -8,8 +8,8 @@
                     <Icon name="arrow-left" />
                 </div>
                 <div class="title">
-                    <div>{{ item.symbol || '--' }}</div>
-                    <div class="info">{{ item.name || '--' }}</div>
+                    <div class="title_name">{{ item.symbol || '--' }}</div>
+                    {{ item.name || '--' }}
                 </div>
                 <div class="title_shadow"></div>
                 <div v-if="!props.innerPage" class="search star" @click="addCollect"
@@ -63,7 +63,7 @@
                     <div class="tab" :class="{ 'active_tab': timeType == '1D' }" @click="changeType('1D')">1D</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1W' }" @click="changeType('1W')">1W</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1M' }" @click="changeType('1M')">1M</div>
-                    <div style="flex:1"></div>
+                    <!-- <div style="flex:1"></div> -->
                     <div class="full-tab" @click="fullScreen(true)">
                         <Icon name="enlarge" />
                     </div>
@@ -90,8 +90,18 @@
             <div class="symbol">{{ item.symbol || '--' }}</div>
             <div class="time_type">{{ timeType }}</div>
             <div class="bottom_line"></div>
-            <div class="bottom_btn" @click="showBuy = true">交易</div>
-            <div class="bottom_btn" @click="showInfo = true">数据详情</div>
+            <div class="bottom_btn" @click="showBuy = true">
+                <div class="bottom_btn_icon">
+                    <img src="/static/img/market/buy_icon.png" alt="img">
+                </div>
+                <span>交易</span>
+            </div>
+            <div class="bottom_btn" @click="showInfo = true">
+                <div class="bottom_btn_icon">
+                    <img src="/static/img/market/data_icon.png" alt="img">
+                </div>
+                <span>数据</span>
+            </div>
         </div>
         <!-- 时间选择弹窗 -->
         <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round
@@ -319,7 +329,8 @@ const showInfo = ref(false)
 .page_marketinfo {
     padding: 1.8rem 0 0 0;
     overflow: hidden;
-
+    display: flex;
+    flex-direction: column;
     position: relative;
 
     .has_padding_x {
@@ -343,6 +354,7 @@ const showInfo = ref(false)
             justify-content: space-between;
             position: relative;
 
+
             .back {
                 width: 0.36rem;
                 height: 0.36rem;
@@ -356,32 +368,29 @@ const showInfo = ref(false)
             .title {
                 pointer-events: none;
                 position: absolute;
-                width: 100%;
+                width: calc(100% - 1.6rem);
                 top: 50%;
-                transform: translateY(-50%);
-                left: 0;
-                padding: 0 0.4rem;
+                transform: translateY(-50%) translateX(-50%);
+                left: 50%;
                 text-align: center;
-                color: #061023;
-                font-size: 0.32rem;
-                line-height: 0.44rem;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                font-size: 0.24rem;
+                line-height: 0.32rem;
+                color: #8F92A1;
 
-                .info {
-                    font-size: 0.24rem;
-                    line-height: 0.32rem;
-                    color: #8F92A1;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    text-align: center;
-
+                .title_name {
+                    color: #061023;
+                    font-size: 0.32rem;
+                    line-height: 0.44rem;
                 }
             }
 
             .search {
                 width: 0.64rem;
                 height: 0.64rem;
-                padding: 0.12rem;
+                padding: 0.16rem;
                 font-size: 0.4rem;
                 margin-left: 0.2rem;
                 background-color: #EAF0F3;
@@ -509,6 +518,8 @@ const showInfo = ref(false)
     }
 
     .market_content {
+        flex: 1;
+        overflow: hidden;
 
         .funcs {
             display: flex;
@@ -603,7 +614,7 @@ const showInfo = ref(false)
 
         .chart_box {
             width: 100%;
-            height: calc(var(--app-height) - 2.6rem);
+            height: calc(var(--app-height) - 2.7rem);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -641,7 +652,7 @@ const showInfo = ref(false)
                 font-size: 0.32rem;
                 width: 0.48rem;
                 height: 0.48rem;
-                margin-left: 0.2rem;
+                // margin-left: 0.2rem;
                 background-color: #EAF0F3;
                 border-radius: 50%;
                 padding: 0.08rem;
@@ -653,10 +664,9 @@ const showInfo = ref(false)
             }
 
             .chart_container {
-                flex: 1;
+                height: calc(100% - 0.48rem);
                 width: 100%;
-                height: 100%;
-                transition: all ease .3s;
+                padding: 0 0.28rem;
             }
 
             .fullscreen_container {
@@ -726,6 +736,15 @@ const showInfo = ref(false)
             color: #014CFA;
             font-size: 0.24rem;
             margin-left: 0.32rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .bottom_btn_icon {
+                margin-right: 0.08rem;
+                width: 0.32rem;
+                height: 0.32rem;
+            }
         }
     }
 
@@ -854,13 +873,14 @@ const showInfo = ref(false)
 
     .info_price {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
+        justify-content: flex-start;
         font-size: 0.32rem;
 
         .info_num {
             font-size: 0.46rem;
             font-weight: 600;
-            flex: 1;
+            margin-right: 0.06rem;
         }
     }
 

@@ -84,7 +84,7 @@ const initData = async () => {
                 show: props.showY
             },
             area: {
-                lineColor: props.color || "#3B82F6",
+                lineColor: props.color || "#FFA800",
                 point: {
                     show: props.showY
                 },
@@ -92,19 +92,19 @@ const initData = async () => {
                 backgroundColor: [
                     {
                         offset: 0,
-                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(59, 130, 246, 0.01)"
+                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(255, 168, 0, 0.01)"
                     },
                     {
                         offset: 1,
-                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(59, 130, 246, 0.3)"
+                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(255, 168, 0, 0.3)"
                     }
                 ],
                 smooth: true,
                 point: {
                     show: true,
-                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(59, 130, 246, 0.3)",
+                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(255, 168, 0, 0.3)",
                     radius: 4,
-                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(59, 130, 246, 0.3)", // getAlphaBlue(0.3),
+                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(255, 168, 0, 0.3)", // getAlphaBlue(0.3),
                     rippleRadius: 8,
                     animation: true,
                     animationDuration: 1000
@@ -227,7 +227,17 @@ const getData = (params) => { // 获取数据
     })
 }
 
+// 重置图表大小
+const resetSize = () => {
+    setTimeout(() => {
+        chart.resize()
+    }, 500)
+}
 
+
+defineExpose({
+    resetSize
+})
 </script>
 
 <style lang="less" scoped>

@@ -217,7 +217,7 @@ export const klineConfig = {
         size: "auto",
         // x轴线
         axisLine: {
-            show: true,
+            show: false,
             color: "#9EA3AE", // "#888888",
             size: 0.5
         },
