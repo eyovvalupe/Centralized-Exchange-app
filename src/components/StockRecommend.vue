@@ -17,6 +17,7 @@
                         :ratio="item.ratio" />
                 </div>
 
+                <div class="unchecked" v-if="!checkedList[i]"></div>
                 <div class="checked" v-if="checkedList[i]">
                     <div class="ok">
                         <img src="/static/img/common/ok.png" alt="√">
@@ -131,7 +132,7 @@ const submit = () => {
             height: 2rem;
             width: 3.36rem;
             border-radius: 0.12rem;
-            border: 1px solid #F5F7F8;
+            border: 1px solid #E9EBF0;
             margin-bottom: 0.28rem;
             position: relative;
             padding: 0.12rem;
@@ -168,6 +169,17 @@ const submit = () => {
                 height: 0.5rem;
                 right: 0.1rem;
                 bottom: 0.1rem;
+            }
+
+            .unchecked {
+                position: absolute;
+                top: 0.1rem;
+                right: 0.1rem;
+                width: 0.36rem;
+                height: 0.36rem;
+                border-radius: 50%;
+                border: 1px solid #000;
+                opacity: 0.9;
             }
         }
 

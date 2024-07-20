@@ -3,24 +3,26 @@
     <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" class="market_optional"
         :list="watchList" />
     <div v-else-if="!watchList.length && !loading" style="position: relative">
-        <Button round plain class="addBtn" :loading="addLoading" @click="addOptional"><span style="font-size: 0.24rem;"
-                :style="{ color: stockList.length ? '#014CFA' : '#999' }">一键添加至自选</span></Button>
+        <Button round class="addBtn" color="#EFF6FF" :loading="addLoading" @click="addOptional">
+            <span style="font-size: 0.2rem;color: #014CFA">一键添加至自选</span>
+            <span class="tag">{{ stockList.length + contractList.length }}</span>
+        </Button>
         <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
             <Tab>
                 <template #title>
                     <div>
                         <span>股票</span>
-                        <span>({{ stockList.length }})</span>
+                        <!-- <span>({{ stockList.length }})</span> -->
                     </div>
                 </template>
                 <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
                 <NoData v-if="!marketSrockRecommendList.length" />
             </Tab>
-            <Tab :title="'合约'">
+            <Tab>
                 <template #title>
                     <div>
-                        <span>股票</span>
-                        <span>({{ contractList.length }})</span>
+                        <span>合约</span>
+                        <!-- <span>({{ contractList.length }})</span> -->
                     </div>
                 </template>
                 <!-- <StockRecommend @change="changeStockList" @init="init"
@@ -202,6 +204,22 @@ const remove = item => {
     right: 0.24rem;
     height: 0.48rem;
     z-index: 9999;
+
+    .tag {
+        display: block;
+        width: 0.32rem;
+        height: 0.32rem;
+        border-radius: 50%;
+        background-color: #3B82F6;
+        color: #fff;
+        font-size: 0.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+        top: -0.1rem;
+    }
 }
 
 .option_tab {

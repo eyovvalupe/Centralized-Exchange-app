@@ -7,7 +7,7 @@ const { startSocket } = useSocket()
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': [],
-    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList'],
+    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList'],
     'trade': ['marketWatchList', 'marketRankList']
 }
 
@@ -111,7 +111,7 @@ export default {
                     ...proxyKeys,
                     ...state.marketWatchKeys,
                 ]))
-                // console.error('订阅：', keys)
+                console.error('订阅：', keys)
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
                 socket && socket.on('realtime', res => {
