@@ -1,113 +1,74 @@
 <!-- 首页 -->
 <template>
   <div class="page page_home">
+
+    <!-- 顶部 -->
+    <div class="top_box">
+      <div class="funcs">
+        <div class="user_box"></div>
+        <div style="flex: 1"></div>
+        <div class="func_box"></div>
+        <div class="func_box"></div>
+      </div>
+
+      <div class="subtitle">总资产(USDT)</div>
+      <div class="assets" v-if="!token">
+        <div class="assets_login">登录</div>
+        <div>查看资产</div>
+        <div class="assets_icon"></div>
+      </div>
+      <div class="assets" v-if="token">
+        <div class="num">*******</div>
+        <div class="assets_icon"></div>
+      </div>
+
+      <div class="btns">
+        <div class="btn">快速交易</div>
+        <div class="btn active_btn">充值</div>
+      </div>
+    </div>
+
+    <!-- 广告 -->
+    <div class="home_ad">
+      <img src="/static/img/home/ad.png" alt="img">
+    </div>
+
     <!-- banner -->
     <Banner v-if="activated" class="home_banner" />
 
-    <!-- 首页推荐数据 -->
-    <!-- <Recommend v-if="activated"  @ready="readyRecommendData" class="home_recommend" /> -->
-
     <!-- Tabs -->
-    <!-- <Tabs @scroll="tabScroll" v-if="!pageLoading" sticky class="tabs" @change="changeTab" v-model:active="active"
-      :swipeable="false" animated :color="'#014CFA'" shrink>
-      <Tab :title="'活跃'">
-        <StockTable v-if="activated" :key="'vol'" :loading="loading" :list="marketVolumeList" />
+    <Tabs v-if="!pageLoading" type="card" class="tabs" v-model:active="activeTab" animated shrink>
+      <Tab :title="'推荐'">
+        <div>推荐</div>
       </Tab>
-      <Tab :title="'涨幅'">
-        <StockTable v-if="activated" :key="'up'" :loading="loading" :list="marketUpList" />
+      <Tab :title="'股票'">
+        <div>股票</div>
       </Tab>
-      <Tab :title="'跌幅'">
-        <StockTable v-if="activated" :key="'down'" :loading="loading" :list="marketDownList" />
+      <Tab :title="'量化'">
+        <div>量化</div>
       </Tab>
-    </Tabs> -->
+      <Tab :title="'合约'">
+        <div>合约</div>
+      </Tab>
+      <Tab :title="'IPO'">
+        <div>IPO</div>
+      </Tab>
+    </Tabs>
+
   </div>
 </template>
 
 <script setup>
 import { onDeactivated, ref, computed, onActivated } from "vue"
-import { Tab, Tabs } from 'vant';
 import Banner from "./components/Banner.vue"
-import Recommend from "./components/Recommend.vue"
 import { useSocket } from '@/utils/ws'
-import StockTable from "@/components/StockTable.vue"
 import store from "@/store";
+import { Tab, Tabs } from 'vant';
 import { _sort } from "@/api/api"
 
-
-// tabs
-const active = ref(-1)
-const changeTab = (key, scrollToTop = true) => {
-  if (scrollToTop) {
-    try {
-      document.querySelector('.page').scrollTo({ top: document.querySelector('.home_banner').clientHeight + document.querySelector('.home_recommend').clientHeight, behavior: 'smooth' });
-    } catch {
-      console.error('滚动失败')
-    }
-  }
-  switch (key) {
-    case 0:
-      getData(marketVolumeList, 'setMarketVolumeList', 'volume', 'marketVolumeList')
-      break
-    case 1:
-      getData(marketUpList, 'setMarketUpList', 'up', 'marketUpList')
-      break
-    case 2:
-      getData(marketDownList, 'setMarketDownList', 'down', 'marketDownList')
-      break
-  }
-}
-
-const marketVolumeList = computed(() => store.state.marketVolumeList || []) // 活跃列表
-const marketUpList = computed(() => store.state.marketUpList || []) // 涨幅列表
-const marketDownList = computed(() => store.state.marketDownList || []) // 跌幅列表
-const loading = ref(false)
-const subs = (listKey, key) => { // 订阅ws
-  store.dispatch('subList', {
-    commitKey: key,
-    listKey: listKey,
-    // proxyListValue: list.value
-  })
-}
-// 获取列表数据
-const getData = (list, key, query, listKey) => {
-  if (loading.value) return
-  loading.value = true
-  if (list.value.length) {
-    subs(listKey, key)
-  }
-  _sort({
-    orderby: query
-  }).then(res => {
-    if (res.code == 200) {
-      res.data = res.data.map(item => {
-        item.ratio = undefined // 弃用接口里的该字段
-        return item
-      })
-      if (list.value.length) { // 有历史数据就更新
-        const rs = res.data.map(item => {
-          const target = list.value.find(a => a.symbol == item.symbol)
-          if (target) {
-            item = {
-              ...target,
-              ...item,
-              ratio: target.ratio
-            }
-          }
-          return item
-        })
-        store.commit(key, rs || [])
-      } else { // 没有就直接提交
-        store.commit(key, res.data || [])
-      }
-
-      setTimeout(() => {
-        subs(listKey, key)
-      }, 0)
-    }
-  }).finally(() => {
-    loading.value = false
-  })
-}
+const { startSocket } = useSocket()
+const activeTab = ref(0)
+const token = computed(() => store.state.token || '')
 
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading)
@@ -119,11 +80,6 @@ Promise.all([
 })
 
 
-// changeTab(0) // 获取首屏数据
-const readyRecommendData = () => { // 推荐数据准备好了，一起监听
-  changeTab(active.value, false)
-}
-const { startSocket } = useSocket()
 
 const activated = ref(false)
 onActivated(() => {
@@ -148,47 +104,147 @@ onDeactivated(() => {
   height: 100%;
   overflow-y: auto;
 
+  .top_box {
+    padding: 0.2rem 0.32rem 0 0.32rem;
+
+    .funcs {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.24rem;
+
+      .user_box {
+        width: 0.52rem;
+        height: 0.52rem;
+        background-color: #D9D9D9;
+        border-radius: 50%;
+      }
+
+      .func_box {
+        background-color: #EAF0F3;
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 50%;
+        margin-left: 0.28rem;
+      }
+    }
+
+    .subtitle {
+      color: #333333;
+      font-size: 0.26rem;
+      margin-bottom: 0.16rem;
+    }
+
+    .assets {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 0.56rem;
+      color: #8D93A6;
+      font-weight: 600;
+
+      .assets_login {
+        color: #014CFA;
+        margin-right: 0.12rem;
+      }
+
+      .assets_icon {
+        width: 0.32rem;
+        height: 0.32rem;
+        margin-left: 0.2rem;
+      }
+
+      .num {
+        color: #000;
+        font-size: 0.48rem;
+      }
+    }
+
+    .btns {
+      margin-top: 0.28rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .btn {
+        width: 48%;
+        height: 0.76rem;
+        background-color: #F2F3F7;
+        border-radius: 0.76rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+        font-size: 0.28rem;
+      }
+
+      .active_btn {
+        background-color: #014CFA;
+        color: #fff;
+      }
+    }
+  }
+
+  .home_ad {
+    height: 2.8rem;
+    width: 100%;
+    margin: 0.4rem 0;
+  }
+
   .home_banner {
     padding-bottom: 0.2rem;
   }
 
   .tabs {
-    flex: 1;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
 
-    :deep(.van-tabs__wrap) {
-      height: calc(44px + 0.2rem);
+    :deep(.van-tab__panel) {
+      // height: calc(var(--app-height) - 3.4rem);
+      // overflow-y: auto;
     }
 
-    :deep(.van-tabs__nav) {
-      position: relative;
+    :deep(.van-tabs__nav--card) {
+      border: none;
+    }
 
-      &::after {
-        content: '';
-        width: 100%;
-        height: 1px;
-        background-color: #3B82F6;
-        position: absolute;
-        bottom: 16px;
-        left: 0;
-        opacity: 0.3;
-      }
+    :deep(.van-tab--card) {
+      border-right: none;
+      color: #061023;
+      // background-color: #f5f5f5;
+      // border-radius: 0.3rem;
+      // margin-left: 0.1rem;
+      // transition: all ease .2s;
+    }
+
+    :deep(.van-tab--card.van-tab--active) {
+      // background-color: #014CFA;
+      // color: #fff;
+
+      background-color: #F6F8FF;
+      border-radius: 0.3rem;
+      color: #014CFA;
+      font-weight: 500
+    }
+
+    :deep(.van-tab--shrink) {
+      padding: 0 0.3rem;
+    }
+
+    :deep(.van-tabs__wrap) {
+      height: 0.8rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0);
+      padding-bottom: 0.2rem;
+    }
+
+    :deep(.van-tabs__nav--card) {
+      height: 0.6rem;
     }
 
     :deep(.van-tab) {
-      margin-left: 0.36rem;
-    }
-
-    :deep(.van-tabs__content) {
-      flex: 1;
-
-      .van-swipe-item {
-        overflow-y: auto;
-        padding-bottom: 0.2rem;
-      }
+      line-height: 0.6rem;
+      font-size: 0.28rem;
     }
   }
+
 }
 </style>

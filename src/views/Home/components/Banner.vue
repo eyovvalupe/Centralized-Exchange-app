@@ -3,7 +3,17 @@
     <Swipe class="banner_box" lazy-render :initial-swipe="currIndex" :autoplay="3000" loop indicator-color="white"
         @change="onChange">
         <SwipeItem v-for="(item, i) in banners" :key="i">
-            <div class="banner_item">{{ i }}</div>
+            <div class="banner_items">
+                <div class="banner_item">
+                    <RecommendItem :item="itemData" />
+                </div>
+                <div class="banner_item">
+                    <RecommendItem :item="itemData" />
+                </div>
+                <div class="banner_item">
+                    <RecommendItem :item="itemData" />
+                </div>
+            </div>
         </SwipeItem>
         <template #indicator="{ active, total }">
             <div class="custom-indicator">
@@ -17,8 +27,9 @@
 <script setup>
 import { Swipe, SwipeItem } from 'vant';
 import { ref, onMounted } from "vue"
+import RecommendItem from "./RecommendItem.vue"
 
-
+const itemData = ref({ "market": "NSE", "symbol": "CHENNPETRO", "name": "CHENNAI PETRO CP", "ratio": "+12.01%" })
 const banners = ref([{}, {}, {}])
 
 const currIndex = ref(banners.value.length - 1)
@@ -35,10 +46,18 @@ onMounted(() => {
 <style lang="less" scoped>
 .banner_box {
 
-    .banner_item {
-        height: 7.4rem;
-        background: linear-gradient(202.14deg, #0F2CE0 6.53%, #3854f4 85.54%);
+    .banner_items {
+        height: 1.9rem;
+        padding: 0 0.32rem;
         color: #fff;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        .banner_item {
+            height: 1.5rem;
+            width: 32%;
+        }
     }
 
     .custom-indicator {

@@ -3,10 +3,13 @@
     <StockTable v-if="watchList.length" :loading="loading" @remove="remove" :deleteItem="!!(token)"
         class="market_optional" :list="watchList" />
     <div v-else-if="!watchList.length && !loading" style="position: relative">
-        <Button round class="addBtn" color="#EFF6FF" :loading="addLoading" @click="addOptional">
-            <span style="font-size: 0.2rem;color: #014CFA">一键添加至自选</span>
-            <span class="tag">{{ stockList.length + contractList.length }}</span>
-        </Button>
+        <Teleport to=".page_market">
+            <Button round class="addBtn" color="#EFF6FF" :loading="addLoading" @click="addOptional">
+                <span style="font-size: 0.2rem;color: #014CFA">一键添加至自选</span>
+                <span class="tag">{{ stockList.length + contractList.length }}</span>
+            </Button>
+        </Teleport>
+
         <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
             <Tab>
                 <template #title>
@@ -205,9 +208,10 @@ const remove = item => {
 <style lang="less" scoped>
 .addBtn {
     position: absolute;
-    right: 0.24rem;
+    right: 0.32rem;
     height: 0.48rem;
     z-index: 9999;
+    top: 2rem;
 
     .tag {
         display: block;

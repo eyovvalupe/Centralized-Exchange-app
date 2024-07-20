@@ -150,14 +150,8 @@ const setReloading = () => {
     padding-bottom: 1.4rem;
     height: 100%;
     overflow-y: auto;
+    position: relative;
 
-    :deep(.van-tabs__content--animated) {
-        overflow: visible !important;
-    }
-
-    :deep(.van-swipe) {
-        overflow: visible !important;
-    }
 
     .title {
         padding: 0 0.24rem 0 0.32rem;

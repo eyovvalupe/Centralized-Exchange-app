@@ -44,18 +44,18 @@
             shrink>
             <Tab :title="'活跃'">
                 <StockTable :key="'vol'" :loading="loading" :list="marketVolumeList" />
-                <LoadingMore ref="more_1" class="active_more" :loading="loading" :finish="finish"
-                    v-if="((finish && marketVolumeList.length) || (!finish)) && active == 0" />
+                <LoadingMore ref="more_1" class="active_more" :loading="!!(marketVolumeList.length && loading)"
+                    :finish="finish" v-if="((finish && marketVolumeList.length) || (!finish)) && active == 0" />
             </Tab>
             <Tab :title="'涨幅'">
                 <StockTable :key="'up'" :loading="loading" :list="marketUpList" />
-                <LoadingMore ref="more_2" class="active_more" :loading="loading" :finish="finish"
-                    v-if="((finish && marketUpList.length) || (!finish)) && active == 1" />
+                <LoadingMore ref="more_2" class="active_more" :loading="!!(marketUpList.length && loading)"
+                    :finish="finish" v-if="((finish && marketUpList.length) || (!finish)) && active == 1" />
             </Tab>
             <Tab :title="'跌幅'">
                 <StockTable :key="'down'" :loading="loading" :list="marketDownList" />
-                <LoadingMore ref="more_3" class="active_more" :loading="loading" :finish="finish"
-                    v-if="((finish && marketDownList.length) || (!finish)) && active == 2" />
+                <LoadingMore ref="more_3" class="active_more" :loading="!!(marketDownList.length && loading)"
+                    :finish="finish" v-if="((finish && marketDownList.length) || (!finish)) && active == 2" />
             </Tab>
         </Tabs>
 
@@ -83,18 +83,18 @@ const changeTab = (key) => {
     page.value = 0
     loading.value = false
     finish.value = false
-    switch (key) {
-        case 0:
-            getData(marketVolumeList, 'setMarketVolumeList', 'volume', 'marketVolumeList')
-            break
-        case 1:
-            getData(marketUpList, 'setMarketUpList', 'up', 'marketUpList')
-            break
-        case 2:
-            getData(marketDownList, 'setMarketDownList', 'down', 'marketDownList')
-            break
-    }
     setTimeout(() => { // 加载更多元素
+        switch (key) {
+            case 0:
+                getData(marketVolumeList, 'setMarketVolumeList', 'volume', 'marketVolumeList')
+                break
+            case 1:
+                getData(marketUpList, 'setMarketUpList', 'up', 'marketUpList')
+                break
+            case 2:
+                getData(marketDownList, 'setMarketDownList', 'down', 'marketDownList')
+                break
+        }
         target = document.querySelector('.loading_more')
     }, 500)
 }
@@ -124,11 +124,13 @@ const getData = (list, key, query, listKey) => {
     if (arr.length) {
         subs(listKey, key)
     }
+    const saveActive = active.value
     _sort({
         orderby: query,
         page: page.value
     }).then(res => {
         if (res.code == 200) {
+            if (saveActive != active.value) return
             if (!res.data.length) {
                 finish.value = true
             }
@@ -152,7 +154,8 @@ const getData = (list, key, query, listKey) => {
 
             setTimeout(() => {
                 subs(listKey, key)
-            }, 200)
+                scrollHandler()
+            }, 500)
         }
     }).finally(() => {
         setTimeout(() => {
