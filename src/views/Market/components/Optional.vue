@@ -1,7 +1,7 @@
 <!-- 自选 -->
 <template>
-    <StockTable v-if="watchList.length" @remove="remove" :deleteItem="!!(token)" class="market_optional"
-        :list="watchList" />
+    <StockTable v-if="watchList.length" :loading="loading" @remove="remove" :deleteItem="!!(token)"
+        class="market_optional" :list="watchList" />
     <div v-else-if="!watchList.length && !loading" style="position: relative">
         <Button round class="addBtn" color="#EFF6FF" :loading="addLoading" @click="addOptional">
             <span style="font-size: 0.2rem;color: #014CFA">一键添加至自选</span>
@@ -16,7 +16,7 @@
                     </div>
                 </template>
                 <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
-                <NoData v-if="!marketSrockRecommendList.length" />
+                <NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
             </Tab>
             <Tab>
                 <template #title>
@@ -111,7 +111,9 @@ const init = () => {
 
 // 推荐列表
 const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
+const recommendLoading = ref(false)
 const openRecommendList = () => {
+    recommendLoading.value = true
     _watchlistDefault().then(res => {
         if (res.code == 200) {
             const arr = res.data.stock.map(item => {
@@ -128,6 +130,8 @@ const openRecommendList = () => {
                 })
             }, 500)
         }
+    }).finally(() => {
+        recommendLoading.value = false
     })
 }
 // 推荐股票选择

@@ -80,22 +80,12 @@ export default {
             state.currStock = data;
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
-                const index = state.marketWatchList.findIndex(item => item.symbol == data.symbol)
-                if (index >= 0) {
-                    state.marketWatchList[index] = data
-                }
-                const index2 = state.marketVolumeList.findIndex(item => item.symbol == data.symbol)
-                if (index2 >= 0) {
-                    state.marketVolumeList[index2] = data
-                }
-                const index3 = state.marketUpList.findIndex(item => item.symbol == data.symbol)
-                if (index3 >= 0) {
-                    state.marketUpList[index3] = data
-                }
-                const index4 = state.marketDownList.findIndex(item => item.symbol == data.symbol)
-                if (index4 >= 0) {
-                    state.marketDownList[index4] = data
-                }
+                (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                    const index = state[ck].findIndex(item => item.symbol == data.symbol)
+                    if (index >= 0) {
+                        state[ck][index] = data
+                    }
+                })
             }, 300)
         },
     },
@@ -112,8 +102,8 @@ export default {
                     ...state.marketWatchKeys,
                 ]))
                 console.error('订阅：', keys)
-                socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.off('realtime')
+                socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {
                     if (res.code == 200) {
                         // 根据不同页面，同步页面内模块的数据
@@ -121,7 +111,11 @@ export default {
                             const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
                                 const target = res.data.find(a => a.symbols == item.symbol)
                                 if (target) {
-                                    Object.assign(item, target)
+                                    return {
+                                        ...item,
+                                        ...target,
+                                        name: item.name || target.name
+                                    }
                                 }
                                 return item
                             })
@@ -130,13 +124,14 @@ export default {
                     }
                 })
 
-                socket && socket.emit('snapshot', keys.join(',')) // 快照数据
                 socket && socket.off('snapshot')
+                socket && socket.emit('snapshot', keys.join(',')) // 快照数据
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
+                        // console.error('收到', res, state.marketSrockRecommendList)
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                            const target = state[ck].find(item => item.symbols == res.symbols)
+                            const target = state[ck].find(item => item.symbols == res.symbols || item.symbol == res.symbols)
                             if (target) {
                                 target.points = _getSnapshotLine(res.data)
                             }

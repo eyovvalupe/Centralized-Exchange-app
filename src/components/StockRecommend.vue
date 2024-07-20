@@ -59,14 +59,7 @@ const updown = item => {
     return item.ratio > 0 ? 1 : -1
 }
 
-const checkedList = ref([])
-const changeCheck = i => {
-    if (checkedList.value[i]) {
-        checkedList.value[i] = !checkedList.value[i]
-    } else {
-        checkedList.value[i] = true
-    }
-
+const emitsKeys = () => {
     const keys = []
     checkedList.value.map((item, i) => {
         if (item) {
@@ -74,6 +67,26 @@ const changeCheck = i => {
         }
     })
     emits('change', keys)
+}
+
+const checkedList = ref([])
+try {
+    checkedList.value = JSON.parse(sessionStorage.getItem('recommend_check_list') || '[]')
+} catch {
+    checkedList.value = []
+}
+emitsKeys()
+
+const changeCheck = i => {
+    if (checkedList.value[i]) {
+        checkedList.value[i] = !checkedList.value[i]
+    } else {
+        checkedList.value[i] = true
+    }
+
+    sessionStorage.setItem('recommend_check_list', JSON.stringify(checkedList.value))
+
+    emitsKeys()
 }
 
 
