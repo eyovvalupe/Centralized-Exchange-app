@@ -128,7 +128,7 @@ const token = computed(() => store.state.token);
 const router = useRouter();
 const route = useRoute()
 const active = computed(() => store.state.currentActive);
-const value = ref(route.query.symbol || '');
+const value = ref('');
 // setTimeout(() => {
 //   if (value.value) {
 //     handleInput()
@@ -624,7 +624,11 @@ const getslide = () => {
 
 
 onMounted(() => {
-  emit('already');
+  //emit('already');
+  if (route.query.symbol) {
+    matchName.symbol = value.value = route.query.symbol;
+    handleBlur(4)
+  }
   getStockslist()
 
   if (first.value == false) {
@@ -829,14 +833,6 @@ defineExpose({
     font-style: normal;
     font-weight: 400;
     line-height: 0.36rem;
-
-    &.right-text {
-      text-align: right;
-    }
-  }
-
-  .m-b-5 {
-    margin-bottom: .1rem;
   }
 
   // .position-box {
@@ -899,50 +895,6 @@ defineExpose({
   //     text-align: right;
   //   }
   // }
-
-  .small-select {
-    width: 1.72rem !important;
-    height: auto !important;
-    border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
-    position: relative;
-    color: #333333;
-    position: relative;
-    line-height: auto !important;
-
-    .abs-con {
-      display: flex;
-      width: 80%;
-      height: .3rem;
-      line-height: auto !important;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      text-align: center;
-      margin: auto;
-    }
-  }
-
-  .select-box {
-    .select-box-item {
-      width: 1.48rem;
-      height: 0.88rem;
-      line-height: 0.88rem;
-      margin-left: 0.2rem;
-    }
-
-    .bigslect {
-      width: 100%;
-      text-align: center;
-      padding-right: 0.4rem;
-    }
-
-    .selected-class {
-      color: #1e5eff;
-    }
-  }
 
   .van-dropdown-menu__title:after {
     border-color: transparent transparent #333333 #333333;

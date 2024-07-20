@@ -33,10 +33,11 @@
           <!-- <Field v-model="priceValue" :class="['num-input', { 'focusinput': isFocused === 1 }]"
             style="margin-bottom: 0.2rem" type="number" @focus="handleFocus(1)"
             @blur="handleBlur(1)" placeholder="满足价格才能成交" /> -->
-          <div class="animate-input num-input flex left-text" :class="{ hasval: !!priceValue, inputFocus: isFocused === 1 }">
+          <div class="animate-input num-input flex left-text"
+            :class="{ hasval: !!priceValue, inputFocus: isFocused === 1 }">
             <div class="ipt_tip" v-if="isFocused === 1 || !priceValue">满足价格才能成交</div>
-            <input v-model="priceValue" type="number"  @focus="handleFocus(1)" @blur="handleBlur(1)" placeholder="">
-            <div class="link-text cur-price">市价</div>
+            <input v-model="priceValue" type="number" @focus="handleFocus(1)" @blur="handleBlur(1)" placeholder="">
+            <div class="link-text cur-price" @click="setCurPrice">市价</div>
           </div>
           <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already"
             :priceValue="priceValue" />
@@ -47,19 +48,56 @@
       <div v-else-if="active === '2'">
         <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
         <div v-show="!loading">
-          <span class="grop-title">止损</span>
-          <Field v-model="loseValue" :class="['num-input', { 'focusinput': isFocused === 2 }]" input-align="right"
-            style="margin-bottom: 0.2rem" @focus="handleFocus(2)" @blur="handleBlur(2)" />
-
-          <span class="grop-title">价格</span>
-          <div style="display: flex">
-            <Field v-model="marketValue" style="margin-bottom: 0.2rem"
-              :class="['price-num-input', { pricenlarged: !marketprice }, { 'focusinput': isFocused === 3 }]"
-              :disabled="!marketprice" @focus="handleFocus(3)" @blur="handleBlur(3)" />
-            <div :class="['market-button', { marketenlarged: marketprice }]" @click="changePrice">
-              {{ marketprice ? '限价' : '市价' }}
-            </div>
+          <div class="right-text m-t-5"><span class="link-text" @click="setMode">{{ !mode ? '简单模式' : '复杂模式' }}</span>
           </div>
+          <template v-if="mode">
+            <div class="left-text grop-title m-b-5">止损</div>
+            <Field v-model="loseValue" :class="['num-input', { 'focusinput': isFocused === 2 }]" input-align="right"
+              style="margin-bottom: 0.2rem" @focus="handleFocus(2)" @blur="handleBlur(2)" />
+
+            <span class="grop-title">价格</span>
+            <div style="display: flex">
+              <Field v-model="marketValue" style="margin-bottom: 0.2rem"
+                :class="['price-num-input', { pricenlarged: !marketprice }, { 'focusinput': isFocused === 3 }]"
+                :disabled="!marketprice" @focus="handleFocus(3)" @blur="handleBlur(3)" />
+              <div :class="['market-button', { marketenlarged: marketprice }]" @click="changePrice">
+                {{ marketprice ? '限价' : '市价' }}
+              </div>
+            </div>
+          </template>
+          <template v-else>
+            <div class="left-text grop-title m-b-5">止盈</div>
+            <div class="flex flex-between">
+              <div class="small-select" @click="allModeSelect">
+                <div class="abs-con">
+                  <span style="margin-left: 0.2rem">{{ selectedModeObj.text }}</span>
+                  <img src="/static/img/trade/down.png" class="down-img" />
+                </div>
+              </div>
+
+              <div class="animate-input num-input flex" :class="{ hasval: !!numValue, inputFocus: isFocused === 5 }">
+                <div class="ipt_tip" v-if="isFocused === 5 || !numValue">止盈触发价格类型</div>
+                <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)"
+                  @blur="handleBlur(5)" ref="buyNumRef" placeholder="">
+              </div>
+            </div>
+            <div class="left-text grop-title m-t-10 m-b-5">止损</div>
+            <div class="flex flex-between">
+              <div class="small-select" @click="allModeSelect">
+                <div class="abs-con" style="width: 95%;">
+                  <span style="margin-left: 0.2rem">{{ selectedModeObj2.text }}</span>
+                  <img src="/static/img/trade/down.png" class="down-img" />
+                </div>
+              </div>
+
+              <div class="animate-input num-input flex" :class="{ hasval: !!numValue, inputFocus: isFocused === 5 }">
+                <div class="ipt_tip" v-if="isFocused === 5 || !numValue">止损触发价格类型
+                </div>
+                <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)"
+                  @blur="handleBlur(5)" ref="buyNumRef" placeholder="">
+              </div>
+            </div>
+          </template>
           <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already" :loseValue="loseValue"
             :marketValue="marketValue" :marketprice="marketprice" />
         </div>
@@ -87,6 +125,7 @@ import { Tab, Tabs, Field, CellGroup, Slider, Button, Loading, Popup, showToast 
 import { _search, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";
 import OpenPositionPopup from "./OpenPositionPopup";
+import ModeSelect from "./components/ModeSelect.vue";
 import OpenSelect from "./components/OpenSelect.vue";
 import LeverSelect from "./components/LeverSelect.vue";
 import StockPopup from './StockPopup.vue'
@@ -116,6 +155,9 @@ const blueBackgroundImageStyle = computed(() => ({
   backgroundImage: `url(/static/img/trade/right-white.svg)`,
   color: "#034cfa",
 }));
+const currentSymbol = computed(() => {
+  return store.state.currentSymbol
+})
 
 const active = ref('0');
 const previousActive = ref('0');
@@ -130,10 +172,13 @@ const percentages = [25, 50, 75, 100];
 const stockCo = ref([]);
 const showOpenPositionBottom = ref(false);
 const showLeverSelect = ref(false)
+const selectedModeObj = ref({ text: "价格", value: 'price' })
+const selectedModeObj2 = ref({ text: "百分比", value: 'price' })
 const option1 = [
   { text: "全仓", value: 0 },
   { text: "逐仓", value: 1 },
 ];
+
 const option2 = ref([]);
 const roundedQuantity = ref(0)
 
@@ -157,9 +202,12 @@ const amount = ref(0)
 //手续费
 const openfee = ref(0)
 const closefee = ref(0)
+const mode = ref(true)
 const ofee = ref(0)
 const cfee = ref(0)
-
+const setMode = () => {
+  mode.value = !mode.value;
+}
 //修改市价和限价
 const marketprice = ref(false)
 
@@ -283,7 +331,7 @@ const handleBlur = (val) => {
 
 const onChange = (val) => {
   previousActive.value = active.value;
-  active.value = val;
+  // active.value = val;
   // store.commit('clearState')
   value.value = ''
   priceValue.value = ''
@@ -339,7 +387,9 @@ const jump = (name) => {
     query: { reurl: 'trade', redata: '1' }
   });
 };
-
+const setCurPrice = () => {
+  priceValue.value = currentSymbol.value.stockPrice
+}
 
 const handleUpdateValue = (value) => {
   const data = {
@@ -364,6 +414,11 @@ const getcommToken = () => {
 
 const allSelect = () => {
   store.dispatch('openPopup', OpenSelect)
+  store.commit('setPopupHeight', '30%')
+  store.commit('setkeyborader', false)
+}
+const allModeSelect = () => {
+  store.dispatch('openPopup', ModeSelect)
   store.commit('setPopupHeight', '30%')
   store.commit('setkeyborader', false)
 }
@@ -481,6 +536,17 @@ defineExpose({
     line-height: 0.36rem;
   }
 
+  .m-b-5 {
+    margin-bottom: .1rem;
+  }
+
+  .m-t-5 {
+    margin-top: .1rem;
+  }
+  .m-t-10 {
+    margin-top: .2rem;
+  }
+
   // .position-box {
   .stock-input {
     width: 100%;
@@ -574,13 +640,54 @@ defineExpose({
       }
     }
   }
+  .small-select {
+    width: 1.72rem !important;
+    height: auto !important;
+    border-radius: 0.12rem;
+    border: 0.02rem solid #d0d8e2;
+    position: relative;
+    color: #333333;
+    position: relative;
+    line-height: auto !important;
 
+    .abs-con {
+      display: flex;
+      width: 80%;
+      height: .3rem;
+      line-height: auto !important;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      margin: auto;
+    }
+  }
+
+  .select-box {
+    .select-box-item {
+      width: 1.48rem;
+      height: 0.88rem;
+      line-height: 0.88rem;
+      margin-left: 0.2rem;
+    }
+
+    .bigslect {
+      width: 100%;
+      text-align: center;
+      padding-right: 0.4rem;
+    }
+
+    .selected-class {
+      color: #1e5eff;
+    }
+  }
   .num-input {
     width: 100%;
     height: 0.88rem;
     border-radius: 0.12rem;
     border: 0.02rem solid #d0d8e2;
-    margin-top: 0.1rem;
     transition: all 0.3s ease;
 
     &.border_item {
@@ -591,17 +698,21 @@ defineExpose({
       }
     }
   }
-  .cur-price{
+
+  .cur-price {
     text-align: center;
     width: 1rem;
     line-height: .66rem;
   }
+
   .link-text {
     color: #014CFA;
   }
+
   .left-text {
-   text-align: left;
+    text-align: left;
   }
+
   .price-num-input {
     width: 4.9rem;
     height: 0.88rem;
@@ -613,6 +724,10 @@ defineExpose({
 
   .pricenlarged {
     background: #f9fafb;
+  }
+
+  .right-text {
+    text-align: right;
   }
 
   .market-button {
