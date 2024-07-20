@@ -53,7 +53,7 @@
 import Top from "@/components/Top.vue"
 import { useRoute } from "vue-router"
 import { ref, computed } from "vue"
-import { Button, showNotify, showToast, showConfirmDialog, Circle } from "vant"
+import { Button, showToast, showConfirmDialog, Circle } from "vant"
 import { _copyTxt } from "@/utils/index.js"
 import Loading from "@/components/Loaidng.vue"
 import { _paycode, _deposit } from "@/api/api"
@@ -158,7 +158,7 @@ const submit = () => {
         token: sessionToken.value,
     }).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '操作成功' });
+            showToast('操作成功');
             // 跳转充值详情
             router.replace({
                 name: "topUpItem",

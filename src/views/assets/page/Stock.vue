@@ -23,7 +23,7 @@
                     <div>
                         <span>借贷</span>
 
-                        <div class="hint">{{ loanNum }}</div>
+                        <div class="hint" v-if="loanNum">{{ loanNum }}</div>
                     </div>
                     <div class="num">{{ hidden ? '***' : assets.loan }}</div>
                 </div>

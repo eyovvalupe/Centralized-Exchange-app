@@ -10,7 +10,7 @@
                     <div class="header_box_icon">
                         <img src="/static/img/common/time_icon.png" alt="img">
 
-                        <div class="header_num">{{ hintNum }}</div>
+                        <div class="header_num" v-if="hintNum">{{ hintNum }}</div>
                     </div>
                 </div>
             </div>

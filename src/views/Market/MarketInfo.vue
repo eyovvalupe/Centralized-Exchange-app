@@ -188,7 +188,7 @@
 </template>
 
 <script setup>
-import { Icon, Popup, ActionSheet, showNotify } from "vant"
+import { Icon, Popup, showToast } from "vant"
 import router from "@/router"
 import { computed, ref } from "vue"
 import store from "@/store";
@@ -216,7 +216,7 @@ const addCollect = () => {
         }).then(res => {
             if (res.code == 200) {
                 store.commit('setCurrStock', { watchlist: 1 })
-                showNotify({ type: 'success', message: '添加成功' })
+                showToast('添加成功')
             }
         }).finally(() => {
             loading.value = false
@@ -227,7 +227,7 @@ const addCollect = () => {
         }).then(res => {
             if (res.code == 200) {
                 store.commit('setCurrStock', { watchlist: 0 })
-                showNotify({ type: 'success', message: '移除成功' })
+                showToast('移除成功')
             }
         }).finally(() => {
             loading.value = false

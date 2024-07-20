@@ -6,9 +6,10 @@
             <div class="td td2">行情</div>
             <div class="td td2 td_r">涨跌幅</div>
         </div> -->
-        <Loading v-show="!props.list.length && props.loading" />
+        <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
         <div class="tr" v-for="(item, i) in props.list" :key="i">
-            <StockItem :deleteItem="props.deleteItem" :type="props.type" @remove="remove" :scrollBox="props.scrollBox" :item="item" />
+            <StockItem :deleteItem="props.deleteItem" :type="props.type" @remove="remove" :scrollBox="props.scrollBox"
+                :item="item" />
         </div>
         <NoData v-if="!props.loading && !props.list.length" />
     </div>
@@ -38,7 +39,7 @@ const props = defineProps({
         default: false
     },
     type: { //从交易页面侧边栏点击
-        type:String,
+        type: String,
         default: ''
     }
 })

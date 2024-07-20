@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { Icon, Button, showToast, showNotify } from "vant"
+import { Icon, Button, showToast } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { _forgetpw } from "@/api/api"
@@ -85,7 +85,7 @@ const submitForm = (code) => {
         ...form.value,
         googlecode: code,
     }).then(res => {
-        showNotify({ type: 'success', message: '密码找回成功' })
+        showToast('密码找回成功')
         setTimeout(() => {
             router.replace({
                 name: 'login'

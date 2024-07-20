@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import { Button, Icon, Popup, showNotify } from "vant"
+import { Button, Icon, Popup, showToast } from "vant"
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
 import { ref, computed } from "vue"
@@ -123,7 +123,7 @@ const submit = (googleCode) => {
     }
     _addAccount(params).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '添加成功' })
+            showToast('添加成功')
             setTimeout(() => {
                 router.back()
             }, 200)

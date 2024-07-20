@@ -47,7 +47,7 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { PasswordInput, NumberKeyboard, Button, showToast, showLoadingToast, closeToast, showNotify } from "vant"
+import { PasswordInput, NumberKeyboard, Button, showToast, showLoadingToast, closeToast } from "vant"
 import { ref, computed, watch } from "vue"
 import { _google, _googleBind } from "@/api/api"
 import QRCode from "qrcode"
@@ -112,7 +112,7 @@ const goBind = () => {
         if (res.code == 200) {
             store.dispatch('updateUserInfo')
             setTimeout(() => {
-                showNotify({ type: 'success', message: '绑定成功' })
+                showToast('绑定成功')
             }, 300)
             if (from.value == 'register') {
                 nextStep()

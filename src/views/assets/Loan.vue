@@ -158,10 +158,11 @@
 import Top from "@/components/Top.vue"
 import { _loanPara, _loanRate, _loan } from "@/api/api"
 import { ref, computed, onMounted, onBeforeUnmount } from "vue"
-import { Button, showNotify, showToast, Icon, Popup } from "vant"
+import { Button, showToast, Icon, Popup } from "vant"
 import store from "@/store"
 import Decimal from 'decimal.js';
 import SafePassword from "@/components/SafePassword.vue"
+import router from "@/router"
 
 store.dispatch('updateWallet')
 
@@ -355,15 +356,15 @@ const submit = s => {
     loading.value = true
     _loan(params).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '借贷成功' });
+            showToast('借贷成功');
             amount.value = ''
             bj.value = ''
             leverIndex.value = 0
             currDayIndex.value = 0
             store.dispatch('updateWallet') // 更新钱包
             setTimeout(() => {
-                getRate()
-            }, 100)
+                router.back()
+            }, 500)
         }
     }).finally(() => {
         getSessionToken()

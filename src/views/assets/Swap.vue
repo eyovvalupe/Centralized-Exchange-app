@@ -141,7 +141,7 @@
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, showNotify, Icon, showToast } from "vant"
+import { Button, Popup, Icon, showToast } from "vant"
 import { ref, computed } from "vue"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
@@ -207,10 +207,13 @@ const submit = s => {
     loading.value = true
     _converter(params).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '兑换成功' });
+            showToast('兑换成功');
             form.value.amount = ''
             form.value.toAmount = ''
             store.dispatch('updateWallet') // 更新钱包
+            setTimeout(() => {
+                router.back()
+            }, 500)
         }
     }).finally(() => {
         // getSessionToken()

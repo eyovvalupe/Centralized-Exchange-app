@@ -163,7 +163,7 @@
 import Top from "@/components/Top.vue"
 import { ref, computed } from "vue"
 import store from "@/store"
-import { Icon, Button, Popup, showNotify, showToast } from "vant"
+import { Icon, Button, Popup, showToast } from "vant"
 import router from "@/router"
 import { _withdrawFee, _withdraw } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
@@ -225,7 +225,7 @@ const submit = s => {
         token: sessionToken.value,
     }).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '操作成功' });
+            showToast('操作成功');
             form.value.amount = ''
             store.dispatch('updateWallet') // 更新钱包
             router.push({

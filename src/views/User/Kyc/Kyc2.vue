@@ -178,7 +178,7 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Uploader, Button, showLoadingToast, closeToast, showNotify } from 'vant';
+import { Uploader, Button, showLoadingToast, closeToast, showToast } from 'vant';
 import { ref, computed } from "vue";
 import { UPLOAD_ADDRESS } from "@/config.js"
 import axios from "axios"
@@ -226,7 +226,7 @@ const submit = () => {
         if (res.code == 200) {
             if (from.value = 'register') {
                 setTimeout(() => {
-                    showNotify({ type: 'success', message: '提交成功' })
+                    showToast('提交成功')
                 }, 300)
                 nextStep()
             } else {
@@ -297,7 +297,7 @@ const afterRead = (file, { name }) => {
             const base64result = base64Img.substr(base64Img.indexOf(',') + 1);
             axios.put(apiUrl, JSON.stringify({ content: base64result, message: `upload ${fileName}` }), {
                 headers: {
-                    Authorization:process.env.VUE_APP_UPLOAD_TOKEN
+                    Authorization: process.env.VUE_APP_UPLOAD_TOKEN
                 }
             }).then(res => {
                 const { content: { download_url } } = res.data

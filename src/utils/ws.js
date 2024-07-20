@@ -31,6 +31,10 @@ export const useSocket = () => {
       });
       socket.on("disconnect", () => {
         console.log("socket disconnected...");
+        setTimeout(() => { // 2秒后重连
+          socket = null
+          startSocket()
+        }, 2000);
       });
     } else {
       setTimeout(() => { // 先返回 socket 再执行

@@ -8,7 +8,10 @@ import { Loading } from 'vant';
 const props = defineProps({
     loading: false,
     size: 48,
-    type: 'spinner',
+    type: {
+        type: String,
+        default: 'spinner'
+    },
     color: ''
 })
 </script>

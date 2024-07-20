@@ -20,9 +20,13 @@
             <div class="item_box">
                 <div class="item account_item">
                     <div class="account_item_icon">
-                        <img src="/static/img/crypto/MAIN.png" alt="icon">
+                        <img v-if="form.from == 'money'" src="/static/img/crypto/MAIN.png" alt="icon">
+                        <img v-else :src="`/static/img/crypto/${form.from.toUpperCase()}.svg`" alt="img">
                     </div>
-                    <div class="item_content" @click="openDialog('from')">{{ _accountMap[form.from] }}</div>
+                    <div class="item_content" @click="openDialog('from')">
+                        <span>{{ _accountMap[form.from] }}</span>
+                        <span class="monty_span" v-if="form.from == 'money'">main</span>
+                    </div>
                     <div class="more" @click="openDialog('from')">
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
@@ -49,9 +53,13 @@
             <div class="item_box">
                 <div class="item account_item">
                     <div class="account_item_icon">
-                        <img src="/static/img/crypto/MAIN.png" alt="icon">
+                        <img v-if="form.to == 'money'" src="/static/img/crypto/MAIN.png" alt="icon">
+                        <img v-else :src="`/static/img/crypto/${form.to.toUpperCase()}.svg`" alt="img">
                     </div>
-                    <div class="item_content" @click="openDialog('to')">{{ _accountMap[form.to] }}</div>
+                    <div class="item_content" @click="openDialog('to')">
+                        <span>{{ _accountMap[form.to] }}</span>
+                        <span class="monty_span" v-if="form.to == 'money'">main</span>
+                    </div>
                     <div class="more" @click="openDialog('to')">
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
@@ -94,7 +102,7 @@
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, showNotify, Icon, showToast } from "vant"
+import { Button, Popup, Icon, showToast } from "vant"
 import { ref, computed } from "vue"
 import { _accountMap, _accountMapList } from "@/utils/dataMap"
 import store from "@/store"
@@ -102,15 +110,10 @@ import SafePassword from "@/components/SafePassword.vue"
 import { _transfer } from "@/api/api"
 import RecordList from "@/components/RecordList.vue"
 import { useRoute } from "vue-router"
+import router from "@/router"
 
 const route = useRoute()
 const focus = ref(false) // 是否在输入中
-
-store.dispatch('updateAssets') // 更新资产
-const assets = computed(() => store.state.assets || {})
-const balance = computed(() => {
-    return assets.value[form.value.from] || 0
-})
 
 // 表单
 const loading = ref(false)
@@ -122,6 +125,19 @@ const form = ref({
 const maxIpt = () => {
     form.value.amount = balance.value
 }
+
+store.dispatch('updateAssets') // 更新资产
+const assets = computed(() => store.state.assets || {})
+const wallet = computed(() => store.state.wallet || []) // 钱包
+const balance = computed(() => {
+    let key = form.value.from
+    if (key == 'money') key = 'main'
+    const target = wallet.value.find(item => item.currency == key)
+    if (target) return target.amount
+    return 0
+})
+
+
 
 // 表单提交
 const safeRef = ref()
@@ -146,9 +162,12 @@ const submit = s => {
     loading.value = true
     _transfer(params).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '划转成功' });
+            showToast('划转成功');
             form.value.amount = ''
             store.dispatch('updateAssets') // 更新资产
+            setTimeout(() => {
+                router.back()
+            }, 500)
         }
     }).finally(() => {
         getSessionToken()
@@ -261,7 +280,7 @@ const goRecord = () => {
             height: 100%;
             border: 1px solid #D0D8E2;
             border-radius: 0.12rem;
-            padding: 0 0.24rem 0 0.24rem;
+            padding: 0 0.18rem 0 0.18rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -279,9 +298,16 @@ const goRecord = () => {
             }
 
             .item_content {
-                font-size: 0.28rem;
+                font-size: 0.24rem;
                 color: #000;
                 white-space: nowrap;
+                display: flex;
+                align-items: flex-end;
+
+                .monty_span {
+                    font-size: 0.2rem;
+                    margin-left: 0.1rem;
+                }
             }
 
             .more {
@@ -305,7 +331,7 @@ const goRecord = () => {
         }
 
         .ipt_item {
-            flex: 7;
+            flex: 6;
             position: relative;
 
             &:has(.ipt:focus) {

@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { Icon, Button, showToast, showNotify } from "vant"
+import { Icon, Button, showToast } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
@@ -98,7 +98,7 @@ const submit = () => {
   _login(form.value).then(res => {
     if (res && res.code == 200) {
       store.dispatch('reset')
-      showNotify({ type: 'success', message: '登录成功' })
+      showToast('登录成功')
       setTimeout(() => {
         store.commit('setToken', res.data.auth)
         store.commit('setUserInfo', res.data)

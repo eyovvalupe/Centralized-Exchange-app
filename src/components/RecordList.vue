@@ -236,6 +236,7 @@ const getDate = str => {
     .rsl_tabs {
         .van-tabs__nav--card {
             border: none;
+            margin: 0 0.76rem 0 0.32rem;
         }
 
         .van-tab--card {
@@ -253,7 +254,7 @@ const getDate = str => {
         }
 
         .van-tab--shrink {
-            padding: 0 0.3rem;
+            padding: 0 0.24rem;
         }
 
         .van-tabs__wrap {
@@ -293,7 +294,7 @@ const getDate = str => {
     }
 
     .list_down {
-        height: calc(var(--app-height) - 1.88rem);
+        height: calc(var(--app-height) - 1.2rem);
     }
 
     .list_0_item {

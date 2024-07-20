@@ -34,7 +34,7 @@
 import SparkLine from "./SparkLine.vue"
 import Loading from "./Loaidng.vue"
 import { ref, computed } from "vue"
-import { Button, showNotify } from 'vant'
+import { Button, showToast } from 'vant'
 import { _add } from "@/api/api"
 import store from "@/store"
 import router from "@/router"
@@ -115,7 +115,7 @@ const submit = () => {
         symbol: keys.join(',')
     }).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '添加成功' })
+            showToast('添加成功')
             emits('init')
         }
     }).finally(() => {

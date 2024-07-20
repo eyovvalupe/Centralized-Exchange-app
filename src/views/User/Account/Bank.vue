@@ -32,7 +32,7 @@
 <script setup>
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
-import { Button, showNotify } from "vant"
+import { Button, showToast } from "vant"
 import { ref, computed } from "vue"
 import { _kycGet, _addAccount } from "@/api/api"
 import router from "@/router";
@@ -61,7 +61,7 @@ const submit = (googleCode) => {
         token: sessionToken.value
     }).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '添加成功' })
+            showToast('添加成功')
             setTimeout(() => {
                 router.back()
             }, 200)

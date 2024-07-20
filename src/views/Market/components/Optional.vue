@@ -32,7 +32,7 @@
         </Tabs>
     </div>
 
-    <Loaidng v-else :loading="loading" />
+    <Loaidng v-else :loading="loading" :type="'spinner'" />
 </template>
 
 <script setup>
@@ -44,7 +44,7 @@ import StockRecommend from "@/components/StockRecommend.vue"
 import store from "@/store";
 import { computed, ref } from "vue"
 import { _watchlist, _del, _watchlistDefault, _add } from "@/api/api"
-import { showLoadingToast, closeToast, showToast, Tabs, Tab, Button, showNotify } from 'vant'
+import { showLoadingToast, closeToast, showToast, Tabs, Tab, Button } from 'vant'
 import { useSocket } from '@/utils/ws'
 const { startSocket } = useSocket()
 
@@ -154,7 +154,7 @@ const addOptional = () => {
         symbol: keys.join(',')
     }).then(res => {
         if (res.code == 200) {
-            showNotify({ type: 'success', message: '添加成功' })
+            showToast('添加成功')
             init()
         }
     }).finally(() => {
