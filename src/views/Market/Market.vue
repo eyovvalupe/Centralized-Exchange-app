@@ -27,13 +27,14 @@
                         <Financial />
                     </Tab> -->
                     <Tab :title="'IPO'">
-                        <IPO v-if="active == 2" :type="'market'" ref="IPORef" @reloading="setReloading"
-                            @showOpenDetail="showOpenDetail" />
+                        <IPO v-if="active == 2" :type="'market'" ref="IPORef" />
                         <div style="height:1rem"></div>
                     </Tab>
                 </Tabs>
             </PullRefresh>
         </transition>
+
+
     </div>
 </template>
 
@@ -76,22 +77,6 @@ const changeTab = key => {
 }
 
 
-watch([detail], ([newActive]) => {
-    if (newActive) {
-        detailTransition.value = 'slide-right';
-    } else {
-        detailTransition.value = 'slide-left';
-    }
-});
-
-
-const showOpenDetail = (val) => {
-    detail.value = val
-}
-
-const closeOpenDetail = () => {
-    detail.value = false
-}
 
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading)
@@ -140,9 +125,7 @@ const onRefresh = () => {
     }
 }
 
-const setReloading = () => {
-    reloading.value = false
-}
+
 </script>
 
 <style lang="less" scoped>

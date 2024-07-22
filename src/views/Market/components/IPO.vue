@@ -1,422 +1,521 @@
 <!-- IPO -->
 <template>
-  <div class="market_ipo">
-    <div class="market_ipo-all" @click="ipoPopup">
-      <span>
-        {{ textSelect }}
-      </span>
-      <img src="/static/img/trade/down.png" class="market_ipo-down-img" />
+    <div class="page_ipo">
+        <div class="filter_box" @click="showPopup = true">
+            <span>{{ selectedOptiontext }}</span>
+            <div class="filter_icon">
+                <img src="/static/img/trade/down.png" alt="img">
+            </div>
+        </div>
+
+        <div class="list">
+            <div class="item" v-for="(item, i) in ipoDataList" :key="i">
+                <div class="item_top">
+                    <div class="name">{{ item.company_name }}</div>
+                    <div class="control_box">
+                        <!-- 认购中 -->
+                        <div class="status_ing" v-if="item.status == 'issuing' || item.status == 'listed'">认购中</div>
+                        <!-- 预售中 -->
+                        <div class="status_pre_box" v-if="item.status == 'none'">
+                            <div class="status_ing status_pre">预售中</div>
+                            <div class="pre_times" v-if="item._timedown">
+                                <div class="pre_time">{{ item._timedown[0] }}</div>
+                                <span>:</span>
+                                <div class="pre_time">{{ item._timedown[1] }}</div>
+                                <span>:</span>
+                                <div class="pre_time">{{ item._timedown[2] }}</div>
+                            </div>
+                        </div>
+                        <!-- 已结束 -->
+                        <div class="status_ing status_done" v-if="item.status == 'done'">已结束</div>
+                    </div>
+                </div>
+                <div class="item_mid">
+                    <div class="mid_item">
+                        <div class="mid_val" style="text-align: left">{{
+                            item.issue_price_max }}</div>
+                        <div style="text-align: left">认购价格</div>
+                    </div>
+                    <div class="mid_item">
+                        <div class="mid_val">{{ item.issue_start_date }}</div>
+                        <div>认购日期</div>
+                    </div>
+                    <div class="mid_item" v-if="item.listing_price">
+                        <div class="mid_val">-{{ item.listing_price }}</div>
+                        <div>上市价格</div>
+                    </div>
+                </div>
+                <div class="item_bottom">
+                    <div class="link" @click="openDetail(item)">详情 &gt;</div>
+                    <div class="btn" v-if="item.status != 'done'">认购</div>
+                </div>
+            </div>
+
+            <LoadingMore v-if="!(finish && ipoDataList.length == 0)" :loading="loading" :finish="finish" />
+            <NoData v-if="(finish && ipoDataList.length == 0)" />
+        </div>
+        <div style="height: 1rem"></div>
+
+        <!-- 下拉框 -->
+        <teleport to="body">
+            <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPopup" position="bottom"
+                class="market_ipo-popup" closeable>
+                <div class="market_ipo-box">
+                    <div v-for="(i, key) in option" :key="key" class="market_ipo-box-item"
+                        :class="{ 'selected-class': selectedOption === i.value }" @click="selectOption(i.value)">
+                        {{ i.text }}
+                    </div>
+                </div>
+            </Popup>
+        </teleport>
+
+        <!-- 详情弹窗 -->
+        <teleport to="body">
+            <Popup style="background-color: rgba(0,0,0,0);" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+                v-model:show="showPopupInfo" position="bottom" closeable>
+                <div class="ipo_detail">
+                    <div class="detail_title">IPO详情</div>
+
+                    <div class="detail_item">
+                        <div class="name">{{ currDetail.company_name }}</div>
+                        <div class="status" :class="{ 'close_status': currDetail.status == 'done' }">{{
+                            (currDetail.status
+                                == 'issuing' || currDetail.status == 'listed') ? '认购中'
+                                : (currDetail.status == 'none' ? '预售中' : '已结束') }}</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>股票代码</div>
+                        <div class="val">--</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>认购价格</div>
+                        <div class="val">{{ currDetail.issue_price_max || '--' }}</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>认购开始日期</div>
+                        <div class="val">{{ currDetail.issue_start_date || '--' }}</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>认购结束日期</div>
+                        <div class="val">{{ currDetail.issue_end_date || '--' }}</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>上市日期</div>
+                        <div class="val">{{ currDetail.listing_date || '--' }}</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>上市价格</div>
+                        <div class="val">{{ currDetail.listing_price || '--' }}</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>最低认购数量</div>
+                        <div class="val">--</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>VIP认购</div>
+                        <div class="val">{{ currDetail.lever ? currDetail.lever + 'X' : '--' }}</div>
+                    </div>
+                    <div class="detail_item">
+                        <div>VIP利息</div>
+                        <div class="val">--</div>
+                    </div>
+                </div>
+            </Popup>
+        </teleport>
     </div>
-
-    <Loading v-show="ipoLoading" type="spinner" class="market-ipo-loading"></Loading>
-
-    <div class="market_ipo-box" v-for="(i, key) in dataList" :key="key" v-if="dataList.length > 0 && !ipoLoading">
-      <div class="market_ipo-box-header">
-        <div class="market_ipo-box-header-title">{{ i.company_name }}</div>
-        <div class="market_ipo-box-header-button" v-if="i == 2" style="background: #333333; color: white">
-          预售中
-        </div>
-        <div class="market_ipo-box-header-button" v-if="i == 3" style="background: #ebebeb; color: #838383">
-          已结束
-        </div>
-        <div class="market_ipo-box-header-button" v-if="i == 1 || i == 4">
-          认购中
-        </div>
-      </div>
-
-      <!-- <div class="market_ipo-box-time" v-if="i == 2">
-          <CountDown :time="time" >
-            <template #default="timeData">
-              <span class="block">{{ timeData.hours }}</span>
-              <span class="colon">:</span>
-              <span class="block">{{ timeData.minutes }}</span>
-              <span class="colon">:</span>
-              <span class="block">{{ timeData.seconds }}</span>
-          </template>
-</CountDown>
-</div> -->
-
-      <div class="market_ipo-m-box">
-        <div>
-          <div class="market_ipo-m-box-p">{{ i.issue_price_max }}</div>
-          <div class="market_ipo-m-box-t">认购价格</div>
-        </div>
-
-        <div>
-          <div class="market_ipo-m-box-p">{{ i.issue_start_date }}</div>
-          <div class="market_ipo-m-box-t">认购日期</div>
-        </div>
-
-        <div>
-          <div class="market_ipo-m-box-p">---</div>
-          <div class="market_ipo-m-box-t">上市价格</div>
-        </div>
-      </div>
-
-      <div class="market_ipo-m-box-line"></div>
-
-      <div class="market_ipo-b">
-        <div class="market_ipo-b-detail" @click="opendetail(i)">
-          <span>详情</span>
-          <Icon name="arrow" class="market_ipo-b-arrow" />
-        </div>
-        <div class="market_ipo-b-detail-button" v-if="i.status == 'none' || i.status == 'listed'"
-          style="background: #999999; color: white">
-          认购
-        </div>
-        <div class="market_ipo-b-detail-button" v-else @click="openSubscription(i)">
-          认购
-        </div>
-        <!-- <div class="market_ipo-b-detail-button" v-if="i.status == 'lssuing'" @click="openSubscription">认购</div> -->
-      </div>
-    </div>
-
-    <!-- 数据列表为空 -->
-    <NoData v-if="dataList.length === 0 && !ipoLoading" />
-
-    <!-- 下拉框 -->
-    <teleport to="body">
-      <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPopup" position="bottom"
-        :style="{ height: '40%' }" class="market_ipo-popup" closeable>
-        <div class="market_ipo-box">
-          <div v-for="(i, key) in option" :key="key" class="market_ipo-box-item"
-            :class="{ 'selected-class': selectedOption === i.value }" @click="select(i.value)">
-            {{ i.text }}
-          </div>
-        </div>
-      </Popup>
-    </teleport>
-
-  </div>
 </template>
+
 <script setup>
-import { Icon, Loading, Popup, PullRefresh } from "vant";
-import { useRouter, useRoute } from "vue-router";
-import { CountDown } from "vant";
-import { onMounted, ref, computed, defineEmits } from "vue";
-import { defineProps } from "vue";
-import { _ipoList } from "@/api/api";
-import NoData from "@/components/NoData.vue";
-import store from "@/store";
-
-
-const hasIpoData = computed(() => {
-  return store.state.hasIpoData
-}); // 用于跟踪是否初始化
-
-const router = useRouter();
-const time = ref(30 * 60 * 60 * 1000);
-const dataList = computed(() => {
-  return store.state.ipoDataList
-});
-const showPopup = ref(false);
-const option = [
-  { text: "所有", value: "" },
-  { text: "发行中", value: "lssuing" },
-  { text: "已上市", value: "listed" },
-];
-const selectedOption = ref("");
-const page = ref(1);
-const reloading = ref(false);
-const ipoLoading = ref(false)
-const token = computed(() => store.state.token)
-const emit = defineEmits();
+import LoadingMore from "@/components/LoadingMore.vue"
+import NoData from "@/components/NoData.vue"
+import { ref, computed, onMounted, onBeforeUnmount } from "vue"
+import store from "@/store"
+import { _ipoList, _ipoGet } from "@/api/api";
+import { Popup } from "vant"
 
 const props = defineProps({
-  type: String
-});
+    scrollDom: {
+        type: String,
+        default: '.page'
+    }
+})
 
-const opendetail = (val) => {
-  store.commit("setIpoId", val.id);
-  store.commit('setIpoDetail', val)
-  emit('showOpenDetail', '1')
-  // router.push({ name: "ipodetail", query: { type: props.type } });
-};
+const ipoDataList = computed(() => store.state.ipoDataList || [])
+const selectedOption = ref('')
+const option = [
+    { text: "所有", value: "" },
+    { text: "发行中", value: "lssuing" },
+    { text: "已上市", value: "listed" },
+];
+const selectedOptiontext = computed(() => option.find(item => item.value == selectedOption.value).text)
+const selectOption = (val) => {
+    showPopup.value = false
+    if (selectedOption.value == val) return
+    selectedOption.value = val
+    setTimeout(() => {
+        init(true)
+    }, 0)
+}
+const showPopup = ref(false)
 
-const openSubscription = (val) => {
-  if (token.value) {
-    store.commit("setIpoId", val.id);
-    store.commit('setIpoDetail', val)
-    emit('showOpenDetail', '2')
-    // store.dispatch("updateSessionToken");
-    // router.push({ name: "subscription", query: { type: props.type } });
-  } else {
-    router.push({
-      name: 'login', query: { reurl: 'trade', redata: 'ipo' }
-    });
-  }
-};
+const loading = ref(false)
+const finish = ref(false)
+const page = ref(0)
 
-const getList = () => {
-  const data = {
-    status: selectedOption.value,
-    vip: "",
-    page: page.value,
-  };
-  _ipoList({ ...data })
-    .then((res) => {
-      if (res.code == 200) {
-        if (reloading.value) {
-          const data = dataList.value.concat(res.data);
-          store.commit('setIpoDataList', data)
-          reloading.value = false;
+// 初始化
+const init = (reset) => {
+    if (reset) {
+        store.commit('setIpoDataList', [])
+    }
+    loading.value = false
+    finish.value = false
+    page.value = 0
+    getData()
+}
+// 获取数据
+const getData = () => {
+    if (loading.value || finish.value) return
+    loading.value = true
+    page.value++
+    _ipoList({
+        status: selectedOption.value,
+        page: page.value
+    }).then(res => {
+        if (res.data && res.data.length) {
+            res.data = res.data.map(item => {
+                item._timedown = countdown(item.listing_date)
+                return item
+            })
+            if (page.value == 1) {
+                store.commit('setIpoDataList', res.data)
+            } else {
+                store.commit('setIpoDataList', [...ipoDataList.value, ...res.data])
+            }
         } else {
-          store.commit('setHasIpoData')
-          store.commit('setIpoDataList', res.data)
+            setTimeout(() => {
+                finish.value = true
+            }, 500)
         }
-      } else {
-        reloading.value = false;
-      }
-      ipoLoading.value = false
-      emit('reloading')
+    }).finally(() => {
+        setTimeout(() => {
+            loading.value = false
+        }, 500)
     })
-    .finally(() => {
-      reloading.value = false;
-      ipoLoading.value = false
-      emit('reloading')
-    });
-};
-
-onMounted(() => {
-  page.value = 1;
-  if (!hasIpoData.value) {
-    ipoLoading.value = true
-  }
-  getList();
-});
-
-const ipoPopup = () => {
-  showPopup.value = true;
-};
-
-const select = (i) => {
-  selectedOption.value = i;
-  showPopup.value = false;
-  page.value = 1;
-  getList();
-};
-
-const textSelect = computed(() => {
-  const selected = option.find((i) => i.value === selectedOption.value);
-  return selected ? selected.text : "";
-});
-
-const onRefresh = () => {
-  reloading.value = true;
-  page.value++;
-  getList();
-};
-
-const init = () => {
-  page.value = 1;
-  if (!hasIpoData.value) {
-    ipoLoading.value = true
-  }
-  getList();
-};
-
-defineExpose({
-  init, onRefresh
-});
-</script>
-
-<style lang="less">
-.market_ipo {
-  padding: 0 0.3rem;
-  width: 100%;
-  overflow: hidden;
-  height: 100%;
-  overflow-y: scroll;
-
-  .market-ipo-loading {
-    margin-top: 2rem !important;
-
-    .van-loading__spinner {
-      left: 45%;
-    }
-  }
-
-  .market_ipo-all {
-    width: 3.06rem;
-    height: 0.72rem;
-    border-radius: 0.48rem;
-    background: #f6f8ff;
-    padding: 0.16rem 0.3rem;
-    display: flex;
-
-    span {
-      color: #014cfa;
-      text-align: center;
-      font-size: 0.28rem;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 0.4rem;
-      flex: 1;
-    }
-
-    .market_ipo-down-img {
-      width: 0.32rem !important;
-      height: 0.32rem !important;
-      margin-top: 0.04rem !important;
-    }
-  }
-
-  .market_ipo-box {
-    border-bottom: 0.02rem solid #eaeaea;
-
-    .market_ipo-box-header {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 0.28rem;
-
-      .market_ipo-box-header-title {
-        color: var(--Greyscale-900, #0d0d12);
-        font-size: 0.32rem;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 0.48rem;
-      }
-
-      .market_ipo-box-header-button {
-        width: 1.24rem;
-        height: 0.48rem;
-        background-color: #e5ecfa;
-        color: #014cfa;
-        text-align: center;
-        font-size: 0.24rem;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 0.48rem;
-        border-bottom-left-radius: 0.12rem;
-        border-top-right-radius: 0.12rem;
-      }
-    }
-
-    .market_ipo-m-box {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 0.28rem;
-
-      .market_ipo-m-box-p {
-        color: #014cfa;
-        font-size: 0.32rem;
-        font-style: normal;
-        font-weight: 500;
-        margin-bottom: 0.2rem;
-      }
-
-      .market_ipo-m-box-t {
-        color: var(--Greyscale-400, #818898);
-        font-size: 0.28rem;
-        font-style: normal;
-        font-weight: 400;
-      }
-    }
-
-    .market_ipo-m-box-line {
-      border-bottom: 0.02rem dashed #cbcbcb;
-      margin-top: 0.2rem;
-    }
-
-    .market_ipo-b {
-      display: flex;
-      justify-content: right;
-      padding: 0.2rem 0;
-
-      .market_ipo-b-detail {
-        margin-right: 0.5rem;
-        cursor: pointer;
-
-        span {
-          color: #014cfa;
-          font-size: 0.28rem;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 0.5rem;
-          margin-right: 0.16rem;
-        }
-
-        .market_ipo-b-arrow {
-          color: #014cfa;
-          font-size: 0.28rem;
-          line-height: 0.4rem;
-        }
-      }
-
-      .market_ipo-b-detail-button {
-        width: 1.26rem;
-        height: 0.5rem;
-        border-radius: 1.26rem;
-        background: #014cfa;
-        color: white;
-        text-align: center;
-        font-size: 0.28rem;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 0.5rem;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .market_ipo-box:last-of-type {
-    border-bottom: 0px;
-  }
-
-  .market_ipo-box-time {
-    display: flex;
-    justify-content: right;
-    margin-top: 0.14rem;
-
-    .block {
-      display: inline-block;
-      width: 0.44rem;
-      color: #fff;
-      font-size: 0.24rem;
-      text-align: center;
-      background-color: #333333;
-      border-radius: 0.06rem;
-    }
-
-    .colon {
-      display: inline-block;
-      margin: 0 0.08rem;
-      color: #9798a7;
-    }
-  }
 }
 
+// 滚动监听
+let loadingMore = ''
+const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+const scrollHandler = () => {
+    if (!loadingMore) return
+    const rect = loadingMore.getBoundingClientRect()
+    if (rect.top <= totalHeight) {
+        // 加载更多
+        getData()
+    }
+}
+// 倒计时
+let interval = null
+onMounted(() => {
+    interval = setInterval(() => {
+        const arr = ipoDataList.value.map(item => {
+            item._timedown = countdown(item.listing_date)
+            return item
+        })
+        store.commit('setIpoDataList', arr)
+    }, 1000)
+    setTimeout(() => {
+        loadingMore = document.querySelector('.loading_more')
+        document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
+    }, 500)
+})
+onBeforeUnmount(() => {
+    if (interval) clearInterval(interval)
+    document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+})
+
+defineExpose({
+    init
+})
+
+
+// 详情
+const showPopupInfo = ref(false)
+const currDetail = ref({})
+const openDetail = (val) => {
+    currDetail.value = val
+    showPopupInfo.value = true
+    _ipoGet({
+        id: currDetail.value.id
+    }).then(res => {
+        if (res.data) {
+            currDetail.value = {
+                ...currDetail.value,
+                ...res.data
+            }
+        }
+    })
+}
+
+
+function countdown(endTime) {
+    if (!endTime) return ['--', '--', '--']
+    const endDate = new Date(endTime);
+    const now = new Date();
+    const diff = endDate - now;
+    if (diff <= 0) {
+        return ["--", "--", "--"];
+    }
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const formattedHours = String(hours).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+    const formattedSeconds = String(seconds).padStart(2, '0');
+    return [formattedHours, formattedMinutes, formattedSeconds];
+}
+</script>
+
+<style lang="less" scoped>
+.page_ipo {
+    padding: 0 0.32rem;
+
+    .list {
+        .item {
+            .item_top {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                padding: 0.28rem 0;
+
+                .name {
+                    font-size: 0.28rem;
+                    font-weight: 600;
+                    color: #0D0D12;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    flex: 1;
+                    margin-right: 0.4rem;
+                    line-height: 0.48rem;
+                }
+
+                .control_box {
+                    .status_ing {
+                        height: 0.48rem;
+                        padding: 0 0.24rem;
+                        border-top-right-radius: 0.12rem;
+                        border-bottom-left-radius: 0.12rem;
+                        background-color: #E4ECFB;
+                        min-width: 1rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 0.24rem;
+                        color: #014CFA;
+                    }
+
+                    .status_pre_box {
+                        .status_pre {
+                            background-color: #333;
+                            color: #fff;
+                        }
+
+                        .pre_times {
+                            display: flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            color: #9798A7;
+                            font-size: 0.32rem;
+                            line-height: 0;
+                            margin-top: 0.2rem;
+
+                            .pre_time {
+                                height: 0.48rem;
+                                min-width: 0.48rem;
+                                display: flex;
+                                padding: 0 0.16rem;
+                                align-items: center;
+                                justify-content: center;
+                                color: #fff;
+                                background-color: #333;
+                                border-radius: 0.08rem;
+                                font-size: 0.24rem;
+
+                            }
+
+                            span {
+                                margin: 0 0.04rem;
+                            }
+                        }
+                    }
+
+                    .status_done {
+                        background-color: #EBEBEB;
+                        color: #838383;
+                    }
+                }
+            }
+
+            .item_mid {
+                display: flex;
+                align-items: stretch;
+                justify-content: space-between;
+                margin-bottom: 0.24rem;
+
+                .mid_item {
+                    text-align: center;
+                    font-size: 0.24rem;
+                    font-weight: 400;
+                    color: #818898;
+
+                    .mid_val {
+                        font-size: 0.28rem;
+                        font-weight: 500;
+                        color: #014CFA;
+                        margin-bottom: 0.28rem;
+                    }
+                }
+            }
+
+            .item_bottom {
+                border-top: 1px dashed #CBCBCB;
+                border-bottom: 1px solid #EAEAEA;
+                padding: 0.2rem 0 0.2rem 0;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+
+                .link {
+                    color: #014CFA;
+                    font-size: 0.28rem;
+                }
+
+                .btn {
+                    margin-left: 0.6rem;
+                    height: 0.5rem;
+                    border-radius: 0.5rem;
+                    background-color: #014CFA;
+                    padding: 0 0.32rem;
+                    min-width: 2rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    font-size: 0.28rem;
+                }
+            }
+        }
+    }
+
+    .filter_box {
+        height: 0.72rem;
+        margin-bottom: 0.2rem;
+        padding: 0 0.4rem;
+        background-color: #F6F8FF;
+        border-radius: 0.72rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #014CFA;
+        font-size: 0.28rem;
+        min-width: 3rem;
+
+        .filter_icon {
+            width: 0.32rem;
+            height: 0.32rem;
+            margin-left: 0.4rem;
+        }
+    }
+}
+</style>
+<style lang="less">
 .market_ipo-popup {
-  border-top-left-radius: 0.36rem;
-  border-top-right-radius: 0.36rem;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  padding-bottom: 1.2rem;
+    border-top-left-radius: 0.36rem;
+    border-top-right-radius: 0.36rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-bottom: 1.2rem;
 
-  .market_ipo-box {
-    margin-top: 1rem;
+    .market_ipo-box {
+        margin-top: 1rem;
 
-    .market_ipo-box-item {
-      width: 100%;
-      height: 0.96rem;
-      text-align: center;
-      line-height: 0.96rem;
-      color: #333333;
-      font-size: 0.28rem;
-      font-style: normal;
-      font-weight: 400;
-      border-bottom: 0.02rem solid #f4f5f7;
+        .market_ipo-box-item {
+            width: 100%;
+            height: 0.96rem;
+            text-align: center;
+            line-height: 0.96rem;
+            color: #333333;
+            font-size: 0.28rem;
+            font-style: normal;
+            font-weight: 400;
+            border-bottom: 0.02rem solid #f4f5f7;
+        }
+
+        .market_ipo-box-item:first-of-type {
+            margin-right: 0.3rem;
+        }
+
+        .selected-class {
+            color: #014cfa;
+            background-color: #f4f5f7;
+            position: relative;
+        }
+    }
+}
+
+.ipo_detail {
+    border-top-left-radius: 0.36rem;
+    border-top-right-radius: 0.36rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: #fff;
+    padding: 0.32rem 0.32rem 0.4rem 0.32rem;
+    position: relative;
+
+    .detail_title {
+        text-align: center;
+        font-size: 0.32rem;
+        margin-bottom: 0.32rem;
     }
 
-    .market_ipo-box-item:first-of-type {
-      margin-right: 0.3rem;
-    }
+    .detail_item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 1rem;
+        border-bottom: 1px solid #F5F5F5;
+        color: #8F92A1;
+        font-size: 0.28rem;
+        font-weight: 400;
 
-    .selected-class {
-      color: #014cfa;
-      background-color: #f4f5f7;
-      position: relative;
+        .name {
+            color: #0D0D12;
+            font-weight: 600;
+            font-size: 0.32rem;
+        }
+
+        .status {
+            height: 0.48rem;
+            background-color: #E4ECFB;
+            color: #014CFA;
+            font-size: 0.24rem;
+            padding: 0 0.32rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.08rem;
+        }
+
+        .close_status {
+            background-color: #EBEBEB;
+            color: #838383;
+        }
+
+        .val {
+            color: #121826;
+            font-weight: 500
+        }
     }
-  }
 }
 </style>

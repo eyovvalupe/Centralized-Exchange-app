@@ -23,6 +23,9 @@
                     <span class="all" @click="putAll">全部</span>
                 </div>
             </div>
+            <div class="subtitle">
+                <span>杠杆</span>
+            </div>
             <!-- 滑块 -->
             <div class="slider_box" @mousedown="startMove = true" @mousemove="mousemove" @touchmove="sliderMove">
                 <div class="slider">
@@ -45,7 +48,7 @@
                     <div class="item_icon">
                         <img src="/static/img/assets/stock_icon.svg" alt="img">
                     </div>
-                    <span>股票</span>
+                    <span>股票账户</span>
                     <div class="more_icon"><img src="/static/img/assets/more.png" alt="img"></div>
                 </div>
                 <div class="border_item ipt_box" style="background-color: #f5f5f5">
@@ -107,7 +110,7 @@
         </Popup>
 
         <!-- 安全密码弹窗 -->
-        <SafePassword @submit="submit" ref="safeRef">
+        <SafePassword @submit="submit" ref="safeRef" :closeable="false">
             <template #top>
                 <div class="loan_comfirm_box">
                     <div class="loan_comfirm_title">
@@ -116,34 +119,41 @@
                             <img src="/static/img/common/close.png" alt="x">
                         </div>
                     </div>
-                    <div class="loan_confirm_amount">{{ amount }}</div>
                     <div class="loan_confirm_item">
+                        <span>借款金额</span>
+                        <div class="loan_confirm_amount">{{ amount }}</div>
+                    </div>
+
+                    <!-- <div class="loan_confirm_item">
                         <span>冻结</span>
                         <span class="value">
                             <span class="tag" style="margin-right:0.2rem">现金账户</span>
                             <span>{{ bj }}</span>
                         </span>
-                    </div>
-                    <div class="loan_confirm_item">
+                    </div> -->
+                    <!-- <div class="loan_confirm_item">
                         <span>杠杆</span>
                         <span class="value">
                             <span class="tag">{{ lever[leverIndex] }}x</span>
                         </span>
-                    </div>
+                    </div> -->
                     <div class="loan_confirm_item">
                         <span>还款日期</span>
                         <span class="value">
                             <span>{{ returnDate }}</span>
-                            <span style="margin-left: 0.2rem">{{ days[currDayIndex] }}天</span>
+                            <!-- <span style="margin-left: 0.2rem">{{ days[currDayIndex] }}天</span> -->
                         </span>
                     </div>
-                    <div class="loan_confirm_item">
+                    <!-- <div class="loan_confirm_item">
                         <span>手续费</span>
                         <span class="value">{{ showFee }}</span>
-                    </div>
+                    </div> -->
                     <div class="loan_confirm_item">
                         <span>隔夜利息</span>
-                        <span class="value">{{ showInterest }}</span>
+                        <span class="value">
+                            <span>{{ showInterest }}</span>
+                            <span style="margin-left: 0.2rem" class="tag">{{ showInterestNum }}</span>
+                        </span>
                     </div>
                     <!-- <div class="loan_confirm_tip">
                         <span class="value">{{ returnAmount }}</span>
@@ -270,6 +280,10 @@ const interest = ref(0)
 const showInterest = computed(() => {
     if (!amount.value) return '--'
     return new Decimal(interest.value).mul(100) + '%'
+})
+const showInterestNum = computed(() => {
+    if (!amount.value) return '--'
+    return new Decimal(interest.value).mul(bj.value)
 })
 
 // 归还
@@ -583,7 +597,7 @@ onBeforeUnmount(() => {
         }
 
         .slider_box {
-            padding: 0.6rem 0 0.5rem 0;
+            padding: 0.2rem 0 0.5rem 0;
 
 
             .slider {

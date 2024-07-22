@@ -1,5 +1,5 @@
 <template>
-  <div class="trade">
+  <div class="page trade">
 
     <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="top"
       class="trade-popup">
@@ -69,9 +69,9 @@
               </Tabs> -->
           </div>
           <div class="value value-line" @click="showPopup">
-              <span class="value-img"><img src="/static/img/trade/value.png" alt=""  /></span>
-              <span>持仓价值</span>
-            </div>
+            <span class="value-img"><img src="/static/img/trade/value.png" alt="" /></span>
+            <span>持仓价值</span>
+          </div>
         </div>
 
 
@@ -82,6 +82,7 @@
             <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
               :color="'#014CFA'" shrink>
               <Tab :title="'IPO'" class="optional">
+                <div style="height: 0.4rem"></div>
                 <IPO :type="'trade'" ref="IPORef" @reloading="setReloading" :ipoLoading="ipoLoading"
                   @ipoloading="ipoloading" @showOpenDetail="showOpenDetail" />
               </Tab>
@@ -245,7 +246,9 @@ const onChange = (val) => {
   }
   previousActive.value = active.value;
   active.value = val;
-
+  if (val == 1) {
+    ipoOnChange(0)
+  }
   // if (val == 1 && !hasInit.value){
   //   ipoLoading.value = true
   //   hasInit.value = true
@@ -261,14 +264,16 @@ const ipoOnChange = (val) => {
     router.push({ path: route.path, query: {} });
   }
   ipoActive.value = val
-  switch (val) {
-    case 0:
-      IPORef.value && IPORef.value.init()
-      break
-    case 1:
-      IPOStockRef.value && IPOStockRef.value.init()
-      break
-  }
+  setTimeout(() => {
+    switch (val) {
+      case 0:
+        IPORef.value && IPORef.value.init()
+        break
+      case 1:
+        IPOStockRef.value && IPOStockRef.value.init()
+        break
+    }
+  }, 500)
 }
 
 
@@ -429,7 +434,7 @@ const closeOpenDetail = () => {
 .trade {
   position: relative;
   padding-bottom: 1.4rem;
-  min-height: 100%;
+  height: 100%;
   overflow-y: auto;
 
   .header {
@@ -480,7 +485,8 @@ const closeOpenDetail = () => {
     font-style: normal;
     font-weight: 400;
   }
-  .value-line{
+
+  .value-line {
     line-height: 1.14rem;
     height: 1.12rem;
   }
@@ -491,7 +497,8 @@ const closeOpenDetail = () => {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    img{
+
+    img {
       width: 0.52rem !important;
       height: 0.52rem !important;
     }

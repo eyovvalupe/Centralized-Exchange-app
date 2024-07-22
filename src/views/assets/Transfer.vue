@@ -20,13 +20,14 @@
             <div class="item_box">
                 <div class="item account_item">
                     <div class="account_item_icon">
-                        <img v-if="form.from == 'money'" src="/static/img/crypto/MAIN.png" alt="icon">
+                        <img v-if="form.from == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
                         <img v-else :src="`/static/img/crypto/${form.from.toUpperCase()}.svg`" alt="img">
                     </div>
                     <div class="item_content" @click="openDialog('from')">
                         <span>{{ _accountMap[form.from] }}</span>
                         <span class="monty_span" v-if="form.from == 'money'">main</span>
                     </div>
+                    <div style="flex:1"></div>
                     <div class="more" @click="openDialog('from')">
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
@@ -60,6 +61,7 @@
                         <span>{{ _accountMap[form.to] }}</span>
                         <span class="monty_span" v-if="form.to == 'money'">main</span>
                     </div>
+                    <div style="flex:1"></div>
                     <div class="more" @click="openDialog('to')">
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
@@ -280,7 +282,7 @@ const goRecord = () => {
             height: 100%;
             border: 1px solid #D0D8E2;
             border-radius: 0.12rem;
-            padding: 0 0.18rem 0 0.18rem;
+            padding: 0 0.18rem 0 0.32rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -374,8 +376,8 @@ const goRecord = () => {
             margin-right: 0.2rem;
 
             .account_item_icon {
-                width: 0.4rem;
-                height: 0.4rem;
+                width: 0.3rem;
+                height: 0.3rem;
                 margin-right: 0.1rem;
             }
         }

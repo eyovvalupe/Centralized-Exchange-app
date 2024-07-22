@@ -23,8 +23,8 @@
       </div>
 
       <div class="btns">
-        <div class="btn">快速交易</div>
-        <div class="btn active_btn">充值</div>
+        <div class="ripple_button btn">快速交易</div>
+        <div class="ripple_button btn active_btn">充值</div>
       </div>
     </div>
 

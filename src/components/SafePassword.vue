@@ -1,9 +1,9 @@
 <!-- 输入安全密码 -->
 <template>
     <Popup :safe-area-inset-top="true" close-on-click-overlay :safe-area-inset-bottom="true" class="self_van_popup"
-        v-model:show="show" position="bottom" teleport="body" :close-on-popstate="true" closeable>
+        v-model:show="show" position="bottom" teleport="body" :close-on-popstate="true" :closeable="props.closeable">
         <!--  :class="{ 'typing_dialog': showKeyboard }" -->
-        <div class="safepassword_dialog">
+        <div class="safepassword_dialog" :class="{ 'safepassword_dialog_uncloseabled': !props.closeable }">
             <slot name="top"></slot>
             <div class="title">输入交易密码</div>
             <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
@@ -27,6 +27,12 @@ import { Popup, PasswordInput, NumberKeyboard, Button, showToast } from "vant"
 import { ref, computed, watch } from "vue"
 const emits = defineEmits(['submit'])
 const iptDom = ref()
+const props = defineProps({
+    closeable: {
+        type: Boolean,
+        default: true,
+    }
+})
 
 const errStatus = ref(false)
 const loading = ref(false)
@@ -142,6 +148,10 @@ defineExpose({
         }
     }
 
+}
+
+.safepassword_dialog_uncloseabled {
+    padding: 0.56rem 0.32rem;
 }
 
 .typing_dialog {
