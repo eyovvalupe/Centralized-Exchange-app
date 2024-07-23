@@ -11,10 +11,10 @@
         </div>
         <div style="flex: 1"></div>
         <div class="func_box">
-          <Iconfonts :name="'icon-sousuo'" :size="0.48" :color="'#000'" />
+          <Iconfonts :name="'icon-sousuo'" :size="0.36" :color="'#000'" />
         </div>
         <div class="func_box">
-          <Iconfonts :name="'icon-xiaoxi'" :size="0.48" :color="'#000'" />
+          <Iconfonts :name="'icon-xiaoxi'" :size="0.36" :color="'#000'" />
         </div>
       </div>
 
@@ -147,8 +147,8 @@ onDeactivated(() => {
 
       .func_box {
         background-color: #EDEDED;
-        width: 0.8rem;
-        height: 0.8rem;
+        width: 0.64rem;
+        height: 0.64rem;
         border-radius: 50%;
         margin-left: 0.28rem;
         display: flex;
@@ -167,7 +167,7 @@ onDeactivated(() => {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      font-size: 0.56rem;
+      font-size: 0.4rem;
       color: #8D93A6;
       font-weight: 600;
 

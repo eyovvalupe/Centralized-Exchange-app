@@ -4,9 +4,12 @@
         class="market_optional" :list="watchList" />
     <div v-else-if="!watchList.length && !loading" style="position: relative">
         <Teleport to=".page_market">
-            <Button round class="addBtn" color="#EFF6FF" :loading="addLoading" @click="addOptional">
-                <span style="font-size: 0.2rem;color: #014CFA">一键添加至自选</span>
-                <span class="tag">{{ stockList.length + contractList.length }}</span>
+            <Button round class="addBtn" :color="!!(stockList.length + contractList.length) ? '#EFF6FF' : '#eee'"
+                :loading="addLoading" @click="addOptional">
+                <span style="font-size: 0.2rem;"
+                    :style="{ color: !!(stockList.length + contractList.length) ? '014CFA' : '#666' }">一键添加至自选</span>
+                <span class="tag" v-if="!!(stockList.length + contractList.length)">{{ stockList.length +
+                    contractList.length }}</span>
             </Button>
         </Teleport>
 

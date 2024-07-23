@@ -191,7 +191,7 @@ const submit = () => {
                 width: 0.36rem;
                 height: 0.36rem;
                 border-radius: 50%;
-                border: 1px solid #000;
+                border: 1px solid #ddd;
                 opacity: 0.9;
             }
         }

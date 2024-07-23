@@ -9,7 +9,7 @@
         </div>
 
         <div class="list">
-            <div class="item" v-for="(item, i) in ipoDataList" :key="i">
+            <div class="item" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
                 <div class="item_top">
                     <div class="name">{{ item.company_name }}</div>
                     <div class="control_box">
@@ -45,9 +45,8 @@
                         <div>上市价格</div>
                     </div>
                 </div>
-                <div class="item_bottom">
-                    <div class="link" @click="openDetail(item)">详情 &gt;</div>
-                    <div class="btn" v-if="item.status != 'done'" @click="goBuy(item)">认购</div>
+                <div class="item_bottom" v-if="item.status == 'issuing' || item.status == 'listed'">
+                    <div class="btn" @click.stop="goBuy(item)">认购</div>
                 </div>
             </div>
 
@@ -291,6 +290,9 @@ function countdown(endTime) {
 
     .list {
         .item {
+            border-bottom: 1px solid #EAEAEA;
+            padding: 0.1rem 0 0.1rem 0;
+
             .item_top {
                 display: flex;
                 align-items: flex-start;
@@ -311,7 +313,7 @@ function countdown(endTime) {
 
                 .control_box {
                     .status_ing {
-                        height: 0.48rem;
+                        height: 0.44rem;
                         padding: 0 0.24rem;
                         border-top-right-radius: 0.12rem;
                         border-bottom-left-radius: 0.12rem;
@@ -320,7 +322,7 @@ function countdown(endTime) {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        font-size: 0.24rem;
+                        font-size: 0.2rem;
                         color: #014CFA;
                     }
 
@@ -337,13 +339,13 @@ function countdown(endTime) {
                             color: #9798A7;
                             font-size: 0.32rem;
                             line-height: 0;
-                            margin-top: 0.2rem;
+                            margin-top: 0.1rem;
 
                             .pre_time {
-                                height: 0.48rem;
-                                min-width: 0.48rem;
+                                height: 0.36rem;
+                                min-width: 0.36rem;
                                 display: flex;
-                                padding: 0 0.16rem;
+                                padding: 0 0.12rem;
                                 align-items: center;
                                 justify-content: center;
                                 color: #fff;
@@ -389,8 +391,8 @@ function countdown(endTime) {
 
             .item_bottom {
                 border-top: 1px dashed #CBCBCB;
-                border-bottom: 1px solid #EAEAEA;
-                padding: 0.2rem 0 0.2rem 0;
+
+                padding: 0.3rem 0 0.2rem 0;
                 display: flex;
                 align-items: center;
                 justify-content: flex-end;
@@ -401,12 +403,11 @@ function countdown(endTime) {
                 }
 
                 .btn {
-                    margin-left: 0.6rem;
-                    height: 0.5rem;
+                    height: 0.56rem;
                     border-radius: 0.5rem;
                     background-color: #014CFA;
                     padding: 0 0.32rem;
-                    min-width: 2rem;
+                    width: 100%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -418,17 +419,17 @@ function countdown(endTime) {
     }
 
     .filter_box {
-        height: 0.72rem;
-        margin-bottom: 0.2rem;
+        height: 0.56rem;
+        margin-bottom: 0;
         padding: 0 0.4rem;
         background-color: #F6F8FF;
-        border-radius: 0.72rem;
+        border-radius: 0.4rem;
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
         color: #014CFA;
-        font-size: 0.28rem;
-        min-width: 3rem;
+        font-size: 0.24rem;
+        min-width: 2.8rem;
 
         .filter_icon {
             width: 0.32rem;
