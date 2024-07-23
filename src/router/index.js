@@ -430,7 +430,8 @@ const routes = [
     // 认购
     path: "/subscription",
     name: "subscription",
-    component: () => import("../views/trade/Subscription.vue"),
+    // component: () => import("../views/trade/Subscription.vue"),
+    component: () => import("../views/Market/IpoSubscription.vue"),
     meta: {
       keepAlive: false,
       pageType: 'tab'

@@ -15,8 +15,9 @@ import { Button } from 'vant'
 import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
-const gotrade = ()=>{
-    router.push({ name: 'trade', query: { type: 'ipodetail' } });
+const gotrade = () => {
+    // router.push({ name: 'trade', query: { type: 'ipodetail' } });
+    router.back()
 }
 </script>
 

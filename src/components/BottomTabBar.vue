@@ -4,8 +4,8 @@
         <div @touchstart="handleClick(item, $event)" @click="handleClick(item)" class=" bottom_nav_item"
             :class="[checkActive(item) ? 'bottom_nav_active' : '']" v-for="(item, i) in navs" :key="i">
             <div class="bottom_nav_icon">
-                <img v-if="!checkActive(item)" :src="item.icon" :alt="item.name">
-                <img v-if="checkActive(item)" :src="item.icon2" :alt="item.name">
+                <iconpark-icon v-if="!checkActive(item)" :name="item.icon"></iconpark-icon>
+                <iconpark-icon v-if="checkActive(item)" :name="item.icon2"></iconpark-icon>
             </div>
 
             <div class="bottom_nav_name">{{ item.name }}</div>
@@ -22,16 +22,7 @@ import { ref, computed } from "vue"
 import { useRoute } from "vue-router";
 import router from "@/router"
 // import { _playVoice } from "@/utils/voice"
-import icon1 from "@/assets/bottom/bottom_1.png"
-import icon11 from "@/assets/bottom/bottom_1_1.png"
-import icon2 from "@/assets/bottom/bottom_2.png"
-import icon22 from "@/assets/bottom/bottom_2_2.png"
-import icon3 from "@/assets/bottom/bottom_3.png"
-import icon33 from "@/assets/bottom/bottom_3_3.png"
-import icon4 from "@/assets/bottom/bottom_4.png"
-import icon44 from "@/assets/bottom/bottom_4_4.png"
-import icon5 from "@/assets/bottom/bottom_5.png"
-import icon55 from "@/assets/bottom/bottom_5_5.png"
+
 import store from "@/store";
 import storeChat from '@/store/chat'
 
@@ -40,11 +31,11 @@ const activeRoute = computed(() => route.name)
 const token = computed(() => store.state.token)
 
 const navs = ref([
-    { name: '首页', route: 'home', icon: icon1, icon2: icon11 },
-    { name: '市场', route: 'market', children: ['market_info', 'financial_info', 'trading_rules'], icon: icon2, icon2: icon22 },
-    { name: '交易', route: 'trade', icon: icon3, icon2: icon33 },
-    { name: '资产', route: 'assets', children: ['transfer'], icon: icon4, icon2: icon44, needLogin: true },
-    { name: '用户', route: 'user', children: ['account'], icon: icon5, icon2: icon55 },
+    { name: '首页', route: 'home', icon: 'shouye1', icon2: 'shouye2' },
+    { name: '市场', route: 'market', children: ['market_info', 'financial_info', 'trading_rules'], icon: 'shichang1', icon2: 'shichang2' },
+    { name: '交易', route: 'trade', icon: 'jiaoyi1', icon2: 'jiaoyi2' },
+    { name: '资产', route: 'assets', children: ['transfer'], icon: 'zichan1', icon2: 'zichan2', needLogin: true },
+    { name: '用户', route: 'user', children: ['account'], icon: 'yonghu1', icon2: 'yonghu2' },
 ])
 
 const touchLoading = ref(false)
@@ -108,6 +99,7 @@ const checkActive = item => {
         .bottom_nav_icon {
             width: 0.48rem;
             height: 0.48rem;
+            font-size: 0.48rem;
             object-fit: contain;
         }
 

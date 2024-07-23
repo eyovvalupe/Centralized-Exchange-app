@@ -8,5 +8,4 @@ import 'vant/lib/index.css';
 
 const app = createApp(App)
 app.use(store).use(router).mount('#app')
-
 // initVoice()

@@ -191,12 +191,16 @@ Promise.all(loadingList).finally(() => {
             font-size: 0.24rem;
 
             .record_icon {
-                background-color: #EAF0F3;
+                background-color: #EDEDED;
                 width: 0.52rem;
                 height: 0.52rem;
                 padding: 0.06rem;
                 border-radius: 50%;
                 margin-right: 0.04rem;
+
+                &:active {
+                    background-color: #EAF0F3;
+                }
             }
         }
     }

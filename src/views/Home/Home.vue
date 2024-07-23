@@ -5,21 +5,33 @@
     <!-- 顶部 -->
     <div class="top_box">
       <div class="funcs">
-        <div class="user_box"></div>
+        <div class="user_box">
+          <img v-if="token" src="/static/img/user/default_avatar.png" alt="avatar">
+          <Iconfonts v-if="!token" :name="'icon-yonghuhui'" :size="0.52" />
+        </div>
         <div style="flex: 1"></div>
-        <div class="func_box"></div>
-        <div class="func_box"></div>
+        <div class="func_box">
+          <Iconfonts :name="'icon-sousuo'" :size="0.48" :color="'#000'" />
+        </div>
+        <div class="func_box">
+          <Iconfonts :name="'icon-xiaoxi'" :size="0.48" :color="'#000'" />
+        </div>
       </div>
 
       <div class="subtitle">总资产(USDT)</div>
       <div class="assets" v-if="!token">
         <div class="assets_login">登录</div>
         <div>查看资产</div>
-        <div class="assets_icon"></div>
+        <div class="assets_icon">
+          <Iconfonts :name="'icon-biyan'" :size="0.32" :color="'#333'" />
+        </div>
       </div>
       <div class="assets" v-if="token">
-        <div class="num">*******</div>
-        <div class="assets_icon"></div>
+        <div class="num">{{ openEye ? assets.total : '*******' }}</div>
+        <div class="assets_icon" @click="openEye = !openEye">
+          <Iconfonts v-show="!openEye" :name="'icon-biyan'" :size="0.32" :color="'#333'" />
+          <Iconfonts v-show="openEye" :name="'icon-zhengyan'" :size="0.32" :color="'#333'" />
+        </div>
       </div>
 
       <div class="btns">
@@ -65,6 +77,9 @@ import { useSocket } from '@/utils/ws'
 import store from "@/store";
 import { Tab, Tabs } from 'vant';
 import { _sort } from "@/api/api"
+import Iconfonts from "@/components/Iconfonts.vue"
+
+const openEye = ref(false)
 
 const { startSocket } = useSocket()
 const activeTab = ref(0)
@@ -79,7 +94,14 @@ Promise.all([
   store.commit('setPageLoading', false)
 })
 
-
+// 总资产
+const assets = computed(() => store.state.assets || {})
+const getAssets = () => {
+  if (!token.value) return
+  store.dispatch('updateAssets')
+  store.dispatch('updateWallet')
+}
+getAssets()
 
 const activated = ref(false)
 onActivated(() => {
@@ -118,14 +140,20 @@ onDeactivated(() => {
         height: 0.52rem;
         background-color: #D9D9D9;
         border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .func_box {
-        background-color: #EAF0F3;
+        background-color: #EDEDED;
         width: 0.8rem;
         height: 0.8rem;
         border-radius: 50%;
         margin-left: 0.28rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
 
@@ -152,6 +180,7 @@ onDeactivated(() => {
         width: 0.32rem;
         height: 0.32rem;
         margin-left: 0.2rem;
+        line-height: 0;
       }
 
       .num {

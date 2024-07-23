@@ -341,7 +341,7 @@ const goRecord = () => {
         font-size: 0.24rem;
 
         .top-record-icon {
-            background-color: #EAF0F3;
+            background-color: #EDEDED;
             width: 0.52rem;
             height: 0.52rem;
             padding: 0.06rem;

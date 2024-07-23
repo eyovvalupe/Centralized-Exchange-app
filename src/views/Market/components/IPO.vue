@@ -37,7 +37,7 @@
                         <div style="text-align: left">认购价格</div>
                     </div>
                     <div class="mid_item">
-                        <div class="mid_val">{{ item.issue_start_date }}</div>
+                        <div class="mid_val">{{ item.issue_start_date }} 至 {{ item.issue_end_date }}</div>
                         <div>认购日期</div>
                     </div>
                     <div class="mid_item" v-if="item.listing_price">
@@ -47,7 +47,7 @@
                 </div>
                 <div class="item_bottom">
                     <div class="link" @click="openDetail(item)">详情 &gt;</div>
-                    <div class="btn" v-if="item.status != 'done'">认购</div>
+                    <div class="btn" v-if="item.status != 'done'" @click="goBuy(item)">认购</div>
                 </div>
             </div>
 
@@ -132,6 +132,7 @@ import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import store from "@/store"
 import { _ipoList, _ipoGet } from "@/api/api";
 import { Popup } from "vant"
+import router from "@/router"
 
 const props = defineProps({
     scrollDom: {
@@ -237,6 +238,14 @@ onBeforeUnmount(() => {
 defineExpose({
     init
 })
+
+// 去购买
+const goBuy = (query) => {
+    router.push({
+        name: 'subscription',
+        query
+    })
+}
 
 
 // 详情
@@ -505,6 +514,7 @@ function countdown(endTime) {
             align-items: center;
             justify-content: center;
             border-radius: 0.08rem;
+            white-space: nowrap;
         }
 
         .close_status {

@@ -181,7 +181,7 @@
     }
     // rem
     (function (doc, win) {
-      const appdom= doc.getElementById("app");
+      const appdom = doc.getElementById("app");
       var docEl = doc.documentElement,
         resizeEvt =
           "orientationchange" in window ? "orientationchange" : "resize",
@@ -189,12 +189,12 @@
           if (docEl.clientWidth > 750) {
             docEl.style.fontSize = "50px"; // 100% == 7.5rem
             appdom.style.width = "375px";
-            appdom.className= "large";
+            appdom.className = "large";
           } else {
             var width = docEl.clientWidth / 7.5;
             docEl.style.fontSize = width + "px";
             appdom.style.width = "100%";
-            appdom.className= "small";
+            appdom.className = "small";
           }
           docEl.style.setProperty('--app-height', `${window.innerHeight}px`)
         };
@@ -231,6 +231,9 @@
       event.preventDefault();
     });
   </script>
+  <script src="./static/js/iconfonts.js?t=2"></script>
+  <script
+    src="https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/icons_34268_21.1c1ba36bac54988c87771e0b84ddfa4d.js"></script>
   <script src="./static/js/qrcode.min.js"></script>
 </body>
 

@@ -330,6 +330,10 @@ const jump = (name, check = false, query) => {
             justify-content: center;
             background-color: #000;
 
+            &:active {
+                background-color: #0B1E4A;
+            }
+
             .btn_icon {
                 width: 0.4rem;
                 height: 0.4rem;
@@ -380,7 +384,7 @@ const jump = (name, check = false, query) => {
                 overflow: hidden;
                 width: 100%;
                 height: 0.8rem;
-                background-color: #EAF0F3;
+                background-color: #EDEDED;
                 margin-bottom: 0.16rem;
                 border-radius: 0.12rem;
                 display: flex;

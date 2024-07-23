@@ -393,7 +393,7 @@ const showInfo = ref(false)
                 padding: 0.16rem;
                 font-size: 0.4rem;
                 margin-left: 0.2rem;
-                background-color: #EAF0F3;
+                background-color: #EDEDED;
                 border-radius: 50%;
             }
         }
@@ -653,7 +653,7 @@ const showInfo = ref(false)
                 width: 0.48rem;
                 height: 0.48rem;
                 // margin-left: 0.2rem;
-                background-color: #EAF0F3;
+                background-color: #EDEDED;
                 border-radius: 50%;
                 padding: 0.08rem;
                 display: center;

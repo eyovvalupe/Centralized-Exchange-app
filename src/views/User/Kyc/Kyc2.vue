@@ -322,7 +322,7 @@ const afterRead = (file, { name }) => {
         .icon {
             width: 0.8rem;
             height: 0.8rem;
-            background-color: #EAF0F3;
+            background-color: #EDEDED;
             border-radius: 50%;
             display: flex;
             align-items: center;

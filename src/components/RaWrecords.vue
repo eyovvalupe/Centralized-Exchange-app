@@ -183,7 +183,8 @@ onBeforeUnmount(() => {
         }
 
         .header_box {
-            background: linear-gradient(270deg, #504BFF 0%, #53B4FF 100%);
+            // background: linear-gradient(270deg, #504BFF 0%, #53B4FF 100%);
+            background: linear-gradient(270deg, #0C05FF 0%, #008DF9 100%);
             width: 1.5rem;
             height: 0.62rem;
             border-radius: 0.3rem;
@@ -193,6 +194,10 @@ onBeforeUnmount(() => {
             display: flex;
             align-items: center;
             justify-content: center;
+
+            &:active {
+                background: linear-gradient(270deg, #504BFF 0%, #53B4FF 100%);
+            }
 
             .header_box_icon {
                 width: 0.48rem;

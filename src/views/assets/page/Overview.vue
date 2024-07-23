@@ -382,15 +382,16 @@ const jump = (name, check = false, query) => {
             overflow: hidden;
 
             &:active {
-                opacity: 0.8;
-                transform: scale(0.98)
+                .icon_box {
+                    background-color: #EAF0F3;
+                }
             }
 
             .icon_box {
                 overflow: hidden;
                 width: 100%;
                 height: 0.8rem;
-                background-color: #EAF0F3;
+                background-color: #EDEDED;
                 margin-bottom: 0.16rem;
                 border-radius: 0.12rem;
                 display: flex;
@@ -467,11 +468,11 @@ const jump = (name, check = false, query) => {
 
     .tabs {
         border-top: 1px solid #EAEAEA;
-        padding: 0 0.32rem;
+
         margin-bottom: 0.6rem;
 
-
         .tab {
+            padding: 0 0.32rem;
             overflow: hidden;
             height: 1rem;
             // border-bottom: 1px solid #EAEAEA;
@@ -480,6 +481,10 @@ const jump = (name, check = false, query) => {
             align-items: center;
             justify-content: space-between;
             font-size: 0.28rem;
+
+            &:active {
+                background-color: rgba(237, 237, 237, 0.87);
+            }
 
             &::before {
                 content: '';

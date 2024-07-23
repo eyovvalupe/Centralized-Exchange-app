@@ -94,6 +94,10 @@ const jump = (name, query) => {
             display: flex;
             align-items: center;
             background-color: #000;
+
+            &:active {
+                background-color: #0B1E4A;
+            }
         }
 
         .loan_max {
@@ -154,8 +158,14 @@ const jump = (name, query) => {
                 font-weight: 400;
                 font-size: 0.24rem;
                 text-align: center;
-                margin: 0 0.48rem;
+                margin: 0 0.24rem;
+                padding: 0 0.24rem;
+                border-radius: 0.26rem;
                 position: relative;
+
+                &:active {
+                    background-color: #5045BD;
+                }
 
                 .hint {
                     background-color: #fff;
@@ -167,7 +177,7 @@ const jump = (name, query) => {
                     border-radius: 0.2rem;
                     position: absolute;
                     top: -0.1rem;
-                    right: -0.32rem;
+                    right: -0.08rem;
                     color: #000
                 }
             }
