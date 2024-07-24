@@ -29,6 +29,8 @@
 
         <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :class="{ 'error_ipt': errText }"
             :value="val" :length="6" :gutter="'0.16rem'" :mask="false" />
+        <input style="opacity: 0;" ref="iptRef" v-model="val" maxlength="6" enterkeyhint="done" @keydown.enter="goBind">
+
         <div class="error_text" v-if="errText">{{ errText }}</div>
 
         <div class="cautions">
@@ -37,17 +39,16 @@
             <div>2. Scan the QR code above and enter the verification code to complete the binding</div>
         </div>
 
-        <Button :style="{ marginBottom: showKeyboard ? '5rem' : '1rem', marginTop: showKeyboard ? '0.4rem' : '1rem' }"
-            :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
+        <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
             @click="goBind">绑定</Button>
 
-        <NumberKeyboard @blur="blur" :show="showKeyboard" v-model="val" />
+
     </div>
 </template>
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { PasswordInput, NumberKeyboard, Button, showToast, showLoadingToast, closeToast } from "vant"
+import { PasswordInput, Button, showToast, showLoadingToast, closeToast } from "vant"
 import { ref, computed, watch } from "vue"
 import { _google, _googleBind } from "@/api/api"
 import QRCode from "qrcode"
@@ -94,7 +95,7 @@ const getGoogle = () => {
         }
     }).finally(() => {
         loading.value = false
-        closeToast()
+        // closeToast()
     })
 }
 getGoogle()
@@ -129,15 +130,20 @@ const goBind = () => {
     })
 }
 
+const iptRef = ref()
 const focus = () => { // 聚焦
+    console.error('聚焦', iptRef.value.focus)
     showKeyboard.value = true
     setTimeout(() => {
-        try {
-            document.querySelector('.page').scrollTo({ top: 99999, behavior: 'smooth' });
-        } catch {
-            console.error('滚动失败')
-        }
-    }, 100)
+        iptRef.value && iptRef.value.focus()
+    }, 300)
+    // setTimeout(() => {
+    //     try {
+    //         document.querySelector('.page').scrollTo({ top: 99999, behavior: 'smooth' });
+    //     } catch {
+    //         console.error('滚动失败')
+    //     }
+    // }, 100)
 }
 const blur = () => { // 失去焦点
     showKeyboard.value = false

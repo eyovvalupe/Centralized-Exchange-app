@@ -9,24 +9,23 @@
             <!-- 设置密码 -->
             <template v-if="step == 1">
                 <div class="form">
-                    <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="safeword" :length="6"
-                        :gutter="'0.16rem'" />
+                    <input type="password" @blur="errStatus = false" placeholder="请输入交易密码"
+                        :class="{ 'err_ipt': errorText }" v-model="safeword" ref="iptDom" class="pass_ipt"
+                        enterkeyhint="done" @keydown.enter="next">
                     <div v-if="errorText" class="error_text">{{ errorText }}</div>
                     <Button :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round color="#014CFA"
-                        class="btn" type="primary" :disabled="(!safeword || safeword.length != 6)"
-                        @click="next">继续</Button>
-                    <NumberKeyboard @blur="showKeyboard = false" :show="showKeyboard" v-model="safeword" />
+                        class="btn" type="primary" :disabled="(!safeword)" @click="next">继续</Button>
                 </div>
             </template>
             <!-- 确认密码 -->
             <template v-else>
                 <div class="form">
-                    <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="safeword2"
-                        :length="6" :gutter="'0.16rem'" />
+                    <input type="password" @blur="errStatus = false" placeholder="请确认交易密码"
+                        :class="{ 'err_ipt': errorText }" v-model="safeword2" ref="iptDom" class="pass_ipt"
+                        enterkeyhint="done" @keydown.enter="next">
                     <Button :loading="loading" :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round
-                        color="#014CFA" class="btn" type="primary" :disabled="(!safeword2 || safeword2.length != 6)"
+                        color="#014CFA" class="btn" type="primary" :disabled="(!safeword2)"
                         @click="submit">创建账户</Button>
-                    <NumberKeyboard @blur="showKeyboard = false" :show="showKeyboard" v-model="safeword2" />
                 </div>
             </template>
         </transition>
@@ -39,7 +38,7 @@
 <script setup>
 import Top from "@/components/Top.vue"
 import { computed, ref, watch } from "vue";
-import { PasswordInput, NumberKeyboard, Button, showToast } from "vant"
+import { Button, showToast } from "vant"
 import { _register } from "@/api/api"
 import router from "@/router"
 import VerifCode from "@/components/VerifCode.vue"
@@ -48,8 +47,9 @@ import store from "@/store"
 // 获取注册参数
 let form = {}
 try {
-    form = JSON.parse(sessionStorage.getItem('registerForm'))
+    form = JSON.parse(sessionStorage.getItem('registerForm') || '{}')
 } catch {
+    form = {}
 }
 if (!form.username) {
     router.replace({
@@ -67,17 +67,7 @@ const aniName = ref('slide-right')
 
 const showKeyboard = ref(false)
 const safeword = ref('') // 安全密码
-watch(safeword, v => {
-    if (v && v.length == 6) {
-        showKeyboard.value = false
-    }
-})
 const safeword2 = ref('') // 确认安全密码
-watch(safeword2, v => {
-    if (v && v.length == 6) {
-        showKeyboard.value = false
-    }
-})
 
 
 const next = () => {
@@ -180,6 +170,24 @@ const focus = () => { // 聚焦
 
     .form {
         margin-top: 3rem;
+
+        .pass_ipt {
+            height: 0.88rem;
+            border: 1px solid #D0D8E2;
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+            border-radius: 0.12rem;
+            padding: 0 0.4rem;
+
+            &:focus {
+                border: 1px solid #014CFA;
+            }
+        }
+
+        .err_ipt {
+            border: 1px solid #E8503A;
+        }
 
         .error_text {
             font-size: 0.28rem;

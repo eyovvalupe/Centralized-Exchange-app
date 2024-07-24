@@ -3,78 +3,115 @@
     <div class="page page_account">
         <Top :title="'收款账户'"></Top>
 
-        <div class="list">
-            <div class="subtitle">
-                <span>银行卡</span>
-                <div class="add_box" @click="goAdd('bank')">
-                    <div class="add_icon">
-                        <img src="/static/img/user/add_icon.png" alt="＋">
+        <!-- Tabs -->
+        <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
+            :swipeable="false" animated shrink>
+            <Tab :title="'银行卡'">
+                <div class="list">
+                    <div class="add_item" @click="goAddAccount">
+                        <Icon style="font-size:0.48rem;" name="add-o" />
+                        <span style="margin-left: 0.2rem;color:#999999;font-size: 0.24rem;">添加收款账户</span>
                     </div>
-                    <span>添加</span>
-                </div>
-            </div>
-            <div class="item" v-for="(item, i) in bankList" :key="i">
-                <div class="address">{{ _hiddenAccount(item.bankCardNumber) }}</div>
-                <div class="title">{{ item.bankName }}</div>
-
-                <div class="icon_box">
-                    <img src="/static/img/user/card_type_b.png" alt="img">
-                </div>
-            </div>
-            <NoData v-if="!bankList.length" :tip="''" />
-            <div class="subtitle">
-                <span>加密货币</span>
-                <div class="add_box" @click="goAdd('crypto')">
-                    <div class="add_icon">
-                        <img src="/static/img/user/add_icon.png" alt="＋">
+                    <div class="item" v-for="(item, i) in bankList" :key="i">
+                        <div class="address">{{ _hiddenAccount(item.bankCardNumber) }}</div>
+                        <div class="title">{{ item.bankName }}</div>
+                        <div class="icon_box">
+                            <img src="/static/img/user/card_type_b.png" alt="img">
+                        </div>
                     </div>
-                    <span>添加</span>
                 </div>
-            </div>
-            <div class="item" v-for="(item, i) in cryptoList" :key="i">
-                <div class="address">{{ _hiddenAccount(item.address) }}</div>
-                <span class="title">{{ item.symbol }}-{{ item.network }}</span>
-
-                <div class="icon_box">
-                    <img src="/static/img/user/card_type_c.png" alt="img">
+            </Tab>
+            <Tab :title="'加密货币'">
+                <div class="list">
+                    <div class="add_item" @click="goAddAccount">
+                        <Icon style="font-size:0.48rem;" name="add-o" />
+                        <span style="margin-left: 0.2rem;color:#999999;font-size: 0.24rem;">添加收款账户</span>
+                    </div>
+                    <div class="item" v-for="(item, i) in cryptoList" :key="i">
+                        <div class="address">{{ _hiddenAccount(item.address) }}</div>
+                        <span class="title">{{ item.symbol }}-{{ item.network }}</span>
+                        <div class="icon_box">
+                            <img src="/static/img/user/card_type_c.png" alt="img">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <NoData v-if="!cryptoList.length" :tip="''" />
-        </div>
+            </Tab>
+        </Tabs>
 
-        <!-- 权限验证 -->
-        <AccountCheck ref="AccountCheckRef" />
+        <!-- 类型选择弹窗 -->
+        <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" />
     </div>
 </template>
 
 <script setup>
+import { Tabs, Tab, Icon, ActionSheet, showConfirmDialog } from "vant"
 import Top from "@/components/Top.vue"
 import store from "@/store"
-import { computed, ref } from "vue"
+import { computed, ref, onMounted } from "vue"
 import router from "@/router";
-import NoData from "@/components/NoData.vue"
-import AccountCheck from "@/components/AccountCheck.vue"
 import { _hiddenAccount } from "@/utils/index"
 
 store.dispatch('updateAccountList')
-const AccountCheckRef = ref()
 
 const userInfo = computed(() => store.state.userInfo || {})
 const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行卡
 const cryptoList = computed(() => accountList.value.filter(item => item.channel == 'crypto')) // 加密货币
 
+// tabs
+const active = ref(0)
+const changeTab = key => {
+    active.value = key
+}
 
-
-
-// 添加
-const goAdd = (name) => {
-    if (AccountCheckRef.value.check()) {
-        router.push({
-            name
+// 打开添加类型选择弹窗
+const showAS = ref(false)
+const actions = [
+    { name: '银行卡', value: 'bank' },
+    { name: '加密货币', value: 'crypto' },
+];
+const goAddAccount = async () => {
+    // google检测
+    if (!userInfo.value.googlebind) {
+        return showConfirmDialog({
+            title: '谷歌验证器',
+            message:
+                '你还未绑定谷歌验证器，是否去绑定?',
+        }).then(() => {
+            jump('google')
         })
     }
+    showAS.value = true
 }
+const onSelect = async item => {
+    showAS.value = false
+    if (item.value == 'bank') { // 银行卡
+        if (userInfo.value.kyc != 2) {
+            return showConfirmDialog({
+                title: '身份认证',
+                message:
+                    '你还未完成身份认证，是否去认证?',
+            }).then(() => {
+                jump('kyc')
+            })
+        }
+    }
+    jump(item.value)
+}
+
+// 添加
+const jump = (name) => {
+    router.push({
+        name
+    })
+}
+
+const pageLoading = ref(true)
+onMounted(() => {
+    setTimeout(() => {
+        pageLoading.value = false
+    }, 500)
+})
 </script>
 
 <style lang="less" scoped>
@@ -83,7 +120,78 @@ const goAdd = (name) => {
     overflow-y: auto;
     height: 100%;
 
+    :deep(.van-action-sheet__content) {
+        padding: 0.4rem 0 1rem 0;
+
+        .van-action-sheet__item {
+            padding: 0.32rem;
+        }
+    }
+
+    .tabs {
+        overflow: hidden;
+
+        :deep(.van-tab__panel) {
+            // height: calc(var(--app-height) - 3.4rem);
+            // overflow-y: auto;
+        }
+
+        :deep(.van-tabs__nav--card) {
+            border: none;
+        }
+
+        :deep(.van-tab--card) {
+            border-right: none;
+            color: #061023;
+            // background-color: #f5f5f5;
+            // border-radius: 0.3rem;
+            // margin-left: 0.1rem;
+            // transition: all ease .2s;
+        }
+
+        :deep(.van-tab--card.van-tab--active) {
+            // background-color: #014CFA;
+            // color: #fff;
+
+            background-color: #F6F8FF;
+            border-radius: 0.3rem;
+            color: #014CFA;
+            font-weight: 500
+        }
+
+        :deep(.van-tab--shrink) {
+            padding: 0 0.3rem;
+        }
+
+        :deep(.van-tabs__wrap) {
+            height: 0.8rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0);
+            padding-bottom: 0.2rem;
+        }
+
+        :deep(.van-tabs__nav--card) {
+            height: 0.6rem;
+        }
+
+        :deep(.van-tab) {
+            line-height: 0.6rem;
+            font-size: 0.28rem;
+        }
+    }
+
     .list {
+        padding-top: 0.5rem;
+
+        .add_item {
+            border: 1px dashed #CCD7FD;
+            border-radius: 0.24rem;
+            margin-bottom: 0.2rem;
+            height: 1.44rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .subtitle {
             margin-bottom: 0.2rem;
             margin-top: 0.4rem;
@@ -137,30 +245,5 @@ const goAdd = (name) => {
 
 
 
-}
-</style>
-
-<style lang="less">
-.page_account_bottoms {
-    position: relative;
-    padding: 1.12rem 0;
-
-    .close {
-        position: absolute;
-        font-size: 0.4rem;
-        top: 0.3rem;
-        right: 0.4rem;
-        color: #161616;
-    }
-
-    .bottom {
-        color: #111111;
-        font-size: 0.28rem;
-        height: 1.12rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
 }
 </style>

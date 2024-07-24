@@ -43,7 +43,13 @@
             </div>
             <div class="slider-container">
                 <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
-                    @change="onSliderChange" />
+                    @change="onSliderChange">
+                    <template #button>
+                        <div class="slider-custom-num">
+                            <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
+                        </div>
+                    </template>
+                </Slider>
             </div>
             <div class="percentages">
                 <div v-for="percent in percentages" :key="percent" class="percentage">
@@ -380,6 +386,27 @@ getFee()
         height: 1rem;
         padding: .4rem 0 0 0;
 
+        :deep(.slider-custom-num) {
+            position: relative;
+            background: #014CFA;
+            color: #fff;
+            display: inline-block;
+            width: .1rem;
+            height: .5rem;
+            font-size: 12px;
+            text-align: center;
+            line-height: .4rem;
+            border-radius: 10px;
+
+            .number {
+                color: #014CFA;
+                position: absolute;
+                top: -0.4rem;
+                left: -0.1rem;
+                font-size: .2rem;
+            }
+        }
+
         :deep(.van-slider) {
             margin-top: 0.1rem;
             height: 0.16rem !important;
@@ -404,26 +431,6 @@ getFee()
             padding: 0.24rem;
         }
 
-        :deep(.slider-custom-num) {
-            position: relative;
-            background: #014CFA;
-            color: #fff;
-            display: inline-block;
-            width: .05rem;
-            height: .5rem;
-            font-size: 12px;
-            text-align: center;
-            line-height: .4rem;
-            border-radius: 10px;
-
-            :deep(.number) {
-                color: #014CFA;
-                position: absolute;
-                top: -0.4rem;
-                left: -0.1rem;
-                font-size: .2rem;
-            }
-        }
 
 
     }
@@ -431,7 +438,7 @@ getFee()
     .percentages {
         display: flex;
         justify-content: space-between;
-        width: 98%;
+        width: 100%;
         z-index: 7;
 
         .percentage {

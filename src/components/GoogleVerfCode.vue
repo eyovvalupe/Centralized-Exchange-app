@@ -2,24 +2,25 @@
 <template>
     <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="bottom"
         teleport="body" :close-on-popstate="true" :close-on-click-overlay="false">
-        <div class="google_dialog" :class="{ 'typing_dialog': showKeyboard }">
+        <div class="google_dialog">
             <div class="title">输入谷歌验证码</div>
             <div class="subtitle">正在进行谷歌验证码</div>
-            <PasswordInput :focused="showKeyboard" @focus="showKeyboard = true" class="code_ipt" :value="val"
-                :length="6" :gutter="'0.16rem'" :mask="false" />
+            <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
+                :gutter="'0.16rem'" :mask="false" />
+            <input style="opacity: 0;" ref="iptRef" v-model="val" maxlength="6" enterkeyhint="done"
+                @keydown.enter="submit">
             <div class="btns">
                 <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
                         style="color: #014CFA;">取消</span></Button>
                 <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="btn" type="primary"
                     @click="submit">确定</Button>
             </div>
-            <NumberKeyboard @blur="showKeyboard = false" :show="showKeyboard" v-model="val" />
         </div>
     </Popup>
 </template>
 
 <script setup>
-import { Popup, PasswordInput, NumberKeyboard, Button } from "vant"
+import { Popup, PasswordInput, Button } from "vant"
 import { ref, computed, watch } from "vue"
 const emits = defineEmits(['submit'])
 
@@ -37,13 +38,21 @@ watch(val, v => {
     }
 })
 
+
+const iptRef = ref()
+const focus = () => {
+    showKeyboard.value = true
+    setTimeout(() => {
+        iptRef.value && iptRef.value.focus()
+    }, 300)
+}
 const close = () => {
     show.value = false
 }
 const open = () => {
     val.value = ''
     show.value = true
-    showKeyboard.value = true
+    // showKeyboard.value = true
 }
 const submit = () => {
     if (disabled.value) return

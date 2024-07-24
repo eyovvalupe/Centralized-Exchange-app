@@ -65,9 +65,6 @@ instance.interceptors.response.use(
           })
           return;
         }
-      } else if (res.code == 400) {
-        showToast(res.message)
-        return
       }
       if (custom.toast) {
         setTimeout(() => {

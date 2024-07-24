@@ -17,14 +17,13 @@
                 <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">确定</Button>
             </div>
 
-            <!-- <NumberKeyboard @blur="showKeyboard = false" :show="showKeyboard" v-model="val" /> -->
         </div>
     </Popup>
 </template>
 
 <script setup>
-import { Popup, PasswordInput, NumberKeyboard, Button, showToast } from "vant"
-import { ref, computed, watch } from "vue"
+import { Popup, Button, showToast } from "vant"
+import { ref, } from "vue"
 const emits = defineEmits(['submit'])
 const iptDom = ref()
 const props = defineProps({
