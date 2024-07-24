@@ -146,6 +146,7 @@ const goChat = () => {
 <style lang="less" scoped>
 .page-register {
   padding-top: 1.12rem;
+  height: 100%;
 
   .top {
     position: fixed;
@@ -177,7 +178,7 @@ const goChat = () => {
   }
 
   .title_box {
-    padding: 0.3rem 0.32rem 0.56rem 0.32rem;
+    padding: 0.12rem 0.32rem 0.56rem 0.32rem;
 
     .title {
       height: 0.78rem;
@@ -245,7 +246,7 @@ const goChat = () => {
     color: #343434;
     font-weight: 400;
     font-size: 0.26rem;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
 
     .register_doc_check {
       margin-right: 0.24rem;
@@ -266,7 +267,7 @@ const goChat = () => {
   }
 
   .go_register {
-    margin: 1.12rem 0;
+    margin: 0.6rem 0 0.2rem 0;
     text-align: center;
     font-weight: 400;
     display: flex;

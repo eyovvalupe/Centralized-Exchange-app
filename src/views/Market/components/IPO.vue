@@ -227,6 +227,11 @@ onMounted(() => {
         loadingMore = document.querySelector('.loading_more')
         document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
     }, 500)
+
+
+    Promise.all([
+        import('@/views/Market/IpoSubscription.vue'),
+    ])
 })
 onBeforeUnmount(() => {
     if (interval) clearInterval(interval)

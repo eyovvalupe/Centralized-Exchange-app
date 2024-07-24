@@ -403,4 +403,11 @@ export const _marketOverview = (data = {}) => {
     custom: { auth: false, toast: true },
   });
 };
+
+// 账号检测
+export const _userExist = (data = {}) => {
+  return http.post(`/anon/v1/user/exist`, data, {
+    custom: { auth: false, toast: false },
+  });
+};
 export const memberInfo = () => { }

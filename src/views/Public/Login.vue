@@ -22,10 +22,12 @@
     <div class="form">
       <div class="form_title">用户名</div>
       <div class="form_item margin_item">
-        <div class="form_item_user" v-show="form.username">
+        <div class="form_item_user" v-show="saveAccount && saveAccount == form.username">
           <img src="/static/img/user/user.png" alt="user">
         </div>
-        <input maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text" class="item_input">
+        <input @change="changeAccount" maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text"
+          class="item_input">
+        <Loading v-if="accountLoading" :size="18" type="spinner" />
       </div>
       <div class="form_title">密码</div>
       <div class="form_item">
@@ -63,11 +65,11 @@
 </template>
 
 <script setup>
-import { Icon, Button, showToast } from "vant"
+import { Icon, Button, showToast, Loading } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
-import { _login } from "@/api/api"
+import { _login, _userExist } from "@/api/api"
 import VerifCode from "@/components/VerifCode.vue"
 import store from "@/store"
 
@@ -76,12 +78,32 @@ store.commit("setToken", "");
 store.commit("setUserInfo", {});
 store.commit('clearChooseSymbol')
 
+const saveAccount = ref(localStorage.getItem('saveAccount') || '')
+const accountLoading = ref(false)
+const changeAccount = () => {
+  accountLoading.value = true
+  if (form.value.username) { // 去检测
+    _userExist({
+      username: form.value.username
+    }).then(res => {
+      if (res.code == 200 && res.data?.exist == 1) {
+        saveAccount.value = form.value.username
+        localStorage.setItem('saveAccount', saveAccount.value)
+      } else {
+        showToast('账号不存在')
+      }
+    }).finally(() => {
+      accountLoading.value = false
+    })
+  }
+}
+
 const route = useRoute()
 const verifCodeRef = ref()
 
 const showPass = ref(false) // 密码显示
 const form = ref({ // 表单
-  username: '',
+  username: saveAccount.value,
   password: '',
   verifcode: ''
 })
@@ -217,7 +239,7 @@ Promise.all([
   }
 
   .title_box {
-    padding: 0.3rem 0.32rem 1.4rem 0.32rem;
+    padding: 0.12rem 0.32rem 0.8rem 0.32rem;
 
     .title {
       height: 0.78rem;
@@ -280,7 +302,7 @@ Promise.all([
     color: #014CFA;
     font-weight: 400;
     padding-left: 0.44rem;
-    margin: 0.2rem 0 1.14rem 0;
+    margin: 0.2rem 0 0.8rem 0;
   }
 
   .submit_box {
@@ -293,7 +315,7 @@ Promise.all([
   }
 
   .go_register {
-    margin: 2.8rem 0 1.4rem 0;
+    margin: 0.8rem 0 0.4rem 0;
     text-align: center;
     font-weight: 400;
 
