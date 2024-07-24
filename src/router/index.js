@@ -242,7 +242,7 @@ const routes = [
     name: "trade",
     component: () => import("../views/trade/trade.vue"),
     meta: {
-      keepAlive: false,
+      keepAlive: true,
       pageType: 'tab'
     }
   },
@@ -434,7 +434,7 @@ const routes = [
     component: () => import("../views/Market/IpoSubscription.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'tab'
+      pageType: 'child'
     }
   },
   {
@@ -444,7 +444,7 @@ const routes = [
     component: () => import("../views/trade/components/Success.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'tab'
+      pageType: 'child'
     }
   },
   {

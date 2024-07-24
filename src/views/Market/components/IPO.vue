@@ -32,13 +32,12 @@
                 </div>
                 <div class="item_mid">
                     <div class="mid_item">
-                        <div class="mid_val" style="text-align: left">{{
-                            item.issue_price_max }}</div>
-                        <div style="text-align: left">认购价格</div>
-                    </div>
-                    <div class="mid_item">
                         <div class="mid_val">{{ item.issue_start_date }} 至 {{ item.issue_end_date }}</div>
                         <div>认购日期</div>
+                    </div>
+                    <div class="mid_item">
+                        <div class="mid_val active_val">{{ item.issue_price_max }}</div>
+                        <div>认购价格</div>
                     </div>
                     <div class="mid_item" v-if="item.listing_price">
                         <div class="mid_val">-{{ item.listing_price }}</div>
@@ -144,7 +143,7 @@ const ipoDataList = computed(() => store.state.ipoDataList || [])
 const selectedOption = ref('')
 const option = [
     { text: "所有", value: "" },
-    { text: "发行中", value: "lssuing" },
+    { text: "发行中", value: "issuing" },
     { text: "已上市", value: "listed" },
 ];
 const selectedOptiontext = computed(() => option.find(item => item.value == selectedOption.value).text)
@@ -289,9 +288,12 @@ function countdown(endTime) {
     padding: 0 0.32rem;
 
     .list {
+        margin-top: 0.2rem;
+        border-top: 1px solid #EAEAEA;
+
         .item {
             border-bottom: 1px solid #EAEAEA;
-            padding: 0.1rem 0 0.1rem 0;
+            padding: 0 0 0.1rem 0;
 
             .item_top {
                 display: flex;
@@ -315,8 +317,7 @@ function countdown(endTime) {
                     .status_ing {
                         height: 0.44rem;
                         padding: 0 0.24rem;
-                        border-top-right-radius: 0.12rem;
-                        border-bottom-left-radius: 0.12rem;
+                        border-radius: 0.12rem;
                         background-color: #E4ECFB;
                         min-width: 1rem;
                         display: flex;
@@ -370,11 +371,16 @@ function countdown(endTime) {
 
             .item_mid {
                 display: flex;
-                align-items: stretch;
+                align-items: center;
                 justify-content: space-between;
                 margin-bottom: 0.24rem;
+                margin-top: 0.2rem;
 
                 .mid_item {
+                    height: 0.9rem;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
                     text-align: center;
                     font-size: 0.24rem;
                     font-weight: 400;
@@ -384,13 +390,20 @@ function countdown(endTime) {
                         font-size: 0.28rem;
                         font-weight: 500;
                         color: #014CFA;
-                        margin-bottom: 0.28rem;
+                        line-height: 0.48rem;
+                    }
+
+                    .active_val {
+                        background-color: #014CFA;
+                        color: #fff;
+                        font-size: 0.32rem;
+                        padding: 0 0.16rem;
+                        border-radius: 0.12rem;
                     }
                 }
             }
 
             .item_bottom {
-                border-top: 1px dashed #CBCBCB;
 
                 padding: 0.3rem 0 0.2rem 0;
                 display: flex;

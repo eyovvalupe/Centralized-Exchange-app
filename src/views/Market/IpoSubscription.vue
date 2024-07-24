@@ -21,20 +21,19 @@
             </div> -->
             <div class="subtitle" v-show="avtiveTab == 2">VIP认购码</div>
             <div class="item " v-show="avtiveTab == 2">
+                <div v-show="avtiveTab == 2" class="border_item account_box" style="background-color: #f5f5f5">
+                    <span>{{ lever }}X</span>
+                </div>
                 <div class="border_item ipt_box" :class="{ 'err_ipt': errStatus2 }">
-                    <input @blur="errStatus2 = false" v-model="form.keyword" type="text" class="ipt2"
-                        placeholder="请输入VIP认购码">
+                    <input @blur="errStatus2 = false" v-model="form.keyword" type="text" class="ipt2" placeholder="">
                 </div>
 
             </div>
             <div class="subtitle">认购数量</div>
             <div class="item">
-                <div v-show="avtiveTab == 2" class="border_item account_box" style="background-color: #f5f5f5">
-                    <span>{{ lever }}X</span>
-                </div>
+
                 <div class="border_item ipt_box" :class="{ 'err_ipt': errStatus }">
-                    <div class="ipt_tip" v-show="form.volume === '' || focus">最大认购 <span>{{ maxNum || '--'
-                            }}</span>
+                    <div class="ipt_tip" v-show="form.volume === '' || focus">最大认购 <span>{{ maxNum }}</span>
                     </div>
                     <input @change="inputNum" @focus="focus = true" @blur="focus = errStatus = false"
                         v-model="form.volume" class="ipt" type="number" placeholder="">
@@ -74,15 +73,15 @@
                             <span>订购数量</span>
                             <span class="val">{{ form.volume }}</span>
                         </div>
-                        <div class="item">
+                        <div class="item" v-show="avtiveTab == 2">
                             <span>冻结金额</span>
-                            <span class="val">{{ avtiveTab == 2 ? (form.volume / 10) : form.volume }}</span>
+                            <span class="val">{{ freezeNum }}</span>
                         </div>
-                        <div class="item">
+                        <div class="item" v-show="avtiveTab == 2">
                             <span>借贷金额</span>
-                            <span class="val">{{ form.volume }}</span>
+                            <span class="val">{{ loanNum }}</span>
                         </div>
-                        <div class="item">
+                        <div class="item" v-show="avtiveTab == 2">
                             <span>借贷手续费</span>
                             <span class="val">{{ feeNum }}</span>
                         </div>
@@ -96,15 +95,17 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { ref, computed, onMounted, onBeforeUnmount } from "vue"
+import { ref, computed } from "vue"
 import { useRoute } from "vue-router"
 import { Button, showToast, Slider } from "vant"
 import SafePassword from "@/components/SafePassword.vue"
 import store from '@/store';
-import { _orderBuy, _orderPara } from "@/api/api"
+import { _orderBuy, _orderPara, _basic } from "@/api/api"
 import Decimal from 'decimal.js';
 import router from '@/router'
 
+
+store.dispatch('updateWallet')
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
 const lever = ref(10)
 
@@ -125,8 +126,8 @@ const changeTab = key => {
 }
 
 const maxNum = computed(() => { // 最大值
-    if (avtiveTab.value == 2) return new Decimal(mainWallet.value.amount).mul(lever.value)
-    return mainWallet.value.amount
+    const amount = (avtiveTab.value == 2) ? (new Decimal(mainWallet.value.amount).mul(lever.value)) : new Decimal(mainWallet.value.amount)
+    return amount.div(currIpo.value.issue_price_max).floor()
 })
 
 const form = ref({
@@ -143,15 +144,32 @@ const onSliderChange = (newValue) => {
         form.value.volume = ''
     } else {
         form.value.volume = Number(val)
+        inputLimit()
+    }
+
+    if (form.value.volume == 0) {
+        sliderValue.value = 0
     }
 };
+const inputLimit = () => {
+    if (form.value.volume <= volumeMap.value.min) { // 最小购买
+        form.value.volume = volumeMap.value.min
+    } else { // 步长限制
+        const diff = new Decimal(form.value.volume).sub(volumeMap.value.min)
+        const more = diff.mod(volumeMap.value.step)
+        form.value.volume = new Decimal(form.value.volume).sub(more)
+    }
+
+    setTimeout(() => {
+        sliderValue.value = parseInt(form.value.volume * 100 / maxNum.value)
+        if (sliderValue.value > 100) sliderValue.value = 100
+    }, 50)
+}
 const percentages = [25, 50, 75, 100];
 const inputNum = () => {
     setTimeout(() => {
-        console.error(form.value.volume * 100 / maxNum.value)
         if (form.value.volume) {
-            sliderValue.value = parseInt(form.value.volume * 100 / maxNum.value)
-            if (sliderValue.value > 100) sliderValue.value = 100
+            inputLimit()
         } else {
             sliderValue.value = 0
         }
@@ -190,14 +208,12 @@ const submit = (s) => {
             });
         }
     }).finally(() => {
+        getSessionToken()
         setTimeout(() => {
             loading.value = false
         }, 500)
     })
 }
-
-
-
 
 // sessionToken
 const sessionToken = computed(() => store.state.sessionToken || '')
@@ -211,14 +227,32 @@ getSessionToken()
 
 // 手续费
 const fee = ref(0)
+const freezeNum = computed(() => {
+    if (!form.value.volume) return 0
+    return new Decimal(form.value.volume).div(lever.value).mul(currIpo.value.issue_price_max).toFixed(2)
+})
+const loanNum = computed(() => {
+    if (!form.value.volume) return 0
+    return new Decimal(form.value.volume).mul(currIpo.value.issue_price_max).sub(freezeNum.value).toFixed(2)
+})
 const feeNum = computed(() => {
     if (!form.value.volume) return 0
-    return new Decimal(form.value.volume).mul(fee.value).toFixed(2)
+    return new Decimal(loanNum.value).mul(fee.value).toFixed(2)
+})
+const volumeMap = ref({
+    min: 0, // 最小值
+    step: 1, // 步长
 })
 const getFee = () => {
     _orderPara().then(res => {
         if (res.code == 200) {
             fee.value = res.data.fee
+            try {
+                const arr = res.data.volume.split(',')
+                volumeMap.value.min = arr[0]
+                volumeMap.value.step = arr[1]
+            } catch { }
+            inputLimit()
         }
     })
 }
@@ -252,7 +286,7 @@ getFee()
                 width: 0.36rem;
                 height: 0.34rem;
                 border-radius: 50%;
-                background-color: #666;
+                background-color: #FFA800;
                 color: #fff;
                 font-size: 0.16rem;
                 display: flex;
@@ -268,9 +302,6 @@ getFee()
             font-weight: 500;
             border-bottom: 3px solid #014CFA;
 
-            .tag_tag {
-                background-color: #000;
-            }
         }
     }
 
@@ -315,6 +346,7 @@ getFee()
                 height: 100%;
                 display: flex;
                 align-items: center;
+                flex: 1;
             }
 
             &:has(.ipt:focus) {
