@@ -85,6 +85,6 @@ export default createStore({
     },
   },
   plugins: [createPersistedState({
-    paths: ['nologinid','messageNum']
+    paths: ['nologinid', 'messageNum']
   })],
 });

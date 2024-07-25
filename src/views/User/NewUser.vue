@@ -8,10 +8,8 @@
         <div class="user-login" v-if="token">
             <div style="display: flex;">
                 <img src="/static/img/user/user-block.png" alt="">
-                <!-- <span v-if="test">Test</span> -->
                 <div class="user-login-block">
-                    <span style="font-weight: 500;" v-if="test">Test</span>
-                    <span style="font-weight: 500;" v-else>{{ userInfo.username || '--' }}</span>
+                    <span style="font-weight: 500;">{{ userInfo.username || '--' }}</span>
                     <div class="id">ID:23424</div>
                 </div>
 
@@ -37,6 +35,7 @@
             <img src="/static/img/user/bg.png" alt="banner">
             <span style="position: absolute;top:0.5rem;left:0">todo：升级投资账户</span>
         </div>
+        <div v-else style="height:0.28rem"></div>
 
 
         <div class="user-comman">
@@ -160,7 +159,7 @@
 
 
         <!-- 退出登录 -->
-        <div class=" loginout" v-if="token || test" @click="loginout">退出登录</div>
+        <div class=" loginout" v-if="token" @click="loginout">退出登录</div>
 
     </div>
 </template>
@@ -201,19 +200,7 @@ const loginout = () => {
                     })
                 }, 200)
             }).catch(() => { })
-    } else if (test.value) {
-        showConfirmDialog({
-            title: '退出登录',
-            message:
-                '您当前确定要退出吗？',
-            confirmButtonColor: '#014CFA',
-            cancelButtonColor: '#323233'
-        })
-            .then(() => {
-                test.value = false
-            }).catch(() => { })
     }
-
 }
 
 const jump = (name, needLogin, query) => {

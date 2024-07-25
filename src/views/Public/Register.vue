@@ -49,7 +49,7 @@
           <img v-show="showPass2" src="/static/img/user/eye-open.png" alt="open">
         </div>
       </div>
-      <div class="form_title">确认交易密码</div>
+      <!-- <div class="form_title">确认交易密码</div>
       <div class="form_item margin_item" :class="{ 'err_ipt': errorTip.error3 }">
         <input maxlength="20" @blur="errorTip.error3 = false" v-show="!showPass3" v-model.trim="form.safeword2"
           placeholder="请确认交易密码" type="password" class="item_input">
@@ -59,7 +59,7 @@
           <img v-show="!showPass3" src="/static/img/user/eye-off.png" alt="off">
           <img v-show="showPass3" src="/static/img/user/eye-open.png" alt="open">
         </div>
-      </div>
+      </div> -->
 
 
 
@@ -78,7 +78,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box">
-      <Button @click="submit" round color="#014CFA" class="submit" type="primary">继续</Button>
+      <Button @click="openSlider" :loading="loading" round color="#014CFA" class="submit" type="primary">继续</Button>
     </div>
 
     <!-- 去注册 -->
@@ -95,13 +95,16 @@
 
     <!-- 验证码 -->
     <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
+
+    <!-- 滑动验证 -->
+    <SliderCheck ref="sliderRef" @success="submit" />
   </div>
 
 
 </template>
 
 <script setup>
-import { Icon, Button, showToast, Checkbox } from "vant"
+import { Icon, Button, showToast, Checkbox, showLoadingToast, closeToast } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
@@ -109,6 +112,7 @@ import PasswordLevel from "@/components/PasswordLevel.vue"
 import store from "@/store"
 import { _register } from "@/api/api"
 import VerifCode from "@/components/VerifCode.vue"
+import SliderCheck from "@/components/SliderCheck.vue"
 
 // 进入页面则重置登录状态信息
 store.commit("setToken", "");
@@ -127,7 +131,7 @@ const form = ref({ // 表单
   guest: guest.value ? 'true' : 'false',
   invateCode: '',
   safeword: '',
-  safeword2: ''
+  // safeword2: ''
 })
 const verifcode = ref('')
 const verifCodeRef = ref()
@@ -157,10 +161,10 @@ const submit = async () => {
     errorTip.value.error3 = true
     return showToast('请输入交易密码')
   }
-  if (form.value.safeword != form.value.safeword2) {
-    errorTip.value.error3 = true
-    return showToast('两次密码不一致')
-  }
+  // if (form.value.safeword != form.value.safeword2) {
+  //   errorTip.value.error3 = true
+  //   return showToast('两次密码不一致')
+  // }
   sessionStorage.setItem('registerForm', JSON.stringify(form.value))
 
   if (!sessionToken.value) {
@@ -169,29 +173,35 @@ const submit = async () => {
   }
   if (loading.value) return
   loading.value = true
+  showLoadingToast({
+    duration: 0,
+    loadingType: 'spinner',
+  })
   _register({
     ...form.value,
     token: sessionToken.value,
     verifcode: verifcode.value
   }).then(res => {
     if (res.code == 200) {
-      store.dispatch('reset')
       setTimeout(() => {
-        store.commit('setToken', res.data.auth)
-        store.commit('setUserInfo', res.data)
-      }, 100)
-      setTimeout(() => {
-        store.dispatch('updateUserInfo')
-        if (guest.value) {
-          router.replace({
-            name: 'registerSuccess2'
-          })
-        } else {
-          router.replace({
-            name: 'registerSuccess'
-          })
-        }
-      }, 300)
+        store.dispatch('reset')
+        setTimeout(() => {
+          store.commit('setToken', res.data.auth)
+          store.commit('setUserInfo', res.data)
+        }, 100)
+        setTimeout(() => {
+          store.dispatch('updateUserInfo')
+          if (guest.value) {
+            router.replace({
+              name: 'registerSuccess2'
+            })
+          } else {
+            router.replace({
+              name: 'registerSuccess'
+            })
+          }
+        }, 300)
+      }, 2000)
     } else {
       showToast(res.message)
     }
@@ -211,7 +221,8 @@ const submit = async () => {
       verifcode.value = ''
       getSessionToken()
       loading.value = false
-    }, 1000)
+      closeToast()
+    }, 2500)
   })
 }
 
@@ -219,6 +230,12 @@ const submit = async () => {
 const submitCode = code => {
   verifcode.value = code
   submit()
+}
+
+// 滑动验证
+const sliderRef = ref()
+const openSlider = () => {
+  sliderRef.value.open()
 }
 
 const sessionToken = computed(() => store.state.sessionToken || '')

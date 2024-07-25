@@ -33,11 +33,11 @@
 
         <div class="error_text" v-if="errText">{{ errText }}</div>
 
-        <div class="cautions">
+        <!-- <div class="cautions">
             <div style="margin-bottom: 0.24rem;">Cautions</div>
             <div style="margin-bottom: 0.24rem;">1.Download Google Authenticator App</div>
             <div>2. Scan the QR code above and enter the verification code to complete the binding</div>
-        </div>
+        </div> -->
 
         <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
             @click="goBind">绑定</Button>
@@ -95,7 +95,7 @@ const getGoogle = () => {
         }
     }).finally(() => {
         loading.value = false
-        // closeToast()
+        closeToast()
     })
 }
 getGoogle()
@@ -169,7 +169,8 @@ const nextStep = () => {
 <style lang="less" scoped>
 .page_google {
     padding: 1.52rem 0.32rem 0.4rem 0.32rem;
-
+    height: 100%;
+    overflow-y: auto;
 
 
     .qrcode {
@@ -241,6 +242,7 @@ const nextStep = () => {
         height: 1.12rem;
         border-radius: 1.2rem;
         font-size: 0.28rem;
+        margin-top: 0.4rem;
     }
 
     .code_ipt {

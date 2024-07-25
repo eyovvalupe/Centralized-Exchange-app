@@ -1,6 +1,11 @@
 <!-- 身份认证2 -->
 <template>
     <div class="kyc_2">
+        <div class="steps">
+            <div class="step finish_step">1</div>
+            <div class="line"></div>
+            <div class="step curr_step">2</div>
+        </div>
         <Top :title="''">
             <!-- 从注册来的 -->
             <template #right v-if="from == 'register'">
@@ -36,9 +41,9 @@
                     <span>上传证件正面</span>
                 </div>
                 <!-- 背后 -->
-                <div class="icon">
+                <!-- <div class="icon">
                     <img src="/static/img/user/iden_bg_1.png" alt="📷">
-                </div>
+                </div> -->
             </div>
             <!-- 上传中 -->
             <div class="item_box loading" v-if="files.front.loading">
@@ -65,9 +70,9 @@
                     <span>上传证件反面</span>
                 </div>
                 <!-- 背后 -->
-                <div class="icon">
+                <!-- <div class="icon">
                     <img src="/static/img/user/iden_bg_2.png" alt="📷">
-                </div>
+                </div> -->
             </div>
             <!-- 上传中 -->
             <div class="item_box loading" v-if="files.back.loading">
@@ -94,9 +99,9 @@
                     <span>上传证件手持面</span>
                 </div>
                 <!-- 背后 -->
-                <div class="icon">
+                <!-- <div class="icon">
                     <img src="/static/img/user/iden_bg_3.png" alt="📷">
-                </div>
+                </div> -->
             </div>
             <!-- 上传中 -->
             <div class="item_box loading" v-if="files.hand.loading">
@@ -111,14 +116,14 @@
         </div>
 
         <!-- 上传要求 -->
-        <div class="upload_title">
+        <!-- <div class="upload_title">
             <div class="line"></div>
             <div class="name">上传证件照片要求</div>
             <div class="line"></div>
-        </div>
+        </div> -->
 
         <!-- 上传细则 -->
-        <div class="upload_rules">
+        <!-- <div class="upload_rules">
             <div class="upload_rule">
                 <div class="rule_img">
                     <img src="/static/img/user/kyc_rule_1.png" alt="1">
@@ -163,7 +168,7 @@
                     <span>光线强烈</span>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- 联系客服 -->
         <div class="server_link">
@@ -314,6 +319,45 @@ const afterRead = (file, { name }) => {
 <style lang="less" scoped>
 .kyc_2 {
     padding: 1.24rem 0.32rem 0.4rem 0.32rem;
+    height: 100%;
+    overflow-y: auto;
+
+    .steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.52rem;
+
+        .step {
+            background-color: #E5E4E9;
+            width: 0.48rem;
+            height: 0.48rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.28rem;
+            border-radius: 50%;
+            color: #B0AFB4;
+        }
+
+        .curr_step {
+            border: 2px solid #014CFA;
+            background-color: #fff;
+        }
+
+        .finish_step {
+            background-color: #014CFA;
+            color: #fff;
+        }
+
+        .line {
+            height: 3px;
+            border-radius: 3px;
+            background-color: #D9D9D9;
+            width: 1rem;
+            margin: 0 0.2rem;
+        }
+    }
 
     .kyc_status {
         display: flex;

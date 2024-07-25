@@ -1,6 +1,11 @@
 <!-- 身份认证1 -->
 <template>
     <div class="kyc_1">
+        <div class="steps">
+            <div class="step curr_step">1</div>
+            <div class="line"></div>
+            <div class="step">2</div>
+        </div>
         <Top :title="''">
             <!-- 从注册来的 -->
             <template #right v-if="from == 'register'">
@@ -144,6 +149,38 @@ const nextStep = () => {
 <style lang="less" scoped>
 .kyc_1 {
     padding: 1.24rem 0.32rem 0.2rem 0.32rem;
+
+    .steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.52rem;
+
+        .step {
+            background-color: #E5E4E9;
+            width: 0.48rem;
+            height: 0.48rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.28rem;
+            border-radius: 50%;
+            color: #B0AFB4;
+        }
+
+        .curr_step {
+            border: 2px solid #014CFA;
+            background-color: #fff;
+        }
+
+        .line {
+            height: 3px;
+            border-radius: 3px;
+            background-color: #D9D9D9;
+            width: 1rem;
+            margin: 0 0.2rem;
+        }
+    }
 
     .title {
         color: #0D0D12;

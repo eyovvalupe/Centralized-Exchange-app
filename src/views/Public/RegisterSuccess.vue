@@ -6,7 +6,8 @@
         </div>
         <div class="title">注册成功</div>
 
-        <Button round color="#014CFA" class="submit" type="primary" @click="next">下一步，绑定两步验证</Button>
+        <Button round color="#014CFA" class="submit" type="primary" @click="next">两步验证&身份验证</Button>
+        <Button round color="#ccc" class="submit" type="primary" @click="back">完成</Button>
     </div>
 </template>
 
@@ -20,6 +21,11 @@ const next = () => {
         query: {
             from: 'register'
         }
+    })
+}
+const back = () => {
+    router.replace({
+        name: 'user',
     })
 }
 </script>
@@ -39,7 +45,7 @@ const next = () => {
     }
 
     .title {
-        margin: 1.12rem 0 1.68rem 0;
+        margin: 1.12rem 0;
         color: #000;
         font-size: 0.32rem;
         line-height: 0.56rem;
@@ -47,6 +53,7 @@ const next = () => {
 
     .submit {
         width: 100%;
+        margin-bottom: 0.6rem;
     }
 }
 </style>
