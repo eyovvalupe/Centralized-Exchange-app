@@ -217,6 +217,16 @@ const routes = [
     }
   },
   {
+    // 注册成功
+    path: "/registerSuccess2",
+    name: "registerSuccess2",
+    component: () => import("../views/Public/RegisterSuccess2.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 语言
     path: "/language",
     name: "language",

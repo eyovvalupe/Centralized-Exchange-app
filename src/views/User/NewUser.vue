@@ -5,7 +5,7 @@
         <!-- 标题 -->
         <!-- <div class="title">用户</div> -->
 
-        <div class="user-login" v-if="token || test">
+        <div class="user-login" v-if="token">
             <div style="display: flex;">
                 <img src="/static/img/user/user-block.png" alt="">
                 <!-- <span v-if="test">Test</span> -->
@@ -30,10 +30,13 @@
             <Icon name="arrow" class="arrow-right" />
         </div>
 
-        <div class="user-banner" @click="testBanner" v-if="!test && !token">
+        <div class="user-banner" @click="jump('register', false, { guest: 1 })" v-if="!token">
             <img src="/static/img/user/bg.png" alt="banner">
         </div>
-        <div v-else style="height: 0.28rem;"></div>
+        <div v-else-if="userInfo.role == 'guest'" class="user-banner">
+            <img src="/static/img/user/bg.png" alt="banner">
+            <span style="position: absolute;top:0.5rem;left:0">todo：升级投资账户</span>
+        </div>
 
 
         <div class="user-comman">
@@ -173,12 +176,6 @@ const messageNum = computed(() => storeChat.state.messageNum);
 const token = computed(() => store.state.token)
 const userInfo = computed(() => store.state.userInfo || {})
 
-const test = ref(false)
-
-
-const testBanner = () => {
-    test.value = true
-}
 
 
 const getFirstCharacter = (username) => {
@@ -219,26 +216,30 @@ const loginout = () => {
 
 }
 
-const jump = (name, needLogin) => {
+const jump = (name, needLogin, query) => {
     if (needLogin && !token.value) {
         router.push({
-            name: 'login'
+            name: 'login',
+            query
         })
         return
     }
     if (name == 'googleCode') {
         if (token.value && !userInfo.value.googlebind) {
             router.push({
-                name: 'google'
+                name: 'google',
+                query
             })
         } else if (token.value && userInfo.value.googlebind) {
             router.push({
-                name: 'googleCode'
+                name: 'googleCode',
+                query
             })
         }
     } else {
         router.push({
-            name
+            name,
+            query
         })
     }
 

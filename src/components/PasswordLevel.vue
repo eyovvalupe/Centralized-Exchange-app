@@ -53,7 +53,6 @@ const levels = computed(() => {
     } else {
         strength = password.length ? 1 : 0
     }
-
     return strength > 4 ? 4 : strength
 })
 </script>
@@ -81,6 +80,7 @@ const levels = computed(() => {
     }
 }
 
+.password_level_1,
 .password_level_2,
 .password_level_3 {
     color: #E53E00;

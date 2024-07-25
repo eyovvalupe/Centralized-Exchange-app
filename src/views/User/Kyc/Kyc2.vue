@@ -180,7 +180,7 @@
 import Top from '@/components/Top.vue';
 import { Uploader, Button, showLoadingToast, closeToast, showToast } from 'vant';
 import { ref, computed } from "vue";
-import { UPLOAD_ADDRESS } from "@/config.js"
+import { UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config.js"
 import axios from "axios"
 import Loaidng from "@/components/Loaidng.vue"
 import { _compressImg } from "@/utils/index"
@@ -297,7 +297,7 @@ const afterRead = (file, { name }) => {
             const base64result = base64Img.substr(base64Img.indexOf(',') + 1);
             axios.put(apiUrl, JSON.stringify({ content: base64result, message: `upload ${fileName}` }), {
                 headers: {
-                    Authorization: process.env.VUE_APP_UPLOAD_TOKEN
+                    Authorization: UPLOAD_TOKEN
                 }
             }).then(res => {
                 const { content: { download_url } } = res.data

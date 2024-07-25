@@ -90,7 +90,7 @@ const changeAccount = () => {
         saveAccount.value = form.value.username
         localStorage.setItem('saveAccount', saveAccount.value)
       } else {
-        showToast('账号不存在')
+        // showToast('账号不存在')
       }
     }).finally(() => {
       accountLoading.value = false
