@@ -4,16 +4,17 @@
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" :key="color">
             <!-- <line x1="0" y1="50%" x2="100%" y2="50%" stroke-dasharray="2 2"
                 :style="{ stroke: color, 'stroke-width': 1 }"></line> -->
-            <defs>
-                <linearGradient :id="props.ratio + ''" x1="0%" y1="0%" x2="0%" y2="100%">
+            <defs style="width:100%">
+                <linearGradient style="width:100%" :id="props.ratio + ''" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" :stop-color="stopStartColor"></stop>
                     <stop offset="100%" :stop-color="stopEndColor"></stop>
                 </linearGradient>
             </defs>
-            <polygon :points="shadowPoints" :style="`fill:url(#${Number(props.ratio)}); stroke: none; opacity: 1;`">
+            <polygon :points="shadowPoints"
+                :style="`fill:url(#${Number(props.ratio)}); stroke: none; opacity: 1;width:100%`">
             </polygon>
-            <!-- <polyline :points="props.points" :style="`fill:url(#${Number(props.ratio)});stroke: none;`"></polyline> -->
-            <polyline :points="props.points" :style="`fill: none; stroke: ${color}; stroke-width:1`"></polyline>
+            <polyline :points="props.points" :style="`fill: none; stroke: ${color}; stroke-width:1;width:100%`">
+            </polyline>
         </svg>
     </div>
 </template>

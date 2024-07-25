@@ -1,17 +1,11 @@
 <!-- banner -->
 <template>
-    <Swipe class="banner_box" lazy-render :initial-swipe="currIndex" :autoplay="3000" loop indicator-color="white"
-        @change="onChange">
-        <SwipeItem v-for="(item, i) in banners" :key="i">
+    <Swipe v-if="showList.length" class="banner_box" lazy-render :initial-swipe="currIndex" :autoplay="3000" loop
+        indicator-color="white" @change="onChange">
+        <SwipeItem v-for="(list, index) in showList" :key="index">
             <div class="banner_items">
-                <div class="banner_item">
-                    <RecommendItem :item="itemData" />
-                </div>
-                <div class="banner_item">
-                    <RecommendItem :item="itemData" />
-                </div>
-                <div class="banner_item">
-                    <RecommendItem :item="itemData" />
+                <div class="banner_item" v-for="(item, i) in list" :key="index + '_' + i">
+                    <RecommendItem :item="item" v-if="item.symbol" />
                 </div>
             </div>
         </SwipeItem>
@@ -26,17 +20,71 @@
 
 <script setup>
 import { Swipe, SwipeItem } from 'vant';
-import { ref, onMounted } from "vue"
+import { ref, onMounted, computed } from "vue"
 import RecommendItem from "./RecommendItem.vue"
+import { _watchlistDefault } from "@/api/api"
+import store from '@/store';
 
-const itemData = ref({ "market": "NSE", "symbol": "CHENNPETRO", "name": "CHENNAI PETRO CP", "ratio": "+12.01%" })
-const banners = ref([{}, {}, {}])
 
-const currIndex = ref(banners.value.length - 1)
+// 推荐数据
+const marketRecommndList = computed(() => store.state.marketRecommndList || [])
+const showList = computed(() => {
+    const arr = []
+    let i = 0
+    marketRecommndList.value.forEach((item) => {
+        if (!arr[i]) {
+            arr[i] = [item]
+        } else if (arr[i].length < 3) {
+            arr[i].push(item)
+        } else {
+            i++
+            arr[i] = [item]
+        }
+    })
+    if (arr[i]) {
+        if (arr[i].length == 2) {
+            arr[i].push({})
+        }
+        if (arr[i].length == 1) {
+            arr[i].push({})
+            arr[i].push({})
+        }
+    }
+    return arr
+})
+const getRecommendData = () => {
+    _watchlistDefault().then(res => {
+        if (res.data?.stock) {
+            const rs = res.data.stock.map(item => {
+                const target = marketRecommndList.value.find(a => a.symbol == item.symbol)
+                if (target) {
+                    Object.assign(target, item)
+                    item = target
+                }
+                return item
+            })
+            store.commit('setMarketRecommndList', rs)
+            setTimeout(() => {
+                subs()
+            }, 500)
+        }
+    })
+}
+getRecommendData()
+
+const subs = () => { // 订阅 ws
+    store.dispatch('subList', {
+        commitKey: 'setMarketRecommndList',
+        listKey: 'marketRecommndList',
+    })
+}
+
+// 轮播
+const currIndex = ref(0)
 const onChange = key => {
     setTimeout(() => {
         currIndex.value = key
-    }, 500)
+    }, 0)
 }
 onMounted(() => {
     onChange(0)

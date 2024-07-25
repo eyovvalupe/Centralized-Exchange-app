@@ -11,7 +11,8 @@
         </div>
 
         <div class="tab_line">
-            <SparkLine style="width:100%;height:100%" :points="props.item.points" :ratio="props.item.ratio" />
+            <SparkLine style="width:100%;height:100%;transform: scaleX(1.75);" :points="props.item.points"
+                :ratio="props.item.ratio" />
         </div>
     </div>
 </template>
@@ -61,11 +62,10 @@ const props = defineProps({
     .tab_line {
         position: absolute;
         bottom: 0;
-        left: 50%;
-        width: 1.4rem;
-        transform: scaleX(2) translateX(-50%);
+        width: calc(100% - 0.34rem);
         transform-origin: 0 0;
         height: 0.6rem;
+        overflow: hidden;
     }
 }
 </style>

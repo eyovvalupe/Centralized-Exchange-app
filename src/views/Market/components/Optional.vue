@@ -21,7 +21,8 @@
                         <!-- <span>({{ stockList.length }})</span> -->
                     </div>
                 </template>
-                <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
+                <StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init"
+                    :list="marketSrockRecommendList" />
                 <NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
             </Tab>
             <Tab>
