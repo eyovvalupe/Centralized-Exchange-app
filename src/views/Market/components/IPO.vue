@@ -11,13 +11,29 @@
         <div class="list">
             <div class="item" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
                 <div class="item_top">
-                    <div class="name">{{ item.company_name }}</div>
+                    <div class="item_top_box">
+                        <div class="name">{{ item.company_name }}</div>
+                        <div class="item_top_info">
+                            <div>
+                                <span class="info_name">认购日期</span>
+                                <span class="info_date">{{ item.issue_start_date }} 至 {{ item.issue_end_date }}</span>
+                            </div>
+                            <div>
+                                <span class="info_name">认购价格</span>
+                                <span class="info_price">{{ item.issue_price_max }}</span>
+                            </div>
+                            <div v-if="item.listing_price">
+                                <span class="info_name">上市价格</span>
+                                <span class="info_price">{{ item.listing_price }}</span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="control_box">
                         <!-- 认购中 -->
-                        <div class="status_ing" v-if="item.status == 'issuing' || item.status == 'listed'">认购中</div>
+                        <div class="status_ing" v-if="item.status == 'issuing'">认购中</div>
                         <!-- 预售中 -->
                         <div class="status_pre_box" v-if="item.status == 'none'">
-                            <div class="status_ing status_pre">预售中</div>
+                            <div class="status_ing status_pre">预售</div>
                             <div class="pre_times" v-if="item._timedown">
                                 <div class="pre_time">{{ item._timedown[0] }}</div>
                                 <span>:</span>
@@ -27,10 +43,16 @@
                             </div>
                         </div>
                         <!-- 已结束 -->
+                        <div class="status_ing status_ed" v-if="item.status == 'listed'">已上市</div>
+                        <!-- 已结束 -->
                         <div class="status_ing status_done" v-if="item.status == 'done'">已结束</div>
+
+                        <div style="flex: 1"></div>
+                        <div v-if="item.status == 'issuing' || item.status == 'listed'" class="btn"
+                            @click.stop="goBuy(item)">认购</div>
                     </div>
                 </div>
-                <div class="item_mid">
+                <!-- <div class="item_mid">
                     <div class="mid_item">
                         <div class="mid_val">{{ item.issue_start_date }} 至 {{ item.issue_end_date }}</div>
                         <div>认购日期</div>
@@ -46,7 +68,7 @@
                 </div>
                 <div class="item_bottom" v-if="item.status == 'issuing' || item.status == 'listed'">
                     <div class="btn" @click.stop="goBuy(item)">认购</div>
-                </div>
+                </div> -->
             </div>
 
             <LoadingMore v-if="!(finish && ipoDataList.length == 0)" :loading="loading" :finish="finish" />
@@ -306,7 +328,7 @@ function countdown(endTime) {
 
             .item_top {
                 display: flex;
-                align-items: flex-start;
+                align-items: stretch;
                 justify-content: space-between;
                 padding: 0.28rem 0;
 
@@ -320,9 +342,52 @@ function countdown(endTime) {
                     flex: 1;
                     margin-right: 0.4rem;
                     line-height: 0.48rem;
+                    margin-bottom: 0.2rem;
+                    white-space: wrap;
+                    word-break: keep-all;
+                }
+
+                .item_top_box {
+                    .item_top_info {
+                        color: #818898;
+                        font-size: 0.24rem;
+                        line-height: 0.48rem;
+                        font-weight: 400;
+
+                        .info_date {
+                            color: #000000;
+                            margin-left: 0.24rem;
+                        }
+
+                        .info_price {
+                            color: #000000;
+                            font-size: 0.28rem;
+                            margin-left: 0.24rem;
+                            font-weight: 600;
+                        }
+                    }
                 }
 
                 .control_box {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    justify-content: space-between;
+                    flex-shrink: 0;
+
+                    .btn {
+                        font-size: 0.24rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        background-color: #014CFA;
+                        height: 0.6rem;
+                        border-radius: 0.08rem;
+                        padding: 0 0.4rem;
+                        color: #fff;
+                        margin-top: 0.32rem;
+                    }
+
                     .status_ing {
                         height: 0.44rem;
                         padding: 0 0.24rem;
@@ -337,9 +402,14 @@ function countdown(endTime) {
                     }
 
                     .status_pre_box {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+
                         .status_pre {
-                            background-color: #333;
-                            color: #fff;
+                            display: inline-flex;
+                            background-color: #FFF3D2;
+                            color: #FE8A00;
                         }
 
                         .pre_times {
@@ -355,8 +425,10 @@ function countdown(endTime) {
                                 height: 0.36rem;
                                 min-width: 0.36rem;
                                 display: flex;
-                                padding: 0 0.12rem;
+                                line-height: 0;
+                                padding: 0 0.06rem;
                                 align-items: center;
+                                text-align: center;
                                 justify-content: center;
                                 color: #fff;
                                 background-color: #333;
@@ -374,6 +446,11 @@ function countdown(endTime) {
                     .status_done {
                         background-color: #EBEBEB;
                         color: #838383;
+                    }
+
+                    .status_ed {
+                        background-color: #DCDAFF;
+                        color: #5F59E0;
                     }
                 }
             }

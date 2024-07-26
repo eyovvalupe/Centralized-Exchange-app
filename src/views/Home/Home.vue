@@ -147,6 +147,9 @@ const tabChange = (val) => {
 const activated = ref(false)
 onActivated(() => {
   activated.value = true
+  setTimeout(() => {
+    subs([...marketRecommndStockList.value, ...marketRecommndContractList.value, ...marketRecommndList.value])
+  }, 500)
 })
 onDeactivated(() => {
   activated.value = false
@@ -239,6 +242,7 @@ const jump = (name, needToken) => {
 
     .van-action-sheet__item {
       padding: 0.32rem;
+      border-bottom: 1px solid #F5F5F5;
     }
   }
 

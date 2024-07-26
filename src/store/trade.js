@@ -33,6 +33,7 @@ export default {
     ipoId: '',
     ipoDetail: {},
     ipoDataList: [],
+    ipoStockList: [],
     hasIpoData: false,
     ipoWinDataList: [],
     hasIpoWinData: false,
@@ -128,6 +129,9 @@ export default {
     },
     setIpoDataList(state, data) {
       state.ipoDataList = data
+    },
+    setIpoStockList(state, data) {
+      state.ipoStockList = data
     },
     setHasIpoData(state, data) {
       state.hasIpoData = true

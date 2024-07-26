@@ -125,6 +125,7 @@ onMounted(() => {
 
         .van-action-sheet__item {
             padding: 0.32rem;
+            border-bottom: 1px solid #f5f5f5;
         }
     }
 

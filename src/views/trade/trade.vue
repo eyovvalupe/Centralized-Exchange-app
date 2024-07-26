@@ -83,11 +83,11 @@
               :color="'#014CFA'" shrink>
               <Tab :title="'IPO'" class="optional">
                 <div style="height: 0.4rem"></div>
-                <IPO :type="'trade'" ref="IPORef" @reloading="setReloading" :ipoLoading="ipoLoading"
-                  @ipoloading="ipoloading" @showOpenDetail="showOpenDetail" />
+                <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" @reloading="setReloading"
+                  :ipoLoading="ipoLoading" @ipoloading="ipoloading" @showOpenDetail="showOpenDetail" />
               </Tab>
               <Tab :title="'中签'">
-                <IPOStock ref="IPOStockRef" @reloading="setReloading" />
+                <IPOStock v-if="ipoActive == 1" ref="IPOStockRef" @reloading="setReloading" />
               </Tab>
             </Tabs>
           </div>
