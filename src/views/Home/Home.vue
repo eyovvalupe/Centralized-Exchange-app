@@ -19,7 +19,7 @@
       </div>
 
       <div class="subtitle">总资产(USDT)</div>
-      <div class="assets" v-if="!token">
+      <div class="assets" v-if="!token" @click="jump('login')">
         <div class="assets_login">登录</div>
         <div>查看资产</div>
         <div class="assets_icon">
@@ -35,8 +35,8 @@
       </div>
 
       <div class="btns">
-        <div class="ripple_button btn" @click="jump('trade')">快速交易</div>
-        <div class="ripple_button btn active_btn" @click="jump('topUp')">充值</div>
+        <div class="ripple_button btn" @click="showAS = true">快速交易</div>
+        <div class="ripple_button btn active_btn" @click="jump('topUp', true)">充值</div>
       </div>
     </div>
 
@@ -71,6 +71,8 @@
       </Tab>
     </Tabs>
 
+    <!-- 类型选择弹窗 -->
+    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" />
   </div>
 </template>
 
@@ -80,7 +82,7 @@ import { onDeactivated, ref, computed, onActivated } from "vue"
 import Banner from "./components/Banner.vue"
 import { useSocket } from '@/utils/ws'
 import store from "@/store";
-import { Tab, Tabs } from 'vant';
+import { Tab, Tabs, ActionSheet } from 'vant';
 import { _sort, _watchlistDefault } from "@/api/api"
 import Iconfonts from "@/components/Iconfonts.vue"
 import router from "@/router";
@@ -93,6 +95,25 @@ const openEye = ref(false)
 const { startSocket } = useSocket()
 const activeTab = ref(0)
 const token = computed(() => store.state.token || '')
+
+// 打开添加类型选择弹窗
+const showAS = ref(false)
+const actions = [
+  { name: '股票', value: '0' },
+  { name: '合约', value: '-1' },
+  { name: 'IPO', value: '1' },
+];
+const onSelect = item => {
+  showAS.value = false
+  if (item.value == -1) return
+  router.push({
+    name: 'trade',
+    query: {
+      page: 'home',
+      pageType: item.value
+    }
+  })
+}
 
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading)
@@ -197,7 +218,10 @@ const subs = (arr) => { // 订阅 ws
 
 
 // 跳转
-const jump = (name) => {
+const jump = (name, needToken) => {
+  if (needToken && !token.value) return router.push({
+    name: 'login'
+  })
   router.push({
     name
   })
@@ -209,6 +233,14 @@ const jump = (name) => {
   padding: 0 0 1.9rem 0;
   height: 100%;
   overflow-y: auto;
+
+  :deep(.van-action-sheet__content) {
+    padding: 0.4rem 0 2rem 0;
+
+    .van-action-sheet__item {
+      padding: 0.32rem;
+    }
+  }
 
   .top_box {
     padding: 0.2rem 0.32rem 0 0.32rem;

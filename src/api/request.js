@@ -3,6 +3,7 @@ import store from "@/store/index";
 import { showToast } from "vant";
 import router from "@/router/index"
 import { BASE_ADDRESS } from "@/config"
+import { isString } from "lodash";
 
 
 const instance = axios.create({
@@ -28,7 +29,9 @@ instance.interceptors.request.use(
       router.push({
         name: 'login'
       })
-      throw new Error("当前 token 已失效，请重新登录");
+      throw {
+        message: "当前 token 已失效，请重新登录"
+      };
       return
     }
     config.headers.lang = 'EN'
@@ -77,6 +80,7 @@ instance.interceptors.response.use(
     return res || {};
   },
   async function (error) {
+
     if (error?.config?.custom?.retry) {
       if (!error.config) return Promise.reject(error);
       error.config._retryTimes = error.config._retryTimes ? error.config._retryTimes + 1 : 1
@@ -86,7 +90,7 @@ instance.interceptors.response.use(
       } catch { }
       return instance(error.config);
     } else {
-      showToast("网络异常,请重试");
+      showToast(error.message || "网络异常,请重试");
       return Promise.reject(error);
     }
   }

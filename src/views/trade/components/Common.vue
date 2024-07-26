@@ -221,7 +221,7 @@ const marketprice = ref(false)
 const enlarged = ref(false)
 
 const isFocused = ref();
-const emit = defineEmits(['update-value']);
+const emit = defineEmits(['update-value', 'already']);
 
 const previousChooseSymbol = computed(() => {
   return store.state.previousChooseSymbol
@@ -285,6 +285,7 @@ const getPrice = (val) => {
 
 // 使用 lodash 的 debounce 函数包装搜索函数
 const debouncedSearch = debounce(getPrice, 800);
+
 
 const getAccount = (price) => {
   let amountNum;

@@ -146,7 +146,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onActivated } from "vue";
 import { Tab, Tabs, Popup, Sticky, Loading, PullRefresh, Icon } from "vant";
 import MarketStock from "./MarketStock.vue";
 import IPOStock from "./IPOStock.vue";
@@ -254,6 +254,16 @@ const onChange = (val) => {
   //   hasInit.value = true
   // }
 };
+
+onActivated(() => {
+  // 从首页跳转过来
+  if (route.query.page == 'home') {
+    const pt = Number(route.query.pageType)
+    setTimeout(() => {
+      onChange(pt)
+    }, 200)
+  }
+})
 
 const ipoloading = () => {
   ipoLoading.value = false
