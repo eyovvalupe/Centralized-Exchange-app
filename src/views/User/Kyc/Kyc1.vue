@@ -14,10 +14,10 @@
             <!-- 提交过认证信息 -->
             <template #right v-if="kycInfo.name">
                 <div class="kyc_status">
-                    <div class="icon">
+                    <!-- <div class="icon">
                         <img class="status_icon" src="/static/img/user/record.png" alt="⚪">
-                    </div>
-                    <span class="status" v-if="kycInfo.status == 'none'">审核中</span>
+                    </div> -->
+                    <span class="status" v-if="kycInfo.status == 'review'">审核中</span>
                     <span class="status status_pass" v-if="kycInfo.status == 'success'">审核通过</span>
                     <span class="status status_fail" v-if="kycInfo.status == 'failed'">审核失败</span>
                 </div>
@@ -29,19 +29,21 @@
 
         <div class="subtitle">法定姓名</div>
         <div class="item">
-            <input v-model.trim="form.name" class="ipt" type="text" placeholder="法定姓名" maxlength="20">
+            <input :disabled="checkMode" v-model.trim="form.name" class="ipt" type="text" placeholder="法定姓名"
+                maxlength="20">
         </div>
         <div class="subtitle">证件号码</div>
         <div class="item">
-            <input v-model.trim="form.idnum" class="ipt" type="text" placeholder="证件号码" maxlength="20">
+            <input :disabled="checkMode" v-model.trim="form.idnum" class="ipt" type="text" placeholder="证件号码"
+                maxlength="20">
         </div>
         <div class="subtitle">出生日期</div>
-        <div class="item" @click="showBottom = true">{{ form.birthday }}</div>
+        <div class="item" @click="checkMode ? showBottom = false : showBottom = true">{{ form.birthday }}</div>
 
-        <Button v-if="!pageLoading && !kycInfo.name" @click="submit" :loading="loading" :disabled="disabled" round
-            color="#014CFA" class="submit" type="primary">继续</Button>
-        <Button v-if="!pageLoading && kycInfo.name" round color="#014CFA" class="submit" type="primary"
-            @click="next">继续</Button>
+        <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failed'" @click="submit" :loading="loading"
+            :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
+        <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="#014CFA" class="submit"
+            type="primary" @click="next">继续</Button>
 
 
         <!-- 日期选择 -->
@@ -54,17 +56,24 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Button, Popup, DatePicker, showLoadingToast, closeToast } from "vant"
+import { Button, Popup, DatePicker } from "vant"
 import { ref, computed } from 'vue'
-import { _kyc1, _kycGet } from "@/api/api"
-import router from '@/router';
+import { _kyc1 } from "@/api/api"
 import store from '@/store';
 import { useRoute } from "vue-router"
 
+const props = defineProps({
+    kycInfo: {
+        type: Object,
+        default: () => { }
+    }
+})
 const route = useRoute()
 const from = ref(route.query.from) // 'register'-表示从注册来
 
-const userInfo = computed(() => store.state.userInfo || {})
+const checkMode = computed(() => {
+    return props.kycInfo.status == 'review' || props.kycInfo.status == 'success'
+})
 
 const loading = ref(false)
 const disabled = computed(() => {
@@ -90,55 +99,30 @@ const form = ref({
     idnum: '',
     birthday: '',
 })
+if (props.kycInfo) {
+    form.value.name = props.kycInfo.name
+    form.value.idnum = props.kycInfo.idnum
+    form.value.birthday = props.kycInfo.birthday
+    if (props.kycInfo.birthday) {
+        currentDate.value = props.kycInfo.birthday.split(',')
+    }
+}
 
 const submit = () => {
     if (loading.value) return
     loading.value = true
     _kyc1(form.value).then(res => {
         if (res.code == 200) {
-            if (from.value == 'register') {
-                nextStep()
-            } else {
-                router.replace({
-                    name: 'submit'
-                })
-            }
+            nextStep()
         }
     }).finally(() => {
         loading.value = false
     })
 }
 
-
-const pageLoading = ref(true)
-const kycInfo = ref({})
-const getKyc = () => {
-    pageLoading.value = true
-    showLoadingToast({
-        duration: 0,
-        loadingType: 'spinner',
-    })
-    _kycGet().then(res => {
-        if (res.code == 200) {
-            pageLoading.value = false
-            kycInfo.value = res.data
-            form.value.name = res.data.name
-            form.value.idnum = res.data.idnum
-            form.value.birthday = res.data.birthday
-            if (res.data.birthday) {
-                currentDate.value = res.data.birthday.split(',')
-            }
-        }
-    }).finally(() => {
-        closeToast()
-    })
-}
-getKyc()
-
+const emits = defineEmits(['next'])
 const next = () => { // 审核成功后 点击继续跳转2
-    const u = JSON.parse(JSON.stringify(userInfo.value))
-    u.kyc = 2
-    store.commit('setUserInfo', u)
+    emits('next')
 }
 
 const nextStep = () => {
@@ -252,7 +236,7 @@ const nextStep = () => {
         .status {
             font-size: 0.28rem;
             font-weight: 400;
-            color: #000000;
+            color: #F3BA2F;
         }
 
         .status_pass {

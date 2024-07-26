@@ -168,3 +168,9 @@ input[type="number"] {
     fill: currentColor;
     overflow: hidden;
 }
+
+.item {
+    &:has(.ipt:focus) {
+        border: 1px solid #014CFA !important;
+    }
+}

@@ -14,10 +14,10 @@
             <!-- 提交过认证信息 -->
             <template #right v-if="kycInfo.idimg_1">
                 <div class="kyc_status">
-                    <div class="icon">
+                    <!-- <div class="icon">
                         <img class="status_icon" src="/static/img/user/record.png" alt="⚪">
-                    </div>
-                    <span class="status" v-if="kycInfo.status == 'none'">审核中</span>
+                    </div> -->
+                    <span class="status" v-if="kycInfo.status == 'review'">审核中</span>
                     <span class="status status_pass" v-if="kycInfo.status == 'success'">审核通过</span>
                     <span class="status status_fail" v-if="kycInfo.status == 'failed'">审核失败</span>
                 </div>
@@ -54,7 +54,7 @@
                 <img :src="files.front.url" alt="img">
             </div>
             <!-- 上传 -->
-            <Uploader :name="'front'" class="uploader" :after-read="afterRead" />
+            <Uploader v-if="!checkMode" :name="'front'" class="uploader" :after-read="afterRead" />
         </div>
         <div class="item">
             <!-- 没有上传 -->
@@ -83,7 +83,7 @@
                 <img :src="files.back.url" alt="img">
             </div>
             <!-- 上传 -->
-            <Uploader :name="'back'" class="uploader" :after-read="afterRead" />
+            <Uploader v-if="!checkMode" :name="'back'" class="uploader" :after-read="afterRead" />
         </div>
         <div class="item">
             <!-- 没有上传 -->
@@ -112,7 +112,7 @@
                 <img :src="files.hand.url" alt="img">
             </div>
             <!-- 上传 -->
-            <Uploader :name="'hand'" class="uploader" :after-read="afterRead" />
+            <Uploader v-if="!checkMode" :name="'hand'" class="uploader" :after-read="afterRead" />
         </div>
 
         <!-- 上传要求 -->
@@ -176,14 +176,16 @@
         </div>
 
         <!-- 提交 -->
-        <Button v-if="!pageLoading && !kycInfo.idimg_1" color="#014CFA" @click="submit" :loading="loading"
-            :disabled="disabled" round class="submit" type="primary">完成</Button>
+        <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failed'" color="#014CFA" @click="submit"
+            :loading="loading" :disabled="disabled" round class="submit" type="primary">完成</Button>
+        <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" color="#014CFA" @click="nextStep"
+            :loading="loading" round class="submit" type="primary">完成</Button>
     </div>
 </template>
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Uploader, Button, showLoadingToast, closeToast, showToast } from 'vant';
+import { Uploader, Button, showToast } from 'vant';
 import { ref, computed } from "vue";
 import { UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config.js"
 import { _fetchWithTimeout } from "@/api/upload"
@@ -197,10 +199,18 @@ import { useRoute } from "vue-router"
 const route = useRoute()
 const from = ref(route.query.from) // 'register'-表示从注册来
 
-
+const props = defineProps({
+    kycInfo: {
+        type: Object,
+        default: () => { }
+    }
+})
 const loading = ref(false)
 const disabled = computed(() => {
     return !(files.value.front.url && files.value.back.url && files.value.hand.url)
+})
+const checkMode = computed(() => {
+    return props.kycInfo.status == 'review' || props.kycInfo.status == 'success'
 })
 // 表单
 const files = ref({
@@ -220,6 +230,13 @@ const files = ref({
         file: {}
     },
 })
+
+if (props.kycInfo) {
+    files.value.front.url = props.kycInfo.idimg_1
+    files.value.back.url = props.kycInfo.idimg_2
+    files.value.hand.url = props.kycInfo.idimg_3
+}
+
 
 const submit = () => {
     if (loading.value) return
@@ -245,30 +262,6 @@ const submit = () => {
         loading.value = false
     })
 }
-
-
-const pageLoading = ref(true)
-const kycInfo = ref({})
-const getKyc = () => {
-    pageLoading.value = true
-    showLoadingToast({
-        duration: 0,
-        loadingType: 'spinner',
-    })
-    _kycGet().then(res => {
-        console.error('_____', res)
-        if (res.code == 200) {
-            pageLoading.value = false
-            kycInfo.value = res.data
-            files.value.front.url = res.data.idimg_1
-            files.value.back.url = res.data.idimg_2
-            files.value.hand.url = res.data.idimg_3
-        }
-    }).finally(() => {
-        closeToast()
-    })
-}
-getKyc()
 
 
 const nextStep = () => {
@@ -391,7 +384,7 @@ const afterRead = (file, { name }) => {
         .status {
             font-size: 0.28rem;
             font-weight: 400;
-            color: #000000;
+            color: #F3BA2F;
         }
 
         .status_pass {

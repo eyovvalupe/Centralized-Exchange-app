@@ -77,13 +77,14 @@ instance.interceptors.response.use(
     return res || {};
   },
   async function (error) {
-    if (error.config.custom.retry) {
+    if (error?.config?.custom?.retry) {
       if (!error.config) return Promise.reject(error);
       error.config._retryTimes = error.config._retryTimes ? error.config._retryTimes + 1 : 1
       if (error.config._retryTimes > 3) return Promise.reject(error); // 重试3次
       return instance(error.config);
     } else {
-      Promise.reject(error);
+      showToast("网络异常,请重试");
+      return Promise.reject(error);
     }
   }
 );

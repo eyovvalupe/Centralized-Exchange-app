@@ -1,23 +1,60 @@
 <!-- 用户认证 -->
 <template>
     <div class="page page_kyc" style="height:100%">
-        <Kyc1 v-if="userInfo.kyc == 0 || userInfo.kyc == 1" />
-        <Kyc2 v-if="userInfo.kyc == 2" />
+        <Loaidng :pageLoading="pageLoading" v-if="pageLoading" />
+        <KycStatus @next="nextStep" :kycInfo="kycInfo" v-if="step == 0" />
+        <Kyc1 @next="nextStep" :kycInfo="kycInfo" v-if="step == 1" />
+        <Kyc2 :kycInfo="kycInfo" v-if="step == 2" />
     </div>
 </template>
 
 <script setup>
-import { defineAsyncComponent, computed, onBeforeUnmount } from "vue"
+import { defineAsyncComponent, computed, onBeforeUnmount, ref } from "vue"
 import store from "@/store";
+import { _kycGet } from "@/api/api"
+import Loaidng from "@/components/Loaidng.vue";
+import { showLoadingToast, closeToast } from 'vant';
 
 const userInfo = computed(() => store.state.userInfo || {})
+const step = ref(-1) // 0-审核中或审核成功
+const nextStep = () => {
+    step.value++
+}
 
+
+const pageLoading = ref(true)
+const kycInfo = ref({})
+const getKyc = () => {
+    pageLoading.value = true
+    showLoadingToast({
+        duration: 0,
+        loadingType: 'spinner',
+    })
+    _kycGet().then(res => {
+        if (res.code == 200) {
+            pageLoading.value = false
+            kycInfo.value = res.data
+            console.error('---认证详情', kycInfo.value)
+            if (kycInfo.value.status == 'none' || kycInfo.value.status == 'failed') {
+                step.value = 1
+            } else {
+                step.value = 0
+            }
+        }
+    }).finally(() => {
+        closeToast()
+    })
+}
+getKyc()
 
 const Kyc1 = defineAsyncComponent(() =>
     import("./Kyc1.vue")
 );
 const Kyc2 = defineAsyncComponent(() =>
     import("./Kyc2.vue")
+);
+const KycStatus = defineAsyncComponent(() =>
+    import("./KycStatus.vue")
 );
 
 onBeforeUnmount(() => {

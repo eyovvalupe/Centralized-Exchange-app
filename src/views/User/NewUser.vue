@@ -3,7 +3,15 @@
     <div class="page page_user">
 
         <!-- 标题 -->
-        <!-- <div class="title">用户</div> -->
+        <div class="title">用户</div>
+
+        <div class="user-banner" @click="jump('register', false, { guest: 1 })" v-if="!token">
+            <img src="/static/img/user/bg.png" alt="banner">
+        </div>
+        <div v-else-if="userInfo.role == 'guest'" class="user-banner" @click="jump('kyc')">
+            <img src="/static/img/user/bg2.png" alt="banner">
+        </div>
+        <div v-else style="height:0.28rem"></div>
 
         <div class="user-login" v-if="token">
             <div style="display: flex;">
@@ -12,10 +20,23 @@
                     <span style="font-weight: 500;">{{ userInfo.username || '--' }}</span>
                     <div class="id">ID:23424</div>
                 </div>
-
             </div>
-
             <Icon name="arrow" class="arrow-right" />
+
+            <div class="user-login_navs">
+                <div class="user-login_nav">
+                    <div class="amount">0</div>
+                    <div>推荐用户</div>
+                </div>
+                <div class="user-login_nav">
+                    <div class="amount">0</div>
+                    <div>网络用户</div>
+                </div>
+                <div class="user-login_nav">
+                    <div class="amount">0</div>
+                    <div>推荐奖金</div>
+                </div>
+            </div>
         </div>
 
 
@@ -28,14 +49,7 @@
             <Icon name="arrow" class="arrow-right" />
         </div>
 
-        <div class="user-banner" @click="jump('register', false, { guest: 1 })" v-if="!token">
-            <img src="/static/img/user/bg.png" alt="banner">
-        </div>
-        <div v-else-if="userInfo.role == 'guest'" class="user-banner">
-            <img src="/static/img/user/bg.png" alt="banner">
-            <span style="position: absolute;top:0.5rem;left:0">todo：升级投资账户</span>
-        </div>
-        <div v-else style="height:0.28rem"></div>
+
 
 
         <div class="user-comman">
@@ -86,8 +100,8 @@
                     <img src="/static/img/user/iden.png" alt="">
                     <div style="display: flex;">
                         <span v-if="token">
-                            <span class="red-text" v-if="userInfo.kyc != 1 || userInfo.kyc != 2">未认证</span>
-                            <span class="red-text" v-else>已认证</span>
+                            <span class="red-text" v-if="userInfo.kyc != 1 && userInfo.kyc != 2">未认证</span>
+                            <span class="red-text" v-else style="color: #18B762;">已认证</span>
                         </span>
                         <Icon name="arrow" class="arrow-right" />
                     </div>
@@ -263,13 +277,15 @@ if (token.value) {
 
 <style lang="less" scoped>
 .page_user {
-    padding: 0rem 0.32rem 1.8rem 0.32rem;
+    padding: 0 0.32rem 3rem 0.32rem;
     position: relative;
+    height: 100%;
+    overflow-y: auto;
 
     .title {
         height: 1.12rem;
         color: #0D0D12;
-        font-size: 0.56rem;
+        font-size: 0.5rem;
         font-weight: 600;
         line-height: 1.12rem;
     }
@@ -286,6 +302,7 @@ if (token.value) {
 
     .user-banner {
         position: relative;
+        margin-top: -0.2rem;
 
         .banner-title {
             position: absolute;
@@ -298,13 +315,36 @@ if (token.value) {
 
     .user-login {
         background-color: #f2f3f8;
-        margin-top: 0.32rem;
+        margin-bottom: 0.32rem;
         padding: 0.3rem;
         padding-top: 0.18rem !important;
         border-radius: 0.2rem;
         display: flex;
         justify-content: space-between;
-        height: 1.6rem;
+        min-height: 1.6rem;
+        flex-wrap: wrap;
+
+        .user-login_navs {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.24rem;
+            color: #333333;
+            font-size: 0.24rem;
+            font-weight: 400;
+            margin-top: 0.2rem;
+            text-align: center;
+
+            .user-login_nav {
+                .amount {
+                    color: #000;
+                    font-size: 0.32rem;
+                    font-weight: 600;
+                    margin-bottom: 0.1rem;
+                }
+            }
+        }
 
         img {
             width: 0.96rem !important;
@@ -327,19 +367,26 @@ if (token.value) {
         }
 
         .user-login-block {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding-top: 0.04rem;
+
             span {
                 line-height: 0.6rem;
-                margin-bottom: 0.14rem;
             }
 
             .id {
-                color: #014CFA;
+                color: #90939C;
                 font-weight: 400;
                 font-size: 0.28rem;
-                line-height: 0.4rem;
-                background-color: rgba(1, 76, 250, 0.08);
+                height: 0.44rem;
+                line-height: 0.44rem;
+                background-color: #E1E4ED;
                 padding: 0 0.1rem;
                 border-radius: 0.04rem;
+                margin-top: 0.06rem;
+                margin-left: 0.4rem;
             }
         }
     }
@@ -515,7 +562,7 @@ if (token.value) {
     // }
     .loginout {
         width: 100%;
-        height: 1.12rem;
+        height: 1.5rem;
         border-radius: 1.3rem;
         background-color: #fff;
         display: flex;
