@@ -4,7 +4,7 @@
         <Loaidng :pageLoading="pageLoading" v-if="pageLoading" />
         <KycStatus @next="nextStep" :kycInfo="kycInfo" v-if="step == 0" />
         <Kyc1 @next="nextStep" :kycInfo="kycInfo" v-if="step == 1" />
-        <Kyc2 :kycInfo="kycInfo" v-if="step == 2" />
+        <Kyc2 @pre="preStep" :kycInfo="kycInfo" v-if="step == 2" />
     </div>
 </template>
 
@@ -20,6 +20,9 @@ const step = ref(-1) // 0-审核中或审核成功
 const nextStep = () => {
     step.value++
 }
+const preStep = () => {
+    step.value--
+}
 
 
 const pageLoading = ref(true)
@@ -34,7 +37,6 @@ const getKyc = () => {
         if (res.code == 200) {
             pageLoading.value = false
             kycInfo.value = res.data
-            console.error('---认证详情', kycInfo.value)
             if (kycInfo.value.status == 'none' || kycInfo.value.status == 'failed') {
                 step.value = 1
             } else {

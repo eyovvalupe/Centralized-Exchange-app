@@ -1,7 +1,7 @@
 <!-- IPO -->
 <template>
     <div class="page_ipo">
-        <div class="filter_box" @click="showPopup = true">
+        <div v-show="props.page != 'home'" class="filter_box" @click="showPopup = true">
             <span>{{ selectedOptiontext }}</span>
             <div class="filter_icon">
                 <img src="/static/img/trade/down.png" alt="img">
@@ -136,6 +136,10 @@ const props = defineProps({
     scrollDom: {
         type: String,
         default: '.page'
+    },
+    page: {
+        type: String,
+        default: ''
     }
 })
 

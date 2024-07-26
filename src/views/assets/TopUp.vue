@@ -13,6 +13,14 @@
 <script setup>
 import Top from "@/components/Top.vue"
 import router from "@/router"
+import { onMounted } from "vue"
+
+onMounted(() => {
+    setTimeout(() => {
+        router.replace({ name: 'topUpCrypto' })
+    }, 0)
+})
+
 </script>
 
 <style lang="less" scoped>

@@ -10,7 +10,7 @@
           <Iconfonts v-if="!token" :name="'icon-yonghuhui'" :size="0.52" />
         </div>
         <div style="flex: 1"></div>
-        <div class="func_box">
+        <div class="func_box" @click="jump('search')">
           <Iconfonts :name="'icon-sousuo'" :size="0.36" :color="'#000'" />
         </div>
         <div class="func_box">
@@ -35,8 +35,8 @@
       </div>
 
       <div class="btns">
-        <div class="ripple_button btn">快速交易</div>
-        <div class="ripple_button btn active_btn">充值</div>
+        <div class="ripple_button btn" @click="jump('trade')">快速交易</div>
+        <div class="ripple_button btn active_btn" @click="jump('topUp')">充值</div>
       </div>
     </div>
 
@@ -49,21 +49,25 @@
     <Banner v-if="activated" class="home_banner" />
 
     <!-- Tabs -->
-    <Tabs v-if="!pageLoading" type="card" class="tabs" v-model:active="activeTab" animated shrink>
-      <Tab :title="'推荐'">
-        <div>推荐</div>
-      </Tab>
+    <Tabs @change="tabChange" v-if="!pageLoading" type="card" class="tabs" v-model:active="activeTab" animated shrink>
       <Tab :title="'股票'">
-        <div>股票</div>
-      </Tab>
-      <Tab :title="'量化'">
-        <div>量化</div>
+        <Loaidng v-if="commendLoading" :loading="commendLoading" />
+        <div>
+          <StockItem :item="item" v-for="(item, i) in marketRecommndStockList" :key="'s_' + i" />
+        </div>
+        <NoData v-if="!commendLoading && !marketRecommndStockList.length" />
       </Tab>
       <Tab :title="'合约'">
-        <div>合约</div>
+        <Loaidng v-if="commendLoading" :loading="commendLoading" />
+        <div>
+          <StockItem :item="item" v-for="(item, i) in marketRecommndContractList" :key="'c_' + i" />
+        </div>
+        <NoData v-if="!commendLoading && !marketRecommndContractList.length" />
       </Tab>
       <Tab :title="'IPO'">
-        <div>IPO</div>
+        <div>
+          <IPO ref="ipoRef" :page="'home'" />
+        </div>
       </Tab>
     </Tabs>
 
@@ -71,13 +75,18 @@
 </template>
 
 <script setup>
+import StockItem from "@/components/StockItem.vue"
 import { onDeactivated, ref, computed, onActivated } from "vue"
 import Banner from "./components/Banner.vue"
 import { useSocket } from '@/utils/ws'
 import store from "@/store";
 import { Tab, Tabs } from 'vant';
-import { _sort } from "@/api/api"
+import { _sort, _watchlistDefault } from "@/api/api"
 import Iconfonts from "@/components/Iconfonts.vue"
+import router from "@/router";
+import IPO from "../Market/components/IPO.vue"
+import NoData from "@/components/NoData.vue"
+import Loaidng from "@/components/Loaidng.vue"
 
 const openEye = ref(false)
 
@@ -103,6 +112,17 @@ const getAssets = () => {
 }
 getAssets()
 
+
+const ipoRef = ref()
+const ipoDataList = computed(() => store.state.ipoDataList || [])
+const tabChange = (val) => {
+  if (val == 2 && !ipoDataList.value.length) {
+    setTimeout(() => {
+      ipoRef.value && ipoRef.value.init()
+    }, 500)
+  }
+}
+
 const activated = ref(false)
 onActivated(() => {
   activated.value = true
@@ -118,6 +138,70 @@ onDeactivated(() => {
     console.error('取消订阅')
   })
 })
+
+
+// 获取推荐数据
+const commendLoading = ref(false)
+const marketRecommndStockList = computed(() => store.state.marketRecommndStockList || [])
+const marketRecommndContractList = computed(() => store.state.marketRecommndContractList || [])
+const marketRecommndList = computed(() => store.state.marketRecommndList || [])
+const getRecommendData = () => {
+  commendLoading.value = true
+  _watchlistDefault().then(res => {
+    if (res.data?.chart) {
+      const rs = res.data.chart.map(item => {
+        const target = marketRecommndList.value.find(a => a.symbol == item.symbol)
+        if (target) {
+          Object.assign(target, item)
+          item = target
+        }
+        return item
+      })
+      store.commit('setMarketRecommndList', rs)
+    }
+    if (res.data?.stock) {
+      const rs = res.data.stock.map(item => {
+        const target = marketRecommndStockList.value.find(a => a.symbol == item.symbol)
+        if (target) {
+          Object.assign(target, item)
+          item = target
+        }
+        return item
+      })
+      store.commit('setMarketRecommndStockList', rs)
+    }
+    if (res.data?.contract) {
+      const rs = res.data.contract.map(item => {
+        const target = marketRecommndContractList.value.find(a => a.symbol == item.symbol)
+        if (target) {
+          Object.assign(target, item)
+          item = target
+        }
+        return item
+      })
+      store.commit('setMarketRecommndContractList', rs)
+    }
+    setTimeout(() => {
+      subs([...(res.data?.chart || []), ...(res.data?.stock || []), ...(res.data?.contract || [])])
+    }, 500)
+  }).finally(() => {
+    commendLoading.value = false
+  })
+}
+getRecommendData()
+
+const subs = (arr) => { // 订阅 ws
+  store.commit('setMarketWatchKeys', arr.map(item => item.symbol) || [])
+  store.dispatch('subList', {})
+}
+
+
+// 跳转
+const jump = (name) => {
+  router.push({
+    name
+  })
+}
 </script>
 
 <style lang="less" scoped>

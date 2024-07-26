@@ -6,7 +6,7 @@ const { startSocket } = useSocket()
 
 // 不同页面对应的监听列表 key
 const pageKeys = {
-    'home': ['marketRecommndList'],
+    'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList'],
     'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList'],
     'trade': ['marketWatchList', 'marketRankList']
 }
@@ -22,6 +22,8 @@ export default {
         marketUpList: [], // 首页涨幅列表
         marketDownList: [], // 首页跌幅列表
         marketRecommndList: [], // 首页推荐列表
+        marketRecommndContractList: [], // 首页合约列表
+        marketRecommndStockList: [], // 首页股票列表
         marketStockList: [], // 股票页列表
         marketSrockRecommendList: [], // 推荐股票列表
         marketRankList: [], // 排行列表
@@ -44,6 +46,12 @@ export default {
         },
         setMarketRecommndList(state, data) {
             state.marketRecommndList = data;
+        },
+        setMarketRecommndStockList(state, data) {
+            state.marketRecommndStockList = data;
+        },
+        setMarketRecommndContractList(state, data) {
+            state.marketRecommndContractList = data;
         },
         setMarketStockList(state, data) {
             state.marketStockList = data;
@@ -92,9 +100,11 @@ export default {
     actions: {
         subList({ commit, state }, { commitKey, listKey }) {
             let proxyKeys = []
-            const proxyListValue = state[listKey]
-            if (proxyListValue) {
-                proxyKeys = proxyListValue.map(item => item.symbol)
+            if (listKey) {
+                const proxyListValue = state[listKey]
+                if (proxyListValue) {
+                    proxyKeys = proxyListValue.map(item => item.symbol)
+                }
             }
             const socket = startSocket(() => {
                 const keys = Array.from(new Set([

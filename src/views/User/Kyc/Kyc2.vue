@@ -1,11 +1,7 @@
 <!-- 身份认证2 -->
 <template>
     <div class="kyc_2">
-        <div class="steps">
-            <div class="step finish_step">1</div>
-            <div class="line"></div>
-            <div class="step curr_step">2</div>
-        </div>
+
         <Top :title="''">
             <!-- 从注册来的 -->
             <template #right v-if="from == 'register'">
@@ -23,9 +19,22 @@
                 </div>
             </template>
         </Top>
+        <!-- 查看模式头部 -->
+        <Tabs @change="preStep" class="tabs" v-if="checkMode" style="width:100%" :lazy-render="false"
+            v-model:active="activeTab" sticky animated shrink>
+            <Tab :title="'身份信息'"></Tab>
+            <Tab :title="'照片'"></Tab>
+        </Tabs>
 
-        <div class="title">验证您的身份</div>
+        <!-- 表单模式头部 -->
+        <div class="steps" v-if="!checkMode">
+            <div class="step finish_step">1</div>
+            <div class="line"></div>
+            <div class="step curr_step">2</div>
+        </div>
+        <div class="title" v-if="!checkMode">验证您的身份</div>
 
+        <!-- 表单 -->
         <!-- 上传元素 -->
         <div class="item">
             <!-- 没有上传 -->
@@ -171,25 +180,24 @@
         </div> -->
 
         <!-- 联系客服 -->
-        <div class="server_link">
+        <div class="server_link" v-if="!checkMode">
             联系<span>在线客服</span>，通过邮件发送照片
         </div>
 
         <!-- 提交 -->
         <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failed'" color="#014CFA" @click="submit"
             :loading="loading" :disabled="disabled" round class="submit" type="primary">完成</Button>
-        <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" color="#014CFA" @click="nextStep"
-            :loading="loading" round class="submit" type="primary">完成</Button>
+        <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" color="#014CFA" @click="nextStep"
+            :loading="loading" round class="submit" type="primary">完成</Button> -->
     </div>
 </template>
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Uploader, Button, showToast } from 'vant';
+import { Uploader, Button, showToast, Tabs, Tab } from 'vant';
 import { ref, computed } from "vue";
 import { UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config.js"
 import { _fetchWithTimeout } from "@/api/upload"
-import axios from "axios"
 import Loaidng from "@/components/Loaidng.vue"
 import { _compressImg } from "@/utils/index"
 import { _kyc2, _kycGet } from "@/api/api"
@@ -199,6 +207,7 @@ import { useRoute } from "vue-router"
 const route = useRoute()
 const from = ref(route.query.from) // 'register'-表示从注册来
 
+const activeTab = ref(1)
 const props = defineProps({
     kycInfo: {
         type: Object,
@@ -268,6 +277,10 @@ const nextStep = () => {
     router.replace({
         name: 'user'
     })
+}
+const emits = defineEmits(['pre'])
+const preStep = () => {
+    emits('pre')
 }
 
 
@@ -565,6 +578,23 @@ const afterRead = (file, { name }) => {
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+    }
+
+    .tabs {
+        margin-bottom: 0.4rem;
+
+        :deep(.van-tabs__nav) {
+            &::after {
+                content: "";
+                width: 100%;
+                height: 0.02rem;
+                background-color: #3b82f6;
+                position: absolute;
+                bottom: 0.32rem;
+                left: 0;
+                opacity: 0.3;
+            }
         }
     }
 }

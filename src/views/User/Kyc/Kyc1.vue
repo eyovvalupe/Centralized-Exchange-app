@@ -1,11 +1,7 @@
 <!-- 身份认证1 -->
 <template>
     <div class="kyc_1">
-        <div class="steps">
-            <div class="step curr_step">1</div>
-            <div class="line"></div>
-            <div class="step">2</div>
-        </div>
+
         <Top :title="''">
             <!-- 从注册来的 -->
             <template #right v-if="from == 'register'">
@@ -23,27 +19,41 @@
                 </div>
             </template>
         </Top>
+        <!-- 查看模式头部 -->
+        <Tabs @change="nextStep" class="tabs" v-if="checkMode" style="width:100%" :lazy-render="false"
+            v-model:active="activeTab" sticky animated shrink>
+            <Tab :title="'身份信息'"></Tab>
+            <Tab :title="'照片'"></Tab>
+        </Tabs>
+        <!-- 表单模式头部 -->
+        <div class="steps" v-if="!checkMode">
+            <div class="step curr_step">1</div>
+            <div class="line"></div>
+            <div class="step">2</div>
+        </div>
+        <div class="title" v-if="!checkMode">验证您的身份</div>
+        <div class="tip" v-if="!checkMode">根据金融法规，我们需要询问这个问题，确保您的详细信息与您的政府签发的身份证件完全匹配。</div>
 
-        <div class="title">验证您的身份</div>
-        <div class="tip">根据金融法规，我们需要询问这个问题，确保您的详细信息与您的政府签发的身份证件完全匹配。</div>
 
+        <!-- 表单 -->
         <div class="subtitle">法定姓名</div>
-        <div class="item">
+        <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }">
             <input :disabled="checkMode" v-model.trim="form.name" class="ipt" type="text" placeholder="法定姓名"
                 maxlength="20">
         </div>
         <div class="subtitle">证件号码</div>
-        <div class="item">
+        <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }">
             <input :disabled="checkMode" v-model.trim="form.idnum" class="ipt" type="text" placeholder="证件号码"
                 maxlength="20">
         </div>
         <div class="subtitle">出生日期</div>
-        <div class="item" @click="checkMode ? showBottom = false : showBottom = true">{{ form.birthday }}</div>
+        <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
+            @click="checkMode ? showBottom = false : showBottom = true">{{ form.birthday }}</div>
 
         <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failed'" @click="submit" :loading="loading"
             :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
-        <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="#014CFA" class="submit"
-            type="primary" @click="next">继续</Button>
+        <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="#014CFA" class="submit"
+            type="primary" @click="next">继续</Button> -->
 
 
         <!-- 日期选择 -->
@@ -56,12 +66,12 @@
 
 <script setup>
 import Top from '@/components/Top.vue';
-import { Button, Popup, DatePicker } from "vant"
+import { Button, Popup, DatePicker, Tabs, Tab } from "vant"
 import { ref, computed } from 'vue'
 import { _kyc1 } from "@/api/api"
-import store from '@/store';
 import { useRoute } from "vue-router"
 
+const activeTab = ref(0)
 const props = defineProps({
     kycInfo: {
         type: Object,
@@ -245,6 +255,23 @@ const nextStep = () => {
 
         .status_fail {
             color: #E8503A;
+        }
+    }
+
+    .tabs {
+        margin-bottom: 0.4rem;
+
+        :deep(.van-tabs__nav) {
+            &::after {
+                content: "";
+                width: 100%;
+                height: 0.02rem;
+                background-color: #3b82f6;
+                position: absolute;
+                bottom: 0.32rem;
+                left: 0;
+                opacity: 0.3;
+            }
         }
     }
 }

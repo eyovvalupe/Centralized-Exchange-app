@@ -81,6 +81,9 @@ instance.interceptors.response.use(
       if (!error.config) return Promise.reject(error);
       error.config._retryTimes = error.config._retryTimes ? error.config._retryTimes + 1 : 1
       if (error.config._retryTimes > 3) return Promise.reject(error); // 重试3次
+      try {
+        error.config.data = JSON.parse(error.config.data)
+      } catch { }
       return instance(error.config);
     } else {
       showToast("网络异常,请重试");

@@ -211,5 +211,4 @@ watch(token, () => {
 .opacity-leave-to {
   opacity: 0;
 }
-
 </style>

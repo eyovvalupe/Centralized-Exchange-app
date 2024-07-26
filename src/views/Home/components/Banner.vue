@@ -22,7 +22,6 @@
 import { Swipe, SwipeItem } from 'vant';
 import { ref, onMounted, computed } from "vue"
 import RecommendItem from "./RecommendItem.vue"
-import { _watchlistDefault } from "@/api/api"
 import store from '@/store';
 
 
@@ -52,32 +51,6 @@ const showList = computed(() => {
     }
     return arr
 })
-const getRecommendData = () => {
-    _watchlistDefault().then(res => {
-        if (res.data?.stock) {
-            const rs = res.data.stock.map(item => {
-                const target = marketRecommndList.value.find(a => a.symbol == item.symbol)
-                if (target) {
-                    Object.assign(target, item)
-                    item = target
-                }
-                return item
-            })
-            store.commit('setMarketRecommndList', rs)
-            setTimeout(() => {
-                subs()
-            }, 500)
-        }
-    })
-}
-getRecommendData()
-
-const subs = () => { // 订阅 ws
-    store.dispatch('subList', {
-        commitKey: 'setMarketRecommndList',
-        listKey: 'marketRecommndList',
-    })
-}
 
 // 轮播
 const currIndex = ref(0)
