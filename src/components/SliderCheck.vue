@@ -45,6 +45,7 @@ const changeSlider = (e) => {
 }
 
 const open = () => {
+    value.value = 0
     showCenter.value = true
 }
 

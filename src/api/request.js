@@ -8,7 +8,7 @@ import { BASE_ADDRESS } from "@/config"
 const instance = axios.create({
   // baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
   baseURL: BASE_ADDRESS,
-  timeout: 1500,
+  timeout: 15000,
   transformRequest: [function (data, headers) {
     if (headers['Content-Type'] == "multipart/form-data") return data
     return JSON.stringify(data);
