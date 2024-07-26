@@ -8,6 +8,7 @@ import { BASE_ADDRESS } from "@/config"
 const instance = axios.create({
   // baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
   baseURL: BASE_ADDRESS,
+  timeout: 1500,
   transformRequest: [function (data, headers) {
     if (headers['Content-Type'] == "multipart/form-data") return data
     return JSON.stringify(data);
@@ -75,8 +76,15 @@ instance.interceptors.response.use(
     }
     return res || {};
   },
-  function (error) {
-    return Promise.reject(error);
+  async function (error) {
+    if (error.config.custom.retry) {
+      if (!error.config) return Promise.reject(error);
+      error.config._retryTimes = error.config._retryTimes ? error.config._retryTimes + 1 : 1
+      if (error.config._retryTimes > 3) return Promise.reject(error); // 重试3次
+      return instance(error.config);
+    } else {
+      Promise.reject(error);
+    }
   }
 );
 

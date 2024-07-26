@@ -22,137 +22,36 @@
       }
     }
 
-    @-webkit-keyframes preloadingAni {
-      0% {
-        transform: translateX(-50%) translateY(-50%) rotate(0deg);
-      }
-
-      100% {
-        transform: translateX(-50%) translateY(-50%) rotate(360deg);
-      }
-    }
-
-    .preloading-box {
+    .preloading_circle {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #eee;
+      border-radius: 50%;
       position: absolute;
-      height: 74px;
-      width: 74px;
-      top: 50%;
+      top: 38%;
       left: 50%;
-      animation: preloadingAni 3s linear infinite;
+      transform: translateX(-50%) translateY(-50%);
+      animation: preloadingAni 2s linear infinite;
     }
 
-    .preloading-item {
-      width: 6px;
-      height: 74px;
+    .preloading_circle::before {
+      content: '';
+      width: 100%;
+      height: 100%;
+      border: 6px solid #014CFA;
+      border-color: #014CFA transparent transparent transparent;
+      border-radius: 50%;
       position: absolute;
-      top: 50%;
-      left: 50%;
-      display: flex;
-      justify-content: flex-end;
-    }
-
-    .preloading-item:nth-child(1) {
-      transform: translateX(-50%) translateY(-50%) rotate(0);
-    }
-
-    .preloading-item:nth-child(2) {
-      transform: translateX(-50%) translateY(-50%) rotate(30deg);
-    }
-
-    .preloading-item:nth-child(3) {
-      transform: translateX(-50%) translateY(-50%) rotate(60deg);
-    }
-
-    .preloading-item:nth-child(4) {
-      transform: translateX(-50%) translateY(-50%) rotate(90deg);
-    }
-
-    .preloading-item:nth-child(5) {
-      transform: translateX(-50%) translateY(-50%) rotate(120deg);
-    }
-
-    .preloading-item:nth-child(6) {
-      transform: translateX(-50%) translateY(-50%) rotate(150deg);
-    }
-
-    .preloading-item:nth-child(7) {
-      transform: translateX(-50%) translateY(-50%) rotate(180deg);
-    }
-
-    .preloading-item:nth-child(8) {
-      transform: translateX(-50%) translateY(-50%) rotate(210deg);
-    }
-
-    .preloading-item:nth-child(9) {
-      transform: translateX(-50%) translateY(-50%) rotate(240deg);
-    }
-
-    .preloading-item:nth-child(10) {
-      transform: translateX(-50%) translateY(-50%) rotate(270deg);
-    }
-
-    .preloading-item:nth-child(11) {
-      transform: translateX(-50%) translateY(-50%) rotate(300deg);
-    }
-
-    .preloading-item:nth-child(12) {
-      transform: translateX(-50%) translateY(-50%) rotate(330deg);
-    }
-
-    .preloading-default {
-      width: 6px;
-      height: 16px;
-      border-radius: 3px;
-      background-color: #ededed;
-    }
-
-    .preloading-color {
-      background-color: #999999;
+      top: -6px;
+      left: -6px;
+      transform: rotate(120deg);
     }
   </style>
 </head>
 
 <body>
   <div id="app">
-    <div class="preloading-box">
-      <div class="preloading-item">
-        <div class="preloading-default preloading-color"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default preloading-color"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default preloading-color"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default preloading-color"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default preloading-color"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default preloading-color"></div>
-      </div>
-
-      <div class="preloading-item">
-        <div class="preloading-default"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default"></div>
-      </div>
-      <div class="preloading-item">
-        <div class="preloading-default"></div>
-      </div>
-    </div>
+    <div class="preloading_circle"></div>
   </div>
   <script>
     // 解析参数

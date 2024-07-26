@@ -186,6 +186,7 @@ import Top from '@/components/Top.vue';
 import { Uploader, Button, showLoadingToast, closeToast, showToast } from 'vant';
 import { ref, computed } from "vue";
 import { UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config.js"
+import { _fetchWithTimeout } from "@/api/upload"
 import axios from "axios"
 import Loaidng from "@/components/Loaidng.vue"
 import { _compressImg } from "@/utils/index"
@@ -255,6 +256,7 @@ const getKyc = () => {
         loadingType: 'spinner',
     })
     _kycGet().then(res => {
+        console.error('_____', res)
         if (res.code == 200) {
             pageLoading.value = false
             kycInfo.value = res.data
@@ -300,16 +302,23 @@ const afterRead = (file, { name }) => {
         files.value[name].loading = true
         _compressImg(reader.result, ratio, (base64Img) => {
             const base64result = base64Img.substr(base64Img.indexOf(',') + 1);
-            axios.put(apiUrl, JSON.stringify({ content: base64result, message: `upload ${fileName}` }), {
+
+            _fetchWithTimeout(apiUrl, {
+                method: 'PUT',
                 headers: {
-                    Authorization: UPLOAD_TOKEN
-                }
-            }).then(res => {
-                const { content: { download_url } } = res.data
-                files.value[name].url = download_url
-            }).finally(() => {
-                files.value[name].loading = false
-            })
+                    'Authorization': UPLOAD_TOKEN,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: base64result, message: `upload ${fileName}`
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    const { content: { download_url } } = data
+                    files.value[name].url = download_url
+                }).finally(() => {
+                    files.value[name].loading = false
+                })
         })
     }
     reader.readAsDataURL(file.file);

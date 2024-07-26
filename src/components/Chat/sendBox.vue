@@ -14,6 +14,7 @@ import { computed, ref } from 'vue'
 import { serviceChat } from '@/utils/serviceChat'
 import { showToast } from "vant"
 import { UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config.js"
+import { _fetchWithTimeout } from "@/api/upload"
 import { randomFileName, _compressImg } from "@/utils"
 import storeUser from "@/store"
 import storeChat from "@/store/chat"
@@ -54,7 +55,7 @@ const uploadImg = (event) => {
     }
     _compressImg(reader.result, ratio, (base64Img) => {
       const base64result = base64Img.substr(base64Img.indexOf(',') + 1);
-      fetch(`${apiUrl}`, {
+      _fetchWithTimeout(`${apiUrl}`, {
         method: 'PUT',
         headers: {
           'Authorization': UPLOAD_TOKEN,
