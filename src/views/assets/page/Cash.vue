@@ -4,7 +4,7 @@
         <!-- 总览 -->
         <div class="overview">
             <div class="top">
-                <div class="title">总资金</div>
+                <div class="title">现金账户</div>
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
@@ -28,7 +28,7 @@
                     <span>提现</span>
                 </div> -->
                 <div class="nav">
-                    <div>现金余额 </div>
+                    <div>现金 </div>
                     <div class="num" style="margin-left:0.1rem">{{ hidden ? '***' : (assets.money || '0.00') }}</div>
                 </div>
                 <div class="line"></div>
@@ -123,7 +123,7 @@
                 </div>
                 <div class="amount" :class="{ 'open_amount': switchs[i + currencyWallet.length] == true }">{{
                     item.amount
-                }}</div>
+                    }}</div>
                 <div class="more" :class="{ 'open_tab': switchs[i + currencyWallet.length] == true }">
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>

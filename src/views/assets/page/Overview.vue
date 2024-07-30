@@ -15,19 +15,9 @@
             </div>
             <div class="navs">
                 <div class="nav">
-                    <div>现金</div>
-                    <div class="num">{{ hidden ? '****' : (assets.money || '0.00') }}</div>
-                </div>
-                <div class="line"></div>
-                <div class="nav">
-                    <div>持仓金额</div>
-                    <div class="num">{{ hidden ? '****' : (assets.margin || '0.00') }}</div>
-                </div>
-                <div class="line"></div>
-                <div class="nav">
                     <div>
-                        <span>借贷</span>
-                        <span class="num" style="margin-left:0.15rem">{{ hidden ? '****' : (assets.loan || '0.00')
+                        <span>现金</span>
+                        <span class="num" style="margin-left:0.15rem">{{ hidden ? '****' : (assets.money || '0.00')
                             }}</span>
                     </div>
                     <div>
@@ -35,6 +25,16 @@
                         <span class="num" style="margin-left:0.15rem">{{ hidden ? '****' : (assets.frozen || '0.00')
                             }}</span>
                     </div>
+                </div>
+                <div class="line"></div>
+                <div class="nav">
+                    <div>持仓金额</div>
+                    <div class="num">{{ hidden ? '****' : (assets.ordervalue || '0.00') }}</div>
+                </div>
+                <div class="line"></div>
+                <div class="nav">
+                    <div>借贷</div>
+                    <div class="num">{{ hidden ? '****' : (assets.loan || '0.00') }}</div>
                 </div>
             </div>
         </div>
@@ -52,16 +52,13 @@
             <div class=" btn btn2" @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="color_text">
-                        <!-- <div class="withdraw_icon">
-                            <img src="/static/img/assets/withdraw_icon.svg" alt="icon">
-                        </div> -->
                         <span style=" font-size: 0.2rem;font-weight: 400;color:#666;margin-right:0.04rem">可提现</span>
-                        <span>{{ (assets.money || '0.00') }}</span>
+                        <span>{{ (new Decimal(assets.money).add(assets.frozen).toFixed(2) || '0.00') }}</span>
                     </div>
-                    <div>
+                    <!-- <div>
                         <span class="tip">冻结</span>
                         <span>{{ (assets.frozen || '0.00') }}</span>
-                    </div>
+                    </div> -->
 
                     <div class="process">
                         <div class="left">
@@ -148,7 +145,8 @@
                     <div>股票</div>
                     <div class="tab_info">股票账户余额+持仓金额</div>
                 </div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ (assets.stock || '0.00') }}
+                <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ new
+                    Decimal(assets.stock).add(assets.stockvalue) }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
                     <img src="/static/img/common/menu.png" alt="img">
@@ -176,7 +174,7 @@
                     <div>合约</div>
                     <div class="tab_info">合约账户余额+持仓金额</div>
                 </div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ (assets.contract || '0.00') }}
+                <div class="amount" :class="{ 'open_amount': rightSwitch3 == true }">{{ ('0.00') }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch3 == true }">
                     <img src="/static/img/common/menu.png" alt="img">
@@ -236,6 +234,7 @@ import { _assets } from "@/api/api"
 import store from "@/store"
 import router from "@/router"
 import AccountCheck from "@/components/AccountCheck.vue"
+import Decimal from 'decimal.js';
 
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
@@ -332,7 +331,7 @@ const jump = (name, check = false, query) => {
         .navs {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: space-around;
             line-height: 0.44rem;
 
             .line {
@@ -346,7 +345,6 @@ const jump = (name, check = false, query) => {
                 font-weight: 400;
                 font-size: 0.24rem;
                 text-align: center;
-                flex: 1;
             }
         }
 

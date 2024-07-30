@@ -4,34 +4,34 @@
         <!-- 总览 -->
         <div class="overview">
             <div class="top">
-                <div class="title">持仓资金</div>
+                <div class="title">股票资产</div>
                 <div class="eyes" @click="hidden = !hidden">
                     <Icon v-show="!hidden" name="eye-o" />
                     <Icon v-show="hidden" name="closed-eye" />
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : assets.stock }}</span>
+                <span>{{ hidden ? '****' : new Decimal(assets.stock).add(assets.stockvalue) }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
-                    <div>现金</div>
-                    <div class="num">{{ hidden ? '***' : assets.money }}</div>
+                    <div>股票账户余额</div>
+                    <div class="num">{{ hidden ? '***' : assets.stock }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav" @click="jump('loanList', { tab: 1 })">
                     <div>
-                        <span>借贷</span>
+                        <span>股票持仓金额</span>
 
                         <div class="hint" v-if="loanNum">{{ loanNum }}</div>
                     </div>
-                    <div class="num">{{ hidden ? '***' : assets.loan }}</div>
+                    <div class="num">{{ hidden ? '***' : assets.stockvalue }}</div>
                 </div>
             </div>
 
             <!-- 借贷按钮 -->
             <div class="loan_btn" @click="jump('loanList')">借贷申请</div>
-            <div class="loan_max">可借资金 0.00</div>
+            <div class="loan_max">可借资金 {{ hidden ? '***' : maxLoan }}</div>
         </div>
 
         <div class="subtitle">持仓</div>
@@ -54,12 +54,22 @@ import { Icon } from "vant"
 import StockItem from "./components/StockItem.vue"
 import router from "@/router"
 import store from "@/store"
+import Decimal from 'decimal.js';
+import { _loanPara } from '@/api/api'
 
 store.dispatch('updateOrderHint')
 
 const hidden = ref(false)
 const assets = computed(() => store.state.assets || {})
-// const wallet = computed(() => store.state.wallet || [])
+const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
+const maxLoan = computed(() => {
+    if (lever.value.length) {
+        const x = lever.value[lever.value.length - 1]
+        return new Decimal(mainWallet.value.amount).mul(x)
+    } else {
+        return '--'
+    }
+})
 const loanNum = computed(() => store.state.loanNum || 0)
 
 const jump = (name, query) => {
@@ -68,6 +78,23 @@ const jump = (name, query) => {
         query
     })
 }
+
+
+
+// 获取借贷配置
+const lever = ref([])
+try {
+    lever.value = JSON.parse(sessionStorage.getItem('lever') || '[]')
+} catch { }
+const getConfig = () => {
+    _loanPara().then(res => {
+        if (res.code == 200) {
+            lever.value = res.data.lever.split(',')
+            sessionStorage.setItem('lever', JSON.stringify(lever.value))
+        }
+    })
+}
+getConfig()
 </script>
 
 <style lang="less" scoped>

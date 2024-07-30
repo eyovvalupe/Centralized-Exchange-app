@@ -1,6 +1,6 @@
-<!-- IPO账户 -->
+<!-- 合约账户 -->
 <template>
-    <div class="page_assets_ipo">
+    <div class="page_assets_contract">
         <!-- 总览 -->
         <div class="overview">
             <div class="top">
@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : assets.ipo }}</span>
+                <span>{{ hidden ? '****' : (assets.contract || '0') }}</span>
             </div>
         </div>
 
@@ -29,7 +29,7 @@ const assets = computed(() => store.state.assets || {})
 </script>
 
 <style lang="less" scoped>
-.page_assets_ipo {
+.page_assets_contract {
     .overview {
         background-size: 100% 100%;
         margin: 0 0.32rem 0.36rem 0.32rem;

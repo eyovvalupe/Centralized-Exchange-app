@@ -11,10 +11,6 @@
                 <span>市场涨跌分布</span>
                 <span v-if="!overviewLoading || count" style="color: #121826;margin-left: 0.1rem">总计 {{ count }}</span>
             </div>
-            <!-- <div class="total_subtitle">
-                <div class="percent">66</div>
-                <span>今天</span>
-            </div> -->
             <Loading v-if="overviewLoading && !count" :loading="overviewLoading" :type="'spinner'" />
             <div class="table_box" v-if="!overviewLoading || count">
                 <div class="table_list">

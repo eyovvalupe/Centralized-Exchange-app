@@ -54,7 +54,7 @@
       <Popup style="background-color: rgba(0,0,0,0);" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
         v-model:show="showPopupInfo" position="bottom" closeable>
         <div class="ipo_stock_detail">
-          <div class="detail_title">IPO详情</div>
+          <div class="detail_title">中签详情</div>
 
           <div class="detail_item">
             <div class="name">{{ currDetail.company_name }}</div>

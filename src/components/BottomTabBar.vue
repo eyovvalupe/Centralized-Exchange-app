@@ -55,7 +55,9 @@ const handleClick = (item, e) => {
     router.push({
         name: item.route
     })
-
+    if (item.route == 'assets') {
+        store.dispatch('updateAssets')
+    }
 }
 
 const checkActive = item => {

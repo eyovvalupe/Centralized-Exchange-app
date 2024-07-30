@@ -69,7 +69,7 @@
                         </div>
                     </template>
                     <div class="tab_body">
-                        合约
+                        <Contract />
                     </div>
                 </Tab>
                 <Tab name="ipo">
@@ -100,6 +100,7 @@ import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
 import IPO from "./page/IPO.vue"
+import Contract from "./page/Contract.vue"
 import RecordList from "@/components/RecordList.vue"
 import store from "@/store"
 
