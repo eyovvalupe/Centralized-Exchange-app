@@ -194,12 +194,12 @@ const goRegister = () => {
 
 
 // 预加载页面
-store.commit('setPageLoading', true)
+// store.commit('setPageLoading', true)
 Promise.all([
   import('@/views/Public/Register.vue'),
   import('@/views/Public/Fogot.vue'),
 ]).finally(() => {
-  store.commit('setPageLoading', false)
+  // store.commit('setPageLoading', false)
 })
 
 

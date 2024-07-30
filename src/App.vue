@@ -1,7 +1,8 @@
 <template>
   <router-view v-slot="{ Component }">
-    <Loading :color="'#1989fa'" :type="'circular'" v-show="pageLoading" size="48"
-      style="position: fixed;top:30%;left:50%;transform: translateX(-50%) translateY(-50%);" :loading="pageLoading" />
+    <div class="full_page_loading" v-show="pageLoading">
+      <img src="/static/img/logo.png" alt="logo">
+    </div>
     <div class="app_scroll" v-show="!pageLoading">
       <transition :name="transitionName">
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
@@ -21,7 +22,6 @@ import { defineAsyncComponent, computed, watch, onMounted } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
 import { Popup } from 'vant';
-import Loading from "@/components/Loaidng.vue";
 // import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
 import { serviceChat } from '@/utils/serviceChat'
@@ -63,7 +63,7 @@ store.commit('setPageLoading', true)
 Promise.all([
   import('@/views/Home/Home.vue'),
   import('@/views/Market/Market.vue'),
-  import('@/views/User/User.vue'),
+  import('@/views/User/NewUser.vue'),
   import('@/views/trade/trade.vue'),
   import('@/views/Assets/Assets.vue'),
 ]).finally(() => {
@@ -210,5 +210,15 @@ watch(token, () => {
 
 .opacity-leave-to {
   opacity: 0;
+}
+
+
+.full_page_loading {
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 108px;
+  height: 62px;
 }
 </style>

@@ -148,6 +148,12 @@ const collect = item => {
         })
     }
 }
+
+
+
+Promise.all([
+    import('@/views/Market/MarketInfo.vue'),
+])
 </script>
 
 <style lang="less" scoped>

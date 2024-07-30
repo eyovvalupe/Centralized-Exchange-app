@@ -150,27 +150,26 @@ const jump = (name, needLogin) => {
 store.commit('setPageLoading', true)
 const loadingList = [
     import('@/views/Public/Language.vue'),
+    import('@/views/Public/Login.vue')
 ]
-if (!token.value) {
-    loadingList.push(import('@/views/Public/Login.vue'))
-}
 Promise.all(loadingList).finally(() => {
     store.commit('setPageLoading', false)
 })
-
 // 延迟加载
-if (token.value) {
-    setTimeout(() => {
-        store.commit('setPageLoading', false)
-        Promise.all([
-            import('@/views/User/Safety.vue'),
-            import('@/views/User/Account/Account.vue'),
-            import('@/views/User/Kyc/Index.vue')
-        ]).finally(() => {
-            console.error('子页面加载完成')
-        })
-    }, 1000)
-}
+setTimeout(() => {
+    Promise.all([
+        import('@/views/User/Safety.vue'),
+        import('@/views/User/Account/Account.vue'),
+        import('@/views/User/Kyc/Index.vue'),
+        import('@/views/User/Google/Google.vue'),
+        import('@/views/Chat/Index.vue')
+    ]).finally(() => {
+        console.error('子页面加载完成')
+    })
+}, 300)
+setTimeout(() => { // 最多加载3s
+    store.commit('setPageLoading', false)
+}, 3000)
 </script>
 
 <style lang="less" scoped>

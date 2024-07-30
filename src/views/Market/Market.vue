@@ -84,6 +84,7 @@ store.commit('setPageLoading', true)
 Promise.all([
     import('@/views/Market/MarketInfo.vue'),
     import('@/views/Market/Search.vue'),
+    import('@/views/Market/IpoSubscription.vue'),
 ]).finally(() => {
     store.commit('setPageLoading', false)
 

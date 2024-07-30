@@ -346,6 +346,12 @@ const goAddAccount = () => {
         })
     }
 }
+
+
+Promise.all([
+    import('@/views/User/Account/Bank.vue'),
+    import('@/views/User/Account/Crypto.vue'),
+])
 </script>
 
 <style lang="less" scoped>

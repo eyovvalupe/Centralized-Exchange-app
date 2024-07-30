@@ -72,7 +72,7 @@
     </Tabs>
 
     <!-- 类型选择弹窗 -->
-    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" />
+    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="快速交易"></ActionSheet>
   </div>
 </template>
 
@@ -120,6 +120,9 @@ const pageLoading = computed(() => store.state.pageLoading)
 store.commit('setPageLoading', true)
 Promise.all([
   import('@/views/Market/MarketInfo.vue'),
+  import('@/views/Market/Search.vue'),
+  import('@/views/Public/Login.vue'),
+  import('@/views/Assets/TopUpCrypto.vue'),
 ]).finally(() => {
   store.commit('setPageLoading', false)
 })
@@ -238,7 +241,7 @@ const jump = (name, needToken) => {
   overflow-y: auto;
 
   :deep(.van-action-sheet__content) {
-    padding: 0.4rem 0 2rem 0;
+    padding: 0.2rem 0 1.38rem 0;
 
     .van-action-sheet__item {
       padding: 0.32rem;

@@ -58,7 +58,6 @@ import { Icon, Button, showToast } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { _forgetpw } from "@/api/api"
-import store from "@/store"
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 
 const ggRef = ref()

@@ -1,7 +1,7 @@
 <!-- 股票单个元素 -->
 <template>
     <div ref="root" style="width:100%">
-        <SwipeCell class="stock_item_box" :class="'stock_item_' + updownStatus">
+        <SwipeCell class="stock_item_box" :class="['stock_item_' + updownStatus]">
             <div class="stock_item" @click="goInfo">
                 <div class="td5">
                     <div class="item_name">{{ props.item.symbol }}</div>
@@ -91,6 +91,7 @@ watch(price, (newVal, oldVal) => {
     }
 })
 
+
 const goInfo = () => {
     store.commit('setCurrStock', props.item)
     if (props.type === 'trade') {
@@ -126,6 +127,11 @@ const removeStock = item => {
     width: 100%;
     transition: all ease .3s;
 
+    &:active,
+    &:hover {
+        background-color: #F2F3F7;
+    }
+
 
     .delete_content {
         width: 1.12rem;
@@ -140,6 +146,10 @@ const removeStock = item => {
             height: 0.52rem
         }
     }
+}
+
+.active_symbol {
+    background-color: #F2F3F7;
 }
 
 .stock_item {
