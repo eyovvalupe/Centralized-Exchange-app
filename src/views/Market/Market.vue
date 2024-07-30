@@ -6,7 +6,8 @@
             <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
             <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
                 <!-- 标题 -->
-                <div class="title">市场</div>
+                <!-- <div class="title">市场</div> -->
+                <div style="height:0.2rem"></div>
                 <!-- 搜索 -->
                 <div class="search_box" @click="router.push({ name: 'search' })">
                     <img src="/static/img/common/search_box.png" alt="🔍">

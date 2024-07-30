@@ -3,15 +3,11 @@
     <div class="page page_user">
 
         <!-- 标题 -->
-        <div class="title">用户</div>
+        <!-- <div class="title">用户</div> -->
 
-        <div class="user-banner" @click="jump('register', false, { guest: 1 })" v-if="!token">
-            <img src="/static/img/user/bg.png" alt="banner">
+        <div style="height:0.28rem">
         </div>
-        <div v-else-if="userInfo.role == 'guest'" class="user-banner" @click="jump('kyc')">
-            <img src="/static/img/user/bg2.png" alt="banner">
-        </div>
-        <div v-else style="height:0.28rem"></div>
+
 
         <div class="user-login" v-if="token">
             <div style="display: flex;">
@@ -49,7 +45,12 @@
             <Icon name="arrow" class="arrow-right" />
         </div>
 
-
+        <div class="user-banner" @click="jump('register', false, { guest: 1 })" v-if="!token">
+            <img src="/static/img/user/bg.png" alt="banner">
+        </div>
+        <div v-else-if="userInfo.role == 'guest'" class="user-banner" @click="jump('kyc')">
+            <img src="/static/img/user/bg2.png" alt="banner">
+        </div>
 
 
         <div class="user-comman">
@@ -277,7 +278,7 @@ if (token.value) {
 
 <style lang="less" scoped>
 .page_user {
-    padding: 0 0.32rem 3rem 0.32rem;
+    padding: 0 0.32rem 2rem 0.32rem;
     position: relative;
     height: 100%;
     overflow-y: auto;
@@ -302,7 +303,7 @@ if (token.value) {
 
     .user-banner {
         position: relative;
-        margin-top: -0.2rem;
+        margin-bottom: 0.1rem;
 
         .banner-title {
             position: absolute;
@@ -315,7 +316,6 @@ if (token.value) {
 
     .user-login {
         background-color: #f2f3f8;
-        margin-bottom: 0.32rem;
         padding: 0.3rem;
         padding-top: 0.18rem !important;
         border-radius: 0.2rem;

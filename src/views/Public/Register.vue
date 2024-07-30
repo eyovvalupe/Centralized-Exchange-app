@@ -217,9 +217,9 @@ const submit = async () => {
       showToast(err.message || "网络异常")
     }
   }).finally(() => {
+    getSessionToken()
     setTimeout(() => {
       verifcode.value = ''
-      getSessionToken()
       loading.value = false
       closeToast()
     }, 2500)
