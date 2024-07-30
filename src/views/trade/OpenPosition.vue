@@ -331,7 +331,7 @@ const handleBlur = (val) => {
 
 const onChange = (val) => {
   previousActive.value = active.value;
-  // active.value = val;
+  active.value = val;
   // store.commit('clearState')
   value.value = ''
   priceValue.value = ''
@@ -543,6 +543,7 @@ defineExpose({
   .m-t-5 {
     margin-top: .1rem;
   }
+
   .m-t-10 {
     margin-top: .2rem;
   }
@@ -640,6 +641,7 @@ defineExpose({
       }
     }
   }
+
   .small-select {
     width: 1.72rem !important;
     height: auto !important;
@@ -683,6 +685,7 @@ defineExpose({
       color: #1e5eff;
     }
   }
+
   .num-input {
     width: 100%;
     height: 0.88rem;

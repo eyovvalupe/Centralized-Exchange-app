@@ -51,6 +51,7 @@
         <div v-else-if="userInfo.role == 'guest'" class="user-banner" @click="jump('kyc')">
             <img src="/static/img/user/bg2.png" alt="banner">
         </div>
+        <div v-else style="height: 0.28rem;"></div>
 
 
         <div class="user-comman">

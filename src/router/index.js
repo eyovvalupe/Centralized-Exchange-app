@@ -257,6 +257,16 @@ const routes = [
     }
   },
   {
+    // 交易
+    path: "/trade2",
+    name: "trade2",
+    component: () => import("../views/Trade2/trade.vue"),
+    meta: {
+      keepAlive: true,
+      pageType: 'tab'
+    }
+  },
+  {
     // 日期查询
     path: "/date",
     name: "date",

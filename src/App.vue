@@ -25,6 +25,7 @@ import { Popup } from 'vant';
 // import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
 import { serviceChat } from '@/utils/serviceChat'
+import { set } from "lodash";
 
 const BottomTabBar = defineAsyncComponent(() =>
   import("@/components/BottomTabBar.vue")
@@ -72,6 +73,9 @@ Promise.all([
     boundFunc()
   }, 500)
 })
+setTimeout(() => { // 最多5s
+  store.commit('setPageLoading', false)
+}, 50000)
 
 const boundFunc = () => {
   const reboundPage = ['user', 'trade', 'date', 'ipodetail']
