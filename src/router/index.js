@@ -248,8 +248,8 @@ const routes = [
   },
   {
     // 交易
-    path: "/trade",
-    name: "trade",
+    path: "/trade2",
+    name: "trade2",
     component: () => import("../views/trade/trade.vue"),
     meta: {
       keepAlive: true,
@@ -258,8 +258,8 @@ const routes = [
   },
   {
     // 交易
-    path: "/trade2",
-    name: "trade2",
+    path: "/trade",
+    name: "trade",
     component: () => import("../views/Trade2/trade.vue"),
     meta: {
       keepAlive: true,

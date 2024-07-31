@@ -1,29 +1,47 @@
 <!-- 股票 -->
 <template>
     <div class="stock_block">
-        <Tabs class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
-            <Tab title="开仓" name="0"> 开仓</Tab>
-            <Tab title="持仓" name="1"> 持仓</Tab>
-            <Tab title="查询" name="2"> 查询</Tab>
+        <Tabs v-if="!pageLoading" class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink
+            @change="onChange">
+            <Tab title="开仓" name="0">
+                <Opening />
+            </Tab>
+            <Tab title="持仓" name="1">
+                <Positions />
+            </Tab>
+            <Tab title="查询" name="2">
+                <Inquire />
+            </Tab>
         </Tabs>
     </div>
 </template>
 
 <script setup>
 import { Tab, Tabs } from "vant";
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
+import Opening from "../components/Opening.vue"
+import Positions from "../components/Positions.vue"
+import Inquire from "../components/Inquire.vue"
+
 
 const active = ref(0)
 const onChange = async (val) => {
     active.value = val;
 };
+
+const pageLoading = ref(true)
+onMounted(() => {
+    setTimeout(() => {
+        pageLoading.value = false
+    }, 200)
+})
 </script>
 
 <style lang="less" scoped>
 .stock_block {
     .tabs {
-        :deep(.van-tabs__wrap) {
-            padding: 0 0.32rem;
+        :deep(.van-tabs__nav) {
+            padding-left: 0.32rem;
         }
 
         :deep(.van-tabs__nav) {

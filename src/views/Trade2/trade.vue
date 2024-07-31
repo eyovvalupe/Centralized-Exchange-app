@@ -21,7 +21,7 @@
             </div>
 
 
-            <transition :name="transitionName">
+            <transition :name="transitionName" v-if="pageActive">
                 <div v-if="activeTab == 1" class="stock_block">
                     <StockBlock />
                 </div>
@@ -33,14 +33,23 @@
 
 
         </PullRefresh>
+
+        <!-- 左侧 -->
+
     </div>
 </template>
 
 <script setup>
-import { PullRefresh } from "vant"
-import { ref, watch } from "vue"
+import { PullRefresh, Popup } from "vant"
+import { ref, watch, computed, onActivated, onDeactivated } from "vue"
 import IpoBlock from "./pages/IpoBlock.vue"
 import StockBlock from "./pages/StockBlock.vue"
+import store from "@/store"
+
+const token = computed(() => store.state.token)
+if (token.value) {
+    store.dispatch('updateWallet')
+}
 
 // 下拉刷新
 const disabled = ref(false)
@@ -61,6 +70,13 @@ watch([activeTab], ([newActive]) => {
 });
 
 
+const pageActive = ref(true)
+onActivated(() => {
+    pageActive.value = true
+})
+onDeactivated(() => {
+    pageActive.value = false
+})
 </script>
 
 <style lang="less" scoped>

@@ -305,6 +305,7 @@ const goBuy = key => {
         name: 'trade',
         query: {
             symbol: item.value.symbol,
+            type: key ? 1 : 2
         }
     })
 }

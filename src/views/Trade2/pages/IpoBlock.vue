@@ -40,8 +40,8 @@ const ipoOnChange = (val) => {
 
 <style lang="less" scoped>
 .tabs {
-    :deep(.van-tabs__wrap) {
-        padding: 0 0.32rem;
+    :deep(.van-tabs__nav) {
+        padding-left: 0.32rem;
     }
 
     :deep(.van-tabs__nav) {
