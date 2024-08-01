@@ -63,7 +63,8 @@ const getData = () => {
 
 getData()
 
-
+let moreDom = null
+const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 const scrolHandle = () => {
     const rect = moreDom.getBoundingClientRect()
     if (rect.top <= totalHeight) {
@@ -73,12 +74,17 @@ const scrolHandle = () => {
 }
 
 onMounted(() => {
-    const moreDom = document.querySelector('.loading_more')
-    const totalHeight = window.innerHeight || document.documentElement.clientHeight;
-    document.querySelector('.list').addEventListener('scroll', scrolHandle)
+    setTimeout(() => {
+        try {
+            moreDom = document.querySelector('.loading_more')
+            document.querySelector('.list').addEventListener('scroll', scrolHandle)
+        } catch { }
+    }, 300)
 })
 onUnmounted(() => {
-    document.querySelector('.list').removeEventListener('scroll', scrolHandle)
+    try {
+        document.querySelector('.list').removeEventListener('scroll', scrolHandle)
+    } catch { }
 })
 </script>
 

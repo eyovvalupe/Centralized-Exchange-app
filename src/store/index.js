@@ -59,6 +59,10 @@ export default createStore({
       commit("setToken", "");
       commit("setUserInfo", {});
       commit("setMarketWatchList", []);
+      commit('setMarketSearch', {
+        search: '',
+        list: []
+      })
     },
     updateUserInfo({ commit }) {
       // 更新个人信息

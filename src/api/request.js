@@ -26,7 +26,7 @@ instance.interceptors.request.use(
       config.headers.auth = token;
     }
     if (config?.custom?.auth && !token) {
-      router.push({
+      router.replace({
         name: 'login'
       })
       throw {

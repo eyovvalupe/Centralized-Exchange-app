@@ -8,8 +8,8 @@
         </div> -->
         <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
         <div class="tr" v-for="(item, i) in props.list" :key="i">
-            <StockItem :deleteItem="props.deleteItem" :type="props.type" @remove="remove" :scrollBox="props.scrollBox"
-                :item="item" />
+            <StockItem :handleClick="props.handleClick" :deleteItem="props.deleteItem" :type="props.type"
+                @remove="remove" :scrollBox="props.scrollBox" :item="item" />
         </div>
         <NoData v-if="!props.loading && !props.list.length" />
     </div>
@@ -41,6 +41,10 @@ const props = defineProps({
     type: { //从交易页面侧边栏点击
         type: String,
         default: ''
+    },
+    handleClick: { // 元素点击事件
+        type: Function,
+        default: null
     }
 })
 

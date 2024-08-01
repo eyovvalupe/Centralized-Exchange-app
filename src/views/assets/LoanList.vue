@@ -131,12 +131,17 @@ onMounted(() => {
         pageLoading.value = false
     }, 200)
     setTimeout(() => {
-        moreDom = document.querySelector('.loading_more')
-        document.querySelector('.list').addEventListener('scroll', scrolHandle)
+        try {
+            moreDom = document.querySelector('.loading_more')
+            document.querySelector('.list').addEventListener('scroll', scrolHandle)
+        } catch {
+        }
     }, 500)
 })
 onUnmounted(() => {
-    document.querySelector('.list').removeEventListener('scroll', scrolHandle)
+    try {
+        document.querySelector('.list').removeEventListener('scroll', scrolHandle)
+    } catch { }
 })
 
 </script>

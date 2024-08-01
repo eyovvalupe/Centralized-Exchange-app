@@ -74,8 +74,7 @@ import VerifCode from "@/components/VerifCode.vue"
 import store from "@/store"
 
 // 进入页面则重置登录状态信息
-store.commit("setToken", "");
-store.commit("setUserInfo", {});
+store.dispatch('reset')
 store.commit('clearChooseSymbol')
 
 const saveAccount = ref(localStorage.getItem('saveAccount') || '')

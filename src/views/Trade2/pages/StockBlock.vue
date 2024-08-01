@@ -4,7 +4,7 @@
         <Tabs v-if="!pageLoading" class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink
             @change="onChange">
             <Tab title="开仓" name="0">
-                <Opening />
+                <Opening ref="OpeningRef" />
             </Tab>
             <Tab title="持仓" name="1">
                 <Positions />
@@ -13,6 +13,7 @@
                 <Inquire />
             </Tab>
         </Tabs>
+        <div style="height:50vh" v-else></div>
     </div>
 </template>
 
@@ -30,10 +31,22 @@ const onChange = async (val) => {
 };
 
 const pageLoading = ref(true)
+const OpeningRef = ref()
+
+// 选择某个股票
+const choose = item => {
+    active.value = 0
+    OpeningRef.value && OpeningRef.value.choose(item)
+}
+
 onMounted(() => {
     setTimeout(() => {
         pageLoading.value = false
     }, 200)
+})
+
+defineExpose({
+    choose
 })
 </script>
 

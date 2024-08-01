@@ -8,7 +8,7 @@ const { startSocket } = useSocket()
 const pageKeys = {
     'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList'],
     'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList'],
-    'trade': ['marketWatchList', 'marketRankList']
+    'trade': ['marketWatchList', 'marketSearchList']
 }
 
 export default {

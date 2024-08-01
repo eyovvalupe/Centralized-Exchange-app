@@ -65,6 +65,10 @@ const props = defineProps({
     type: { //从交易页面侧边栏点击
         type: String,
         default: ''
+    },
+    handleClick: {
+        type: Function,
+        default: null
     }
 })
 
@@ -93,6 +97,7 @@ watch(price, (newVal, oldVal) => {
 
 
 const goInfo = () => {
+    if (props.handleClick) return props.handleClick(props.item)
     store.commit('setCurrStock', props.item)
     if (props.type === 'trade') {
         const data = [
