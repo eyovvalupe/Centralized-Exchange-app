@@ -2,6 +2,78 @@
 <template>
     <div class="form">
 
+        <!-- 止盈止损 -->
+        <template v-if="props.activeTab == 2">
+            <div class="subtitle">
+                <span></span>
+                <span style="color:#014CFA" @click="changeMode">{{ mode == 1 ? '复杂模式' : '简单模式' }}</span>
+            </div>
+
+            <!-- 复杂模式 -->
+            <div class="item_box" v-show="mode == 2"><!-- 止盈 -->
+                <div class="item_box_left" @click="showUpModelDialog = true">
+                    <div class="subtitle"><span>止盈</span></div>
+                    <div class="item" style="justify-content: center;">
+                        <span>{{ stopMap[form1.stop_profit_type] || '--' }}</span>
+                        <div class="more_icon">
+                            <img src="/static/img/trade/down.png" alt="↓">
+                        </div>
+                    </div>
+                </div>
+                <div class="item_box_right">
+                    <div class="subtitle">
+                        <span>&nbsp;</span>
+                    </div>
+                    <div class="item">
+                        <input @input="inputStop(1)" v-model="form1.stop_profit_price" type="number" class="ipt">
+                        <span v-if="form1.stop_profit_type == 'ratio'">%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item_box" v-show="mode == 2"><!-- 止损 -->
+                <div class="item_box_left" @click="showDownModelDialog = true">
+                    <div class="subtitle"><span>止损</span></div>
+                    <div class="item" style="justify-content: center;">
+                        <span>{{ stopMap[form1.stop_loss_type] || '--' }}</span>
+                        <div class="more_icon">
+                            <img src="/static/img/trade/down.png" alt="↓">
+                        </div>
+                    </div>
+                </div>
+                <div class="item_box_right">
+                    <div class="subtitle">
+                        <span>&nbsp;</span>
+                    </div>
+                    <div class="item">
+                        <input @input="inputStop(2)" v-model="form1.stop_loss_price" type="number" class="ipt">
+                        <span v-if="form1.stop_loss_type == 'ratio'">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 简单模式 -->
+            <div class="subtitle" v-show="mode == 1">
+                <span>止损</span>
+            </div>
+            <div class="item_box" v-show="mode == 1">
+                <div class="item">
+                    <input @input="inputStop(2)" v-model="form1.stop_loss_price" type="number" class="ipt">
+                </div>
+            </div>
+
+            <!-- 价格 -->
+            <div class="subtitle">
+                <span>价格</span>
+            </div>
+            <div class="item_box">
+                <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
+                    <input :disabled="priceMode == 1" v-model="form1.price" type="number" class="ipt">
+                </div>
+                <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
+                    1 ? '市价' : '限价' }}</div>
+            </div>
+        </template>
+
         <!-- 价格 -->
         <div class="subtitle" v-if="props.activeTab == 1">
             <span>价格</span>
@@ -9,8 +81,9 @@
         <div class="item_box" v-if="props.activeTab == 1">
             <div class="item" :class="{ 'item_focus': priceFocus }">
                 <span class="ipt_tip" v-show="form1.price === '' || priceFocus">满足价格才能成交</span>
-                <input v-model="form1.price" @focus="priceFocus = true" @blur="price = false" type="number" class="ipt">
-                <span style="color: #014CFA;" @click="setNowPrice">市价</span>
+                <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
+                    class="ipt">
+                <span style="color: #014CFA;" @click="setNowPrice" v-show="currStock.price">市价</span>
             </div>
         </div>
 
@@ -136,8 +209,18 @@
             </div>
             <div class="item">
                 <div class="item_name">止盈/止损</div>
-                <div class="item_val">
+                <div class="item_val" v-if="props.activeTab != 2">
                     <div class="tag">无</div>
+                </div>
+                <div v-if="props.activeTab == 2">
+                    <div class="item_val" style="margin-bottom:0.12rem" v-if="mode == 2">
+                        <div class="tag red_tag">止盈</div>
+                        <div class="lever">{{ params.stop_profit_price }}</div>
+                    </div>
+                    <div class="item_val">
+                        <div class="tag green_tag">止损</div>
+                        <div class="lever">{{ params.stop_loss_price }}</div>
+                    </div>
                 </div>
             </div>
 
@@ -159,10 +242,20 @@
     <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
         <StockPopup style="height:90vh" />
     </Popup>
+
+    <!-- 止盈类型选择 -->
+    <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
+        title="止盈">
+    </ActionSheet>
+
+    <!-- 止损类型选择 -->
+    <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode" :actions="downModeList"
+        title="止损">
+    </ActionSheet>
 </template>
 
 <script setup>
-import { Loading, Slider, Button, showToast, Popup } from "vant";
+import { Loading, Slider, Button, showToast, Popup, ActionSheet } from "vant";
 import { ref, computed } from "vue"
 import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api"
 import store from "@/store";
@@ -206,8 +299,85 @@ const form1 = ref({
     leverType: 'cross',
     volume: '',
     price: '',
-    price_type: props.activeTab == 1 ? 'limit' : 'market'
+    price_type: props.activeTab == 1 ? 'limit' : 'market',
+    stop_profit_type: null, // 价格-[ price ]  金额-[ amount ]  百分比-[ ratio ]
+    stop_profit_price: null,
+    stop_loss_type: null,
+    stop_loss_price: null,
 })
+
+// 止盈止损参数
+const mode = ref(1) // 1-简单模式  2-复杂模式
+const priceMode = ref(1) // 1-市价 2-限价
+const changePriceMode = () => {
+    if (priceMode.value == 1) {
+        priceMode.value = 2
+    } else {
+        priceMode.value = 1
+        form1.value.price = ''
+    }
+}
+const changeMode = () => {
+    mode.value = mode.value == 1 ? 2 : 1
+    if (mode.value == 1) {
+        form1.value.stop_profit_type = null
+        form1.value.stop_profit_price = null
+    } else {
+        form1.value.stop_profit_type = 'price'
+        form1.value.stop_profit_price = ''
+    }
+    form1.value.stop_loss_type = 'price'
+    form1.value.stop_loss_price = ''
+}
+const stopMap = ref({
+    price: '价格',
+    amount: '金额',
+    ratio: '百分比'
+})
+if (props.activeTab == 2) {
+    form1.value.stop_loss_type = 'price'
+    form1.value.stop_loss_price = ''
+}
+const showUpModelDialog = ref(false)
+const showDownModelDialog = ref(false)
+const upModeList = computed(() => {
+    const list = []
+    for (let key in stopMap.value) {
+        list.push({ name: stopMap.value[key], value: key, className: form1.value.stop_profit_type == key ? 'action-sheet-active' : '', icon: form1.value.stop_profit_type == key ? 'success' : '' },)
+    }
+    return list
+})
+const downModeList = computed(() => {
+    const list = []
+    for (let key in stopMap.value) {
+        list.push({ name: stopMap.value[key], value: key, className: form1.value.stop_loss_type == key ? 'action-sheet-active' : '', icon: form1.value.stop_loss_type == key ? 'success' : '' },)
+    }
+    return list
+})
+const onSelectUpMode = (item) => { // 选择止盈类型
+    showUpModelDialog.value = false
+    form1.value.stop_profit_type = item.value
+    form1.value.stop_profit_price = ''
+}
+const onSelectDownMode = (item) => { // 选择止损类型
+    showDownModelDialog.value = false
+    form1.value.stop_loss_type = item.value
+    form1.value.stop_loss_price = ''
+}
+const inputStop = key => { // 输入止盈止损
+    if (key == 1) { // 止盈
+        form1.value.stop_profit_price = form1.value.stop_profit_price < 0 ? 0 : form1.value.stop_profit_price
+        if (form1.value.stop_profit_type == 'ratio') {
+            form1.value.stop_profit_price = form1.value.stop_profit_price > 100 ? 100 : form1.value.stop_profit_price
+        }
+    } else { // 止损
+        form1.value.stop_loss_price = form1.value.stop_loss_price < 0 ? 0 : form1.value.stop_loss_price
+        if (form1.value.stop_loss_type == 'ratio') {
+            form1.value.stop_loss_price = form1.value.stop_loss_price > 100 ? 100 : form1.value.stop_loss_price
+        }
+    }
+}
+
 
 const setLeverType = val => {
     form1.value.leverType = val
@@ -215,21 +385,40 @@ const setLeverType = val => {
 const submit1 = () => {
     if (!currStock.value.symbol) return showToast('请输入股票代码')
     if (!form1.value.volume || form1.value.volume < min.value) return showToast(`最小交易量：${min.value}`)
-    console.error('提交')
+    // 止盈止损校验
+    if (props.activeTab == 2) {
+        if (mode.value == 1) { // 简单模式
+            if (!form1.value.stop_loss_price) return showToast('请输入止损价格')
+        } else { // 复杂模式
+            if (!form1.value.stop_profit_price) return showToast('请输入止盈价格')
+            if (!form1.value.stop_loss_price) return showToast('请输入止损价格')
+        }
+        if (priceMode.value == 2 && !form1.value.price) { // 限价
+            return showToast('请输入限价')
+        }
+    }
     // 打开确认弹窗
     params.value = {
         symbol: currStock.value.symbol,
         offset: props.activeType == 1 ? 'long' : 'short',
         volume: Number(form1.value.volume),
         lever_type: form1.value.leverType,
-        // lever: '',
         price_type: form1.value.price_type,
         price: form1.value.price || '',
-        // stop_profit_price: '',
-        // stop_loss_type: '',
-        // stop_loss_price: '',
-
+        stop_profit_type: form1.value.stop_profit_type,
+        stop_profit_price: form1.value.stop_profit_price,
+        stop_loss_type: form1.value.stop_loss_type,
+        stop_loss_price: form1.value.stop_loss_price,
     }
+    if (props.activeTab == 2) { // 止盈止损
+        if (priceMode.value == 1) { // 市价
+            params.value.price_type = 'market'
+            params.value.price = ''
+        } else { // 限价
+            form1.value.price_type = 'limit'
+        }
+    }
+
     safePass.value = ''
     showModel.value = true
 }
@@ -440,7 +629,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .form {
-    padding: 0.4rem 0.32rem 2rem 0.32rem;
+    padding: 0.6rem 0.32rem 2rem 0.32rem;
 
     .subtitle {
         color: #333;
@@ -518,6 +707,10 @@ defineExpose({
             }
         }
 
+        .disabled_item {
+            background-color: #f9fafb;
+        }
+
         .item_focus {
             height: 1.12rem;
             padding-top: 0.2rem;
@@ -538,6 +731,27 @@ defineExpose({
 
         .item_box_right {
             flex: 1;
+        }
+
+        .mode_btn {
+            padding: 0 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1.26rem;
+            background: #f2f2f2;
+            height: 0.72rem;
+            color: #999;
+            text-align: center;
+            font-size: 0.28rem;
+            font-weight: 600;
+            margin-left: 0.16rem;
+            margin-top: 0.08rem;
+        }
+
+        .active_btn {
+            background: #014cfa;
+            color: #fff;
         }
     }
 
