@@ -87,7 +87,7 @@ const pageLoading = ref(true)
 onMounted(() => {
     setTimeout(() => {
         pageLoading.value = false
-    }, 200)
+    }, 300)
 })
 
 
@@ -147,7 +147,7 @@ defineExpose({
         }
 
         :deep(.van-tabs__nav) {
-            padding-left: 3.4rem !important;
+            padding-left: 3rem !important;
 
             &::after {
                 width: calc(100% - 3.32rem) !important;

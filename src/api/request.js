@@ -3,7 +3,6 @@ import store from "@/store/index";
 import { showToast } from "vant";
 import router from "@/router/index"
 import { BASE_ADDRESS } from "@/config"
-import { isString } from "lodash";
 
 
 const instance = axios.create({

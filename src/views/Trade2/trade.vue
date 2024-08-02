@@ -217,6 +217,10 @@ onDeactivated(() => {
     height: 100%;
     overflow-y: auto;
 
+    :deep(.van-tab--shrink) {
+        padding: 0 0.28rem;
+    }
+
     .trade_header {
         height: 1.12rem;
         padding: 0 0.32rem;
