@@ -41,7 +41,8 @@
                         </div>
                         <div>订单详情</div>
                     </div>
-                    <div class="btn btn2">
+                    <div class="btn btn2" @click="update(item)"
+                        :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(item.status) }">
                         <div class="btn_icon">
                             <img src="/static/img/trade/update.png" alt="img">
                         </div>
@@ -53,6 +54,13 @@
                             <img src="/static/img/trade/close.png" alt="img">
                         </div>
                         <div>平仓</div>
+                    </div>
+                    <div class="btn btn4" @click="cancel(item)"
+                        :class="{ 'disabled_btn': !['none'].includes(item.status) }">
+                        <div class="btn_icon">
+                            <img src="/static/img/trade/cancel.png" alt="img">
+                        </div>
+                        <div>撤单</div>
                     </div>
                 </div>
             </template>
@@ -81,7 +89,7 @@
                     <div class="name">订单号</div>
                     <div class="val_box">
                         <span>{{ currStock.order_no || '--' }}</span>
-                        <div class="copy_icon">
+                        <div class="copy_icon" @click="copy(currStock.order_no)">
                             <img src="/static/img/trade/copy.png" alt="copy">
                         </div>
                     </div>
@@ -223,20 +231,119 @@
                 </div>
             </div>
         </Popup>
+
+        <!-- 更新 -->
+        <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
+            <div class="order_sell_box">
+                <div class="title">更新订单</div>
+                <div style="height:0.4rem"></div>
+                <div class="form">
+                    <div class="item_box"><!-- 止盈 -->
+                        <div class="item_box_left" @click="showUpModelDialog = true">
+                            <div class="subtitle"><span>止盈</span></div>
+                            <div class="item" style="justify-content: center;">
+                                <span>{{ stopMap[updateForm.stop_profit_type] || '--' }}</span>
+                                <div class="more_icon">
+                                    <img src="/static/img/trade/down.png" alt="↓">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item_box_right">
+                            <div class="subtitle">
+                                <span>&nbsp;</span>
+                            </div>
+                            <div class="item">
+                                <input @input="inputStop(1)" v-model="updateForm.stop_profit_price" type="number"
+                                    class="ipt">
+                                <span v-if="updateForm.stop_profit_type == 'ratio'">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item_box"><!-- 止损 -->
+                        <div class="item_box_left" @click="showDownModelDialog = true">
+                            <div class="subtitle"><span>止损</span></div>
+                            <div class="item" style="justify-content: center;">
+                                <span>{{ stopMap[updateForm.stop_loss_type] || '--' }}</span>
+                                <div class="more_icon">
+                                    <img src="/static/img/trade/down.png" alt="↓">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item_box_right">
+                            <div class="subtitle">
+                                <span>&nbsp;</span>
+                            </div>
+                            <div class="item">
+                                <input @input="inputStop(2)" v-model="updateForm.stop_loss_price" type="number"
+                                    class="ipt">
+                                <span v-if="updateForm.stop_loss_type == 'ratio'">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subtitle">增加保证金</div>
+                    <div class="item" style="margin-bottom:0.1rem">
+                        <input @input="changeAmount" v-model="updateForm.amount" type="number" class="ipt">
+                    </div>
+                    <div class="tip">账户余额 {{ stockWalletAmount }}</div>
+                    <!-- 拖动 -->
+                    <div class="slider-container">
+                        <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa"
+                            inactive-color="#f2f2f2" @change="onSliderChange">
+                            <template #button>
+                                <div class="slider-custom-num">
+                                    <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
+                                </div>
+                            </template>
+                        </Slider>
+                    </div>
+                    <div class="percentages">
+                        <div v-for="percent in percentages" :key="percent" class="percentage">
+                            <div class="line"></div>
+                            {{ percent }}%
+                        </div>
+                    </div>
+                    <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
+                    <div class="item">
+                        <input v-model="updateForm.safeword" type="password" class="ipt">
+                    </div>
+
+                    <Button @click="goUpdate" :loading="updateLoading" type="primary" class="btn" color="#014CFA">
+                        <span style="font-size: 0.28rem;">确定</span>
+                    </Button>
+                </div>
+            </div>
+        </Popup>
+
+        <!-- 止盈类型选择 -->
+        <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
+            title="止盈">
+        </ActionSheet>
+
+        <!-- 止损类型选择 -->
+        <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode"
+            :actions="downModeList" title="止损">
+        </ActionSheet>
     </div>
 </template>
 
 <script setup>
-import { SwipeCell, Popup, Button, Slider, showToast } from 'vant';
+import { SwipeCell, Popup, Button, Slider, showToast, ActionSheet, showConfirmDialog, showLoadingToast, closeToast } from 'vant';
 import { useSocket } from "@/utils/ws";
 import { onMounted, onUnmounted, computed, ref } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
-import { _stocksSell } from "@/api/api"
+import { _stocksSell, _stocksUpdate, _stocksCancel } from "@/api/api"
+import { _copyTxt } from "@/utils/index"
 
 const token = computed(() => store.state.token)
 const positionsList = computed(() => store.state.positionsList)
+const wallet = computed(() => store.state.wallet || [])
+const stockWalletAmount = computed(() => { // 股票账户余额
+    const target = wallet.value.find(item => item.currency == 'stock')
+    if (target) return target.amount
+    return 0
+})
 
 const items = ref()
 const clickDom = (e, i) => {
@@ -367,6 +474,91 @@ const goSell = () => {
     })
 }
 
+// 更新
+const showUpdate = ref(false)
+const updateForm = ref({
+    amount: '',
+    stop_profit_type: null,
+    stop_profit_price: null,
+    stop_loss_type: null,
+    stop_loss_price: null,
+    safeword: ''
+})
+const update = item => {
+    if (!['none', 'lock', 'open'].includes(item.status)) return
+    currStock.value = item
+    showUpdate.value = true
+    updateForm.value = {
+        amount: '',
+        stop_profit_type: currStock.value.stop_profit_type || 'price',
+        stop_profit_price: currStock.value.stop_profit_price,
+        stop_loss_type: currStock.value.stop_loss_type || 'price',
+        stop_loss_price: currStock.value.stop_loss_price,
+        safeword: ''
+    }
+    sliderValue.value = 0
+}
+const updateLoading = ref(false)
+const goUpdate = () => {
+    if (updateLoading.value) return
+    if (!updateForm.value.amount) return showToast('请输入保证金')
+    if (!updateForm.value.safeword) return showToast('请输入交易密码')
+    updateLoading.value = true
+    _stocksUpdate({
+        ...updateForm.value,
+        order_no: currStock.value.order_no,
+        token: sessionToken.value
+    }).then(res => {
+        if (res && res.code == 200) {
+            showToast('操作成功')
+            showUpdate.value = false
+        }
+    }).finally(() => {
+        updateLoading.value = false
+        getSessionToken()
+    })
+}
+const showUpModelDialog = ref(false)
+const showDownModelDialog = ref(false)
+const upModeList = computed(() => {
+    const list = []
+    for (let key in stopMap.value) {
+        list.push({ name: stopMap.value[key], value: key, className: updateForm.value.stop_profit_type == key ? 'action-sheet-active' : '', icon: updateForm.value.stop_profit_type == key ? 'success' : '' },)
+    }
+    return list
+})
+const downModeList = computed(() => {
+    const list = []
+    for (let key in stopMap.value) {
+        list.push({ name: stopMap.value[key], value: key, className: updateForm.value.stop_loss_type == key ? 'action-sheet-active' : '', icon: updateForm.value.stop_loss_type == key ? 'success' : '' },)
+    }
+    return list
+})
+const onSelectUpMode = (item) => { // 选择止盈类型
+    showUpModelDialog.value = false
+    updateForm.value.stop_profit_type = item.value
+    updateForm.value.stop_profit_price = ''
+}
+const onSelectDownMode = (item) => { // 选择止损类型
+    showDownModelDialog.value = false
+    updateForm.value.stop_loss_type = item.value
+    updateForm.value.stop_loss_price = ''
+}
+const inputStop = key => { // 输入止盈止损
+    if (key == 1) { // 止盈
+        updateForm.value.stop_profit_price = updateForm.value.stop_profit_price < 0 ? 0 : updateForm.value.stop_profit_price
+        if (updateForm.value.stop_profit_type == 'ratio') {
+            updateForm.value.stop_profit_price = updateForm.value.stop_profit_price > 100 ? 100 : updateForm.value.stop_profit_price
+        }
+    } else { // 止损
+        updateForm.value.stop_loss_price = updateForm.value.stop_loss_price < 0 ? 0 : updateForm.value.stop_loss_price
+        if (updateForm.value.stop_loss_type == 'ratio') {
+            updateForm.value.stop_loss_price = updateForm.value.stop_loss_price > 100 ? 100 : updateForm.value.stop_loss_price
+        }
+    }
+}
+
+
 // 拖动
 const percentages = [25, 50, 75, 100];
 const sliderValue = ref(0);
@@ -374,6 +566,9 @@ const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
     if (showSell.value) { // 平仓
         sellForm.value.volume = new Decimal(currStock.value.unsold_volume).mul(newValue).div(100).floor()
+    }
+    if (showUpdate.value) { // 更新
+        updateForm.value.amount = new Decimal(stockWalletAmount.value).mul(newValue).div(100).floor()
     }
 };
 const changeValue = () => {
@@ -391,6 +586,52 @@ const changeValue = () => {
     }
     sliderValue.value = Number(new Decimal(val).mul(100).div(currStock.value.unsold_volume).floor())
 }
+const changeAmount = () => {
+    let val = 0
+    if (showUpdate.value) val = updateForm.value.amount
+    if (!val || val < 0) {
+        sliderValue.value = 0
+        updateForm.value.amount = 0
+        return
+    }
+    if (val > stockWalletAmount.value) {
+        sliderValue.value = 100
+        if (showUpdate.value) updateForm.value.amount = stockWalletAmount.value
+        return
+    }
+    sliderValue.value = Number(new Decimal(val).mul(100).div(stockWalletAmount.value).floor())
+}
+
+
+// 撤单
+const cancel = item => {
+    if (!['none'].includes(item.status)) return
+    showConfirmDialog({
+        title: '撤单',
+        message:
+            '确认撤单吗？',
+    })
+        .then(() => {
+            showLoadingToast({
+                duration: 0,
+                loadingType: 'spinner',
+            })
+            _stocksCancel({
+                order_no: item.order_no,
+                token: sessionToken.value
+            }).then(res => {
+                if (res && res.code == 200) {
+                    setTimeout(() => {
+                        showToast('操作成功')
+                    }, 100)
+                }
+            }).finally(() => {
+                getSessionToken()
+                closeToast()
+            })
+        })
+        .catch(() => { });
+}
 
 
 // sessionToken
@@ -399,6 +640,13 @@ const getSessionToken = () => {
     store.dispatch("updateSessionToken")
 }
 getSessionToken()
+
+
+//  复制
+const copy = text => {
+    _copyTxt(text)
+    showToast('已复制')
+}
 </script>
 
 <style lang="less" scoped>
@@ -543,6 +791,10 @@ getSessionToken()
             background-color: #014CFA;
         }
 
+        .btn4 {
+            background-color: #ef4d4b;
+        }
+
         .disabled_btn {
             background-color: #000;
             filter: invert(0.9);
@@ -680,12 +932,37 @@ getSessionToken()
             margin-bottom: 0.1rem;
         }
 
+        .item_box {
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 0.5rem;
+
+            .item_box_left {
+                width: 1.8rem;
+                margin-right: 0.2rem;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .item_box_right {
+                flex: 1;
+            }
+
+            .more_icon {
+                width: 0.32rem;
+                height: 0.32rem;
+                margin-left: 0.08rem;
+            }
+        }
+
         .item {
             width: 100%;
             height: 0.96rem;
             border: 1px solid #D0D8E2;
             border-radius: 0.12rem;
             padding: 0 0.24rem;
+            display: flex;
+            align-items: center;
 
             .ipt {
                 width: 100%;

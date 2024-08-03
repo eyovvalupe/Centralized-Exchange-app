@@ -1,6 +1,13 @@
 <!-- 股票 -->
 <template>
     <div class="stock_block">
+        <!-- 日期 -->
+        <div class="date_box" v-show="active == 2" @click="openDate">
+            <div class="date_icon">
+                <img src="/static/img/trade/time.png" alt="img">
+            </div>
+            <span>日期</span>
+        </div>
         <Tabs v-if="!pageLoading" class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink
             @change="onChange">
             <Tab title="开仓" name="0">
@@ -10,10 +17,14 @@
                 <Positions />
             </Tab>
             <Tab title="查询" name="2">
-                <Inquire />
+                <Inquire ref="InquireRef" />
             </Tab>
         </Tabs>
         <div style="height:50vh" v-else></div>
+
+
+        <!-- 日期选择 -->
+        <DateArea @submit="submitDate" ref="dateAreaRef" />
     </div>
 </template>
 
@@ -23,12 +34,24 @@ import { ref, onMounted } from "vue"
 import Opening from "../components/Opening.vue"
 import Positions from "../components/Positions.vue"
 import Inquire from "../components/Inquire.vue"
+import DateArea from "@/components/DateArea.vue"
 
 
 const active = ref(0)
+const InquireRef = ref()
 const onChange = async (val) => {
     active.value = val;
+    if (val == 2) {
+        setTimeout(() => {
+            InquireRef.value && InquireRef.value.init()
+        }, 0)
+    }
 };
+const submitDate = times => {
+    setTimeout(() => {
+        InquireRef.value && InquireRef.value.init(times)
+    }, 0)
+}
 
 const pageLoading = ref(true)
 const OpeningRef = ref()
@@ -48,10 +71,36 @@ onMounted(() => {
 defineExpose({
     choose
 })
+
+// 日期选择
+const dateAreaRef = ref()
+const openDate = () => {
+    dateAreaRef.value && dateAreaRef.value.open()
+}
 </script>
 
 <style lang="less" scoped>
 .stock_block {
+    position: relative;
+
+    .date_box {
+        position: absolute;
+        z-index: 999;
+        right: 0.2rem;
+        top: 0.2rem;
+        display: flex;
+        align-items: center;
+        color: #0953FA;
+        font-size: 0.24rem;
+
+        .date_icon {
+            width: 0.44rem;
+            height: 0.44rem;
+            margin-right: 0.08rem;
+        }
+    }
+
+
     .tabs {
         :deep(.van-tabs__nav) {
             padding-left: 0.32rem;

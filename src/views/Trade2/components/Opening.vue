@@ -16,16 +16,16 @@
             <Tabs key="form" v-if="!pageLoading" class="tabs" @change="e => activeTab = e" v-model="activeTab"
                 :swipeable="false" animated :color="'#014CFA'" shrink>
                 <Tab title="市价" name="0">
-                    <OpeningForm v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :modeMap="modeMap"
-                        :activeTab="activeTab" :activeType="activeType" />
+                    <OpeningForm v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab"
+                        :activeType="activeType" />
                 </Tab>
                 <Tab title="限价" name="1">
-                    <OpeningForm v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :modeMap="modeMap"
-                        :activeTab="activeTab" :activeType="activeType" />
+                    <OpeningForm v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab"
+                        :activeType="activeType" />
                 </Tab>
                 <Tab title="止盈/止损" name="2">
-                    <OpeningForm v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :modeMap="modeMap"
-                        :activeTab="activeTab" :activeType="activeType" />
+                    <OpeningForm v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab"
+                        :activeType="activeType" />
                 </Tab>
             </Tabs>
 
@@ -33,10 +33,7 @@
         </div>
 
 
-        <!-- 仓位模式选择 -->
-        <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
-            title="保证金模式">
-        </ActionSheet>
+
 
 
     </div>
@@ -54,28 +51,7 @@ const OpeningForm0Ref = ref()
 const OpeningForm1Ref = ref()
 const OpeningForm2Ref = ref()
 
-// 仓位类型
-const modeMap = ref({
-    'cross': '全仓',
-    'isolated': '逐仓'
-})
-const modeList = computed(() => {
-    const list = []
-    for (let key in modeMap.value) {
-        list.push({ name: modeMap.value[key], value: key, className: leverType.value == key ? 'action-sheet-active' : '', icon: leverType.value == key ? 'success' : '' },)
-    }
-    return list
-})
-const leverType = ref('cross')
-// 市价-类型
-const showTypeDialog = ref(false)
-const onSelectForm1Type = (item) => {
-    showTypeDialog.value = false
-    leverType.value = item.value
-    OpeningForm0Ref.value && OpeningForm0Ref.value.setLeverType(item.value)
-    OpeningForm1Ref.value && OpeningForm1Ref.value.setLeverType(item.value)
-    OpeningForm2Ref.value && OpeningForm2Ref.value.setLeverType(item.value)
-}
+
 
 const activeType = ref(1) // 1-买涨 2-买跌
 // url参数处理
@@ -114,6 +90,7 @@ defineExpose({
         position: relative;
         display: flex;
         align-items: flex-start;
+
 
         .type_tabs {
             position: absolute;

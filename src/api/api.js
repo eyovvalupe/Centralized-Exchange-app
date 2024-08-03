@@ -241,6 +241,12 @@ export const _stocksUpdate = (data = {}) => {
     custom: { auth: true, toast: true, retry: false },
   });
 };
+// 撤销订单
+export const _stocksCancel = (data = {}) => {
+  return http.post(`/authc/v1/stocks/cancel`, data, {
+    custom: { auth: true, toast: true, retry: false },
+  });
+};
 
 
 // 总资产

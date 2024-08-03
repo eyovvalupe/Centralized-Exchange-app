@@ -252,6 +252,11 @@
     <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode" :actions="downModeList"
         title="止损">
     </ActionSheet>
+
+    <!-- 仓位模式选择 -->
+    <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
+        title="保证金模式">
+    </ActionSheet>
 </template>
 
 <script setup>
@@ -267,11 +272,30 @@ import StockPopup from "../../trade/StockPopup.vue"
 const props = defineProps({
     activeTab: null, // 0-市价 1-限价 2-止盈止损
     activeType: null,
-    modeMap: {}
 })
+
+// 仓位类型
+const modeMap = ref({
+    'cross': '全仓',
+    'isolated': '逐仓'
+})
+
+// 市价-类型
+const showTypeDialog = ref(false)
+const onSelectForm1Type = (item) => {
+    showTypeDialog.value = false
+    form1.value.leverType = item.value
+}
 
 const route = useRoute()
 const token = computed(() => store.state.token)
+const modeList = computed(() => {
+    const list = []
+    for (let key in modeMap.value) {
+        list.push({ name: modeMap.value[key], value: key, className: form1.value.leverType == key ? 'action-sheet-active' : '', icon: form1.value.leverType == key ? 'success' : '' },)
+    }
+    return list
+})
 
 
 const wallet = computed(() => store.state.wallet || [])
@@ -379,9 +403,7 @@ const inputStop = key => { // 输入止盈止损
 }
 
 
-const setLeverType = val => {
-    form1.value.leverType = val
-}
+
 const submit1 = () => {
     if (!currStock.value.symbol) return showToast('请输入股票代码')
     if (!form1.value.volume || form1.value.volume < min.value) return showToast(`最小交易量：${min.value}`)
@@ -622,7 +644,6 @@ const choose = (item) => {
 }
 
 defineExpose({
-    setLeverType,
     choose
 })
 </script>
