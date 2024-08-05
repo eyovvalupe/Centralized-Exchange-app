@@ -400,6 +400,7 @@ const jump = (name, check = false, query) => {
                 .btn_icon {
                     width: 0.42rem;
                     height: 0.42rem;
+                    opacity: 0.85;
                 }
 
                 .tip {

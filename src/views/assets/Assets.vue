@@ -4,8 +4,8 @@
         <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
 
             <div class="page_title">
-                <span>资产</span>
-
+                <!-- <span>资产</span> -->
+                <span></span>
                 <div class="record_icon_box" @click="openRecordPopup">
                     <div class="record_icon">
                         <img src="/static/img/user/withdraw_record_icon.png" alt="img">
@@ -14,6 +14,7 @@
                     <span>记录</span>
                 </div>
             </div>
+            <!-- <div style="height:0.4rem"></div> -->
 
             <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card"
                 animated shrink>
@@ -169,8 +170,8 @@ Promise.all(loadingList).finally(() => {
     overflow-y: auto;
 
     .page_title {
-        padding: 0 0.24rem 0 0.32rem;
-        height: 1.12rem;
+        padding: 0.3rem 0.24rem 0 0.32rem;
+        // height: 1.12rem;
         font-weight: 600;
         color: #0D0D12;
         line-height: 0.5rem;
@@ -178,7 +179,7 @@ Promise.all(loadingList).finally(() => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 0.1rem;
+        // margin-bottom: 0.1rem;
         position: relative;
 
         .record_icon_box {

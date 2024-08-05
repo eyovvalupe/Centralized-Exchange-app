@@ -249,8 +249,9 @@ const copy = () => {
             .num {
                 font-weight: 600;
                 font-size: 1rem;
-                line-height: 1.4rem;
+                line-height: 1rem;
                 font-family: fangsong;
+                word-break: break-all;
             }
         }
 

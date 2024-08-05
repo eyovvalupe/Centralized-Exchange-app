@@ -4,7 +4,12 @@
         <Top :title="'提现'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    <div class="top-record-icon">
+                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    </div>
+                    <span>
+                        记录
+                    </span>
                 </div>
             </template>
         </Top>
@@ -361,18 +366,22 @@ Promise.all([
     position: relative;
 
     .top-record {
-        width: 0.64rem;
-        height: 0.64rem;
         border-radius: 50%;
-        background-color: #EDEDED;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #0953fa;
+        font-size: 0.24rem;
 
-        img {
-            width: 0.36rem !important;
-            height: 0.36rem !important;
+        .top-record-icon {
+            background-color: #EDEDED;
+            width: 0.52rem;
+            height: 0.52rem;
+            padding: 0.06rem;
+            border-radius: 50%;
+            margin-right: 0.04rem;
         }
+
     }
 
     .form {

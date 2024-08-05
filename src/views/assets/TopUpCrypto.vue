@@ -4,7 +4,12 @@
         <Top :title="'充值'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    <div class="top-record-icon">
+                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                    </div>
+                    <span>
+                        记录
+                    </span>
                 </div>
             </template>
         </Top>
@@ -20,7 +25,7 @@
                         <div class="currency_icon">
                             <img :src="`/static/img/crypto/${form.currency.toUpperCase()}.png`" alt="currency">
                         </div>
-                        <span>{{ form.currency.toUpperCase() }}</span>
+                        <span>{{ form.currency }}</span>
                     </div>
                     <div class="more">
                         <img src="/static/img/assets/more.png" alt="more">
@@ -28,7 +33,7 @@
                 </div>
                 <div class="select_item border_item" style="margin-left: 0.6rem" @click="showNetDialog = true">
                     <div class="currency" v-if="form.network">
-                        <span>{{ form.network.toUpperCase() }}</span>
+                        <span>{{ form.network }}</span>
                     </div>
                     <div class="more">
                         <img src="/static/img/assets/more.png" alt="more">
@@ -37,19 +42,19 @@
             </div>
 
             <div class="subtitle">
-                <span>充值金额</span>
-                <span class="subtitle_right" @click="topUpMode = topUpMode == 1 ? 2 : 1">切换为 <b>{{ topUpMode == 1 ? 'MAIN' : form.currency.toUpperCase() }}</b></span>
+                <span style="flex:none">充值金额</span>
+                <span class="subtitle_right" @click="topUpMode = topUpMode == 1 ? 2 : 1"><iconpark-icon style="position: relative;top:0.02rem" name="qiehuan"></iconpark-icon> <b>{{targetAmount}}</b>{{ topUpMode == 1 ? 'MAIN' : form.currency.toUpperCase() }}</span>
             </div>
             <div class="item border_item" :class="{ 'err_ipt': errStatus }">
                 <div class="item_content">
                     <input class="ipt" @blur="errStatus = false" type="number" v-model="form.amount" placeholder="请输入">
                 </div>
-                <div>{{ topUpMode == 1 ? form.currency.toUpperCase() : 'MAIN' }}</div>
+                <div>{{ topUpMode == 1 ? form.currency : 'MAIN' }}</div>
             </div>
-            <div class="tip" v-if="topUpMode == 2">
-                <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency.toUpperCase()}}</span>
+            <!-- <div class="tip" v-if="topUpMode == 2">
+                <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
                 <Loading v-show="rateLoading" type="spinner" size="12px" />
-            </div>
+            </div> -->
 
             <div class="border_item act_body">
                 <div>活动内容</div>
@@ -222,7 +227,11 @@ const submit = () => {
 // 汇率
 const rate = ref('')
 const targetAmount = computed(() => {
-    return new Decimal(form.value.amount || 0).div(rate.value || 1).toFixed(2)
+    if (topUpMode.value == 1) {
+        return new Decimal(form.value.amount || 0).mul(rate.value || 1)
+    } else {
+        return new Decimal(form.value.amount || 0).div(rate.value || 1)
+    }
 })
 let timeout = null
 let interval = null
@@ -231,6 +240,10 @@ const rateLoading = ref(false)
 const getRate = () => {
     if (timeout) clearTimeout(timeout)
     if (interval) clearInterval(interval)
+    showLoadingToast({
+            duration: 0,
+            loadingType: 'spinner',
+        })
     timeDown.value = 10
     rateLoading.value = true
     _swapRate({
@@ -240,7 +253,6 @@ const getRate = () => {
     }).then(res => {
         if (res.code == 200) {
             rate.value = res.data.exchange_rate
-            console.error(rate.value)
             interval = setInterval(() => {
                 timeDown.value--
                 if (timeDown.value <= 0) {
@@ -249,6 +261,7 @@ const getRate = () => {
             }, 1000)
         }
     }).finally(() => {
+        closeToast();
         rateLoading.value = false
     })
 }
@@ -265,18 +278,22 @@ onBeforeUnmount(() => {
     position: relative;
 
     .top-record {
-        width: 0.64rem;
-        height: 0.64rem;
         border-radius: 50%;
-        background-color: #EDEDED;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: #0953fa;
+        font-size: 0.24rem;
 
-        img {
-            width: 0.36rem !important;
-            height: 0.36rem !important;
+        .top-record-icon {
+            background-color: #EDEDED;
+            width: 0.52rem;
+            height: 0.52rem;
+            padding: 0.06rem;
+            border-radius: 50%;
+            margin-right: 0.04rem;
         }
+
     }
 
     .form {
@@ -376,8 +393,10 @@ onBeforeUnmount(() => {
             }
             .subtitle_right {
                 text-align: right;
+                font-size: 0.24rem;
                 b {
                     color: #014CFA;
+                    font-size: 0.28rem;
                 }
             }
         }
