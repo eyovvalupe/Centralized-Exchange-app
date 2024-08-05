@@ -36,14 +36,17 @@
             </div>
         </div>
         <div class="tip">
-            <div>提示：请在1分钟内完成充值</div>
+            <div>提示：请在倒计时内完成充值</div>
             <div>{{ s ? s + 's' : '--' }}后二维码刷新</div>
         </div>
         <div class="btns">
-            <Button round color="#EFF6FF" class="submit" type="info" @click="router.back()">
+            <!-- <Button round color="#EFF6FF" class="submit" type="info" @click="router.back()">
                 <span style="color:#014CFA">取消</span>
             </Button>
-            <Button @click="openSure" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
+            <Button @click="openSure" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button> -->
+
+            <Button @click="router.back()" :loading="loading" round color="#EFF6FF" style="width:100%" class="submit"
+                type="info"><span style="color:#014CFA">完成</span></Button>
         </div>
 
     </div>
@@ -53,14 +56,21 @@
 import Top from "@/components/Top.vue"
 import { useRoute } from "vue-router"
 import { ref, computed } from "vue"
-import { Button, showToast, showConfirmDialog, Circle } from "vant"
+import { Button, showToast, showConfirmDialog, Circle, showDialog } from "vant"
 import { _copyTxt } from "@/utils/index.js"
 import Loading from "@/components/Loaidng.vue"
-import { _paycode, _deposit } from "@/api/api"
+import { _deposit1, _deposit, _depositGet } from "@/api/api"
 import store from "@/store"
 import router from "@/router"
 
 const route = useRoute()
+
+// sessionToken
+const sessionToken = computed(() => store.state.sessionToken || '')
+const getSessionToken = () => {
+    store.dispatch("updateSessionToken")
+}
+getSessionToken()
 
 // 表单
 const loading = ref(false)
@@ -85,14 +95,17 @@ const changeNet = item => { // 切换网络
 const getAddress = () => {
     if (loading.value) return
     loading.value = true
-    _paycode({
+    _deposit1({
         currency: form.value.currency,
-        network: form.value.network
+        network: form.value.network,
+        amount: form.value.amount,
+        token: sessionToken.value,
     }).then(res => {
         if (res.code == 200) {
             address.value = res.data?.address || ''
             drawQrcode()
-            startCountDown()
+            startCountDown(res.data?.timeout || 60)
+            order_no.value = res.data?.order_no
         }
     }).finally(() => {
         loading.value = false
@@ -102,21 +115,51 @@ getAddress()
 
 // 倒计时
 const s = ref(0)
-const max = 60
 const currentRate = computed(() => {
-    return s.value * 100 / 60
+    return s.value * 100 / timeoutMax.value
 })
 let interval = null
-const startCountDown = () => {
+const timeoutMax = ref(1)
+const startCountDown = (max) => {
+    timeoutMax.value = max
     s.value = max
     interval && clearInterval(interval)
     interval = setInterval(() => {
         s.value--
         if (s.value == 0) {
             clearInterval(interval)
-            getAddress()
+            refreshTime()
         }
     }, 1000);
+}
+
+// 刷新倒计时
+const order_no = ref('') // 订单编号
+const refreshTime = () => {
+    _depositGet({
+        order_no: order_no.value
+    }).then(res => {
+        if (res.code == 200) {
+            if (res.data?.status == 'success') {
+                showDialog({
+                    title: '成功',
+                    message: '充值成功!',
+                }).then(() => {
+                    router.back()
+                });
+            } else if (res.data?.status == 'failure') {
+                showDialog({
+                    title: '失败',
+                    message: '充值失败，请重试!',
+                }).then(() => {
+                    router.back()
+                });
+            } else { // 继续倒计时
+                startCountDown(res.data?.timeout || 60)
+            }
+
+        }
+    })
 }
 
 
@@ -181,12 +224,7 @@ const copy = () => {
 }
 
 
-// sessionToken
-const sessionToken = computed(() => store.state.sessionToken || '')
-const getSessionToken = () => {
-    store.dispatch("updateSessionToken")
-}
-getSessionToken()
+
 </script>
 
 <style lang="less" scoped>

@@ -189,11 +189,15 @@ const scrollHandler = () => {
 onMounted(() => {
   setTimeout(() => {
     loadingMore = document.querySelector('.loading_more')
-    document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
+    try {
+      document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
+    } catch {}
   }, 500)
 })
 onBeforeUnmount(() => {
-  document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+  try {
+    document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+  } catch {}
 })
 
 defineExpose({

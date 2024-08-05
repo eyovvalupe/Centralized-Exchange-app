@@ -142,7 +142,7 @@
 <script setup>
 import Top from "@/components/Top.vue"
 import { Button, Popup, Icon, showToast } from "vant"
-import { ref, computed } from "vue"
+import { ref, computed, onBeforeUnmount } from "vue"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
 import { _converter, _swapRate } from "@/api/api"
@@ -238,7 +238,7 @@ const getRate = () => {
         if (res.code == 200) {
             rate.value = res.data.exchange_rate
             if (form.value.amount) {
-                form.value.toAmount = new Decimal(rate.value).mul(form.value.amount).toFixed(2);
+                form.value.toAmount = new Decimal(rate.value).mul(form.value.amount).toFixed(4);
             }
             interval = setInterval(() => {
                 timeDown.value--
@@ -315,6 +315,9 @@ const getSessionToken = () => {
 // getSessionToken()
 
 
+onBeforeUnmount(() => {
+    if (interval) clearInterval(interval)
+})
 
 // 跳转记录
 const RecordListRef = ref()

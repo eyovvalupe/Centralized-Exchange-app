@@ -375,9 +375,27 @@ export const _withdrawList = (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+// 获取充值 币种
+export const _cryptoCoin = (data = {}) => {
+  return http.post(`/authc/v1/wallet/crypto/coin`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
 // 获取充值地址
 export const _paycode = (data = {}) => {
   return http.post(`/authc/v1/wallet/crypto/paycode`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 充值1
+export const _deposit1 = (data = {}) => {
+  return http.post(`/authc/v1/wallet/crypto/deposit`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 查询/刷新超时
+export const _depositGet = (data = {}) => {
+  return http.post(`/authc/v1/wallet/crypto/deposit/get`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };

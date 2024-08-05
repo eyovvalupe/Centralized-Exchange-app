@@ -53,7 +53,7 @@
                 <div class="icon_box">
                     <div class="color_text">
                         <span style=" font-size: 0.2rem;font-weight: 400;color:#666;margin-right:0.04rem">可提现</span>
-                        <span>{{ (new Decimal(assets.money).add(assets.frozen).toFixed(2) || '0.00') }}</span>
+                        <span>{{ (new Decimal(assets.money || 0).add(assets.frozen || 0).toFixed(2) || '0.00') }}</span>
                     </div>
                     <!-- <div>
                         <span class="tip">冻结</span>

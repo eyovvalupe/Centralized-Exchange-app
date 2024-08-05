@@ -266,11 +266,15 @@ const scrollHandler = () => {
 }
 onMounted(() => {
     setTimeout(() => {
-        document.querySelector('.page').addEventListener('scroll', scrollHandler)
+        try {
+            document.querySelector('.page').addEventListener('scroll', scrollHandler)
+        } catch {}
     }, 500)
 })
 onBeforeUnmount(() => {
-    document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+    try {
+        document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+    } catch {}
 })
 </script>
 

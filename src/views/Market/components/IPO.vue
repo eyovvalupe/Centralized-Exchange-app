@@ -251,7 +251,9 @@ onMounted(() => {
     }, 1000)
     setTimeout(() => {
         loadingMore = document.querySelector('.loading_more')
-        document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
+        try {
+            document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
+        } catch {}
     }, 500)
 
 
@@ -261,7 +263,9 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
     if (interval) clearInterval(interval)
-    document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+    try {
+        document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+    }catch {}
 })
 
 defineExpose({

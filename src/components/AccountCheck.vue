@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { Popup } from 'vant';
+import { Popup, showConfirmDialog  } from 'vant';
 import { ref, computed } from "vue"
 import store from '@/store';
 import router from '@/router';
@@ -108,11 +108,48 @@ const close = () => {
 }
 
 const check = () => {
-    const val = userInfo.value.googlebind && userInfo.value.kyc == 2 && userInfo.role == 'user'
-    if (!val) {
-        open()
+    // const val = userInfo.value.googlebind && userInfo.value.kyc == 2 && userInfo.value.role == 'user'
+    // if (!val) {
+    //     open()
+    // }
+    // return val
+    if (userInfo.value.role != 'user') {
+        showConfirmDialog({
+            title: '账号升级',
+            message:
+                '模拟账号不能进行该操作，去升级？',
+            })
+            .then(() => {
+                router.push({ name: 'kyc' })
+            })
+            .catch(() => {});
+        return false
     }
-    return val
+    if (!userInfo.value.googlebind) {
+        showConfirmDialog({
+            title: '谷歌验证器',
+            message:
+                '谷歌验证器未绑定，去绑定？',
+            })
+            .then(() => {
+                router.push({ name: 'google' })
+            })
+            .catch(() => {});
+        return false
+    }
+    if (userInfo.value.kyc != 2) {
+        showConfirmDialog({
+            title: '实名认证',
+            message:
+                '实名认证未通过，去认证？',
+            })
+            .then(() => {
+                router.push({ name: 'kyc' })
+            })
+            .catch(() => {});
+        return false
+    }
+    return true
 }
 const jump = name => {
     close()

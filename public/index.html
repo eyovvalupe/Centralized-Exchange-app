@@ -12,7 +12,19 @@
       --app-height: 100%;
     }
 
+    @keyframes preloading {
+        0% {
+            opacity: 1;
+        }
 
+        60% {
+            opacity: 0.65;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
     .preloading_box {
       position: fixed;
       left: 50%;
@@ -20,6 +32,7 @@
       transform: translateX(-50%) translateY(-50%);
       width: 108px;
       height: 62px;
+      animation: preloading 3s ease-out infinite;
     }
   </style>
 </head>

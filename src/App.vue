@@ -1,7 +1,8 @@
 <template>
   <router-view v-slot="{ Component }">
     <div class="full_page_loading" v-show="pageLoading">
-      <img src="/static/img/logo.png" alt="logo">
+      <!-- <img src="/static/img/logo.png" alt="logo"> -->
+      <Loading :size="44" color="#014cfa" />
     </div>
     <div class="app_scroll" v-show="!pageLoading">
       <transition :name="transitionName">
@@ -21,11 +22,11 @@
 import { defineAsyncComponent, computed, watch, onMounted } from "vue";
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
-import { Popup } from 'vant';
+import { Popup, Loading } from 'vant';
 // import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
 import { serviceChat } from '@/utils/serviceChat'
-import { set } from "lodash";
+
 
 const BottomTabBar = defineAsyncComponent(() =>
   import("@/components/BottomTabBar.vue")
@@ -65,7 +66,7 @@ Promise.all([
   import('@/views/Home/Home.vue'),
   import('@/views/Market/Market.vue'),
   import('@/views/User/NewUser.vue'),
-  import('@/views/trade/trade.vue'),
+  import('@/views/Trade2/trade.vue'),
   import('@/views/Assets/Assets.vue'),
 ]).finally(() => {
   store.commit('setPageLoading', false)
@@ -222,7 +223,5 @@ watch(token, () => {
   left: 50%;
   top: 40%;
   transform: translateX(-50%) translateY(-50%);
-  width: 108px;
-  height: 62px;
 }
 </style>
