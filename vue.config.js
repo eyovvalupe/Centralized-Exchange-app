@@ -1,6 +1,7 @@
 const { defineConfig } = require("@vue/cli-service");
 const CompressionPlugin = require("compression-webpack-plugin");
-
+const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
+console.log(RetryChunkLoadPlugin)
 module.exports = defineConfig({
   configureWebpack: {
     plugins: [
@@ -10,6 +11,11 @@ module.exports = defineConfig({
         threshold: 10240, // 文件大小大于等于 10kb 时启用压缩
         minRatio: 0.8, // 压缩比例达到 0.8 时启用压缩
       }),
+      new RetryChunkLoadPlugin({
+        retryDelay: 1000, // 重试延迟时间（毫秒）
+        maxRetries: 3, // 最大重试次数
+        lastResortScript: 'fallback.js', // 备用脚本，当重试次数用尽时加载
+      })
     ],
   },
   chainWebpack: config => {

@@ -122,7 +122,8 @@ import LeverSelect from "./LeverSelect.vue";
 import StockPopup from '../StockPopup.vue'
 import store from "@/store";
 import Decimal from 'decimal.js';
-import { debounce } from 'lodash';
+// import { debounce } from 'lodash';
+const debounce = () => { }
 
 const token = computed(() => store.state.token);
 const router = useRouter();
