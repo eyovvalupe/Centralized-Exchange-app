@@ -13,18 +13,19 @@
     }
 
     @keyframes preloading {
-        0% {
-            opacity: 1;
-        }
+      0% {
+        opacity: 1;
+      }
 
-        60% {
-            opacity: 0.65;
-        }
+      60% {
+        opacity: 0.65;
+      }
 
-        100% {
-            opacity: 1;
-        }
+      100% {
+        opacity: 1;
+      }
     }
+
     .preloading_box {
       position: fixed;
       left: 50%;
@@ -119,6 +120,72 @@
     document.addEventListener("gesturestart", function (event) {
       event.preventDefault();
     });
+  </script>
+
+  <script>
+    // 记录重试次数的对象
+    const retryCounts = {};
+
+    // 最大重试次数
+    const maxRetries = 3;
+
+    // 重试延迟（毫秒）
+    const retryDelay = 1000;
+
+    // 监听资源加载错误事件
+    window.addEventListener('error', function (event) {
+      console.error('加载失败', event)
+      // 检查是否是资源加载错误
+      if (event.target.tagName === 'LINK' || event.target.tagName === 'SCRIPT') {
+        const src = event.target.href || event.target.src;
+        if (!src) return;
+
+        // 如果重试次数超过最大值，则不再重试
+        if (retryCounts[src] >= maxRetries) {
+          console.error(`Failed to load resource: ${src}`);
+          return;
+        }
+
+        // 初始化重试次数
+        if (!retryCounts[src]) retryCounts[src] = 0;
+        retryCounts[src]++;
+
+        // 延迟重试加载
+        setTimeout(() => {
+          console.error('重试', event.target.tagName)
+          if (event.target.tagName === 'LINK') {
+            reloadCSS(src);
+          } else if (event.target.tagName === 'SCRIPT') {
+            reloadJS(src);
+          }
+        }, retryDelay);
+      }
+    }, true);
+
+    // 重新加载 CSS 文件
+    function reloadCSS(href) {
+      const newLink = document.createElement('link');
+      newLink.rel = 'stylesheet';
+      newLink.href = href + '?retry=' + retryCounts[href];
+      document.head.appendChild(newLink);
+
+      // 移除旧的 link 标签
+      const oldLinks = document.querySelectorAll(`link[href="${href}"]`);
+      oldLinks.forEach(link => link.remove());
+    }
+
+    // 重新加载 JS 文件
+    function reloadJS(src) {
+      const newScript = document.createElement('script');
+      newScript.src = src + '?retry=' + retryCounts[src];
+      document.body.appendChild(newScript);
+
+      // 移除旧的 script 标签
+      const oldScripts = document.querySelectorAll(`script[src="${src}"]`);
+      oldScripts.forEach(script => script.remove());
+    }
+
+
   </script>
   <script src="./static/js/iconfonts.js?t=2"></script>
   <script
