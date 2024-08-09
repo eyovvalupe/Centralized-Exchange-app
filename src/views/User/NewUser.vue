@@ -14,7 +14,7 @@
                 <img src="/static/img/user/user-block.png" alt="">
                 <div class="user-login-block">
                     <span style="font-weight: 500;">{{ userInfo.username || '--' }}</span>
-                    <div class="id">ID:23424</div>
+                    <div class="id">ID:{{ userInfo.uid || '--' }}</div>
                 </div>
             </div>
             <Icon name="arrow" class="arrow-right" />

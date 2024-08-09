@@ -114,5 +114,7 @@ export default createStore({
     ...trade.actions,
     ...assets.actions,
   },
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState({
+    key: 'sunx'
+  })],
 });
