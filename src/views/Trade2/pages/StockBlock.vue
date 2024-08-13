@@ -6,7 +6,7 @@
             <div class="date_icon">
                 <img src="/static/img/trade/time.png" alt="img">
             </div>
-            <span>日期</span>
+            <!-- <span>日期</span> -->
         </div>
         <Tabs v-if="!pageLoading" class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink
             @change="onChange">
@@ -94,8 +94,8 @@ const openDate = () => {
         font-size: 0.24rem;
 
         .date_icon {
-            width: 0.44rem;
-            height: 0.44rem;
+            width: 0.48rem;
+            height: 0.48rem;
             margin-right: 0.08rem;
         }
     }

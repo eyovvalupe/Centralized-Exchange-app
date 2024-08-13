@@ -4,7 +4,7 @@
 
         <!-- 止盈止损 -->
         <template v-if="props.activeTab == 2">
-            <div class="subtitle">
+            <div class="subtitle" style="position: absolute;right: 0.32rem;">
                 <span></span>
                 <span style="color:#014CFA" @click="changeMode">{{ mode == 1 ? '复杂模式' : '简单模式' }}</span>
             </div>
@@ -62,15 +62,27 @@
             </div>
 
             <!-- 价格 -->
-            <div class="subtitle">
-                <span>价格</span>
-            </div>
             <div class="item_box">
-                <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
-                    <input :disabled="priceMode == 1" v-model="form1.price" type="number" class="ipt">
+                <div class="item_box_left" @click="showPriceTypeDialog = true">
+                    <div class="subtitle"><span>价格</span></div>
+                    <div class="item" style="justify-content: center;">
+                        <span>{{ priceMode == 1 ? '市价' : '限价' }}</span>
+                        <div class="more_icon">
+                            <img src="/static/img/trade/down.png" alt="↓">
+                        </div>
+                    </div>
                 </div>
-                <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
-                    1 ? '市价' : '限价' }}</div>
+                <div class="item_box_right">
+                    <div class="subtitle">
+                        <span>&nbsp;</span>
+                    </div>
+                    <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
+                        <input :disabled="priceMode == 1" v-model="form1.price" type="number" class="ipt">
+                    </div>
+                </div>
+
+                <!-- <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
+                    1 ? '市价' : '限价' }}</div> -->
             </div>
         </template>
 
@@ -128,14 +140,12 @@
                 <div class="subtitle">
                     <span>数量</span>
                     <div style="color: #014CFA;display: flex;align-items: center;">
-                        <span @click="jump('swap')">账户划转</span>
+                        <span @click="jump('transfer')">账户划转</span>
                         <span @click="jump('loanList')" style="margin-left: 0.24rem;">借贷</span>
                     </div>
                 </div>
                 <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <span class="ipt_tip" v-show="form1.volume === '' || amountFocus">最大可{{ activeType
-                        ==
-                        1 ? '买' : '卖' }} {{ maxStockNum == '--' ? '0' : maxStockNum }}
+                    <span class="ipt_tip" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
                     </span>
                     <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false"
                         @change="changePercent" type="number" class="ipt">
@@ -257,6 +267,11 @@
     <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
         title="保证金模式">
     </ActionSheet>
+
+    <!-- 限价模式选择 -->
+    <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
+        @select="onSelectForm1PriceType" title="限价模式">
+    </ActionSheet>
 </template>
 
 <script setup>
@@ -286,6 +301,23 @@ const onSelectForm1Type = (item) => {
     showTypeDialog.value = false
     form1.value.leverType = item.value
 }
+
+// 限价模式
+const showPriceTypeDialog = ref(false)
+const priceModeList = computed(() => {
+    const list = []
+    list.push({ name: '市价', value: 1, className: priceMode.value == 1 ? 'action-sheet-active' : '', icon: priceMode.value == 1 ? 'success' : '' })
+    list.push({ name: '限价', value: 2, className: priceMode.value == 2 ? 'action-sheet-active' : '', icon: priceMode.value == 2 ? 'success' : '' })
+    return list
+})
+const onSelectForm1PriceType = item => {
+    showPriceTypeDialog.value = false
+    priceMode.value = item.value
+    if (priceMode.value == 1) {
+        form1.value.price = ''
+    }
+}
+
 
 const route = useRoute()
 const token = computed(() => store.state.token)
@@ -333,14 +365,6 @@ const form1 = ref({
 // 止盈止损参数
 const mode = ref(1) // 1-简单模式  2-复杂模式
 const priceMode = ref(1) // 1-市价 2-限价
-const changePriceMode = () => {
-    if (priceMode.value == 1) {
-        priceMode.value = 2
-    } else {
-        priceMode.value = 1
-        form1.value.price = ''
-    }
-}
 const changeMode = () => {
     mode.value = mode.value == 1 ? 2 : 1
     if (mode.value == 1) {
@@ -651,6 +675,7 @@ defineExpose({
 <style lang="less" scoped>
 .form {
     padding: 0.6rem 0.32rem 2rem 0.32rem;
+    position: relative;
 
     .subtitle {
         color: #333;
@@ -729,7 +754,7 @@ defineExpose({
         }
 
         .disabled_item {
-            background-color: #f9fafb;
+            background-color: #f5f5f5;
         }
 
         .item_focus {

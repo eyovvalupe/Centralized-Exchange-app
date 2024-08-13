@@ -14,9 +14,9 @@
                     <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">IPO</div>
                 </div>
 
-                <div class="value" @click="showPrice = true">
+                <div class="value">
                     <div class="value_icon"><img src="/static/img/trade/value.png" alt="img" /></div>
-                    <span>持仓价值</span>
+                    <!-- <span>持仓价值</span> -->
                 </div>
             </div>
 
