@@ -471,6 +471,7 @@ const goRecord = () => {
     .transfer_dialog_item_active {
         color: #014CFA;
         font-weight: 600;
+        position: relative;
 
         .check_icon {
             position: absolute;

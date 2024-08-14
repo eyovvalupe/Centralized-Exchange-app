@@ -321,6 +321,7 @@ if (token.value) {
         padding-top: 0.18rem !important;
         border-radius: 0.2rem;
         display: flex;
+        align-items: center;
         justify-content: space-between;
         min-height: 1.6rem;
         flex-wrap: wrap;
@@ -368,13 +369,12 @@ if (token.value) {
         }
 
         .user-login-block {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
+
             padding-top: 0.04rem;
 
             span {
                 line-height: 0.6rem;
+                display: block;
             }
 
             .id {
@@ -386,8 +386,7 @@ if (token.value) {
                 background-color: #E1E4ED;
                 padding: 0 0.1rem;
                 border-radius: 0.04rem;
-                margin-top: 0.06rem;
-                margin-left: 0.4rem;
+                display: inline-block;
             }
         }
     }

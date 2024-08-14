@@ -4,7 +4,7 @@
 
     <!-- 返回和语言 -->
     <div class="max-width top">
-      <div class=" top_back" @click="goBack">
+      <div class="top_back" @click="goBack">
         <Icon name="cross" />
       </div>
 
@@ -18,16 +18,33 @@
       <div class="title">登录</div>
     </div>
 
+    <!-- tab -->
+    <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
+      <Tab :title="'邮箱登录'"> </Tab>
+      <Tab :title="'手机登录'"></Tab>
+    </Tabs>
+
     <!-- 表单 -->
     <div class="form">
-      <div class="form_title">用户名</div>
-      <div class="form_item margin_item">
-        <div class="form_item_user" v-show="saveAccount && saveAccount == form.username">
+      <div class="form_title" v-show="activeTab == 0">邮箱</div>
+      <div class="form_item margin_item" v-show="activeTab == 0">
+        <div class="form_item_user" v-show="saveAccount && saveAccount == form.email">
           <img src="/static/img/user/user.png" alt="user">
         </div>
-        <input @change="changeAccount" maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text"
+        <input @change="changeAccount" maxlength="20" v-model.trim="form.email" placeholder="您的邮箱" type="text"
           class="item_input">
         <Loading v-if="accountLoading" :size="18" type="spinner" />
+      </div>
+
+      <div class="form_title" v-show="activeTab == 1">手机号</div>
+      <div class="form_item margin_item" v-show="activeTab == 1">
+        <div class="code" @click="showDialog = true">
+          <span>{{ form.area }}</span>
+          <div class="more_icon">
+            <img src="/static/img/assets/more.png" alt="img">
+          </div>
+        </div>
+        <input maxlength="20" v-model.trim="form.phone" placeholder="您的手机号" type="text" class="item_input">
       </div>
       <div class="form_title">密码</div>
       <div class="form_item">
@@ -59,19 +76,59 @@
 
     <!-- 验证码 -->
     <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
+
+    <!-- 区号弹窗 -->
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
+      position="bottom" teleport="body">
+      <div class="register_accounr_dialog">
+        <div class="close_icon" @click="showDialog = false">
+          <img src="/static/img/common/close.png" alt="x">
+        </div>
+        <div class="item search_box">
+          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="搜索">
+        </div>
+        <div style="height:60vh;overflow-y: auto;">
+          <div @click="clickItem(item)" class="transfer_dialog_item"
+            :class="{ 'transfer_dialog_item_active': form.area == item.code }" v-for="(item, i) in showAreas" :key="i">
+            <span>{{ item.cn }} ({{ item.code }})</span>
+            <Icon v-if="form.area == item.code" class="check_icon" name="success" />
+          </div>
+          <NoData v-if="!showAreas.length" />
+        </div>
+      </div>
+    </Popup>
   </div>
 
 
 </template>
 
 <script setup>
-import { Icon, Button, showToast, Loading } from "vant"
+import { Icon, Button, showToast, Loading, Popup, Tabs, Tab } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
 import { _login, _userExist } from "@/api/api"
 import VerifCode from "@/components/VerifCode.vue"
 import store from "@/store"
+import { areaCode, validateEmail } from '@/utils/index'
+import NoData from "@/components/NoData.vue"
+
+
+// 区号控制
+const activeTab = ref(0)
+const defaultCode = '+244'
+const showDialog = ref(false)
+const searchStr = ref('')
+const showAreas = computed(() => {
+  return areaCode.filter(item => {
+    return item.cn.includes(searchStr.value) || item.en.includes(searchStr.value) || item.code.includes(searchStr.value)
+  })
+})
+const clickItem = item => {
+  form.value.area = item.code
+  showDialog.value = false
+}
+
 
 // 进入页面则重置登录状态信息
 store.dispatch('reset')
@@ -86,7 +143,7 @@ const changeAccount = () => {
       username: form.value.username
     }).then(res => {
       if (res.code == 200 && res.data?.exist == 1) {
-        saveAccount.value = form.value.username
+        saveAccount.value = form.value.email
         localStorage.setItem('saveAccount', saveAccount.value)
       } else {
         // showToast('账号不存在')
@@ -102,6 +159,9 @@ const verifCodeRef = ref()
 
 const showPass = ref(false) // 密码显示
 const form = ref({ // 表单
+  area: localStorage.getItem('area') || defaultCode,
+  email: saveAccount.value,
+  phone: localStorage.getItem('phone') || '',
   username: saveAccount.value,
   password: '',
   verifcode: ''
@@ -116,6 +176,14 @@ const disabled = computed(() => { // 提交按钮禁用
 const submit = () => {
   if (loading.value) return
   loading.value = true
+  if (activeTab.value == 0) {
+    form.value.username = form.value.email
+  }
+  if (activeTab.value == 1) {
+    localStorage.setItem('area', form.value.area)
+    localStorage.setItem('phone', form.value.phone)
+    form.value.username = form.value.area + form.value.phone
+  }
   _login(form.value).then(res => {
     if (res && res.code == 200) {
       store.dispatch('reset')
@@ -208,6 +276,59 @@ Promise.all([
 .page-login {
   padding-top: 1.12rem;
 
+  .tabs {
+    overflow: hidden;
+    margin-bottom: 0.4rem;
+    z-index: 1;
+
+    :deep(.van-tab__panel) {
+      // height: calc(var(--app-height) - 3.4rem);
+      // overflow-y: auto;
+    }
+
+    :deep(.van-tabs__nav--card) {
+      border: none;
+    }
+
+    :deep(.van-tab--card) {
+      border-right: none;
+      color: #061023;
+      // background-color: #f5f5f5;
+      // border-radius: 0.3rem;
+      // margin-left: 0.1rem;
+      // transition: all ease .2s;
+    }
+
+    :deep(.van-tab--card.van-tab--active) {
+      // background-color: #014CFA;
+      // color: #fff;
+
+      background-color: #F6F8FF;
+      border-radius: 0.3rem;
+      color: #014CFA;
+      font-weight: 500
+    }
+
+    :deep(.van-tab--shrink) {
+      padding: 0 0.3rem;
+    }
+
+    :deep(.van-tabs__wrap) {
+      height: 0.8rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0);
+      padding-bottom: 0.2rem;
+    }
+
+    :deep(.van-tabs__nav--card) {
+      height: 0.6rem;
+    }
+
+    :deep(.van-tab) {
+      line-height: 0.6rem;
+      font-size: 0.28rem;
+    }
+  }
+
   .top {
     position: fixed;
     width: 100%;
@@ -268,6 +389,19 @@ Promise.all([
       border-radius: 0.32rem;
       padding: 0 0.32rem;
 
+      .code {
+        color: #666;
+        display: flex;
+        align-items: center;
+        margin-right: 0.12rem;
+
+        .more_icon {
+          width: 0.24rem;
+          height: 0.24rem;
+          margin-left: 0.1rem;
+        }
+      }
+
       .item_input {
         flex: 1;
         color: #333333;
@@ -321,6 +455,60 @@ Promise.all([
     >span {
       color: #1A59F6;
       font-weight: 600;
+    }
+  }
+}
+</style>
+
+<style lang="less" scoped>
+.register_accounr_dialog {
+  background-color: #fff;
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+  overflow: hidden;
+  padding: 0.86rem 0.32rem 0.8rem 0.32rem;
+  position: relative;
+
+  .close_icon {
+    position: absolute;
+    width: 0.4rem;
+    height: 0.4rem;
+    top: 0.24rem;
+    right: 0.32rem;
+  }
+
+  .search_box {
+    height: 0.84rem;
+    border: 1px solid #D0D8E2;
+    border-radius: 0.32rem;
+    padding: 0 0.32rem;
+    margin: 0.12rem 0;
+
+    .ipt {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .transfer_dialog_item {
+    overflow: auto;
+    height: 1.12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #F5F5F5;
+  }
+
+  .transfer_dialog_item_active {
+    color: #014CFA;
+    font-weight: 600;
+    position: relative;
+
+    .check_icon {
+      position: absolute;
+      right: 0.64rem;
+      color: #014CFA;
+      font-size: 0.28rem;
     }
   }
 }
