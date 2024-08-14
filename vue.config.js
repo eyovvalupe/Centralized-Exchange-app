@@ -1,7 +1,7 @@
 const { defineConfig } = require("@vue/cli-service");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
-console.log(RetryChunkLoadPlugin)
+
 module.exports = defineConfig({
   configureWebpack: {
     plugins: [

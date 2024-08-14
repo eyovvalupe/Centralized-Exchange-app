@@ -104,7 +104,7 @@
 
 <script setup>
 import { Icon, Button, showToast, Loading, Popup, Tabs, Tab } from "vant"
-import { ref, computed } from "vue"
+import { ref, computed, onMounted } from "vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
 import { _login, _userExist } from "@/api/api"
@@ -259,14 +259,9 @@ const goRegister = () => {
   })
 }
 
-
-// 预加载页面
-// store.commit('setPageLoading', true)
-Promise.all([
-  import('@/views/Public/Register.vue'),
-  import('@/views/Public/Fogot.vue'),
-]).finally(() => {
-  // store.commit('setPageLoading', false)
+onMounted(() => {
+  import('@/views/Public/Register.vue')
+  import('@/views/Public/Fogot.vue')
 })
 
 
