@@ -169,7 +169,7 @@ const form = ref({ // 表单
 
 const loading = ref(false) // 加载
 const disabled = computed(() => { // 提交按钮禁用
-  return !(form.value.username && form.value.password)
+  return !(form.value.password)
 })
 
 // 提交
@@ -184,6 +184,7 @@ const submit = () => {
     localStorage.setItem('phone', form.value.phone)
     form.value.username = form.value.area + form.value.phone
   }
+  if (!form.value.username) return
   _login(form.value).then(res => {
     if (res && res.code == 200) {
       store.dispatch('reset')
