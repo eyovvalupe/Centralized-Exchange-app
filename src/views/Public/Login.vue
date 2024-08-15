@@ -138,9 +138,9 @@ const saveAccount = ref(localStorage.getItem('saveAccount') || '')
 const accountLoading = ref(false)
 const changeAccount = () => {
   accountLoading.value = true
-  if (form.value.username) { // 去检测
+  if (form.value.email) { // 去检测
     _userExist({
-      username: form.value.username
+      username: form.value.email
     }).then(res => {
       if (res.code == 200 && res.data?.exist == 1) {
         saveAccount.value = form.value.email
