@@ -132,7 +132,7 @@ const clickItem = item => {
 
 // 进入页面则重置登录状态信息
 store.dispatch('reset')
-store.commit('clearChooseSymbol')
+// store.commit('clearChooseSymbol')
 
 const saveAccount = ref(localStorage.getItem('saveAccount') || '')
 const accountLoading = ref(false)
@@ -260,8 +260,10 @@ const goRegister = () => {
 }
 
 onMounted(() => {
-  import('@/views/Public/Register.vue')
-  import('@/views/Public/Fogot.vue')
+  Promise.all([
+    import('@/views/Public/Register.vue'),
+    import('@/views/Public/Fogot.vue')
+  ])
 })
 
 
