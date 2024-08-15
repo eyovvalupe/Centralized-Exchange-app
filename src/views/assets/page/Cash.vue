@@ -85,8 +85,11 @@
             </div>
         </div>
         <div class="cash_tab_content tabs">
-            <div class="tab_title">法币</div>
-            <div class=" tab" @click="switchOpen(i, $event)" v-for="(item, i) in currencyWallet" :key="i">
+            <div class="tab_title">
+                <Switch v-model="show0" />
+                <span style="margin-left:0.1rem">{{ show0 ? '已隐藏余额为0的币种' : '已展示余额为0的币种' }}</span>
+            </div>
+            <div class=" tab" @click="switchOpen(i, $event)" v-for="(item, i) in showList" :key="i">
                 <div class="tab_icon">
                     <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="img">
                 </div>
@@ -112,37 +115,6 @@
                     </div>
                 </div>
             </div>
-            <div class="tab_title" style="margin-top: 0.4rem;">加密货币</div>
-            <div class=" tab" @click="switchOpen(i + currencyWallet.length, $event)" v-for="(item, i) in showWallet"
-                :key="i">
-                <div class="tab_icon">
-                    <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="img">
-                </div>
-                <div :class="{ 'open_tab': switchs[i + currencyWallet.length] == true }">
-                    <div>{{ item.currency }}</div>
-                </div>
-                <div class="amount" :class="{ 'open_amount': switchs[i + currencyWallet.length] == true }">{{
-                    item.amount
-                }}</div>
-                <div class="more" :class="{ 'open_tab': switchs[i + currencyWallet.length] == true }">
-                    <img src="/static/img/common/menu.png" alt="img">
-                </div>
-                <div class="rights" style="width:2.4rem"
-                    :class="{ 'open_tab': switchs[i + currencyWallet.length] != true }">
-                    <div class="right" style="background-color: #32D74B;" @click="goTopUp(item.currency.toUpperCase())">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/money.png" alt="img">
-                        </div>
-                        <div>充值</div>
-                    </div>
-                    <div class="right" style="background-color: #5E5CE6;">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/pay.png" alt="img">
-                        </div>
-                        <div>提现</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- 充提记录 -->
@@ -153,12 +125,13 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue"
-import { Icon } from "vant"
+import { Icon, Switch } from "vant"
 import store from "@/store"
 import RaWrecords from "@/components/RaWrecords.vue"
 import router from "@/router"
 import { useRoute } from "vue-router"
 import AccountCheck from "@/components/AccountCheck.vue"
+import { _cryptoCoin } from "@/api/api"
 
 
 const route = useRoute()
@@ -172,8 +145,7 @@ const RaWrecordsRef = ref()
 
 // 刷新现金钱包
 const assets = computed(() => store.state.assets || {})
-const currencyWallet = computed(() => (store.state.wallet || []).filter(a => ['main', 'USD'].includes(a.currency))) // 法币钱包
-const showWallet = computed(() => (store.state.wallet || []).filter(a => !['main', 'stock', 'contract', 'main', 'USD'].includes(a.currency))) // 除了法币外的其他钱包
+const wallet = computed(() => (store.state.wallet || [])) // 钱包
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
 const getAssets = () => {
     if (!token.value) return
@@ -183,6 +155,29 @@ const getAssets = () => {
     })
     store.dispatch('updateOrderHint')
 }
+const show0 = ref(false) // 是否隐藏余额为0的钱包
+const coinMap = computed(() => store.state.coinMap || {})
+const showList = computed(() => {
+    const arr = [...wallet.value]
+    for (let key in coinMap.value) {
+        const target = wallet.value.find(item => item.currency == key)
+        if (target) {
+            if (!arr.find(item => item.currency == key)) {
+                arr.push(target)
+            }
+        } else {
+            arr.push({
+                currency: key,
+                amount: 0
+            })
+        }
+    }
+    if (show0.value) return arr.filter(item => item.amount)
+    return arr
+})
+_cryptoCoin().then(res => {
+    store.commit('setCoinMap', res.data || {})
+})
 
 
 // 展开状态
@@ -486,9 +481,13 @@ const jump = (name, check = false, query) => {
         .tab_title {
             border-bottom: 1px solid #EAEAEA;
             line-height: 0.48rem;
-            padding: 0 0 0.2rem 0;
+            padding: 0.24rem 0 0.24rem 0;
             color: #121826;
             font-size: 0.28rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.24rem;
+            color: #999;
         }
 
         .tab {

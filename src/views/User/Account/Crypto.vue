@@ -11,8 +11,8 @@
             <div class="ipt">{{ form.currency }}</div>
             <Icon style="transform: rotate(90deg);" name="play" />
         </div>
-        <div class="subtitle" v-show="['USDT', 'BTC', 'ETH'].includes(form.currency)">网络</div>
-        <div class="item" @click="showNet = true" v-show="['USDT', 'BTC', 'ETH'].includes(form.currency)">
+        <div class="subtitle">网络</div>
+        <div class="item" @click="showNet = true">
             <div class="ipt">{{ form.network }}</div>
             <Icon style="transform: rotate(90deg);" name="play" />
         </div>
@@ -31,7 +31,7 @@
             position="bottom">
             <div class="bottoms">
                 <div @click="chooseCurrency(item)" class="bottom" :class="{ 'active_bottom': form.currency == item }"
-                    v-for="item in _currencyMapList" :key="item">
+                    v-for="item in currencyMapList" :key="item">
                     <div class="bottom_icon">
                         <img :src="`/static/img/crypto/${item.toUpperCase()}.png`" alt="usdt">
                     </div>
@@ -66,14 +66,13 @@ import { Button, Icon, Popup, showToast } from "vant"
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
 import Top from '@/components/Top.vue';
 import { ref, computed } from "vue"
-import { _addAccount } from "@/api/api"
+import { _addAccount, _cryptoCoin } from "@/api/api"
 import router from "@/router";
 import store from "@/store";
-import { _currencyMapList, _networkMapList } from "@/utils/dataMap.js"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
-
+const coinMap = computed(() => store.state.coinMap || {})
 
 
 const googleRef = ref()
@@ -103,13 +102,20 @@ const chooseNet = (item) => {
     showNet.value = false
 }
 const currNetwork = computed(() => {
-    return _networkMapList[form.value.currency.toUpperCase()] || []
+    return coinMap.value[form.value.currency] || []
 })
 const initNetwork = () => {
     form.value.network = currNetwork.value[0]
 }
 initNetwork()
 
+
+const currencyMapList = computed(() => {
+    return Object.keys(coinMap.value) || []
+})
+_cryptoCoin().then(res => {
+    store.commit('setCoinMap', res.data || {})
+})
 
 
 // 提交

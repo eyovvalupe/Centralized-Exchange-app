@@ -7,6 +7,7 @@ export default {
         rechargeAmount: '', // 充值金额
         hintNum: 0, // 待处理的订单笔数
         loanNum: 0, // 借贷重的订单数
+        coinMap: {}, // 币种
     },
     mutations: {
         setAssets(state, data) {
@@ -23,6 +24,9 @@ export default {
         },
         setLoadNum(state, data) {
             state.loanNum = data;
+        },
+        setCoinMap(state, data) {
+            state.coinMap = data;
         },
     },
     actions: {
