@@ -3,8 +3,7 @@
     <div class="page page_assets">
         <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
 
-            <div class="page_title">
-                <!-- <span>资产</span> -->
+            <!-- <div class="page_title">
                 <span></span>
                 <div class="record_icon_box" @click="openRecordPopup">
                     <div class="record_icon">
@@ -13,8 +12,8 @@
 
                     <span>记录</span>
                 </div>
-            </div>
-            <!-- <div style="height:0.4rem"></div> -->
+            </div> -->
+            <div style="height:0.4rem"></div>
 
             <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card"
                 animated shrink>
@@ -30,7 +29,8 @@
                     </template> -->
 
                     <div class="tab_body">
-                        <Overview ref="overviewRef" @setLoading="val => loading = val" v-if="active == 'overview'" />
+                        <Overview @openRecordPopup="openRecordPopup" ref="overviewRef"
+                            @setLoading="val => loading = val" v-if="active == 'overview'" />
                     </div>
                 </Tab>
                 <Tab :title="'现金账户'" name="cash">

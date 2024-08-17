@@ -49,17 +49,28 @@
                 </div>
                 <span>充值</span>
             </div>
-            <div class=" btn btn2" @click="jump('withdraw', true)">
+            <div class=" btn" @click="jump('withdraw', true)">
+                <div class="icon_box">
+                    <div class="btn_icon">
+                        <img src="/static/img/assets/withdraw_icon.png" alt="img">
+                    </div>
+                </div>
+                <span>提现</span>
+            </div>
+            <div class=" btn" @click="openRecordPopup">
+                <div class="icon_box">
+                    <div class="btn_icon">
+                        <img src="/static/img/assets/record_icon.png" alt="img">
+                    </div>
+                </div>
+                <span>记录</span>
+            </div>
+            <!-- <div class=" btn btn2" @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="color_text">
                         <span style=" font-size: 0.2rem;font-weight: 400;color:#666;margin-right:0.04rem">可提现</span>
                         <span>{{ (new Decimal(assets.money || 0).add(assets.frozen || 0).toFixed(2) || '0.00') }}</span>
                     </div>
-                    <!-- <div>
-                        <span class="tip">冻结</span>
-                        <span>{{ (assets.frozen || '0.00') }}</span>
-                    </div> -->
-
                     <div class="process">
                         <div class="left">
                             <div class="ball"></div>
@@ -67,7 +78,7 @@
                     </div>
                 </div>
                 <span>提现</span>
-            </div>
+            </div> -->
             <div class=" btn" @click="jump('transfer')">
                 <div class="icon_box">
                     <div class="btn_icon">
@@ -145,8 +156,9 @@
                     <div>股票</div>
                     <div class="tab_info">股票账户余额+持仓金额</div>
                 </div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{ new
-                    Decimal(assets.stock).add(assets.stockvalue) }}
+                <div class="amount" :class="{ 'open_amount': rightSwitch2 == true }">{{
+                    new Decimal(assets && assets.stock ? assets.stock : 0).add(assets && assets.stockvalue ?
+                        assets.stockvalue : 0) }}
                 </div>
                 <div class="more" :class="{ 'open_tab': rightSwitch2 == true }">
                     <img src="/static/img/common/menu.png" alt="img">
@@ -236,9 +248,13 @@ import router from "@/router"
 import AccountCheck from "@/components/AccountCheck.vue"
 import Decimal from 'decimal.js';
 
-const emits = defineEmits(['setLoading'])
+const emits = defineEmits(['setLoading', 'openRecordPopup'])
 const token = computed(() => store.state.token || '')
 const hidden = ref(false) // 隐藏数字
+
+const openRecordPopup = () => {
+    emits('openRecordPopup')
+}
 
 // 功能区域控制
 const tab1 = ref()

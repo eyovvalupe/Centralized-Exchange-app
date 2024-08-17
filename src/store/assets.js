@@ -11,7 +11,7 @@ export default {
     },
     mutations: {
         setAssets(state, data) {
-            state.assets = data;
+            state.assets = data || {};
         },
         setWallet(state, data) {
             state.wallet = data;

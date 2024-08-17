@@ -11,33 +11,49 @@
 
         <div class="form">
             <div class="amount">
-                <div>{{ form.currency }} -- {{ form.network }}</div>
-                <div class="num">{{ form.amount }}</div>
+
+                <div class="num" @click="copyPrice">
+                    <span>{{ form.amount }}<b style="font-size: 0.64rem;">{{ form.currency }}</b></span>
+                    <div class="copy_icon" v-if="form.amount">
+                        <img src="/static/img/common/copy2.png" alt="img">
+                    </div>
+                </div>
+                <div style="margin: 0 auto 0.4rem auto;width: 3.34rem;text-align: right">{{ ratePrice }} MAIN</div>
+
+                <div>{{ form.currency }} · {{ form.network }}</div>
             </div>
             <div class="qrcode_box">
                 <Loading :loading="loading" v-show="loading" />
                 <div id="qrcode" ref="qrcodeRef" v-show="!loading"></div>
+
+                <!-- 已过期  -->
+                <div class="timeout_box" v-if="s == 0 && !loading">
+                    <div class="warning_icon">
+                        <img src="/static/img/common/warning.png" alt="img">
+                    </div>
+                    <div>二维码已过期</div>
+                </div>
             </div>
-            <div class="address" @click="copy">
+            <div class="address" @click="copy" v-if="address">
                 <span>{{ address }}</span>
                 <div class=" copy_icon">
-                    <img src="/static/img/common/copy.png" alt="img">
+                    <img src="/static/img/common/copy2.png" alt="img">
                 </div>
             </div>
         </div>
 
         <div class="circle_box">
             <Circle class="circle" :start-position="'right'" :stroke-linecap="'butt'" :stroke-width="150"
-                :layer-color="'#E5E5E5'" :color="'#014CFA'" size="60px" v-if="s && !loading"
+                :layer-color="'#E5E5E5'" :color="'#014CFA'" size="40px" v-if="s && !loading"
                 v-model:current-rate="currentRate" :rate="0" :text="''" />
-            <div class="time_box">
-                <div class="time">{{ s ? s + 's' : '--' }}</div>
-                <div>超时时间</div>
+            <div class="time_box" v-if="s && !loading">
+                <div class="time">{{ showS }}</div>
+                <div>截至时间</div>
             </div>
         </div>
         <div class="tip">
-            <div>提示：请在倒计时内完成充值</div>
-            <div>{{ s ? s + 's' : '--' }}后二维码刷新</div>
+            <div>提示：请在<span style="color:#FD4938">截至时间</span>内完成充值</div>
+            <div>订单到期作废</div>
         </div>
         <div class="btns">
             <!-- <Button round color="#EFF6FF" class="submit" type="info" @click="router.back()">
@@ -45,8 +61,12 @@
             </Button>
             <Button @click="openSure" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button> -->
 
-            <Button @click="router.back()" :loading="loading" round color="#EFF6FF" style="width:100%" class="submit"
-                type="info"><span style="color:#014CFA">完成</span></Button>
+            <Button v-if="orderStatus == 'success'" @click="router.back()" :loading="loading" round color="#18B762"
+                style="width:100%" class="submit" type="info"><span style="color:#fff">成功</span></Button>
+            <Button v-else-if="orderStatus == 'failure'" @click="router.back()" :loading="loading" round color="#E8503A"
+                style="width:100%" class="submit" type="info"><span style="color:#fff">失败</span></Button>
+            <Button v-else @click="router.back()" :loading="loading" round color="#014CFA" style="width:100%"
+                class="submit" type="info"><span style="color:#fff">完成</span></Button>
         </div>
 
     </div>
@@ -56,71 +76,121 @@
 import Top from "@/components/Top.vue"
 import { useRoute } from "vue-router"
 import { ref, computed } from "vue"
-import { Button, showToast, showConfirmDialog, Circle, showDialog } from "vant"
+import { Button, showToast, Circle } from "vant"
 import { _copyTxt } from "@/utils/index.js"
 import Loading from "@/components/Loaidng.vue"
-import { _deposit1, _deposit, _depositGet } from "@/api/api"
+import { _deposit1, _deposit, _depositGet, _swapRate } from "@/api/api"
 import store from "@/store"
 import router from "@/router"
+import Decimal from "decimal.js"
 
 const route = useRoute()
 
 // sessionToken
 const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
-    store.dispatch("updateSessionToken")
+    loading.value = true
+    return store.dispatch("updateSessionToken")
 }
-getSessionToken()
+
 
 // 表单
+const orderStatus = ref('') // 状态
 const loading = ref(false)
+const order_no = ref(route.query.order_no) // 订单编号
 const form = ref({
     amount: route.query.amount,
     currency: route.query.currency,
     network: route.query.network,
+    swap: route.query.swap ? JSON.parse(route.query.swap) : false
 })
 const address = ref('')
-const changeNet = item => { // 切换网络
-    if (loading.value) return
-    form.value.network = item
-    if (qrcodeRef.value) {
-        qrcodeRef.value.innerHTML = ''
-    }
-    setTimeout(() => {
-        getAddress()
-    }, 0)
-}
+
 
 // 获取充值地址
 const getAddress = () => {
-    if (loading.value) return
     loading.value = true
     _deposit1({
         currency: form.value.currency,
         network: form.value.network,
         amount: form.value.amount,
         token: sessionToken.value,
+        swap: form.value.swap
     }).then(res => {
         if (res.code == 200) {
             address.value = res.data?.address || ''
             drawQrcode()
             startCountDown(res.data?.timeout || 60)
             order_no.value = res.data?.order_no
+
+            setTimeout(() => {
+                getRate()
+                router.replace({
+                    name: 'recharging',
+                    query: {
+                        order_no: order_no.value
+                    }
+                })
+            }, 200)
         }
     }).finally(() => {
         loading.value = false
     })
 }
-getAddress()
+
+// 获取订单详情
+const getOrderInfo = () => {
+    loading.value = true
+    _depositGet({
+        order_no: order_no.value
+    }).then(res => {
+        if (res.data) {
+            orderStatus.value = res.data.status
+            form.value = {
+                amount: res.data.amount,
+                currency: res.data.currency,
+                network: res.data.network,
+                swap: false
+            }
+            address.value = res.data.address
+            drawQrcode()
+            startCountDown(res.data?.timeout || 60)
+
+            setTimeout(() => {
+                getRate()
+            }, 200)
+        }
+    }).finally(() => {
+        loading.value = false
+    })
+}
+
+if (order_no.value) { // 查看订单详情
+    getOrderInfo()
+} else { // 获取充值地址
+    getSessionToken().then(res => {
+        getAddress()
+    })
+}
+
 
 // 倒计时
 const s = ref(0)
+const showS = computed(() => {
+    if (s.value > 0) {
+        const m = Math.floor(s.value / 60)
+        const sec = s.value % 60
+        return `${m >= 10 ? m : '0' + m}:${sec >= 10 ? sec : '0' + sec}`
+    }
+    return '--'
+})
 const currentRate = computed(() => {
     return s.value * 100 / timeoutMax.value
 })
 let interval = null
 const timeoutMax = ref(1)
 const startCountDown = (max) => {
+    if (!max || max <= 0) max = 0
     timeoutMax.value = max
     s.value = max
     interval && clearInterval(interval)
@@ -128,40 +198,9 @@ const startCountDown = (max) => {
         s.value--
         if (s.value == 0) {
             clearInterval(interval)
-            refreshTime()
         }
     }, 1000);
 }
-
-// 刷新倒计时
-const order_no = ref('') // 订单编号
-const refreshTime = () => {
-    _depositGet({
-        order_no: order_no.value
-    }).then(res => {
-        if (res.code == 200) {
-            if (res.data?.status == 'success') {
-                showDialog({
-                    title: '成功',
-                    message: '充值成功!',
-                }).then(() => {
-                    router.back()
-                });
-            } else if (res.data?.status == 'failure') {
-                showDialog({
-                    title: '失败',
-                    message: '充值失败，请重试!',
-                }).then(() => {
-                    router.back()
-                });
-            } else { // 继续倒计时
-                startCountDown(res.data?.timeout || 60)
-            }
-
-        }
-    })
-}
-
 
 // 生成二维码
 const qrcodeRef = ref()
@@ -176,50 +215,37 @@ const drawQrcode = () => {
     }, 100)
 }
 
-
-// 提交确认
-const openSure = () => {
-    showConfirmDialog({
-        title: '确认操作',
-        message:
-            '确认提交充值申请？',
-        confirmButtonColor: '#014CFA',
-        cancelButtonColor: '#323233'
-    })
-        .then(() => {
-            submit()
-        }).catch(() => { })
-}
-// 提交表单
-const submit = () => {
-    if (loading.value) return
-    loading.value = true
-    _deposit({
-        currency: form.value.currency,
-        amount: form.value.amount,
-        network: form.value.network,
-        token: sessionToken.value,
+const rate = ref(0)
+const rateLoading = ref(false)
+const ratePrice = computed(() => {
+    if (!rate.value || rateLoading.value) return '--'
+    return new Decimal(form.value.amount).mul(rate.value)
+})
+const getRate = () => { // 获取汇率
+    rateLoading.value = true
+    _swapRate({
+        from: form.value.currency,
+        to: 'main',
+        amount: 0
     }).then(res => {
         if (res.code == 200) {
-            showToast('操作成功');
-            // 跳转充值详情
-            router.replace({
-                name: "topUpItem",
-                query: {
-                    order_no: "1122334455"
-                }
-            })
+            console.error('---汇率', res.data)
+            rate.value = res.data.exchange_rate
         }
     }).finally(() => {
-        getSessionToken()
-        loading.value = false
+        rateLoading.value = false
     })
 }
+
 
 
 // 复制
 const copy = () => {
     _copyTxt(address.value)
+    showToast('已复制');
+}
+const copyPrice = () => {
+    _copyTxt(form.value.amount)
     showToast('已复制');
 }
 
@@ -242,16 +268,26 @@ const copy = () => {
         .amount {
             text-align: center;
             color: #000000;
-            font-size: 0.4rem;
+            font-size: 0.28rem;
             line-height: 0.48rem;
             font-weight: 400;
 
             .num {
                 font-weight: 600;
-                font-size: 1rem;
+                font-size: 0.8rem;
                 line-height: 1rem;
-                font-family: fangsong;
                 word-break: break-all;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                .copy_icon {
+                    width: 0.4rem;
+                    height: 0.4rem;
+                    line-height: 0;
+                    position: relative;
+                    left: 0.2rem;
+                }
             }
         }
 
@@ -273,6 +309,26 @@ const copy = () => {
             align-items: center;
             justify-content: center;
             padding: 0.1rem;
+            position: relative;
+
+            .timeout_box {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(255, 255, 255, 0.5);
+
+                .warning_icon {
+                    width: 1rem;
+                    height: 1rem;
+                    margin-bottom: 0.4rem;
+                }
+            }
 
             #qrcode {
                 width: 100%;
@@ -312,7 +368,7 @@ const copy = () => {
     }
 
     .circle_box {
-        margin: 0.9rem auto 0.5rem auto;
+        margin: 0.4rem auto 0.4rem auto;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -323,16 +379,16 @@ const copy = () => {
 
         .time_box {
             margin-left: 0.2rem;
-            text-align: center;
             color: #666;
             font-size: 0.24rem;
             font-weight: 400;
+            text-align: left;
 
             .time {
-                color: #000;
+                color: #E8503A;
                 font-size: 0.32rem;
-                font-weight: 600;
-                margin-bottom: 0.2rem;
+                font-weight: 500;
+                margin-bottom: 0.1rem;
             }
         }
     }
@@ -343,15 +399,21 @@ const copy = () => {
         color: #191B1E;
         font-size: 0.24rem;
         line-height: 0.32rem;
-        margin: 0 0 0.4rem 0;
+        margin: 0 auto 0.4rem auto;
         text-align: center;
+        background-color: #F2F1F9;
+        width: 75vw;
+        color: #333;
+        padding: 0.12rem 0.5rem;
+        line-height: 0.4rem;
+        border-radius: 0.04rem;
     }
 
     .btns {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 1rem 0 0.4rem 0;
+        margin: 0.6rem 0 0.4rem 0;
 
         .submit {
             width: 47%;

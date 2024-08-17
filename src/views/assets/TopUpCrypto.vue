@@ -31,7 +31,8 @@
                         <img src="/static/img/assets/more.png" alt="more">
                     </div>
                 </div>
-                <div class="select_item border_item" style="margin-left: 0.6rem" @click="showNetDialog = true">
+                <div class="select_item border_item" style="margin-left: 0.6rem;padding-left:0.4rem"
+                    @click="showNetDialog = true">
                     <div class="currency" v-if="form.network">
                         <span>{{ form.network }}</span>
                     </div>
@@ -43,7 +44,10 @@
 
             <div class="subtitle">
                 <span style="flex:none">充值金额</span>
-                <span class="subtitle_right" @click="topUpMode = topUpMode == 1 ? 2 : 1"><iconpark-icon style="position: relative;top:0.02rem" name="qiehuan"></iconpark-icon> <b>{{targetAmount}}</b>{{ topUpMode == 1 ? 'MAIN' : form.currency.toUpperCase() }}</span>
+                <span class="subtitle_right" @click="topUpMode = topUpMode == 1 ? 2 : 1"><iconpark-icon
+                        style="position: relative;top:0.02rem" name="qiehuan"></iconpark-icon> <b>{{ targetAmount
+                        }}</b>{{
+                            topUpMode == 1 ? 'MAIN' : form.currency.toUpperCase() }}</span>
             </div>
             <div class="item border_item" :class="{ 'err_ipt': errStatus }">
                 <div class="item_content">
@@ -51,15 +55,19 @@
                 </div>
                 <div>{{ topUpMode == 1 ? form.currency : 'MAIN' }}</div>
             </div>
+
+            <div>
+                <Checkbox v-model="form.swap" shape="square" name="a">自动兑换</Checkbox>
+            </div>
             <!-- <div class="tip" v-if="topUpMode == 2">
                 <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
                 <Loading v-show="rateLoading" type="spinner" size="12px" />
             </div> -->
 
-            <div class="border_item act_body">
+            <!-- <div class="border_item act_body">
                 <div>活动内容</div>
                 <div>--</div>
-            </div>
+            </div> -->
 
         </div>
 
@@ -74,8 +82,8 @@
                     <img src="/static/img/common/close.png" alt="x">
                 </div>
                 <div @click="clickItem(keyStr)" class="swap_dialog_item"
-                    :class="{ 'swap_dialog_item_active': form.currency == keyStr }" v-for="(val, keyStr) in networkMapList"
-                    :key="keyStr">
+                    :class="{ 'swap_dialog_item_active': form.currency == keyStr }"
+                    v-for="(val, keyStr) in networkMapList" :key="keyStr">
                     <div class="icon">
                         <img :src="`/static/img/crypto/${keyStr.toUpperCase()}.png`" alt="currency">
                     </div>
@@ -120,7 +128,7 @@ import Top from "@/components/Top.vue"
 import router from "@/router"
 import { ref, computed, onBeforeUnmount } from "vue"
 import store from "@/store";
-import { Popup, Button, Icon, showToast, Loading, showLoadingToast, closeToast } from "vant"
+import { Popup, Button, Icon, showToast, Checkbox, showLoadingToast, closeToast } from "vant"
 import { useRoute } from "vue-router"
 // import { _networkMapList } from "@/utils/dataMap.js"
 import RecordList from "@/components/RecordList.vue"
@@ -137,6 +145,7 @@ const route = useRoute()
 const loading = ref(false)
 // 表单
 const form = ref({
+    swap: false,
     amount: '',
     currency: '',
     network: '',
@@ -176,9 +185,9 @@ const clickNetItem = item => {
 // initNetwork()
 const getCoinNet = () => {
     showLoadingToast({
-            duration: 0,
-            loadingType: 'spinner',
-        })
+        duration: 0,
+        loadingType: 'spinner',
+    })
     _cryptoCoin().then(res => {
         networkMapList.value = res.data || {}
         const k = Object.keys(networkMapList.value)[0]
@@ -204,21 +213,23 @@ const goTopUp = () => {
         errStatus.value = true
         return showToast('请输入金额')
     }
-    if (topUpMode == 2 && !rate.value) {
+    if (topUpMode.value == 2 && !rate.value) {
         return showToast('正在获取汇率')
     }
-    if (AccountCheckRef.value.check()) {
-        // safeRef.value.open()
-        submit()
-    }
+    submit()
+    // if (AccountCheckRef.value.check()) {
+    //     // safeRef.value.open()
+    //     submit()
+    // }
 }
 const submit = () => {
     router.push({
         name: 'recharging',
         query: {
-            amount: topUpMode == 1 ? form.value.amount : targetAmount.value,
+            amount: topUpMode.value == 1 ? form.value.amount : targetAmount.value,
             currency: form.value.currency,
             network: form.value.network,
+            swap: form.value.swap
         }
     })
 }
@@ -241,9 +252,9 @@ const getRate = () => {
     if (timeout) clearTimeout(timeout)
     if (interval) clearInterval(interval)
     showLoadingToast({
-            duration: 0,
-            loadingType: 'spinner',
-        })
+        duration: 0,
+        loadingType: 'spinner',
+    })
     timeDown.value = 10
     rateLoading.value = true
     _swapRate({
@@ -335,7 +346,7 @@ onBeforeUnmount(() => {
                 display: flex;
                 align-items: center;
                 margin-right: 0.24rem;
-                line-height: 0;
+                line-height: 1;
 
                 .currency_icon {
                     width: 0.56rem;
@@ -359,6 +370,7 @@ onBeforeUnmount(() => {
                 border: 1px solid #014CFA;
             }
         }
+
         .tip {
             font-size: 0.24rem;
             position: relative;
@@ -391,9 +403,11 @@ onBeforeUnmount(() => {
             >span {
                 flex: 1;
             }
+
             .subtitle_right {
                 text-align: right;
                 font-size: 0.24rem;
+
                 b {
                     color: #014CFA;
                     font-size: 0.28rem;

@@ -1,6 +1,6 @@
 <!-- 充值记录-元素 -->
 <template>
-    <div class="recgarge_item">
+    <div class="recgarge_item" @click="goInfo">
         <div class="icon_box">
             <div class="icon">
                 <img src="/static/img/account/crypto_icon.png" alt="img">
@@ -8,7 +8,7 @@
         </div>
         <div class="content">
             <div class="item_title">{{ item.currency }}</div>
-            <div class="address">{{ item.order_no }}</div>
+            <!-- <div class="address">{{ item.address }}</div> -->
             <div class="time">{{ item.date ? (item.date.split(' ')[1] || item.date) : '--' }}</div>
         </div>
         <div class="right">
@@ -19,19 +19,32 @@
 </template>
 
 <script setup>
+import router from "@/router"
 import { _topUpStatusMap } from "@/utils/dataMap"
+
 const props = defineProps({
     item: {
         type: Object,
         default: () => { }
     }
 })
+
+const emits = defineEmits(['close'])
+const goInfo = () => {
+    emits('close')
+    router.push({
+        name: 'recharging',
+        query: {
+            order_no: props.item.order_no
+        }
+    })
+}
 </script>
 
 <style lang="less" scoped>
 .recgarge_item {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     padding: 0.24rem 0;
     border-bottom: 1px dashed #CBCBCB;
 
@@ -41,6 +54,11 @@ const props = defineProps({
         background-color: #D9E4FF;
         border-radius: 0.16rem;
         padding: 0.16rem;
+
+        .icon {
+            width: 100%;
+            height: 100%;
+        }
     }
 
     .content {
@@ -48,6 +66,10 @@ const props = defineProps({
         flex: 1;
         text-align: left;
         line-height: 1.2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
 
         .item_title {
             width: 100%;
@@ -71,7 +93,7 @@ const props = defineProps({
 
     .right {
         height: 100%;
-        padding-top: 0.2rem;
+        // padding-top: 0.2rem;
         text-align: right;
 
         .amount {

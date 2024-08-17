@@ -16,7 +16,7 @@
                             <div v-for="(item, i) in list" :key="i" class="list_0_item">
                                 <div class="date" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">{{
                                     getDate(item.date) }}</div>
-                                <RechargeItem :item="item" />
+                                <RechargeItem @close="showBottom = false" :item="item" />
                             </div>
                         </template>
                         <LoadingMore class="active_more" :loading="loading" :finish="finish"

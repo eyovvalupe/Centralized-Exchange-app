@@ -128,7 +128,7 @@ const maxIpt = () => {
     form.value.amount = balance.value
 }
 
-store.dispatch('updateAssets') // 更新资产
+store.dispatch('updateWallet') // 更新资产
 const assets = computed(() => store.state.assets || {})
 const wallet = computed(() => store.state.wallet || []) // 钱包
 const balance = computed(() => {
@@ -166,7 +166,7 @@ const submit = s => {
         if (res.code == 200) {
             showToast('划转成功');
             form.value.amount = ''
-            store.dispatch('updateAssets') // 更新资产
+            store.dispatch('updateWallet') // 更新资产
             setTimeout(() => {
                 router.back()
             }, 500)
