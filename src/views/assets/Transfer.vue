@@ -7,9 +7,9 @@
                     <div class="top-record-icon">
                         <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                     </div>
-                    <span>
+                    <!-- <span>
                         记录
-                    </span>
+                    </span> -->
                 </div>
             </template>
         </Top>

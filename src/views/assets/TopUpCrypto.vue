@@ -7,12 +7,21 @@
                     <div class="top-record-icon">
                         <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                     </div>
-                    <span>
+                    <!-- <span>
                         记录
-                    </span>
+                    </span> -->
                 </div>
             </template>
         </Top>
+
+        <div class="recommend_list">
+            <div @click="clickItem(item)" class="recommend_item" :class="{ 'recommend_active': form.currency == item }"
+                v-for="item in recommendList" :key="item">
+                <div class="recommend_icon"><img :src="`/static/img/crypto/${item.toUpperCase()}.png`" alt="currency">
+                </div>
+                <span>{{ item }}</span>
+            </div>
+        </div>
 
         <div class="form">
             <div class="subtitle">
@@ -44,10 +53,17 @@
 
             <div class="subtitle">
                 <span style="flex:none">充值金额</span>
-                <span class="subtitle_right" @click="topUpMode = topUpMode == 1 ? 2 : 1"><iconpark-icon
-                        style="position: relative;top:0.02rem" name="qiehuan"></iconpark-icon> <b>{{ targetAmount
-                        }}</b>{{
-                            topUpMode == 1 ? 'MAIN' : form.currency.toUpperCase() }}</span>
+                <span class="subtitle_right" @click="goTransing">
+                    <span style="color: #014CFA;">{{ targetAmount }}</span>
+                    {{ topUpMode
+                        == 1 ?
+                        'MAIN' : form.currency.toUpperCase() }}
+
+                </span>
+                <div style="width:0.52rem;height:0.52rem;margin-left: 0.1rem;" @click="goTransing"
+                    :class="[transing ? 'transing_icon' : 'transing_stop']">
+                    <img src="/static/img/assets/recharge_trans.png" alt="img">
+                </div>
             </div>
             <div class="item border_item" :class="{ 'err_ipt': errStatus }">
                 <div class="item_content">
@@ -57,7 +73,7 @@
             </div>
 
             <div>
-                <Checkbox v-model="form.swap" shape="square" name="a">自动兑换</Checkbox>
+                <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
             </div>
             <!-- <div class="tip" v-if="topUpMode == 2">
                 <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
@@ -138,6 +154,8 @@ import { _swapRate } from "@/api/api"
 import Decimal from "decimal.js";
 import { _cryptoCoin } from "@/api/api"
 
+
+
 const safeRef = ref()
 
 const RecordListRef = ref()
@@ -145,16 +163,25 @@ const route = useRoute()
 const loading = ref(false)
 // 表单
 const form = ref({
-    swap: false,
+    swap: true,
     amount: '',
     currency: '',
     network: '',
 })
 
 const topUpMode = ref(1) // 1-选择的币种 2-法币
+const transing = ref(false) // 转换动画中
+const goTransing = () => {
+    topUpMode.value = topUpMode.value == 1 ? 2 : 1
+    transing.value = true
+    setTimeout(() => {
+        transing.value = false
+    }, 500)
+}
 
 // 货币选择
 const showDialog = ref(false)
+const recommendList = ref(['USDT', 'BTC', 'ETH', 'USD']) // 推荐币种
 // 钱包
 const wallet = computed(() => { // 可选钱包列表
     return store.state.wallet.filter(item => !['stock', 'contract', 'main', 'USD'].includes(item.currency)) || []
@@ -216,11 +243,10 @@ const goTopUp = () => {
     if (topUpMode.value == 2 && !rate.value) {
         return showToast('正在获取汇率')
     }
-    submit()
-    // if (AccountCheckRef.value.check()) {
-    //     // safeRef.value.open()
-    //     submit()
-    // }
+    if (AccountCheckRef.value.check()) {
+        // safeRef.value.open()
+        submit()
+    }
 }
 const submit = () => {
     router.push({
@@ -264,12 +290,14 @@ const getRate = () => {
     }).then(res => {
         if (res.code == 200) {
             rate.value = res.data.exchange_rate
-            interval = setInterval(() => {
-                timeDown.value--
-                if (timeDown.value <= 0) {
-                    getRate()
-                }
-            }, 1000)
+            if (route.name == 'topUpCrypto') {
+                interval = setInterval(() => {
+                    timeDown.value--
+                    if (timeDown.value <= 0) {
+                        getRate()
+                    }
+                }, 1000)
+            }
         }
     }).finally(() => {
         closeToast();
@@ -307,17 +335,51 @@ onBeforeUnmount(() => {
 
     }
 
+    .recommend_list {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0.32rem 0 0 0;
+
+        .recommend_item {
+            padding: 0.12rem 0.2rem;
+            border-radius: 0.3rem;
+            background-color: #F0F0F2;
+            color: #333333;
+            font-size: 0.24rem;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+
+            .recommend_icon {
+                width: 0.32rem;
+                height: 0.32rem;
+                margin-right: 0.1rem;
+            }
+        }
+
+        .recommend_active {
+            background-color: #014CFA;
+            color: #fff;
+        }
+    }
+
     .form {
         margin-top: 0.5rem;
 
         .item {
             width: 100%;
-            height: 1.12rem;
+            height: 0.88rem;
             margin-bottom: 0.6rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-weight: 400;
+
+            &:has(.ipt:focus) {
+                height: 1.12rem;
+            }
 
             .item_pre {
                 width: 1rem;
@@ -394,6 +456,7 @@ onBeforeUnmount(() => {
 
         .subtitle {
             display: flex;
+            align-items: center;
             font-size: 0.28rem;
             color: #333333;
             font-weight: 400;
@@ -402,6 +465,16 @@ onBeforeUnmount(() => {
 
             >span {
                 flex: 1;
+            }
+
+            .transing_icon {
+                transition: all ease .5s;
+                transform: rotate(360deg);
+            }
+
+            .transing_stop {
+                transition: none;
+                transform: rotate(0deg);
             }
 
             .subtitle_right {

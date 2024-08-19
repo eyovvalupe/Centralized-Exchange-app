@@ -7,9 +7,9 @@
                     <div class="top-record-icon">
                         <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                     </div>
-                    <span>
+                    <!-- <span>
                         记录
-                    </span>
+                    </span> -->
                 </div>
             </template>
         </Top>
@@ -17,7 +17,7 @@
         <!-- 表单 -->
         <div class="form">
             <div class="subtitle">金额</div>
-            <div class="item" :class="{ 'active_item': focus }">
+            <div class="item2" :class="{ 'active_item': focus }">
 
                 <div class="item_box item_currency" @click="showDialog = true">
                     <div class="currency" v-if="form.from">
@@ -385,7 +385,7 @@ Promise.all([
     }
 
     .form {
-        .item {
+        .item2 {
             width: 100%;
             height: 0.88rem;
             border-radius: 0.32rem;

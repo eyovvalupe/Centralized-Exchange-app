@@ -13,20 +13,36 @@
             <div class="amount">
 
                 <div class="num" @click="copyPrice">
-                    <span>{{ form.amount }}<b style="font-size: 0.64rem;">{{ form.currency }}</b></span>
+                    <span style="border-bottom:1px dashed #D0D2D6">{{ form.amount }}<b
+                            style="font-size: 0.48rem;color:#333">{{
+                                form.currency
+                            }}</b></span>
                     <div class="copy_icon" v-if="form.amount">
                         <img src="/static/img/common/copy2.png" alt="img">
                     </div>
                 </div>
-                <div style="margin: 0 auto 0.4rem auto;width: 3.34rem;text-align: right">{{ ratePrice }} MAIN</div>
+                <div v-if="rate" style="margin: 0 auto 0.32rem auto;width: 3.34rem;text-align: right;">{{
+                    ratePrice }}
+                    MAIN</div>
+                <div v-else style="height: 0.8rem;"></div>
 
-                <div>{{ form.currency }} · {{ form.network }}</div>
+                <div v-if="form.currency"
+                    style="background-color: #F6F6F6;color: #3830DD;display: inline-block;padding: 0 0.2rem;margin-bottom:0.04rem">
+                    {{
+                        form.currency
+                    }} · {{
+                        form.network }}</div>
             </div>
+
+            <div v-if="!form.amount" style="height: 1rem;"></div>
             <div class="qrcode_box">
                 <Loading :loading="loading" v-show="loading" />
                 <div id="qrcode" ref="qrcodeRef" v-show="!loading"></div>
 
                 <!-- 已过期  -->
+                <div v-if="s == 0 && !loading" style="width:100%;height:100%;position: absolute;top:0;left:0;z-index:1">
+                    <img src="/static/img/assets/Expired.png" alt="Expired">
+                </div>
                 <div class="timeout_box" v-if="s == 0 && !loading">
                     <div class="warning_icon">
                         <img src="/static/img/common/warning.png" alt="img">
@@ -178,9 +194,16 @@ if (order_no.value) { // 查看订单详情
 const s = ref(0)
 const showS = computed(() => {
     if (s.value > 0) {
-        const m = Math.floor(s.value / 60)
-        const sec = s.value % 60
-        return `${m >= 10 ? m : '0' + m}:${sec >= 10 ? sec : '0' + sec}`
+        if (s.value < 3600) {
+            const m = Math.floor(s.value / 60)
+            const sec = s.value % 60
+            return `${m >= 10 ? m : '0' + m}:${sec >= 10 ? sec : '0' + sec}`
+        } else {
+            const h = Math.floor(s.value / 3600)
+            const m = Math.floor(s.value % 3600 / 60)
+            const sec = s.value % 60
+            return `${h}:${m >= 10 ? m : '0' + m}:${sec >= 10 ? sec : '0' + sec}`
+        }
     }
     return '--'
 })
@@ -275,7 +298,7 @@ const copyPrice = () => {
             .num {
                 font-weight: 600;
                 font-size: 0.8rem;
-                line-height: 1rem;
+                line-height: 0.9rem;
                 word-break: break-all;
                 display: flex;
                 align-items: center;
@@ -302,8 +325,8 @@ const copyPrice = () => {
         .qrcode_box {
             border: 1px solid #DFE2E4;
             background-color: #fff;
-            width: 3.34rem;
-            height: 3.34rem;
+            width: 3rem;
+            height: 3rem;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -319,9 +342,10 @@ const copyPrice = () => {
                 flex-direction: column;
                 justify-content: center;
                 position: absolute;
+                z-index: 9;
                 top: 0;
                 left: 0;
-                background-color: rgba(255, 255, 255, 0.5);
+                background-color: rgba(255, 255, 255, 0.8);
 
                 .warning_icon {
                     width: 1rem;
@@ -347,7 +371,7 @@ const copyPrice = () => {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 0.2rem;
+            margin-top: 0.1rem;
 
             >span {
                 white-space: nowrap;
@@ -355,12 +379,12 @@ const copyPrice = () => {
                 text-overflow: ellipsis;
                 color: #121212;
                 font-weight: 400;
-                font-size: 0.32rem;
+                font-size: 0.28rem;
             }
 
             .copy_icon {
-                width: 0.4rem;
-                height: 0.4rem;
+                width: 0.36rem;
+                height: 0.36rem;
                 margin-left: 0.1rem;
                 overflow: hidden;
             }
@@ -368,7 +392,7 @@ const copyPrice = () => {
     }
 
     .circle_box {
-        margin: 0.4rem auto 0.4rem auto;
+        margin: 0.32rem auto 0.24rem auto;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -378,7 +402,7 @@ const copyPrice = () => {
         }
 
         .time_box {
-            margin-left: 0.2rem;
+            margin-left: 0.12rem;
             color: #666;
             font-size: 0.24rem;
             font-weight: 400;
@@ -388,7 +412,7 @@ const copyPrice = () => {
                 color: #E8503A;
                 font-size: 0.32rem;
                 font-weight: 500;
-                margin-bottom: 0.1rem;
+                margin-bottom: 0.07rem;
             }
         }
     }
@@ -413,7 +437,7 @@ const copyPrice = () => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 0.6rem 0 0.4rem 0;
+        margin: 0.68rem 0 0.4rem 0;
 
         .submit {
             width: 47%;

@@ -7,9 +7,9 @@
                     <div class="top-record-icon">
                         <img src="/static/img/user/withdraw_record_icon.png" alt="img">
                     </div>
-                    <span>
+                    <!-- <span>
                         记录
-                    </span>
+                    </span> -->
                 </div>
             </template>
         </Top>
@@ -149,8 +149,10 @@ import { _converter, _swapRate } from "@/api/api"
 import router from "@/router"
 import Decimal from 'decimal.js';
 import RecordList from "@/components/RecordList.vue"
+import { useRoute } from "vue-router"
 
 const focus = ref(false)
+const route = useRoute()
 
 store.dispatch('updateWallet')
 const wallet = computed(() => {
@@ -240,12 +242,15 @@ const getRate = () => {
             if (form.value.amount) {
                 form.value.toAmount = new Decimal(rate.value).mul(form.value.amount).toFixed(4);
             }
-            interval = setInterval(() => {
-                timeDown.value--
-                if (timeDown.value <= 0) {
-                    getRate()
-                }
-            }, 1000)
+            if (route.name == 'swap') {
+                interval = setInterval(() => {
+                    timeDown.value--
+                    if (timeDown.value <= 0) {
+                        getRate()
+                    }
+                }, 1000)
+            }
+
         }
     })
 }

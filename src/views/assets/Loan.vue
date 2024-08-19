@@ -8,7 +8,7 @@
             <div class="subtitle">
                 <span>抵押</span>
             </div>
-            <div class="item">
+            <div class="item2">
                 <div class="border_item account_box" style="background-color: #f5f5f5">
                     <div class="item_icon">
                         <img src="/static/img/assets/cash_icon.svg" alt="img">
@@ -43,7 +43,7 @@
             <div class="subtitle">
                 <span>借款账户</span>
             </div>
-            <div class="item">
+            <div class="item2">
                 <div class="border_item account_box" @click="showDialog = true" style="padding-right:0.24rem">
                     <div class="item_icon">
                         <img src="/static/img/assets/stock_icon.svg" alt="img">
@@ -479,7 +479,7 @@ onBeforeUnmount(() => {
             }
         }
 
-        .item {
+        .item2 {
             display: flex;
             align-items: center;
             justify-content: space-between;
