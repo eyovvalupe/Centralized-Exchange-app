@@ -57,7 +57,7 @@
                 </div>
                 <span>提现</span>
             </div>
-            <div class=" btn" @click="openRecordPopup">
+            <div class=" btn" @click="showAS = true">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/record_icon.png" alt="img">
@@ -235,11 +235,14 @@
             </div>
         </div>
 
+        <!-- 类型选择弹窗 -->
+        <ActionSheet teleport="body" v-model:show="showAS" :actions="actions" @select="onSelect" title="记录列表">
+        </ActionSheet>
     </div>
 </template>
 
 <script setup>
-import { Icon } from "vant"
+import { Icon, ActionSheet } from "vant"
 import { ref, computed, onMounted } from "vue"
 import { useClickAway } from '@vant/use';
 import { _assets } from "@/api/api"
@@ -247,6 +250,23 @@ import store from "@/store"
 import router from "@/router"
 import AccountCheck from "@/components/AccountCheck.vue"
 import Decimal from 'decimal.js';
+
+const showAS = ref(false)
+const actions = [
+    { name: '充值记录', value: '0' },
+    { name: '提现记录', value: '1' },
+    { name: '划转记录', value: '2' },
+    { name: '兑换记录', value: '3' },
+];
+const onSelect = item => {
+    showAS.value = false
+    router.push({
+        name: 'recordList',
+        query: {
+            tab: item.value,
+        }
+    })
+}
 
 const emits = defineEmits(['setLoading', 'openRecordPopup'])
 const token = computed(() => store.state.token || '')

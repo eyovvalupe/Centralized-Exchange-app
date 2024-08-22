@@ -32,12 +32,21 @@ const props = defineProps({
 const emits = defineEmits(['close'])
 const goInfo = () => {
     emits('close')
-    router.push({
-        name: 'recharging',
-        query: {
-            order_no: props.item.order_no
-        }
-    })
+    if (props.item.status == 'success' || props.item.status == 'failure') {
+        router.push({
+            name: 'rechargeInfo',
+            query: {
+                order_no: props.item.order_no
+            }
+        })
+    } else {
+        router.push({
+            name: 'recharging',
+            query: {
+                order_no: props.item.order_no
+            }
+        })
+    }
 }
 </script>
 

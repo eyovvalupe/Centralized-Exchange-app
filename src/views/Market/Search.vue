@@ -177,8 +177,8 @@ Promise.all([
         }
 
         .icon {
-            width: 0.48rem;
-            height: 0.48rem;
+            width: 0.4rem;
+            height: 0.4rem;
         }
 
         .close {

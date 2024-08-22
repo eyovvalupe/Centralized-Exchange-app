@@ -3,21 +3,51 @@
     <div class="page page_trade">
         <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
 
+            <div class="title">交易</div>
             <!-- 头部 -->
             <div class="trade_header">
-                <div class="menu" @click="showNavDialog = true">
+                <!-- <div class="menu" @click="showNavDialog = true">
                     <img src="/static/img/trade/open.png" alt="menu" />
-                </div>
+                </div> -->
 
                 <div class="tabs">
                     <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">股票</div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">IPO</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 9 }" @click="activeTab = 9">合约</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">
+                        <div class="mytab_title_icon" v-show="activeTab != 0">
+                            <img src="/static/img/assets/contract_icon.svg" alt="img">
+                        </div>
+                        <span v-show="activeTab == 0">买币</span>
+                    </div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">
+                        <div class="mytab_title_icon" v-show="activeTab != 3">
+                            <img src="/static/img/assets/stock_icon.svg" alt="img">
+                        </div>
+                        <span v-show="activeTab == 3">交易机器人</span>
+                    </div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 4 }" @click="activeTab = 4">
+                        <div class="mytab_title_icon" v-show="activeTab != 4">
+                            <img src="/static/img/assets/contract_icon.svg" alt="img">
+                        </div>
+                        <span v-show="activeTab == 4">外汇</span>
+                    </div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">
+                        <div class="mytab_title_icon" v-show="activeTab != 2">
+                            <img src="/static/img/assets/ipo_icon.svg" alt="img">
+                        </div>
+                        <span v-show="activeTab == 2">IPO</span>
+                    </div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">
+                        <div class="mytab_title_icon" v-show="activeTab != 5">
+                            <img src="/static/img/assets/stock_icon.svg" alt="img">
+                        </div>
+                        <span v-show="activeTab == 5">理财</span>
+                    </div>
                 </div>
 
-                <div class="value">
+                <!-- <div class="value">
                     <div class="value_icon"><img src="/static/img/trade/value.png" alt="img" /></div>
-                    <!-- <span>持仓价值</span> -->
-                </div>
+                </div> -->
             </div>
 
 
@@ -27,6 +57,9 @@
                 </div>
                 <div v-else-if="activeTab == 2" class="ipo_block">
                     <IpoBlock />
+                </div>
+                <div v-else>
+                    <NoData />
                 </div>
             </transition>
 
@@ -91,6 +124,7 @@ import StockBlock from "./pages/StockBlock.vue"
 import store from "@/store"
 import StockTable from "@/components/StockTable.vue"
 import { _search, _watchlist } from "@/api/api"
+import NoData from "@/components/NoData.vue"
 
 const token = computed(() => store.state.token)
 if (token.value) {
@@ -221,8 +255,21 @@ onDeactivated(() => {
         padding: 0 0.28rem;
     }
 
-    .trade_header {
+    .title {
+        padding: 0 0.24rem 0 0.32rem;
         height: 1.12rem;
+        font-weight: 600;
+        color: #0D0D12;
+        line-height: 0.5rem;
+        font-size: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .trade_header {
+        height: 0.8rem;
         padding: 0 0.32rem;
         display: flex;
         align-items: center;
@@ -237,22 +284,33 @@ onDeactivated(() => {
             flex: 1;
             display: flex;
             align-items: center;
-            padding: 0 0.4rem;
+            // padding: 0 0.4rem;
 
             .tab {
                 font-size: .28rem;
                 color: #061023;
-                padding: 0 .4rem;
+                padding: 0 .24rem;
                 height: .6rem;
                 border-radius: .48rem;
                 display: flex;
                 align-items: center;
                 cursor: pointer;
+                white-space: nowrap;
+
+                .mytab_title_icon {
+                    width: 0.32rem;
+                    height: 0.32rem;
+                    line-height: 1;
+                    position: relative;
+                    top: -0.02rem;
+                }
             }
 
             .active_tab {
                 color: #014cfa;
+                padding: 0 .32rem;
                 background-color: #f6f8ff;
+
             }
         }
 

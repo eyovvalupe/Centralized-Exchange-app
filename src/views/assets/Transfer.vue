@@ -233,10 +233,12 @@ getSessionToken()
 // 跳转记录
 const RecordListRef = ref()
 const goRecord = () => {
-    // router.push({
-    //     name: 'transferRecord'
-    // })
-    RecordListRef.value && RecordListRef.value.open(2)
+    router.push({
+        name: 'recordList',
+        query: {
+            tab: 2
+        }
+    })
 }
 </script>
 

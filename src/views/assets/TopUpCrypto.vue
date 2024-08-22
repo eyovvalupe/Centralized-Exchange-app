@@ -228,10 +228,12 @@ const getCoinNet = () => {
 getCoinNet()
 
 const goRecord = () => {
-    // router.push({
-    //     name: 'topUpRecord'
-    // })
-    RecordListRef.value && RecordListRef.value.open()
+    router.push({
+        name: 'recordList',
+        query: {
+            tab: 0
+        }
+    })
 }
 const errStatus = ref(false)
 const AccountCheckRef = ref()

@@ -330,10 +330,12 @@ getSessionToken()
 
 // 跳转记录
 const goRecord = () => {
-    // router.push({
-    //     name: 'withdrawRecord'
-    // })
-    RecordListRef.value && RecordListRef.value.open(1)
+    router.push({
+        name: 'recordList',
+        query: {
+            tab: 1
+        }
+    })
 }
 // 跳转添加
 const goAddAccount = () => {

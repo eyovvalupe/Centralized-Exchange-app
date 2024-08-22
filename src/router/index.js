@@ -447,6 +447,26 @@ const routes = [
     }
   },
   {
+    // 充值详情
+    path: "/rechargeInfo",
+    name: "rechargeInfo",
+    component: () => import("../views/Assets/RechargeInfo.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
+    // 记录列表
+    path: "/recordList",
+    name: "recordList",
+    component: () => import("../views/Assets/RecordList.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
+  {
     // 认购
     path: "/subscription",
     name: "subscription",

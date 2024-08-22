@@ -104,6 +104,7 @@ import IPO from "./page/IPO.vue"
 import Contract from "./page/Contract.vue"
 import RecordList from "@/components/RecordList.vue"
 import store from "@/store"
+import router from "@/router"
 
 const RecordListRef = ref()
 const active = ref('overview')
@@ -112,7 +113,12 @@ const disabled = ref(false)
 const pageLoading = ref(false)
 
 const openRecordPopup = () => {
-    RecordListRef.value && RecordListRef.value.open()
+    router.push({
+        name: 'recordList',
+        query: {
+            tab: 0
+        }
+    })
 }
 
 const overviewRef = ref()

@@ -6,12 +6,17 @@
             <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
             <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
                 <!-- 标题 -->
-                <!-- <div class="title">市场</div> -->
-                <div style="height:0.2rem"></div>
-                <!-- 搜索 -->
-                <div class="search_box" @click="router.push({ name: 'search' })">
-                    <img src="/static/img/common/search_box.png" alt="🔍">
+                <div class="title">市场</div>
+                <div class="search_block" @click="router.push({ name: 'search' })">
+                    <div class="search_icon">
+                        <img src="/static/img/common/search.png" alt="🔍">
+                    </div>
+                    <span>搜索</span>
                 </div>
+                <!-- 搜索 -->
+                <!-- <div class="search_box" @click="router.push({ name: 'search' })">
+                    <img src="/static/img/common/search_box.png" alt="🔍">
+                </div> -->
 
                 <!-- Tabs -->
                 <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
@@ -24,12 +29,15 @@
                         <Stock v-if="active == 1" ref="StockRef" />
                         <div style="height:1rem"></div>
                     </Tab>
-                    <!-- <Tab :title="'理财'">
-                        <Financial />
-                    </Tab> -->
+                    <Tab :title="'理财'">
+                        <NoData />
+                    </Tab>
                     <Tab :title="'IPO'">
-                        <IPO v-if="active == 2" :type="'market'" ref="IPORef" />
+                        <IPO v-if="active == 3" :type="'market'" ref="IPORef" />
                         <div style="height:1rem"></div>
+                    </Tab>
+                    <Tab :title="'加密货币'">
+                        <NoData />
                     </Tab>
                 </Tabs>
             </PullRefresh>
@@ -51,6 +59,7 @@ import store from "@/store"
 import { useSocket } from '@/utils/ws'
 import IPODetail from '@/views/trade/IPODetail.vue'
 import Subscription from '@/views/trade/Subscription.vue'
+import NoData from '@/components/NoData.vue';
 
 const active = ref(0)
 const OptionalRef = ref()
@@ -70,7 +79,7 @@ const changeTab = key => {
             case 1:
                 StockRef.value.initData()
                 break
-            case 2:
+            case 3:
                 IPORef.value && IPORef.value.init()
                 break
         }
@@ -150,7 +159,25 @@ const onRefresh = () => {
         justify-content: space-between;
         margin-bottom: 0.1rem;
         position: relative;
+    }
 
+    .search_block {
+        background-color: #F4F5F7;
+        height: 0.8rem;
+        border-radius: 0.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 0.32rem;
+        font-size: 0.28rem;
+        color: #9EA3AE;
+        margin: 0 0.32rem 0.32rem 0.32rem;
+
+        .search_icon {
+            width: 0.4rem;
+            height: 0.4rem;
+            margin-right: 0.2rem;
+        }
     }
 
     .search_box {

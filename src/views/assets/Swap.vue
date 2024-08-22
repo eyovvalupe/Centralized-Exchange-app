@@ -327,10 +327,12 @@ onBeforeUnmount(() => {
 // 跳转记录
 const RecordListRef = ref()
 const goRecord = () => {
-    // router.push({
-    //     name: 'swapRecord'
-    // })
-    RecordListRef.value && RecordListRef.value.open(3)
+    router.push({
+        name: 'recordList',
+        query: {
+            tab: 3
+        }
+    })
 }
 </script>
 
