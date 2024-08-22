@@ -91,12 +91,15 @@
 
         <!-- 记录弹窗 -->
         <RecordList ref="RecordListRef" />
+
+        <!-- 充提记录 -->
+        <HintBlock v-if="route.name == 'assets' && hintNum" />
     </div>
 </template>
 
 <script setup>
 import { Tab, Tabs, PullRefresh } from "vant"
-import { ref, onMounted } from "vue"
+import { ref, onMounted, computed } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
@@ -105,6 +108,11 @@ import Contract from "./page/Contract.vue"
 import RecordList from "@/components/RecordList.vue"
 import store from "@/store"
 import router from "@/router"
+import HintBlock from "@/components/HintBlock.vue"
+import { useRoute } from "vue-router"
+
+const route = useRoute()
+const hintNum = computed(() => store.state.hintNum || 0)
 
 const RecordListRef = ref()
 const active = ref('overview')

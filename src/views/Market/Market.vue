@@ -6,17 +6,18 @@
             <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
             <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
                 <!-- 标题 -->
-                <div class="title">市场</div>
-                <div class="search_block" @click="router.push({ name: 'search' })">
+                <!-- <div class="title">市场</div> -->
+                <!-- <div class="search_block" @click="router.push({ name: 'search' })">
                     <div class="search_icon">
                         <img src="/static/img/common/search.png" alt="🔍">
                     </div>
                     <span>搜索</span>
-                </div>
-                <!-- 搜索 -->
-                <!-- <div class="search_box" @click="router.push({ name: 'search' })">
-                    <img src="/static/img/common/search_box.png" alt="🔍">
                 </div> -->
+                <div style="height:0.26rem"></div>
+                <!-- 搜索 -->
+                <div class="search_box" @click="router.push({ name: 'search' })">
+                    <img src="/static/img/common/search_box.png" alt="🔍">
+                </div>
 
                 <!-- Tabs -->
                 <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
@@ -29,15 +30,42 @@
                         <Stock v-if="active == 1" ref="StockRef" />
                         <div style="height:1rem"></div>
                     </Tab>
-                    <Tab :title="'理财'">
+                    <Tab>
                         <NoData />
+
+                        <template #title>
+                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 2 }">
+                                <div class="mytab_title_icon" v-show="active != 2">
+                                    <img v-show="active != 2" src="/static/img/assets/stock_icon.svg" alt="img">
+                                </div>
+                                <span v-show="active == 2">理财</span>
+                            </div>
+                        </template>
                     </Tab>
-                    <Tab :title="'IPO'">
+                    <Tab>
                         <IPO v-if="active == 3" :type="'market'" ref="IPORef" />
                         <div style="height:1rem"></div>
+
+                        <template #title>
+                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 3 }">
+                                <div class="mytab_title_icon" v-show="active != 3">
+                                    <img v-show="active != 3" src="/static/img/assets/ipo_icon.svg" alt="img">
+                                </div>
+                                <span v-show="active == 3">IPO</span>
+                            </div>
+                        </template>
                     </Tab>
-                    <Tab :title="'加密货币'">
+                    <Tab>
                         <NoData />
+
+                        <template #title>
+                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 4 }">
+                                <div class="mytab_title_icon" v-show="active != 4">
+                                    <img v-show="active != 4" src="/static/img/assets/contract_icon.svg" alt="img">
+                                </div>
+                                <span v-show="active == 4">加密货币</span>
+                            </div>
+                        </template>
                     </Tab>
                 </Tabs>
             </PullRefresh>
@@ -146,6 +174,30 @@ const onRefresh = () => {
     overflow-y: auto;
     position: relative;
 
+    .mytab_title {
+        display: flex;
+        align-items: center;
+        transition: all ease .3s;
+
+        >span {
+            margin-left: 0.08rem;
+        }
+
+        .mytab_title_icon {
+            width: 0.32rem;
+            height: 0.32rem;
+            line-height: 1;
+            position: relative;
+            top: -0.02rem;
+        }
+    }
+
+    .mytab_title_active {
+        .mytab_title_icon {
+            width: 0.28rem;
+            height: 0.28rem;
+        }
+    }
 
     .title {
         padding: 0 0.24rem 0 0.32rem;

@@ -117,8 +117,6 @@
             </div>
         </div>
 
-        <!-- 充提记录 -->
-        <RaWrecords v-if="route.name == 'assets'" :bottom="'1.4rem'" :hiddenBeforeOpen="false" ref="RaWrecordsRef" />
 
     </div>
 </template>
@@ -127,19 +125,14 @@
 import { ref, computed, onMounted, onUnmounted } from "vue"
 import { Icon, Switch } from "vant"
 import store from "@/store"
-import RaWrecords from "@/components/RaWrecords.vue"
 import router from "@/router"
-import { useRoute } from "vue-router"
-import AccountCheck from "@/components/AccountCheck.vue"
 import { _cryptoCoin } from "@/api/api"
 
-
-const route = useRoute()
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
 const hidden = ref(false)
 
-const RaWrecordsRef = ref()
+
 
 
 
@@ -216,7 +209,6 @@ onUnmounted(() => {
 })
 
 const refresh = () => {
-    RaWrecordsRef.value && RaWrecordsRef.value.close()
     getAssets()
 }
 defineExpose({

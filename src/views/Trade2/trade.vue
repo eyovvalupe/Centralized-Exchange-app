@@ -3,7 +3,7 @@
     <div class="page page_trade">
         <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
 
-            <div class="title">交易</div>
+            <!-- <div class="title">交易</div> -->
             <!-- 头部 -->
             <div class="trade_header">
                 <!-- <div class="menu" @click="showNavDialog = true">
@@ -11,19 +11,19 @@
                 </div> -->
 
                 <div class="tabs">
-                    <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">股票</div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 9 }" @click="activeTab = 9">合约</div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">
-                        <div class="mytab_title_icon" v-show="activeTab != 0">
+                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">股票</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">合约</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">
+                        <div class="mytab_title_icon" v-show="activeTab != 2">
                             <img src="/static/img/assets/contract_icon.svg" alt="img">
                         </div>
-                        <span v-show="activeTab == 0">买币</span>
+                        <span v-show="activeTab == 2">买币</span>
                     </div>
                     <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">
                         <div class="mytab_title_icon" v-show="activeTab != 3">
                             <img src="/static/img/assets/stock_icon.svg" alt="img">
                         </div>
-                        <span v-show="activeTab == 3">交易机器人</span>
+                        <span v-show="activeTab == 3">AI</span>
                     </div>
                     <div class="tab" :class="{ 'active_tab': activeTab == 4 }" @click="activeTab = 4">
                         <div class="mytab_title_icon" v-show="activeTab != 4">
@@ -31,17 +31,17 @@
                         </div>
                         <span v-show="activeTab == 4">外汇</span>
                     </div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">
-                        <div class="mytab_title_icon" v-show="activeTab != 2">
-                            <img src="/static/img/assets/ipo_icon.svg" alt="img">
-                        </div>
-                        <span v-show="activeTab == 2">IPO</span>
-                    </div>
                     <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">
                         <div class="mytab_title_icon" v-show="activeTab != 5">
+                            <img src="/static/img/assets/ipo_icon.svg" alt="img">
+                        </div>
+                        <span v-show="activeTab == 5">IPO</span>
+                    </div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
+                        <div class="mytab_title_icon" v-show="activeTab != 6">
                             <img src="/static/img/assets/stock_icon.svg" alt="img">
                         </div>
-                        <span v-show="activeTab == 5">理财</span>
+                        <span v-show="activeTab == 6">理财</span>
                     </div>
                 </div>
 
@@ -52,11 +52,14 @@
 
 
             <transition :name="transitionName" v-if="pageActive">
-                <div v-if="activeTab == 1" class="stock_block">
+                <div v-if="activeTab == 0" class="stock_block">
                     <StockBlock ref="StockBlockRef" />
                 </div>
-                <div v-else-if="activeTab == 2" class="ipo_block">
+                <div v-else-if="activeTab == 5" class="ipo_block">
                     <IpoBlock />
+                </div>
+                <div v-else-if="activeTab == 4">
+                    <Foreign />
                 </div>
                 <div v-else>
                     <NoData />
@@ -125,6 +128,7 @@ import store from "@/store"
 import StockTable from "@/components/StockTable.vue"
 import { _search, _watchlist } from "@/api/api"
 import NoData from "@/components/NoData.vue"
+import Foreign from "./components/Foreign.vue"
 
 const token = computed(() => store.state.token)
 if (token.value) {
@@ -142,10 +146,11 @@ const onRefresh = () => {
 // 一级导航
 const activeTab = ref(1) // 1-股票 2-IPO
 const transitionName = ref('slide-left')
-watch([activeTab], ([newActive]) => {
-    if (newActive === 2) {
+watch([activeTab], (newActive, oldActive) => {
+    console.error(newActive, oldActive)
+    if (newActive > oldActive) {
         transitionName.value = 'slide-right';
-    } else if (newActive === 1) {
+    } else {
         transitionName.value = 'slide-left';
     }
 });
@@ -269,7 +274,7 @@ onDeactivated(() => {
     }
 
     .trade_header {
-        height: 0.8rem;
+        height: 1.12rem;
         padding: 0 0.32rem;
         display: flex;
         align-items: center;
