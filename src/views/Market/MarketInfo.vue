@@ -14,8 +14,8 @@
                 <div class="title_shadow"></div>
                 <div v-if="!props.innerPage" class="search star" @click="addCollect"
                     :style="{ opacity: loading ? '0.5' : '1' }">
-                    <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
-                    <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
+                    <img v-if="item.watchlist == 1" src="/static/img/common/collected.svg" alt="⭐">
+                    <img v-else src="/static/img/common/collect.svg" alt="⭐">
                 </div>
                 <!-- <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
                     <Icon name="enlarge" />
@@ -65,7 +65,7 @@
                     <div class="tab" :class="{ 'active_tab': timeType == '1M' }" @click="changeType('1M')">1M</div>
                     <!-- <div style="flex:1"></div> -->
                     <div class="full-tab" @click="fullScreen(true)">
-                        <Icon name="enlarge" />
+                        <img src="/static/img/common/full.svg" alt="">
                     </div>
                     <!-- <div class="full-tab" @click="addCollect" :style="{ opacity: loading ? '0.5' : '1' }">
                         <img v-if="item.watchlist == 0" src="/static/img/market/unstar.png" alt="⭐">
@@ -94,13 +94,13 @@
                 <div class="bottom_btn_icon">
                     <img src="/static/img/market/buy_icon.png" alt="img">
                 </div>
-                <span>交易</span>
+                <!-- <span>交易</span> -->
             </div>
             <div class="bottom_btn" @click="showInfo = true">
                 <div class="bottom_btn_icon">
                     <img src="/static/img/market/data_icon.png" alt="img">
                 </div>
-                <span>数据</span>
+                <!-- <span>数据</span> -->
             </div>
         </div>
         <!-- 时间选择弹窗 -->
@@ -391,10 +391,10 @@ const showInfo = ref(false)
             .search {
                 width: 0.64rem;
                 height: 0.64rem;
-                padding: 0.16rem;
+                padding: 0.12rem;
                 font-size: 0.4rem;
                 margin-left: 0.2rem;
-                background-color: #EDEDED;
+                // background-color: #EDEDED;
                 border-radius: 50%;
             }
         }
@@ -654,7 +654,7 @@ const showInfo = ref(false)
                 width: 0.48rem;
                 height: 0.48rem;
                 // margin-left: 0.2rem;
-                background-color: #EDEDED;
+                // background-color: #EDEDED;
                 border-radius: 50%;
                 padding: 0.08rem;
                 display: center;

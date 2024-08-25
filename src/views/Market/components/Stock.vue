@@ -7,6 +7,14 @@
 
         <!-- 市场涨跌分布 -->
         <div class="total_box">
+            <!-- 类型 -->
+            <div class="type_box" @click="showAS = true">
+                <span>美股</span>
+                <div class="type_icon">
+                    <img src="/static/img/assets/more.png" alt="img">
+                </div>
+            </div>
+
             <div class="total_title">
                 <span>市场涨跌分布</span>
                 <span v-if="!overviewLoading || count" style="color: #121826;margin-left: 0.1rem">总计 {{ count }}</span>
@@ -55,11 +63,16 @@
             </Tab>
         </Tabs>
 
+
+        <!-- 类型选择弹窗 -->
+        <Teleport to="body">
+            <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="类型"></ActionSheet>
+        </Teleport>
     </div>
 </template>
 
 <script setup>
-import { Tab, Tabs } from 'vant';
+import { Tab, Tabs, ActionSheet } from 'vant';
 import StockTable from "@/components/StockTable.vue"
 import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { _sort, _marketOverview } from "@/api/api"
@@ -72,6 +85,20 @@ import LoadingMore from "@/components/LoadingMore.vue"
 const loading = ref(false)
 const finish = ref(false)
 const page = ref(0)
+
+const showAS = ref(false)
+const currAs = ref('1')
+const actions = computed(() => {
+    return [
+        { name: '美股', value: '1', className: currAs.value == 1 ? 'action-sheet-active' : '', icon: currAs.value == 1 ? 'success' : '' },
+        { name: '选项二', value: '2', className: currAs.value == 2 ? 'action-sheet-active' : '', icon: currAs.value == 2 ? 'success' : '' },
+        { name: '选项三', value: '3', className: currAs.value == 3 ? 'action-sheet-active' : '', icon: currAs.value == 3 ? 'success' : '' },
+    ]
+})
+const onSelect = item => {
+    showAS.value = false
+    currAs.value = item.value
+}
 
 // tabs
 const active = ref(-1)
@@ -268,13 +295,13 @@ onMounted(() => {
     setTimeout(() => {
         try {
             document.querySelector('.page').addEventListener('scroll', scrollHandler)
-        } catch {}
+        } catch { }
     }, 500)
 })
 onBeforeUnmount(() => {
     try {
         document.querySelector('.page').removeEventListener('scroll', scrollHandler)
-    } catch {}
+    } catch { }
 })
 </script>
 
@@ -293,6 +320,20 @@ onBeforeUnmount(() => {
 
     .total_box {
         margin: 0.32rem;
+        position: relative;
+
+        .type_box {
+            position: absolute;
+            top: -0.03rem;
+            right: 0;
+            display: flex;
+            align-items: center;
+
+            .type_icon {
+                width: 0.32rem;
+                height: 0.32rem;
+            }
+        }
 
         .total_title {
             color: #9EA3AE;

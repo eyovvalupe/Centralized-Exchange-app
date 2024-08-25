@@ -7,63 +7,78 @@
             <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
                 <!-- 标题 -->
                 <!-- <div class="title">市场</div> -->
-                <!-- <div class="search_block" @click="router.push({ name: 'search' })">
+                <div style="height:0.26rem"></div>
+                <div class="search_block" @click="router.push({ name: 'search' })">
                     <div class="search_icon">
                         <img src="/static/img/common/search.png" alt="🔍">
                     </div>
                     <span>搜索</span>
-                </div> -->
-                <div style="height:0.26rem"></div>
-                <!-- 搜索 -->
-                <div class="search_box" @click="router.push({ name: 'search' })">
-                    <img src="/static/img/common/search_box.png" alt="🔍">
                 </div>
+
+                <!-- 搜索 -->
+                <!-- <div class="search_box" @click="router.push({ name: 'search' })">
+                    <img src="/static/img/common/search_box.png" alt="🔍">
+                </div> -->
 
                 <!-- Tabs -->
                 <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
                     v-model:active="active" :swipeable="false" animated shrink>
-                    <Tab :title="'自选'" class="optional">
+                    <Tab class="optional">
                         <Optional v-if="activated && active == 0" ref="OptionalRef" />
                         <div style="height:1rem"></div>
+
+                        <template #title>
+                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 0 }">
+                                <div class="mytab_title_icon" v-show="active != 0">
+                                    <img v-show="active != 0" src="/static/img/assets/contract_icon.svg" alt="img">
+                                </div>
+                                <span v-show="active == 0">自选</span>
+                            </div>
+                        </template>
+                    </Tab>
+                    <Tab>
+                        <NoData />
+                        <template #title>
+                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 1 }">
+                                <div class="mytab_title_icon" v-show="active != 1">
+                                    <img v-show="active != 1" src="/static/img/assets/contract_icon.svg" alt="img">
+                                </div>
+                                <span v-show="active == 1">买币</span>
+                            </div>
+                        </template>
                     </Tab>
                     <Tab :title="'股票'">
-                        <Stock v-if="active == 1" ref="StockRef" />
+                        <Stock v-if="active == 2" ref="StockRef" />
                         <div style="height:1rem"></div>
+                    </Tab>
+                    <Tab :title="'合约'">
+                        <NoData />
+                    </Tab>
+                    <Tab :title="'AI量化'">
+                        <NoData />
+                    </Tab>
+                    <Tab :title="'外汇'">
+                        <NoData />
                     </Tab>
                     <Tab>
                         <NoData />
-
                         <template #title>
-                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 2 }">
-                                <div class="mytab_title_icon" v-show="active != 2">
-                                    <img v-show="active != 2" src="/static/img/assets/stock_icon.svg" alt="img">
+                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 6 }">
+                                <div class="mytab_title_icon" v-show="active != 6">
+                                    <img v-show="active != 6" src="/static/img/assets/contract_icon.svg" alt="img">
                                 </div>
-                                <span v-show="active == 2">理财</span>
-                            </div>
-                        </template>
-                    </Tab>
-                    <Tab>
-                        <IPO v-if="active == 3" :type="'market'" ref="IPORef" />
-                        <div style="height:1rem"></div>
-
-                        <template #title>
-                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 3 }">
-                                <div class="mytab_title_icon" v-show="active != 3">
-                                    <img v-show="active != 3" src="/static/img/assets/ipo_icon.svg" alt="img">
-                                </div>
-                                <span v-show="active == 3">IPO</span>
+                                <span v-show="active == 6">IPO</span>
                             </div>
                         </template>
                     </Tab>
                     <Tab>
                         <NoData />
-
                         <template #title>
-                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 4 }">
-                                <div class="mytab_title_icon" v-show="active != 4">
-                                    <img v-show="active != 4" src="/static/img/assets/contract_icon.svg" alt="img">
+                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 7 }">
+                                <div class="mytab_title_icon" v-show="active != 7">
+                                    <img v-show="active != 7" src="/static/img/assets/contract_icon.svg" alt="img">
                                 </div>
-                                <span v-show="active == 4">加密货币</span>
+                                <span v-show="active == 7">理财</span>
                             </div>
                         </template>
                     </Tab>
@@ -104,10 +119,10 @@ const changeTab = key => {
             case 0:
                 OptionalRef.value && OptionalRef.value.init()
                 break
-            case 1:
+            case 2:
                 StockRef.value.initData()
                 break
-            case 3:
+            case 6:
                 IPORef.value && IPORef.value.init()
                 break
         }
@@ -214,7 +229,8 @@ const onRefresh = () => {
     }
 
     .search_block {
-        background-color: #F4F5F7;
+        background-color: #fff;
+        border: 1px solid #eeeff1;
         height: 0.8rem;
         border-radius: 0.2rem;
         display: flex;
