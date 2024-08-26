@@ -248,7 +248,7 @@ const remove = item => {
     position: absolute;
     right: 0.32rem;
     height: 0.48rem;
-    z-index: 9999;
+    z-index: 1;
     top: 2.2rem;
 
     .tag {

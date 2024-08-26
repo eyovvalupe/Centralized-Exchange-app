@@ -1,6 +1,6 @@
 <!-- 持仓 -->
 <template>
-    <div class="positions">
+    <div v-if="token" class="positions">
         <div class="tr th">
             <div class="td td-5">股票/状态</div>
             <div class="td td-4">开仓/可售</div>
@@ -324,6 +324,8 @@
             :actions="downModeList" title="止损">
         </ActionSheet>
     </div>
+
+    <UnLogin v-else />
 </template>
 
 <script setup>
@@ -335,6 +337,7 @@ import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
 import { _stocksSell, _stocksUpdate, _stocksCancel } from "@/api/api"
 import { _copyTxt } from "@/utils/index"
+import UnLogin from "@/components/UnLogin.vue"
 
 const token = computed(() => store.state.token)
 const positionsList = computed(() => store.state.positionsList)

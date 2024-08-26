@@ -10,29 +10,28 @@
                     <img src="/static/img/trade/open.png" alt="menu" />
                 </div> -->
 
-            <div class="tabs">
+            <div class="tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']">
                 <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">股票</div>
                 <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">合约</div>
                 <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">AI量化</div>
                 <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">外汇</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 4">
-                    <div class="mytab_title_icon" v-show="activeTab != 4">
-                        <img src="/static/img/assets/contract_icon.svg" alt="img">
-                    </div>
-                    <span v-show="activeTab == 4">买币</span>
+                <div class="tab" :class="{ 'active_tab': activeTab == 4 }" @click="activeTab = 4">买币</div>
+                <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">IPO</div>
+                <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">理财</div>
+
+                <div v-if="openTab == false" class="tab_icon my_icon" @click="openTab = true">
+                    <img src="/static/img/common/tab_menu.png" alt="img">
                 </div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">
-                    <div class="mytab_title_icon" v-show="activeTab != 5">
-                        <img src="/static/img/assets/ipo_icon.svg" alt="img">
-                    </div>
-                    <span v-show="activeTab == 5">IPO</span>
+                <div class="tab_icon" @click="openTab = false">
+                    <img src="/static/img/common/tab_back.png" alt="img">
                 </div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
+
+                <!-- <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
                     <div class="mytab_title_icon" v-show="activeTab != 6">
                         <img src="/static/img/assets/stock_icon.svg" alt="img">
                     </div>
                     <span v-show="activeTab == 6">理财</span>
-                </div>
+                </div> -->
             </div>
 
             <!-- <div class="value">
@@ -123,6 +122,8 @@ import { _search, _watchlist } from "@/api/api"
 import NoData from "@/components/NoData.vue"
 import Foreign from "./components/Foreign.vue"
 
+
+const openTab = ref(false)
 const token = computed(() => store.state.token)
 if (token.value) {
     store.dispatch('updateWallet')
@@ -266,7 +267,7 @@ onDeactivated(() => {
     }
 
     .trade_header {
-        height: 1.12rem;
+        min-height: 1.12rem;
         padding: 0 0.32rem;
         display: flex;
         align-items: center;
@@ -281,7 +282,8 @@ onDeactivated(() => {
             flex: 1;
             display: flex;
             align-items: center;
-            overflow-x: auto;
+            flex-wrap: wrap;
+            position: relative;
             // padding: 0 0.4rem;
 
             .tab {
@@ -310,6 +312,31 @@ onDeactivated(() => {
                 background-color: #f6f8ff;
 
             }
+
+            .tab_icon {
+                width: 0.4rem;
+                height: 0.4rem;
+            }
+
+            .my_icon {
+                position: absolute;
+                top: 0.1rem;
+                right: 0;
+                padding-right: 0 !important;
+            }
+        }
+
+        .open_tabs {
+            height: 1.6rem;
+            padding-top: 0.2rem;
+            padding-bottom: 0.2rem;
+            padding-right: 0.4rem;
+        }
+
+        .close_tabs {
+            height: 0.6rem;
+            overflow: hidden;
+            padding-right: 0.4rem;
         }
 
         .value {

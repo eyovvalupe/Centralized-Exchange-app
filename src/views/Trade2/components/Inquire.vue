@@ -1,6 +1,6 @@
 <!-- 查询 -->
 <template>
-    <div class="inquire">
+    <div class="inquire" v-if="token">
         <div class="tr th">
             <div class="td td-5">股票/状态</div>
             <div class="td td-4">开仓/可售</div>
@@ -36,6 +36,8 @@
         </SwipeCell>
         <LoadingMore :loading="loading" :finish="finish" v-if="(finish && inquireList.length) || (!finish)" />
     </div>
+
+    <UnLogin v-else />
 </template>
 
 <script setup>
@@ -45,8 +47,10 @@ import store from "@/store"
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import { _stocksList } from "@/api/api"
+import UnLogin from "@/components/UnLogin.vue"
 
 const inquireList = computed(() => store.state.inquireList || [])
+const token = computed(() => store.state.token)
 
 const statusMap = ref({ // 仓位状态
     'none': '开仓',
@@ -87,13 +91,15 @@ const timeMap = ref({
     end_time: null
 })
 const init = (times) => {
-    if (times) {
-        timeMap.value = times
+    if (token.value) {
+        if (times) {
+            timeMap.value = times
+        }
+        page.value = false
+        loading.value = false
+        finish.value = false
+        getList()
     }
-    page.value = false
-    loading.value = false
-    finish.value = false
-    getList()
 }
 const getList = () => {
     if (loading.value || finish.value) return

@@ -21,31 +21,16 @@
                 </div> -->
 
         <!-- Tabs -->
-        <Tabs type="card" sticky class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
-            v-model:active="active" :swipeable="false" animated shrink>
-            <Tab class="optional">
+        <Tabs type="card" sticky class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']"
+            v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
+
+
+            <Tab class="optional" :title="'自选'">
                 <Optional v-if="activated && active == 0" ref="OptionalRef" />
                 <div style="height:1rem"></div>
-
-                <template #title>
-                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 0 }">
-                        <div class="mytab_title_icon" v-show="active != 0">
-                            <img v-show="active != 0" src="/static/img/assets/contract_icon.svg" alt="img">
-                        </div>
-                        <span v-show="active == 0">自选</span>
-                    </div>
-                </template>
             </Tab>
-            <Tab>
+            <Tab :title="'买币'">
                 <NoData />
-                <template #title>
-                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 1 }">
-                        <div class="mytab_title_icon" v-show="active != 1">
-                            <img v-show="active != 1" src="/static/img/assets/contract_icon.svg" alt="img">
-                        </div>
-                        <span v-show="active == 1">买币</span>
-                    </div>
-                </template>
             </Tab>
             <Tab :title="'股票'">
                 <Stock v-if="active == 2" ref="StockRef" />
@@ -60,25 +45,25 @@
             <Tab :title="'外汇'">
                 <NoData />
             </Tab>
-            <Tab>
+            <Tab :title="'IPO'">
                 <NoData />
+            </Tab>
+            <Tab :title="'理财'">
+                <NoData />
+            </Tab>
+
+            <Tab v-if="openTab == false" :title-class="'my_icon'" @click.native.stop="() => { }">
                 <template #title>
-                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 6 }">
-                        <div class="mytab_title_icon" v-show="active != 6">
-                            <img v-show="active != 6" src="/static/img/assets/contract_icon.svg" alt="img">
-                        </div>
-                        <span v-show="active == 6">IPO</span>
+                    <div class="tab_icon " @click.native.stop="openTab = true">
+                        <img src="/static/img/common/tab_menu.png" alt="img">
                     </div>
                 </template>
             </Tab>
-            <Tab>
-                <NoData />
+
+            <Tab @click.native.stop="() => { }">
                 <template #title>
-                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 7 }">
-                        <div class="mytab_title_icon" v-show="active != 7">
-                            <img v-show="active != 7" src="/static/img/assets/contract_icon.svg" alt="img">
-                        </div>
-                        <span v-show="active == 7">理财</span>
+                    <div class="tab_icon" @click.native.stop="openTab = false">
+                        <img src="/static/img/common/tab_back.png" alt="img">
                     </div>
                 </template>
             </Tab>
@@ -103,6 +88,9 @@ import { useSocket } from '@/utils/ws'
 import IPODetail from '@/views/trade/IPODetail.vue'
 import Subscription from '@/views/trade/Subscription.vue'
 import NoData from '@/components/NoData.vue';
+
+
+const openTab = ref(false)
 
 const active = ref(0)
 const OptionalRef = ref()
@@ -263,6 +251,19 @@ const onRefresh = () => {
 
     .tabs {
         overflow: hidden;
+        position: relative;
+
+        .tab_icon {
+            width: 0.4rem;
+            height: 0.4rem;
+        }
+
+        :deep(.my_icon) {
+            position: absolute;
+            top: 0.12rem;
+            right: 0;
+            padding-right: 0 !important;
+        }
 
         :deep(.van-tab__panel) {
             // height: calc(var(--app-height) - 3.4rem);
@@ -304,6 +305,7 @@ const onRefresh = () => {
 
         :deep(.van-tabs__nav--card) {
             height: 0.6rem;
+            flex-wrap: wrap;
         }
 
         :deep(.van-tab) {
@@ -311,5 +313,22 @@ const onRefresh = () => {
             font-size: 0.28rem;
         }
     }
+
+    .open_tabs {
+        :deep(.van-sticky) {
+            height: 1.4rem !important;
+        }
+
+        :deep(.van-tabs__wrap) {
+            height: 1.4rem;
+        }
+
+        :deep(.van-tabs__nav--card) {
+            height: 1.2rem;
+            padding-right: 0.4rem;
+        }
+    }
+
+    .close_tabs {}
 }
 </style>

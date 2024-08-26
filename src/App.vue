@@ -71,7 +71,7 @@ Promise.all([
 ]).finally(() => {
   store.commit('setPageLoading', false)
   setTimeout(() => {
-    boundFunc()
+    // boundFunc()
   }, 500)
 })
 setTimeout(() => { // 最多5s
