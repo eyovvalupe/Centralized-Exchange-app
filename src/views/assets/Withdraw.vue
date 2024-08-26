@@ -188,7 +188,6 @@ const form = ref({
     account: '',
 })
 const maxIpt = () => {
-    console.error('??', balance.value)
     form.value.amount = balance.value
     setTimeout(() => {
         getFee()

@@ -26,7 +26,10 @@ instance.interceptors.request.use(
     }
     if (config?.custom?.auth && !token) {
       router.replace({
-        name: 'login'
+        name: 'login',
+        query: {
+          reurl: router.currentRoute.value.name
+        }
       })
       throw {
         message: "当前 token 已失效，请重新登录"
@@ -41,7 +44,7 @@ instance.interceptors.request.use(
     if (config && config.custom && config.custom["responseType"]) {
       config.headers["responseType"] = config.custom["responseType"];
     }
-    console.log(`--- 请求 ${config.url} 参数 ---`);
+    // console.log(`--- 请求 ${config.url} 参数 ---`);
     return config;
   },
   function (error) {
@@ -52,7 +55,7 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   function (response) {
-    console.log(`--- 请求 ${response.config.url} 返回 ---`, response.data);
+    // console.log(`--- 请求 ${response.config.url} 返回 ---`, response.data);
     let res = response.data;
     const custom = response.config?.custom;
     if (res.code != 200 && res.code != 510) {

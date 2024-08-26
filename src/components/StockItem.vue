@@ -131,6 +131,8 @@ const removeStock = item => {
 .stock_item_box {
     width: 100%;
     transition: all ease .3s;
+    border-radius: 0.12rem;
+    overflow: hidden;
 
     &:active,
     &:hover {
@@ -162,8 +164,17 @@ const removeStock = item => {
     align-items: center;
     height: 1.44rem;
     padding: 0 0.3rem;
-    border-bottom: 1px solid #EAEAEA;
+    position: relative;
 
+
+    &::after {
+        content: '';
+        width: calc(100% - 0.24rem);
+        position: absolute;
+        bottom: 0;
+        left: 0.12rem;
+        border-bottom: 1px solid #EAEAEA;
+    }
 
     .td5 {
         flex: 5;

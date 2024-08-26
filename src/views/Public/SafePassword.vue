@@ -149,9 +149,7 @@ const focus = () => { // 聚焦
     setTimeout(() => {
         try {
             document.querySelector('.page').scrollTo({ top: 99999, behavior: 'smooth' });
-        } catch {
-            console.error('滚动失败')
-        }
+        } catch { }
     }, 100)
 }
 

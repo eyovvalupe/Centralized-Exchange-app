@@ -13,23 +13,13 @@
             <div class="tabs">
                 <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">股票</div>
                 <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">合约</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">
-                    <div class="mytab_title_icon" v-show="activeTab != 2">
-                        <img src="/static/img/assets/contract_icon.svg" alt="img">
-                    </div>
-                    <span v-show="activeTab == 2">买币</span>
-                </div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">
-                    <div class="mytab_title_icon" v-show="activeTab != 3">
-                        <img src="/static/img/assets/stock_icon.svg" alt="img">
-                    </div>
-                    <span v-show="activeTab == 3">AI</span>
-                </div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 4 }" @click="activeTab = 4">
+                <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">AI量化</div>
+                <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">外汇</div>
+                <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 4">
                     <div class="mytab_title_icon" v-show="activeTab != 4">
                         <img src="/static/img/assets/contract_icon.svg" alt="img">
                     </div>
-                    <span v-show="activeTab == 4">外汇</span>
+                    <span v-show="activeTab == 4">买币</span>
                 </div>
                 <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">
                     <div class="mytab_title_icon" v-show="activeTab != 5">
@@ -58,7 +48,7 @@
                 <div v-else-if="activeTab == 5" class="ipo_block">
                     <IpoBlock />
                 </div>
-                <div v-else-if="activeTab == 4">
+                <div v-else-if="activeTab == 3">
                     <Foreign />
                 </div>
                 <div v-else>
@@ -142,15 +132,13 @@ if (token.value) {
 const disabled = ref(false)
 const loading = ref(false)
 const onRefresh = () => {
-    console.error('下拉刷新')
     loading.value = false
 }
 
 // 一级导航
-const activeTab = ref(1) // 1-股票 2-IPO
+const activeTab = ref(0)
 const transitionName = ref('slide-left')
 watch([activeTab], (newActive, oldActive) => {
-    console.error(newActive, oldActive)
     if (newActive > oldActive) {
         transitionName.value = 'slide-right';
     } else {
@@ -293,6 +281,7 @@ onDeactivated(() => {
             flex: 1;
             display: flex;
             align-items: center;
+            overflow-x: auto;
             // padding: 0 0.4rem;
 
             .tab {

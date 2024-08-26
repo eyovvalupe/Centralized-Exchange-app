@@ -252,7 +252,6 @@ const getRate = () => { // 获取汇率
         amount: 0
     }).then(res => {
         if (res.code == 200) {
-            console.error('---汇率', res.data)
             rate.value = res.data.exchange_rate
         }
     }).finally(() => {

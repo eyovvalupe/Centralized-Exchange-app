@@ -378,7 +378,6 @@ const updateClosePositionPopup = (i) => {
 
 const subscribeOrders = () => {
   socket = startSocket(() => {
-    // console.error('开始订阅')
     // 这里是 stocksorder 的处理
     socket && socket.emit('user', token.value)
     socket && socket.emit('stocksorder', '#all')
@@ -453,7 +452,6 @@ const onChange = async (val) => {
       socket && socket.emit('stocksorder', '')
       socket && socket.off('user')
       socket && socket.off('stocksorder')
-      // console.error('取消订阅')
     })
     if (val === '2') {
       //查询
@@ -523,7 +521,6 @@ onDeactivated(() => {
     socket && socket.emit('stocksorder', '')
     socket && socket.off('user')
     socket && socket.off('stocksorder')
-    // console.error('取消订阅')
   })
 })
 

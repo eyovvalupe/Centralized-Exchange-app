@@ -43,6 +43,10 @@ const emits = defineEmits(['init', 'change'])
 const token = computed(() => store.state.token || '')
 
 const props = defineProps({
+    keyStr: {
+        type: String,
+        default: ''
+    },
     loading: {
         type: Boolean,
         default: true,
@@ -61,6 +65,7 @@ const updown = item => {
 
 const emitsKeys = () => {
     const keys = []
+
     checkedList.value.map((item, i) => {
         if (item) {
             keys.push(props.list[i].symbol)
@@ -71,7 +76,7 @@ const emitsKeys = () => {
 
 const checkedList = ref([])
 try {
-    checkedList.value = JSON.parse(sessionStorage.getItem('recommend_check_list') || '[]')
+    checkedList.value = JSON.parse(sessionStorage.getItem(props.keyStr + '_recommend_check_list') || '[]')
 } catch {
     checkedList.value = []
 }
@@ -84,7 +89,7 @@ const changeCheck = i => {
         checkedList.value[i] = true
     }
 
-    sessionStorage.setItem('recommend_check_list', JSON.stringify(checkedList.value))
+    sessionStorage.setItem(props.keyStr + '_recommend_check_list', JSON.stringify(checkedList.value))
 
     emitsKeys()
 }

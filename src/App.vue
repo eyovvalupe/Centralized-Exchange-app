@@ -31,8 +31,8 @@ import { serviceChat } from '@/utils/serviceChat'
 const BottomTabBar = defineAsyncComponent(() =>
   import("@/components/BottomTabBar.vue")
 );
-console.error("---storage---");
-console.error(store.state)
+// console.error("---storage---");
+// console.error(store.state)
 
 // 引入主题
 // const theme = computed(() => store.state.theme || '')
@@ -79,7 +79,7 @@ setTimeout(() => { // 最多5s
 }, 50000)
 
 const boundFunc = () => {
-  const reboundPage = ['user', 'trade', 'date', 'ipodetail']
+  const reboundPage = ['user', 'trade', 'date', 'ipodetail', 'assets', 'market', 'home']
   // 回弹效果
   let startY = 0
   const maxMove = 200

@@ -61,7 +61,6 @@ const getOrderInfo = () => {
     }).then(res => {
         if (res.data) {
             orderData.value = res.data
-            console.error('----', orderData.value)
         }
     }).finally(() => {
         loading.value = false

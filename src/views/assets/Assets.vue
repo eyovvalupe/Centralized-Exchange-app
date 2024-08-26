@@ -147,7 +147,6 @@ onMounted(() => {
         // const bodys = document.querySelectorAll('.tab_body')
         // bodys.forEach(item => {
         // item.addEventListener('scroll', (e) => {
-        //     console.error(e.target.scrollTop)
         //     if (e.target.scrollTop > 0) {
         //         disabled.value = true
         //     } else {

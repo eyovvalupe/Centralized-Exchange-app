@@ -12,7 +12,5 @@ export const initVoice = () => {
 export const _playVoice = () => {
     try {
         menuClick.play();
-    } catch {
-        console.error('音频未加载')
-    }
+    } catch { }
 }

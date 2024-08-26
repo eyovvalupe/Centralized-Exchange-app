@@ -311,7 +311,6 @@ const getAccount = (price) => {
           }
 
         } else {
-          console.error('获取价格或余额失败');
           paymentAmount.value = 0
           amount.value = 0
           numValue.value = ''

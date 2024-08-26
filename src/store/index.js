@@ -69,7 +69,7 @@ export default createStore({
       return new Promise((resolve) => {
         _userinfo()
           .then((res) => {
-            console.error('--用户信息', res.data)
+            // console.error('--用户信息', res.data)
             if (res.code == 200 && res.data) {
               commit("setUserInfo", res.data || {});
               resolve(res.data);

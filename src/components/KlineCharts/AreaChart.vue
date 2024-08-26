@@ -168,8 +168,6 @@ const initData = async () => {
             timeout = setTimeout(() => {
                 chart.resize()
             }, 300)
-        } else {
-            console.error('没有数据')
         }
     }
 }

@@ -269,9 +269,7 @@ if (token.value) {
             import('@/views/User/Safety.vue'),
             import('@/views/User/Account/Account.vue'),
             import('@/views/User/Kyc/Index.vue')
-        ]).finally(() => {
-            console.error('子页面加载完成')
-        })
+        ])
     }, 1000)
 }
 

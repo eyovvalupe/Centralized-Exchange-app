@@ -48,7 +48,7 @@ const getInfo = () => {
     _depositInfo({
         order_no: route.query.order_no
     }).then(res => {
-        console.error('???', res)
+
     })
 }
 getInfo()

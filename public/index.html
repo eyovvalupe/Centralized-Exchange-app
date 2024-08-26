@@ -65,9 +65,7 @@
             str = "";
           localStorage.setItem(key, decodeURIComponent(str));
         }
-      } catch {
-        console.error(key + "获取失败");
-      }
+      } catch { }
     }
     // rem
     (function (doc, win) {
@@ -134,7 +132,6 @@
 
     // 监听资源加载错误事件
     window.addEventListener('error', function (event) {
-      console.error('加载失败', event)
       // 检查是否是资源加载错误
       if (event.target.tagName === 'LINK' || event.target.tagName === 'SCRIPT') {
         const src = event.target.href || event.target.src;

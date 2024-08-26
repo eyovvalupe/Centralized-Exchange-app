@@ -316,7 +316,6 @@ const leftclose = () => {
     socket && socket.emit('snapshot', '') // 快照数据
     socket && socket.off('realtime')
     socket && socket.off('snapshot')
-    // console.error('取消订阅')
   })
 }
 
@@ -390,7 +389,6 @@ const clearData = () => { // 重置搜索
 let timeout = null
 const keydown = () => { // 输入事件监听
   setTimeout(() => {
-    console.error(search.value)
     if (timeout) clearTimeout(timeout)
     if (!search.value) return
     timeout = setTimeout(() => {

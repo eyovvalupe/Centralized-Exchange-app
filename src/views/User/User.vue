@@ -163,9 +163,7 @@ setTimeout(() => {
         import('@/views/User/Kyc/Index.vue'),
         import('@/views/User/Google/Google.vue'),
         import('@/views/Chat/Index.vue')
-    ]).finally(() => {
-        console.error('子页面加载完成')
-    })
+    ])
 }, 300)
 setTimeout(() => { // 最多加载3s
     store.commit('setPageLoading', false)

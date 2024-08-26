@@ -132,7 +132,6 @@ const goBind = () => {
 
 const iptRef = ref()
 const focus = () => { // 聚焦
-    console.error('聚焦', iptRef.value.focus)
     showKeyboard.value = true
     setTimeout(() => {
         iptRef.value && iptRef.value.focus()
@@ -141,7 +140,6 @@ const focus = () => { // 聚焦
     //     try {
     //         document.querySelector('.page').scrollTo({ top: 99999, behavior: 'smooth' });
     //     } catch {
-    //         console.error('滚动失败')
     //     }
     // }, 100)
 }

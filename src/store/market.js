@@ -7,7 +7,7 @@ const { startSocket } = useSocket()
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList'],
-    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList'],
+    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList'],
     'trade': ['marketWatchList', 'marketSearchList']
 }
 
@@ -26,6 +26,7 @@ export default {
         marketRecommndStockList: [], // 首页股票列表
         marketStockList: [], // 股票页列表
         marketSrockRecommendList: [], // 推荐股票列表
+        marketContractRecommendList: [], // 推荐合约列表
         marketRankList: [], // 排行列表
 
         marketWatchKeys: [], // 除了主列表，还需要额外监听的股票 symbol数组
@@ -58,6 +59,9 @@ export default {
         },
         setMarketSrockRecommendList(state, data) {
             state.marketSrockRecommendList = data;
+        },
+        setMarketContractRecommendList(state, data) {
+            state.marketContractRecommendList = data;
         },
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
@@ -111,7 +115,7 @@ export default {
                     ...proxyKeys,
                     ...state.marketWatchKeys,
                 ]))
-                console.error('订阅：', keys)
+                // console.error('订阅：', keys)
                 socket && socket.off('realtime')
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {
@@ -138,7 +142,6 @@ export default {
                 socket && socket.emit('snapshot', keys.join(',')) // 快照数据
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
-                        // console.error('收到', res, state.marketSrockRecommendList)
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const target = state[ck].find(item => item.symbols == res.symbols || item.symbol == res.symbols)

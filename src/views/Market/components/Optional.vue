@@ -13,20 +13,24 @@
             </Button>
         </Teleport>
 
-        <div class="item_block">
+        <Loaidng v-if="!marketSrockRecommendList.length && !marketContractRecommendList.length && recommendLoading"
+            :loading="recommendLoading" :type="'spinner'" />
+        <NoData
+            v-if="!marketSrockRecommendList.length && !marketContractRecommendList.length && !loading && !recommendLoading" />
+        <div class="item_block" v-if="marketSrockRecommendList.length">
             <div class="item_block_title">
                 <span>股票</span>
             </div>
-            <StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init"
-                :list="marketSrockRecommendList" />
-            <NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
-        </div>
+            <StockRecommend :key="'stock'" :keyStr="'stock'" :loading="recommendLoading" @change="changeStockList"
+                @init="init" :list="marketSrockRecommendList" />
 
-        <div class="item_block">
+        </div>
+        <div class="item_block" v-if="marketContractRecommendList.length">
             <div class="item_block_title">
                 <span>合约</span>
             </div>
-            <NoData />
+            <StockRecommend :key="'recommend'" :keyStr="'recommend'" :loading="recommendLoading"
+                @change="changeContractList" @init="init" :list="marketContractRecommendList" />
         </div>
 
         <!-- <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
@@ -41,10 +45,10 @@
 </Tab>
 <Tab>
     <template #title>
-                    <div>
-                        <span>合约</span>
-                    </div>
-                </template>
+                                <div>
+                                    <span>合约</span>
+                                </div>
+                            </template>
     <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
     <NoData />
 </Tab>
@@ -130,16 +134,28 @@ const init = () => {
 
 // 推荐列表
 const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
+const marketContractRecommendList = computed(() => store.state.marketContractRecommendList || [])
 const recommendLoading = ref(false)
 const openRecommendList = () => {
     recommendLoading.value = true
     _watchlistDefault().then(res => {
         if (res.code == 200) {
+
+            // 股票
             const arr = res.data.stock.map(item => {
                 const target = marketSrockRecommendList.value.find(a => a.symbol == item.symbol)
                 return target || item
             })
             store.commit('setMarketSrockRecommendList', arr || [])
+
+            // 合约
+            const arr2 = res.data.contract.map(item => {
+                const target = marketContractRecommendList.value.find(a => a.symbol == item.symbol)
+                return target || item
+            })
+            store.commit('setMarketContractRecommendList', arr2 || [])
+
+
 
             setTimeout(() => {
                 store.dispatch('subList', {

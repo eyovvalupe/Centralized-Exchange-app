@@ -8,8 +8,8 @@
             </div>
             <!-- <span>日期</span> -->
         </div>
-        <Tabs v-if="!pageLoading" class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink
-            @change="onChange">
+        <Tabs v-if="!pageLoading" class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
+            shrink @change="onChange">
             <Tab title="开仓" name="0">
                 <Opening ref="OpeningRef" />
             </Tab>
@@ -37,10 +37,11 @@ import Inquire from "../components/Inquire.vue"
 import DateArea from "@/components/DateArea.vue"
 
 
-const active = ref(0)
+const active = ref(sessionStorage.getItem('trade_stock_tab') || 0)
 const InquireRef = ref()
 const onChange = async (val) => {
     active.value = val;
+    sessionStorage.setItem('trade_stock_tab', val)
     if (val == 2) {
         setTimeout(() => {
             InquireRef.value && InquireRef.value.init()
@@ -65,7 +66,10 @@ const choose = item => {
 onMounted(() => {
     setTimeout(() => {
         pageLoading.value = false
-    }, 200)
+        setTimeout(() => {
+            onChange(active.value)
+        }, 300)
+    }, 300)
 })
 
 defineExpose({
