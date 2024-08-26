@@ -1,90 +1,90 @@
 <!-- 市场 -->
 <template>
     <div class="page page_market " v-if="activated">
-        <transition :name="detailTransition">
-            <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'" />
-            <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
-            <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else>
-                <!-- 标题 -->
-                <!-- <div class="title">市场</div> -->
-                <div style="height:0.26rem"></div>
-                <div class="search_block" @click="router.push({ name: 'search' })">
-                    <div class="search_icon">
-                        <img src="/static/img/common/search.png" alt="🔍">
-                    </div>
-                    <span>搜索</span>
-                </div>
+        <!-- <transition :name="detailTransition"> -->
+        <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'" />
+        <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
+        <!-- <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else> -->
+        <!-- 标题 -->
+        <!-- <div class="title">市场</div> -->
+        <div style="height:0.2rem"></div>
+        <div class="search_block" @click="router.push({ name: 'search' })">
+            <div class="search_icon">
+                <img src="/static/img/common/search.png" alt="🔍">
+            </div>
+            <span>搜索</span>
+        </div>
 
-                <!-- 搜索 -->
-                <!-- <div class="search_box" @click="router.push({ name: 'search' })">
+        <!-- 搜索 -->
+        <!-- <div class="search_box" @click="router.push({ name: 'search' })">
                     <img src="/static/img/common/search_box.png" alt="🔍">
                 </div> -->
 
-                <!-- Tabs -->
-                <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
-                    v-model:active="active" :swipeable="false" animated shrink>
-                    <Tab class="optional">
-                        <Optional v-if="activated && active == 0" ref="OptionalRef" />
-                        <div style="height:1rem"></div>
+        <!-- Tabs -->
+        <Tabs type="card" sticky class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
+            v-model:active="active" :swipeable="false" animated shrink>
+            <Tab class="optional">
+                <Optional v-if="activated && active == 0" ref="OptionalRef" />
+                <div style="height:1rem"></div>
 
-                        <template #title>
-                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 0 }">
-                                <div class="mytab_title_icon" v-show="active != 0">
-                                    <img v-show="active != 0" src="/static/img/assets/contract_icon.svg" alt="img">
-                                </div>
-                                <span v-show="active == 0">自选</span>
-                            </div>
-                        </template>
-                    </Tab>
-                    <Tab>
-                        <NoData />
-                        <template #title>
-                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 1 }">
-                                <div class="mytab_title_icon" v-show="active != 1">
-                                    <img v-show="active != 1" src="/static/img/assets/contract_icon.svg" alt="img">
-                                </div>
-                                <span v-show="active == 1">买币</span>
-                            </div>
-                        </template>
-                    </Tab>
-                    <Tab :title="'股票'">
-                        <Stock v-if="active == 2" ref="StockRef" />
-                        <div style="height:1rem"></div>
-                    </Tab>
-                    <Tab :title="'合约'">
-                        <NoData />
-                    </Tab>
-                    <Tab :title="'AI量化'">
-                        <NoData />
-                    </Tab>
-                    <Tab :title="'外汇'">
-                        <NoData />
-                    </Tab>
-                    <Tab>
-                        <NoData />
-                        <template #title>
-                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 6 }">
-                                <div class="mytab_title_icon" v-show="active != 6">
-                                    <img v-show="active != 6" src="/static/img/assets/contract_icon.svg" alt="img">
-                                </div>
-                                <span v-show="active == 6">IPO</span>
-                            </div>
-                        </template>
-                    </Tab>
-                    <Tab>
-                        <NoData />
-                        <template #title>
-                            <div class="mytab_title" :class="{ 'mytab_title_active': active == 7 }">
-                                <div class="mytab_title_icon" v-show="active != 7">
-                                    <img v-show="active != 7" src="/static/img/assets/contract_icon.svg" alt="img">
-                                </div>
-                                <span v-show="active == 7">理财</span>
-                            </div>
-                        </template>
-                    </Tab>
-                </Tabs>
-            </PullRefresh>
-        </transition>
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 0 }">
+                        <div class="mytab_title_icon" v-show="active != 0">
+                            <img v-show="active != 0" src="/static/img/assets/contract_icon.svg" alt="img">
+                        </div>
+                        <span v-show="active == 0">自选</span>
+                    </div>
+                </template>
+            </Tab>
+            <Tab>
+                <NoData />
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 1 }">
+                        <div class="mytab_title_icon" v-show="active != 1">
+                            <img v-show="active != 1" src="/static/img/assets/contract_icon.svg" alt="img">
+                        </div>
+                        <span v-show="active == 1">买币</span>
+                    </div>
+                </template>
+            </Tab>
+            <Tab :title="'股票'">
+                <Stock v-if="active == 2" ref="StockRef" />
+                <div style="height:1rem"></div>
+            </Tab>
+            <Tab :title="'合约'">
+                <NoData />
+            </Tab>
+            <Tab :title="'AI量化'">
+                <NoData />
+            </Tab>
+            <Tab :title="'外汇'">
+                <NoData />
+            </Tab>
+            <Tab>
+                <NoData />
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 6 }">
+                        <div class="mytab_title_icon" v-show="active != 6">
+                            <img v-show="active != 6" src="/static/img/assets/contract_icon.svg" alt="img">
+                        </div>
+                        <span v-show="active == 6">IPO</span>
+                    </div>
+                </template>
+            </Tab>
+            <Tab>
+                <NoData />
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 7 }">
+                        <div class="mytab_title_icon" v-show="active != 7">
+                            <img v-show="active != 7" src="/static/img/assets/contract_icon.svg" alt="img">
+                        </div>
+                        <span v-show="active == 7">理财</span>
+                    </div>
+                </template>
+            </Tab>
+        </Tabs>
+        <!-- </PullRefresh> -->
+        <!-- </transition> -->
 
 
     </div>
@@ -189,6 +189,11 @@ const onRefresh = () => {
     overflow-y: auto;
     position: relative;
 
+    :deep(.van-sticky) {
+        background-color: #fff;
+        padding-top: 0.2rem;
+    }
+
     .mytab_title {
         display: flex;
         align-items: center;
@@ -239,7 +244,7 @@ const onRefresh = () => {
         padding: 0 0.32rem;
         font-size: 0.28rem;
         color: #9EA3AE;
-        margin: 0 0.32rem 0.32rem 0.32rem;
+        margin: 0 0.32rem 0.12rem 0.32rem;
 
         .search_icon {
             width: 0.4rem;

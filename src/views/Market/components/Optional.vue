@@ -13,30 +13,42 @@
             </Button>
         </Teleport>
 
-        <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
+        <div class="item_block">
+            <div class="item_block_title">
+                <span>股票</span>
+            </div>
+            <StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init"
+                :list="marketSrockRecommendList" />
+            <NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
+        </div>
+
+        <div class="item_block">
+            <div class="item_block_title">
+                <span>合约</span>
+            </div>
+            <NoData />
+        </div>
+
+        <!-- <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
             <Tab>
                 <template #title>
                     <div>
                         <span>股票</span>
-                        <!-- <span>({{ stockList.length }})</span> -->
                     </div>
                 </template>
-                <StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init"
-                    :list="marketSrockRecommendList" />
-                <NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
-            </Tab>
-            <Tab>
-                <template #title>
+<StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
+<NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
+</Tab>
+<Tab>
+    <template #title>
                     <div>
                         <span>合约</span>
-                        <!-- <span>({{ contractList.length }})</span> -->
                     </div>
                 </template>
-                <!-- <StockRecommend @change="changeStockList" @init="init"
-                    :list="marketSrockRecommendList" /> -->
-                <NoData />
-            </Tab>
-        </Tabs>
+    <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
+    <NoData />
+</Tab>
+</Tabs> -->
     </div>
 
     <Loaidng v-else :loading="loading" :type="'spinner'" />
@@ -210,12 +222,18 @@ const remove = item => {
 </script>
 
 <style lang="less" scoped>
+.item_block {
+    .item_block_title {
+        padding: 0.32rem 0.32rem 0.12rem 0.32rem;
+    }
+}
+
 .addBtn {
     position: absolute;
     right: 0.32rem;
     height: 0.48rem;
     z-index: 9999;
-    top: 2rem;
+    top: 2.2rem;
 
     .tag {
         display: block;

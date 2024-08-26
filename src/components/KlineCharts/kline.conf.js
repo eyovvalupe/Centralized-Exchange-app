@@ -6,17 +6,17 @@ export const klineConfig = {
     grid: {
         show: true,
         horizontal: {
-            show: false,
+            show: true,
             size: 1,
-            color: "#E3E7EC",
-            style: "dashed",
+            color: '#EDEDED',
+            style: 'dashed',
             dashedValue: [2, 2]
         },
         vertical: {
             show: true,
             size: 1,
-            color: "#E3E7EC",
-            style: "dashed",
+            color: '#EDEDED',
+            style: 'dashed',
             dashedValue: [2, 2]
         }
     },

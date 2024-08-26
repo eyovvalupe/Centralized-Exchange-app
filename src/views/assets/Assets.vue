@@ -1,9 +1,9 @@
 <!-- 资产页 -->
 <template>
     <div class="page page_assets">
-        <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh">
+        <!-- <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh"> -->
 
-            <!-- <div class="page_title">
+        <!-- <div class="page_title">
                 <span></span>
                 <div class="record_icon_box" @click="openRecordPopup">
                     <div class="record_icon">
@@ -13,12 +13,11 @@
                     <span>记录</span>
                 </div>
             </div> -->
-            <div style="height:0.4rem"></div>
 
-            <Tabs v-if="pageLoading" class="tab_content" :lazy-render="false" v-model:active="active" type="card"
-                animated shrink>
-                <Tab :title="'总资产'" name="overview">
-                    <!-- <template #title>
+        <Tabs v-if="pageLoading" sticky class="tab_content" :lazy-render="false" v-model:active="active" type="card"
+            animated shrink>
+            <Tab :title="'总资产'" name="overview">
+                <!-- <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'overview' }">
                             <div class="mytab_title_icon">
                                 <img v-show="active != 'overview'" src="/static/img/user/iden-1.png" alt="img">
@@ -28,13 +27,13 @@
                         </div>
                     </template> -->
 
-                    <div class="tab_body">
-                        <Overview @openRecordPopup="openRecordPopup" ref="overviewRef"
-                            @setLoading="val => loading = val" v-if="active == 'overview'" />
-                    </div>
-                </Tab>
-                <Tab :title="'现金账户'" name="cash">
-                    <!-- <template #title>
+                <div class="tab_body">
+                    <Overview @openRecordPopup="openRecordPopup" ref="overviewRef" @setLoading="val => loading = val"
+                        v-if="active == 'overview'" />
+                </div>
+            </Tab>
+            <Tab :title="'现金账户'" name="cash">
+                <!-- <template #title>
                         <div class="mytab_title" :class="{ 'mytab_title_active': active == 'cash' }">
                             <div class="mytab_title_icon">
                                 <img v-show="active != 'cash'" src="/static/img/user/google-1.png" alt="img">
@@ -43,51 +42,51 @@
                             <span v-show="active == 'cash'">现金账户</span>
                         </div>
                     </template> -->
-                    <div class="tab_body">
-                        <Cash ref="cashRef" @setLoading="val => loading = val" v-if="active == 'cash'" />
-                    </div>
-                </Tab>
-                <Tab name="stock">
-                    <template #title>
-                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'stock' }">
-                            <div class="mytab_title_icon" v-show="active != 'stock'">
-                                <img v-show="active != 'stock'" src="/static/img/assets/stock_icon.svg" alt="img">
-                            </div>
-                            <span v-show="active == 'stock'">股票</span>
+                <div class="tab_body">
+                    <Cash ref="cashRef" @setLoading="val => loading = val" v-if="active == 'cash'" />
+                </div>
+            </Tab>
+            <Tab name="stock">
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 'stock' }">
+                        <div class="mytab_title_icon" v-show="active != 'stock'">
+                            <img v-show="active != 'stock'" src="/static/img/assets/stock_icon.svg" alt="img">
                         </div>
-                    </template>
-                    <div class="tab_body">
-                        <Stock ref="stockRef" @setLoading="val => loading = val" v-if="active == 'stock'" />
+                        <span v-show="active == 'stock'">股票</span>
                     </div>
-                </Tab>
-                <Tab name="contract">
-                    <template #title>
-                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'contract' }">
-                            <div class="mytab_title_icon" v-show="active != 'contract'">
-                                <img v-show="active != 'contract'" src="/static/img/assets/contract_icon.svg" alt="img">
-                            </div>
-                            <span v-show="active == 'contract'">合约</span>
+                </template>
+                <div class="tab_body">
+                    <Stock ref="stockRef" @setLoading="val => loading = val" v-if="active == 'stock'" />
+                </div>
+            </Tab>
+            <Tab name="contract">
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 'contract' }">
+                        <div class="mytab_title_icon" v-show="active != 'contract'">
+                            <img v-show="active != 'contract'" src="/static/img/assets/contract_icon.svg" alt="img">
                         </div>
-                    </template>
-                    <div class="tab_body">
-                        <Contract />
+                        <span v-show="active == 'contract'">合约</span>
                     </div>
-                </Tab>
-                <Tab name="ipo">
-                    <template #title>
-                        <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
-                            <div class="mytab_title_icon" v-show="active != 'ipo'">
-                                <img v-show="active != 'ipo'" src="/static/img/assets/ipo_icon.svg" alt="img">
-                            </div>
-                            <span v-show="active == 'ipo'">IPO</span>
+                </template>
+                <div class="tab_body">
+                    <Contract />
+                </div>
+            </Tab>
+            <Tab name="ipo">
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
+                        <div class="mytab_title_icon" v-show="active != 'ipo'">
+                            <img v-show="active != 'ipo'" src="/static/img/assets/ipo_icon.svg" alt="img">
                         </div>
-                    </template>
-                    <div class="tab_body">
-                        <IPO ref="ipoRef" @setLoading="val => loading = val" v-if="active == 'ipo'" />
+                        <span v-show="active == 'ipo'">IPO</span>
                     </div>
-                </Tab>
-            </Tabs>
-        </PullRefresh>
+                </template>
+                <div class="tab_body">
+                    <IPO ref="ipoRef" @setLoading="val => loading = val" v-if="active == 'ipo'" />
+                </div>
+            </Tab>
+        </Tabs>
+        <!-- </PullRefresh> -->
 
         <!-- 记录弹窗 -->
         <RecordList ref="RecordListRef" />
@@ -182,6 +181,11 @@ Promise.all(loadingList).finally(() => {
     // padding: 0.24rem 0 0 0;
     height: 100%;
     overflow-y: auto;
+
+    :deep(.van-sticky) {
+        background-color: #fff;
+        padding-top: 0.2rem;
+    }
 
     .page_title {
         padding: 0.3rem 0.24rem 0 0.32rem;

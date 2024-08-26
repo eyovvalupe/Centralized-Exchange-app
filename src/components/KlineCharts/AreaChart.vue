@@ -67,77 +67,28 @@ const initData = async () => {
     // 样式
     const selfStyle = {
         grid: {
-            vertical: {
-                show: false
-            }
-        },
-        // xAxis: {
-        //     show: props.showY,
-        //     size: 'auto'
-        // },
-        // yAxis: {
-        //     show: props.showY
-        // },
-        xAxis: {
             show: true,
-            size: "auto",
-            // x轴线
-            axisLine: {
-                show: false,
-                color: "#9EA3AE", // "#888888",
-                size: 0.5
-            },
-            // x轴分割文字
-            tickText: {
+            horizontal: {
                 show: true,
-                color: "#9EA3AE", // #D9D9D9"
-                family: "Helvetica Neue",
-                weight: "normal",
-                size: 12,
-                marginStart: 0, // 4,
-                marginEnd: 0 // 4
-            },
-            // x轴分割线
-            tickLine: {
-                show: true,
-                size: 0.5,
-                length: 3,
-                color: "#9EA3AE" // "#888888"
-            }
-        },
-        // y轴
-        yAxis: {
-            show: true,
-            size: "auto",
-            // 'left' | 'right'
-            position: "right",
-            // 'normal' | 'percentage' | 'log'
-            type: "normal",
-            inside: true,
-            reverse: false,
-            // y轴线
-            axisLine: {
-                show: false,
-                color: "#888", // #888
-                size: 0.5
-            },
-            // y轴分割文字
-            tickText: {
-                show: true,
-                color: "#D9D9D9", // #D9D9D9
-                family: "Helvetica Neue",
-                weight: "normal",
-                size: 12,
-                marginStart: 0, // 4,
-                marginEnd: 0 //4
-            },
-            // y轴分割线
-            tickLine: {
-                show: false,
                 size: 1,
-                length: 3,
-                color: "red"
+                color: '#EDEDED',
+                style: 'dashed',
+                dashedValue: [2, 2]
+            },
+            vertical: {
+                show: true,
+                size: 1,
+                color: '#EDEDED',
+                style: 'dashed',
+                dashedValue: [2, 2]
             }
+        },
+        xAxis: {
+            show: props.showY,
+            size: 'auto'
+        },
+        yAxis: {
+            show: props.showY
         },
         candle: {
             type: 'area',
