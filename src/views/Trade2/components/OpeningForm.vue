@@ -351,6 +351,12 @@ const setNowPrice = () => { // 设置为当前价格
 
 // 市价
 const currStock = ref({}) // 当前股票
+try {
+    currStock.value = JSON.parse(sessionStorage.getItem('currStock') || '{}')
+} catch {
+    currStock.value = {}
+}
+
 const form1 = ref({
     leverType: 'cross',
     volume: '',
@@ -526,6 +532,7 @@ const goSearch = () => {
                         ...currStock.value,
                         ...r.data
                     }
+                    sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
                 }
             })
         } else {
