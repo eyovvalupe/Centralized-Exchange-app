@@ -37,7 +37,7 @@ const getKyc = () => {
         if (res.code == 200) {
             pageLoading.value = false
             kycInfo.value = res.data
-            if (kycInfo.value.status == 'none' || kycInfo.value.status == 'failed') {
+            if (kycInfo.value.status == 'none' || kycInfo.value.status == 'failure') {
                 step.value = 1
             } else {
                 step.value = 0

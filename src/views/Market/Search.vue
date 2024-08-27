@@ -51,7 +51,8 @@ const searchList = computed(() => store.state.marketSearchList || [])
 const getData = () => { // 获取数据
     loading.value = true
     _search({
-        symbol: search.value
+        symbol: search.value,
+        page: 1
     }).then(res => {
         store.commit('setMarketSearch', {
             search: search.value,

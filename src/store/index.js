@@ -71,6 +71,7 @@ export default createStore({
           .then((res) => {
             // console.error('--用户信息', res.data)
             if (res.code == 200 && res.data) {
+              res.data.kycl2 = res.data.kyc || res.data.kycl2
               commit("setUserInfo", res.data || {});
               resolve(res.data);
             } else {

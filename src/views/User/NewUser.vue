@@ -102,7 +102,7 @@
                     <img src="/static/img/user/iden.png" alt="">
                     <div style="display: flex;">
                         <span v-if="token">
-                            <span class="red-text" v-if="userInfo.kyc != 1 && userInfo.kyc != 2">未认证</span>
+                            <span class="red-text" v-if="userInfo.kycl2 != 1 && userInfo.kycl2 != 2">未认证</span>
                             <span class="red-text" v-else style="color: #18B762;">已认证</span>
                         </span>
                         <Icon name="arrow" class="arrow-right" />

@@ -212,7 +212,8 @@ const goSearch = () => {
     searchTimeout = setTimeout(() => {
         searchLoading.value = true
         _search({
-            symbol: s
+            symbol: s,
+            page: 1
         }).then(res => {
             if (searchStr.value == s) {
                 store.commit('setMarketSearch', {

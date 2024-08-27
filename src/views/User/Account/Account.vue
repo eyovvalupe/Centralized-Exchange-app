@@ -86,7 +86,7 @@ const goAddAccount = async () => {
 const onSelect = async item => {
     showAS.value = false
     if (item.value == 'bank') { // 银行卡
-        if (userInfo.value.kyc != 2) {
+        if (userInfo.value.kycl2 != 2) {
             return showConfirmDialog({
                 title: '身份认证',
                 message:

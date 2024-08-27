@@ -59,14 +59,14 @@ export const _googleBind = (data = {}) => {
 
 // 自选列表
 export const _watchlist = (data = {}) => {
-  return http.post(`authc/v1/market/watchlist/list`, data, {
+  return http.post(`/authc/v1/item/watchlist/list`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
 
 // 搜索股票
 export const _search = (data = {}) => {
-  return http.post(`/anon/v1/market/search`, data, {
+  return http.post(`/anon/v1/item/search`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };
@@ -101,7 +101,7 @@ export const _time = (data = {}) => {
 
 // 获取市场排序数据
 export const _sort = (data = {}) => {
-  return http.post(`/anon/v1/market/stock/sort`, data, {
+  return http.post(`/anon/v1/market/rankinglist`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };
@@ -115,7 +115,7 @@ export const _stocksList = (data = {}) => {
 
 // 添加自选
 export const _add = (data = {}) => {
-  return http.post(`/authc/v1/market/watchlist/add`, data, {
+  return http.post(`/authc/v1/item/watchlist/add`, data, {
     custom: { auth: true, toast: true, retry: false },
   });
 };
@@ -129,7 +129,7 @@ export const _stocksPara = (data = {}) => {
 
 // 移除自选
 export const _del = (data = {}) => {
-  return http.post(`/authc/v1/market/watchlist/del`, data, {
+  return http.post(`/authc/v1/item/watchlist/del`, data, {
     custom: { auth: true, toast: true, retry: false },
   });
 };
@@ -413,7 +413,7 @@ export const _depositInfo = (data = {}) => {
 };
 // 自选推荐
 export const _watchlistDefault = (data = {}) => {
-  return http.post(`/anon/v1/market/watchlist/default`, data, {
+  return http.post(`/anon/v1/item/watchlist/default`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };

@@ -123,7 +123,7 @@ export default {
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
-                                const target = res.data.find(a => a.symbols == item.symbol)
+                                const target = res.data.find(a => a.symbols == item.symbol || a.symbol == item.symbol)
                                 if (target) {
                                     return {
                                         ...item,

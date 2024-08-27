@@ -36,7 +36,7 @@
                             <img class="status_icon" src="/static/img/user/no.png" alt="no">
                         </div>
                     </div>
-                    <div v-if="userInfo.kyc != 2" class=" way" @click="router.push({ name: 'kyc' })">
+                    <div v-if="userInfo.kycl2 != 2" class=" way" @click="router.push({ name: 'kyc' })">
                         <div class="left">
                             <div class="title">实名认证未通过 </div>
                             <div class="info">
@@ -63,7 +63,7 @@
                             <img class="status_icon" src="/static/img/user/ok.png" alt="no">
                         </div>
                     </div>
-                    <div v-if="userInfo.kyc == 2" class=" way active_way">
+                    <div v-if="userInfo.kycl2 == 2" class=" way active_way">
                         <div class="left">
                             <div class="title">已通过实名认证 </div>
                         </div>
@@ -90,7 +90,7 @@
 </template>
 
 <script setup>
-import { Popup, showConfirmDialog  } from 'vant';
+import { Popup, showConfirmDialog } from 'vant';
 import { ref, computed } from "vue"
 import store from '@/store';
 import router from '@/router';
@@ -108,7 +108,7 @@ const close = () => {
 }
 
 const check = () => {
-    // const val = userInfo.value.googlebind && userInfo.value.kyc == 2 && userInfo.value.role == 'user'
+    // const val = userInfo.value.googlebind && userInfo.value.kycl2 == 2 && userInfo.value.role == 'user'
     // if (!val) {
     //     open()
     // }
@@ -118,11 +118,11 @@ const check = () => {
             title: '账号升级',
             message:
                 '模拟账号不能进行该操作，去升级？',
-            })
+        })
             .then(() => {
                 router.push({ name: 'kyc' })
             })
-            .catch(() => {});
+            .catch(() => { });
         return false
     }
     if (!userInfo.value.googlebind) {
@@ -130,23 +130,23 @@ const check = () => {
             title: '谷歌验证器',
             message:
                 '谷歌验证器未绑定，去绑定？',
-            })
+        })
             .then(() => {
                 router.push({ name: 'google' })
             })
-            .catch(() => {});
+            .catch(() => { });
         return false
     }
-    if (userInfo.value.kyc != 2) {
+    if (userInfo.value.kycl2 != 2) {
         showConfirmDialog({
             title: '实名认证',
             message:
                 '实名认证未通过，去认证？',
-            })
+        })
             .then(() => {
                 router.push({ name: 'kyc' })
             })
-            .catch(() => {});
+            .catch(() => { });
         return false
     }
     return true

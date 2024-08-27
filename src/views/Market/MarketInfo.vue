@@ -255,14 +255,14 @@ if (item.value.symbol) {
             })
         }
     })
-    _profile({ symbol: item.value.symbol }).then(res => {
-        if (res.code == 200) {
-            store.commit('setCurrStock', {
-                ...item.value,
-                ...res.data
-            })
-        }
-    })
+    // _profile({ symbol: item.value.symbol }).then(res => {
+    //     if (res.code == 200) {
+    //         store.commit('setCurrStock', {
+    //             ...item.value,
+    //             ...res.data
+    //         })
+    //     }
+    // })
 }
 
 

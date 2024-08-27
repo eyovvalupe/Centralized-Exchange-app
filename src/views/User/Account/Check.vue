@@ -21,7 +21,7 @@
                         <img class="status_icon" src="/static/img/user/no.png" alt="no">
                     </div>
                 </div>
-                <div v-if="userInfo.kyc != 2" class=" way" @click="router.push({ name: 'kyc' })">
+                <div v-if="userInfo.kycl2 != 2" class=" way" @click="router.push({ name: 'kyc' })">
                     <div class="left">
                         <div class="title">实名认证未通过 </div>
                         <div class="info">
@@ -48,7 +48,7 @@
                         <img class="status_icon" src="/static/img/user/ok.png" alt="no">
                     </div>
                 </div>
-                <div v-if="userInfo.kyc == 2" class=" way active_way">
+                <div v-if="userInfo.kycl2 == 2" class=" way active_way">
                     <div class="left">
                         <div class="title">已通过实名认证 </div>
                     </div>

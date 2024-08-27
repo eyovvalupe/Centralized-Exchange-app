@@ -521,7 +521,8 @@ const goSearch = () => {
     const s = searchStr.value
     _search({
         symbol: s,
-        mode: 'right'
+        mode: 'right',
+        page: 1
     }).then(res => {
         if (s != searchStr.value) return
         if (res && res.data && res.data[0]) {

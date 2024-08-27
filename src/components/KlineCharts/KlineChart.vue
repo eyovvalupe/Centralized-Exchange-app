@@ -121,10 +121,12 @@ const initData = async () => { // 初始化数据
     }
 }
 const subs = () => { // 订阅新数据
+
     socket = startSocket(() => {
         const params = { symbols: props.symbol, period: currPeriod.value }
-        socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
+        console.error('订阅', params)
         socket && socket.off('kline')
+        socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
             if (res.code == 200 && res.symbols == props.symbol && res.period == props.period) {
                 const item = res.data[0]

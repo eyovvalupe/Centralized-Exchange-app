@@ -142,28 +142,36 @@ const openRecommendList = () => {
         if (res.code == 200) {
 
             // 股票
-            const arr = res.data.stock.map(item => {
-                const target = marketSrockRecommendList.value.find(a => a.symbol == item.symbol)
-                return target || item
-            })
-            store.commit('setMarketSrockRecommendList', arr || [])
+            if (res.data?.stock) {
+                const arr = res.data.stock.map(item => {
+                    const target = marketSrockRecommendList.value.find(a => a.symbol == item.symbol)
+                    return target || item
+                })
+                store.commit('setMarketSrockRecommendList', arr || [])
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketSrockRecommendList',
+                        listKey: 'marketSrockRecommendList',
+                    })
+                }, 500)
+            }
+
 
             // 合约
-            const arr2 = res.data.contract.map(item => {
-                const target = marketContractRecommendList.value.find(a => a.symbol == item.symbol)
-                return target || item
-            })
-            store.commit('setMarketContractRecommendList', arr2 || [])
-
-
-
-            setTimeout(() => {
-                store.dispatch('subList', {
-                    commitKey: 'setMarketSrockRecommendList',
-                    listKey: 'marketSrockRecommendList',
-                    // proxyListValue: marketSrockRecommendList.value
+            if (res.data?.futures) {
+                const arr2 = res.data.futures.map(item => {
+                    const target = marketContractRecommendList.value.find(a => a.symbol == item.symbol)
+                    return target || item
                 })
-            }, 500)
+                store.commit('setMarketContractRecommendList', arr2 || [])
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketContractRecommendList',
+                        listKey: 'marketContractRecommendList',
+                    })
+                }, 1000)
+            }
+
         }
     }).finally(() => {
         recommendLoading.value = false
