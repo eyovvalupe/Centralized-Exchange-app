@@ -9,7 +9,7 @@
         <div class="total_box">
             <!-- 类型 -->
             <div class="type_box" @click="showAS = true">
-                <span>美股</span>
+                <span>全部</span>
                 <div class="type_icon">
                     <img src="/static/img/assets/more.png" alt="img">
                 </div>
@@ -90,8 +90,8 @@ const showAS = ref(false)
 const currAs = ref('1')
 const actions = computed(() => {
     return [
-        { name: '美股', value: '1', className: currAs.value == 1 ? 'action-sheet-active' : '', icon: currAs.value == 1 ? 'success' : '' },
-        { name: '选项二', value: '2', className: currAs.value == 2 ? 'action-sheet-active' : '', icon: currAs.value == 2 ? 'success' : '' },
+        { name: '全部', value: '1', className: currAs.value == 1 ? 'action-sheet-active' : '', icon: currAs.value == 1 ? 'success' : '' },
+        { name: '美股', value: '2', className: currAs.value == 2 ? 'action-sheet-active' : '', icon: currAs.value == 2 ? 'success' : '' },
         { name: '选项三', value: '3', className: currAs.value == 3 ? 'action-sheet-active' : '', icon: currAs.value == 3 ? 'success' : '' },
     ]
 })
@@ -328,10 +328,14 @@ onBeforeUnmount(() => {
             right: 0;
             display: flex;
             align-items: center;
+            color: #253146;
+            font-size: 0.24rem;
 
             .type_icon {
                 width: 0.32rem;
                 height: 0.32rem;
+                opacity: 0.8;
+                margin-left: 0.04rem;
             }
         }
 

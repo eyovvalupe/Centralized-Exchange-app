@@ -7,13 +7,13 @@
         <!-- <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else> -->
         <!-- 标题 -->
         <!-- <div class="title">市场</div> -->
-        <div style="height:0.2rem"></div>
-        <div class="search_block" @click="router.push({ name: 'search' })">
+        <!-- <div style="height:0.2rem"></div> -->
+        <!-- <div class="search_block" @click="router.push({ name: 'search' })">
             <div class="search_icon">
                 <img src="/static/img/common/search.png" alt="🔍">
             </div>
             <span>搜索</span>
-        </div>
+        </div> -->
 
         <!-- 搜索 -->
         <!-- <div class="search_box" @click="router.push({ name: 'search' })">
@@ -21,6 +21,15 @@
                 </div> -->
 
         <!-- Tabs -->
+        <Teleport to="body">
+            <div @click="openTab = false" v-if="openTab" style="position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.2);
+            z-index: 1000;"></div>
+        </Teleport>
         <Tabs type="card" sticky class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']"
             v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
 
@@ -52,18 +61,18 @@
                 <NoData />
             </Tab>
 
-            <Tab v-if="openTab == false" :title-class="'my_icon'" @click.native.stop="() => { }">
+            <Tab :title-class="'my_icon'" @click.native.stop="() => { }">
                 <template #title>
-                    <div class="tab_icon " @click.native.stop="openTab = true">
-                        <img src="/static/img/common/tab_menu.png" alt="img">
+                    <div class="tab_icon " @click.native.stop="openTab = !openTab">
+                        <img v-show="!openTab" src="/static/img/common/menu_icon.png" alt="img">
+                        <img v-show="openTab" src="/static/img/common/back_icon.png" alt="img">
                     </div>
                 </template>
             </Tab>
-
-            <Tab @click.native.stop="() => { }">
+            <Tab :title-class="'my_icon my_icon2'" @click.native.stop="() => { }">
                 <template #title>
-                    <div class="tab_icon" @click.native.stop="openTab = false">
-                        <img src="/static/img/common/tab_back.png" alt="img">
+                    <div class="tab_icon " @click.native.stop="router.push({ name: 'search' })">
+                        <img src="/static/img/common/search_icon.png" alt="img">
                     </div>
                 </template>
             </Tab>
@@ -73,6 +82,7 @@
 
 
     </div>
+
 </template>
 
 <script setup>
@@ -254,13 +264,29 @@ const onRefresh = () => {
         position: relative;
 
         .tab_icon {
-            width: 0.4rem;
-            height: 0.4rem;
+            width: 0.32rem;
+            height: 0.32rem;
+            line-height: 0;
         }
 
         :deep(.my_icon) {
             position: absolute;
-            top: 0.12rem;
+            top: 0;
+            right: 0.88rem;
+            padding-right: 0 !important;
+            padding-left: 0 !important;
+            border-radius: 50%;
+            border: 1px solid #EDF2F7;
+            width: 0.6rem;
+            height: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        :deep(.my_icon2) {
+            position: absolute;
+            top: 0;
             right: 0;
             padding-right: 0 !important;
         }
@@ -272,6 +298,7 @@ const onRefresh = () => {
 
         :deep(.van-tabs__nav--card) {
             border: none;
+            padding-right: 1.6rem;
         }
 
         :deep(.van-tab--card) {
@@ -315,8 +342,21 @@ const onRefresh = () => {
     }
 
     .open_tabs {
+
+
+        :deep(.van-tab) {
+            font-size: 0.30rem;
+        }
+
         :deep(.van-sticky) {
-            height: 1.4rem !important;
+            height: 1.6rem !important;
+            border-bottom-left-radius: 0.6rem;
+            border-bottom-right-radius: 0.6rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
         }
 
         :deep(.van-tabs__wrap) {
@@ -325,9 +365,9 @@ const onRefresh = () => {
 
         :deep(.van-tabs__nav--card) {
             height: 1.2rem;
-            padding-right: 0.4rem;
         }
     }
+
 
     .close_tabs {}
 }

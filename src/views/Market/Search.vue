@@ -9,8 +9,14 @@
             </div>
             <input ref="iptRef" @keydown="keydown" @keydown.enter="resetData" placeholder="搜索" type="text"
                 enterkeyhint="search" v-model.trim="search" class="search">
-            <div class="close" v-show="search" @click="clearData">
+            <!-- <div class="close" v-show="search" @click="clearData">
                 <Icon name="cross" />
+            </div> -->
+            <div class="type_select" @click="showAS = true">
+                <span>{{ currAsName }}</span>
+                <div class="type_icon">
+                    <img src="/static/img/assets/more.png" alt="img">
+                </div>
             </div>
         </div>
         <!-- 结果列表 -->
@@ -27,18 +33,47 @@
                 </div>
             </div>
         </div>
+
+        <!-- 类型选择弹窗 -->
+        <Teleport to="body">
+            <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="类型"></ActionSheet>
+        </Teleport>
     </div>
+
+
 </template>
 
 <script setup>
 import Top from "@/components/Top"
-import { Icon, showToast, showLoadingToast, closeToast } from "vant"
+import { Icon, showToast, showLoadingToast, closeToast, ActionSheet } from "vant"
 import { ref, computed, onMounted } from "vue"
 import { _search } from "@/api/api"
 import Loading from "@/components/Loaidng.vue"
 import store from "@/store"
 import router from "@/router"
 import { _add, _del } from '@/api/api'
+
+
+const showAS = ref(false)
+const currAs = ref('stock')
+const currAsName = computed(() => {
+    return actions.value.find(item => item.value == currAs.value).name
+})
+const actions = computed(() => {
+    return [
+        { name: '股票', value: 'stock', className: currAs.value == 'stock' ? 'action-sheet-active' : '', icon: currAs.value == 'stock' ? 'success' : '' },
+        { name: '合约', value: 'futures', className: currAs.value == 'futures' ? 'action-sheet-active' : '', icon: currAs.value == 'futures' ? 'success' : '' },
+        { name: 'AI量化', value: 'aiquant', className: currAs.value == 'aiquant' ? 'action-sheet-active' : '', icon: currAs.value == 'aiquant' ? 'success' : '' },
+        { name: '外汇', value: 'forex', className: currAs.value == 'forex' ? 'action-sheet-active' : '', icon: currAs.value == 'forex' ? 'success' : '' },
+    ]
+})
+const onSelect = item => {
+    showAS.value = false
+    currAs.value = item.value
+    if (search.value) {
+        getData()
+    }
+}
 
 const iptRef = ref()
 const search = ref('')
@@ -51,6 +86,7 @@ const searchList = computed(() => store.state.marketSearchList || [])
 const getData = () => { // 获取数据
     loading.value = true
     _search({
+        market: currAs.value,
         symbol: search.value,
         page: 1
     }).then(res => {
@@ -172,6 +208,21 @@ Promise.all([
         height: 0.8rem;
         background-color: #F4F5F7;
         border-radius: 0.2rem;
+
+        .type_select {
+            right: 0;
+            display: flex;
+            align-items: center;
+            color: #253146;
+            font-size: 0.24rem;
+
+            .type_icon {
+                width: 0.32rem;
+                height: 0.32rem;
+                opacity: 0.8;
+                margin-left: 0.04rem;
+            }
+        }
 
         &:has(.search:focus) {
             border: 1px solid #014CFA;

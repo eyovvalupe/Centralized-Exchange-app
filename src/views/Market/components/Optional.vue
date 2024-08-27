@@ -257,7 +257,7 @@ const remove = item => {
     right: 0.32rem;
     height: 0.48rem;
     z-index: 1;
-    top: 2.2rem;
+    top: 1.14rem;
 
     .tag {
         display: block;
