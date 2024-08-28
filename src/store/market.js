@@ -81,6 +81,9 @@ export default {
         },
         setCurrStock(state, data) {
             if (!data.symbol) { // 只更新部分数据
+                for (let key in data) {
+                    if (data[key] === null) delete data[key]
+                }
                 state.currStock = {
                     ...state.currStock,
                     ...data
@@ -88,7 +91,7 @@ export default {
                 return
             }
             // 兼容后端的symbols 和 symbol
-            data.symbol = data.symbols || data.symbol
+            // data.symbol = data.symbols || data.symbol
             state.currStock = data;
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
@@ -144,7 +147,7 @@ export default {
                     if (res.code == 200) {
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                            const target = state[ck].find(item => item.symbols == res.symbols || item.symbol == res.symbols)
+                            const target = state[ck].find(item => item.symbols == res.symbol || item.symbol == res.symbol)
                             if (target) {
                                 target.points = _getSnapshotLine(res.data)
                             }
