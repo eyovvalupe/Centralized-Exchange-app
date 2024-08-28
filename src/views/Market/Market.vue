@@ -39,7 +39,7 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="active != 0">
-                            <img src="/static/img/assets/contract_icon.svg" alt="icon">
+                            <img src="/static/img/market/option.svg" alt="icon">
                         </div>
                         <span v-show="active == 0">自选</span>
                     </div>
@@ -50,7 +50,8 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img src="/static/img/assets/ipo_icon.svg" alt="icon">
+                            <img v-show="active != 1" src="/static/img/market/buy.svg" alt="icon">
+                            <img v-show="active == 1" src="/static/img/market/buy2.svg" alt="icon">
                         </div>
                         <span>买币</span>
                     </div>
@@ -62,7 +63,8 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img src="/static/img/assets/ipo_icon.svg" alt="icon">
+                            <img v-show="active != 2" src="/static/img/market/stock.svg" alt="icon">
+                            <img v-show="active == 2" src="/static/img/market/stock2.svg" alt="icon">
                         </div>
                         <span>股票</span>
                     </div>
@@ -73,7 +75,8 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img src="/static/img/assets/stock_icon.svg" alt="icon">
+                            <img v-show="active != 3" src="/static/img/market/constract.svg" alt="icon">
+                            <img v-show="active == 3" src="/static/img/market/constract2.svg" alt="icon">
                         </div>
                         <span>合约</span>
                     </div>
@@ -84,7 +87,8 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img src="/static/img/assets/stock_icon.svg" alt="icon">
+                            <img v-show="active != 4" src="/static/img/market/ai.svg" alt="icon">
+                            <img v-show="active == 4" src="/static/img/market/ai2.svg" alt="icon">
                         </div>
                         <span>AI量化</span>
                     </div>
@@ -95,7 +99,8 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img src="/static/img/assets/contract_icon.svg" alt="icon">
+                            <img v-show="active != 5" src="/static/img/market/out.svg" alt="icon">
+                            <img v-show="active == 5" src="/static/img/market/out2.svg" alt="icon">
                         </div>
                         <span>外汇</span>
                     </div>
@@ -106,7 +111,8 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img src="/static/img/assets/ipo_icon.svg" alt="icon">
+                            <img v-show="active != 6" src="/static/img/market/ipo.svg" alt="icon">
+                            <img v-show="active == 6" src="/static/img/market/ipo2.svg" alt="icon">
                         </div>
                         <span>IPO</span>
                     </div>
@@ -117,7 +123,8 @@
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img src="/static/img/assets/stock_icon.svg" alt="icon">
+                            <img v-show="active != 7" src="/static/img/market/money.svg" alt="icon">
+                            <img v-show="active == 7" src="/static/img/market/money2.svg" alt="icon">
                         </div>
                         <span>理财</span>
                     </div>
@@ -349,9 +356,9 @@ const onRefresh = () => {
             line-height: 0;
 
             .tab_item_icon {
-                width: 0.28rem;
-                height: 0.28rem;
-                margin-right: 0.05rem;
+                width: 0.3rem;
+                height: 0.3rem;
+                margin-right: 0.04rem;
             }
         }
 
