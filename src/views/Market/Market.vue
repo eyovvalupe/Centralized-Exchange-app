@@ -1,6 +1,6 @@
 <!-- 市场 -->
 <template>
-    <div class="page page_market " v-if="activated">
+    <div ref="marketPageRef" class="page page_market " v-if="activated">
         <!-- <transition :name="detailTransition"> -->
         <IPODetail @closeOpenDetail='closeOpenDetail' v-if="detail == '1'" />
         <Subscription @closeOpenDetail='closeOpenDetail' v-else-if="detail == '2'" />
@@ -20,7 +20,7 @@
                 </div> -->
 
         <!-- Tabs -->
-        <Teleport to="body">
+        <!-- <Teleport to="body">
             <div @click="openTab = false" v-if="openTab" style="position: absolute;
             width: 100%;
             height: 100%;
@@ -28,7 +28,7 @@
             left: 0;
             background-color: rgba(0, 0, 0, 0.2);
             z-index: 1000;"></div>
-        </Teleport>
+        </Teleport> -->
         <Tabs type="card" sticky class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']"
             v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
 
@@ -49,7 +49,7 @@
                 <NoData />
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon">
+                        <div class="tab_item_icon" v-show="openTab">
                             <img src="/static/img/assets/ipo_icon.svg" alt="icon">
                         </div>
                         <span>买币</span>
@@ -61,7 +61,7 @@
                 <div style="height:1rem"></div>
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon">
+                        <div class="tab_item_icon" v-show="openTab">
                             <img src="/static/img/assets/ipo_icon.svg" alt="icon">
                         </div>
                         <span>股票</span>
@@ -72,7 +72,7 @@
                 <NoData />
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon">
+                        <div class="tab_item_icon" v-show="openTab">
                             <img src="/static/img/assets/stock_icon.svg" alt="icon">
                         </div>
                         <span>合约</span>
@@ -83,7 +83,7 @@
                 <NoData />
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon">
+                        <div class="tab_item_icon" v-show="openTab">
                             <img src="/static/img/assets/stock_icon.svg" alt="icon">
                         </div>
                         <span>AI量化</span>
@@ -94,7 +94,7 @@
                 <NoData />
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon">
+                        <div class="tab_item_icon" v-show="openTab">
                             <img src="/static/img/assets/contract_icon.svg" alt="icon">
                         </div>
                         <span>外汇</span>
@@ -105,7 +105,7 @@
                 <NoData />
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon">
+                        <div class="tab_item_icon" v-show="openTab">
                             <img src="/static/img/assets/ipo_icon.svg" alt="icon">
                         </div>
                         <span>IPO</span>
@@ -116,7 +116,7 @@
                 <NoData />
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon">
+                        <div class="tab_item_icon" v-show="openTab">
                             <img src="/static/img/assets/stock_icon.svg" alt="icon">
                         </div>
                         <span>理财</span>
@@ -162,7 +162,7 @@ import IPODetail from '@/views/trade/IPODetail.vue'
 import Subscription from '@/views/trade/Subscription.vue'
 import NoData from '@/components/NoData.vue';
 
-
+const marketPageRef = ref()
 const openTab = ref(false)
 
 const active = ref(0)
@@ -212,16 +212,25 @@ Promise.all([
 
 const { startSocket } = useSocket()
 const activated = ref(false)
+const scrollHandler = () => {
+    if (openTab.value) {
+        openTab.value = false
+    }
+}
 onActivated(() => {
     activated.value = true
     setTimeout(() => {
         if (active.value == 0) {
             OptionalRef.value && OptionalRef.value.init()
         }
+        marketPageRef.value && marketPageRef.value.addEventListener('scroll', scrollHandler)
     }, 100)
 })
 onDeactivated(() => {
-    activated.value = false
+    marketPageRef.value && marketPageRef.value.removeEventListener('scroll', scrollHandler)
+    setTimeout(() => {
+        activated.value = false
+    }, 100)
     // 取消订阅
     const socket = startSocket(() => {
         socket && socket.emit('realtime', '') // 价格变化
@@ -250,6 +259,12 @@ const onRefresh = () => {
     height: 100%;
     overflow-y: auto;
     position: relative;
+
+    &:has(.open_tabs) {
+        :deep(.addBtn) {
+            top: 1.76rem;
+        }
+    }
 
     :deep(.van-sticky) {
         background-color: #fff;
@@ -416,10 +431,9 @@ const onRefresh = () => {
     }
 
     .open_tabs {
+        z-index: 999;
+        position: relative;
 
-        :deep(.van-tabs__content) {
-            padding-top: 1.6rem;
-        }
 
         :deep(.my_icon) {
             right: 0.2rem;
@@ -429,7 +443,7 @@ const onRefresh = () => {
             height: 1.6rem !important;
             border-bottom-left-radius: 0.6rem;
             border-bottom-right-radius: 0.6rem;
-            position: absolute;
+            // position: relative;
             top: 0;
             left: 0;
             width: 100%;

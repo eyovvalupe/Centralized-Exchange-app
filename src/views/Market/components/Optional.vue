@@ -7,7 +7,7 @@
             <Button round class="addBtn" :color="!!(stockList.length + contractList.length) ? '#EFF6FF' : '#eee'"
                 :loading="addLoading" @click="addOptional">
                 <span style="font-size: 0.2rem;"
-                    :style="{ color: !!(stockList.length + contractList.length) ? '014CFA' : '#666' }">一键添加至自选</span>
+                    :style="{ color: !!(stockList.length + contractList.length) ? '#014CFA' : '#666' }">一键添加至自选</span>
                 <span class="tag" v-if="!!(stockList.length + contractList.length)">{{ stockList.length +
                     contractList.length }}</span>
             </Button>
@@ -27,7 +27,7 @@
         </div>
         <div class="item_block" v-if="marketContractRecommendList.length">
             <div class="item_block_title">
-                <span>合约</span>
+                <span>合约/AI量化</span>
             </div>
             <StockRecommend :key="'recommend'" :keyStr="'recommend'" :loading="recommendLoading"
                 @change="changeContractList" @init="init" :list="marketContractRecommendList" />

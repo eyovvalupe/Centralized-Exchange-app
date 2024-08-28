@@ -204,6 +204,7 @@ const goSearch = () => {
     if (!s) {
         store.commit('setMarketSearch', {
             search: '',
+            market: '',
             list: []
         })
         searchLoading.value = false
@@ -218,6 +219,7 @@ const goSearch = () => {
             if (searchStr.value == s) {
                 store.commit('setMarketSearch', {
                     search: s,
+                    market: '',
                     list: res.data || []
                 })
                 setTimeout(() => {

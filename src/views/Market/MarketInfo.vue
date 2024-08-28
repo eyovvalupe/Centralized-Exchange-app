@@ -91,16 +91,16 @@
             <div class="time_type">{{ timeType }}</div>
             <div class="bottom_line"></div>
             <div class="bottom_btn" @click="showBuy = true">
-                <div class="bottom_btn_icon">
+                <!-- <div class="bottom_btn_icon">
                     <img src="/static/img/market/buy_icon.png" alt="img">
-                </div>
-                <!-- <span>交易</span> -->
+                </div> -->
+                <span>交易</span>
             </div>
             <div class="bottom_btn" @click="showInfo = true">
-                <div class="bottom_btn_icon">
+                <!-- <div class="bottom_btn_icon">
                     <img src="/static/img/market/data_icon.png" alt="img">
-                </div>
-                <!-- <span>数据</span> -->
+                </div> -->
+                <span>数据</span>
             </div>
         </div>
         <!-- 时间选择弹窗 -->
@@ -396,6 +396,8 @@ const showInfo = ref(false)
                 margin-left: 0.2rem;
                 // background-color: #EDEDED;
                 border-radius: 50%;
+                position: relative;
+                left: 0.15rem;
             }
         }
 
@@ -625,7 +627,7 @@ const showInfo = ref(false)
                 height: 0.48rem;
                 display: flex;
                 align-items: center;
-                justify-content: flex-start;
+                justify-content: space-between;
 
                 .tab {
                     height: 0.48rem;

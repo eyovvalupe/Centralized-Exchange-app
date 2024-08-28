@@ -15,6 +15,7 @@ export default {
     state: {
         currStock: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
+        marketSearchType: '', // 当前搜索的市场
         marketSearchList: [], // 当前搜索的结果
 
         marketWatchList: [], // 当前订阅的列表数据
@@ -74,6 +75,7 @@ export default {
         },
         setMarketSearch(state, data) {
             state.marketSearchStr = data.search;
+            state.marketSearchType = data.market;
             state.marketSearchList = data.list;
         },
         setMarketSearchList(state, data) {

@@ -15,13 +15,14 @@
             <div class="type_select" @click="showAS = true">
                 <span>{{ currAsName }}</span>
                 <div class="type_icon">
-                    <img src="/static/img/assets/more.png" alt="img">
+                    <img src="/static/img/common/menu.png" alt="img">
                 </div>
             </div>
         </div>
         <!-- 结果列表 -->
         <div class="list">
             <Loading v-show="!searchList.length && loading" />
+            <NoData v-if="!searchList.length && !loading" />
             <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
                 <div class="info">
                     <div class="title">{{ item.symbol || '--' }}</div>
@@ -32,6 +33,7 @@
                     <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                 </div>
             </div>
+
         </div>
 
         <!-- 类型选择弹窗 -->
@@ -52,10 +54,11 @@ import Loading from "@/components/Loaidng.vue"
 import store from "@/store"
 import router from "@/router"
 import { _add, _del } from '@/api/api'
+import NoData from "@/components/NoData.vue"
 
 
 const showAS = ref(false)
-const currAs = ref('stock')
+const currAs = ref(store.state.marketSearchType || 'stock')
 const currAsName = computed(() => {
     return actions.value.find(item => item.value == currAs.value).name
 })
@@ -70,9 +73,12 @@ const actions = computed(() => {
 const onSelect = item => {
     showAS.value = false
     currAs.value = item.value
-    if (search.value) {
-        getData()
-    }
+    store.commit('setMarketSearch', {
+        search: '',
+        market: '',
+        list: []
+    })
+    getData()
 }
 
 const iptRef = ref()
@@ -92,6 +98,7 @@ const getData = () => { // 获取数据
     }).then(res => {
         store.commit('setMarketSearch', {
             search: search.value,
+            market: currAs.value,
             list: res.data || []
         })
     }).finally(() => {
@@ -101,6 +108,7 @@ const getData = () => { // 获取数据
 const resetData = () => { // 搜索
     store.commit('setMarketSearch', {
         search: '',
+        market: '',
         list: []
     })
     getData()
@@ -113,7 +121,7 @@ let timeout = null
 const keydown = () => { // 输入事件监听
     setTimeout(() => {
         if (timeout) clearTimeout(timeout)
-        if (!search.value) return
+        // if (!search.value) return
         timeout = setTimeout(() => {
             resetData()
         }, 500)
@@ -175,6 +183,7 @@ const collect = item => {
                     i.watchlist = i.watchlist == 1 ? 0 : 1
                     store.commit('setMarketSearch', {
                         search: search.value,
+                        market: currAs.value,
                         list: searchList.value
                     })
                 }
@@ -217,10 +226,10 @@ Promise.all([
             font-size: 0.24rem;
 
             .type_icon {
-                width: 0.32rem;
-                height: 0.32rem;
+                width: 0.28rem;
+                height: 0.28rem;
                 opacity: 0.8;
-                margin-left: 0.04rem;
+                margin-left: 0.06rem;
             }
         }
 

@@ -61,6 +61,7 @@ export default createStore({
       commit("setMarketWatchList", []);
       commit('setMarketSearch', {
         search: '',
+        market: '',
         list: []
       })
     },

@@ -44,8 +44,8 @@
         </div>
 
         <!-- Tabs -->
-        <Tabs class="tabs" @change="changeTab" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
-            shrink>
+        <Tabs v-if="!pageLoading" class="tabs" @change="changeTab" v-model:active="active" :swipeable="false" animated
+            :color="'#014CFA'" shrink>
             <Tab :title="'活跃'">
                 <StockTable :key="'vol'" :loading="loading" :list="marketVolumeList" />
                 <LoadingMore ref="more_1" class="active_more" :loading="!!(marketVolumeList.length && loading)"
@@ -66,7 +66,7 @@
 
         <!-- 类型选择弹窗 -->
         <Teleport to="body">
-            <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="类型"></ActionSheet>
+            <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="交易所"></ActionSheet>
         </Teleport>
     </div>
 </template>
@@ -102,8 +102,15 @@ const actions = computed(() => {
 const onSelect = item => {
     showAS.value = false
     currAs.value = item.value
+    count.value = 0
+    setTimeout(() => {
+        store.commit('setMarketVolumeList', [])
+        store.commit('setMarketUpList', [])
+        store.commit('setMarketDownList', [])
+    }, 340)
     setTimeout(() => {
         getOverviewData()
+        changeTab(active.value)
     }, 0)
 }
 
@@ -126,7 +133,7 @@ const changeTab = (key) => {
                 break
         }
         target = document.querySelector('.loading_more')
-    }, 500)
+    }, 350)
 }
 const readyRecommendData = () => { // 推荐数据准备好了，一起监听
     changeTab(active.value)
@@ -156,6 +163,7 @@ const getData = (list, key, query, listKey) => {
     }
     const saveActive = active.value
     _sort({
+        exchange: currAs.value.includes(',') ? '' : currAs.value,
         orderby: query,
         page: page.value
     }).then(res => {
@@ -313,7 +321,12 @@ const scrollHandler = () => {
         }
     }
 }
+
+const pageLoading = ref(true)
 onMounted(() => {
+    setTimeout(() => {
+        pageLoading.value = false
+    }, 300)
     setTimeout(() => {
         try {
             document.querySelector('.page').addEventListener('scroll', scrollHandler)
