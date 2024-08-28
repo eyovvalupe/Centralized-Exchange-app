@@ -7,7 +7,6 @@
         <!-- <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else> -->
         <!-- 标题 -->
         <!-- <div class="title">市场</div> -->
-        <!-- <div style="height:0.2rem"></div> -->
         <!-- <div class="search_block" @click="router.push({ name: 'search' })">
             <div class="search_icon">
                 <img src="/static/img/common/search.png" alt="🔍">
@@ -34,44 +33,108 @@
             v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
 
 
-            <Tab class="optional" :title="'自选'">
+            <Tab class="optional">
                 <Optional v-if="activated && active == 0" ref="OptionalRef" />
                 <div style="height:1rem"></div>
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon" v-show="active != 0">
+                            <img src="/static/img/assets/contract_icon.svg" alt="icon">
+                        </div>
+                        <span v-show="active == 0">自选</span>
+                    </div>
+                </template>
             </Tab>
-            <Tab :title="'买币'">
+            <Tab>
                 <NoData />
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon">
+                            <img src="/static/img/assets/ipo_icon.svg" alt="icon">
+                        </div>
+                        <span>买币</span>
+                    </div>
+                </template>
             </Tab>
-            <Tab :title="'股票'">
+            <Tab>
                 <Stock v-if="active == 2" ref="StockRef" />
                 <div style="height:1rem"></div>
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon">
+                            <img src="/static/img/assets/ipo_icon.svg" alt="icon">
+                        </div>
+                        <span>股票</span>
+                    </div>
+                </template>
             </Tab>
-            <Tab :title="'合约'">
+            <Tab>
                 <NoData />
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon">
+                            <img src="/static/img/assets/stock_icon.svg" alt="icon">
+                        </div>
+                        <span>合约</span>
+                    </div>
+                </template>
             </Tab>
-            <Tab :title="'AI量化'">
+            <Tab>
                 <NoData />
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon">
+                            <img src="/static/img/assets/stock_icon.svg" alt="icon">
+                        </div>
+                        <span>AI量化</span>
+                    </div>
+                </template>
             </Tab>
-            <Tab :title="'外汇'">
+            <Tab>
                 <NoData />
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon">
+                            <img src="/static/img/assets/contract_icon.svg" alt="icon">
+                        </div>
+                        <span>外汇</span>
+                    </div>
+                </template>
             </Tab>
-            <Tab :title="'IPO'">
+            <Tab>
                 <NoData />
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon">
+                            <img src="/static/img/assets/ipo_icon.svg" alt="icon">
+                        </div>
+                        <span>IPO</span>
+                    </div>
+                </template>
             </Tab>
-            <Tab :title="'理财'">
+            <Tab>
                 <NoData />
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon">
+                            <img src="/static/img/assets/stock_icon.svg" alt="icon">
+                        </div>
+                        <span>理财</span>
+                    </div>
+                </template>
             </Tab>
 
-            <Tab :title-class="'my_icon'" @click.native.stop="() => { }">
+            <Tab :title-class="'my_icon'" @click.native.stop="openTab = !openTab">
                 <template #title>
-                    <div class="tab_icon " @click.native.stop="openTab = !openTab">
+                    <div class="tab_icon" @click.native.stop="openTab = !openTab">
                         <img v-show="!openTab" src="/static/img/common/menu_icon.png" alt="img">
                         <img v-show="openTab" src="/static/img/common/back_icon.png" alt="img">
                     </div>
                 </template>
             </Tab>
-            <Tab :title-class="'my_icon my_icon2'" @click.native.stop="() => { }">
+            <Tab v-if="!openTab" :title-class="'my_icon my_icon2'" @click.native.stop="router.push({ name: 'search' })">
                 <template #title>
-                    <div class="tab_icon " @click.native.stop="router.push({ name: 'search' })">
+                    <div class="tab_icon" @click.native.stop="router.push({ name: 'search' })">
                         <img src="/static/img/common/search_icon.png" alt="img">
                     </div>
                 </template>
@@ -110,8 +173,10 @@ const reloading = ref(false)
 const detail = ref(null)
 const detailTransition = ref('slide-right');
 
+
 const changeTab = key => {
     active.value = key
+    openTab.value = false
     setTimeout(() => {
         switch (key) {
             case 0:
@@ -260,19 +325,35 @@ const onRefresh = () => {
     }
 
     .tabs {
-        overflow: hidden;
         position: relative;
 
-        .tab_icon {
-            width: 0.32rem;
-            height: 0.32rem;
+        :deep(.tab_item) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             line-height: 0;
+
+            .tab_item_icon {
+                width: 0.28rem;
+                height: 0.28rem;
+                margin-right: 0.05rem;
+            }
+        }
+
+        .tab_icon {
+            width: 100%;
+            height: 100%;
+            line-height: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 0.1rem;
         }
 
         :deep(.my_icon) {
             position: absolute;
             top: 0;
-            right: 0.88rem;
+            right: 1rem;
             padding-right: 0 !important;
             padding-left: 0 !important;
             border-radius: 50%;
@@ -282,37 +363,27 @@ const onRefresh = () => {
             display: flex;
             align-items: center;
             justify-content: center;
+            background-color: #fff;
         }
 
         :deep(.my_icon2) {
             position: absolute;
             top: 0;
-            right: 0;
+            right: 0.2rem;
             padding-right: 0 !important;
         }
 
-        :deep(.van-tab__panel) {
-            // height: calc(var(--app-height) - 3.4rem);
-            // overflow-y: auto;
-        }
 
         :deep(.van-tabs__nav--card) {
             border: none;
-            padding-right: 1.6rem;
         }
 
         :deep(.van-tab--card) {
             border-right: none;
             color: #061023;
-            // background-color: #f5f5f5;
-            // border-radius: 0.3rem;
-            // margin-left: 0.1rem;
-            // transition: all ease .2s;
         }
 
         :deep(.van-tab--card.van-tab--active) {
-            // background-color: #014CFA;
-            // color: #fff;
 
             background-color: #F6F8FF;
             border-radius: 0.3rem;
@@ -321,18 +392,21 @@ const onRefresh = () => {
         }
 
         :deep(.van-tab--shrink) {
-            padding: 0 0.3rem;
+            padding: 0 0.26rem;
         }
 
         :deep(.van-tabs__wrap) {
             height: 0.8rem;
             border-bottom: 1px solid rgba(0, 0, 0, 0);
             padding-bottom: 0.2rem;
+            position: relative;
+            padding-right: 2rem;
         }
 
         :deep(.van-tabs__nav--card) {
             height: 0.6rem;
-            flex-wrap: wrap;
+            width: 100%;
+            position: static;
         }
 
         :deep(.van-tab) {
@@ -343,9 +417,12 @@ const onRefresh = () => {
 
     .open_tabs {
 
+        :deep(.van-tabs__content) {
+            padding-top: 1.6rem;
+        }
 
-        :deep(.van-tab) {
-            font-size: 0.30rem;
+        :deep(.my_icon) {
+            right: 0.2rem;
         }
 
         :deep(.van-sticky) {
@@ -361,10 +438,13 @@ const onRefresh = () => {
 
         :deep(.van-tabs__wrap) {
             height: 1.4rem;
+            padding-right: 1.2rem;
         }
 
         :deep(.van-tabs__nav--card) {
             height: 1.2rem;
+            flex-wrap: wrap;
+            overflow: hidden;
         }
     }
 

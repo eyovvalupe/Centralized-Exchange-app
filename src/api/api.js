@@ -429,6 +429,12 @@ export const _marketOverview = (data = {}) => {
     custom: { auth: false, toast: true, retry: true },
   });
 };
+// 股票交易所支持列表
+export const _exchange = (data = {}) => {
+  return http.post(`/anon/v1/market/stock/exchange`, data, {
+    custom: { auth: false, toast: true, retry: true },
+  });
+};
 
 // 账号检测
 export const _userExist = (data = {}) => {

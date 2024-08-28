@@ -8,10 +8,10 @@
         <!-- 市场涨跌分布 -->
         <div class="total_box">
             <!-- 类型 -->
-            <div class="type_box" @click="showAS = true">
-                <span>全部</span>
+            <div class="type_box" v-if="currAs" @click="showAS = true">
+                <span>{{ currAs }}</span>
                 <div class="type_icon">
-                    <img src="/static/img/assets/more.png" alt="img">
+                    <img src="/static/img/common/menu.png" alt="img">
                 </div>
             </div>
 
@@ -75,7 +75,7 @@
 import { Tab, Tabs, ActionSheet } from 'vant';
 import StockTable from "@/components/StockTable.vue"
 import { ref, computed, onMounted, onBeforeUnmount } from "vue"
-import { _sort, _marketOverview } from "@/api/api"
+import { _sort, _marketOverview, _exchange } from "@/api/api"
 import store from "@/store"
 import { _add, _del } from '@/api/api'
 import Recommend from '@/views/Home/components/Recommend.vue';
@@ -87,17 +87,24 @@ const finish = ref(false)
 const page = ref(0)
 
 const showAS = ref(false)
-const currAs = ref('1')
+const currAs = ref('')
+const actionsMap = ref([])
 const actions = computed(() => {
-    return [
-        { name: '全部', value: '1', className: currAs.value == 1 ? 'action-sheet-active' : '', icon: currAs.value == 1 ? 'success' : '' },
-        { name: '美股', value: '2', className: currAs.value == 2 ? 'action-sheet-active' : '', icon: currAs.value == 2 ? 'success' : '' },
-        { name: '选项三', value: '3', className: currAs.value == 3 ? 'action-sheet-active' : '', icon: currAs.value == 3 ? 'success' : '' },
-    ]
+    return actionsMap.value.map(item => {
+        return {
+            name: item,
+            value: item,
+            className: currAs.value == item ? 'action-sheet-active' : '',
+            icon: currAs.value == item ? 'success' : ''
+        }
+    })
 })
 const onSelect = item => {
     showAS.value = false
     currAs.value = item.value
+    setTimeout(() => {
+        getOverviewData()
+    }, 0)
 }
 
 // tabs
@@ -246,7 +253,9 @@ const getFlex = position => {
 const overviewLoading = ref(false)
 const getOverviewData = () => {
     overviewLoading.value = true
-    _marketOverview().then(res => {
+    _marketOverview({
+        market: currAs.value.includes(',') ? '' : currAs.value
+    }).then(res => {
         if (!res.data) return
         sessionStorage.setItem('overview_data', JSON.stringify(res.data))
         count.value = res.data.count || 0
@@ -257,6 +266,19 @@ const getOverviewData = () => {
         overviewLoading.value = false
     })
 }
+// 获取交易所类型
+const getExchange = () => {
+    _exchange().then(res => {
+        if (res.data) {
+            currAs.value = res.data
+            actionsMap.value.push(res.data)
+            const arr = res.data.split(',')
+            actionsMap.value.push(...arr)
+        }
+
+    })
+}
+getExchange()
 
 const initData = () => {
     // changeTab(active.value)
@@ -324,18 +346,21 @@ onBeforeUnmount(() => {
 
         .type_box {
             position: absolute;
-            top: -0.03rem;
+            top: -0.1rem;
             right: 0;
             display: flex;
             align-items: center;
             color: #253146;
             font-size: 0.24rem;
+            border: 1px solid #eee;
+            border-radius: 0.08rem;
+            padding: 0.08rem 0.16rem;
 
             .type_icon {
-                width: 0.32rem;
-                height: 0.32rem;
+                width: 0.28rem;
+                height: 0.28rem;
                 opacity: 0.8;
-                margin-left: 0.04rem;
+                margin-left: 0.06rem;
             }
         }
 
