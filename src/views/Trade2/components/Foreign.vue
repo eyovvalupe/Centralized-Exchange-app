@@ -83,7 +83,7 @@
                 text-align: left;
 
                 .name {
-                    font-size: 0.4rem;
+                    font-size: 0.28rem;
                     font-weight: bold;
                     color: #000;
                     line-height: 0.5rem;
@@ -105,12 +105,13 @@
                     vertical-align: baseline;
 
                     .big {
-                        font-size: 0.6rem;
+                        font-size: 0.38rem;
+                        margin: 0 0 0 0.04rem;
                     }
 
                     .sm {
                         position: relative;
-                        top: -0.24rem;
+                        top: -0.12rem;
                     }
                 }
             }

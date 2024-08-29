@@ -46,7 +46,7 @@
                 </template>
             </Tab>
             <Tab>
-                <NoData />
+                <CoinBuy v-if="active == 1" />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
@@ -107,7 +107,7 @@
                 </template>
             </Tab>
             <Tab>
-                <NoData />
+                <IPO v-if="active == 6" :type="'market'" ref="IPORef" />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
@@ -168,6 +168,7 @@ import { useSocket } from '@/utils/ws'
 import IPODetail from '@/views/trade/IPODetail.vue'
 import Subscription from '@/views/trade/Subscription.vue'
 import NoData from '@/components/NoData.vue';
+import CoinBuy from "./components/CoinBuy.vue"
 
 const marketPageRef = ref()
 const openTab = ref(false)
