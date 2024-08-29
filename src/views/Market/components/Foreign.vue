@@ -83,7 +83,7 @@
                 text-align: left;
 
                 .name {
-                    font-size: 0.28rem;
+                    font-size: 0.32rem;
                     font-weight: bold;
                     color: #000;
                     line-height: 0.5rem;

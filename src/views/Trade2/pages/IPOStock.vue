@@ -1,6 +1,6 @@
 <!-- 中签 -->
 <template>
-  <div class="page_ipo_stock">
+  <div v-if="token" class="page_ipo_stock">
 
     <div class="list">
       <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="openDetail(item)">
@@ -101,6 +101,8 @@
       </Popup>
     </teleport>
   </div>
+
+  <UnLogin v-else />
 </template>
 
 <script setup>
@@ -111,7 +113,10 @@ import store from "@/store"
 import { _orderList, _orderGet } from "@/api/api";
 import { Popup } from "vant"
 import router from "@/router"
+import UnLogin from "@/components/UnLogin.vue"
 
+
+const token = computed(() => store.state.token)
 const statusMap = ref({
   lock: '锁定',
   success: '中签',
@@ -137,13 +142,15 @@ const page = ref(0)
 
 // 初始化
 const init = (reset) => {
-  if (reset) {
-    store.commit('setIpoStockList', [])
+  if (token.value) {
+    if (reset) {
+      store.commit('setIpoStockList', [])
+    }
+    loading.value = false
+    finish.value = false
+    page.value = 0
+    getData()
   }
-  loading.value = false
-  finish.value = false
-  page.value = 0
-  getData()
 }
 // 获取数据
 const getData = () => {
@@ -191,13 +198,13 @@ onMounted(() => {
     loadingMore = document.querySelector('.loading_more')
     try {
       document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
-    } catch {}
+    } catch { }
   }, 500)
 })
 onBeforeUnmount(() => {
   try {
     document.querySelector('.page').removeEventListener('scroll', scrollHandler)
-  } catch {}
+  } catch { }
 })
 
 defineExpose({

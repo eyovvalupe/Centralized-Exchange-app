@@ -1,6 +1,6 @@
-<!-- 买币 -->
+<!-- 合约 -->
 <template>
-    <div class="page page-coinbuy">
+    <div class="page page-constract">
         <div class="tr th">
             <div class="td td_left">名称/交易量</div>
             <div class="td">价格</div>
@@ -19,10 +19,10 @@
                     </div>
                 </div>
                 <div class="td">
-                    <span class="amount" style="font-size: 0.28rem;">$3966.520</span>
+                    <span class="amount" style="font-weight: 500;">$3966.520</span>
                 </div>
                 <div class="td td_right">
-                    <span class="amount down">6868</span>
+                    <span class="amount down" style="font-weight: 500;">6868</span>
                     <div class="percent down_bg">-0.70%</div>
                 </div>
             </div>
@@ -35,14 +35,14 @@
 </script>
 
 <style lang="less" scoped>
-.page-coinbuy {
+.page-constract {
 
 
     .tr {
         border-bottom: 1px solid #E8E8E8;
         display: flex;
         align-items: center;
-        padding: 0.2rem 0;
+        padding: 0.24rem 0;
 
         .td {
             flex: 1;
@@ -51,11 +51,12 @@
             align-items: center;
             justify-content: center;
             color: #9EA3AE;
-            font-size: 0.24rem;
+            font-size: 0.28rem;
 
             .amount {
                 color: #333;
                 font-weight: bold;
+                font-size: 0.32rem
             }
 
             .x {
@@ -71,6 +72,7 @@
                 border-radius: 0.08rem;
                 color: #fff;
                 margin-top: 0.08rem;
+                font-size: 0.24rem;
             }
         }
 

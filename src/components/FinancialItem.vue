@@ -49,7 +49,7 @@ const handleClick = () => {
         white-space: nowrap;
         font-weight: 600;
         color: #0D0D12;
-        font-size: 0.32rem;
+        font-size: 0.28rem;
         line-height: 0.45rem;
         margin-bottom: 0.12rem;
     }
@@ -77,10 +77,10 @@ const handleClick = () => {
 
                 .percent {
                     color: #F03C3C;
-                    font-size: 0.4rem;
+                    font-size: 0.36rem;
                     line-height: 0.56rem;
                     font-weight: 600;
-                    margin-right: 0.52rem;
+                    margin-right: 0.32rem;
                 }
 
                 .tag {
@@ -106,19 +106,19 @@ const handleClick = () => {
             justify-content: space-between;
 
             .start {
-                font-size: 0.36rem;
+                font-size: 0.28rem;
                 color: #000;
                 line-height: 0.48rem;
                 font-weight: 500;
             }
 
             .btn {
-                height: 0.6rem;
-                padding: 0 0.4rem;
+                height: 0.56rem;
+                padding: 0 0.36rem;
                 border-radius: 0.3rem;
                 background-color: #E7E7E7;
                 color: #9EA3AE;
-                font-size: 0.28rem;
+                font-size: 0.24rem;
                 font-weight: 400;
                 display: flex;
                 align-items: center;

@@ -47,9 +47,6 @@
                 <div v-else-if="activeTab == 5" class="ipo_block">
                     <IpoBlock />
                 </div>
-                <div v-else-if="activeTab == 3">
-                    <Foreign />
-                </div>
                 <div v-else>
                     <NoData />
                 </div>
@@ -120,7 +117,7 @@ import store from "@/store"
 import StockTable from "@/components/StockTable.vue"
 import { _search, _watchlist } from "@/api/api"
 import NoData from "@/components/NoData.vue"
-import Foreign from "./components/Foreign.vue"
+
 
 
 const openTab = ref(false)
