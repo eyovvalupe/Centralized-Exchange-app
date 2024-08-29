@@ -139,16 +139,21 @@
             <div class="item_box_right">
                 <div class="subtitle">
                     <span>数量</span>
-                    <div style="color: #014CFA;display: flex;align-items: center;">
-                        <span @click="jump('transfer')">账户划转</span>
-                        <span @click="jump('loanList')" style="margin-left: 0.24rem;">借贷</span>
+                    <div @click="showJumpTypeDialog = true"
+                        style="color: #014CFA;display: flex;align-items: center;font-size:0.24rem">
+                        划转/兑换/充值
+                        <!-- <span @click="jump('transfer')">账户划转</span>
+                        <span @click="jump('loanList')" style="margin-left: 0.24rem;">借贷</span> -->
                     </div>
                 </div>
                 <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <span class="ipt_tip" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
+                    <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
                     </span>
-                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false"
-                        @change="changePercent" type="number" class="ipt">
+                    <span @click="putAll"
+                        :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
+                        style="color: #014CFA;position: absolute;left: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .2s">全部</span>
+                    <input style="text-align: right;" v-model="form1.volume" @focus="amountFocus = true"
+                        @blur="amountFocus = false" @change="changePercent" type="number" class="ipt">
                 </div>
             </div>
         </div>
@@ -272,6 +277,11 @@
     <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
         @select="onSelectForm1PriceType" title="限价模式">
     </ActionSheet>
+
+    <!-- 跳转选择 -->
+    <ActionSheet teleport="body" v-model:show="showJumpTypeDialog" :actions="jumpModeList"
+        @select="onSelectJumpModeType" title="划转/兑换/充值">
+    </ActionSheet>
 </template>
 
 <script setup>
@@ -283,6 +293,17 @@ import Decimal from 'decimal.js';
 import { useRoute } from "vue-router"
 import router from "@/router"
 import StockPopup from "../../trade/StockPopup.vue"
+
+
+const showJumpTypeDialog = ref(false) // 跳转开关
+const jumpModeList = ref([
+    { name: '划转', value: 'transfer' },
+    { name: '兑换', value: 'swap' },
+    { name: '充值', value: 'topUpCrypto' },
+])
+const onSelectJumpModeType = item => {
+    jump(item.value)
+}
 
 const props = defineProps({
     activeTab: null, // 0-市价 1-限价 2-止盈止损
@@ -477,6 +498,11 @@ const submit1 = () => {
 const amountFocus = ref(false)
 const priceFocus = ref(false)
 
+
+// 全部
+const putAll = () => {
+    onSliderChange(100)
+}
 // 市价-拖动
 const percentages = [25, 50, 75, 100];
 const sliderValue = ref(0);
@@ -733,6 +759,11 @@ defineExpose({
                 position: absolute;
                 left: 0.24rem;
                 transition: all ease .3s;
+            }
+
+            .ipt_tip2 {
+                left: auto;
+                right: 0.24rem;
             }
 
             .ipt {
