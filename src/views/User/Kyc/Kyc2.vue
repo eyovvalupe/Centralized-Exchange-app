@@ -61,6 +61,10 @@
             <!-- 已上传 -->
             <div class="item_box success" v-if="files.front.url">
                 <img :src="files.front.url" alt="img">
+
+                <div class="delete_icon" @click="deleteImg('front')">
+                    <img src="/static/img/user/delete.png" alt="x">
+                </div>
             </div>
             <!-- 上传 -->
             <Uploader v-if="!checkMode" :name="'front'" class="uploader" :after-read="afterRead" />
@@ -90,6 +94,10 @@
             <!-- 已上传 -->
             <div class="item_box success" v-if="files.back.url">
                 <img :src="files.back.url" alt="img">
+
+                <div class="delete_icon" @click="deleteImg('back')">
+                    <img src="/static/img/user/delete.png" alt="x">
+                </div>
             </div>
             <!-- 上传 -->
             <Uploader v-if="!checkMode" :name="'back'" class="uploader" :after-read="afterRead" />
@@ -119,6 +127,10 @@
             <!-- 已上传 -->
             <div class="item_box success" v-if="files.hand.url">
                 <img :src="files.hand.url" alt="img">
+
+                <div class="delete_icon" @click="deleteImg('hand')">
+                    <img src="/static/img/user/delete.png" alt="x">
+                </div>
             </div>
             <!-- 上传 -->
             <Uploader v-if="!checkMode" :name="'hand'" class="uploader" :after-read="afterRead" />
@@ -239,6 +251,14 @@ const files = ref({
         file: {}
     },
 })
+
+const deleteImg = key => {
+    files.value[key] = {
+        url: '',
+        loading: false,
+        file: {}
+    }
+}
 
 if (props.kycInfo) {
     files.value.front.url = props.kycInfo.idimg_1
@@ -520,6 +540,16 @@ const afterRead = (file, { name }) => {
             width: 100%;
             height: 100%;
             position: relative;
+
+            .delete_icon {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 0.8rem;
+                height: 0.8rem;
+                z-index: 9999;
+                padding: 0.2rem;
+            }
         }
 
         .content {
