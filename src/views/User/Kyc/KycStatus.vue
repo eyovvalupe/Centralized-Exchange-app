@@ -12,7 +12,7 @@
                 </div>
                 <div class="subtitlt">认证成功</div>
                 <div style="flex:1"></div>
-                <div class="btn" @click="nextStep">查看认证信息</div>
+                <div class="btn" @click="goInfo">查看认证信息</div>
             </template>
             <!-- 详情 -->
             <template v-if="kycInfo.status == 'review'">
@@ -21,7 +21,6 @@
                 </div>
                 <div class="subtitlt">身份认证已提交审核，请耐心等待</div>
                 <div style="flex:1"></div>
-                <div class="btn" @click="back">回到首页</div>
             </template>
             <!-- 失败 -->
             <template v-if="kycInfo.status == 'failure'">
@@ -65,6 +64,12 @@ const nextStep = () => {
 const back = () => {
     router.back()
 }
+const goInfo = () => {
+    localStorage.setItem('kycInfo', JSON.stringify(props.kycInfo))
+    router.replace({
+        name: 'kycSuccess'
+    })
+}
 
 </script>
 
@@ -93,7 +98,7 @@ const back = () => {
         }
 
         .subtitlt {
-            font-size: 0.32rem;
+            font-size: 0.28rem;
             color: #333;
             margin-top: 0.4rem;
         }

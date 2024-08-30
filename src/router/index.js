@@ -84,6 +84,15 @@ const routes = [
       pageType: 'child'
     }
   },
+  { // 认证成功
+    path: "/kycSuccess",
+    name: "kycSuccess",
+    component: () => import("../views/User/Kyc/KycSuccess.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   { // 收款账户
     path: "/account",
     name: "account",

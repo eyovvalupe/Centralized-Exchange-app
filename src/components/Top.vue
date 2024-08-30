@@ -52,7 +52,7 @@ const clickLeft = () => {
     font-weight: 500;
     text-align: center;
     line-height: 1.05;
-    z-index: 999;
+    z-index: 9999;
 
     .back {
         position: absolute;

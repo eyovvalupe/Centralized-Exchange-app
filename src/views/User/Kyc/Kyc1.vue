@@ -2,7 +2,7 @@
 <template>
     <div class="kyc_1">
 
-        <Top :title="''">
+        <Top :title="'身份认证'">
             <!-- 从注册来的 -->
             <template #right v-if="from == 'register'">
                 <span @click="nextStep" style="color: #014CFA;font-weight: 400;font-size: 0.28rem;">跳过</span>
@@ -15,7 +15,7 @@
                     </div> -->
                     <span class="status" v-if="kycInfo.status == 'review'">审核中</span>
                     <span class="status status_pass" v-if="kycInfo.status == 'success'">审核通过</span>
-                    <span class="status status_fail" v-if="kycInfo.status == 'failed'">审核失败</span>
+                    <span class="status status_fail" v-if="kycInfo.status == 'failure'">审核失败</span>
                 </div>
             </template>
         </Top>
@@ -32,7 +32,7 @@
             <div class="step">2</div>
         </div>
         <div class="title" v-if="!checkMode">验证您的身份</div>
-        <div class="tip" v-if="!checkMode">根据金融法规，我们需要询问这个问题，确保您的详细信息与您的政府签发的身份证件完全匹配。</div>
+        <!-- <div class="tip" v-if="!checkMode">根据金融法规，我们需要询问这个问题，确保您的详细信息与您的政府签发的身份证件完全匹配。</div> -->
 
 
         <!-- 表单 -->
@@ -50,14 +50,16 @@
         <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
             @click="checkMode ? showBottom = false : showBottom = true">{{ form.birthday }}</div>
 
-        <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failed'" @click="submit" :loading="loading"
-            :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
+        <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" @click="submit" :loading="loading"
+            :disabled="disabled" round :color="disabled ? '#C8CED5' : '#014CFA'" class="submit"
+            type="primary">继续</Button>
         <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="#014CFA" class="submit"
             type="primary" @click="next">继续</Button> -->
 
 
         <!-- 日期选择 -->
-        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBottom" position="bottom">
+        <Popup style="border-top-left-radius: 12px;border-top-right-radius: 12px;" :safe-area-inset-top="true"
+            :safe-area-inset-bottom="true" v-model:show="showBottom" position="bottom">
             <DatePicker @cancel="cancelDate" @confirm="confirmDate" v-model="currentDate" title="选择日期"
                 :min-date="minDate" :max-date="maxDate" />
         </Popup>
@@ -151,7 +153,8 @@ const nextStep = () => {
         margin-bottom: 0.52rem;
 
         .step {
-            background-color: #E5E4E9;
+            border: 2px solid #014CFA;
+            background-color: #fff;
             width: 0.48rem;
             height: 0.48rem;
             display: flex;
@@ -159,12 +162,12 @@ const nextStep = () => {
             justify-content: center;
             font-size: 0.28rem;
             border-radius: 50%;
-            color: #B0AFB4;
+            color: #014CFA;
         }
 
         .curr_step {
-            border: 2px solid #014CFA;
-            background-color: #fff;
+            color: #fff;
+            background-color: #014CFA;
         }
 
         .line {
@@ -179,7 +182,7 @@ const nextStep = () => {
     .title {
         color: #0D0D12;
         font-weight: 600;
-        font-size: 0.56rem;
+        font-size: 0.48rem;
         line-height: 0.8rem;
         margin-bottom: 0.6rem;
     }

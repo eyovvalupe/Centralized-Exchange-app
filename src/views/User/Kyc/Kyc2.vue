@@ -2,10 +2,19 @@
 <template>
     <div class="kyc_2">
 
-        <Top :title="''">
+        <Top :title="'身份认证'">
             <!-- 从注册来的 -->
             <template #right v-if="from == 'register'">
                 <span @click="nextStep" style="color: #014CFA;font-weight: 400;font-size: 0.28rem;">跳过</span>
+            </template>
+            <!-- 从个人中心来的 -->
+            <template #right v-else>
+                <div @click="goTip" style="display: flex;align-items: center;line-height: 0;">
+                    <div style="width: 0.24rem;height: 0.24rem;position: relative;top:-0.01rem;left:-0.04rem">
+                        <img src="/static/img/user/warning.png" alt="icon">
+                    </div>
+                    <span style="color: #014CFA;font-weight: 400;font-size: 0.24rem;">照片上传要求</span>
+                </div>
             </template>
             <!-- 提交过认证信息 -->
             <template #right v-if="kycInfo.idimg_1">
@@ -15,7 +24,7 @@
                     </div> -->
                     <span class="status" v-if="kycInfo.status == 'review'">审核中</span>
                     <span class="status status_pass" v-if="kycInfo.status == 'success'">审核通过</span>
-                    <span class="status status_fail" v-if="kycInfo.status == 'failed'">审核失败</span>
+                    <span class="status status_fail" v-if="kycInfo.status == 'failure'">审核失败</span>
                 </div>
             </template>
         </Top>
@@ -28,11 +37,11 @@
 
         <!-- 表单模式头部 -->
         <div class="steps" v-if="!checkMode">
-            <div class="step finish_step">1</div>
+            <div class="step curr_step">1</div>
             <div class="line"></div>
-            <div class="step curr_step">2</div>
+            <div class="step finish_step">2</div>
         </div>
-        <div class="title" v-if="!checkMode">验证您的身份</div>
+        <div class="title" v-if="!checkMode">上传照片</div>
 
         <!-- 表单 -->
         <!-- 上传元素 -->
@@ -62,7 +71,7 @@
             <div class="item_box success" v-if="files.front.url">
                 <img :src="files.front.url" alt="img">
 
-                <div class="delete_icon" @click="deleteImg('front')">
+                <div class="delete_icon" @click="deleteImg('front')" v-if="!checkMode">
                     <img src="/static/img/user/delete.png" alt="x">
                 </div>
             </div>
@@ -95,7 +104,7 @@
             <div class="item_box success" v-if="files.back.url">
                 <img :src="files.back.url" alt="img">
 
-                <div class="delete_icon" @click="deleteImg('back')">
+                <div class="delete_icon" @click="deleteImg('back')" v-if="!checkMode">
                     <img src="/static/img/user/delete.png" alt="x">
                 </div>
             </div>
@@ -128,7 +137,7 @@
             <div class="item_box success" v-if="files.hand.url">
                 <img :src="files.hand.url" alt="img">
 
-                <div class="delete_icon" @click="deleteImg('hand')">
+                <div class="delete_icon" @click="deleteImg('hand')" v-if="!checkMode">
                     <img src="/static/img/user/delete.png" alt="x">
                 </div>
             </div>
@@ -193,12 +202,12 @@
 
         <!-- 联系客服 -->
         <div class="server_link" v-if="!checkMode">
-            联系<span>在线客服</span>，通过邮件发送照片
+            无法上传照片？联系<span>在线客服</span>
         </div>
 
         <!-- 提交 -->
-        <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failed'" color="#014CFA" @click="submit"
-            :loading="loading" :disabled="disabled" round class="submit" type="primary">完成</Button>
+        <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" :color="disabled ? '#C8CED5' : '#014CFA'"
+            @click="submit" :loading="loading" :disabled="disabled" round class="submit" type="primary">完成</Button>
         <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" color="#014CFA" @click="nextStep"
             :loading="loading" round class="submit" type="primary">完成</Button> -->
     </div>
@@ -298,11 +307,13 @@ const nextStep = () => {
         name: 'user'
     })
 }
-const emits = defineEmits(['pre'])
+const emits = defineEmits(['pre', 'info'])
 const preStep = () => {
     emits('pre')
 }
-
+const goTip = () => {
+    emits('info')
+}
 
 // 图片处理
 const afterRead = (file, { name }) => {
@@ -432,7 +443,7 @@ const afterRead = (file, { name }) => {
     .title {
         color: #0D0D12;
         font-weight: 600;
-        font-size: 0.56rem;
+        font-size: 0.48rem;
         line-height: 0.8rem;
         margin-bottom: 0.6rem;
     }
@@ -506,7 +517,7 @@ const afterRead = (file, { name }) => {
     }
 
     .item {
-        height: 3.08rem;
+        height: 4rem;
         border: 1px dashed #2972F6;
         border-radius: 0.16rem;
         margin-bottom: 0.32rem;
@@ -541,14 +552,20 @@ const afterRead = (file, { name }) => {
             height: 100%;
             position: relative;
 
+            >img {
+                object-fit: fill !important;
+            }
+
             .delete_icon {
                 position: absolute;
-                top: 0;
-                right: 0;
-                width: 0.8rem;
-                height: 0.8rem;
-                z-index: 9999;
-                padding: 0.2rem;
+                top: 0.1rem;
+                right: 0.1rem;
+                width: 0.64rem;
+                height: 0.64rem;
+                z-index: 9998;
+                padding: 0.14rem;
+                border-radius: 50%;
+                background-color: #fff;
             }
         }
 

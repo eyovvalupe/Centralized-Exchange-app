@@ -4,7 +4,8 @@
         <Loaidng :pageLoading="pageLoading" v-if="pageLoading" />
         <KycStatus @next="nextStep" :kycInfo="kycInfo" v-if="step == 0" />
         <Kyc1 @next="nextStep" :kycInfo="kycInfo" v-if="step == 1" />
-        <Kyc2 @pre="preStep" :kycInfo="kycInfo" v-if="step == 2" />
+        <Kyc2 @pre="preStep" @info="step = 3" :kycInfo="kycInfo" v-if="step == 2" />
+        <KycTip @back="step = 2" v-if="step == 3" />
     </div>
 </template>
 
@@ -57,6 +58,9 @@ const Kyc2 = defineAsyncComponent(() =>
 );
 const KycStatus = defineAsyncComponent(() =>
     import("./KycStatus.vue")
+);
+const KycTip = defineAsyncComponent(() =>
+    import("./KycTip.vue")
 );
 
 onBeforeUnmount(() => {
