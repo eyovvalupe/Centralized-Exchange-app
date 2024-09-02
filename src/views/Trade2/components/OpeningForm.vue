@@ -585,15 +585,15 @@ const closeFee = ref(0) // 平仓手续费
 const flowerFee = ref(0) // 印花税
 const configLoading = ref(false)
 const getParam = () => {
-    configLoading.value = true
+    // configLoading.value = true
     paramHandle()
-    _stocksPara().then(res => {
-        if (res && res.data) {
-            paramHandle(res.data)
-        }
-    }).finally(() => {
-        configLoading.value = false
-    })
+    // _stocksPara().then(res => {
+    //     if (res && res.data) {
+    //         paramHandle(res.data)
+    //     }
+    // }).finally(() => {
+    //     configLoading.value = false
+    // })
 }
 const paramHandle = data => {
     if (data) {

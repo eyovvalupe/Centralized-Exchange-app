@@ -237,15 +237,18 @@ const openSafePass = () => {
     if (balance.value < form.value.amount) {
         return showToast('余额不足')
     }
+    if (form.value.from == form.value.to && form.value.fromCurrency.currency == form.value.toCurrency.currency) {
+        return showToast('同一账户无法划转')
+    }
     safeRef.value.open()
 }
 const submit = s => {
     const params = {
         // ...form.value,
         account_from: form.value.from,
-        from: form.value.fromCurrency.key,
+        from: form.value.fromCurrency.currency,
         account_to: form.value.to,
-        to: form.value.toCurrency.key,
+        to: form.value.toCurrency.currency,
         amount: form.value.amount,
         safeword: s,
         token: sessionToken.value

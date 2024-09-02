@@ -554,55 +554,55 @@ const getData = () => {
 
 const getStockslist = () => {
   //交易参数
-  _stocksPara({
-  })
-    .then((res) => {
-      if (res.code == 200 && res.data) {
-        //杠杆参数
-        const str = res.data.lever;
-        const lever = str.split(',')
-        const levernum = lever.map((num, index) => {
-          return {
-            text: `${num}x`,
-            value: `${num}`
-          };
-        });
-        option2.value = levernum
-        store.commit('setOption2', levernum)
-        store.commit('setSelectedLeverOption', levernum[0].value)
+  // _stocksPara({
+  // })
+  //   .then((res) => {
+  //     if (res.code == 200 && res.data) {
+  //       //杠杆参数
+  //       const str = res.data.lever;
+  //       const lever = str.split(',')
+  //       const levernum = lever.map((num, index) => {
+  //         return {
+  //           text: `${num}x`,
+  //           value: `${num}`
+  //         };
+  //       });
+  //       option2.value = levernum
+  //       store.commit('setOption2', levernum)
+  //       store.commit('setSelectedLeverOption', levernum[0].value)
 
-        //volume 最低数量 和倍数增加的处理
-        const volume = res.data.volume.split(',')
-        minOrder.value = new Decimal(volume[0]);
-        increment.value = new Decimal(volume[1]);
+  //       //volume 最低数量 和倍数增加的处理
+  //       const volume = res.data.volume.split(',')
+  //       minOrder.value = new Decimal(volume[0]);
+  //       increment.value = new Decimal(volume[1]);
 
 
-        store.commit('setMinOrder', minOrder.value)
+  //       store.commit('setMinOrder', minOrder.value)
 
-        if (roundedQuantity.value == 0) {
-          numValue.value = ''
-          sliderValue.value = 0
-        } else if (currentNumber.value > minOrder.value) {
-          numValue.value = currentNumber.value
-          getslide()
-        } else if (currentNumber.value < minOrder.value) {
-          numValue.value = minOrder.value
-          getslide()
-        }
+  //       if (roundedQuantity.value == 0) {
+  //         numValue.value = ''
+  //         sliderValue.value = 0
+  //       } else if (currentNumber.value > minOrder.value) {
+  //         numValue.value = currentNumber.value
+  //         getslide()
+  //       } else if (currentNumber.value < minOrder.value) {
+  //         numValue.value = minOrder.value
+  //         getslide()
+  //       }
 
-        //手续费
-        const fee = res.data.fee.split(',')
-        ofee.value = new Decimal(fee[0]).plus(new Decimal(fee[2]))
-        cfee.value = new Decimal(fee[1])
+  //       //手续费
+  //       const fee = res.data.fee.split(',')
+  //       ofee.value = new Decimal(fee[0]).plus(new Decimal(fee[2]))
+  //       cfee.value = new Decimal(fee[1])
 
-        //开仓手续费  数量*手续费
-        openfee.value = numValue.value ? new Decimal(numValue.value).mul(ofee.value).toFixed(2) : 0;
-        //平仓手续费
-        closefee.value = numValue.value ? new Decimal(cfee.value).mul(numValue.value).toFixed(2) : 0;
+  //       //开仓手续费  数量*手续费
+  //       openfee.value = numValue.value ? new Decimal(numValue.value).mul(ofee.value).toFixed(2) : 0;
+  //       //平仓手续费
+  //       closefee.value = numValue.value ? new Decimal(cfee.value).mul(numValue.value).toFixed(2) : 0;
 
-        // emit('already');
-      }
-    })
+  //       // emit('already');
+  //     }
+  //   })
 
 }
 
