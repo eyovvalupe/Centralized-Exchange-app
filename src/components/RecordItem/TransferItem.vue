@@ -3,15 +3,21 @@
     <div class="transfer_item">
         <div class="left">
             <div class="item_title">
-                <span>{{ _accountMap[item.from] || '未知' }}</span>
+                <div class="item_box">
+                    <span>{{ _accountMap[item.account_from] || '未知' }}</span>
+                    <span>{{ item.amount_from }} {{ item.from }}</span>
+                </div>
                 <div class="icon_box">
                     <img src="/static/img/account/to.png" alt="to">
                 </div>
-                <span>{{ _accountMap[item.to] || '未知' }}</span>
+                <div class="item_box">
+                    <span>{{ _accountMap[item.account_to] || '未知' }}</span>
+                    <span>{{ item.amountt_to }} {{ item.to }}</span>
+                </div>
             </div>
             <div class="time">{{ item.created }}</div>
         </div>
-        <div class="right">{{ item.amount }}</div>
+        <!-- <div class="right">{{ item.amount }}</div> -->
     </div>
 </template>
 
@@ -42,10 +48,18 @@ const props = defineProps({
             font-weight: 0.28rem;
             font-weight: 600;
 
+            .item_box {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                line-height: 0.5rem;
+            }
+
             .icon_box {
                 width: 0.4rem;
                 height: 0.4rem;
-                margin: 0 0.24rem;
+                margin: 0 0.32rem;
             }
         }
 

@@ -129,12 +129,6 @@ Promise.all([
 
 // 总资产
 const assets = computed(() => store.state.assets || {})
-const getAssets = () => {
-  if (!token.value) return
-  store.dispatch('updateAssets')
-  store.dispatch('updateWallet')
-}
-getAssets()
 
 
 const ipoRef = ref()

@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : assets.ipo }}</span>
+                <span>{{ hidden ? '****' : (assets.ipo || '0') }}</span>
             </div>
         </div>
 

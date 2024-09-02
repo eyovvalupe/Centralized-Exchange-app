@@ -176,7 +176,6 @@ import { _hiddenAccount } from "@/utils/index"
 import RecordList from "@/components/RecordList.vue"
 import AccountCheck from "@/components/AccountCheck.vue"
 
-store.dispatch('updateWallet') // 更新钱包
 const RecordListRef = ref()
 
 const focus = ref(false)

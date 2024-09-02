@@ -25,7 +25,7 @@
                     </div>
                     <div class="item_content" @click="openDialog('from')">
                         <span>{{ _accountMap[form.from] }}</span>
-                        <span class="monty_span" v-if="form.from == 'money'">main</span>
+                        <span class="monty_span">{{ form.fromCurrency.name || '' }}</span>
                     </div>
                     <div style="flex:1"></div>
                     <div class="more" @click="openDialog('from')">
@@ -34,7 +34,8 @@
                 </div>
 
                 <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
-                    <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
+                    <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span>
+                    </div>
                     <input @focus="focus = true" @blur="errStatus = focus = false" v-model="form.amount" type="number"
                         :placeholder="``" class="ipt">
                     <div class="btn" @click="maxIpt">全部</div>
@@ -54,12 +55,12 @@
             <div class="item_box">
                 <div class="item account_item">
                     <div class="account_item_icon">
-                        <img v-if="form.to == 'money'" src="/static/img/crypto/MAIN.png" alt="icon">
+                        <img v-if="form.to == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
                         <img v-else :src="`/static/img/crypto/${form.to.toUpperCase()}.svg`" alt="img">
                     </div>
                     <div class="item_content" @click="openDialog('to')">
                         <span>{{ _accountMap[form.to] }}</span>
-                        <span class="monty_span" v-if="form.to == 'money'">main</span>
+                        <span class="monty_span">{{ form.toCurrency.name || '' }}</span>
                     </div>
                     <div style="flex:1"></div>
                     <div class="more" @click="openDialog('to')">
@@ -68,75 +69,159 @@
                 </div>
 
                 <div class="item ipt_item" style="background-color: #f5f5f5">
-                    <div class="ipt">{{ form.amount || '--' }}</div>
+                    <div class="ipt" v-show="formType == 'transfer'">{{ form.amount || '--' }}</div>
+                    <div class="ipt" v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}
+                    </div>
                 </div>
             </div>
+
+            <div v-if="formType == 'swap'" style="margin-top:0.16rem;font-size: 0.24rem;color:#999;text-align: right;">
+                汇率：{{ rateLoading ? '--' : rate
+                }}</div>
 
         </div>
 
         <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
-
-        <!-- 账户选择弹窗 -->
-        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-            v-model:show="showDialog" position="bottom" teleport="body">
-            <div class="transfer_accounr_dialog">
-                <div class="close_icon" @click="showDialog = false">
-                    <img src="/static/img/common/close.png" alt="x">
-                </div>
-                <div @click="clickItem(item)" class="transfer_dialog_item"
-                    :class="{ 'transfer_dialog_item_active': (clickKey == 'from' ? (form.from == item.key) : (form.to == item.key)) }"
-                    v-for="(item, i) in _accountMapList" :key="i">
-                    <span>{{ item.value }}</span>
-
-                    <Icon v-if="(clickKey == 'from' ? (form.from == item.key) : (form.to == item.key))"
-                        class="check_icon" name="success" />
-                </div>
-            </div>
-        </Popup>
 
         <!-- 充提记录 -->
         <RecordList ref="RecordListRef" />
 
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef" />
+
+        <!-- 账户和币种 -->
+        <Popup v-model:show="showPicker" round position="bottom">
+            <Picker :swipe-duration="300" :columns="columns" :columns-field-names="customFieldName"
+                @cancel="showPicker = false" @confirm="onConfirm" />
+        </Popup>
     </div>
 </template>
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, Icon, showToast } from "vant"
+import { Button, Popup, showToast, Picker } from "vant"
 import { ref, computed } from "vue"
 import { _accountMap, _accountMapList } from "@/utils/dataMap"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
-import { _transfer } from "@/api/api"
+import { _transfer, _swapRate } from "@/api/api"
 import RecordList from "@/components/RecordList.vue"
 import { useRoute } from "vue-router"
 import router from "@/router"
+import Decimal from 'decimal.js';
+
 
 const route = useRoute()
 const focus = ref(false) // 是否在输入中
+const assets = computed(() => store.state.assets || {})
+const wallet = computed(() => store.state.wallet || []) // 钱包
+const elseWallet = computed(() => store.state.elseWallet || []) // 其他账户钱包
+const elseCoinMap = computed(() => store.state.elseCoinMap || {}) // 其他账户的币种
 
 // 表单
 const loading = ref(false)
 const form = ref({
     from: route.query.from || 'money',
+    fromCurrency: {},
     to: route.query.to || 'stock',
+    toCurrency: {},
     amount: "",
 })
+const formType = computed(() => { // 币种相同是划转  币种不同是兑换
+    if (form.value.fromCurrency.currency == form.value.toCurrency.currency) return 'transfer'
+    return 'swap'
+})
+// 设置默认货币
+if (wallet.value[0]) {
+    form.value.fromCurrency = wallet.value[0]
+}
+const t1 = elseWallet.value.find(item => item.account == form.value.to)
+if (t1) {
+    form.value.toCurrency = t1
+}
+setTimeout(() => {
+    if (formType.value == 'swap') {
+        getRate()
+    }
+}, 0)
 const maxIpt = () => {
     form.value.amount = balance.value
 }
 
-store.dispatch('updateWallet') // 更新资产
-const assets = computed(() => store.state.assets || {})
-const wallet = computed(() => store.state.wallet || []) // 钱包
-const balance = computed(() => {
-    let key = form.value.from
-    if (key == 'money') key = 'main'
-    const target = wallet.value.find(item => item.currency == key)
-    if (target) return target.amount
-    return 0
+
+
+// 账户选择
+const showPicker = ref(false)
+const clickKey = ref('from') // 从哪里点开弹窗
+const openDialog = val => {
+    clickKey.value = val
+    showPicker.value = true
+}
+const columns = computed(() => {
+    return _accountMapList.map(item => {
+        if (item.key == 'money') { // 现金账户
+            item.currencys = wallet.value.map(w => {
+                return {
+                    key: w.currency,
+                    currency: w.currency,
+                    value: w.name,
+                    name: w.name,
+                    disabled: clickKey.value == 'from' ? (w.currency == form.value.fromCurrency.currency) : (w.currency == form.value.toCurrency.currency)
+                }
+            })
+        } else { // 其他账户
+            item.disabled = clickKey.value == 'from' ? (form.value.from == item.key) : (form.value.to == item.key)
+            const target = elseWallet.value.find(a => a.account == item.key)
+            if (target) {
+                item.currencys = [{
+                    key: target.currency,
+                    value: target.name,
+                    currency: target.currency,
+                    name: target.name
+                }]
+            } else {
+                item.currencys = [{
+                    key: '',
+                    value: '',
+                    currency: '',
+                    name: ''
+                }]
+            }
+        }
+        return item
+    })
+})
+
+const customFieldName = {
+    text: 'value',
+    value: 'key',
+    children: 'currencys'
+}
+const onConfirm = ({ selectedOptions }) => {
+    if (clickKey.value == 'from') {
+        form.value.from = selectedOptions[0].key
+        form.value.fromCurrency = selectedOptions[1]
+    } else {
+        form.value.to = selectedOptions[0].key
+        form.value.toCurrency = selectedOptions[1]
+    }
+    showPicker.value = false
+    setTimeout(() => {
+        if (formType.value == 'swap') {
+            getRate()
+        }
+    }, 0)
+}
+
+
+const balance = computed(() => { // 余额
+    if (form.value.from == 'money') {  // 转出
+        const w = wallet.value.find(item => item.currency == form.value.fromCurrency.key)
+        return w ? w.amount : 0
+    } else { // 转入
+        const w = elseWallet.value.find(item => item.account == form.value.from)
+        return w ? w.amount : 0
+    }
 })
 
 
@@ -156,7 +241,12 @@ const openSafePass = () => {
 }
 const submit = s => {
     const params = {
-        ...form.value,
+        // ...form.value,
+        account_from: form.value.from,
+        from: form.value.fromCurrency.key,
+        account_to: form.value.to,
+        to: form.value.toCurrency.key,
+        amount: form.value.amount,
         safeword: s,
         token: sessionToken.value
     }
@@ -191,31 +281,15 @@ const transAccount = () => {
     const to = form.value.to
     form.value.to = form.value.from
     form.value.from = to
-}
-const showDialog = ref(false)
-const clickKey = ref('from') // 从哪里点开弹窗
-const openDialog = key => {
-    clickKey.value = key
-    showDialog.value = true
-}
-const clickItem = item => { // 选择账户
-    if (clickKey.value == 'from') {
-        if (item.key == form.value.to) {
-            form.value.to = form.value.from
-            goTransing()
+    const currency = form.value.toCurrency
+    form.value.toCurrency = form.value.fromCurrency
+    form.value.fromCurrency = currency
+    setTimeout(() => {
+        if (formType.value == 'swap') {
+            getRate()
         }
-        form.value.from = item.key
-    } else if (clickKey.value == 'to') {
-        if (item.key == form.value.from) {
-            form.value.from = form.value.to
-            goTransing()
-        }
-        form.value.to = item.key
-    }
-    showDialog.value = false
+    }, 0)
 }
-
-
 
 
 // sessionToken
@@ -228,6 +302,23 @@ const getSessionToken = () => {
 }
 getSessionToken()
 
+
+const rate = ref(0)
+const rateLoading = ref(false)
+const getRate = () => { // 获取汇率
+    rateLoading.value = true
+    _swapRate({
+        from: form.value.fromCurrency.currency,
+        to: form.value.toCurrency.currency,
+        amount: 0
+    }).then(res => {
+        if (res.code == 200) {
+            rate.value = res.data.exchange_rate
+        }
+    }).finally(() => {
+        rateLoading.value = false
+    })
+}
 
 
 // 跳转记录
@@ -374,7 +465,7 @@ const goRecord = () => {
 
         .account_item {
             height: 100% !important;
-            flex: 4;
+            flex: 4.5;
             margin-right: 0.2rem;
 
             .account_item_icon {

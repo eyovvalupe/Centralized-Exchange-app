@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : new Decimal(assets.stock).add(assets.stockvalue) }}</span>
+                <span>{{ hidden ? '****' : new Decimal(assets.stock).add(assets.stock_value) }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
@@ -25,7 +25,7 @@
 
                         <div class="hint" v-if="loanNum">{{ loanNum }}</div>
                     </div>
-                    <div class="num">{{ hidden ? '***' : assets.stockvalue }}</div>
+                    <div class="num">{{ hidden ? '***' : assets.stock_value }}</div>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@ import store from "@/store"
 import Decimal from 'decimal.js';
 import { _loanPara } from '@/api/api'
 
-store.dispatch('updateOrderHint')
+// store.dispatch('updateOrderHint')
 
 const hidden = ref(false)
 const assets = computed(() => store.state.assets || {})
@@ -87,12 +87,12 @@ try {
     lever.value = JSON.parse(sessionStorage.getItem('lever') || '[]')
 } catch { }
 const getConfig = () => {
-    _loanPara().then(res => {
-        if (res.code == 200) {
-            lever.value = res.data.lever.split(',')
-            sessionStorage.setItem('lever', JSON.stringify(lever.value))
-        }
-    })
+    // _loanPara().then(res => {
+    //     if (res.code == 200) {
+    //         lever.value = res.data.lever.split(',')
+    //         sessionStorage.setItem('lever', JSON.stringify(lever.value))
+    //     }
+    // })
 }
 getConfig()
 </script>

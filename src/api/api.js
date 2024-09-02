@@ -261,6 +261,12 @@ export const _balance = (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+// 现金账户支持的货币
+export const _walletCurrency = (data = {}) => {
+  return http.post(`/anon/v1/wallet/currency`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
 // 充值记录
 export const _depositList = (data = {}) => {
   return http.post(`/authc/v1/wallet/deposit/list`, data, {
@@ -379,6 +385,18 @@ export const _withdrawList = (data = {}) => {
 export const _cryptoCoin = (data = {}) => {
   return http.post(`/authc/v1/wallet/crypto/coin`, data, {
     custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 现金账户支持的货币
+export const _currency = (data = {}) => {
+  return http.post(`/authc/v1/account/balance`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
+// 现金账户支持的货币
+export const _currency2 = (data = {}) => {
+  return http.post(`/anon/v1/account/currency`, data, {
+    custom: { auth: false, toast: false, retry: true },
   });
 };
 // 获取充值地址

@@ -1,13 +1,15 @@
 // 市场
-import { _assets, _balance, _accountHint } from "@/api/api"
+import { _assets, _balance, _accountHint, _currency, _walletCurrency } from "@/api/api"
 export default {
     state: {
         assets: {}, // 总资产
         wallet: [], // 现金钱包
+        elseWallet: [], // 其他账户钱包
+        currencyList: [], // 币种列表
         rechargeAmount: '', // 充值金额
         hintNum: 0, // 待处理的订单笔数
         loanNum: 0, // 借贷重的订单数
-        coinMap: {}, // 币种
+        coinMap: {}, // 币种 网络 map
     },
     mutations: {
         setAssets(state, data) {
@@ -15,6 +17,12 @@ export default {
         },
         setWallet(state, data) {
             state.wallet = data;
+        },
+        setElseWallet(state, data) {
+            state.elseWallet = data;
+        },
+        setCurrencyList(state, data) {
+            state.currencyList = data;
         },
         setRechargeAmount(state, data) {
             state.rechargeAmount = data;
@@ -47,18 +55,26 @@ export default {
         },
         updateWallet({ commit }) {
             // 更新钱包
-            return new Promise((resolve) => {
-                _balance()
-                    .then((res) => {
-                        if (res.code == 200 && res.data) {
-                            commit("setWallet", res.data || []);
-                            resolve(res.data);
-                        } else {
-                            resolve(false);
-                        }
-                    })
-                    .catch(() => resolve(false));
-            });
+            _balance() // 现金账户
+                .then((res) => {
+                    if (res.code == 200 && res.data) {
+                        commit("setWallet", res.data || []);
+                    }
+                })
+            _currency() // 其他账户
+                .then((res) => {
+                    if (res.code == 200 && res.data) {
+                        commit("setElseWallet", res.data || []);
+                    }
+                })
+        },
+        updateCurrency({ commit }) {
+            // 获取账户对应货币 其它账户对应货币
+            _walletCurrency().then(res => {
+                if (res.code == 200 && res.data) {
+                    commit("setCurrencyList", res.data || {});
+                }
+            })
         },
         updateOrderHint({ commit }) {
             // 更新待处理订单笔数

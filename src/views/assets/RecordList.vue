@@ -46,7 +46,8 @@
             <NoData v-if="!loading && !list.length" />
             <template v-if="active == 3">
                 <div v-for="(item, i) in list" :key="i">
-                    <SwapItem :item="item" />
+                    <!-- <SwapItem :item="item" /> -->
+                    <TransferItem :item="item" />
                 </div>
             </template>
             <LoadingMore class="active_more" :loading="loading" :finish="finish"
@@ -80,7 +81,8 @@ const reqs = {
     0: _depositList,
     1: _withdrawList,
     2: _transferLog,
-    3: _converterLog,
+    // 3: _converterLog,
+    3: _transferLog
 }
 
 // 初始化

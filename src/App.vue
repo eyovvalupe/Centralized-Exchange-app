@@ -45,7 +45,10 @@ const BottomTabBar = defineAsyncComponent(() =>
 const token = computed(() => store.state.token)
 if (token.value) { // 更新用户信息
   store.dispatch('updateUserInfo')
+  store.dispatch('updateAssets')
+  store.dispatch('updateWallet')
 }
+store.dispatch('updateCurrency') // 获取币种等配置信息
 
 const fullWindow = computed(() => store.state.fullscreen) // 全屏状态
 store.commit('setFullscreen', false)

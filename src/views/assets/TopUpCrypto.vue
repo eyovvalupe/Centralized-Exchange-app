@@ -211,19 +211,19 @@ const clickNetItem = item => {
 }
 // initNetwork()
 const getCoinNet = () => {
-    showLoadingToast({
-        duration: 0,
-        loadingType: 'spinner',
-    })
-    _cryptoCoin().then(res => {
-        networkMapList.value = res.data || {}
-        const k = Object.keys(networkMapList.value)[0]
-        if (k) {
-            clickItem(k)
-        }
-    }).finally(() => {
-        closeToast();
-    })
+    // showLoadingToast({
+    //     duration: 0,
+    //     loadingType: 'spinner',
+    // })
+    // _cryptoCoin().then(res => {
+    //     networkMapList.value = res.data || {}
+    //     const k = Object.keys(networkMapList.value)[0]
+    //     if (k) {
+    //         clickItem(k)
+    //     }
+    // }).finally(() => {
+    //     closeToast();
+    // })
 }
 getCoinNet()
 

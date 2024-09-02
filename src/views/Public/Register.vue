@@ -286,6 +286,8 @@ const submit = async () => {
         }, 100)
         setTimeout(() => {
           store.dispatch('updateUserInfo')
+          store.dispatch('updateAssets')
+          store.dispatch('updateWallet')
           step.value = 3
         }, 300)
       }, 2000)

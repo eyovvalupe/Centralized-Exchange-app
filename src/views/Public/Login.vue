@@ -195,6 +195,8 @@ const submit = () => {
       }, 100)
       setTimeout(() => {
         store.dispatch('updateUserInfo')
+        store.dispatch('updateAssets')
+        store.dispatch('updateWallet')
         if (route.query.reurl) {
           router.replace({
             name: route.query.reurl,

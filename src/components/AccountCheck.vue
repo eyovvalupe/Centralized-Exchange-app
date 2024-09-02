@@ -95,7 +95,7 @@ import { ref, computed } from "vue"
 import store from '@/store';
 import router from '@/router';
 
-store.dispatch("updateOrderHint")
+// store.dispatch("updateOrderHint")
 const userInfo = computed(() => store.state.userInfo || {})
 const loanNum = computed(() => store.state.loanNum || 0)
 

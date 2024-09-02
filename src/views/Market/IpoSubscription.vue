@@ -105,7 +105,6 @@ import Decimal from 'decimal.js';
 import router from '@/router'
 
 
-store.dispatch('updateWallet')
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
 const lever = ref(10)
 

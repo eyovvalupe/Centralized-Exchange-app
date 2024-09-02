@@ -23,7 +23,7 @@
                         <div class="currency_icon">
                             <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
                         </div>
-                        <span>{{ form.from.toUpperCase() }}</span>
+                        <span>{{ form.fromName }}</span>
                     </div>
                     <div class="more">
                         <img src="/static/img/assets/more.png" alt="more">
@@ -54,7 +54,7 @@
                         <div class="currency_icon">
                             <img :src="`/static/img/crypto/${form.to.toUpperCase()}.png`" alt="currency">
                         </div>
-                        <span>{{ form.to.toUpperCase() }}</span>
+                        <span>{{ form.toName }}</span>
                     </div>
                     <div class="more">
                         <img src="/static/img/assets/more.png" alt="more">
@@ -98,7 +98,7 @@
                     <div class="icon">
                         <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
                     </div>
-                    <span>{{ item.currency.toUpperCase() }}</span>
+                    <span>{{ item.name }}</span>
 
                     <Icon v-if="(clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency))"
                         class="check_icon" name="success" />
@@ -154,10 +154,7 @@ import { useRoute } from "vue-router"
 const focus = ref(false)
 const route = useRoute()
 
-store.dispatch('updateWallet')
-const wallet = computed(() => {
-    return store.state.wallet.filter(item => !['stock', 'contract'].includes(item.currency)) || []
-})
+const wallet = computed(() => store.state.wallet || [])
 const balance = computed(() => { // main钱包余额
     let b = 0
     const main = wallet.value.find(item => item.currency == form.value.from)
@@ -168,10 +165,11 @@ const balance = computed(() => { // main钱包余额
 // 表单
 const loading = ref(false)
 const form = ref({
-    from: 'main',
-    to: 'USDT',
+    from: wallet.value[0] ? wallet.value[0].currency : '--',
+    fromName: wallet.value[0] ? wallet.value[0].name : '--',
+    to: wallet.value[1] ? wallet.value[1].currency : '--',
+    toName: wallet.value[1] ? wallet.value[1].name : '--',
     amount: "",
-    toAmount: "",
 })
 const maxIpt = () => {
     form.value.amount = balance.value
@@ -194,9 +192,9 @@ const openSafePass = () => {
         errStatus.value = true
         return showToast('请输入金额')
     }
-    if (balance.value < form.value.amount) {
-        return showToast('余额不足')
-    }
+    // if (balance.value < form.value.amount) {
+    //     return showToast('余额不足')
+    // }
     safeRef.value.open()
 }
 const submit = s => {
@@ -234,7 +232,8 @@ const getRate = () => {
     if (interval) clearInterval(interval)
     timeDown.value = 10
     _swapRate({
-        ...form.value,
+        from: form.value.from,
+        to: form.value.to,
         amount: form.value.amount || 0
     }).then(res => {
         if (res.code == 200) {
@@ -287,18 +286,14 @@ const clickItem = item => { // 选择账户
             goTransing()
         }
         form.value.from = item.currency
-        if (form.value.from != 'main' && form.value.to != 'main') {
-            form.value.to = 'main'
-        }
+        form.value.fromName = item.name
     } else if (clickKey.value == 'to') {
         if (item.currency == form.value.from) {
             form.value.from = form.value.to
             goTransing()
         }
         form.value.to = item.currency
-        if (form.value.from != 'main' && form.value.to != 'main') {
-            form.value.from = 'main'
-        }
+        form.value.toName = item.name
     }
     showDialog.value = false
     setTimeout(() => {

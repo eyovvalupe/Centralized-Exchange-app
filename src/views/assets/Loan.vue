@@ -174,7 +174,6 @@ import Decimal from 'decimal.js';
 import SafePassword from "@/components/SafePassword.vue"
 import router from "@/router"
 
-store.dispatch('updateWallet')
 
 const focus = ref(false)
 const loading = ref(false)

@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '****' : (assets.contract || '0') }}</span>
+                <span>{{ hidden ? '****' : (assets.futures_value || '0') }}</span>
             </div>
         </div>
 

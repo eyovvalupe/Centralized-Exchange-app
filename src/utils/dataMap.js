@@ -5,12 +5,14 @@
 export const _accountMap = {
   "money": "现金账户",
   "stock": "股票账户",
-  "contract": "合约账户",
+  "futures": "合约账户",
+  "forex": "外汇账户",
 };
 export const _accountMapList = [
   { key: "money", value: "现金账户" },
   { key: "stock", value: "股票账户" },
-  { key: "contract", value: "合约账户" },
+  { key: "futures", value: "合约账户" },
+  { key: "forex", value: "外汇账户" },
 ]
 
 

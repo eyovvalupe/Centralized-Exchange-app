@@ -113,9 +113,9 @@ initNetwork()
 const currencyMapList = computed(() => {
     return Object.keys(coinMap.value) || []
 })
-_cryptoCoin().then(res => {
-    store.commit('setCoinMap', res.data || {})
-})
+// _cryptoCoin().then(res => {
+//     store.commit('setCoinMap', res.data || {})
+// })
 
 
 // 提交

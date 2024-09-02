@@ -122,9 +122,6 @@ import NoData from "@/components/NoData.vue"
 
 const openTab = ref(false)
 const token = computed(() => store.state.token)
-if (token.value) {
-    store.dispatch('updateWallet')
-}
 
 // 下拉刷新
 const disabled = ref(false)

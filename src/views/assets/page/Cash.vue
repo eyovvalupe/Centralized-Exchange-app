@@ -34,7 +34,7 @@
                 <div class="line"></div>
                 <div class="nav">
                     <div>冻结 </div>
-                    <div class="num" style="margin-left:0.1rem">{{ hidden ? '****' : (assets.frozen || '0.00') }}</div>
+                    <div class="num" style="margin-left:0.1rem">{{ hidden ? '****' : '--' }}</div>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
                     </div>
                     <div>
                         <span class="tip">冻结</span>
-                        <span>{{ (assets.frozen || '0.00') }}</span>
+                        <span>{{ '--' }}</span>
                     </div>
 
                     <div class="process">
@@ -91,10 +91,10 @@
             </div>
             <div class=" tab" @click="switchOpen(i, $event)" v-for="(item, i) in showList" :key="i">
                 <div class="tab_icon">
-                    <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="img">
+                    <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="img">
                 </div>
                 <div :class="{ 'open_tab': switchs[i] == true }">
-                    <div>{{ item.currency }}</div>
+                    <div>{{ item.name }}</div>
                 </div>
                 <div class="amount" :class="{ 'open_amount': switchs[i] == true }">{{ item.amount }}</div>
                 <div class="more" :class="{ 'open_tab': switchs[i] == true }">
@@ -146,7 +146,7 @@ const getAssets = () => {
     store.dispatch('updateWallet').finally(() => {
         emits('setLoading', false)
     })
-    store.dispatch('updateOrderHint')
+    // store.dispatch('updateOrderHint')
 }
 const show0 = ref(false) // 是否隐藏余额为0的钱包
 const coinMap = computed(() => store.state.coinMap || {})
@@ -168,9 +168,9 @@ const showList = computed(() => {
     if (show0.value) return arr.filter(item => item.amount)
     return arr
 })
-_cryptoCoin().then(res => {
-    store.commit('setCoinMap', res.data || {})
-})
+// _cryptoCoin().then(res => {
+//     store.commit('setCoinMap', res.data || {})
+// })
 
 
 // 展开状态
