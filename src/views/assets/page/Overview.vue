@@ -16,25 +16,15 @@
             <div class="navs">
                 <div class="nav">
                     <div>
-                        <span>现金</span>
-                        <span class="num" style="margin-left:0.15rem">{{ hidden ? '****' : (assets.money || '0')
-                            }}</span>
-                    </div>
-                    <div>
-                        <span>冻结</span>
-                        <span class="num" style="margin-left:0.15rem">{{ hidden ? '****' : ('--')
-                            }}</span>
+                        <span>现金账户合计</span>
+                        <div class="num">{{ hidden ? '****' : (assets.money || '0')
+                            }}</div>
                     </div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
                     <div>持仓金额</div>
                     <div class="num">{{ hidden ? '****' : (assets.ordervalue || '0') }}</div>
-                </div>
-                <div class="line"></div>
-                <div class="nav">
-                    <div>借贷</div>
-                    <div class="num">{{ hidden ? '****' : ('--') }}</div>
                 </div>
             </div>
         </div>
@@ -108,9 +98,9 @@
         <!-- 列表 -->
         <div class="tabs">
             <div ref="tab1" :key="1" class=" tab" @click="rightSwitch1 = !rightSwitch1">
-                <!-- <div class="tab_icon">
+                <div class="tab_icon">
                     <img src="/static/img/assets/cash_icon.svg" alt="img">
-                </div> -->
+                </div>
                 <div :class="{ 'open_tab': rightSwitch1 == true }">
                     <div>现金账户</div>
                     <!-- <div class="tab_info">现金账户币种合计</div> -->
@@ -149,9 +139,9 @@
                 </div>
             </div>
             <div ref="tab2" :key="2" class=" tab" @click="rightSwitch2 = !rightSwitch2">
-                <!-- <div class="tab_icon">
+                <div class="tab_icon">
                     <img src="/static/img/assets/stock_icon.svg" alt="img">
-                </div> -->
+                </div>
                 <div :class="{ 'open_tab': rightSwitch2 == true }">
                     <div>股票</div>
                     <!-- <div class="tab_info">股票账户余额+持仓金额</div> -->
@@ -179,9 +169,9 @@
                 </div>
             </div>
             <div ref="tab3" :key="3" class=" tab" @click="rightSwitch3 = !rightSwitch3">
-                <!-- <div class="tab_icon">
+                <div class="tab_icon">
                     <img src="/static/img/assets/contract_icon.svg" alt="img">
-                </div> -->
+                </div>
                 <div :class="{ 'open_tab': rightSwitch3 == true }">
                     <div>合约</div>
                     <!-- <div class="tab_info">合约账户余额+持仓金额</div> -->
@@ -208,37 +198,10 @@
                     </div>
                 </div>
             </div>
-            <div ref="tab4" :key="4" class=" tab" @click="rightSwitch4 = !rightSwitch4">
-                <!-- <div class="tab_icon">
-                    <img src="/static/img/assets/ipo_icon.svg" alt="img">
-                </div> -->
-                <div :class="{ 'open_tab': rightSwitch4 == true }">
-                    <div>IPO</div>
-                    <!-- <div class="tab_info">IPO冻结金额</div> -->
-                </div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch4 == true }">{{ (assets.ipo || '0') }}</div>
-                <div class="more" :class="{ 'open_tab': rightSwitch4 == true }">
-                    <img src="/static/img/common/menu.png" alt="img">
-                </div>
-                <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch4 != true }">
-                    <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/money.png" alt="img">
-                        </div>
-                        <div>充值</div>
-                    </div>
-                    <div class="right" style="background-color: #5E5CE6;" @click="jump('withdraw', true)">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/pay.png" alt="img">
-                        </div>
-                        <div>提现</div>
-                    </div>
-                </div>
-            </div>
             <div ref="tab5" :key="5" class=" tab" @click="rightSwitch5 = !rightSwitch5">
-                <!-- <div class="tab_icon">
-                    <img src="/static/img/assets/contract_icon.svg" alt="img">
-                </div> -->
+                <div class="tab_icon">
+                    <img src="/static/img/market/out.svg" alt="img">
+                </div>
                 <div :class="{ 'open_tab': rightSwitch5 == true }">
                     <div>外汇</div>
                     <!-- <div class="tab_info">合约账户余额+持仓金额</div> -->
@@ -251,64 +214,6 @@
                     <img src="/static/img/common/menu.png" alt="img">
                 </div>
                 <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch5 != true }">
-                    <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/money.png" alt="img">
-                        </div>
-                        <div>充值</div>
-                    </div>
-                    <div class="right" style="background-color: #5E5CE6;" @click="jump('withdraw', true)">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/pay.png" alt="img">
-                        </div>
-                        <div>提现</div>
-                    </div>
-                </div>
-            </div>
-            <div ref="tab6" :key="6" class=" tab" @click="rightSwitch6 = !rightSwitch6">
-                <!-- <div class="tab_icon">
-                    <img src="/static/img/assets/contract_icon.svg" alt="img">
-                </div> -->
-                <div :class="{ 'open_tab': rightSwitch6 == true }">
-                    <div>AI</div>
-                    <!-- <div class="tab_info">合约账户余额+持仓金额</div> -->
-                </div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch6 == true }">
-                    {{ assets.aiquant_value || '0' }}
-                </div>
-                <div class="more" :class="{ 'open_tab': rightSwitch6 == true }">
-                    <img src="/static/img/common/menu.png" alt="img">
-                </div>
-                <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch6 != true }">
-                    <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/money.png" alt="img">
-                        </div>
-                        <div>充值</div>
-                    </div>
-                    <div class="right" style="background-color: #5E5CE6;" @click="jump('withdraw', true)">
-                        <div class="right_icon">
-                            <img src="/static/img/assets/pay.png" alt="img">
-                        </div>
-                        <div>提现</div>
-                    </div>
-                </div>
-            </div>
-            <div ref="tab7" :key="7" class=" tab" @click="rightSwitch7 = !rightSwitch7">
-                <!-- <div class="tab_icon">
-                    <img src="/static/img/assets/contract_icon.svg" alt="img">
-                </div> -->
-                <div :class="{ 'open_tab': rightSwitch7 == true }">
-                    <div>理财</div>
-                    <!-- <div class="tab_info">合约账户余额+持仓金额</div> -->
-                </div>
-                <div class="amount" :class="{ 'open_amount': rightSwitch7 == true }">
-                    {{ assets.wealth_value || '0' }}
-                </div>
-                <div class="more" :class="{ 'open_tab': rightSwitch7 == true }">
-                    <img src="/static/img/common/menu.png" alt="img">
-                </div>
-                <div class="rights" style="width:2.4rem" :class="{ 'open_tab': rightSwitch7 != true }">
                     <div class="right" style="background-color: #32D74B;" @click="jump('topUp', true)">
                         <div class="right_icon">
                             <img src="/static/img/assets/money.png" alt="img">
@@ -370,24 +275,15 @@ const openRecordPopup = () => {
 const tab1 = ref()
 const tab2 = ref()
 const tab3 = ref()
-const tab4 = ref()
 const tab5 = ref()
-const tab6 = ref()
-const tab7 = ref()
 const rightSwitch1 = ref(false)
 const rightSwitch2 = ref(false)
 const rightSwitch3 = ref(false)
-const rightSwitch4 = ref(false)
 const rightSwitch5 = ref(false)
-const rightSwitch6 = ref(false)
-const rightSwitch7 = ref(false)
 useClickAway(tab1, () => { rightSwitch1.value = false })
 useClickAway(tab2, () => { rightSwitch2.value = false })
 useClickAway(tab3, () => { rightSwitch3.value = false })
-useClickAway(tab4, () => { rightSwitch4.value = false })
 useClickAway(tab5, () => { rightSwitch5.value = false })
-useClickAway(tab6, () => { rightSwitch6.value = false })
-useClickAway(tab7, () => { rightSwitch7.value = false })
 
 
 // 刷新总资产

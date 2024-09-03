@@ -327,8 +327,8 @@ const onSelectForm1Type = (item) => {
 const showPriceTypeDialog = ref(false)
 const priceModeList = computed(() => {
     const list = []
-    list.push({ name: '市价', value: 1, className: priceMode.value == 1 ? 'action-sheet-active' : '', icon: priceMode.value == 1 ? 'success' : '' })
-    list.push({ name: '限价', value: 2, className: priceMode.value == 2 ? 'action-sheet-active' : '', icon: priceMode.value == 2 ? 'success' : '' })
+    list.push({ name: '市价', value: 1, className: priceMode.value == 1 ? 'action-sheet-active' : '' })
+    list.push({ name: '限价', value: 2, className: priceMode.value == 2 ? 'action-sheet-active' : '' })
     return list
 })
 const onSelectForm1PriceType = item => {
@@ -345,7 +345,7 @@ const token = computed(() => store.state.token)
 const modeList = computed(() => {
     const list = []
     for (let key in modeMap.value) {
-        list.push({ name: modeMap.value[key], value: key, className: form1.value.leverType == key ? 'action-sheet-active' : '', icon: form1.value.leverType == key ? 'success' : '' },)
+        list.push({ name: modeMap.value[key], value: key, className: form1.value.leverType == key ? 'action-sheet-active' : '' },)
     }
     return list
 })
@@ -418,14 +418,14 @@ const showDownModelDialog = ref(false)
 const upModeList = computed(() => {
     const list = []
     for (let key in stopMap.value) {
-        list.push({ name: stopMap.value[key], value: key, className: form1.value.stop_profit_type == key ? 'action-sheet-active' : '', icon: form1.value.stop_profit_type == key ? 'success' : '' },)
+        list.push({ name: stopMap.value[key], value: key, className: form1.value.stop_profit_type == key ? 'action-sheet-active' : '' },)
     }
     return list
 })
 const downModeList = computed(() => {
     const list = []
     for (let key in stopMap.value) {
-        list.push({ name: stopMap.value[key], value: key, className: form1.value.stop_loss_type == key ? 'action-sheet-active' : '', icon: form1.value.stop_loss_type == key ? 'success' : '' },)
+        list.push({ name: stopMap.value[key], value: key, className: form1.value.stop_loss_type == key ? 'action-sheet-active' : '' },)
     }
     return list
 })

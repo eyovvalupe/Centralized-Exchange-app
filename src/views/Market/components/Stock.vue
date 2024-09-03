@@ -95,7 +95,6 @@ const actions = computed(() => {
             name: item,
             value: item,
             className: currAs.value == item ? 'action-sheet-active' : '',
-            icon: currAs.value == item ? 'success' : ''
         }
     })
 })

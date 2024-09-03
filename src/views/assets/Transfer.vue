@@ -16,68 +16,111 @@
 
         <!-- 表单 -->
         <div class="form">
-            <div class="subtitle">从</div>
-            <div class="item_box">
-                <div class="item account_item">
-                    <div class="account_item_icon">
-                        <img v-if="form.from == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
-                        <img v-else :src="`/static/img/crypto/${form.from.toUpperCase()}.svg`" alt="img">
-                    </div>
-                    <div class="item_content" @click="openDialog('from')">
-                        <span>{{ _accountMap[form.from] }}</span>
-                        <span class="monty_span">{{ form.fromCurrency.name || '' }}</span>
-                    </div>
-                    <div style="flex:1"></div>
-                    <div class="more" @click="openDialog('from')">
-                        <img src="/static/img/assets/more.png" alt="more">
-                    </div>
-                </div>
 
-                <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
-                    <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span>
-                    </div>
-                    <input @focus="focus = true" @blur="errStatus = focus = false" v-model="form.amount" type="number"
-                        :placeholder="``" class="ipt">
-                    <div class="btn" @click="maxIpt">全部</div>
-                </div>
-            </div>
+            <div style="display: flex;align-items: center;justify-content: space-between;margin-bottom:0.86rem">
 
+                <div style="flex: 1;">
+                    <!-- 从 -->
+                    <div class="item_box" @click="openDialog('from')" style="margin-bottom: 0.32rem;">
+                        <div class="subtitle">从</div>
+                        <div class="item account_item">
+                            <div class="account_item_icon">
+                                <img v-if="form.from == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
+                                <img v-else :src="`/static/img/crypto/${form.from.toUpperCase()}.svg`" alt="img">
+                            </div>
+                            <div class="item_content">
+                                <span>{{ _accountMap[form.from] }}</span>
+                            </div>
+                            <div style="flex:1"></div>
+                            <div class="more">
+                                <img src="/static/img/assets/more.png" alt="more">
+                            </div>
+                        </div>
 
-            <div class="trans">
-                <div class="line"></div>
-                <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-                    <img src="/static/img/assets/transfer.png" alt="img">
-                </div>
-                <div class="line" style="flex:12"></div>
-            </div>
+                        <div class="item account_item">
+                            <div class="account_item_icon">
+                                <img :src="`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.png`" alt="img">
+                            </div>
+                            <div class="item_content">
+                                <span class="monty_span">{{ form.fromCurrency.name || '' }}</span>
+                            </div>
+                            <div style="flex:1"></div>
+                            <div class="more">
+                                <img src="/static/img/assets/more.png" alt="more">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 到 -->
+                    <div class="item_box" @click="openDialog('to')">
+                        <div class="subtitle">到</div>
+                        <div class="item account_item">
+                            <div class="account_item_icon">
+                                <img v-if="form.to == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
+                                <img v-else :src="`/static/img/crypto/${form.to.toUpperCase()}.svg`" alt="img">
+                            </div>
+                            <div class="item_content">
+                                <span>{{ _accountMap[form.to] }}</span>
+                            </div>
+                            <div style="flex:1"></div>
+                            <div class="more">
+                                <img src="/static/img/assets/more.png" alt="more">
+                            </div>
+                        </div>
 
-            <div class="subtitle">到</div>
-            <div class="item_box">
-                <div class="item account_item">
-                    <div class="account_item_icon">
-                        <img v-if="form.to == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
-                        <img v-else :src="`/static/img/crypto/${form.to.toUpperCase()}.svg`" alt="img">
-                    </div>
-                    <div class="item_content" @click="openDialog('to')">
-                        <span>{{ _accountMap[form.to] }}</span>
-                        <span class="monty_span">{{ form.toCurrency.name || '' }}</span>
-                    </div>
-                    <div style="flex:1"></div>
-                    <div class="more" @click="openDialog('to')">
-                        <img src="/static/img/assets/more.png" alt="more">
-                    </div>
-                </div>
+                        <div class="item account_item">
+                            <div class="account_item_icon">
+                                <img :src="`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`" alt="img">
+                            </div>
+                            <div class="item_content">
+                                <span class="monty_span">{{ form.toCurrency.name || '' }}</span>
+                            </div>
+                            <div style="flex:1"></div>
+                            <div class="more">
+                                <img src="/static/img/assets/more.png" alt="more">
+                            </div>
+                        </div>
 
-                <div class="item ipt_item" style="background-color: #f5f5f5">
+                        <!-- <div class="item ipt_item" style="background-color: #f5f5f5">
                     <div class="ipt" v-show="formType == 'transfer'">{{ form.amount || '--' }}</div>
                     <div class="ipt" v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}
                     </div>
+                </div> -->
+                    </div>
+                </div>
+                <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
+                    <img src="/static/img/assets/transfer.png" alt="img">
                 </div>
             </div>
 
-            <div v-if="formType == 'swap'" style="margin-top:0.16rem;font-size: 0.24rem;color:#999;text-align: right;">
+
+            <!-- 输入 -->
+            <div class="subtitle" style="margin-bottom: 0.32rem;">金额</div>
+            <div class="item_box">
+                <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
+                    <!-- <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span>
+                    </div> -->
+                    <input @focus="focus = true" @blur="errStatus = focus = false" v-model="form.amount" type="number"
+                        :placeholder="``" class="ipt">
+                    <div class="btn" @click="maxIpt">全部</div>
+                    <div>{{ form.fromCurrency.name || '' }}</div>
+                </div>
+            </div>
+            <div style="margin-top:0.16rem;font-size: 0.24rem;color:#999;">最大可转：{{ balance }}</div>
+            <!-- <div v-if="formType == 'swap'" style="margin-top:0.16rem;font-size: 0.24rem;color:#999;text-align: right;">
                 汇率：{{ rateLoading ? '--' : rate
-                }}</div>
+                }}</div> -->
+
+            <!-- 信息 -->
+            <div style="margin-top:0.16rem;font-size: 0.24rem;color:#999;text-align: right">入账</div>
+            <div class="right_tip">
+                <span>{{ _accountMap[form.to] }}</span>
+                <span>{{ form.toCurrency.name || '' }}</span>
+                <span v-show="formType == 'transfer'">{{ form.amount || '--' }}</span>
+                <span v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
+            </div>
+            <div class="right_tip" v-if="formType == 'swap'"> 汇率：{{ rateLoading ? '--' : rate
+                }}
+            </div>
 
         </div>
 
@@ -159,6 +202,7 @@ const openDialog = val => {
 }
 const columns = computed(() => {
     return _accountMapList.map(item => {
+        item.className = clickKey.value == 'from' ? (form.value.from == item.key ? 'action-sheet-active' : '') : (form.value.to == item.key ? 'action-sheet-active' : '')
         if (item.key == 'money') { // 现金账户
             item.currencys = wallet.value.map(w => {
                 return {
@@ -166,18 +210,18 @@ const columns = computed(() => {
                     currency: w.currency,
                     value: w.name,
                     name: w.name,
-                    disabled: clickKey.value == 'from' ? (w.currency == form.value.fromCurrency.currency) : (w.currency == form.value.toCurrency.currency)
+                    className: clickKey.value == 'from' ? (form.value.fromCurrency.currency == w.currency ? 'action-sheet-active' : '') : (form.value.toCurrency.currency == w.currency ? 'action-sheet-active' : ''),
                 }
             })
         } else { // 其他账户
-            item.disabled = clickKey.value == 'from' ? (form.value.from == item.key) : (form.value.to == item.key)
             const target = elseWallet.value.find(a => a.account == item.key)
             if (target) {
                 item.currencys = [{
                     key: target.currency,
                     value: target.name,
                     currency: target.currency,
-                    name: target.name
+                    name: target.name,
+                    className: clickKey.value == 'from' ? (form.value.fromCurrency.currency == target.currency ? 'action-sheet-active' : '') : (form.value.toCurrency.currency == target.currency ? 'action-sheet-active' : ''),
                 }]
             } else {
                 item.currencys = [{
@@ -385,7 +429,7 @@ const goRecord = () => {
             font-weight: 400;
 
             &:has(.ipt:focus) {
-                padding-top: 0.3rem;
+                // padding-top: 0.3rem;
                 border: 1px solid #014CFA;
             }
 
@@ -478,41 +522,37 @@ const goRecord = () => {
             }
         }
 
-        .trans {
-            margin: 0.56rem 0 0.26rem 0;
-            padding: 0 0.2rem;
-            display: flex;
-            align-items: center;
+        .trans_icon {
+            width: 0.8rem;
+            height: 0.8rem;
+        }
 
-            .trans_icon {
-                width: 0.8rem;
-                height: 0.8rem;
-                margin: 0 0.48rem;
-            }
+        .transing_icon {
+            transition: all ease .5s;
+            transform: rotate(360deg);
+        }
 
-            .transing_icon {
-                transition: all ease .5s;
-                transform: rotate(360deg);
-            }
-
-            .transing_stop {
-                transition: none;
-                transform: rotate(0deg);
-            }
-
-            .line {
-                flex: 1;
-                height: 1px;
-                background-color: rgba(59, 130, 246, 0.1);
-            }
+        .transing_stop {
+            transition: none;
+            transform: rotate(0deg);
         }
 
         .subtitle {
             font-size: 0.28rem;
             color: #333333;
             font-weight: 400;
-            line-height: 0.36rem;
-            margin: 0.4rem 0 0.12rem 0;
+            line-height: 0;
+            margin: 0 0.2rem 0 0;
+        }
+
+        .right_tip {
+            font-size: 0.24rem;
+            text-align: right;
+            margin-top: 0.2rem;
+
+            span {
+                margin-left: 0.2rem;
+            }
         }
 
         .tip {

@@ -64,10 +64,10 @@ const currAsName = computed(() => {
 })
 const actions = computed(() => {
     return [
-        { name: '股票', value: 'stock', className: currAs.value == 'stock' ? 'action-sheet-active' : '', icon: currAs.value == 'stock' ? 'success' : '' },
-        { name: '合约', value: 'futures', className: currAs.value == 'futures' ? 'action-sheet-active' : '', icon: currAs.value == 'futures' ? 'success' : '' },
-        { name: 'AI量化', value: 'aiquant', className: currAs.value == 'aiquant' ? 'action-sheet-active' : '', icon: currAs.value == 'aiquant' ? 'success' : '' },
-        { name: '外汇', value: 'forex', className: currAs.value == 'forex' ? 'action-sheet-active' : '', icon: currAs.value == 'forex' ? 'success' : '' },
+        { name: '股票', value: 'stock', className: currAs.value == 'stock' ? 'action-sheet-active' : '' },
+        { name: '合约', value: 'futures', className: currAs.value == 'futures' ? 'action-sheet-active' : '' },
+        { name: 'AI量化', value: 'aiquant', className: currAs.value == 'aiquant' ? 'action-sheet-active' : '' },
+        { name: '外汇', value: 'forex', className: currAs.value == 'forex' ? 'action-sheet-active' : '' },
     ]
 })
 const onSelect = item => {

@@ -4,16 +4,18 @@
         v-model:show="show" position="bottom" teleport="body" :close-on-popstate="true" :closeable="props.closeable">
         <!--  :class="{ 'typing_dialog': showKeyboard }" -->
         <div class="safepassword_dialog" :class="{ 'safepassword_dialog_uncloseabled': !props.closeable }">
-            <slot name="top"></slot>
-            <div class="title">输入交易密码</div>
+            <slot name="top">
+            </slot>
+            <div class="main_title">交易密码</div>
+            <div class="title">请输入交易密码</div>
             <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
             <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
             <input type="password" @blur="errStatus = false" :class="{ 'err_ipt': errStatus }" v-model="val"
                 ref="iptDom" class="pass_ipt" enterkeyhint="done" @keydown.enter="submit">
             <div class="btns">
-                <!-- <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
-                        style="color: #014CFA;">取消</span></Button> -->
+                <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
+                        style="color: #014CFA;">取消</span></Button>
                 <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">确定</Button>
             </div>
 
@@ -87,8 +89,16 @@ defineExpose({
     padding: 0.96rem 0.32rem;
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
-
     position: relative;
+
+    .main_title {
+        font-size: 0.32rem;
+        color: #000;
+        position: absolute;
+        top: 0.32rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 
     .btns {
         display: flex;
@@ -99,7 +109,7 @@ defineExpose({
         .btn {
             height: 0.96rem;
             border-radius: 0.96rem;
-            width: 100%;
+            width: 48%;
         }
     }
 
@@ -108,6 +118,7 @@ defineExpose({
         line-height: 0.44rem;
         color: #121826;
         margin-bottom: 0.2rem;
+        margin-top: 0.2rem;
         text-align: left;
     }
 

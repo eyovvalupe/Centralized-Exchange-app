@@ -72,6 +72,19 @@
                     <Contract />
                 </div>
             </Tab>
+            <Tab name="ai">
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ai' }">
+                        <div class="mytab_title_icon" v-show="active != 'ai'">
+                            <img v-show="active != 'ai'" src="/static/img/market/ai.svg" alt="img">
+                        </div>
+                        <span v-show="active == 'ai'">交易机器人</span>
+                    </div>
+                </template>
+                <div class="tab_body">
+
+                </div>
+            </Tab>
             <Tab name="ipo">
                 <template #title>
                     <div class="mytab_title" :class="{ 'mytab_title_active': active == 'ipo' }">
@@ -83,6 +96,19 @@
                 </template>
                 <div class="tab_body">
                     <IPO ref="ipoRef" @setLoading="val => loading = val" v-if="active == 'ipo'" />
+                </div>
+            </Tab>
+            <Tab name="financial">
+                <template #title>
+                    <div class="mytab_title" :class="{ 'mytab_title_active': active == 'financial' }">
+                        <div class="mytab_title_icon" v-show="active != 'financial'">
+                            <img v-show="active != 'financial'" src="/static/img/market/money.svg" alt="img">
+                        </div>
+                        <span v-show="active == 'financial'">理财</span>
+                    </div>
+                </template>
+                <div class="tab_body">
+
                 </div>
             </Tab>
         </Tabs>

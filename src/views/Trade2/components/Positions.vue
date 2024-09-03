@@ -526,14 +526,14 @@ const showDownModelDialog = ref(false)
 const upModeList = computed(() => {
     const list = []
     for (let key in stopMap.value) {
-        list.push({ name: stopMap.value[key], value: key, className: updateForm.value.stop_profit_type == key ? 'action-sheet-active' : '', icon: updateForm.value.stop_profit_type == key ? 'success' : '' },)
+        list.push({ name: stopMap.value[key], value: key, className: updateForm.value.stop_profit_type == key ? 'action-sheet-active' : '' },)
     }
     return list
 })
 const downModeList = computed(() => {
     const list = []
     for (let key in stopMap.value) {
-        list.push({ name: stopMap.value[key], value: key, className: updateForm.value.stop_loss_type == key ? 'action-sheet-active' : '', icon: updateForm.value.stop_loss_type == key ? 'success' : '' },)
+        list.push({ name: stopMap.value[key], value: key, className: updateForm.value.stop_loss_type == key ? 'action-sheet-active' : '' },)
     }
     return list
 })
