@@ -108,7 +108,7 @@ export const _sort = (data = {}) => {
 
 // 订单列表
 export const _stocksList = (data = {}) => {
-  return http.post(`/authc/v1/stocks/list`, data, {
+  return http.post(`/authc/v1/stock/list`, data, {
     custom: { auth: true, toast: true, retry: true },
   })
 };
@@ -150,7 +150,7 @@ export const _updatepw = (data = {}) => {
 
 //开仓
 export const _stocksBuy = (data = {}) => {
-  return http.post(`authc/v1/stocks/buy`, data, {
+  return http.post(`authc/v1/stock/buy`, data, {
     custom: { auth: true, toast: true, retry: false },
   });
 };

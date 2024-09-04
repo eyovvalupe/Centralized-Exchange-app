@@ -396,11 +396,12 @@ const loading = ref(false)
 const subs = () => {
     const socket = startSocket(() => {
         socket && socket.off('user')
-        socket && socket.off('stocksorder')
+        socket && socket.off('stockorder')
         socket && socket.emit('user', token.value)
-        socket && socket.emit('stocksorder', '#all')
+        socket && socket.emit('stockorder', '#all')
         loading.value = true
-        socket.on('stocksorder', res => {
+        socket.on('stockorder', res => {
+            console.error('????', res)
             store.commit('setPositionsList', res.data || [])
             loading.value = false
         })
@@ -410,9 +411,9 @@ const subs = () => {
 const cancelSubs = () => {
     const socket = startSocket(() => {
         socket && socket.off('user')
-        socket && socket.off('stocksorder')
+        socket && socket.off('stockorder')
         socket && socket.emit('user', '')
-        socket && socket.emit('stocksorder', '')
+        socket && socket.emit('stockorder', '')
     })
 }
 

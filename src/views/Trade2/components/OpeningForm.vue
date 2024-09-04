@@ -392,15 +392,15 @@ const modeList = computed(() => {
 })
 
 
-const wallet = computed(() => store.state.wallet || [])
+const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 股票账户余额
-    const target = wallet.value.find(item => item.currency == 'stock')
+    const target = elseWallet.value.find(item => item.account == 'stock')
     if (target) return target.amount
     return 0
 })
 const maxStockNum = computed(() => { // 最大可买 可卖
     if (currStock.value.price) {
-        return new Decimal(stockWalletAmount.value).div(form1.value.price || currStock.value.price).floor()
+        return new Decimal(stockWalletAmount.value).div(form1.value.price || currStock.value.price).mul(form1.value.lever).floor()
     }
     return '--'
 })
@@ -708,7 +708,7 @@ const payAmount = computed(() => { // 需要支付
 })
 const payOrigin = computed(() => { // 保证金
     if (!params.value.volume || !currStock.value.price) return 0
-    return new Decimal(params.value.volume).mul(currStock.value.price)
+    return new Decimal(params.value.volume).mul(currStock.value.price).div(form1.value.lever)
 })
 const payFee = computed(() => { // 手续费
     return new Decimal(payOrigin.value).mul(openFee.value)
