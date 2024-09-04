@@ -2,16 +2,15 @@
 <template>
     <div class="stock_block">
         <!-- 日期 -->
-        <div class="date_box" v-show="active == 2" @click="openDate">
+        <!-- <div class="date_box" v-show="active == 2" @click="openDate">
             <div class="date_icon">
                 <img src="/static/img/trade/time.png" alt="img">
             </div>
-            <!-- <span>日期</span> -->
-        </div>
+        </div> -->
         <Tabs v-if="!pageLoading" class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="onChange">
             <Tab title="开仓" name="0">
-                <Opening ref="OpeningRef" />
+                <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
             </Tab>
             <Tab title="持仓" name="1">
                 <Positions />
@@ -36,6 +35,11 @@ import Positions from "../components/Positions.vue"
 import Inquire from "../components/Inquire.vue"
 import DateArea from "@/components/DateArea.vue"
 
+
+const emits = defineEmits(['showNavDialog'])
+const showNavDialog = () => {
+    emits('showNavDialog')
+}
 
 const active = ref(sessionStorage.getItem('trade_stock_tab') || 0)
 const InquireRef = ref()

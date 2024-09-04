@@ -304,6 +304,7 @@ const more_3 = ref()
 const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 let target = null
 const scrollHandler = () => {
+    if (!target) return
     const rect = target.getBoundingClientRect()
     if (rect.top <= totalHeight) {
         // 加载更多

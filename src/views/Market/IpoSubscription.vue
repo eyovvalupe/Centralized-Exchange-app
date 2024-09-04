@@ -126,7 +126,7 @@ const changeTab = key => {
 
 const maxNum = computed(() => { // 最大值
     const amount = (avtiveTab.value == 2) ? (new Decimal(mainWallet.value.amount).mul(lever.value)) : new Decimal(mainWallet.value.amount)
-    return amount.div(currIpo.value.issue_price_max).floor()
+    return amount.div(currIpo.value.issue_price_max).toNumber()
 })
 
 const form = ref({

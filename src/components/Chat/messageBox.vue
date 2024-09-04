@@ -15,7 +15,7 @@
             </template>
             <van-image v-else class="send-conimg" Lazyload :src="item.content" fit="scale-down">
               <template v-slot:loading>
-                <van-loading type="spinner" size="20" />
+                <Loaidng type="spinner" size="20" />
               </template>
             </van-image>
           </div>
@@ -50,6 +50,7 @@ import { Lazyload, Image as VanImage } from 'vant';
 import { transferTime } from '@/utils'
 import storeChat from "@/store/chat"
 import avatar from '@/assets/avatar.png'
+import Loaidng from "@/components/Loaidng.vue"
 // import avatarMy from '@/assets/avatar-my.png'
 const messageList = computed(() => storeChat.getters.getMessageList)
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
@@ -136,6 +137,7 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
         border-right: 8px solid #f2f2f2;
       }
     }
+
     .send-conimg {
       max-height: 10rem;
       max-width: 10rem;

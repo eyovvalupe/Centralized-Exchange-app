@@ -4,10 +4,10 @@
 
         <!-- 止盈止损 -->
         <template v-if="props.activeTab == 2">
-            <div class="subtitle" style="position: absolute;right: 0.32rem;">
+            <!-- <div class="subtitle" style="position: absolute;right: 0.32rem;">
                 <span></span>
                 <span style="color:#014CFA" @click="changeMode">{{ mode == 1 ? '复杂模式' : '简单模式' }}</span>
-            </div>
+            </div> -->
 
             <!-- 复杂模式 -->
             <div class="item_box" v-show="mode == 2"><!-- 止盈 -->
@@ -77,7 +77,13 @@
                         <span>&nbsp;</span>
                     </div>
                     <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
-                        <input :disabled="priceMode == 1" v-model="form1.price" type="number" class="ipt">
+                        <span v-show="priceMode == 1" style="color: #999;">最新价格成交</span>
+                        <input v-show="priceMode != 1" v-model="form1.price" type="number" class="ipt">
+
+                        <span v-show="priceMode != 1 && currStock.price" style="color: #014CFA;margin-left: 0.2rem"
+                            @click="setPricePercent(3)">3%</span>
+                        <span v-show="priceMode != 1 && currStock.price" style="color: #014CFA;margin-left: 0.2rem"
+                            @click="setPricePercent(1)">1%</span>
                     </div>
                 </div>
 
@@ -95,13 +101,20 @@
                 <span class="ipt_tip" v-show="form1.price === '' || priceFocus">满足价格才能成交</span>
                 <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
                     class="ipt">
-                <span style="color: #014CFA;" @click="setNowPrice" v-show="currStock.price">市价</span>
+
+                <span style="color: #014CFA;margin-left: 0.2rem" @click="setPricePercent(3)"
+                    v-show="currStock.price">3%</span>
+                <span style="color: #014CFA;margin-left: 0.2rem" @click="setPricePercent(2)"
+                    v-show="currStock.price">2%</span>
+                <span style="color: #014CFA;margin-left: 0.2rem" @click="setPricePercent(1)"
+                    v-show="currStock.price">1%</span>
+                <span style="color: #014CFA;margin-left: 0.2rem" @click="setNowPrice" v-show="currStock.price">市价</span>
             </div>
         </div>
 
         <!-- 股票 -->
         <div class="subtitle">
-            <span>股票</span>
+            <span style="color: #014CFA;" @click="showNavDialog">股票</span>
             <Loading v-show="searchLoading" type="spinner" style="width:0.28rem;height:0.28rem" color="#034cfa" />
             <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
                 <img src="/static/img/trade/blue-stock.png" />
@@ -112,7 +125,7 @@
             <div class="item" :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
                 <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">股票代码</span>
                 <input :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
-                    @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="searchFocus = false"
+                    @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="blurSearch"
                     v-model.trim="searchStr" @keyup="inputSearch" class="ipt" type="text">
                 <div class="base_ipt" v-show="currStock.symbol && searchFocus">{{ currStock.symbol }}
                 </div>
@@ -127,9 +140,9 @@
         <!-- 数量 -->
         <div class="item_box">
             <div class="item_box_left" @click="showTypeDialog = true">
-                <div class="subtitle"><span style="color: #014CFA;">全仓 VS 逐仓</span></div>
+                <div class="subtitle"><span>模式&杠杆</span></div>
                 <div class="item" style="justify-content: center;">
-                    <span>{{ modeMap[form1.leverType] || '--' }}</span>
+                    <span>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
                     <div class="more_icon">
                         <img src="/static/img/trade/down.png" alt="↓">
                     </div>
@@ -139,23 +152,27 @@
             <div class="item_box_right">
                 <div class="subtitle">
                     <span>数量</span>
-                    <div @click="showJumpTypeDialog = true"
-                        style="color: #014CFA;display: flex;align-items: center;font-size:0.24rem">
-                        划转/兑换/充值
-                        <!-- <span @click="jump('transfer')">账户划转</span>
-                        <span @click="jump('loanList')" style="margin-left: 0.24rem;">借贷</span> -->
+                    <div style="color: #014CFA;display: flex;align-items: center;font-size:0.24rem">
+                        <!-- 划转/兑换/充值 -->
+                        <span @click="jump('transfer')">划转</span>
+                        <!-- <span @click="jump('loanList')" style="margin-left: 0.24rem;">借贷</span> -->
                     </div>
                 </div>
                 <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
-                    </span>
+                    <!-- <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
+                    </span> -->
                     <span @click="putAll"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                        style="color: #014CFA;position: absolute;left: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .2s">全部</span>
-                    <input style="text-align: right;" v-model="form1.volume" @focus="amountFocus = true"
-                        @blur="amountFocus = false" @change="changePercent" type="number" class="ipt">
+                        style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .2s">全部</span>
+                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false"
+                        @change="changePercent" type="number" class="ipt">
                 </div>
             </div>
+        </div>
+        <div
+            style="color: #b7b7b7;text-align: left;font-size: 0.24rem;position: relative;top: -0.4rem;padding-left: 2.4rem;">
+            最大可买 {{
+                maxStockNum }}
         </div>
 
         <!-- 拖动 -->
@@ -269,9 +286,13 @@
     </ActionSheet>
 
     <!-- 仓位模式选择 -->
-    <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
+    <!-- <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
         title="保证金模式">
-    </ActionSheet>
+    </ActionSheet> -->
+    <Popup v-model:show="showTypeDialog" round position="bottom" teleport="body">
+        <Picker :swipe-duration="300" :columns="columns" @cancel="showTypeDialog = false"
+            @confirm="onSelectForm1Type" />
+    </Popup>
 
     <!-- 限价模式选择 -->
     <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
@@ -285,7 +306,7 @@
 </template>
 
 <script setup>
-import { Loading, Slider, Button, showToast, Popup, ActionSheet } from "vant";
+import { Loading, Slider, Button, showToast, Popup, ActionSheet, Picker } from "vant";
 import { ref, computed } from "vue"
 import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api"
 import store from "@/store";
@@ -294,7 +315,10 @@ import { useRoute } from "vue-router"
 import router from "@/router"
 import StockPopup from "../../trade/StockPopup.vue"
 
-
+const emits = defineEmits(['showNavDialog'])
+const showNavDialog = () => {
+    emits('showNavDialog')
+}
 const showJumpTypeDialog = ref(false) // 跳转开关
 const jumpModeList = ref([
     { name: '划转', value: 'transfer' },
@@ -320,7 +344,8 @@ const modeMap = ref({
 const showTypeDialog = ref(false)
 const onSelectForm1Type = (item) => {
     showTypeDialog.value = false
-    form1.value.leverType = item.value
+    form1.value.leverType = item.selectedValues[0]
+    form1.value.lever = item.selectedValues[1]
 }
 
 // 限价模式
@@ -330,6 +355,22 @@ const priceModeList = computed(() => {
     list.push({ name: '市价', value: 1, className: priceMode.value == 1 ? 'action-sheet-active' : '' })
     list.push({ name: '限价', value: 2, className: priceMode.value == 2 ? 'action-sheet-active' : '' })
     return list
+})
+const columns = computed(() => {
+    return [
+        [
+            { text: '全仓', value: 'cross', className: form1.value.leverType == 'cross' ? 'action-sheet-active' : '' },
+            { text: '逐仓', value: 'isolated', className: form1.value.leverType == 'isolated' ? 'action-sheet-active' : '' }
+        ],
+        levers.value.map(item => {
+
+            return {
+                text: item + 'X',
+                value: item,
+                className: form1.value.lever == item ? 'action-sheet-active' : ''
+            }
+        })
+    ]
 })
 const onSelectForm1PriceType = item => {
     showPriceTypeDialog.value = false
@@ -369,6 +410,13 @@ const maxStockNum = computed(() => { // 最大可买 可卖
 const setNowPrice = () => { // 设置为当前价格
     form1.value.price = currStock.value.price || ''
 }
+const setPricePercent = (i) => { // 设置浮动价格
+    if (props.activeType == 1) { // 买涨
+        form1.value.price = new Decimal(currStock.value.price).mul(100 - i).div(100).toNumber()
+    } else { // 买跌
+        form1.value.price = new Decimal(currStock.value.price).mul(100 + i).div(100).toNumber()
+    }
+}
 
 // 市价
 const currStock = ref({}) // 当前股票
@@ -380,6 +428,7 @@ try {
 
 const form1 = ref({
     leverType: 'cross',
+    lever: 1,
     volume: '',
     price: '',
     price_type: props.activeTab == 1 ? 'limit' : 'market',
@@ -476,6 +525,7 @@ const submit1 = () => {
         offset: props.activeType == 1 ? 'long' : 'short',
         volume: Number(form1.value.volume),
         lever_type: form1.value.leverType,
+        lever: form1.value.lever,
         price_type: form1.value.price_type,
         price: form1.value.price || '',
         stop_profit_type: form1.value.stop_profit_type,
@@ -509,9 +559,9 @@ const sliderValue = ref(0);
 const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
     if (maxStockNum.value == '--') return sliderValue.value = 0
-    let v = new Decimal(maxStockNum.value).mul(newValue).div(100).floor()
+    let v = new Decimal(maxStockNum.value).mul(newValue).div(100)
     v = v.sub(v.mod(step.value))
-    form1.value.volume = v
+    form1.value.volume = v.toNumber()
     setTimeout(() => {
         changePercent()
     }, 0)
@@ -520,7 +570,7 @@ const changePercent = () => {
     if (maxStockNum.value == '--' || !form1.value.volume) return sliderValue.value = 0
     let v = new Decimal(form1.value.volume)
     form1.value.volume = v.sub(v.mod(step.value))
-    let p = new Decimal(form1.value.volume).div(maxStockNum.value).mul(100).floor()
+    let p = new Decimal(form1.value.volume).div(maxStockNum.value).mul(100).toNumber()
     if (p < 0) p = 0
     if (p > 100) p = 100
     sliderValue.value = Number(p)
@@ -529,6 +579,12 @@ const changePercent = () => {
 const searchLoading = ref(false)
 const searchFocus = ref(false)
 const searchStr = ref('')
+const blurSearch = () => {
+    searchFocus.value = false
+    if (!currStock.value.symbol && searchStr.value) { // 失去焦点时没有结果的情况
+        sureStock()
+    }
+}
 let searchTimeout = null
 const inputSearch = () => {
     searchStr.value = searchStr.value.toUpperCase()
@@ -542,6 +598,21 @@ const inputSearch = () => {
         goSearch()
     }, 600)
 }
+// 用详情接口来确认搜索到的股票
+const sureStock = () => {
+    searchLoading.value = true
+    _basic({ symbol: searchStr.value.toUpperCase() }).then(r => {
+        if (r && r.data && r.data.symbol) {
+            currStock.value = {
+                ...currStock.value,
+                ...r.data
+            }
+            sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
+        }
+    }).finally(() => {
+        searchLoading.value = false
+    })
+}
 const goSearch = () => {
     searchLoading.value = true
     const s = searchStr.value
@@ -550,8 +621,10 @@ const goSearch = () => {
         mode: 'right',
         page: 1
     }).then(res => {
-        if (s != searchStr.value) return
+        if (s != searchStr.value) return // 搜索内容已经变化就不处理了
+        if (!searchFocus.value) return // 失去焦点就不处理了
         if (res && res.data && res.data[0]) {
+
             currStock.value = res.data[0]
             _basic({ symbol: currStock.value.symbol }).then(r => {
                 if (r && r.data && r.data.symbol) {
@@ -584,16 +657,17 @@ const openFee = ref(0) // 开仓手续费
 const closeFee = ref(0) // 平仓手续费
 const flowerFee = ref(0) // 印花税
 const configLoading = ref(false)
+const levers = ref([1]) // 杠杆
 const getParam = () => {
-    // configLoading.value = true
+    configLoading.value = true
     paramHandle()
-    // _stocksPara().then(res => {
-    //     if (res && res.data) {
-    //         paramHandle(res.data)
-    //     }
-    // }).finally(() => {
-    //     configLoading.value = false
-    // })
+    _stocksPara().then(res => {
+        if (res && res.data) {
+            paramHandle(res.data)
+        }
+    }).finally(() => {
+        configLoading.value = false
+    })
 }
 const paramHandle = data => {
     if (data) {
@@ -617,7 +691,9 @@ const paramHandle = data => {
         closeFee.value = arr2[1] || 0
         flowerFee.value = arr2[2] || 0
     }
-
+    if (data.lever) {
+        levers.value = data.lever.split(',')
+    }
 }
 getParam()
 
@@ -798,7 +874,7 @@ defineExpose({
 
         .item_focus {
             height: 1.12rem;
-            padding-top: 0.2rem;
+            // padding-top: 0.2rem;
             border: 1px solid #034cfa;
 
             .ipt_tip {
@@ -808,7 +884,7 @@ defineExpose({
         }
 
         .item_box_left {
-            width: 1.8rem;
+            width: 2.2rem;
             margin-right: 0.2rem;
             display: flex;
             flex-direction: column;

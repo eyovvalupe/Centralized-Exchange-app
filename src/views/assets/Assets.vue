@@ -209,7 +209,7 @@ Promise.all(loadingList).finally(() => {
 
     :deep(.van-sticky) {
         background-color: #fff;
-        padding-top: 0.2rem;
+        padding-top: 0.24rem;
     }
 
     .page_title {

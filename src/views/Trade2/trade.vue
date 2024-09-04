@@ -11,20 +11,26 @@
                 </div> -->
 
             <div class="tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']">
-                <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">股票</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">合约</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">AI量化</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">外汇</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 4 }" @click="activeTab = 4">买币</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">IPO</div>
-                <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">理财</div>
+                <div class="tab_icon my_icon2" @click="showNavDialog = true">
+                    <img src="/static/img/trade/open.png" alt="img">
+                </div>
+
+                <div class="tab_body">
+                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">股票</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">合约</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">AI量化</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">外汇</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">IPO</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">理财</div>
+                    <div v-if="openTab == true" class="tab_icon" @click="openTab = false">
+                        <img src="/static/img/common/tab_back.png" alt="img">
+                    </div>
+                </div>
 
                 <div v-if="openTab == false" class="tab_icon my_icon" @click="openTab = true">
                     <img src="/static/img/common/tab_menu.png" alt="img">
                 </div>
-                <div class="tab_icon" @click="openTab = false">
-                    <img src="/static/img/common/tab_back.png" alt="img">
-                </div>
+
 
                 <!-- <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
                     <div class="mytab_title_icon" v-show="activeTab != 6">
@@ -42,7 +48,7 @@
         <div class="trade_body">
             <transition :name="transitionName" v-if="pageActive">
                 <div v-if="activeTab == 0" class="stock_block">
-                    <StockBlock ref="StockBlockRef" />
+                    <StockBlock @showNavDialog="showNavDialog = true" ref="StockBlockRef" />
                 </div>
                 <div v-else-if="activeTab == 5" class="ipo_block">
                     <IpoBlock />
@@ -321,6 +327,13 @@ onDeactivated(() => {
                 right: 0;
                 padding-right: 0 !important;
             }
+
+            .my_icon2 {
+                position: absolute;
+                top: 0.1rem;
+                left: 0;
+                transition: all ease .3s;
+            }
         }
 
         .open_tabs {
@@ -328,12 +341,36 @@ onDeactivated(() => {
             padding-top: 0.2rem;
             padding-bottom: 0.2rem;
             padding-right: 0.4rem;
+            padding-left: 0.6rem;
+
+            .my_icon2 {
+                top: 0.3rem;
+            }
+
+            .tab_body {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+
         }
 
         .close_tabs {
             height: 0.6rem;
             overflow: hidden;
             padding-right: 0.4rem;
+            padding-left: 0.6rem;
+
+
+            .tab_body {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                margin: 0 0.2rem;
+            }
         }
 
         .value {

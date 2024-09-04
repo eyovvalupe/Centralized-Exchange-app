@@ -568,10 +568,10 @@ const sliderValue = ref(0);
 const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
     if (showSell.value) { // 平仓
-        sellForm.value.volume = new Decimal(currStock.value.unsold_volume).mul(newValue).div(100).floor()
+        sellForm.value.volume = new Decimal(currStock.value.unsold_volume).mul(newValue).div(100).toNumber()
     }
     if (showUpdate.value) { // 更新
-        updateForm.value.amount = new Decimal(stockWalletAmount.value).mul(newValue).div(100).floor()
+        updateForm.value.amount = new Decimal(stockWalletAmount.value).mul(newValue).div(100).toNumber()
     }
 };
 const changeValue = () => {

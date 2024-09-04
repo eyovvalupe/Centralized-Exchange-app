@@ -16,16 +16,16 @@
             <Tabs key="form" v-if="!pageLoading" class="tabs" @change="e => activeTab = e" v-model="activeTab"
                 :swipeable="false" animated :color="'#014CFA'" shrink>
                 <Tab title="市价" name="0">
-                    <OpeningForm v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab"
-                        :activeType="activeType" />
+                    <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0"
+                        :activeTab="activeTab" :activeType="activeType" />
                 </Tab>
                 <Tab title="限价" name="1">
-                    <OpeningForm v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab"
-                        :activeType="activeType" />
+                    <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1"
+                        :activeTab="activeTab" :activeType="activeType" />
                 </Tab>
                 <Tab title="止盈/止损" name="2">
-                    <OpeningForm v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab"
-                        :activeType="activeType" />
+                    <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2"
+                        :activeTab="activeTab" :activeType="activeType" />
                 </Tab>
             </Tabs>
 
@@ -45,6 +45,12 @@ import { Tab, Tabs, ActionSheet } from "vant";
 import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api"
 import { useRoute } from "vue-router"
 import OpeningForm from "./OpeningForm.vue"
+
+
+const emits = defineEmits(['showNavDialog'])
+const showNavDialog = () => {
+    emits('showNavDialog')
+}
 
 const route = useRoute()
 const OpeningForm0Ref = ref()

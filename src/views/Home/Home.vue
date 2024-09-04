@@ -49,7 +49,8 @@
     <Banner v-if="activated" class="home_banner" />
 
     <!-- Tabs -->
-    <Tabs @change="tabChange" v-if="!pageLoading" type="card" class="tabs" v-model:active="activeTab" animated shrink>
+    <Tabs @change="tabChange" v-if="!pageLoading && activated" type="card" class="tabs" v-model:active="activeTab"
+      animated shrink>
       <Tab :title="'股票'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div>

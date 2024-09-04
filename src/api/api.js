@@ -122,7 +122,7 @@ export const _add = (data = {}) => {
 
 //交易参数
 export const _stocksPara = (data = {}) => {
-  return http.post(`/anon/v1/stocks/para`, data, {
+  return http.post(`/anon/v1/stock/para`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };

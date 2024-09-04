@@ -173,6 +173,7 @@ getConfig()
             align-items: center;
             justify-content: center;
             line-height: 0.44rem;
+            padding: 0.1rem 0;
 
             .line {
                 width: 1px;
@@ -183,10 +184,9 @@ getConfig()
             .nav {
                 color: #fff;
                 font-weight: 400;
+                flex: 1;
                 font-size: 0.24rem;
                 text-align: center;
-                margin: 0 0.24rem;
-                padding: 0 0.24rem;
                 border-radius: 0.26rem;
                 position: relative;
 

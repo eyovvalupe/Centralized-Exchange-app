@@ -272,8 +272,7 @@ const jump = (name, check = false, query) => {
             align-items: center;
             justify-content: center;
             // border-top: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 0.2rem 0;
-            margin-top: 0.3rem;
+            padding: 0.1rem 0;
 
 
             .line {
@@ -289,9 +288,10 @@ const jump = (name, check = false, query) => {
                 font-size: 0.24rem;
                 text-align: center;
                 display: flex;
+                flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                margin: 0 0.5rem;
+                line-height: 0.44rem;
 
                 .nav_icon {
                     width: 0.7rem;
