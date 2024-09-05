@@ -88,7 +88,24 @@ const token = computed(() => store.state.token)
 
 // 搜索相关
 search.value = store.state.marketSearchStr || ''
-const searchList = computed(() => store.state.marketSearchList || [])
+const searchList = computed(() => {
+    let list = []
+    switch (currAs.value) {
+        case 'stock': // 股票
+            list = store.state.marketSearchList
+            break
+        case 'futures': // 合约
+            list = store.state.futuresSearchList
+            break
+        case 'aiquant': // ai
+            list = store.state.aiquantSearchList
+            break
+        case 'forex': // 外汇
+            list = store.state.forexSearchList
+            break
+    }
+    return list
+})
 const getData = () => { // 获取数据
     loading.value = true
     _search({
@@ -96,11 +113,36 @@ const getData = () => { // 获取数据
         symbol: search.value,
         page: 1
     }).then(res => {
-        store.commit('setMarketSearch', {
-            search: search.value,
-            market: currAs.value,
-            list: res.data || []
-        })
+        switch (currAs.value) {
+            case 'stock': // 股票
+                store.commit('setMarketSearch', {
+                    search: search.value,
+                    market: currAs.value,
+                    list: res.data || []
+                })
+                break
+            case 'futures': // 合约
+                store.commit('setMarketSearch', {
+                    search: search.value,
+                    market: currAs.value,
+                    futuresSearchList: res.data || []
+                })
+                break
+            case 'aiquant': // ai
+                store.commit('setMarketSearch', {
+                    search: search.value,
+                    market: currAs.value,
+                    aiquantSearchList: res.data || []
+                })
+                break
+            case 'forex': // 外汇
+                store.commit('setMarketSearch', {
+                    search: search.value,
+                    market: currAs.value,
+                    forexSearchList: res.data || []
+                })
+                break
+        }
     }).finally(() => {
         loading.value = false
     })
@@ -109,7 +151,6 @@ const resetData = () => { // 搜索
     store.commit('setMarketSearch', {
         search: '',
         market: '',
-        list: []
     })
     getData()
 }

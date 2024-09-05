@@ -401,7 +401,6 @@ const subs = () => {
         socket && socket.emit('stockorder', '#all')
         loading.value = true
         socket.on('stockorder', res => {
-            console.error('????', res)
             store.commit('setPositionsList', res.data || [])
             loading.value = false
         })

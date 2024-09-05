@@ -83,7 +83,7 @@
                 </template>
             </Tab>
             <Tab>
-                <NoData />
+                <Ai v-if="active == 4" />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
@@ -170,6 +170,7 @@ import IPODetail from '@/views/trade/IPODetail.vue'
 import Subscription from '@/views/trade/Subscription.vue'
 import NoData from '@/components/NoData.vue';
 import Constract from "./components/Constract.vue"
+import Ai from "./components/Ai.vue"
 
 const marketPageRef = ref()
 const openTab = ref(false)

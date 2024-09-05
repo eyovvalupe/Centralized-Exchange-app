@@ -50,6 +50,9 @@
                 <div v-if="activeTab == 0" class="stock_block">
                     <StockBlock @showNavDialog="showNavDialog = true" ref="StockBlockRef" />
                 </div>
+                <div v-else-if="activeTab == 2" class="ai_block">
+                    <AiBlock />
+                </div>
                 <div v-else-if="activeTab == 5" class="ipo_block">
                     <IpoBlock />
                 </div>
@@ -67,27 +70,73 @@
 
 
         <!-- 自选列表 -->
-        <Popup v-model:show="showNavDialog" position="left" :style="{ width: '85%', height: '100%' }">
+        <Popup round v-model:show="showNavDialog" position="left" :style="{ width: '85%', height: '100%' }">
             <div class="trade_option_list">
 
-                <!-- 搜索 -->
-                <div class="item search_box">
-                    <div class="search_icon">
-                        <img src="/static/img/common/search.png" alt="🔍">
-                    </div>
-                    <input v-model.trim="searchStr" @keyup="goSearch" type="text" class="ipt" placeholder="搜索">
-                </div>
+                <!-- 切换 -->
+                <Tabs @change="changeTab" sticky class="tab_content" :lazy-render="false" v-model:active="navActiveTab"
+                    type="card" animated shrink>
+                    <Tab :title="'自选'" name="option">
+                        <!-- 推荐列表 -->
+                        <StockTable :handleClick="handleClick" v-if="!searchStr" :loading="optionLoading"
+                            :key="'option'" :list="watchList" />
+                    </Tab>
+                    <Tab :title="'股票'" name="stock">
+                        <!-- 搜索 -->
+                        <div class="item search_box">
+                            <div class="search_icon">
+                                <img src="/static/img/common/search.png" alt="🔍">
+                            </div>
+                            <input v-model.trim="searchStr" @keyup="goSearch('stock')" type="text" class="ipt"
+                                placeholder="搜索">
+                        </div>
 
-                <div class="lists">
-                    <!-- 搜索列表 -->
-                    <StockTable :handleClick="handleClick" v-if="searchStr" :loading="searchLoading" :key="'search'"
-                        :list="marketSearchList" />
+                        <div class="lists">
+                            <!-- 搜索列表 -->
+                            <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                                :list="marketSearchList" />
+                        </div>
+                    </Tab>
+                    <Tab :title="'合约'" name="contract">
+                        <!-- 搜索 -->
+                        <div class="item search_box">
+                            <div class="search_icon">
+                                <img src="/static/img/common/search.png" alt="🔍">
+                            </div>
+                            <input v-model.trim="searchStr" @keyup="goSearch('futures')" type="text" class="ipt"
+                                placeholder="搜索">
+                        </div>
 
-                    <!-- 推荐列表 -->
-                    <StockTable :handleClick="handleClick" v-if="!searchStr" :loading="optionLoading" :key="'option'"
-                        :list="watchList" />
-                </div>
+                        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                            :list="futuresSearchList" />
+                    </Tab>
+                    <Tab :title="'AI量化'" name="ai">
+                        <!-- 搜索 -->
+                        <div class="item search_box">
+                            <div class="search_icon">
+                                <img src="/static/img/common/search.png" alt="🔍">
+                            </div>
+                            <input v-model.trim="searchStr" @keyup="goSearch('aiquant')" type="text" class="ipt"
+                                placeholder="搜索">
+                        </div>
 
+                        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                            :list="aiquantSearchList" />
+                    </Tab>
+                    <Tab :title="'外汇'" name="out">
+                        <!-- 搜索 -->
+                        <div class="item search_box">
+                            <div class="search_icon">
+                                <img src="/static/img/common/search.png" alt="🔍">
+                            </div>
+                            <input v-model.trim="searchStr" @keyup="goSearch('forex')" type="text" class="ipt"
+                                placeholder="搜索">
+                        </div>
+
+                        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                            :list="forexSearchList" />
+                    </Tab>
+                </Tabs>
 
             </div>
         </Popup>
@@ -115,10 +164,11 @@
 </template>
 
 <script setup>
-import { PullRefresh, Popup } from "vant"
+import { PullRefresh, Popup, Tabs, Tab } from "vant"
 import { ref, watch, computed, onActivated, onDeactivated } from "vue"
 import IpoBlock from "./pages/IpoBlock.vue"
 import StockBlock from "./pages/StockBlock.vue"
+import AiBlock from "./pages/AiBlock.vue"
 import store from "@/store"
 import StockTable from "@/components/StockTable.vue"
 import { _search, _watchlist } from "@/api/api"
@@ -152,8 +202,13 @@ watch([activeTab], (newActive, oldActive) => {
 const showPrice = ref(false)
 // 左侧列表弹窗
 const showNavDialog = ref(false)
+const navActiveTab = ref('option')
+
 const watchList = computed(() => store.state.marketWatchList || [])
 const marketSearchList = computed(() => store.state.marketSearchList || [])
+const futuresSearchList = computed(() => store.state.futuresSearchList || [])
+const aiquantSearchList = computed(() => store.state.aiquantSearchList || [])
+const forexSearchList = computed(() => store.state.forexSearchList || [])
 
 // 自选列表
 const optionLoading = ref(false)
@@ -194,40 +249,90 @@ const handleClick = (item) => {
     StockBlockRef.value && StockBlockRef.value.choose(item)
 }
 
+
+const changeTab = val => {
+    console.error(val)
+    goSearch(val)
+}
+
 // 搜索列表
 const searchStr = ref('')
 let searchTimeout = null
 const searchLoading = ref(false)
-const goSearch = () => {
+const goSearch = (market) => {
     if (searchTimeout) clearTimeout(searchTimeout)
     let s = searchStr.value
-    if (!s) {
-        store.commit('setMarketSearch', {
-            search: '',
-            market: '',
-            list: []
-        })
-        searchLoading.value = false
-        return
-    }
+    // if (!s) {
+    //     store.commit('setMarketSearch', {
+    //         search: '',
+    //         market: '',
+    //         list: []
+    //     })
+    //     searchLoading.value = false
+    // }
     searchTimeout = setTimeout(() => {
         searchLoading.value = true
         _search({
+            market: market || '',
             symbol: s,
             page: 1
         }).then(res => {
             if (searchStr.value == s) {
-                store.commit('setMarketSearch', {
-                    search: s,
-                    market: '',
-                    list: res.data || []
-                })
-                setTimeout(() => {
-                    store.dispatch('subList', {
-                        commitKey: 'setMarketSearchList',
-                        listKey: 'marketSearchList',
-                    })
-                }, 100)
+                switch (market) {
+                    case 'stock': // 股票
+                        store.commit('setMarketSearch', {
+                            search: s,
+                            market: market,
+                            list: res.data || []
+                        })
+                        setTimeout(() => {
+                            store.dispatch('subList', {
+                                commitKey: 'setMarketSearchList',
+                                listKey: 'marketSearchList',
+                            })
+                        }, 100)
+                        break
+                    case 'futures': // 合约
+                        store.commit('setMarketSearch', {
+                            search: s,
+                            market: market,
+                            futuresSearchList: res.data || []
+                        })
+                        setTimeout(() => {
+                            store.dispatch('subList', {
+                                commitKey: 'setFuturesSearchList',
+                                listKey: 'futuresSearchList',
+                            })
+                        }, 100)
+                        break
+                    case 'aiquant': // ai
+                        store.commit('setMarketSearch', {
+                            search: s,
+                            market: market,
+                            aiquantSearchList: res.data || []
+                        })
+                        setTimeout(() => {
+                            store.dispatch('subList', {
+                                commitKey: 'setAiquantSearchList',
+                                listKey: 'aiquantSearchList',
+                            })
+                        }, 100)
+                        break
+                    case 'forex': // 外汇
+                        store.commit('setMarketSearch', {
+                            search: s,
+                            market: market,
+                            forexSearchList: res.data || []
+                        })
+                        setTimeout(() => {
+                            store.dispatch('subList', {
+                                commitKey: 'setForexSearchList',
+                                listKey: 'forexSearchList',
+                            })
+                        }, 100)
+                        break
+                }
+
             }
         }).finally(() => {
             searchLoading.value = false
@@ -394,9 +499,49 @@ onDeactivated(() => {
 
     .trade_option_list {
         height: 100%;
-        padding-bottom: 1.4rem;
+        padding-bottom: 0.4rem;
+        padding-top: 0.2rem;
         display: flex;
         flex-direction: column;
+
+        .tab_content {
+            :deep(.van-tabs__nav--card) {
+                border: none;
+            }
+
+            :deep(.van-tab--card) {
+                border-right: none;
+                color: #061023;
+                // background-color: #f5f5f5;
+            }
+
+            :deep(.van-tab--card.van-tab--active) {
+
+                background-color: #F6F8FF;
+                border-radius: 0.3rem;
+                color: #014CFA;
+                font-weight: 500
+            }
+
+            :deep(.van-tab--shrink) {
+                padding: 0 0.3rem;
+            }
+
+            :deep(.van-tabs__wrap) {
+                height: 0.8rem;
+                padding-bottom: 0.34rem;
+            }
+
+            :deep(.van-tabs__nav--card) {
+                height: 0.6rem;
+            }
+
+            :deep(.van-tab) {
+                line-height: 0.6rem;
+                font-size: 0.28rem;
+            }
+
+        }
 
         .lists {
             flex: 1;

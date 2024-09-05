@@ -57,7 +57,21 @@
             </div>
             <div class="item_box" v-show="mode == 1">
                 <div class="item">
-                    <input @input="inputStop(2)" v-model="form1.stop_loss_price" type="number" class="ipt">
+                    <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
+                        v-model="form1.stop_loss_price" type="number" class="ipt">
+
+                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(3)"
+                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
+                            props.activeType ==
+                                1 ? '-' : '+' }}3%</span>
+                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(2)"
+                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
+                            props.activeType ==
+                                1 ? '-' : '+' }}2%</span>
+                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(1)"
+                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
+                            props.activeType ==
+                                1 ? '-' : '+' }}1%</span>
                 </div>
             </div>
 
@@ -78,12 +92,17 @@
                     </div>
                     <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
                         <span v-show="priceMode == 1" style="color: #999;">最新价格成交</span>
-                        <input v-show="priceMode != 1" v-model="form1.price" type="number" class="ipt">
+                        <input @focus="priceFocus2 = true" @blur="priceFocus2 = false" v-show="priceMode != 1"
+                            v-model="form1.price" type="number" class="ipt">
 
-                        <span v-show="priceMode != 1 && currStock.price" style="color: #014CFA;margin-left: 0.2rem"
-                            @click="setPricePercent(3)">3%</span>
-                        <span v-show="priceMode != 1 && currStock.price" style="color: #014CFA;margin-left: 0.2rem"
-                            @click="setPricePercent(1)">1%</span>
+                        <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                            @click="setPricePercent(3)" v-show="currStock.price && priceMode != 1"
+                            :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
+                                1 ? '-' : '+' }}3%</span>
+                        <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                            @click="setPricePercent(1)" v-show="currStock.price && priceMode != 1"
+                            :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
+                                1 ? '-' : '+' }}1%</span>
                     </div>
                 </div>
 
@@ -102,13 +121,17 @@
                 <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
                     class="ipt">
 
-                <span style="color: #014CFA;margin-left: 0.2rem" @click="setPricePercent(3)"
-                    v-show="currStock.price">3%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem" @click="setPricePercent(2)"
-                    v-show="currStock.price">2%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem" @click="setPricePercent(1)"
-                    v-show="currStock.price">1%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem" @click="setNowPrice" v-show="currStock.price">市价</span>
+                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(3)"
+                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
+                        1 ? '-' : '+' }}3%</span>
+                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(2)"
+                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
+                        1 ? '-' : '+' }}2%</span>
+                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(1)"
+                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
+                        1 ? '-' : '+' }}1%</span>
+                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setNowPrice"
+                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">市价</span>
             </div>
         </div>
 
@@ -159,20 +182,15 @@
                     </div>
                 </div>
                 <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <!-- <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
-                    </span> -->
+                    <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
+                    </span>
                     <span @click="putAll"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                        style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .2s">全部</span>
+                        style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
                     <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false"
                         @change="changePercent" type="number" class="ipt">
                 </div>
             </div>
-        </div>
-        <div
-            style="color: #b7b7b7;text-align: left;font-size: 0.24rem;position: relative;top: -0.4rem;padding-left: 2.4rem;">
-            最大可买 {{
-                maxStockNum }}
         </div>
 
         <!-- 拖动 -->
@@ -441,6 +459,13 @@ const form1 = ref({
 // 止盈止损参数
 const mode = ref(1) // 1-简单模式  2-复杂模式
 const priceMode = ref(1) // 1-市价 2-限价
+const setPriceStop = i => { // 设置止损价格
+    if (props.activeType == 1) { // 买涨
+        form1.value.stop_loss_price = new Decimal(currStock.value.price).mul(100 - i).div(100).toNumber()
+    } else { // 买跌
+        form1.value.stop_loss_price = new Decimal(currStock.value.price).mul(100 + i).div(100).toNumber()
+    }
+}
 const changeMode = () => {
     mode.value = mode.value == 1 ? 2 : 1
     if (mode.value == 1) {
@@ -547,6 +572,8 @@ const submit1 = () => {
 }
 const amountFocus = ref(false)
 const priceFocus = ref(false)
+const priceFocus2 = ref(false)
+const priceFocus3 = ref(false)
 
 
 // 全部

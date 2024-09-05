@@ -8,7 +8,7 @@ const { startSocket } = useSocket()
 const pageKeys = {
     'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList'],
     'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList'],
-    'trade': ['marketWatchList', 'marketSearchList']
+    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList']
 }
 
 export default {
@@ -16,7 +16,10 @@ export default {
         currStock: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
         marketSearchType: '', // 当前搜索的市场
-        marketSearchList: [], // 当前搜索的结果
+        marketSearchList: [], // 当前搜索的结果-股票
+        futuresSearchList: [], // 当前搜索的结果-合约
+        aiquantSearchList: [], // 当前搜索的结果-ai
+        forexSearchList: [], // 当前搜索的结果-外汇
 
         marketWatchList: [], // 当前订阅的列表数据
         marketVolumeList: [], // 首页活跃列表
@@ -76,10 +79,39 @@ export default {
         setMarketSearch(state, data) {
             state.marketSearchStr = data.search;
             state.marketSearchType = data.market;
-            state.marketSearchList = data.list;
+            state.marketSearchList = (data.list || []).map(item => {
+                const target = state.marketSearchList.find(a => a.symbol == item.symbol)
+                if (target) return target
+                return item
+            });
+
+            state.futuresSearchList = (data.futuresSearchList || []).map(item => {
+                const target = state.futuresSearchList.find(a => a.symbol == item.symbol)
+                if (target) return target
+                return item
+            });
+            state.aiquantSearchList = (data.aiquantSearchList || []).map(item => {
+                const target = state.aiquantSearchList.find(a => a.symbol == item.symbol)
+                if (target) return target
+                return item
+            });
+            state.forexSearchList = (data.forexSearchList || []).map(item => {
+                const target = state.forexSearchList.find(a => a.symbol == item.symbol)
+                if (target) return target
+                return item
+            });
         },
         setMarketSearchList(state, data) {
             state.marketSearchList = data;
+        },
+        setFuturesSearchList(state, data) {
+            state.futuresSearchList = data;
+        },
+        setAiquantSearchList(state, data) {
+            state.aiquantSearchList = data;
+        },
+        setForexSearchList(state, data) {
+            state.forexSearchList = data;
         },
         setCurrStock(state, data) {
             if (!data.symbol) { // 只更新部分数据
