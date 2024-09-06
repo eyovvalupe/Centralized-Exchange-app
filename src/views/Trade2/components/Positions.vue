@@ -87,7 +87,7 @@
 
                 <div class="info_item">
                     <div class="name">订单号</div>
-                    <div class="val_box">
+                    <div class="val_box" style="color:#999">
                         <span>{{ currStock.order_no || '--' }}</span>
                         <div class="copy_icon" @click="copy(currStock.order_no)">
                             <img src="/static/img/trade/copy.png" alt="copy">
@@ -97,7 +97,7 @@
                 <div class="info_item">
                     <div class="name">股票</div>
                     <div class="val_box">
-                        <div>{{ currStock.symbol || '--' }}</div>
+                        <div class="text">{{ currStock.symbol || '--' }}</div>
                     </div>
                 </div>
                 <div class="info_item">
@@ -174,11 +174,15 @@
         <Popup v-model:show="showSell" position="bottom" round closeable teleport="body">
             <div class="order_sell_box">
                 <div class="title">平仓</div>
-
+                <div style="height:0.4rem"></div>
                 <div class="form">
                     <div class="subtitle">数量</div>
                     <div class="item" style="margin-bottom:0.1rem">
-                        <input v-model="sellForm.volume" @input="changeValue" type="number" class="ipt">
+                        <input @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
+                            @input="changeValue" type="number" class="ipt">
+                        <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
+                            style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
+                            @click="sellForm.volume = currStock.unsold_volume">全部</span>
                     </div>
 
                     <div class="tip">持仓数量 <span class="num">{{ currStock.unsold_volume }}</span></div>
@@ -201,7 +205,7 @@
                     </div>
 
                     <!-- 收益分析 -->
-                    <div class="total_box">
+                    <!-- <div class="total_box">
                         <div class="total_item">
                             <div class="total_num total_big"
                                 :class="!currStock.profit ? '' : (currStock.profit > 0 ? 'up' : 'down')">{{
@@ -218,14 +222,14 @@
                             <div class="total_name">手续费</div>
                             <div class="total_num">{{ currStock.fee || 0 }}</div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
+                    <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">
                         <input v-model="sellForm.safeword" type="password" class="ipt">
-                    </div>
+                    </div> -->
 
-                    <Button @click="goSell" :loading="sellLoading" type="primary" class="btn" color="#014CFA">
+                    <Button @click="goSellDialog" :loading="sellLoading" type="primary" class="btn" color="#014CFA">
                         <span style="font-size: 0.28rem;">确定</span>
                     </Button>
                 </div>
@@ -238,7 +242,7 @@
                 <div class="title">更新订单</div>
                 <div style="height:0.4rem"></div>
                 <div class="form">
-                    <div class="item_box"><!-- 止盈 -->
+                    <!-- <div class="item_box">
                         <div class="item_box_left" @click="showUpModelDialog = true">
                             <div class="subtitle"><span>止盈</span></div>
                             <div class="item" style="justify-content: center;">
@@ -258,9 +262,9 @@
                                 <span v-if="updateForm.stop_profit_type == 'ratio'">%</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="item_box"><!-- 止损 -->
-                        <div class="item_box_left" @click="showDownModelDialog = true">
+                        <!-- <div class="item_box_left" @click="showDownModelDialog = true">
                             <div class="subtitle"><span>止损</span></div>
                             <div class="item" style="justify-content: center;">
                                 <span>{{ stopMap[updateForm.stop_loss_type] || '--' }}</span>
@@ -268,21 +272,40 @@
                                     <img src="/static/img/trade/down.png" alt="↓">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="item_box_right">
                             <div class="subtitle">
-                                <span>&nbsp;</span>
+                                <span>止损</span>
                             </div>
                             <div class="item">
-                                <input @input="inputStop(2)" v-model="updateForm.stop_loss_price" type="number"
-                                    class="ipt">
-                                <span v-if="updateForm.stop_loss_type == 'ratio'">%</span>
+                                <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
+                                    v-model="updateForm.stop_loss_price" type="number" class="ipt">
+                                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                                    @click="setPriceStop(20)" v-show="currStock.open_price"
+                                    :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
+                                        currStock.offset ==
+                                            'long' ? '-' : '+' }}20%</span>
+                                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                                    @click="setPriceStop(15)" v-show="currStock.open_price"
+                                    :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
+                                        currStock.offset ==
+                                            'long' ? '-' : '+' }}15%</span>
+                                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                                    @click="setPriceStop(10)" v-show="currStock.open_price"
+                                    :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
+                                        currStock.offset ==
+                                            'long' ? '-' : '+' }}10%</span>
+                                <!-- <span v-if="updateForm.stop_loss_type == 'ratio'">%</span> -->
                             </div>
                         </div>
                     </div>
                     <div class="subtitle">增加保证金</div>
                     <div class="item" style="margin-bottom:0.1rem">
-                        <input @input="changeAmount" v-model="updateForm.amount" type="number" class="ipt">
+                        <input @focus="amountFocus = true" @blur="amountFocus = false" @input="changeAmount"
+                            v-model="updateForm.amount" type="number" class="ipt">
+                        <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
+                            style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
+                            @click="updateForm.amount = stockWalletAmount">全部</span>
                     </div>
                     <div class="tip">账户余额 {{ stockWalletAmount }}</div>
                     <!-- 拖动 -->
@@ -302,12 +325,12 @@
                             {{ percent }}%
                         </div>
                     </div>
-                    <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
+                    <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">
                         <input v-model="updateForm.safeword" type="password" class="ipt">
-                    </div>
+                    </div> -->
 
-                    <Button @click="goUpdate" :loading="updateLoading" type="primary" class="btn" color="#014CFA">
+                    <Button @click="goUpdateDialog" :loading="updateLoading" type="primary" class="btn" color="#014CFA">
                         <span style="font-size: 0.28rem;">确定</span>
                     </Button>
                 </div>
@@ -326,6 +349,11 @@
     </div>
 
     <UnLogin v-else />
+
+    <!-- 更新订单-安全密码弹窗 -->
+    <SafePassword @submit="goUpdate" ref="safeRef" :key="'update'"></SafePassword>
+    <!-- 平仓-安全密码弹窗 -->
+    <SafePassword @submit="goSell" ref="safeRef2" :key="'sell'"></SafePassword>
 </template>
 
 <script setup>
@@ -338,12 +366,16 @@ import Decimal from 'decimal.js';
 import { _stocksSell, _stocksUpdate, _stocksCancel } from "@/api/api"
 import { _copyTxt } from "@/utils/index"
 import UnLogin from "@/components/UnLogin.vue"
+import SafePassword from "@/components/SafePassword.vue"
+
+const safeRef = ref()
+const safeRef2 = ref()
 
 const token = computed(() => store.state.token)
 const positionsList = computed(() => store.state.positionsList)
-const wallet = computed(() => store.state.wallet || [])
+const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 股票账户余额
-    const target = wallet.value.find(item => item.currency == 'stock')
+    const target = elseWallet.value.find(item => item.account == 'stock')
     if (target) return target.amount
     return 0
 })
@@ -441,6 +473,7 @@ const OpeningForm = item => {
 }
 
 // 平仓
+const amountFocus = ref(false)
 const sellForm = ref({
     volume: '',
     safeword: ''
@@ -457,13 +490,18 @@ const sell = item => {
     sliderValue.value = 0
 }
 const sellLoading = ref(false)
-const goSell = () => {
+const goSellDialog = () => {
     if (sellLoading.value) return
     if (!sellForm.value.volume) return showToast('请输入平仓数量')
-    if (!sellForm.value.safeword) return showToast('请输入交易密码')
+    // if (!sellForm.value.safeword) return showToast('请输入交易密码')
+    showSell.value = false
+    safeRef2.value && safeRef2.value.open()
+}
+const goSell = (s) => {
     sellLoading.value = true
     _stocksSell({
         ...sellForm.value,
+        safeword: s,
         order_no: currStock.value.order_no,
         token: sessionToken.value
     }).then(res => {
@@ -502,13 +540,18 @@ const update = item => {
     sliderValue.value = 0
 }
 const updateLoading = ref(false)
-const goUpdate = () => {
+const goUpdateDialog = () => {
     if (updateLoading.value) return
     if (!updateForm.value.amount) return showToast('请输入保证金')
-    if (!updateForm.value.safeword) return showToast('请输入交易密码')
+    // if (!updateForm.value.safeword) return showToast('请输入交易密码')
+    showUpdate.value = false
+    safeRef.value && safeRef.value.open()
+}
+const goUpdate = (s) => {
     updateLoading.value = true
     _stocksUpdate({
         ...updateForm.value,
+        safeword: s,
         order_no: currStock.value.order_no,
         token: sessionToken.value
     }).then(res => {
@@ -560,7 +603,14 @@ const inputStop = key => { // 输入止盈止损
         }
     }
 }
-
+const priceFocus3 = ref(false)
+const setPriceStop = i => { // 设置止损价格
+    if (currStock.value.offset == 'long') { // 买涨
+        updateForm.value.stop_loss_price = new Decimal(currStock.value.open_price).mul(100 - i).div(100).toNumber()
+    } else { // 买跌
+        updateForm.value.stop_loss_price = new Decimal(currStock.value.open_price).mul(100 + i).div(100).toNumber()
+    }
+}
 
 // 拖动
 const percentages = [25, 50, 75, 100];
@@ -657,7 +707,7 @@ const copy = text => {
     padding-bottom: 2rem;
 
     .tr {
-        padding: 0.2rem 0.32rem;
+        padding: 0.24rem 0.32rem;
         border-bottom: 1px solid #e8e8e8;
         display: flex;
         align-items: stretch;
@@ -665,7 +715,7 @@ const copy = text => {
 
     .th {
         color: #9ea3ae;
-        font-size: 0.24rem;
+        font-size: 0.28rem;
         font-weight: 400;
     }
 
@@ -734,13 +784,13 @@ const copy = text => {
 
         .amount {
             color: #014CFA;
-            font-size: 0.24rem;
+            font-size: 0.28rem;
             font-weight: 400;
         }
 
         .price {
             color: #000;
-            font-size: 0.24rem;
+            font-size: 0.28rem;
             font-weight: 400;
         }
 
@@ -818,6 +868,7 @@ const copy = text => {
         text-align: center;
         font-size: 0.28rem;
         color: #121826;
+        font-weight: bold;
     }
 
     .info_boxs {
@@ -911,8 +962,9 @@ const copy = text => {
             }
 
             .text {
-                min-width: 1.5rem;
+                min-width: 0.5rem;
                 text-align: right;
+                font-weight: bold;
             }
         }
     }
@@ -925,6 +977,7 @@ const copy = text => {
         text-align: center;
         font-size: 0.28rem;
         color: #121826;
+        font-weight: 600;
     }
 
     .form {

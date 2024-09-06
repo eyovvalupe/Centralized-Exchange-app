@@ -89,6 +89,7 @@ defineExpose({
         color: #121826;
         margin-bottom: 0.4rem;
         text-align: center;
+        font-weight: bold;
     }
 
     .subtitle {

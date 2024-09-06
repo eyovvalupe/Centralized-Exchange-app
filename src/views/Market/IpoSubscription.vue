@@ -519,7 +519,7 @@ getFee()
         text-align: center;
         top: -0.64rem;
         font-size: 0.28rem;
-        font-weight: 500;
+        font-weight: 600;
     }
 
     .item {

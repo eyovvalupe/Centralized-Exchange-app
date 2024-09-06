@@ -52,6 +52,23 @@
     z-index: 99998 !important;
 }
 
+.van-popup--bottom {
+    padding-top: 0.2rem;
+
+    &::after {
+        content: '';
+        background-color: #D9D9D9;
+        width: 0.64rem;
+        height: 0.08rem;
+        border-radius: 0.08rem;
+        position: absolute;
+        z-index: 99;
+        top: 0.2rem;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
 @media (min-width: 751px) {
 
 

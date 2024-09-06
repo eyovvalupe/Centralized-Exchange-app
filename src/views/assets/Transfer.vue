@@ -134,8 +134,8 @@
 
         <!-- 账户和币种 -->
         <Popup v-model:show="showPicker" round position="bottom">
-            <Picker :swipe-duration="300" :columns="columns" :columns-field-names="customFieldName"
-                @cancel="showPicker = false" @confirm="onConfirm" />
+            <Picker :swipe-duration="200" :columns="columns" :columns-field-names="customFieldName"
+                @cancel="showPicker = false" @confirm="showPicker = false" @change="onConfirm" />
         </Popup>
     </div>
 </template>
@@ -249,7 +249,7 @@ const onConfirm = ({ selectedOptions }) => {
         form.value.to = selectedOptions[0].key
         form.value.toCurrency = selectedOptions[1]
     }
-    showPicker.value = false
+    // showPicker.value = false
     setTimeout(() => {
         if (formType.value == 'swap') {
             getRate()

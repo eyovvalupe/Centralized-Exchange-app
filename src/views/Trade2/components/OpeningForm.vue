@@ -60,18 +60,18 @@
                     <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
                         v-model="form1.stop_loss_price" type="number" class="ipt">
 
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(3)"
+                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(20)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
-                                1 ? '-' : '+' }}3%</span>
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(2)"
+                                1 ? '-' : '+' }}20%</span>
+                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(15)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
-                                1 ? '-' : '+' }}2%</span>
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(1)"
+                                1 ? '-' : '+' }}15%</span>
+                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(10)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
-                                1 ? '-' : '+' }}1%</span>
+                                1 ? '-' : '+' }}10%</span>
                 </div>
             </div>
 
@@ -308,8 +308,8 @@
         title="保证金模式">
     </ActionSheet> -->
     <Popup v-model:show="showTypeDialog" round position="bottom" teleport="body">
-        <Picker :swipe-duration="300" :columns="columns" @cancel="showTypeDialog = false"
-            @confirm="onSelectForm1Type" />
+        <Picker :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
+            @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
     </Popup>
 
     <!-- 限价模式选择 -->
@@ -361,7 +361,7 @@ const modeMap = ref({
 // 市价-类型
 const showTypeDialog = ref(false)
 const onSelectForm1Type = (item) => {
-    showTypeDialog.value = false
+    // showTypeDialog.value = false
     form1.value.leverType = item.selectedValues[0]
     form1.value.lever = item.selectedValues[1]
 }
@@ -720,6 +720,9 @@ const paramHandle = data => {
     }
     if (data.lever) {
         levers.value = data.lever.split(',')
+        if (levers.value[0]) {
+            form1.value.lever = levers.value[0]
+        }
     }
 }
 getParam()
@@ -1039,6 +1042,7 @@ defineExpose({
         line-height: 0.6rem;
         text-align: center;
         margin-bottom: 0.2rem;
+        font-weight: bold;
     }
 
     .item {

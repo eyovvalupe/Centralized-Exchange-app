@@ -644,6 +644,7 @@ Promise.all([
         width: 100%;
         color: #121826;
         pointer-events: none;
+        font-weight: bold;
     }
 
     .close_icon {

@@ -437,6 +437,7 @@ const jump = (name) => {
         line-height: 0.6rem;
         text-align: center;
         margin-bottom: 0.2rem;
+        font-weight: bold;
     }
 
     .item {

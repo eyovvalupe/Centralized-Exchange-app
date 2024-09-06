@@ -160,7 +160,7 @@ defineExpose({
     padding-bottom: 2rem;
 
     .tr {
-        padding: 0.2rem 0.32rem;
+        padding: 0.24rem 0.32rem;
         border-bottom: 1px solid #e8e8e8;
         display: flex;
         align-items: stretch;
@@ -168,7 +168,7 @@ defineExpose({
 
     .th {
         color: #9ea3ae;
-        font-size: 0.24rem;
+        font-size: 0.28rem;
         font-weight: 400;
     }
 
@@ -237,14 +237,14 @@ defineExpose({
 
         .amount {
             color: #014CFA;
-            font-size: 0.24rem;
-            font-weight: 400;
+            font-size: 0.28rem;
+            font-weight: 500;
         }
 
         .price {
             color: #000;
-            font-size: 0.24rem;
-            font-weight: 400;
+            font-size: 0.28rem;
+            font-weight: 500;
         }
 
         .num {
