@@ -154,8 +154,8 @@
                 </div>
 
                 <div class="info" v-show="currStock.symbol && !searchFocus">
-                    <div>{{ currStock.symbol }}</div>
-                    <div style="color: #9ea3ae;">{{ currStock.name }}</div>
+                    <div style="color: #014cfa;">{{ currStock.symbol }}</div>
+                    <div style="color: #9ea3ae;font-size: 0.24rem;">{{ currStock.name }}</div>
                 </div>
             </div>
         </div>
@@ -163,7 +163,7 @@
         <!-- 数量 -->
         <div class="item_box">
             <div class="item_box_left" @click="showTypeDialog = true">
-                <div class="subtitle"><span>模式&杠杆</span></div>
+                <div class="subtitle"><span>保证金模式</span></div>
                 <div class="item" style="justify-content: center;">
                     <span>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
                     <div class="more_icon">
@@ -212,7 +212,7 @@
         </div>
 
         <!-- 按钮 -->
-        <Button v-if="token" :loading="configLoading" size="large" @click="submit1" class="submit"
+        <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
             :color="activeType == 1 ? '#18b762' : '#e8503a'" round>{{
                 activeType == 1 ?
                     '买涨' : '买跌' }}</Button>
@@ -232,7 +232,7 @@
                 <div class="item_val">
                     <div style="line-height: 0.32rem;">
                         <div style="text-align: right">{{ currStock.symbol }}</div>
-                        <div style="color: #9ea3ae;">{{ currStock.name }}</div>
+                        <div style="color: #9ea3ae;font-size: 0.24rem;">{{ currStock.name }}</div>
                     </div>
                 </div>
             </div>
@@ -279,11 +279,11 @@
                 <div class="fee">保证金 {{ payOrigin }} + 手续费 {{ payFee }}</div>
             </div>
 
-            <div class="subtitle">请输入交易密码</div>
+            <!-- <div class="subtitle">请输入交易密码</div>
             <div class="item pass_ipt">
                 <input v-model="safePass" type="password" class="ipt">
-            </div>
-            <Button :loading="submitLoading" @click="submitForm" size="large" class="submit" color="#014cfa"
+            </div> -->
+            <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit" color="#014cfa"
                 round>开仓</Button>
         </div>
     </Popup>
@@ -321,6 +321,9 @@
     <ActionSheet teleport="body" v-model:show="showJumpTypeDialog" :actions="jumpModeList"
         @select="onSelectJumpModeType" title="划转/兑换/充值">
     </ActionSheet>
+
+    <!-- 开仓-安全密码弹窗 -->
+    <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 </template>
 
 <script setup>
@@ -332,6 +335,9 @@ import Decimal from 'decimal.js';
 import { useRoute } from "vue-router"
 import router from "@/router"
 import StockPopup from "../../trade/StockPopup.vue"
+import SafePassword from "@/components/SafePassword.vue"
+
+const safeRef = ref()
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
@@ -418,7 +424,9 @@ const stockWalletAmount = computed(() => { // 股票账户余额
 })
 const maxStockNum = computed(() => { // 最大可买 可卖
     if (currStock.value.price) {
-        return new Decimal(stockWalletAmount.value).div(form1.value.price || currStock.value.price).mul(form1.value.lever).floor()
+        const max = new Decimal(stockWalletAmount.value).div(form1.value.price || currStock.value.price).mul(form1.value.lever).floor()
+        const rs = max - max.mod(step.value)
+        return rs > min.value ? rs : 0
     }
     return '--'
 })
@@ -744,14 +752,17 @@ const payFee = computed(() => { // 手续费
     return new Decimal(payOrigin.value).mul(openFee.value)
 })
 const submitLoading = ref(false)
-const submitForm = () => {
-    if (!safePass.value) return showToast('请输入交易密码')
+const submitFormDialog = () => {
+    showModel.value = false
+    safeRef.value && safeRef.value.open()
+}
+const submitForm = (s) => {
     if (submitLoading.value) return
     submitLoading.value = true
     _stocksBuy({
         ...params.value,
         token: sessionToken.value,
-        safeword: safePass.value,
+        safeword: s,
     }).then(res => {
         if (res && res.code == 200) {
             showModel.value = false
@@ -1088,7 +1099,7 @@ defineExpose({
             }
 
             .lever {
-                width: 2rem;
+                min-width: 0.7rem;
                 text-align: right;
             }
         }

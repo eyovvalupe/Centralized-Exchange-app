@@ -716,7 +716,9 @@ const copy = text => {
     .th {
         color: #9ea3ae;
         font-size: 0.28rem;
+        padding: 0.24rem 0.32rem 0.08rem 0.32rem;
         font-weight: 400;
+        border-bottom: none;
     }
 
     .td {

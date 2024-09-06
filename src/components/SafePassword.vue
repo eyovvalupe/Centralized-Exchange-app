@@ -96,7 +96,7 @@ defineExpose({
         color: #000;
         position: absolute;
         font-weight: bold;
-        top: 0.32rem;
+        top: 0.44rem;
         left: 50%;
         transform: translateX(-50%);
     }
