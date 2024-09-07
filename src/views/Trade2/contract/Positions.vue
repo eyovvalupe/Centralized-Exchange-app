@@ -2,7 +2,7 @@
 <template>
     <div v-if="token" class="positions">
         <div class="tr th">
-            <div class="td td-5">股票/状态</div>
+            <div class="td td-5">合约/状态</div>
             <div class="td td-4">开仓/可售</div>
             <div class="td td-4">现价/成本</div>
             <div class="td td-4">盈亏/盈亏比</div>
@@ -73,7 +73,7 @@
 
                 <div class="info_boxs">
                     <div class="info_box">
-                        <div>可售股票</div>
+                        <div>可售合约</div>
                         <div class="amount">{{ currStock.unsold_volume || '--' }}</div>
                     </div>
                     <div class="info_box">
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="info_item">
-                    <div class="name">股票</div>
+                    <div class="name">合约</div>
                     <div class="val_box">
                         <div class="text">{{ currStock.symbol || '--' }}</div>
                     </div>
@@ -374,7 +374,7 @@ const safeRef2 = ref()
 const token = computed(() => store.state.token)
 const contractPositionsList = computed(() => store.state.contractPositionsList)
 const elseWallet = computed(() => store.state.elseWallet || [])
-const stockWalletAmount = computed(() => { // 股票账户余额
+const stockWalletAmount = computed(() => { // 合约账户余额
     const target = elseWallet.value.find(item => item.account == 'stock')
     if (target) return target.amount
     return 0
@@ -433,7 +433,13 @@ const subs = () => {
         socket && socket.emit('futuresorder', '#all')
         loading.value = true
         socket.on('futuresorder', res => {
-            store.commit('setContractPositionsList', res.data || [])
+
+            store.commit('setContractPositionsList', (res.data || []).map(item => {
+                if (!item.order_no && item.father_username) {
+                    item.order_no = item.father_username
+                }
+                return item
+            }))
             loading.value = false
         })
     });
@@ -506,6 +512,7 @@ const goSell = (s) => {
         token: sessionToken.value
     }).then(res => {
         if (res && res.code == 200) {
+            store.dispatch('updateWallet')
             showToast('操作成功')
             showSell.value = false
         }
@@ -556,6 +563,7 @@ const goUpdate = (s) => {
         token: sessionToken.value
     }).then(res => {
         if (res && res.code == 200) {
+            store.dispatch('updateWallet')
             showToast('操作成功')
             showUpdate.value = false
         }
@@ -675,6 +683,7 @@ const cancel = item => {
             }).then(res => {
                 if (res && res.code == 200) {
                     setTimeout(() => {
+                        store.dispatch('updateWallet')
                         showToast('操作成功')
                     }, 100)
                 }
@@ -879,14 +888,14 @@ const copy = text => {
         padding: 0.4rem 0.32rem;
         position: relative;
 
-        &::after {
-            content: '';
-            width: 40%;
-            position: absolute;
-            bottom: 0;
-            left: 30%;
-            border-bottom: 1px dashed #CBCBCB;
-        }
+        // &::after {
+        //     content: '';
+        //     width: 40%;
+        //     position: absolute;
+        //     bottom: 0;
+        //     left: 30%;
+        //     border-bottom: 1px dashed #CBCBCB;
+        // }
 
         .info_box {
             flex: 1;

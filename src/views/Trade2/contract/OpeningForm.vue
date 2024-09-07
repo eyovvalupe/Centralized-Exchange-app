@@ -137,7 +137,7 @@
 
         <!-- 股票 -->
         <div class="subtitle">
-            <span style="color: #014CFA;" @click="showNavDialog">股票</span>
+            <span style="color: #014CFA;" @click="showNavDialog">合约</span>
             <Loading v-show="searchLoading" type="spinner" style="width:0.28rem;height:0.28rem" color="#034cfa" />
             <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
                 <img src="/static/img/trade/blue-stock.png" />
@@ -146,7 +146,7 @@
         <!-- 搜索 -->
         <div class="item_box">
             <div class="item" :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
-                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">股票代码</span>
+                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">合约代码</span>
                 <input :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
                     @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="blurSearch"
                     v-model.trim="searchStr" @keyup="inputSearch" class="ipt" type="text">
@@ -228,7 +228,7 @@
         <div class="stock_submit_box">
             <div class="title">开仓确认</div>
             <div class="item">
-                <div class="item_name">股票</div>
+                <div class="item_name">合约</div>
                 <div class="item_val">
                     <div style="line-height: 0.32rem;">
                         <div style="text-align: right">{{ currStock.symbol }}</div>
@@ -418,13 +418,13 @@ const modeList = computed(() => {
 
 const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 股票账户余额
-    const target = elseWallet.value.find(item => item.account == 'stock')
+    const target = elseWallet.value.find(item => item.account == 'futures')
     if (target) return target.amount
     return 0
 })
 const maxStockNum = computed(() => { // 最大可买 可卖
     if (currStock.value.price) {
-        const max = new Decimal(stockWalletAmount.value).div(form1.value.price || currStock.value.price).mul(form1.value.lever).floor()
+        const max = new Decimal(stockWalletAmount.value).div(amountper.value).mul(form1.value.lever).floor()
         const rs = max - max.mod(step.value)
         return rs > min.value ? rs : 0
     }
@@ -447,10 +447,11 @@ const setPricePercent = (i) => { // 设置浮动价格
 // 市价
 const currStock = ref({}) // 当前股票
 try {
-    currStock.value = JSON.parse(sessionStorage.getItem('currStock') || '{}')
+    currStock.value = JSON.parse(sessionStorage.getItem('currConstract') || '{}')
 } catch {
     currStock.value = {}
 }
+currStock.value = store.state.currConstact
 
 const form1 = ref({
     leverType: 'cross',
@@ -538,7 +539,7 @@ const inputStop = key => { // 输入止盈止损
 
 
 const submit1 = () => {
-    if (!currStock.value.symbol) return showToast('请输入股票代码')
+    if (!currStock.value.symbol) return showToast('请输入合约代码')
     if (!form1.value.volume || form1.value.volume < min.value) return showToast(`最小交易量：${min.value}`)
     // 止盈止损校验
     if (props.activeTab == 2) {
@@ -642,7 +643,7 @@ const sureStock = () => {
                 ...currStock.value,
                 ...r.data
             }
-            sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
+            sessionStorage.setItem('currConstract', JSON.stringify(currStock.value))
         }
     }).finally(() => {
         searchLoading.value = false
@@ -654,7 +655,8 @@ const goSearch = () => {
     _search({
         symbol: s,
         mode: 'right',
-        page: 1
+        page: 1,
+        market: 'futures'
     }).then(res => {
         if (s != searchStr.value) return // 搜索内容已经变化就不处理了
         if (!searchFocus.value) return // 失去焦点就不处理了
@@ -667,7 +669,7 @@ const goSearch = () => {
                         ...currStock.value,
                         ...r.data
                     }
-                    sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
+                    sessionStorage.setItem('currConstract', JSON.stringify(currStock.value))
                 }
             })
         } else {
@@ -699,7 +701,6 @@ const getParam = () => {
     configLoading.value = true
     paramHandle()
     _futuresPara().then(res => {
-        console.error('---合约参数', res)
         if (res && res.data) {
             paramHandle(res.data)
         }

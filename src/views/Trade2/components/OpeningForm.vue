@@ -654,7 +654,8 @@ const goSearch = () => {
     _search({
         symbol: s,
         mode: 'right',
-        page: 1
+        page: 1,
+        market: 'stock'
     }).then(res => {
         if (s != searchStr.value) return // 搜索内容已经变化就不处理了
         if (!searchFocus.value) return // 失去焦点就不处理了

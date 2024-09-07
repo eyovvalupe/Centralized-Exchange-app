@@ -38,7 +38,7 @@ import DateArea from "@/components/DateArea.vue"
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
-    emits('showNavDialog')
+    emits('showNavDialog', 'stock')
 }
 
 const active = ref(sessionStorage.getItem('trade_stock_tab') || 0)

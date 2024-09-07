@@ -27,7 +27,7 @@ import Inquire from "../contract/Inquire.vue"
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
-    emits('showNavDialog')
+    emits('showNavDialog', 'contract')
 }
 
 const active = ref(sessionStorage.getItem('trade_contract_tab') || 0)

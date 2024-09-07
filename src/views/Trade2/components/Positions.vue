@@ -507,6 +507,7 @@ const goSell = (s) => {
     }).then(res => {
         if (res && res.code == 200) {
             showToast('操作成功')
+            store.dispatch('updateWallet')
             showSell.value = false
         }
     }).finally(() => {
@@ -557,6 +558,7 @@ const goUpdate = (s) => {
     }).then(res => {
         if (res && res.code == 200) {
             showToast('操作成功')
+            store.dispatch('updateWallet')
             showUpdate.value = false
         }
     }).finally(() => {
@@ -675,6 +677,7 @@ const cancel = item => {
             }).then(res => {
                 if (res && res.code == 200) {
                     setTimeout(() => {
+                        store.dispatch('updateWallet')
                         showToast('操作成功')
                     }, 100)
                 }
@@ -879,14 +882,14 @@ const copy = text => {
         padding: 0.4rem 0.32rem;
         position: relative;
 
-        &::after {
-            content: '';
-            width: 40%;
-            position: absolute;
-            bottom: 0;
-            left: 30%;
-            border-bottom: 1px dashed #CBCBCB;
-        }
+        // &::after {
+        //     content: '';
+        //     width: 40%;
+        //     position: absolute;
+        //     bottom: 0;
+        //     left: 30%;
+        //     border-bottom: 1px dashed #CBCBCB;
+        // }
 
         .info_box {
             flex: 1;

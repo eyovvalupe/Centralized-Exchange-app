@@ -190,12 +190,15 @@
 <script setup>
 import { Icon, Popup, showToast } from "vant"
 import router from "@/router"
+import { useRoute } from "vue-router"
 import { computed, ref } from "vue"
 import store from "@/store";
 import AreaChart from "@/components/KlineCharts/AreaChart.vue"
 import KlineChart from "@/components/KlineCharts/KlineChart.vue"
 import { _formatNumber } from "@/utils/index"
 import { _basic, _profile, _add, _del } from "@/api/api"
+
+const route = useRoute()
 
 // const activeTab = ref(1)
 const props = defineProps({
@@ -210,12 +213,18 @@ const loading = ref(false)
 const addCollect = () => {
     if (loading.value) return
     loading.value = true
-    if (item.value.watchlist == 0) {
+    if (!item.value.watchlist) {
         _add({
             symbol: item.value.symbol
         }).then(res => {
             if (res.code == 200) {
-                store.commit('setCurrStock', { watchlist: 1 })
+                switch (route.query.type) {
+                    case 'constract': // 合约
+                        store.commit('setCurrConstract', { watchlist: 1 })
+                        break
+                    default:
+                        store.commit('setCurrStock', { watchlist: 1 })
+                }
                 showToast('添加成功')
             }
         }).finally(() => {
@@ -226,7 +235,13 @@ const addCollect = () => {
             symbol: item.value.symbol
         }).then(res => {
             if (res.code == 200) {
-                store.commit('setCurrStock', { watchlist: 0 })
+                switch (route.query.type) {
+                    case 'constract': // 合约
+                        store.commit('setCurrConstract', { watchlist: 0 })
+                        break
+                    default:
+                        store.commit('setCurrStock', { watchlist: 0 })
+                }
                 showToast('移除成功')
             }
         }).finally(() => {
@@ -239,7 +254,17 @@ const addCollect = () => {
 
 
 // 股票信息
-const item = computed(() => store.state.currStock || {})
+const item = computed(() => {
+    let it = {}
+    switch (route.query.type) {
+        case 'constract': // 合约
+            it = store.state.currConstact || {}
+            break
+        default:
+            it = store.state.currStock || {}
+    }
+    return it
+})
 const updown = computed(() => { // 1-涨 -1-跌 0-平
     if (item.value.ratio === undefined) return 0
     return item.value.ratio > 0 ? 1 : -1
@@ -305,7 +330,8 @@ const goBuy = key => {
         name: 'trade',
         query: {
             symbol: item.value.symbol,
-            type: key ? 1 : 2
+            type: key ? 1 : 2,
+            to: route.query.type
         }
     })
 }

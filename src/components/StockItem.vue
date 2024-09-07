@@ -114,7 +114,8 @@ const goInfo = () => {
             router.push({
                 name: 'market_info',
                 query: {
-                    symbol: props.item.symbol
+                    symbol: props.item.symbol,
+                    type: 'stock'
                 }
             })
         }, 100)

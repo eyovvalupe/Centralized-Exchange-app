@@ -48,6 +48,7 @@ import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import { _futuresList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
+import Decimal from 'decimal.js';
 
 const inquireList = computed(() => store.state.inquireList || [])
 const token = computed(() => store.state.token)

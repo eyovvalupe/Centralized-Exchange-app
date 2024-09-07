@@ -48,10 +48,10 @@
         <div class="trade_body">
             <transition :name="transitionName" v-if="pageActive">
                 <div v-if="activeTab == 0">
-                    <StockBlock @showNavDialog="showNavDialog = true" ref="StockBlockRef" />
+                    <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" />
                 </div>
                 <div v-else-if="activeTab == 1">
-                    <ContractBlock @showNavDialog="showNavDialog = true" ref="ContractBlockRef" />
+                    <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" />
                 </div>
                 <div v-else-if="activeTab == 2">
                     <AiBlock />
@@ -177,9 +177,9 @@ import store from "@/store"
 import StockTable from "@/components/StockTable.vue"
 import { _search, _watchlist } from "@/api/api"
 import NoData from "@/components/NoData.vue"
+import { useRoute } from "vue-router"
 
-
-
+const route = useRoute()
 const openTab = ref(false)
 const token = computed(() => store.state.token)
 
@@ -192,6 +192,10 @@ const onRefresh = () => {
 
 // 一级导航
 const activeTab = ref(0)
+if (route.query.to == 'constract') {
+    activeTab.value = 1
+}
+
 const transitionName = ref('slide-left')
 watch([activeTab], (newActive, oldActive) => {
     if (newActive > oldActive) {
@@ -207,6 +211,14 @@ const showPrice = ref(false)
 // 左侧列表弹窗
 const showNavDialog = ref(false)
 const navActiveTab = ref('option')
+const showNavDialogFunc = val => {
+    console.error(val)
+    navActiveTab.value = val || 'opeion'
+    showNavDialog.value = true
+    setTimeout(() => {
+        goSearch()
+    }, 300)
+}
 
 const watchList = computed(() => store.state.marketWatchList || [])
 const marketSearchList = computed(() => store.state.marketSearchList || [])
@@ -262,7 +274,6 @@ const handleClickContract = (item) => {
 
 
 const changeTab = val => {
-    console.error(val)
     goSearch(val)
 }
 

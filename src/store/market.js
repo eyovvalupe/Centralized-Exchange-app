@@ -7,7 +7,7 @@ const { startSocket } = useSocket()
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList'],
-    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList'],
+    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList'],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList']
 }
 
@@ -34,6 +34,9 @@ export default {
         marketRankList: [], // 排行列表
 
         marketWatchKeys: [], // 除了主列表，还需要额外监听的股票 symbol数组
+
+        currConstact: {}, // 当前合约的数据
+        contractList: [], // 合约列表
 
     },
     mutations: {
@@ -66,6 +69,9 @@ export default {
         },
         setMarketContractRecommendList(state, data) {
             state.marketContractRecommendList = data;
+        },
+        setContractList(state, data) {
+            state.contractList = data
         },
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
@@ -137,6 +143,30 @@ export default {
                 })
             }, 300)
         },
+        setCurrConstract(state, data) {
+            if (!data.symbol) { // 只更新部分数据
+                for (let key in data) {
+                    if (data[key] === null) delete data[key]
+                }
+                state.currConstact = {
+                    ...state.currConstact,
+                    ...data
+                }
+                return
+            }
+            // 兼容后端的symbols 和 symbol
+            // data.symbol = data.symbols || data.symbol
+            state.currConstact = data;
+            // 当前股票有更新，则同步到列表里去
+            setTimeout(() => {
+                (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                    const index = state[ck].findIndex(item => item.symbol == data.symbol)
+                    if (index >= 0) {
+                        state[ck][index] = data
+                    }
+                })
+            }, 300)
+        }
     },
     actions: {
         subList({ commit, state }, { commitKey, listKey }) {
