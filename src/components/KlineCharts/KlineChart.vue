@@ -27,8 +27,10 @@ import { _kline } from "@/api/api"
 import { Loading as L } from 'vant';
 import { useSocket } from '@/utils/ws'
 import store from "@/store";
+import { useRoute } from "vue-router"
 import Loading from "../LoadingMore"
 
+const route = useRoute()
 const { startSocket } = useSocket()
 let socket = null
 
@@ -98,12 +100,13 @@ const initData = async () => { // 初始化数据
 
     initLoading.value = true
     const datas = await getData(query)
+    console.error('---d1', datas)
     initLoading.value = false
     if (query.symbol == props.symbol && query.period == currPeriod.value) { // 而且是当前选项
         if (datas && datas.length) {
             chart.applyNewData(datas) // 重设图表数据
             // 同步数据到股票详情
-            store.commit('setCurrStock', datas[datas.length - 1] || {})
+            setCurrData(datas[datas.length - 1] || {})
             chart.loadMore(loadMoreData)
             setTimeout(() => {
                 if (!vol.value) {
@@ -117,6 +120,8 @@ const initData = async () => { // 初始化数据
             }, 300)
             // 订阅新数据
             subs()
+        } else {
+            chart.applyNewData([]) // 重设图表数据
         }
     }
 }
@@ -124,13 +129,12 @@ const subs = () => { // 订阅新数据
 
     socket = startSocket(() => {
         const params = { symbols: props.symbol, period: currPeriod.value }
-        console.error('订阅', params)
         socket && socket.off('kline')
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
             if (res.code == 200 && res.symbols == props.symbol && res.period == props.period) {
                 const item = res.data[0]
-                store.commit('setCurrStock', item)
+                setCurrData(item)
                 chart.updateData({
                     ...item,
                     timestamp: item.timestamp * 1000
@@ -165,7 +169,7 @@ const loadMoreData = async () => { // 加载更多
 }
 
 const getData = (params) => { // 获取数据
-    const key = `${params.symbol}_${params.period}_${params.page}`
+    const key = `${route.query.type}_${params.symbol}_${params.period}_${params.page}`
     return new Promise(resolve => {
         let rs = []
         // 先从session里找
@@ -216,6 +220,18 @@ const resetSize = () => {
 defineExpose({
     resetSize
 })
+
+
+const setCurrData = (item) => {
+    switch (route.query.type) {
+        case 'constract':
+            store.commit('setCurrConstract', item)
+            break
+        default:
+            store.commit('setCurrStock', item)
+            break
+    }
+}
 </script>
 
 <style lang="less" scoped>
