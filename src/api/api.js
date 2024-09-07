@@ -460,4 +460,47 @@ export const _userExist = (data = {}) => {
     custom: { auth: false, toast: false, retry: true },
   });
 };
+
+// 合约列表
+export const _futures = (data = {}) => {
+  return http.post(`/anon/v1/item/futures`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
+// 合约参数
+export const _futuresPara = (data = {}) => {
+  return http.post(`/anon/v1/futures/para`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
+// 订单列表
+export const _futuresList = (data = {}) => {
+  return http.post(`/authc/v1/futures/list`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 合约开仓
+export const _futuresBuy = (data = {}) => {
+  return http.post(`/authc/v1/futures/buy`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 合约平仓
+export const _futuresSell = (data = {}) => {
+  return http.post(`/authc/v1/futures/sell`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 合约撤单
+export const _futuresCancel = (data = {}) => {
+  return http.post(`/authc/v1/stocks/cancel`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 合约更新
+export const _futuresUpdate = (data = {}) => {
+  return http.post(`/authc/v1/futures/update`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
 export const memberInfo = () => { }

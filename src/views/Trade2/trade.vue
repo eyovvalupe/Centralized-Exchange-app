@@ -47,13 +47,16 @@
 
         <div class="trade_body">
             <transition :name="transitionName" v-if="pageActive">
-                <div v-if="activeTab == 0" class="stock_block">
+                <div v-if="activeTab == 0">
                     <StockBlock @showNavDialog="showNavDialog = true" ref="StockBlockRef" />
                 </div>
-                <div v-else-if="activeTab == 2" class="ai_block">
+                <div v-else-if="activeTab == 1">
+                    <ContractBlock @showNavDialog="showNavDialog = true" ref="ContractBlockRef" />
+                </div>
+                <div v-else-if="activeTab == 2">
                     <AiBlock />
                 </div>
-                <div v-else-if="activeTab == 5" class="ipo_block">
+                <div v-else-if="activeTab == 5">
                     <IpoBlock />
                 </div>
                 <div v-else>
@@ -107,7 +110,7 @@
                                 placeholder="搜索">
                         </div>
 
-                        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                        <StockTable :handleClick="handleClickContract" :loading="searchLoading" :key="'search'"
                             :list="futuresSearchList" />
                     </Tab>
                     <Tab :title="'AI量化'" name="ai">
@@ -169,6 +172,7 @@ import { ref, watch, computed, onActivated, onDeactivated } from "vue"
 import IpoBlock from "./pages/IpoBlock.vue"
 import StockBlock from "./pages/StockBlock.vue"
 import AiBlock from "./pages/AiBlock.vue"
+import ContractBlock from "./pages/ContractBlock.vue"
 import store from "@/store"
 import StockTable from "@/components/StockTable.vue"
 import { _search, _watchlist } from "@/api/api"
@@ -247,6 +251,13 @@ const StockBlockRef = ref()
 const handleClick = (item) => {
     showNavDialog.value = false
     StockBlockRef.value && StockBlockRef.value.choose(item)
+}
+
+// 选择合约
+const ContractBlockRef = ref()
+const handleClickContract = (item) => {
+    showNavDialog.value = false
+    ContractBlockRef.value && ContractBlockRef.value.choose(item)
 }
 
 

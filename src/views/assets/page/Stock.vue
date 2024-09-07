@@ -35,27 +35,18 @@
         </div>
 
         <div class="subtitle">持仓</div>
-        <!-- 列表 -->
-        <div class="th">
-            <div class="td td12">股票/状态</div>
-            <div class="td">开仓/数量</div>
-            <div class="td">现价/成本</div>
-            <div class="td">盈亏/盈亏比</div>
-        </div>
-        <div style="padding: 0 0.32rem;">
-            <StockItem v-for="i in 20" :key="i" />
-        </div>
+        <Positions />
     </div>
 </template>
 
 <script setup>
 import { ref, computed } from "vue"
 import { Icon } from "vant"
-import StockItem from "./components/StockItem.vue"
 import router from "@/router"
 import store from "@/store"
 import Decimal from 'decimal.js';
 import { _loanPara } from '@/api/api'
+import Positions from "../../Trade2/components/Positions.vue"
 
 // store.dispatch('updateOrderHint')
 
@@ -220,27 +211,5 @@ getConfig()
         margin-bottom: 0.1rem;
     }
 
-    .th {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 0.72rem;
-        color: #9EA3AE;
-        font-size: 0.28rem;
-        font-weight: 400;
-        border-bottom: 1px solid #E8E8E8;
-        margin: 0 0.32rem;
-        text-align: center;
-
-        .td {
-            flex: 10;
-
-        }
-
-        .td12 {
-            flex: 12;
-            text-align: left;
-        }
-    }
 }
 </style>

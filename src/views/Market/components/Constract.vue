@@ -31,7 +31,21 @@
 </template>
 
 <script setup>
+import { _futures } from "@/api/api"
+import { ref } from "vue"
 
+const loading = ref(false)
+const getList = () => {
+    loading.value = true
+    _futures().then(res => {
+        console.error(res)
+    }).finally(() => {
+        loading.value = false
+    })
+}
+
+
+getList()
 </script>
 
 <style lang="less" scoped>
