@@ -156,7 +156,7 @@ export default {
             }
             // 兼容后端的symbols 和 symbol
             // data.symbol = data.symbols || data.symbol
-            state.currConstact = data;
+            state.currConstact = Object.assign({}, state.currConstact, data);
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
                 (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {

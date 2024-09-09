@@ -61,26 +61,28 @@ watch(currPeriod, val => {
 
 let chart = null
 onMounted(() => {
-    chart = init('chat_k')
-    chart.setStyles(klineConfig)
-    chart?.setScrollEnabled(true) // 是否滚动
-    chart?.setOffsetRightDistance(50) // 设置右边距
-    chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
-    chart?.setMaxOffsetRightDistance(50) // 设置右边最大空出的边距
-    chart.setStyles({
-        // tooltip: {
-        //     showRule: 'none'
-        // },
-        candle: {
-            type: 'candle_solid',
-            margin: {
-                right: 0 // 设置右边距为0
+    setTimeout(() => {
+        chart = init('chat_k')
+        chart.setStyles(klineConfig)
+        chart?.setScrollEnabled(true) // 是否滚动
+        chart?.setOffsetRightDistance(50) // 设置右边距
+        chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
+        chart?.setMaxOffsetRightDistance(50) // 设置右边最大空出的边距
+        chart.setStyles({
+            // tooltip: {
+            //     showRule: 'none'
+            // },
+            candle: {
+                type: 'candle_solid',
+                margin: {
+                    right: 0 // 设置右边距为0
+                }
             }
-        }
-    })
+        })
+    }, 100)
     setTimeout(() => {
         initData()
-    }, 100)
+    }, 300)
 })
 onBeforeUnmount(() => {
     dispose('chat_k')
@@ -97,13 +99,18 @@ const initData = async () => { // 初始化数据
         page: page.value,
     }
     chart.loadMore(() => { })
-
     initLoading.value = true
     const datas = await getData(query)
-    console.error('---d1', datas)
     initLoading.value = false
     if (query.symbol == props.symbol && query.period == currPeriod.value) { // 而且是当前选项
         if (datas && datas.length) {
+            let num = 2
+            try {
+                num = datas[0].high.toString().split('.')[1].length || 0
+            } catch {
+                num = 2
+            }
+            chart.setPriceVolumePrecision(num, 2)
             chart.applyNewData(datas) // 重设图表数据
             // 同步数据到股票详情
             setCurrData(datas[datas.length - 1] || {})

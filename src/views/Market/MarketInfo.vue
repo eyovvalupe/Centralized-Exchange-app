@@ -7,10 +7,15 @@
                 <div v-if="!props.innerPage" class=" back" @click="backFunc">
                     <Icon name="arrow-left" />
                 </div>
-                <div class="title">
+                <!-- 标题 -->
+                <div class="title" v-if="route.query.type == 'constract'">
+                    <div class="title_name">{{ item.name || '--' }}</div>
+                </div>
+                <div class="title" v-else>
                     <div class="title_name">{{ item.symbol || '--' }}</div>
                     {{ item.name || '--' }}
                 </div>
+                <!-- 详情 -->
                 <div class="title_shadow"></div>
                 <div v-if="!props.innerPage" class="search star" @click="addCollect"
                     :style="{ opacity: loading ? '0.5' : '1' }">
@@ -24,7 +29,7 @@
             <div class="header-price">
                 <h1 class="info" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
                     <template v-if="item.price || item.close">
-                        {{ Number(item.price || item.close).toFixed(2) }}
+                        {{ Number(item.price || item.close) }}
                     </template>
                     <span v-else>--</span>
                 </h1>
@@ -32,7 +37,7 @@
                     :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
                     <div class="ratio_price" v-if="Number(item.price * (item.ratio || 0))">{{ Number(item.price *
                         (item.ratio ||
-                            0)).toFixed(2) }}</div>
+                            0)).toFixed(4) }}</div>
                     <div v-if="item.ratio">{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%'
                         }}</div>
                 </div>
@@ -73,6 +78,8 @@
                     </div> -->
                 </div>
                 <div class="chart_container" :class="{ 'fullscreen_container': fullWindow }">
+                    <!-- 时区 -->
+                    <div v-if="item.date" class="chart_time">{{ item.date }}</div>
                     <!-- 分时图 -->
                     <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
                     <!-- K线图 -->
@@ -696,6 +703,15 @@ const showInfo = ref(false)
                 height: calc(100% - 0.48rem);
                 width: 100%;
                 padding: 0 0.28rem;
+                position: relative;
+
+                .chart_time {
+                    position: absolute;
+                    z-index: 999;
+                    top: 0.24rem;
+                    left: 0.24rem;
+                    color: #999;
+                }
             }
 
             .fullscreen_container {

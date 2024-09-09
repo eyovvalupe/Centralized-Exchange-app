@@ -163,6 +163,13 @@ const initData = async () => {
     loading.value = false
     if (query == symbol.value) { // 当前股票
         if (datas && datas.length) {
+            let num = 2
+            try {
+                num = datas[0].high.toString().split('.')[1].length || 0
+            } catch {
+                num = 2
+            }
+            chart.setPriceVolumePrecision(num, 2)
             chart.applyNewData(datas) // 重设图表数据
             subs()
             timeout = setTimeout(() => {
