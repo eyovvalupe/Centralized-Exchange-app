@@ -228,16 +228,45 @@ const jump = (name, check = false, query) => {
 
     .overview {
         background-size: 100% 100%;
-        margin: 0 0.32rem 0.24rem 0.32rem;
+        margin: 0 0.32rem 0.36rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
-        background-color: #5050FF;
+        background-color: #1A59F6;
         border-radius: 0.32rem;
         position: relative;
 
-        .top {
+        .loan_btn {
+            position: absolute;
+            top: 0.4rem;
+            right: 0.6rem;
+            height: 0.52rem;
+            color: #fff;
+            font-size: 0.24rem;
+            border-radius: 0.3rem;
+            padding: 0 0.4rem;
+            display: flex;
+            align-items: center;
+            background-color: #000;
 
+            &:active {
+                background-color: #0B1E4A;
+            }
+        }
+
+        .loan_max {
+            position: absolute;
+            top: 1.04rem;
+            right: 0.2rem;
+            color: #fff;
+            font-size: 0.24rem;
+            font-weight: 400;
+            text-align: center;
+            min-width: 2.4rem;
+        }
+
+        .top {
             font-size: 0.28rem;
             font-weight: 400;
+            padding-left: 0.32rem;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -257,6 +286,7 @@ const jump = (name, check = false, query) => {
         }
 
         .money {
+            padding-left: 0.32rem;
             font-size: 0.68rem;
             font-weight: 500;
             color: #fff;
@@ -268,78 +298,41 @@ const jump = (name, check = false, query) => {
             display: flex;
             align-items: center;
             justify-content: center;
-            // border-top: 1px solid rgba(255, 255, 255, 0.4);
+            line-height: 0.44rem;
             padding: 0.1rem 0;
-
 
             .line {
                 width: 1px;
-                height: 0.4rem;
+                height: 0.44rem;
                 background-color: rgba(255, 255, 255, 0.4);
             }
 
             .nav {
-                flex: 1;
                 color: #fff;
                 font-weight: 400;
+                flex: 1;
                 font-size: 0.24rem;
                 text-align: center;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                line-height: 0.44rem;
+                border-radius: 0.26rem;
+                position: relative;
 
-                .nav_icon {
-                    width: 0.7rem;
-                    height: 0.7rem;
-                    margin-right: 0.18rem;
+                &:active {
+                    background-color: #5045BD;
                 }
-            }
-        }
 
-        .currency_btn {
-            position: absolute;
-            top: 0.3rem;
-            right: 0.4rem;
-            height: 0.56rem;
-            min-width: 1.2rem;
-            border-radius: 0.6rem;
-            padding: 0 0.2rem;
-            color: #fff;
-            font-size: 0.24rem;
-            font-weight: 400;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #000;
-
-            &:active {
-                background-color: #0B1E4A;
-            }
-
-            .btn_icon {
-                width: 0.4rem;
-                height: 0.4rem;
-                margin-right: 0.1rem;
-            }
-        }
-
-        .loan_box {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            color: #fff;
-            font-weight: 400;
-            font-size: 0.24rem;
-            position: absolute;
-            left: 4.8rem;
-            bottom: 0.2rem;
-
-            .num {
-                font-size: 0.28rem;
-                font-weight: 500;
-                margin-left: 0.1rem;
+                .hint {
+                    background-color: #fff;
+                    height: 0.24rem;
+                    font-size: 0.2rem;
+                    line-height: 0.24rem;
+                    font-weight: 200;
+                    padding: 0 0.1rem;
+                    border-radius: 0.2rem;
+                    position: absolute;
+                    top: -0.1rem;
+                    right: -0.08rem;
+                    color: #000
+                }
             }
         }
     }

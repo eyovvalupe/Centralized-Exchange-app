@@ -34,13 +34,43 @@ const assets = computed(() => store.state.assets || {})
         background-size: 100% 100%;
         margin: 0 0.32rem 0.36rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
-        background-color: #25253D;
+        background-color: #1A59F6;
         border-radius: 0.32rem;
+        position: relative;
+
+        .loan_btn {
+            position: absolute;
+            top: 0.4rem;
+            right: 0.6rem;
+            height: 0.52rem;
+            color: #fff;
+            font-size: 0.24rem;
+            border-radius: 0.3rem;
+            padding: 0 0.4rem;
+            display: flex;
+            align-items: center;
+            background-color: #000;
+
+            &:active {
+                background-color: #0B1E4A;
+            }
+        }
+
+        .loan_max {
+            position: absolute;
+            top: 1.04rem;
+            right: 0.2rem;
+            color: #fff;
+            font-size: 0.24rem;
+            font-weight: 400;
+            text-align: center;
+            min-width: 2.4rem;
+        }
 
         .top {
-
             font-size: 0.28rem;
             font-weight: 400;
+            padding-left: 0.32rem;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -60,6 +90,7 @@ const assets = computed(() => store.state.assets || {})
         }
 
         .money {
+            padding-left: 0.32rem;
             font-size: 0.68rem;
             font-weight: 500;
             color: #fff;
@@ -69,9 +100,10 @@ const assets = computed(() => store.state.assets || {})
 
         .navs {
             display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
             line-height: 0.44rem;
+            padding: 0.1rem 0;
 
             .line {
                 width: 1px;
@@ -82,9 +114,29 @@ const assets = computed(() => store.state.assets || {})
             .nav {
                 color: #fff;
                 font-weight: 400;
+                flex: 1;
                 font-size: 0.24rem;
                 text-align: center;
-                flex: 1;
+                border-radius: 0.26rem;
+                position: relative;
+
+                &:active {
+                    background-color: #5045BD;
+                }
+
+                .hint {
+                    background-color: #fff;
+                    height: 0.24rem;
+                    font-size: 0.2rem;
+                    line-height: 0.24rem;
+                    font-weight: 200;
+                    padding: 0 0.1rem;
+                    border-radius: 0.2rem;
+                    position: absolute;
+                    top: -0.1rem;
+                    right: -0.08rem;
+                    color: #000
+                }
             }
         }
     }

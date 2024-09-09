@@ -96,7 +96,7 @@ getConfig()
         background-size: 100% 100%;
         margin: 0 0.32rem 0.36rem 0.32rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
-        background-color: #3629B7;
+        background-color: #1A59F6;
         border-radius: 0.32rem;
         position: relative;
 
@@ -130,9 +130,9 @@ getConfig()
         }
 
         .top {
-
             font-size: 0.28rem;
             font-weight: 400;
+            padding-left: 0.32rem;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -152,6 +152,7 @@ getConfig()
         }
 
         .money {
+            padding-left: 0.32rem;
             font-size: 0.68rem;
             font-weight: 500;
             color: #fff;

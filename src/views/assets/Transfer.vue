@@ -18,17 +18,17 @@
         <div class="form">
 
             <div
-                style="display: flex;align-items: center;justify-content: space-between;margin-bottom:0.64rem;border: 1px solid #D0D8E2;padding: 0.32rem;border-radius: 0.24rem;">
+                style="display: flex;align-items: center;justify-content: space-between;margin-bottom:0.64rem;border: 1px solid #D0D8E2;padding: 0.12rem 0.32rem;border-radius: 0.12rem;">
 
                 <div style="flex: 1;">
                     <!-- 从 -->
-                    <div class="item_box" @click="openDialog('from')">
+                    <div class="item_box" style="padding-right: 0.32rem;" @click="openDialog('from')">
                         <div class="subtitle">从</div>
                         <div class="item account_item">
-                            <div class="account_item_icon">
+                            <!-- <div class="account_item_icon">
                                 <img v-if="form.from == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
                                 <img v-else :src="`/static/img/crypto/${form.from.toUpperCase()}.svg`" alt="img">
-                            </div>
+                            </div> -->
                             <div class="item_content">
                                 <span>{{ _accountMap[form.from] }}</span>
                             </div>
@@ -38,7 +38,7 @@
                             </div> -->
                         </div>
 
-                        <div class="item account_item">
+                        <div class="item account_item" style="flex: 1">
                             <div class="account_item_icon">
                                 <img :src="`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.png`" alt="img">
                             </div>
@@ -47,19 +47,19 @@
                             </div>
                             <div style="flex:1"></div>
                             <div class="more">
-                                <img src="/static/img/assets/more.png" alt="more">
+                                <img src="/static/img/assets/more_icon.svg" alt="more">
                             </div>
                         </div>
                     </div>
-                    <div style="width: 70%;height: 1px;background-color: #e5e5e5;margin: 0.32rem 0"></div>
+                    <div style="width: 75%;height: 1px;background-color: #e5e5e5;margin: 0.16rem 0"></div>
                     <!-- 到 -->
-                    <div class="item_box" @click="openDialog('to')">
+                    <div class="item_box" style="padding-right: 0.32rem;" @click="openDialog('to')">
                         <div class="subtitle">到</div>
                         <div class="item account_item">
-                            <div class="account_item_icon">
+                            <!-- <div class="account_item_icon">
                                 <img v-if="form.to == 'money'" src="/static/img/assets/cash_icon.svg" alt="icon">
                                 <img v-else :src="`/static/img/crypto/${form.to.toUpperCase()}.svg`" alt="img">
-                            </div>
+                            </div> -->
                             <div class="item_content">
                                 <span>{{ _accountMap[form.to] }}</span>
                             </div>
@@ -69,7 +69,7 @@
                             </div> -->
                         </div>
 
-                        <div class="item account_item">
+                        <div class="item account_item" style="flex: 1">
                             <div class="account_item_icon">
                                 <img :src="`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`" alt="img">
                             </div>
@@ -78,7 +78,7 @@
                             </div>
                             <div style="flex:1"></div>
                             <div class="more">
-                                <img src="/static/img/assets/more.png" alt="more">
+                                <img src="/static/img/assets/more_icon.svg" alt="more">
                             </div>
                         </div>
 
@@ -90,27 +90,29 @@
                     </div>
                 </div>
                 <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-                    <img src="/static/img/assets/transfer.png" alt="img">
+                    <img src="/static/img/assets/trans_icon2.png" alt="img">
                 </div>
             </div>
 
 
             <!-- 输入 -->
-            <div class="subtitle" style="margin-bottom: 0.32rem;">金额</div>
+            <div class="subtitle" style="margin-bottom: 0.32rem;">转出金额</div>
             <div class="item_box">
                 <div class="item border_item ipt_item" :class="{ 'err_ipt': errStatus }">
-                    <div class="ipt_tip" v-show="form.amount === '' || focus">最大可转 <span>{{ balance }}</span> {{
-                        form.fromCurrency.name || '' }}
+                    <div class="ipt_tip" v-show="form.amount === '' || focus">最多可转&nbsp;&nbsp;<span>{{ balance }}</span>
+                        <div :style="{ opacity: focus ? '1' : '0', pointerEvents: focus ? 'all' : 'none' }" class="btn"
+                            @click="maxIpt">
+                            全部</div>
                     </div>
-                    <input @focus="focus = true" @blur="errStatus = focus = false" v-model="form.amount" type="number"
-                        :placeholder="``" class="ipt">
-                    <div class="btn" @click="maxIpt">全部</div>
+                    <input @focus="focus = true" @blur="blurInput" v-model="form.amount" type="number" :placeholder="``"
+                        class="ipt">
+
                     <div style="font-size: 0.24rem;color: #999;">{{ form.fromCurrency.name || '' }}</div>
                 </div>
             </div>
             <div class="subtitle" style="margin-bottom: 0.32rem;margin-top: 0.64rem">转入金额</div>
             <div class="item_box">
-                <div class="item border_item ipt_item" :class="{ 'err_ipt': errStatus }">
+                <div class="item border_item ipt_item" style="background-color: #f5f5f5;">
                     <div class="ipt">
                         <span v-show="formType == 'transfer'">{{ form.amount || '--' }}</span>
                         <span v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
@@ -118,8 +120,8 @@
                     <div style="font-size: 0.24rem;color: #999;">{{ form.toCurrency.name || '' }}</div>
                 </div>
             </div>
-            <div class="right_tip" v-if="formType == 'swap'"> 汇率：{{ rateLoading ? '--' : rate
-                }}
+            <div class="right_tip" v-if="formType == 'swap'"> 1{{ form.fromCurrency.name }} ≈ {{ rateLoading ? '--' : rate
+                }} {{ form.toCurrency.name }}
             </div>
 
         </div>
@@ -156,6 +158,9 @@ import Decimal from 'decimal.js';
 
 const route = useRoute()
 const focus = ref(false) // 是否在输入中
+const blurInput = () => {
+    setTimeout(() => { errStatus.value = focus.value = false }, 0)
+}
 const assets = computed(() => store.state.assets || {})
 const wallet = computed(() => store.state.wallet || []) // 钱包
 const elseWallet = computed(() => store.state.elseWallet || []) // 其他账户钱包
@@ -409,7 +414,7 @@ const goRecord = () => {
         .item_box {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
             height: 0.88rem;
 
             &:has(.ipt:focus) {
@@ -440,7 +445,7 @@ const goRecord = () => {
             }
 
             .item_content {
-                font-size: 0.24rem;
+                font-size: 0.28rem;
                 color: #000;
                 white-space: nowrap;
                 display: flex;
@@ -453,8 +458,9 @@ const goRecord = () => {
             }
 
             .more {
-                width: 0.32rem;
-                height: 0.32rem;
+                width: 0.24rem;
+                height: 0.24rem;
+                opacity: 0.5;
             }
 
             .ipt {
@@ -462,6 +468,10 @@ const goRecord = () => {
                 color: #292929;
                 font-size: 0.28rem;
                 width: 2rem;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
             }
 
             .btn {
@@ -469,6 +479,8 @@ const goRecord = () => {
                 font-size: 0.24rem;
                 margin: 0 0.24rem;
                 white-space: nowrap;
+                transform: all ease .3s;
+
             }
         }
 
@@ -484,6 +496,7 @@ const goRecord = () => {
                 .ipt_tip {
                     transform: translateY(-200%);
                     font-size: 0.2rem;
+                    line-height: 0.2rem;
 
                     span {
                         color: #A4ACB9;
@@ -498,9 +511,13 @@ const goRecord = () => {
                 color: #A4ACB9;
                 left: 0.32rem;
                 top: 50%;
-                transform: translateY(-50%);
                 pointer-events: none;
+                transform: translateY(-50%);
                 transition: all ease .2s;
+                display: flex;
+                align-items: center;
+                z-index: 999;
+                line-height: 0.24rem;
 
                 span {
                     // color: #111111;
@@ -516,8 +533,8 @@ const goRecord = () => {
 
         .account_item {
             height: 100% !important;
-            flex: 4.5;
-            margin-right: 0.2rem;
+            // flex: 4.5;
+            width: auto !important;
 
             .account_item_icon {
                 width: 0.3rem;
@@ -527,8 +544,8 @@ const goRecord = () => {
         }
 
         .trans_icon {
-            width: 0.8rem;
-            height: 0.8rem;
+            width: 0.6rem;
+            height: 0.6rem;
         }
 
         .transing_icon {
