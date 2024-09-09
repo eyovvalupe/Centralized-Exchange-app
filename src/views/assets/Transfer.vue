@@ -17,11 +17,12 @@
         <!-- 表单 -->
         <div class="form">
 
-            <div style="display: flex;align-items: center;justify-content: space-between;margin-bottom:0.86rem">
+            <div
+                style="display: flex;align-items: center;justify-content: space-between;margin-bottom:0.64rem;border: 1px solid #D0D8E2;padding: 0.32rem;border-radius: 0.24rem;">
 
                 <div style="flex: 1;">
                     <!-- 从 -->
-                    <div class="item_box" @click="openDialog('from')" style="margin-bottom: 0.32rem;">
+                    <div class="item_box" @click="openDialog('from')">
                         <div class="subtitle">从</div>
                         <div class="item account_item">
                             <div class="account_item_icon">
@@ -32,9 +33,9 @@
                                 <span>{{ _accountMap[form.from] }}</span>
                             </div>
                             <div style="flex:1"></div>
-                            <div class="more">
+                            <!-- <div class="more">
                                 <img src="/static/img/assets/more.png" alt="more">
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="item account_item">
@@ -50,6 +51,7 @@
                             </div>
                         </div>
                     </div>
+                    <div style="width: 70%;height: 1px;background-color: #e5e5e5;margin: 0.32rem 0"></div>
                     <!-- 到 -->
                     <div class="item_box" @click="openDialog('to')">
                         <div class="subtitle">到</div>
@@ -62,9 +64,9 @@
                                 <span>{{ _accountMap[form.to] }}</span>
                             </div>
                             <div style="flex:1"></div>
-                            <div class="more">
+                            <!-- <div class="more">
                                 <img src="/static/img/assets/more.png" alt="more">
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="item account_item">
@@ -96,27 +98,25 @@
             <!-- 输入 -->
             <div class="subtitle" style="margin-bottom: 0.32rem;">金额</div>
             <div class="item_box">
-                <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
-                    <!-- <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span>
-                    </div> -->
+                <div class="item border_item ipt_item" :class="{ 'err_ipt': errStatus }">
+                    <div class="ipt_tip" v-show="form.amount === '' || focus">最大可转 <span>{{ balance }}</span> {{
+                        form.fromCurrency.name || '' }}
+                    </div>
                     <input @focus="focus = true" @blur="errStatus = focus = false" v-model="form.amount" type="number"
                         :placeholder="``" class="ipt">
                     <div class="btn" @click="maxIpt">全部</div>
-                    <div>{{ form.fromCurrency.name || '' }}</div>
+                    <div style="font-size: 0.24rem;color: #999;">{{ form.fromCurrency.name || '' }}</div>
                 </div>
             </div>
-            <div style="margin-top:0.16rem;font-size: 0.24rem;color:#999;">最大可转：{{ balance }}</div>
-            <!-- <div v-if="formType == 'swap'" style="margin-top:0.16rem;font-size: 0.24rem;color:#999;text-align: right;">
-                汇率：{{ rateLoading ? '--' : rate
-                }}</div> -->
-
-            <!-- 信息 -->
-            <div style="margin-top:0.16rem;font-size: 0.24rem;color:#999;text-align: right">入账</div>
-            <div class="right_tip">
-                <span>{{ _accountMap[form.to] }}</span>
-                <span>{{ form.toCurrency.name || '' }}</span>
-                <span v-show="formType == 'transfer'">{{ form.amount || '--' }}</span>
-                <span v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
+            <div class="subtitle" style="margin-bottom: 0.32rem;margin-top: 0.64rem">转入金额</div>
+            <div class="item_box">
+                <div class="item border_item ipt_item" :class="{ 'err_ipt': errStatus }">
+                    <div class="ipt">
+                        <span v-show="formType == 'transfer'">{{ form.amount || '--' }}</span>
+                        <span v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
+                    </div>
+                    <div style="font-size: 0.24rem;color: #999;">{{ form.toCurrency.name || '' }}</div>
+                </div>
             </div>
             <div class="right_tip" v-if="formType == 'swap'"> 汇率：{{ rateLoading ? '--' : rate
                 }}
@@ -420,7 +420,7 @@ const goRecord = () => {
         .item {
             width: 100%;
             height: 100%;
-            border: 1px solid #D0D8E2;
+            // border: 1px solid #D0D8E2;
             border-radius: 0.12rem;
             padding: 0 0.18rem 0 0.32rem;
             display: flex;
@@ -429,7 +429,7 @@ const goRecord = () => {
             font-weight: 400;
 
             &:has(.ipt:focus) {
-                // padding-top: 0.3rem;
+                padding-top: 0.3rem;
                 border: 1px solid #014CFA;
             }
 
@@ -470,6 +470,10 @@ const goRecord = () => {
                 margin: 0 0.24rem;
                 white-space: nowrap;
             }
+        }
+
+        .border_item {
+            border: 1px solid #D0D8E2;
         }
 
         .ipt_item {
@@ -549,6 +553,7 @@ const goRecord = () => {
             font-size: 0.24rem;
             text-align: right;
             margin-top: 0.2rem;
+            padding-right: 0.12rem;
 
             span {
                 margin-left: 0.2rem;
@@ -573,7 +578,7 @@ const goRecord = () => {
     .submit {
         width: 100%;
         height: 1.12rem;
-        margin: 2.4rem 0 0.4rem 0;
+        margin: 1.4rem 0 0.4rem 0;
     }
 }
 </style>

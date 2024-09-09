@@ -39,12 +39,9 @@
             </div>
 
             <!-- 货币兑换 -->
-            <div class="currency_btn " @click="jump('swap')">
-                <!-- <div class="btn_icon">
-                    <img src="/static/img/assets/currency_icon.png" alt="img">
-                </div> -->
+            <!-- <div class="currency_btn " @click="jump('swap')">
                 <span>货币兑换</span>
-            </div>
+            </div> -->
 
             <!-- <div class="loan_box">
                 <div>借贷</div>

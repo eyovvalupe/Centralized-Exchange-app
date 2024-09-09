@@ -118,13 +118,13 @@
         <RecordList ref="RecordListRef" />
 
         <!-- 充提记录 -->
-        <HintBlock v-if="route.name == 'assets' && hintNum" />
+        <!-- <HintBlock v-if="route.name == 'assets' && hintNum" /> -->
     </div>
 </template>
 
 <script setup>
 import { Tab, Tabs, PullRefresh } from "vant"
-import { ref, onMounted, computed } from "vue"
+import { ref, onMounted, computed, onActivated } from "vue"
 import Overview from "./page/Overview.vue"
 import Cash from "./page/Cash.vue"
 import Stock from "./page/Stock.vue"
@@ -133,7 +133,7 @@ import Contract from "./page/Contract.vue"
 import RecordList from "@/components/RecordList.vue"
 import store from "@/store"
 import router from "@/router"
-import HintBlock from "@/components/HintBlock.vue"
+// import HintBlock from "@/components/HintBlock.vue"
 import { useRoute } from "vue-router"
 
 const route = useRoute()
@@ -197,6 +197,10 @@ Promise.all(loadingList).finally(() => {
     setTimeout(() => {
         pageLoading.value = true
     }, 100)
+})
+
+onActivated(() => {
+    // store.dispatch('updateOrderHint')
 })
 
 </script>

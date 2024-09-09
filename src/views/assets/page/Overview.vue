@@ -31,45 +31,23 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class=" btn" @click="jump('topUp', true)">
+            <div class="btn" @click="jump('topUp', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/recharge_icon.png" alt="img">
                     </div>
                 </div>
-                <span>充值</span>
+                <span>加密货币充值</span>
             </div>
-            <div class=" btn" @click="jump('withdraw', true)">
+            <div class="btn" @click="jump('topUp', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/assets/withdraw_icon.png" alt="img">
+                        <img src="/static/img/assets/bank_icon.png" alt="img">
                     </div>
                 </div>
-                <span>提现</span>
+                <span>银行卡充值</span>
             </div>
-            <div class=" btn" @click="showAS = true">
-                <div class="icon_box">
-                    <div class="btn_icon">
-                        <img src="/static/img/assets/record_icon.png" alt="img">
-                    </div>
-                </div>
-                <span>记录</span>
-            </div>
-            <!-- <div class=" btn btn2" @click="jump('withdraw', true)">
-                <div class="icon_box">
-                    <div class="color_text">
-                        <span style=" font-size: 0.2rem;font-weight: 400;color:#666;margin-right:0.04rem">可提现</span>
-                        <span>{{ (new Decimal(assets.money || 0).add(assets.frozen || 0).toFixed(2) || '0') }}</span>
-                    </div>
-                    <div class="process">
-                        <div class="left">
-                            <div class="ball"></div>
-                        </div>
-                    </div>
-                </div>
-                <span>提现</span>
-            </div> -->
-            <div class=" btn" style="width: 48%;" @click="jump('transfer')">
+            <div class="btn" @click="jump('transfer')">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/trans_icon.png" alt="img">
@@ -77,22 +55,34 @@
                 </div>
                 <span>账户划转</span>
             </div>
-            <div class=" btn" style="width: 48%;" @click="jump('transfer')">
+
+            <div class="btn" :class="{ 'withdraw_btn': !!(assets.money) }" style="width: 48%;"
+                @click="jump('withdraw', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/assets/swap_icon.png" alt="img">
+                        <img v-if="!!(assets.money)" src="/static/img/assets/withdraw_icon_ed.png" alt="img">
+                        <img v-else src="/static/img/assets/withdraw_icon.png" alt="img">
                     </div>
+                    <span style="margin-left:0.1rem;font-size: 0.24rem;font-weight: bold;color: #171D2E;">可提 {{
+                        assets.money }}</span>
                 </div>
-                <span>货币兑换</span>
+                <span>提现</span>
             </div>
-            <!-- <div class=" btn" @click="jump('loanList')">
+            <div class="btn" :class="{ 'recharge_btn': !!(hintNum) }" style="width: 48%;" @click="showAS = true">
                 <div class="icon_box">
                     <div class="btn_icon">
-                        <img src="/static/img/assets/loan_icon.png" alt="img">
+                        <img v-if="!!(hintNum)" src="/static/img/assets/record_icon_ed.png" alt="img">
+                        <img v-else src="/static/img/assets/record_icon.png" alt="img">
+                    </div>
+                    <div v-if="hintNum"
+                        style="position:relative;margin-left:0.1rem;font-size: 0.24rem;font-weight: bold;color: #171D2E;">
+                        <span>记录状态xxx</span>
+                        <span class="hint">{{ hintNum }}</span>
                     </div>
                 </div>
-                <span>借贷</span>
-            </div> -->
+                <span>记录</span>
+            </div>
+
         </div>
 
         <!-- 列表 -->
@@ -246,12 +236,14 @@ import router from "@/router"
 import AccountCheck from "@/components/AccountCheck.vue"
 import Decimal from 'decimal.js';
 
+
+const hintNum = computed(() => store.state.hintNum || 0)
+
 const showAS = ref(false)
 const actions = [
     { name: '充值记录', value: '0' },
     { name: '提现记录', value: '1' },
     { name: '划转记录', value: '2' },
-    { name: '兑换记录', value: '3' },
 ];
 const onSelect = item => {
     showAS.value = false
@@ -420,7 +412,7 @@ const jump = (name, check = false, query) => {
                 overflow: hidden;
                 width: 100%;
                 height: 0.8rem;
-                background-color: #EDEDED;
+                background-color: #F2F3F8;
                 margin-bottom: 0.16rem;
                 border-radius: 0.12rem;
                 display: flex;
@@ -438,6 +430,30 @@ const jump = (name, check = false, query) => {
                     font-size: 0.2rem;
                     font-weight: 400;
                     margin-right: 0.04rem;
+                }
+            }
+        }
+
+        .withdraw_btn {
+            .icon_box {
+                background-color: #CADAFF;
+            }
+        }
+
+        .recharge_btn {
+            .icon_box {
+                background-color: #FFE1BE;
+
+                .hint {
+                    position: absolute;
+                    padding: 0.04rem 0.08rem;
+                    border-radius: 0.2rem;
+                    background-color: #FD4938;
+                    color: #fff;
+                    left: 100%;
+                    top: -0.2rem;
+                    line-height: 0.24rem;
+                    transform: scale(0.8);
                 }
             }
         }

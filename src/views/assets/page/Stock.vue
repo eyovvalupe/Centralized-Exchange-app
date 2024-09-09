@@ -30,8 +30,8 @@
             </div>
 
             <!-- 借贷按钮 -->
-            <div class="loan_btn" @click="jump('loanList')">借贷申请</div>
-            <div class="loan_max">可借资金 {{ hidden ? '***' : maxLoan }}</div>
+            <!-- <div class="loan_btn" @click="jump('loanList')">借贷申请</div>
+            <div class="loan_max">可借资金 {{ hidden ? '***' : maxLoan }}</div> -->
         </div>
 
         <div class="subtitle">持仓</div>
