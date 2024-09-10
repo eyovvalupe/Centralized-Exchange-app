@@ -31,7 +31,7 @@
 
         <!-- 按钮 -->
         <div class="btns">
-            <div class="btn" @click="jump('topUp', true)">
+            <div class="btn" @click="jump('topUpCrypto', true)">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/recharge_icon.png" alt="img">
@@ -39,7 +39,7 @@
                 </div>
                 <span>加密货币充值</span>
             </div>
-            <div class="btn" @click="jump('topUp', true)">
+            <div class="btn">
                 <div class="icon_box">
                     <div class="btn_icon">
                         <img src="/static/img/assets/bank_icon.png" alt="img">
@@ -81,7 +81,7 @@
                     </div>
                     <div v-else style="margin-left:0.1rem">充值,提现,划转</div>
                 </div>
-                <span>记录</span>
+                <span>资金记录</span>
             </div>
 
         </div>
@@ -316,7 +316,7 @@ const jump = (name, check = false, query) => {
 
     .overview {
         background-size: 100% 100%;
-        margin: 0 0.32rem 0.36rem 0.32rem;
+        margin: 0 0.24rem 0.36rem 0.24rem;
         padding: 0.4rem 0.3rem 0.24rem 0.3rem;
         background-color: #1A59F6;
         border-radius: 0.32rem;
@@ -426,7 +426,7 @@ const jump = (name, check = false, query) => {
     }
 
     .btns {
-        margin: 0.16rem 0.32rem 0.1rem 0.32rem;
+        margin: 0.16rem 0.24rem 0.1rem 0.24rem;
         display: flex;
         align-items: center;
         justify-content: space-between;

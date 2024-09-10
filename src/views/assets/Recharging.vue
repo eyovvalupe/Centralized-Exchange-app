@@ -15,7 +15,7 @@
                 <div class="num" @click="copyPrice">
                     <span style="border-bottom:1px dashed #D0D2D6">{{ form.amount }}<b
                             style="font-size: 0.48rem;color:#333">{{
-                                form.currency
+                                form.name
                             }}</b></span>
                     <div class="copy_icon" v-if="form.amount">
                         <img src="/static/img/common/copy2.png" alt="img">
@@ -23,13 +23,13 @@
                 </div>
                 <div v-if="rate" style="margin: 0 auto 0.32rem auto;width: 3.34rem;text-align: right;">{{
                     ratePrice }}
-                    MAIN</div>
+                    USDT</div>
                 <div v-else style="height: 0.8rem;"></div>
 
-                <div v-if="form.currency"
+                <div v-if="form.name"
                     style="background-color: #F6F6F6;color: #3830DD;display: inline-block;padding: 0 0.2rem;margin-bottom:0.04rem">
                     {{
-                        form.currency
+                        form.name
                     }} · {{
                         form.network }}</div>
             </div>
@@ -115,10 +115,11 @@ const orderStatus = ref('') // 状态
 const loading = ref(false)
 const order_no = ref(route.query.order_no) // 订单编号
 const form = ref({
-    amount: route.query.amount,
+    name: route.query.name,
+    amount: Number(route.query.amount),
     currency: route.query.currency,
     network: route.query.network,
-    swap: route.query.swap ? JSON.parse(route.query.swap) : false
+    // swap: route.query.swap ? JSON.parse(route.query.swap) : false
 })
 const address = ref('')
 
@@ -248,7 +249,7 @@ const getRate = () => { // 获取汇率
     rateLoading.value = true
     _swapRate({
         from: form.value.currency,
-        to: 'main',
+        to: 'USDT',
         amount: 0
     }).then(res => {
         if (res.code == 200) {

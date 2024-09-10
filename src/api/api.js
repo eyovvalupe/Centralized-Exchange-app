@@ -383,7 +383,7 @@ export const _withdrawList = (data = {}) => {
 };
 // 获取充值 币种
 export const _cryptoCoin = (data = {}) => {
-  return http.post(`/authc/v1/wallet/crypto/coin`, data, {
+  return http.post(`/anon/v1/wallet/currency`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };

@@ -34,7 +34,15 @@ export default {
             state.loanNum = data;
         },
         setCoinMap(state, data) {
-            state.coinMap = data;
+            const obj = {}
+            data.map(item => {
+                if (obj[item.name]) {
+                    obj[item.name].push(item)
+                } else {
+                    obj[item.name] = [item]
+                }
+            })
+            state.coinMap = obj;
         },
     },
     actions: {

@@ -14,14 +14,7 @@
             </template>
         </Top>
 
-        <div class="recommend_list">
-            <div @click="clickItem(item)" class="recommend_item" :class="{ 'recommend_active': form.currency == item }"
-                v-for="item in recommendList" :key="item">
-                <div class="recommend_icon"><img :src="`/static/img/crypto/${item.toUpperCase()}.png`" alt="currency">
-                </div>
-                <span>{{ item }}</span>
-            </div>
-        </div>
+
 
         <div class="form">
             <div class="subtitle">
@@ -50,18 +43,27 @@
                     </div>
                 </div>
             </div>
+            <div class="recommend_list">
+                <div @click="clickItem(item)" class="recommend_item"
+                    :class="{ 'recommend_active': form.currency == item }" v-for="item in recommendList" :key="item">
+                    <div class="recommend_icon"><img :src="`/static/img/crypto/${item.toUpperCase()}.png`"
+                            alt="currency">
+                    </div>
+                    <span>{{ item }}</span>
+                </div>
+            </div>
 
             <div class="subtitle">
                 <span style="flex:none">充值金额</span>
-                <span class="subtitle_right" @click="goTransing">
+                <span class="subtitle_right" @click="goTransing" v-if="form.currency != 'USDT'">
                     <span style="color: #014CFA;">{{ targetAmount }}</span>
                     {{ topUpMode
                         == 1 ?
-                        'MAIN' : form.currency.toUpperCase() }}
+                        'USDT' : form.currency.toUpperCase() }}
 
                 </span>
                 <div style="width:0.52rem;height:0.52rem;margin-left: 0.1rem;" @click="goTransing"
-                    :class="[transing ? 'transing_icon' : 'transing_stop']">
+                    :class="[transing ? 'transing_icon' : 'transing_stop']" v-if="form.currency != 'USDT'">
                     <img src="/static/img/assets/recharge_trans.png" alt="img">
                 </div>
             </div>
@@ -69,12 +71,12 @@
                 <div class="item_content">
                     <input class="ipt" @blur="errStatus = false" type="number" v-model="form.amount" placeholder="请输入">
                 </div>
-                <div>{{ topUpMode == 1 ? form.currency : 'MAIN' }}</div>
+                <div>{{ topUpMode == 1 ? form.currency : 'USDT' }}</div>
             </div>
 
-            <div>
+            <!-- <div>
                 <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
-            </div>
+            </div> -->
             <!-- <div class="tip" v-if="topUpMode == 2">
                 <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
                 <Loading v-show="rateLoading" type="spinner" size="12px" />
@@ -117,10 +119,10 @@
                 <div class="close_icon" @click="showNetDialog = false">
                     <img src="/static/img/common/close.png" alt="x">
                 </div>
-                <div @click="clickNetItem(item)" class="swap_dialog_item"
-                    :class="{ 'swap_dialog_item_active': form.network == item }" v-for="(item, i) in currNetwork"
-                    :key="i">
-                    <span>{{ item.toUpperCase() }}</span>
+                <div @click="clickNetItem(item.network)" class="swap_dialog_item"
+                    :class="{ 'swap_dialog_item_active': form.network == item.network }"
+                    v-for="(item, i) in currNetwork" :key="i">
+                    <span>{{ item.network }}</span>
 
                     <Icon v-if="form.network == item" class="check_icon" name="success" />
                 </div>
@@ -190,16 +192,19 @@ form.value.currency = route.query.currency || 'BTC' // 初始化默认币种
 const clickItem = item => {
     form.value.currency = item
     showDialog.value = false
-    initNetwork()
+    setTimeout(() => {
+        initNetwork()
+    }, 0)
 }
 
 // 网络选择
 const networkMapList = ref({})
 const currNetwork = computed(() => {
-    return networkMapList.value[form.value.currency.toUpperCase()] || []
+    return networkMapList.value[form.value.currency] || []
 })
 const initNetwork = () => {
-    form.value.network = currNetwork.value[0]
+    console.error(form.value.currency, networkMapList.value, currNetwork.value)
+    form.value.network = currNetwork.value[0]?.network
     setTimeout(() => {
         getRate()
     }, 0)
@@ -210,20 +215,32 @@ const clickNetItem = item => {
     showNetDialog.value = false
 }
 // initNetwork()
+const coinLists = ref([])
 const getCoinNet = () => {
-    // showLoadingToast({
-    //     duration: 0,
-    //     loadingType: 'spinner',
-    // })
-    // _cryptoCoin().then(res => {
-    //     networkMapList.value = res.data || {}
-    //     const k = Object.keys(networkMapList.value)[0]
-    //     if (k) {
-    //         clickItem(k)
-    //     }
-    // }).finally(() => {
-    //     closeToast();
-    // })
+    showLoadingToast({
+        duration: 0,
+        loadingType: 'spinner',
+    })
+    _cryptoCoin({ dedup: false }).then(res => {
+        const obj = {};
+        coinLists.value = res.data || [];
+        (res.data || []).map(item => {
+            if (item.type == 'drypto') {
+                if (obj[item.name]) {
+                    obj[item.name].push(item)
+                } else {
+                    obj[item.name] = [item]
+                }
+            }
+        })
+        networkMapList.value = obj
+        const k = res.data[0].currency
+        if (k) {
+            clickItem(k)
+        }
+    }).finally(() => {
+        closeToast();
+    })
 }
 getCoinNet()
 
@@ -245,17 +262,18 @@ const goTopUp = () => {
     if (topUpMode.value == 2 && !rate.value) {
         return showToast('正在获取汇率')
     }
-    if (AccountCheckRef.value.check()) {
-        // safeRef.value.open()
-        submit()
-    }
+    submit()
+    // if (AccountCheckRef.value.check()) {
+    //     submit()
+    // }
 }
 const submit = () => {
     router.push({
         name: 'recharging',
         query: {
             amount: topUpMode.value == 1 ? form.value.amount : targetAmount.value,
-            currency: form.value.currency,
+            name: form.value.currency,
+            currency: coinLists.value.find(item => item.network == form.value.network).currency,
             network: form.value.network,
             swap: form.value.swap
         }
@@ -283,23 +301,23 @@ const getRate = () => {
         duration: 0,
         loadingType: 'spinner',
     })
-    timeDown.value = 10
+    // timeDown.value = 10
     rateLoading.value = true
     _swapRate({
-        from: form.value.currency,
-        to: 'main',
+        from: coinLists.value.find(item => item.network == form.value.network).currency,
+        to: 'USDT',
         amount: 0
     }).then(res => {
         if (res.code == 200) {
             rate.value = res.data.exchange_rate
-            if (route.name == 'topUpCrypto') {
-                interval = setInterval(() => {
-                    timeDown.value--
-                    if (timeDown.value <= 0) {
-                        getRate()
-                    }
-                }, 1000)
-            }
+            // if (route.name == 'topUpCrypto') {
+            //     interval = setInterval(() => {
+            //         timeDown.value--
+            //         if (timeDown.value <= 0) {
+            //             getRate()
+            //         }
+            //     }, 1000)
+            // }
         }
     }).finally(() => {
         closeToast();
@@ -340,12 +358,13 @@ onBeforeUnmount(() => {
     .recommend_list {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
 
-        padding: 0.32rem 0 0 0;
+        padding: 0 0 0.8rem 0;
 
         .recommend_item {
-            padding: 0.12rem 0.2rem;
+            padding: 0.1rem 0.18rem;
+            margin-right: 0.2rem;
             border-radius: 0.3rem;
             background-color: #F0F0F2;
             color: #333333;
@@ -373,7 +392,7 @@ onBeforeUnmount(() => {
         .item {
             width: 100%;
             height: 0.88rem;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.32rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -428,7 +447,7 @@ onBeforeUnmount(() => {
         .border_item {
             border-radius: 0.12rem;
             border: 1px solid #D0D8E2;
-            padding: 0 0.4rem 0 0.76rem;
+            padding: 0 0.32rem;
 
             &:has(.ipt:focus) {
                 border: 1px solid #014CFA;

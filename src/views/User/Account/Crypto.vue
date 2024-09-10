@@ -105,7 +105,7 @@ const currNetwork = computed(() => {
     return coinMap.value[form.value.currency] || []
 })
 const initNetwork = () => {
-    form.value.network = currNetwork.value[0]
+    form.value.network = currNetwork.value[0].network
 }
 initNetwork()
 
@@ -113,9 +113,9 @@ initNetwork()
 const currencyMapList = computed(() => {
     return Object.keys(coinMap.value) || []
 })
-// _cryptoCoin().then(res => {
-//     store.commit('setCoinMap', res.data || {})
-// })
+_cryptoCoin().then(res => {
+    store.commit('setCoinMap', res.data || [])
+})
 
 
 // 提交

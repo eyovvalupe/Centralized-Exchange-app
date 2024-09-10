@@ -165,9 +165,9 @@ const showList = computed(() => {
     if (show0.value) return arr.filter(item => item.amount)
     return arr
 })
-// _cryptoCoin().then(res => {
-//     store.commit('setCoinMap', res.data || {})
-// })
+_cryptoCoin().then(res => {
+    store.commit('setCoinMap', res.data || [])
+})
 
 
 // 展开状态

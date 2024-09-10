@@ -5,11 +5,8 @@
             <template #right>
                 <div class="top-record" @click="goRecord">
                     <div class="top-record-icon">
-                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                        <img src="/static/img/assets/record_icon.png" alt="img">
                     </div>
-                    <!-- <span>
-                        记录
-                    </span> -->
                 </div>
             </template>
         </Top>
@@ -17,12 +14,12 @@
         <!-- 表单 -->
         <div class="form">
 
-            <div
-                style="display: flex;align-items: center;justify-content: space-between;margin-bottom:0.64rem;border: 1px solid #D0D8E2;padding: 0.12rem 0.32rem;border-radius: 0.12rem;">
+            <div class="form_box" :class="{ 'form_box_active': showPicker }">
 
                 <div style="flex: 1;">
                     <!-- 从 -->
-                    <div class="item_box" style="padding-right: 0.32rem;" @click="openDialog('from')">
+                    <div class="item_box" :class="{ 'item_box_from': clickKey == 'from' }"
+                        style="padding-right: 0.32rem;" @click="openDialog('from')">
                         <div class="subtitle">从</div>
                         <div class="item account_item">
                             <!-- <div class="account_item_icon">
@@ -39,9 +36,9 @@
                         </div>
 
                         <div class="item account_item" style="flex: 1">
-                            <div class="account_item_icon">
+                            <!-- <div class="account_item_icon">
                                 <img :src="`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.png`" alt="img">
-                            </div>
+                            </div> -->
                             <div class="item_content">
                                 <span class="monty_span">{{ form.fromCurrency.name || '' }}</span>
                             </div>
@@ -53,7 +50,8 @@
                     </div>
                     <div style="width: 75%;height: 1px;background-color: #e5e5e5;margin: 0.16rem 0"></div>
                     <!-- 到 -->
-                    <div class="item_box" style="padding-right: 0.32rem;" @click="openDialog('to')">
+                    <div class="item_box" :class="{ 'item_box_to': clickKey == 'to' }" style="padding-right: 0.32rem;"
+                        @click="openDialog('to')">
                         <div class="subtitle">到</div>
                         <div class="item account_item">
                             <!-- <div class="account_item_icon">
@@ -70,9 +68,9 @@
                         </div>
 
                         <div class="item account_item" style="flex: 1">
-                            <div class="account_item_icon">
+                            <!-- <div class="account_item_icon">
                                 <img :src="`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`" alt="img">
-                            </div>
+                            </div> -->
                             <div class="item_content">
                                 <span class="monty_span">{{ form.toCurrency.name || '' }}</span>
                             </div>
@@ -100,19 +98,19 @@
             <div class="item_box">
                 <div class="item border_item ipt_item" :class="{ 'err_ipt': errStatus }">
                     <div class="ipt_tip" v-show="form.amount === '' || focus">最多可转&nbsp;&nbsp;<span>{{ balance }}</span>
-                        <div :style="{ opacity: focus ? '1' : '0', pointerEvents: focus ? 'all' : 'none' }" class="btn"
-                            @click="maxIpt">
-                            全部</div>
+
                     </div>
                     <input @focus="focus = true" @blur="blurInput" v-model="form.amount" type="number" :placeholder="``"
                         class="ipt">
-
+                    <div :style="{ opacity: focus ? '1' : '0', pointerEvents: focus ? 'all' : 'none' }" class="btn"
+                        @click="maxIpt">
+                        全部</div>
                     <div style="font-size: 0.24rem;color: #999;">{{ form.fromCurrency.name || '' }}</div>
                 </div>
             </div>
             <div class="subtitle" style="margin-bottom: 0.32rem;margin-top: 0.64rem">转入金额</div>
             <div class="item_box">
-                <div class="item border_item ipt_item" style="background-color: #f5f5f5;">
+                <div class="item border_item ipt_item">
                     <div class="ipt">
                         <span v-show="formType == 'transfer'">{{ form.amount || '--' }}</span>
                         <span v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
@@ -120,7 +118,8 @@
                     <div style="font-size: 0.24rem;color: #999;">{{ form.toCurrency.name || '' }}</div>
                 </div>
             </div>
-            <div class="right_tip" v-if="formType == 'swap'"> 1{{ form.fromCurrency.name }} ≈ {{ rateLoading ? '--' : rate
+            <div class="right_tip" v-if="formType == 'swap'"> 1{{ form.fromCurrency.name }} ≈ {{ rateLoading ? '--' :
+                rate
                 }} {{ form.toCurrency.name }}
             </div>
 
@@ -411,6 +410,34 @@ const goRecord = () => {
     }
 
     .form {
+        .form_box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.64rem;
+            border: 1px solid #D0D8E2;
+            padding: 0.12rem 0.32rem;
+            border-radius: 0.12rem;
+        }
+
+        .form_box_active {
+            border: 1px solid #014CFA;
+
+            .item_box_from {
+                .item_content {
+                    color: #014CFA !important;
+                    font-weight: bold;
+                }
+            }
+
+            .item_box_to {
+                .item_content {
+                    color: #014CFA !important;
+                    font-weight: bold;
+                }
+            }
+        }
+
         .item_box {
             display: flex;
             align-items: center;
@@ -421,6 +448,8 @@ const goRecord = () => {
                 height: 1.12rem;
             }
         }
+
+
 
         .item {
             width: 100%;
@@ -452,7 +481,7 @@ const goRecord = () => {
                 align-items: flex-end;
 
                 .monty_span {
-                    font-size: 0.2rem;
+                    font-size: 0.28rem;
                     margin-left: 0.1rem;
                 }
             }
@@ -595,7 +624,7 @@ const goRecord = () => {
     .submit {
         width: 100%;
         height: 1.12rem;
-        margin: 1.4rem 0 0.4rem 0;
+        margin: 2.5rem 0 0.4rem 0;
     }
 }
 </style>
