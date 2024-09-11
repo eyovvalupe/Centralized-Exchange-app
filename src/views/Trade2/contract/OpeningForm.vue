@@ -858,6 +858,7 @@ defineExpose({
             border: 1px solid #d0d8e2;
             padding: 0 0.24rem;
 
+
             .info {
                 flex: 1;
                 text-align: right;

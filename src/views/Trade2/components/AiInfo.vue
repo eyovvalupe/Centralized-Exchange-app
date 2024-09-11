@@ -43,6 +43,7 @@ import { Button, Popup, Circle } from "vant"
 import { ref } from "vue"
 
 
+
 const currentRate = ref(100)
 const rate = ref(80)
 const gradientColor = {

@@ -21,7 +21,7 @@
         <!-- 品种 -->
         <div class="curr">
             <div class="subtitle">交易品种</div>
-            <div class="ipt_box" style="margin-left:0.32rem">BTC/USDT</div>
+            <div class="ipt_box" style="margin-left:0.32rem">{{ form1.name }}</div>
             <div class="curr_icon">
                 <img src="/static/img/trade/market_icon.png" alt="icon">
             </div>
@@ -36,21 +36,24 @@
         </div>
 
         <!-- 数量 -->
-        <div class="item">
+        <div class="item_content">
             <div class="subtitle">网格数量</div>
-            <div class="select">
-                <span>2000</span>
+            <div class="item item_box select">
+                <!-- <span>2000</span>
                 <div class="select_more">
                     <img src="/static/img/assets/more.png" alt="more">
-                </div>
+                </div> -->
+                <span class="ipt_tip" v-show="!(form1.grid && !gridFocus)">最大网格 {{ maxgrid }}</span>
+                <input @focus="gridFocus = true" @blur="gridFocus = false" type="number" class="ipt"
+                    v-model="form1.grid" :min="1" :max="maxgrid" @change="changeGrid">
             </div>
         </div>
 
         <!-- 利润 -->
-        <div class="item">
+        <div class="item_content" style="margin-top: 0.32rem;">
             <div class="subtitle">每格利润</div>
-            <div class="ipt_box">
-                <span>0.65-1.88%</span>
+            <div class="item item_box ipt_box">
+                <span class="ipt">--</span>
             </div>
         </div>
 
@@ -60,7 +63,9 @@
             <span class="link">账户划转</span>
         </div>
         <div class="item item_box" style="margin-top: 0">
-            <input type="number" class="ipt">
+            <span class="ipt_tip" v-show="!(form1.volume !== '' && !amountFocus)">余额 {{ assets.money }}</span>
+            <input @focus="amountFocus = true" @blur="amountFocus = false" type="number" v-model="form1.volume"
+                class="ipt" @change="changePercent">
         </div>
 
         <!-- 拖动 -->
@@ -83,8 +88,8 @@
 
         <!-- 按钮 -->
         <div style="margin-top: 0.6rem">
-            <Button @click="showModel = true" v-if="token" size="large" class="submit"
-                :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
+            <Button :loading="loading || submitLoading" @click="showModel = true" v-if="token" size="large"
+                class="submit" :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
                     tab == 1 ?
                         '买涨' : '买跌' }}</Button>
 
@@ -103,41 +108,43 @@
                 <div class="item">
                     <div class="item_name">时间区域</div>
                     <div class="item_val">
-                        <div class="tag">30秒</div>
+                        <div class="tag">--秒</div>
                     </div>
                 </div>
                 <div class="item">
-                    <div class="item_name">网络数量</div>
+                    <div class="item_name">网格数量</div>
                     <div class="item_val">
-                        <div class="tag">20</div>
+                        <div class="tag">{{ form1.grid }}</div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="item_name">投资额</div>
                     <div class="item_val">
-                        <div class="tag">无</div>
+                        <div class="tag">{{ form1.volume }}</div>
                         <span style="margin-left: 0.32rem;">USDT</span>
                     </div>
                 </div>
                 <div class="item">
                     <div class="item_name">预期盈亏金额</div>
                     <div class="item_val">
-                        <div class="tag">20~40</div>
+                        <div class="tag">--</div>
                         <span style="margin-left: 0.32rem;">USDT</span>
                     </div>
                 </div>
 
 
-                <div class="subtitle" style="margin-top: 0.6rem;">请输入交易密码</div>
+                <!-- <div class="subtitle" style="margin-top: 0.6rem;">请输入交易密码</div>
                 <div class="item pass_ipt">
                     <input v-model="safePass" type="password" class="ipt">
-                </div>
-                <Button @click="openInfo" size="large" class="submit" color="#014cfa" round>开仓</Button>
+                </div> -->
+                <Button @click="submitFormDialog" size="large" class="submit" color="#014cfa" round>开仓</Button>
             </div>
         </Popup>
 
         <!-- ai订单详情 -->
         <AiInfo ref="AiInfoRef" />
+        <!-- 开仓-安全密码弹窗 -->
+        <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
     </div>
 </template>
 
@@ -148,6 +155,13 @@ import Decimal from 'decimal.js';
 import store from "@/store"
 import router from "@/router"
 import AiInfo from "../components/AiInfo.vue"
+import { useRoute } from "vue-router"
+import { _aipara, _aibuy } from "@/api/api"
+import SafePassword from "@/components/SafePassword.vue"
+
+const route = useRoute()
+const assets = computed(() => store.state.assets || {})
+const safeRef = ref()
 
 const AiInfoRef = ref()
 const openInfo = () => {
@@ -172,15 +186,31 @@ const times = ref({
 })
 
 // 表单
+const amountFocus = ref(false)
+const gridFocus = ref(false)
 const form1 = ref({
+    name: route.query.name || '',
+    symbol: route.query.symbol || '',
+    grid: '',
     volume: ''
 })
 const safePass = ref('')
+const changeGrid = () => {
+    setTimeout(() => {
+        form1.value.grid = parseInt(form1.value.grid)
+        if (form1.value.grid > maxgrid.value) {
+            form1.value.grid = maxgrid.value
+        }
+        if (form1.value.grid <= 1) {
+            form1.value.grid = 1
+        }
+    }, 0)
+}
 
 // 拖动
 const percentages = [25, 50, 75, 100];
 const sliderValue = ref(0);
-const maxStockNum = computed(() => 0)
+const maxStockNum = computed(() => assets.value.money)
 const step = computed(() => 1)
 const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
@@ -201,6 +231,69 @@ const changePercent = () => {
     if (p > 100) p = 100
     sliderValue.value = Number(p)
 }
+
+
+const submitFormDialog = () => {
+    showModel.value = false
+    safeRef.value && safeRef.value.open()
+}
+const submitLoading = ref(false)
+const submitForm = (s) => {
+    if (submitLoading.value) return
+    submitLoading.value = true
+    _aibuy({
+        symbol: form1.value.symbol,
+        offset: tab.value == 1 ? 'long' : 'short',
+        time: '',
+        unit: '',
+        lever: '',
+        amount: form1.value.volume,
+        token: sessionToken.value,
+        safeword: s,
+    }).then(res => {
+        if (res && res.code == 200) {
+            showModel.value = false
+            store.dispatch('updateWallet')
+            showToast('开仓成功')
+            form1.value.volume = ''
+            sliderValue.value = 0
+        }
+    }).finally(() => {
+        getSessionToken()
+        setTimeout(() => {
+            submitLoading.value = false
+        }, 500);
+    })
+}
+
+
+// 交易参数
+const loading = ref(false)
+const minamount = ref(0) // 最小投资额
+const maxgrid = ref(0) // 最大网格
+const getParams = () => {
+    loading.value = true
+    _aipara({
+        symbol: form1.value.symbol
+    }).then(res => {
+        console.error('参数', res.data)
+        if (!res.data) return
+        minamount.value = res.data.minamount
+        maxgrid.value = res.data.maxgrid
+    }).finally(() => {
+        loading.value = false
+    })
+}
+getParams()
+
+
+// sessionToken
+const sessionToken = computed(() => store.state.sessionToken || '')
+const getSessionToken = () => {
+    store.dispatch("updateSessionToken")
+}
+getSessionToken()
+
 
 
 // 跳转
@@ -298,7 +391,26 @@ const jump = (name) => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 0.32rem;
+        position: relative;
+
+        &:has(.ipt:focus) {
+            padding-top: 0.204rem;
+
+            .ipt_tip {
+                top: 0.2rem;
+                left: 0.32rem;
+                font-size: 0.2rem;
+            }
+        }
+
+        .ipt_tip {
+            color: #b7b7b7;
+            font-size: 0.24rem;
+            position: absolute;
+            left: 0.24rem;
+            transition: all ease .3s;
+            pointer-events: none;
+        }
 
         .select {
             height: 0.88rem;
@@ -330,6 +442,7 @@ const jump = (name) => {
             border-radius: 0.12rem;
             background-color: #F5F5F5;
             padding-right: 1rem;
+
         }
     }
 
@@ -340,8 +453,12 @@ const jump = (name) => {
         .ipt {
             width: 100%;
             height: 0.88rem;
-            text-align: right;
-            padding-right: 1rem;
+            text-align: left;
+            padding: 0 0.32rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+
         }
     }
 
@@ -500,6 +617,10 @@ const jump = (name) => {
         .ipt {
             height: 0.8rem;
         }
+    }
+
+    .submit {
+        margin-top: 0.6rem;
     }
 }
 </style>

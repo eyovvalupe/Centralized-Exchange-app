@@ -46,7 +46,7 @@
                 </template>
             </Tab>
             <Tab>
-                <NoData />
+                <buyCoin />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
@@ -171,6 +171,7 @@ import Subscription from '@/views/trade/Subscription.vue'
 import NoData from '@/components/NoData.vue';
 import Constract from "./components/Constract.vue"
 import Ai from "./components/Ai.vue"
+import buyCoin from "./buyCoin/index.vue"
 
 const marketPageRef = ref()
 const openTab = ref(false)

@@ -503,4 +503,22 @@ export const _futuresUpdate = (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+// ai列表
+export const _aiquant = (data = {}) => {
+  return http.post(`/anon/v1/item/aiquant`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
+// ai交易参数
+export const _aipara = (data = {}) => {
+  return http.post(`/anon/v1/aiquant/para`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
+// ai开仓
+export const _aibuy = (data = {}) => {
+  return http.post(`/authc/v1/aiquant/buy`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
 export const memberInfo = () => { }

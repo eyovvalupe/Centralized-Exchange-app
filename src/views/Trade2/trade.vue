@@ -195,6 +195,9 @@ const activeTab = ref(0)
 if (route.query.to == 'constract') {
     activeTab.value = 1
 }
+if (route.query.to == 'ai') {
+    activeTab.value = 2
+}
 
 const transitionName = ref('slide-left')
 watch([activeTab], (newActive, oldActive) => {

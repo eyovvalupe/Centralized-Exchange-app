@@ -1,39 +1,39 @@
 <!-- ai交易元素 -->
 <template>
     <div class="ai_item">
-        <div class="title">BTC/USDT</div>
+        <div class="title">{{ props.item.name }}</div>
         <div class="tip">
             <div class="tip_member">
                 <div class="tip_icon">
                     <img src="/static/img/common/member.png" alt="icon">
                 </div>
-                <span>4</span>
+                <span>--</span>
             </div>
-            <div>最大网格24</div>
+            <div>最大网格{{ props.item.maxgrid }}</div>
         </div>
 
         <div>盈亏（USDT）</div>
-        <div class="amount down">23424.32</div>
+        <div class="amount" :class="[props.item.income > 0 ? 'up' : 'down']">{{ props.item.income }}</div>
 
         <div class="table">
             <div class="td">
                 <div class="td_title">历史收益率</div>
-                <div>24.56%</div>
+                <div>{{ props.item.ratereturn }}%</div>
             </div>
             <div class="td">
                 <div class="td_title">24小时收益率</div>
-                <div>24.56%</div>
+                <div>{{ props.item.ratereturn24h }}%</div>
             </div>
             <div class="td" style="align-items: flex-end">
                 <div class="td_title">最小投资金额</div>
-                <div>288</div>
+                <div>{{ props.item.minamount }}</div>
             </div>
             <div class="td" style="margin-top: 0.4rem;">
                 <div class="td_title">运行时间</div>
-                <div>7天12时18分</div>
+                <div>{{ formatSec(props.item.runtime) }}</div>
             </div>
             <div class="btns" style="margin-top: 0.4rem;">
-                <div class="btn">交易</div>
+                <div class="btn" @click="goTrade">交易</div>
             </div>
         </div>
 
@@ -43,7 +43,29 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import router from "@/router";
+import { formatSec } from "@/utils/time"
+
+const props = defineProps({
+    item: {
+        type: Object,
+        default: () => { }
+    }
+})
+
+const goTrade = () => {
+    router.push({
+        name: 'trade',
+        query: {
+            to: 'ai',
+            name: props.item.name,
+            symbol: props.item.symbol,
+        }
+    })
+}
+
+</script>
 
 <style lang="less" scoped>
 .ai_item {

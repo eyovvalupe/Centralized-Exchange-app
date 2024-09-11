@@ -43,3 +43,14 @@ export function strTime2Str(str) {
   // 组合成所需的格式
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
+
+// 秒 转换成  xx时xx分xx秒
+export function formatSec(seconds) {
+  if (seconds < 0) return '--'
+  const days = Math.floor(seconds / (24 * 3600));
+  seconds %= 24 * 3600;
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  const minutes = Math.floor(seconds / 60);
+  return `${days}天${hours}时${minutes}分`;
+}
