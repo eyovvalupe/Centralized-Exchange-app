@@ -54,3 +54,13 @@ export function formatSec(seconds) {
   const minutes = Math.floor(seconds / 60);
   return `${days}天${hours}时${minutes}分`;
 }
+
+// 秒 转换成 hh:mm:ss
+export function formatSec2(seconds) {
+  if (seconds < 0) return '--'
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  const minutes = Math.floor(seconds / 60);
+  const sec = seconds % 60
+  return `${hours}:${minutes}:${sec}`;
+}

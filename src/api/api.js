@@ -518,7 +518,19 @@ export const _aipara = (data = {}) => {
 // ai开仓
 export const _aibuy = (data = {}) => {
   return http.post(`/authc/v1/aiquant/buy`, data, {
-    custom: { auth: false, toast: false, retry: true },
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 订单列表
+export const _ailist = (data = {}) => {
+  return http.post(`/authc/v1/aiquant/list`, data, {
+    custom: { auth: true, toast: false, retry: true },
+  });
+};
+// 订单详情
+export const _aiget = (data = {}) => {
+  return http.post(`/authc/v1/aiquant/get`, data, {
+    custom: { auth: true, toast: false, retry: true },
   });
 };
 export const memberInfo = () => { }

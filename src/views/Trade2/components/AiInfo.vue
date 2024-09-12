@@ -5,27 +5,48 @@
             <div class="title">订单详情</div>
 
             <div style="display: flex;flex-direction: column;align-items: center;">
-                <Circle class="circle" :start-position="'bottom'" :stroke-linecap="'butt'" :stroke-width="150"
-                    :layer-color="'#E5E5E5'" :color="gradientColor" size="200px" :rate="rate"
-                    v-model:current-rate="currentRate" :text="currentRate + '分钟'" />
+                <!-- 盈利 -->
+                <div class="win" v-if="currItem.status == 'close'">
+                    <div class="win_name">盈利</div>
+                    <div class="amount" :class="[currItem.profit > 0 ? 'up' : 'down']">{{ currItem.profit > 0 ? '+' : ''
+                        }}{{ currItem.profit }}</div>
+                </div>
+                <Circle v-if="currItem.status == 'open'" class="circle" :start-position="'bottom'"
+                    :stroke-linecap="'butt'" :stroke-width="150" :layer-color="'#E5E5E5'" :color="gradientColor"
+                    size="200px" :rate="rate" v-model:current-rate="currentRate" :text="''" />
 
-                <div class="time">00 : 18 : 66</div>
-                <div class="adress">sdfsdfsdfs7df9sd7f9sd</div>
-                <div class="name">BTC/USDT</div>
+                <div class="time" v-if="currItem.status == 'open'">{{ formatSec2(currItem.endtime) }}</div>
+                <div class="adress">{{ currItem.order_no }}</div>
+                <div class="name">{{ currItem.name }}</div>
 
+
+                <div class="item">
+                    <span>时间区域</span>
+
+                    <div class="val">
+                        <div class="tag">{{ currItem.time }}{{ currItem.unit }}</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <span>网格数量</span>
+
+                    <div class="val">
+                        <div class="tag">{{ currItem.lever }}</div>
+                    </div>
+                </div>
                 <div class="item">
                     <span>投资额</span>
 
                     <div class="val">
-                        <div class="tag">2000</div>
+                        <div class="tag">{{ currItem.amount }}</div>
                         <span style="margin-left: 0.2rem;">USDT</span>
                     </div>
                 </div>
-                <div class="item">
+                <div class="item" v-if="currItem.status == 'open'">
                     <span>预期盈亏金额</span>
 
                     <div class="val">
-                        <div class="tag">20~40</div>
+                        <div class="tag">{{ getRange() }}</div>
                         <span style="margin-left: 0.2rem;">USDT</span>
                     </div>
                 </div>
@@ -41,7 +62,9 @@
 <script setup>
 import { Button, Popup, Circle } from "vant"
 import { ref } from "vue"
-
+import { _aiget } from "@/api/api"
+import { formatSec2 } from "@/utils/time"
+import Decimal from 'decimal.js';
 
 
 const currentRate = ref(100)
@@ -53,9 +76,43 @@ const gradientColor = {
 };
 
 const showModel = ref(false)
-const open = () => {
+const currItem = ref({})
+const open = (item) => {
+    currItem.value = item
+    getInfo()
     showModel.value = true
 }
+
+// 获取详情
+const getInfo = () => {
+    _aiget({
+        order_no: currItem.value.order_no
+    }).then(res => {
+        if (res.data) {
+            console.error(res.data)
+            currItem.value = res.data
+        }
+    })
+}
+
+
+const getRange = () => { // 获取预计盈亏
+    if (!currItem.value.amountreturn) return '--'
+    if (!currItem.value.amount) return '--'
+    const rangereturn = currItem.value.amountreturn
+    let rs = '--'
+    try {
+        const arr = rangereturn.split(' - ')
+        console.error('????', arr)
+        const start = new Decimal(currItem.value.amount).mul(Number(arr[0])).div(100)
+        const end = new Decimal(currItem.value.amount).mul(Number(arr[1])).div(100)
+        rs = `${start} - ${end}`
+    } catch { }
+
+    return rs
+}
+
+
 
 defineExpose({
     open
@@ -72,6 +129,22 @@ defineExpose({
         line-height: 0.6rem;
         text-align: center;
         margin-bottom: 0.2rem;
+    }
+
+    .win {
+        text-align: center;
+        margin: 0.4rem 0 0.6rem 0;
+        font-weight: bold;
+
+        .win_name {
+            color: #000;
+            margin-bottom: 0.2rem;
+        }
+
+        .amount {
+            font-size: 0.68rem;
+
+        }
     }
 
     .circle {

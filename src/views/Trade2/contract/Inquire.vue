@@ -2,14 +2,14 @@
 <template>
     <div class="inquire" v-if="token">
         <div class="tr th">
-            <div class="td td-5">股票/状态</div>
+            <div class="td td-5">合约/状态</div>
             <div class="td td-4">开仓/可售</div>
             <div class="td td-4">现价/成本</div>
             <div class="td td-4">盈亏/盈亏比</div>
         </div>
-        <NoData v-if="!loading && !inquireList.length" />
+        <NoData v-if="!loading && !contractInquireList.length" />
 
-        <SwipeCell ref="items" v-for="(item, i) in inquireList" :key="i" disabled>
+        <SwipeCell ref="items" v-for="(item, i) in contractInquireList" :key="i" disabled>
             <div class="tr">
                 <div class="td td-5">
                     <div class="name">{{ item.symbol }}</div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </SwipeCell>
-        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && inquireList.length) || (!finish)" />
+        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || (!finish)" />
     </div>
 
     <UnLogin v-else />
@@ -50,7 +50,7 @@ import { _futuresList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
 import Decimal from 'decimal.js';
 
-const inquireList = computed(() => store.state.inquireList || [])
+const contractInquireList = computed(() => store.state.contractInquireList || [])
 const token = computed(() => store.state.token)
 
 const statusMap = ref({ // 仓位状态
@@ -112,11 +112,11 @@ const getList = () => {
     loading.value = true
     _futuresList(params).then(res => {
         if (page.value == 1) {
-            store.commit('setInquireList', res.data || [])
+            store.commit('setContractInquireList', res.data || [])
         } else {
-            const arr = inquireList.value
+            const arr = contractInquireList.value
             arr.push(...LoadingMore(res.data || []))
-            store.commit('setInquireList', arr)
+            store.commit('setContractInquireList', arr)
         }
         if (!res.data?.length) {
             finish.value = true

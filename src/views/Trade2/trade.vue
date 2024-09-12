@@ -54,7 +54,7 @@
                     <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" />
                 </div>
                 <div v-else-if="activeTab == 2">
-                    <AiBlock />
+                    <AiBlock @showNavDialog="showNavDialogFunc" />
                 </div>
                 <div v-else-if="activeTab == 5">
                     <IpoBlock />
@@ -215,8 +215,7 @@ const showPrice = ref(false)
 const showNavDialog = ref(false)
 const navActiveTab = ref('option')
 const showNavDialogFunc = val => {
-    console.error(val)
-    navActiveTab.value = val || 'opeion'
+    navActiveTab.value = val || 'option'
     showNavDialog.value = true
     setTimeout(() => {
         goSearch()
