@@ -1,6 +1,6 @@
 <template>
   <div class="stockPopup">
-    <MarketInfo @back="back" :innerPage="true" />
+    <MarketInfo :type="props.type" @back="back" :innerPage="true" />
   </div>
 </template>
 
@@ -8,6 +8,13 @@
 import { ref, computed } from "vue";
 import store from "@/store";
 import MarketInfo from "../Market/MarketInfo.vue"
+
+const props = defineProps({
+  type: {
+    type: String,
+    default: ''
+  }
+})
 
 const back = () => {
   store.commit('setShowOpenPositionBottom', false)

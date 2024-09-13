@@ -18,11 +18,11 @@
         <div class="table">
             <div class="td">
                 <div class="td_title">历史收益率</div>
-                <div>{{ props.item.ratereturn }}%</div>
+                <div>{{ props.item.ratereturn }}</div>
             </div>
             <div class="td">
                 <div class="td_title">24小时收益率</div>
-                <div>{{ props.item.ratereturn24h }}%</div>
+                <div>{{ props.item.ratereturn24h }}</div>
             </div>
             <div class="td" style="align-items: flex-end">
                 <div class="td_title">最小投资金额</div>
@@ -39,13 +39,18 @@
 
 
         <!-- 图表 -->
-        <div class="canvas"></div>
+        <div class="canvas">
+            <SparkLine v-if="item.points" style="width:100%;height:100%" :points="props.item.points"
+                :ratio="props.item.ratio" />
+        </div>
     </div>
 </template>
 
 <script setup>
 import router from "@/router";
 import { formatSec } from "@/utils/time"
+import SparkLine from "@/components/SparkLine.vue"
+import store from "@/store"
 
 const props = defineProps({
     item: {
@@ -55,6 +60,7 @@ const props = defineProps({
 })
 
 const goTrade = () => {
+    store.commit('setCurrAi', props.item)
     router.push({
         name: 'trade',
         query: {

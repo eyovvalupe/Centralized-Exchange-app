@@ -3,7 +3,7 @@
     <div class="trade_ai">
 
         <!-- 涨跌 -->
-        <div class="tabs" style="margin-bottom:0.6rem">
+        <div class="tabs" style="margin-bottom:0.32rem">
             <div class="tab" @click="tab = 1">
                 <span :style="{ color: tab == 1 ? '#fff' : '#014cfa' }">看涨</span>
                 <img v-if="tab == 1" src="/static/img/trade/ai_active_tab.png" alt="bg" />
@@ -23,8 +23,8 @@
             <div class="subtitle" style="color: #014CFA;" @click="showNavDialog">交易品种</div>
             <div class="ipt_box" style="margin-left:0.32rem" :class="{ 'error_border': !form1.name }">{{ form1.name }}
             </div>
-            <div class="curr_icon">
-                <img src="/static/img/trade/market_icon.png" alt="icon">
+            <div class="curr_icon" v-if="form1.name" @click="openStockModel">
+                <img src="/static/img/trade/blue-stock.png" alt="icon">
             </div>
         </div>
 
@@ -33,7 +33,7 @@
         <div class="times">
             <div class="time" @click="currTime = obj"
                 :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
-                v-for="(obj, i) in times" :key="i">{{ obj.time }}{{ obj.unit }}
+                v-for="(obj, i) in times" :key="i">{{ obj.time }}{{ _dateUnitMap[obj.unit] }}
             </div>
         </div>
 
@@ -60,7 +60,7 @@
         </div>
 
         <!-- 投资额 -->
-        <div class="subtitle" style="margin-top: 0.32rem;">
+        <div class="subtitle">
             <span>投资额</span>
             <span class="link">账户划转</span>
         </div>
@@ -110,7 +110,7 @@
                 <div class="item">
                     <div class="item_name">时间区域</div>
                     <div class="item_val">
-                        <div class="tag">{{ currTime.time }}{{ currTime.unit }}</div>
+                        <div class="tag">{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</div>
                     </div>
                 </div>
                 <div class="item">
@@ -147,6 +147,22 @@
         <AiInfo ref="AiInfoRef" />
         <!-- 开仓-安全密码弹窗 -->
         <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
+
+
+        <!-- 股票行情弹窗 -->
+        <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
+            <StockPopup type="ai" style="height:90vh" />
+        </Popup>
+
+        <!-- ai列表 -->
+        <Popup teleport="body" v-model:show="showBottom" round closeable position="bottom">
+            <div class="trade_ai_list">
+                <div class="trade_ai_list_title">AI量化列表</div>
+                <div class="list">
+                    <AiItem @click.stop="chooseItem(item)" v-for="(item, i) in marketAiList" :key="i" :item="item" />
+                </div>
+            </div>
+        </Popup>
     </div>
 </template>
 
@@ -157,9 +173,12 @@ import Decimal from 'decimal.js';
 import store from "@/store"
 import router from "@/router"
 import AiInfo from "../components/AiInfo.vue"
+import AiItem from "../../Market/components/AiItem.vue"
 import { useRoute } from "vue-router"
-import { _aipara, _aibuy } from "@/api/api"
+import { _aipara, _aibuy, _aiquant } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
+import { _dateUnitMap } from "@/utils/dataMap"
+import StockPopup from "../../trade/StockPopup.vue"
 
 const route = useRoute()
 const wallet = computed(() => store.state.wallet || [])
@@ -167,7 +186,8 @@ const usdt = computed(() => wallet.value.find(item => item.currency == 'USDT') |
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
-    emits('showNavDialog', 'ai')
+    // emits('showNavDialog', 'ai')
+    showBottom.value = true
 }
 
 const safeRef = ref()
@@ -190,7 +210,7 @@ const gridFocus = ref(false)
 const form1 = ref({
     name: route.query.name || '',
     symbol: route.query.symbol || '',
-    grid: '',
+    grid: '1',
     volume: ''
 })
 const safePass = ref('')
@@ -341,6 +361,12 @@ const getSessionToken = () => {
 }
 getSessionToken()
 
+// 打开行情
+const showStockModel = ref(false)
+const openStockModel = () => {
+    store.commit('setCurrAi', form1.value)
+    showStockModel.value = true
+}
 
 
 // 跳转
@@ -349,6 +375,28 @@ const jump = (name) => {
         name
     })
 }
+
+
+// ai列表
+const showBottom = ref(false)
+const marketAiList = computed(() => store.state.marketAiList || []) // ai量化默认列表
+const chooseItem = item => {
+    form1.value.name = item.name
+    form1.value.symbol = item.symbol
+    store.commit('setCurrAi', item)
+    showBottom.value = false
+}
+_aiquant({
+    orderby: '',
+}).then(res => {
+    store.commit('setMarketAiList', res.data || [])
+    setTimeout(() => {
+        store.dispatch('subList', {
+            commitKey: 'setMarketAiList',
+            listKey: 'marketAiList',
+        })
+    }, 500)
+})
 </script>
 
 <style lang="less" scoped>
@@ -386,11 +434,20 @@ const jump = (name) => {
         }
     }
 
+    .item_content {
+        display: flex;
+        align-items: center;
+
+        .item_box {
+            flex: 1;
+            margin-left: 0.32rem;
+        }
+    }
+
     .curr {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 0.32rem;
 
         .ipt_box {
             flex: 1;
@@ -438,6 +495,7 @@ const jump = (name) => {
             color: #014CFA;
         }
     }
+
 
     .item {
         display: flex;
@@ -677,6 +735,23 @@ const jump = (name) => {
 
     .submit {
         margin-top: 0.6rem;
+    }
+}
+
+.trade_ai_list {
+    .trade_ai_list_title {
+        font-size: 0.32rem;
+        line-height: 0.6rem;
+        text-align: center;
+        margin-bottom: 0.2rem;
+        margin-top: 0.2rem;
+        font-weight: bold;
+    }
+
+    .list {
+        max-height: 80vh;
+        padding: 0.4rem 0.32rem;
+        overflow-y: auto;
     }
 }
 </style>

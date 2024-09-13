@@ -45,3 +45,12 @@ export const _networkMapList = {
   ETH: ['Ethereum'],
   BTC: ['Legacy', 'SegWit']
 }
+
+
+// 时间单位
+export const _dateUnitMap = {
+  s: '秒',
+  m: '分钟',
+  h: '小时',
+  d: '天'
+}

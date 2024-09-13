@@ -4,7 +4,7 @@
         <Tabs v-if="!pageLoading" class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="onChange">
             <Tab title="开仓" name="0">
-                <Opening />
+                <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
             </Tab>
             <Tab title="持仓" name="1">
                 <Positions />
@@ -24,6 +24,11 @@ import Opening from "../ai/Opening.vue"
 import Positions from "../ai/Positions.vue"
 import Inquire from "../ai/Inquire.vue"
 
+
+const emits = defineEmits(['showNavDialog'])
+const showNavDialog = () => {
+    emits('showNavDialog', 'ai')
+}
 
 const active = ref(sessionStorage.getItem('trade_ai_tab') || 0)
 const InquireRef = ref()

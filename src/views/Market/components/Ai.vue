@@ -1,29 +1,35 @@
 <!-- AI量化 -->
 <template>
     <div class="page_ai">
+
         <Tabs type="card" sticky class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
             v-model:active="active" :swipeable="false" animated shrink>
             <Tab :title="'默认'">
                 <div class="list">
-                    <AiItem v-for="(item, i) in list" :key="i" :item="item" />
-                    <LoadingMore v-if="!(finish && list.length == 0) && active == 0" :loading="loading"
-                        :finish="finish" />
-                    <NoData v-if="(finish && list.length == 0)" />
+                    <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
+                    <AiItem v-for="(item, i) in marketAiList" :key="i" :item="item" />
+                    <NoData v-if="(!loading && marketAiList.length == 0)" />
                 </div>
             </Tab>
             <Tab :title="'历史高收益率'">
                 <div class="list">
-                    <AiItem v-for="(item, i) in list" :key="i" :item="item" />
+                    <Loaidng :loading="loading" v-if="!marketAiHisList.length && loading" />
+                    <AiItem v-for="(item, i) in marketAiHisList" :key="i" :item="item" />
+                    <NoData v-if="(!loading && marketAiHisList.length == 0)" />
                 </div>
             </Tab>
             <Tab :title="'24小时高收益率'">
                 <div class="list">
-                    <AiItem v-for="(item, i) in list" :key="i" :item="item" />
+                    <Loaidng :loading="loading" v-if="!marketAi24List.length && loading" />
+                    <AiItem v-for="(item, i) in marketAi24List" :key="i" :item="item" />
+                    <NoData v-if="(!loading && marketAi24List.length == 0)" />
                 </div>
             </Tab>
             <Tab :title="'高杠杆'">
                 <div class="list">
-                    <AiItem v-for="(item, i) in list" :key="i" :item="item" />
+                    <Loaidng :loading="loading" v-if="!marketAiGridList.length && loading" />
+                    <AiItem v-for="(item, i) in marketAiGridList" :key="i" :item="item" />
+                    <NoData v-if="(!loading && marketAiGridList.length == 0)" />
                 </div>
             </Tab>
         </Tabs>
@@ -32,80 +38,99 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue"
+import { ref, onMounted, computed } from "vue"
 import { Tabs, Tab } from "vant"
 import AiItem from "./AiItem.vue"
 import { _aiquant } from "@/api/api"
 import Loaidng from "@/components/Loaidng.vue"
-import LoadingMore from "@/components/LoadingMore.vue"
 import NoData from "@/components/NoData.vue"
+import store from "@/store/index"
+
+
+const marketAiList = computed(() => store.state.marketAiList || []) // ai量化默认列表
+const marketAiHisList = computed(() => store.state.marketAiHisList || []) // ai量化历史收益率列表
+const marketAi24List = computed(() => store.state.marketAi24List || []) // ai量化24小时收益率列表
+const marketAiGridList = computed(() => store.state.marketAiGridList || []) // ai量化最大网格(杠杆)列表
 
 const active = ref(0)
+const orderby = ref('')
 const changeTab = (val) => {
-    console.error(val)
-}
-
-
-const list = ref([])
-const page = ref(0)
-const loading = ref(false)
-const finish = ref(false)
-const reset = () => {
-    list.value = []
-    page.value = 0
-    loading.value = false
-    finish.value = false
+    switch (val) {
+        case 0:
+            orderby.value = ''
+            break
+        case 1:
+            orderby.value = 'ratereturn'
+            break
+        case 2:
+            orderby.value = 'ratereturn24h'
+            break
+        case 3:
+            orderby.value = 'maxgrid'
+            break
+    }
     getList()
 }
+
+
+const loading = ref(false)
 const getList = () => {
-    if (loading.value || finish.value) return
     loading.value = true
-    page.value++
+    const by = orderby.value
     _aiquant({
-        page: page.value
+        orderby: by,
     }).then(res => {
-        if (page.value == 1) {
-            list.value = res.data || []
-        } else {
-            list.value.push(...res.data)
-        }
-        if (!res.data || !res.data.length) {
-            finish.value = true
+        const list = res.data || []
+        switch (by) {
+            case 'ratereturn':
+                store.commit('setMarketAiHisList', list)
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketAiHisList',
+                        listKey: 'marketAiHisList',
+                    })
+                }, 500)
+                break
+            case 'ratereturn24h':
+                store.commit('setMarketAi24List', list)
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketAi24List',
+                        listKey: 'marketAi24List',
+                    })
+                }, 500)
+                break
+            case 'maxgrid':
+                store.commit('setMarketAiGridList', list)
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketAiGridList',
+                        listKey: 'marketAiGridList',
+                    })
+                }, 500)
+                break
+            default:
+                store.commit('setMarketAiList', list)
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketAiList',
+                        listKey: 'marketAiList',
+                    })
+                }, 500)
+                break
         }
     }).finally(() => {
         loading.value = false
     })
 }
-reset()
+getList()
 
 
 const pageLoading = ref(true)
-// 滚动监听
-let loadingMore = ''
-const totalHeight = window.innerHeight || document.documentElement.clientHeight;
-const scrollHandler = () => {
-    if (!loadingMore) return
-    const rect = loadingMore.getBoundingClientRect()
-    if (rect.top <= totalHeight) {
-        // 加载更多
-        getList()
-    }
-}
 onMounted(() => {
     setTimeout(() => {
         pageLoading.value = false
-        setTimeout(() => {
-            loadingMore = document.querySelector('.loading_more')
-            try {
-                document.querySelector('.page').addEventListener('scroll', scrollHandler)
-            } catch { }
-        }, 200)
     }, 300)
-})
-onBeforeUnmount(() => {
-    try {
-        document.querySelector('.page').removeEventListener('scroll', scrollHandler)
-    } catch { }
 })
 </script>
 
@@ -113,6 +138,10 @@ onBeforeUnmount(() => {
 .page_ai {
     .list {
         padding: 0 0.32rem 0.32rem 0.32rem;
+    }
+
+    :deep(.van-tabs__wrap) {
+        padding-right: 0.6rem !important;
     }
 }
 </style>

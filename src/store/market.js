@@ -7,8 +7,8 @@ const { startSocket } = useSocket()
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList'],
-    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList'],
-    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList']
+    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList', 'marketAiList', 'marketAiHisList', 'marketAi24List', 'marketAiGridList'],
+    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
 }
 
 export default {
@@ -37,6 +37,12 @@ export default {
 
         currConstact: {}, // 当前合约的数据
         contractList: [], // 合约列表
+
+        currAi: {}, // 当前ai量化数据
+        marketAiList: [], // ai量化默认列表
+        marketAiHisList: [], // ai量化历史收益率列表
+        marketAi24List: [], // ai量化24小时收益率列表
+        marketAiGridList: [], // ai量化最大网格(杠杆)列表
 
     },
     mutations: {
@@ -119,6 +125,18 @@ export default {
         setForexSearchList(state, data) {
             state.forexSearchList = data;
         },
+        setMarketAiList(state, data) {
+            state.marketAiList = data || [];
+        },
+        setMarketAiHisList(state, data) {
+            state.marketAiHisList = data || [];
+        },
+        setMarketAi24List(state, data) {
+            state.marketAi24List = data || [];
+        },
+        setMarketAiGridList(state, data) {
+            state.marketAiGridList = data || [];
+        },
         setCurrStock(state, data) {
             if (!data.symbol) { // 只更新部分数据
                 for (let key in data) {
@@ -162,11 +180,35 @@ export default {
                 (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                     const index = state[ck].findIndex(item => item.symbol == data.symbol)
                     if (index >= 0) {
-                        state[ck][index] = data
+                        state[ck][index] = Object.assign({}, state[ck][index], data);
                     }
                 })
             }, 300)
-        }
+        },
+        setCurrAi(state, data) {
+            if (!data.symbol) { // 只更新部分数据
+                for (let key in data) {
+                    if (data[key] === null) delete data[key]
+                }
+                state.currAi = {
+                    ...state.currAi,
+                    ...data
+                }
+                return
+            }
+            // 兼容后端的symbols 和 symbol
+            // data.symbol = data.symbols || data.symbol
+            state.currAi = Object.assign({}, state.currAi, data);
+            // 当前股票有更新，则同步到列表里去
+            setTimeout(() => {
+                (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                    const index = state[ck].findIndex(item => item.symbol == data.symbol)
+                    if (index >= 0) {
+                        state[ck][index] = Object.assign({}, state[ck][index], data);
+                    }
+                })
+            }, 300)
+        },
     },
     actions: {
         subList({ commit, state }, { commitKey, listKey }) {
@@ -182,7 +224,6 @@ export default {
                     ...proxyKeys,
                     ...state.marketWatchKeys,
                 ]))
-                // console.error('订阅：', keys)
                 socket && socket.off('realtime')
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {

@@ -8,12 +8,12 @@
                     <Icon name="arrow-left" />
                 </div>
                 <!-- 标题 -->
-                <div class="title" v-if="route.query.type == 'constract'">
-                    <div class="title_name">{{ item.name || '--' }}</div>
-                </div>
-                <div class="title" v-else>
+                <div class="title" v-if="route.query.type == 'stock'">
                     <div class="title_name">{{ item.symbol || '--' }}</div>
                     {{ item.name || '--' }}
+                </div>
+                <div class="title" v-else>
+                    <div class="title_name">{{ item.name || '--' }}</div>
                 </div>
                 <!-- 详情 -->
                 <div class="title_shadow"></div>
@@ -212,6 +212,10 @@ const props = defineProps({
     innerPage: { // 作为内置展示页
         type: Boolean,
         default: false
+    },
+    type: {
+        type: String,
+        default: ''
     }
 })
 
@@ -263,9 +267,13 @@ const addCollect = () => {
 // 股票信息
 const item = computed(() => {
     let it = {}
-    switch (route.query.type) {
+    const type = route.query.type || props.type
+    switch (type) {
         case 'constract': // 合约
             it = store.state.currConstact || {}
+            break
+        case 'ai': // 合约
+            it = store.state.currAi || {}
             break
         default:
             it = store.state.currStock || {}

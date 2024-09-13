@@ -13,10 +13,14 @@
                 </div>
                 <Circle v-if="currItem.status == 'open'" class="circle" :start-position="'bottom'"
                     :stroke-linecap="'butt'" :stroke-width="150" :layer-color="'#E5E5E5'" :color="gradientColor"
-                    size="200px" :rate="rate" v-model:current-rate="currentRate" :text="''" />
+                    size="150px" :rate="rate" v-model:current-rate="currentRate"
+                    :text="currItem.time + _dateUnitMap[currItem.unit]" />
 
                 <div class="time" v-if="currItem.status == 'open'">{{ formatSec2(currItem.endtime) }}</div>
                 <div class="adress">{{ currItem.order_no }}</div>
+                <div class="success_icon">
+                    <img src="/static/img/assets/status_success.png" alt="√">
+                </div>
                 <div class="name">{{ currItem.name }}</div>
 
 
@@ -61,14 +65,28 @@
 
 <script setup>
 import { Button, Popup, Circle } from "vant"
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { _aiget } from "@/api/api"
 import { formatSec2 } from "@/utils/time"
 import Decimal from 'decimal.js';
+import { _dateUnitMap } from "@/utils/dataMap"
 
 
 const currentRate = ref(100)
-const rate = ref(80)
+const rate = computed(() => {
+    let t = currItem.value.time || 1
+    if (currItem.value.unit == 'm') {
+        t *= 60
+    }
+    if (currItem.value.unit == 'h') {
+        t *= 3600
+    }
+    if (currItem.value.unit == 'd') {
+        t *= (3600 * 24)
+    }
+    const p = currItem.value.endtime * 100 / t
+    return p > 100 ? 100 : p
+})
 const gradientColor = {
     '0%': '#62B7F9',
     '60%': '#0066FF',
@@ -158,11 +176,17 @@ defineExpose({
         font-size: 0.5rem;
     }
 
+    .success_icon {
+        width: 0.48rem;
+        height: 0.48rem;
+        margin: 0.4rem 0 0.1rem 0;
+    }
+
     .name {
         font-weight: 600;
         color: #000;
         font-size: 0.32rem;
-        margin: 0.4rem 0 0.2rem 0;
+        margin: 0 0 0.2rem 0;
     }
 
     .item {

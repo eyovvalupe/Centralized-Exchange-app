@@ -192,12 +192,15 @@ const onRefresh = () => {
 
 // 一级导航
 const activeTab = ref(0)
-if (route.query.to == 'constract') {
-    activeTab.value = 1
+const reDir = () => {
+    if (route.query.to == 'constract') {
+        activeTab.value = 1
+    }
+    if (route.query.to == 'ai') {
+        activeTab.value = 2
+    }
 }
-if (route.query.to == 'ai') {
-    activeTab.value = 2
-}
+reDir()
 
 const transitionName = ref('slide-left')
 watch([activeTab], (newActive, oldActive) => {
@@ -367,6 +370,7 @@ const goSearch = (market) => {
 
 const pageActive = ref(true)
 onActivated(() => {
+    reDir()
     pageActive.value = true
     getOptionList()
 })
