@@ -55,6 +55,7 @@ const subs = () => {
         socket && socket.emit('aiquantorder', '#all')
         loading.value = true
         socket.on('aiquantorder', res => {
+            // console.error('持仓', res)
             store.commit('setAiPositionsList', (res.data || []))
             loading.value = false
         })

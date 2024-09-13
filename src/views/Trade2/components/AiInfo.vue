@@ -121,7 +121,6 @@ const getRange = () => { // 获取预计盈亏
     let rs = '--'
     try {
         const arr = rangereturn.split(' - ')
-        console.error('????', arr)
         const start = new Decimal(currItem.value.amount).mul(Number(arr[0])).div(100)
         const end = new Decimal(currItem.value.amount).mul(Number(arr[1])).div(100)
         rs = `${start} - ${end}`

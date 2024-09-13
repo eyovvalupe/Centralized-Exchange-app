@@ -8,10 +8,10 @@
                 <Faster />
             </Tab>
             <Tab title="自选区" name="1">
-
+                <Self />
             </Tab>
             <Tab title="我的订单" name="2">
-
+                <List />
             </Tab>
         </Tabs>
 
@@ -22,6 +22,8 @@
 import { Tab, Tabs } from "vant";
 import { ref, onMounted } from "vue"
 import Faster from "./Faster.vue"
+import List from "./List.vue"
+import Self from "./Self.vue"
 
 
 const active = ref(0)

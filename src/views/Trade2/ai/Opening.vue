@@ -21,7 +21,8 @@
         <!-- 品种 -->
         <div class="curr">
             <div class="subtitle" style="color: #014CFA;" @click="showNavDialog">交易品种</div>
-            <div class="ipt_box" style="margin-left:0.32rem" :class="{ 'error_border': !form1.name }">{{ form1.name }}
+            <div class="ipt_box" style="margin-left:0.32rem" @click="showNavDialog"
+                :class="{ 'error_border': !form1.name }">{{ form1.name }}
             </div>
             <div class="curr_icon" v-if="form1.name" @click="openStockModel">
                 <img src="/static/img/trade/blue-stock.png" alt="icon">
@@ -62,7 +63,7 @@
         <!-- 投资额 -->
         <div class="subtitle">
             <span>投资额</span>
-            <span class="link">账户划转</span>
+            <span class="link" @click="jump('transfer')">划转</span>
         </div>
         <div class="item item_box" style="margin-top: 0" :class="{ 'error_border': error2 }">
             <span class="ipt_tip" v-show="!(form1.volume !== '' && !amountFocus)">余额 {{ usdt.amount }}</span>
@@ -164,6 +165,8 @@
             </div>
         </Popup>
     </div>
+
+
 </template>
 
 <script setup>
@@ -385,6 +388,7 @@ const chooseItem = item => {
     form1.value.symbol = item.symbol
     store.commit('setCurrAi', item)
     showBottom.value = false
+    getParams()
 }
 _aiquant({
     orderby: '',
