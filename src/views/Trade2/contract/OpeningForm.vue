@@ -182,7 +182,7 @@
                     </div>
                 </div>
                 <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">最大可买 {{ maxStockNum }}
+                    <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">≤ {{ maxStockNum }}
                     </span>
                     <span @click="putAll"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"

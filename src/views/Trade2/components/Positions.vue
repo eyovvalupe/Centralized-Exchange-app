@@ -307,7 +307,7 @@
                             style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
                             @click="updateForm.amount = stockWalletAmount">全部</span>
                     </div>
-                    <div class="tip">账户余额 {{ stockWalletAmount }}</div>
+                    <div class="tip">≤ {{ stockWalletAmount }}</div>
                     <!-- 拖动 -->
                     <div class="slider-container">
                         <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa"

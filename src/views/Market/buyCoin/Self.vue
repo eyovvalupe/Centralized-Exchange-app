@@ -14,13 +14,27 @@
                 </div>
             </div>
         </div>
+        <div class="subtabs">
+            <div class="subtab active_subtab">USDT</div>
+            <div class="subtab">BTC</div>
+            <div class="subtab">ETH</div>
+            <div class="subtab">BNB</div>
+            <div class="subtab">DAI</div>
+            <div class="subtab">BTC</div>
+            <div class="subtab">ETH</div>
+            <div class="subtab">BNB</div>
+            <div class="subtab">DAI</div>
+        </div>
 
         <!-- list -->
         <div class="list">
 
             <div class="item" v-for="i in 10" :key="i">
                 <div class="top">
-                    <div class="avatar"></div>
+                    <div class="avatar">
+
+                        <div class="avatar_status"></div>
+                    </div>
                     <div class="top_content">
                         <div class="name">撒大大实打实/挨打</div>
                         <div class="info">
@@ -39,13 +53,30 @@
                         <div class="amount">7.18 USD</div>
                         <div>订单限额100-10000</div>
                     </div>
-                    <div class="btn">购买</div>
+                    <div class="btn" @click="showPopupInfo = true">购买</div>
                 </div>
             </div>
 
         </div>
     </div>
+
+    <!-- 订单弹窗 -->
+    <Popup teleport="body" v-model:show="showPopupInfo" round position="bottom" closeable>
+        <div class="buycoin_orderinfo_dialog">
+            <div class="orderinfo_dialog_title">订单详情</div>
+
+            <OrderInfo />
+        </div>
+    </Popup>
 </template>
+
+<script setup>
+import { ref } from "vue"
+import { Popup } from "vant"
+import OrderInfo from "./OrderInfo.vue"
+
+const showPopupInfo = ref(true)
+</script>
 
 <style lang="less" scoped>
 .buycoin_self {
@@ -57,12 +88,12 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+        // border-bottom: 1px solid rgba(59, 130, 246, 0.3);
 
         .tab {
             margin-right: 0.24rem;
             min-width: 1rem;
-            color: #999;
+            color: #9EA3AE;
             height: 100%;
             display: flex;
             align-items: center;
@@ -70,14 +101,33 @@
         }
 
         .active_tab {
+            font-weight: bold;
             color: #000;
-            border-bottom: 3px solid #014cfa;
+            // border-bottom: 3px solid #014cfa;
         }
 
         .icon {
             font-size: 0.28rem;
             height: 0.28rem;
             margin-left: 0.2rem;
+        }
+    }
+
+    .subtabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        margin: 0.2rem 0;
+        padding-left: 0.1rem;
+
+        .subtab {
+            display: inline-block;
+            margin-right: 0.4rem;
+            color: #9EA3AE;
+        }
+
+        .active_subtab {
+            color: #000;
+            font-weight: bold;
         }
     }
 
@@ -97,6 +147,17 @@
                     border-radius: 50%;
                     background-color: #014cfa;
                     margin-right: 0.24rem;
+                    position: relative;
+
+                    .avatar_status {
+                        position: absolute;
+                        width: 0.13rem;
+                        height: 0.13rem;
+                        border-radius: 50%;
+                        background-color: #30BF87;
+                        bottom: 0.04rem;
+                        right: 0.04rem;
+                    }
                 }
 
                 .top_content {
@@ -153,5 +214,21 @@
             }
         }
     }
+}
+</style>
+
+<style lang="less">
+.buycoin_orderinfo_dialog {
+    position: relative;
+
+    .orderinfo_dialog_title {
+        font-size: 0.32rem;
+        line-height: 0.6rem;
+        text-align: center;
+        margin-bottom: 0.2rem;
+        margin-top: 0.2rem;
+        font-weight: bold;
+    }
+
 }
 </style>

@@ -31,7 +31,7 @@
                 </div>
                 <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
                     <div class="item_content">
-                        <div class="ipt_tip" v-show="form.amount === '' || focus">可用余额 <span>{{ balance }}</span></div>
+                        <div class="ipt_tip" v-show="form.amount === '' || focus">≤ <span>{{ balance }}</span></div>
                         <input @focus="focus = true" @blur="errStatus = focus = false" class="ipt" @input="changeAmount"
                             type="number" v-model="form.amount" placeholder="">
                         <span class="all" @click="maxIpt">全部</span>

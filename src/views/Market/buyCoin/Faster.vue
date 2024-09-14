@@ -3,12 +3,17 @@
     <div class="page_fasters">
         <div class="form">
 
+            <div class="tabs">
+                <div class="tab">买入</div>
+                <div class="tab active_tab">卖出</div>
+            </div>
+
             <!-- 售出 -->
             <div class="item_box">
                 <div class="item_box_left">
                     <div class="subtitle"><span>售出</span></div>
                     <div class="item" :class="{ 'item_focus': priceFocus }">
-                        <span class="ipt_tip" v-show="form1.price === '' || priceFocus">余额 10000</span>
+                        <span class="ipt_tip" v-show="form1.price === '' || priceFocus">≤ 10000</span>
                         <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
                             class="ipt">
                     </div>
@@ -67,6 +72,24 @@ const form1 = ref({
 .page_fasters {
     .form {
         padding: 0.64rem 0.32rem;
+
+        .tabs {
+            margin: 0 0 0.6rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .tab {
+                color: #9EA3AE;
+                margin: 0 0.4rem;
+            }
+
+            .active_tab {
+                font-weight: bold;
+                color: #000;
+                ;
+            }
+        }
 
         .tip {
             color: #b7b7b7;
@@ -206,7 +229,7 @@ const form1 = ref({
     }
 
     .submit {
-        margin-top: 4rem;
+        margin-top: 3rem;
     }
 }
 </style>

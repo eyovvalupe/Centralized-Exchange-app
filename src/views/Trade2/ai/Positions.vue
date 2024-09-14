@@ -19,6 +19,8 @@
                     <div class="time">{{ item.date }}</div>
                 </div>
             </div>
+
+            <Loaidng :loading="loading" v-if="loading && !aiPositionsList.length" />
         </div>
     </div>
 
@@ -31,6 +33,7 @@ import { useSocket } from "@/utils/ws";
 import { onMounted, onUnmounted, computed, ref } from "vue"
 import store from '@/store';
 import AiInfo from "../components/AiInfo.vue"
+import Loaidng from "@/components/Loaidng.vue"
 
 // 详情
 const infoRef = ref()
@@ -48,12 +51,12 @@ const { startSocket } = useSocket();
 // 订阅
 const loading = ref(false)
 const subs = () => {
+    loading.value = true
     const socket = startSocket(() => {
         socket && socket.off('user')
         socket && socket.off('aiquantorder')
         socket && socket.emit('user', token.value)
         socket && socket.emit('aiquantorder', '#all')
-        loading.value = true
         socket.on('aiquantorder', res => {
             // console.error('持仓', res)
             store.commit('setAiPositionsList', (res.data || []))

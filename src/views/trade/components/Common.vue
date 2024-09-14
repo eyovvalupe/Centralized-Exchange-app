@@ -61,7 +61,7 @@
       </div>
 
       <div class="animate-input num-input flex" :class="{ hasval: !!numValue, inputFocus: isFocused === 5 }">
-        <div class="ipt_tip" v-if="isFocused === 5 || !numValue">最大可{{ isUpActive ? '买' : '卖' }} {{ roundedQuantity }}
+        <div class="ipt_tip" v-if="isFocused === 5 || !numValue">≤ {{ roundedQuantity }}
         </div>
         <input v-model="numValue" type="number" @input="inputChange" @focus="handleFocus(5)" @blur="handleBlur(5)"
           ref="buyNumRef" placeholder="">

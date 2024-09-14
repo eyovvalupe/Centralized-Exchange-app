@@ -21,8 +21,7 @@
         <!-- 品种 -->
         <div class="curr">
             <div class="subtitle" style="color: #014CFA;" @click="showNavDialog">交易品种</div>
-            <div class="ipt_box" style="margin-left:0.32rem" @click="showNavDialog"
-                :class="{ 'error_border': !form1.name }">{{ form1.name }}
+            <div class="ipt_box" style="margin-left:0.32rem" @click="showNavDialog">{{ form1.name }}
             </div>
             <div class="curr_icon" v-if="form1.name" @click="openStockModel">
                 <img src="/static/img/trade/blue-stock.png" alt="icon">
@@ -66,7 +65,7 @@
             <span class="link" @click="jump('transfer')">划转</span>
         </div>
         <div class="item item_box" style="margin-top: 0" :class="{ 'error_border': error2 }">
-            <span class="ipt_tip" v-show="!(form1.volume !== '' && !amountFocus)">余额 {{ usdt.amount }}</span>
+            <span class="ipt_tip" v-show="!(form1.volume !== '' && !amountFocus)">≤ {{ usdt.amount }}</span>
             <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false" type="number"
                 v-model="form1.volume" class="ipt" @change="changePercent">
         </div>
