@@ -59,6 +59,14 @@ export default createStore({
       commit("setToken", "");
       commit("setUserInfo", {});
       commit("setMarketWatchList", []);
+      commit("setPositionsList", []);
+      commit("setContractPositionsList", []);
+      commit("setAiPositionsList", []);
+      commit("setIpoDataList", []);
+      commit("setApoStockList", []);
+      commit("setInquireList", []);
+      commit("setContractInquireList", []);
+      commit("setAiInquireList", []);
       commit('setMarketSearch', {
         search: '',
         market: '',

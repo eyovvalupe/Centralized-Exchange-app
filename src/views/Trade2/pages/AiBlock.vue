@@ -15,9 +15,9 @@
             </Tab> -->
             <Tab title="订单" name="2">
                 <div class="ai-block-content">
-                    <div class="ai-block-title">当前持仓</div>
+                    <div v-if="token" class="ai-block-title">当前持仓</div>
                     <Positions />
-                    <div class="ai-block-title" style="margin-top: 0.32rem;">历史订单</div>
+                    <div v-if="token" class="ai-block-title" style="margin-top: 0.32rem;">历史订单</div>
                     <Inquire ref="InquireRef" />
                 </div>
             </Tab>
@@ -35,12 +35,14 @@
 
 <script setup>
 import { Tab, Tabs, Popup } from "vant";
-import { ref, onMounted } from "vue"
+import { ref, onMounted, computed } from "vue"
 import Opening from "../ai/Opening.vue"
 import Ai from "../../Market/components/Ai.vue"
 import Positions from "../ai/Positions.vue"
 import Inquire from "../ai/Inquire.vue"
+import store from "@/store";
 
+const token = computed(() => store.state.token || '')
 
 const OpeningRef = ref()
 const showModel = ref(false)
