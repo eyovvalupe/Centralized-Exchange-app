@@ -234,7 +234,7 @@ defineExpose({
             font-weight: 500;
 
             .tag {
-                height: 0.44rem;
+                min-height: 0.44rem;
                 color: #014CFA;
                 background-color: #ecf1fe;
                 line-height: 0.44rem;

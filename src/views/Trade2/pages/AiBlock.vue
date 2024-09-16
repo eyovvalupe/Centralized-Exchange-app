@@ -8,13 +8,16 @@
                     <Ai @clickItems="clickItem"></Ai>
                 </div>
             </Tab>
-            <Tab title="持仓" name="1">
+            <!-- <Tab title="持仓" name="1">
                 <div class="ai-block-content">
-                    <Positions />
+                    
                 </div>
-            </Tab>
-            <Tab title="查询" name="2">
+            </Tab> -->
+            <Tab title="订单" name="2">
                 <div class="ai-block-content">
+                    <div class="ai-block-title">当前持仓</div>
+                    <Positions />
+                    <div class="ai-block-title" style="margin-top: 0.32rem;">历史订单</div>
                     <Inquire ref="InquireRef" />
                 </div>
             </Tab>
@@ -77,6 +80,11 @@ onMounted(() => {
 .ai-block {
     .ai-block-content {
         padding: 0.4rem 0 2rem 0;
+
+        .ai-block-title {
+            padding: 0 0.32rem;
+            font-weight: 600;
+        }
     }
 
     .tabs {

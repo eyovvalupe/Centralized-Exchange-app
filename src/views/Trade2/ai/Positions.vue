@@ -9,14 +9,15 @@
                 <div class="mid">
                     <div class="name">{{ item.name }}</div>
                     <div class="mid_block">
-                        <div class="tag" :class="[item.offset == 'long' ? 'up' : 'down']">{{ item.offset == 'long'
-                            ? '买涨' : '买跌' }}</div>
-                        <div class="grid">{{ item.lever }}</div>
+                        <!-- <div class="tag" :class="[item.offset == 'long' ? 'up' : 'down']">{{ item.offset == 'long'
+                            ? '买涨' : '买跌' }}</div> -->
+                        <div class="grid">{{ item.order_no }}</div>
                     </div>
                 </div>
                 <div class="right">
-                    <div class="amount">{{ item.amount }}</div>
-                    <div class="time">{{ item.date }}</div>
+                    <div class="amount">{{ formatSec2(item.endtime) }}</div>
+                    <!-- <div class="time">{{ item.date }}</div> -->
+                    <div class="status">当前持仓</div>
                 </div>
             </div>
 
@@ -34,6 +35,7 @@ import { onMounted, onUnmounted, computed, ref } from "vue"
 import store from '@/store';
 import AiInfo from "../components/AiInfo.vue"
 import Loaidng from "@/components/Loaidng.vue"
+import { formatSec2 } from "@/utils/time"
 
 // 详情
 const infoRef = ref()
@@ -106,10 +108,10 @@ onUnmounted(() => {
 
         .mid {
             flex: 1;
-            margin: 0 0.2rem 0 0.3rem;
+            margin: 0 0.2rem 0 0.36rem;
 
             .name {
-                font-size: 0.32rem;
+                font-size: 0.28rem;
                 color: #000;
                 font-weight: bold;
             }
@@ -117,6 +119,7 @@ onUnmounted(() => {
             .mid_block {
                 display: flex;
                 align-items: center;
+                margin-top: 0.1rem;
 
                 .tag {
                     padding: 0 0.08rem;
@@ -134,6 +137,19 @@ onUnmounted(() => {
                 font-size: 0.32rem;
                 color: #000;
                 font-weight: bold;
+            }
+
+            .status {
+                color: #FFAF2A;
+                background-color: #FFFAF2;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 0.16rem;
+                border-radius: 0.04rem;
+                font-size: 0.24rem;
+                width: auto;
+                margin-top: 0.1rem;
             }
         }
     }

@@ -5,30 +5,32 @@
 
         <div class="tr" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">
             <div class="ai_icon">
-                <img src="/static/img/trade/ai_order.png" alt="ai">
+                <img src="/static/img/trade/ai_order2.png" alt="ai">
             </div>
             <div class="mid">
                 <div class="name">{{ item.name }}</div>
                 <div class="mid_block">
-                    <div class="tag" :class="[item.offset == 'long' ? 'up' : 'down']">{{ item.offset == 'long'
-                        ? '买涨' : '买跌' }}</div>
-                    <div class="grid">{{ item.lever }}</div>
+                    <!-- <div class="tag" :class="[item.offset == 'long' ? 'up' : 'down']">{{ item.offset == 'long'
+                        ? '买涨' : '买跌' }}</div> -->
+                    <div class="grid">{{ item.order_no }}</div>
                 </div>
             </div>
             <div class="right">
-                <div class="amount" :class="[item.profit > 0 ? 'up' : 'down']">{{ item.profit > 0 ? '+' : '' }}{{
-                    item.profit }}</div>
-                <div class="time">{{ item.date }}</div>
+                <div class="amount">{{ item.profit > 0 ? '+' : '' }}{{
+                    item.profit }} <span>USDT</span></div>
+                <!-- <div class="time">{{ item.date }}</div> -->
+                <div class="status" :class="[item.profit < 0 ? 'down_status' : 'up_status']">{{ item.profit < 0 ? '负盈利'
+                    : '盈利' }}</div>
+                </div>
             </div>
+            <LoadingMore :loading="loading" :finish="finish" v-if="(finish && aiInquireList.length) || (!finish)" />
         </div>
-        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && aiInquireList.length) || (!finish)" />
-    </div>
 
-    <UnLogin v-else />
+        <UnLogin v-else />
 
 
-    <!-- 详情 -->
-    <AiInfo ref="infoRef" />
+        <!-- 详情 -->
+        <AiInfo ref="infoRef" />
 </template>
 
 <script setup>
@@ -117,25 +119,26 @@ defineExpose({
 
 <style lang="less" scoped>
 .inquire {
-    padding-bottom: 2rem;
+    padding: 0.2rem 0.32rem;
 
     .tr {
         padding: 0.24rem 0.32rem;
         display: flex;
-        align-items: stretch;
+        align-items: center;
         padding: 0.2rem;
         border-bottom: 1px solid #EAEAEA;
         color: #333;
         line-height: 0.5rem;
 
         .ai_icon {
-            width: 0.64rem;
-            height: 0.64rem;
+            width: 0.56rem;
+            height: 0.56rem;
+            margin: 0 0.04rem;
         }
 
         .mid {
             flex: 1;
-            margin: 0 0.2rem 0 0.3rem;
+            margin: 0 0.2rem 0 0.36rem;
 
             .name {
                 font-size: 0.32rem;
@@ -146,6 +149,7 @@ defineExpose({
             .mid_block {
                 display: flex;
                 align-items: center;
+                margin-top: 0.1rem;
 
                 .tag {
                     padding: 0 0.08rem;
@@ -153,6 +157,7 @@ defineExpose({
                     margin-right: 0.1rem;
                     font-size: 0.24rem;
                 }
+
             }
         }
 
@@ -163,6 +168,32 @@ defineExpose({
                 font-size: 0.32rem;
                 color: #000;
                 font-weight: bold;
+
+                >span {
+                    font-weight: 400;
+                    font-size: 0.28rem;
+                }
+            }
+
+            .status {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 0.16rem;
+                border-radius: 0.04rem;
+                font-size: 0.24rem;
+                width: auto;
+                margin-top: 0.1rem;
+            }
+
+            .down_status {
+                color: #E8503A;
+                background-color: #FFF3F3;
+            }
+
+            .up_status {
+                color: #0AB27D;
+                background-color: #EBFEED;
             }
         }
     }
