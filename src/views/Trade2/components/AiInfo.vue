@@ -1,20 +1,27 @@
 <!-- ai量化-订单详情 -->
 <template>
-    <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
+    <Popup teleport="body" lazy-render v-model:show="showModel" position="bottom" round closeable>
         <div class="ai_order_info">
             <div class="title">订单详情</div>
 
             <div style="display: flex;flex-direction: column;align-items: center;">
-                <!-- 盈利 -->
-                <div class="win" v-if="currItem.status == 'close'">
-                    <div class="win_name">盈利</div>
-                    <div class="amount" :class="[currItem.profit > 0 ? 'up' : 'down']">{{ currItem.profit > 0 ? '+' : ''
-                        }}{{ currItem.profit }}</div>
-                </div>
-                <Circle v-if="currItem.status == 'open'" class="circle" :start-position="'bottom'"
-                    :stroke-linecap="'butt'" :stroke-width="150" :layer-color="'#E5E5E5'" :color="gradientColor"
-                    size="150px" :rate="rate" v-model:current-rate="currentRate"
-                    :text="currItem.time + _dateUnitMap[currItem.unit]" />
+                <!-- 加载 -->
+                <Loaidng v-if="loading" :loading="loading" />
+
+                <template v-else>
+                    <!-- 盈利 -->
+                    <div class="win" v-if="currItem.status == 'close'">
+                        <div class="win_name">盈利</div>
+                        <div class="amount" :class="[currItem.profit > 0 ? 'up' : 'down']">{{ currItem.profit > 0 ? '+'
+                            : ''
+                            }}{{ currItem.profit }}</div>
+                    </div>
+                    <Circle v-if="currItem.status == 'open'" class="circle" :start-position="'bottom'"
+                        :stroke-linecap="'butt'" :stroke-width="150" :layer-color="'#E5E5E5'" :color="gradientColor"
+                        size="150px" :rate="rate" v-model:current-rate="currentRate"
+                        :text="currItem.time + _dateUnitMap[currItem.unit]" />
+                </template>
+
 
                 <div class="time" v-if="currItem.status == 'open'">{{ formatSec2(currItem.endtime) }}</div>
                 <div class="adress">{{ currItem.order_no }}</div>
@@ -65,11 +72,12 @@
 
 <script setup>
 import { Button, Popup, Circle } from "vant"
-import { ref, computed } from "vue"
+import { ref, computed, onBeforeUnmount } from "vue"
 import { _aiget } from "@/api/api"
 import { formatSec2 } from "@/utils/time"
 import Decimal from 'decimal.js';
 import { _dateUnitMap } from "@/utils/dataMap"
+import Loaidng from "@/components/Loaidng.vue"
 
 
 const currentRate = ref(100)
@@ -99,17 +107,36 @@ const open = (item) => {
     currItem.value = item
     getInfo()
     showModel.value = true
+    if (timeout) clearInterval(timeout)
 }
 
 // 获取详情
+let timeout = null
+const loading = ref(false)
 const getInfo = () => {
+    loading.value = true
     _aiget({
         order_no: currItem.value.order_no
     }).then(res => {
         if (res.data) {
-            console.error(res.data)
             currItem.value = res.data
+            if (currItem.value.endtime) { // 开始倒计时
+                if (timeout) clearInterval(timeout)
+                timeout = setInterval(() => {
+                    currItem.value.endtime--
+                    if (currItem.value.endtime <= 0) {
+                        clearInterval(timeout)
+
+                        loading.value = true
+                        setTimeout(() => {
+                            getInfo()
+                        }, 1000)
+                    }
+                }, 1000)
+            }
         }
+    }).finally(() => {
+        loading.value = false
     })
 }
 
@@ -130,7 +157,9 @@ const getRange = () => { // 获取预计盈亏
 }
 
 
-
+onBeforeUnmount(() => {
+    timeout && clearInterval(timeout)
+})
 defineExpose({
     open
 })

@@ -75,7 +75,7 @@ import { ref } from "vue"
 import { Popup } from "vant"
 import OrderInfo from "./OrderInfo.vue"
 
-const showPopupInfo = ref(true)
+const showPopupInfo = ref(false)
 </script>
 
 <style lang="less" scoped>

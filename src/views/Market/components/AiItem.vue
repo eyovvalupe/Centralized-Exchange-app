@@ -1,16 +1,19 @@
 <!-- ai交易元素 -->
 <template>
     <div class="ai_item">
-        <div class="title">{{ props.item.name }}</div>
-        <div class="tip">
-            <div class="tip_member">
-                <div class="tip_icon">
-                    <img src="/static/img/common/member.png" alt="icon">
+        <div class="title">
+            <span>{{ props.item.name }}</span>
+            <div class="tip">
+                <div class="tip_member">
+                    <div class="tip_icon">
+                        <img src="/static/img/common/member.png" alt="icon">
+                    </div>
+                    <span>{{ props.item.numpeople || '--' }}</span>
                 </div>
-                <span>--</span>
+                <div>最大网格{{ props.item.maxgrid }}</div>
             </div>
-            <div>最大网格{{ props.item.maxgrid }}</div>
         </div>
+
 
         <div>盈亏（USDT）</div>
         <div class="amount" :class="[props.item.income > 0 ? 'up' : 'down']">{{ props.item.income }}</div>
@@ -28,11 +31,11 @@
                 <div class="td_title">最小投资金额</div>
                 <div>{{ props.item.minamount }}</div>
             </div>
-            <div class="td" style="margin-top: 0.4rem;">
+            <div class="td" style="margin-top: 0.24rem;">
                 <div class="td_title">运行时间</div>
                 <div>{{ formatSec(props.item.runtime) }}</div>
             </div>
-            <div class="btns" style="margin-top: 0.4rem;">
+            <div class="btns" style="margin-top: 0.24rem;">
                 <div class="btn" @click="goTrade">交易</div>
             </div>
         </div>
@@ -51,7 +54,11 @@ import router from "@/router";
 import { formatSec } from "@/utils/time"
 import SparkLine from "@/components/SparkLine.vue"
 import store from "@/store"
+import { useRoute } from "vue-router"
 
+const emits = defineEmits('click')
+
+const route = useRoute()
 const props = defineProps({
     item: {
         type: Object,
@@ -69,6 +76,9 @@ const goTrade = () => {
             symbol: props.item.symbol,
         }
     })
+    if (route.name == 'trade') {
+        emits('clickItems', props.item)
+    }
 }
 
 </script>
@@ -86,10 +96,10 @@ const goTrade = () => {
     .canvas {
         position: absolute;
         width: 3rem;
-        height: 1.5rem;
-        border: 1px solid #eee;
+        height: 1.2rem;
+        // border: 1px solid #eee;
         right: 0.32rem;
-        top: 0.9rem;
+        top: 0.8rem;
     }
 
 
@@ -97,7 +107,10 @@ const goTrade = () => {
         color: #0D0D12;
         font-size: 0.32rem;
         font-weight: bold;
-        margin-bottom: 0.1rem;
+        margin-bottom: 0.24rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .tip {
@@ -105,7 +118,8 @@ const goTrade = () => {
         align-items: center;
         justify-content: flex-start;
         color: #8F8F8F;
-        margin-bottom: 0.44rem;
+        font-weight: 400;
+        font-size: 0.28rem;
 
         .tip_member {
             display: flex;
@@ -129,7 +143,7 @@ const goTrade = () => {
     .amount {
         font-size: 0.48rem;
         font-weight: bold;
-        margin: 0.2rem 0 0.44rem 0;
+        margin: 0.2rem 0 0.24rem 0;
     }
 
     .table {
@@ -146,13 +160,13 @@ const goTrade = () => {
 
             .td_title {
                 color: #6C7B90;
-                margin-bottom: 0.2rem;
+                margin-bottom: 0.1rem;
             }
         }
 
         .btns {
             flex: 1;
-            padding: 0.1rem 0.48rem 0 0.48rem;
+            padding: 0.05rem 0.48rem;
 
             .btn {
                 height: 0.64rem;

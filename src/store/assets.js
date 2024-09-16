@@ -65,13 +65,13 @@ export default {
             // 更新钱包
             _balance() // 现金账户
                 .then((res) => {
-                    if (res.code == 200 && res.data) {
+                    if (res && res.code == 200 && res.data) {
                         commit("setWallet", res.data || []);
                     }
                 })
             _currency() // 其他账户
                 .then((res) => {
-                    if (res.code == 200 && res.data) {
+                    if (res && res.code == 200 && res.data) {
                         commit("setElseWallet", res.data || []);
                     }
                 })

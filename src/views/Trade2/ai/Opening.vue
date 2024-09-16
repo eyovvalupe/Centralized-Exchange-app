@@ -268,6 +268,12 @@ const checkForm = () => {
         showToast('请输入投资额')
         return
     }
+    if (form1.value.volume < minamount.value) {
+        error2.value = true
+        showToast('最小投资额: ' + minamount.value)
+        return
+    }
+
     showModel.value = true
 }
 const submitFormDialog = () => {
@@ -400,11 +406,29 @@ _aiquant({
         })
     }, 500)
 })
+
+
+
+const init = () => {
+    error1.value = false
+    error2.value = false
+    form1.value = {
+        name: route.query.name || '',
+        symbol: route.query.symbol || '',
+        grid: '1',
+        volume: ''
+    }
+    getParams()
+}
+
+defineExpose({
+    init
+})
 </script>
 
 <style lang="less" scoped>
 .trade_ai {
-    padding: 0.32rem 0.32rem 3rem 0.32rem;
+    padding: 0.32rem 0.32rem 0.6rem 0.32rem;
 
     .tabs {
         display: flex;

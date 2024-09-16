@@ -7,28 +7,28 @@
             <Tab :title="'默认'">
                 <div class="list">
                     <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
-                    <AiItem v-for="(item, i) in marketAiList" :key="i" :item="item" />
+                    <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiList" :key="i" :item="item" />
                     <NoData v-if="(!loading && marketAiList.length == 0)" />
                 </div>
             </Tab>
             <Tab :title="'历史高收益率'">
                 <div class="list">
                     <Loaidng :loading="loading" v-if="!marketAiHisList.length && loading" />
-                    <AiItem v-for="(item, i) in marketAiHisList" :key="i" :item="item" />
+                    <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiHisList" :key="i" :item="item" />
                     <NoData v-if="(!loading && marketAiHisList.length == 0)" />
                 </div>
             </Tab>
             <Tab :title="'24小时高收益率'">
                 <div class="list">
                     <Loaidng :loading="loading" v-if="!marketAi24List.length && loading" />
-                    <AiItem v-for="(item, i) in marketAi24List" :key="i" :item="item" />
+                    <AiItem @clickItems="clickItem" v-for="(item, i) in marketAi24List" :key="i" :item="item" />
                     <NoData v-if="(!loading && marketAi24List.length == 0)" />
                 </div>
             </Tab>
             <Tab :title="'高杠杆'">
                 <div class="list">
                     <Loaidng :loading="loading" v-if="!marketAiGridList.length && loading" />
-                    <AiItem v-for="(item, i) in marketAiGridList" :key="i" :item="item" />
+                    <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiGridList" :key="i" :item="item" />
                     <NoData v-if="(!loading && marketAiGridList.length == 0)" />
                 </div>
             </Tab>
@@ -45,6 +45,11 @@ import { _aiquant } from "@/api/api"
 import Loaidng from "@/components/Loaidng.vue"
 import NoData from "@/components/NoData.vue"
 import store from "@/store/index"
+
+const emits = defineEmits('clickItem')
+const clickItem = item => {
+    emits('clickItems', item)
+}
 
 
 const marketAiList = computed(() => store.state.marketAiList || []) // ai量化默认列表
@@ -140,8 +145,50 @@ onMounted(() => {
         padding: 0 0.32rem 0.32rem 0.32rem;
     }
 
+    :deep(.van-tabs__nav) {
+        &::after {
+            display: none;
+        }
+    }
+
+    :deep(.van-tabs__nav--card) {
+        border: none;
+    }
+
+    :deep(.van-tab--card) {
+        border-right: none;
+        color: #061023;
+    }
+
+    :deep(.van-tab--card.van-tab--active) {
+
+        background-color: #F6F8FF;
+        border-radius: 0.3rem;
+        color: #014CFA;
+        font-weight: 500
+    }
+
+    :deep(.van-tab--shrink) {
+        padding: 0 0.26rem;
+    }
+
     :deep(.van-tabs__wrap) {
+        height: 0.8rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0);
+        padding-bottom: 0.2rem;
+        position: relative;
         padding-right: 0.6rem !important;
+    }
+
+    :deep(.van-tabs__nav--card) {
+        height: 0.6rem;
+        width: 100%;
+        position: static;
+    }
+
+    :deep(.van-tab) {
+        line-height: 0.6rem;
+        font-size: 0.28rem;
     }
 }
 </style>

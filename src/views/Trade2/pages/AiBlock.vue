@@ -4,26 +4,50 @@
         <Tabs v-if="!pageLoading" class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="onChange">
             <Tab title="开仓" name="0">
-                <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
+                <div class="ai-block-content">
+                    <Ai @clickItems="clickItem"></Ai>
+                </div>
             </Tab>
             <Tab title="持仓" name="1">
-                <Positions />
+                <div class="ai-block-content">
+                    <Positions />
+                </div>
             </Tab>
             <Tab title="查询" name="2">
-                <Inquire ref="InquireRef" />
+                <div class="ai-block-content">
+                    <Inquire ref="InquireRef" />
+                </div>
             </Tab>
         </Tabs>
         <div style="height:50vh" v-else></div>
+
+        <!-- 下单弹窗 -->
+        <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
+            <div style="padding-top: 0.5rem;height: var(--app-height);overflow-y: auto;">
+                <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
+            </div>
+        </Popup>
     </div>
 </template>
 
 <script setup>
-import { Tab, Tabs } from "vant";
+import { Tab, Tabs, Popup } from "vant";
 import { ref, onMounted } from "vue"
 import Opening from "../ai/Opening.vue"
+import Ai from "../../Market/components/Ai.vue"
 import Positions from "../ai/Positions.vue"
 import Inquire from "../ai/Inquire.vue"
 
+
+const OpeningRef = ref()
+const showModel = ref(false)
+const clickItem = item => {
+    console.error('---', item)
+    showModel.value = true
+    setTimeout(() => {
+        OpeningRef.value.init()
+    }, 100)
+}
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
@@ -51,6 +75,10 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .ai-block {
+    .ai-block-content {
+        padding: 0.4rem 0 2rem 0;
+    }
+
     .tabs {
         :deep(.van-tabs__nav) {
             padding-left: 0.32rem;
