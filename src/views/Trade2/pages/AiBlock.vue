@@ -41,13 +41,21 @@ import Ai from "../../Market/components/Ai.vue"
 import Positions from "../ai/Positions.vue"
 import Inquire from "../ai/Inquire.vue"
 import store from "@/store";
+import router from "@/router";
 
 const token = computed(() => store.state.token || '')
 
 const OpeningRef = ref()
 const showModel = ref(false)
 const clickItem = item => {
-    console.error('---', item)
+    if (!token.value) {
+        return router.push({
+            name: 'login',
+            query: {
+                reurl: "trade"
+            }
+        })
+    }
     showModel.value = true
     setTimeout(() => {
         OpeningRef.value.init()

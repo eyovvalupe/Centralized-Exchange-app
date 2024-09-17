@@ -90,7 +90,7 @@
                             <img v-show="active != 4" src="/static/img/market/ai.svg" alt="icon">
                             <img v-show="active == 4" src="/static/img/market/ai2.svg" alt="icon">
                         </div>
-                        <span>AI量化</span>
+                        <span>交易机器人</span>
                     </div>
                 </template>
             </Tab>
@@ -418,7 +418,7 @@ const onRefresh = () => {
         }
 
         :deep(.van-tab--shrink) {
-            padding: 0 0.26rem;
+            padding: 0 0.2rem;
         }
 
         :deep(.van-tabs__wrap) {

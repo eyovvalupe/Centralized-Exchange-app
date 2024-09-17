@@ -12,7 +12,7 @@
                     <!-- 盈利 -->
                     <div class="win" v-if="currItem.status == 'close'">
                         <div class="win_name">盈利</div>
-                        <div class="amount" :class="[currItem.profit > 0 ? 'up' : 'down']">{{ currItem.profit > 0 ? '+'
+                        <div class="amount" :class="[currItem.profit < 0 ? 'down' : 'up']">{{ currItem.profit > 0 ? '+'
                             : ''
                             }}{{ currItem.profit }}</div>
                     </div>

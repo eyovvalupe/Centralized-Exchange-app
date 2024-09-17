@@ -4,98 +4,117 @@
 
         <!-- tabs -->
         <div class="tabs">
-            <div class="tab active_tab">
+            <div class="tab" @click="active = 1" :class="{ 'active_tab': active == 1 }">
                 <span>购买</span>
             </div>
-            <div class="tab">
+            <div class="tab" @click="active = 2" :class="{ 'active_tab': active == 2 }">
                 <span>联系商家</span>
                 <div class="hint">2</div>
             </div>
         </div>
 
-        <!-- 顶部详情 -->
-        <div class="top">
-            <span>2024-08-08 13:13:13</span>
-            <span>242342342342342234</span>
-            <div class="copy_icon">
-                <img src="/static/img/common/copy_default.png" alt="copy">
-            </div>
-        </div>
-
-        <!-- 价格详情 -->
-        <div class="info">
-            <div class="info_item">
-                <div class="title">总价</div>
-                <div class="val">1000 USDT</div>
-            </div>
-            <div class="info_item">
-                <div class="title">价格</div>
-                <div class="val">1000 USDT</div>
-            </div>
-            <div class="info_item">
-                <div class="title">数量</div>
-                <div class="val">1000 USDT</div>
-            </div>
-        </div>
-
-        <!-- 商家详情 -->
-        <div class="seller">
-            <div class="title_box">
-                <div class="avatar"></div>
-                <div class="title">萨达萨达是/阿松大萨达撒</div>
-            </div>
-            <div class="remark">备注 诚信交易|快速交易|阿三大苏打萨达萨达</div>
-        </div>
-
-        <!-- 银行卡 -->
-        <div class="bank">
-            <div class="bank_title">
-                <div class="bank_icon">
-                    <img src="/static/img/user/card_type_b.png" alt="img">
-                </div>
-                <div>银行卡</div>
-            </div>
-
-            <div class="table">
-                <div class="tr">
-                    <div class="td">银行卡</div>
-                    <div class="td td-3">美国银行</div>
-                </div>
-                <div class="tr">
-                    <div class="td">卡号</div>
-                    <div class="td td-3">123435</div>
-                </div>
-                <div class="tr">
-                    <div class="td">账号</div>
-                    <div class="td td-3">asdasdasds</div>
+        <!-- 详情 -->
+        <template v-if="active == 1">
+            <!-- 顶部详情 -->
+            <div class="top">
+                <span>2024-08-08 13:13:13</span>
+                <span>242342342342342234</span>
+                <div class="copy_icon">
+                    <img src="/static/img/common/copy_default.png" alt="copy">
                 </div>
             </div>
-        </div>
 
-        <!-- 状态 -->
-        <div class="status">
-            <div class="status_wait">
-                <div style="display: flex;align-items: center;">
-                    <div class="amount">等待买家付款</div>
-                    <div class="time">14:13:00</div>
+            <!-- 价格详情 -->
+            <div class="info">
+                <div class="info_item">
+                    <div class="title">总价</div>
+                    <div class="val">1000 USDT</div>
                 </div>
-                <div>请根据总价，向商家提供的银行卡转账</div>
+                <div class="info_item">
+                    <div class="title">价格</div>
+                    <div class="val">1000 USDT</div>
+                </div>
+                <div class="info_item">
+                    <div class="title">数量</div>
+                    <div class="val">1000 USDT</div>
+                </div>
             </div>
-        </div>
 
-        <!-- 按钮 -->
-        <div class="btns">
-            <div class="btn" style="margin-right: 0.64rem;">取消订单</div>
-            <div class="btn active_btn">我已付款</div>
-        </div>
+            <!-- 商家详情 -->
+            <div class="seller">
+                <div class="title_box">
+                    <div class="avatar"></div>
+                    <div class="title">萨达萨达是/阿松大萨达撒</div>
+                </div>
+                <div class="remark">备注 诚信交易|快速交易|阿三大苏打萨达萨达</div>
+            </div>
+
+            <!-- 银行卡 -->
+            <div class="bank">
+                <div class="bank_title">
+                    <div class="bank_icon">
+                        <img src="/static/img/user/card_type_b.png" alt="img">
+                    </div>
+                    <div>银行卡</div>
+                </div>
+
+                <div class="table">
+                    <div class="tr">
+                        <div class="td">银行卡</div>
+                        <div class="td td-3">美国银行</div>
+                    </div>
+                    <div class="tr">
+                        <div class="td">卡号</div>
+                        <div class="td td-3">123435</div>
+                    </div>
+                    <div class="tr">
+                        <div class="td">账号</div>
+                        <div class="td td-3">asdasdasds</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 状态 -->
+            <div class="status">
+                <div class="status_wait">
+                    <div style="display: flex;align-items: center;">
+                        <div class="amount">等待买家付款</div>
+                        <div class="time">14:13:00</div>
+                    </div>
+                    <div>请根据总价，向商家提供的银行卡转账</div>
+                </div>
+            </div>
+
+            <!-- 按钮 -->
+            <div class="btns">
+                <div class="btn" style="margin-right: 0.64rem;">取消订单</div>
+                <div class="btn active_btn">我已付款</div>
+            </div>
+        </template>
+
+        <!-- 聊天 -->
+        <template v-if="active == 2">
+            <Chat style="flex: 1;" />
+        </template>
 
     </div>
 </template>
+
+<script setup>
+import Chat from "./Chat.vue"
+import { ref } from "vue"
+
+const active = ref(1) // 1-详情 2-聊天
+
+</script>
 
 
 <style lang="less" scoped>
 .order_info {
     padding: 0 0.32rem 0.32rem 0.32rem;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
 
     .tabs {
         display: flex;
