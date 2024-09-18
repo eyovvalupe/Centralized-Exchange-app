@@ -67,7 +67,10 @@ instance.interceptors.response.use(
         } else {
           store.dispatch('reset')
           router.push({
-            name: 'login'
+            name: 'login',
+            query: {
+              reurl: router.currentRoute.value.name
+            }
           })
           return;
         }

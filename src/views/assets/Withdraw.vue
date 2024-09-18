@@ -167,7 +167,7 @@
 import Top from "@/components/Top.vue"
 import { ref, computed } from "vue"
 import store from "@/store"
-import { Icon, Button, Popup, showToast } from "vant"
+import { Icon, Button, Popup, showToast, showConfirmDialog } from "vant"
 import router from "@/router"
 import { _withdrawFee, _withdraw } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
@@ -176,6 +176,7 @@ import RecordList from "@/components/RecordList.vue"
 import AccountCheck from "@/components/AccountCheck.vue"
 
 const RecordListRef = ref()
+const userInfo = computed(() => store.state.userInfo || {})
 
 const focus = ref(false)
 const loading = ref(false)
@@ -339,8 +340,27 @@ const goRecord = () => {
 }
 // 跳转添加
 const goAddAccount = () => {
+    // google检测
+    if (!userInfo.value.googlebind) {
+        return showConfirmDialog({
+            title: '谷歌验证器',
+            message:
+                '你还未绑定谷歌验证器，是否去绑定?',
+        }).then(() => {
+            jump('google')
+        })
+    }
     const target = wallet.value.find(a => a.name == form.value.from)
     if (target.type == 'fiat') {
+        if (userInfo.value.kycl2 != 2) {
+            return showConfirmDialog({
+                title: '身份认证',
+                message:
+                    '你还未完成身份认证，是否去认证?',
+            }).then(() => {
+                jump('kyc')
+            })
+        }
         router.push({
             name: 'bank'
         })
@@ -354,6 +374,12 @@ const goAddAccount = () => {
     }
 }
 
+// 添加
+const jump = (name) => {
+    router.push({
+        name
+    })
+}
 
 Promise.all([
     import('@/views/User/Account/Bank.vue'),

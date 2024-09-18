@@ -203,7 +203,10 @@ const reqMap = {
 const collect = item => {
     if (!token.value) {
         router.push({
-            name: 'login'
+            name: 'login',
+            query: {
+                reurl: 'search'
+            }
         })
     } else {
         if (collectLoading.value) return

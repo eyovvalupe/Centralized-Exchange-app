@@ -220,7 +220,10 @@ const subs = (arr) => { // 订阅 ws
 // 跳转
 const jump = (name, needToken) => {
   if (needToken && !token.value) return router.push({
-    name: 'login'
+    name: 'login',
+    query: {
+      reurl: 'home'
+    }
   })
   router.push({
     name

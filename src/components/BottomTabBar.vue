@@ -49,7 +49,10 @@ const handleClick = (item, e) => {
     // _playVoice()
     if (item.needLogin && !token.value) {
         return router.push({
-            name: 'login'
+            name: 'login',
+            query: {
+                reurl: route.name
+            }
         })
     }
     router.push({
