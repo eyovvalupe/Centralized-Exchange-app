@@ -88,7 +88,7 @@
             </div>
             <div class=" tab" @click="switchOpen(i, $event)" v-for="(item, i) in showList" :key="i">
                 <div class="tab_icon">
-                    <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="img">
+                    <img :src="`/static/img/crypto/${item.name}.png`" alt="img">
                 </div>
                 <div :class="{ 'open_tab': switchs[i] == true }">
                     <div>{{ item.name }}</div>
@@ -158,6 +158,7 @@ const showList = computed(() => {
         } else {
             arr.push({
                 currency: key,
+                name: key,
                 amount: 0
             })
         }
@@ -165,7 +166,7 @@ const showList = computed(() => {
     if (show0.value) return arr.filter(item => item.amount)
     return arr
 })
-_cryptoCoin().then(res => {
+_cryptoCoin({ dedup: false }).then(res => {
     store.commit('setCoinMap', res.data || [])
 })
 

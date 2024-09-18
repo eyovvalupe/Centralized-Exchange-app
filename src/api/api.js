@@ -261,12 +261,6 @@ export const _balance = (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
-// 现金账户支持的货币
-export const _walletCurrency = (data = {}) => {
-  return http.post(`/anon/v1/wallet/currency`, data, {
-    custom: { auth: false, toast: false, retry: true },
-  });
-};
 // 充值记录
 export const _depositList = (data = {}) => {
   return http.post(`/authc/v1/wallet/deposit/list`, data, {

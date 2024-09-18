@@ -50,7 +50,7 @@
                     <!-- <div class="bottom_icon">
                         <img :src="`/static/img/crypto/${item}.png`" alt="usdt">
                     </div> -->
-                    <span>{{ item }}</span>
+                    <span>{{ item.network }}</span>
                 </div>
                 <Icon @click="showNet = false" class="close" name="cross" />
             </div>
@@ -98,14 +98,20 @@ const chooseCurrency = (item) => {
 // 网络
 const showNet = ref(false)
 const chooseNet = (item) => {
-    form.value.network = item
+    form.value.network = item.network
     showNet.value = false
 }
 const currNetwork = computed(() => {
     return coinMap.value[form.value.currency] || []
 })
+
+setTimeout(() => {
+    console.error('????', coinMap.value, form.value.currency, currNetwork.value)
+}, 5000)
 const initNetwork = () => {
-    form.value.network = currNetwork.value[0].network
+    if (currNetwork.value[0]) {
+        form.value.network = currNetwork.value[0].network
+    }
 }
 initNetwork()
 
@@ -113,7 +119,7 @@ initNetwork()
 const currencyMapList = computed(() => {
     return Object.keys(coinMap.value) || []
 })
-_cryptoCoin().then(res => {
+_cryptoCoin({ dedup: false }).then(res => {
     store.commit('setCoinMap', res.data || [])
 })
 
@@ -135,6 +141,7 @@ const submit = (googleCode) => {
             }, 200)
         }
     }).finally(() => {
+        getSessionToken()
         loading.value = false
     })
 }

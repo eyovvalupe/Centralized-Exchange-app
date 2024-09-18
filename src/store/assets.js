@@ -1,5 +1,5 @@
 // 市场
-import { _assets, _balance, _accountHint, _currency, _walletCurrency } from "@/api/api"
+import { _assets, _balance, _accountHint, _currency, _cryptoCoin } from "@/api/api"
 export default {
     state: {
         assets: {}, // 总资产
@@ -78,7 +78,7 @@ export default {
         },
         updateCurrency({ commit }) {
             // 获取账户对应货币 其它账户对应货币
-            _walletCurrency().then(res => {
+            _cryptoCoin({ dedup: false }).then(res => {
                 if (res.code == 200 && res.data) {
                     commit("setCurrencyList", res.data || {});
                 }

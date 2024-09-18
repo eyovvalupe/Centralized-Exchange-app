@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="item_box item_content" :class="{ 'err_ipt': errStatus }">
-                    <span class="item_tip" v-show="form.amount === '' || focus">可提金额 <span>{{ balance }}</span></span>
+                    <span class="item_tip" v-show="form.amount === '' || focus">≤ <span>{{ balance }}</span></span>
                     <input class="ipt" @focus="focus = true" @blur="errStatus = focus = false" @change="changeAmount"
                         type="number" v-model="form.amount" placeholder="">
                     <span class="all" @click="maxIpt">全部</span>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div v-else>
-                    <div class="add_account" @click="goAddAccount">
+                    <div class="add_account" @click="showAccountDialog = true">
                         <Icon style="font-size:0.48rem;" name="add-o" />
                         <span style="margin-left: 0.28rem;color:#014CFA;font-size: 0.24rem;">添加收款方式</span>
                     </div>
@@ -95,15 +95,14 @@
                 </div>
                 <div class="title">币种选择</div>
                 <div @click="clickItem(item)" class="swap_dialog_item"
-                    :class="{ 'swap_dialog_item_active': form.from == item.currency }" v-for="(item, i) in wallet"
-                    :key="i">
+                    :class="{ 'swap_dialog_item_active': form.from == item.name }" v-for="(item, i) in wallet" :key="i">
                     <div class="icon">
-                        <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
+                        <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency">
                     </div>
-                    <span>{{ item.currency.toUpperCase() }}</span>
+                    <span>{{ item.name.toUpperCase() }}</span>
 
 
-                    <Icon v-if="form.from == item.currency" class="check_icon" name="success" />
+                    <Icon v-if="form.from == item.name" class="check_icon" name="success" />
                 </div>
             </div>
         </Popup>
@@ -183,7 +182,7 @@ const loading = ref(false)
 // 表单
 const form = ref({
     amount: '',
-    from: 'main',
+    from: '',
     account: '',
 })
 const maxIpt = () => {
@@ -261,11 +260,14 @@ const getFee = () => {
 
 // 钱包
 const wallet = computed(() => { // 可选钱包列表
-    return store.state.wallet.filter(item => !['stock', 'contract'].includes(item.currency)) || []
+    return store.state.wallet || []
 })
+if (wallet.value[0]) {
+    form.value.from = wallet.value[0].name
+}
 const balance = computed(() => { // main钱包余额
     let b = 0
-    const main = store.state.wallet.find(item => item.currency == form.value.from)
+    const main = store.state.wallet.find(item => item.name == form.value.from)
     if (main) b = main.amount
     return b
 })
@@ -310,7 +312,7 @@ const clickAccountItem = item => {
 // 账户弹窗
 const showDialog = ref(false)
 const clickItem = item => {
-    form.value.from = item.currency
+    form.value.from = item.name
     form.value.account = ''
     form.value.amount = ''
     showDialog.value = false
@@ -337,8 +339,8 @@ const goRecord = () => {
 }
 // 跳转添加
 const goAddAccount = () => {
-    // todo 权限校验
-    if (form.value.from == 'main') {
+    const target = wallet.value.find(a => a.name == form.value.from)
+    if (target.type == 'fiat') {
         router.push({
             name: 'bank'
         })
@@ -451,9 +453,6 @@ Promise.all([
                     transform: translateY(-50%);
                     transition: all ease .2s;
 
-                    span {
-                        color: #111111;
-                    }
                 }
 
                 .all {
@@ -636,7 +635,7 @@ Promise.all([
     .title {
         height: 1rem;
         position: absolute;
-        top: 0;
+        top: 0.2rem;
         left: 0;
         text-align: center;
         line-height: 1rem;
