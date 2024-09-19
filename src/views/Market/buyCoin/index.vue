@@ -8,7 +8,7 @@
                 <Faster />
             </Tab>
             <Tab title="自选区" name="1">
-                <Self />
+                <Self v-if="active == 1" />
             </Tab>
             <Tab title="我的订单" name="2">
                 <List />

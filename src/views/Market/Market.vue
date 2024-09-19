@@ -33,68 +33,68 @@
             v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
 
 
-            <Tab class="optional">
-                <Optional v-if="activated && active == 0" ref="OptionalRef" />
+            <Tab class="optional" name="option">
+                <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
                 <div style="height:1rem"></div>
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon" v-show="active != 0">
+                        <div class="tab_item_icon" v-show="active != 'option'">
                             <img src="/static/img/market/option.svg" alt="icon">
                         </div>
-                        <span v-show="active == 0">自选</span>
+                        <span v-show="active == 'option'">自选</span>
                     </div>
                 </template>
             </Tab>
-            <Tab>
+            <Tab name="buy">
                 <buyCoin />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 1" src="/static/img/market/buy.svg" alt="icon">
-                            <img v-show="active == 1" src="/static/img/market/buy2.svg" alt="icon">
+                            <img v-show="active != 'buy'" src="/static/img/market/buy.svg" alt="icon">
+                            <img v-show="active == 'buy'" src="/static/img/market/buy2.svg" alt="icon">
                         </div>
                         <span>买币</span>
                     </div>
                 </template>
             </Tab>
-            <Tab>
-                <Stock v-if="active == 2" ref="StockRef" />
+            <Tab name="stock">
+                <Stock v-if="active == 'stock'" ref="StockRef" />
                 <div style="height:1rem"></div>
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 2" src="/static/img/market/stock.svg" alt="icon">
-                            <img v-show="active == 2" src="/static/img/market/stock2.svg" alt="icon">
+                            <img v-show="active != 'stock'" src="/static/img/market/stock.svg" alt="icon">
+                            <img v-show="active == 'stock'" src="/static/img/market/stock2.svg" alt="icon">
                         </div>
                         <span>股票</span>
                     </div>
                 </template>
             </Tab>
-            <Tab>
-                <Constract v-if="active == 3" />
+            <Tab name="contract">
+                <Constract v-if="active == 'contract'" />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 3" src="/static/img/market/constract.svg" alt="icon">
-                            <img v-show="active == 3" src="/static/img/market/constract2.svg" alt="icon">
+                            <img v-show="active != 'contract'" src="/static/img/market/constract.svg" alt="icon">
+                            <img v-show="active == 'contract'" src="/static/img/market/constract2.svg" alt="icon">
                         </div>
                         <span>合约</span>
                     </div>
                 </template>
             </Tab>
-            <Tab>
-                <Ai v-if="active == 4" />
+            <Tab name="ai">
+                <Ai v-if="active == 'ai'" />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 4" src="/static/img/market/ai.svg" alt="icon">
-                            <img v-show="active == 4" src="/static/img/market/ai2.svg" alt="icon">
+                            <img v-show="active != 'ai'" src="/static/img/market/ai.svg" alt="icon">
+                            <img v-show="active == 'ai'" src="/static/img/market/ai2.svg" alt="icon">
                         </div>
                         <span>交易机器人</span>
                     </div>
                 </template>
             </Tab>
-            <Tab>
+            <!-- <Tab>
                 <Foreign v-if="active == 5" />
                 <template #title>
                     <div class="tab_item">
@@ -105,20 +105,20 @@
                         <span>外汇</span>
                     </div>
                 </template>
-            </Tab>
-            <Tab>
-                <IPO v-if="active == 6" :type="'market'" ref="IPORef" />
+            </Tab> -->
+            <Tab name="ipo">
+                <IPO v-if="active == 'ipo'" :type="'market'" ref="IPORef" />
                 <template #title>
                     <div class="tab_item">
                         <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 6" src="/static/img/market/ipo.svg" alt="icon">
-                            <img v-show="active == 6" src="/static/img/market/ipo2.svg" alt="icon">
+                            <img v-show="active != 'ipo'" src="/static/img/market/ipo.svg" alt="icon">
+                            <img v-show="active == 'ipo'" src="/static/img/market/ipo2.svg" alt="icon">
                         </div>
                         <span>IPO</span>
                     </div>
                 </template>
             </Tab>
-            <Tab>
+            <!-- <Tab>
                 <Financial v-if="active == 7" />
                 <template #title>
                     <div class="tab_item">
@@ -129,7 +129,7 @@
                         <span>理财</span>
                     </div>
                 </template>
-            </Tab>
+            </Tab> -->
 
             <Tab :title-class="'my_icon'" @click.native.stop="openTab = !openTab">
                 <template #title>
@@ -176,7 +176,7 @@ import buyCoin from "./buyCoin/index.vue"
 const marketPageRef = ref()
 const openTab = ref(false)
 
-const active = ref(0)
+const active = ref('option')
 const OptionalRef = ref()
 const StockRef = ref()
 const IPORef = ref()
@@ -190,13 +190,13 @@ const changeTab = key => {
     openTab.value = false
     setTimeout(() => {
         switch (key) {
-            case 0:
+            case 'option':
                 OptionalRef.value && OptionalRef.value.init()
                 break
-            case 2:
+            case 'stock':
                 StockRef.value.initData()
                 break
-            case 6:
+            case 'ipo':
                 IPORef.value && IPORef.value.init()
                 break
         }
@@ -231,7 +231,7 @@ const scrollHandler = () => {
 onActivated(() => {
     activated.value = true
     setTimeout(() => {
-        if (active.value == 0) {
+        if (active.value == 'option') {
             OptionalRef.value && OptionalRef.value.init()
         }
         marketPageRef.value && marketPageRef.value.addEventListener('scroll', scrollHandler)
@@ -251,15 +251,7 @@ onDeactivated(() => {
     })
 })
 
-const onRefresh = () => {
-    if (active.value == 2) {
-        IPORef.value && IPORef.value.onRefresh()
-    } else {
-        setTimeout(() => {
-            reloading.value = false
-        }, 500)
-    }
-}
+
 
 
 </script>

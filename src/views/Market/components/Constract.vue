@@ -7,6 +7,8 @@
             <div class="td td_right">24小时涨跌</div>
         </div> -->
         <div class="coinbuy_content">
+            <Loaidng :loading="loading" v-if="loading && !contractList.length" />
+            <NoData v-if="!loading && !contractList.length" />
             <div class="tr" v-for="(item, i) in contractList" :key="i" @click="goInfo(item)">
                 <div class="td td_left">
                     <div>
@@ -39,6 +41,8 @@ import { ref, computed } from "vue"
 import store from "@/store/index"
 import router from "@/router"
 import Decimal from 'decimal.js';
+import NoData from "@/components/NoData.vue"
+import Loaidng from "@/components/Loaidng.vue"
 
 const contractList = computed(() => store.state.contractList || [])
 
@@ -53,7 +57,6 @@ const getList = () => {
             return item
         })
         store.commit('setContractList', list || [])
-
         setTimeout(() => {
             store.dispatch('subList', {
                 commitKey: 'setContractList',

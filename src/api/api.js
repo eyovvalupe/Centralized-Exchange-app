@@ -527,4 +527,22 @@ export const _aiget = (data = {}) => {
     custom: { auth: true, toast: false, retry: true },
   });
 };
+// 快捷买入或卖出
+export const _orderFast = (data = {}) => {
+  return http.post(`/authc/v1/c2c/order/fast`, data, {
+    custom: { auth: true, toast: false, retry: false },
+  });
+};
+// 自选列表
+export const _adList = (data = {}) => {
+  return http.post(`/anon/v1/c2c/ad/list`, data, {
+    custom: { auth: true, toast: false, retry: true },
+  });
+};
+// 自选交易
+export const _buysell = (data = {}) => {
+  return http.post(`/authc/v1/c2c/order/buysell`, data, {
+    custom: { auth: true, toast: false, retry: false },
+  });
+};
 export const memberInfo = () => { }

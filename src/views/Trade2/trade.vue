@@ -19,40 +19,23 @@
                     <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">股票</div>
                     <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">合约</div>
                     <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">交易机器人</div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">外汇</div>
+                    <!-- <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">外汇</div> -->
                     <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">
-                        <span v-show="activeTab == 5">IPO</span>
+                        <span>IPO</span>
+                        <!-- <span v-show="activeTab == 5">IPO</span>
                         <div class="tab_icon" v-show="activeTab != 5">
                             <img src="/static/img/market/ipo.svg" alt="img">
-                        </div>
+                        </div> -->
                     </div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
+                    <!-- <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
                         <span v-show="activeTab == 6">理财</span>
                         <div class="tab_icon" v-show="activeTab != 6">
                             <img src="/static/img/market/money.svg" alt="img">
                         </div>
-                    </div>
-                    <!-- <div v-if="openTab == true" class="tab_icon" @click="openTab = false">
-                        <img src="/static/img/common/tab_back.png" alt="img">
                     </div> -->
                 </div>
-
-                <!-- <div v-if="openTab == false" class="tab_icon my_icon" @click="openTab = true">
-                    <img src="/static/img/common/tab_menu.png" alt="img">
-                </div> -->
-
-
-                <!-- <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
-                    <div class="mytab_title_icon" v-show="activeTab != 6">
-                        <img src="/static/img/assets/stock_icon.svg" alt="img">
-                    </div>
-                    <span v-show="activeTab == 6">理财</span>
-                </div> -->
             </div>
 
-            <!-- <div class="value">
-                    <div class="value_icon"><img src="/static/img/trade/value.png" alt="img" /></div>
-                </div> -->
         </div>
 
         <div class="trade_body">
