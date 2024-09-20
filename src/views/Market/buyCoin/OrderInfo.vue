@@ -17,9 +17,9 @@
         <template v-if="active == 1">
             <!-- 顶部详情 -->
             <div class="top">
-                <span>2024-08-08 13:13:13</span>
-                <span>242342342342342234</span>
-                <div class="copy_icon">
+                <span>{{ currItem.date || '--' }}</span>
+                <span style="margin-left: 0.1rem;">{{ currItem.order_no }}</span>
+                <div class="copy_icon" @click="copy(currItem.order_no)">
                     <img src="/static/img/common/copy_default.png" alt="copy">
                 </div>
             </div>
@@ -28,25 +28,27 @@
             <div class="info">
                 <div class="info_item">
                     <div class="title">总价</div>
-                    <div class="val">1000 USDT</div>
+                    <div class="val">{{ currItem.totalprice }} {{ currItem.currency }}</div>
                 </div>
                 <div class="info_item">
                     <div class="title">价格</div>
-                    <div class="val">1000 USDT</div>
+                    <div class="val">{{ currItem.price }} {{ currItem.currency }}</div>
                 </div>
                 <div class="info_item">
                     <div class="title">数量</div>
-                    <div class="val">1000 USDT</div>
+                    <div class="val">{{ currItem.volume }} {{ currItem.crypto }}</div>
                 </div>
             </div>
 
             <!-- 商家详情 -->
             <div class="seller">
                 <div class="title_box">
-                    <div class="avatar"></div>
-                    <div class="title">萨达萨达是/阿松大萨达撒</div>
+                    <div class="avatar">
+                        {{ currItem.merchant_name ? currItem.merchant_name.slice(0, 1) : '' }}
+                    </div>
+                    <div class="title">{{ currItem.merchant_name }}</div>
                 </div>
-                <div class="remark">备注 诚信交易|快速交易|阿三大苏打萨达萨达</div>
+                <div class="remark">备注 --</div>
             </div>
 
             <!-- 银行卡 -->
@@ -58,37 +60,61 @@
                     <div>银行卡</div>
                 </div>
 
-                <div class="table">
-                    <div class="tr">
+                <div v-if="currItem.bank_status == 'undone'"
+                    style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
+                    <div style="width: 1rem;height: 1rem;margin-bottom: 0.2rem;">
+                        <img src="/static/img/chat/wait.png" alt="img">
+                    </div>
+                    <div>等待商家提供银行卡</div>
+                </div>
+                <div class="table" v-if="currItem.bank_status == 'done'">
+                    <div class="tr" @click="copy(currItem.bank_name)">
                         <div class="td">银行卡</div>
-                        <div class="td td-3">美国银行</div>
+                        <div class="td td-3">{{ currItem.bank_name }}</div>
                     </div>
-                    <div class="tr">
+                    <div class="tr" @click="copy(currItem.bank_card_number)">
                         <div class="td">卡号</div>
-                        <div class="td td-3">123435</div>
+                        <div class="td td-3">{{ currItem.bank_card_number }}</div>
                     </div>
-                    <div class="tr">
+                    <div class="tr" @click="copy(currItem.account_name)">
                         <div class="td">账号</div>
-                        <div class="td td-3">asdasdasds</div>
+                        <div class="td td-3">{{ currItem.account_name }}</div>
                     </div>
                 </div>
             </div>
 
             <!-- 状态 -->
             <div class="status">
-                <div class="status_wait">
+                <!-- 等待买家付款 -->
+                <div class="status_wait" v-if="currItem.status == 'waitpayment'">
                     <div style="display: flex;align-items: center;">
                         <div class="amount">等待买家付款</div>
-                        <div class="time">14:13:00</div>
+                        <div class="time">{{ formatSec2(currItem.endtime) }}</div>
                     </div>
                     <div>请根据总价，向商家提供的银行卡转账</div>
+                </div>
+                <!-- 等待确认 -->
+                <div class="status_wait" v-if="currItem.status == 'waitconfirm'">
+                    <div style="display: flex;align-items: center;">
+                        <div class="amount">等待确认</div>
+                        <div class="time">{{ formatSec2(currItem.endtime) }}</div>
+                    </div>
+                    <!-- <div>请根据总价，向商家提供的银行卡转账</div> -->
+                </div>
+                <!-- 已完成 -->
+                <div class="finish_status success_status" v-if="currItem.status == 'done'">
+                    <div>已完成</div>
+                </div>
+                <!-- 已取消 -->
+                <div class="finish_status" v-if="currItem.status == 'cancel'">
+                    <div>已取消</div>
                 </div>
             </div>
 
             <!-- 按钮 -->
-            <div class="btns">
-                <div class="btn" style="margin-right: 0.64rem;">取消订单</div>
-                <div class="btn active_btn">我已付款</div>
+            <div class="btns" :style="{ opacity: loading ? '0.5' : 1 }" v-if="currItem.status = 'waitpayment'">
+                <div class="btn" style="margin-right: 0.64rem;" @click="cancelOrder">取消订单</div>
+                <div class="btn active_btn" @click="confirmOrder">我已付款</div>
             </div>
         </template>
 
@@ -98,13 +124,118 @@
         </template>
 
     </div>
+
+    <!-- 安全密码弹窗 -->
+    <SafePassword @submit="orderAction" ref="safeRef"></SafePassword>
 </template>
 
 <script setup>
 import Chat from "./Chat.vue"
-import { ref } from "vue"
+import { ref, computed } from "vue"
+import { _c2cOrderInfo, _c2cOrderStatus } from "@/api/api"
+import { _copyTxt } from "@/utils/index"
+import { showToast, showConfirmDialog } from "vant";
+import { formatSec2 } from "@/utils/time"
+import SafePassword from "@/components/SafePassword.vue"
+import store from "@/store"
 
+
+const emits = defineEmits(['successHanlde'])
 const active = ref(1) // 1-详情 2-聊天
+const safeRef = ref()
+
+// 详情
+const loading = ref(false)
+const getInfo = () => {
+    loading.value = true
+    _c2cOrderInfo({
+        order_no: currItem.value.order_no
+    }).then(res => {
+        if (res.data) {
+            currItem.value = JSON.parse(JSON.stringify(res.data || {}))
+        }
+    }).finally(() => {
+        loading.value = false
+    })
+}
+const currItem = ref({})
+const open = item => {
+    currItem.value = item
+    getSessionToken()
+    setTimeout(() => {
+        getInfo()
+    }, 0)
+}
+
+defineExpose({
+    open
+})
+
+
+const moreDialog = ref(false)
+// 放行
+const confirmOrder = () => {
+    if (loading.value) return
+    moreDialog.value = true
+    showConfirmDialog({
+        title: '确认付款',
+        message:
+            '确认已经付款给商家?',
+    })
+        .then(() => {
+            action.value = 'confirm'
+            safeRef.value.open()
+        })
+        .catch(() => { }).finally(() => moreDialog.value = false);
+}
+
+// 取消
+const cancelOrder = () => {
+    if (loading.value) return
+    moreDialog.value = true
+    showConfirmDialog({
+        title: '取消',
+        message:
+            '确认取消该订单?',
+    })
+        .then(() => {
+            action.value = 'cancel'
+            safeRef.value.open()
+        })
+        .catch(() => { }).finally(() => moreDialog.value = false);
+}
+
+// 操作状态
+const action = ref('')
+const orderAction = (s) => {
+    loading.value = true
+    _c2cOrderStatus({
+        order_no: currItem.value.order_no,
+        status: action.value,
+        token: sessionToken.value,
+        safeword: s
+    }).then(res => {
+        console.error(res)
+        if (res.code == 200) {
+            showToast('操作成功')
+            emits('successHanlde', '')
+        }
+    }).finally(() => {
+        loading.value = false
+        getSessionToken()
+    })
+}
+
+const copy = (val) => {
+    if (!val) return
+    _copyTxt(val)
+    showToast('已复制')
+}
+// sessionToken
+const sessionToken = computed(() => store.state.sessionToken || '')
+const getSessionToken = () => {
+    store.dispatch("updateSessionToken")
+}
 
 </script>
 
@@ -112,7 +243,7 @@ const active = ref(1) // 1-详情 2-聊天
 <style lang="less" scoped>
 .order_info {
     padding: 0 0.32rem 0.32rem 0.32rem;
-    height: 80vh;
+    height: 85vh;
     display: flex;
     flex-direction: column;
 
@@ -202,6 +333,11 @@ const active = ref(1) // 1-详情 2-聊天
                 border-radius: 50%;
                 background-color: #014CFA;
                 margin-right: 0.32rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                font-size: 0.36rem;
             }
 
             .title {
@@ -280,13 +416,27 @@ const active = ref(1) // 1-详情 2-聊天
                 font-size: 0.32rem;
             }
         }
+
+        .finish_status {
+            padding: 0.2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.32rem;
+            font-weight: bold;
+            color: #888888;
+        }
+
+        .success_status {
+            color: #0AB27D;
+        }
     }
 
     .btns {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 0.32rem;
+        margin: 0.32rem 0;
 
         .btn {
             flex: 1;

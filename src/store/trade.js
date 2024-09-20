@@ -9,6 +9,8 @@ export default {
     inquireList: [], // 股票列表
     contractInquireList: [], // 合约历史列表
     aiInquireList: [], // ai历史列表
+
+    c2cList: [], // c2c订单列表
   },
   mutations: {
     setPositionsList(state, data) {
@@ -34,6 +36,9 @@ export default {
     },
     setAiInquireList(state, data) {
       state.aiInquireList = data
+    },
+    setC2cList(state, data) {
+      state.c2cList = data
     },
   },
 }

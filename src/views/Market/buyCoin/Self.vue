@@ -62,7 +62,7 @@
 
             <div class="form">
                 <div class="item form_item" :class="{ 'focus_item': amountFocus }">
-                    <div class="tip_text" v-if="!(!amountFocus && amount !== '')">≤ {{ currWallet.amount || '0' }} {{
+                    <div class="tip_text" v-if="!(!amountFocus && amount !== '')">≤ {{ maxAmount }} {{
                         offset == 'sell' ? currCrypto.name :
                             currCurrency.name }}</div>
                     <input v-model="amount" @blur="amountFocus = false" @focus="amountFocus = true" type="number"
@@ -71,7 +71,7 @@
                 </div>
                 <div class="tip">订单限额：{{ currItem.limitmin }}-{{ currItem.limitmax }} {{ offset == 'sell' ?
                     currCrypto.name : currCurrency.name }}</div>
-                <div class="tip">预计收到：{{ showAmount }} {{ offset == 'buy' ? currCrypto.name : currCurrency.name }}</div>
+                <div class="tip" v-if="offset == 'sell'">预计收到：{{ showAmount }} {{ currCurrency.name }}</div>
 
                 <div class="btn" @click="preSubmit">确认{{ offset == 'buy' ? '买入' : '卖出' }}</div>
             </div>
@@ -206,6 +206,14 @@ const showFormDialog = ref(false)
 const currItem = ref({})
 const amountFocus = ref(false)
 const amount = ref('')
+const maxAmount = computed(() => {
+    if (!currWallet.value.amount || !currItem.value.price) return 0
+    if (offset.value == 'buy') {
+        return new Decimal(currWallet.value.amount).div(currItem.value.price)
+    } else {
+        return currWallet.value.amount
+    }
+})
 const showAmount = computed(() => {
     if (!amount.value || amount.value <= 0) return '--'
     if (offset.value == 'buy') {
@@ -240,13 +248,12 @@ const submitSell = (s) => {
         token: sessionToken.value,
         safeword: s
     }
-    console.error(params)
     if (loading.value) return
     loading.value = true
     _buysell(params).then(res => {
         console.error('???', res)
         if (res.code == 200) {
-
+            showToast('下单成功')
         }
     }).finally(() => {
         loading.value = false
@@ -264,17 +271,22 @@ const getData = () => {
     if (loading.value || finish.value) return
     loading.value = true
     page.value++
-    _adList({
-        page: page.value,
+    let req = {
         offset: offset.value,
         crypto: currCrypto.value.currency,
         currency: currCurrency.value.currency
+    }
+    _adList({
+        page: page.value,
+        ...req
     }).then(res => {
+        if (req.offset != offset.value || req.crypto != currCrypto.value.currency || req.currency != currCurrency.value.currency) return
+        loading.value = false
         list.value.push(...(res.data || []))
         if (!res.data?.length) {
             finish.value = true
         }
-    }).finally(() => {
+    }).catch(() => {
         loading.value = false
     })
 }
