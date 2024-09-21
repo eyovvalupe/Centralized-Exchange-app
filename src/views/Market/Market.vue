@@ -54,6 +54,9 @@
                             <img v-show="active == 'buy'" src="/static/img/market/buy2.svg" alt="icon">
                         </div>
                         <span>买币</span>
+
+                        <div class="nav_num" v-if="store.state.c2cUnreadTotal > 0">{{ store.state.c2cUnreadTotal }}
+                        </div>
                     </div>
                 </template>
             </Tab>
@@ -350,11 +353,28 @@ onDeactivated(() => {
             align-items: center;
             justify-content: center;
             line-height: 0;
+            position: relative;
 
             .tab_item_icon {
                 width: 0.3rem;
                 height: 0.3rem;
                 margin-right: 0.04rem;
+            }
+
+            .nav_num {
+                width: 0.28rem;
+                height: 0.28rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #FF3B30;
+                font-size: 0.2rem;
+                color: #fff;
+                font-weight: 400;
+                border-radius: 50%;
+                position: absolute;
+                top: -0.3rem;
+                right: -0.12rem;
             }
         }
 

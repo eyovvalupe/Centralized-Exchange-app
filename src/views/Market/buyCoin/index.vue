@@ -12,6 +12,13 @@
             </Tab>
             <Tab title="我的订单" name="2">
                 <List />
+                <template #title>
+                    <div class="tab_item">
+                        <span>我的订单</span>
+                        <div class="nav_num" v-if="store.state.c2cUnreadTotal > 0">{{ store.state.c2cUnreadTotal }}
+                        </div>
+                    </div>
+                </template>
             </Tab>
         </Tabs>
 
@@ -19,12 +26,44 @@
 </template>
 
 <script setup>
+import { useSocket } from "@/utils/ws";
 import { Tab, Tabs } from "vant";
-import { ref, onMounted } from "vue"
+import { ref, onMounted, onUnmounted, computed } from "vue"
 import Faster from "./Faster.vue"
 import List from "./List.vue"
 import Self from "./Self.vue"
+import store from '@/store';
 
+
+const { startSocket } = useSocket();
+const token = computed(() => store.state.token)
+
+// 订阅
+const currLoading = ref(false)
+const subs = () => {
+    const socket = startSocket(() => {
+        socket && socket.off('user')
+        socket && socket.off('c2corder')
+        socket && socket.emit('user', token.value)
+        socket && socket.emit('c2corder', '#all')
+        currLoading.value = true
+        store.commit('setC2cList', [])
+        socket.on('c2corder', res => {
+            // console.error('--->', res.data)
+            store.commit('setC2cList', res.data || [])
+            currLoading.value = false
+        })
+    });
+}
+// 取消订阅
+const cancelSubs = () => {
+    const socket = startSocket(() => {
+        socket && socket.off('user')
+        socket && socket.off('c2corder')
+        socket && socket.emit('user', '')
+        socket && socket.emit('c2corder', '')
+    })
+}
 
 const active = ref(0)
 const onChange = i => {
@@ -36,6 +75,12 @@ onMounted(() => {
     setTimeout(() => {
         pageLoading.value = false
     }, 300)
+    if (token.value) {
+        subs()
+    }
+})
+onUnmounted(() => {
+    cancelSubs()
 })
 </script>
 

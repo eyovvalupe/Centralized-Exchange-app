@@ -5,9 +5,11 @@
         <div class="list">
 
             <!-- 当前订单 -->
-            <div class="item" v-for="(item, i) in c2cList" :key="i" @click="openOrderInfo(item)">
+            <div class="item" v-for="(item, i) in list" :key="i" @click="openOrderInfo(item)">
                 <div class="avatar">
                     <img src="/static/img/crypto/USDT.png" alt="coin">
+
+                    <div class="nav_num" v-if="c2cUnread[item.order_no]">{{ c2cUnread[item.order_no] }}</div>
                 </div>
                 <div class="left">
                     <div style="margin-bottom: 0.2rem;">
@@ -34,32 +36,6 @@
                 </div>
             </div>
 
-            <!-- 历史订单 -->
-            <div style="margin: 0.4rem 0 0.1rem 0;font-weight: bold;">历史订单</div>
-            <div class="item" v-for="(item, i) in list" :key="i" @click="openOrderInfo(item)">
-                <div class="avatar">
-                    <img src="/static/img/crypto/USDT.png" alt="coin">
-                </div>
-                <div class="left">
-                    <div style="margin-bottom: 0.2rem;">
-                        <span class="type">{{ item.offset == 'buy' ? '购入' : '售出' }} {{ item.crypto }}</span>
-                        <span>{{ item.volume }}</span>
-                    </div>
-                    <div class="no">{{ item.order_no }}</div>
-                </div>
-                <div class="right">
-                    <div class="right_top">
-                        <!-- 完成 -->
-                        <template v-if="item.status == 'done' || item.status == 'cancel'">
-                            <div class="amount" :class="item.offset == 'buy' ? 'down' : 'up'">{{ item.offset == 'buy' ?
-                                '-'
-                                : '+' }}{{ item.totalprice }}</div>
-                            <div class="unit">{{ item.currency }}</div>
-                        </template>
-                    </div>
-                    <div class="status" :class="['status_' + item.status]">{{ statusMap[item.status] }}</div>
-                </div>
-            </div>
 
             <NoData v-if="!loading && !list.length" />
             <LoadingMore :loading="loading" :finish="finish" v-if="(finish && list.length) || (!finish)" />
@@ -72,13 +48,13 @@
     <Popup teleport="body" v-model:show="showPopupInfo" round position="bottom" closeable>
         <div class="buycoin_orderinfo_dialog">
             <div class="orderinfo_dialog_title">订单详情</div>
-            <OrderInfo @successHanlde="successOrder" ref="OrderInfoRef" />
+            <OrderInfo v-if="showPopupInfo" @successHanlde="successOrder" ref="OrderInfoRef" />
         </div>
     </Popup>
 </template>
 
 <script setup>
-import { useSocket } from "@/utils/ws";
+
 import { onMounted, onUnmounted, computed, ref } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
@@ -88,6 +64,9 @@ import OrderInfo from "./OrderInfo.vue"
 import { Popup } from "vant"
 import { _c2cOrderList } from "@/api/api"
 import LoadingMore from "@/components/LoadingMore.vue"
+
+// 未读消息
+const c2cUnread = computed(() => store.state.c2cUnread || {})
 
 // 订单详情
 const OrderInfoRef = ref()
@@ -118,34 +97,7 @@ const statusMap = ref({
 
 const token = computed(() => store.state.token)
 const c2cList = computed(() => store.state.c2cList || [])
-
-const { startSocket } = useSocket();
-// 订阅
-const currLoading = ref(false)
-const subs = () => {
-    const socket = startSocket(() => {
-        socket && socket.off('user')
-        socket && socket.off('c2corder')
-        socket && socket.emit('user', token.value)
-        socket && socket.emit('c2corder', '#all')
-        currLoading.value = true
-        socket.on('c2corder', res => {
-            // console.error(res.data)
-            store.commit('setC2cList', res.data || [])
-            currLoading.value = false
-        })
-    });
-}
-// 取消订阅
-const cancelSubs = () => {
-    const socket = startSocket(() => {
-        socket && socket.off('user')
-        socket && socket.off('c2corder')
-        socket && socket.emit('user', '')
-        socket && socket.emit('c2corder', '')
-    })
-}
-
+const c2cLasttime = computed(() => store.state.c2cList || {})
 
 // 列表
 const loading = ref(false)
@@ -166,6 +118,18 @@ const getData = () => {
         if (!res.data?.length) {
             finish.value = true
         }
+
+        setTimeout(() => {
+            const obj = {}
+            list.value.forEach(item => {
+                if (c2cLasttime.value[item.order_no]) {
+                    obj[item.order_no] = c2cLasttime.value[item.order_no]
+                } else {
+                    obj[item.order_no] = Date.now()
+                }
+            })
+            store.commit('setC2cLasttime', obj)
+        }, 0)
     }).catch(() => {
         loading.value = false
     })
@@ -193,9 +157,18 @@ const scrollHandle = () => {
     }
 }
 
+
+let interval = null
+
 onMounted(() => {
+    interval = setInterval(() => {
+        list.value.forEach(item => {
+            if (item.endtime) {
+                item.endtime--
+            }
+        })
+    }, 1000)
     if (token.value) {
-        subs()
         setTimeout(() => {
             moreDom = document.querySelector('.loading_more')
             document.querySelector('.page').addEventListener('scroll', scrollHandle)
@@ -203,7 +176,7 @@ onMounted(() => {
     }
 })
 onUnmounted(() => {
-    cancelSubs()
+    if (interval) clearInterval(interval)
     document.querySelector('.page').removeEventListener('scroll', scrollHandle)
 })
 </script>
@@ -238,6 +211,24 @@ onUnmounted(() => {
                 width: 0.64rem;
                 height: 0.64rem;
                 margin-right: 0.4rem;
+                flex-shrink: 0;
+                position: relative;
+
+                .nav_num {
+                    width: 0.28rem;
+                    height: 0.28rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #FF3B30;
+                    font-size: 0.2rem;
+                    color: #fff;
+                    font-weight: 400;
+                    border-radius: 50%;
+                    position: absolute;
+                    top: -0.1rem;
+                    right: -0.12rem;
+                }
             }
 
             .left {

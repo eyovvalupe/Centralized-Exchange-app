@@ -10,6 +10,9 @@
 
             <div class="bottom_nav_name">{{ item.name }}</div>
 
+            <!-- c2c角标 -->
+            <div v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0" class="nav_num">{{
+                store.state.c2cUnreadTotal }}</div>
             <!-- 角标 -->
             <div v-if="item.route == 'user' && storeChat.state.messageNum > 0" class="nav_num">{{
                 storeChat.state.messageNum }}</div>

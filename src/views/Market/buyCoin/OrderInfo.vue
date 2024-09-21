@@ -9,7 +9,7 @@
             </div>
             <div class="tab" @click="active = 2" :class="{ 'active_tab': active == 2 }">
                 <span>联系商家</span>
-                <div class="hint">2</div>
+                <div class="hint" v-if="c2cUnread[currItem.order_no]">{{ c2cUnread[currItem.order_no] }}</div>
             </div>
         </div>
 
@@ -119,9 +119,7 @@
         </template>
 
         <!-- 聊天 -->
-        <template v-if="active == 2">
-            <Chat style="flex: 1;" />
-        </template>
+        <Chat :style="{ opacity: active == 2 ? 1 : 0 }" :currItem="currItem" style="flex: 1;" />
 
     </div>
 
@@ -131,7 +129,7 @@
 
 <script setup>
 import Chat from "./Chat.vue"
-import { ref, computed } from "vue"
+import { ref, computed, onMounted, onUnmounted } from "vue"
 import { _c2cOrderInfo, _c2cOrderStatus } from "@/api/api"
 import { _copyTxt } from "@/utils/index"
 import { showToast, showConfirmDialog } from "vant";
@@ -140,6 +138,8 @@ import SafePassword from "@/components/SafePassword.vue"
 import store from "@/store"
 
 
+// 未读消息
+const c2cUnread = computed(() => store.state.c2cUnread || {})
 const emits = defineEmits(['successHanlde'])
 const active = ref(1) // 1-详情 2-聊天
 const safeRef = ref()
@@ -152,7 +152,8 @@ const getInfo = () => {
         order_no: currItem.value.order_no
     }).then(res => {
         if (res.data) {
-            currItem.value = JSON.parse(JSON.stringify(res.data || {}))
+            // currItem.value = JSON.parse(JSON.stringify(res.data || {}))
+            Object.assign(currItem.value, res.data)
         }
     }).finally(() => {
         loading.value = false
@@ -236,6 +237,11 @@ const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
     store.dispatch("updateSessionToken")
 }
+
+
+
+
+
 
 </script>
 

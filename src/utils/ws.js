@@ -48,7 +48,7 @@ export const useSocket = () => {
    *  断开连接
    */
   function disConnect() {
-    io.disconnect();
+    socket.disconnect();
   }
   return {
     // socket,

@@ -563,5 +563,11 @@ export const _c2cOrderList = (data = {}) => {
     custom: { auth: true, toast: false, retry: true },
   });
 };
+// c2c已读回执
+export const _c2cRead = (data = {}) => {
+  return http.post(`/authc/v1/c2c/msg/read`, data, {
+    custom: { auth: true, toast: false, retry: true },
+  });
+};
 
 export const memberInfo = () => { }

@@ -11,6 +11,9 @@ export default {
     aiInquireList: [], // ai历史列表
 
     c2cList: [], // c2c订单列表
+    c2cUnread: {}, // 未读消息
+    c2cUnreadTotal: 0, // 总未读消息
+    c2cLasttime: {}, // 列表已读时间记录   { order_no: lasttime }
   },
   mutations: {
     setPositionsList(state, data) {
@@ -39,6 +42,17 @@ export default {
     },
     setC2cList(state, data) {
       state.c2cList = data
+      const obj = {};
+      let total = 0;
+      (data || []).forEach(item => {
+        obj[item.order_no] = item.unread
+        total += item.unread
+      })
+      state.c2cUnread = obj
+      state.c2cUnreadTotal = total
+    },
+    setC2cLasttime(state, data) {
+      state.c2cLasttime = data
     },
   },
 }
