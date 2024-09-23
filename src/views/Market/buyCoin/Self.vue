@@ -9,6 +9,9 @@
             <div style="flex:1"></div>
             <div style="display: flex;align-items: center;" @click="showDialog = true">
                 <span>{{ currCurrency.name }}</span>
+                <div style="width:0.28rem;height:0.28rem;margin-left:0.04rem">
+                    <img src="/static/img/assets/more.png" alt="img">
+                </div>
             </div>
 
             <div class="icon">
@@ -17,6 +20,9 @@
 
             <div style="display: flex;align-items: center;" @click="showDialog2 = true">
                 <span>{{ currCrypto.name }}</span>
+                <div style="width:0.28rem;height:0.28rem;margin-left:0.04rem">
+                    <img src="/static/img/assets/more.png" alt="img">
+                </div>
             </div>
         </div>
         <!-- <div class="subtabs">
