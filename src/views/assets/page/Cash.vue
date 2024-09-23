@@ -203,7 +203,9 @@ onMounted(() => {
     document.querySelector('.page').addEventListener('click', removeSwitch)
 })
 onUnmounted(() => {
-    document.querySelector('.page').removeEventListener('click', removeSwitch)
+    try {
+        document.querySelector('.page').removeEventListener('click', removeSwitch)
+    } catch { }
 })
 
 const refresh = () => {

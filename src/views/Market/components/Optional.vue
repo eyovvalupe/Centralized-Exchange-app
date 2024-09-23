@@ -1,7 +1,13 @@
 <!-- 自选 -->
 <template>
-    <StockTable v-if="watchList.length" :loading="loading" @remove="remove" :deleteItem="!!(token)"
-        class="market_optional" :list="watchList" />
+    <div class="search_block" @click="router.push({ name: 'search' })">
+        <div class="search_icon">
+            <img src="/static/img/common/search.png" alt="🔍">
+        </div>
+        <span>搜索</span>
+    </div>
+    <StockTable style="margin-top:0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
+        :deleteItem="!!(token)" class="market_optional" :list="watchList" />
     <div v-else-if="!watchList.length && !loading" style="position: relative">
         <Teleport to=".page_market">
             <Button round class="addBtn" :color="!!(stockList.length + contractList.length) ? '#EFF6FF' : '#eee'"
@@ -17,6 +23,8 @@
             :loading="recommendLoading" :type="'spinner'" />
         <NoData
             v-if="!marketSrockRecommendList.length && !marketContractRecommendList.length && !loading && !recommendLoading" />
+
+
         <div class="item_block" v-if="marketSrockRecommendList.length">
             <div class="item_block_title">
                 <span>股票</span>
@@ -63,7 +71,7 @@ import Loaidng from "@/components/Loaidng.vue"
 import NoData from "@/components/NoData.vue"
 import StockTable from "@/components/StockTable.vue"
 import StockRecommend from "@/components/StockRecommend.vue"
-// import router from "@/router"
+import router from "@/router"
 import store from "@/store";
 import { computed, ref } from "vue"
 import { _watchlist, _del, _watchlistDefault, _add } from "@/api/api"
@@ -246,9 +254,29 @@ const remove = item => {
 </script>
 
 <style lang="less" scoped>
+.search_block {
+    background-color: #F4F5F7;
+    // border: 1px solid #eeeff1;
+    height: 0.8rem;
+    border-radius: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0.32rem;
+    font-size: 0.28rem;
+    color: #9EA3AE;
+    margin: 0.06rem 0.32rem 0 0.32rem;
+
+    .search_icon {
+        width: 0.4rem;
+        height: 0.4rem;
+        margin-right: 0.2rem;
+    }
+}
+
 .item_block {
     .item_block_title {
-        padding: 0.32rem 0.32rem 0.12rem 0.32rem;
+        padding: 0.32rem 0.32rem 0.22rem 0.32rem;
     }
 }
 
@@ -257,7 +285,7 @@ const remove = item => {
     right: 0.32rem;
     height: 0.48rem;
     z-index: 1;
-    top: 1.14rem;
+    top: 2.14rem;
 
     .tag {
         display: block;

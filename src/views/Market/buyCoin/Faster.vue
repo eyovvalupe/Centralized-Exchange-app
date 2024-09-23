@@ -13,21 +13,24 @@
                 <div class="item_box_left">
                     <div class="subtitle">
                         <span>售出</span>
-                        <span v-if="form1.offset == 'sell'">最大可用 {{ currOut.amount }}</span>
+                        <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span>
                     </div>
                     <div class="item" :class="{ 'item_focus': priceFocus }">
-                        <span class="ipt_tip" v-if="form1.offset == 'sell'" v-show="form1.volume === '' || priceFocus">≤
+                        <span class="ipt_tip" v-if="form1.offset == 'sell' && token"
+                            v-show="form1.volume === '' || priceFocus">≤
                             {{ currOut.amount }}</span>
                         <input v-model="form1.volume" @focus="priceFocus = true" @blur="priceFocus = false"
                             type="number" class="ipt">
                     </div>
                 </div>
                 <div class="item_box_right">
-                    <div class="subtitle" @click="jump('transfer')"><span>&nbsp;</span><span class="link">划转</span>
+                    <div class="subtitle" v-if="token" @click="jump('transfer')"><span>&nbsp;</span><span
+                            class="link">划转</span>
                     </div>
+                    <div class="subtitle" v-if="!token">&nbsp;</div>
                     <div @click="openDialog(1)" class="item" :class="{ 'item_focus': priceFocus }"
                         style="justify-content: center;border:1px solid #d0d8e2!important">
-                        <div class="icon">
+                        <div class="icon" v-if="currOut.name">
                             <img :src="`/static/img/crypto/${currOut.name.toUpperCase()}.png`" alt="currency">
                         </div>
                         <span>{{ currOut.name || '--' }}</span>
@@ -51,7 +54,7 @@
                     <div class="subtitle"><span>&nbsp;</span></div>
                     <div @click="openDialog(2)" class="item" :class="{ 'item_focus': priceFocus }"
                         style="justify-content: center;border:1px solid #d0d8e2!important">
-                        <div class="icon">
+                        <div class="icon" v-if="currIn.name">
                             <img :src="`/static/img/crypto/${currIn.name.toUpperCase()}.png`" alt="currency">
                         </div>
                         <span>{{ currIn.name || '--' }}</span>
@@ -148,10 +151,11 @@ import SafePassword from "@/components/SafePassword.vue"
 
 const safeRef = ref()
 const token = computed(() => store.state.token)
-const wallet = computed(() => store.state.wallet || []) // 所有钱包
+const wallet = computed(() => token.value ? store.state.wallet : currencyList.value) // 所有钱包
 const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const userInfo = computed(() => store.state.userInfo || {})
+const currencyList = computed(() => store.state.currencyList || [])
 
 // 售出
 const loading = ref(false)

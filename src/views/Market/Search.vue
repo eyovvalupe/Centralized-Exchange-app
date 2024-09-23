@@ -66,7 +66,7 @@ const actions = computed(() => {
     return [
         { name: '股票', value: 'stock', className: currAs.value == 'stock' ? 'action-sheet-active' : '' },
         { name: '合约', value: 'futures', className: currAs.value == 'futures' ? 'action-sheet-active' : '' },
-        { name: 'AI量化', value: 'aiquant', className: currAs.value == 'aiquant' ? 'action-sheet-active' : '' },
+        // { name: 'AI量化', value: 'aiquant', className: currAs.value == 'aiquant' ? 'action-sheet-active' : '' },
         { name: '外汇', value: 'forex', className: currAs.value == 'forex' ? 'action-sheet-active' : '' },
     ]
 })
@@ -109,7 +109,7 @@ const searchList = computed(() => {
 const getData = () => { // 获取数据
     loading.value = true
     _search({
-        market: currAs.value,
+        market: currAs.value == 'stock' ? 'stock' : '', // currAs.value
         symbol: search.value,
         page: 1
     }).then(res => {

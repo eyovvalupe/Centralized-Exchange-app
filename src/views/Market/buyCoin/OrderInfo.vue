@@ -5,7 +5,7 @@
         <!-- tabs -->
         <div class="tabs">
             <div class="tab" @click="active = 1" :class="{ 'active_tab': active == 1 }">
-                <span>购买</span>
+                <span>{{ currItem.offset == 'sell' ? '售出' : '购买' }}</span>
             </div>
             <div class="tab" @click="active = 2" :class="{ 'active_tab': active == 2 }">
                 <span>联系商家</span>
@@ -60,7 +60,7 @@
                     <div>银行卡</div>
                 </div>
 
-                <div v-if="currItem.bank_status == 'undone'"
+                <div v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'"
                     style="display: flex;flex-direction: column;align-items: center;justify-content: center;">
                     <div style="width: 1rem;height: 1rem;margin-bottom: 0.2rem;">
                         <img src="/static/img/chat/wait.png" alt="img">
@@ -86,12 +86,20 @@
             <!-- 状态 -->
             <div class="status">
                 <!-- 等待买家付款 -->
-                <div class="status_wait" v-if="currItem.status == 'waitpayment'">
+                <div class="status_wait" v-if="currItem.status == 'waitpayment' && currItem.offset == 'buy'">
                     <div style="display: flex;align-items: center;">
                         <div class="amount">等待买家付款</div>
                         <div class="time">{{ formatSec2(currItem.endtime) }}</div>
                     </div>
                     <div>请根据总价，向商家提供的银行卡转账</div>
+                </div>
+                <!-- 等待商家付款 -->
+                <div class="status_wait" v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'">
+                    <div style="display: flex;align-items: center;">
+                        <div class="amount">等待商家付款</div>
+                        <div class="time">{{ formatSec2(currItem.endtime) }}</div>
+                    </div>
+                    <div>等待商家付款</div>
                 </div>
                 <!-- 等待确认 -->
                 <div class="status_wait" v-if="currItem.status == 'waitconfirm'">
@@ -113,8 +121,9 @@
 
             <!-- 按钮 -->
             <div class="btns" :style="{ opacity: loading ? '0.5' : 1 }" v-if="currItem.status = 'waitpayment'">
-                <div class="btn" style="margin-right: 0.64rem;" @click="cancelOrder">取消订单</div>
-                <div class="btn active_btn" @click="confirmOrder">我已付款</div>
+                <div class="btn" v-if="currItem.offset == 'buy'" style="margin-right: 0.64rem;" @click="cancelOrder">
+                    取消订单</div>
+                <div class="btn active_btn" @click="confirmOrder">{{ currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
             </div>
         </template>
 
@@ -154,6 +163,8 @@ const getInfo = () => {
         if (res.data) {
             // currItem.value = JSON.parse(JSON.stringify(res.data || {}))
             Object.assign(currItem.value, res.data)
+
+            console.error('???', currItem.value)
         }
     }).finally(() => {
         loading.value = false

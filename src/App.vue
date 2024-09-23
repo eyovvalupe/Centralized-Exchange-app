@@ -16,6 +16,8 @@
 
   <BottomTabBar v-if="showBottom" />
 
+  <!-- 登录弹窗 -->
+  <LoginDialog />
 </template>
 
 <script setup>
@@ -26,6 +28,7 @@ import { Popup, Loading } from 'vant';
 // import DateBottom from '@/views/trade/DateBottom.vue'
 import { useRoute } from "vue-router";
 import { serviceChat } from '@/utils/serviceChat'
+import LoginDialog from "./views/Public/LoginDialog.vue"
 
 
 const BottomTabBar = defineAsyncComponent(() =>

@@ -222,6 +222,7 @@ const getData = (params) => { // 获取数据
             }
         }
         _time(params).then(res => {
+            console.error(res)
             if (res.code == 200) {
                 const dd = res.data.map(item => {
                     item.open = item.price

@@ -32,7 +32,8 @@
                             <div class="unit">{{ item.currency }}</div>
                         </template>
                     </div>
-                    <div class="status" :class="['status_' + item.status]">{{ statusMap[item.status] }}</div>
+                    <div class="status" :class="['status_' + item.status]">{{ statusMap(item.status, item.offset) }}
+                    </div>
                 </div>
             </div>
 
@@ -89,12 +90,14 @@ const successOrder = () => {
 
 
 // 状态
-const statusMap = ref({
-    waitpayment: '等待付款',
-    waitconfirm: '等待确认',
-    done: '完成',
-    cancel: '取消'
-})
+const statusMap = (key, type) => {
+    return {
+        waitpayment: type == 'buy' ? '等待付款' : '等待收款',
+        waitconfirm: '等待确认',
+        done: '完成',
+        cancel: '取消'
+    }[key]
+}
 
 const token = computed(() => store.state.token)
 const c2cList = computed(() => store.state.c2cList || [])
@@ -115,7 +118,12 @@ const getData = () => {
         setTimeout(() => {
             loading.value = false
         }, 100)
-        list.value.push(...(res.data || []))
+        if (page.value == 1) {
+            list.value = res.data || []
+        } else {
+            list.value.push(...(res.data || []))
+        }
+
         if (!res.data?.length) {
             finish.value = true
         }
@@ -139,7 +147,6 @@ const init = () => {
     page.value = 0
     loading.value = false
     finish.value = false
-    list.value = []
     setTimeout(() => {
         if (token.value) {
             getData()
@@ -184,7 +191,13 @@ onMounted(() => {
 })
 onUnmounted(() => {
     if (interval) clearInterval(interval)
-    document.querySelector('.page').removeEventListener('scroll', scrollHandle)
+    try {
+        document.querySelector('.page').removeEventListener('scroll', scrollHandle)
+    } catch { }
+})
+
+defineExpose({
+    init
 })
 </script>
 

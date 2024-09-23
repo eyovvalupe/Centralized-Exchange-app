@@ -8,10 +8,10 @@
                 <Faster />
             </Tab>
             <Tab title="自选区" name="1">
-                <Self v-if="active == 1" />
+                <Self />
             </Tab>
             <Tab title="我的订单" name="2">
-                <List />
+                <List ref="listRef" />
                 <template #title>
                     <div class="tab_item">
                         <span>我的订单</span>
@@ -65,9 +65,14 @@ const cancelSubs = () => {
     })
 }
 
-const active = ref(0)
-const onChange = i => {
 
+const listRef = ref()
+const active = ref(sessionStorage.getItem('buycoinActive') || 0)
+const onChange = i => {
+    sessionStorage.setItem('buycoinActive', i)
+    if (i == 2) {
+        listRef.value && listRef.value.init()
+    }
 }
 
 const pageLoading = ref(true)

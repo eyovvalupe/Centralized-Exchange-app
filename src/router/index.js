@@ -138,6 +138,15 @@ const routes = [
       pageType: 'tab'
     }
   },
+  { // 安全
+    path: "/deal",
+    name: "deal",
+    component: () => import("../views/Market/buyCoin/Deal.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   { // 搜索
     path: "/search",
     name: "search",

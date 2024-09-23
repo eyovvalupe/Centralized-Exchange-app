@@ -21,6 +21,7 @@ export default createStore({
     userInfo: {}, // 用户详情
     accountList: [], // 收款方式列表
     sessionToken: '', // 关键请求token
+    isLoginOpen: false, // 登录弹窗开关
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -49,6 +50,9 @@ export default createStore({
     },
     setSessionToken(state, data) {
       state.sessionToken = data;
+    },
+    setIsLoginOpen(state, data) {
+      state.isLoginOpen = data;
     },
     ...market.mutations,
     ...trade.mutations,

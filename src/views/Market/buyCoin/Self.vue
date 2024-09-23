@@ -68,9 +68,10 @@
 
             <div class="form">
                 <div class="item form_item" :class="{ 'focus_item': amountFocus }">
-                    <div class="tip_text" v-if="!(!amountFocus && amount !== '')">≤ {{ maxAmount }} {{
-                        offset == 'sell' ? currCrypto.name :
-                            currCurrency.name }}</div>
+                    <div class="tip_text" v-show="offset == 'sell'" v-if="!(!amountFocus && amount !== '')">≤ {{
+                        maxAmount }} {{
+                            offset == 'sell' ? currCrypto.name :
+                                currCurrency.name }}</div>
                     <input v-model="amount" @blur="amountFocus = false" @focus="amountFocus = true" type="number"
                         class="ipt">
                     <div class="all" @click="amount = currWallet.amount">全部</div>
@@ -220,15 +221,18 @@ if (dryptoWallet.value[0]) {
 const clickItem = item => {
     currCurrency.value = item
     showDialog.value = false
+    list.value = []
     init()
 }
 const clickCrypto = item => {
     currCrypto.value = item
     showDialog2.value = false
+    list.value = []
     init()
 }
 const changeTab = name => {
     offset.value = name
+    list.value = []
     init()
 }
 
@@ -254,6 +258,14 @@ const showAmount = computed(() => {
     }
 })
 const goBuy = item => {
+    // router.push({
+    //     name: 'deal',
+    //     query: {
+    //         ...item,
+    //         offset: offset.value
+    //     }
+    // })
+    // if (offset.value) return
     amount.value = ''
     currItem.value = item
     showFormDialog.value = true
@@ -297,6 +309,9 @@ const submitSell = (s) => {
 const loading = ref(false)
 const finish = ref(false)
 const list = ref([])
+try {
+    list.value = JSON.parse(sessionStorage.getItem('deal_list') || '[]')
+} catch { }
 const page = ref(0)
 const getData = () => {
     if (loading.value || finish.value) return
@@ -313,10 +328,17 @@ const getData = () => {
     }).then(res => {
         if (req.offset != offset.value || req.crypto != currCrypto.value.currency || req.currency != currCurrency.value.currency) return
         loading.value = false
-        list.value.push(...(res.data || []))
+        if (page.value == 1) {
+            list.value = res.data || []
+        } else {
+            list.value.push(...(res.data || []))
+        }
         if (!res.data?.length) {
             finish.value = true
         }
+        setTimeout(() => {
+            sessionStorage.setItem('deal_list', JSON.stringify(list.value))
+        }, 100)
     }).catch(() => {
         loading.value = false
     })
@@ -325,7 +347,6 @@ const init = () => {
     page.value = 0
     loading.value = false
     finish.value = false
-    list.value = []
     setTimeout(() => {
         getData()
     }, 0)
@@ -360,7 +381,9 @@ onMounted(() => {
     }, 500)
 })
 onUnmounted(() => {
-    document.querySelector('.page').removeEventListener('scroll', scrollHandle)
+    try {
+        document.querySelector('.page').removeEventListener('scroll', scrollHandle)
+    } catch { }
 })
 
 

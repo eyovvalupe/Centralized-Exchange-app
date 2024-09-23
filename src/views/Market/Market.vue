@@ -143,13 +143,13 @@
                     </div>
                 </template>
             </Tab> -->
-            <Tab v-if="!openTab" :title-class="'my_icon my_icon2'" @click.native.stop="router.push({ name: 'search' })">
+            <!-- <Tab v-if="!openTab" :title-class="'my_icon my_icon2'" @click.native.stop="router.push({ name: 'search' })">
                 <template #title>
                     <div class="tab_icon" @click.native.stop="router.push({ name: 'search' })">
                         <img src="/static/img/common/search_icon.png" alt="img">
                     </div>
                 </template>
-            </Tab>
+            </Tab> -->
         </Tabs>
         <!-- </PullRefresh> -->
         <!-- </transition> -->
@@ -180,7 +180,7 @@ import buyCoin from "./buyCoin/index.vue"
 const marketPageRef = ref()
 const openTab = ref(false)
 
-const active = ref('option')
+const active = ref(sessionStorage.getItem('market_active') || 'option')
 const OptionalRef = ref()
 const StockRef = ref()
 const IPORef = ref()
@@ -191,6 +191,7 @@ const detailTransition = ref('slide-right');
 
 const changeTab = key => {
     active.value = key
+    sessionStorage.setItem('market_active', key)
     openTab.value = false
     setTimeout(() => {
         switch (key) {
@@ -220,7 +221,7 @@ Promise.all([
     store.commit('setPageLoading', false)
 
     setTimeout(() => {
-        changeTab(0)
+        changeTab(active.value)
     }, 0)
 })
 
