@@ -29,8 +29,8 @@
             background-color: rgba(0, 0, 0, 0.2);
             z-index: 1000;"></div>
         </Teleport> -->
-        <Tabs type="card" sticky class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']"
-            v-if="!pageLoading" @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
+        <Tabs type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" v-if="!pageLoading"
+            @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
 
 
             <Tab class="optional" name="option">
@@ -38,10 +38,11 @@
                 <div style="height:1rem"></div>
                 <template #title>
                     <div class="tab_item">
-                        <div class="tab_item_icon" v-show="active != 'option'">
+                        <!-- <div class="tab_item_icon" v-show="active != 'option'">
                             <img src="/static/img/market/option.svg" alt="icon">
                         </div>
-                        <span v-show="active == 'option'">自选</span>
+                        <span v-show="active == 'option'">自选</span> -->
+                        <span>自选</span>
                     </div>
                 </template>
             </Tab>
@@ -85,7 +86,7 @@
                     </div>
                 </template>
             </Tab>
-            <Tab name="ai">
+            <!-- <Tab name="ai">
                 <Ai v-if="active == 'ai'" />
                 <template #title>
                     <div class="tab_item">
@@ -96,7 +97,7 @@
                         <span>交易机器人</span>
                     </div>
                 </template>
-            </Tab>
+            </Tab> -->
             <!-- <Tab>
                 <Foreign v-if="active == 5" />
                 <template #title>
@@ -109,7 +110,7 @@
                     </div>
                 </template>
             </Tab> -->
-            <Tab name="ipo">
+            <!-- <Tab name="ipo">
                 <IPO v-if="active == 'ipo'" :type="'market'" ref="IPORef" />
                 <template #title>
                     <div class="tab_item">
@@ -120,7 +121,7 @@
                         <span>IPO</span>
                     </div>
                 </template>
-            </Tab>
+            </Tab> -->
             <!-- <Tab>
                 <Financial v-if="active == 7" />
                 <template #title>
@@ -134,14 +135,14 @@
                 </template>
             </Tab> -->
 
-            <Tab :title-class="'my_icon'" @click.native.stop="openTab = !openTab">
+            <!-- <Tab :title-class="'my_icon'" @click.native.stop="openTab = !openTab">
                 <template #title>
                     <div class="tab_icon" @click.native.stop="openTab = !openTab">
                         <img v-show="!openTab" src="/static/img/common/menu_icon.png" alt="img">
                         <img v-show="openTab" src="/static/img/common/back_icon.png" alt="img">
                     </div>
                 </template>
-            </Tab>
+            </Tab> -->
             <Tab v-if="!openTab" :title-class="'my_icon my_icon2'" @click.native.stop="router.push({ name: 'search' })">
                 <template #title>
                     <div class="tab_icon" @click.native.stop="router.push({ name: 'search' })">
@@ -439,6 +440,8 @@ onDeactivated(() => {
             padding-bottom: 0.2rem;
             position: relative;
             padding-right: 2rem;
+
+            margin-top: 0.24rem;
         }
 
         :deep(.van-tabs__nav--card) {

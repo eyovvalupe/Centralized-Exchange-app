@@ -378,13 +378,13 @@ export const _withdrawList = (data = {}) => {
 // 获取充值 币种
 export const _cryptoCoin = (data = {}) => {
   return http.post(`/anon/v1/wallet/currency`, data, {
-    custom: { auth: true, toast: true, retry: true },
+    custom: { auth: false, toast: true, retry: true },
   });
 };
 // 现金账户支持的货币
 export const _currency = (data = {}) => {
   return http.post(`/authc/v1/account/balance`, data, {
-    custom: { auth: false, toast: false, retry: true },
+    custom: { auth: true, toast: false, retry: true },
   });
 };
 // 现金账户支持的货币
@@ -536,7 +536,7 @@ export const _orderFast = (data = {}) => {
 // 自选列表
 export const _adList = (data = {}) => {
   return http.post(`/anon/v1/c2c/ad/list`, data, {
-    custom: { auth: true, toast: false, retry: true },
+    custom: { auth: false, toast: false, retry: true },
   });
 };
 // 自选交易

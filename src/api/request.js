@@ -31,6 +31,7 @@ instance.interceptors.request.use(
           reurl: router.currentRoute.value.name
         }
       })
+      console.error(config)
       throw {
         message: "当前 token 已失效，请重新登录"
       };

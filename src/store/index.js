@@ -63,7 +63,7 @@ export default createStore({
       commit("setContractPositionsList", []);
       commit("setAiPositionsList", []);
       commit("setIpoDataList", []);
-      commit("setApoStockList", []);
+      commit("setIpoStockList", []);
       commit("setInquireList", []);
       commit("setContractInquireList", []);
       commit("setAiInquireList", []);

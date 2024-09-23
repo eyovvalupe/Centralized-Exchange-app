@@ -9,15 +9,20 @@
             <div style="flex:1"></div>
             <div style="display: flex;align-items: center;" @click="showDialog = true">
                 <span>{{ currCurrency.name }}</span>
-                <div class="icon">
-                    <img src="/static/img/market/trans.png" alt="img">
-                </div>
+            </div>
+
+            <div class="icon">
+                <img src="/static/img/market/trans.png" alt="img">
+            </div>
+
+            <div style="display: flex;align-items: center;" @click="showDialog2 = true">
+                <span>{{ currCrypto.name }}</span>
             </div>
         </div>
-        <div class="subtabs">
+        <!-- <div class="subtabs">
             <div @click="clickCrypto(item)" class="subtab" :class="{ 'active_subtab': item.name == currCrypto.name }"
                 v-for="(item, i) in dryptoWallet" :key="i">{{ item.name }}</div>
-        </div>
+        </div> -->
 
         <!-- list -->
         <div class="list">
@@ -47,11 +52,12 @@
                                 }}</span></div>
                         <div>订单限额{{ item.limitmin }}-{{ item.limitmax }}</div>
                     </div>
-                    <div class="btn" @click="goBuy(item)">{{ offset == 'buy' ? '购买' : '出售' }}</div>
+                    <div v-if="token" class="btn" @click="goBuy(item)">{{ offset == 'buy' ? '购买' : '出售' }}</div>
                 </div>
             </div>
             <NoData v-if="!loading && !list.length" />
-            <LoadingMore :loading="loading" :finish="finish" v-if="(finish && list.length) || (!finish)" />
+            <LoadingMore :classN="'buycoin_buss'" :loading="loading" :finish="finish"
+                v-if="(finish && list.length) || (!finish)" />
         </div>
     </div>
 
@@ -87,7 +93,7 @@
         </div>
     </Popup>
 
-    <!-- 币种 -->
+    <!-- 法币币种 -->
     <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
         position="bottom" teleport="body">
         <div class="withdraw_accounr_dialog">
@@ -103,6 +109,25 @@
                 </div>
                 <span>{{ item.name.toUpperCase() }}</span>
                 <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />
+            </div>
+        </div>
+    </Popup>
+    <!-- 加密币种 -->
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog2"
+        position="bottom" teleport="body">
+        <div class="withdraw_accounr_dialog">
+            <div class="close_icon" @click="showDialog2 = false">
+                <img src="/static/img/common/close.png" alt="x">
+            </div>
+            <div class="title">币种选择</div>
+            <div @click="clickCrypto(item)" class="swap_dialog_item"
+                :class="{ 'swap_dialog_item_active': currCrypto.name == item.name }" v-for="(item, i) in dryptoWallet"
+                :key="i">
+                <div class="icon">
+                    <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency">
+                </div>
+                <span>{{ item.name.toUpperCase() }}</span>
+                <Icon v-if="currCrypto.name == item.name" class="check_icon" name="success" />
             </div>
         </div>
     </Popup>
@@ -153,7 +178,7 @@ import OrderInfo from "./OrderInfo.vue"
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import { _adList, _buysell } from "@/api/api"
-import { ref, onMounted, onUnmounted, computed } from "vue"
+import { ref, onMounted, onUnmounted, computed, onActivated } from "vue"
 import store from "@/store"
 import Decimal from 'decimal.js';
 import router from "@/router"
@@ -165,6 +190,8 @@ const safeRef = ref()
 
 const showPopupInfo = ref(false)
 const showDialog = ref(false)
+const showDialog2 = ref(false)
+const token = computed(() => store.state.token)
 const wallet = computed(() => store.state.wallet || []) // 所有钱包
 const fiatWallet = computed(() => wallet.value.filter(item => item.type == 'fiat')) // 法币钱包
 const dryptoWallet = computed(() => wallet.value.filter(item => item.type == 'drypto')) // 加密钱包
@@ -186,7 +213,10 @@ const offset = ref('buy')
 const currCurrency = ref({}) // 计价货币
 if (fiatWallet.value[0]) currCurrency.value = fiatWallet.value[0]
 const currCrypto = ref({}) // 加密货币
-if (dryptoWallet.value[0]) currCrypto.value = dryptoWallet.value[0]
+if (dryptoWallet.value[0]) {
+    const target = dryptoWallet.value.find(item => item.name == 'USDT')
+    currCrypto.value = target || dryptoWallet.value[0]
+}
 const clickItem = item => {
     currCurrency.value = item
     showDialog.value = false
@@ -194,6 +224,7 @@ const clickItem = item => {
 }
 const clickCrypto = item => {
     currCrypto.value = item
+    showDialog2.value = false
     init()
 }
 const changeTab = name => {
@@ -298,6 +329,9 @@ const init = () => {
     setTimeout(() => {
         getData()
     }, 0)
+    setTimeout(() => {
+        moreDom = document.querySelector('.buycoin_buss')
+    }, 500)
 }
 init()
 
@@ -314,9 +348,14 @@ const scrollHandle = () => {
     }
 }
 
+onActivated(() => {
+    setTimeout(() => {
+        moreDom = document.querySelector('.buycoin_buss')
+    }, 500)
+})
 onMounted(() => {
     setTimeout(() => {
-        moreDom = document.querySelector('.loading_more')
+        moreDom = document.querySelector('.buycoin_buss')
         document.querySelector('.page').addEventListener('scroll', scrollHandle)
     }, 500)
 })
@@ -357,7 +396,15 @@ const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
     store.dispatch("updateSessionToken")
 }
-getSessionToken()
+if (token.value) {
+    getSessionToken()
+}
+
+const goLogin = () => {
+    router.push({
+        name: 'login'
+    })
+}
 
 // 跳转
 const jump = name => {
@@ -398,8 +445,16 @@ const jump = name => {
         .icon {
             font-size: 0.28rem;
             height: 0.28rem;
-            margin-left: 0.2rem;
+            margin: 0 0.2rem;
         }
+    }
+
+    .subtabs2 {
+        margin: 0.2rem 0;
+        padding: 0 0.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
 
     .subtabs {

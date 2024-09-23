@@ -38,7 +38,8 @@
 
 
             <NoData v-if="!loading && !list.length" />
-            <LoadingMore :loading="loading" :finish="finish" v-if="(finish && list.length) || (!finish)" />
+            <LoadingMore :classN="'buycoin_self'" :loading="loading" :finish="finish"
+                v-if="(finish && list.length) || (!finish)" />
         </div>
     </div>
     <UnLogin v-else />
@@ -55,7 +56,7 @@
 
 <script setup>
 
-import { onMounted, onUnmounted, computed, ref } from "vue"
+import { onMounted, onUnmounted, computed, ref, onActivated } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import UnLogin from "@/components/UnLogin.vue"
@@ -140,7 +141,9 @@ const init = () => {
     finish.value = false
     list.value = []
     setTimeout(() => {
-        getData()
+        if (token.value) {
+            getData()
+        }
     }, 0)
 }
 init()
@@ -151,7 +154,6 @@ const scrollHandle = () => {
     if (!moreDom) return
     const rect = moreDom.getBoundingClientRect()
     if (rect.top <= totalHeight) {
-        console.error('加载更多')
         // 加载更多
         getData()
     }
@@ -160,6 +162,11 @@ const scrollHandle = () => {
 
 let interval = null
 
+onActivated(() => {
+    setTimeout(() => {
+        moreDom = document.querySelector('.buycoin_self')
+    }, 500)
+})
 onMounted(() => {
     interval = setInterval(() => {
         list.value.forEach(item => {
@@ -170,7 +177,7 @@ onMounted(() => {
     }, 1000)
     if (token.value) {
         setTimeout(() => {
-            moreDom = document.querySelector('.loading_more')
+            moreDom = document.querySelector('.buycoin_self')
             document.querySelector('.page').addEventListener('scroll', scrollHandle)
         }, 500)
     }

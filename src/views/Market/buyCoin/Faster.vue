@@ -11,9 +11,13 @@
             <!-- 售出 -->
             <div class="item_box">
                 <div class="item_box_left">
-                    <div class="subtitle"><span>售出</span></div>
+                    <div class="subtitle">
+                        <span>售出</span>
+                        <span v-if="form1.offset == 'sell'">最大可用 {{ currOut.amount }}</span>
+                    </div>
                     <div class="item" :class="{ 'item_focus': priceFocus }">
-                        <span class="ipt_tip" v-show="form1.volume === '' || priceFocus">≤ {{ currOut.amount }}</span>
+                        <span class="ipt_tip" v-if="form1.offset == 'sell'" v-show="form1.volume === '' || priceFocus">≤
+                            {{ currOut.amount }}</span>
                         <input v-model="form1.volume" @focus="priceFocus = true" @blur="priceFocus = false"
                             type="number" class="ipt">
                     </div>
@@ -23,6 +27,9 @@
                     </div>
                     <div @click="openDialog(1)" class="item" :class="{ 'item_focus': priceFocus }"
                         style="justify-content: center;border:1px solid #d0d8e2!important">
+                        <div class="icon">
+                            <img :src="`/static/img/crypto/${currOut.name.toUpperCase()}.png`" alt="currency">
+                        </div>
                         <span>{{ currOut.name || '--' }}</span>
                         <div class="more_icon">
                             <img src="/static/img/trade/down.png" alt="↓">
@@ -44,6 +51,9 @@
                     <div class="subtitle"><span>&nbsp;</span></div>
                     <div @click="openDialog(2)" class="item" :class="{ 'item_focus': priceFocus }"
                         style="justify-content: center;border:1px solid #d0d8e2!important">
+                        <div class="icon">
+                            <img :src="`/static/img/crypto/${currIn.name.toUpperCase()}.png`" alt="currency">
+                        </div>
                         <span>{{ currIn.name || '--' }}</span>
                         <div class="more_icon">
                             <img src="/static/img/trade/down.png" alt="↓">
@@ -52,9 +62,16 @@
                 </div>
 
             </div>
-            <div class="tip">1{{ currOut.name }} ≈ {{ rate || '--' }}{{ currIn.name }}</div>
+            <div class="tip">预计价格&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
 
-            <Button size="large" class="submit" color="#014cfa" round :loading="loading" @click="sell">卖出</Button>
+            <Button v-if="token" size="large" class="submit" round :loading="loading" @click="sell"
+                :color="form1.offset == 'sell' ? '#E8503A' : '#18B762'">{{ form1.offset == 'sell' ? '卖出' : '买入'
+                }}</Button>
+
+            <Button size="large" color="#014cfa" round v-if="!token" style="margin-bottom: 0.34rem;margin-top: 1.6rem;"
+                @click="jump('login')">登录</Button>
+            <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999"
+                @click="jump('register')">注册</Button>
         </div>
     </div>
 
@@ -130,6 +147,7 @@ import { _hiddenAccount } from "@/utils/index"
 import SafePassword from "@/components/SafePassword.vue"
 
 const safeRef = ref()
+const token = computed(() => store.state.token)
 const wallet = computed(() => store.state.wallet || []) // 所有钱包
 const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
@@ -139,8 +157,8 @@ const userInfo = computed(() => store.state.userInfo || {})
 const loading = ref(false)
 const sell = () => {
     if (!form1.value.volume || form1.value.volume <= 0) return showToast('请输入金额')
-    if (form1.value.volume > currOut.value.amount) return showToast('余额不足')
     if (form1.value.offset == "sell") {
+        if (form1.value.volume > currOut.value.amount) return showToast('余额不足')
         showAccountDialog.value = true
     } else {
         safeRef.value.open()
@@ -287,7 +305,10 @@ const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
     store.dispatch("updateSessionToken")
 }
-getSessionToken()
+if (token.value) {
+    getSessionToken()
+}
+
 
 // 跳转
 const jump = name => {
@@ -356,6 +377,14 @@ const jump = name => {
                 border: 1px solid #d0d8e2;
                 padding: 0 0.24rem;
 
+
+                .icon {
+                    margin-right: 0.06rem;
+                    width: 0.3rem;
+                    height: 0.3rem;
+                    position: relative;
+                    top: -0.02rem;
+                }
 
                 .info {
                     flex: 1;

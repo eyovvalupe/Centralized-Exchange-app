@@ -340,7 +340,7 @@ const fullScreen = (key) => {
 // 下单
 const goBuy = key => {
     showBuy.value = false
-    store.commit('setActive', key)
+    // store.commit('setActive', key)
     router.push({
         name: 'trade',
         query: {
