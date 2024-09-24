@@ -65,9 +65,13 @@
                         <Icon style="transform: rotate(90deg);" name="play" />
                     </div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1h' }" @click="changeType('1h')">1h</div>
+                    <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)"
+                        :class="{ 'active_tab': timeType == '4h' }" @click="changeType('4h')">4h</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1D' }" @click="changeType('1D')">1D</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1W' }" @click="changeType('1W')">1W</div>
                     <div class="tab" :class="{ 'active_tab': timeType == '1M' }" @click="changeType('1M')">1M</div>
+                    <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)"
+                        :class="{ 'active_tab': timeType == '1Y' }" @click="changeType('1Y')">1Y</div>
                     <!-- <div style="flex:1"></div> -->
                     <div class="full-tab" @click="fullScreen(true)">
                         <img src="/static/img/common/full.svg" alt="">
@@ -79,7 +83,7 @@
                 </div>
                 <div class="chart_container" :class="{ 'fullscreen_container': fullWindow }">
                     <!-- 时区 -->
-                    <div v-if="item.date" class="chart_time">{{ item.date }}</div>
+                    <div v-if="showDate" class="chart_time">{{ showDate }}</div>
                     <!-- 分时图 -->
                     <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
                     <!-- K线图 -->
@@ -204,6 +208,7 @@ import AreaChart from "@/components/KlineCharts/AreaChart.vue"
 import KlineChart from "@/components/KlineCharts/KlineChart.vue"
 import { _formatNumber } from "@/utils/index"
 import { _basic, _profile, _add, _del } from "@/api/api"
+import { formatTimestamp } from "@/utils/time"
 
 const route = useRoute()
 
@@ -264,6 +269,7 @@ const addCollect = () => {
 }
 
 
+const periodType = computed(() => route.query.type || props.type)
 // 股票信息
 const item = computed(() => {
     let it = {}
@@ -280,6 +286,18 @@ const item = computed(() => {
     }
     return it
 })
+
+const showDate = computed(() => { // 展示的数据时间
+    if (item.value.timestamp || item.value.ts) {
+        return formatTimestamp(item.value.timestamp || item.value.ts, item.value.timezone)
+    }
+    return ''
+})
+
+setTimeout(() => {
+    console.error('???', item.value)
+}, 2000)
+
 const updown = computed(() => { // 1-涨 -1-跌 0-平
     if (item.value.ratio === undefined) return 0
     return item.value.ratio > 0 ? 1 : -1
@@ -306,11 +324,16 @@ if (item.value.symbol) {
 }
 
 
-// 图表信息  Time 1m 5m 10m 15m 30m 1h 1D 1W 1M
+// 图表信息  Time 1m 5m 10m 15m 30m 1h 4h 1D 1W 1M 1Y
 const timeType = ref('1h')
 const showPicker = ref(false) // 时间选择弹窗
 const currMin = ref('1m')
-const minList = ['1m', '5m', '10m', '15m', '30m']
+const minList = computed(() => {
+    if (periodType.value == 'futures' || periodType.value == 'aiquant') {
+        return ['1m', '5m', '15m', '30m']
+    }
+    return ['1m', '5m', '10m', '15m', '30m']
+})
 const chooseTime = time => {
     showPicker.value = false
     currMin.value = time
@@ -680,9 +703,9 @@ const showInfo = ref(false)
                     color: #0A54F9;
                     font-size: 0.24rem;
                     font-weight: 400;
-                    margin-right: 0.18rem;
-                    padding: 0 0.12rem;
-                    min-width: 0.8rem;
+                    margin-right: 0.16rem;
+                    padding: 0 0.1rem;
+                    min-width: 0.64rem;
                 }
 
                 .active_tab {

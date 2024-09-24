@@ -52,7 +52,7 @@
             </div>
 
             <!-- 银行卡 -->
-            <div class="bank">
+            <div class="bank" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
                 <div class="bank_title">
                     <div class="bank_icon">
                         <img src="/static/img/user/card_type_b.png" alt="img">
@@ -109,21 +109,27 @@
                     </div>
                     <!-- <div>请根据总价，向商家提供的银行卡转账</div> -->
                 </div>
-                <!-- 已完成 -->
-                <div class="finish_status success_status" v-if="currItem.status == 'done'">
-                    <div>已完成</div>
-                </div>
-                <!-- 已取消 -->
-                <div class="finish_status" v-if="currItem.status == 'cancel'">
-                    <div>已取消</div>
+
+                <div class="btns">
+                    <!-- 已完成 -->
+                    <div class="btn finish_status success_status" v-if="currItem.status == 'done'">
+                        <div>已完成</div>
+                    </div>
+                    <!-- 已取消 -->
+                    <div class="btn finish_status" v-if="currItem.status == 'cancel'">
+                        <div>已取消</div>
+                    </div>
                 </div>
             </div>
 
             <!-- 按钮 -->
-            <div class="btns" :style="{ opacity: loading ? '0.5' : 1 }" v-if="currItem.status = 'waitpayment'">
-                <div class="btn" v-if="currItem.offset == 'buy'" style="margin-right: 0.64rem;" @click="cancelOrder">
+            <div class="btns" v-if="currItem.status == 'waitpayment'">
+                <div class="btn" v-if="currItem.offset == 'buy'"
+                    :style="{ backgroundColor: loading ? '#ddd' : '', color: loading ? '#fff' : '' }"
+                    style="margin-right: 0.64rem;" @click="cancelOrder">
                     取消订单</div>
-                <div class="btn active_btn" @click="confirmOrder">{{ currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
+                <div class="btn active_btn" @click="confirmOrder" :style="{ backgroundColor: loading ? '#ddd' : '' }">{{
+                    currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
             </div>
         </template>
 
@@ -161,10 +167,7 @@ const getInfo = () => {
         order_no: currItem.value.order_no
     }).then(res => {
         if (res.data) {
-            // currItem.value = JSON.parse(JSON.stringify(res.data || {}))
-            Object.assign(currItem.value, res.data)
-
-            console.error('???', currItem.value)
+            currItem.value = res.data || {}
         }
     }).finally(() => {
         loading.value = false
@@ -441,7 +444,9 @@ const getSessionToken = () => {
             justify-content: center;
             font-size: 0.32rem;
             font-weight: bold;
-            color: #888888;
+            color: #aaa !important;
+            background-color: #eee !important;
+            margin-top: 1rem;
         }
 
         .success_status {

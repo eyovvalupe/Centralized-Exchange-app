@@ -45,9 +45,11 @@ const periodMap = {
     '15m': '15min',
     '30m': '30min',
     '1h': '1h',
+    '4h': '4h',
     '1D': '1day',
     '1W': '1week',
-    '1M': '1month'
+    '1M': '1month',
+    '1Y': '1year',
 }
 const currPeriod = computed(() => periodMap[props.period])
 const page = ref(1)
@@ -112,6 +114,9 @@ const initData = async () => { // 初始化数据
             }
             chart.setPriceVolumePrecision(num, 2)
             chart.applyNewData(datas) // 重设图表数据
+            if (datas[0] && datas[0].timezone) {
+                chart.setTimezone(datas[0].timezone)
+            }
             // 同步数据到股票详情
             setCurrData(datas[datas.length - 1] || {})
             chart.loadMore(loadMoreData)
@@ -135,16 +140,15 @@ const initData = async () => { // 初始化数据
 const subs = () => { // 订阅新数据
 
     socket = startSocket(() => {
-        const params = { symbols: props.symbol, period: currPeriod.value }
+        const params = { symbol: props.symbol, period: currPeriod.value }
         socket && socket.off('kline')
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
-            if (res.code == 200 && res.symbols == props.symbol && res.period == props.period) {
+            if (res.code == 200 && res.symbol == props.symbol && (res.period == props.period || res.period == currPeriod.value)) {
                 const item = res.data[0]
                 setCurrData(item)
-                chart.updateData({
-                    ...item,
-                    timestamp: item.timestamp * 1000
+                res.data.forEach(a => {
+                    chart.updateData(a)
                 })
             }
         })
@@ -198,10 +202,7 @@ const getData = (params) => { // 获取数据
         }
         _kline(params).then(res => {
             if (res.code == 200) {
-                const dd = res.data.map(item => {
-                    item.timestamp *= 1000
-                    return item
-                }).reverse()
+                const dd = res.data.reverse()
                 resolve(dd)
                 // 把结果放到sessionData
                 sessionStorage.setItem(key + '_time', Date.now())
