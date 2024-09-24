@@ -67,46 +67,52 @@ export function formatSec2(seconds) {
 
 // 时间戳和时区 转换成 时间
 export function formatTimestamp(timestamp, timezone) {
-  const date = new Date(timestamp);
-  const options = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false, // 使用24小时制
-    timeZone: timezone,
-  };
+  try {
+    const date = new Date(timestamp);
+    const options = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false, // 使用24小时制
+      timeZone: timezone,
+    };
 
-  const formatter = new Intl.DateTimeFormat('en-GB', options);
-  const parts = formatter.formatToParts(date);
+    const formatter = new Intl.DateTimeFormat('en-GB', options);
+    const parts = formatter.formatToParts(date);
 
-  const formattedDate = parts.reduce((acc, part) => {
-    switch (part.type) {
-      case 'year':
-        acc[0] = part.value;
-        break;
-      case 'month':
-        acc[1] = part.value;
-        break;
-      case 'day':
-        acc[2] = part.value;
-        break;
-      case 'hour':
-        acc[3] = part.value;
-        break;
-      case 'minute':
-        acc[4] = part.value;
-        break;
-      case 'second':
-        acc[5] = part.value;
-        break;
-      default:
-        break;
-    }
-    return acc;
-  }, ['', '', '', '', '', '']);
+    const formattedDate = parts.reduce((acc, part) => {
+      switch (part.type) {
+        case 'year':
+          acc[0] = part.value;
+          break;
+        case 'month':
+          acc[1] = part.value;
+          break;
+        case 'day':
+          acc[2] = part.value;
+          break;
+        case 'hour':
+          acc[3] = part.value;
+          break;
+        case 'minute':
+          acc[4] = part.value;
+          break;
+        case 'second':
+          acc[5] = part.value;
+          break;
+        default:
+          break;
+      }
+      return acc;
+    }, ['', '', '', '', '', '']);
 
-  return `${formattedDate[0]}-${formattedDate[1]}-${formattedDate[2]} ${formattedDate[3]}:${formattedDate[4]}:${formattedDate[5]}`;
+    return `${formattedDate[0]}-${formattedDate[1]}-${formattedDate[2]} ${formattedDate[3]}:${formattedDate[4]}:${formattedDate[5]}`;
+  } catch {
+    console.error(`-- format error --  timestamp:${timestamp}  timezone:${timezone}`)
+    return getTimestr(timestamp)
+  }
+
 }

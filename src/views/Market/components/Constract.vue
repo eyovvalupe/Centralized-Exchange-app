@@ -12,11 +12,12 @@
             <div class="tr" v-for="(item, i) in contractList" :key="i" @click="goInfo(item)">
                 <div class="td td_left">
                     <div>
-                        <span class="amount">{{ item.name }}</span>
+                        <span class="amount">{{ item.name || '--' }}</span>
                     </div>
                     <div style="display: flex;align-items: center;justify-content: flex-start;margin-top: 0.15rem;">
                         <div class="x">{{ item.lever || 1 }}X</div>
-                        <span style="word-break: keep-all;white-space:nowrap;">Val: {{ item.volume.toFixed(2) || '--'
+                        <span style="word-break: keep-all;white-space:nowrap;">Val: {{ item.volume ?
+                            item.volume.toFixed(2) : '--'
                             }}</span>
                     </div>
                 </div>
@@ -72,6 +73,7 @@ getList()
 
 
 const getUpDown = (item) => {
+    if (!item.price || !item.ratio) return 0
     return new Decimal(item.price).mul(item.ratio).toNumber()
 }
 

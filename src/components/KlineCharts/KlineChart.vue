@@ -145,8 +145,9 @@ const subs = () => { // 订阅新数据
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
             if (res.code == 200 && res.symbol == props.symbol && (res.period == props.period || res.period == currPeriod.value)) {
+
                 const item = res.data[0]
-                setCurrData(item)
+                // setCurrData(item)
                 res.data.forEach(a => {
                     chart.updateData(a)
                 })
@@ -231,12 +232,21 @@ defineExpose({
 
 
 const setCurrData = (item) => {
+    let obj = {}
     switch (route.query.type) {
         case 'constract':
-            store.commit('setCurrConstract', item)
+            obj = {
+                ...store.state.currConstact,
+                ...item
+            }
+            store.commit('setCurrConstract', obj)
             break
         default:
-            store.commit('setCurrStock', item)
+            obj = {
+                ...store.state.currStock,
+                ...item
+            }
+            store.commit('setCurrStock', obj)
             break
     }
 }
