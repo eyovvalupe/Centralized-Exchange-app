@@ -144,10 +144,11 @@
             </div>
         </div>
         <!-- 搜索 -->
-        <div class="item_box">
-            <div class="item" :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
+        <div class="item_box" @click="openSearchDialog">
+            <div class="item" style="pointer-events: none;"
+                :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
                 <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">股票代码</span>
-                <input :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
+                <input disabled :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
                     @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="blurSearch"
                     v-model.trim="searchStr" @keyup="inputSearch" class="ipt" type="text">
                 <div class="base_ipt" v-show="currStock.symbol && searchFocus">{{ currStock.symbol }}
@@ -218,7 +219,7 @@
                     '买涨' : '买跌' }}</Button>
 
         <Button size="large" color="#014cfa" class="submit" round v-if="!token" style="margin-bottom: 0.34rem"
-            @click="jump('login')">登录</Button>
+            @click="store.commit('setIsLoginOpen', true)">登录</Button>
         <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999"
             @click="jump('register')">注册</Button>
     </div>
@@ -324,6 +325,31 @@
 
     <!-- 开仓-安全密码弹窗 -->
     <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
+
+
+    <!-- 搜索列表 -->
+    <Popup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
+
+        <div class="search_dialog_trade">
+            <div class="title">搜索</div>
+            <!-- 搜索 -->
+            <div class="item search_box">
+                <div class="search_icon">
+                    <img src="/static/img/common/search.png" alt="🔍">
+                </div>
+                <input v-model.trim="searchDialogStr" @keyup="goDialogSearch('stock')" type="text" class="ipt"
+                    placeholder="搜索">
+            </div>
+
+            <div class="lists">
+                <!-- 搜索列表 -->
+                <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                    :list="marketSearchList" />
+            </div>
+        </div>
+
+    </Popup>
+
 </template>
 
 <script setup>
@@ -336,8 +362,65 @@ import { useRoute } from "vue-router"
 import router from "@/router"
 import StockPopup from "../../trade/StockPopup.vue"
 import SafePassword from "@/components/SafePassword.vue"
+import StockTable from "@/components/StockTable.vue"
 
 const safeRef = ref()
+
+//搜索
+const marketSearchList = computed(() => store.state.marketSearchList || [])
+const showSearchDialog = ref()
+const searchDialogStr = ref('')
+const openSearchDialog = () => {
+    showSearchDialog.value = true
+    goDialogSearch('stock')
+}
+const handleClick = item => {
+    showSearchDialog.value = false
+    currStock.value = item
+    _basic({ symbol: currStock.value.symbol }).then(r => {
+        if (r && r.data && r.data.symbol) {
+            currStock.value = {
+                ...currStock.value,
+                ...r.data
+            }
+            sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
+        }
+    })
+}
+store.commit('setMarketSearch', {
+    search: '',
+    market: 'stock',
+    futuresSearchList: []
+})
+const goDialogSearch = (market) => {
+    if (searchTimeout) clearTimeout(searchTimeout)
+    let s = searchDialogStr.value
+    searchTimeout = setTimeout(() => {
+        searchLoading.value = true
+        _search({
+            market: market || '',
+            symbol: s,
+            page: 1
+        }).then(res => {
+            if (searchDialogStr.value == s) {
+                store.commit('setMarketSearch', {
+                    search: s,
+                    market: market,
+                    list: res.data || []
+                })
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketSearchList',
+                        listKey: 'marketSearchList',
+                    })
+                }, 100)
+            }
+        }).finally(() => {
+            searchLoading.value = false
+        })
+    }, 500)
+}
+
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
@@ -825,6 +908,50 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
+.search_dialog_trade {
+    padding-top: 0.8rem;
+
+    .title {
+        height: 1rem;
+        position: absolute;
+        top: 0.2rem;
+        left: 0;
+        text-align: center;
+        line-height: 1rem;
+        font-size: 0.32rem;
+        width: 100%;
+        color: #121826;
+        pointer-events: none;
+        font-weight: bold;
+    }
+
+    .lists {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .search_box {
+        margin: 0.2rem 0.15rem 0.4rem 0.15rem;
+        display: flex;
+        align-items: center;
+        padding: 0 0.4rem;
+        height: 0.8rem;
+        background-color: #F4F5F7;
+        border-radius: 0.2rem;
+        border: 1px solid #F4F5F7;
+
+        .search_icon {
+            width: 0.48rem;
+            height: 0.48rem;
+            margin-right: 0.24rem;
+        }
+
+        .ipt {
+            height: 100%;
+        }
+    }
+}
+
 .form {
     padding: 0.6rem 0.32rem 2rem 0.32rem;
     position: relative;

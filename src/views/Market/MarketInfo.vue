@@ -329,7 +329,7 @@ const timeType = ref('1h')
 const showPicker = ref(false) // 时间选择弹窗
 const currMin = ref('1m')
 const minList = computed(() => {
-    if (periodType.value == 'futures' || periodType.value == 'aiquant') {
+    if (periodType.value == 'futures' || periodType.value == 'aiquant' || periodType.value == 'constract') {
         return ['1m', '5m', '15m', '30m']
     }
     return ['1m', '5m', '10m', '15m', '30m']

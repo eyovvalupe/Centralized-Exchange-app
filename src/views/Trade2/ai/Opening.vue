@@ -96,7 +96,7 @@
                         '买涨' : '买跌' }}</Button>
 
             <Button size="large" color="#014cfa" class="submit" round v-if="!token" style="margin-bottom: 0.34rem"
-                @click="jump('login')">登录</Button>
+                @click="store.commit('setIsLoginOpen', true)">登录</Button>
             <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999"
                 @click="jump('register')">注册</Button>
         </div>

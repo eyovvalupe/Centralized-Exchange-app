@@ -113,6 +113,18 @@ import store from "@/store"
 import { areaCode, validateEmail } from '@/utils/index'
 import NoData from "@/components/NoData.vue"
 
+const emits = defineEmits(['closeDialog'])
+const props = defineProps({
+  backFunc: {
+    type: Function,
+    default: null
+  },
+  successFunc: {
+    type: Function,
+    default: null
+  },
+})
+
 
 // 区号控制
 const activeTab = ref(0)
@@ -197,6 +209,8 @@ const submit = () => {
         store.dispatch('updateUserInfo')
         store.dispatch('updateAssets')
         store.dispatch('updateWallet')
+        emits('closeDialog')
+        if (props.successFunc) return props.successFunc()
         if (route.query.reurl) {
           router.replace({
             name: route.query.reurl,
@@ -240,6 +254,7 @@ const submitCode = code => {
 
 // 返回
 const goBack = () => {
+  if (props.backFunc) return props.backFunc()
   if (route.query.reurl) {
     router.replace({
       name: route.query.reurl,
@@ -253,6 +268,7 @@ const goBack = () => {
 }
 // 跳转注册
 const goRegister = () => {
+  emits('closeDialog')
   router.replace({
     name: 'register',
     query: {

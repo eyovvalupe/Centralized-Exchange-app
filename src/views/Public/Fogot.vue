@@ -86,9 +86,10 @@ const submitForm = (code) => {
     }).then(res => {
         showToast('密码找回成功')
         setTimeout(() => {
-            router.replace({
-                name: 'login'
-            })
+            store.commit('setIsLoginOpen', true)
+            // router.replace({
+            //     name: 'login'
+            // })
         }, 300)
     }).finally(() => {
         setTimeout(() => {

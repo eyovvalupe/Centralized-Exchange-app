@@ -144,7 +144,7 @@
 <script setup>
 import Top from "@/components/Top.vue"
 import router from "@/router"
-import { ref, computed, onBeforeUnmount } from "vue"
+import { ref, computed, onBeforeUnmount, onMounted } from "vue"
 import store from "@/store";
 import { Popup, Button, Icon, showToast, Checkbox, showLoadingToast, closeToast } from "vant"
 import { useRoute } from "vue-router"
@@ -159,9 +159,12 @@ import { _cryptoCoin } from "@/api/api"
 
 
 const safeRef = ref()
-
+const userInfo = computed(() => store.state.userInfo || {})
 const RecordListRef = ref()
 const route = useRoute()
+
+
+
 const loading = ref(false)
 // 表单
 const form = ref({
@@ -242,7 +245,7 @@ const getCoinNet = () => {
         closeToast();
     })
 }
-getCoinNet()
+
 
 const goRecord = () => {
     router.push({
@@ -263,9 +266,6 @@ const goTopUp = () => {
         return showToast('正在获取汇率')
     }
     submit()
-    // if (AccountCheckRef.value.check()) {
-    //     submit()
-    // }
 }
 const submit = () => {
     router.push({
@@ -279,6 +279,7 @@ const submit = () => {
         }
     })
 }
+
 
 
 // 汇率
@@ -324,6 +325,13 @@ const getRate = () => {
         rateLoading.value = false
     })
 }
+
+
+onMounted(() => {
+    if (AccountCheckRef.value.check()) {
+        getCoinNet()
+    }
+})
 
 onBeforeUnmount(() => {
     if (interval) clearInterval(interval)

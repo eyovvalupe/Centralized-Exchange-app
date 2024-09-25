@@ -107,7 +107,7 @@
                         <div class="amount">等待确认</div>
                         <div class="time">{{ formatSec2(currItem.endtime) }}</div>
                     </div>
-                    <!-- <div>请根据总价，向商家提供的银行卡转账</div> -->
+                    <div>商家已付款，请确认资金是否到账</div>
                 </div>
 
                 <div class="btns">
@@ -128,8 +128,11 @@
                     :style="{ backgroundColor: loading ? '#ddd' : '', color: loading ? '#fff' : '' }"
                     style="margin-right: 0.64rem;" @click="cancelOrder">
                     取消订单</div>
-                <div class="btn active_btn" @click="confirmOrder" :style="{ backgroundColor: loading ? '#ddd' : '' }">{{
-                    currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
+                <div class="btn active_btn" v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'"
+                    :style="{ backgroundColor: '#ddd' }">等待确认</div>
+                <div class="btn active_btn" v-else @click="confirmOrder"
+                    :style="{ backgroundColor: loading ? '#ddd' : '' }">{{
+                        currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
             </div>
         </template>
 
@@ -190,6 +193,7 @@ defineExpose({
 const moreDialog = ref(false)
 // 放行
 const confirmOrder = () => {
+    console.error(1)
     if (loading.value) return
     moreDialog.value = true
     showConfirmDialog({
@@ -198,7 +202,7 @@ const confirmOrder = () => {
             '确认已经付款给商家?',
     })
         .then(() => {
-            action.value = 'confirm'
+            action.value = currItem.value.offset == 'buy' ? 'payment' : 'confirm'
             safeRef.value.open()
         })
         .catch(() => { }).finally(() => moreDialog.value = false);

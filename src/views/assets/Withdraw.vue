@@ -165,7 +165,7 @@
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { ref, computed } from "vue"
+import { ref, computed, onMounted } from "vue"
 import store from "@/store"
 import { Icon, Button, Popup, showToast, showConfirmDialog } from "vant"
 import router from "@/router"
@@ -213,9 +213,8 @@ const openSafePass = () => {
     if (!showAccount.value.length) {
         return showToast('请添加收款账户')
     }
-    if (AccountCheckRef.value.check()) {
-        safeRef.value.open()
-    }
+    safeRef.value.open()
+
 }
 const submit = s => {
     if (loading.value) return
@@ -327,7 +326,7 @@ const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
     store.dispatch("updateSessionToken")
 }
-getSessionToken()
+
 
 // 跳转记录
 const goRecord = () => {
@@ -373,6 +372,13 @@ const goAddAccount = () => {
         })
     }
 }
+
+
+onMounted(() => {
+    if (AccountCheckRef.value.check()) {
+        getSessionToken()
+    }
+})
 
 // 添加
 const jump = (name) => {

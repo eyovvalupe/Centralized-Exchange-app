@@ -17,12 +17,13 @@ import { useRoute } from "vue-router"
 const route = useRoute()
 
 const goLogin = () => {
-    router.push({
-        name: 'login',
-        query: {
-            reurl: route.name
-        }
-    })
+    // router.push({
+    //     name: 'login',
+    //     query: {
+    //         reurl: route.name
+    //     }
+    // })
+    store.commit('setIsLoginOpen', true)
 }
 </script>
 

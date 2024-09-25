@@ -102,12 +102,14 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
 // 添加自选
 const submit = () => {
 
-    if (!token.value) return router.push({
-        name: 'login',
-        query: {
-            reurl: "market"
-        }
-    })
+    // if (!token.value) return router.push({
+    //     name: 'login',
+    //     query: {
+    //         reurl: "market"
+    //     }
+    // })
+
+    if (!token.value) return store.commit('setIsLoginOpen', true)
 
     const keys = []
     checkedList.value.map((item, i) => {

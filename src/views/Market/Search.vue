@@ -202,12 +202,13 @@ const reqMap = {
 }
 const collect = item => {
     if (!token.value) {
-        router.push({
-            name: 'login',
-            query: {
-                reurl: 'search'
-            }
-        })
+        store.commit('setIsLoginOpen', true)
+        // router.push({
+        //     name: 'login',
+        //     query: {
+        //         reurl: 'search'
+        //     }
+        // })
     } else {
         if (collectLoading.value) return
         collectLoading.value = true

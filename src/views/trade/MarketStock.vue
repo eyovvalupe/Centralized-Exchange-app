@@ -111,7 +111,7 @@
         <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
           <img src="/static/img/trade/no-data.png" class="no-data-img">
           <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;"
-              @click="jump('login')">马上登录</span>
+              @click="store.commit('setIsLoginOpen', true)">马上登录</span>
           </p>
         </div>
 

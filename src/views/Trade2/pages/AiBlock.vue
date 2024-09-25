@@ -49,12 +49,13 @@ const OpeningRef = ref()
 const showModel = ref(false)
 const clickItem = item => {
     if (!token.value) {
-        return router.push({
-            name: 'login',
-            query: {
-                reurl: "trade"
-            }
-        })
+        return store.commit('setIsLoginOpen', true)
+        // return router.push({
+        //     name: 'login',
+        //     query: {
+        //         reurl: "trade"
+        //     }
+        // })
     }
     showModel.value = true
     setTimeout(() => {

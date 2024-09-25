@@ -15,7 +15,7 @@
                 <div class="id">ID:23424</div>
             </div>
             <!-- 未登录 -->
-            <div v-else class="user_box unlogin" @click="jump('login')">
+            <div v-else class="user_box unlogin" @click="store.commit('setIsLoginOpen', true)">
                 <span>登录/注册新用户</span>
             </div>
         </div>
@@ -126,18 +126,20 @@ const loginout = () => {
             _logout()
             setTimeout(() => {
                 store.dispatch('reset')
-                router.push({
-                    name: 'login'
-                })
+                store.commit('setIsLoginOpen', true)
+                // router.push({
+                //     name: 'login'
+                // })
             }, 200)
         }).catch(() => { })
 }
 
 const jump = (name, needLogin) => {
     if (needLogin && !token.value) {
-        router.push({
-            name: 'login'
-        })
+        store.commit('setIsLoginOpen', true)
+        // router.push({
+        //     name: 'login'
+        // })
         return
     }
     router.push({

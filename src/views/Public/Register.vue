@@ -355,13 +355,14 @@ const goBack = () => {
 }
 // 跳转登录
 const goLogin = () => {
-  router.replace({
-    name: 'login',
-    query: {
-      reurl: route.query.reurl,
-      redata: route.query.redata,
-    }
-  })
+  store.commit('setIsLoginOpen', true)
+  // router.replace({
+  //   name: 'login',
+  //   query: {
+  //     reurl: route.query.reurl,
+  //     redata: route.query.redata,
+  //   }
+  // })
 }
 const goChat = () => {
   router.push({

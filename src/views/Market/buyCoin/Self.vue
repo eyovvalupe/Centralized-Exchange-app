@@ -434,9 +434,10 @@ if (token.value) {
 }
 
 const goLogin = () => {
-    router.push({
-        name: 'login'
-    })
+    store.commit('setIsLoginOpen', true)
+    // router.push({
+    //     name: 'login'
+    // })
 }
 
 // 跳转

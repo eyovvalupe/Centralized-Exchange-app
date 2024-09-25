@@ -113,40 +113,54 @@ const check = () => {
     //     open()
     // }
     // return val
+    console.error(userInfo.value)
     if (userInfo.value.role != 'user') {
-        showConfirmDialog({
-            title: '账号升级',
-            message:
-                '模拟账号不能进行该操作，去升级？',
-        })
-            .then(() => {
-                router.push({ name: 'kyc' })
+        setTimeout(() => {
+            showConfirmDialog({
+                title: '账号升级',
+                message:
+                    '模拟账号不能进行该操作，去升级？',
             })
-            .catch(() => { });
+                .then(() => {
+                    router.push({ name: 'kyc' })
+                })
+                .catch(() => {
+                    router.back()
+                });
+        }, 400)
         return false
     }
     if (!userInfo.value.googlebind) {
-        showConfirmDialog({
-            title: '谷歌验证器',
-            message:
-                '谷歌验证器未绑定，去绑定？',
-        })
-            .then(() => {
-                router.push({ name: 'google' })
+        console.error('弹窗')
+        setTimeout(() => {
+            showConfirmDialog({
+                title: '谷歌验证器',
+                message:
+                    '谷歌验证器未绑定，去绑定？',
             })
-            .catch(() => { });
+                .then(() => {
+                    router.push({ name: 'google' })
+                })
+                .catch(() => {
+                    router.back()
+                });
+        }, 400)
         return false
     }
     if (userInfo.value.kycl2 != 2) {
-        showConfirmDialog({
-            title: '实名认证',
-            message:
-                '实名认证未通过，去认证？',
-        })
-            .then(() => {
-                router.push({ name: 'kyc' })
+        setTimeout(() => {
+            showConfirmDialog({
+                title: '实名认证',
+                message:
+                    '实名认证未通过，去认证？',
             })
-            .catch(() => { });
+                .then(() => {
+                    router.push({ name: 'kyc' })
+                })
+                .catch(() => {
+                    router.back()
+                });
+        }, 400)
         return false
     }
     return true

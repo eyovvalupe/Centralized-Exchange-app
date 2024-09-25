@@ -25,12 +25,16 @@ instance.interceptors.request.use(
       config.headers.auth = token;
     }
     if (config?.custom?.auth && !token) {
+      // router.replace({
+      //   name: 'login',
+      //   query: {
+      //     reurl: router.currentRoute.value.name
+      //   }
+      // })
       router.replace({
-        name: 'login',
-        query: {
-          reurl: router.currentRoute.value.name
-        }
+        name: 'my'
       })
+      store.commit('setIsLoginOpen', true)
       console.error(config)
       throw {
         message: "当前 token 已失效，请重新登录"
@@ -59,7 +63,7 @@ instance.interceptors.response.use(
     // console.log(`--- 请求 ${response.config.url} 返回 ---`, response.data);
     let res = response.data;
     const custom = response.config?.custom;
-    if (res.code != 200 && res.code != 510) {
+    if (res.code != 200) {
       if (res.code == 401) {
         if (
           location.href.includes("/login")
@@ -67,12 +71,16 @@ instance.interceptors.response.use(
           return;
         } else {
           store.dispatch('reset')
-          router.push({
-            name: 'login',
-            query: {
-              reurl: router.currentRoute.value.name
-            }
+          // router.push({
+          //   name: 'login',
+          //   query: {
+          //     reurl: router.currentRoute.value.name
+          //   }
+          // })
+          router.replace({
+            name: 'my'
           })
+          store.commit('setIsLoginOpen', true)
           return;
         }
       }

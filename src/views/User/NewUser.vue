@@ -36,7 +36,7 @@
         </div>
 
 
-        <div class="user-login" v-else @click="jump('login')">
+        <div class="user-login" v-else @click="store.commit('setIsLoginOpen', true)">
             <div>
                 <img src="/static/img/user/user-block.png" alt="">
                 <span>登录/注册新用户</span>
@@ -211,9 +211,10 @@ const loginout = () => {
                 _logout()
                 setTimeout(() => {
                     store.dispatch('reset')
-                    router.push({
-                        name: 'login'
-                    })
+                    store.commit('setIsLoginOpen', true)
+                    // router.push({
+                    //     name: 'login'
+                    // })
                 }, 200)
             }).catch(() => { })
     }
@@ -221,10 +222,11 @@ const loginout = () => {
 
 const jump = (name, needLogin, query) => {
     if (needLogin && !token.value) {
-        router.push({
-            name: 'login',
-            query
-        })
+        store.commit('setIsLoginOpen', true)
+        // router.push({
+        //     name: 'login',
+        //     query
+        // })
         return
     }
     if (name == 'googleCode') {

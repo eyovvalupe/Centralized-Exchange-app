@@ -19,7 +19,7 @@
       </div>
 
       <div class="subtitle">总资产(USDT)</div>
-      <div class="assets" v-if="!token" @click="jump('login')">
+      <div class="assets" v-if="!token" @click="store.commit('setIsLoginOpen', true)">
         <div class="assets_login">登录</div>
         <div>查看资产</div>
         <div class="assets_icon">
@@ -219,12 +219,13 @@ const subs = (arr) => { // 订阅 ws
 
 // 跳转
 const jump = (name, needToken) => {
-  if (needToken && !token.value) return router.push({
-    name: 'login',
-    query: {
-      reurl: 'home'
-    }
-  })
+  if (needToken && !token.value) return store.commit('setIsLoginOpen', true)
+  // router.push({
+  //   name: 'login',
+  //   query: {
+  //     reurl: 'home'
+  //   }
+  // })
   router.push({
     name
   })

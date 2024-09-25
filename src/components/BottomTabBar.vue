@@ -51,12 +51,14 @@ const handleClick = (item, e) => {
     }, 300)
     // _playVoice()
     if (item.needLogin && !token.value) {
-        return router.push({
-            name: 'login',
-            query: {
-                reurl: route.name
-            }
-        })
+        // return router.push({
+        //     name: 'login',
+        //     query: {
+        //         reurl: route.name
+        //     }
+        // })
+        store.commit('setIsLoginOpen', true)
+        return
     }
     router.push({
         name: item.route
