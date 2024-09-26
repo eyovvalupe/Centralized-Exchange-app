@@ -25,6 +25,7 @@ import { ref, computed } from "vue"
 import { useRoute } from "vue-router";
 import router from "@/router"
 // import { _playVoice } from "@/utils/voice"
+import eventBus from "@/utils/eventBus"
 
 import store from "@/store";
 import storeChat from '@/store/chat'
@@ -57,6 +58,15 @@ const handleClick = (item, e) => {
         //         reurl: route.name
         //     }
         // })
+        eventBus.on('loginSuccess', () => { // 登录成功后继续跳转
+            router.push({
+                name: item.route
+            })
+        })
+        eventBus.on('loginFail', () => { // 关闭弹窗后移除监听
+            eventBus.off('loginSuccess')
+            eventBus.off('loginFail')
+        })
         store.commit('setIsLoginOpen', true)
         return
     }

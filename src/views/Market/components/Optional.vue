@@ -197,6 +197,7 @@ const changeContractList = arr => {
 // 添加自选
 const addLoading = ref(false)
 const addOptional = () => {
+    if (!token.value) return store.commit('setIsLoginOpen', true)
     if (!stockList.value.length && !contractList.value.length) return
     const keys = [...stockList.value, ...contractList.value]
     if (addLoading.value) return

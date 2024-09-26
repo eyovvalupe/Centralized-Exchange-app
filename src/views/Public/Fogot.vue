@@ -27,11 +27,11 @@
                 </div>
                 <input maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text" class="item_input">
             </div>
-            <div class="form_title">密码</div>
+            <div class="form_title">新密码</div>
             <div class="form_item">
-                <input maxlength="20" v-show="!showPass" v-model.trim="form.password" placeholder="请输入您的密码"
+                <input maxlength="20" v-show="!showPass" v-model.trim="form.password" placeholder="请输入您的新密码"
                     type="password" class="item_input">
-                <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="请输入您的密码" type="text"
+                <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="请输入您的新密码" type="text"
                     class="item_input">
                 <div class=" form_item_icon" @click="showPass = !showPass">
                     <img v-show="!showPass" src="/static/img/user/eye-off.png" alt="off">
@@ -43,7 +43,7 @@
         <!-- 按钮 -->
         <div class="submit_box" @click="submit">
             <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit"
-                type="primary">修改</Button>
+                type="primary">找回</Button>
         </div>
 
 
@@ -59,6 +59,7 @@ import { ref, computed } from "vue"
 import router from "@/router"
 import { _forgetpw } from "@/api/api"
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue"
+import store from "@/store"
 
 const ggRef = ref()
 
@@ -86,10 +87,12 @@ const submitForm = (code) => {
     }).then(res => {
         showToast('密码找回成功')
         setTimeout(() => {
-            store.commit('setIsLoginOpen', true)
-            // router.replace({
-            //     name: 'login'
-            // })
+            router.replace({
+                name: 'user'
+            })
+            setTimeout(() => {
+                store.commit('setIsLoginOpen', true)
+            }, 300)
         }, 300)
     }).finally(() => {
         setTimeout(() => {

@@ -32,7 +32,7 @@ instance.interceptors.request.use(
       //   }
       // })
       router.replace({
-        name: 'my'
+        name: 'user'
       })
       store.commit('setIsLoginOpen', true)
       console.error(config)
@@ -78,7 +78,7 @@ instance.interceptors.response.use(
           //   }
           // })
           router.replace({
-            name: 'my'
+            name: 'user'
           })
           store.commit('setIsLoginOpen', true)
           return;

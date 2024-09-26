@@ -43,7 +43,7 @@
                 v-if="(finish && list.length) || (!finish)" />
         </div>
     </div>
-    <UnLogin v-else />
+    <UnLogin @loginfinish="loginfinish" v-show="!token" />
 
 
     <!-- 订单弹窗 -->
@@ -66,6 +66,12 @@ import OrderInfo from "./OrderInfo.vue"
 import { Popup } from "vant"
 import { _c2cOrderList } from "@/api/api"
 import LoadingMore from "@/components/LoadingMore.vue"
+
+const loginfinish = () => {
+    setTimeout(() => {
+        init()
+    }, 100)
+}
 
 // 未读消息
 const c2cUnread = computed(() => store.state.c2cUnread || {})

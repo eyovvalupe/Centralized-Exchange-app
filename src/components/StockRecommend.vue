@@ -25,8 +25,6 @@
                 </div>
             </div>
         </div>
-        <!-- <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary"
-            @click="submit">一键添加至自选</Button> -->
     </div>
 </template>
 
@@ -99,36 +97,6 @@ const loading = ref(false)
 const disabled = computed(() => !checkedList.value.some(item => item == true))
 
 
-// 添加自选
-const submit = () => {
-
-    // if (!token.value) return router.push({
-    //     name: 'login',
-    //     query: {
-    //         reurl: "market"
-    //     }
-    // })
-
-    if (!token.value) return store.commit('setIsLoginOpen', true)
-
-    const keys = []
-    checkedList.value.map((item, i) => {
-        if (item) {
-            keys.push(props.list[i].symbol)
-        }
-    })
-    loading.value = true
-    _add({
-        symbol: keys.join(',')
-    }).then(res => {
-        if (res.code == 200) {
-            showToast('添加成功')
-            emits('init')
-        }
-    }).finally(() => {
-        loading.value = false
-    })
-}
 </script>
 
 

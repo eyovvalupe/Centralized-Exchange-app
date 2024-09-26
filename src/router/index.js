@@ -39,6 +39,15 @@ const routes = [
       pageType: 'child'
     }
   },
+  { // 修改交易密码
+    path: "/fund",
+    name: "fund",
+    component: () => import("../views/User/FundPassword.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    }
+  },
   { // 操作成功
     path: "/success",
     name: "success",

@@ -21,11 +21,14 @@ const isLoginOpen = computed(() => store.state.isLoginOpen)
 
 const closeDialog = () => {
     store.commit('setIsLoginOpen', false)
+    setTimeout(() => {
+        eventBus.emit('loginFail')
+    }, 500)
 }
 const successFunc = () => {
-    router.push({
-        name: 'user'
-    })
+    // router.push({
+    //     name: 'user'
+    // })
     eventBus.emit('loginSuccess')
 }
 </script>

@@ -2,7 +2,8 @@ import http from "./request";
 import axios from "axios";
 import { BASE_ADDRESS } from "@/config"
 
-const baseURL = process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS
+// const baseURL = process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS
+const baseURL = BASE_ADDRESS
 // 上传文件
 // export const _upload = (file, successFunc, errorFunc, finishFunc) => {
 //   const form = new FormData()
@@ -20,7 +21,7 @@ const baseURL = process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS
 
 // 获取验证码
 export const _verifcode = () => {
-  return axios.get(baseURL + "/anon/v1/comm/verifcode", { responseType: 'blob' }, {
+  return axios.get(baseURL + "/anon/v1/comm/verifcode?t=" + Date.now(), { responseType: 'blob' }, {
     custom: { auth: false, toast: false, retry: true },
   })
 };
@@ -143,7 +144,13 @@ export const _walletBalance = (data = {}) => {
 
 // 修改密码
 export const _updatepw = (data = {}) => {
-  return http.post(`/authc/v1/user/updatepw`, data, {
+  return http.post(`/authc/v1/user/password`, data, {
+    custom: { auth: true, toast: true, retry: false },
+  });
+};
+// 修改交易密码
+export const _safeword = (data = {}) => {
+  return http.post(`/authc/v1/user/safeword`, data, {
     custom: { auth: true, toast: true, retry: false },
   });
 };
@@ -164,7 +171,7 @@ export const _commToken = (data = {}) => {
 
 // 忘记密码
 export const _forgetpw = (data = {}) => {
-  return http.post(`/anon/v1/user/forgetpw`, data, {
+  return http.post(`/anon/v1/user/forget`, data, {
     custom: { auth: false, toast: true, retry: false },
   });
 };

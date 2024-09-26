@@ -110,8 +110,7 @@
         <!-- 未登录 -->
         <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
           <img src="/static/img/trade/no-data.png" class="no-data-img">
-          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;"
-              @click="store.commit('setIsLoginOpen', true)">马上登录</span>
+          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="goLogin">马上登录</span>
           </p>
         </div>
 
@@ -244,6 +243,18 @@ import OrderUpdate from "./OrderUpdate.vue";
 import OrderClosePosition from "./OrderClosePosition.vue";
 import Optional from "../../views/Market/components/Optional.vue"
 import NoData from "@/components/NoData.vue"
+import eventBus from "@/utils/eventBus";
+
+
+const goLogin = () => {
+  store.commit('setIsLoginOpen', true)
+  eventBus.on('loginSuccess', () => {
+    eventBus.off('loginSuccess')
+    if (active.value === '1') {
+      subscribeOrders();
+    }
+  })
+}
 
 const token = computed(() => store.state.token);
 const { startSocket } = useSocket();
@@ -515,6 +526,7 @@ if (route.query.type === "date") {
 
 
 onDeactivated(() => {
+  eventBus.off('loginSuccess')
   // 取消订阅
   const socket = startSocket(() => {
     socket && socket.emit('user', '')

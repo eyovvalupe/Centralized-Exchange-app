@@ -211,6 +211,7 @@ import { _basic, _profile, _add, _del } from "@/api/api"
 import { formatTimestamp } from "@/utils/time"
 
 const route = useRoute()
+const token = computed(() => store.state.token)
 
 // const activeTab = ref(1)
 const props = defineProps({
@@ -227,6 +228,7 @@ const props = defineProps({
 // 添加自选
 const loading = ref(false)
 const addCollect = () => {
+    if (!token.value) return store.commit('setIsLoginOpen', true)
     if (loading.value) return
     loading.value = true
     if (!item.value.watchlist) {
@@ -294,9 +296,7 @@ const showDate = computed(() => { // 展示的数据时间
     return ''
 })
 
-setTimeout(() => {
-    console.error('???', item.value)
-}, 2000)
+
 
 const updown = computed(() => { // 1-涨 -1-跌 0-平
     if (item.value.ratio === undefined) return 0

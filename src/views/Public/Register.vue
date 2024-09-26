@@ -355,7 +355,12 @@ const goBack = () => {
 }
 // 跳转登录
 const goLogin = () => {
-  store.commit('setIsLoginOpen', true)
+  router.replace({
+    name: 'user',
+  })
+  setTimeout(() => {
+    store.commit('setIsLoginOpen', true)
+  }, 300)
   // router.replace({
   //   name: 'login',
   //   query: {

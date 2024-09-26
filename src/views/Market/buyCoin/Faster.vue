@@ -140,7 +140,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, onBeforeUnmount } from "vue"
 import { Button, Popup, Icon, showToast, showConfirmDialog } from "vant"
 import store from "@/store"
 import router from "@/router"
@@ -148,6 +148,7 @@ import { _swapRate, _orderFast } from "@/api/api"
 import Decimal from 'decimal.js';
 import { _hiddenAccount } from "@/utils/index"
 import SafePassword from "@/components/SafePassword.vue"
+import eventBus from "@/utils/eventBus"
 
 const safeRef = ref()
 const token = computed(() => store.state.token)
@@ -312,6 +313,12 @@ const getSessionToken = () => {
 if (token.value) {
     getSessionToken()
 }
+eventBus.on('loginSuccess', () => {
+    getSessionToken()
+})
+onBeforeUnmount(() => {
+    eventBus.off('loginSuccess')
+})
 
 
 // 跳转

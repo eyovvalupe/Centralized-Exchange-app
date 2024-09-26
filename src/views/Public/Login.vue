@@ -8,7 +8,7 @@
         <Icon name="cross" />
       </div>
 
-      <div class=" top_lang" @click="router.push({ name: 'language' })">
+      <div class=" top_lang" @click="goLang">
         <img src="/static/img/common/language.png" alt="language">
       </div>
     </div>
@@ -60,7 +60,7 @@
     </div>
 
     <!-- 忘记密码 -->
-    <div class="fogot" @click="router.replace({ name: 'fogot' })">忘记密码？</div>
+    <div class="fogot" @click="goFoget">忘记密码？</div>
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
@@ -266,16 +266,26 @@ const goBack = () => {
     router.back()
   }
 }
+// 忘记密码
+const goFoget = () => {
+  emits('closeDialog')
+  router.push({ name: 'fogot' })
+}
 // 跳转注册
 const goRegister = () => {
   emits('closeDialog')
-  router.replace({
+  router.push({
     name: 'register',
     query: {
       reurl: route.query.reurl,
       redata: route.query.redata,
     }
   })
+}
+// 跳转多语言
+const goLang = () => {
+  emits('closeDialog')
+  router.push({ name: 'language' })
 }
 
 onMounted(() => {

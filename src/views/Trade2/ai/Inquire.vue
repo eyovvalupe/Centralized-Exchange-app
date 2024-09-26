@@ -26,7 +26,7 @@
             <LoadingMore :loading="loading" :finish="finish" v-if="(finish && aiInquireList.length) || (!finish)" />
         </div>
 
-        <UnLogin v-else />
+        <UnLogin @loginfinish="loginfinish" v-show="!token" />
 
 
         <!-- 详情 -->
@@ -41,6 +41,13 @@ import LoadingMore from "@/components/LoadingMore.vue"
 import { _ailist } from "@/api/api"
 import AiInfo from "../components/AiInfo.vue"
 import UnLogin from "@/components/UnLogin.vue"
+
+
+const loginfinish = () => {
+    setTimeout(() => {
+        init()
+    }, 100)
+}
 
 const aiInquireList = computed(() => store.state.aiInquireList || [])
 const token = computed(() => store.state.token)
@@ -60,7 +67,9 @@ const init = () => {
         page.value = false
         loading.value = false
         finish.value = false
-        getList()
+        setTimeout(() => {
+            getList()
+        }, 0)
     }
 }
 const getList = () => {

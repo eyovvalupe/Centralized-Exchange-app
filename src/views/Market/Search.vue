@@ -48,14 +48,19 @@
 <script setup>
 import Top from "@/components/Top"
 import { Icon, showToast, showLoadingToast, closeToast, ActionSheet } from "vant"
-import { ref, computed, onMounted } from "vue"
+import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import { _search } from "@/api/api"
 import Loading from "@/components/Loaidng.vue"
 import store from "@/store"
 import router from "@/router"
 import { _add, _del } from '@/api/api'
 import NoData from "@/components/NoData.vue"
+import eventBus from "@/utils/eventBus"
 
+
+onBeforeUnmount(() => {
+    eventBus.off('loginSuccess')
+})
 
 const showAS = ref(false)
 const currAs = ref(store.state.marketSearchType || 'stock')
@@ -203,6 +208,10 @@ const reqMap = {
 const collect = item => {
     if (!token.value) {
         store.commit('setIsLoginOpen', true)
+        eventBus.on('loginSuccess', () => {
+            getData()
+            eventBus.off('loginSuccess')
+        })
         // router.push({
         //     name: 'login',
         //     query: {

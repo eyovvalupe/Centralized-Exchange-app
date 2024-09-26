@@ -304,7 +304,6 @@ const submitSell = (s) => {
     if (loading.value) return
     loading.value = true
     _buysell(params).then(res => {
-        console.error('???', res)
         if (res.code == 200) {
             showToast('下单成功')
         }
@@ -433,12 +432,6 @@ if (token.value) {
     getSessionToken()
 }
 
-const goLogin = () => {
-    store.commit('setIsLoginOpen', true)
-    // router.push({
-    //     name: 'login'
-    // })
-}
 
 // 跳转
 const jump = name => {

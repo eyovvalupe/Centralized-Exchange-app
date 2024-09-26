@@ -186,7 +186,7 @@ const goTransing = () => {
 
 // 货币选择
 const showDialog = ref(false)
-const recommendList = ref(['USDT', 'BTC', 'ETH', 'USD']) // 推荐币种
+const recommendList = ref(['USDT', 'BTC', 'ETH']) // 推荐币种
 // 钱包
 const wallet = computed(() => { // 可选钱包列表
     return store.state.wallet.filter(item => !['stock', 'contract', 'main', 'USD'].includes(item.currency)) || []

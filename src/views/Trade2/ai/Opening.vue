@@ -96,7 +96,7 @@
                         '买涨' : '买跌' }}</Button>
 
             <Button size="large" color="#014cfa" class="submit" round v-if="!token" style="margin-bottom: 0.34rem"
-                @click="store.commit('setIsLoginOpen', true)">登录</Button>
+                @click="goLogin">登录</Button>
             <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999"
                 @click="jump('register')">注册</Button>
         </div>
@@ -169,7 +169,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, onBeforeUnmount } from "vue"
 import { Slider, Button, Popup, showToast } from "vant"
 import Decimal from 'decimal.js';
 import store from "@/store"
@@ -181,6 +181,17 @@ import { _aipara, _aibuy, _aiquant } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
 import { _dateUnitMap } from "@/utils/dataMap"
 import StockPopup from "../../trade/StockPopup.vue"
+import eventBus from "@/utils/eventBus"
+
+const goLogin = () => {
+    store.commit('setIsLoginOpen', true)
+    // eventBus.on('loginSuccess', () => {
+    //     eventBus.off('loginSuccess')
+    // })
+}
+// onBeforeUnmount(() => {
+//     eventBus.off('loginSuccess')
+// })
 
 const route = useRoute()
 const wallet = computed(() => store.state.wallet || [])

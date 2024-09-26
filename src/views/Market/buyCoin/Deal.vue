@@ -186,7 +186,6 @@ const submitSell = (s) => {
     if (loading.value) return
     loading.value = true
     _buysell(params).then(res => {
-        console.error('???', res)
         if (res.code == 200) {
             showToast('下单成功')
             setTimeout(() => {

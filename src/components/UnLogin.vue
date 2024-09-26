@@ -13,8 +13,11 @@
 import NoData from './NoData.vue';
 import router from "@/router"
 import { useRoute } from "vue-router"
+import eventBus from "@/utils/eventBus"
+import store from '@/store';
 
 const route = useRoute()
+const emits = defineEmits(['loginfinish'])
 
 const goLogin = () => {
     // router.push({
@@ -24,6 +27,10 @@ const goLogin = () => {
     //     }
     // })
     store.commit('setIsLoginOpen', true)
+    eventBus.on('loginSuccess', () => {
+        emits('loginfinish')
+        eventBus.off('loginSuccess')
+    })
 }
 </script>
 

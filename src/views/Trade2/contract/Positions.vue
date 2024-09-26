@@ -348,7 +348,7 @@
         </ActionSheet>
     </div>
 
-    <UnLogin v-else />
+    <UnLogin @loginfinish="loginfinish" v-show="!token" />
 
     <!-- 更新订单-安全密码弹窗 -->
     <SafePassword @submit="goUpdate" ref="safeRef" :key="'update'"></SafePassword>
@@ -367,6 +367,11 @@ import { _futuresSell, _futuresUpdate, _futuresCancel } from "@/api/api"
 import { _copyTxt } from "@/utils/index"
 import UnLogin from "@/components/UnLogin.vue"
 import SafePassword from "@/components/SafePassword.vue"
+
+
+const loginfinish = () => {
+
+}
 
 const safeRef = ref()
 const safeRef2 = ref()

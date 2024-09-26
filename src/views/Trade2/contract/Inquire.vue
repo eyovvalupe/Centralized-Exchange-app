@@ -37,7 +37,7 @@
         <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || (!finish)" />
     </div>
 
-    <UnLogin v-else />
+    <UnLogin @loginfinish="loginfinish" v-show="!token" />
 </template>
 
 <script setup>
@@ -49,6 +49,13 @@ import LoadingMore from "@/components/LoadingMore.vue"
 import { _futuresList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
 import Decimal from 'decimal.js';
+
+
+const loginfinish = () => {
+    setTimeout(() => {
+        init()
+    }, 100)
+}
 
 const contractInquireList = computed(() => store.state.contractInquireList || [])
 const token = computed(() => store.state.token)
@@ -99,7 +106,9 @@ const init = (times) => {
         page.value = false
         loading.value = false
         finish.value = false
-        getList()
+        setTimeout(() => {
+            getList()
+        }, 0)
     }
 }
 const getList = () => {

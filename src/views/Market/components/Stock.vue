@@ -48,18 +48,21 @@
             :color="'#014CFA'" shrink>
             <Tab :title="'活跃'">
                 <StockTable :key="'vol'" :loading="loading" :list="marketVolumeList" />
-                <LoadingMore ref="more_1" class="active_more" :loading="!!(marketVolumeList.length && loading)"
-                    :finish="finish" v-if="((finish && marketVolumeList.length) || (!finish)) && active == 0" />
+                <LoadingMore :classN="'stock_soft_more0'" ref="more_1" class="active_more"
+                    :loading="!!(marketVolumeList.length && loading)" :finish="finish"
+                    v-if="((finish && marketVolumeList.length) || (!finish)) && active == 0" />
             </Tab>
             <Tab :title="'涨幅'">
                 <StockTable :key="'up'" :loading="loading" :list="marketUpList" />
-                <LoadingMore ref="more_2" class="active_more" :loading="!!(marketUpList.length && loading)"
-                    :finish="finish" v-if="((finish && marketUpList.length) || (!finish)) && active == 1" />
+                <LoadingMore :classN="'stock_soft_more1'" ref="more_2" class="active_more"
+                    :loading="!!(marketUpList.length && loading)" :finish="finish"
+                    v-if="((finish && marketUpList.length) || (!finish)) && active == 1" />
             </Tab>
             <Tab :title="'跌幅'">
                 <StockTable :key="'down'" :loading="loading" :list="marketDownList" />
-                <LoadingMore ref="more_3" class="active_more" :loading="!!(marketDownList.length && loading)"
-                    :finish="finish" v-if="((finish && marketDownList.length) || (!finish)) && active == 2" />
+                <LoadingMore :classN="'stock_soft_more2'" ref="more_3" class="active_more"
+                    :loading="!!(marketDownList.length && loading)" :finish="finish"
+                    v-if="((finish && marketDownList.length) || (!finish)) && active == 2" />
             </Tab>
         </Tabs>
 
@@ -131,7 +134,7 @@ const changeTab = (key) => {
                 getData(marketDownList, 'setMarketDownList', 'down', 'marketDownList')
                 break
         }
-        target = document.querySelector('.loading_more')
+        target = document.querySelector('.stock_soft_more' + key)
     }, 350)
 }
 const readyRecommendData = () => { // 推荐数据准备好了，一起监听
@@ -330,6 +333,7 @@ onMounted(() => {
     setTimeout(() => {
         try {
             document.querySelector('.page').addEventListener('scroll', scrollHandler)
+            target = document.querySelector('.stock_soft_more' + active.value)
         } catch { }
     }, 500)
 })

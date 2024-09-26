@@ -11,7 +11,7 @@
                 <div class="nav_title">登录密码</div>
                 <Icon name="arrow" />
             </div>
-            <div class=" nav">
+            <div class=" nav" @click="checkGG('fund')">
                 <div class="nav_icon">
                     <img src="/static/img/user/safe_icon.png" alt="🔒">
                 </div>

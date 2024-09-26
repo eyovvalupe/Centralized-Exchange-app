@@ -102,7 +102,7 @@
     </teleport>
   </div>
 
-  <UnLogin v-else />
+  <UnLogin @loginfinish="loginfinish" v-show="!token" />
 </template>
 
 <script setup>
@@ -115,6 +115,10 @@ import { Popup } from "vant"
 import router from "@/router"
 import UnLogin from "@/components/UnLogin.vue"
 
+
+const loginfinish = () => {
+
+}
 
 const token = computed(() => store.state.token)
 const statusMap = ref({

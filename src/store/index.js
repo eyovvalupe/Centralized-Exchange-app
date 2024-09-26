@@ -71,11 +71,11 @@ export default createStore({
       commit("setInquireList", []);
       commit("setContractInquireList", []);
       commit("setAiInquireList", []);
-      commit('setMarketSearch', {
-        search: '',
-        market: '',
-        list: []
-      })
+      // commit('setMarketSearch', {
+      //   search: '',
+      //   market: '',
+      //   list: []
+      // })
     },
     updateUserInfo({ commit }) {
       // 更新个人信息

@@ -60,12 +60,13 @@ const scrollToBottom = () => {
                 inline: 'nearest'   // 水平方向的滚动对齐方式
             });
         } else {
-            scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+            try {
+                scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
+            } catch { }
         }
         setTimeout(() => {
             childScroll = false;
         }, 1000);
-        console.log(scrollContainer.value.scrollHeight, scrollContainer.value.offsetHeight)
     }, 500);
 };
 const handleScroll = () => {
