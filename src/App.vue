@@ -73,7 +73,7 @@ Promise.all([
   import('@/views/Market/Market.vue'),
   import('@/views/User/NewUser.vue'),
   import('@/views/Trade2/trade.vue'),
-  import('@/views/Assets/Assets.vue'),
+  import('@/views/assets/Assets.vue'),
 ]).finally(() => {
   store.commit('setPageLoading', false)
   setTimeout(() => {

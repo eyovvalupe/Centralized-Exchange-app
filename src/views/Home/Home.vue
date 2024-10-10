@@ -123,7 +123,7 @@ Promise.all([
   import('@/views/Market/MarketInfo.vue'),
   import('@/views/Market/Search.vue'),
   import('@/views/Public/Login.vue'),
-  import('@/views/Assets/TopUpCrypto.vue'),
+  import('@/views/assets/TopUpCrypto.vue'),
 ]).finally(() => {
   store.commit('setPageLoading', false)
 })

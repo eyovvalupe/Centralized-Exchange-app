@@ -186,11 +186,11 @@ onMounted(() => {
 // 预加载页面
 store.commit('setPageLoading', true)
 const loadingList = [
-    import('@/views/Assets/Loan.vue'),
-    import('@/views/Assets/TopUp.vue'),
-    import('@/views/Assets/Transfer.vue'),
-    import('@/views/Assets/Withdraw.vue'),
-    import('@/views/Assets/Swap.vue'),
+    import('@/views/assets/Loan.vue'),
+    import('@/views/assets/TopUp.vue'),
+    import('@/views/assets/Transfer.vue'),
+    import('@/views/assets/Withdraw.vue'),
+    import('@/views/assets/Swap.vue'),
 ]
 Promise.all(loadingList).finally(() => {
     store.commit('setPageLoading', false)
