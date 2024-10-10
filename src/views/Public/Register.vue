@@ -124,7 +124,7 @@
     </template>
 
     <template v-else>
-      <RegisterCodeCheck @success="registerSuccessNext" />
+      <RegisterCodeCheck :type="activeTab == 0 ? 'email' : 'phone'" @success="registerSuccessNext" />
     </template>
 
     <!-- 验证码 -->
@@ -162,7 +162,7 @@
 import { Icon, Button, showToast, Checkbox, showLoadingToast, closeToast, Tab, Tabs, Popup } from "vant"
 import { ref, computed } from "vue"
 import router from "@/router"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import PasswordLevel from "@/components/PasswordLevel.vue"
 import store from "@/store"
 import { _register } from "@/api/api"
@@ -174,7 +174,7 @@ import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue"
 
 
 // 区号控制
-const step = ref(1)
+// const step = ref(1)
 const activeTab = ref(0)
 const defaultCode = '+244'
 const showDialog = ref(false)
@@ -195,6 +195,9 @@ store.commit("setToken", "");
 store.commit("setUserInfo", {});
 
 const route = useRoute()
+const routerApi = useRouter();
+const forwardUrl = routerApi.options.history.state.forward
+const step = ref(forwardUrl === '/language' || forwardUrl === '/chat' ? 2 : 1)
 
 const guest = ref(route.query.guest)
 const showPass = ref(false) // 密码显示
