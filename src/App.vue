@@ -1,15 +1,15 @@
 <template>
   <router-view v-slot="{ Component }">
-    <div class="full_page_loading" v-show="pageLoading">
+    <div v-show="pageLoading" class="full_page_loading">
       <!-- <img src="/static/img/logo.png" alt="logo"> -->
       <Loading :size="44" color="#014cfa" />
     </div>
-    <div class="app_scroll" v-show="!pageLoading">
+    <div v-show="!pageLoading" class="app_scroll">
       <transition :name="transitionName">
-        <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
+        <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name" />
       </transition>
       <keep-alive>
-        <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+        <component :is="Component" v-if="$route.meta.keepAlive" :key="$route.name" />
       </keep-alive>
     </div>
   </router-view>
@@ -21,19 +21,17 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent, computed, watch, onMounted } from "vue";
-import store from "@/store/index";
+import { defineAsyncComponent, computed, watch, onMounted } from 'vue'
+import { Popup, Loading } from 'vant'
+import { useRoute } from 'vue-router'
+import store from '@/store/index'
 // import { nanoid } from "nanoid";
-import { Popup, Loading } from 'vant';
 // import DateBottom from '@/views/trade/DateBottom.vue'
-import { useRoute } from "vue-router";
 import { serviceChat } from '@/utils/serviceChat'
-import LoginDialog from "./views/Public/LoginDialog.vue"
+import LoginDialog from './views/Public/LoginDialog.vue'
+import { setLocale } from './i18/utils'
 
-
-const BottomTabBar = defineAsyncComponent(() =>
-  import("@/components/BottomTabBar.vue")
-);
+const BottomTabBar = defineAsyncComponent(() => import('@/components/BottomTabBar.vue'))
 // console.error("---storage---");
 // console.error(store.state)
 
@@ -44,9 +42,9 @@ const BottomTabBar = defineAsyncComponent(() =>
 //   import(`@/style/theme/${theme.value}.less`)
 // }
 
-
 const token = computed(() => store.state.token)
-if (token.value) { // 更新用户信息
+if (token.value) {
+  // 更新用户信息
   store.dispatch('updateUserInfo')
   store.dispatch('updateAssets')
   store.dispatch('updateWallet')
@@ -57,33 +55,27 @@ const fullWindow = computed(() => store.state.fullscreen) // 全屏状态
 store.commit('setFullscreen', false)
 
 // 路由监听
-const route = useRoute();
+const route = useRoute()
 const routeName = computed(() => route.name)
 const showBottom = computed(() => {
-  return ["home", "user", "trade", "market", "financial_info", "trading_rules", 'assets', 'transfer'].includes(route.name) && !fullWindow.value;
-});
-
-
+  return ['home', 'user', 'trade', 'market', 'financial_info', 'trading_rules', 'assets', 'transfer'].includes(route.name) && !fullWindow.value
+})
 
 // 预加载 tab 页面
 const pageLoading = computed(() => store.state.pageLoading)
 store.commit('setPageLoading', true)
-Promise.all([
-  import('@/views/Home/Home.vue'),
-  import('@/views/Market/Market.vue'),
-  import('@/views/User/NewUser.vue'),
-  import('@/views/Trade2/trade.vue'),
-  import('@/views/assets/Assets.vue'),
-]).finally(() => {
+Promise.all([import('@/views/Home/Home.vue'), import('@/views/Market/Market.vue'), import('@/views/User/NewUser.vue'), import('@/views/Trade2/trade.vue'), import('@/views/assets/Assets.vue')]).finally(() => {
   store.commit('setPageLoading', false)
   setTimeout(() => {
     // boundFunc()
   }, 500)
 })
-setTimeout(() => { // 最多5s
+setTimeout(() => {
+  // 最多5s
   store.commit('setPageLoading', false)
 }, 50000)
-
+// 国际化启动
+setLocale()
 const boundFunc = () => {
   const reboundPage = ['user', 'trade', 'date', 'ipodetail', 'assets', 'market', 'home']
   // 回弹效果
@@ -91,34 +83,50 @@ const boundFunc = () => {
   const maxMove = 200
   const body = document.querySelector('#app')
   const app = document.querySelector('.app_scroll')
-  body.addEventListener('touchstart', e => {
-    if (!reboundPage.includes(routeName.value)) return
-    startY = e.changedTouches[0].clientY
-  }, { passive: true })
-  body.addEventListener('touchmove', e => {
-    if (!reboundPage.includes(routeName.value)) return
-    const y = e.changedTouches[0].clientY - startY <= maxMove ? e.changedTouches[0].clientY - startY : maxMove
-    app.style.transition = "none"
-    app.style.transform = `translateY(${0.3 * y}px)`
-  }, { passive: true })
-  body.addEventListener("touchend", e => {
-    const y = e.changedTouches[0].clientY - startY
-    app.style.transition = "transform .6s"
-    app.style.transform = `translateY(0px)`
-  }, { passive: true })
+  body.addEventListener(
+    'touchstart',
+    e => {
+      if (!reboundPage.includes(routeName.value)) return
+      startY = e.changedTouches[0].clientY
+    },
+    { passive: true }
+  )
+  body.addEventListener(
+    'touchmove',
+    e => {
+      if (!reboundPage.includes(routeName.value)) return
+      const y = e.changedTouches[0].clientY - startY <= maxMove ? e.changedTouches[0].clientY - startY : maxMove
+      app.style.transition = 'none'
+      app.style.transform = `translateY(${0.3 * y}px)`
+    },
+    { passive: true }
+  )
+  body.addEventListener(
+    'touchend',
+    e => {
+      const y = e.changedTouches[0].clientY - startY
+      app.style.transition = 'transform .6s'
+      app.style.transform = `translateY(0px)`
+    },
+    { passive: true }
+  )
 }
 
 const transitionName = computed(() => store.state.transitionName || '')
-watch(token, () => {
-  serviceChat.destroyNum()
-  serviceChat.initNum()
-}, { immediate: true })
+watch(
+  token,
+  () => {
+    serviceChat.destroyNum()
+    serviceChat.initNum()
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="less">
-@import "./style/var.less";
-@import "./style/vant.less";
-@import "./style/index.less";
+@import './style/var.less';
+@import './style/vant.less';
+@import './style/index.less';
 
 .slide-left-enter-active,
 .slide-left-leave-active,
@@ -189,7 +197,7 @@ watch(token, () => {
 
 .slide-top-enter-from {
   transform: translateY(-100%);
-  opacity: 0
+  opacity: 0;
 }
 
 .slide-top-enter-to {
@@ -204,8 +212,6 @@ watch(token, () => {
   transform: translateY(100%);
   opacity: 0;
 }
-
-
 
 .opacity-enter-from {
   opacity: 0;
@@ -222,7 +228,6 @@ watch(token, () => {
 .opacity-leave-to {
   opacity: 0;
 }
-
 
 .full_page_loading {
   position: fixed;
