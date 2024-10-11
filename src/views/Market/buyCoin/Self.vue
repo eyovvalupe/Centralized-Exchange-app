@@ -201,7 +201,7 @@ const showDialog2 = ref(false)
 const token = computed(() => store.state.token)
 const wallet = computed(() => token.value ? store.state.wallet : currencyList.value) // 所有钱包
 const fiatWallet = computed(() => wallet.value.filter(item => item.type == 'fiat')) // 法币钱包
-const dryptoWallet = computed(() => wallet.value.filter(item => item.type == 'drypto')) // 加密钱包
+const dryptoWallet = computed(() => wallet.value.filter(item => item.type == 'crypto')) // 加密钱包
 const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const currencyList = computed(() => store.state.currencyList || [])
