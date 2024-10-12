@@ -205,7 +205,7 @@ const outWallet = computed(() => { // 售出钱包
     if (form1.value.offset == 'buy') {
         return wallet.value.filter(item => item.type == 'fiat')
     } else {
-        return wallet.value.filter(item => item.type == 'drypto')
+        return wallet.value.filter(item => item.type == 'crypto')
     }
 })
 const currOut = ref({}) // 当前售出钱包
@@ -213,7 +213,7 @@ if (outWallet.value[0]) currOut.value = outWallet.value[0]
 
 const inWallet = computed(() => { // 收到钱包
     if (form1.value.offset == 'buy') {
-        return wallet.value.filter(item => item.type == 'drypto')
+        return wallet.value.filter(item => item.type == 'crypto')
     } else {
         return wallet.value.filter(item => item.type == 'fiat')
     }

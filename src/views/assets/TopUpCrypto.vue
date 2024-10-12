@@ -228,7 +228,7 @@ const getCoinNet = () => {
         const obj = {};
         coinLists.value = res.data || [];
         (res.data || []).map(item => {
-            if (item.type == 'drypto') {
+            if (item.type == 'crypto') {
                 if (obj[item.name]) {
                     obj[item.name].push(item)
                 } else {

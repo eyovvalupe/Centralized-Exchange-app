@@ -124,7 +124,8 @@
     </template>
 
     <template v-else>
-      <RegisterCodeCheck :type="activeTab == 0 ? 'email' : 'phone'" @success="registerSuccessNext" />
+      <RegisterCodeCheck :type="activeTab == 0 ? 'email' : 'phone'" :value="activeTab == 0 ? form.email : form.phone"
+        @success="registerSuccessNext" />
     </template>
 
     <!-- 验证码 -->
