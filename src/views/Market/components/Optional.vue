@@ -1,6 +1,7 @@
 <!-- 自选 -->
 <template>
     <div v-if="watchList.length" :loading="loading">
+        <OptionCategory />
         <StockTable style="margin-top:0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
             :deleteItem="!!(token)" class="market_optional" :list="watchList" />
         <div class="addBtn_container">
@@ -78,6 +79,7 @@ import Loaidng from "@/components/Loaidng.vue"
 import NoData from "@/components/NoData.vue"
 import StockTable from "@/components/StockTable.vue"
 import StockRecommend from "@/components/StockRecommend.vue"
+import OptionCategory from "@/components/OptionCategory.vue"
 import router from "@/router"
 import store from "@/store";
 import { computed, ref } from "vue"
