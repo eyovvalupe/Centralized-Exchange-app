@@ -14,7 +14,7 @@
                 </div>
                 <div class="td2 td_r">
                     <div class="item_num" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{
-                        props.item.price ? (props.item.price).toFixed(2) : '--' }}</div>
+                        props.item.price ? (props.item.price).toFixed(3) : '--' }}</div>
                     <div class="item_info_box" @click.stop="() => mode = mode == 3 ? 1 : mode + 1">
                         <div v-if="props.item.ratio !== undefined" class="item_percent"
                             :class="[updown === 0 ? '' : (updown > 0 ? 'up_bg' : 'down_bg')]">
