@@ -1,19 +1,17 @@
 <!-- 开仓 -->
 <template>
     <div class="opening">
+        <div class="type_tabs">
+            <div @click="activeType = 1" class="type_tab" :class="{ 'active_type_tab': activeType == 1 }">
+            买涨</div>
+            <div @click="activeType = 2" class="type_tab" :class="{ 'active_type_tab': activeType == 2 }">
+                买跌</div>
+        </div>
 
         <!-- Tabs -->
         <div class="open_tab_box">
-            <div class="type_tabs">
-                <div @click="activeType = 1" class="type_tab" :class="{ 'active_type_tab': activeType == 1 }"
-                    :style="{ backgroundImage: `url('/static/img/trade/${activeType == 1 ? 'left-blue' : 'light-blue'}.svg')` }">
-                    买涨</div>
-                <div @click="activeType = 2" class="type_tab" :class="{ 'active_type_tab': activeType == 2 }"
-                    :style="{ backgroundImage: `url('/static/img/trade/${activeType == 2 ? 'blue' : 'right-white'}.svg')` }">
-                    买跌</div>
-            </div>
-
-            <Tabs key="form" v-if="!pageLoading" class="tabs" @change="e => activeTab = e" v-model="activeTab"
+            
+            <Tabs key="form" v-if="!pageLoading" class="van-tabs--oval-sub" @change="e => activeTab = e" v-model="activeTab"
                 :swipeable="false" animated :color="'#014CFA'" shrink>
                 <Tab title="市价" name="0">
                     <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0"
@@ -90,55 +88,45 @@ defineExpose({
 
 <style lang="less" scoped>
 .opening {
-    padding: 0.32rem 0;
+    padding: 0.32rem 0 1.5rem 0;
 
     .open_tab_box {
-        position: relative;
+        border-radius: 0 0 0.32rem 0.32rem;
+        background-color: #F5F7FC;
+        padding-top: 0.32rem;
+    }
+
+    .type_tabs {
+        height: 0.68rem;
         display: flex;
-        align-items: flex-start;
-
-
-        .type_tabs {
-            position: absolute;
-            left: 0.32rem;
+        align-items: center;
+        z-index: 99;
+        .type_tab {
+            flex: 1;
+            height: 100%;
             display: flex;
             align-items: center;
-            z-index: 99;
-
-            .type_tab {
-                width: 1.2rem;
-                height: 0.6rem;
-                background-size: 100% 100%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #034cfa;
-                font-size: 0.28rem;
-            }
-
-            .active_type_tab {
-                color: #fff;
-            }
+            justify-content: center;
+            color: #666D80;
+            font-size: 0.3rem;
         }
 
-        .tabs {
-            width: 100%;
+        .type_tab_text{
+            position: relative;
+            z-index: 1;
         }
 
-        :deep(.van-tabs__wrap) {
-            height: 0.6rem !important;
+        .active_type_tab {
+            color: #014CFA;
+            font-weight: 600;
+            position: relative;
+            background: #F5F7FC;
+            border-radius: 0.32rem 0.32rem 0 0;
         }
-
-        :deep(.van-tabs__nav) {
-            padding-left: 3rem !important;
-
-            &::after {
-                width: calc(100% - 3.32rem) !important;
-                left: 3rem !important;
-            }
-        }
+        
     }
 
 
 }
+
 </style>

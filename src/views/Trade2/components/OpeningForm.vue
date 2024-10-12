@@ -137,7 +137,7 @@
 
         <!-- 股票 -->
         <div class="subtitle">
-            <span style="color: #014CFA;" @click="showNavDialog">股票</span>
+            <span @click="showNavDialog">股票</span>
             <Loading v-show="searchLoading" type="spinner" style="width:0.28rem;height:0.28rem" color="#034cfa" />
             <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
                 <img src="/static/img/trade/blue-stock.png" />
@@ -155,8 +155,8 @@
                 </div>
 
                 <div class="info" v-show="currStock.symbol && !searchFocus">
-                    <div style="color: #014cfa;">{{ currStock.symbol }}</div>
-                    <div style="color: #9ea3ae;font-size: 0.24rem;">{{ currStock.name }}</div>
+                    <div style="color: #061023;font-size:0.3rem;">{{ currStock.symbol }}</div>
+                    <div style="color: #9ea3ae;font-size: 0.24rem;margin-top:0.08rem;">{{ currStock.name }}</div>
                 </div>
             </div>
         </div>
@@ -196,7 +196,7 @@
 
         <!-- 拖动 -->
         <div class="slider-container">
-            <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
+            <Slider v-model="sliderValue" bar-height="0.28rem" active-color="#014CFA" inactive-color="#E0E7F8"
                 @change="onSliderChange">
                 <template #button>
                     <div class="slider-custom-num">
@@ -403,8 +403,9 @@ store.commit('setMarketSearch', {
 const goDialogSearch = (market) => {
     if (searchTimeout) clearTimeout(searchTimeout)
     let s = searchDialogStr.value
+    searchLoading.value = true
     searchTimeout = setTimeout(() => {
-        searchLoading.value = true
+        
         _search({
             market: market || '',
             symbol: s,
@@ -934,7 +935,7 @@ defineExpose({
     }
 
     .lists {
-        max-height: 60vh;
+        height: 60vh;
         overflow-y: auto;
     }
 
@@ -961,13 +962,14 @@ defineExpose({
 }
 
 .form {
-    padding: 0.6rem 0.32rem 2rem 0.32rem;
+    padding: 0.32rem 0;
     position: relative;
 
     .subtitle {
-        color: #333;
+        color: #061023;
         font-size: 0.28rem;
-        margin-bottom: 0.1rem;
+        margin-bottom: 0.12rem;
+        line-height: 0.36rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -981,7 +983,7 @@ defineExpose({
     .item_box {
         display: flex;
         align-items: stretch;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
 
         .item {
             flex: 1;
@@ -989,20 +991,17 @@ defineExpose({
             align-items: center;
             justify-content: space-between;
             position: relative;
-            height: 0.88rem;
-            border-radius: 0.12rem;
+            height: 0.92rem;
+            border-radius: 0.32rem;
             border: 1px solid #d0d8e2;
             padding: 0 0.24rem;
 
             .info {
                 flex: 1;
-                text-align: right;
-                margin-left: 0.2rem;
                 font-size: 0.28rem;
                 font-weight: 400;
-                color: #333;
                 position: absolute;
-                right: 0.24rem;
+                left: 0.32rem;
                 pointer-events: none;
             }
 
@@ -1099,37 +1098,29 @@ defineExpose({
 }
 
 .slider-container {
-    margin: 0 auto;
-    width: 100%;
     height: 0.8rem;
-    padding: 0.2rem 0 0 0;
-
+    padding: .32rem 0;
+    margin: 0 0.2rem;
     :deep(.slider-custom-num) {
         position: relative;
         background: #014CFA;
         color: #fff;
         display: inline-block;
-        width: .1rem;
-        height: .5rem;
-        font-size: 12px;
-        text-align: center;
-        line-height: .4rem;
-        border-radius: 10px;
-
+        width: .4rem;
+        height: .4rem;
+        border-radius: 50%;
         .number {
             color: #014CFA;
             position: absolute;
-            top: -0.4rem;
+            top: -0.32rem;
             left: -0.1rem;
-            font-size: .2rem;
+            font-size: .24rem;
         }
     }
 
     :deep(.van-slider) {
-        margin-top: 0.1rem;
-        height: 0.16rem !important;
-        border-radius: 0.02rem;
-        padding-right: 0.1rem;
+        height: 0.26rem !important;
+        border-radius: 0.2rem;
     }
 
     :deep(.van-slider__bar) {
@@ -1146,10 +1137,7 @@ defineExpose({
 
     :deep(.van-slider__button-wrapper) {
         z-index: 999 !important;
-        padding: 0.24rem;
     }
-
-
 
 }
 
@@ -1170,17 +1158,16 @@ defineExpose({
     }
 
     .line {
-        width: 0.06rem;
-        height: 0.2rem;
+        width: 0.07rem;
+        height: 0.26rem;
         position: absolute;
-        right: 0;
-        top: -0.5rem;
+        right: -0.03rem;
+        top: -0.48rem;
         background: #fff;
         z-index: 88;
     }
 }
-</style>
-<style lang="less">
+
 .stock_submit_box {
     padding: 0.32rem 0.32rem 1rem 0.32rem;
 

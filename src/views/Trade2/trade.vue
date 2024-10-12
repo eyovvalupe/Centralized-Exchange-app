@@ -16,19 +16,25 @@
                 </div>
 
                 <div class="tab_body">
-                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">股票</div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">合约</div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">交易机器人</div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="activeTab = 0">
+                        <span class="tab-name">股票</span>
+                    </div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="activeTab = 1">
+                        <span class="tab-name">合约</span>
+                    </div>
+                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="activeTab = 2">
+                        <span class="tab-name">交易机器人</span>
+                    </div>
                     <!-- <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="activeTab = 3">外汇</div> -->
                     <div class="tab" :class="{ 'active_tab': activeTab == 5 }" @click="activeTab = 5">
-                        <span>IPO</span>
+                        <span class="tab-name">IPO</span>
                         <!-- <span v-show="activeTab == 5">IPO</span>
                         <div class="tab_icon" v-show="activeTab != 5">
                             <img src="/static/img/market/ipo.svg" alt="img">
                         </div> -->
                     </div>
                     <!-- <div class="tab" :class="{ 'active_tab': activeTab == 6 }" @click="activeTab = 6">
-                        <span v-show="activeTab == 6">理财</span>
+                        <span class="tab-name" v-show="activeTab == 6">理财</span>
                         <div class="tab_icon" v-show="activeTab != 6">
                             <img src="/static/img/market/money.svg" alt="img">
                         </div>
@@ -396,16 +402,16 @@ onDeactivated(() => {
     }
 
     .trade_header {
-        min-height: 1.12rem;
+        height: 1.12rem;
         padding: 0 0 0 0.24rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .menu {
-            width: 0.4rem;
-            height: 0.4rem;
-        }
+        // .menu {
+        //     width: 0.4rem;
+        //     height: 0.4rem;
+        // }
 
         .tabs {
             flex: 1;
@@ -417,16 +423,17 @@ onDeactivated(() => {
 
             .tab {
                 font-size: .28rem;
-                color: #061023;
+                color: #666D80;
                 padding: 0 .22rem;
-                height: .6rem;
+                height: .66rem;
                 line-height: 0;
                 border-radius: .48rem;
                 display: flex;
+                padding-bottom: 0.06rem;
                 align-items: center;
                 cursor: pointer;
                 white-space: nowrap;
-
+                position: relative;
                 .mytab_title_icon {
                     width: 0.32rem;
                     height: 0.32rem;
@@ -439,18 +446,43 @@ onDeactivated(() => {
                     width: 0.32rem;
                     height: 0.32rem;
                 }
+                .tab-name{
+                    position: relative;
+                    z-index: 1;
+                    transition: .3s;
+                }
+                &::after{
+                    content: '';
+                    width: 0.6rem;
+                    height: 0.2rem;
+                    background-color: #014CFA;
+                    position: absolute;
+                    bottom: 0;
+                    left:50%;
+                    margin-left: -0.3rem;
+                    border-radius: 0.6rem;
+                    transition: .3s;
+                    opacity: 0;
+                    transform: scale(0);
+                }
             }
 
             .active_tab {
-                color: #014cfa;
-                padding: 0 .32rem;
-                background-color: #f6f8ff;
-
+                color: #061023;
+                font-weight: 700;
+                opacity: 1;
+                .tab-name{
+                    font-size: 0.56rem;
+                }
+                &::after{
+                    opacity: 1;
+                    transform: scale(1);
+                }
             }
 
             .tab_icon {
-                width: 0.4rem;
-                height: 0.4rem;
+                width: 0.48rem;
+                height: 0.48rem;
             }
 
             .my_icon {
@@ -489,11 +521,8 @@ onDeactivated(() => {
         }
 
         .close_tabs {
-            height: 0.6rem;
-            overflow: hidden;
             padding-right: 0;
             padding-left: 0.4rem;
-
 
             .tab_body {
                 flex: 1;

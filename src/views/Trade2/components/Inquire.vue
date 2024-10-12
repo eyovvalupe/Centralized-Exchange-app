@@ -170,16 +170,19 @@ defineExpose({
 
     .tr {
         padding: 0.24rem 0.32rem;
-        border-bottom: 1px solid #e8e8e8;
+        border-bottom: 1px solid #EFF3F8;
         display: flex;
         align-items: stretch;
     }
 
     .th {
-        color: #9ea3ae;
-        font-size: 0.28rem;
+        color: #8F92A1;
+        font-size: 0.24rem;
+        padding: 0.24rem 0.32rem 0.08rem 0.32rem;
         font-weight: 400;
+        border-bottom: none;
     }
+
 
     .td {
         text-align: center;
