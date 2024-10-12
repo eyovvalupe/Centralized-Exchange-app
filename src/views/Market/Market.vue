@@ -98,7 +98,7 @@
                     </div>
                 </template>
             </Tab> -->
-            <!-- <Tab>
+            <Tab>
                 <Foreign v-if="active == 5" />
                 <template #title>
                     <div class="tab_item">
@@ -109,7 +109,19 @@
                         <span>外汇</span>
                     </div>
                 </template>
-            </Tab> -->
+            </Tab>
+            <Tab>
+                <Foreign v-if="active == 5" />
+                <template #title>
+                    <div class="tab_item">
+                        <div class="tab_item_icon" v-show="openTab">
+                            <img v-show="active != 5" src="/static/img/market/out.svg" alt="icon">
+                            <img v-show="active == 5" src="/static/img/market/out2.svg" alt="icon">
+                        </div>
+                        <span>黄金</span>
+                    </div>
+                </template>
+            </Tab>
             <!-- <Tab name="ipo">
                 <IPO v-if="active == 'ipo'" :type="'market'" ref="IPORef" />
                 <template #title>
@@ -349,6 +361,7 @@ onDeactivated(() => {
 
     .tabs {
         position: relative;
+        overflow-x: auto;
 
         :deep(.tab_item) {
             display: flex;
@@ -420,15 +433,15 @@ onDeactivated(() => {
 
         :deep(.van-tab--card) {
             border-right: none;
-            color: #061023;
+            color: #666D80;
         }
 
         :deep(.van-tab--card.van-tab--active) {
-
-            background-color: #F6F8FF;
-            border-radius: 0.3rem;
-            color: #014CFA;
-            font-weight: 500
+            background-color: transparent;
+            color: #08090e;
+            font-weight: 500;
+            font-size: 0.507rem;
+            border-bottom: 3px solid #014CFA;
         }
 
         :deep(.van-tab--shrink) {
