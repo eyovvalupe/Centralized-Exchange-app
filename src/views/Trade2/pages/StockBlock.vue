@@ -100,9 +100,42 @@ const openDate = () => {
     :deep(.van-tabs__nav){
         margin:0 0.32rem;
     }
+<<<<<<< HEAD
     .stock_tab-body{
         padding:0 0.32rem;
+=======
+
+
+    .tabs {
+
+:deep(.van-tabs__wrap) {
+    background: #EFF3F8;
+    margin: 0 .32rem;
+    border-radius: 16px;
+    height: 40px;
+    
+    .van-tabs__nav {
+        padding-left: 0.32rem;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        .van-tab {
+            width: 33%;
+        }
+        // &::after {
+        //     content: '';
+        //     width: 100%;
+        //     height: 1px;
+        //     background-color: #3B82F6;
+        //     position: absolute;
+        //     bottom: 16px;
+        //     left: 0;
+        //     opacity: 0.3;
+        // }
+>>>>>>> 210b5fc (feat: 买币样式及弹窗首次提交)
     }
     
+}
+}
 }
 </style>

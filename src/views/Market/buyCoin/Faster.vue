@@ -12,20 +12,20 @@
             <div class="item_box">
                 <div class="item_box_left">
                     <div class="subtitle">
-                        <span>售出</span>
-                        <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span>
+                        <span>买入</span>
+                        <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
                     </div>
                     <div class="item" :class="{ 'item_focus': priceFocus }">
                         <span class="ipt_tip" v-if="form1.offset == 'sell' && token"
                             v-show="form1.volume === '' || priceFocus">≤
                             {{ currOut.amount }}</span>
-                        <input v-model="form1.volume" @focus="priceFocus = true" @blur="priceFocus = false"
+                        <input v-model="form1.volume" @focus="priceFocus = false" @blur="priceFocus = false"
                             type="number" class="ipt">
                     </div>
                 </div>
                 <div class="item_box_right">
-                    <div class="subtitle" v-if="token" @click="jump('transfer')"><span>&nbsp;</span><span
-                            class="link">划转</span>
+                    <div class="subtitle" v-if="token" @click="jump('transfer')"><span>&nbsp;</span>
+                        <!-- <span class="link">划转</span> -->
                     </div>
                     <div class="subtitle" v-if="!token">&nbsp;</div>
                     <div @click="openDialog(1)" class="item" :class="{ 'item_focus': priceFocus }"
@@ -68,7 +68,7 @@
             <div class="tip">预计价格&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
 
             <Button v-if="token" size="large" class="submit" round :loading="loading" @click="sell"
-                :color="form1.offset == 'sell' ? '#E8503A' : '#18B762'">{{ form1.offset == 'sell' ? '卖出' : '买入'
+                :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'">{{ form1.offset == 'sell' ? '卖出' : '买入'
                 }}</Button>
 
             <Button size="large" color="#014cfa" round v-if="!token" style="margin-bottom: 0.34rem;margin-top: 1.6rem;"
@@ -84,6 +84,13 @@
         <div class="withdraw_accounr_dialog">
             <div class="close_icon" @click="showDialog = false">
                 <img src="/static/img/common/close.png" alt="x">
+            </div>
+            <div class="search_box">
+                <div class="icon">
+                    <img src="/static/img/common/search.png" alt="🔍">
+                </div>
+                <input ref="iptRef" placeholder="输入币种" type="text"
+                    enterkeyhint="search" v-model.trim="searchValue" class="search">
             </div>
             <div class="title">币种选择</div>
             <div @click="clickItem(item)" class="swap_dialog_item"
@@ -157,7 +164,7 @@ const accountList = computed(() => store.state.accountList || []) // 收款方�
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const userInfo = computed(() => store.state.userInfo || {})
 const currencyList = computed(() => store.state.currencyList || [])
-
+const searchValue = ref('');
 // 售出
 const loading = ref(false)
 const sell = () => {
@@ -201,22 +208,31 @@ const form1 = ref({
     currency: '',
     account_id: ''
 })
+const filterSearchValue = (data) => {
+    return data.filter(item => item.name.toLowerCase().includes(searchValue.value.toLowerCase()))
+}
 const outWallet = computed(() => { // 售出钱包
+    let data;
     if (form1.value.offset == 'buy') {
-        return wallet.value.filter(item => item.type == 'fiat')
+        data = wallet.value.filter(item => item.type == 'fiat')
     } else {
-        return wallet.value.filter(item => item.type == 'crypto')
+        data = wallet.value.filter(item => item.type == 'crypto')
     }
+    return filterSearchValue(data)
 })
 const currOut = ref({}) // 当前售出钱包
 if (outWallet.value[0]) currOut.value = outWallet.value[0]
 
 const inWallet = computed(() => { // 收到钱包
+    let data;
     if (form1.value.offset == 'buy') {
-        return wallet.value.filter(item => item.type == 'crypto')
+        data = wallet.value.filter(item => item.type == 'crypto');
+        // 模糊查询
     } else {
-        return wallet.value.filter(item => item.type == 'fiat')
+        data = wallet.value.filter(item => item.type == 'fiat')
     }
+    // 模糊查询
+    return filterSearchValue(data)
 })
 const currIn = ref({}) // 当前收到钱包
 if (inWallet.value[0]) currIn.value = inWallet.value[0]
@@ -332,37 +348,45 @@ const jump = name => {
 <style lang="less" scoped>
 .page_fasters {
     .form {
-        padding: 0.64rem 0.32rem;
+        padding: 0 0.32rem;
 
         .tabs {
-            margin: 0 0 0.6rem 0;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            line-height: 34px;
+            margin: 20px 0;
+            border: 0.5px solid #D0D8E2;
+            width: 47%;
+            border-radius: 34px;
 
             .tab {
-                color: #9EA3AE;
-                margin: 0 0.4rem;
+                color: #666D80;
+                margin: 0;
+                width: 80px;
+                text-align: center;
+                border-radius: 34px;
+
             }
 
             .active_tab {
                 font-weight: bold;
-                color: #000;
-                ;
+                color: white;
+                background: #014CFA;
+                text-align: center;
             }
         }
 
         .tip {
-            color: #b7b7b7;
+            color: #333333;
             font-size: 0.24rem;
-            position: relative;
-            top: -0.2rem
+            margin-top: 15px;
         }
 
         .subtitle {
             color: #333;
             font-size: 0.28rem;
-            margin-bottom: 0.1rem;
+            margin-bottom: 0.15rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -375,7 +399,7 @@ const jump = name => {
         .item_box {
             display: flex;
             align-items: stretch;
-            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
 
             .item {
                 flex: 1;
@@ -383,8 +407,8 @@ const jump = name => {
                 align-items: center;
                 justify-content: space-between;
                 position: relative;
-                height: 0.88rem;
-                border-radius: 0.12rem;
+                height: 1rem;
+                border-radius: 16px;
                 border: 1px solid #d0d8e2;
                 padding: 0 0.24rem;
 
@@ -453,7 +477,7 @@ const jump = name => {
             }
 
             .item_focus {
-                height: 1.12rem;
+                // height: 1.12rem;
                 // padding-top: 0.2rem;
                 border: 1px solid #034cfa;
 
@@ -498,7 +522,7 @@ const jump = name => {
     }
 
     .submit {
-        margin-top: 3rem;
+        margin-top: .8rem;
     }
 }
 </style>
@@ -512,14 +536,70 @@ const jump = name => {
     padding: 1.2rem 0.32rem 0.8rem 0.32rem;
     position: relative;
 
+    .search_box {
+        display: flex;
+        align-items: center;
+        padding: 0 0.4rem;
+        margin-bottom: 0.15rem;
+        height: 40px;
+        background-color: #F4F5F7;
+        border-radius: 40px;
+
+        input {
+            padding-top: 3px;
+        }
+        input::placeholder {
+            // color: #014cfa; /* 占位符颜色 */
+            color: #9EA3AE;
+            font-size: 15px;
+        }
+
+        .type_select {
+            right: 0;
+            display: flex;
+            align-items: center;
+            color: #253146;
+            font-size: 0.24rem;
+
+            .type_icon {
+                width: 0.28rem;
+                height: 0.28rem;
+                opacity: 0.8;
+                margin-left: 0.06rem;
+            }
+        }
+
+        &:has(.search:focus) {
+            border: 1px solid #014CFA;
+        }
+
+        .icon {
+            width: 0.4rem;
+            height: 0.4rem;
+        }
+
+        .close {
+            width: 0.24rem;
+            height: 0.24rem;
+            color: #121826;
+        }
+
+        .search {
+            flex: 1;
+            margin: 0 0.16rem;
+            font-size: 0.32rem;
+            font-weight: 400;
+        }
+    }
+
     .title {
         height: 1rem;
         position: absolute;
-        top: 0.2rem;
+        top: 0.3rem;
         left: 0;
         text-align: center;
         line-height: 1rem;
-        font-size: 0.32rem;
+        font-size: 16px;
         width: 100%;
         color: #121826;
         pointer-events: none;
@@ -539,45 +619,29 @@ const jump = name => {
         line-height: 0;
         display: flex;
         align-items: center;
-        justify-content: center;
         border-bottom: 1px solid #F5F5F5;
         overflow: hidden;
         position: relative;
-
+        color: #333333;
         .icon {
-            width: 0.4rem;
-            height: 0.4rem;
+            width: 0.6rem;
+            height: 0.6rem;
             margin-right: 0.24rem;
         }
     }
 
     .swap_dialog_item_active {
         color: #014CFA;
-        font-weight: 600;
 
         .check_icon {
             position: absolute;
             right: 0.24rem;
             color: #014CFA;
-            font-size: 0.28rem;
+            font-size: 0.4rem;
         }
     }
 
-    .search_box {
-        height: 0.8rem;
-        background-color: #F5F5F5;
-        border-radius: 0.4rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 0.32rem;
-        padding: 0 0.4rem;
 
-        input {
-            flex: 1;
-            color: #121826;
-        }
-    }
 
     .tabs {
         display: flex;
