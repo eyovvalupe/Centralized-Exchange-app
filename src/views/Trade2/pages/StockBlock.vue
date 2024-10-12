@@ -100,10 +100,6 @@ const openDate = () => {
     :deep(.van-tabs__nav){
         margin:0 0.32rem;
     }
-<<<<<<< HEAD
-    .stock_tab-body{
-        padding:0 0.32rem;
-=======
 
 
     .tabs {
@@ -132,7 +128,6 @@ const openDate = () => {
         //     left: 0;
         //     opacity: 0.3;
         // }
->>>>>>> 210b5fc (feat: 买币样式及弹窗首次提交)
     }
     
 }
