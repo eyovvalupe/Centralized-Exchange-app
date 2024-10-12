@@ -11,13 +11,13 @@
         :deleteItem="!!(token)" class="market_optional" :list="watchList" />
     <div v-else-if="!watchList.length && !loading" style="position: relative">
         <Teleport to=".page_market">
-            <Button round class="addBtn" :color="!!(stockList.length + contractList.length) ? '#EFF6FF' : '#eee'"
-                :loading="addLoading" @click="addOptional">
-                <span style="font-size: 0.2rem;"
-                    :style="{ color: !!(stockList.length + contractList.length) ? '#014CFA' : '#666' }">一键添加至自选</span>
-                <span class="tag" v-if="!!(stockList.length + contractList.length)">{{ stockList.length +
-                    contractList.length }}</span>
-            </Button>
+            <div class="one_click_to_favorite_container">
+                <Button round block type="primary" size="large" class="one_click_to_favorite" :loading="addLoading"
+                    @click="addOptional">
+                    一键添加自选(<i class="tag" v-if="!!(stockList.length + contractList.length)">{{ stockList.length +
+                        contractList.length }}</i>)
+                </Button>
+            </div>
         </Teleport>
 
         <Loaidng v-if="!marketSrockRecommendList.length && !marketContractRecommendList.length && recommendLoading"
@@ -298,6 +298,18 @@ const remove = item => {
             line-height: 0.326rem;
             margin-bottom: 0.326rem;
         }
+    }
+}
+
+.one_click_to_favorite_container {
+    position: fixed;
+    bottom: 1.866rem;
+    width: 100%;
+    padding: 0 0.271rem;
+
+    .one_click_to_favorite {
+        background-color: #014CFA;
+        color: #FFFFFF;
     }
 }
 
