@@ -5,7 +5,7 @@
         <StockTable style="margin-top:0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
             :deleteItem="!!(token)" class="market_optional" :list="watchList" />
         <div class="addBtn_container">
-            <Button round icon="plus" plain type="primary" hairline="">添加自选</Button>
+            <Button round icon="plus" plain type="primary" hairline="" class="addBtn">添加自选</Button>
         </div>
     </div>
     <div v-else-if="!watchList.length && !loading" style="position: relative">
@@ -284,11 +284,11 @@ const remove = item => {
     .text {
         margin-bottom: 0.307rem;
     }
+}
 
-    .addBtn {
-        color: #014CFA;
-        border-color: #014CFA;
-    }
+.addBtn {
+    color: #014CFA;
+    border-color: #014CFA;
 }
 
 .recommend_block {
