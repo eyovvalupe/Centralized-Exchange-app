@@ -17,11 +17,11 @@
                         :ratio="item.ratio" />
                 </div>
 
-                <div class="unchecked" v-if="!checkedList[i]"></div>
+                <div class="unchecked" v-if="!checkedList[i]">
+                    <img src="/static/img/common/unchecked.png" alt="√">
+                </div>
                 <div class="checked" v-if="checkedList[i]">
-                    <div class="ok">
-                        <img src="/static/img/common/ok.png" alt="√">
-                    </div>
+                    <img src="/static/img/common/checked.png" alt="√">
                 </div>
             </div>
         </div>
@@ -102,7 +102,7 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
 
 <style lang="less" scoped>
 .recommend_list {
-    padding: 0 0.32rem;
+    padding: 0 0.0362rem;
     // height: calc(var(--app-height) - 4.2rem);
     overflow: hidden;
     display: flex;
@@ -117,6 +117,7 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
         flex-wrap: wrap;
 
         .list_item {
+            background-color: #FFFFFF;
             height: 2rem;
             width: 3.36rem;
             border-radius: 0.12rem;
@@ -163,8 +164,8 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
                 position: absolute;
                 top: 0.1rem;
                 right: 0.1rem;
-                width: 0.36rem;
-                height: 0.36rem;
+                width: 0.3624rem;
+                height: 0.3624rem;
                 border-radius: 50%;
                 border: 1px solid #ddd;
                 opacity: 0.9;
@@ -179,8 +180,8 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
                 position: absolute;
                 top: 0.1rem;
                 right: 0.1rem;
-                width: 0.36rem;
-                height: 0.36rem;
+                width: 0.3624rem;
+                height: 0.3624rem;
                 border-radius: 50%;
                 background-color: #000;
                 display: flex;

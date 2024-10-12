@@ -25,21 +25,22 @@
         <NoData
             v-if="!marketSrockRecommendList.length && !marketContractRecommendList.length && !loading && !recommendLoading" />
 
-
-        <div class="item_block" v-if="marketSrockRecommendList.length">
-            <div class="item_block_title">
-                <span>股票</span>
+        <div class="recommend_block">
+            <div class="item_block" v-if="marketSrockRecommendList.length">
+                <div class="item_block_title">
+                    <span>推荐股票</span>
+                </div>
+                <StockRecommend :key="'stock'" :keyStr="'stock'" :loading="recommendLoading" @change="changeStockList"
+                    @init="init" :list="marketSrockRecommendList" />
             </div>
-            <StockRecommend :key="'stock'" :keyStr="'stock'" :loading="recommendLoading" @change="changeStockList"
-                @init="init" :list="marketSrockRecommendList" />
 
-        </div>
-        <div class="item_block" v-if="marketContractRecommendList.length">
-            <div class="item_block_title">
-                <span>合约/AI量化</span>
+            <div class="item_block" v-if="marketContractRecommendList.length">
+                <div class="item_block_title">
+                    <span>推荐合约/AI量化</span>
+                </div>
+                <StockRecommend :key="'recommend'" :keyStr="'recommend'" :loading="recommendLoading"
+                    @change="changeContractList" @init="init" :list="marketContractRecommendList" />
             </div>
-            <StockRecommend :key="'recommend'" :keyStr="'recommend'" :loading="recommendLoading"
-                @change="changeContractList" @init="init" :list="marketContractRecommendList" />
         </div>
 
         <!-- <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
@@ -262,7 +263,7 @@ const remove = item => {
     justify-content: center;
     align-items: center;
     margin-top: 0.579rem;
-    margin-bottom: 0.181rem;
+    margin-bottom: 0.362rem;
     color: #A4ACB9;
     font-size: 0.253rem;
     font-weight: 400;
@@ -280,6 +281,23 @@ const remove = item => {
     .addBtn {
         color: #014CFA;
         border-color: #014CFA;
+    }
+}
+
+.recommend_block {
+    background-color: #F5F7FC;
+    padding: 0.471rem 0.272rem;
+    border-radius: 0.452rem;
+
+    .item_block {
+        margin-bottom: 0.471rem;
+
+        .item_block_title {
+            font-size: 0.326rem;
+            font-weight: 600;
+            line-height: 0.326rem;
+            margin-bottom: 0.326rem;
+        }
     }
 }
 
@@ -302,14 +320,6 @@ const remove = item => {
         margin-right: 0.2rem;
     }
 }
-
-.item_block {
-    .item_block_title {
-        padding: 0.32rem 0.32rem 0.22rem 0.32rem;
-    }
-}
-
-
 
 .option_tab {
     :deep(.van-tab__panel) {
