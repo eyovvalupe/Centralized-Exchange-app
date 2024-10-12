@@ -1,10 +1,11 @@
 <!-- 自选 -->
 <template>
-    <div class="search_block" @click="router.push({ name: 'search' })">
-        <div class="search_icon">
-            <img src="/static/img/common/search.png" alt="🔍">
+    <div class="no_self_selection_block">
+        <div class="no_data_icon">
+            <img src="/static/img/common/no_data.png" alt="暂无数据">
         </div>
-        <span>搜索</span>
+        <p class="text">你还没有添加自选哦</p>
+        <Button round icon="plus" plain type="primary" hairline="" class="addBtn">添加自选</Button>
     </div>
     <StockTable style="margin-top:0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
         :deleteItem="!!(token)" class="market_optional" :list="watchList" />
@@ -255,6 +256,33 @@ const remove = item => {
 </script>
 
 <style lang="less" scoped>
+.no_self_selection_block {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0.579rem;
+    margin-bottom: 0.181rem;
+    color: #A4ACB9;
+    font-size: 0.253rem;
+    font-weight: 400;
+    line-height: 0.253rem;
+
+    .no_data_icon {
+        width: 1.34rem;
+        height: 1.16rem;
+    }
+
+    .text {
+        margin-bottom: 0.307rem;
+    }
+
+    .addBtn {
+        color: #014CFA;
+        border-color: #014CFA;
+    }
+}
+
 .search_block {
     background-color: #F4F5F7;
     // border: 1px solid #eeeff1;
@@ -281,29 +309,7 @@ const remove = item => {
     }
 }
 
-.addBtn {
-    position: absolute;
-    right: 0.32rem;
-    height: 0.48rem;
-    z-index: 1;
-    top: 2.14rem;
 
-    .tag {
-        display: block;
-        width: 0.32rem;
-        height: 0.32rem;
-        border-radius: 50%;
-        background-color: #3B82F6;
-        color: #fff;
-        font-size: 0.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: absolute;
-        right: 0;
-        top: -0.1rem;
-    }
-}
 
 .option_tab {
     :deep(.van-tab__panel) {
