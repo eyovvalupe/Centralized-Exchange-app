@@ -1,15 +1,21 @@
 <!-- 自选 -->
 <template>
-    <div class="no_self_selection_block">
-        <div class="no_data_icon">
-            <img src="/static/img/common/no_data.png" alt="暂无数据">
+    <div v-if="watchList.length" :loading="loading">
+        <OptionCategory />
+        <StockTable style="margin-top:0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
+            :deleteItem="!!(token)" class="market_optional" :list="watchList" />
+        <div class="addBtn_container">
+            <Button round icon="plus" plain type="primary" hairline="" class="addBtn">添加自选</Button>
         </div>
-        <p class="text">你还没有添加自选哦</p>
-        <Button round icon="plus" plain type="primary" hairline="" class="addBtn">添加自选</Button>
     </div>
-    <StockTable style="margin-top:0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
-        :deleteItem="!!(token)" class="market_optional" :list="watchList" />
     <div v-else-if="!watchList.length && !loading" style="position: relative">
+        <div class="no_self_selection_block">
+            <div class="no_data_icon">
+                <img src="/static/img/common/no_data.png" alt="暂无数据">
+            </div>
+            <p class="text">你还没有添加自选哦</p>
+            <Button round icon="plus" plain type="primary" hairline="" class="addBtn">添加自选</Button>
+        </div>
         <Teleport to=".page_market">
             <div class="one_click_to_favorite_container">
                 <Button round block type="primary" size="large" class="one_click_to_favorite" :loading="addLoading"
@@ -73,6 +79,7 @@ import Loaidng from "@/components/Loaidng.vue"
 import NoData from "@/components/NoData.vue"
 import StockTable from "@/components/StockTable.vue"
 import StockRecommend from "@/components/StockRecommend.vue"
+import OptionCategory from "@/components/OptionCategory.vue"
 import router from "@/router"
 import store from "@/store";
 import { computed, ref } from "vue"
@@ -277,11 +284,11 @@ const remove = item => {
     .text {
         margin-bottom: 0.307rem;
     }
+}
 
-    .addBtn {
-        color: #014CFA;
-        border-color: #014CFA;
-    }
+.addBtn {
+    color: #014CFA;
+    border-color: #014CFA;
 }
 
 .recommend_block {
@@ -311,6 +318,12 @@ const remove = item => {
         background-color: #014CFA;
         color: #FFFFFF;
     }
+}
+
+.addBtn_container {
+    margin-top: 0.398rem;
+    display: flex;
+    justify-content: center;
 }
 
 .search_block {
