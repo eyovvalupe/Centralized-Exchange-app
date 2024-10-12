@@ -173,9 +173,6 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
         }
 
         .list_item_active {
-            // border: 1px solid #3B6BEE;
-            background-color: #F5F7F8;
-
             .checked {
                 position: absolute;
                 top: 0.1rem;
