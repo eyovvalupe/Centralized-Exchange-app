@@ -946,7 +946,7 @@ defineExpose({
 }
 
 .form {
-    padding:0.48rem 0 0.32rem 0;
+    padding:0.48rem 0.32rem 0.32rem;
     position: relative;
 
     .subtitle {

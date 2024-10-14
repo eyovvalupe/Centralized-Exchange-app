@@ -711,7 +711,7 @@ const copy = text => {
     padding-bottom: 1.6rem;
 
     .tr {
-        padding: 0.24rem 0;
+        padding: 0.24rem 0.32rem;
         border-bottom: 1px solid #EFF3F8;
         display: flex;
         align-items: stretch;
@@ -724,8 +724,7 @@ const copy = text => {
     .th {
         color: #8F92A1;
         font-size: 0.22rem;
-        padding: 0.48rem 0 0.24rem 0;
-        font-weight: 400;
+        padding: 0.48rem 0.32rem 0.24rem 0.32rem;
     }
 
     .td {
