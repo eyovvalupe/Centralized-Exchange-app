@@ -92,24 +92,64 @@ onUnmounted(() => {
 <style lang="less" scoped>
 .page-buycoin {
     .tabs {
-        :deep(.van-tabs__wrap) {
-            padding: 0 0.32rem !important;
-        }
 
-        :deep(.van-tabs__nav) {
-            position: relative;
-
-            &::after {
-                content: '';
-                width: 100%;
-                height: 1px;
-                background-color: #3B82F6;
-                position: absolute;
-                bottom: 16px;
-                left: 0;
-                opacity: 0.3;
-            }
-        }
+:deep(.van-tabs__wrap) {
+    background: #EFF3F8;
+    margin: 0 .32rem;
+    border-radius: 16px;
+    height: 40px;
+    padding: 0 !important;
+    overflow: visible;
+    .van-tabs__nav--complete {
+        overflow: visible;
+        padding: 0;
     }
+    .van-tabs__nav {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        .van-tabs__line {
+                display: none;
+            }
+        .van-tab {
+            width: 33%;
+            color: #666D80;
+        }
+        .van-tab--active {
+            box-shadow: 0px -2px 5px 0px #014CFA1A;
+            background: white;
+            padding: 0;
+            border-radius: 16px;
+            height: 120%;
+            transform: translateY(-10%);
+            color: #014CFA;
+            &:first-child {
+                border-end-end-radius: 0;
+            }
+
+            &:nth-child(2) {
+                border-end-start-radius: 0;
+                border-end-end-radius: 0;
+            }
+
+            &:nth-child(3) {
+                border-end-start-radius: 0;
+            }
+
+            
+        }
+        // &::after {
+        //     content: '';
+        //     width: 100%;
+        //     height: 1px;
+        //     background-color: #3B82F6;
+        //     position: absolute;
+        //     bottom: 16px;
+        //     left: 0;
+        //     opacity: 0.3;
+        // }
+    }
+}
+}
 }
 </style>

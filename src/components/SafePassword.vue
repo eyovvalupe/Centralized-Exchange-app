@@ -7,15 +7,19 @@
             <slot name="top">
             </slot>
             <div class="main_title">交易密码</div>
-            <div class="title">请输入交易密码</div>
+            <div class="title">交易密码</div>
             <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
             <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
-            <input type="password" @blur="errStatus = false" :class="{ 'err_ipt': errStatus }" v-model="val"
-                ref="iptDom" class="pass_ipt" enterkeyhint="done" @keydown.enter="submit">
+                <div class="show_pass">
+                    <input :type="passwordInputType" @blur="errStatus = false" :class="{ 'err_ipt': errStatus }" v-model="val"
+                    ref="iptDom" placeholder="请输入交易密码" class="pass_ipt" enterkeyhint="done" @keydown.enter="submit">
+                    <i @click="passwordVisibility"></i>
+                </div>
+            
             <div class="btns">
-                <Button @click="close" round color="#EFF6FF" class="btn" type="primary"><span
-                        style="color: #014CFA;">取消</span></Button>
+                <Button @click="close" round color="white" class="btn" type="primary"><span
+                        style="color: #666D80;">取消</span></Button>
                 <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">确定</Button>
             </div>
 
@@ -25,7 +29,7 @@
 
 <script setup>
 import { Popup, Button, showToast } from "vant"
-import { ref, } from "vue"
+import { ref, computed } from "vue"
 const emits = defineEmits(['submit'])
 const iptDom = ref()
 const props = defineProps({
@@ -44,6 +48,7 @@ const loading = ref(false)
 const show = ref(false)
 const showKeyboard = ref(true)
 const val = ref('')
+const showPassword = ref(false)
 // watch(val, v => {
 //     if (v && v.length == 6) {
 //         showKeyboard.value = false
@@ -60,6 +65,14 @@ const open = () => {
     focus()
 
 }
+
+const passwordVisibility = () => {
+    showPassword.value =  !showPassword.value
+}
+
+const passwordInputType = computed(() => (showPassword.value ? 'text' : 'password'));  
+    // const icon = computed(() => (isPasswordVisible.value ? '🙈' : '👁️')); 
+    
 const submit = () => {
     if (!val.value) {
         errStatus.value = true
@@ -93,10 +106,10 @@ defineExpose({
 
     .main_title {
         font-size: 0.32rem;
-        color: #000;
+        color: #121826;
         position: absolute;
-        font-weight: bold;
-        top: 0.44rem;
+        font-weight: 400;
+        top: 0.5rem;
         left: 50%;
         transform: translateX(-50%);
     }
@@ -105,9 +118,10 @@ defineExpose({
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top: 0.6rem;
+        margin-top: 0.5rem;
 
         .btn {
+            border: 1px solid #D0D8E2 !important;
             height: 0.96rem;
             border-radius: 0.96rem;
             width: 48%;
@@ -117,9 +131,9 @@ defineExpose({
     .title {
         font-size: 0.28rem;
         line-height: 0.44rem;
-        color: #121826;
+        color: #000;
         margin-bottom: 0.2rem;
-        margin-top: 0.2rem;
+        margin-top: 0.4rem;
         text-align: left;
     }
 
@@ -129,11 +143,28 @@ defineExpose({
         width: 100%;
         display: block;
         box-sizing: border-box;
-        border-radius: 0.12rem;
+        border-radius: 16px;
         padding: 0 0.4rem;
 
         &:focus {
             border: 1px solid #014CFA;
+        }
+    }
+
+    .show_pass {
+        position: relative;
+        i {
+            content: '';
+            display: block;
+            background-image: url('../assets/password_hide.png');
+            background-size: 100%;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
         }
     }
 

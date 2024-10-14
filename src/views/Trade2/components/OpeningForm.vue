@@ -1100,7 +1100,6 @@ defineExpose({
     }
 }
 
-
 .stock_submit_box {
     padding: 0.2rem 0.6rem 0.6rem;
 
