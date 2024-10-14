@@ -2,7 +2,7 @@
 <template>
     <div class="page_ai">
 
-        <Tabs type="card" sticky class="tab_content tabs" v-if="!pageLoading" @change="changeTab"
+        <Tabs class="van-tabs--sub" v-if="!pageLoading" @change="changeTab"
             v-model:active="active" :swipeable="false" animated shrink>
             <Tab :title="'默认'">
                 <div class="list">
@@ -141,54 +141,8 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page_ai {
-    .list {
-        padding: 0 0.32rem 0.32rem 0.32rem;
-    }
-
-    :deep(.van-tabs__nav) {
-        &::after {
-            display: none;
-        }
-    }
-
-    :deep(.van-tabs__nav--card) {
-        border: none;
-    }
-
-    :deep(.van-tab--card) {
-        border-right: none;
-        color: #061023;
-    }
-
-    :deep(.van-tab--card.van-tab--active) {
-
-        background-color: #F6F8FF;
-        border-radius: 0.3rem;
-        color: #014CFA;
-        font-weight: 500
-    }
-
-    :deep(.van-tab--shrink) {
-        padding: 0 0.26rem;
-    }
-
-    :deep(.van-tabs__wrap) {
-        height: 0.8rem;
-        border-bottom: 1px solid rgba(0, 0, 0, 0);
-        padding-bottom: 0.2rem;
-        position: relative;
-        padding-right: 0.6rem !important;
-    }
-
-    :deep(.van-tabs__nav--card) {
-        height: 0.6rem;
-        width: 100%;
-        position: static;
-    }
-
-    :deep(.van-tab) {
-        line-height: 0.6rem;
-        font-size: 0.28rem;
+    .list{
+        padding:0.2rem 0;
     }
 }
 </style>

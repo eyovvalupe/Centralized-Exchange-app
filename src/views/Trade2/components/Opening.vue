@@ -102,7 +102,7 @@ defineExpose({
         }
         .type_tabs {
             position: absolute;
-            left: 0;
+            left: 0.32rem;
             width: 2.7rem;
             height: 0.68rem;
             display: flex;
@@ -152,7 +152,7 @@ defineExpose({
         }
     
         :deep(.van-tabs__nav) {
-            margin-left: 3.2rem !important;
+            margin-left: 3.4rem !important;
 
         }
     }

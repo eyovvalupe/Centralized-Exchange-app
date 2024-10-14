@@ -962,7 +962,7 @@ defineExpose({
 }
 
 .form {
-    padding: 0.32rem 0;
+    padding: 0.32rem;
     position: relative;
 
     .subtitle {
@@ -1144,16 +1144,16 @@ defineExpose({
 .percentages {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: calc(100% - 0.4rem);
     z-index: 7;
-
+    margin-left: 0.2rem;
     .percentage {
         color: #8f92a1;
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
         text-align: center;
-        width: 25%;
+        flex: 1;
         position: relative;
     }
 
@@ -1163,11 +1163,13 @@ defineExpose({
         position: absolute;
         right: -0.03rem;
         top: -0.48rem;
-        background: #fff;
+        background: #F5F7FC;
         z-index: 88;
     }
+    .percentage:last-child .line{
+        display: none;
+    }
 }
-
 .stock_submit_box {
     padding: 0.32rem 0.32rem 1rem 0.32rem;
 

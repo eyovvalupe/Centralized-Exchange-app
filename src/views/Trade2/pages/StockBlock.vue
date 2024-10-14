@@ -96,41 +96,31 @@ const openDate = () => {
 <style lang="less" scoped>
 .stock_block {
     position: relative;
-    padding: 0.32rem 0;
+    padding: 0.24rem 0  0.32rem 0;
     :deep(.van-tabs__nav){
         margin:0 0.32rem;
     }
 
-
     .tabs {
 
-:deep(.van-tabs__wrap) {
-    background: #EFF3F8;
-    margin: 0 .32rem;
-    border-radius: 16px;
-    height: 40px;
-    
-    .van-tabs__nav {
-        padding-left: 0.32rem;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        .van-tab {
-            width: 33%;
+        :deep(.van-tabs__wrap) {
+            background: #EFF3F8;
+            margin: 0 .32rem;
+            border-radius: 16px;
+            height: 40px;
+            
+            .van-tabs__nav {
+                padding-left: 0.32rem;
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                .van-tab {
+                    width: 33%;
+                }
+        
+            }
+            
         }
-        // &::after {
-        //     content: '';
-        //     width: 100%;
-        //     height: 1px;
-        //     background-color: #3B82F6;
-        //     position: absolute;
-        //     bottom: 16px;
-        //     left: 0;
-        //     opacity: 0.3;
-        // }
     }
-    
-}
-}
 }
 </style>
