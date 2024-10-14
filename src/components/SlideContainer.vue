@@ -52,6 +52,7 @@ const onSliderChange = (newValue) => {
 
 .slider-container {
     margin: 0 0.2rem;
+    line-height: 100%;
     :deep(.slider-custom-num) {
         position: relative;
         background: #014CFA;
@@ -89,7 +90,6 @@ const onSliderChange = (newValue) => {
     :deep(.van-slider__button-wrapper) {
         z-index: 999 !important;
     }
-
 }
 
 .percentages {
@@ -99,6 +99,7 @@ const onSliderChange = (newValue) => {
     height: 0.62rem;
     align-items: center;
     margin: 0 0.2rem;
+    line-height: 100%;
     .percentage {
         color: #8f92a1;
         font-size: 0.28rem;

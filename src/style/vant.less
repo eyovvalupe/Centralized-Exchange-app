@@ -37,14 +37,6 @@
     background-color: rgba(0, 0, 0, 0) !important;
 }
 
-.van-popup {
-    z-index: 99999 !important;
-}
-
-.van-overlay {
-    z-index: 99998 !important;
-}
-
 .van-popup--bottom {
     padding-top: 0.2rem;
 
@@ -73,6 +65,12 @@
 
     .van-popup__close-icon{
         font-size: 0.4rem !important;
+    }
+
+    .van-popup-custom-body{
+        max-height: calc(100vh - 1.12rem);
+        overflow-y: auto;
+        box-sizing: border-box;
     }
 }
 

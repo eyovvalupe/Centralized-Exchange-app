@@ -719,7 +719,7 @@ const copy = text => {
 <style lang="less" scoped>
 .positions {
     padding-bottom: 2rem;
-
+    
     .tr {
         padding: 0.24rem 0.32rem;
         border-bottom: 1px solid #EFF3F8;
@@ -874,9 +874,7 @@ const copy = text => {
         }
     }
 }
-</style>
 
-<style lang="less">
 .order_info_box {
     padding: 0.32rem;
 
@@ -1143,9 +1141,6 @@ const copy = text => {
                 z-index: 999 !important;
                 padding: 0.24rem;
             }
-
-
-
         }
 
         .percentages {

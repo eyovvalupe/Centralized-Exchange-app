@@ -31,7 +31,7 @@
                 </div>
                 <!-- 图表 -->
                 <div class="canvas">
-                    <SparkLine v-if="item.points" style="width:100%;height:100%" :points="props.item.points"
+                    <SparkLine v-if="item.points" :polyline-stroke-width="3" style="width:100%;height:100%" :points="props.item.points"
                         :ratio="props.item.ratio" />
                 </div>
             </div>
