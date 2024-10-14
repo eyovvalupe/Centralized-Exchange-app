@@ -1,6 +1,8 @@
 // 重写vant样式
 :root:root {
     --van-overlay-background: rgba(31, 41, 55, 0.50);
+    --van-button-large-height:1.12rem;
+    
 }
 
 .van-toast--loading {
@@ -12,12 +14,6 @@
     }
 }
 
-
-.van-button__text {
-    // 按钮文案
-    font-size: 0.28rem;
-    font-weight: 400;
-}
 
 .van-button {
     border: none !important;
@@ -63,6 +59,26 @@
         top: 0.2rem;
         left: 50%;
         transform: translateX(-50%);
+    }
+    
+    .van-popup-custom-title{
+        margin-top: 0.48rem;
+        height: 0.44rem;
+        line-height: 0.44rem;
+        color: #121826;
+        text-align: center;
+        font-size: 0.32rem;
+        font-weight: 500;
+    }
+
+    .van-popup__close-icon{
+        font-size: 0.4rem !important;
+    }
+}
+
+.van-button--large{
+    .van-button__text{
+        font-size:0.36rem;
     }
 }
 
@@ -329,3 +345,18 @@
     backdrop-filter: blur(4px);
 }
 
+
+/* 省略 */
+.van-omit1,
+.van-omit2,
+.van-omit3,
+.van-omit4{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.van-omit1{ -webkit-line-clamp: 1; }
+.van-omit2{ -webkit-line-clamp: 2; }
+.van-omit3{ -webkit-line-clamp: 3; }
+.van-omit4{ -webkit-line-clamp: 4; }

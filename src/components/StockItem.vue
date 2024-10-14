@@ -18,11 +18,9 @@
                     <div class="item_info_box" @click.stop="() => mode = mode == 3 ? 1 : mode + 1">
                         <div v-if="props.item.ratio !== undefined" class="item_percent"
                             :class="[updown === 0 ? '' : (updown > 0 ? 'up_bg' : 'down_bg')]">
-                            <transition :name="'opacity'">
                                 <span v-if="mode == 1">{{ ((props.item.ratio || 0) * 100).toFixed(2) }}%</span>
                                 <span v-else-if="mode == 2">{{ (props.item.price || 0).toFixed(2) }}</span>
                                 <span v-else>{{ _formatNumber(props.item.volume) }}</span>
-                            </transition>
                         </div>
                     </div>
                 </div>
@@ -170,11 +168,13 @@ const removeStock = item => {
 
     &::after {
         content: '';
-        width: calc(100% - 0.24rem);
+        width: calc(100% - 0.6rem);
         position: absolute;
         bottom: 0;
-        left: 0.12rem;
-        border-bottom: 1px solid #EAEAEA;
+        left: 0.3rem;
+        height: 1px;
+        background-color: #EFF3F8;
+
     }
 
     .td5 {
@@ -208,26 +208,24 @@ const removeStock = item => {
         overflow: hidden;
 
         .item_num {
-            font-size: 0.32rem;
-            font-weight: 400;
-            line-height: 0.42rem;
+            font-size: 0.3rem;
+            font-weight: 600;
+            line-height: 0.3rem;
             color: #6C7B90;
         }
 
         .item_info_box {
-            margin-top: 0.06rem;
-            height: 0.48rem;
-            overflow: hidden;
-
+            margin-top: 0.1rem;
             .item_percent {
-                line-height: 0.32rem;
+                height: 0.4rem;
+                line-height: 0.4rem;
                 font-size: 0.24rem;
-                font-weight: 400;
+                display: inline-block;
+                font-weight: 600;
                 color: #fff;
                 text-align: center;
-                padding: 0.08rem 0;
-                border-radius: 0.08rem;
-                white-space: nowrap;
+                border-radius: 0.12rem;
+                padding: 0 0.14rem;
             }
 
             .nodata_percent {
