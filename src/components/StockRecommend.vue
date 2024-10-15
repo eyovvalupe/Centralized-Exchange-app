@@ -120,11 +120,10 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
             background-color: #FFFFFF;
             height: 2rem;
             width: 3.36rem;
-            border-radius: 0.12rem;
-            border: 1px solid #E9EBF0;
+            border-radius: 0.2rem;
             margin-bottom: 0.28rem;
             position: relative;
-            padding: 0.12rem;
+            padding: 0.2rem;
             overflow: hidden;
 
             .symbol {
