@@ -140,7 +140,7 @@ import { Button, Popup, Icon, showToast, showConfirmDialog } from 'vant'
 import Decimal from 'decimal.js'
 import store from '@/store'
 import router from '@/router'
-import { _swapRate, _orderFast } from '@/api/api'
+import { _swapRate, _orderFast, _cryptoCoin } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import eventBus from '@/utils/eventBus'
@@ -306,6 +306,12 @@ const goAddAccount = () => {
     name: 'account',
   })
 }
+// 获取充值 币种
+const getRechargeCurrency = async params => {
+  const res = _cryptoCoin({ type: 'fiat', dedup: false })
+  console.log('🚀 ~ getRechargeCurrency ~ res:', res)
+}
+getRechargeCurrency()
 
 // sessionToken
 const sessionToken = computed(() => store.state.sessionToken || '')
@@ -332,6 +338,7 @@ const jump = name => {
 
 <style lang="less" scoped>
 .page_fasters {
+  margin-top: -0.32rem;
   .form {
     padding: 0 0.32rem;
 

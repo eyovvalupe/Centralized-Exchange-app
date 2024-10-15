@@ -430,7 +430,7 @@ const jump = name => {
     :deep(.van-tab--card.van-tab--active) {
       background-color: transparent;
       color: #08090e;
-      font-weight: 500;
+      font-weight: 700;
       font-size: 0.507rem;
       position: relative;
       // border-bottom: 3px solid #014cfa;

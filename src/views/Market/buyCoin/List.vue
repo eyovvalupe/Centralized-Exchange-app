@@ -1,76 +1,78 @@
 <!-- 订单列表 -->
 <template>
-    <div class="buycoin_list" v-if="token">
-
-        <div class="list">
-
-            <!-- 当前订单 -->
-            <div class="item" v-for="(item, i) in list" :key="i" @click="openOrderInfo(item)">
-                <div class="avatar">
-                    <img src="/static/img/crypto/USDT.png" alt="coin">
-
-                    <div class="nav_num" v-if="c2cUnread[item.order_no]">{{ c2cUnread[item.order_no] }}</div>
-                </div>
-                <div class="left">
-                    <div style="margin-bottom: 0.2rem;">
-                        <span class="type">{{ item.offset == 'buy' ? '购入' : '售出' }} {{ item.crypto }}</span>
-                        <span>{{ item.volume }}</span>
-                    </div>
-                    <div class="no">{{ item.order_no }}</div>
-                </div>
-                <div class="right">
-                    <div class="right_top">
-                        <!-- 进行中 -->
-                        <template v-if="item.status == 'waitpayment' || item.status == 'waitconfirm'">
-                            <div class="amount">{{ formatSec2(item.endtime) }}</div>
-                        </template>
-                        <!-- 完成 -->
-                        <template v-if="item.status == 'done' || item.status == 'cancel'">
-                            <div class="amount" :class="item.offset == 'buy' ? 'down' : 'up'">{{ item.offset == 'buy' ?
-                                '-'
-                                : '+' }}{{ item.totalprice }}</div>
-                            <div class="unit">{{ item.currency }}</div>
-                        </template>
-                    </div>
-                    <div class="status" :class="['status_' + item.status]">{{ statusMap(item.status, item.offset) }}
-                    </div>
-                </div>
+  <div v-if="token" class="buycoin_list">
+    <div class="list">
+      <!-- 当前订单 -->
+      <div v-for="(item, i) in list" :key="i" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
+        <!-- 消息右上角小红点 -->
+        <div v-if="item.unread" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">{{ item.unread > 99 ? '+99' : item.unread }}</div>
+        <div class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]">
+          <!-- order_no 订单号 -->
+          <div class="text-14 text-[#666]">{{ item.order_no }}</div>
+          <div class="text-14" :style="{ color: statusEnum[item.status].color }">{{ statusEnum[item.status].name }}</div>
+        </div>
+        <!-- 交易信息展示 0.32rem -->
+        <div class="flex items-center justify-between">
+          <!-- 加密货币信息 -->
+          <div class="text-12">
+            <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
+              <!-- 根据交易类型显示“购入”或“售出” -->
+              {{ item.offset == 'buy' ? '购入' : '售出' }}&nbsp;{{ item.crypto }}&nbsp;
+              <!-- 加密货币图标 -->
+              <img class="!h-4 !w-4 rounded-50" :src="`/static/img/crypto/${item.crypto.toUpperCase()}.png`" alt="currency" />
             </div>
+            <!-- 价格信息 -->
+            <div class="mb-[0.12rem] text-[#666D80]">价格&nbsp;{{ item.price }}&nbsp;{{ item.currency }}</div>
+            <!-- 数量信息 -->
+            <div class="text-[#666D80]">数量&nbsp;{{ item.volume }}&nbsp;{{ item.crypto }}</div>
+          </div>
 
-
-            <NoData v-if="!loading && !list.length" />
-            <LoadingMore :classN="'buycoin_self'" :loading="loading" :finish="finish"
-                v-if="(finish && list.length) || (!finish)" />
+          <!-- 交易总额 -->
+          <div class="flex items-center text-18">
+            <!-- 根据交易类型显示正负号 -->
+            {{ item.offset == 'buy' ? '-' : '+' }}{{ item.totalprice }}
+            <!-- 货币类型 -->
+            <span class="ml-2 text-12 font-normal text-[#121826]">{{ item.currency }}</span>
+          </div>
         </div>
+      </div>
+
+      <NoData v-if="!loading && !list.length" />
+      <LoadingMore v-if="(finish && list.length) || !finish" :classN="'buycoin_self'" :loading="loading" :finish="finish" />
     </div>
-    <UnLogin @loginfinish="loginfinish" v-show="!token" />
+  </div>
+  <UnLogin v-show="!token" @loginfinish="loginfinish" />
 
-
-    <!-- 订单弹窗 -->
-    <Popup teleport="body" v-model:show="showPopupInfo" round position="bottom" closeable>
-        <div class="buycoin_orderinfo_dialog">
-            <div class="orderinfo_dialog_title">订单详情</div>
-            <OrderInfo v-if="showPopupInfo" @successHanlde="successOrder" ref="OrderInfoRef" />
-        </div>
-    </Popup>
+  <!-- 订单弹窗 -->
+  <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
+    <div class="buycoin_orderinfo_dialog">
+      <div class="orderinfo_dialog_title">订单详情</div>
+      <OrderInfo v-if="showPopupInfo" ref="OrderInfoRef" @successHanlde="successOrder" />
+    </div>
+  </Popup>
 </template>
 
 <script setup>
+import { onMounted, onUnmounted, computed, ref, onActivated } from 'vue'
+import { Popup } from 'vant'
+import store from '@/store'
+import NoData from '@/components/NoData.vue'
+import UnLogin from '@/components/UnLogin.vue'
+import { formatSec2 } from '@/utils/time'
+import OrderInfo from './OrderInfo.vue'
+import { _c2cOrderList } from '@/api/api'
+import LoadingMore from '@/components/LoadingMore.vue'
 
-import { onMounted, onUnmounted, computed, ref, onActivated } from "vue"
-import store from '@/store';
-import NoData from "@/components/NoData.vue"
-import UnLogin from "@/components/UnLogin.vue"
-import { formatSec2 } from "@/utils/time"
-import OrderInfo from "./OrderInfo.vue"
-import { Popup } from "vant"
-import { _c2cOrderList } from "@/api/api"
-import LoadingMore from "@/components/LoadingMore.vue"
-
+const statusEnum = {
+  waitpayment: { name: '等待付款', color: 'var(--main-color)' },
+  waitconfirm: { name: '等待确认', color: 'var(--main-color)' },
+  done: { name: '已完成', color: '#18B762' },
+  cancel: { name: '已取消', color: '#8F92A1' },
+}
 const loginfinish = () => {
-    setTimeout(() => {
-        init()
-    }, 100)
+  setTimeout(() => {
+    init()
+  }, 100)
 }
 
 // 未读消息
@@ -80,29 +82,28 @@ const c2cUnread = computed(() => store.state.c2cUnread || {})
 const OrderInfoRef = ref()
 const showPopupInfo = ref(false)
 const openOrderInfo = item => {
-    showPopupInfo.value = true
-    setTimeout(() => {
-        OrderInfoRef.value && OrderInfoRef.value.open(item)
-    }, 100)
+  showPopupInfo.value = true
+  setTimeout(() => {
+    OrderInfoRef.value && OrderInfoRef.value.open(item)
+  }, 100)
 }
 const successOrder = () => {
-    showPopupInfo.value = false
-    // 获取列表数据
-    store.commit('setC2cList', [])
-    setTimeout(() => {
-        init()
-    }, 100)
+  showPopupInfo.value = false
+  // 获取列表数据
+  store.commit('setC2cList', [])
+  setTimeout(() => {
+    init()
+  }, 100)
 }
-
 
 // 状态
 const statusMap = (key, type) => {
-    return {
-        waitpayment: type == 'buy' ? '等待付款' : '等待收款',
-        waitconfirm: '等待确认',
-        done: '完成',
-        cancel: '取消'
-    }[key]
+  return {
+    waitpayment: type == 'buy' ? '等待付款' : '等待收款',
+    waitconfirm: '等待确认',
+    done: '完成',
+    cancel: '取消',
+  }[key]
 }
 
 const token = computed(() => store.state.token)
@@ -112,214 +113,228 @@ const c2cLasttime = computed(() => store.state.c2cList || {})
 // 列表
 const loading = ref(false)
 const finish = ref(false)
+/** 
+interface Order {
+  order_no: string; // 订单号
+  offset: 'buy' | 'sell'; // 方向
+  crypto: string; // 加密货币
+  currency: string; // 计价货币
+  price: number; // 价格
+  volume: number; // 数量
+  totalprice: number; // 总价
+  status: 'waitpayment' | 'waitconfirm' | 'done' | 'cancel'; // 状态
+  endtime?: string; // 结束时间
+  date: string; // 订单时间，格式：MM-dd hh:mm
+}
+*/
 const list = ref([])
 const page = ref(0)
 const getData = () => {
-    if (loading.value || finish.value) return
-    loading.value = true
-    page.value++
-    _c2cOrderList({
-        page: page.value,
-    }).then(res => {
-        setTimeout(() => {
-            loading.value = false
-        }, 100)
-        if (page.value == 1) {
-            list.value = res.data || []
-        } else {
-            list.value.push(...(res.data || []))
-        }
-
-        if (!res.data?.length) {
-            finish.value = true
-        }
-
-        setTimeout(() => {
-            const obj = {}
-            list.value.forEach(item => {
-                if (c2cLasttime.value[item.order_no]) {
-                    obj[item.order_no] = c2cLasttime.value[item.order_no]
-                } else {
-                    obj[item.order_no] = Date.now()
-                }
-            })
-            store.commit('setC2cLasttime', obj)
-        }, 0)
-    }).catch(() => {
+  if (loading.value || finish.value) return
+  loading.value = true
+  page.value++
+  _c2cOrderList({
+    page: page.value,
+  })
+    .then(res => {
+      setTimeout(() => {
         loading.value = false
+      }, 100)
+      if (page.value == 1) {
+        list.value = res.data || []
+      } else {
+        list.value.push(...(res.data || []))
+      }
+
+      if (!res.data?.length) {
+        finish.value = true
+      }
+
+      setTimeout(() => {
+        const obj = {}
+        list.value.forEach(item => {
+          if (c2cLasttime.value[item.order_no]) {
+            obj[item.order_no] = c2cLasttime.value[item.order_no]
+          } else {
+            obj[item.order_no] = Date.now()
+          }
+        })
+        store.commit('setC2cLasttime', obj)
+      }, 0)
+    })
+    .catch(() => {
+      loading.value = false
     })
 }
 const init = () => {
-    page.value = 0
-    loading.value = false
-    finish.value = false
-    setTimeout(() => {
-        if (token.value) {
-            getData()
-        }
-    }, 0)
+  page.value = 0
+  loading.value = false
+  finish.value = false
+  setTimeout(() => {
+    if (token.value) {
+      getData()
+    }
+  }, 0)
 }
 init()
 // 监听
-const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+const totalHeight = window.innerHeight || document.documentElement.clientHeight
 let moreDom = null
 const scrollHandle = () => {
-    if (!moreDom) return
-    const rect = moreDom.getBoundingClientRect()
-    if (rect.top <= totalHeight) {
-        // 加载更多
-        getData()
-    }
+  if (!moreDom) return
+  const rect = moreDom.getBoundingClientRect()
+  if (rect.top <= totalHeight) {
+    // 加载更多
+    getData()
+  }
 }
-
 
 let interval = null
 
 onActivated(() => {
-    setTimeout(() => {
-        moreDom = document.querySelector('.buycoin_self')
-    }, 500)
+  setTimeout(() => {
+    moreDom = document.querySelector('.buycoin_self')
+  }, 500)
 })
 onMounted(() => {
-    interval = setInterval(() => {
-        list.value.forEach(item => {
-            if (item.endtime) {
-                item.endtime--
-            }
-        })
-    }, 1000)
-    if (token.value) {
-        setTimeout(() => {
-            moreDom = document.querySelector('.buycoin_self')
-            document.querySelector('.page').addEventListener('scroll', scrollHandle)
-        }, 500)
-    }
+  interval = setInterval(() => {
+    list.value.forEach(item => {
+      if (item.endtime) {
+        item.endtime--
+      }
+    })
+  }, 1000)
+  if (token.value) {
+    setTimeout(() => {
+      moreDom = document.querySelector('.buycoin_self')
+      document.querySelector('.page').addEventListener('scroll', scrollHandle)
+    }, 500)
+  }
 })
 onUnmounted(() => {
-    if (interval) clearInterval(interval)
-    try {
-        document.querySelector('.page').removeEventListener('scroll', scrollHandle)
-    } catch { }
+  if (interval) clearInterval(interval)
+  try {
+    document.querySelector('.page').removeEventListener('scroll', scrollHandle)
+  } catch {}
 })
 
 defineExpose({
-    init
+  init,
 })
 </script>
 
 <style lang="less" scoped>
 .buycoin_orderinfo_dialog {
-    position: relative;
+  position: relative;
 
-    .orderinfo_dialog_title {
-        font-size: 0.32rem;
-        line-height: 0.6rem;
-        text-align: center;
-        margin-bottom: 0.2rem;
-        margin-top: 0.2rem;
-        font-weight: bold;
-    }
-
+  .orderinfo_dialog_title {
+    font-size: 0.32rem;
+    line-height: 0.6rem;
+    text-align: center;
+    margin-bottom: 0.2rem;
+    margin-top: 0.2rem;
+    font-weight: bold;
+  }
 }
 
 .buycoin_list {
-    .list {
-        padding: 0.2rem 0.32rem;
+  .list {
+    padding: 0.08rem 0.32rem;
 
-        .item {
-            padding: 0.24rem 0.32rem;
-            border-bottom: 1px dashed #e8e8e8;
-            display: flex;
-            align-items: center;
-            line-height: 0.36rem;
+    .item {
+      padding: 0.24rem 0.32rem;
+      border-bottom: 1px dashed #e8e8e8;
+      display: flex;
+      align-items: center;
+      line-height: 0.36rem;
 
-            .avatar {
-                width: 0.64rem;
-                height: 0.64rem;
-                margin-right: 0.4rem;
-                flex-shrink: 0;
-                position: relative;
+      .avatar {
+        width: 0.64rem;
+        height: 0.64rem;
+        margin-right: 0.4rem;
+        flex-shrink: 0;
+        position: relative;
 
-                .nav_num {
-                    width: 0.28rem;
-                    height: 0.28rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: #FF3B30;
-                    font-size: 0.2rem;
-                    color: #fff;
-                    font-weight: 400;
-                    border-radius: 50%;
-                    position: absolute;
-                    top: -0.1rem;
-                    right: -0.12rem;
-                }
-            }
-
-            .left {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                justify-content: space-between;
-
-                .type {
-                    margin-right: 0.32rem;
-                    color: #000;
-                }
-
-                .no {
-                    font-size: 0.24rem;
-                    color: #999;
-                    padding: 0.05rem 0;
-                }
-            }
-
-            .right {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-                justify-content: space-between;
-
-                .right_top {
-                    display: flex;
-                    align-items: center;
-                }
-
-                .amount {
-                    font-size: 0.36rem;
-                    font-weight: bold;
-                }
-
-                .unit {
-                    margin-left: 0.1rem;
-                }
-
-                .status {
-                    margin-top: 0.24rem;
-                    font-size: 0.24rem;
-                    padding: 0.05rem 0.32rem;
-                    background-color: #F6F6F6;
-                    color: #888888;
-                }
-
-                .status_waitpayment {
-                    color: #FFAF2A;
-                    background-color: #FFFAF2;
-                }
-
-                .status_waitconfirm {
-                    color: #FFAF2A;
-                    background-color: #FFFAF2;
-                }
-
-                .status_done {
-                    color: #30BF87;
-                    background-color: #EBFEED;
-                }
-            }
+        .nav_num {
+          width: 0.28rem;
+          height: 0.28rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #ff3b30;
+          font-size: 0.2rem;
+          color: #fff;
+          font-weight: 400;
+          border-radius: 50%;
+          position: absolute;
+          top: -0.1rem;
+          right: -0.12rem;
         }
+      }
+
+      .left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        .type {
+          margin-right: 0.32rem;
+          color: #000;
+        }
+
+        .no {
+          font-size: 0.24rem;
+          color: #999;
+          padding: 0.05rem 0;
+        }
+      }
+
+      .right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        .right_top {
+          display: flex;
+          align-items: center;
+        }
+
+        .amount {
+          font-size: 0.36rem;
+          font-weight: bold;
+        }
+
+        .unit {
+          margin-left: 0.1rem;
+        }
+
+        .status {
+          margin-top: 0.24rem;
+          font-size: 0.24rem;
+          padding: 0.05rem 0.32rem;
+          background-color: #f6f6f6;
+          color: #888888;
+        }
+
+        .status_waitpayment {
+          color: #ffaf2a;
+          background-color: #fffaf2;
+        }
+
+        .status_waitconfirm {
+          color: #ffaf2a;
+          background-color: #fffaf2;
+        }
+
+        .status_done {
+          color: #30bf87;
+          background-color: #ebfeed;
+        }
+      }
     }
+  }
 }
 </style>

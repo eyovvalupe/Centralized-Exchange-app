@@ -86,7 +86,7 @@ onUnmounted(() => {
 <style lang="less" scoped>
 .page-buycoin {
   .tabs {
-    :deep(.van-tabs__wrap) {
+    > :deep(.van-tabs__wrap) {
       background: #eff3f8;
       margin: 0 0.32rem;
       border-radius: 16px;
