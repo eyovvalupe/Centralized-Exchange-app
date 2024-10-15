@@ -179,7 +179,6 @@ const disabled = computed(() => !checkedList.value.some(item => item == true))
                 width: 0.3624rem;
                 height: 0.3624rem;
                 border-radius: 50%;
-                background-color: #000;
                 display: flex;
                 align-items: center;
                 justify-content: center;
