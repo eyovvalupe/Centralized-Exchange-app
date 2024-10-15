@@ -3,48 +3,44 @@
     <div class="trade_ai">
 
         <!-- 涨跌 -->
-        <div class="tabs" style="margin-bottom:0.32rem">
-            <div class="tab" @click="tab = 1">
-                <span :style="{ color: tab == 1 ? '#fff' : '#014cfa' }">看涨</span>
-                <img v-if="tab == 1" src="/static/img/trade/ai_active_tab.png" alt="bg" />
-                <img style="transform: rotate(180deg);" v-if="tab == 2" src="/static/img/trade/ai_tab.png" alt="bg" />
-            </div>
-            <div class="tab" @click="tab = 2">
-                <span :style="{ color: tab == 2 ? '#fff' : '#014cfa' }">看跌</span>
-                <img v-if="tab == 1" src="/static/img/trade/ai_tab.png" alt="bg" />
-                <img style="transform: rotate(180deg);" v-if="tab == 2" src="/static/img/trade/ai_active_tab.png"
-                    alt="bg" />
-            </div>
-        </div>
+        <Tabs  type="custom-card" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
+            <Tab title="看涨" :name="1">
+                
+            </Tab>
+            <Tab title="看跌" :name="2">
+            </Tab>
+        </Tabs>
 
 
         <!-- 品种 -->
-        <div class="curr">
-            <div class="subtitle" style="color: #014CFA;" @click="showNavDialog">交易品种</div>
-            <div class="ipt_box" style="margin-left:0.32rem" @click="showNavDialog">{{ form1.name }}
+        <div class="item_content">
+            <div class="subtitle">
+                交易品种
+                <div class="stock_icon" v-if="form1.name" @click="openStockModel">
+                    <img src="/static/img/trade/blue-stock.png" alt="icon">
+                </div>
             </div>
-            <div class="curr_icon" v-if="form1.name" @click="openStockModel">
-                <img src="/static/img/trade/blue-stock.png" alt="icon">
+
+            <div class="item item_box ipt_box" @click="showNavDialog">
+                 {{ form1.name }}
             </div>
+            
         </div>
 
         <!-- 时间 -->
-        <div class="subtitle">时间区域</div>
-        <div class="times">
-            <div class="time" @click="currTime = obj"
-                :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
-                v-for="(obj, i) in times" :key="i">{{ obj.time }}{{ _dateUnitMap[obj.unit] }}
+        <div class="item_content">
+            <div class="subtitle">时间区域</div>
+            <div class="times">
+                <div class="time" @click="currTime = obj"
+                    :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
+                    v-for="(obj, i) in times" :key="i">{{ obj.time }}{{ _dateUnitMap[obj.unit] }}
+                </div>
             </div>
         </div>
-
         <!-- 数量 -->
         <div class="item_content">
             <div class="subtitle">网格数量</div>
-            <div class="item item_box select" :class="{ 'error_border': error1 }">
-                <!-- <span>2000</span>
-                <div class="select_more">
-                    <img src="/static/img/assets/more.png" alt="more">
-                </div> -->
+            <div class="item item_box" :class="{ 'error_border': error1 }">
                 <span class="ipt_tip" v-show="!(form1.grid && !gridFocus)">最大网格 {{ maxgrid }}</span>
                 <input @focus="gridFocus = true, error1 = false" @blur="gridFocus = false" type="number" class="ipt"
                     v-model="form1.grid" :min="1" :max="maxgrid" @change="changeGrid">
@@ -52,7 +48,7 @@
         </div>
 
         <!-- 利润 -->
-        <div class="item_content" style="margin-top: 0.32rem;">
+        <div class="item_content">
             <div class="subtitle">每格利润</div>
             <div class="item item_box ipt_box">
                 <span class="ipt">{{ getPercent() }}</span>
@@ -60,37 +56,24 @@
         </div>
 
         <!-- 投资额 -->
-        <div class="subtitle">
-            <span>投资额</span>
-            <span class="link" @click="jump('transfer')">划转</span>
-        </div>
-        <div class="item item_box" style="margin-top: 0" :class="{ 'error_border': error2 }">
-            <span class="ipt_tip" v-show="!(form1.volume !== '' && !amountFocus)">≤ {{ usdt.amount }}</span>
-            <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false" type="number"
-                v-model="form1.volume" class="ipt" @change="changePercent">
-        </div>
-
-        <!-- 拖动 -->
-        <div class="slider-container" style="margin-top: 0.4rem">
-            <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
-                @change="onSliderChange">
-                <template #button>
-                    <div class="slider-custom-num">
-                        <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
-                    </div>
-                </template>
-            </Slider>
-        </div>
-        <div class="percentages">
-            <div v-for="percent in percentages" :key="percent" class="percentage">
-                <div class="line"></div>
-                {{ percent }}%
+        <div class="item_content">
+            <div class="subtitle">
+                <span>投资额</span>
+                <span style="color:#666D80;" v-show="!(form1.volume !== '' && !amountFocus)">≤ {{ usdt.amount }}</span>
+            </div>
+            <div class="item item_box" style="margin-top: 0" :class="{ 'error_border': error2 }">
+                <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false" type="number"
+                    v-model="form1.volume" class="ipt" @change="changePercent">
             </div>
         </div>
 
+        <div style="height:0.47rem;"></div>
+        <!-- 拖动 -->
+        <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+
         <!-- 按钮 -->
         <div style="margin-top: 0.6rem">
-            <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="submit"
+            <Button :loading="loading || submitLoading"  @click="checkForm" v-if="token" size="large" class="submit"
                 :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
                     tab == 1 ?
                         '买涨' : '买跌' }}</Button>
@@ -102,11 +85,10 @@
         </div>
 
 
-
         <!-- 开仓确认弹窗 -->
         <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
+             <div class="van-popup-custom-title">开仓确认</div>
             <div class="stock_submit_box">
-                <div class="title">开仓确认</div>
                 <div class="item">
                     <div class="item_name">时间区域</div>
                     <div class="item_val">
@@ -170,7 +152,7 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount } from "vue"
-import { Slider, Button, Popup, showToast } from "vant"
+import { Slider, Button, Popup, showToast,Tabs,Tab } from "vant"
 import Decimal from 'decimal.js';
 import store from "@/store"
 import router from "@/router"
@@ -182,6 +164,7 @@ import SafePassword from "@/components/SafePassword.vue"
 import { _dateUnitMap } from "@/utils/dataMap"
 import StockPopup from "../../trade/StockPopup.vue"
 import eventBus from "@/utils/eventBus"
+import SlideContainer from "@/components/SlideContainer.vue"
 
 const goLogin = () => {
     store.commit('setIsLoginOpen', true)
@@ -240,7 +223,6 @@ const changeGrid = () => {
 }
 
 // 拖动
-const percentages = [25, 50, 75, 100];
 const sliderValue = ref(0);
 const maxStockNum = computed(() => usdt.value.amount)
 const step = computed(() => 1)
@@ -440,71 +422,27 @@ defineExpose({
 <style lang="less" scoped>
 .trade_ai {
     padding: 0.32rem 0.32rem 0.6rem 0.32rem;
-
-    .tabs {
+    
+     .subtitle {
+        color: #061023;
+        font-size: 0.28rem;
+        margin-bottom: 0.12rem;
+        line-height: 0.36rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .tab {
-            flex: 1;
-            height: 0.72rem;
-            position: relative;
-
-            span {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translateX(-50%) translateY(-50%);
-                z-index: 9;
-            }
-        }
-    }
-
-    .subtitle {
-        height: 0.88rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .link {
-            color: #014CFA;
+        .stock_icon {
+            width: 0.36rem;
+            height: 0.36rem;
         }
     }
 
     .item_content {
-        display: flex;
-        align-items: center;
-
-        .item_box {
-            flex: 1;
-            margin-left: 0.32rem;
-        }
+        margin-top: 0.4rem;
+       
     }
-
-    .curr {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .ipt_box {
-            flex: 1;
-            height: 0.88rem;
-            border-radius: 0.12rem;
-            border: 1px solid #E5E5E5;
-            background-color: #F5F5F5;
-            color: #014CFA;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .curr_icon {
-            width: 0.88rem;
-            height: 0.88rem;
-            padding: 0.2rem;
-        }
-    }
+    
 
     .times {
         display: flex;
@@ -595,8 +533,12 @@ defineExpose({
     }
 
     .item_box {
-        border: 1px solid #D0D8E2;
-        border-radius: 0.12rem;
+        
+        position: relative;
+        height: 0.92rem;
+        border-radius: 0.32rem;
+        border: 1px solid #d0d8e2;
+        padding: 0 0.24rem;
 
         .ipt {
             width: 100%;
@@ -609,88 +551,7 @@ defineExpose({
 
         }
     }
-
-    .slider-container {
-        margin: 0 auto;
-        width: 100%;
-        height: 0.8rem;
-        padding: 0.2rem 0 0 0;
-
-        :deep(.slider-custom-num) {
-            position: relative;
-            background: #014CFA;
-            color: #fff;
-            display: inline-block;
-            width: .1rem;
-            height: .5rem;
-            font-size: 12px;
-            text-align: center;
-            line-height: .4rem;
-            border-radius: 10px;
-
-            .number {
-                color: #014CFA;
-                position: absolute;
-                top: -0.4rem;
-                left: -0.1rem;
-                font-size: .2rem;
-            }
-        }
-
-        :deep(.van-slider) {
-            margin-top: 0.1rem;
-            height: 0.16rem !important;
-            border-radius: 0.02rem;
-            padding-right: 0.1rem;
-        }
-
-        :deep(.van-slider__bar) {
-            position: relative;
-        }
-
-        :deep(.van-slider__button) {
-            width: 0.1rem;
-            height: 0.48rem;
-            background-color: #014cfa;
-            border-radius: inherit;
-            top: -0.36rem;
-        }
-
-        :deep(.van-slider__button-wrapper) {
-            z-index: 999 !important;
-            padding: 0.24rem;
-        }
-
-
-
-    }
-
-    .percentages {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        z-index: 7;
-
-        .percentage {
-            color: #8f92a1;
-            font-size: 0.28rem;
-            font-style: normal;
-            font-weight: 400;
-            text-align: center;
-            width: 25%;
-            position: relative;
-        }
-
-        .line {
-            width: 0.06rem;
-            height: 0.2rem;
-            position: absolute;
-            right: 0;
-            top: -0.5rem;
-            background: #fff;
-            z-index: 88;
-        }
-    }
+    
 
     .error_border {
         border: 1px solid #e8503a !important;
@@ -698,22 +559,14 @@ defineExpose({
 }
 
 .stock_submit_box {
-    padding: 0.32rem 0.32rem 1rem 0.32rem;
-
-    .title {
-        font-size: 0.32rem;
-        line-height: 0.6rem;
-        text-align: center;
-        margin-bottom: 0.2rem;
-        font-weight: bold;
-    }
+    padding: 0.2rem 0.6rem 0.6rem;
 
     .item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.2rem 0;
-        border-bottom: 1px solid #f5f5f5;
+        padding: 0.36rem 0 0.2rem 0;
+        border-bottom: 1px solid #F5F7FC;
 
         .item_name {
             color: #8F92A1;
@@ -734,8 +587,8 @@ defineExpose({
                 color: #014CFA;
                 background-color: #ecf1fe;
                 line-height: 0.44rem;
-                padding: 0 0.24rem;
-                border-radius: 0.04rem;
+                padding: 0 0.3rem;
+                border-radius: 0.4rem;
                 margin-left: 0.2rem;
                 font-size: 0.24rem;
             }
@@ -748,6 +601,11 @@ defineExpose({
             .green_tag {
                 background-color: #eff9f2;
                 color: #18b762;
+            }
+
+            .lever {
+                min-width: 0.7rem;
+                text-align: right;
             }
         }
     }

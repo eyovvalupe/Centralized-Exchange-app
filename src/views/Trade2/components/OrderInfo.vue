@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Top title="股票订单" :backFunc="backFunc" />
+        <Top title="股票订单" :backFunc="backFunc" v-if="type == 'stock'" />
+        <Top title="合约订单" :backFunc="backFunc" v-else-if="type == 'contract'" />
+        
         <div class="scroller">
             <div class="stock-info">
                 <div class="stock-info__head">
@@ -21,7 +23,7 @@
             </div>
             <div class="info_boxs">
                 <div class="info_box">
-                    <div>可售股票</div>
+                    <div>可售{{type == 'stock' && '股票' || type == 'contract' && '合约' || ''}}</div>
                     <div class="amount">{{ currStock.unsold_volume || '--' }}</div>
                 </div>
                 <div class="info_box">
@@ -112,7 +114,7 @@
 
         </div>
 
-        <div class="btns">
+        <div class="btns"  v-if="currStock.status != 'done'">
         
             <div class="btn btn2" @click="emit('update',currStock)"
                 v-if="currStock.status != 'done'"
@@ -123,7 +125,7 @@
                 <div>更新</div>
             </div>
             <div class="btn btn3" @click="emit('sell',currStock)"
-                v-if="currStock.status != 'done'"
+               
                 :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(currStock.status) }">
                 <div class="btn_icon">
                     <img src="/static/img/trade/close.png" alt="img">
@@ -149,6 +151,10 @@ import Top from "@/components/Top.vue"
 import Decimal from 'decimal.js';
 const emit = defineEmits(['update','sell','cancel','back'])
 const props = defineProps({
+    type:{
+        type:String,
+        default:'stock' //stock 股票 contract 合约
+    },
     currStock:{
         type:Object,
         default(){

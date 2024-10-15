@@ -8,7 +8,7 @@
         </div> -->
         <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
         <div class="tr" v-for="(item, i) in props.list" :key="i">
-            <StockItem :handleClick="props.handleClick" :deleteItem="props.deleteItem" :type="props.type"
+            <StockItem :theme="theme" :handleClick="props.handleClick" :deleteItem="props.deleteItem" :type="props.type"
                 @remove="remove" :scrollBox="props.scrollBox" :item="item" />
         </div>
         <NoData v-if="!props.loading && !props.list.length" />
@@ -37,6 +37,10 @@ const props = defineProps({
     deleteItem: { // 是否可以滑动删除
         type: Boolean,
         default: false
+    },
+    theme: { // 空 默认 classic 经典
+        type: String,
+        default: ''
     },
     type: { //从交易页面侧边栏点击
         type: String,

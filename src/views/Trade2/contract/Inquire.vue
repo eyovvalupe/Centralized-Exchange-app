@@ -167,23 +167,25 @@ defineExpose({
 
 <style lang="less" scoped>
 .inquire {
-    padding-bottom: 2rem;
-
+    padding:0 0 1.6rem 0;
     .tr {
-        padding: 0.24rem 0;
-        border-bottom: 1px solid #EFF3F8;
+        padding: 0.2rem;
+        background-color: #F5F7FC;
         display: flex;
         align-items: stretch;
+        border-radius: 0.32rem;
+        margin-top: 0.2rem;
     }
-    .tr:last-child{
-        border-bottom: 0px;
-    }
-  
+   
 
     .th {
         color: #8F92A1;
         font-size: 0.22rem;
+        border-bottom: 1px solid #EFF3F8;
         padding: 0.48rem 0 0.24rem 0;
+        background: none;
+        margin-top:0px;
+        
     }
 
     .td {
@@ -285,6 +287,7 @@ defineExpose({
             line-height: 0.36rem;
         }
     }
+
     .td-5 {
         flex: 5;
         text-align: left;
