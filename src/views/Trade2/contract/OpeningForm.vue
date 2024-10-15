@@ -147,7 +147,7 @@
         <div class="item_box" @click="openSearchDialog">
             <div class="item" style="pointer-events: none;"
                 :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
-                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">合约代码</span>
+                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">股票代码</span>
                 <input disabled :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
                     @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="blurSearch"
                     v-model.trim="searchStr" @keyup="inputSearch" class="ipt" type="text">
@@ -155,8 +155,13 @@
                 </div>
 
                 <div class="info" v-show="currStock.symbol && !searchFocus">
-                    <div style="color: #014cfa;">{{ currStock.symbol }}</div>
-                    <div style="color: #9ea3ae;font-size: 0.24rem;">{{ currStock.name }}</div>
+                    <div style="flex:1;">
+                        <div class="info-symbol">{{ currStock.symbol }}</div>
+                        <div class="info-name">{{ currStock.name }}</div>
+                    </div>
+                    <div class="more_icon">
+                        <img src="/static/img/trade/down.png" alt="↓">
+                    </div>
                 </div>
             </div>
         </div>
@@ -176,15 +181,12 @@
             <div class="item_box_right">
                 <div class="subtitle">
                     <span>数量</span>
-                    <div style="color: #014CFA;display: flex;align-items: center;font-size:0.24rem">
-                        <!-- 划转/兑换/充值 -->
-                        <span @click="jump('transfer')">划转</span>
-                        <!-- <span @click="jump('loanList')" style="margin-left: 0.24rem;">借贷</span> -->
-                    </div>
+                     <span style="color:#666D80;">
+                        ≤ {{ maxStockNum }}
+                    </span>
+                   
                 </div>
                 <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <span class="ipt_tip ipt_tip2" v-show="form1.volume === '' || amountFocus">≤ {{ maxStockNum }}
-                    </span>
                     <span @click="putAll"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                         style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
@@ -194,23 +196,8 @@
             </div>
         </div>
 
-        <!-- 拖动 -->
-        <div class="slider-container">
-            <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#E0E7F8"
-                @change="onSliderChange">
-                <template #button>
-                    <div class="slider-custom-num">
-                        <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
-                    </div>
-                </template>
-            </Slider>
-        </div>
-        <div class="percentages">
-            <div v-for="percent in percentages" :key="percent" class="percentage">
-                <div class="line"></div>
-                {{ percent }}%
-            </div>
-        </div>
+         <!-- 拖动 -->
+        <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
         <!-- 按钮 -->
         <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
@@ -226,14 +213,14 @@
 
     <!-- 开仓确认弹窗 -->
     <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
+        <div class="van-popup-custom-title">开仓确认</div>
         <div class="stock_submit_box">
-            <div class="title">开仓确认</div>
             <div class="item">
                 <div class="item_name">合约</div>
                 <div class="item_val">
-                    <div style="line-height: 0.32rem;">
-                        <div style="text-align: right">{{ currStock.symbol }}</div>
-                        <div style="color: #9ea3ae;font-size: 0.24rem;">{{ currStock.name }}</div>
+                    <div style="line-height: 0.36rem;">
+                        <div style="text-align: right;font-size:0.3rem;">{{ currStock.symbol }}</div>
+                        <div style="color: #9EA3AE;font-size: 0.24rem;">{{ currStock.name }}</div>
                     </div>
                 </div>
             </div>
@@ -276,14 +263,14 @@
             </div>
 
             <div class="money_box">
-                <div class="amount">支付 {{ payAmount }}</div>
-                <div class="fee">保证金 {{ payOrigin }} + 手续费 {{ payFee }}</div>
+                <div class="amount">支付 <strong>{{ payAmount }}</strong></div>
+                <div class="fee">保证金 <span>{{ payOrigin }}</span> + 手续费 <span>{{ payFee }}</span></div>
             </div>
 
-            <!-- <div class="subtitle">请输入交易密码</div>
+            <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
-                <input v-model="safePass" type="password" class="ipt">
-            </div> -->
+                <input v-model="safePass" placeholder="请输入交易密码" type="password" class="ipt">
+            </div>
             <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit" color="#014cfa"
                 round>开仓</Button>
         </div>
@@ -330,8 +317,8 @@
     <!-- 搜索列表 -->
     <Popup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
 
+        <div class="van-popup-custom-title">搜索</div>
         <div class="search_dialog_trade">
-            <div class="title">搜索</div>
             <!-- 搜索 -->
             <div class="item search_box">
                 <div class="search_icon">
@@ -343,7 +330,7 @@
 
             <div class="lists">
                 <!-- 搜索列表 -->
-                <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                <StockTable theme="classic" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
                     :list="marketSearchList" />
             </div>
         </div>
@@ -363,6 +350,7 @@ import router from "@/router"
 import StockPopup from "../../trade/StockPopup.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import StockTable from "@/components/StockTable.vue"
+import SlideContainer from "@/components/SlideContainer.vue"
 
 const safeRef = ref()
 const _market = 'futures' //合约
@@ -674,7 +662,6 @@ const putAll = () => {
     onSliderChange(100)
 }
 // 市价-拖动
-const percentages = [25, 50, 75, 100];
 const sliderValue = ref(0);
 const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
@@ -837,8 +824,12 @@ const payFee = computed(() => { // 手续费
 })
 const submitLoading = ref(false)
 const submitFormDialog = () => {
-    showModel.value = false
-    safeRef.value && safeRef.value.open()
+    if(!safePass.value){
+        return showToast('请输入交易密码')
+    }
+    submitForm(safePass.value)
+    //showModel.value = false
+    //safeRef.value && safeRef.value.open()
 }
 const submitForm = (s) => {
     if (submitLoading.value) return
@@ -909,36 +900,21 @@ defineExpose({
 
 <style lang="less" scoped>
 .search_dialog_trade {
-    padding-top: 0.8rem;
-
-    .title {
-        height: 1rem;
-        position: absolute;
-        top: 0.2rem;
-        left: 0;
-        text-align: center;
-        line-height: 1rem;
-        font-size: 0.32rem;
-        width: 100%;
-        color: #121826;
-        pointer-events: none;
-        font-weight: bold;
-    }
-
+    
     .lists {
         height: 60vh;
         overflow-y: auto;
+        margin-top:0.32rem;
     }
-
     .search_box {
-        margin: 0.2rem 0.15rem 0.4rem 0.15rem;
+        height: 0.8rem;
+        padding: 0 0.32rem;
+        margin:0.52rem 0.3rem 0 0.3rem;
         display: flex;
         align-items: center;
-        padding: 0 0.4rem;
-        height: 0.8rem;
-        background-color: #F4F5F7;
-        border-radius: 0.2rem;
-        border: 1px solid #F4F5F7;
+        background-color: #F5F7FC;
+        border-radius: 0.6rem;
+        border: 1px solid #D0D8E2;
 
         .search_icon {
             width: 0.48rem;
@@ -948,12 +924,17 @@ defineExpose({
 
         .ipt {
             height: 100%;
+            font-weight: 400;
+        }
+        .ipt::placeholder{
+            color:#A4ACB9;
         }
     }
+
 }
 
 .form {
-    padding: 0.32rem;
+    padding:0.48rem 0.32rem 0.32rem;
     position: relative;
 
     .subtitle {
@@ -988,12 +969,29 @@ defineExpose({
             padding: 0 0.24rem;
 
             .info {
-                flex: 1;
                 font-size: 0.28rem;
                 font-weight: 400;
                 position: absolute;
-                left: 0.32rem;
+                width: 100%;
+                left:0;
+                box-sizing: border-box;
+                padding-left: 0.32rem;
                 pointer-events: none;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .more_icon{
+                    margin-right: 0.3rem;
+                }
+            }
+            .info-symbol{
+                color: #061023;
+                font-size:0.3rem;
+            }
+            .info-name{
+                color: #9ea3ae;
+                font-size: 0.24rem;
+                margin-top:0.08rem;
             }
 
             .ipt_tip {
@@ -1036,18 +1034,20 @@ defineExpose({
         }
 
         .disabled_item {
-            background-color: #D0D8E2;
+            background-color: #f5f5f5;
         }
 
         .item_focus {
             height: 1.12rem;
-            // padding-top: 0.2rem;
             border: 1px solid #034cfa;
 
             .ipt_tip {
                 font-size: 0.2rem;
                 transform: translateY(-0.36rem);
             }
+        }
+        .item_focus2{
+            border: 1px solid #034cfa;
         }
 
         .item_box_left {
@@ -1088,103 +1088,15 @@ defineExpose({
     }
 }
 
-.slider-container {
-    height: 0.8rem;
-    padding: .32rem 0;
-    margin:0 0.2rem;
-    :deep(.slider-custom-num) {
-        position: relative;
-        background: #014CFA;
-        color: #fff;
-        display: inline-block;
-        width: .4rem;
-        height: .4rem;
-        border-radius: 50%;
-        .number {
-            color: #014CFA;
-            position: absolute;
-            top: -0.32rem;
-            left: -0.1rem;
-            font-size: .24rem;
-        }
-    }
-
-    :deep(.van-slider) {
-        height: 0.26rem !important;
-        border-radius: 0.2rem;
-    }
-
-    :deep(.van-slider__bar) {
-        position: relative;
-    }
-
-    :deep(.van-slider__button) {
-        width: 0.1rem;
-        height: 0.48rem;
-        background-color: #014cfa;
-        border-radius: inherit;
-        top: -0.36rem;
-    }
-
-    :deep(.van-slider__button-wrapper) {
-        z-index: 999 !important;
-    }
-
-}
-
-.percentages {
-    display: flex;
-    justify-content: space-between;
-    width: calc(100% - 0.4rem);
-    z-index: 7;
-    margin-left: 0.2rem;
-    .percentage {
-        color: #8f92a1;
-        font-size: 0.28rem;
-        font-style: normal;
-        font-weight: 400;
-        text-align: center;
-        flex: 1;
-        position: relative;
-    }
-
-    .line {
-        width: 0.07rem;
-        height: 0.26rem;
-        position: absolute;
-        right: -0.03rem;
-        top: -0.48rem;
-        background: #F5F7FC;
-        z-index: 88;
-    }
-    .percentage:last-child .line{
-        display: none;
-    }
-}
-
-.num-tag{
-    color: #014CFA;
-    margin-left: 0.2rem;
-    transition: all ease .3s;
-}
-
 .stock_submit_box {
-    padding: 0.32rem 0.32rem 1rem 0.32rem;
-
-    .title {
-        font-size: 0.32rem;
-        line-height: 0.6rem;
-        text-align: center;
-        margin-bottom: 0.2rem;
-        font-weight: bold;
-    }
+    padding: 0.2rem 0.6rem 0.6rem;
 
     .item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0.2rem 0;
-        border-bottom: 1px solid #f5f5f5;
+        padding: 0.36rem 0 0.2rem 0;
+        border-bottom: 1px solid #F5F7FC;
 
         .item_name {
             color: #8F92A1;
@@ -1205,8 +1117,8 @@ defineExpose({
                 color: #014CFA;
                 background-color: #ecf1fe;
                 line-height: 0.44rem;
-                padding: 0 0.24rem;
-                border-radius: 0.04rem;
+                padding: 0 0.3rem;
+                border-radius: 0.4rem;
                 margin-left: 0.2rem;
                 font-size: 0.24rem;
             }
@@ -1229,45 +1141,64 @@ defineExpose({
     }
 
     .subtitle {
-        font-size: 0.24rem;
-        margin-bottom: 0.2rem;
-        color: #121826;
+        font-size: 0.28rem;
+        margin-bottom: 0.12rem;
+        color: #000;
         font-weight: 400;
+        line-height: 150%;
     }
 
     .pass_ipt {
-        margin-bottom: 0.4rem;
-        border-radius: 0.12rem;
+        margin-bottom: 0.58rem;
+        border-radius: 0.32rem;
         border: 1px solid #d0d8e2;
         padding: 0 0.24rem;
-
-        .ipt {
-            height: 0.8rem;
-        }
+        height: 1.12rem;
+        padding: 0.16rem 0.32rem;
+        box-sizing: border-box;
     }
 
     .money_box {
-        margin: 0.5rem 0;
+        margin: 0.32rem 0;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
         justify-content: center;
-
+        background-color: #F5F7FC;
+        border-radius: 0.32rem;
+        padding: 0.24rem 0.32rem;
         .amount {
-            color: #014cfa;
-            font-size: 0.36rem;
-            font-weight: 600;
-            line-height: 0.56rem;
+            color:#666D80;
+             line-height: 0.56rem;
+            strong{
+                color: #061023;
+                font-size: 0.36rem;
+                font-weight: 600;
+               margin-left: 0.12rem;
+            }
         }
 
         .fee {
-            color: #333;
+            color: #666D80;
             font-size: 0.24rem;
             font-weight: 400;
             line-height: 0.36rem;
-            border-top: 1px dashed #cbcbcb;
             padding: 0.1rem 0 0 0.2rem;
+            span{
+                color:#061023;
+            }
         }
     }
+}
+.num-tag{
+    color: #2168F6;
+    margin-left: 0.08rem;
+    transition: all ease .3s;
+    border-radius: 0.3rem;
+    background: rgba(33, 104, 246, 0.10);
+    font-size: 0.24rem;
+    padding: 0 0.14rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
 }
 </style>

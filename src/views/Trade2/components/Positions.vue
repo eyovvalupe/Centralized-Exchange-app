@@ -54,14 +54,12 @@
                             @input="changeValue" type="number" class="ipt">
                         <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                             style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
-                            @click="sellForm.volume = currStock.unsold_volume">全部</span>
+                            @click="onSliderChange(100)">全部</span>
                     </div>
                     <div style="height:0.47rem;"></div>
                     
                     <!-- 拖动 -->
-
                     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-                    
 
                     <!-- 收益分析 -->
                     <!-- <div class="total_box">
@@ -97,7 +95,7 @@
         
 
         <!-- 更新 -->
-        <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body" z-index="111111">
+        <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
             <div class="van-popup-custom-title">更新订单</div>
             <div class="order_sell_box">
                 
@@ -168,7 +166,7 @@
                             v-model="updateForm.amount" type="number" class="ipt">
                         <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                             style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
-                            @click="updateForm.amount = stockWalletAmount">全部</span>
+                            @click="onSliderChange(100)">全部</span>
                     </div>
                     <div style="height:0.47rem;"></div>
                     <!-- 拖动 -->
@@ -213,7 +211,6 @@ import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
 import { _stocksSell, _stocksUpdate, _stocksCancel } from "@/api/api"
-import { _copyTxt } from "@/utils/index"
 import UnLogin from "@/components/UnLogin.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
@@ -545,11 +542,6 @@ const getSessionToken = () => {
 getSessionToken()
 
 
-//  复制
-const copy = text => {
-    _copyTxt(text)
-    showToast('已复制')
-}
 </script>
 
 <style lang="less" scoped>
@@ -805,5 +797,7 @@ const copy = text => {
     background: rgba(33, 104, 246, 0.10);
     font-size: 0.24rem;
     padding: 0 0.14rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
 }
 </style>

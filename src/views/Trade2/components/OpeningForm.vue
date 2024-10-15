@@ -60,15 +60,15 @@
                     <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
                         v-model="form1.stop_loss_price" type="number" class="ipt">
 
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(20)"
+                    <span class="num-tag" @click="setPriceStop(20)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
                                 1 ? '-' : '+' }}20%</span>
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(15)"
+                    <span class="num-tag" @click="setPriceStop(15)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
                                 1 ? '-' : '+' }}15%</span>
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(10)"
+                    <span class="num-tag" @click="setPriceStop(10)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
                                 1 ? '-' : '+' }}10%</span>
@@ -95,11 +95,11 @@
                         <input @focus="priceFocus2 = true" @blur="priceFocus2 = false" v-show="priceMode != 1"
                             v-model="form1.price" type="number" class="ipt">
 
-                        <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                        <span class="num-tag"
                             @click="setPricePercent(3)" v-show="currStock.price && priceMode != 1"
                             :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
                                 1 ? '-' : '+' }}3%</span>
-                        <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                        <span class="num-tag"
                             @click="setPricePercent(1)" v-show="currStock.price && priceMode != 1"
                             :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
                                 1 ? '-' : '+' }}1%</span>
@@ -121,16 +121,16 @@
                 <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
                     class="ipt">
 
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(3)"
+                <span class="num-tag" @click="setPricePercent(3)"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
                         1 ? '-' : '+' }}3%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(2)"
+                <span class="num-tag" @click="setPricePercent(2)"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
                         1 ? '-' : '+' }}2%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(1)"
+                <span class="num-tag" @click="setPricePercent(1)"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
                         1 ? '-' : '+' }}1%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setNowPrice"
+                <span class="num-tag" @click="setNowPrice"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">市价</span>
             </div>
         </div>
@@ -187,7 +187,6 @@
                     
                 </div>
                 <div class="item" :class="{ 'item_focus2': amountFocus }">
-                    
                     <span @click="putAll"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                         style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
@@ -1201,5 +1200,16 @@ defineExpose({
             }
         }
     }
+}
+.num-tag{
+    color: #2168F6;
+    margin-left: 0.08rem;
+    transition: all ease .3s;
+    border-radius: 0.3rem;
+    background: rgba(33, 104, 246, 0.10);
+    font-size: 0.24rem;
+    padding: 0 0.14rem;
+    height: 0.4rem;
+    line-height: 0.4rem;
 }
 </style>

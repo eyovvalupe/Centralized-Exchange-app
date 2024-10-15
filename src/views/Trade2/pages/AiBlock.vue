@@ -26,7 +26,8 @@
 
         <!-- 下单弹窗 -->
         <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
-            <div style="padding-top: 0.5rem;height: var(--app-height);overflow-y: auto;">
+            <div class="van-popup-custom-title">交易</div>
+            <div style="height: 90vh;overflow-y: auto;">
                 <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
             </div>
         </Popup>
