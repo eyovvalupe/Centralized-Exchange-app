@@ -60,15 +60,15 @@
                     <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
                         v-model="form1.stop_loss_price" type="number" class="ipt">
 
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(20)"
+                    <span class="num-tag" @click="setPriceStop(20)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
                                 1 ? '-' : '+' }}20%</span>
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(15)"
+                    <span class="num-tag" @click="setPriceStop(15)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
                                 1 ? '-' : '+' }}15%</span>
-                    <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPriceStop(10)"
+                    <span class="num-tag" @click="setPriceStop(10)"
                         v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                             props.activeType ==
                                 1 ? '-' : '+' }}10%</span>
@@ -91,15 +91,15 @@
                         <span>&nbsp;</span>
                     </div>
                     <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
-                        <span v-show="priceMode == 1" style="color: #999;">最新价格成交</span>
+                        <span v-show="priceMode == 1" style="color: #A4ACB9;">最新价格成交</span>
                         <input @focus="priceFocus2 = true" @blur="priceFocus2 = false" v-show="priceMode != 1"
                             v-model="form1.price" type="number" class="ipt">
 
-                        <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                        <span class="num-tag"
                             @click="setPricePercent(3)" v-show="currStock.price && priceMode != 1"
                             :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
                                 1 ? '-' : '+' }}3%</span>
-                        <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                        <span class="num-tag"
                             @click="setPricePercent(1)" v-show="currStock.price && priceMode != 1"
                             :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
                                 1 ? '-' : '+' }}1%</span>
@@ -121,23 +121,23 @@
                 <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
                     class="ipt">
 
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(3)"
+                <span class="num-tag" @click="setPricePercent(3)"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
                         1 ? '-' : '+' }}3%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(2)"
+                <span class="num-tag" @click="setPricePercent(2)"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
                         1 ? '-' : '+' }}2%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setPricePercent(1)"
+                <span class="num-tag" @click="setPricePercent(1)"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
                         1 ? '-' : '+' }}1%</span>
-                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;" @click="setNowPrice"
+                <span class="num-tag" @click="setNowPrice"
                     v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">市价</span>
             </div>
         </div>
 
         <!-- 股票 -->
         <div class="subtitle">
-            <span style="color: #014CFA;" @click="showNavDialog">合约</span>
+            <span @click="showNavDialog">合约</span>
             <Loading v-show="searchLoading" type="spinner" style="width:0.28rem;height:0.28rem" color="#034cfa" />
             <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
                 <img src="/static/img/trade/blue-stock.png" />
@@ -196,7 +196,7 @@
 
         <!-- 拖动 -->
         <div class="slider-container">
-            <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
+            <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#E0E7F8"
                 @change="onSliderChange">
                 <template #button>
                     <div class="slider-custom-num">
@@ -337,7 +337,7 @@
                 <div class="search_icon">
                     <img src="/static/img/common/search.png" alt="🔍">
                 </div>
-                <input v-model.trim="searchDialogStr" @keyup="goDialogSearch('contract')" type="text" class="ipt"
+                <input v-model.trim="searchDialogStr" @keyup="goDialogSearch(_market)" type="text" class="ipt"
                     placeholder="搜索">
             </div>
 
@@ -365,15 +365,15 @@ import SafePassword from "@/components/SafePassword.vue"
 import StockTable from "@/components/StockTable.vue"
 
 const safeRef = ref()
-
+const _market = 'futures' //合约
 
 //搜索
-const marketSearchList = computed(() => store.state.marketSearchList || [])
+const marketSearchList = computed(() => store.state.futuresSearchList || [])
 const showSearchDialog = ref()
 const searchDialogStr = ref('')
 const openSearchDialog = () => {
     showSearchDialog.value = true
-    goDialogSearch('contract')
+    goDialogSearch(_market)
 }
 const handleClick = item => {
     showSearchDialog.value = false
@@ -390,15 +390,15 @@ const handleClick = item => {
 }
 store.commit('setMarketSearch', {
     search: '',
-    market: 'contract',
+    market: _market,
     futuresSearchList: []
 })
 const goDialogSearch = (market) => {
     if (searchTimeout) clearTimeout(searchTimeout)
-
+    searchLoading.value = true
     let s = searchDialogStr.value
     searchTimeout = setTimeout(() => {
-        searchLoading.value = true
+        
         _search({
             market: market || '',
             symbol: s,
@@ -926,7 +926,7 @@ defineExpose({
     }
 
     .lists {
-        max-height: 60vh;
+        height: 60vh;
         overflow-y: auto;
     }
 
@@ -953,13 +953,14 @@ defineExpose({
 }
 
 .form {
-    padding: 0.6rem 0.32rem 2rem 0.32rem;
+    padding: 0.32rem;
     position: relative;
 
     .subtitle {
-        color: #333;
+        color: #061023;
         font-size: 0.28rem;
-        margin-bottom: 0.1rem;
+        margin-bottom: 0.12rem;
+        line-height: 0.36rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -973,7 +974,7 @@ defineExpose({
     .item_box {
         display: flex;
         align-items: stretch;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.4rem;
 
         .item {
             flex: 1;
@@ -981,21 +982,17 @@ defineExpose({
             align-items: center;
             justify-content: space-between;
             position: relative;
-            height: 0.88rem;
-            border-radius: 0.12rem;
+            height: 0.92rem;
+            border-radius: 0.32rem;
             border: 1px solid #d0d8e2;
             padding: 0 0.24rem;
 
-
             .info {
                 flex: 1;
-                text-align: right;
-                margin-left: 0.2rem;
                 font-size: 0.28rem;
                 font-weight: 400;
-                color: #333;
                 position: absolute;
-                right: 0.24rem;
+                left: 0.32rem;
                 pointer-events: none;
             }
 
@@ -1039,7 +1036,7 @@ defineExpose({
         }
 
         .disabled_item {
-            background-color: #f5f5f5;
+            background-color: #D0D8E2;
         }
 
         .item_focus {
@@ -1087,42 +1084,34 @@ defineExpose({
     }
 
     .submit {
-        margin-top: 1rem;
+        margin-top: 0.4rem;
     }
 }
 
 .slider-container {
-    margin: 0 auto;
-    width: 100%;
     height: 0.8rem;
-    padding: 0.2rem 0 0 0;
-
+    padding: .32rem 0;
+    margin:0 0.2rem;
     :deep(.slider-custom-num) {
         position: relative;
         background: #014CFA;
         color: #fff;
         display: inline-block;
-        width: .1rem;
-        height: .5rem;
-        font-size: 12px;
-        text-align: center;
-        line-height: .4rem;
-        border-radius: 10px;
-
+        width: .4rem;
+        height: .4rem;
+        border-radius: 50%;
         .number {
             color: #014CFA;
             position: absolute;
-            top: -0.4rem;
+            top: -0.32rem;
             left: -0.1rem;
-            font-size: .2rem;
+            font-size: .24rem;
         }
     }
 
     :deep(.van-slider) {
-        margin-top: 0.1rem;
-        height: 0.16rem !important;
-        border-radius: 0.02rem;
-        padding-right: 0.1rem;
+        height: 0.26rem !important;
+        border-radius: 0.2rem;
     }
 
     :deep(.van-slider__bar) {
@@ -1139,41 +1128,46 @@ defineExpose({
 
     :deep(.van-slider__button-wrapper) {
         z-index: 999 !important;
-        padding: 0.24rem;
     }
-
-
 
 }
 
 .percentages {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: calc(100% - 0.4rem);
     z-index: 7;
-
+    margin-left: 0.2rem;
     .percentage {
         color: #8f92a1;
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
         text-align: center;
-        width: 25%;
+        flex: 1;
         position: relative;
     }
 
     .line {
-        width: 0.06rem;
-        height: 0.2rem;
+        width: 0.07rem;
+        height: 0.26rem;
         position: absolute;
-        right: 0;
-        top: -0.5rem;
-        background: #fff;
+        right: -0.03rem;
+        top: -0.48rem;
+        background: #F5F7FC;
         z-index: 88;
     }
+    .percentage:last-child .line{
+        display: none;
+    }
 }
-</style>
-<style lang="less">
+
+.num-tag{
+    color: #014CFA;
+    margin-left: 0.2rem;
+    transition: all ease .3s;
+}
+
 .stock_submit_box {
     padding: 0.32rem 0.32rem 1rem 0.32rem;
 

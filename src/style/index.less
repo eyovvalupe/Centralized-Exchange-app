@@ -1,4 +1,8 @@
 // 全局公共样式
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #app {
@@ -19,6 +23,9 @@ body,
         height: 100%;
         object-fit: contain;
     }
+}
+:root {
+  --main-color: @mainColor;
 }
 
 #app {
@@ -172,5 +179,8 @@ input[type="number"] {
 .item {
     &:has(.ipt:focus) {
         border: 1px solid #014CFA !important;
+    }
+    .ipt::placeholder{
+        color:#A4ACB9;
     }
 }

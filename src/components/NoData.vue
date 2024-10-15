@@ -2,9 +2,9 @@
 <template>
     <div class="no_data">
         <div class="nodata_icon">
-            <img src="/static/img/common/nodata.png" alt="nothing">
+            <img src="/static/img/common/no_data.png" alt="nothing">
         </div>
-        <div>{{ props.tip }}</div>
+        <div class="nodata_text">{{ props.tip }}</div>
     </div>
 </template>
 
@@ -27,15 +27,19 @@ const props = defineProps({
     font-weight: 400;
     line-height: 0.4rem;
     font-size: 0.28rem;
-    color: #A5AFBA;
+    color: #A4ACB9;
     padding: 1rem 0;
 
     .nodata_icon {
-        width: 4.14rem;
+        width: 2.28rem;
         height: auto;
         img {
             width: 100%;
         }
+    }
+    .nodata_text{
+        font-size: 0.28rem;
+        margin-top: 0.46rem;
     }
 }
 </style>

@@ -8,69 +8,36 @@
             <div class="td td-4">盈亏/盈亏比</div>
         </div>
         <NoData v-if="!positionsList.length && !loading" />
-        <SwipeCell ref="items" v-for="(item, i) in positionsList" @close="closeDom(i)" :key="i" disabled
-            @click="clickDom($event, i)">
-            <div class="tr">
-                <div class="td td-5">
-                    <div class="name">{{ item.symbol }}</div>
-                    <div class="lever">
-                        <span>{{ item.lever }}X</span>
-                        <div class="status" :class="'status-' + item.status">{{ statusMap[item.status] || '--' }}</div>
-                    </div>
-                </div>
-                <div class="td td-4">
-                    <div class="state" :class="'state-' + item.offset">{{ offsetMap[item.offset] || '--' }}</div>
-                    <div class="amount">{{ item.unsold_volume || '--' }}</div>
-                </div>
-                <div class="td td-4">
-                    <div class="price">{{ item.settled_price || '--' }}</div>
-                    <div class="price">{{ item.open_price || '--' }}</div>
-                </div>
-                <div class="td td-4">
-                    <div class="num" :class="!item.profit ? '' : (item.profit > 0 ? 'up' : 'down')">{{ item.profit ||
-                        '--' }}</div>
-                    <div class="num" :class="!item.ratio ? '' : (item.ratio > 0 ? 'up' : 'down')">{{
-                        getRatio(item.ratio) }}</div>
+        
+        <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
+            <div class="td td-5">
+                <div class="name van-omit1">{{ item.symbol }}</div>
+                <div class="lever">
+                    <div class="status">{{ item.lever }}X</div>
+                    <div class="status" :class="'status-' + item.status">{{ statusMap[item.status] || '--' }}</div>
                 </div>
             </div>
-            <template #right>
-                <div class="btns">
-                    <div class="btn btn1" @click="OpeningForm(item)">
-                        <div class="btn_icon">
-                            <img src="/static/img/trade/detail.png" alt="img">
-                        </div>
-                        <div>订单详情</div>
-                    </div>
-                    <div class="btn btn2" @click="update(item)"
-                        :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(item.status) }">
-                        <div class="btn_icon">
-                            <img src="/static/img/trade/update.png" alt="img">
-                        </div>
-                        <div>更新</div>
-                    </div>
-                    <div class="btn btn3" @click="sell(item)"
-                        :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(item.status) }">
-                        <div class="btn_icon">
-                            <img src="/static/img/trade/close.png" alt="img">
-                        </div>
-                        <div>平仓</div>
-                    </div>
-                    <div class="btn btn4" @click="cancel(item)"
-                        :class="{ 'disabled_btn': !['none'].includes(item.status) }">
-                        <div class="btn_icon">
-                            <img src="/static/img/trade/cancel.png" alt="img">
-                        </div>
-                        <div>撤单</div>
-                    </div>
-                </div>
-            </template>
-        </SwipeCell>
+            <div class="td td-4">
+                <div class="state" :class="'state-' + item.offset">{{ offsetMap[item.offset] || '--' }}</div>
+                <div class="amount">{{ item.unsold_volume || '--' }}</div>
+            </div>
+            <div class="td td-4">
+                <div class="price">{{ item.settled_price || '--' }}</div>
+                <div class="price">{{ item.open_price || '--' }}</div>
+            </div>
+            <div class="td td-4">
+                <div class="num" :class="!item.profit ? '' : (item.profit > 0 ? 'up' : 'down')">{{ item.profit ||
+                    '--' }}</div>
+                <div class="num" :class="!item.ratio ? '' : (item.ratio > 0 ? 'up' : 'down')">{{
+                    getRatio(item.ratio) }}</div>
+            </div>
+        </div>
+            
 
         <!-- 订单详情 -->
-        <Popup v-model:show="showInfo" position="bottom" round closeable teleport="body">
-            <div class="order_info_box">
-                <div class="title">订单详情</div>
-
+        <Popup v-model:show="showInfo" position="bottom" round closeable   teleport="body">
+            <div class="van-popup-custom-title">股票订单</div>
+            <div class="order_info_box van-popup-custom-body" style="max-height:calc(100vh - 3.6rem);">
                 <div class="info_boxs">
                     <div class="info_box">
                         <div>可售股票</div>
@@ -168,41 +135,59 @@
                     </div>
                 </div>
             </div>
+
+            <div class="btns">
+            
+                <div class="btn btn2" @click="update(currStock)"
+                    v-if="currStock.status != 'done'"
+                    :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(currStock.status) }">
+                    <div class="btn_icon">
+                        <img src="/static/img/trade/update.png" alt="img">
+                    </div>
+                    <div>更新</div>
+                </div>
+                <div class="btn btn3" @click="sell(currStock)"
+                    v-if="currStock.status != 'done'"
+                    :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(currStock.status) }">
+                    <div class="btn_icon">
+                        <img src="/static/img/trade/close.png" alt="img">
+                    </div>
+                    <div>平仓</div>
+                </div>
+                <div class="btn btn4" @click="cancel(currStock)"
+                    :class="{ 'disabled_btn': !['none'].includes(currStock.status) }">
+                    <div class="btn_icon">
+                        <img src="/static/img/trade/cancel.png" alt="img">
+                    </div>
+                    <div>撤单</div>
+                </div>
+            </div>
+
+            
         </Popup>
 
         <!-- 平仓 -->
         <Popup v-model:show="showSell" position="bottom" round closeable teleport="body">
+            <div class="van-popup-custom-title">平仓</div>
             <div class="order_sell_box">
-                <div class="title">平仓</div>
-                <div style="height:0.4rem"></div>
                 <div class="form">
-                    <div class="subtitle">数量</div>
-                    <div class="item" style="margin-bottom:0.1rem">
+                    <div class="subtitle">
+                        <span>数量</span>
+                        <span class="subtitle-tip">持仓数量 {{ currStock.unsold_volume }}</span>
+                    </div>
+                    <div class="item">
                         <input @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
                             @input="changeValue" type="number" class="ipt">
                         <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                             style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
                             @click="sellForm.volume = currStock.unsold_volume">全部</span>
                     </div>
-
-                    <div class="tip">持仓数量 <span class="num">{{ currStock.unsold_volume }}</span></div>
+                    <div style="height:0.47rem;"></div>
+                    
                     <!-- 拖动 -->
-                    <div class="slider-container">
-                        <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa"
-                            inactive-color="#f2f2f2" @change="onSliderChange">
-                            <template #button>
-                                <div class="slider-custom-num">
-                                    <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
-                                </div>
-                            </template>
-                        </Slider>
-                    </div>
-                    <div class="percentages">
-                        <div v-for="percent in percentages" :key="percent" class="percentage">
-                            <div class="line"></div>
-                            {{ percent }}%
-                        </div>
-                    </div>
+
+                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                    
 
                     <!-- 收益分析 -->
                     <!-- <div class="total_box">
@@ -229,18 +214,19 @@
                         <input v-model="sellForm.safeword" type="password" class="ipt">
                     </div> -->
 
-                    <Button @click="goSellDialog" :loading="sellLoading" type="primary" class="btn" color="#014CFA">
-                        <span style="font-size: 0.28rem;">确定</span>
+                    <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"  color="#014CFA">
+                        确定
                     </Button>
                 </div>
             </div>
         </Popup>
+        
 
         <!-- 更新 -->
-        <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
+        <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body" z-index="111111">
+            <div class="van-popup-custom-title">更新订单</div>
             <div class="order_sell_box">
-                <div class="title">更新订单</div>
-                <div style="height:0.4rem"></div>
+                
                 <div class="form">
                     <!-- <div class="item_box">
                         <div class="item_box_left" @click="showUpModelDialog = true">
@@ -280,17 +266,17 @@
                             <div class="item">
                                 <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
                                     v-model="updateForm.stop_loss_price" type="number" class="ipt">
-                                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                                <span class="num-tag"
                                     @click="setPriceStop(20)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}20%</span>
-                                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                                <span class="num-tag"
                                     @click="setPriceStop(15)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}15%</span>
-                                <span style="color: #014CFA;margin-left: 0.2rem;transition: all ease .3s;"
+                                <span class="num-tag"
                                     @click="setPriceStop(10)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
@@ -299,39 +285,28 @@
                             </div>
                         </div>
                     </div>
-                    <div class="subtitle">增加保证金</div>
-                    <div class="item" style="margin-bottom:0.1rem">
+                    <div class="subtitle">
+                        <span>增加保证金</span>
+                        <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
+                    </div>
+                    <div class="item">
                         <input @focus="amountFocus = true" @blur="amountFocus = false" @input="changeAmount"
                             v-model="updateForm.amount" type="number" class="ipt">
                         <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                             style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
                             @click="updateForm.amount = stockWalletAmount">全部</span>
                     </div>
-                    <div class="tip">≤ {{ stockWalletAmount }}</div>
+                    <div style="height:0.47rem;"></div>
                     <!-- 拖动 -->
-                    <div class="slider-container">
-                        <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa"
-                            inactive-color="#f2f2f2" @change="onSliderChange">
-                            <template #button>
-                                <div class="slider-custom-num">
-                                    <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
-                                </div>
-                            </template>
-                        </Slider>
-                    </div>
-                    <div class="percentages">
-                        <div v-for="percent in percentages" :key="percent" class="percentage">
-                            <div class="line"></div>
-                            {{ percent }}%
-                        </div>
-                    </div>
+                    <SlideContainer v-model="sliderValue"  @change="onSliderChange" />
+                    
                     <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">
                         <input v-model="updateForm.safeword" type="password" class="ipt">
                     </div> -->
 
-                    <Button @click="goUpdateDialog" :loading="updateLoading" type="primary" class="btn" color="#014CFA">
-                        <span style="font-size: 0.28rem;">确定</span>
+                    <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary" color="#014CFA">
+                        确定
                     </Button>
                 </div>
             </div>
@@ -367,7 +342,7 @@ import { _stocksSell, _stocksUpdate, _stocksCancel } from "@/api/api"
 import { _copyTxt } from "@/utils/index"
 import UnLogin from "@/components/UnLogin.vue"
 import SafePassword from "@/components/SafePassword.vue"
-
+import SlideContainer from "@/components/SlideContainer.vue"
 
 const loginfinish = () => {
 
@@ -712,21 +687,23 @@ const copy = text => {
 
 <style lang="less" scoped>
 .positions {
-    padding-bottom: 2rem;
-
+    padding:0 0.32rem 1.6rem 0.32rem;
+    
     .tr {
-        padding: 0.24rem 0.32rem;
-        border-bottom: 1px solid #e8e8e8;
+        padding: 0.24rem 0;
+        border-bottom: 1px solid #EFF3F8;
         display: flex;
         align-items: stretch;
     }
+    .tr:last-child{
+        border-bottom: 0px;
+    }
+  
 
     .th {
-        color: #9ea3ae;
-        font-size: 0.28rem;
-        padding: 0.24rem 0.32rem 0.08rem 0.32rem;
-        font-weight: 400;
-        border-bottom: none;
+        color: #8F92A1;
+        font-size: 0.22rem;
+        padding: 0.48rem 0 0.24rem 0;
     }
 
     .td {
@@ -735,56 +712,65 @@ const copy = text => {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding: 0 0.04rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        line-height: 0.44rem;
+        line-height: 0.3rem;
 
         .name {
-            font-size: 0.28rem;
-            font-weight: 600;
+            font-size: 0.32rem;
             color: #061023;
-            margin-bottom: 0.1rem;
+            line-height: 0.32rem;
+            margin-bottom: 0.18rem;
         }
 
         .lever {
             display: flex;
             align-items: center;
-            padding-left: 0.1rem;
-            font-size: 0.24rem;
-            color: #000;
-            font-weight: 400;
+            
         }
 
         .status {
-            color: #F89A29;
-            font-weight: 500;
-            height: 0.4rem;
-            padding: 0 0.16rem;
-            border-radius: 0.08rem;
-            background-color: rgba(248, 154, 41, 0.08);
+            color: #014CFA;
+            height: 0.3rem;
+            padding: 0 0.08rem;
+            border-radius: 0.3rem;
+            border:1px solid #014CFA;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 0.1rem;
+            font-size: 0.22rem;
+            margin-right: 0.08rem;
         }
+        
 
         .status-open {
             color: #18B762;
-            background-color: rgba(24, 183, 98, 0.08);
+            border-color: #18B762;
         }
 
+        .status-fail,
+        .status-lock{
+            color:#E8503A;
+            border-color: #E8503A;
+        }
+        .status-none{
+            color:#7E99D6;
+            border-color:#7E99D6;
+        }
+ 
+
         .state {
+            width: 0.68rem;
+            height: 0.36rem;
             color: #E8503A;
-            font-weight: 500;
-            height: 0.44rem;
-            padding: 0 0.2rem;
-            border-radius: 0.08rem;
-            background-color: rgba(232, 80, 58, 0.08);
+            border-radius: 0.12rem;
+            background: rgba(232, 80, 58, 0.10);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.24rem;
+            margin:0 auto;
         }
 
         .state-short {
@@ -793,22 +779,30 @@ const copy = text => {
         }
 
         .amount {
-            color: #014CFA;
+            color: #061023;
             font-size: 0.28rem;
-            font-weight: 400;
         }
 
         .price {
-            color: #000;
-            font-size: 0.28rem;
-            font-weight: 400;
+            color: #666D80;
+            font-size: 0.24rem;
+            
         }
-
+        .price:first-child{
+            color:#061023;
+            font-size: 0.28rem;
+            font-weight: 600;
+            line-height: 0.36rem;
+        }
         .num {
             color: #6C7B90;
             font-weight: 600;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
             text-align: right;
+        }
+        .num:first-child{
+            font-size: 0.28rem;
+            line-height: 0.36rem;
         }
     }
 
@@ -821,56 +815,9 @@ const copy = text => {
         flex: 4;
     }
 
-    .btns {
-        display: flex;
-
-        .btn {
-            width: 1.4rem;
-            height: 1.4rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 0.24rem;
-            font-weight: 400;
-
-            .btn_icon {
-                width: 0.4rem;
-                height: 0.4rem;
-                margin-bottom: 0.2rem;
-            }
-        }
-
-        .btn1 {
-            background-color: #F7931F;
-        }
-
-        .btn2 {
-            background-color: #627EEA;
-        }
-
-        .btn3 {
-            background-color: #014CFA;
-        }
-
-        .btn4 {
-            background-color: #ef4d4b;
-        }
-
-        .disabled_btn {
-            background-color: #000;
-            filter: invert(0.9);
-
-            >div {
-                filter: invert(0.6);
-            }
-        }
-    }
+    
 }
-</style>
 
-<style lang="less">
 .order_info_box {
     padding: 0.32rem;
 
@@ -955,7 +902,7 @@ const copy = text => {
                 align-items: center;
                 justify-content: center;
                 padding: 0 0.24rem;
-                border-radius: 0.08rem;
+                border-radius: 0.28rem;
                 margin-right: 0.1rem;
             }
 
@@ -978,6 +925,47 @@ const copy = text => {
             }
         }
     }
+
+    
+}
+
+.btns {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 0.32rem 0;
+    .btn {
+        width: 2.1532rem;
+        height: 1.4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #014CFA;
+        color: #fff;
+        font-size: 0.32rem;
+        font-weight: 400;
+        line-height: 100%;
+        border-radius: 0.32rem;
+        margin: 0 0.1rem;
+        .btn_icon {
+            width: 0.4rem;
+            height: 0.4rem;
+            margin-bottom: 0.16rem;
+        }
+    }
+
+    .btn3 {
+        background-color: #7E99D6;
+    }
+
+    .btn4 {
+        background-color: #B2BBD1;
+    }
+
+    .disabled_btn {
+        opacity: 0.6;
+    }
 }
 
 .order_sell_box {
@@ -995,13 +983,23 @@ const copy = text => {
             color: #333333;
             font-weight: 400;
             font-size: 0.28rem;
-            margin-bottom: 0.1rem;
+            margin-bottom: 0.12rem;
+            line-height: 0.42rem;
+            align-items: center;
+            display:flex;
+            justify-content: space-between;
+        }
+        .subtitle-tip{
+            color:#666D80;
+        }
+        .submit{
+            margin-top:0.6rem;
         }
 
         .item_box {
             display: flex;
             align-items: stretch;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
 
             .item_box_left {
                 width: 1.8rem;
@@ -1023,9 +1021,9 @@ const copy = text => {
 
         .item {
             width: 100%;
-            height: 0.96rem;
+            height: 1.12rem;
             border: 1px solid #D0D8E2;
-            border-radius: 0.12rem;
+            border-radius: 0.32rem;
             padding: 0 0.24rem;
             display: flex;
             align-items: center;
@@ -1036,13 +1034,7 @@ const copy = text => {
             }
         }
 
-        .btn {
-            width: 100%;
-            border-radius: 0.5rem;
-            margin-top: 0.6rem;
-            height: 0.96rem;
-        }
-
+    
         .tip {
             text-align: right;
             font-size: 0.24rem;
@@ -1086,88 +1078,16 @@ const copy = text => {
                 }
             }
         }
-
-        .slider-container {
-            margin: 0 auto;
-            width: 100%;
-            height: 0.8rem;
-            padding: 0.2rem 0 0 0;
-
-            .slider-custom-num {
-                position: relative;
-                background: #014CFA;
-                color: #fff;
-                display: inline-block;
-                width: .1rem;
-                height: .5rem;
-                font-size: 12px;
-                text-align: center;
-                line-height: .4rem;
-                border-radius: 10px;
-
-                .number {
-                    color: #014CFA;
-                    position: absolute;
-                    top: -0.4rem;
-                    left: -0.1rem;
-                    font-size: .2rem;
-                }
-            }
-
-            .van-slider {
-                margin-top: 0.1rem;
-                height: 0.16rem !important;
-                border-radius: 0.02rem;
-                padding-right: 0.1rem;
-            }
-
-            .van-slider__bar {
-                position: relative;
-            }
-
-            .van-slider__button {
-                width: 0.1rem;
-                height: 0.48rem;
-                background-color: #014cfa;
-                border-radius: inherit;
-                top: -0.36rem;
-            }
-
-            .van-slider__button-wrapper {
-                z-index: 999 !important;
-                padding: 0.24rem;
-            }
-
-
-
-        }
-
-        .percentages {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            z-index: 7;
-
-            .percentage {
-                color: #8f92a1;
-                font-size: 0.28rem;
-                font-style: normal;
-                font-weight: 400;
-                text-align: center;
-                width: 25%;
-                position: relative;
-            }
-
-            .line {
-                width: 0.06rem;
-                height: 0.2rem;
-                position: absolute;
-                right: 0;
-                top: -0.5rem;
-                background: #fff;
-                z-index: 88;
-            }
-        }
+        
     }
+}
+.num-tag{
+    color: #2168F6;
+    margin-left: 0.08rem;
+    transition: all ease .3s;
+    border-radius: 0.3rem;
+    background: rgba(33, 104, 246, 0.10);
+    font-size: 0.24rem;
+    padding: 0 0.14rem;
 }
 </style>

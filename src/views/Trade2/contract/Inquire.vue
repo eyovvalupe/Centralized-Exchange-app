@@ -14,7 +14,7 @@
                 <div class="td td-5">
                     <div class="name">{{ item.symbol }}</div>
                     <div class="lever">
-                        <span>{{ item.lever }}X</span>
+                        <div class="status">{{ item.lever }}X</div>
                         <div class="status" :class="'status-' + item.status">{{ statusMap[item.status] || '--' }}</div>
                     </div>
                 </div>
@@ -170,16 +170,20 @@ defineExpose({
     padding-bottom: 2rem;
 
     .tr {
-        padding: 0.24rem 0.32rem;
-        border-bottom: 1px solid #e8e8e8;
+        padding: 0.24rem 0;
+        border-bottom: 1px solid #EFF3F8;
         display: flex;
         align-items: stretch;
     }
+    .tr:last-child{
+        border-bottom: 0px;
+    }
+  
 
     .th {
-        color: #9ea3ae;
-        font-size: 0.28rem;
-        font-weight: 400;
+        color: #8F92A1;
+        font-size: 0.22rem;
+        padding: 0.48rem 0 0.24rem 0;
     }
 
     .td {
@@ -188,56 +192,65 @@ defineExpose({
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding: 0 0.04rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        line-height: 0.44rem;
+        line-height: 0.3rem;
 
         .name {
-            font-size: 0.28rem;
-            font-weight: 600;
+            font-size: 0.32rem;
             color: #061023;
-            margin-bottom: 0.1rem;
+            line-height: 0.32rem;
+            margin-bottom: 0.18rem;
         }
 
         .lever {
             display: flex;
             align-items: center;
-            padding-left: 0.1rem;
-            font-size: 0.24rem;
-            color: #000;
-            font-weight: 400;
+            
         }
 
         .status {
-            color: #F89A29;
-            font-weight: 500;
-            height: 0.4rem;
-            padding: 0 0.16rem;
-            border-radius: 0.08rem;
-            background-color: rgba(248, 154, 41, 0.08);
+            color: #014CFA;
+            height: 0.3rem;
+            padding: 0 0.08rem;
+            border-radius: 0.3rem;
+            border:1px solid #014CFA;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: 0.1rem;
+            font-size: 0.22rem;
+            margin-right: 0.08rem;
         }
+        
 
         .status-open {
             color: #18B762;
-            background-color: rgba(24, 183, 98, 0.08);
+            border-color: #18B762;
         }
 
+        .status-fail,
+        .status-lock{
+            color:#E8503A;
+            border-color: #E8503A;
+        }
+        .status-none{
+            color:#7E99D6;
+            border-color:#7E99D6;
+        }
+ 
+
         .state {
+            width: 0.68rem;
+            height: 0.36rem;
             color: #E8503A;
-            font-weight: 500;
-            height: 0.44rem;
-            padding: 0 0.2rem;
-            border-radius: 0.08rem;
-            background-color: rgba(232, 80, 58, 0.08);
+            border-radius: 0.12rem;
+            background: rgba(232, 80, 58, 0.10);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.24rem;
+            margin:0 auto;
         }
 
         .state-short {
@@ -246,25 +259,32 @@ defineExpose({
         }
 
         .amount {
-            color: #014CFA;
+            color: #061023;
             font-size: 0.28rem;
-            font-weight: 500;
         }
 
         .price {
-            color: #000;
-            font-size: 0.28rem;
-            font-weight: 500;
+            color: #666D80;
+            font-size: 0.24rem;
+            
         }
-
+        .price:first-child{
+            color:#061023;
+            font-size: 0.28rem;
+            font-weight: 600;
+            line-height: 0.36rem;
+        }
         .num {
             color: #6C7B90;
             font-weight: 600;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
             text-align: right;
         }
+        .num:first-child{
+            font-size: 0.28rem;
+            line-height: 0.36rem;
+        }
     }
-
     .td-5 {
         flex: 5;
         text-align: left;

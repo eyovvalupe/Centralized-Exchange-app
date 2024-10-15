@@ -696,8 +696,7 @@ defineExpose({
         border: 1px solid #e8503a !important;
     }
 }
-</style>
-<style lang="less">
+
 .stock_submit_box {
     padding: 0.32rem 0.32rem 1rem 0.32rem;
 

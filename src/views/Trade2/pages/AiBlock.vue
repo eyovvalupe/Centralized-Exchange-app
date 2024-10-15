@@ -1,7 +1,7 @@
 <!-- ai -->
 <template>
     <div class="ai-block">
-        <Tabs v-if="!pageLoading" class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
+        <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="onChange">
             <Tab title="开仓" name="0">
                 <div class="ai-block-content">
@@ -89,8 +89,9 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .ai-block {
+    padding: 0.24rem 0.32rem 0.32rem;
     .ai-block-content {
-        padding: 0.4rem 0 2rem 0;
+        padding: 0.4rem 0 1.22rem 0;
 
         .ai-block-title {
             padding: 0 0.32rem;

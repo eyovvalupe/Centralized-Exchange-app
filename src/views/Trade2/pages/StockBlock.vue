@@ -7,16 +7,22 @@
                 <img src="/static/img/trade/time.png" alt="img">
             </div>
         </div> -->
-        <Tabs v-if="!pageLoading" class="tabs" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
+        <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="onChange">
             <Tab title="开仓" name="0">
-                <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
+                <div class="stock_tab-body">
+                    <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
+                </div>
             </Tab>
             <Tab title="持仓" name="1">
-                <Positions />
+                <div class="stock_tab-body">
+                    <Positions />
+                </div>
             </Tab>
             <Tab title="查询" name="2">
-                <Inquire ref="InquireRef" />
+                <div class="stock_tab-body">
+                    <Inquire ref="InquireRef" />
+                </div>
             </Tab>
         </Tabs>
         <div style="height:50vh" v-else></div>
@@ -90,43 +96,30 @@ const openDate = () => {
 <style lang="less" scoped>
 .stock_block {
     position: relative;
-
-    .date_box {
-        position: absolute;
-        z-index: 999;
-        right: 0.2rem;
-        top: 0.2rem;
-        display: flex;
-        align-items: center;
-        color: #0953FA;
-        font-size: 0.24rem;
-
-        .date_icon {
-            width: 0.48rem;
-            height: 0.48rem;
-            margin-right: 0.08rem;
-        }
+    padding: 0.24rem 0  0.32rem 0;
+    :deep(.van-tabs__nav){
+        margin:0 0.32rem;
     }
 
-
     .tabs {
-        :deep(.van-tabs__nav) {
-            padding-left: 0.32rem;
-        }
 
-        :deep(.van-tabs__nav) {
-            position: relative;
-
-            &::after {
-                content: '';
-                width: 100%;
-                height: 1px;
-                background-color: #3B82F6;
-                position: absolute;
-                bottom: 16px;
-                left: 0;
-                opacity: 0.3;
+        :deep(.van-tabs__wrap) {
+            background: #EFF3F8;
+            margin: 0 .32rem;
+            border-radius: 16px;
+            height: 40px;
+            
+            .van-tabs__nav {
+                padding-left: 0.32rem;
+                position: relative;
+                display: flex;
+                justify-content: space-between;
+                .van-tab {
+                    width: 33%;
+                }
+        
             }
+            
         }
     }
 }

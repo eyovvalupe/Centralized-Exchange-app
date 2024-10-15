@@ -1,6 +1,8 @@
 // 重写vant样式
-:root {
-    --van-overlay-background: #0000004d !important;
+:root:root {
+    --van-overlay-background: rgba(31, 41, 55, 0.50);
+    --van-button-large-height:1.12rem;
+    
 }
 
 .van-toast--loading {
@@ -12,15 +14,6 @@
     }
 }
 
-.van-tabs__nav {
-    background-color: transparent !important;
-}
-
-.van-button__text {
-    // 按钮文案
-    font-size: 0.28rem;
-    font-weight: 400;
-}
 
 .van-button {
     border: none !important;
@@ -44,14 +37,6 @@
     background-color: rgba(0, 0, 0, 0) !important;
 }
 
-.van-popup {
-    z-index: 99999 !important;
-}
-
-.van-overlay {
-    z-index: 99998 !important;
-}
-
 .van-popup--bottom {
     padding-top: 0.2rem;
 
@@ -66,6 +51,32 @@
         top: 0.2rem;
         left: 50%;
         transform: translateX(-50%);
+    }
+    
+    .van-popup-custom-title{
+        margin-top: 0.48rem;
+        height: 0.44rem;
+        line-height: 0.44rem;
+        color: #121826;
+        text-align: center;
+        font-size: 0.32rem;
+        font-weight: 500;
+    }
+
+    .van-popup__close-icon{
+        font-size: 0.4rem !important;
+    }
+
+    .van-popup-custom-body{
+        max-height: calc(100vh - 1.12rem);
+        overflow-y: auto;
+        box-sizing: border-box;
+    }
+}
+
+.van-button--large{
+    .van-button__text{
+        font-size:0.36rem;
     }
 }
 
@@ -158,3 +169,192 @@
 .van-dialog {
     box-shadow: 0 0 10px #ddd;
 }
+
+/*自定义选项卡样式1*/
+.van-tabs--custom-card{
+    margin-top: 0.16rem;
+    > .van-tabs__wrap{
+        overflow: inherit;
+        .van-tabs__nav{
+            background: #EFF3F8;
+            height: 0.8rem;
+            border-radius: 0.32rem;
+            overflow: inherit;
+            
+        }
+       
+        .van-tab--active{
+            flex: 1;
+            text-align: center;
+            color: #8A8C95;
+        }
+     
+        .van-tab--shrink{
+            flex: 1;
+        }
+        .van-tab--active {
+            border-radius: 0.32rem 0.32rem 0 0;
+            background: #FFF;
+            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            height: 0.92rem;
+            position: relative;
+            top:-0.12rem;
+            z-index: 1;
+            .van-tab__text {
+                font-size: 0.32rem;
+                font-weight: 600;
+                color:#014CFA;
+                
+            }
+        }
+        .van-tab:first-child.van-tab--active{
+            border-radius: 0.32rem 0.32rem 0 0.32rem;
+        }
+        .van-tab:last-child.van-tab--active{
+            border-radius: 0.32rem 0.32rem 0.32rem 0;
+        }
+        .van-tabs__line{
+            display: none;
+        }
+    }
+}
+
+/*自定义选项卡样式2*/
+.van-tabs--sub{
+    > .van-tabs__wrap {
+        height: 0.6rem !important;
+        .van-tabs__nav--line {
+            border-bottom: 1px solid #EFF3F8 !important;
+            padding-bottom: 0px;
+            box-sizing: border-box;
+            padding-left: 0px;
+            padding-right: 0px;
+            .van-tab__text {
+                font-size: 0.28rem;
+                color: #8F92A1;
+            }
+    
+            .van-tab--active {
+                .van-tab__text {
+                    color: #121826;
+                }
+            }
+
+            .van-tab{
+                padding: 0px;
+                margin-right: 0.36rem;
+            }
+
+            .van-tabs__line {
+                background-color: #014CFA !important;
+                width: 0.36rem;
+                bottom:0;
+                border-radius: 0.3rem;
+                height: 0.06rem;
+            }
+        }
+    }
+}
+
+.van-tabs--oval-card{
+    margin-top: 0.16rem;
+    > .van-tabs__wrap{
+        overflow: inherit;
+        .van-tabs__nav{
+            background: #fff;
+            height: 0.92rem;
+            border-radius: 0.32rem;
+            overflow: inherit;
+            border: 1px solid #EFF3F8 !important;
+            
+        }
+        .van-tab__text {
+            font-size: 0.32rem;
+        }
+       
+        .van-tab--active{
+            flex: 1;
+            text-align: center;
+            color: #8A8C95;
+        }
+        
+        .van-tab--shrink{
+            flex: 1;
+        }
+        .van-tab--active {
+            border-radius: 0.32rem;
+            background: #014CFA;
+            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            height: 0.92rem;
+            z-index: 1;
+            .van-tab__text {
+                font-size: 0.32rem;
+                font-weight: 600;
+                color:#fff;
+                
+            }
+        }
+        
+        .van-tabs__line{
+            display: none;
+        }
+    }
+}
+.van-tabs--oval-sub{
+    > .van-tabs__wrap {
+        height: 0.68rem !important;
+        .van-tabs__nav {
+            padding-bottom: 0px;
+            box-sizing: border-box;
+            padding-left: 0px;
+            padding-right: 0px;
+            background: none;
+            .van-tab__text {
+                font-size: 0.28rem;
+                color: #8F92A1;
+            }
+    
+            .van-tab{
+                padding: 0 0.24rem;
+                border: 1px solid #D0D8E2;
+                margin-right: 0.12rem;
+                border-radius: 0.5rem;
+                height: 0.68rem;
+                box-sizing: border-box;
+            }
+            .van-tab--active {
+                background-color: #014CFA;
+                border-color: #014CFA;
+                .van-tab__text {
+                    color: #fff;
+                    font-weight: 400;
+                }
+            }
+
+            
+
+            .van-tabs__line {
+                display: none;
+            }
+        }
+    }
+}
+.van-overlay{
+    backdrop-filter: blur(4px);
+}
+
+
+/* 省略 */
+.van-omit1,
+.van-omit2,
+.van-omit3,
+.van-omit4{
+    overflow:hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.van-omit1{ -webkit-line-clamp: 1; }
+.van-omit2{ -webkit-line-clamp: 2; }
+.van-omit3{ -webkit-line-clamp: 3; }
+.van-omit4{ -webkit-line-clamp: 4; }
