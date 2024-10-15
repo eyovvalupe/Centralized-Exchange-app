@@ -18,9 +18,9 @@
                     <div class="item_info_box" @click.stop="() => mode = mode == 3 ? 1 : mode + 1">
                         <div v-if="props.item.ratio !== undefined" class="item_percent"
                             :class="[updown === 0 ? '' : (updown > 0 ? 'up_bg' : 'down_bg')]">
-                                <span v-if="mode == 1">{{ ((props.item.ratio || 0) * 100).toFixed(2) }}%</span>
-                                <span v-else-if="mode == 2">{{ (props.item.price || 0).toFixed(2) }}</span>
-                                <span v-else>{{ _formatNumber(props.item.volume) }}</span>
+                            <span v-if="mode == 1">{{ ((props.item.ratio || 0) * 100).toFixed(2) }}%</span>
+                            <span v-else-if="mode == 2">{{ (props.item.price || 0).toFixed(2) }}</span>
+                            <span v-else>{{ _formatNumber(props.item.volume) }}</span>
                         </div>
                     </div>
                 </div>
@@ -140,12 +140,14 @@ const removeStock = item => {
 
 
     .delete_content {
-        width: 1.12rem;
+        width: 1rem;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #014CFA;
+        background-color: #d0d8e2;
+        border-top-right-radius: 16px;
+        border-bottom-right-radius: 16px;
 
         .delete_icon {
             font-size: 0.52rem;
@@ -216,6 +218,7 @@ const removeStock = item => {
 
         .item_info_box {
             margin-top: 0.1rem;
+
             .item_percent {
                 height: 0.4rem;
                 line-height: 0.4rem;

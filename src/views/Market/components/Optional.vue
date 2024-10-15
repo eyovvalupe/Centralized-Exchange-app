@@ -308,6 +308,13 @@ const remove = item => {
     }
 }
 
+@media (min-width: 751px) {
+    .one_click_to_favorite_container {
+        max-width: 375px;
+        overflow-y: auto;
+    }
+}
+
 .one_click_to_favorite_container {
     position: fixed;
     bottom: 1.866rem;
