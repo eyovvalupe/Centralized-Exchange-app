@@ -98,20 +98,34 @@
         </div>
         <!-- 操作 -->
         <div class="market_bottom" v-if="!props.innerPage">
-            <div class="symbol">{{ item.symbol || '--' }}</div>
-            <div class="time_type">{{ timeType }}</div>
-            <div class="bottom_line"></div>
-            <div class="bottom_btn" @click="showBuy = true">
-                <!-- <div class="bottom_btn_icon">
-                    <img src="/static/img/market/buy_icon.png" alt="img">
-                </div> -->
+            <div>
+                <div class="symbol">{{ item.symbol || "--" }}</div>
+                <div class="time_type">{{ timeType }}</div>
+            </div>
+
+            <!-- <div class="bottom_btn" @click="showBuy = true">
                 <span>交易</span>
             </div>
-            <div class="bottom_btn" @click="showInfo = true">
-                <!-- <div class="bottom_btn_icon">
-                    <img src="/static/img/market/data_icon.png" alt="img">
-                </div> -->
-                <span>数据</span>
+            -->
+            <div style="display: flex">
+                <div class="bottom_btn" style="background-color: #014cfa" @click="showInfo = true">
+                    <!-- <div class="bottom_btn_icon">
+                            <img src="/static/img/market/data_icon.png" alt="img">
+                        </div> -->
+                    <span>数据</span>
+                </div>
+                <div class="bottom_btn" @click="goBuy(true)" style="background-color: #00af70">
+                    <!-- <div class="bottom_btn_icon">
+                            <img src="/static/img/market/data_icon.png" alt="img">
+                        </div> -->
+                    <span>买涨</span>
+                </div>
+                <div class="bottom_btn" @click="goBuy(false)" style="background-color: #e8503a">
+                    <!-- <div class="bottom_btn_icon">
+                            <img src="/static/img/market/data_icon.png" alt="img">
+                        </div> -->
+                    <span>买跌</span>
+                </div>
             </div>
         </div>
         <!-- 时间选择弹窗 -->
@@ -681,7 +695,7 @@ const showInfo = ref(false)
 
         .chart_box {
             width: 100%;
-            height: calc(var(--app-height) - 2.7rem);
+            height: calc(var(--app-height) - 3.7rem);
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -787,18 +801,24 @@ const showInfo = ref(false)
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 0.32rem;
+        padding: 0.12rem 0.32rem;
         border-top: 1px solid #EAEEF3;
-        height: 0.8rem;
+        height: 1.4rem;
         font-size: 0.28rem;
 
         .symbol {
             color: #061023;
+            margin-bottom: 0.12rem;
         }
 
         .time_type {
-            color: #8F92A1;
-            margin: 0 0.3rem;
+            width: 50%;
+            text-align: center;
+            box-sizing: border-box;
+            color: #8f92a1;
+            border-radius: 20px;
+            border: 0.5px solid #d0d8e2;
+            padding: 2px;
             font-size: 0.24rem;
         }
 
@@ -809,9 +829,11 @@ const showInfo = ref(false)
         }
 
         .bottom_btn {
-            color: #014CFA;
+            color: white;
+            border-radius: 40px;
+            padding: 16px 24px;
             font-size: 0.24rem;
-            margin-left: 0.32rem;
+            margin-left: 0.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
