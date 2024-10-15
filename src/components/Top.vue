@@ -2,7 +2,7 @@
 <template>
     <div class="max-width top">
         <div class=" back" @click="clickLeft">
-            <Icon :name="props.icon" />
+            <Icon :name="props.icon" size="0.4rem" />
         </div>
         <span>{{ props.title }}</span>
         <div class="right">
