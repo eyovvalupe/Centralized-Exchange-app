@@ -1,28 +1,24 @@
 <!-- ai持仓 -->
 <template>
     <div class="page_ai_position">
+        <NoData v-if="!loading && !aiPositionsList.length" />
         <div class="list">
             <div class="item" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)">
                 <div class="ai_icon">
-                    <img src="/static/img/trade/ai_order.png" alt="ai">
+                    <img src="/static/img/trade/ai.png" alt="ai">
                 </div>
                 <div class="mid">
                     <div class="name">{{ item.name }}</div>
-                    <div class="mid_block">
-                        <!-- <div class="tag" :class="[item.offset == 'long' ? 'up' : 'down']">{{ item.offset == 'long'
-                            ? '买涨' : '买跌' }}</div> -->
-                        <div class="grid">{{ item.order_no }}</div>
-                    </div>
+                    <div class="grid van-omit1">{{ item.order_no }}</div>
                 </div>
                 <div class="right">
-                    <div class="amount">{{ formatSec2(item.endtime) }}</div>
-                    <!-- <div class="time">{{ item.date }}</div> -->
-                    <div class="status">当前持仓</div>
+                    <div class="endtime" v-html="formatEndtime(item.endtime)"></div>
                 </div>
             </div>
-
-            <Loaidng :loading="loading" v-if="loading && !aiPositionsList.length" />
+            
+            
         </div>
+        <LoadingMore :loading="loading" v-if="loading && !aiPositionsList.length" />
     </div>
 
     <!-- 详情 -->
@@ -34,7 +30,8 @@ import { useSocket } from "@/utils/ws";
 import { onMounted, onUnmounted, computed, ref } from "vue"
 import store from '@/store';
 import AiInfo from "../components/AiInfo.vue"
-import Loaidng from "@/components/Loaidng.vue"
+import LoadingMore from "@/components/LoadingMore.vue"
+import NoData from '@/components/NoData.vue';
 import { formatSec2 } from "@/utils/time"
 
 // 详情
@@ -43,6 +40,17 @@ const openInfo = item => {
     infoRef.value && infoRef.value.open(item)
 }
 
+const formatEndtime = (endtime)=>{
+    let time = formatSec2(endtime)
+    let html = ''
+    time.split(":").map((t,i)=>{
+        if(i > 0){
+            html += '<span class="split">:</span>'
+        }
+        html += '<span class="num">'+t+'</span>'
+    })
+    return html
+}
 
 
 const token = computed(() => store.state.token)
@@ -89,69 +97,93 @@ onUnmounted(() => {
 <style lang="less" scoped>
 .page_ai_position {
     .list {
-        padding: 0.2rem 0.32rem;
+        padding: 0.2rem 0 1.4rem 0;
 
     }
 
     .item {
         display: flex;
         align-items: center;
-        padding: 0.2rem;
-        border-bottom: 1px solid #EAEAEA;
-        color: #333;
-        line-height: 0.5rem;
-
+        border-bottom: 1px solid #EFF3F8;
+        line-height: 100%;
+        padding: 0.32rem 0;
         .ai_icon {
-            width: 0.64rem;
-            height: 0.64rem;
+            width: 0.8rem;
+            height: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.24rem;
+            background-color: rgba(1, 76, 250, 0.10);
+            img{
+                width: 0.53rem !important;
+                height:0.53rem !important;
+            }
         }
 
         .mid {
             flex: 1;
-            margin: 0 0.2rem 0 0.36rem;
-
+            margin: 0 0.2rem 0 0.18rem;
+            overflow: hidden;
             .name {
-                font-size: 0.28rem;
-                color: #000;
+                font-size: 0.3rem;
+                color: #061023;
                 font-weight: bold;
             }
 
-            .mid_block {
-                display: flex;
-                align-items: center;
-                margin-top: 0.1rem;
-
-                .tag {
-                    padding: 0 0.08rem;
-                    border-radius: 0.04rem;
-                    margin-right: 0.1rem;
-                    font-size: 0.24rem;
-                }
+            .grid{
+                color:#8F92A1;
+                font-weight: 400;
+                font-size: 0.28rem;
+                margin-top: 0.18rem;
             }
         }
 
         .right {
             text-align: right;
-
             .amount {
                 font-size: 0.32rem;
-                color: #000;
-                font-weight: bold;
+                font-weight: 600;
             }
 
-            .status {
-                color: #FFAF2A;
-                background-color: #FFFAF2;
-                display: inline-flex;
+            .endtime{
+                display: flex;
                 align-items: center;
-                justify-content: center;
-                padding: 0 0.16rem;
-                border-radius: 0.04rem;
-                font-size: 0.24rem;
-                width: auto;
-                margin-top: 0.1rem;
+                height: 0.6rem;
+                :deep(.num){
+                    width: 0.6rem;
+                    height: 0.6rem;
+                    position: relative;
+                    text-align: center;
+                    line-height: 0.6rem;
+                    color:#E8503A;
+                    font-weight: 600;
+                    font-size: 0.32rem;
+                    &::after{
+                        content: '';
+                        width: 200%;
+                        height: 200%;
+                        box-sizing: border-box;
+                        border: 1px solid #E8503A;
+                        transform: scale(0.5);
+                        position: absolute;
+                        left:-50%;
+                        top:-50%;
+                        border-radius: 0.24rem;
+                    }
+                }
+                :deep(.split){
+                    font-size: 0.32rem;
+                    font-weight: 600;
+                    width: 0.3rem;
+                    color:#E8503A;
+                    text-align: center;
+                }
             }
         }
+    }
+    .item:last-child{
+        border-bottom: 0px;
     }
 }
 </style>

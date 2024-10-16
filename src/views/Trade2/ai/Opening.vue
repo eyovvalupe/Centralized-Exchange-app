@@ -3,9 +3,8 @@
     <div class="trade_ai">
 
         <!-- 涨跌 -->
-        <Tabs  type="custom-card" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
+        <Tabs type="custom-card" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
             <Tab title="看涨" :name="1">
-                
             </Tab>
             <Tab title="看跌" :name="2">
             </Tab>

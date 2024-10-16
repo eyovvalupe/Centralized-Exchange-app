@@ -14,12 +14,19 @@
                 </div>
             </Tab> -->
             <Tab title="订单" name="2">
-                <div class="ai-block-content">
-                    <div v-if="token" class="ai-block-title">当前持仓</div>
-                    <Positions />
-                    <div v-if="token" class="ai-block-title" style="margin-top: 0.32rem;">历史订单</div>
-                    <Inquire ref="InquireRef" />
+                
+                <div class="type_tabs">
+                    <div @click="activeType = 1" class="type_tab" :class="{ 'active_type_tab': activeType == 1 }">
+                        <span class="type_tab_text">当前持仓</span>
+                    </div>
+                    <div @click="activeType = 2" class="type_tab" :class="{ 'active_type_tab': activeType == 2 }">
+                        <span class="type_tab_text">历史订单</span>
+                    </div>
                 </div>
+
+                <Positions v-if="activeType == 1" />
+                <Inquire ref="InquireRef" v-if="activeType == 2" />
+
             </Tab>
         </Tabs>
         <div style="height:50vh" v-else></div>
@@ -45,7 +52,7 @@ import store from "@/store";
 import router from "@/router";
 
 const token = computed(() => store.state.token || '')
-
+const activeType = ref(1)
 const OpeningRef = ref()
 const showModel = ref(false)
 const clickItem = item => {
@@ -119,6 +126,52 @@ onMounted(() => {
                 opacity: 0.3;
             }
         }
+    }
+}
+
+.type_tabs {
+    width: 3.5rem;
+    height: 0.68rem;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+    margin-top: 0.32rem;
+    border: 1px solid #D0D8E2;
+    border-radius: 0.6rem;
+    .type_tab {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666D80;
+        font-size: 0.3rem;
+    }
+
+    .type_tab_text{
+        position: relative;
+        z-index: 1;
+    }
+
+    .active_type_tab {
+        color: #fff;
+        position: relative;
+        &::after{
+            content: '';
+            width: calc(100% + 1px);
+            height: calc(100% + 1px);
+            background-color: #014CFA;
+            position: absolute;
+            left:0;
+            top:-1px;
+            border-radius: 0.6rem;
+        }
+    }
+    .type_tab:first-child.active_type_tab{
+        left:-1px;
+    }
+    .type_tab:last-child.active_type_tab{
+        right:-1px;
     }
 }
 </style>

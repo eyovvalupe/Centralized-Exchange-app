@@ -147,7 +147,7 @@
         <div class="item_box" @click="openSearchDialog">
             <div class="item" style="pointer-events: none;"
                 :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
-                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">股票代码</span>
+                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">合约代码</span>
                 <input disabled :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
                     @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="blurSearch"
                     v-model.trim="searchStr" @keyup="inputSearch" class="ipt" type="text">
@@ -1034,7 +1034,7 @@ defineExpose({
         }
 
         .disabled_item {
-            background-color: #f5f5f5;
+            background-color: #D0D8E2;
         }
 
         .item_focus {
