@@ -1,6 +1,7 @@
 <!-- 查询 -->
 <template>
     <div class="inquire" v-if="token">
+        
         <NoData v-if="!loading && !aiInquireList.length" />
         <div class="list">
             <div class="item" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">

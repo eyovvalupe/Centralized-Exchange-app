@@ -34,11 +34,14 @@ import LoadingMore from "@/components/LoadingMore.vue"
 import NoData from '@/components/NoData.vue';
 import { formatSec2 } from "@/utils/time"
 
+
 // 详情
 const infoRef = ref()
 const openInfo = item => {
     infoRef.value && infoRef.value.open(item)
 }
+
+
 
 const formatEndtime = (endtime)=>{
     let time = formatSec2(endtime)
@@ -68,10 +71,12 @@ const subs = () => {
         socket && socket.emit('user', token.value)
         socket && socket.emit('aiquantorder', '#all')
         socket.on('aiquantorder', res => {
-            // console.error('持仓', res)
             store.commit('setAiPositionsList', (res.data || []))
             loading.value = false
         })
+        setTimeout(()=>{
+            loading.value = false
+        },1000)
     });
 }
 // 取消订阅
@@ -134,7 +139,7 @@ onUnmounted(() => {
             .grid{
                 color:#8F92A1;
                 font-weight: 400;
-                font-size: 0.28rem;
+                font-size: 0.25rem;
                 margin-top: 0.18rem;
             }
         }
@@ -159,6 +164,8 @@ onUnmounted(() => {
                     color:#E8503A;
                     font-weight: 600;
                     font-size: 0.32rem;
+                    background-color: rgba(232, 80, 58, 0.10);
+                    border-radius: 0.2rem;
                     &::after{
                         content: '';
                         width: 200%;

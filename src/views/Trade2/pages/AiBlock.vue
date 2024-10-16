@@ -1,6 +1,7 @@
 <!-- ai -->
 <template>
     <div class="ai-block">
+      
         <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="onChange">
             <Tab title="开仓" name="0">
@@ -24,19 +25,20 @@
                     </div>
                 </div>
 
-                <Positions v-if="activeType == 1" />
-                <Inquire ref="InquireRef" v-if="activeType == 2" />
+                <div v-show="activeType == 1">
+                    <Positions />
+                </div>
+                <div v-show="activeType == 2">
+                    <Inquire ref="InquireRef"  />
+                </div>
 
             </Tab>
         </Tabs>
         <div style="height:50vh" v-else></div>
 
         <!-- 下单弹窗 -->
-        <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
-            <div class="van-popup-custom-title">交易</div>
-            <div style="height: 90vh;overflow-y: auto;">
-                <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
-            </div>
+        <Popup teleport="body" v-model:show="showModel" position="right" style="width:100%;height:100%;">
+            <Opening @showNavDialog="showNavDialog" ref="OpeningRef" @back="showModel=false" />
         </Popup>
     </div>
 </template>
