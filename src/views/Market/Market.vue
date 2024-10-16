@@ -30,8 +30,11 @@
             z-index: 1000;"></div>
         </Teleport> -->
 
-    <div class="boder-[#D0D8E2] absolute right-4 top-[9px] z-10 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
-      <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
+    <div class="absolute right-4 top-[0.18rem] z-10 flex" @click="jump('search')">
+      <div class="mr-7 h-11 w-[0.66rem]" :style="{ background: 'linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 100%)' }" />
+      <div class="boder-[#D0D8E2] flex size-[0.6rem] items-center justify-center rounded-50 border">
+        <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
+      </div>
     </div>
     <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
       <Tab class="optional" name="option">
