@@ -214,6 +214,7 @@ const copy = text => {
     overflow-y: auto;
     margin-top: 1.12rem;
 }
+
 .stock-info{
     background-color: #F5F7FC;
     border-radius: 0.32rem;

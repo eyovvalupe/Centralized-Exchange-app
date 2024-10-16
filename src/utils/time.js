@@ -56,12 +56,21 @@ export function formatSec(seconds) {
 }
 
 // 秒 转换成 hh:mm:ss
-export function formatSec2(seconds) {
+export function formatSec2(seconds,zeroFill=false) {
   if (seconds < 0) return '--'
-  const hours = Math.floor(seconds / 3600);
+  let hours = Math.floor(seconds / 3600);
+  if(zeroFill && hours < 10){
+    hours = '0'+hours
+  }
   seconds %= 3600;
-  const minutes = Math.floor(seconds / 60);
-  const sec = seconds % 60
+  let minutes = Math.floor(seconds / 60);
+  if(zeroFill && minutes < 10){
+    minutes = '0'+minutes
+  }
+  let sec = seconds % 60
+  if(zeroFill && sec < 10){
+    sec = '0'+sec
+  }
   return `${hours}:${minutes}:${sec}`;
 }
 
