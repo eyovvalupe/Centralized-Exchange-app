@@ -38,7 +38,7 @@
                     <div class="ratio_price" v-if="Number(item.price * (item.ratio || 0))">{{ Number(item.price *
                         (item.ratio ||
                             0)).toFixed(4) }}</div>
-                    <div v-if="item.ratio">{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%'
+                    <div class="ratio_percentage" v-if="item.ratio">{{ item.ratio === undefined ? '--' : (item.ratio * 100).toFixed(2) + '%'
                         }}</div>
                 </div>
                 <!-- <div class="count van-col van-col--5">
@@ -108,7 +108,7 @@
             </div>
             -->
             <div style="display: flex">
-                <div class="bottom_btn" style="background-color: #014cfa" @click="showInfo = true">
+                <div class="bottom_btn--default" @click="showInfo = true">
                     <!-- <div class="bottom_btn_icon">
                             <img src="/static/img/market/data_icon.png" alt="img">
                         </div> -->
@@ -171,39 +171,39 @@
                     </div>
                     <div style="display: flex;align-items: center;margin-left: 0.4rem"
                         :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">
-                        <div v-if="Number(item.price * (item.ratio || 0))">{{ Number(item.price *
+                        <div v-if="Number(item.price * (item.ratio || 0))" :class="[updown === 0 ? '' : (updown > 0 ? 'price_up' : 'price_down')]">{{ Number(item.price *
                             (item.ratio ||
                                 0)).toFixed(2) }}</div>
-                        <div v-if="item.ratio" style="margin-left:0.32rem">{{ item.ratio === undefined ? '--' :
+                        <div v-if="item.ratio" style="margin-left:0.32rem" :class="[updown === 0 ? '' : (updown > 0 ? 'percentage_up' : 'percentage_down')]">{{ item.ratio === undefined ? '--' :
                             (item.ratio *
                                 100).toFixed(2) + '%'
                             }}</div>
                     </div>
                 </div>
                 <div class="info_items">
-                    <div class="info_item">
+                    <div class="info_item" style="background-image: url('/static/img/common/price_bg.png'); background-repeat: no-repeat; background-position: center bottom;">
                         <div class="name">开</div>
-                        <div>{{ item.open }}</div>
+                        <div class="info_item__value">{{ item.open }}</div>
                     </div>
-                    <div class="info_item">
+                    <div class="info_item" style="background-image: url('/static/img/common/price_bg.png'); background-repeat: no-repeat; background-position: center bottom;">
                         <div class="name">高</div>
-                        <div>{{ item.high }}</div>
+                        <div class="info_item__value">{{ item.high }}</div>
                     </div>
-                    <div class="info_item">
+                    <div class="info_item" style="background-image: url('/static/img/common/price_bg.png'); background-repeat: no-repeat; background-position: center bottom;">
                         <div class="name">量</div>
-                        <div>{{ _formatNumber(item.volume) }}</div>
+                        <div class="info_item__value">{{ _formatNumber(item.volume) }}</div>
                     </div>
-                    <div class="info_item">
+                    <div class="info_item" style="background-image: url('/static/img/common/price_bg.png'); background-repeat: no-repeat; background-position: center bottom;">
                         <div class="name">收</div>
-                        <div>{{ item.close }}</div>
+                        <div class="info_item__value">{{ item.close }}</div>
                     </div>
-                    <div class="info_item">
+                    <div class="info_item" style="background-image: url('/static/img/common/price_bg.png'); background-repeat: no-repeat; background-position: center bottom;">
                         <div class="name">低</div>
-                        <div>{{ item.low }}</div>
+                        <div class="info_item__value">{{ item.low }}</div>
                     </div>
-                    <div class="info_item">
+                    <div class="info_item" style="background-image: url('/static/img/common/price_bg.png'); background-repeat: no-repeat; background-position: center bottom;">
                         <div class="name">额</div>
-                        <div>{{ _formatNumber(item.amount) }}</div>
+                        <div class="info_item__value">{{ _formatNumber(item.amount) }}</div>
                     </div>
                 </div>
             </div>
@@ -473,6 +473,7 @@ const showInfo = ref(false)
                 font-size: 0.4rem;
                 margin-left: 0.2rem;
                 // background-color: #EDEDED;
+                border: 1px solid #CFCFCF;
                 border-radius: 50%;
                 position: relative;
                 left: 0.15rem;
@@ -571,8 +572,20 @@ const showInfo = ref(false)
         }
     }
 
-    .ratio_price {
-        margin-right: 0.3rem
+   
+
+    .ratio_price, .ratio_percentage {
+        margin-right: 0.3rem;
+        padding: .1rem .25rem;
+        border-radius: 1.25rem;
+    }
+
+    .up .ratio_price, .up .ratio_percentage {
+       background: #00AF701A;
+    }
+
+    .down .ratio_price, .down .ratio_percentage {
+       background: #E53E001A;
     }
 
     .align-content {
@@ -601,6 +614,7 @@ const showInfo = ref(false)
     .market_content {
         flex: 1;
         overflow: hidden;
+        margin-top: .25rem;
 
         .funcs {
             display: flex;
@@ -756,6 +770,11 @@ const showInfo = ref(false)
                     top: 0.24rem;
                     left: 0.24rem;
                     color: #999;
+                    padding: .1rem .15rem;
+                    background: #00000080;
+                    border-radius: .15rem;
+                    color: #fff;
+                    font-size: .275rem;
                 }
             }
 
@@ -826,6 +845,19 @@ const showInfo = ref(false)
             flex: 1;
             height: 0.32rem;
             border-left: 1px solid #EAEEF3;
+        }
+
+        .bottom_btn--default {
+            color: #061023;
+            border-radius: 40px;
+            padding: 16px 24px;
+            font-size: 0.24rem;
+            margin-left: 0.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            border: 1px solid #D0D8E2;
         }
 
         .bottom_btn {
@@ -966,7 +998,7 @@ const showInfo = ref(false)
     .info_name {
         color: #121826;
         margin-bottom: 0.54rem;
-        padding-left: 0.24rem;
+        text-align: center;
     }
 
     .info_price {
@@ -974,11 +1006,28 @@ const showInfo = ref(false)
         align-items: center;
         justify-content: flex-start;
         font-size: 0.32rem;
+        padding: .3rem .375rem;
+        background: #E6F9F2;
+        border-radius: .4rem;
 
         .info_num {
             font-size: 0.46rem;
             font-weight: 600;
             margin-right: 0.06rem;
+
+            
+        }
+
+        .price_up, .percentage_up  {
+            background: #00AF701A;
+            border-radius: 1.25rem;
+            padding: .075rem .25rem;   
+        }
+
+         .price_down, .percentage_down  {
+            background: #E53E001A;
+            border-radius: 1.25rem;
+            padding: .075rem .25rem;   
         }
     }
 
@@ -988,17 +1037,26 @@ const showInfo = ref(false)
         align-items: center;
         flex-wrap: wrap;
         justify-content: space-between;
+        
 
         .info_item {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+            align-items: center;
             margin-bottom: 0.32rem;
             width: 31%;
-            height: 1.08rem;
-            background: #F2F3F8;
-            padding: 0.2rem;
+            background-color: #F2F3F8;
+            padding: 0.25rem;
+            border-radius: .4rem;
 
             .name {
                 padding-left: 0.1rem;
                 margin-bottom: 0.15rem;
+            }
+
+            .info_item__value {
+                font-weight: 600;
             }
         }
     }
