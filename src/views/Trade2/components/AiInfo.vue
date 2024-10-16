@@ -5,34 +5,36 @@
          <div class="ai_order_info">
             
             <!-- 盈利 -->
-            <div class="win" :style="{backgroundImage:currItem.profit > 0 ? 'url(/static/img/trade/profit_bg.png)' : 'url(/static/img/trade/loss_bg.png)'}" v-if="currItem.status == 'close'">
+            <div class="win" :style="{backgroundImage:currItem.profit >= 0 ? 'url(/static/img/trade/profit_bg.png)' : 'url(/static/img/trade/loss_bg.png)'}" v-if="currItem.status == 'close'">
                 <div class="win_name">盈利</div>
-                <div class="amount" :class="[currItem.profit < 0 ? 'down' : 'up']">{{ currItem.profit > 0 ? '+'
+                <div class="amount" :class="[currItem.profit < 0 ? 'down' : 'up']">{{ currItem.profit >= 0 ? '+'
                     : ''
                     }}{{ currItem.profit }}</div>
             </div>
-            <!-- 加载 -->
-            <Loaidng v-else-if="loading" color="#014CFA" type="circular"  :loading="loading" />
+           
             <div class="win-box" v-else>
-                
-                <div class="circle-wrap">
-                    <div class="circle-mid">
-                        <div class="time">{{ formatSec2(currItem.endtime,true) }}</div>
-                        <div class="text">倒计时</div>
+                 <!-- 加载 -->
+                <Loaidng v-if="loading" color="#014CFA" type="circular"  :loading="loading" />
+                <template v-else>
+                    <div class="circle-wrap">
+                        <div class="circle-mid">
+                            <div class="time">{{ formatSec2(currItem.endtime,true) }}</div>
+                            <div class="text">倒计时</div>
+                        </div>
+                        <Circle v-if="currItem.status == 'open'" start-position="bottom"
+                            stroke-linecap="round" stroke-width="142" layer-color="#F5F7FC" :color="gradientColor"
+                            size="182" :rate="rate" v-model:current-rate="currentRate" />
                     </div>
-                    <Circle v-if="currItem.status == 'open'" start-position="bottom"
-                        stroke-linecap="round" stroke-width="142" layer-color="#F5F7FC" :color="gradientColor"
-                        size="182" :rate="rate" v-model:current-rate="currentRate" />
-                </div>
 
-                <div class="time_bg">
-                    <strong>{{currItem.time}}</strong>
-                    <span>{{_dateUnitMap[currItem.unit]}}</span>
-                </div>
+                    <div class="time_bg">
+                        <strong>{{currItem.time}}</strong>
+                        <span>{{_dateUnitMap[currItem.unit]}}</span>
+                    </div>
 
-                <div class="time_tip">
-                    {{currItem.time + _dateUnitMap[currItem.unit]}}交易结束
-                </div>
+                    <div class="time_tip">
+                        {{currItem.time + _dateUnitMap[currItem.unit]}}交易结束
+                    </div>
+                </template>
             </div>
 
              <div class="stock-info">
@@ -210,6 +212,7 @@ defineExpose({
         background-position: 0 100%;
         padding-top: 0.58rem;
         box-sizing: border-box;
+        
         .win_name {
             color: #000;
             text-align: center;
@@ -227,11 +230,11 @@ defineExpose({
     }
     
     .win-box{
-        width: 100%;
         box-sizing: border-box;
         border-radius: 0.32rem;
         padding: 0.52rem;
         background: #FFF;
+        height: 6.88rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -239,6 +242,7 @@ defineExpose({
         box-shadow: 0px 4px 40px 0px rgba(1, 76, 250, 0.20);
         margin: 0 0.32rem;
     }
+    
 
     .circle-wrap {
         width: 182px;

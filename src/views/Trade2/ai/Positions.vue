@@ -155,29 +155,19 @@ onUnmounted(() => {
                 display: flex;
                 align-items: center;
                 height: 0.6rem;
+                 line-height: 0.58rem;
                 :deep(.num){
                     width: 0.6rem;
                     height: 0.6rem;
-                    position: relative;
                     text-align: center;
-                    line-height: 0.6rem;
                     color:#E8503A;
                     font-weight: 600;
                     font-size: 0.32rem;
+                    border: 1px solid #E8503A;
                     background-color: rgba(232, 80, 58, 0.10);
-                    border-radius: 0.2rem;
-                    &::after{
-                        content: '';
-                        width: 200%;
-                        height: 200%;
-                        box-sizing: border-box;
-                        border: 1px solid #E8503A;
-                        transform: scale(0.5);
-                        position: absolute;
-                        left:-50%;
-                        top:-50%;
-                        border-radius: 0.24rem;
-                    }
+                    box-sizing: border-box;
+                    border-radius: 0.12rem;
+                   
                 }
                 :deep(.split){
                     font-size: 0.32rem;
