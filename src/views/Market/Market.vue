@@ -3,13 +3,13 @@
   <div v-if="activated" ref="marketPageRef" class="page page_market">
     <IPODetail v-if="detail == '1'" @closeOpenDetail="closeOpenDetail" />
     <Subscription v-else-if="detail == '2'" @closeOpenDetail="closeOpenDetail" />
-    <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-10 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
+    <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
       <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
     </div>
+    <div class = "bg-gradient-to-r from-transparent to-white w-[1rem] h-[0.5rem] absolute z-10 top-[0.25rem] right-15"></div>
     <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
       <Tab class="optional" style="padding-left: 0px;" name="option">
         <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
-        <div style="height: 1rem" ></div>
         <template #title>
           <div class="tab_item first_tab">
             <span>自选</span>
@@ -374,7 +374,7 @@ const jump = name => {
       height: 0.8rem;
       border-bottom: 1px solid rgba(0, 0, 0, 0);
       position: relative;
-      padding-right: 2rem;
+      padding-right: 1.7rem;
       // 源14 多8
       margin-top: 0.12rem;
       margin-bottom: 0.24rem;

@@ -27,7 +27,7 @@
         <div class="td2 spark_line_box">
           <SparkLine
             v-if="props.item.points"
-            style="width: 100%; height: 0.45rem"
+            style="width: 100%; height: 0.6rem"
             :points="props.item.points"
             :ratio="props.item.ratio"
           />
