@@ -29,6 +29,12 @@
   import StockItem from "./StockItem.vue";
   import NoData from "./NoData.vue";
   
+  const data = {
+    name: 'MANRAJ HOUSING FINANCE LTD.',
+    symbol: 'MANRAJH',
+    type: 'crypto'
+  }
+
   const emits = defineEmits(["remove"]);
   const props = defineProps({
     loading: {

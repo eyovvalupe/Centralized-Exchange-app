@@ -81,7 +81,7 @@
 
       <div class="item_block" v-if="marketContractRecommendList.length">
         <div class="item_block_title">
-          <span>推荐加密代币</span>
+          <span>推荐合约/AI量化</span>
         </div>
         <StockRecommend
           :key="'recommend'"
@@ -165,7 +165,6 @@ const getWatchList = () => {
       if (res.code == 200) {
         if (watchList.value.length) {
           // 有历史数据就更新
-          console.log("watchList==========================>", res.data);
           const rs = res.data.map((item) => {
             const target = watchList.value.find((a) => a.symbol == item.symbol);
             if (target) {
@@ -174,7 +173,6 @@ const getWatchList = () => {
             }
             return item;
           });
-          console.log(rs);
           store.commit("setMarketWatchList", rs || []);
         } else {
           // 没有就直接提交
@@ -368,7 +366,7 @@ const remove = (item) => {
 
 .recommend_block {
   background-color: #f5f7fc;
-  padding: 1rem 0.272rem;
+  padding: 0.471rem 0.272rem;
   border-radius: 0.452rem;
 
   .item_block {
@@ -429,10 +427,10 @@ const remove = (item) => {
 }
 
 .option_tab {
-  :deep(.van-tab__panel) {
+  // :deep(.van-tab__panel) {
     // height: calc(var(--app-height) - 4.2rem) !important;
     // overflow-y: auto;
-  }
+  // }
 
   :deep(.van-tabs__nav--line) {
     padding-bottom: 0;

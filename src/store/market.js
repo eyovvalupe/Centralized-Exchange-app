@@ -16,7 +16,7 @@ export default {
         marketType: "all",
         currStock: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
-        marketSearchType: '', // 当前搜索的市场
+        marketSearchTextList: [],
         marketSearchList: [], // 当前搜索的结果-股票
         futuresSearchList: [], // 当前搜索的结果-合约
         aiquantSearchList: [], // 当前搜索的结果-ai
@@ -92,30 +92,15 @@ export default {
             // 设置keys
             state.marketWatchKeys = Array.from(new Set(state.marketWatchKeys.concat(arr)))
         },
+        setMarketSearchTextList(state, data) {
+            state.marketSearchTextList = data;
+        },
         setMarketSearch(state, data) {
             state.marketSearchStr = data.search;
-            state.marketSearchType = data.market;
             state.marketSearchList = (data.list || []).map(item => {
-                const target = state.marketSearchList.find(a => a.symbol == item.symbol)
-                if (target) return target
-                return item
+                return item;
             });
 
-            state.futuresSearchList = (data.futuresSearchList || []).map(item => {
-                const target = state.futuresSearchList.find(a => a.symbol == item.symbol)
-                if (target) return target
-                return item
-            });
-            state.aiquantSearchList = (data.aiquantSearchList || []).map(item => {
-                const target = state.aiquantSearchList.find(a => a.symbol == item.symbol)
-                if (target) return target
-                return item
-            });
-            state.forexSearchList = (data.forexSearchList || []).map(item => {
-                const target = state.forexSearchList.find(a => a.symbol == item.symbol)
-                if (target) return target
-                return item
-            });
         },
         setMarketSearchList(state, data) {
             state.marketSearchList = data;
