@@ -87,17 +87,16 @@ import { useRoute } from 'vue-router'
 import { Button, showToast } from 'vant'
 import Decimal from 'decimal.js'
 import Top from '@/components/Top.vue'
-import store from '@/store'
+import store, { useMapState } from '@/store'
 import SafePassword from '@/components/SafePassword.vue'
 import router from '@/router'
 import { _buysell } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
-
-const accountList = computed(() => store.state.accountList || []) // 收款方式列表
+// 收款方式列表 所有钱包
+const { accountList, wallet, sessionToken } = useMapState(['accountList', 'wallet', 'sessionToken'])
 // .filter(item => item.channel == 'bank')
 const bankList = computed(() => accountList.value) // 银行账号列表
-const wallet = computed(() => store.state.wallet || []) // 所有钱包
 const safeRef = ref()
 
 const route = useRoute()
@@ -164,9 +163,6 @@ const submitSell = s => {
       getSessionToken()
     })
 }
-
-// sessionToken
-const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }

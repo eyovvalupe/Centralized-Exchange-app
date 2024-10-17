@@ -21,7 +21,7 @@
           </div>
         </div>
         <!-- 三层容器 -->
-        <div class="mb-[10px] flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my" @click="goAddAccount">
+        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my" @click="goAddAccount">
           <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
           <span class="text-12 leading-22">添加收款账户</span>
         </div>
@@ -30,7 +30,6 @@
           <div class="card_icon">
             <img v-if="tabsValue === 'crypto'" class="rounded-50" :src="`/static/img/crypto/${item.symbol?.toUpperCase()}.png`" alt="currency" />
             <img v-else src="/static/img/user/card_type_b.png" alt="img" />
-            <!-- <img v-else src="/static/img/user/card_type_c.png" alt="img" /> -->
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
@@ -46,29 +45,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
 import { Popup, showConfirmDialog } from 'vant'
-import { _hiddenAccount } from '@/utils/index'
-import store from '@/store'
 import router from '@/router'
+import { useMapState } from '@/store'
+import { _hiddenAccount } from '@/utils/index'
 
 const props = defineProps({
   show: Boolean,
   bank: {
     type: Object,
     default: () => ({}),
-    required: true,
+    required: !0,
   },
 })
 const emit = defineEmits(['update:show', 'onAddCollection'])
 const tabsValue = ref('crypto')
-const userInfo = computed(() => store.state.userInfo || {})
-const accountList = computed(() => store.state.accountList || []) // 收款方式列表
+const { userInfo, accountList } = useMapState(['accountList', 'userInfo'])
 const showAccountDialog = computed({
   get: () => props.show,
   set: val => emit('update:show', val),
-}) // 收款方式列表
-const bankList = computed(() => accountList.value.filter(item => item.channel == tabsValue.value)) // 银行账号列表
+})
+// 收款方式列表
+const bankList = computed(() => accountList.value.filter(item => item.channel === tabsValue.value)) // 银行账号列表
 
 // 跳转添加
 const goAddAccount = () => {

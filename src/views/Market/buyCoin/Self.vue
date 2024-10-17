@@ -163,24 +163,20 @@ import OrderInfo from './OrderInfo.vue'
 import NoData from '@/components/NoData.vue'
 import LoadingMore from '@/components/LoadingMore.vue'
 import { _adList, _buysell } from '@/api/api'
-import store from '@/store'
+import store, { useMapState } from '@/store'
 import router from '@/router'
 import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import IconSvg from '@/components/IconSvg.vue'
 
-const userInfo = computed(() => store.state.userInfo || {})
+const { userInfo, token, deWeightCurrencyList: currencyList, accountList, sessionToken } = useMapState(['userInfo', 'token', 'deWeightCurrencyList', 'accountList', 'sessionToken'])
 const safeRef = ref()
-
 const showPopupInfo = ref(false)
 const showDialog = ref(false)
 const showDialog2 = ref(false)
-const token = computed(() => store.state.token)
-const currencyList = computed(() => store.state.deWeightCurrencyList || [])
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
 const fiatWallet = computed(() => currencyList.value.filter(item => item.type == 'fiat')) // 法币钱包
 const dryptoWallet = computed(() => currencyList.value.filter(item => item.type == 'crypto')) // 加密钱包
-const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 
 const currWallet = computed(() => {
@@ -399,8 +395,6 @@ const goAddAccount = () => {
   })
 }
 
-// sessionToken
-const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }
