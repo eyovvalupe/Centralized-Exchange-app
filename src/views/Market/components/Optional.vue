@@ -39,7 +39,6 @@
         >
           一键添加自选(<i
             class="tag"
-            v-if="!!(stockList.length + contractList.length)"
             >{{ stockList.length + contractList.length }}</i
           >)
         </Button>
