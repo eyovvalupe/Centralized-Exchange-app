@@ -74,9 +74,9 @@ const emitsKeys = () => {
 
 const checkedList = ref([])
 try {
-    checkedList.value = JSON.parse(sessionStorage.getItem(props.keyStr + '_recommend_check_list') || '[]')
+    checkedList.value = props.list.map((item) => true);
 } catch {
-    checkedList.value = []
+    checkedList.value = [];
 }
 emitsKeys()
 
@@ -86,9 +86,6 @@ const changeCheck = i => {
     } else {
         checkedList.value[i] = true
     }
-
-    sessionStorage.setItem(props.keyStr + '_recommend_check_list', JSON.stringify(checkedList.value))
-
     emitsKeys()
 }
 
