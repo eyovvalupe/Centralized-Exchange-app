@@ -96,7 +96,7 @@ const initData = async () => {
                 show: props.showY
             },
             area: {
-                lineColor: props.color || "#FFA800",
+                lineColor: props.color || "#2168F6",
                 point: {
                     show: props.showY
                 },
@@ -104,19 +104,19 @@ const initData = async () => {
                 backgroundColor: [
                     {
                         offset: 0,
-                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(255, 168, 0, 0.01)"
+                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(0, 0, 168, 0.01)"
                     },
                     {
                         offset: 1,
-                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(255, 168, 0, 0.3)"
+                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)"
                     }
                 ],
                 smooth: true,
                 point: {
                     show: true,
-                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(255, 168, 0, 0.3)",
+                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)",
                     radius: 4,
-                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(255, 168, 0, 0.3)", // getAlphaBlue(0.3),
+                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)", // getAlphaBlue(0.3),
                     rippleRadius: 8,
                     animation: true,
                     animationDuration: 1000

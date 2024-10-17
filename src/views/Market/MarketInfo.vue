@@ -19,8 +19,10 @@
                 <div class="title_shadow"></div>
                 <div v-if="!props.innerPage" class="search star" @click="addCollect"
                     :style="{ opacity: loading ? '0.5' : '1' }">
-                    <img v-if="item.watchlist == 1" src="/static/img/common/collected.svg" alt="⭐">
-                    <img v-else src="/static/img/common/collect.svg" alt="⭐">
+                    <div class="search_parent">
+                        <img v-if="item.watchlist == 1" src="/static/img/common/collected.svg" alt="⭐">
+                        <img v-else src="/static/img/common/collect.svg" alt="⭐">
+                    </div>
                 </div>
                 <!-- <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
                     <Icon name="enlarge" />
@@ -406,7 +408,7 @@ const showInfo = ref(false)
 
 <style lang="less" scoped>
 .page_marketinfo {
-    padding: 1.8rem 0 0 0;
+    // padding: 1.8rem 0 0 0;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -417,13 +419,11 @@ const showInfo = ref(false)
     }
 
     .info_header {
-        width: calc(100% - 0.6rem);
-        // border-bottom: 0.1rem solid #F9FAFB;
-        position: fixed;
+        width: 100%;
         top: 0;
         left: 50%;
-        transform: translateX(-50%);
         background-color: #fff;
+        padding: 0 0.205rem;
         z-index: 100;
 
         .top {
@@ -432,6 +432,8 @@ const showInfo = ref(false)
             align-items: center;
             justify-content: space-between;
             position: relative;
+            height: 0.88rem;
+            margin-bottom: 0.205rem;
 
 
             .back {
@@ -467,16 +469,24 @@ const showInfo = ref(false)
             }
 
             .search {
-                width: 0.64rem;
-                height: 0.64rem;
+                width: 0.8rem;
+                height: 0.8rem;
                 padding: 0.12rem;
-                font-size: 0.4rem;
+                font-size: 0.48rem;
                 margin-left: 0.2rem;
                 // background-color: #EDEDED;
                 border: 1px solid #CFCFCF;
                 border-radius: 50%;
                 position: relative;
-                left: 0.15rem;
+                text-align: center;
+                align-self: center;
+
+                .search_parent {
+                    width: 0.48rem;
+                    height: 0.48rem;
+                    padding: 0.0675rem 0.073rem;
+                    display: inline-block;
+                }
             }
         }
 

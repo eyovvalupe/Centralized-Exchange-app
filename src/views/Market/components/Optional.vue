@@ -81,7 +81,7 @@
 
       <div class="item_block" v-if="marketContractRecommendList.length">
         <div class="item_block_title">
-          <span>推荐合约/AI量化</span>
+          <span>推荐加密代币</span>
         </div>
         <StockRecommend
           :key="'recommend'"
@@ -198,7 +198,6 @@ const getWatchList = () => {
 };
 
 const init = () => {
-  console.log("==========>", watchList.value)
   if (token.value) {
     getWatchList();
   } else {
@@ -225,7 +224,6 @@ const openRecommendList = () => {
     .then((res) => {
       if (res.code == 200) {
         // 股票
-        console.log("default ============>", res.data)
         if (res.data?.stock) {
           const arr = res.data.stock.map((item) => {
             const target = marketSrockRecommendList.value.find(
