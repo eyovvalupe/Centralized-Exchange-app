@@ -186,7 +186,7 @@
     }
   
     .delete_content {
-      width: 1rem;
+      width: 0.78rem;
       height: 100%;
       display: flex;
       align-items: center;
