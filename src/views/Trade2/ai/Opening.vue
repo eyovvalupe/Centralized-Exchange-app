@@ -457,7 +457,7 @@ defineExpose({
             margin: 0 0.16rem;
         }
     }
-     .subtitle {
+    .subtitle {
         color: #061023;
         font-size: 0.28rem;
         margin-bottom: 0.12rem;
@@ -557,7 +557,6 @@ defineExpose({
     }
 
     .item_box {
-        
         position: relative;
         height: 0.92rem;
         border-radius: 0.32rem;
