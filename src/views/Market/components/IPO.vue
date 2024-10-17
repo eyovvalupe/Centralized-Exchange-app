@@ -168,8 +168,10 @@ const props = defineProps({
 const ipoDataList = computed(() => store.state.ipoDataList || [])
 const selectedOption = ref('')
 const option = [
-    { text: "所有", value: "" },
-    { text: "发行中", value: "issuing" },
+    { text: "全部", value: "" },
+    { text: "预售中", value: "none"},
+    { text: "认购中", value: "issuing" },
+    { text: "已结束", value: "done" },
     { text: "已上市", value: "listed" },
 ];
 const selectedOptiontext = computed(() => option.find(item => item.value == selectedOption.value).text)

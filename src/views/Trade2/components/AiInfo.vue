@@ -6,6 +6,7 @@
             
             <!-- 盈利 -->
             <div class="win" :style="{backgroundImage:currItem.profit >= 0 ? 'url(/static/img/trade/profit_bg.png)' : 'url(/static/img/trade/loss_bg.png)'}" v-if="currItem.status == 'close'">
+                <div class="win-animate-bg"></div>
                 <div class="win_name">盈利</div>
                 <div class="amount" :class="[currItem.profit < 0 ? 'down' : 'up']">{{ currItem.profit >= 0 ? '+'
                     : ''
@@ -14,8 +15,7 @@
            
             <div class="win-box" v-else>
                  <!-- 加载 -->
-                <Loaidng v-if="loading" color="#014CFA" type="circular"  :loading="loading" />
-                <template v-else>
+               
                     <div class="circle-wrap">
                         <div class="circle-mid">
                             <div class="time">{{ formatSec2(currItem.endtime,true) }}</div>
@@ -23,18 +23,17 @@
                         </div>
                         <Circle v-if="currItem.status == 'open'" start-position="bottom"
                             stroke-linecap="round" stroke-width="142" layer-color="#F5F7FC" :color="gradientColor"
-                            size="182" :rate="rate" v-model:current-rate="currentRate" />
+                            size="182" :rate="100" :current-rate="100-rate" />
                     </div>
 
-                    <div class="time_bg">
+                    <div class="time_bg" >
                         <strong>{{currItem.time}}</strong>
-                        <span>{{_dateUnitMap[currItem.unit]}}</span>
+                        <span class="unit">{{_dateUnitMap[currItem.unit]}}</span>
                     </div>
 
-                    <div class="time_tip">
+                    <div class="time_tip" >
                         {{currItem.time + _dateUnitMap[currItem.unit]}}交易结束
                     </div>
-                </template>
             </div>
 
              <div class="stock-info">
@@ -91,7 +90,6 @@ import Loaidng from "@/components/Loaidng.vue"
 import Top from "@/components/Top.vue"
 const emits = defineEmits(['back'])
 
-const currentRate = ref(100)
 const rate = computed(() => {
     let t = currItem.value.time || 1
     if (currItem.value.unit == 'm') {
@@ -212,19 +210,26 @@ defineExpose({
         background-position: 0 100%;
         padding-top: 0.58rem;
         box-sizing: border-box;
-        
+        position: relative;
+        overflow: hidden;
         .win_name {
             color: #000;
             text-align: center;
             font-size: 0.3rem;
             font-weight: 400;
             line-height: 100%; 
+            position: relative;
+            z-index: 1;
+            animation: opacityanimate 0.5s;
         }
         .amount {
             font-size: 0.6rem;
             font-weight: 600;
             line-height: 100%;
             margin-top: 0.32rem;
+            position: relative;
+            z-index: 1;
+            animation: opacityanimate 0.5s;
 
         }
     }
@@ -282,18 +287,13 @@ defineExpose({
             margin-top: 0.1rem;
         }
     }
-   
-    .success_icon {
-        width: 0.48rem;
-        height: 0.48rem;
-        margin: 0.4rem 0 0.1rem 0;
-    }
-
+  
     .name {
         font-weight: 600;
         color: #000;
         font-size: 0.32rem;
         margin: 0 0 0.2rem 0;
+        
     }
 
     .time_bg{
@@ -312,7 +312,7 @@ defineExpose({
             font-size:0.8rem;
             margin-right: 0.1rem;
         }
-        span{
+        .unit{
             position: relative;
             top:0.1rem;
         }
@@ -323,6 +323,7 @@ defineExpose({
         font-size: 0.28rem;
         font-weight: 400;
         line-height: 100%;
+        height: 0.28rem;
         margin-top:0.2rem;
     }
     
@@ -413,6 +414,34 @@ defineExpose({
         margin-top:-0.45rem;
     }
 }
+.win-animate-bg{
+    position: absolute;
+    left:100%;
+    top:0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    animation: bganimate 1.4s;
+}
+
+@keyframes bganimate {
+    0% {
+        left:0;
+    }
+    100% {
+        left:100%;
+    }
+}
+
+@keyframes opacityanimate {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .split-line{
     clear: both;
     height: 0.62rem;
