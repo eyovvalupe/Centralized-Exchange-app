@@ -14,7 +14,15 @@
                 {{ market[props.item.type] }}
               </div>
             </div>
-            <div class="item_info">{{ props.item.name || "--" }}</div>
+            <div class="item_info" v-show="props.item.type != 'crypto'">
+              {{ props.item.name || "--" }}
+            </div>
+            <div
+              class="text-[#0A54F9] text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border-2 items-center flex justify-center border-[#0A54F9]"
+              v-show="props.item.type == 'crypto'"
+            >
+              20X
+            </div>
           </div>
           <div class="td2 spark_line_box">
             <SparkLine
