@@ -25,7 +25,7 @@
               </van-image>
 
             </div>
-            <div class="user-icon" v-if="item.direction !== 'receive'"></div>
+            <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
             <div class="user-avatar" v-if="item.direction !== 'receive'">
               <img class="user-avatar-img" src="/static/img/user/user-block.png" alt="img">
             </div>
@@ -231,6 +231,10 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
     .send-conimg {
       max-height: 10rem;
       max-width: 10rem;
+    }
+    .van-image__img{
+      display: block;
+      border-radius: 6px !important;
     }
   }
 

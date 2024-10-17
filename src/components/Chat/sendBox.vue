@@ -3,7 +3,7 @@
     <span class="icon-left"><img :src="sendImg_icon">
       <input type="file" id="fileInput" @change="uploadImg" accept="image/*">
     </span>
-    <textarea class="textarea" v-model="message" ref="sendInput"></textarea>
+    <textarea class="textarea" v-model="message" ref="sendInput" placeholder="请输入..."></textarea>
     <span class="icon-right" @click="sendMessage('text', message)"><img :src="send_icon">
     </span>
   </div>
@@ -88,16 +88,22 @@ const uploadImg = (event) => {
 
 <style lang="less">
 .msg-input {
-  height: 40px;
+  height: 47px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-content: center;
 
   .textarea {
-    border: none;
-    line-height: 36px;
-    width: calc(100% - 80px);
+    width: 5.1rem;
+    height: 47px;
+    line-height: 47px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    text-indent: 16px;
+    font-size: 15px;
+    border: 1px solid #D0D8E2;
+    overflow-y: hidden;
   }
 
   #fileInput {
@@ -116,7 +122,7 @@ const uploadImg = (event) => {
     justify-content: center;
 
     img {
-      max-height: 22px;
+      max-height: 30px;
       flex-shrink: 0;
       vertical-align: middle;
     }
@@ -124,7 +130,7 @@ const uploadImg = (event) => {
 
   .icon-right {
     img {
-      max-height: 22px;
+      max-height: 30px;
       flex-shrink: 0;
       vertical-align: middle;
     }

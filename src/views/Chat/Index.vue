@@ -109,11 +109,9 @@ onUnmounted(() => {
     }
 
     .chat-send {
-        border: 1px solid #D0D8E2;
-        border-radius: 10px;
         background: #fff;
-        margin: 10px;
-        padding: 0 10px;
+        padding: 10px 16px;
+        border-top: 1px solid #EAEEF3;
     }
 }
 </style>
