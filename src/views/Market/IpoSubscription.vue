@@ -1,10 +1,10 @@
 <!-- IPO认购 -->
 <template>
     <div class="page page_ipo_subs">
-        <Top :title="'认购'" />
+        <Top title="IPO认购" />
 
         <!-- tabs -->
-        <div class="tabs">
+        <!-- <div class="tabs">
             <div class="tab" :class="{ 'active_tab': avtiveTab == 1 }" @click="changeTab(1)">
                 <span>普通认购</span>
             </div>
@@ -12,108 +12,103 @@
                 <span>VIP认购</span>
                 <div class="tag_tag">{{ lever }}X</div>
             </div>
+        </div> -->
+
+        <div class="ipo_info">
+            <div class="ipo_info_lt">
+                <div class="ipo_info_name">{{ currIpo.company_name }}</div>
+                <div class="ipo_info_price">
+                   认购价格 <span>${{ currIpo.issue_price_max }}</span>
+                </div>
+                <div v-show="avtiveTab == 2" class="ipo_info_price">
+                    认购杠杆 <span class="blue">{{ currIpo.lever }}X</span>
+                </div>
+            </div>
+            <Icon class="ipo_info_arrow" name="arrow" size="0.4rem" color="#666D80" />
         </div>
 
         <div class="form">
-            <!-- <div class="subtitle">认购名称</div>
-            <div class="item" style="background-color: #F9FAFB;">
-                <span>{{ currIpo.company_name }}</span>
-            </div> -->
+           
+            <div class="subtitle">
+                <span>认购数量</span>
+                <span style="color:#666D80;">最大认购 {{ maxNum }}</span>
+            </div>
+            <div class="item item_box" :class="{ 'err_ipt': errStatus }">
+                
+                <input @change="inputNum" @focus="focus = true" @blur="focus = errStatus = false"
+                    v-model="form.volume" class="ipt" type="number" placeholder="">
+                <span class="put_all" :style="{ opacity: focus ? '1' : '0', visibility: focus ? '' : 'hidden' }" @click="onSliderChange(100)">全部</span>
+            </div>
+            
+            
+            <div style="height:0.47rem;"></div>
+            <!-- 拖动 -->
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+
+            <div v-if="form.volume > 0">
+                <div>
+                    <div class="subtitle">订购数量</div>
+                    <div class="item item_box disabled_item">{{ form.volume }}</div>
+                </div>
+                <div  v-show="avtiveTab == 2">
+                    <div class="subtitle">冻结金额</div>
+                    <div class="item item_box disabled_item">{{ freezeNum }}</div>
+                </div>
+                <div  v-show="avtiveTab == 2">
+                    <div class="subtitle">借贷金额</div>
+                    <div class="item item_box disabled_item">{{ loanNum }}</div>
+                </div>
+                <div v-show="avtiveTab == 2">
+                    <div class="subtitle">借贷手续费</div>
+                    <div class="item item_box disabled_item">{{ feeNum }}</div>
+                </div>
+            </div>
+
             <div class="subtitle" v-show="avtiveTab == 2">VIP认购码</div>
-            <div class="item " v-show="avtiveTab == 2">
-                <div v-show="avtiveTab == 2" class="border_item account_box" style="background-color: #f5f5f5">
-                    <span>{{ lever }}X</span>
-                </div>
-                <div class="border_item ipt_box" :class="{ 'err_ipt': errStatus2 }">
-                    <input @blur="errStatus2 = false" v-model="form.keyword" type="text" class="ipt2" placeholder="">
-                </div>
-
-            </div>
-            <div class="subtitle">认购数量</div>
-            <div class="item">
-
-                <div class="border_item ipt_box" :class="{ 'err_ipt': errStatus }">
-                    <div class="ipt_tip" v-show="form.volume === '' || focus">最大认购 <span>{{ maxNum }}</span>
-                    </div>
-                    <input @change="inputNum" @focus="focus = true" @blur="focus = errStatus = false"
-                        v-model="form.volume" class="ipt" type="number" placeholder="">
-                    <span class="all" @click="form.volume = maxNum, sliderValue = 100">全部</span>
-                </div>
-            </div>
-            <div class="slider-container">
-                <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
-                    @change="onSliderChange">
-                    <template #button>
-                        <div class="slider-custom-num">
-                            <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
-                        </div>
-                    </template>
-                </Slider>
-            </div>
-            <div class="percentages">
-                <div v-for="percent in percentages" :key="percent" class="percentage">
-                    <div class="line"></div>
-                    {{ percent }}%
-                </div>
+            <div class="item item_box" v-show="avtiveTab == 2" :class="{ 'err_ipt': errStatus2 }">
+                <input @blur="errStatus2 = false" v-model="form.keyword" type="text" class="ipt2" placeholder="">
+        
             </div>
 
 
         </div>
 
 
-        <Button @click="openSafe" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
+        <Button @click="openSafe" :loading="loading" round  size="large" color="#014CFA" class="submit" type="primary">认购</Button>
 
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef">
-            <template #top>
-                <div class="iposubs_dialog">
-                    <div class="title">订购确认</div>
-                    <div style="margin-bottom: 0.4rem">
-                        <div class="item">
-                            <span>订购数量</span>
-                            <span class="val">{{ form.volume }}</span>
-                        </div>
-                        <div class="item" v-show="avtiveTab == 2">
-                            <span>冻结金额</span>
-                            <span class="val">{{ freezeNum }}</span>
-                        </div>
-                        <div class="item" v-show="avtiveTab == 2">
-                            <span>借贷金额</span>
-                            <span class="val">{{ loanNum }}</span>
-                        </div>
-                        <div class="item" v-show="avtiveTab == 2">
-                            <span>借贷手续费</span>
-                            <span class="val">{{ feeNum }}</span>
-                        </div>
-                    </div>
-                </div>
-
-            </template>
+            
         </SafePassword>
     </div>
 </template>
 
 <script setup>
+
 import Top from '@/components/Top.vue';
-import { ref, computed } from "vue"
+import { ref, computed, nextTick } from "vue"
 import { useRoute } from "vue-router"
-import { Button, showToast, Slider } from "vant"
+import { Button, showToast, Slider,Icon } from "vant"
 import SafePassword from "@/components/SafePassword.vue"
+import SlideContainer from "@/components/SlideContainer.vue"
 import store from '@/store';
 import { _orderBuy, _orderPara, _basic } from "@/api/api"
+
 import Decimal from 'decimal.js';
 import router from '@/router'
 
-
-const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
-const lever = ref(10)
-
-
+const currency = computed(() => (store.state.accountCurrencyMap.ipo || '') )
+const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == currency.value) || {}) // 主钱包
 const route = useRoute()
 const currIpo = ref(route.query)
 const avtiveTab = ref(1)
+const lever = currIpo.value.lever
+if(lever > 1){
+    avtiveTab.value = 2
+}
 const loading = ref(false)
 const safeRef = ref()
+
 
 const changeTab = key => {
     sliderValue.value = 0
@@ -123,9 +118,12 @@ const changeTab = key => {
     }
     avtiveTab.value = key
 }
-
-const maxNum = computed(() => { // 最大值
-    const amount = (avtiveTab.value == 2) ? (new Decimal(mainWallet.value.amount).mul(lever.value)) : new Decimal(mainWallet.value.amount)
+// 最大值
+const maxNum = computed(() => { 
+    if(!mainWallet.value.amount){
+        return 0
+    }
+    const amount = (avtiveTab.value == 2) ? (new Decimal(mainWallet.value.amount).mul(lever)) : new Decimal(mainWallet.value.amount)
     return amount.div(currIpo.value.issue_price_max).toNumber()
 })
 
@@ -137,18 +135,19 @@ const sliderValue = ref(0);
 const onSliderChange = (newValue) => {
     errStatus.value = false
     sliderValue.value = newValue;
-    const val = new Decimal(maxNum.value).mul(newValue).div(100).toFixed(2)
-    if (!Number(val)) {
-        sliderValue.value = 0
-        form.value.volume = ''
-    } else {
-        form.value.volume = Number(val)
-        inputLimit()
-    }
-
-    if (form.value.volume == 0) {
-        sliderValue.value = 0
-    }
+    nextTick(()=>{
+        const val = new Decimal(maxNum.value).mul(newValue).div(100).toFixed(2)
+        if (!Number(val)) {
+            sliderValue.value = 0
+            form.value.volume = ''
+        } else {
+            form.value.volume = Number(val)
+            inputLimit()
+        }
+        if (form.value.volume == 0 ) {
+            sliderValue.value = 0
+        }
+    })
 };
 const inputLimit = () => {
     if (form.value.volume <= volumeMap.value.min) { // 最小购买
@@ -164,7 +163,6 @@ const inputLimit = () => {
         if (sliderValue.value > 100) sliderValue.value = 100
     }, 50)
 }
-const percentages = [25, 50, 75, 100];
 const inputNum = () => {
     setTimeout(() => {
         if (form.value.volume) {
@@ -228,11 +226,12 @@ getSessionToken()
 const fee = ref(0)
 const freezeNum = computed(() => {
     if (!form.value.volume) return 0
-    return new Decimal(form.value.volume).div(lever.value).mul(currIpo.value.issue_price_max).toFixed(2)
+    return new Decimal(form.value.volume).div(lever).mul(currIpo.value.issue_price_max).toFixed(2)
 })
 const loanNum = computed(() => {
     if (!form.value.volume) return 0
-    return new Decimal(form.value.volume).mul(currIpo.value.issue_price_max).sub(freezeNum.value).toFixed(2)
+    let _freezeNum = freezeNum.value || 0
+    return new Decimal(form.value.volume).mul(currIpo.value.issue_price_max).sub(_freezeNum).toFixed(2)
 })
 const feeNum = computed(() => {
     if (!form.value.volume) return 0
@@ -255,12 +254,12 @@ const getFee = () => {
         }
     })
 }
-getFee()
+//getFee()
 </script>
 
 <style lang="less" scoped>
 .page_ipo_subs {
-    padding: 1.6rem 0.32rem 1.6rem 0.32rem;
+    padding: 1.12rem 0.32rem 1.6rem 0.32rem;
 
     position: relative;
 
@@ -304,238 +303,113 @@ getFee()
         }
     }
 
-    .subtitle {
-        color: #333333;
-        font-size: 0.28rem;
-        font-weight: 400;
-        margin-bottom: 0.16rem;
+    .ipo_info{
+        border-radius: 0.32rem;
+        border: 1px solid  #EFF3F8;
+        background: #F5F7FC;
+        padding:0.28rem 0.32rem;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 0.28rem;
+        &_lt{
+            flex: 1;
+        }
+        &_arrow{
+            margin-top: 0.32rem;
+        }
+        &_name{
+            color: #061023;
+            font-size: 0.32rem;
+            font-weight: 600;
+            line-height: 0.36rem; /* 112.5% */
+        }
+        &_price{
+            color: #8F92A1;
+            font-size: 0.3rem;
+            font-weight: 400;
+            line-height: 0.36rem;
+            margin-top: 0.2rem;
+            span{
+                margin-left: 0.12rem;
+                color: #E8503A;
+            }
+            .blue{
+                color:#014CFA;
+            }
+        }
+        
     }
-
+    
+     .put_all{
+        color: #014CFA;
+        position: absolute;
+        right: 0.32rem;
+        font-size: 0.3rem;
+        z-index:9;
+        transition: all ease .3s;
+    }
+    .subtitle {
+        color: #061023;
+        font-size: 0.28rem;
+        margin-bottom: 0.12rem;
+        line-height: 0.36rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top:0.4rem;
+    }
     .item {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 0.4rem;
-        height: 0.88rem;
-
-        &:has(.ipt:focus) {
-            height: 1.12rem;
-        }
-
-        .account_box {
-            width: 2.4rem;
-            margin-right: 0.2rem;
-            color: #000000;
-            font-size: 0.28rem;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .ipt_box {
+        position: relative;
+        .ipt {
             flex: 1;
-            padding: 0 0 0 0.2rem;
-            display: flex;
-            align-items: center;
-
-            position: relative;
-
-            .ipt {
-                height: 100%;
-                display: flex;
-                align-items: center;
-                flex: 1;
-            }
-
-            &:has(.ipt:focus) {
-                padding-top: 0.3rem;
-
-                .ipt_tip {
-                    transform: translateY(-200%);
-                    font-size: 0.2rem;
-
-                    span {
-                        color: #A4ACB9;
-                    }
-                }
-            }
-
-            .ipt_tip {
-                position: absolute;
-                font-size: 0.24rem;
-                font-weight: 400;
-                color: #A4ACB9;
-                left: 0.4rem;
-                top: 50%;
-                transform: translateY(-50%);
-                pointer-events: none;
-                transition: all ease .2s;
-
-                span {
-                    // color: #111111;
-                }
-            }
-
-            .all {
-                color: #1A59F6;
-                position: absolute;
-                right: 0.32rem;
-            }
-        }
-
-        .border_item {
-            border: 1px solid #D0D8E2;
-
-            border-radius: 0.12rem;
             height: 100%;
-
-            .item_icon {
-                width: 0.26rem;
-                height: 0.26rem;
-                margin-right: 0.08rem;
-                position: relative;
-                top: -0.02rem;
-            }
-
-            &:has(.ipt:focus) {
-                border: 1px solid #014CFA;
-            }
-
-            &:has(.ipt2:focus) {
-                border: 1px solid #014CFA;
-            }
-        }
-
-        .err_ipt {
-            border: 1px solid #E8503A;
-        }
-    }
-
-    .slider-container {
-        margin-top: .2rem;
-        height: 1rem;
-        padding: .4rem 0 0 0;
-
-        :deep(.slider-custom-num) {
-            position: relative;
-            background: #014CFA;
-            color: #fff;
-            display: inline-block;
-            width: .1rem;
-            height: .5rem;
-            font-size: 12px;
-            text-align: center;
-            line-height: .4rem;
-            border-radius: 10px;
-
-            .number {
-                color: #014CFA;
-                position: absolute;
-                top: -0.4rem;
-                left: -0.1rem;
-                font-size: .2rem;
-            }
-        }
-
-        :deep(.van-slider) {
-            margin-top: 0.1rem;
-            height: 0.16rem !important;
-            border-radius: 0.02rem;
-            padding-right: 0.1rem;
-        }
-
-        :deep(.van-slider__bar) {
-            position: relative;
-        }
-
-        :deep(.van-slider__button) {
-            width: 0.1rem;
-            height: 0.48rem;
-            background-color: #014cfa;
-            border-radius: inherit;
-            top: -0.36rem;
-        }
-
-        :deep(.van-slider__button-wrapper) {
-            z-index: 999 !important;
-            padding: 0.24rem;
-        }
-
-
-
-    }
-
-    .percentages {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        z-index: 7;
-
-        .percentage {
-            color: #8f92a1;
+            width: 2rem;
             font-size: 0.28rem;
-            font-style: normal;
-            font-weight: 400;
-            text-align: center;
-            width: 25%;
+            padding: 0;
             position: relative;
+            z-index: 1;
         }
-
-        .line {
-            width: 0.06rem;
-            height: 0.2rem;
+        .ipt_tip {
+            color: #b7b7b7;
+            font-size: 0.24rem;
             position: absolute;
-            right: 0;
-            top: -0.5rem;
-            background: #fff;
-            z-index: 88;
+            left: 0.24rem;
+            transition: all ease .3s;
         }
     }
 
+    .item_box {
+        position: relative;
+        height: 0.92rem;
+        border-radius: 0.32rem;
+        border: 1px solid #d0d8e2;
+        padding: 0 0.24rem;
+
+    }
+    .item_focus {
+        height: 1.12rem;
+        border: 1px solid #034cfa;
+
+        .ipt_tip {
+            font-size: 0.2rem;
+            transform: translateY(-0.36rem);
+        }
+    }
+    .disabled_item {
+        background-color: #F5F7FC;
+    }
 
 
-    .err_ipt {
-        border: 1px solid #E8503A;
+    .error_border {
+        border: 1px solid #e8503a !important;
     }
 
     .submit {
-        position: absolute;
-        bottom: 0.5rem;
-        left: 50%;
-        transform: translateX(-50%);
-        width: calc(100% - 0.64rem);
+        margin-top: 0.8rem;
     }
 }
-</style>
 
-<style lang="less">
-.iposubs_dialog {
-    position: relative;
-
-    .title {
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        top: -0.64rem;
-        font-size: 0.28rem;
-        font-weight: 600;
-    }
-
-    .item {
-        height: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: 1px solid #F5F5F5;
-        font-weight: 400;
-        color: #8F92A1;
-        font-size: 0.28rem;
-
-        .val {
-            color: #000;
-            font-weight: 500;
-        }
-    }
-}
 </style>

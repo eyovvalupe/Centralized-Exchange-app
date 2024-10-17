@@ -1,5 +1,5 @@
 // 市场
-import { _assets, _balance, _accountHint, _currency, _cryptoCoin } from '@/api/api'
+import { _assets, _balance, _accountHint, _currency,accountCurrency, _cryptoCoin } from '@/api/api'
 
 export default {
   state: {
@@ -7,6 +7,7 @@ export default {
     wallet: [], // 现金钱包
     elseWallet: [], // 其他账户钱包
     currencyList: [], // 币种列表
+    accountCurrencyMap:{},
     deWeightCurrencyList: [], // 去重币种列表
     rechargeAmount: '', // 充值金额
     hintNum: 0, // 待处理的订单笔数
@@ -25,6 +26,9 @@ export default {
     },
     setCurrencyList(state, data) {
       state.currencyList = data
+    },
+    setAccountCurrencyMap(state, data) {
+      state.accountCurrencyMap = data
     },
     setRechargeAmount(state, data) {
       state.rechargeAmount = data
@@ -82,6 +86,13 @@ export default {
         })
     },
     updateCurrency({ commit }) {
+      
+      accountCurrency().then(res=>{
+        if (res.code == 200 && res.data) {
+          commit('setAccountCurrencyMap', res.data || {})
+        }
+      })
+
       // 获取账户对应货币 其它账户对应货币
       _cryptoCoin({ dedup: false }).then(res => {
         if (res.code == 200 && res.data) {

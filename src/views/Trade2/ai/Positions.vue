@@ -3,7 +3,7 @@
     <div class="page_ai_position">
         <NoData v-if="!loading && !aiPositionsList.length" />
         <div class="list">
-            <div class="item" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)">
+            <div class="item" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)" v-show="item.endtime > 0">
                 <div class="ai_icon">
                     <img src="/static/img/trade/ai.png" alt="ai">
                 </div>
@@ -15,8 +15,6 @@
                     <div class="endtime" v-html="formatEndtime(item.endtime)"></div>
                 </div>
             </div>
-            
-            
         </div>
         <LoadingMore :loading="loading" v-if="loading && !aiPositionsList.length" />
     </div>
@@ -58,8 +56,9 @@ const formatEndtime = (endtime)=>{
 
 const token = computed(() => store.state.token)
 const aiPositionsList = computed(() => store.state.aiPositionsList || [])
-const { startSocket } = useSocket();
 
+const { startSocket } = useSocket();
+store.commit('setAiPositionsList', [])
 
 // 订阅
 const loading = ref(false)
@@ -76,7 +75,7 @@ const subs = () => {
         })
         setTimeout(()=>{
             loading.value = false
-        },1000)
+        },1500)
     });
 }
 // 取消订阅

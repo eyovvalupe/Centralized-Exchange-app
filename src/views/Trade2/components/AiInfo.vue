@@ -256,12 +256,12 @@ defineExpose({
 
     .circle-mid{
         box-shadow:0px 0px 20px rgba(1, 76, 250, 0.10);
-        width: 140px;
-        height: 140px;
+        width: 136px;
+        height: 136px;
         border-radius: 50%;
         position: absolute;
-        left:20px;
-        top:20px;
+        left:23px;
+        top:23px;
         border-radius: 50%;
         z-index: 1;
         display: flex;

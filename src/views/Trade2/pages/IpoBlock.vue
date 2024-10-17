@@ -3,7 +3,6 @@
     <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated type="oval-card"
         shrink>
         <Tab :title="'IPO'" class="optional">
-            <div style="height: 0.4rem"></div>
             <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" />
         </Tab>
         <Tab :title="'中签'">
