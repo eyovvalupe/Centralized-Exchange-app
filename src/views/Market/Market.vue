@@ -30,19 +30,15 @@
             z-index: 1000;"></div>
         </Teleport> -->
 
-    <!-- <div class="boder-[#D0D8E2] absolute right-4 top-[9px] z-10 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
+    <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-10 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
       <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
-    </div> -->
+    </div>
     <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
       <Tab class="optional" name="option">
         <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
         <div style="height: 1rem" ></div>
         <template #title>
           <div class="tab_item">
-            <!-- <div class="tab_item_icon" v-show="active != 'option'">
-                            <img src="/static/img/market/option.svg" alt="icon">
-                        </div>
-                        <span v-show="active == 'option'">自选</span> -->
             <span>自选</span>
           </div>
         </template>
