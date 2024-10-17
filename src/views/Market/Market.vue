@@ -366,7 +366,6 @@ const jump = name => {
     }
 
     :deep(.van-tab--shrink) {
-      // padding: 0 0.2rem;
       padding-left: 0;
       padding-right: 0.4rem;
     }

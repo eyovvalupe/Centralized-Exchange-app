@@ -420,7 +420,6 @@ const showInfo = ref(false)
 
     .info_header {
         width: 100%;
-        top: 0;
         left: 50%;
         background-color: #fff;
         padding: 0 0.205rem;

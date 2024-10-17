@@ -10,7 +10,9 @@
                 <div class="price">{{ item.price ? (item.price).toFixed(2) : '--' }}</div>
                 <div class="percent" :class="[updown(item) === 0 ? '' : (updown(item) > 0 ? 'up' : 'down')]">{{
                     ((item.ratio || 0) *
-                        100).toFixed(2) }}%</div>
+                        100).toFixed(2) > 0 ? '+' + ((item.ratio || 0) *
+                        100).toFixed(2) : ((item.ratio || 0) *
+                        100).toFixed(2)  }}%</div>
 
                 <div class="sparkLine">
                     <SparkLine v-if="item.points" style="width:100%;height:0.45rem" :points="item.points"
