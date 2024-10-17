@@ -8,7 +8,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import store from "@/store";
 
 const categories = ref([
     { key: 'all', label: '全部' },
@@ -16,10 +17,13 @@ const categories = ref([
     { key: 'contract', label: '合约' },
     { key: 'exchange', label: '外汇' },
 ])
-const selectedCategory = ref("all")
+const marketType = computed(
+  () => store.getters.getMarketType
+)
+const selectedCategory = ref(marketType.value)
 const selectCategory = category => {
-    console.log(category)
     selectedCategory.value = category.key
+    store.commit("setMarketType", selectedCategory.value || "all");
 }
 </script>
 

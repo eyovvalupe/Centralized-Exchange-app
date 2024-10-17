@@ -10,6 +10,7 @@
       :deleteItem="!!token"
       class="market_optional"
       :list="watchList"
+      :marketType="marketType"
     />
     <div class="addBtn_container">
       <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
@@ -164,6 +165,7 @@ const getWatchList = () => {
       if (res.code == 200) {
         if (watchList.value.length) {
           // 有历史数据就更新
+          console.log("watchList==========================>", res.data);
           const rs = res.data.map((item) => {
             const target = watchList.value.find((a) => a.symbol == item.symbol);
             if (target) {
@@ -172,6 +174,7 @@ const getWatchList = () => {
             }
             return item;
           });
+          console.log(rs);
           store.commit("setMarketWatchList", rs || []);
         } else {
           // 没有就直接提交
@@ -197,6 +200,7 @@ const getWatchList = () => {
 };
 
 const init = () => {
+  console.log("==========>", watchList.value)
   if (token.value) {
     getWatchList();
   } else {
@@ -207,6 +211,9 @@ const init = () => {
 };
 
 // 推荐列表
+const marketType = computed(
+  () => store.getters.getMarketType
+)
 const marketSrockRecommendList = computed(
   () => store.state.marketSrockRecommendList || []
 );
@@ -220,6 +227,7 @@ const openRecommendList = () => {
     .then((res) => {
       if (res.code == 200) {
         // 股票
+        console.log("default ============>", res.data)
         if (res.data?.stock) {
           const arr = res.data.stock.map((item) => {
             const target = marketSrockRecommendList.value.find(
@@ -237,13 +245,14 @@ const openRecommendList = () => {
         }
 
         // 合约
-        if (res.data?.futures) {
-          const arr2 = res.data.futures.map((item) => {
+        if (res.data?.crypto) {
+          const arr2 = res.data.crypto.map((item) => {
             const target = marketContractRecommendList.value.find(
               (a) => a.symbol == item.symbol
             );
             return target || item;
           });
+
           store.commit("setMarketContractRecommendList", arr2 || []);
           setTimeout(() => {
             store.dispatch("subList", {

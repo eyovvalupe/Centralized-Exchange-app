@@ -13,6 +13,7 @@ const pageKeys = {
 
 export default {
     state: {
+        marketType: "all",
         currStock: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
         marketSearchType: '', // 当前搜索的市场
@@ -46,6 +47,9 @@ export default {
 
     },
     mutations: {
+        setMarketType(state,data) {
+            state.marketType = data;
+        },
         setMarketWatchList(state, data) {
             state.marketWatchList = data;
         },
@@ -261,6 +265,14 @@ export default {
                     }
                 })
             })
+        },
+        setMarketType({commit, state}) {
+            commit("setMarketType", state)
         }
     },
+    getters: {
+        getMarketType(state) {
+            return state.marketType;
+        }
+    }
 }

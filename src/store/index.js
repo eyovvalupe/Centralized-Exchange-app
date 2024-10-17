@@ -129,6 +129,9 @@ export default createStore({
     ...trade.actions,
     ...assets.actions,
   },
+  getters: {
+    ...market.getters
+  },
   plugins: [
     createPersistedState({
       key: 'sunx',
