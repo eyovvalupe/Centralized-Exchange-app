@@ -81,7 +81,7 @@
 
       <div class="item_block" v-if="marketContractRecommendList.length">
         <div class="item_block_title">
-          <span>推荐合约/AI量化</span>
+          <span>推荐加密代币</span>
         </div>
         <StockRecommend
           :key="'recommend'"
@@ -368,7 +368,7 @@ const remove = (item) => {
 
 .recommend_block {
   background-color: #f5f7fc;
-  padding: 0.471rem 0.272rem;
+  padding: 1rem 0.272rem;
   border-radius: 0.452rem;
 
   .item_block {

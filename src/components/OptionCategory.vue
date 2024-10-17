@@ -14,8 +14,8 @@ import store from "@/store";
 const categories = ref([
     { key: 'all', label: '全部' },
     { key: 'stock', label: '股票' },
-    { key: 'contract', label: '合约' },
-    { key: 'exchange', label: '外汇' },
+    { key: 'crypto', label: '合约' },
+    { key: 'forex', label: '外汇' },
 ])
 const marketType = computed(
   () => store.getters.getMarketType

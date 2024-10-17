@@ -30,13 +30,13 @@
             z-index: 1000;"></div>
         </Teleport> -->
 
-    <div class="boder-[#D0D8E2] absolute right-4 top-[9px] z-10 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
+    <!-- <div class="boder-[#D0D8E2] absolute right-4 top-[9px] z-10 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
       <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
-    </div>
+    </div> -->
     <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
       <Tab class="optional" name="option">
         <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
-        <div style="height: 1rem" />
+        <div style="height: 1rem" ></div>
         <template #title>
           <div class="tab_item">
             <!-- <div class="tab_item_icon" v-show="active != 'option'">
@@ -63,7 +63,7 @@
       </Tab>
       <Tab name="stock">
         <Stock v-if="active == 'stock'" ref="StockRef" />
-        <div style="height: 1rem" />
+        <!-- <div style="height: 1rem" ></div> -->
         <template #title>
           <div class="tab_item">
             <div v-show="openTab" class="tab_item_icon">
@@ -162,7 +162,9 @@
                     </div>
                 </template>
             </Tab> -->
+            
     </Tabs>
+    
     <!-- </PullRefresh> -->
     <!-- </transition> -->
   </div>

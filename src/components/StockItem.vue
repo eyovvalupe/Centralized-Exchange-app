@@ -1,265 +1,302 @@
 <!-- 股票单个元素 -->
 <template>
-    <div ref="root" style="width:100%">
-        <SwipeCell class="stock_item_box" :class="['stock_item_' + updownStatus]">
-            <div class="stock_item" @click="goInfo">
-                <div class="td5">
-                    <div class="item_name">{{ props.item.symbol }}</div>
-                    <div class="item_info">{{ props.item.name || '--' }}</div>
-                </div>
-                <div class="td2 spark_line_box">
-                    <SparkLine v-if="props.item.points" style="width:100%;height:0.45rem" :points="props.item.points"
-                        :ratio="props.item.ratio" />
-                    <div v-else></div>
-                </div>
-                <div class="td2 td_r">
-                    <div class="item_num" :class="[updown === 0 ? '' : (updown > 0 ? 'up' : 'down')]">{{
-                        props.item.price ? (props.item.price).toFixed(3) : '--' }}</div>
-                    <div class="item_info_box" @click.stop="() => mode = mode == 3 ? 1 : mode + 1">
-                        <div v-if="props.item.ratio !== undefined" class="item_percent"
-                            :class="[updown === 0 ? '' : (updown > 0 ? 'up_bg' : 'down_bg')]">
-                            <span v-if="mode == 1">{{ ((props.item.ratio || 0) * 100).toFixed(2) }}%</span>
-                            <span v-else-if="mode == 2">{{ (props.item.price || 0).toFixed(2) }}</span>
-                            <span v-else>{{ _formatNumber(props.item.volume) }}</span>
-                        </div>
-                    </div>
-                </div>
+    <div ref="root" style="width: 100%">
+      <SwipeCell class="stock_item_box" :class="['stock_item_' + updownStatus]">
+        <div class="stock_item" @click="goInfo">
+          <div class="td5">
+            <div class="item_name flex items-center gap-1">
+              {{ props.item.symbol }}
+              <div
+                :class="`${
+                  marketStyle[props.item.type]
+                } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] w-[0.6rem] h-[0.3rem] `"
+              >
+                {{ market[props.item.type] }}
+              </div>
             </div>
-
-            <template #right v-if="props.deleteItem">
-                <div class="delete_content" @click="removeStock(item)">
-                    <div class="delete_icon">
-                        <img src="/static/img/market/delete.png" alt="🚮">
-                    </div>
-                </div>
-            </template>
-        </SwipeCell>
-        <!-- <div style="height: 1.44rem;" v-if="!show"></div> -->
+            <div class="item_info">{{ props.item.name || "--" }}</div>
+          </div>
+          <div class="td2 spark_line_box">
+            <SparkLine
+              v-if="props.item.points"
+              style="width: 100%; height: 0.45rem"
+              :points="props.item.points"
+              :ratio="props.item.ratio"
+            />
+            <div v-else></div>
+          </div>
+          <div class="td2 td_r">
+            <div
+              class="item_num"
+              :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
+            >
+              {{ props.item.price ? props.item.price.toFixed(3) : "--" }}
+            </div>
+            <div
+              class="item_info_box"
+              @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)"
+            >
+              <div
+                v-if="props.item.ratio !== undefined"
+                class="item_percent"
+                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']"
+              >
+                <span v-if="mode == 1"
+                  >{{ ((props.item.ratio || 0) * 100).toFixed(2) }}%</span
+                >
+                <span v-else-if="mode == 2">{{
+                  (props.item.price || 0).toFixed(2)
+                }}</span>
+                <span v-else>{{ _formatNumber(props.item.volume) }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <template #right v-if="props.deleteItem">
+          <div class="delete_content" @click="removeStock(item)">
+            <div class="delete_icon">
+              <img src="/static/img/market/delete.png" alt="🚮" />
+            </div>
+          </div>
+        </template>
+      </SwipeCell>
+      <!-- <div style="height: 1.44rem;" v-if="!show"></div> -->
     </div>
-</template>
-
-<script setup>
-import SparkLine from "./SparkLine.vue"
-import { ref, computed, watch } from "vue"
-import router from "@/router"
-import { SwipeCell } from 'vant';
-import store from "@/store"
-import { _formatNumber } from "@/utils/index"
-
-const emits = defineEmits(['remove'])
-const props = defineProps({
+  </template>
+  
+  <script setup>
+  import SparkLine from "./SparkLine.vue";
+  import { ref, computed, watch } from "vue";
+  import router from "@/router";
+  import { SwipeCell } from "vant";
+  import store from "@/store";
+  import { _formatNumber } from "@/utils/index";
+  
+  const market = {
+    stock: "股票",
+    crypto: "合约",
+    forex: "外汇",
+  };
+  const marketStyle = {
+    stock: "text-[#014CFA] bg-[rgba(1,76,250,0.1)] ",
+    crypto: "text-[#FFAF2A] bg-[rgba(255,175,42,0.1)] ",
+    forex: "text-[#18B762] bg-[rgba(24,183,98,0.1)] ",
+  };
+  const emits = defineEmits(["remove"]);
+  const props = defineProps({
     item: {
-        type: Object,
-        default: () => { }
+      type: Object,
+      default: () => {},
     },
-    scrollBox: { // 滚动的父级
-        type: String,
-        default: '.page'
+    scrollBox: {
+      // 滚动的父级
+      type: String,
+      default: ".page",
     },
-    deleteItem: { // 是否可以滑动删除
-        type: Boolean,
-        default: false
+    deleteItem: {
+      // 是否可以滑动删除
+      type: Boolean,
+      default: false,
     },
-    type: { //从交易页面侧边栏点击
-        type: String,
-        default: ''
+    type: {
+      //从交易页面侧边栏点击
+      type: String,
+      default: "",
     },
     handleClick: {
-        type: Function,
-        default: null
-    }
-})
-
-
-const mode = ref(1)
-const updown = computed(() => { // 1-涨 -1-跌 0-平
-    if (props.item.ratio === undefined) return 0
-    return props.item.ratio > 0 ? 1 : -1
-})
-const price = computed(() => props.item.price | 0)
-
-
-const updownStatus = ref('')
-watch(price, (newVal, oldVal) => {
+      type: Function,
+      default: null,
+    },
+  });
+  
+  const mode = ref(1);
+  const updown = computed(() => {
+    // 1-涨 -1-跌 0-平
+    if (props.item.ratio === undefined) return 0;
+    return props.item.ratio > 0 ? 1 : -1;
+  });
+  const price = computed(() => props.item.price | 0);
+  
+  const updownStatus = ref("");
+  watch(price, (newVal, oldVal) => {
     if (newVal && oldVal) {
-        if (newVal > oldVal) { // 上升
-            updownStatus.value = 'up'
-        } else { // 下降
-            updownStatus.value = 'down'
-        }
-        setTimeout(() => {
-            updownStatus.value = ''
-        }, 1000)
+      if (newVal > oldVal) {
+        // 上升
+        updownStatus.value = "up";
+      } else {
+        // 下降
+        updownStatus.value = "down";
+      }
+      setTimeout(() => {
+        updownStatus.value = "";
+      }, 1000);
     }
-})
-
-
-const goInfo = () => {
-    if (props.handleClick) return props.handleClick(props.item)
-    store.commit('setCurrStock', props.item)
-    if (props.type === 'trade') {
-        const data = [
-            {
-                name: props.item.name,
-                symbol: props.item.symbol,
-            }
-        ]
-        store.commit('setShowLeft', false)
-        store.commit('setChooseSymbol', data)
-        return
+  });
+  
+  const goInfo = () => {
+    if (props.handleClick) return props.handleClick(props.item);
+    store.commit("setCurrStock", props.item);
+    if (props.type === "trade") {
+      const data = [
+        {
+          name: props.item.name,
+          symbol: props.item.symbol,
+        },
+      ];
+      store.commit("setShowLeft", false);
+      store.commit("setChooseSymbol", data);
+      return;
     } else {
-        setTimeout(() => {
-            router.push({
-                name: 'market_info',
-                query: {
-                    symbol: props.item.symbol,
-                    type: 'stock'
-                }
-            })
-        }, 100)
+      setTimeout(() => {
+        router.push({
+          name: "market_info",
+          query: {
+            symbol: props.item.symbol,
+            type: "stock",
+          },
+        });
+      }, 100);
     }
-}
-
-
-const removeStock = item => {
-    emits('remove', item)
-}
-</script>
-
-<style lang="less" scoped>
-.stock_item_box {
+  };
+  
+  const removeStock = (item) => {
+    emits("remove", item);
+  };
+  </script>
+  
+  <style lang="less" scoped>
+  .stock_item_box {
     width: 100%;
-    transition: all ease .3s;
+    transition: all ease 0.3s;
     border-radius: 0.12rem;
     overflow: hidden;
-
+  
     &:active,
     &:hover {
-        background-color: #F2F3F7;
+      background-color: #f2f3f7;
     }
-
-
+  
     .delete_content {
-        width: 1rem;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #d0d8e2;
-        border-top-right-radius: 16px;
-        border-bottom-right-radius: 16px;
-
-        .delete_icon {
-            font-size: 0.52rem;
-            height: 0.52rem
-        }
+      width: 1rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #d0d8e2;
+      border-top-right-radius: 16px;
+      border-bottom-right-radius: 16px;
+  
+      .delete_icon {
+        font-size: 0.52rem;
+        height: 0.52rem;
+      }
     }
-}
-
-.active_symbol {
-    background-color: #F2F3F7;
-}
-
-.stock_item {
+  }
+  
+  .active_symbol {
+    background-color: #f2f3f7;
+  }
+  
+  .stock_item {
     display: flex;
     align-items: center;
     height: 1.44rem;
     padding: 0 0.3rem;
     position: relative;
-
-
+  
     &::after {
-        content: '';
-        width: calc(100% - 0.6rem);
-        position: absolute;
-        bottom: 0;
-        left: 0.3rem;
-        height: 1px;
-        background-color: #EFF3F8;
-
+      content: "";
+      width: calc(100% - 0.6rem);
+      position: absolute;
+      bottom: 0;
+      left: 0.3rem;
+      height: 1px;
+      background-color: #eff3f8;
     }
-
+  
     .td5 {
-        flex: 5;
-        flex-shrink: 0;
+      flex: 5;
+      flex-shrink: 0;
+      overflow: hidden;
+  
+      .item_name {
+        font-size: 0.32rem;
+        color: #061023;
+        line-height: 0.46rem;
+        font-weight: 600;
+        margin-bottom: 0.06rem;
+      }
+  
+      .item_info {
+        font-size: 0.28rem;
+        line-height: 0.36rem;
+        color: #8f92a1;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
         overflow: hidden;
-
-        .item_name {
-            font-size: 0.32rem;
-            color: #061023;
-            line-height: 0.46rem;
-            font-weight: 600;
-            margin-bottom: 0.06rem;
-        }
-
-        .item_info {
-            font-size: 0.28rem;
-            line-height: 0.36rem;
-            color: #8F92A1;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            width: 100%;
-            overflow: hidden;
-            padding-right: 0.4rem;
-        }
-    }
-
-    .td2 {
-        flex-shrink: 0;
-        flex: 2;
-        overflow: hidden;
-
-        .item_num {
-            font-size: 0.3rem;
-            font-weight: 600;
-            line-height: 0.3rem;
-            color: #6C7B90;
-        }
-
-        .item_info_box {
-            margin-top: 0.1rem;
-
-            .item_percent {
-                height: 0.4rem;
-                line-height: 0.4rem;
-                font-size: 0.24rem;
-                display: inline-block;
-                font-weight: 600;
-                color: #fff;
-                text-align: center;
-                border-radius: 0.12rem;
-                padding: 0 0.14rem;
-            }
-
-            .nodata_percent {
-                background-color: #6C7B90;
-            }
-        }
-    }
-
-    .td_r {
-        text-align: right;
-    }
-
-    .spark_line_box {
         padding-right: 0.4rem;
-        padding-left: 0.2rem;
+      }
     }
-}
-
-.stock_item_up {
+  
+    .td2 {
+      flex-shrink: 0;
+      flex: 2;
+      overflow: hidden;
+  
+      .item_num {
+        font-size: 0.3rem;
+        font-weight: 600;
+        line-height: 0.3rem;
+        color: #6c7b90;
+      }
+  
+      .item_info_box {
+        margin-top: 0.1rem;
+  
+        .item_percent {
+          height: 0.4rem;
+          line-height: 0.4rem;
+          font-size: 0.24rem;
+          display: inline-block;
+          font-weight: 600;
+          color: #fff;
+          text-align: center;
+          border-radius: 0.12rem;
+          padding: 0 0.14rem;
+        }
+  
+        .nodata_percent {
+          background-color: #6c7b90;
+        }
+      }
+    }
+  
+    .td_r {
+      text-align: right;
+    }
+  
+    .spark_line_box {
+      padding-right: 0.4rem;
+      padding-left: 0.2rem;
+    }
+  }
+  
+  .stock_item_up {
     background-color: rgba(24, 183, 98, 0.12);
-
+  
     .stock_item {
-        border-bottom: 1px solid rgba(24, 183, 98, 0.12);
+      border-bottom: 1px solid rgba(24, 183, 98, 0.12);
     }
-}
-
-.stock_item_down {
+  }
+  
+  .stock_item_down {
     background-color: rgba(250, 100, 102, 0.12);
-
+  
     .stock_item {
-        border-bottom: 1px solid rgba(250, 100, 102, 0.12);
+      border-bottom: 1px solid rgba(250, 100, 102, 0.12);
     }
-}
-</style>
+  }
+  </style>
+  
