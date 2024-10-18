@@ -182,12 +182,12 @@ const getWatchList = () => {
           // 还没有添加自选
           setTimeout(() => {
             openRecommendList();
-          }, 100);
+          }, 500);
         } else {
           // 有数据就订阅
           setTimeout(() => {
             subs();
-          }, 500);
+          }, 1000);
         }
       }
     })
