@@ -37,6 +37,8 @@ const selectCategory = category => {
 
 button {
     border: 1px solid #D0D8E2;
+    width: 1.14rem;
+    height: 0.68rem;
     padding: 0.145rem 0.261rem;
     border-radius: 1.178rem;
     background-color: transparent;

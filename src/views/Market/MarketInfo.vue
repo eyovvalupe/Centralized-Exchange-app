@@ -653,13 +653,15 @@ const showInfo = ref(false);
         text-overflow: ellipsis;
         overflow: hidden;
         font-size: 0.24rem;
-        line-height: 0.32rem;
+        line-height: 0.332rem;
+        font-weight: 400;
         color: #8f92a1;
 
         .title_name {
           color: #061023;
           font-size: 0.32rem;
-          line-height: 0.44rem;
+          line-height: 0.432rem;
+          font-weight: 500;
         }
       }
 

@@ -215,7 +215,7 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.44rem;
+  height: 1.24rem;
   padding: 0 0.3rem;
   position: relative;
 
@@ -237,14 +237,15 @@ const removeStock = (item) => {
     .item_name {
       font-size: 0.32rem;
       color: #061023;
-      line-height: 0.46rem;
+      line-height: 0.32rem;
       font-weight: 600;
       margin-bottom: 0.06rem;
     }
 
     .item_info {
-      font-size: 0.28rem;
-      line-height: 0.36rem;
+      font-size: 0.24rem;
+      line-height: 0.332rem;
+      font-weight: 400;
       color: #8f92a1;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -313,3 +314,4 @@ const removeStock = (item) => {
   }
 }
 </style>
+
