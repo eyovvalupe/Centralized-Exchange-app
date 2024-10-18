@@ -1,7 +1,7 @@
 <!-- 搜索页 -->
 <template>
   <div class="page page_search">
-    <Top :title="'搜索'" />
+    <Top :title="'搜索'" :searchText="search" />
     <!-- 搜索框 -->
     <div class="search_box">
       <div class="icon">
@@ -131,7 +131,7 @@ const loading = ref(false);
 const token = computed(() => store.state.token);
 
 // 搜索相关
-search.value = store.state.marketSearchStr || "";
+search.value = "";
 const searchList = computed(() => store.state.marketSearchList);
 const marketSearchTextList = computed(() => store.state.marketSearchTextList);
 const handleHistory = (data) => {
@@ -188,17 +188,6 @@ const keydown = () => {
   }, 0);
 };
 const keydownEnter = () => {
-  if (search.value.length > 0) {
-    var prevList = [...marketSearchTextList.value];
-    var flag = false;
-    prevList.map((item) => {
-        if(item.toUpperCase() == search.value.toUpperCase())
-            flag = true;
-    })
-    var newList = flag ? prevList : [...prevList, search.value];
-
-    store.commit("setMarketSearchTextList", newList);
-  }
   resetData();
 }
 

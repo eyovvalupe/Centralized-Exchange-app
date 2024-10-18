@@ -14,7 +14,7 @@
 <script setup>
 import { Icon } from 'vant'
 import router from '@/router'
-
+import store from '@/store'
 const props = defineProps({
   title: {
     // 标题
@@ -25,10 +25,25 @@ const props = defineProps({
     type: String,
     default: 'arrow-left',
   },
+  searchText: {
+    type: String,
+    default: ""
+  },
   backFunc: Function,
 })
-
+const marketSearchTextList = computed(() => store.state.marketSearchTextList);
 const clickLeft = () => {
+  if (props.searchText.length > 0) {
+    var prevList = [...marketSearchTextList.value];
+    var flag = false;
+    prevList.map((item) => {
+        if(item.toUpperCase() == props.searchText.toUpperCase())
+            flag = true;
+    })
+    var newList = flag ? prevList : [...prevList, props.searchText];
+
+    store.commit("setMarketSearchTextList", newList);
+  }
   if (props.backFunc) return props.backFunc()
   router.back()
 }
