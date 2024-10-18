@@ -6,7 +6,7 @@
       <div
         class="list_item"
         @click="changeCheck(i)"
-        :class="{ list_item_active: checkedList[i] }"
+        :class="'list_item_active'"
         v-for="(item, i) in props.list"
         :key="i"
       >
@@ -33,14 +33,14 @@
           />
         </div>
 
-        <!-- <div class="check_ticket" v-if="checkedList[i]">
+        <div class="check_ticket" v-if="checkedList[i]">
           <div class="checkmark"></div>
-        </div> -->
-
-        <div class="uncheck_ticket" v-if="checkedList[i]">
-          <div class="uncheckmark"></div>
         </div>
 
+        <div class="uncheck_ticket" v-else >
+          <div class="uncheckmark"></div>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -98,11 +98,7 @@ try {
 emitsKeys();
 
 const changeCheck = (i) => {
-  if (checkedList.value[i]) {
-    checkedList.value[i] = !checkedList.value[i];
-  } else {
-    checkedList.value[i] = true;
-  }
+    checkedList.value[i] = !checkedList.value[i]
   emitsKeys();
 };
 
@@ -115,7 +111,6 @@ const disabled = computed(
 <style lang="less" scoped>
 .recommend_list {
   padding: 0 0.036rem;
-  // height: calc(var(--app-height) - 4.2rem);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -173,55 +168,44 @@ const disabled = computed(
         right: 0.1rem;
         bottom: 0.1rem;
       }
-
-    //   .unchecked {
-    //     position: absolute;
-    //     top: 0.1rem;
-    //     right: 0.1rem;
-    //     width: 0.3624rem;
-    //     height: 0.3624rem;
-    //     border-radius: 50%;
-    //     border: 1px solid #ddd;
-    //     opacity: 0.9;
-    //   }
     }
 
     .list_item_active {
       position: relative;
 
-    //   .check_ticket {
-    //     top: 0.2rem;
-    //     right: 0.2rem;
-    //     display: flex;
-    //     align-items: center;
-    //     justify-content: center;
-    //     width: 0.4rem; /* Adjust size as needed */
-    //     height: 0.4rem; /* Adjust size as needed */
-    //     background-color: #014cfa; /* Blue background */
-    //     border-radius: 50%; /* Makes it a circle */
-    //     color: white; /* White color for the checkmark */
-    //     font-size: 0.5rem; /* Adjust size of the checkmark */
-    //     position: absolute;
+      .check_ticket {
+        top: 0.15rem;
+        right: 0.15rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 0.4rem;
+        height: 0.4rem;
+        background-color: #014cfa;
+        border-radius: 50%;
+        color: white;
+        font-size: 0.5rem;
+        position: absolute;
 
-    //     .checkmark {
-    //       width: 11px;
-    //       height: 7px;
-    //       position: relative;
-    //     }
+        .checkmark {
+          width: 11px;
+          height: 7px;
+          position: relative;
+        }
 
-    //     .checkmark::before {
-    //       content: "";
-    //       position: absolute;
-    //       top: 0;
-    //       left: 0;
-    //       width: 100%;
-    //       height: 100%;
-    //       background-color: white; /* Background color */
-    //       clip-path: path(
-    //         "M3.52645 6.39447C3.34635 6.38945 3.17542 6.32185 3.04962 6.2059L0.203008 3.66018C0.072772 3.53877 0 3.37669 0 3.20804C0 3.03939 0.072772 2.87731 0.203008 2.7559C0.268598 2.69655 0.346602 2.64945 0.432527 2.61731C0.518452 2.58517 0.610601 2.56862 0.70367 2.56862C0.796739 2.56862 0.888889 2.58517 0.974814 2.61731C1.06074 2.64945 1.13874 2.69655 1.20433 2.7559L3.52645 4.8559L9.45809 0.188751C9.52294 0.129008 9.60043 0.081531 9.68601 0.0491152C9.77158 0.0166994 9.86351 0 9.95637 0C10.0492 0 10.1412 0.0166994 10.2267 0.0491152C10.3123 0.081531 10.3898 0.129008 10.4547 0.188751C10.5207 0.247704 10.5731 0.317814 10.6088 0.395044C10.6446 0.472274 10.663 0.555099 10.663 0.638751C10.663 0.722402 10.6446 0.805227 10.6088 0.882457C10.5731 0.959687 10.5207 1.0298 10.4547 1.08875L4.02712 6.2059C3.89458 6.32584 3.71453 6.39366 3.52645 6.39447Z"
-    //       );
-    //     }
-    //   }
+        .checkmark::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: white;
+          clip-path: path(
+            "M3.52645 6.39447C3.34635 6.38945 3.17542 6.32185 3.04962 6.2059L0.203008 3.66018C0.072772 3.53877 0 3.37669 0 3.20804C0 3.03939 0.072772 2.87731 0.203008 2.7559C0.268598 2.69655 0.346602 2.64945 0.432527 2.61731C0.518452 2.58517 0.610601 2.56862 0.70367 2.56862C0.796739 2.56862 0.888889 2.58517 0.974814 2.61731C1.06074 2.64945 1.13874 2.69655 1.20433 2.7559L3.52645 4.8559L9.45809 0.188751C9.52294 0.129008 9.60043 0.081531 9.68601 0.0491152C9.77158 0.0166994 9.86351 0 9.95637 0C10.0492 0 10.1412 0.0166994 10.2267 0.0491152C10.3123 0.081531 10.3898 0.129008 10.4547 0.188751C10.5207 0.247704 10.5731 0.317814 10.6088 0.395044C10.6446 0.472274 10.663 0.555099 10.663 0.638751C10.663 0.722402 10.6446 0.805227 10.6088 0.882457C10.5731 0.959687 10.5207 1.0298 10.4547 1.08875L4.02712 6.2059C3.89458 6.32584 3.71453 6.39366 3.52645 6.39447Z"
+          );
+        }
+      }
 
       .uncheck_ticket {
         top: 0.15rem;
@@ -229,13 +213,13 @@ const disabled = computed(
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 0.4rem; /* Adjust size as needed */
-        height: 0.4rem; /* Adjust size as needed */
-        background-color: white; /* Blue background */
+        width: 0.4rem;
+        height: 0.4rem;
+        background-color: white;
         border-width: 1px;
-        border-radius: 50%; /* Makes it a circle */
-        color: #8f92a1; /* White color for the checkmark */
-        font-size: 0.5rem; /* Adjust size of the checkmark */
+        border-radius: 50%;
+        color: #8f92a1;
+        font-size: 0.5rem;
         position: absolute;
 
         .uncheckmark {
@@ -251,7 +235,7 @@ const disabled = computed(
           left: 0;
           width: 100%;
           height: 100%;
-          background-color: #8f92a1; /* Background color */
+          background-color: #8f92a1;
           clip-path: path(
             "M3.52645 6.39447C3.34635 6.38945 3.17542 6.32185 3.04962 6.2059L0.203008 3.66018C0.072772 3.53877 0 3.37669 0 3.20804C0 3.03939 0.072772 2.87731 0.203008 2.7559C0.268598 2.69655 0.346602 2.64945 0.432527 2.61731C0.518452 2.58517 0.610601 2.56862 0.70367 2.56862C0.796739 2.56862 0.888889 2.58517 0.974814 2.61731C1.06074 2.64945 1.13874 2.69655 1.20433 2.7559L3.52645 4.8559L9.45809 0.188751C9.52294 0.129008 9.60043 0.081531 9.68601 0.0491152C9.77158 0.0166994 9.86351 0 9.95637 0C10.0492 0 10.1412 0.0166994 10.2267 0.0491152C10.3123 0.081531 10.3898 0.129008 10.4547 0.188751C10.5207 0.247704 10.5731 0.317814 10.6088 0.395044C10.6446 0.472274 10.663 0.555099 10.663 0.638751C10.663 0.722402 10.6446 0.805227 10.6088 0.882457C10.5731 0.959687 10.5207 1.0298 10.4547 1.08875L4.02712 6.2059C3.89458 6.32584 3.71453 6.39366 3.52645 6.39447Z"
           );
