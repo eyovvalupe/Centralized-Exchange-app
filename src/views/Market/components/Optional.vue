@@ -17,7 +17,7 @@
         >添加自选</Button>
     </div>
   </div>
-  <div v-else-if="!watchList.length && !loading" style="position: relative">
+  <div v-else-if="!watchList.length && !loading" style="position: relative; margin-bottom: 1rem;">
     <div class="no_self_selection_block">
       <div class="no_data_icon">
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
@@ -362,6 +362,7 @@ const remove = (item) => {
 .addBtn {
   color: #014cfa;
   border-color: #014cfa;
+  // border-width: 10px;
   width: 1.82rem;
   height: 0.68rem;
   font-size: 0.28rem;
@@ -407,7 +408,8 @@ const remove = (item) => {
 }
 
 .addBtn_container {
-  margin-top: 0.398rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.1rem;
   display: flex;
   justify-content: center;
 }
