@@ -50,7 +50,7 @@
           <span v-else>--</span>
         </h1>
         <div
-          style="display: flex; align-items: center; margin-left: 0.4rem"
+          style="display: flex; align-items: center; margin-left: 0.2rem"
           class="ratio"
           :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
         >
@@ -731,6 +731,8 @@ const showInfo = ref(false);
 
   h1.info {
     font-size: 0.6rem;
+    line-height: 0.81rem;
+    font-weight: 600;
   }
 
   .submit {
@@ -789,7 +791,7 @@ const showInfo = ref(false);
     font-size: 0.32rem;
     font-weight: 400;
     line-height: 0.42;
-    margin-right: 0.3rem;
+    margin-right: 0.2rem;
     padding: 0.1rem 0.25rem;
     border-radius: 1.25rem;
   }
@@ -830,7 +832,6 @@ const showInfo = ref(false);
   .market_content {
     flex: 1;
     overflow: hidden;
-    margin-top: 0.25rem;
 
     .funcs {
       display: flex;
@@ -1042,7 +1043,8 @@ const showInfo = ref(false);
     padding: 0.12rem 0.32rem;
     border-top: 1px solid #eaeef3;
     height: 1.4rem;
-    font-size: 0.28rem;
+    font-size: 0.3rem;
+    font-weight: 400;
 
     .symbol {
       color: #061023;
@@ -1070,7 +1072,7 @@ const showInfo = ref(false);
       color: #061023;
       border-radius: 40px;
       padding: 16px 24px;
-      font-size: 0.24rem;
+      font-size: 0.32rem;
       margin-left: 0.2rem;
       display: flex;
       align-items: center;
@@ -1083,7 +1085,7 @@ const showInfo = ref(false);
       color: white;
       border-radius: 40px;
       padding: 16px 24px;
-      font-size: 0.24rem;
+      font-size: 0.32rem;
       margin-left: 0.2rem;
       display: flex;
       align-items: center;
