@@ -186,7 +186,7 @@ defineExpose({
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .ai_order_info {
     padding: 0.32rem 0 1rem 0;
     margin-top: 1.12rem;
@@ -328,7 +328,6 @@ defineExpose({
     }
     
 }
-
 
 .stock-info{
     background-color: #F5F7FC;

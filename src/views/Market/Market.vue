@@ -100,6 +100,7 @@ import Constract from './components/Constract.vue'
 import Ai from './components/Ai.vue'
 import buyCoin from './buyCoin/index.vue'
 import Iconfonts from '@/components/Iconfonts.vue'
+import { throttle } from '@/utils'
 
 const marketPageRef = ref()
 const openTab = ref(false)
@@ -111,7 +112,8 @@ const IPORef = ref()
 const reloading = ref(false)
 const detail = ref(null)
 const detailTransition = ref('slide-right')
-
+const scrollTop = ref(0)
+provide('scrollTop', scrollTop)
 const changeTab = key => {
   active.value = key
   sessionStorage.setItem('market_active', key)
@@ -144,11 +146,17 @@ Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Sea
 
 const { startSocket } = useSocket()
 const activated = ref(false)
-const scrollHandler = () => {
+const activatedIncludes = computed(() => {
+  // 需要缓存的页面
+  return ['option', 'stock', 'contract', '4', '5'].includes(active.value) ? activated.value : true
+})
+const scrollHandler = throttle(e => {
+  // console.log('e', e.target.scrollTop)
+  scrollTop.value = e.target.scrollTop
   if (openTab.value) {
     openTab.value = false
   }
-}
+}, 400)
 onActivated(() => {
   activated.value = true
   setTimeout(() => {

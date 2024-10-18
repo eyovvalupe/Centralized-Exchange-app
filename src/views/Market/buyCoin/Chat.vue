@@ -2,24 +2,33 @@
 <template>
   <div class="buycoin-chat">
     <div ref="listRef" class="list">
+      <div class="notice_msg">
+        <div class="time">{{ list[0]?.time }}</div>
+        <div class="content">您已经成功下单，请耐心等候商家付款</div>
+      </div>
       <template v-for="item in list">
+        <!-- 提示 -->
+        <!-- <div class="notice_msg">
+          <div class="time">2024-10-28 10:25:08</div>
+          <div class="content">您已经成功下单，请耐心等候商家付款</div>
+        </div> -->
         <template v-if="item.direction == 'send'">
           <!-- 我的文本 -->
           <div v-if="item.type == 'text'" :id="`a${item.msgid}`" class="my_text_box">
             <div class="my_text">{{ item.content }}</div>
-            <div class="time">{{ item.time }}</div>
+            <!-- <div class="time">{{ item.time }}</div> -->
           </div>
 
           <!-- 我的富文本 -->
           <div v-if="item.type == 'html'" :id="`a${item.msgid}`" class="my_text_box">
             <div class="my_text" v-html="item.content" />
-            <div class="time">{{ item.time }}</div>
+            <!-- <div class="time">{{ item.time }}</div> -->
           </div>
 
           <!-- 我的图片 -->
           <div v-if="item.type == 'img'" :id="`a${item.msgid}`" class="my_pic_box">
             <img class="my_pic" :src="item.content" alt="img" />
-            <div class="time">{{ item.time }}</div>
+            <!-- <div class="time">{{ item.time }}</div> -->
           </div>
         </template>
         <template v-else>
@@ -32,7 +41,7 @@
 
             <div class="op_text">
               <div class="op_text_content">{{ item.content }}</div>
-              <div class="time">{{ item.time }}</div>
+              <!-- <div class="time">{{ item.time }}</div> -->
             </div>
           </div>
 
@@ -45,7 +54,7 @@
 
             <div class="op_text">
               <div class="op_text_content" v-html="item.content" />
-              <div class="time">{{ item.time }}</div>
+              <!-- <div class="time">{{ item.time }}</div> -->
             </div>
           </div>
 
@@ -58,29 +67,22 @@
 
             <div class="op_pic">
               <img class="op_pic_content" :src="item.content" alt="img" />
-              <div class="time">{{ item.time }}</div>
+              <!-- <div class="time">{{ item.time }}</div> -->
             </div>
           </div>
         </template>
       </template>
-      <!-- 提示 -->
-      <!-- <div class="notice_msg">
-                <div class="time">2024-10-28 10:25:08</div>
-                <div class="content">您已经成功下单，请耐心等候商家付款</div>
-            </div>
-            <div class="notice_msg">
-                <div class="time">2024-10-28 10:25:08</div>
-                <div class="content">您已经成功下单，请耐心等候商家付款</div>
-            </div> -->
     </div>
+    <div class="-ml-4 h-[0.02rem] w-[7.5rem] bg-[#EAEEF3]" />
     <div class="box item">
       <div class="box_icon">
-        <img src="/static/img/chat/file.png" alt="img" />
+        <!-- <img src="/static/img/chat/file.png" alt="img" /> -->
+        <IconSvg name="chatFile" class="text-30 text-my" />
         <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
       </div>
       <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
       <div class="box_icon" @click="sendText">
-        <img src="/static/img/chat/send.png" alt="img" />
+        <IconSvg name="chatSend" class="text-30 text-my" />
       </div>
     </div>
   </div>
@@ -95,6 +97,7 @@ import { randomFileName, _compressImg } from '@/utils'
 import { _fetchWithTimeout } from '@/api/upload'
 import storeChat from '@/store/chat'
 import { _c2cRead } from '@/api/api'
+import IconSvg from '@/components/IconSvg.vue'
 
 const props = defineProps({
   currItem: {
@@ -288,7 +291,7 @@ onBeforeUnmount(() => {
   padding: 0.2rem 0;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  // overflow: hidden;
 
   .list {
     flex: 1;
@@ -450,30 +453,47 @@ onBeforeUnmount(() => {
       margin: 0.1rem 0.64rem 0.32rem 0.64rem;
 
       .time {
-        font-size: 0.24rem;
-        color: #aeaeae;
-        margin-bottom: 0.1rem;
+        font-size: 0.28rem;
+        color: #8f92a1;
+        margin-bottom: 0.26rem;
+      }
+      .content {
+        // width: 5.22rem;
+        // height: 0.6rem;
+        border-radius: 1rem;
+        background: var(--F5F7FC, #f5f7fc);
+        color: var(--666D80, #666d80);
+        text-align: center;
+        font-size: 0.3rem;
+        line-height: 0.6rem; /* 133.333% */
+        padding: 0 0.18rem;
       }
     }
   }
 
   .box {
-    border: 1px solid #d0d8e2;
-    height: 0.96rem;
+    height: 1.34rem;
+    width: 100%;
     border-radius: 0.04rem;
-    margin-top: 0.1rem;
+    // margin-top: 5px;
+    padding-top: 0.2rem;
     display: flex;
     align-items: center;
-    padding: 0 0.32rem;
+    // border-top: 1px solid #d0d8e2;
+    // padding: 0 0.32rem;
 
     .ipt {
+      height: 0.96rem;
+      padding: 0 0.24rem;
+      border: 0.02rem solid #d0d8e2;
       flex: 1;
-      margin: 0 0.32rem;
+      margin: 0 0.3rem;
+      border-radius: 0.32rem;
     }
 
     .box_icon {
-      width: 0.4rem;
-      height: 0.4rem;
+      width: 0.6rem;
+      height: 0.6rem;
       position: relative;
 
       .file {

@@ -168,8 +168,12 @@ import router from '@/router'
 import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import IconSvg from '@/components/IconSvg.vue'
+import { useSessionStorage } from '@/utils/hooks'
 
 const { userInfo, token, deWeightCurrencyList: currencyList, accountList, sessionToken } = useMapState(['userInfo', 'token', 'deWeightCurrencyList', 'accountList', 'sessionToken'])
+const active = inject('active')
+const scrollTop = inject('scrollTop')
+const [buycoinScrollTop, setBuycoinScrollTop, removeBuycoinScrollTop] = useSessionStorage('buycoinScrollTop2')
 const safeRef = ref()
 const showPopupInfo = ref(false)
 const showDialog = ref(false)
@@ -344,10 +348,11 @@ const init = () => {
     moreDom = document.querySelector('.buycoin_buss')
   }, 500)
 }
-init()
 
 const scrollHandle = () => {
   if (!moreDom) return
+  if (active.value !== '1') return
+  setBuycoinScrollTop(scrollTop.value)
   const rect = moreDom.getBoundingClientRect()
   if (rect.top <= totalHeight) {
     console.error('加载更多')
@@ -355,23 +360,21 @@ const scrollHandle = () => {
     getData()
   }
 }
+watch(() => scrollTop.value, scrollHandle)
 
 onActivated(() => {
   setTimeout(() => {
+    const page2 = document.querySelector('.page')
+    page2.scrollTop = buycoinScrollTop.value
     moreDom = document.querySelector('.buycoin_buss')
   }, 500)
 })
 onMounted(() => {
+  init()
   currCryptoRef.value.scrollTo(currCrypto.value.name)
   setTimeout(() => {
     moreDom = document.querySelector('.buycoin_buss')
-    document.querySelector('.page').addEventListener('scroll', scrollHandle)
   }, 500)
-})
-onUnmounted(() => {
-  try {
-    document.querySelector('.page').removeEventListener('scroll', scrollHandle)
-  } catch {}
 })
 
 const clickAccountItem = item => {
@@ -413,6 +416,12 @@ function cryptoChange({ name: item }) {
   sessionStorage.setItem('buycoin_currCrypto', JSON.stringify(result))
   clickCrypto(result)
 }
+onUnmounted(() => {
+  removeBuycoinScrollTop()
+})
+defineExpose({
+  init,
+})
 </script>
 
 <style lang="less" scoped>

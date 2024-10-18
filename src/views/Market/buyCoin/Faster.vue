@@ -21,7 +21,8 @@
         </div>
 
         <div class="item_box_right">
-          <div v-if="token" class="subtitle" @click="jump('transfer')">
+          <div v-if="token" class="subtitle">
+            <!--  @click="jump('transfer')" -->
             <span>&nbsp;</span>
             <!-- <span class="link">划转</span> -->
           </div>
@@ -63,12 +64,12 @@
           </div>
         </div>
       </div>
-      <div class="tip">预计价格&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
+      <div v-if="rate" class="tip">预计价格&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
 
-      <Button v-if="token" size="large" class="submit" round :loading="loading" :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? '卖出' : '买入' }}</Button>
+      <Button size="large" class="submit" round :loading="loading" :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? '卖出' : '买入' }}</Button>
 
-      <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
-      <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button>
+      <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
+      <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
     </div>
   </div>
 
@@ -101,34 +102,6 @@
     </div>
   </Popup>
 
-  <!-- 账户选择弹窗 -->
-  <!-- <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
-    <div class="withdraw_accounr_dialog">
-      <div class="close_icon" @click="showAccountDialog = false">
-        <img src="/static/img/common/close.png" alt="x" />
-      </div>
-      <div class="title">账户选择</div>
-      <div class="list">
-        <div class="add_item" @click="goAddAccount">
-          <Icon style="font-size: 0.48rem" name="add-o" />
-          <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">添加收款账户</span>
-        </div>
-        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: form1.account_id == item.id }" class="dialog_account_item" @click="clickAccountItem(item)">
-          <div class="card_icon">
-            <img v-if="item.bankName" src="/static/img/user/card_type_b.png" alt="img" />
-            <img v-else src="/static/img/user/card_type_c.png" alt="img" />
-          </div>
-          <div class="card">
-            <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
-            <div class="name">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }}</div>
-          </div>
-          <div v-if="form1.account_id == item.id" class="checked" style="background-image: url('/static/img/user/check_bg.png')">
-            <img src="/static/img/common/ok.png" alt="img" />
-          </div>
-        </div>
-      </div>
-    </div>
-  </Popup> -->
   <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" @on-add-collection="clickAccountItem" />
 
   <!-- 安全密码弹窗 -->
@@ -141,8 +114,8 @@ import { Button, Popup, Icon, showToast, showConfirmDialog } from 'vant'
 import Decimal from 'decimal.js'
 import store from '@/store'
 import router from '@/router'
-import { _swapRate, _orderFast, _cryptoCoin } from '@/api/api'
-import { _hiddenAccount } from '@/utils/index'
+import { _swapRate, _orderFast } from '@/api/api'
+// import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import eventBus from '@/utils/eventBus'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
@@ -150,7 +123,7 @@ import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 const safeRef = ref()
 const token = computed(() => store.state.token)
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
-const accountList = computed(() => store.state.accountList || []) // 收款方式列表
+// const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 // const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const userInfo = computed(() => store.state.userInfo || {})
 const currencyList = computed(() => store.state.deWeightCurrencyList || [])
@@ -198,6 +171,7 @@ const inWallet = computed(() => {
 const sessionToken = computed(() => store.state.sessionToken || '')
 
 const sell = () => {
+  if (!token.value) return store.commit('setIsLoginOpen', true)
   if (!form1.value.volume || form1.value.volume <= 0) return showToast('请输入金额')
   if (form1.value.offset == 'sell') {
     if (form1.value.volume > currOut.value.amount) return showToast('余额不足')
@@ -289,8 +263,9 @@ const getRate = () => {
       rateLoading.value = false
     })
 }
+
 setTimeout(() => {
-  getRate()
+  if (token.value) getRate()
 }, 100)
 
 const clickAccountItem = item => {
@@ -409,9 +384,9 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
         border-radius: 16px;
         border: 1px solid #d0d8e2;
         padding: 0 0.2rem;
-
+        font-size: 0.32rem;
         .icon {
-          margin-right: 0.06rem;
+          margin-right: 0.12rem;
           width: 0.64rem;
           height: 0.64rem;
           position: relative;

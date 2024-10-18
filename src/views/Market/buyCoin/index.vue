@@ -6,7 +6,7 @@
         <Faster />
       </Tab>
       <Tab title="自选区" name="1">
-        <Self />
+        <Self ref="selfRef" />
       </Tab>
       <Tab title="我的订单" name="2">
         <List ref="listRef" />
@@ -36,7 +36,6 @@ import Self from './Self.vue'
 import store from '@/store'
 
 /* eslint-enable */
-
 const { startSocket } = useSocket()
 const token = computed(() => store.state.token)
 
@@ -46,7 +45,6 @@ const subs = () => {
   const socket = startSocket(() => {
     socket && socket.off('user')
     socket && socket.off('c2corder')
-    // socket && socket.off('msgapi')
     socket && socket.emit('user', token.value)
     socket && socket.emit('c2corder', '#all')
     currLoading.value = true
@@ -69,15 +67,28 @@ const cancelSubs = () => {
 }
 
 const listRef = ref()
+const selfRef = ref()
 const active = ref(sessionStorage.getItem('buycoinActive') || 0)
+provide('active', active)
 const onChange = i => {
   sessionStorage.setItem('buycoinActive', i)
-  if (i == 2) {
+  if (i == 1) {
+    selfRef.value && selfRef.value.init()
+  } else if (i == 2) {
     listRef.value && listRef.value.init()
   }
 }
 
 const pageLoading = ref(true)
+
+watch(
+  () => store.state.bottomTabBarValue,
+  newValue => {
+    if (newValue === 'market') {
+      onChange(active.value)
+    }
+  }
+)
 onMounted(() => {
   setTimeout(() => {
     pageLoading.value = false
@@ -137,6 +148,9 @@ onUnmounted(() => {
           &:nth-child(3) {
             border-end-start-radius: 0;
           }
+        }
+        .van-tab__text {
+          font-size: 0.32rem;
         }
         // &::after {
         //     content: '';

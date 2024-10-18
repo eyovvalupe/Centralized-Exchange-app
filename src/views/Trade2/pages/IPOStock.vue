@@ -2,49 +2,64 @@
 <template>
   <div v-if="token" class="page_ipo_stock">
 
+    <Tabs  type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"  :color="'#014CFA'" 
+        shrink>
+        <Tab title="全部" name="">
+        </Tab>
+        <Tab title="待中签" name="lock">
+        </Tab>
+        <Tab title="已中签" name="success">
+        </Tab>
+        <Tab title="未中签" name="failure">
+        </Tab>
+    </Tabs>
     <div class="list">
-      <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="openDetail(item)">
-        <div class="item_top">
-          <div class="item_top_box">
-            <div class="name">{{ item.company_name }}</div>
-            <div class="item_top_info">
-              <div>
-                <span class="info_name">发行价格</span>
-                <span class="info_val">{{ item.issue_price || '--' }}</span>
-              </div>
-              <div>
-                <span class="info_name">认购数量</span>
-                <span class="info_val">{{ item.volume || '--' }}</span>
-              </div>
-              <div v-if="item.winning">
-                <span class="info_name">中签数量</span>
-                <span class="info_price">{{ item.winning || '--' }}股</span>
-              </div>
-              <div>
-                <span class="info_name">认购日期</span>
-                <span class="info_val">{{ item.created || '--' }}</span>
-              </div>
-              <div v-if="item.listing_date">
-                <span class="info_name">上市日期</span>
-                <span class="info_val">{{ item.listing_date || '--' }}</span>
-              </div>
-              <div v-if="item.listed_price">
-                <span class="info_name">上市价格</span>
-                <span class="info_val">{{ item.listed_price || '--' }}</span>
-              </div>
+      <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="ipoOrderDetail(item)">
+          <div class="item_box">
+            <div class="name_box">
+              <div class="name">{{ item.company_name }}</div>
+              <img v-if="item.lever > 1" src="/static/img/trade/level.png"/>
+            </div>
+            
+            <div class="item_winning">
+              中签数量：<strong>{{ item.winning || '--' }}</strong>
+            </div>
+
+            <div class="status_box" v-if="item.status == 'success'" style="background-image: url(/static/img/trade/ipo_status_success.png);">
+              
+            </div>
+            <div class="status_box" v-else-if="item.status == 'failure'" style="background-image: url(/static/img/trade/ipo_status_failure.png);">
+              
+            </div>
+            <div class="status_box" v-else style="background-image: url(/static/img/trade/ipo_status_lock.png);">
+              
             </div>
           </div>
-          <div class="control_box">
-            <div class="status_box" :class="['status_box_' + item.status]">
-              <div class="status_box_inner">
-                <div class="status_text">{{ statusMap[item.status] || '--' }}</div>
-              </div>
+          <div class="item_info">
+            <div class="info_cell">
+              <span class="info_name">认购价格</span>
+              <span class="info_val">{{ item.issue_price || '--' }}</span>
+            </div>
+            <div class="info_cell">
+              <span class="info_name">认购数量</span>
+              <span class="info_val">{{ item.volume || '--' }}<span class="info_lever" v-if="item.lever > 1">{{ item.lever }}X</span></span>
+            </div>
+            <div class="info_cell" v-if="item.listing_date">
+              <span class="info_name">上市日期</span>
+              <span class="info_val">{{ item.listing_date || '--' }}</span>
+            </div>
+            <div class="info_cell" v-if="item.listed_price">
+              <span class="info_name">上市价格</span>
+              <span class="info_val">{{ item.listed_price || '--' }}</span>
+            </div>
+            <div class="info_cell">
+              <span class="info_name">认购日期</span>
+              <span class="info_val">{{ item.created || '--' }}</span>
             </div>
           </div>
-        </div>
       </div>
 
-      <LoadingMore v-if="!(finish && ipoStockList.length == 0)" :loading="loading" :finish="finish" />
+      <LoadingMore style="margin-top: 0.8rem;" v-if="!(finish && ipoStockList.length == 0)" :loading="loading" :finish="finish" />
       <NoData v-if="(finish && ipoStockList.length == 0)" />
     </div>
     <div style="height: 1rem"></div>
@@ -111,16 +126,19 @@ import NoData from "@/components/NoData.vue"
 import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import store from "@/store"
 import { _orderList, _orderGet } from "@/api/api";
-import { Popup } from "vant"
+import { Popup, Tabs,Tab } from "vant"
 import router from "@/router"
 import UnLogin from "@/components/UnLogin.vue"
 
-
+const ipoActive = ref("")
 const loginfinish = () => {
 
 }
-
+const ipoOnChange = ()=>{
+  init(true)
+}
 const token = computed(() => store.state.token)
+
 const statusMap = ref({
   lock: '锁定',
   success: '中签',
@@ -162,6 +180,7 @@ const getData = () => {
   loading.value = true
   page.value++
   _orderList({
+    status:ipoActive.value,
     page: page.value
   }).then(res => {
     if (res.data && res.data.length) {
@@ -174,14 +193,10 @@ const getData = () => {
         store.commit('setIpoStockList', [...ipoStockList.value, ...res.data])
       }
     } else {
-      setTimeout(() => {
-        finish.value = true
-      }, 500)
+      finish.value = true
     }
   }).finally(() => {
-    setTimeout(() => {
-      loading.value = false
-    }, 500)
+    loading.value = false
   })
 }
 
@@ -215,14 +230,10 @@ defineExpose({
   init
 })
 
-// 去购买
-const goBuy = (query) => {
-  router.push({
-    name: 'subscription',
-    query
-  })
+// 订单详情
+const ipoOrderDetail = (item)=>{
+    router.push('/ipo/orderDetail?order_no='+item.order_no)
 }
-
 
 // 详情
 const showPopupInfo = ref(false)
@@ -263,132 +274,183 @@ function countdown(endTime) {
 
 <style lang="less" scoped>
 .page_ipo_stock {
-  padding: 0 0.32rem;
+  padding: 0.28rem 0.32rem 0 0.32rem;
 
   .list {
-    margin-top: 0.2rem;
-    border-top: 1px solid #EAEAEA;
-
+    padding-top: 0.12rem;
     .item {
-      border-bottom: 1px solid #EAEAEA;
-      padding: 0 0 0.1rem 0;
-      position: relative;
-
-      .item_top {
-        display: flex;
-        align-items: stretch;
-        justify-content: space-between;
-        padding: 0.28rem 0;
-
-        .name {
-          font-size: 0.28rem;
-          font-weight: 600;
-          color: #0D0D12;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          flex: 1;
-          margin-right: 0.4rem;
-          line-height: 0.48rem;
-          margin-bottom: 0.2rem;
-          white-space: wrap;
-          word-break: keep-all;
-        }
-
-        .item_top_box {
-          .item_top_info {
-            color: #818898;
-            font-size: 0.24rem;
-            line-height: 0.48rem;
+          border-radius: 0.32rem;
+          border: 1px solid #EFF3F8;
+          background: #F5F7FC;
+          margin-top: 0.2rem;
+              
+          .name {
+              color: #061023;
+              font-size: 0.32rem;
+              font-weight: 600;
+              line-height: 0.36rem; 
+              color: #0D0D12;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              height: 0.36rem; 
+              white-space: wrap;
+              word-break: keep-all;
+              margin-bottom: 0.14rem;
+              max-width: 80%;
+          }
+          .name_box{
+              display: flex;
+              img{
+                  width: 0.34rem !important;
+                  height: 0.34rem !important;
+                  margin-left: 0.08rem;
+              }
+          }
+          .item_winning{
+            color: #8F92A1;
+            font-size: 0.28rem;
             font-weight: 400;
-
-            .info_val {
-              color: #000000;
-              margin-left: 0.24rem;
-            }
-
-            .info_price {
-              color: #0953FA;
-              font-size: 0.24rem;
-              margin-left: 0.24rem;
+            line-height: 0.36rem;
+            strong{
+              color:#014CFA;
+              margin-left: 0.18rem;
             }
           }
-        }
+          .item_box {
+              padding: 0.24rem 0.32rem ;
+              position: relative;
+              
+          }
+          .status_box{
+            width: 1.26738rem;
+            height: 1.17056rem;
+            position: absolute;
+            right:-0.14rem;
+            top:-0.02rem;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+          }
+          
 
-        .control_box {
-          flex-shrink: 0;
+          .pre_times {
+              display: flex;
+              align-items: center;
+              .pre_time {
+                  height: 0.48rem;
+                  min-width: 0.48rem;
+                  display: flex;
+                  align-items: center;
+                  text-align: center;
+                  justify-content: center;
+                  color: #FFAF2A;
+                  border: 1px solid #FFAF2A;
+                  border-radius: 0.12rem;
+                  font-size: 0.28rem;
+                  font-weight: 600;
+                  box-sizing: border-box;
 
-          .status_box {
-            width: 1.8rem;
-            height: 1.8rem;
-            border-radius: 50%;
-            border: 1px solid #C5C5C5;
-            right: 0.2rem;
-            padding: 0.1rem;
+              }
+              span {
+                  color: #FFAF2A;
+                  margin: 0 0.1rem;
+                  font-size: 0.28rem;
+              }
+          }
 
-            .status_box_inner {
-              border: 1px solid #C5C5C5;
-              width: 100%;
-              height: 100%;
-              border-radius: 50%;
+          .status_ing {
+              height: 0.6rem;
+              border-radius: 0rem 0.32rem;
+              padding: 0 0.2rem;
+              background-color: #014CFA;
+              min-width: 1.1rem;
               display: flex;
               align-items: center;
               justify-content: center;
-
-              .status_text {
-                height: 0.6rem;
-                padding: 0 0.1rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                line-height: 0;
-                color: #333;
-                font-size: 0.4rem;
-                font-weight: 600;
-                border-top: 1px dashed #C5C5C5;
-                border-bottom: 1px dashed #C5C5C5;
-                transform: rotate(-30deg);
-                white-space: nowrap;
-              }
-            }
+              font-size: 0.24rem;
+              color: #fff;
+              position: absolute;
+              right:0;
+              top:0;
           }
 
-          .status_box_lock {
-            border: 1px solid #FFA800;
-
-            .status_box_inner {
-              border: 1px solid #ffe3ac;
-
-              .status_text {
-                color: #FFA800;
-                border-top: 1px dashed #ffe3ac;
-                border-bottom: 1px dashed #ffe3ac;
-              }
-            }
+          .status_pre {
+              background-color: #FFAF2A;
+              color: #fff;
           }
 
-          .status_box_success {
-            border: 1px solid #0953FA;
-
-            .status_box_inner {
-              border: 1px solid #8BB2FC;
-
-              .status_text {
-                color: #0953FA;
-                border-top: 1px dashed #8BB2FC;
-                border-bottom: 1px dashed #8BB2FC;
-              }
-            }
+          .status_done {
+              background-color: #7E99D6;
+              color: #fff;
           }
-        }
+
+          .status_ed {
+              background-color: #18B762;
+              color: #fff;
+          }
+
+          .item_info {
+              border-radius: 0.32rem;
+              border: 1px solid #EFF3F8;
+              border-bottom: 0px;
+              background: #FFF;
+              position: relative;
+              left:-1px;
+              width: calc(100% + 2px);
+              box-sizing: border-box;
+              line-height: 0.3rem;
+              .info_cell{
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 0.24rem 0.32rem;
+              }
+              .info_cell + .info_cell{
+                  border-top: 1px dashed #EFF3F8;
+              }
+              .info_name{
+                  font-size: 0.28rem;
+                  color:#8F92A1;
+              }
+              .info_date,
+              .info_price {
+                  color: #061023;
+                  font-size: 0.28rem;
+              }
+              .info_lever{
+                border-radius: 0.32rem;
+                height: 0.44rem;
+                line-height: 0.44rem;
+                color:#014CFA;
+                font-size: 0.28rem;
+                padding: 0 0.12rem;
+                background: rgba(1, 76, 250, 0.08);
+                margin-left: 0.12rem;
+              }
+          }
+       
+
+          .control_box {
+              padding: 0.2rem 0.32rem;
+              .btn {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background-color: #014CFA;
+                  height: 0.8rem;
+                  border-radius: 0.5rem;
+                  color: #fff;
+                  font-size: 0.3rem;
+                  font-weight: 600;
+              }
+
+              
+          }
       }
-
-    }
   }
 
 }
-</style>
-<style lang="less">
+
+
 .ipo_stock_detail {
   border-top-left-radius: 0.36rem;
   border-top-right-radius: 0.36rem;
