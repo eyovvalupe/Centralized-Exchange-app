@@ -74,17 +74,20 @@
               {{ market[item.type] }}
             </div>
           </div>
-          <div class="text">{{ item.name || "--" }}</div>
+
+          <!-- 给了定值，需要用后端数据该代码 -->
+          <!-- <div class="text">{{ item.name || "--" }}</div> -->
+          <div class="text">超2万人搜索</div>
         </div>
         <div class="star" @click.stop="collect(item)">
           <img
             v-if="item.watchlist == 0"
-            src="/static/img/market/unstar.png"
+            src="/static/img/market/unstar.svg"
             alt="⭐"
           />
           <img
             v-if="item.watchlist == 1"
-            src="/static/img/market/star.png"
+            src="/static/img/market/star.svg"
             alt="⭐"
           />
         </div>
