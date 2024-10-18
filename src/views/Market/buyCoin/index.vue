@@ -1,7 +1,7 @@
 <!-- 买币 -->
 <template>
   <div class="page page-buycoin">
-    <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
+    <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated color="#014CFA" shrink @change="onChange">
       <Tab title="快捷区" name="0">
         <Faster />
       </Tab>
@@ -21,7 +21,12 @@
   </div>
 </template>
 
+<script>
+export default { name: 'Buycoin' }
+</script>
+
 <script setup>
+/* eslint-disable */
 import { Tab, Tabs } from 'vant'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useSocket } from '@/utils/ws'
@@ -29,6 +34,8 @@ import Faster from './Faster.vue'
 import List from './List.vue'
 import Self from './Self.vue'
 import store from '@/store'
+
+/* eslint-enable */
 
 const { startSocket } = useSocket()
 const token = computed(() => store.state.token)
@@ -39,12 +46,13 @@ const subs = () => {
   const socket = startSocket(() => {
     socket && socket.off('user')
     socket && socket.off('c2corder')
+    // socket && socket.off('msgapi')
     socket && socket.emit('user', token.value)
     socket && socket.emit('c2corder', '#all')
     currLoading.value = true
     store.commit('setC2cList', [])
     socket.on('c2corder', res => {
-      // console.error('--->', res.data)
+      // console.log('setC2cList', res.data)
       store.commit('setC2cList', res.data || [])
       currLoading.value = false
     })

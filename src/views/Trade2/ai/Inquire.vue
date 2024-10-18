@@ -1,36 +1,36 @@
 <!-- 查询 -->
 <template>
     <div class="inquire" v-if="token">
+        
         <NoData v-if="!loading && !aiInquireList.length" />
-
-        <div class="tr" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">
-            <div class="ai_icon">
-                <img src="/static/img/trade/ai_order2.png" alt="ai">
-            </div>
-            <div class="mid">
-                <div class="name">{{ item.name }}</div>
-                <div class="mid_block">
-                    <!-- <div class="tag" :class="[item.offset == 'long' ? 'up' : 'down']">{{ item.offset == 'long'
-                        ? '买涨' : '买跌' }}</div> -->
+        <div class="list">
+            <div class="item" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">
+                <div class="ai_icon">
+                    <img src="/static/img/trade/ai.png" alt="ai">
+                </div>
+                <div class="mid">
+                    <div class="name">{{ item.name }}</div>
                     <div class="grid">{{ item.order_no }}</div>
                 </div>
-            </div>
-            <div class="right">
-                <div class="amount">{{ item.profit > 0 ? '+' : '' }}{{
-                    item.profit }} <span>USDT</span></div>
-                <!-- <div class="time">{{ item.date }}</div> -->
-                <div class="status" :class="[item.profit < 0 ? 'down_status' : 'up_status']">{{ item.profit < 0 ? '负盈利'
-                    : '盈利' }}</div>
+                <div class="right">
+                    <div class="amount" :class="[item.profit < 0 ? 'down_status' : 'up_status']">
+                        {{ item.profit >= 0 ? '+' : '-' }}
+                        {{item.profit }}
+                    </div>
+                    <div class="date">{{ formatDate(item.date) }}</div>
                 </div>
             </div>
-            <LoadingMore :loading="loading" :finish="finish" v-if="(finish && aiInquireList.length) || (!finish)" />
+            
         </div>
+        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && aiInquireList.length) || (!finish)" />
+    </div>
+        
 
-        <UnLogin @loginfinish="loginfinish" v-show="!token" />
+    <UnLogin @loginfinish="loginfinish" v-show="!token" />
 
 
-        <!-- 详情 -->
-        <AiInfo ref="infoRef" />
+    <!-- 详情 -->
+    <AiInfo ref="infoRef" />
 </template>
 
 <script setup>
@@ -41,6 +41,7 @@ import LoadingMore from "@/components/LoadingMore.vue"
 import { _ailist } from "@/api/api"
 import AiInfo from "../components/AiInfo.vue"
 import UnLogin from "@/components/UnLogin.vue"
+import { formatNumber } from 'vant/lib/utils';
 
 
 const loginfinish = () => {
@@ -71,6 +72,13 @@ const init = () => {
             getList()
         }, 0)
     }
+}
+const formatDate = (date)=>{
+    if(date){
+       let mat = date.match(/\d+\-(\d+\-\d+)\s(\d+:\d+)/) || []
+       return mat[1] + ' ' + mat[2]
+    }
+    return ''
 }
 const getList = () => {
     if (loading.value || finish.value) return
@@ -128,84 +136,73 @@ defineExpose({
 
 <style lang="less" scoped>
 .inquire {
-    padding: 0.2rem 0.32rem;
+    .list {
+        padding: 0.2rem 0 1.4rem 0;
 
-    .tr {
-        padding: 0.24rem 0.32rem;
+    }
+
+    .item {
         display: flex;
         align-items: center;
-        padding: 0.2rem;
-        border-bottom: 1px solid #EAEAEA;
-        color: #333;
-        line-height: 0.5rem;
-
+        border-bottom: 1px solid #EFF3F8;
+        line-height: 100%;
+        padding: 0.32rem 0;
+        
         .ai_icon {
-            width: 0.56rem;
-            height: 0.56rem;
-            margin: 0 0.04rem;
+            width: 0.8rem;
+            height: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.24rem;
+            background-color: rgba(1, 76, 250, 0.10);
+            img{
+                width: 0.53rem !important;
+                height:0.53rem !important;
+            }
         }
 
         .mid {
             flex: 1;
-            margin: 0 0.2rem 0 0.36rem;
-
+            margin: 0 0.2rem 0 0.18rem;
+            overflow: hidden;
             .name {
-                font-size: 0.32rem;
-                color: #000;
+                font-size: 0.3rem;
+                color: #061023;
                 font-weight: bold;
             }
 
-            .mid_block {
-                display: flex;
-                align-items: center;
-                margin-top: 0.1rem;
-
-                .tag {
-                    padding: 0 0.08rem;
-                    border-radius: 0.04rem;
-                    margin-right: 0.1rem;
-                    font-size: 0.24rem;
-                }
-
+            .grid{
+                color:#8F92A1;
+                font-weight: 400;
+                font-size: 0.28rem;
+                margin-top: 0.18rem;
             }
         }
 
         .right {
             text-align: right;
-
             .amount {
                 font-size: 0.32rem;
-                color: #000;
-                font-weight: bold;
-
-                >span {
-                    font-weight: 400;
-                    font-size: 0.28rem;
-                }
+                font-weight: 600;
             }
 
-            .status {
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0 0.16rem;
-                border-radius: 0.04rem;
-                font-size: 0.24rem;
-                width: auto;
-                margin-top: 0.1rem;
+            .date{
+                color:#8F92A1;
+                font-size: 0.28rem;
+                margin-top:0.18rem;
             }
-
             .down_status {
                 color: #E8503A;
-                background-color: #FFF3F3;
             }
 
             .up_status {
-                color: #0AB27D;
-                background-color: #EBFEED;
+                color: #18B762;
             }
         }
     }
-
+    .item:last-child{
+        border-bottom: 0px;
+    }
 }
 </style>

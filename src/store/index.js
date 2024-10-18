@@ -1,13 +1,12 @@
+import { computed } from 'vue'
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-
-import { _userinfo, _listAccount, _sessionToken } from '@/api/api'
-import router from '@/router/index'
+import { _listAccount, _sessionToken, _userinfo } from '@/api/api'
+import assets from './assets'
 import market from './market'
 import trade from './trade'
-import assets from './assets'
 
-export default createStore({
+const store = createStore({
   state: {
     fullscreen: false, // 是否是全屏状态
     pageLoading: true, // 页面加载状态
@@ -138,3 +137,12 @@ export default createStore({
     }),
   ],
 })
+export const useMapState = arr => {
+  if (!Array.isArray(arr)) return new Error('useMapState参数必须为数组')
+  const result = arr.reduce((acc, cur) => {
+    acc[cur] = computed(() => store.state[cur])
+    return acc
+  }, {})
+  return result
+}
+export default store

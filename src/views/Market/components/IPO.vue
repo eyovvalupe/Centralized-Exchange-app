@@ -1,93 +1,78 @@
 <!-- IPO -->
 <template>
     <div class="page_ipo">
-        <div v-show="props.page != 'home'" class="filter_box" @click="showPopup = true">
-            <span>{{ selectedOptiontext }}</span>
-            <div class="filter_icon">
-                <img src="/static/img/trade/down.png" alt="img">
-            </div>
-        </div>
+        
+        <Tabs v-show="props.page != 'home'" type="custom-card" v-model:active="selectedOption" :swipeable="false" animated :color="'#014CFA'"
+            shrink @change="init(true)">
+            <Tab :title="i.text" :name="i.value" v-for="(i, key) in option" :key="key">
+            </Tab>
+        </Tabs>
+
+         <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'#014CFA'"
+            shrink @change="onLevelChange">
+            <Tab :title="i.text" :name="i.value" v-for="(i, key) in leverOption" :key="key">
+            </Tab>
+        </Tabs>
 
         <div class="list">
             <div class="item" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
-                <div class="item_top">
-                    <div class="item_top_box">
+                <div class="item_box">
+                    <div class="name_box">
                         <div class="name">{{ item.company_name }}</div>
-                        <div class="item_top_info">
-                            <div>
-                                <span class="info_name">认购日期</span>
-                                <span class="info_date">{{ item.issue_start_date }} 至 {{ item.issue_end_date }}</span>
-                            </div>
-                            <div>
-                                <span class="info_name">认购价格</span>
-                                <span class="info_price">{{ item.issue_price_max }}</span>
-                            </div>
-                            <div v-if="item.listing_price">
-                                <span class="info_name">上市价格</span>
-                                <span class="info_price">{{ item.listing_price }}</span>
-                            </div>
-                        </div>
+                        <img  v-if="item.lever > 1" src="/static/img/trade/level.png"/>
                     </div>
-                    <div class="control_box">
-                        <!-- 认购中 -->
-                        <div class="status_ing" v-if="item.status == 'issuing'">认购中</div>
-                        <!-- 预售中 -->
-                        <div class="status_pre_box" v-if="item.status == 'none'">
-                            <div class="status_ing status_pre">预售</div>
-                            <div class="pre_times" v-if="item._timedown">
-                                <div class="pre_time">{{ item._timedown[0] }}</div>
-                                <span>:</span>
-                                <div class="pre_time">{{ item._timedown[1] }}</div>
-                                <span>:</span>
-                                <div class="pre_time">{{ item._timedown[2] }}</div>
-                            </div>
-                        </div>
-                        <!-- 已结束 -->
-                        <div class="status_ing status_ed" v-if="item.status == 'listed'">已上市</div>
-                        <!-- 已结束 -->
-                        <div class="status_ing status_done" v-if="item.status == 'done'">已结束</div>
-
-                        <div style="flex: 1"></div>
-                        <div v-if="item.status == 'issuing' || item.status == 'listed'" class="btn"
-                            @click.stop="goBuy(item)">认购</div>
+                    <div class="pre_times" v-if="item.status == 'none' && item._timedown">
+                        <div class="pre_time">{{ item._timedown[0] }}</div>
+                        <span>:</span>
+                        <div class="pre_time">{{ item._timedown[1] }}</div>
+                        <span>:</span>
+                        <div class="pre_time">{{ item._timedown[2] }}</div>
                     </div>
+                    
+                    <!-- 认购中 -->
+                    <div class="status_ing" v-if="item.status == 'issuing'">认购中</div>
+                    <!-- 预售中 -->
+                    <div class="status_ing status_pre" v-if="item.status == 'none'">预售</div>
+                    <!-- 已结束 -->
+                    <div class="status_ing status_ed" v-if="item.status == 'listed'">已上市</div>
+                    <!-- 已结束 -->
+                    <div class="status_ing status_done" v-if="item.status == 'done'">已结束</div>
                 </div>
-                <!-- <div class="item_mid">
-                    <div class="mid_item">
-                        <div class="mid_val">{{ item.issue_start_date }} 至 {{ item.issue_end_date }}</div>
-                        <div>认购日期</div>
+                <div class="item_info" :class="{'item_info_nobb':item.status != 'issuing' && item.status != 'listed'}">
+                    <div class="info_cell">
+                        <span class="info_name">认购价格</span>
+                        <span class="info_price">{{ item.issue_price_max }}</span>
                     </div>
-                    <div class="mid_item">
-                        <div class="mid_val active_val">{{ item.issue_price_max }}</div>
-                        <div>认购价格</div>
+                    <div class="info_cell" v-if="item.lever > 1">
+                        <span class="info_name">认购杠杆</span>
+                        <span class="info_price">{{ item.lever + 'X' }}</span>
                     </div>
-                    <div class="mid_item" v-if="item.listing_price">
-                        <div class="mid_val">-{{ item.listing_price }}</div>
-                        <div>上市价格</div>
+                    <div class="info_cell">
+                        <span class="info_name">上市时间</span>
+                        <span class="info_price">{{ item.listing_date }}</span>
                     </div>
+                    
+                    <div class="info_cell" v-if="item.listing_price">
+                        <span class="info_name">上市价格</span>
+                        <span class="info_price">{{ item.listing_price }}</span>
+                    </div>
+                    <div class="info_cell">
+                        <span class="info_name">认购日期</span>
+                        <span class="info_date">{{ item.issue_start_date }} - {{ item.issue_end_date }}</span>
+                    </div>
+                    
                 </div>
-                <div class="item_bottom" v-if="item.status == 'issuing' || item.status == 'listed'">
-                    <div class="btn" @click.stop="goBuy(item)">认购</div>
-                </div> -->
+                <div class="control_box" v-if="item.status == 'issuing' || item.status == 'listed'">
+                    <div class="btn"
+                        @click.stop="goBuy(item)">认购</div>
+                </div>
+                
             </div>
 
             <LoadingMore v-if="!(finish && ipoDataList.length == 0)" :loading="loading" :finish="finish" />
             <NoData v-if="(finish && ipoDataList.length == 0)" />
         </div>
         <div style="height: 1rem"></div>
-
-        <!-- 下拉框 -->
-        <teleport to="body">
-            <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPopup" position="bottom"
-                class="market_ipo-popup" closeable>
-                <div class="market_ipo-box">
-                    <div v-for="(i, key) in option" :key="key" class="market_ipo-box-item"
-                        :class="{ 'selected-class': selectedOption === i.value }" @click="selectOption(i.value)">
-                        {{ i.text }}
-                    </div>
-                </div>
-            </Popup>
-        </teleport>
 
         <!-- 详情弹窗 -->
         <teleport to="body">
@@ -151,7 +136,7 @@ import NoData from "@/components/NoData.vue"
 import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import store from "@/store"
 import { _ipoList, _ipoGet } from "@/api/api";
-import { Popup } from "vant"
+import { Tabs,Tab,Popup } from "vant"
 import router from "@/router"
 
 const props = defineProps({
@@ -168,21 +153,21 @@ const props = defineProps({
 const ipoDataList = computed(() => store.state.ipoDataList || [])
 const selectedOption = ref('')
 const option = [
-    { text: "所有", value: "" },
+    { text: "全部", value: "" },
     { text: "发行中", value: "issuing" },
     { text: "已上市", value: "listed" },
 ];
 const selectedOptiontext = computed(() => option.find(item => item.value == selectedOption.value).text)
-const selectOption = (val) => {
-    showPopup.value = false
-    if (selectedOption.value == val) return
-    selectedOption.value = val
-    setTimeout(() => {
-        init(true)
-    }, 0)
-}
-const showPopup = ref(false)
 
+const selectedLever = ref("")
+const leverOption = [
+    { text: "全部", value: "" },
+    { text: "普通", value: "1" },
+    { text: "配资", value: "2" },
+]
+const onLevelChange = ()=>{
+
+}
 const loading = ref(false)
 const finish = ref(false)
 const page = ref(0)
@@ -320,229 +305,156 @@ function countdown(endTime) {
 
 <style lang="less" scoped>
 .page_ipo {
-    padding: 0 0.32rem;
-
+    padding: 0.28rem 0 0 0;
+    .van-tabs--oval-sub{
+        margin-top:0.32rem;
+    }
     .list {
-        margin-top: 0.2rem;
-        border-top: 1px solid #EAEAEA;
+        padding-top: 0.12rem;
 
         .item {
-            border-bottom: 1px solid #EAEAEA;
-            padding: 0 0 0.1rem 0;
-
-            .item_top {
+            border-radius: 0.32rem;
+            border: 1px solid #EFF3F8;
+            background: #F5F7FC;
+            margin-top: 0.2rem;
+                
+            .name {
+                color: #061023;
+                font-size: 0.32rem;
+                font-weight: 600;
+                line-height: 0.36rem; 
+                color: #0D0D12;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                height: 0.36rem; 
+                white-space: wrap;
+                word-break: keep-all;
+                margin-bottom: 0.14rem;
+                max-width: 80%;
+            }
+            .name_box{
                 display: flex;
-                align-items: stretch;
-                justify-content: space-between;
-                padding: 0.28rem 0;
+                img{
+                    width: 0.34rem !important;
+                    height: 0.34rem !important;
+                    margin-left: 0.08rem;
+                }
+            }
+            .item_box {
+                padding: 0.26rem 0.32rem 0.16rem 0.32rem;
+                position: relative;
+                
+            }
 
-                .name {
+            .pre_times {
+                display: flex;
+                align-items: center;
+                .pre_time {
+                    height: 0.48rem;
+                    min-width: 0.48rem;
+                    display: flex;
+                    align-items: center;
+                    text-align: center;
+                    justify-content: center;
+                    color: #FFAF2A;
+                    border: 1px solid #FFAF2A;
+                    border-radius: 0.12rem;
                     font-size: 0.28rem;
                     font-weight: 600;
-                    color: #0D0D12;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    flex: 1;
-                    margin-right: 0.4rem;
-                    line-height: 0.48rem;
-                    margin-bottom: 0.2rem;
-                    white-space: wrap;
-                    word-break: keep-all;
+                    box-sizing: border-box;
+
                 }
-
-                .item_top_box {
-                    .item_top_info {
-                        color: #818898;
-                        font-size: 0.24rem;
-                        line-height: 0.48rem;
-                        font-weight: 400;
-
-                        .info_date {
-                            color: #000000;
-                            margin-left: 0.24rem;
-                        }
-
-                        .info_price {
-                            color: #000000;
-                            font-size: 0.28rem;
-                            margin-left: 0.24rem;
-                            font-weight: 600;
-                        }
-                    }
-                }
-
-                .control_box {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: flex-end;
-                    justify-content: space-between;
-                    flex-shrink: 0;
-
-                    .btn {
-                        font-size: 0.24rem;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        background-color: #014CFA;
-                        height: 0.6rem;
-                        border-radius: 0.08rem;
-                        padding: 0 0.4rem;
-                        color: #fff;
-                        margin-top: 0.32rem;
-                    }
-
-                    .status_ing {
-                        height: 0.44rem;
-                        padding: 0 0.24rem;
-                        border-radius: 0.12rem;
-                        background-color: #E4ECFB;
-                        min-width: 1rem;
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        font-size: 0.2rem;
-                        color: #014CFA;
-                    }
-
-                    .status_pre_box {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: flex-end;
-
-                        .status_pre {
-                            display: inline-flex;
-                            background-color: #FFF3D2;
-                            color: #FE8A00;
-                        }
-
-                        .pre_times {
-                            display: flex;
-                            align-items: center;
-                            justify-content: flex-end;
-                            color: #9798A7;
-                            font-size: 0.32rem;
-                            line-height: 0;
-                            margin-top: 0.1rem;
-
-                            .pre_time {
-                                height: 0.36rem;
-                                min-width: 0.36rem;
-                                display: flex;
-                                line-height: 0;
-                                padding: 0 0.06rem;
-                                align-items: center;
-                                text-align: center;
-                                justify-content: center;
-                                color: #fff;
-                                background-color: #333;
-                                border-radius: 0.08rem;
-                                font-size: 0.24rem;
-
-                            }
-
-                            span {
-                                margin: 0 0.04rem;
-                            }
-                        }
-                    }
-
-                    .status_done {
-                        background-color: #EBEBEB;
-                        color: #838383;
-                    }
-
-                    .status_ed {
-                        background-color: #DCDAFF;
-                        color: #5F59E0;
-                    }
-                }
-            }
-
-            .item_mid {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 0.24rem;
-                margin-top: 0.2rem;
-
-                .mid_item {
-                    height: 0.9rem;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    text-align: center;
-                    font-size: 0.24rem;
-                    font-weight: 400;
-                    color: #818898;
-
-                    .mid_val {
-                        font-size: 0.28rem;
-                        font-weight: 500;
-                        color: #014CFA;
-                        line-height: 0.48rem;
-                    }
-
-                    .active_val {
-                        background-color: #014CFA;
-                        color: #fff;
-                        font-size: 0.32rem;
-                        padding: 0 0.16rem;
-                        border-radius: 0.12rem;
-                    }
-                }
-            }
-
-            .item_bottom {
-
-                padding: 0.3rem 0 0.2rem 0;
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-
-                .link {
-                    color: #014CFA;
+                span {
+                    color: #FFAF2A;
+                    margin: 0 0.1rem;
                     font-size: 0.28rem;
                 }
+            }
 
+            .status_ing {
+                height: 0.6rem;
+                border-radius: 0rem 0.32rem;
+                padding: 0 0.2rem;
+                background-color: #014CFA;
+                min-width: 1.1rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.24rem;
+                color: #fff;
+                position: absolute;
+                right:0;
+                top:0;
+            }
+
+            .status_pre {
+                background-color: #FFAF2A;
+                color: #fff;
+            }
+
+            .status_done {
+                background-color: #7E99D6;
+                color: #fff;
+            }
+
+            .status_ed {
+                background-color: #18B762;
+                color: #fff;
+            }
+
+            .item_info {
+                border-radius: 0.32rem;
+                border: 1px solid #EFF3F8;
+                background: #FFF;
+                position: relative;
+                left:-1px;
+                width: calc(100% + 2px);
+                box-sizing: border-box;
+                line-height: 0.3rem;
+                .info_cell{
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0.24rem 0.32rem;
+                }
+                .info_cell + .info_cell{
+                    border-top: 1px dashed #EFF3F8;
+                }
+                .info_name{
+                    font-size: 0.28rem;
+                    color:#8F92A1;
+                }
+                .info_date,
+                .info_price {
+                    color: #061023;
+                    font-size: 0.28rem;
+                }
+            }
+            .item_info_nobb{
+                border-bottom: 0px;
+            }
+
+            .control_box {
+                padding: 0.2rem 0.32rem;
                 .btn {
-                    height: 0.56rem;
-                    border-radius: 0.5rem;
-                    background-color: #014CFA;
-                    padding: 0 0.32rem;
-                    width: 100%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    background-color: #014CFA;
+                    height: 0.8rem;
+                    border-radius: 0.5rem;
                     color: #fff;
-                    font-size: 0.28rem;
+                    font-size: 0.3rem;
+                    font-weight: 600;
                 }
+
+                
             }
         }
     }
-
-    .filter_box {
-        height: 0.56rem;
-        margin-bottom: 0;
-        padding: 0 0.4rem;
-        background-color: #F6F8FF;
-        border-radius: 0.4rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #014CFA;
-        font-size: 0.24rem;
-        min-width: 2.8rem;
-
-        .filter_icon {
-            width: 0.32rem;
-            height: 0.32rem;
-            margin-left: 0.4rem;
-        }
-    }
+    
 }
-</style>
-<style lang="less">
+
 .market_ipo-popup {
     border-top-left-radius: 0.36rem;
     border-top-right-radius: 0.36rem;

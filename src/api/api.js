@@ -394,8 +394,8 @@ export const _currency = (data = {}) => {
     custom: { auth: true, toast: false, retry: true },
   });
 };
-// 现金账户支持的货币
-export const _currency2 = (data = {}) => {
+// 其他账户支持的货币
+export const accountCurrency = (data = {}) => {
   return http.post(`/anon/v1/account/currency`, data, {
     custom: { auth: false, toast: false, retry: true },
   });

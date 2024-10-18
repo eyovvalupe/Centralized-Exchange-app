@@ -1,71 +1,70 @@
 <!-- 与商家的会话 -->
 <template>
-    <div class="buycoin-chat">
-        <div class="list" ref="listRef">
+  <div class="buycoin-chat">
+    <div ref="listRef" class="list">
+      <template v-for="item in list">
+        <template v-if="item.direction == 'send'">
+          <!-- 我的文本 -->
+          <div v-if="item.type == 'text'" :id="`a${item.msgid}`" class="my_text_box">
+            <div class="my_text">{{ item.content }}</div>
+            <div class="time">{{ item.time }}</div>
+          </div>
 
-            <template v-for="(item) in list">
-                <template v-if="item.direction == 'send'">
-                    <!-- 我的文本 -->
-                    <div class="my_text_box" v-if="item.type == 'text'" :id="'a' + item.msgid">
-                        <div class="my_text">{{ item.content }}</div>
-                        <div class="time">{{ item.time }}</div>
-                    </div>
+          <!-- 我的富文本 -->
+          <div v-if="item.type == 'html'" :id="`a${item.msgid}`" class="my_text_box">
+            <div class="my_text" v-html="item.content" />
+            <div class="time">{{ item.time }}</div>
+          </div>
 
-                    <!-- 我的富文本 -->
-                    <div class="my_text_box" v-if="item.type == 'html'" :id="'a' + item.msgid">
-                        <div class="my_text" v-html="item.content"></div>
-                        <div class="time">{{ item.time }}</div>
-                    </div>
+          <!-- 我的图片 -->
+          <div v-if="item.type == 'img'" :id="`a${item.msgid}`" class="my_pic_box">
+            <img class="my_pic" :src="item.content" alt="img" />
+            <div class="time">{{ item.time }}</div>
+          </div>
+        </template>
+        <template v-else>
+          <!-- 对方文本 -->
+          <div v-if="item.type == 'text'" :id="`a${item.msgid}`" class="op_text_box">
+            <div class="avatar">
+              <!-- <div class="pointer"></div> -->
+              {{ props.currItem.merchant_name ? props.currItem.merchant_name.slice(0, 1) : '' }}
+            </div>
 
-                    <!-- 我的图片 -->
-                    <div class="my_pic_box" v-if="item.type == 'img'" :id="'a' + item.msgid">
-                        <img class="my_pic" :src="item.content" alt="img">
-                        <div class="time">{{ item.time }}</div>
-                    </div>
-                </template>
-                <template v-else>
-                    <!-- 对方文本 -->
-                    <div class="op_text_box" v-if="item.type == 'text'" :id="'a' + item.msgid">
-                        <div class="avatar">
-                            <!-- <div class="pointer"></div> -->
-                            {{ props.currItem.merchant_name ? props.currItem.merchant_name.slice(0, 1) : '' }}
-                        </div>
+            <div class="op_text">
+              <div class="op_text_content">{{ item.content }}</div>
+              <div class="time">{{ item.time }}</div>
+            </div>
+          </div>
 
-                        <div class="op_text">
-                            <div class="op_text_content">{{ item.content }}</div>
-                            <div class="time">{{ item.time }}</div>
-                        </div>
-                    </div>
+          <!-- 对方富文本 -->
+          <div v-if="item.type == 'html'" :id="`a${item.msgid}`" class="op_text_box">
+            <div class="avatar">
+              <!-- <div class="pointer"></div> -->
+              {{ props.currItem.merchant_name ? props.currItem.merchant_name.slice(0, 1) : '' }}
+            </div>
 
-                    <!-- 对方富文本 -->
-                    <div class="op_text_box" v-if="item.type == 'html'" :id="'a' + item.msgid">
-                        <div class="avatar">
-                            <!-- <div class="pointer"></div> -->
-                            {{ props.currItem.merchant_name ? props.currItem.merchant_name.slice(0, 1) : '' }}
-                        </div>
+            <div class="op_text">
+              <div class="op_text_content" v-html="item.content" />
+              <div class="time">{{ item.time }}</div>
+            </div>
+          </div>
 
-                        <div class="op_text">
-                            <div class="op_text_content" v-html="item.content"></div>
-                            <div class="time">{{ item.time }}</div>
-                        </div>
-                    </div>
+          <!-- 对方图片 -->
+          <div v-if="item.type == 'img'" :id="`a${item.msgid}`" class="op_pic_box">
+            <div class="avatar">
+              <!-- <div class="pointer"></div> -->
+              {{ props.currItem.merchant_name ? props.currItem.merchant_name.slice(0, 1) : '' }}
+            </div>
 
-                    <!-- 对方图片 -->
-                    <div class="op_pic_box" v-if="item.type == 'img'" :id="'a' + item.msgid">
-                        <div class="avatar">
-                            <!-- <div class="pointer"></div> -->
-                            {{ props.currItem.merchant_name ? props.currItem.merchant_name.slice(0, 1) : '' }}
-                        </div>
-
-                        <div class="op_pic">
-                            <img class="op_pic_content" :src="item.content" alt="img">
-                            <div class="time">{{ item.time }}</div>
-                        </div>
-                    </div>
-                </template>
-            </template>
-            <!-- 提示 -->
-            <!-- <div class="notice_msg">
+            <div class="op_pic">
+              <img class="op_pic_content" :src="item.content" alt="img" />
+              <div class="time">{{ item.time }}</div>
+            </div>
+          </div>
+        </template>
+      </template>
+      <!-- 提示 -->
+      <!-- <div class="notice_msg">
                 <div class="time">2024-10-28 10:25:08</div>
                 <div class="content">您已经成功下单，请耐心等候商家付款</div>
             </div>
@@ -73,422 +72,421 @@
                 <div class="time">2024-10-28 10:25:08</div>
                 <div class="content">您已经成功下单，请耐心等候商家付款</div>
             </div> -->
-
-
-        </div>
-        <div class="box item">
-            <div class="box_icon">
-                <img src="/static/img/chat/file.png" alt="img">
-                <input class="file" type="file" id="fileInput" @change="uploadImg" accept="image/*">
-            </div>
-            <input v-model="text" type="text" class="ipt" placeholder="请输入...">
-            <div class="box_icon" @click="sendText">
-                <img src="/static/img/chat/send.png" alt="img">
-            </div>
-        </div>
     </div>
+    <div class="box item">
+      <div class="box_icon">
+        <img src="/static/img/chat/file.png" alt="img" />
+        <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
+      </div>
+      <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
+      <div class="box_icon" @click="sendText">
+        <img src="/static/img/chat/send.png" alt="img" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import io from "socket.io-client";
-import { CHAT_WEBSOCKET, UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config"
-import { ref, computed, onMounted, onBeforeUnmount } from "vue"
-import store from "@/store"
-import { randomFileName, _compressImg } from "@/utils"
-import { _fetchWithTimeout } from "@/api/upload"
-import storeChat from "@/store/chat"
-import { _c2cRead } from "@/api/api"
+import io from 'socket.io-client'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { CHAT_WEBSOCKET, UPLOAD_ADDRESS, UPLOAD_TOKEN } from '@/config'
+import store from '@/store'
+import { randomFileName, _compressImg } from '@/utils'
+import { _fetchWithTimeout } from '@/api/upload'
+import storeChat from '@/store/chat'
+import { _c2cRead } from '@/api/api'
 
-
-const listRef = ref()
 const props = defineProps({
-    currItem: {
-        type: Object,
-        default: () => { }
-    }
+  currItem: {
+    type: Object,
+    default: () => {},
+  },
 })
-
+const listRef = ref()
 //  聊天区域
-let socket = null;
+let socket = null
 const list = ref([])
 const startSocket = () => {
-    const WS_API = CHAT_WEBSOCKET + "/c2cmsg";
-    const query = {
-        auth: store.state.token
-    }
-    console.error(WS_API)
-    socket = io(WS_API, {
-        transports: ['websocket'],
-        reconnectionDelayMax: 10000,
-        query
-    });
-    socket.on("connect", () => {
-        setTimeout(() => {
-            console.log("seller connect...", props.currItem.order_no);
-            socket.emit('subscribe', props.currItem.order_no)
-        }, 500)
-        // setTimeout(() => {
-        //     console.error('发送消息')
-        //     socket.emit('apisend', JSON.stringify({
-        //         order_no: props.currItem.order_no,
-        //         type: 'text',
-        //         content: '我是消息'
-        //     }))
-        // }, 2000)
-    });
-    socket.on('receive', res => {
-        console.error('---消息', res.data)
-        list.value.push(...(res.data || []))
-        setTimeout(() => {
-            if (res.data && res.data.length > 1) { // 首次收到消息
-                // 滚动到已读位置
-                const t = c2cLasttime.value[props.currItem.order_no]
-                const target = list.value.find(item => {
-                    return Date.parse(new Date(item.time)) == t
-                })
-                if (target) {
-                    const element = document.querySelector(`#a${target.msgid}`)
-                    element.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    scrollToBottom()
-                }
-            }
-        }, 1000)
-    })
+  const WS_API = `${CHAT_WEBSOCKET}/c2cmsg`
+  const query = {
+    auth: store.state.token,
+  }
+  console.error(WS_API)
+  socket = io(WS_API, {
+    transports: ['websocket'],
+    reconnectionDelayMax: 10000,
+    query,
+  })
+  socket.on('connect', () => {
+    setTimeout(() => {
+      console.log('seller connect...', props.currItem.order_no)
+      socket.emit('subscribe', props.currItem.order_no)
+    }, 500)
+    // setTimeout(() => {
+    //     console.error('发送消息')
+    //     socket.emit('apisend', JSON.stringify({
+    //         order_no: props.currItem.order_no,
+    //         type: 'text',
+    //         content: '我是消息'
+    //     }))
+    // }, 2000)
+  })
+  socket.on('receive', res => {
+    console.error('---消息', res.data)
+    list.value.push(...(res.data || []))
+    setTimeout(() => {
+      if (res.data && res.data.length > 1) {
+        // 首次收到消息
+        // 滚动到已读位置
+        const t = c2cLasttime.value[props.currItem.order_no]
+        const target = list.value.find(item => {
+          return Date.parse(new Date(item.time)) == t
+        })
+        if (target) {
+          const element = document.querySelector(`#a${target.msgid}`)
+          element.scrollIntoView({ behavior: 'smooth' })
+        } else {
+          scrollToBottom()
+        }
+      }
+    }, 1000)
+  })
 }
 
 // 发送文本消息
 const text = ref('')
 const sendText = () => {
-    if (text.value !== '') {
-        socket.emit('apisend', JSON.stringify({
-            order_no: props.currItem.order_no,
-            type: 'text',
-            content: text.value
-        }))
-        scrollToBottom()
-        setTimeout(() => {
-            text.value = ''
-        }, 50)
-    }
-
+  if (text.value !== '') {
+    socket.emit(
+      'apisend',
+      JSON.stringify({
+        order_no: props.currItem.order_no,
+        type: 'text',
+        content: text.value,
+      })
+    )
+    scrollToBottom()
+    setTimeout(() => {
+      text.value = ''
+    }, 50)
+  }
 }
 // 发送
 const sendMessage = url => {
-    if (url) {
-        socket.emit('apisend', JSON.stringify({
-            order_no: props.currItem.order_no,
-            type: 'img',
-            content: url
-        }))
-        scrollToBottom()
-    }
+  if (url) {
+    socket.emit(
+      'apisend',
+      JSON.stringify({
+        order_no: props.currItem.order_no,
+        type: 'img',
+        content: url,
+      })
+    )
+    scrollToBottom()
+  }
 }
-const uploadImg = (event) => {
-    const file = event.target.files[0]
-    const fileName = randomFileName(file.name);
-    const path = `images/${fileName}`;
-    const apiUrl = `${UPLOAD_ADDRESS}${path}`
-    const reader = new FileReader();
-    reader.onloadend = function () {
-        let ratio = 0.5
-        const size = file.size / 1024
-        if (size < 50) {
-            ratio = 1
-        } else if (size < 150) {
-            ratio = 0.9
-        } else {
-            ratio = 0.5
-        }
-        _compressImg(reader.result, ratio, (base64Img) => {
-            const base64result = base64Img.substr(base64Img.indexOf(',') + 1);
-            _fetchWithTimeout(`${apiUrl}`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': UPLOAD_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: storeChat.getters.getNologinid,
-                    content: base64result,
-                    branch: 'main'
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.content && data.content.download_url) {
-                        sendMessage(data.content.download_url)
-                    } else {
-                        showToast('上传失败')
-                        console.error('上传失败:', data);
-                    }
-                })
-                .catch(error => {
-                    showToast('上传出错')
-                    console.error('上传出错:', error)
-                });
-        })
+const uploadImg = event => {
+  const file = event.target.files[0]
+  const fileName = randomFileName(file.name)
+  const path = `images/${fileName}`
+  const apiUrl = `${UPLOAD_ADDRESS}${path}`
+  const reader = new FileReader()
+  reader.onloadend = function () {
+    let ratio = 0.5
+    const size = file.size / 1024
+    if (size < 50) {
+      ratio = 1
+    } else if (size < 150) {
+      ratio = 0.9
+    } else {
+      ratio = 0.5
     }
-    reader.readAsDataURL(file);
+    _compressImg(reader.result, ratio, base64Img => {
+      const base64result = base64Img.substr(base64Img.indexOf(',') + 1)
+      _fetchWithTimeout(`${apiUrl}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: UPLOAD_TOKEN,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          message: storeChat.getters.getNologinid,
+          content: base64result,
+          branch: 'main',
+        }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.content && data.content.download_url) {
+            sendMessage(data.content.download_url)
+          } else {
+            showToast('上传失败')
+            console.error('上传失败:', data)
+          }
+        })
+        .catch(error => {
+          showToast('上传出错')
+          console.error('上传出错:', error)
+        })
+    })
+  }
+  reader.readAsDataURL(file)
 }
 
 const scrollToBottom = () => {
-    setTimeout(() => {
-        listRef.value.scrollTop = listRef.value.scrollHeight;
-    }, 500)
+  setTimeout(() => {
+    listRef.value.scrollTop = listRef.value.scrollHeight
+  }, 500)
 }
-
 
 // 已读回执
 const readLoading = ref(false)
 const c2cLasttime = computed(() => store.state.c2cLasttime || {})
 const scrollHandler = () => {
-    // 当前滚动位置 + 可视区域高度
-    const div = listRef.value
-    const scrollTop = div.scrollTop;
-    const clientHeight = div.clientHeight;
-    // 内容的总高度
-    const scrollHeight = div.scrollHeight;
+  // 当前滚动位置 + 可视区域高度
+  const div = listRef.value
+  const { scrollTop } = div
+  const { clientHeight } = div
+  // 内容的总高度
+  const { scrollHeight } = div
 
-    // 判断是否滚动到底部
-    if (scrollTop + clientHeight >= scrollHeight) {
-        if (readLoading.value) return
-        readLoading.value = true
-        setTimeout(() => {
-            readLoading.value = false
-        }, 2000)
-        const t = Date.parse(new Date(list.value[list.value.length - 1].time))
-        _c2cRead({
-            order_no: props.currItem.order_no,
-            lasttime: t
-        })
-        c2cLasttime.value[props.currItem.order_no] = t
-        store.commit('setC2cLasttime', c2cLasttime.value)
-    }
+  // 判断是否滚动到底部
+  if (scrollTop + clientHeight >= scrollHeight) {
+    if (readLoading.value) return
+    readLoading.value = true
+    setTimeout(() => {
+      readLoading.value = false
+    }, 2000)
+    const t = Date.parse(new Date(list.value[list.value.length - 1].time))
+    _c2cRead({
+      order_no: props.currItem.order_no,
+      lasttime: t,
+    })
+    c2cLasttime.value[props.currItem.order_no] = t
+    store.commit('setC2cLasttime', c2cLasttime.value)
+  }
 }
 
 onMounted(() => {
-    console.error('开始连接')
-    startSocket()
-    setTimeout(() => {
-        listRef.value.addEventListener('scroll', scrollHandler)
-    }, 500)
+  console.error('开始连接')
+  startSocket()
+  setTimeout(() => {
+    listRef.value.addEventListener('scroll', scrollHandler)
+  }, 500)
 })
 onBeforeUnmount(() => {
-    listRef.value && listRef.value.removeEventListener('scroll', scrollHandler)
-    if (socket) {
-        socket.disconnect();
-        console.error('断开连接')
-    }
+  listRef.value && listRef.value.removeEventListener('scroll', scrollHandler)
+  if (socket) {
+    socket.disconnect()
+    console.error('断开连接')
+  }
 })
 </script>
 
 <style lang="less" scoped>
 .buycoin-chat {
-    padding: 0.2rem 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
+  padding: 0.2rem 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 
-    .list {
-        flex: 1;
-        overflow-y: auto;
-        color: #333;
-        padding-bottom: 0.6rem;
+  .list {
+    flex: 1;
+    overflow-y: auto;
+    color: #333;
+    padding-bottom: 0.6rem;
 
-        .op_pic_box {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin-top: 0.4rem;
+    .op_pic_box {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-top: 0.4rem;
 
-            .avatar {
-                width: 0.64rem;
-                height: 0.64rem;
-                position: relative;
-                border-radius: 50%;
-                background-color: #014CFA;
-                margin-right: 0.2rem;
-                top: 0.05rem;
-                flex-shrink: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #fff;
-
-                .pointer {
-                    width: 0.16rem;
-                    height: 0.16rem;
-                    position: absolute;
-                    right: 0;
-                    bottom: 0;
-                    border-radius: 50%;
-                    background-color: #30BF87;
-                }
-            }
-
-            .op_pic {
-                .op_pic_content {
-                    display: inline-block;
-                    max-width: 4rem;
-                    height: auto;
-                    background-color: #eee;
-                    border-radius: 0.12rem;
-                    margin-bottom: 0.1rem;
-                }
-
-                .time {
-                    font-size: 0.24rem;
-                    color: #AEAEAE;
-                }
-            }
-        }
-
-        .op_text_box {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            margin-top: 0.4rem;
-
-            .avatar {
-                width: 0.64rem;
-                height: 0.64rem;
-                position: relative;
-                border-radius: 50%;
-                background-color: #014CFA;
-                margin-right: 0.2rem;
-                top: 0.05rem;
-                flex-shrink: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #fff;
-
-                .pointer {
-                    width: 0.16rem;
-                    height: 0.16rem;
-                    position: absolute;
-                    right: 0;
-                    bottom: 0;
-                    border-radius: 50%;
-                    background-color: #30BF87;
-                }
-            }
-
-            .op_text {
-                .op_text_content {
-                    display: inline-block;
-                    padding: 0.2rem 0.4rem;
-                    line-height: 0.4rem;
-                    background-color: #F6F8FE;
-                    color: #333;
-                    text-align: left;
-                    border-top-right-radius: 0.24rem;
-                    border-bottom-left-radius: 0.24rem;
-                    border-bottom-right-radius: 0.24rem;
-                    margin-bottom: 0.1rem;
-                }
-
-                .time {
-                    font-size: 0.24rem;
-                    color: #AEAEAE;
-                }
-            }
-        }
-
-        .my_pic_box {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: flex-start;
-            margin-top: 0.4rem;
-
-
-            .my_pic {
-                display: inline-block;
-                max-width: 4rem;
-                height: auto;
-                background-color: #eee;
-                border-radius: 0.12rem;
-                margin-bottom: 0.1rem;
-            }
-
-            .time {
-                font-size: 0.24rem;
-                color: #AEAEAE;
-            }
-        }
-
-        .my_text_box {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            justify-content: flex-start;
-            margin-top: 0.4rem;
-
-
-            .my_text {
-                display: inline-block;
-                padding: 0.2rem 0.4rem;
-                line-height: 0.4rem;
-                background-color: #3D65F9;
-                color: #fff;
-                text-align: left;
-                max-width: 84%;
-                border-top-left-radius: 0.24rem;
-                border-bottom-left-radius: 0.24rem;
-                border-bottom-right-radius: 0.24rem;
-                margin-bottom: 0.1rem;
-            }
-
-            .time {
-                font-size: 0.24rem;
-                color: #AEAEAE;
-            }
-        }
-
-        .notice_msg {
-            text-align: center;
-            margin: 0.1rem 0.64rem 0.32rem 0.64rem;
-
-            .time {
-                font-size: 0.24rem;
-                color: #AEAEAE;
-                margin-bottom: 0.1rem;
-            }
-        }
-    }
-
-    .box {
-        border: 1px solid #D0D8E2;
-        height: 0.96rem;
-        border-radius: 0.04rem;
-        margin-top: 0.1rem;
+      .avatar {
+        width: 0.64rem;
+        height: 0.64rem;
+        position: relative;
+        border-radius: 50%;
+        background-color: #014cfa;
+        margin-right: 0.2rem;
+        top: 0.05rem;
+        flex-shrink: 0;
         display: flex;
         align-items: center;
-        padding: 0 0.32rem;
+        justify-content: center;
+        color: #fff;
 
-        .ipt {
-            flex: 1;
-            margin: 0 0.32rem;
+        .pointer {
+          width: 0.16rem;
+          height: 0.16rem;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          border-radius: 50%;
+          background-color: #30bf87;
+        }
+      }
+
+      .op_pic {
+        .op_pic_content {
+          display: inline-block;
+          max-width: 4rem;
+          height: auto;
+          background-color: #eee;
+          border-radius: 0.12rem;
+          margin-bottom: 0.1rem;
         }
 
-        .box_icon {
-            width: 0.4rem;
-            height: 0.4rem;
-            position: relative;
-
-            .file {
-                width: 100%;
-                height: 100%;
-                position: absolute;
-                z-index: 1;
-                // border: 1px solid red;
-                left: 0;
-                top: 0;
-                opacity: 0;
-            }
+        .time {
+          font-size: 0.24rem;
+          color: #aeaeae;
         }
+      }
     }
+
+    .op_text_box {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-top: 0.4rem;
+
+      .avatar {
+        width: 0.64rem;
+        height: 0.64rem;
+        position: relative;
+        border-radius: 50%;
+        background-color: #014cfa;
+        margin-right: 0.2rem;
+        top: 0.05rem;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+
+        .pointer {
+          width: 0.16rem;
+          height: 0.16rem;
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          border-radius: 50%;
+          background-color: #30bf87;
+        }
+      }
+
+      .op_text {
+        .op_text_content {
+          display: inline-block;
+          padding: 0.2rem 0.4rem;
+          line-height: 0.4rem;
+          background-color: #f6f8fe;
+          color: #333;
+          text-align: left;
+          border-top-right-radius: 0.24rem;
+          border-bottom-left-radius: 0.24rem;
+          border-bottom-right-radius: 0.24rem;
+          margin-bottom: 0.1rem;
+        }
+
+        .time {
+          font-size: 0.24rem;
+          color: #aeaeae;
+        }
+      }
+    }
+
+    .my_pic_box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      margin-top: 0.4rem;
+
+      .my_pic {
+        display: inline-block;
+        max-width: 4rem;
+        height: auto;
+        background-color: #eee;
+        border-radius: 0.12rem;
+        margin-bottom: 0.1rem;
+      }
+
+      .time {
+        font-size: 0.24rem;
+        color: #aeaeae;
+      }
+    }
+
+    .my_text_box {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: flex-start;
+      margin-top: 0.4rem;
+
+      .my_text {
+        display: inline-block;
+        padding: 0.2rem 0.4rem;
+        line-height: 0.4rem;
+        background-color: #3d65f9;
+        color: #fff;
+        text-align: left;
+        max-width: 84%;
+        border-top-left-radius: 0.24rem;
+        border-bottom-left-radius: 0.24rem;
+        border-bottom-right-radius: 0.24rem;
+        margin-bottom: 0.1rem;
+      }
+
+      .time {
+        font-size: 0.24rem;
+        color: #aeaeae;
+      }
+    }
+
+    .notice_msg {
+      text-align: center;
+      margin: 0.1rem 0.64rem 0.32rem 0.64rem;
+
+      .time {
+        font-size: 0.24rem;
+        color: #aeaeae;
+        margin-bottom: 0.1rem;
+      }
+    }
+  }
+
+  .box {
+    border: 1px solid #d0d8e2;
+    height: 0.96rem;
+    border-radius: 0.04rem;
+    margin-top: 0.1rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.32rem;
+
+    .ipt {
+      flex: 1;
+      margin: 0 0.32rem;
+    }
+
+    .box_icon {
+      width: 0.4rem;
+      height: 0.4rem;
+      position: relative;
+
+      .file {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+        // border: 1px solid red;
+        left: 0;
+        top: 0;
+        opacity: 0;
+      }
+    }
+  }
 }
 </style>

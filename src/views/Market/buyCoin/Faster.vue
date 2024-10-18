@@ -102,7 +102,7 @@
   </Popup>
 
   <!-- 账户选择弹窗 -->
-  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
+  <!-- <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
@@ -128,7 +128,8 @@
         </div>
       </div>
     </div>
-  </Popup>
+  </Popup> -->
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" @on-add-collection="clickAccountItem" />
 
   <!-- 安全密码弹窗 -->
   <SafePassword ref="safeRef" @submit="submitSell" />
@@ -144,17 +145,58 @@ import { _swapRate, _orderFast, _cryptoCoin } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import eventBus from '@/utils/eventBus'
+import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 
 const safeRef = ref()
 const token = computed(() => store.state.token)
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
 const accountList = computed(() => store.state.accountList || []) // 收款方式列表
-const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
+// const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const userInfo = computed(() => store.state.userInfo || {})
-const currencyList = computed(() => store.state.currencyList || [])
+const currencyList = computed(() => store.state.deWeightCurrencyList || [])
 const searchValue = ref('')
 // 售出
 const loading = ref(false)
+const priceFocus = ref(false)
+const form1 = ref({
+  offset: 'buy',
+  volume: '',
+  crypto: '',
+  currency: '',
+  account_id: '',
+})
+
+const currOut = ref({}) // 当前售出钱包
+const currIn = ref({}) // 当前收到钱包
+
+// 币种弹窗
+const showDialog = ref(false)
+const showDialogType = ref(1) // 1-售出 2-收到
+
+//  获取汇率
+const rateLoading = ref(false)
+const rate = ref('')
+// 账户选择
+const showAccountDialog = ref(false)
+
+const filterSearchValue = data => {
+  return data.filter(item => item.name.toLowerCase().includes(searchValue.value.toLowerCase()))
+}
+const inWallet = computed(() => {
+  // 收到钱包
+  let data
+  // if (form1.value.offset == 'buy') {
+  //   data = wallet.value.filter(item => item.type == 'crypto')
+  //   // 模糊查询
+  // } else {
+  data = currencyList.value.filter(item => item.type == 'fiat')
+  // }
+  // 模糊查询
+  return filterSearchValue(data)
+})
+// sessionToken
+const sessionToken = computed(() => store.state.sessionToken || '')
+
 const sell = () => {
   if (!form1.value.volume || form1.value.volume <= 0) return showToast('请输入金额')
   if (form1.value.offset == 'sell') {
@@ -170,8 +212,8 @@ const submitSell = s => {
     offset: form1.value.offset,
     account_id: form1.value.offset == 'sell' ? form1.value.account_id : null,
     volume: form1.value.volume,
-    crypto: form1.value.offset == 'sell' ? currOut.value.currency : currIn.value.currency,
-    currency: form1.value.offset == 'sell' ? currIn.value.currency : currOut.value.currency,
+    crypto: form1.value.offset == 'buy' ? currOut.value.currency : currIn.value.currency,
+    currency: form1.value.offset == 'buy' ? currIn.value.currency : currOut.value.currency,
     token: sessionToken.value,
     safeword: s,
   }
@@ -185,52 +227,22 @@ const submitSell = s => {
     })
 }
 
-const priceFocus = ref(false)
 const getMoney = computed(() => {
   if (!form1.value.volume || !rate.value) return '--'
   return new Decimal(form1.value.volume).mul(rate.value) || '--'
 })
-const form1 = ref({
-  offset: 'buy',
-  volume: '',
-  crypto: '',
-  currency: '',
-  account_id: '',
-})
-const filterSearchValue = data => {
-  return data.filter(item => item.name.toLowerCase().includes(searchValue.value.toLowerCase()))
-}
 const outWallet = computed(() => {
   // 售出钱包
   let data
-  if (form1.value.offset == 'buy') {
-    data = wallet.value.filter(item => item.type == 'fiat')
-  } else {
-    data = wallet.value.filter(item => item.type == 'crypto')
-  }
+  // if (form1.value.offset == 'buy') {
+  // data = wallet.value.filter(item => item.type == 'fiat')
+  // console.log('currencyList.value', currencyList.value)
+  // data = currencyList.value.filter(item => item.type == 'fiat')
+  // } else {
+  data = wallet.value.filter(item => item.type == 'crypto')
+  // }
   return filterSearchValue(data)
 })
-const currOut = ref({}) // 当前售出钱包
-if (outWallet.value[0]) currOut.value = outWallet.value[0]
-
-const inWallet = computed(() => {
-  // 收到钱包
-  let data
-  if (form1.value.offset == 'buy') {
-    data = wallet.value.filter(item => item.type == 'crypto')
-    // 模糊查询
-  } else {
-    data = wallet.value.filter(item => item.type == 'fiat')
-  }
-  // 模糊查询
-  return filterSearchValue(data)
-})
-const currIn = ref({}) // 当前收到钱包
-if (inWallet.value[0]) currIn.value = inWallet.value[0]
-
-// 币种弹窗
-const showDialog = ref(false)
-const showDialogType = ref(1) // 1-售出 2-收到
 const openDialog = type => {
   showDialogType.value = type
   showDialog.value = true
@@ -252,17 +264,14 @@ const clickItem = item => {
 const changeTab = val => {
   form1.value.offset = val
   // 切换币种
-  const obj = currOut.value
-  currOut.value = currIn.value
-  currIn.value = obj
+  // const obj = currOut.value
+  // currOut.value = currIn.value
+  // currIn.value = obj
   setTimeout(() => {
     getRate()
   }, 100)
 }
 
-//  获取汇率
-const rateLoading = ref(false)
-const rate = ref('')
 const getRate = () => {
   rateLoading.value = true
   rate.value = ''
@@ -284,10 +293,9 @@ setTimeout(() => {
   getRate()
 }, 100)
 
-// 账户选择
-const showAccountDialog = ref(false)
 const clickAccountItem = item => {
   form1.value.account_id = item.id
+  form1.value.id = item.id
   showAccountDialog.value = false
   safeRef.value.open()
 }
@@ -306,15 +314,7 @@ const goAddAccount = () => {
     name: 'account',
   })
 }
-// 获取充值 币种
-const getRechargeCurrency = async params => {
-  const res = _cryptoCoin({ type: 'fiat', dedup: false })
-  console.log('🚀 ~ getRechargeCurrency ~ res:', res)
-}
-getRechargeCurrency()
 
-// sessionToken
-const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }
@@ -334,6 +334,13 @@ const jump = name => {
     name,
   })
 }
+if (outWallet.value[0]) currOut.value = outWallet.value[0]
+if (inWallet.value[0]) currIn.value = inWallet.value[0]
+// const getData2 = async params => {
+//   const res = await _cryptoCoin()
+//   console.log('🚀 ~ getData2 ~ res:', res)
+// }
+// getData2()
 </script>
 
 <style lang="less" scoped>

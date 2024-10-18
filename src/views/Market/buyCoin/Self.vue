@@ -1,11 +1,12 @@
 <!-- 自选区 -->
 <template>
   <div class="buycoin_self">
-    <!-- tab -->
+    <!-- 一层容器 tab -->
     <div class="tabs-buy">
       <div class="tab" :class="{ active_tab: offset == 'buy' }" @click="changeTab('buy')">买入</div>
       <div class="tab" :class="{ active_tab: offset == 'sell' }" @click="changeTab('sell')">卖出</div>
     </div>
+    <!-- 二层容器 -->
     <div class="tabs mb-4">
       <div>
         <div class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12" @click="showDialog = true">
@@ -20,12 +21,14 @@
         </div>
       </div>
 
-      <Tabs :active="currCrypto.name" class="encryption w-full" scrollspy line-height="0.06rem" line-width="0.32rem" @change="cryptoChange">
-        <Tab v-for="(item, index) in dryptoWallet" :key="index" :title="item.name" :name="item.name" />
-      </Tabs>
+      <div class="w-full overflow-hidden">
+        <Tabs ref="currCryptoRef" class="encryption w-full" line-height="0.06rem" scrollspy line-width="0.32rem" @click-tab="cryptoChange">
+          <Tab v-for="(item, index) in dryptoWallet" :key="index" :title="item.name" :name="item.name" />
+        </Tabs>
+      </div>
     </div>
 
-    <!-- list -->
+    <!-- 三层容器 list -->
     <div class="list">
       <div v-for="(item, i) in list" :key="i" class="item">
         <div class="top">
@@ -56,7 +59,7 @@
         </div>
       </div>
       <NoData v-if="!loading && !list.length" />
-      <LoadingMore v-if="(finish && list.length) || !finish" :classN="'buycoin_buss'" :loading="loading" :finish="finish" />
+      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_buss" :loading="loading" :finish="finish" />
     </div>
   </div>
 
@@ -155,31 +158,26 @@
 
 <script setup>
 import { Popup, Icon, showToast, showConfirmDialog, Tabs, Tab } from 'vant'
-import { ref, onMounted, onUnmounted, computed, onActivated } from 'vue'
 import Decimal from 'decimal.js'
 import OrderInfo from './OrderInfo.vue'
 import NoData from '@/components/NoData.vue'
 import LoadingMore from '@/components/LoadingMore.vue'
 import { _adList, _buysell } from '@/api/api'
-import store from '@/store'
+import store, { useMapState } from '@/store'
 import router from '@/router'
 import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import IconSvg from '@/components/IconSvg.vue'
 
-const userInfo = computed(() => store.state.userInfo || {})
+const { userInfo, token, deWeightCurrencyList: currencyList, accountList, sessionToken } = useMapState(['userInfo', 'token', 'deWeightCurrencyList', 'accountList', 'sessionToken'])
 const safeRef = ref()
-
 const showPopupInfo = ref(false)
 const showDialog = ref(false)
 const showDialog2 = ref(false)
-const token = computed(() => store.state.token)
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
-const fiatWallet = computed(() => wallet.value.filter(item => item.type == 'fiat')) // 法币钱包
-const dryptoWallet = computed(() => wallet.value.filter(item => item.type == 'crypto')) // 加密钱包
-const accountList = computed(() => store.state.accountList || []) // 收款方式列表
+const fiatWallet = computed(() => currencyList.value.filter(item => item.type == 'fiat')) // 法币钱包
+const dryptoWallet = computed(() => currencyList.value.filter(item => item.type == 'crypto')) // 加密钱包
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
-const currencyList = computed(() => store.state.currencyList || [])
 
 const currWallet = computed(() => {
   if (offset.value == 'buy') {
@@ -193,10 +191,33 @@ const offset = ref(sessionStorage.getItem('buycoin_offset') || 'buy')
 const currCurrency = ref({}) // 计价货币
 if (fiatWallet.value[0]) currCurrency.value = fiatWallet.value[0]
 const currCrypto = ref({}) // 加密货币
-if (dryptoWallet.value[0]) {
+const currCryptoRef = ref(null) // 加密货币
+
+// 表单弹窗
+const showFormDialog = ref(false)
+const currItem = ref({})
+const amountFocus = ref(false)
+const amount = ref('')
+
+// 列表
+const loading = ref(false)
+const finish = ref(false)
+const list = ref([])
+// 账户选择
+const showAccountDialog = ref(false)
+const currAccount = ref({})
+// 监听
+const totalHeight = window.innerHeight || document.documentElement.clientHeight
+let moreDom = null
+try {
+  list.value = JSON.parse(sessionStorage.getItem('deal_list') || '[]')
+  currCrypto.value = JSON.parse(sessionStorage.getItem('buycoin_currCrypto') || '{}')
+} catch {}
+if (dryptoWallet.value[0] && !currCrypto.value.name) {
   const target = dryptoWallet.value.find(item => item.name == 'USDT')
   currCrypto.value = target || dryptoWallet.value[0]
 }
+
 const clickItem = item => {
   currCurrency.value = item
   showDialog.value = false
@@ -215,12 +236,6 @@ const changeTab = name => {
   list.value = []
   init()
 }
-
-// 表单弹窗
-const showFormDialog = ref(false)
-const currItem = ref({})
-const amountFocus = ref(false)
-const amount = ref('')
 const maxAmount = computed(() => {
   if (!currWallet.value.amount || !currItem.value.price) return 0
   if (offset.value == 'buy') {
@@ -285,14 +300,6 @@ const submitSell = s => {
     })
 }
 
-// 列表
-const loading = ref(false)
-const finish = ref(false)
-const list = ref([])
-try {
-  list.value = JSON.parse(sessionStorage.getItem('deal_list') || '[]')
-  currCrypto.value = JSON.parse(sessionStorage.getItem('buycoin_currCrypto') || '{}')
-} catch {}
 const page = ref(0)
 const getData = () => {
   if (loading.value || finish.value) return
@@ -339,9 +346,6 @@ const init = () => {
 }
 init()
 
-// 监听
-const totalHeight = window.innerHeight || document.documentElement.clientHeight
-let moreDom = null
 const scrollHandle = () => {
   if (!moreDom) return
   const rect = moreDom.getBoundingClientRect()
@@ -358,6 +362,7 @@ onActivated(() => {
   }, 500)
 })
 onMounted(() => {
+  currCryptoRef.value.scrollTo(currCrypto.value.name)
   setTimeout(() => {
     moreDom = document.querySelector('.buycoin_buss')
     document.querySelector('.page').addEventListener('scroll', scrollHandle)
@@ -369,9 +374,6 @@ onUnmounted(() => {
   } catch {}
 })
 
-// 账户选择
-const showAccountDialog = ref(false)
-const currAccount = ref({})
 const clickAccountItem = item => {
   currAccount.value = item
   showAccountDialog.value = false
@@ -393,8 +395,6 @@ const goAddAccount = () => {
   })
 }
 
-// sessionToken
-const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }
@@ -408,7 +408,7 @@ const jump = name => {
     name,
   })
 }
-function cryptoChange(item) {
+function cryptoChange({ name: item }) {
   const result = dryptoWallet.value.find(i => i.name == item)
   sessionStorage.setItem('buycoin_currCrypto', JSON.stringify(result))
   clickCrypto(result)
@@ -424,7 +424,7 @@ function cryptoChange(item) {
     align-items: center;
     justify-content: space-between;
     line-height: 34px;
-    margin: 20px 0;
+    margin: 0.4rem 0 0.2rem;
     border: 0.5px solid #d0d8e2;
     width: 47%;
     border-radius: 34px;
@@ -468,6 +468,8 @@ function cryptoChange(item) {
     }
     .encryption {
       > :deep(.van-tabs__wrap) {
+        border-bottom: 1px solid #f0f3f8;
+        padding-right: 0;
         .van-tabs__line {
           background-color: var(--main-color) !important;
         }
@@ -476,6 +478,9 @@ function cryptoChange(item) {
           padding-right: 0 !important;
           padding-left: 0 !important;
           margin-right: 14px !important;
+        }
+        .van-tabs__nav:last-child {
+          margin-right: 0 !important;
         }
       }
     }

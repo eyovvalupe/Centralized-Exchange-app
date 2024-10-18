@@ -1,9 +1,8 @@
 <!-- ipo相关 -->
 <template>
-    <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated :color="'#014CFA'"
+    <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated type="oval-card"
         shrink>
         <Tab :title="'IPO'" class="optional">
-            <div style="height: 0.4rem"></div>
             <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" />
         </Tab>
         <Tab :title="'中签'">
@@ -39,24 +38,7 @@ const ipoOnChange = (val) => {
 </script>
 
 <style lang="less" scoped>
-.tabs {
-    :deep(.van-tabs__nav) {
-        padding-left: 0.32rem;
-    }
-
-    :deep(.van-tabs__nav) {
-        position: relative;
-
-        &::after {
-            content: '';
-            width: 100%;
-            height: 1px;
-            background-color: #3B82F6;
-            position: absolute;
-            bottom: 16px;
-            left: 0;
-            opacity: 0.3;
-        }
-    }
+.tabs{
+    padding:0.16rem 0.32rem 0.32rem 0.32rem;
 }
 </style>

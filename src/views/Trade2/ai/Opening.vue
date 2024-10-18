@@ -1,127 +1,139 @@
 <!-- ai量化交易 -->
 <template>
     <div class="trade_ai">
+        <Top title="交易" :backFunc="backFunc" />
 
         <!-- 涨跌 -->
-        <Tabs  type="custom-card" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
+        <Tabs type="custom-card" style="margin-top: 1.12rem;" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
             <Tab title="看涨" :name="1">
-                
             </Tab>
             <Tab title="看跌" :name="2">
             </Tab>
         </Tabs>
-
-
-        <!-- 品种 -->
-        <div class="item_content">
-            <div class="subtitle">
-                交易品种
-                <div class="stock_icon" v-if="form1.name" @click="openStockModel">
-                    <img src="/static/img/trade/blue-stock.png" alt="icon">
-                </div>
-            </div>
-
-            <div class="item item_box ipt_box" @click="showNavDialog">
-                 {{ form1.name }}
-            </div>
+        <div class="scroller">
             
-        </div>
+            <!-- 品种 -->
+            <div class="item_content">
+                <div class="subtitle">
+                    交易品种
+                    <div class="stock_icon" v-if="form1.name" @click="openStockModel">
+                        <img src="/static/img/trade/blue-stock.png" alt="icon">
+                    </div>
+                </div>
 
-        <!-- 时间 -->
-        <div class="item_content">
-            <div class="subtitle">时间区域</div>
-            <div class="times">
-                <div class="time" @click="currTime = obj"
-                    :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
-                    v-for="(obj, i) in times" :key="i">{{ obj.time }}{{ _dateUnitMap[obj.unit] }}
+                <div class="item item_box" @click="showNavDialog">
+                    {{ form1.name }}
+                </div>
+                
+            </div>
+
+            <!-- 时间 -->
+            <div class="item_content">
+                <div class="subtitle">时间区域</div>
+                <div class="times">
+                    <div class="time" @click="currTime = obj"
+                        :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
+                        v-for="(obj, i) in times" :key="i">{{ obj.time }}{{ _dateUnitMap[obj.unit] }}
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- 数量 -->
-        <div class="item_content">
-            <div class="subtitle">网格数量</div>
-            <div class="item item_box" :class="{ 'error_border': error1 }">
-                <span class="ipt_tip" v-show="!(form1.grid && !gridFocus)">最大网格 {{ maxgrid }}</span>
-                <input @focus="gridFocus = true, error1 = false" @blur="gridFocus = false" type="number" class="ipt"
-                    v-model="form1.grid" :min="1" :max="maxgrid" @change="changeGrid">
+            <!-- 数量 -->
+            <div class="item_content">
+                <div class="subtitle">网格数量</div>
+                <div class="item item_box" :class="{'item_focus':gridFocus, 'error_border': error1 }">
+                    <span class="ipt_tip" v-show="!(form1.grid && !gridFocus)">最大网格 {{ maxgrid }}</span>
+                    <input @focus="gridFocus = true, error1 = false" @blur="gridFocus = false" type="number" class="ipt"
+                        v-model="form1.grid" :min="1" :max="maxgrid" @change="changeGrid">
+                </div>
             </div>
+
+            <!-- 利润 -->
+            <div class="item_content">
+                <div class="subtitle">每格利润</div>
+                <div class="item item_box disabled_item">
+                    {{ getPercent() }}
+                </div>
+            </div>
+
+            <!-- 投资额 -->
+            <div class="item_content">
+                <div class="subtitle">
+                    <span>投资额</span>
+                    <span style="color:#666D80;" v-show="!(form1.volume !== '' && !amountFocus)">≤ {{ usdt.amount }}</span>
+                </div>
+                <div class="item item_box" style="margin-top: 0" :class="{ 'error_border': error2 }">
+                    <span @click="onSliderChange(100)"
+                        :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
+                        class="put_all">全部</span>
+                    <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false" type="number"
+                        v-model="form1.volume" class="ipt" @change="changePercent">
+                </div>
+            </div>
+
+            <div style="height:0.47rem;"></div>
+            <!-- 拖动 -->
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+
+           
         </div>
 
-        <!-- 利润 -->
-        <div class="item_content">
-            <div class="subtitle">每格利润</div>
-            <div class="item item_box ipt_box">
-                <span class="ipt">{{ getPercent() }}</span>
-            </div>
+         <!-- 按钮 -->
+        <div class="btns" v-if="!token">
+            <Button size="large" color="#014cfa" class="btn" round 
+                @click="goLogin">登录</Button>
+            <Button size="large" color="#f2f2f2" class="btn" round style="color: #999999"
+                @click="jump('register')">注册</Button>
         </div>
-
-        <!-- 投资额 -->
-        <div class="item_content">
-            <div class="subtitle">
-                <span>投资额</span>
-                <span style="color:#666D80;" v-show="!(form1.volume !== '' && !amountFocus)">≤ {{ usdt.amount }}</span>
-            </div>
-            <div class="item item_box" style="margin-top: 0" :class="{ 'error_border': error2 }">
-                <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false" type="number"
-                    v-model="form1.volume" class="ipt" @change="changePercent">
-            </div>
-        </div>
-
-        <div style="height:0.47rem;"></div>
-        <!-- 拖动 -->
-        <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-
-        <!-- 按钮 -->
-        <div style="margin-top: 0.6rem">
-            <Button :loading="loading || submitLoading"  @click="checkForm" v-if="token" size="large" class="submit"
+        <div class="btns" v-else>
+            <Button :loading="loading || submitLoading"  @click="checkForm" v-if="token" size="large" class="btn"
                 :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
                     tab == 1 ?
                         '买涨' : '买跌' }}</Button>
-
-            <Button size="large" color="#014cfa" class="submit" round v-if="!token" style="margin-bottom: 0.34rem"
-                @click="goLogin">登录</Button>
-            <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999"
-                @click="jump('register')">注册</Button>
+           
         </div>
-
 
         <!-- 开仓确认弹窗 -->
         <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
-             <div class="van-popup-custom-title">开仓确认</div>
+             <div class="van-popup-custom-title">订单确认</div>
             <div class="stock_submit_box">
+                <div class="item">
+                    <div class="item_name">交易品种</div>
+                    <div class="item_val">
+                        <div class="item_val_text">{{ form1.name }}</div>
+                    </div>
+                </div>
                 <div class="item">
                     <div class="item_name">时间区域</div>
                     <div class="item_val">
-                        <div class="tag">{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</div>
+                        <div class="item_val_text">{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="item_name">网格数量</div>
                     <div class="item_val">
-                        <div class="tag">{{ form1.grid }}</div>
+                        <div class="item_val_text">{{ form1.grid }}</div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="item_name">投资额</div>
                     <div class="item_val">
-                        <div class="tag">{{ form1.volume }}</div>
-                        <span style="margin-left: 0.32rem;">USDT</span>
+                        <div class="item_val_text">{{ form1.volume }}</div>
+                        <div class="item_val_unit">USDT</div>
                     </div>
                 </div>
                 <div class="item">
                     <div class="item_name">预期盈亏金额</div>
                     <div class="item_val">
-                        <div class="tag">{{ getRange() }}</div>
-                        <span style="margin-left: 0.32rem;">USDT</span>
+                        <div class="item_val_text">{{ getRange() }}</div>
+                        <div class="item_val_unit">USDT</div>
                     </div>
                 </div>
-
 
                 <!-- <div class="subtitle" style="margin-top: 0.6rem;">请输入交易密码</div>
                 <div class="item pass_ipt">
                     <input v-model="safePass" type="password" class="ipt">
                 </div> -->
-                <Button @click="submitFormDialog" size="large" class="submit" color="#014cfa" round>开仓</Button>
+                <Button @click="submitFormDialog" size="large" class="submit" color="#014cfa" round>确定</Button>
             </div>
         </Popup>
 
@@ -165,6 +177,7 @@ import { _dateUnitMap } from "@/utils/dataMap"
 import StockPopup from "../../trade/StockPopup.vue"
 import eventBus from "@/utils/eventBus"
 import SlideContainer from "@/components/SlideContainer.vue"
+import Top from "@/components/Top.vue"
 
 const goLogin = () => {
     store.commit('setIsLoginOpen', true)
@@ -180,10 +193,14 @@ const route = useRoute()
 const wallet = computed(() => store.state.wallet || [])
 const usdt = computed(() => wallet.value.find(item => item.currency == 'USDT') || {})
 
-const emits = defineEmits(['showNavDialog'])
+const emits = defineEmits(['showNavDialog','back'])
 const showNavDialog = () => {
     // emits('showNavDialog', 'ai')
     showBottom.value = true
+}
+
+const backFunc = ()=>{
+    emits('back')
 }
 
 const safeRef = ref()
@@ -194,11 +211,8 @@ const openInfo = () => {
     AiInfoRef.value.open()
 }
 const token = computed(() => store.state.token)
-
 const tab = ref(1) // 1-看涨 2-看跌
 const showModel = ref(false)
-
-
 
 // 表单
 const amountFocus = ref(false)
@@ -420,10 +434,30 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
+.scroller{
+    height: calc(100vh - 2.42rem);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding-bottom: 2rem;
+}
 .trade_ai {
-    padding: 0.32rem 0.32rem 0.6rem 0.32rem;
+    padding: 0.28rem 0.32rem 0 0.32rem;
     
-     .subtitle {
+    .btns{
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        left:0;
+        padding: 0.32rem 0.16rem;
+        background-color: rgba(255,255,255,0.7);
+        z-index: 1000;
+        display: flex;
+        .btn{
+            flex: 1;
+            margin: 0 0.16rem;
+        }
+    }
+    .subtitle {
         color: #061023;
         font-size: 0.28rem;
         margin-bottom: 0.12rem;
@@ -443,6 +477,14 @@ defineExpose({
        
     }
     
+    .put_all{
+        color: #014CFA;
+        position: absolute;
+        right: 0.32rem;
+        font-size: 0.3rem;
+        z-index:9;
+        transition: all ease .3s
+    }
 
     .times {
         display: flex;
@@ -478,24 +520,21 @@ defineExpose({
         align-items: center;
         justify-content: space-between;
         position: relative;
-
-        &:has(.ipt:focus) {
-            padding-top: 0.204rem;
-
-            .ipt_tip {
-                top: 0.2rem;
-                left: 0.32rem;
-                font-size: 0.2rem;
-            }
+        .ipt {
+            flex: 1;
+            height: 100%;
+            width: 2rem;
+            font-size: 0.28rem;
+            padding: 0;
+            position: relative;
+            z-index: 1;
         }
-
         .ipt_tip {
             color: #b7b7b7;
             font-size: 0.24rem;
             position: absolute;
             left: 0.24rem;
             transition: all ease .3s;
-            pointer-events: none;
         }
 
         .select {
@@ -515,43 +554,28 @@ defineExpose({
                 margin-left: 1rem;
             }
         }
-
-        .ipt_box {
-            height: 0.88rem;
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-left: 0.32rem;
-            padding: 0 0.32rem;
-            border: 1px solid #e5e5e5;
-            border-radius: 0.12rem;
-            background-color: #F5F5F5;
-            padding-right: 1rem;
-
-        }
     }
 
     .item_box {
-        
         position: relative;
         height: 0.92rem;
         border-radius: 0.32rem;
         border: 1px solid #d0d8e2;
         padding: 0 0.24rem;
 
-        .ipt {
-            width: 100%;
-            height: 0.88rem;
-            text-align: left;
-            padding: 0 0.32rem;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
+    }
+     .item_focus {
+        height: 1.12rem;
+        border: 1px solid #034cfa;
 
+        .ipt_tip {
+            font-size: 0.2rem;
+            transform: translateY(-0.36rem);
         }
     }
-    
+    .disabled_item {
+        background-color: #F5F7FC;
+    }
 
     .error_border {
         border: 1px solid #e8503a !important;
@@ -559,7 +583,7 @@ defineExpose({
 }
 
 .stock_submit_box {
-    padding: 0.2rem 0.6rem 0.6rem;
+    padding: 0.2rem 0.5rem 0.6rem;
 
     .item {
         display: flex;
@@ -576,36 +600,17 @@ defineExpose({
 
         .item_val {
             display: flex;
-            align-items: center;
+            align-items:center;
             justify-content: flex-end;
             color: #121826;
             font-size: 0.28rem;
             font-weight: 500;
 
-            .tag {
-                height: 0.44rem;
-                color: #014CFA;
-                background-color: #ecf1fe;
-                line-height: 0.44rem;
-                padding: 0 0.3rem;
-                border-radius: 0.4rem;
-                margin-left: 0.2rem;
+            &_unit {
+                margin-left: 0.06rem;
                 font-size: 0.24rem;
-            }
-
-            .red_tag {
-                background-color: #fbf1ef;
-                color: #e8503a;
-            }
-
-            .green_tag {
-                background-color: #eff9f2;
-                color: #18b762;
-            }
-
-            .lever {
-                min-width: 0.7rem;
-                text-align: right;
+                line-height: 100%;
+                margin-top: 0.04rem;
             }
         }
     }
@@ -627,10 +632,10 @@ defineExpose({
             height: 0.8rem;
         }
     }
-
-    .submit {
-        margin-top: 0.6rem;
+    .submit{
+        margin-top: 0.5rem;
     }
+
 }
 
 .trade_ai_list {
