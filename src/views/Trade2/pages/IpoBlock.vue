@@ -3,9 +3,9 @@
     <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated type="oval-card"
         shrink>
         <Tab :title="'IPO'" class="optional">
-            <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" />
+            <IPO  v-if="ipoActive == 0" :type="'trade'" ref="IPORef" />
         </Tab>
-        <Tab :title="'中签'">
+        <Tab :title="'订单'">
             <IPOStock v-if="ipoActive == 1" ref="IPOStockRef" />
         </Tab>
     </Tabs>
@@ -38,7 +38,8 @@ const ipoOnChange = (val) => {
 </script>
 
 <style lang="less" scoped>
-.tabs{
-    padding:0.16rem 0.32rem 0.32rem 0.32rem;
+
+.tabs :deep(> .van-tabs__wrap){
+    padding:0.16rem 0.32rem 0 0.32rem;
 }
 </style>
