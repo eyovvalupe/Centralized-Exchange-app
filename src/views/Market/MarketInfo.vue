@@ -190,7 +190,7 @@
     </div>
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
-      <div>
+      <div class="market_bottom_symbol">
         <div class="symbol">{{ item.symbol || "--" }}</div>
         <div class="time_type">{{ timeType }}</div>
       </div>
@@ -1046,6 +1046,11 @@ const showInfo = ref(false);
     font-size: 0.3rem;
     font-weight: 400;
 
+    .market_bottom_symbol {
+      padding-right: 0.1rem;
+      overflow: hidden;
+    }
+
     .symbol {
       color: #061023;
       margin-bottom: 0.12rem;
@@ -1069,6 +1074,7 @@ const showInfo = ref(false);
     }
 
     .bottom_btn--default {
+      width: 1.64rem;
       color: #061023;
       border-radius: 40px;
       padding: 16px 24px;
@@ -1082,6 +1088,7 @@ const showInfo = ref(false);
     }
 
     .bottom_btn {
+      width: 1.64rem;
       color: white;
       border-radius: 40px;
       padding: 16px 24px;
