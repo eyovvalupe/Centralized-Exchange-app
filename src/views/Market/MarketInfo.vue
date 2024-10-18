@@ -1224,6 +1224,8 @@ const showInfo = ref(false);
   padding: 0.8rem 0.32rem 0.2rem 0.32rem;
 
   .info_name {
+    font-size: 0.32rem;
+    line-height: 0.44rem;
     color: #121826;
     margin-bottom: 0.54rem;
     text-align: center;
@@ -1234,12 +1236,14 @@ const showInfo = ref(false);
     align-items: center;
     justify-content: flex-start;
     font-size: 0.32rem;
-    padding: 0.3rem 0.375rem;
+    height: 1.3rem;
+    padding: 0.24rem;
     background: #e6f9f2;
     border-radius: 0.4rem;
 
     .info_num {
-      font-size: 0.46rem;
+      font-size: 0.6rem;
+      line-height: 0.81rem;
       font-weight: 600;
       margin-right: 0.2rem;
     }
@@ -1280,12 +1284,11 @@ const showInfo = ref(false);
       margin-bottom: 0.32rem;
       width: 31%;
       background-color: #f2f3f8;
-      padding: 0.25rem;
       border-radius: 0.4rem;
+      height: 1.14rem;
 
       .name {
-        padding-left: 0.1rem;
-        margin-bottom: 0.15rem;
+        margin-top: 0.2rem;
       }
 
       .info_item__value {
