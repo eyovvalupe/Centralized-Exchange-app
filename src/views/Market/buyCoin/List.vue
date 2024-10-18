@@ -11,7 +11,7 @@
           <div class="text-14 text-[#666]">{{ item.order_no }}</div>
           <div class="text-14" :style="{ color: statusEnum[item.status].color }">{{ statusEnum[item.status].name }}</div>
         </div>
-        <!-- 交易信息展示 0.32rem -->
+        <!-- 交易信息展示 -->
         <div class="flex items-center justify-between">
           <!-- 加密货币信息 -->
           <div class="text-12">
@@ -38,7 +38,7 @@
       </div>
 
       <NoData v-if="!loading && !list.length" />
-      <LoadingMore v-if="(finish && list.length) || !finish" :classN="'buycoin_self'" :loading="loading" :finish="finish" />
+      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_self" :loading="loading" :finish="finish" />
     </div>
   </div>
   <UnLogin v-show="!token" @loginfinish="loginfinish" />
@@ -47,22 +47,23 @@
   <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
     <div class="buycoin_orderinfo_dialog">
       <div class="orderinfo_dialog_title">订单详情</div>
-      <OrderInfo v-if="showPopupInfo" ref="OrderInfoRef" @successHanlde="successOrder" />
+      <OrderInfo v-if="showPopupInfo" ref="OrderInfoRef" @success-hanlde="successOrder" />
     </div>
   </Popup>
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, computed, ref, onActivated } from 'vue'
 import { Popup } from 'vant'
-import store from '@/store'
+import store, { useMapState } from '@/store'
 import NoData from '@/components/NoData.vue'
 import UnLogin from '@/components/UnLogin.vue'
-import { formatSec2 } from '@/utils/time'
 import OrderInfo from './OrderInfo.vue'
 import { _c2cOrderList } from '@/api/api'
 import LoadingMore from '@/components/LoadingMore.vue'
+import router from '@/router'
 
+// 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
+const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
 const statusEnum = {
   waitpayment: { name: '等待付款', color: 'var(--main-color)' },
   waitconfirm: { name: '等待确认', color: 'var(--main-color)' },
@@ -75,16 +76,17 @@ const loginfinish = () => {
   }, 100)
 }
 
-// 未读消息
-const c2cUnread = computed(() => store.state.c2cUnread || {})
-
 // 订单详情
 const OrderInfoRef = ref()
 const showPopupInfo = ref(false)
-const openOrderInfo = item => {
-  showPopupInfo.value = true
+const openOrderInfo = ({ order_no }) => {
+  // showPopupInfo.value = true
   setTimeout(() => {
-    OrderInfoRef.value && OrderInfoRef.value.open(item)
+    router.push({
+      name: 'orderDetails',
+      query: { order_no },
+    })
+    // OrderInfoRef.value && OrderInfoRef.value.open(item)
   }, 100)
 }
 const successOrder = () => {
@@ -106,9 +108,7 @@ const statusMap = (key, type) => {
   }[key]
 }
 
-const token = computed(() => store.state.token)
-const c2cList = computed(() => store.state.c2cList || [])
-const c2cLasttime = computed(() => store.state.c2cList || {})
+// const c2cLasttime = computed(() => store.state.c2cList || {})
 
 // 列表
 const loading = ref(false)
@@ -197,6 +197,7 @@ onActivated(() => {
   }, 500)
 })
 onMounted(() => {
+  console.log('c2cList', store.state.c2cList)
   interval = setInterval(() => {
     list.value.forEach(item => {
       if (item.endtime) {

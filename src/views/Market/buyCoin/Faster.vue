@@ -102,7 +102,7 @@
   </Popup>
 
   <!-- 账户选择弹窗 -->
-  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
+  <!-- <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
@@ -128,7 +128,8 @@
         </div>
       </div>
     </div>
-  </Popup>
+  </Popup> -->
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" @on-add-collection="clickAccountItem" />
 
   <!-- 安全密码弹窗 -->
   <SafePassword ref="safeRef" @submit="submitSell" />
@@ -144,12 +145,13 @@ import { _swapRate, _orderFast, _cryptoCoin } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import eventBus from '@/utils/eventBus'
+import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 
 const safeRef = ref()
 const token = computed(() => store.state.token)
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
 const accountList = computed(() => store.state.accountList || []) // 收款方式列表
-const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
+// const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const userInfo = computed(() => store.state.userInfo || {})
 const currencyList = computed(() => store.state.deWeightCurrencyList || [])
 const searchValue = ref('')
@@ -210,8 +212,8 @@ const submitSell = s => {
     offset: form1.value.offset,
     account_id: form1.value.offset == 'sell' ? form1.value.account_id : null,
     volume: form1.value.volume,
-    crypto: form1.value.offset == 'sell' ? currOut.value.currency : currIn.value.currency,
-    currency: form1.value.offset == 'sell' ? currIn.value.currency : currOut.value.currency,
+    crypto: form1.value.offset == 'buy' ? currOut.value.currency : currIn.value.currency,
+    currency: form1.value.offset == 'buy' ? currIn.value.currency : currOut.value.currency,
     token: sessionToken.value,
     safeword: s,
   }
@@ -293,6 +295,7 @@ setTimeout(() => {
 
 const clickAccountItem = item => {
   form1.value.account_id = item.id
+  form1.value.id = item.id
   showAccountDialog.value = false
   safeRef.value.open()
 }

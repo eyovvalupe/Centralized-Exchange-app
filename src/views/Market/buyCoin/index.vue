@@ -46,12 +46,13 @@ const subs = () => {
   const socket = startSocket(() => {
     socket && socket.off('user')
     socket && socket.off('c2corder')
+    // socket && socket.off('msgapi')
     socket && socket.emit('user', token.value)
     socket && socket.emit('c2corder', '#all')
     currLoading.value = true
     store.commit('setC2cList', [])
     socket.on('c2corder', res => {
-      console.log('setC2cList', res.data)
+      // console.log('setC2cList', res.data)
       store.commit('setC2cList', res.data || [])
       currLoading.value = false
     })
