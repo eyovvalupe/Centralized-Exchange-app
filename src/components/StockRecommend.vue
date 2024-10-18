@@ -20,10 +20,10 @@
                 </div>
 
                 <div class="unchecked" v-if="!checkedList[i]">
-                    <img src="/static/img/common/unchecked.png" alt="√">
+                    <img src="/static/img/assets/unchecked.svg" alt="√">
                 </div>
                 <div class="checked" v-if="checkedList[i]">
-                    <img src="/static/img/common/checked.png" alt="√">
+                    <img src="/static/img/assets/checked.svg" alt="√">
                 </div>
             </div>
         </div>

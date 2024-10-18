@@ -58,11 +58,17 @@
             class="ratio_price"
             v-if="Number(item.price * (item.ratio || 0))"
           >
-            {{ updown === 0 ? '' : updown > 0 ? '+' : '-' }}
+            {{ updown === 0 ? "" : updown > 0 ? "+" : "-" }}
             {{ Number(item.price * (item.ratio || 0)).toFixed(4) }}
           </div>
           <div class="ratio_percentage" v-if="item.ratio">
-            {{ updown === 0 || item.ratio === undefined ? '' : updown > 0 ? '+' : '-' }}
+            {{
+              updown === 0 || item.ratio === undefined
+                ? ""
+                : updown > 0
+                ? "+"
+                : "-"
+            }}
             {{
               item.ratio === undefined
                 ? "--"
@@ -290,7 +296,7 @@
             <span v-else>--</span>
           </div>
           <div
-            style="display: flex; align-items: center; margin-left: 0.4rem"
+            style="display: flex; align-items: center;"
             :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
           >
             <div
@@ -988,7 +994,6 @@ const showInfo = ref(false);
           font-size: 0.22rem;
           font-weight: 400;
           line-height: 0.22rem;
-
         }
       }
 
@@ -1225,11 +1230,14 @@ const showInfo = ref(false);
     .info_num {
       font-size: 0.46rem;
       font-weight: 600;
-      margin-right: 0.06rem;
+      margin-right: 0.2rem;
     }
 
     .price_up,
     .percentage_up {
+      height: 0.56rem;
+      display: flex;
+      align-items: center;
       background: #00af701a;
       border-radius: 1.25rem;
       padding: 0.075rem 0.25rem;
@@ -1237,6 +1245,9 @@ const showInfo = ref(false);
 
     .price_down,
     .percentage_down {
+      height: 0.56rem;
+      display: flex;
+      align-items: center;
       background: #e53e001a;
       border-radius: 1.25rem;
       padding: 0.075rem 0.25rem;
