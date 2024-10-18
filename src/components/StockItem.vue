@@ -117,12 +117,10 @@
       <template #right v-if="props.deleteItem">
         <div :class="props.marketType != 'crypto' ? 'delete_content' : 'delete_content_crypto'" @click="removeStock(item)">
           <div class="delete_icon">
-            <img src="/static/img/market/delete.png" alt="🚮" />
+            <img src="/static/img/assets/delete.svg" alt="🚮" />
           </div>
         </div>
       </template>
-      
-      
     </SwipeCell>
   </div>
 </template>
@@ -253,8 +251,8 @@ const removeStock = (item) => {
     border-bottom-right-radius: 16px;
 
     .delete_icon {
-      font-size: 0.52rem;
-      height: 0.52rem;
+      width: 0.4rem;
+      height: 0.4rem;
     }
   }
   .delete_content_crypto {
