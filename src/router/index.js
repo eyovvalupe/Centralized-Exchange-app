@@ -536,6 +536,24 @@ const routes = [
     },
   },
   {
+    path:'/ipo/detail',
+    name:'ipoDetail',
+    component: () => import('../views/Market/IpoDetail.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
+    path:'/ipo/orderDetail',
+    name:'ipoOrderDetail',
+    component: () => import('../views/Market/IpoOrderDetail.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
     // 认购成功
     path: '/subscriptionSuccess',
     name: 'subscriptionSuccess',

@@ -154,8 +154,10 @@ const ipoDataList = computed(() => store.state.ipoDataList || [])
 const selectedOption = ref('')
 const option = [
     { text: "全部", value: "" },
-    { text: "发行中", value: "issuing" },
-    { text: "已上市", value: "listed" },
+    { text: "预售中", value: "none" },
+    { text: "认购中", value: "issuing" },
+    { text: "已结束", value: "done" },
+    { text: "已上市", value: "listed" }
 ];
 const selectedOptiontext = computed(() => option.find(item => item.value == selectedOption.value).text)
 
@@ -269,20 +271,23 @@ const goBuy = (query) => {
 // 详情
 const showPopupInfo = ref(false)
 const currDetail = ref({})
-const openDetail = (val) => {
-    currDetail.value = val
-    showPopupInfo.value = true
-    _ipoGet({
-        id: currDetail.value.id
-    }).then(res => {
-        if (res.data) {
-            currDetail.value = {
-                ...currDetail.value,
-                ...res.data
-            }
-        }
-    })
+const openDetail = (val)=>{
+    router.push('/ipo/detail?id='+val.id)
 }
+// const openDetail = (val) => {
+//     currDetail.value = val
+//     showPopupInfo.value = true
+//     _ipoGet({
+//         id: currDetail.value.id
+//     }).then(res => {
+//         if (res.data) {
+//             currDetail.value = {
+//                 ...currDetail.value,
+//                 ...res.data
+//             }
+//         }
+//     })
+// }
 
 
 function countdown(endTime) {
@@ -304,10 +309,14 @@ function countdown(endTime) {
 </script>
 
 <style lang="less" scoped>
+
 .page_ipo {
     padding: 0.28rem 0.32rem 0 0.32rem;
     .van-tabs--oval-sub{
         margin-top:0.32rem;
+    }
+    :deep(.van-tab--custom-card){
+        padding: 0 0.12rem !important;
     }
     .list {
         padding-top: 0.12rem;

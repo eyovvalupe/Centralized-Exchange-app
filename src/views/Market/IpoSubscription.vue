@@ -14,7 +14,7 @@
             </div>
         </div> -->
 
-        <div class="ipo_info">
+        <div class="ipo_info" @click="ipoDetail">
             <div class="ipo_info_lt">
                 <div class="ipo_info_name">{{ currIpo.company_name }}</div>
                 <div class="ipo_info_price">
@@ -100,6 +100,7 @@ import router from '@/router'
 const currency = computed(() => (store.state.accountCurrencyMap.ipo || '') )
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == currency.value) || {}) // 主钱包
 const route = useRoute()
+
 const currIpo = ref(route.query)
 const avtiveTab = ref(1)
 const lever = currIpo.value.lever
@@ -126,7 +127,9 @@ const maxNum = computed(() => {
     const amount = (avtiveTab.value == 2) ? (new Decimal(mainWallet.value.amount).mul(lever)) : new Decimal(mainWallet.value.amount)
     return amount.div(currIpo.value.issue_price_max).toNumber()
 })
-
+const ipoDetail = ()=>{
+    router.push('/ipo/detail?id='+currIpo.value.id)
+}
 const form = ref({
     volume: '',
     keyword: '',

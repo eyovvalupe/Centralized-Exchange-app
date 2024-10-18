@@ -2,7 +2,7 @@
 <template>
   <div v-if="token" class="page_ipo_stock">
 
-    <Tabs  type="custom-card" v-model:active="selectedLever" :swipeable="false" @change="ipoOnChange"  :color="'#014CFA'" 
+    <Tabs  type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"  :color="'#014CFA'" 
         shrink>
         <Tab title="全部" name="">
         </Tab>
@@ -14,7 +14,7 @@
         </Tab>
     </Tabs>
     <div class="list">
-      <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="openDetail(item)">
+      <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="ipoOrderDetail(item)">
           <div class="item_box">
             <div class="name_box">
               <div class="name">{{ item.company_name }}</div>
@@ -56,8 +56,6 @@
               <span class="info_name">认购日期</span>
               <span class="info_val">{{ item.created || '--' }}</span>
             </div>
-            
-           
           </div>
       </div>
 
@@ -137,7 +135,7 @@ const loginfinish = () => {
 
 }
 const ipoOnChange = ()=>{
-  init()
+  init(true)
 }
 const token = computed(() => store.state.token)
 
@@ -158,8 +156,7 @@ const props = defineProps({
   }
 })
 
-//const ipoStockList = computed(() => store.state.ipoStockList || [])
-const ipoStockList = computed(() => store.state.ipoDataList || [])
+const ipoStockList = computed(() => store.state.ipoStockList || [])
 
 const loading = ref(false)
 const finish = ref(false)
@@ -233,14 +230,10 @@ defineExpose({
   init
 })
 
-// 去购买
-const goBuy = (query) => {
-  router.push({
-    name: 'subscription',
-    query
-  })
+// 订单详情
+const ipoOrderDetail = (item)=>{
+    router.push('/ipo/orderDetail?order_no='+item.order_no)
 }
-
 
 // 详情
 const showPopupInfo = ref(false)
@@ -456,8 +449,8 @@ function countdown(endTime) {
   }
 
 }
-</style>
-<style lang="less">
+
+
 .ipo_stock_detail {
   border-top-left-radius: 0.36rem;
   border-top-right-radius: 0.36rem;
