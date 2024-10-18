@@ -58,7 +58,7 @@
             class="ratio_price"
             v-if="Number(item.price * (item.ratio || 0))"
           >
-            {{ updown === 0 ? "" : updown > 0 ? "+" : "-" }}
+            {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
             {{ Number(item.price * (item.ratio || 0)).toFixed(4) }}
           </div>
           <div class="ratio_percentage" v-if="item.ratio">
@@ -67,7 +67,7 @@
                 ? ""
                 : updown > 0
                 ? "+"
-                : "-"
+                : ""
             }}
             {{
               item.ratio === undefined
