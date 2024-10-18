@@ -18,7 +18,7 @@
               <template v-if="item.type !== 'img'">
                 {{ item.content }}
               </template>
-              <van-image v-else class="send-conimg" Lazyload :src="item.content" fit="scale-down">
+              <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
                 <template v-slot:loading>
                   <Loaidng type="spinner" size="20" />
                 </template>
@@ -41,7 +41,7 @@
               <template v-if="item.type !== 'img'">
                 {{ item.content }}
               </template>
-              <van-image v-else class="send-conimg" Lazyload :src="item.content" fit="scale-down">
+              <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
                 <template v-slot:loading>
                   <Loaidng type="spinner" size="20" />
                 </template>
@@ -123,6 +123,10 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
         &.receive-text{
           margin-left: -9px;
         }
+        &.img{
+          padding: 0 !important;
+          margin-right: 6px;
+        }
       }
       .user-box{
         display: flex;
@@ -181,6 +185,10 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
       .con {
         background: #EFF3F8;
         color: #061023;
+        &.img{
+          padding: 0 !important;
+          margin-left: 6px;
+        }
       }
     }
     &.send {
