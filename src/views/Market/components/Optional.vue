@@ -23,8 +23,8 @@
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
       </div>
       <p class="text">你还没有添加自选哦</p>
-      <Button round plain type="primary" hairline="" class="addBtn"
-        >+添加自选</Button>
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
+        >添加自选</Button>
     </div>
     <Teleport to=".page_market">
       <div class="one_click_to_favorite_container">
@@ -379,10 +379,10 @@ const remove = (item) => {
     margin-bottom: 0.471rem;
 
     .item_block_title {
-      font-size: 0.326rem;
+      font-size: 0.36rem;
       font-weight: 600;
-      line-height: 0.326rem;
-      margin-bottom: 0.326rem;
+      line-height: 0.36rem;
+      margin-bottom: 0.36rem;
     }
   }
 }

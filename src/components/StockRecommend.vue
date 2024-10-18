@@ -114,7 +114,7 @@ const disabled = computed(
 
 <style lang="less" scoped>
 .recommend_list {
-  padding: 0 0.0362rem;
+  padding: 0 0.036rem;
   // height: calc(var(--app-height) - 4.2rem);
   overflow: hidden;
   display: flex;
@@ -130,7 +130,7 @@ const disabled = computed(
 
     .list_item {
       background-color: #ffffff;
-      height: 2rem;
+      height: 1.998rem;
       width: 3.36rem;
       border-radius: 0.2rem;
       margin-bottom: 0.14rem;
@@ -149,18 +149,21 @@ const disabled = computed(
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin: 0.2rem 0;
+        margin: 0.1rem 0;
       }
 
       .price {
         color: #061023;
-        font-weight: 700;
+        font-weight: 600;
         font-size: 0.32rem;
+        line-height: 0.432rem;
         margin-bottom: 0.08rem;
       }
 
       .percent {
-        font-size: 0.32rem;
+        font-size: 0.28rem;
+        line-height: 0.32rem;
+        font-weight: 600;
       }
 
       .sparkLine {
@@ -221,8 +224,8 @@ const disabled = computed(
     //   }
 
       .uncheck_ticket {
-        top: 0.2rem;
-        right: 0.2rem;
+        top: 0.15rem;
+        right: 0.15rem;
         display: flex;
         align-items: center;
         justify-content: center;
