@@ -39,7 +39,7 @@
             :class="
               props.marketType != 'crypto'
                 ? 'td2 spark_line_box'
-                : 'flex-1'
+                : 'td2 ml-[2rem]'
             "
           >
             <SparkLine
@@ -89,10 +89,10 @@
 
         <!-- 为了显示自选给了常数，需要更改为后端数据 -->
         <div
-          class="px-[1rem] flex items-center justify-between text-[0.32rem] font-bold"
+          class="flex items-center justify-between text-[0.32rem] font-bold w-[100%]"
           v-show="props.marketType == 'crypto'"
         >
-          <div class="text-center">
+          <div class="text-center w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">3.16</span><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal"
               >最新价</span
@@ -104,7 +104,7 @@
               >盈亏价</span
             >
           </div>
-          <div class="text-center">
+          <div class="text-center w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{updown === 0 ? '' : updown > 0 ? '+' : '-'}}2.36%</span><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal"
               >盈亏比</span
@@ -399,7 +399,7 @@ const removeStock = (item) => {
   display: flex;
   align-items: center;
   height: 1rem;
-  padding: 0 0.3rem;
+  padding: 0 0.32rem;
   position: relative;
   margin-bottom: 0.1rem;
 

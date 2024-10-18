@@ -1,11 +1,6 @@
 <!-- 股票列表样式架子 -->
 <template>
   <div class="stock_table">
-    <!-- <div class="tr th">
-              <div class="td td5">名称</div>
-              <div class="td td2">行情</div>
-              <div class="td td2 td_r">涨跌幅</div>
-          </div> -->
     <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
     <div class="tr" v-for="(item, i) in props.list" :key="i">
       <div v-show="props.marketType == 'all' || props.marketType == item.type">
