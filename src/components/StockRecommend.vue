@@ -1,244 +1,264 @@
 <!-- 自选推荐 -->
 <template>
-    <div class="recommend_list">
-        <Loading v-show="!props.list.length && props.loading" />
-        <div class="list_box">
-            <div class="list_item" @click="changeCheck(i)" :class="{ 'list_item_active': checkedList[i] }"
-                v-for="(item, i) in props.list" :key="i">
-                <div class="symbol">{{ item.symbol }}</div>
-                <div class="name">{{ item.name || '--' }}</div>
-                <div class="price">{{ item.price ? (item.price).toFixed(2) : '--' }}</div>
-                <div class="percent" :class="[updown(item) === 0 ? '' : (updown(item) > 0 ? 'up' : 'down')]">{{
-                    ((item.ratio || 0) *
-                        100).toFixed(2) > 0 ? '+' + ((item.ratio || 0) *
-                        100).toFixed(2) : ((item.ratio || 0) *
-                        100).toFixed(2)  }}%</div>
-
-                <div class="sparkLine">
-                    <SparkLine v-if="item.points" style="width:100%;height:0.45rem" :points="item.points"
-                        :ratio="item.ratio" />
-                </div>
-
-                <div class="unchecked" v-if="!checkedList[i]">
-                    <img src="/static/img/assets/unchecked.svg" alt="√">
-                </div>
-                <div class="checked" v-if="checkedList[i]">
-                    <img src="/static/img/assets/checked.svg" alt="√">
-                </div>
-            </div>
+  <div class="recommend_list">
+    <Loading v-show="!props.list.length && props.loading" />
+    <div class="list_box">
+      <div
+        class="list_item"
+        @click="changeCheck(i)"
+        :class="{ list_item_active: checkedList[i] }"
+        v-for="(item, i) in props.list"
+        :key="i"
+      >
+        <div class="symbol">{{ item.symbol }}</div>
+        <div class="name">{{ item.name || "--" }}</div>
+        <div class="price">{{ item.price ? item.price.toFixed(2) : "--" }}</div>
+        <div
+          class="percent"
+          :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']"
+        >
+          {{
+            ((item.ratio || 0) * 100).toFixed(2) > 0
+              ? "+" + ((item.ratio || 0) * 100).toFixed(2)
+              : ((item.ratio || 0) * 100).toFixed(2)
+          }}%
         </div>
+
+        <div class="sparkLine">
+          <SparkLine
+            v-if="item.points"
+            style="width: 100%; height: 0.45rem"
+            :points="item.points"
+            :ratio="item.ratio"
+          />
+        </div>
+
+        <!-- <div class="check_ticket" v-if="checkedList[i]">
+          <div class="checkmark"></div>
+        </div> -->
+
+        <div class="uncheck_ticket" v-if="checkedList[i]">
+          <div class="uncheckmark"></div>
+        </div>
+
+      </div>
     </div>
+  </div>
 </template>
 
 <script setup>
-import SparkLine from "./SparkLine.vue"
-import Loading from "./Loaidng.vue"
-import { ref, computed } from "vue"
-import { Button, showToast } from 'vant'
-import { _add } from "@/api/api"
-import store from "@/store"
-import router from "@/router"
+import SparkLine from "./SparkLine.vue";
+import Loading from "./Loaidng.vue";
+import { ref, computed } from "vue";
+import { Button, showToast } from "vant";
+import { _add } from "@/api/api";
+import store from "@/store";
+import router from "@/router";
 
-const emits = defineEmits(['init', 'change'])
-const token = computed(() => store.state.token || '')
+const emits = defineEmits(["init", "change"]);
+const token = computed(() => store.state.token || "");
 
 const props = defineProps({
-    keyStr: {
-        type: String,
-        default: ''
-    },
-    loading: {
-        type: Boolean,
-        default: true,
-    },
-    list: {
-        type: Array,
-        default: () => []
-    }
-})
+  keyStr: {
+    type: String,
+    default: "",
+  },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
+  list: {
+    type: Array,
+    default: () => [],
+  },
+});
 
-
-const updown = item => {
-    if (item.ratio === undefined) return 0
-    return item.ratio > 0 ? 1 : -1
-}
+const updown = (item) => {
+  if (item.ratio === undefined) return 0;
+  return item.ratio > 0 ? 1 : -1;
+};
 
 const emitsKeys = () => {
-    const keys = []
+  const keys = [];
 
-    checkedList.value.map((item, i) => {
-        if (item) {
-            keys.push(props.list[i].symbol)
-        }
-    })
-    emits('change', keys)
-}
-
-const checkedList = ref([])
-try {
-    checkedList.value = props.list.map((item) => true);
-} catch {
-    checkedList.value = [];
-}
-emitsKeys()
-
-const changeCheck = i => {
-    if (checkedList.value[i]) {
-        checkedList.value[i] = !checkedList.value[i]
-    } else {
-        checkedList.value[i] = true
+  checkedList.value.map((item, i) => {
+    if (item) {
+      keys.push(props.list[i].symbol);
     }
-    emitsKeys()
+  });
+  emits("change", keys);
+};
+
+const checkedList = ref([]);
+try {
+  checkedList.value = props.list.map((item) => true);
+} catch {
+  checkedList.value = [];
 }
+emitsKeys();
 
+const changeCheck = (i) => {
+  if (checkedList.value[i]) {
+    checkedList.value[i] = !checkedList.value[i];
+  } else {
+    checkedList.value[i] = true;
+  }
+  emitsKeys();
+};
 
-const loading = ref(false)
-const disabled = computed(() => !checkedList.value.some(item => item == true))
-
-
+const loading = ref(false);
+const disabled = computed(
+  () => !checkedList.value.some((item) => item == true)
+);
 </script>
-
 
 <style lang="less" scoped>
 .recommend_list {
-    padding: 0 0.0362rem;
-    // height: calc(var(--app-height) - 4.2rem);
-    overflow: hidden;
+  padding: 0 0.0362rem;
+  // height: calc(var(--app-height) - 4.2rem);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .list_box {
+    flex: 1;
+    overflow-y: auto;
     display: flex;
-    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
-    .list_box {
-        flex: 1;
-        overflow-y: auto;
-        display: flex;
-        align-items: stretch;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    .list_item {
+      background-color: #ffffff;
+      height: 2rem;
+      width: 3.36rem;
+      border-radius: 0.2rem;
+      margin-bottom: 0.14rem;
+      position: relative;
+      padding: 0.2rem;
+      overflow: hidden;
 
-        .list_item {
-            background-color: #FFFFFF;
-            height: 2rem;
-            width: 3.36rem;
-            border-radius: 0.2rem;
-            margin-bottom: 0.28rem;
-            position: relative;
-            padding: 0.2rem;
-            overflow: hidden;
+      .symbol {
+        font-size: 0.32rem;
+        color: #061023;
+      }
 
-            .symbol {
-                font-size: 0.32rem;
-                color: #061023;
-            }
-
-            .name {
-                font-size: 0.24rem;
-                color: #8F92A1;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                margin: 0.2rem 0;
-            }
-
-            .price {
-                color: #061023;
-                font-weight: 700;
-                font-size: 0.32rem;
-                margin-bottom: 0.08rem;
-            }
-
-            .percent {
-                font-size: 0.32rem;
-            }
-
-            .sparkLine {
-                position: absolute;
-                width: 1.6rem;
-                height: 0.5rem;
-                right: 0.1rem;
-                bottom: 0.1rem;
-            }
-
-            .unchecked {
-                position: absolute;
-                top: 0.1rem;
-                right: 0.1rem;
-                width: 0.3624rem;
-                height: 0.3624rem;
-                border-radius: 50%;
-                border: 1px solid #ddd;
-                opacity: 0.9;
-            }
-        }
-
-        .list_item_active {
-            .checked {
-                position: absolute;
-                top: 0.1rem;
-                right: 0.1rem;
-                width: 0.3624rem;
-                height: 0.3624rem;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                opacity: 0.9;
-
-                .ok {
-                    width: 0.16rem;
-                    height: 0.16rem;
-                    text-align: center;
-                    line-height: 0;
-                }
-            }
-        }
-
-        .list_item_active2 {
-            border: 1px solid #3B6BEE;
-
-            .checked {
-                position: absolute;
-                top: 0.1rem;
-                right: 0.1rem;
-                width: 0.4rem;
-                height: 0.4rem;
-                border-radius: 50%;
-                background-color: #3B6BEE;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                .ok {
-                    width: 0.24rem;
-                    height: 0.24rem;
-                }
-            }
-        }
-
-        .list_item_active3 {
-            background-color: #F5F7F8;
-
-            .checked {
-                position: absolute;
-                top: 0.1rem;
-                right: 0.1rem;
-                width: 0.4rem;
-                height: 0.4rem;
-                border-radius: 50%;
-                background-color: #000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                .ok {
-                    width: 0.24rem;
-                    height: 0.24rem;
-                }
-            }
-        }
-    }
-
-    .submit {
+      .name {
+        font-size: 0.24rem;
+        color: #8f92a1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin: 0.2rem 0;
+      }
+
+      .price {
+        color: #061023;
+        font-weight: 700;
+        font-size: 0.32rem;
+        margin-bottom: 0.08rem;
+      }
+
+      .percent {
+        font-size: 0.32rem;
+      }
+
+      .sparkLine {
+        position: absolute;
+        width: 1.6rem;
+        height: 0.5rem;
+        right: 0.1rem;
+        bottom: 0.1rem;
+      }
+
+    //   .unchecked {
+    //     position: absolute;
+    //     top: 0.1rem;
+    //     right: 0.1rem;
+    //     width: 0.3624rem;
+    //     height: 0.3624rem;
+    //     border-radius: 50%;
+    //     border: 1px solid #ddd;
+    //     opacity: 0.9;
+    //   }
     }
+
+    .list_item_active {
+      position: relative;
+
+    //   .check_ticket {
+    //     top: 0.2rem;
+    //     right: 0.2rem;
+    //     display: flex;
+    //     align-items: center;
+    //     justify-content: center;
+    //     width: 0.4rem; /* Adjust size as needed */
+    //     height: 0.4rem; /* Adjust size as needed */
+    //     background-color: #014cfa; /* Blue background */
+    //     border-radius: 50%; /* Makes it a circle */
+    //     color: white; /* White color for the checkmark */
+    //     font-size: 0.5rem; /* Adjust size of the checkmark */
+    //     position: absolute;
+
+    //     .checkmark {
+    //       width: 11px;
+    //       height: 7px;
+    //       position: relative;
+    //     }
+
+    //     .checkmark::before {
+    //       content: "";
+    //       position: absolute;
+    //       top: 0;
+    //       left: 0;
+    //       width: 100%;
+    //       height: 100%;
+    //       background-color: white; /* Background color */
+    //       clip-path: path(
+    //         "M3.52645 6.39447C3.34635 6.38945 3.17542 6.32185 3.04962 6.2059L0.203008 3.66018C0.072772 3.53877 0 3.37669 0 3.20804C0 3.03939 0.072772 2.87731 0.203008 2.7559C0.268598 2.69655 0.346602 2.64945 0.432527 2.61731C0.518452 2.58517 0.610601 2.56862 0.70367 2.56862C0.796739 2.56862 0.888889 2.58517 0.974814 2.61731C1.06074 2.64945 1.13874 2.69655 1.20433 2.7559L3.52645 4.8559L9.45809 0.188751C9.52294 0.129008 9.60043 0.081531 9.68601 0.0491152C9.77158 0.0166994 9.86351 0 9.95637 0C10.0492 0 10.1412 0.0166994 10.2267 0.0491152C10.3123 0.081531 10.3898 0.129008 10.4547 0.188751C10.5207 0.247704 10.5731 0.317814 10.6088 0.395044C10.6446 0.472274 10.663 0.555099 10.663 0.638751C10.663 0.722402 10.6446 0.805227 10.6088 0.882457C10.5731 0.959687 10.5207 1.0298 10.4547 1.08875L4.02712 6.2059C3.89458 6.32584 3.71453 6.39366 3.52645 6.39447Z"
+    //       );
+    //     }
+    //   }
+
+      .uncheck_ticket {
+        top: 0.2rem;
+        right: 0.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 0.4rem; /* Adjust size as needed */
+        height: 0.4rem; /* Adjust size as needed */
+        background-color: white; /* Blue background */
+        border-width: 1px;
+        border-radius: 50%; /* Makes it a circle */
+        color: #8f92a1; /* White color for the checkmark */
+        font-size: 0.5rem; /* Adjust size of the checkmark */
+        position: absolute;
+
+        .uncheckmark {
+          width: 11px;
+          height: 7px;
+          position: relative;
+        }
+
+        .uncheckmark::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: #8f92a1; /* Background color */
+          clip-path: path(
+            "M3.52645 6.39447C3.34635 6.38945 3.17542 6.32185 3.04962 6.2059L0.203008 3.66018C0.072772 3.53877 0 3.37669 0 3.20804C0 3.03939 0.072772 2.87731 0.203008 2.7559C0.268598 2.69655 0.346602 2.64945 0.432527 2.61731C0.518452 2.58517 0.610601 2.56862 0.70367 2.56862C0.796739 2.56862 0.888889 2.58517 0.974814 2.61731C1.06074 2.64945 1.13874 2.69655 1.20433 2.7559L3.52645 4.8559L9.45809 0.188751C9.52294 0.129008 9.60043 0.081531 9.68601 0.0491152C9.77158 0.0166994 9.86351 0 9.95637 0C10.0492 0 10.1412 0.0166994 10.2267 0.0491152C10.3123 0.081531 10.3898 0.129008 10.4547 0.188751C10.5207 0.247704 10.5731 0.317814 10.6088 0.395044C10.6446 0.472274 10.663 0.555099 10.663 0.638751C10.663 0.722402 10.6446 0.805227 10.6088 0.882457C10.5731 0.959687 10.5207 1.0298 10.4547 1.08875L4.02712 6.2059C3.89458 6.32584 3.71453 6.39366 3.52645 6.39447Z"
+          );
+        }
+      }
+    }
+  }
+
+  .submit {
+    margin: 0.2rem 0;
+  }
 }
 </style>

@@ -11,7 +11,7 @@
       <Tab class="optional" style="padding-left: 0px;" name="option">
         <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
         <template #title>
-          <div class="tab_item first_tab">
+          <div class="tab_item">
             <span>自选</span>
           </div>
         </template>
@@ -280,6 +280,7 @@ const jump = name => {
         width: 0.3rem;
         height: 0.3rem;
         margin-right: 0.04rem;
+        font-size: 0.3rem;
       }
 
       .nav_num {
@@ -344,8 +345,8 @@ const jump = name => {
     :deep(.van-tab--card.van-tab--active) {
       background-color: transparent;
       color: #08090e;
-      font-weight: 700;
-      font-size: 0.507rem;
+      font-weight: 600;
+      font-size: 0.5rem;
       position: relative;
       // border-bottom: 3px solid #014cfa;
       // border-width: 10px;

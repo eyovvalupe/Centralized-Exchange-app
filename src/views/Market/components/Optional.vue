@@ -23,8 +23,8 @@
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
       </div>
       <p class="text">你还没有添加自选哦</p>
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
-        >添加自选</Button>
+      <Button round plain type="primary" hairline="" class="addBtn"
+        >+添加自选</Button>
     </div>
     <Teleport to=".page_market">
       <div class="one_click_to_favorite_container">
@@ -353,12 +353,21 @@ const remove = (item) => {
 
   .text {
     margin-bottom: 0.307rem;
+    font-size: 0.28rem;
+    font-weight: 400;
+    line-height: 0.28rem;
   }
 }
 
 .addBtn {
   color: #014cfa;
   border-color: #014cfa;
+  width: 1.82rem;
+  height: 0.68rem;
+  font-size: 0.28rem;
+  font-weight: 400;
+  line-height: 0.28rem;
+  padding: 0;
 }
 
 .recommend_block {
