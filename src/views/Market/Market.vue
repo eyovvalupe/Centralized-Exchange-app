@@ -1,9 +1,9 @@
 <!-- 市场 -->
 <template>
-  <div v-if="activated" ref="marketPageRef" class="page page_market">
+  <div v-if="activatedIncludes" ref="marketPageRef" class="page page_market">
     <!-- <transition :name="detailTransition"> -->
-    <IPODetail v-if="detail == '1'" @closeOpenDetail="closeOpenDetail" />
-    <Subscription v-else-if="detail == '2'" @closeOpenDetail="closeOpenDetail" />
+    <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
+    <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
     <!-- <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else> -->
     <!-- 标题 -->
     <!-- <div class="title">市场</div> -->
@@ -33,7 +33,7 @@
     <div class="absolute right-4 top-[0.18rem] z-10 flex" @click="jump('search')">
       <div class="mr-7 h-11 w-[0.66rem]" :style="{ background: 'linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 100%)' }" />
       <div class="boder-[#D0D8E2] flex size-[0.6rem] items-center justify-center rounded-50 border">
-        <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
+        <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
       </div>
     </div>
     <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
@@ -189,6 +189,7 @@ import Constract from './components/Constract.vue'
 import Ai from './components/Ai.vue'
 import buyCoin from './buyCoin/index.vue'
 import Iconfonts from '@/components/Iconfonts.vue'
+import { throttle } from '@/utils'
 
 const marketPageRef = ref()
 const openTab = ref(false)
@@ -200,7 +201,8 @@ const IPORef = ref()
 const reloading = ref(false)
 const detail = ref(null)
 const detailTransition = ref('slide-right')
-
+const scrollTop = ref(0)
+provide('scrollTop', scrollTop)
 const changeTab = key => {
   active.value = key
   sessionStorage.setItem('market_active', key)
@@ -233,11 +235,17 @@ Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Sea
 
 const { startSocket } = useSocket()
 const activated = ref(false)
-const scrollHandler = () => {
+const activatedIncludes = computed(() => {
+  // 需要缓存的页面
+  return ['option', 'stock', 'contract', '4', '5'].includes(active.value) ? activated.value : true
+})
+const scrollHandler = throttle(e => {
+  // console.log('e', e.target.scrollTop)
+  scrollTop.value = e.target.scrollTop
   if (openTab.value) {
     openTab.value = false
   }
-}
+}, 400)
 onActivated(() => {
   activated.value = true
   setTimeout(() => {

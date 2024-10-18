@@ -18,6 +18,7 @@ const store = createStore({
     sessionToken: '', // 关键请求token
     isLoginOpen: false, // 登录弹窗开关
     i18Data: { name: '中文简体', locale: 'zh', icon: '/static/img/common/cn.png' },
+    bottomTabBarValue: '',
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -52,6 +53,9 @@ const store = createStore({
     },
     setI18Data(state, data) {
       state.i18Data = data
+    },
+    setBottomTabBarValue(state, data) {
+      state.bottomTabBarValue = data
     },
     ...market.mutations,
     ...trade.mutations,

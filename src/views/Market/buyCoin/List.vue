@@ -5,7 +5,9 @@
       <!-- 当前订单 -->
       <div v-for="(item, i) in list" :key="i" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
-        <div v-if="item.unread" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">{{ item.unread > 99 ? '+99' : item.unread }}</div>
+        <div v-if="c2cUnread[item.order_no]" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
+          {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
+        </div>
         <div class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]">
           <!-- order_no 订单号 -->
           <div class="text-14 text-[#666]">{{ item.order_no }}</div>
@@ -58,12 +60,16 @@ import store, { useMapState } from '@/store'
 import NoData from '@/components/NoData.vue'
 import UnLogin from '@/components/UnLogin.vue'
 import OrderInfo from './OrderInfo.vue'
-import { _c2cOrderList } from '@/api/api'
+import { _c2cOrderInfo, _c2cOrderList } from '@/api/api'
 import LoadingMore from '@/components/LoadingMore.vue'
 import router from '@/router'
+import { useSessionStorage } from '@/utils/hooks'
 
+const active = inject('active')
+const scrollTop = inject('scrollTop')
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
+const [buycoinScrollTop, setBuycoinScrollTop, removeBuycoinScrollTop] = useSessionStorage('buycoinScrollTop')
 const statusEnum = {
   waitpayment: { name: '等待付款', color: 'var(--main-color)' },
   waitconfirm: { name: '等待确认', color: 'var(--main-color)' },
@@ -79,7 +85,9 @@ const loginfinish = () => {
 // 订单详情
 const OrderInfoRef = ref()
 const showPopupInfo = ref(false)
+let onOrderNoValue = ''
 const openOrderInfo = ({ order_no }) => {
+  onOrderNoValue = order_no
   // showPopupInfo.value = true
   setTimeout(() => {
     router.push({
@@ -97,18 +105,6 @@ const successOrder = () => {
     init()
   }, 100)
 }
-
-// 状态
-const statusMap = (key, type) => {
-  return {
-    waitpayment: type == 'buy' ? '等待付款' : '等待收款',
-    waitconfirm: '等待确认',
-    done: '完成',
-    cancel: '取消',
-  }[key]
-}
-
-// const c2cLasttime = computed(() => store.state.c2cList || {})
 
 // 列表
 const loading = ref(false)
@@ -129,10 +125,10 @@ interface Order {
 */
 const list = ref([])
 const page = ref(0)
-const getData = () => {
+const getData = isBottom => {
   if (loading.value || finish.value) return
   loading.value = true
-  page.value++
+  if (isBottom) page.value += 1
   _c2cOrderList({
     page: page.value,
   })
@@ -140,7 +136,8 @@ const getData = () => {
       setTimeout(() => {
         loading.value = false
       }, 100)
-      if (page.value == 1) {
+      console.log('123', isBottom)
+      if (!isBottom) {
         list.value = res.data || []
       } else {
         list.value.push(...(res.data || []))
@@ -172,51 +169,71 @@ const init = () => {
   finish.value = false
   setTimeout(() => {
     if (token.value) {
-      getData()
+      getData(false)
     }
   }, 0)
 }
-init()
 // 监听
 const totalHeight = window.innerHeight || document.documentElement.clientHeight
 let moreDom = null
 const scrollHandle = () => {
   if (!moreDom) return
+  if (active.value !== '2') return
+  setBuycoinScrollTop(scrollTop.value)
   const rect = moreDom.getBoundingClientRect()
   if (rect.top <= totalHeight) {
     // 加载更多
-    getData()
+    getData(true)
   }
 }
+watch(() => scrollTop.value, scrollHandle)
 
-let interval = null
+// let interval = null
+const getC2cOrderInfo = async () => {
+  try {
+    const res = await _c2cOrderInfo({
+      order_no: onOrderNoValue,
+    })
+    if (!res.data) return
+    list.value.forEach((element, i) => {
+      if (element.order_no === onOrderNoValue) {
+        list.value[i] = res.data
+      }
+    })
+  } finally {
+    //
+  }
+}
+init()
+onMounted(() => {
+  // interval = setInterval(() => {
+  //   list.value.forEach(item => {
+  //     if (item.endtime) {
+  //       item.endtime--
+  //     }
+  //   })
+  // }, 1000)
+  if (token.value) {
+    setTimeout(() => {
+      moreDom = document.querySelector('.buycoin_self')
+    }, 500)
+  }
+})
 
 onActivated(() => {
+  if (active.value !== '2') return
+  if (onOrderNoValue) {
+    const page2 = document.querySelector('.page')
+    page2.scrollTop = buycoinScrollTop.value
+    getC2cOrderInfo()
+  }
   setTimeout(() => {
     moreDom = document.querySelector('.buycoin_self')
   }, 500)
 })
-onMounted(() => {
-  console.log('c2cList', store.state.c2cList)
-  interval = setInterval(() => {
-    list.value.forEach(item => {
-      if (item.endtime) {
-        item.endtime--
-      }
-    })
-  }, 1000)
-  if (token.value) {
-    setTimeout(() => {
-      moreDom = document.querySelector('.buycoin_self')
-      document.querySelector('.page').addEventListener('scroll', scrollHandle)
-    }, 500)
-  }
-})
 onUnmounted(() => {
-  if (interval) clearInterval(interval)
-  try {
-    document.querySelector('.page').removeEventListener('scroll', scrollHandle)
-  } catch {}
+  console.log('我的订单卸载')
+  removeBuycoinScrollTop()
 })
 
 defineExpose({
@@ -239,9 +256,8 @@ defineExpose({
 }
 
 .buycoin_list {
+  padding: 0.08rem 0.32rem;
   .list {
-    padding: 0.08rem 0.32rem;
-
     .item {
       padding: 0.24rem 0.32rem;
       border-bottom: 1px dashed #e8e8e8;
