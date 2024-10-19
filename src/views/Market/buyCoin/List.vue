@@ -86,9 +86,9 @@ const loginfinish = () => {
 // 订单详情
 const OrderInfoRef = ref()
 const showPopupInfo = ref(false)
-let onOrderNoValue = ''
-const openOrderInfo = ({ order_no }) => {
-  onOrderNoValue = order_no
+let onOrderNoValue = {}
+const openOrderInfo = ({ order_no, ...row }) => {
+  onOrderNoValue = { order_no, ...row }
   // showPopupInfo.value = true
   setTimeout(() => {
     router.push({
@@ -192,12 +192,12 @@ watch(() => scrollTop.value, scrollHandle)
 const getC2cOrderInfo = async () => {
   try {
     const res = await _c2cOrderInfo({
-      order_no: onOrderNoValue,
+      order_no: onOrderNoValue.order_no,
     })
     if (!res.data) return
-    list.value.forEach((element, i) => {
-      if (element.order_no === onOrderNoValue) {
-        list.value[i] = res.data
+    c2cLasttime.value.forEach((element, i) => {
+      if (element.order_no === onOrderNoValue.order_no) {
+        c2cLasttime.value[i] = res.data
       }
     })
   } finally {
@@ -226,7 +226,10 @@ onActivated(() => {
     const page2 = document.querySelector('.page')
     page2.scrollTop = buycoinScrollTop2.value
   })
-  if (onOrderNoValue) getC2cOrderInfo()
+  const { status } = onOrderNoValue
+  if (status === 'waitpayment' || status === 'waitconfirm') {
+    getC2cOrderInfo()
+  }
 
   setTimeout(() => {
     moreDom = document.querySelector('.buycoin_self')
