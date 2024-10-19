@@ -785,7 +785,7 @@ const showInfo = ref(false);
   .ratio_price,
   .ratio_percentage {
     height: 0.56rem;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     font-size: 0.32rem;
     font-weight: 400;

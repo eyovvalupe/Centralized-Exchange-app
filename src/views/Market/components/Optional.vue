@@ -13,7 +13,7 @@
       :marketType="marketType"
     />
     <div class="addBtn_container">
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
         >添加自选</Button
       >
     </div>
@@ -27,7 +27,7 @@
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
       </div>
       <p class="text">你还没有添加自选哦</p>
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
         >添加自选</Button
       >
     </div>
@@ -106,27 +106,6 @@
         />
       </div>
     </div>
-
-    <!-- <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
-            <Tab>
-                <template #title>
-                    <div>
-                        <span>股票</span>
-                    </div>
-                </template>
-<StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
-<NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
-</Tab>
-<Tab>
-    <template #title>
-                                <div>
-                                    <span>合约</span>
-                                </div>
-                            </template>
-    <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
-    <NoData />
-</Tab>
-</Tabs> -->
   </div>
 
   <Loaidng v-else :loading="loading" :type="'spinner'" />
@@ -359,6 +338,12 @@ const changeAllCheckState = () => {
     store.commit("setCheckState", newState.value);
   }
 };
+
+const jump = name => {
+  router.push({
+    name,
+  })
+}
 </script>
 
 <style lang="less" scoped>
