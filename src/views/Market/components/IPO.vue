@@ -9,7 +9,7 @@
         </Tabs>
 
          <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'#014CFA'"
-            shrink @change="onLevelChange">
+            shrink @change="init(true)">
             <Tab :title="i.text" :name="i.value" v-for="(i, key) in leverOption" :key="key">
             </Tab>
         </Tabs>
@@ -72,7 +72,6 @@
             <LoadingMore v-if="!(finish && ipoDataList.length == 0)" :loading="loading" :finish="finish" />
             <NoData v-if="(finish && ipoDataList.length == 0)" />
         </div>
-        <div style="height: 1rem"></div>
 
         <!-- 详情弹窗 -->
         <teleport to="body">
@@ -167,9 +166,6 @@ const leverOption = [
     { text: "普通", value: "1" },
     { text: "配资", value: "2" },
 ]
-const onLevelChange = ()=>{
-
-}
 const loading = ref(false)
 const finish = ref(false)
 const page = ref(0)
@@ -189,10 +185,17 @@ const getData = () => {
     if (loading.value || finish.value) return
     loading.value = true
     page.value++
-    _ipoList({
+    const par = {
         status: selectedOption.value,
-        page: page.value
-    }).then(res => {
+        page: page.value,
+        lever:''
+    }
+    if(selectedLever.value == '1'){
+        par.lever = false
+    }else if(selectedLever.value == '2'){
+        par.lever = true
+    }
+    _ipoList(par).then(res => {
         if (res.data && res.data.length) {
             res.data = res.data.map(item => {
                 item._timedown = countdown(item.listing_date)

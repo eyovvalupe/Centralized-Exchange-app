@@ -76,7 +76,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, defineEmits } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { Icon, Loading } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import { _ipoGet } from "@/api/api";

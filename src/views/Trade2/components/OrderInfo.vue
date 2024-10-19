@@ -10,7 +10,7 @@
                         <span class="stock-info__symbol">{{ currStock.symbol || '--' }}</span>
                         <span class="stock-info__status">{{ statusMap[currStock.status] || '--' }}</span>
                     </div>
-                    <div class="stock-info__trend" @click="openStockModel">
+                    <div class="stock-info__trend" @click="openStockModel(currStock)">
                         <img src="/static/img/trade/blue-stock.png" />
                     </div>
                 </div>
@@ -140,15 +140,22 @@
                 <div>撤单</div>
             </div>
         </div>
+
+        <!-- 行情弹窗 -->
+        <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
+            <StockPopup style="height:90vh" />
+        </Popup>
     </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { _copyTxt } from "@/utils/index"
-import { showToast } from 'vant';
+import { showToast,Popup } from 'vant';
+import store from "@/store";
 import Top from "@/components/Top.vue"
 import Decimal from 'decimal.js';
+import StockPopup from "../../trade/StockPopup.vue"
 const emit = defineEmits(['update','sell','cancel','back'])
 const props = defineProps({
     type:{
@@ -170,8 +177,11 @@ const getRatio = (num) => {
     return new Decimal(num).mul(100) + '%'
 }
 
-const openStockModel = ()=>{
 
+const showStockModel = ref(false)
+const openStockModel = (currStock)=>{
+    store.commit('setCurrStock', currStock)
+    showStockModel.value = true
 }
 const statusMap = ref({ // 仓位状态
     'none': '开仓',

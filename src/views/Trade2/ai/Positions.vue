@@ -101,8 +101,7 @@ onUnmounted(() => {
 <style lang="less" scoped>
 .page_ai_position {
     .list {
-        padding: 0.2rem 0 1.4rem 0;
-
+        padding: 0.2rem 0 0.32rem 0;
     }
 
     .item {

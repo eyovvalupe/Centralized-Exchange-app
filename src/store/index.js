@@ -132,7 +132,9 @@ const store = createStore({
     ...trade.actions,
     ...assets.actions,
   },
-  devtools: true,
+  getters: {
+    ...market.getters
+  },
   plugins: [
     createPersistedState({
       key: 'sunx',

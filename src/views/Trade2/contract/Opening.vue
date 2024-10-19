@@ -79,8 +79,6 @@ const choose = (item) => {
     OpeningForm2Ref.value && OpeningForm2Ref.value.choose(item)
 }
 
-
-
 defineExpose({
     choose
 })
@@ -88,7 +86,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .opening {
-    padding: 0.32rem 0 1.5rem 0;
+    padding: 0.32rem 0;
 
     .open_tab_box {
         border-radius: 0 0 0.32rem 0.32rem;

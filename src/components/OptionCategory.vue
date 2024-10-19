@@ -8,36 +8,43 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import store from "@/store";
 
 const categories = ref([
     { key: 'all', label: '全部' },
     { key: 'stock', label: '股票' },
-    { key: 'contract', label: '合约' },
-    { key: 'exchange', label: '外汇' },
+    { key: 'crypto', label: '合约' },
+    { key: 'forex', label: '外汇' },
 ])
-const selectedCategory = ref("all")
+const marketType = computed(
+  () => store.getters.getMarketType
+)
+const selectedCategory = ref(marketType.value)
 const selectCategory = category => {
-    console.log(category)
     selectedCategory.value = category.key
+    store.commit("setMarketType", selectedCategory.value || "all");
 }
 </script>
 
 <style scoped>
 .category-button-group {
     display: flex;
-    gap: 0.109rem;
+    gap: 0.12rem;
     padding: 0 0.289rem;
     margin-bottom: 0.2rem;
 }
 
 button {
     border: 1px solid #D0D8E2;
-    padding: 0.145rem 0.261rem;
+    height: 0.7rem;
+    padding: 0.2rem 0.26rem;
     border-radius: 1.178rem;
     background-color: transparent;
     cursor: pointer;
     transition: background-color 0.3s;
+    color:#666D80;
+    box-sizing: border-box;
 }
 
 button:hover {
@@ -46,6 +53,7 @@ button:hover {
 
 button.active {
     background-color: #014CFA;
+    border-color:#014CFA;
     color: white;
 }
 </style>

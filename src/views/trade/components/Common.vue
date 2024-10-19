@@ -112,7 +112,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick, defineEmits, defineExpose, onUpdated, onBeforeUnmount, onDeactivated, reactive } from "vue";
+import { ref, computed, onMounted, watch, nextTick, defineExpose, onUpdated, onBeforeUnmount, onDeactivated, reactive } from "vue";
 import { Tab, Tabs, Field, CellGroup, Slider, Button, Loading, Popup, showToast } from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";

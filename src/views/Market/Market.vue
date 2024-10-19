@@ -1,51 +1,17 @@
 <!-- 市场 -->
 <template>
-  <div v-if="activatedIncludes" ref="marketPageRef" class="page page_market">
-    <!-- <transition :name="detailTransition"> -->
+  <div v-if="activated" ref="marketPageRef" class="page page_market">
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
     <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
-    <!-- <PullRefresh class="refresh_box" v-model="reloading" @refresh="onRefresh" v-else> -->
-    <!-- 标题 -->
-    <!-- <div class="title">市场</div> -->
-    <!-- <div class="search_block" @click="router.push({ name: 'search' })">
-            <div class="search_icon">
-                <img src="/static/img/common/search.png" alt="🔍">
-            </div>
-            <span>搜索</span>
-        </div> -->
-
-    <!-- 搜索 -->
-    <!-- <div class="search_box" @click="router.push({ name: 'search' })">
-                    <img src="/static/img/common/search_box.png" alt="🔍">
-                </div> -->
-
-    <!-- Tabs -->
-    <!-- <Teleport to="body">
-            <div @click="openTab = false" v-if="openTab" style="position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            background-color: rgba(0, 0, 0, 0.2);
-            z-index: 1000;"></div>
-        </Teleport> -->
-
-    <div class="absolute right-4 top-[0.18rem] z-10 flex" @click="jump('search')">
-      <div class="mr-7 h-11 w-[0.66rem]" :style="{ background: 'linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #fff 100%)' }" />
-      <div class="boder-[#D0D8E2] flex size-[0.6rem] items-center justify-center rounded-50 border">
-        <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
-      </div>
+    <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
+      <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
     </div>
+    <div class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white" />
     <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
-      <Tab class="optional" name="option">
+      <Tab class="optional" style="padding-left: 0px" name="option">
         <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
-        <div style="height: 1rem" />
         <template #title>
           <div class="tab_item">
-            <!-- <div class="tab_item_icon" v-show="active != 'option'">
-                            <img src="/static/img/market/option.svg" alt="icon">
-                        </div>
-                        <span v-show="active == 'option'">自选</span> -->
             <span>自选</span>
           </div>
         </template>
@@ -65,7 +31,6 @@
       </Tab>
       <Tab name="stock">
         <Stock v-if="active == 'stock'" ref="StockRef" />
-        <div style="height: 1rem" />
         <template #title>
           <div class="tab_item">
             <div v-show="openTab" class="tab_item_icon">
@@ -88,18 +53,6 @@
           </div>
         </template>
       </Tab>
-      <!-- <Tab name="ai">
-                <Ai v-if="active == 'ai'" />
-                <template #title>
-                    <div class="tab_item">
-                        <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 'ai'" src="/static/img/market/ai.svg" alt="icon">
-                            <img v-show="active == 'ai'" src="/static/img/market/ai2.svg" alt="icon">
-                        </div>
-                        <span>交易机器人</span>
-                    </div>
-                </template>
-            </Tab> -->
       <Tab>
         <Foreign v-if="active == 5" />
         <template #title>
@@ -124,46 +77,6 @@
           </div>
         </template>
       </Tab>
-      <!-- <Tab name="ipo">
-                <IPO v-if="active == 'ipo'" :type="'market'" ref="IPORef" />
-                <template #title>
-                    <div class="tab_item">
-                        <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 'ipo'" src="/static/img/market/ipo.svg" alt="icon">
-                            <img v-show="active == 'ipo'" src="/static/img/market/ipo2.svg" alt="icon">
-                        </div>
-                        <span>IPO</span>
-                    </div>
-                </template>
-            </Tab> -->
-      <!-- <Tab>
-                <Financial v-if="active == 7" />
-                <template #title>
-                    <div class="tab_item">
-                        <div class="tab_item_icon" v-show="openTab">
-                            <img v-show="active != 7" src="/static/img/market/money.svg" alt="icon">
-                            <img v-show="active == 7" src="/static/img/market/money2.svg" alt="icon">
-                        </div>
-                        <span>理财</span>
-                    </div>
-                </template>
-            </Tab> -->
-
-      <!-- <Tab :title-class="'my_icon'" @click.native.stop="openTab = !openTab">
-                <template #title>
-                    <div class="tab_icon" @click.native.stop="openTab = !openTab">
-                        <img v-show="!openTab" src="/static/img/common/menu_icon.png" alt="img">
-                        <img v-show="openTab" src="/static/img/common/back_icon.png" alt="img">
-                    </div>
-                </template>
-            </Tab> -->
-      <!-- <Tab v-if="!openTab" :title-class="'my_icon my_icon2'" @click.native.stop="router.push({ name: 'search' })">
-                <template #title>
-                    <div class="tab_icon" @click.native.stop="router.push({ name: 'search' })">
-                        <img src="/static/img/common/search_icon.png" alt="img">
-                    </div>
-                </template>
-            </Tab> -->
     </Tabs>
     <buyCoin v-if="active === 'buy'" />
 
@@ -377,6 +290,7 @@ const jump = name => {
         width: 0.3rem;
         height: 0.3rem;
         margin-right: 0.04rem;
+        font-size: 0.3rem;
       }
 
       .nav_num {
@@ -441,8 +355,8 @@ const jump = name => {
     :deep(.van-tab--card.van-tab--active) {
       background-color: transparent;
       color: #08090e;
-      font-weight: 700;
-      font-size: 0.507rem;
+      font-weight: 600;
+      font-size: 0.5rem;
       position: relative;
       // border-bottom: 3px solid #014cfa;
       // border-width: 10px;
@@ -458,19 +372,20 @@ const jump = name => {
         border-radius: 0.2rem;
         position: absolute;
         bottom: 0.06rem;
-        left: calc(50% - 0.3rem);
+        padding-left: 0;
       }
     }
 
     :deep(.van-tab--shrink) {
-      padding: 0 0.2rem;
+      padding-left: 0;
+      padding-right: 0.4rem;
     }
 
     :deep(.van-tabs__wrap) {
       height: 0.8rem;
       border-bottom: 1px solid rgba(0, 0, 0, 0);
       position: relative;
-      padding-right: 2rem;
+      padding-right: 1.7rem;
       // 源14 多8
       margin-top: 0.12rem;
       margin-bottom: 0.24rem;
@@ -517,9 +432,6 @@ const jump = name => {
       flex-wrap: wrap;
       overflow: hidden;
     }
-  }
-
-  .close_tabs {
   }
 }
 </style>

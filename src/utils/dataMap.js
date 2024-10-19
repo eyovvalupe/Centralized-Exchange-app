@@ -49,8 +49,8 @@ export const _networkMapList = {
 
 // 时间单位
 export const _dateUnitMap = {
-  s: '秒',
-  m: '分钟',
-  h: '小时',
-  d: '天'
+  s: 's',
+  m: 'min',
+  h: 'h',
+  d: 'day'
 }
