@@ -92,27 +92,6 @@
         />
       </div>
     </div>
-
-    <!-- <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
-            <Tab>
-                <template #title>
-                    <div>
-                        <span>股票</span>
-                    </div>
-                </template>
-<StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
-<NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
-</Tab>
-<Tab>
-    <template #title>
-                                <div>
-                                    <span>合约</span>
-                                </div>
-                            </template>
-    <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
-    <NoData />
-</Tab>
-</Tabs> -->
   </div>
 
   <Loaidng v-else :loading="loading" :type="'spinner'" />

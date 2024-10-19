@@ -43,7 +43,6 @@ button {
     border-radius: 1.178rem;
     background-color: transparent;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 button:hover {
