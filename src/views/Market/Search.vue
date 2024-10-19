@@ -357,7 +357,8 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     .search {
       flex: 1;
       margin: 0 0.16rem;
-      font-size: 0.32rem;
+      font-size: 0.3rem;
+      line-height: 0.5rem;
       font-weight: 400;
     }
   }
