@@ -185,9 +185,9 @@ const getWatchList = () => {
           }, 500);
         } else {
           // 有数据就订阅
-          setTimeout(() => {
+          // setTimeout(() => {
             subs();
-          }, 1000);
+          // }, 1000);
         }
       }
     })
