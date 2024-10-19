@@ -1057,6 +1057,7 @@ const showInfo = ref(false);
     }
 
     .time_type {
+      min-width: 0.54rem;
       width: 50%;
       text-align: center;
       box-sizing: border-box;
