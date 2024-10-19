@@ -188,7 +188,7 @@
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
       <div class="market_bottom_symbol">
-        <div class="symbol">{{ item.symbol || "--" }}</div>
+        <div class="symbol">{{ route.query.type == 'constract' ? item.name : item.symbol || "--" }}</div>
         <div class="time_type">{{ timeType }}</div>
       </div>
 
@@ -1056,13 +1056,15 @@ const showInfo = ref(false);
     }
 
     .time_type {
-      width: 50%;
+      height: 0.36rem;
+      padding: 0 0.1rem;
+      display: inline-flex;
+      align-items: center;
       text-align: center;
       box-sizing: border-box;
       color: #8f92a1;
       border-radius: 20px;
       border: 0.5px solid #d0d8e2;
-      padding: 2px;
       font-size: 0.24rem;
     }
 
@@ -1073,10 +1075,10 @@ const showInfo = ref(false);
     }
 
     .bottom_btn--default {
-      width: 1.64rem;
+      width: 1.44rem;
+      height: 0.9rem;
       color: #061023;
       border-radius: 40px;
-      padding: 16px 24px;
       font-size: 0.32rem;
       margin-left: 0.2rem;
       display: flex;
@@ -1087,10 +1089,10 @@ const showInfo = ref(false);
     }
 
     .bottom_btn {
-      width: 1.64rem;
+      width: 1.44rem;
+      height: 0.9rem;
       color: white;
       border-radius: 40px;
-      padding: 16px 24px;
       font-size: 0.32rem;
       margin-left: 0.2rem;
       display: flex;

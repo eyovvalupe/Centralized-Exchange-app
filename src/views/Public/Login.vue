@@ -1,15 +1,14 @@
 <!-- 登录页 -->
 <template>
   <div class="page page-login">
-
     <!-- 返回和语言 -->
     <div class="max-width top">
       <div class="top_back" @click="goBack">
         <Icon name="cross" />
       </div>
 
-      <div class=" top_lang" @click="goLang">
-        <img src="/static/img/common/language.png" alt="language">
+      <div class="top_lang" @click="goLang">
+        <img src="/static/img/common/language.png" alt="language" />
       </div>
     </div>
 
@@ -28,11 +27,20 @@
     <div class="form">
       <div class="form_title" v-show="activeTab == 0">邮箱</div>
       <div class="form_item margin_item" v-show="activeTab == 0">
-        <div class="form_item_user" v-show="saveAccount && saveAccount == form.email">
-          <img src="/static/img/user/user.png" alt="user">
+        <div
+          class="form_item_user"
+          v-show="saveAccount && saveAccount == form.email"
+        >
+          <img src="/static/img/user/user.png" alt="user" />
         </div>
-        <input @change="changeAccount" maxlength="20" v-model.trim="form.email" placeholder="您的邮箱" type="text"
-          class="item_input">
+        <input
+          @change="changeAccount"
+          maxlength="20"
+          v-model.trim="form.email"
+          placeholder="您的邮箱"
+          type="text"
+          class="item_input"
+        />
         <Loading v-if="accountLoading" :size="18" type="spinner" />
       </div>
 
@@ -41,20 +49,46 @@
         <div class="code" @click="showDialog = true">
           <span>{{ form.area }}</span>
           <div class="more_icon">
-            <img src="/static/img/assets/more.png" alt="img">
+            <img src="/static/img/assets/more.png" alt="img" />
           </div>
         </div>
-        <input maxlength="20" v-model.trim="form.phone" placeholder="您的手机号" type="text" class="item_input">
+        <input
+          maxlength="20"
+          v-model.trim="form.phone"
+          placeholder="您的手机号"
+          type="text"
+          class="item_input"
+        />
       </div>
       <div class="form_title">密码</div>
       <div class="form_item">
-        <input maxlength="20" v-show="!showPass" v-model.trim="form.password" placeholder="请输入您的密码" type="password"
-          class="item_input">
-        <input maxlength="20" v-show="showPass" v-model.trim="form.password" placeholder="请输入您的密码" type="text"
-          class="item_input">
-        <div class=" form_item_icon" @click="showPass = !showPass">
-          <img v-show="!showPass" src="/static/img/user/eye-off.png" alt="off">
-          <img v-show="showPass" src="/static/img/user/eye-open.png" alt="open">
+        <input
+          maxlength="20"
+          v-show="!showPass"
+          v-model.trim="form.password"
+          placeholder="请输入您的密码"
+          type="password"
+          class="item_input"
+        />
+        <input
+          maxlength="20"
+          v-show="showPass"
+          v-model.trim="form.password"
+          placeholder="请输入您的密码"
+          type="text"
+          class="item_input"
+        />
+        <div class="form_item_icon" @click="showPass = !showPass">
+          <img
+            v-show="!showPass"
+            src="/static/img/user/eye-off.png"
+            alt="off"
+          />
+          <img
+            v-show="showPass"
+            src="/static/img/user/eye-open.png"
+            alt="open"
+          />
         </div>
       </div>
     </div>
@@ -64,7 +98,15 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">登录</Button>
+      <Button
+        :loading="loading"
+        :disabled="disabled"
+        round
+        color="#014CFA"
+        class="submit"
+        type="primary"
+        >登录</Button
+      >
     </div>
 
     <!-- 去注册 -->
@@ -73,229 +115,272 @@
       <span>去注册</span>
     </div>
 
-
     <!-- 验证码 -->
     <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
-      position="bottom" teleport="body">
+    <Popup
+      :safe-area-inset-top="true"
+      :safe-area-inset-bottom="true"
+      class="self_van_popup"
+      v-model:show="showDialog"
+      position="bottom"
+      teleport="body"
+    >
       <div class="register_accounr_dialog">
         <div class="close_icon" @click="showDialog = false">
-          <img src="/static/img/common/close.png" alt="x">
+          <img src="/static/img/common/close.png" alt="x" />
         </div>
         <div class="item search_box">
-          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="搜索">
+          <input
+            v-model.trim="searchStr"
+            class="ipt"
+            type="text"
+            placeholder="搜索"
+          />
         </div>
-        <div style="height:60vh;overflow-y: auto;">
-          <div @click="clickItem(item)" class="transfer_dialog_item"
-            :class="{ 'transfer_dialog_item_active': form.area == item.code }" v-for="(item, i) in showAreas" :key="i">
+        <div style="height: 60vh; overflow-y: auto">
+          <div
+            @click="clickItem(item)"
+            class="transfer_dialog_item"
+            :class="{ transfer_dialog_item_active: form.area == item.code }"
+            v-for="(item, i) in showAreas"
+            :key="i"
+          >
             <span>{{ item.cn }} ({{ item.code }})</span>
-            <Icon v-if="form.area == item.code" class="check_icon" name="success" />
+            <Icon
+              v-if="form.area == item.code"
+              class="check_icon"
+              name="success"
+            />
           </div>
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
     </Popup>
   </div>
-
-
 </template>
 
 <script setup>
-import { Icon, Button, showToast, Loading, Popup, Tabs, Tab } from "vant"
-import { ref, computed, onMounted } from "vue"
-import router from "@/router"
-import { useRoute } from "vue-router"
-import { _login, _userExist } from "@/api/api"
-import VerifCode from "@/components/VerifCode.vue"
-import store from "@/store"
-import { areaCode, validateEmail } from '@/utils/index'
-import NoData from "@/components/NoData.vue"
-
-const emits = defineEmits(['closeDialog'])
+import { Icon, Button, showToast, Loading, Popup, Tabs, Tab } from "vant";
+import { ref, computed, onMounted } from "vue";
+import router from "@/router";
+import { useRoute } from "vue-router";
+import { _login, _userExist, _watchlist } from "@/api/api";
+import VerifCode from "@/components/VerifCode.vue";
+import store from "@/store";
+import { areaCode, validateEmail } from "@/utils/index";
+import NoData from "@/components/NoData.vue";
+const emits = defineEmits(["closeDialog"]);
 const props = defineProps({
   backFunc: {
     type: Function,
-    default: null
+    default: null,
   },
   successFunc: {
     type: Function,
-    default: null
+    default: null,
   },
-})
-
+});
 
 // 区号控制
-const activeTab = ref(0)
-const defaultCode = '+244'
-const showDialog = ref(false)
-const searchStr = ref('')
+const activeTab = ref(0);
+const defaultCode = "+244";
+const showDialog = ref(false);
+const searchStr = ref("");
 const showAreas = computed(() => {
-  return areaCode.filter(item => {
-    return item.cn.includes(searchStr.value) || item.en.includes(searchStr.value) || item.code.includes(searchStr.value)
-  })
-})
-const clickItem = item => {
-  form.value.area = item.code
-  showDialog.value = false
-}
-
+  return areaCode.filter((item) => {
+    return (
+      item.cn.includes(searchStr.value) ||
+      item.en.includes(searchStr.value) ||
+      item.code.includes(searchStr.value)
+    );
+  });
+});
+const clickItem = (item) => {
+  form.value.area = item.code;
+  showDialog.value = false;
+};
 
 // 进入页面则重置登录状态信息
-store.dispatch('reset')
+store.dispatch("reset");
 // store.commit('clearChooseSymbol')
 
-const saveAccount = ref(localStorage.getItem('saveAccount') || '')
-const accountLoading = ref(false)
+const saveAccount = ref(localStorage.getItem("saveAccount") || "");
+const accountLoading = ref(false);
 const changeAccount = () => {
-  accountLoading.value = true
-  if (form.value.email) { // 去检测
+  accountLoading.value = true;
+  if (form.value.email) {
+    // 去检测
     _userExist({
-      username: form.value.email
-    }).then(res => {
-      if (res.code == 200 && res.data?.exist == 1) {
-        saveAccount.value = form.value.email
-        localStorage.setItem('saveAccount', saveAccount.value)
-      } else {
-        // showToast('账号不存在')
-      }
-    }).finally(() => {
-      accountLoading.value = false
+      username: form.value.email,
     })
+      .then((res) => {
+        if (res.code == 200 && res.data?.exist == 1) {
+          saveAccount.value = form.value.email;
+          localStorage.setItem("saveAccount", saveAccount.value);
+        } else {
+          // showToast('账号不存在')
+        }
+      })
+      .finally(() => {
+        accountLoading.value = false;
+      });
   }
-}
+};
 
-const route = useRoute()
-const verifCodeRef = ref()
+const route = useRoute();
+const verifCodeRef = ref();
 
-const showPass = ref(false) // 密码显示
-const form = ref({ // 表单
-  area: localStorage.getItem('area') || defaultCode,
+const showPass = ref(false); // 密码显示
+const form = ref({
+  // 表单
+  area: localStorage.getItem("area") || defaultCode,
   email: saveAccount.value,
-  phone: localStorage.getItem('phone') || '',
+  phone: localStorage.getItem("phone") || "",
   username: saveAccount.value,
-  password: '',
-  verifcode: ''
-})
+  password: "",
+  verifcode: "",
+});
 
-const loading = ref(false) // 加载
-const disabled = computed(() => { // 提交按钮禁用
-  return !(form.value.password)
-})
+const loading = ref(false); // 加载
+const disabled = computed(() => {
+  // 提交按钮禁用
+  return !form.value.password;
+});
 
 // 提交
 const submit = () => {
-  if (loading.value) return
-  loading.value = true
+  if (loading.value) return;
+  loading.value = true;
   if (activeTab.value == 0) {
-    form.value.username = form.value.email
+    form.value.username = form.value.email;
   }
   if (activeTab.value == 1) {
-    localStorage.setItem('area', form.value.area)
-    localStorage.setItem('phone', form.value.phone)
-    form.value.username = form.value.area + form.value.phone
+    localStorage.setItem("area", form.value.area);
+    localStorage.setItem("phone", form.value.phone);
+    form.value.username = form.value.area + form.value.phone;
   }
-  if (!form.value.username) return
-  _login(form.value).then(res => {
-    if (res && res.code == 200) {
-      store.dispatch('reset')
-      showToast('登录成功')
-      setTimeout(() => {
-        store.commit('setToken', res.data.auth)
-        store.commit('setUserInfo', res.data)
-      }, 100)
-      setTimeout(() => {
-        store.dispatch('updateUserInfo')
-        store.dispatch('updateAssets')
-        store.dispatch('updateWallet')
-        emits('closeDialog')
-        if (props.successFunc) return props.successFunc()
-        if (route.query.reurl) {
-          router.replace({
-            name: route.query.reurl,
-            query: {
-              redata: route.query.redata,
+  if (!form.value.username) return;
+  _login(form.value)
+    .then((res) => {
+      if (res && res.code == 200) {
+        store.dispatch("reset");
+
+        // setTimeout(() => {
+        store.commit("setToken", res.data.auth);
+        store.commit("setUserInfo", res.data);
+
+        // }, 100)
+
+        setTimeout(() => {
+          store.dispatch("updateUserInfo");
+          store.dispatch("updateAssets");
+          store.dispatch("updateWallet");
+
+          if (props.successFunc) return props.successFunc();
+          if (route.query.reurl) {
+            router.replace({
+              name: route.query.reurl,
+              query: {
+                redata: route.query.redata,
+              },
+            });
+          } else {
+            router.push({
+              name: "user",
+            });
+          }
+        }, 300);
+        _watchlist()
+          .then((res) => {
+            if (res.code == 200) {
+              store.commit("setMarketWatchList", res.data || []);
+
+              store.dispatch("subList", {
+                commitKey: "setMarketWatchList",
+                listKey: "marketWatchList",
+              });
             }
           })
-        } else {
-          router.push({
-            name: 'user'
-          })
-        }
-      }, 300)
-    } else {
-      return showToast(res.message || '登录异常')
-    }
-  }).catch(err => {
-    if (err.code == '1001') { // 弹出验证码
-      if (form.value.verifcode) { // 如果输入了验证码，旧提示验证码错误
-        showToast(err.message)
+          .finally(() => {
+            emits("closeDialog");
+            showToast("登录成功");
+          });
+      } else {
+        return showToast(res.message || "登录异常");
       }
+    })
+    .catch((err) => {
+      if (err.code == "1001") {
+        // 弹出验证码
+        if (form.value.verifcode) {
+          // 如果输入了验证码，旧提示验证码错误
+          showToast(err.message);
+        }
+        setTimeout(() => {
+          verifCodeRef.value.open();
+        }, 1000);
+      } else {
+        showToast(err.message || "网络异常");
+      }
+    })
+    .finally(() => {
       setTimeout(() => {
-        verifCodeRef.value.open()
-      }, 1000)
-    } else {
-      showToast(err.message || "网络异常")
-    }
-  }).finally(() => {
-    setTimeout(() => {
-      form.value.verifcode = ''
-      loading.value = false
-    }, 1000)
-  })
-}
+        form.value.verifcode = "";
+        loading.value = false;
+      }, 1000);
+    });
+};
 
 // 通过验证码提交
-const submitCode = code => {
-  form.value.verifcode = code
-  submit()
-}
+const submitCode = (code) => {
+  form.value.verifcode = code;
+  submit();
+};
 
 // 返回
 const goBack = () => {
-  if (props.backFunc) return props.backFunc()
+  if (props.backFunc) return props.backFunc();
   if (route.query.reurl) {
     router.replace({
       name: route.query.reurl,
       query: {
         redata: route.query.redata,
-      }
-    })
+      },
+    });
   } else {
-    router.back()
+    router.back();
   }
-}
+};
 // 忘记密码
 const goFoget = () => {
-  emits('closeDialog')
-  router.push({ name: 'fogot' })
-}
+  emits("closeDialog");
+  router.push({ name: "fogot" });
+};
 // 跳转注册
 const goRegister = () => {
-  emits('closeDialog')
+  emits("closeDialog");
   router.push({
-    name: 'register',
+    name: "register",
     query: {
       reurl: route.query.reurl,
       redata: route.query.redata,
-    }
-  })
-}
+    },
+  });
+};
 // 跳转多语言
 const goLang = () => {
-  emits('closeDialog')
-  router.push({ name: 'language' })
-}
+  emits("closeDialog");
+  router.push({ name: "language" });
+};
 
 onMounted(() => {
   Promise.all([
-    import('@/views/Public/Register.vue'),
-    import('@/views/Public/Fogot.vue')
-  ])
-})
-
-
+    import("@/views/Public/Register.vue"),
+    import("@/views/Public/Fogot.vue"),
+  ]);
+});
 </script>
 
 <style lang="less" scoped>
@@ -329,10 +414,10 @@ onMounted(() => {
       // background-color: #014CFA;
       // color: #fff;
 
-      background-color: #F6F8FF;
+      background-color: #f6f8ff;
       border-radius: 0.3rem;
-      color: #014CFA;
-      font-weight: 500
+      color: #014cfa;
+      font-weight: 500;
     }
 
     :deep(.van-tab--shrink) {
@@ -370,7 +455,7 @@ onMounted(() => {
 
     .top_back {
       color: #161616;
-      font-size: 0.40rem;
+      font-size: 0.4rem;
       width: 0.8rem;
       height: 0.8rem;
       display: flex;
@@ -393,7 +478,7 @@ onMounted(() => {
       align-items: center;
       font-weight: 600;
       font-size: 0.56rem;
-      color: #0D0D12;
+      color: #0d0d12;
     }
   }
 
@@ -410,7 +495,7 @@ onMounted(() => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 1px solid #D0D8E2;
+      border: 1px solid #d0d8e2;
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.32rem;
@@ -436,7 +521,7 @@ onMounted(() => {
       }
 
       &:has(.item_input:focus) {
-        border: 1px solid #014CFA;
+        border: 1px solid #014cfa;
       }
 
       .form_item_user {
@@ -458,7 +543,7 @@ onMounted(() => {
   }
 
   .fogot {
-    color: #014CFA;
+    color: #014cfa;
     font-weight: 400;
     padding-left: 0.44rem;
     margin: 0.2rem 0 0.8rem 0;
@@ -478,8 +563,8 @@ onMounted(() => {
     text-align: center;
     font-weight: 400;
 
-    >span {
-      color: #1A59F6;
+    > span {
+      color: #1a59f6;
       font-weight: 600;
     }
   }
@@ -505,7 +590,7 @@ onMounted(() => {
 
   .search_box {
     height: 0.84rem;
-    border: 1px solid #D0D8E2;
+    border: 1px solid #d0d8e2;
     border-radius: 0.32rem;
     padding: 0 0.32rem;
     margin: 0.12rem 0;
@@ -522,18 +607,18 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #F5F5F5;
+    border-bottom: 1px solid #f5f5f5;
   }
 
   .transfer_dialog_item_active {
-    color: #014CFA;
+    color: #014cfa;
     font-weight: 600;
     position: relative;
 
     .check_icon {
       position: absolute;
       right: 0.64rem;
-      color: #014CFA;
+      color: #014cfa;
       font-size: 0.28rem;
     }
   }
