@@ -13,7 +13,7 @@
       :marketType="marketType"
     />
     <div class="addBtn_container">
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
         >添加自选</Button>
     </div>
   </div>
@@ -23,7 +23,7 @@
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
       </div>
       <p class="text">你还没有添加自选哦</p>
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
         >添加自选</Button>
     </div>
     <Teleport to=".page_market">
@@ -331,6 +331,12 @@ const remove = (item) => {
       removeLoading.value = false;
     });
 };
+
+const jump = name => {
+  router.push({
+    name,
+  })
+}
 </script>
 
 <style lang="less" scoped>
