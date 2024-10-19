@@ -13,18 +13,23 @@
       :marketType="marketType"
     />
     <div class="addBtn_container">
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
-        >添加自选</Button>
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
+        >添加自选</Button
+      >
     </div>
   </div>
-  <div v-else-if="!watchList.length && !loading" style="position: relative; margin-bottom: 1rem;">
+  <div
+    v-else-if="!watchList.length && !loading"
+    style="position: relative; margin-bottom: 1rem"
+  >
     <div class="no_self_selection_block">
       <div class="no_data_icon">
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
       </div>
       <p class="text">你还没有添加自选哦</p>
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
-        >添加自选</Button>
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn"
+        >添加自选</Button
+      >
     </div>
     <Teleport to=".page_market">
       <div class="one_click_to_favorite_container">
@@ -37,9 +42,9 @@
           :loading="addLoading"
           @click="addOptional"
         >
-          一键添加自选(<i
-            class="tag"
-            >{{ stockList.length + contractList.length }}</i
+          一键添加自选(<i class="tag">{{
+            stockList.length + contractList.length
+          }}</i
           >)
         </Button>
       </div>
@@ -65,13 +70,20 @@
 
     <div class="recommend_block">
       <div class="item_block" v-if="marketSrockRecommendList.length">
-        <div class="item_block_title">
-          <span>推荐股票</span>
+        <div class="item_block_title flex justify-between">
+          <div>推荐股票</div>
+          <div @click="changeAllCheckState">
+            <div
+              :class="allCheckState ? 'checked_icon_blue' : 'unchecked_icon'"
+            ></div>
+          </div>
         </div>
         <StockRecommend
           :key="'stock'"
           :keyStr="'stock'"
           :loading="recommendLoading"
+          :newState="newState"
+          :flag="flag"
           @change="changeStockList"
           @init="init"
           :list="marketSrockRecommendList"
@@ -86,12 +98,35 @@
           :key="'recommend'"
           :keyStr="'recommend'"
           :loading="recommendLoading"
+          :newState="newState"
+          :flag="flag"
           @change="changeContractList"
           @init="init"
           :list="marketContractRecommendList"
         />
       </div>
     </div>
+
+    <!-- <Tabs class="option_tab" v-model:active="active" :swipeable="false" animated shrink>
+            <Tab>
+                <template #title>
+                    <div>
+                        <span>股票</span>
+                    </div>
+                </template>
+<StockRecommend :loading="recommendLoading" @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
+<NoData v-if="!marketSrockRecommendList.length && !loading && !recommendLoading" />
+</Tab>
+<Tab>
+    <template #title>
+                                <div>
+                                    <span>合约</span>
+                                </div>
+                            </template>
+    <StockRecommend @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
+    <NoData />
+</Tab>
+</Tabs> -->
   </div>
 
   <Loaidng v-else :loading="loading" :type="'spinner'" />
@@ -105,7 +140,7 @@ import StockRecommend from "@/components/StockRecommend.vue";
 import OptionCategory from "@/components/OptionCategory.vue";
 import router from "@/router";
 import store from "@/store";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { _watchlist, _del, _watchlistDefault, _add } from "@/api/api";
 import {
   showLoadingToast,
@@ -118,6 +153,7 @@ import {
 import { useSocket } from "@/utils/ws";
 const { startSocket } = useSocket();
 
+const watchList = computed(() => store.state.marketWatchList || []);
 const active = ref(0);
 
 const token = computed(() => store.state.token || "");
@@ -131,7 +167,6 @@ const subs = () => {
   });
 };
 
-const watchList = computed(() => store.state.marketWatchList || []);
 const getWatchList = () => {
   // 获取订阅列表
   loading.value = true;
@@ -165,7 +200,7 @@ const getWatchList = () => {
         } else {
           // 有数据就订阅
           // setTimeout(() => {
-            subs();
+          subs();
           // }, 1000);
         }
       }
@@ -174,7 +209,6 @@ const getWatchList = () => {
       loading.value = false;
     });
 };
-
 const init = () => {
   if (token.value) {
     getWatchList();
@@ -186,9 +220,7 @@ const init = () => {
 };
 
 // 推荐列表
-const marketType = computed(
-  () => store.getters.getMarketType
-)
+const marketType = computed(() => store.getters.getMarketType);
 const marketSrockRecommendList = computed(
   () => store.state.marketSrockRecommendList || []
 );
@@ -311,11 +343,22 @@ const remove = (item) => {
     });
 };
 
-const jump = name => {
-  router.push({
-    name,
-  })
-}
+const allCheckState = computed(() => store.state.checkState);
+
+store.commit("setCheckState", true);
+const newState = ref(true);
+const flag = ref(null);
+const changeAllCheckState = () => {
+  if (newState.value == !allCheckState.value) {
+    flag.value = false;
+    newState.value = !newState.value;
+    store.commit("setCheckState", !newState.value);
+  } else {
+    flag.value = true;
+    newState.value = !allCheckState.value;
+    store.commit("setCheckState", newState.value);
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -369,6 +412,21 @@ const jump = name => {
       font-weight: 600;
       line-height: 0.36rem;
       margin-bottom: 0.36rem;
+
+      .checked_icon_blue {
+        width: 0.4rem;
+        height: 0.4rem;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="6" fill="%23014CFA"/><path d="M8.52645 13.3945C8.34635 13.3895 8.17542 13.3219 8.04962 13.2059L5.20301 10.6602C5.07277 10.5388 5 10.3767 5 10.208C5 10.0394 5.07277 9.87731 5.20301 9.7559C5.2686 9.69655 5.3466 9.64945 5.43253 9.61731C5.51845 9.58517 5.6106 9.56862 5.70367 9.56862C5.79674 9.56862 5.88889 9.58517 5.97481 9.61731C6.06074 9.64945 6.13874 9.69655 6.20433 9.7559L8.52645 11.8559L14.4581 7.18875C14.5229 7.12901 14.6004 7.08153 14.686 7.04912C14.7716 7.0167 14.8635 7 14.9564 7C15.0492 7 15.1412 7.0167 15.2267 7.04912C15.3123 7.08153 15.3898 7.12901 15.4547 7.18875C15.5207 7.2477 15.5731 7.31781 15.6088 7.39504C15.6446 7.47227 15.663 7.5551 15.663 7.63875C15.663 7.7224 15.6446 7.80523 15.6088 7.88246C15.5731 7.95969 15.5207 8.0298 15.4547 8.08875L9.02712 13.2059C8.89458 13.3258 8.71453 13.3937 8.52645 13.3945Z" fill="white"/></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      .unchecked_icon {
+        width: 0.4rem;
+        height: 0.4rem;
+        background-color: transparent;
+        border: 1px solid #d0d8e2;
+        border-radius: 0.11rem;
+      }
     }
   }
 }
@@ -421,8 +479,8 @@ const jump = name => {
 
 .option_tab {
   // :deep(.van-tab__panel) {
-    // height: calc(var(--app-height) - 4.2rem) !important;
-    // overflow-y: auto;
+  // height: calc(var(--app-height) - 4.2rem) !important;
+  // overflow-y: auto;
   // }
 
   :deep(.van-tabs__nav--line) {

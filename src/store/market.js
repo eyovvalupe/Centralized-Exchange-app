@@ -13,6 +13,9 @@ const pageKeys = {
 
 export default {
     state: {
+        checkState: true,
+        checkStockList: [],
+        checkCryptoList: [],
         marketType: "all",
         currStock: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
@@ -47,6 +50,15 @@ export default {
 
     },
     mutations: {
+        setCheckState(state,data) {
+            state.checkState = data;
+        },
+        setCheckStockState(state,data) {
+            state.checkStockList = data;
+        },
+        setCheckCryptoState(state,data) {
+            state.checkCryptoList = data;
+        },
         setMarketType(state,data) {
             state.marketType = data;
         },

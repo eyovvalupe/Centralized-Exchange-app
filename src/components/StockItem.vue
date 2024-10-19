@@ -18,7 +18,7 @@
             ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
             : ''
         "
-        @click="goInfo"
+        @click="goInfo(props.item.type)"
       >
         <div
           :class="
@@ -35,7 +35,7 @@
                 } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] w-[0.6rem] h-[0.3rem] `"
               >
                 {{ market[props.item.type] }}
-              </div> 
+              </div>
             </div>
             <div class="item_info" v-show="props.item.type != 'crypto'">
               {{ props.item.name || "--" }}
@@ -168,8 +168,6 @@ import { SwipeCell } from "vant";
 import store from "@/store";
 import { _formatNumber } from "@/utils/index";
 
-onMounted(() => console.log("=========>", props.item.type));
-
 const market = {
   stock: "股票",
   crypto: "合约",
@@ -208,12 +206,11 @@ const props = defineProps({
   marketType: {
     type: String,
   },
-  showSparkLine:{
-    type:Boolean,
-    default:true
-  }
+  showSparkLine: {
+    type: Boolean,
+    default: true,
+  },
 });
-console.log(props.item)
 
 const mode = ref(1);
 const updown = computed(() => {
@@ -239,9 +236,28 @@ watch(price, (newVal, oldVal) => {
   }
 });
 
-const goInfo = () => {
+const goInfo = (type) => {
   if (props.handleClick) return props.handleClick(props.item);
-  store.commit("setCurrStock", props.item);
+  if (type == "stock") {
+    store.commit("setCurrStock", props.item);
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: props.item.symbol,
+        type: "stock",
+      },
+    });
+  }
+  if (type == "crypto") {
+    store.commit("setCurrConstract", props.item);
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: props.item.name,
+        type: "constract",
+      },
+    });
+  }
   if (props.type === "trade") {
     const data = [
       {
@@ -252,16 +268,6 @@ const goInfo = () => {
     store.commit("setShowLeft", false);
     store.commit("setChooseSymbol", data);
     return;
-  } else {
-    setTimeout(() => {
-      router.push({
-        name: "market_info",
-        query: {
-          symbol: props.item.symbol,
-          type: "stock",
-        },
-      });
-    }, 100);
   }
 };
 
