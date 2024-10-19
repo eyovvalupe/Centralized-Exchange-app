@@ -25,10 +25,10 @@
             props.marketType != 'crypto' ? 'stock_item' : 'stock_item_crypto'
           "
         >
-          <div class="td5">
+          <div class="td5" v-show="props.marketType != 'crypto'">
             <div class="item_name flex items-center gap-1">
-              <span v-if="props.item.type == 'stock'">{{ props.item.symbol }}</span>
-              <span v-if="props.item.type == 'crypto'">{{ props.item.name }}</span>
+              <span v-show="item.type == 'stock'">{{ props.item.symbol }}</span>
+              <span v-show="item.type == 'crypto'">{{ props.item.name }}</span>
               <div
                 :class="`${
                   marketStyle[props.item.type]
@@ -53,7 +53,7 @@
               <div
                 class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] border-[#0A54F9]"
               >
-              {{ item.lever }}X
+                20X
               </div>
             </div>
           </div>
@@ -168,7 +168,7 @@ import { SwipeCell } from "vant";
 import store from "@/store";
 import { _formatNumber } from "@/utils/index";
 
-onMounted(()=> console.log("=========>", props.item.type))
+onMounted(() => console.log("=========>", props.item.type));
 
 const market = {
   stock: "股票",
