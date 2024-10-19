@@ -1,6 +1,6 @@
 <template>
   <div class="orderDetails">
-    <Top :title="statusEnum[form.status]?.title" />
+    <Top :title="statusEnum[form.status]?.title" :back-func="goBack" />
     <!-- 一层容器 tab -->
     <div class="tabs-buy !mb-5">
       <div class="tab" :class="{ active_tab: tabsValue == 'buy' }" @click="changeTab('buy')">{{ offsetEnum[form.offset] }}</div>
@@ -18,8 +18,8 @@
         </template>
         <div v-else class="mb-[0.22rem] text-center text-15 leading-25" :style="{ color: statusEnum[form.status]?.color }">{{ statusEnum[form.status]?.name }}</div>
 
-        <!-- 三层容器 -->
-        <div class="h-[4.26rem] w-full rounded-2xl border border-[#d0d8e2] bg-white px-4 py-[0.2rem]">
+        <!-- 三层容器 rounded-2xl border border-[#d0d8e2]-->
+        <div class="box-3 relative h-[4.26rem] w-full rounded-2xl bg-white px-4 py-[0.2rem]">
           <div class="mb-1 flex items-center">
             <div class="mr-[0.12rem] w-6 rounded-full bg-[#a6bef4] text-center text-xs font-semibold leading-24 text-[#014cfa]">{{ form.merchant_name ? form.merchant_name.slice(0, 1) : '' }}</div>
             <div class="text-base text-[#061023]">{{ form.merchant_name }}</div>
@@ -99,7 +99,7 @@
       <!-- 底部button -->
       <div v-if="['waitpayment'].includes(form.status)" class="van-safe-area-bottom absolute inset-x-4 bottom-0 mb-5 flex justify-between text-16 text-[#666D80]">
         <div class="mr-4 flex-1 cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-48" @click="handleBotton('cancel')">取消订单</div>
-        <div class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white" @click="handleBotton('payment')">我已付款</div>
+        <div class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white" :disabled="true" @click="handleBotton('payment')">我已付款</div>
       </div>
     </template>
 
@@ -121,6 +121,7 @@ import { useMapState } from '@/store'
 import SafePassword from '@/components/SafePassword.vue'
 import { useCountdown } from '@/utils/hooks'
 import Chat from './Chat.vue'
+import router from '@/router'
 
 const { sessionToken } = useMapState(['sessionToken'])
 const [countState, countDispatch] = useCountdown()
@@ -166,7 +167,9 @@ const route = useRoute()
 const changeTab = name => {
   tabsValue.value = name
   list.length = 0
-  // init()
+  if (name === 'buy') {
+    getInfo()
+  }
 }
 const getInfo = async () => {
   showLoadingToast({ duration: 0, loadingType: 'spinner' })
@@ -201,8 +204,16 @@ const apiSetOrderStatus = async safeword => {
 }
 
 function handleBotton(val) {
+  if (!form.bank_card_number) return showToast('请等待商家提供银行卡')
   statusApiValue = val
   safeRef.value.open()
+}
+const goBack = () => {
+  if (tabsValue.value === 'contactTheMerchant') {
+    tabsValue.value = 'buy'
+  } else {
+    router.back()
+  }
 }
 //  复制
 const copy = text => {
@@ -221,10 +232,12 @@ onInit()
 
 <style lang="less" scoped>
 .orderDetails {
+  width: 7.5rem;
   padding: 1.12rem 0.32rem 0;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   // margin-top: -0.32rem;
 
@@ -252,6 +265,20 @@ onInit()
       color: white;
       background: var(--main-color);
       text-align: center;
+    }
+  }
+  .box-3 {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 0.34rem;
+      border: 1px solid #d0d8e2;
+      border-top-left-radius: 0.34rem;
+      border-top-right-radius: 0.34rem;
+      border-bottom-color: transparent;
     }
   }
   .dashed-my {

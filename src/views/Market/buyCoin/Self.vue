@@ -22,8 +22,8 @@
       </div>
 
       <div class="w-full overflow-hidden">
-        <Tabs ref="currCryptoRef" :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" scrollspy line-width="0.32rem" @click-tab="cryptoChange">
-          <Tab v-for="(item, index) in dryptoWallet" :key="index" :title="item.name" :name="item.name" />
+        <Tabs ref="currCryptoRef" :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" line-width="0.32rem" @click-tab="cryptoChange">
+          <Tab v-for="(item, index) in dryptoWallet" :key="item.name + index" :title="item.name" :name="item.name" />
         </Tabs>
       </div>
     </div>
@@ -171,9 +171,9 @@ import IconSvg from '@/components/IconSvg.vue'
 import { useSessionStorage } from '@/utils/hooks'
 
 const { userInfo, token, deWeightCurrencyList: currencyList, accountList, sessionToken } = useMapState(['userInfo', 'token', 'deWeightCurrencyList', 'accountList', 'sessionToken'])
+const [buycoinScrollTop1] = useSessionStorage('buycoinScrollTop1')
 const active = inject('active')
 const scrollTop = inject('scrollTop')
-const [buycoinScrollTop, setBuycoinScrollTop, removeBuycoinScrollTop] = useSessionStorage('buycoinScrollTop2')
 const safeRef = ref()
 const showPopupInfo = ref(false)
 const showDialog = ref(false)
@@ -230,6 +230,7 @@ const clickItem = item => {
 }
 const clickCrypto = item => {
   currCrypto.value = item
+  // currCurrency.value = item
   showDialog2.value = false
   list.value = []
   init()
@@ -352,7 +353,6 @@ const init = () => {
 const scrollHandle = () => {
   if (!moreDom) return
   if (active.value !== '1') return
-  setBuycoinScrollTop(scrollTop.value)
   const rect = moreDom.getBoundingClientRect()
   if (rect.top <= totalHeight) {
     console.error('加载更多')
@@ -366,8 +366,10 @@ onActivated(() => {
   setTimeout(() => {
     moreDom = document.querySelector('.buycoin_buss')
     if (active.value !== '1') return
-    const page2 = document.querySelector('.page')
-    page2.scrollTop = buycoinScrollTop.value
+    nextTick(() => {
+      const page2 = document.querySelector('.page')
+      page2.scrollTop = buycoinScrollTop1.value
+    })
   }, 500)
 })
 onMounted(() => {
@@ -417,9 +419,7 @@ function cryptoChange({ name: item }) {
   sessionStorage.setItem('buycoin_currCrypto', JSON.stringify(result))
   clickCrypto(result)
 }
-onUnmounted(() => {
-  removeBuycoinScrollTop()
-})
+
 defineExpose({
   init,
 })
@@ -427,6 +427,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .buycoin_self {
+  width: 7.5rem;
   padding: 0 0.32rem;
   margin-top: -0.32rem;
   .tabs-buy {

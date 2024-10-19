@@ -3,7 +3,7 @@
   <div v-if="token" class="buycoin_list">
     <div class="list">
       <!-- 当前订单 -->
-      <div v-for="(item, i) in list" :key="i" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
+      <div v-for="(item, i) in [...c2cLasttime, ...list]" :key="i" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="c2cUnread[item.order_no]" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
@@ -56,6 +56,7 @@
 
 <script setup>
 import { Popup } from 'vant'
+import { nextTick } from 'vue'
 import store, { useMapState } from '@/store'
 import NoData from '@/components/NoData.vue'
 import UnLogin from '@/components/UnLogin.vue'
@@ -69,7 +70,7 @@ const active = inject('active')
 const scrollTop = inject('scrollTop')
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
-const [buycoinScrollTop, setBuycoinScrollTop, removeBuycoinScrollTop] = useSessionStorage('buycoinScrollTop')
+const [buycoinScrollTop2] = useSessionStorage('buycoinScrollTop2')
 const statusEnum = {
   waitpayment: { name: '等待付款', color: 'var(--main-color)' },
   waitconfirm: { name: '等待确认', color: 'var(--main-color)' },
@@ -136,7 +137,6 @@ const getData = isBottom => {
       setTimeout(() => {
         loading.value = false
       }, 100)
-      console.log('123', isBottom)
       if (!isBottom) {
         list.value = res.data || []
       } else {
@@ -179,7 +179,7 @@ let moreDom = null
 const scrollHandle = () => {
   if (!moreDom) return
   if (active.value !== '2') return
-  setBuycoinScrollTop(scrollTop.value)
+
   const rect = moreDom.getBoundingClientRect()
   if (rect.top <= totalHeight) {
     // 加载更多
@@ -222,18 +222,15 @@ onMounted(() => {
 
 onActivated(() => {
   if (active.value !== '2') return
-  if (onOrderNoValue) {
+  nextTick(() => {
     const page2 = document.querySelector('.page')
-    page2.scrollTop = buycoinScrollTop.value
-    getC2cOrderInfo()
-  }
+    page2.scrollTop = buycoinScrollTop2.value
+  })
+  if (onOrderNoValue) getC2cOrderInfo()
+
   setTimeout(() => {
     moreDom = document.querySelector('.buycoin_self')
   }, 500)
-})
-onUnmounted(() => {
-  console.log('我的订单卸载')
-  removeBuycoinScrollTop()
 })
 
 defineExpose({

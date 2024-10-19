@@ -1,6 +1,6 @@
 <!-- 买币 -->
 <template>
-  <div class="page page-buycoin">
+  <div class="page-buycoin">
     <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated color="#014CFA" shrink @change="onChange">
       <Tab title="快捷区" name="0">
         <Faster />
@@ -28,19 +28,27 @@ export default { name: 'Buycoin' }
 <script setup>
 /* eslint-disable */
 import { Tab, Tabs } from 'vant'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
 import { useSocket } from '@/utils/ws'
 import Faster from './Faster.vue'
 import List from './List.vue'
 import Self from './Self.vue'
 import store from '@/store'
-
+import { useSessionStorage } from '@/utils/hooks'
 /* eslint-enable */
 const { startSocket } = useSocket()
 const token = computed(() => store.state.token)
-
+const scrollTop = inject('scrollTop')
+const positionValue = ref('relative')
 // 订阅
 const currLoading = ref(false)
+const listRef = ref()
+const selfRef = ref()
+const active = ref(sessionStorage.getItem('buycoinActive') || 0)
+let active2
+provide('active', active)
+const [buycoinScrollTop1, setBuycoinScrollTop1, removeBuycoinScrollTop1] = useSessionStorage('buycoinScrollTop1')
+const [buycoinScrollTop2, setBuycoinScrollTop2, removeBuycoinScrollTop2] = useSessionStorage('buycoinScrollTop2')
 const subs = () => {
   const socket = startSocket(() => {
     socket && socket.off('user')
@@ -50,7 +58,6 @@ const subs = () => {
     currLoading.value = true
     store.commit('setC2cList', [])
     socket.on('c2corder', res => {
-      // console.log('setC2cList', res.data)
       store.commit('setC2cList', res.data || [])
       currLoading.value = false
     })
@@ -66,26 +73,63 @@ const cancelSubs = () => {
   })
 }
 
-const listRef = ref()
-const selfRef = ref()
-const active = ref(sessionStorage.getItem('buycoinActive') || 0)
-provide('active', active)
 const onChange = i => {
+  active2 = i
   sessionStorage.setItem('buycoinActive', i)
-  if (i == 1) {
-    selfRef.value && selfRef.value.init()
-  } else if (i == 2) {
-    listRef.value && listRef.value.init()
+  const page2 = document.querySelector('.page')
+  switch (i) {
+    case '1':
+      nextTick(() => {
+        page2.scrollTop = buycoinScrollTop1.value
+        selfRef.value?.init()
+      })
+      break
+    case '2':
+      nextTick(() => {
+        page2.scrollTop = buycoinScrollTop2.value
+        listRef.value?.init()
+      })
+      break
   }
 }
 
 const pageLoading = ref(true)
 
 watch(
+  () => active.value,
+  newValue => {
+    if (newValue !== active2) onChange(active.value)
+  }
+)
+watch(
   () => store.state.bottomTabBarValue,
   newValue => {
     if (newValue === 'market') {
       onChange(active.value)
+    }
+  }
+)
+watch(
+  () => scrollTop.value,
+  (val, oldVal) => {
+    if (val > 100) {
+      if (val > oldVal) {
+        // 向下滚动
+        positionValue.value = 'relative'
+      } else {
+        // 向上滚动
+        positionValue.value = 'sticky'
+      }
+    } else {
+      positionValue.value = 'relative'
+    }
+    switch (active.value) {
+      case '1':
+        setBuycoinScrollTop1(val)
+        break
+      case '2':
+        setBuycoinScrollTop2(val)
+        break
     }
   }
 )
@@ -98,6 +142,8 @@ onMounted(() => {
   }
 })
 onUnmounted(() => {
+  removeBuycoinScrollTop1()
+  removeBuycoinScrollTop2()
   cancelSubs()
 })
 </script>
@@ -107,20 +153,23 @@ onUnmounted(() => {
   width: 7.5rem;
   .tabs {
     > :deep(.van-tabs__wrap) {
-      background: #eff3f8;
+      box-sizing: unset;
+      background: #fff;
       margin: 0 0.32rem;
-      border-radius: 0.32rem;
       height: 0.8rem;
-      padding: 0 !important;
-      overflow: visible;
-      // position: sticky !important;
-      // top: 0;
-      // left: 0;
+      padding: 0.2rem 0 0.12rem !important;
+      position: v-bind(positionValue) !important;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      margin: 0 0.32rem 0.2rem;
       .van-tabs__nav--complete {
         overflow: visible;
         padding: 0;
       }
-      .van-tabs__nav {
+      > .van-tabs__nav {
+        border-radius: 0.32rem;
+        background: #eff3f8 !important;
         position: relative;
         display: flex;
         justify-content: space-between;

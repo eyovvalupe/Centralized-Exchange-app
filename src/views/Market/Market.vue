@@ -1,14 +1,14 @@
 <!-- 市场 -->
 <template>
   <div v-if="activated" ref="marketPageRef" class="page page_market">
-    <IPODetail v-if="detail == '1'" @closeOpenDetail="closeOpenDetail" />
-    <Subscription v-else-if="detail == '2'" @closeOpenDetail="closeOpenDetail" />
+    <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
+    <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
     <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
-      <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
+      <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
     </div>
-    <div class = "bg-gradient-to-r from-transparent to-white w-[1rem] h-[0.5rem] absolute z-10 top-[0.25rem] right-15"></div>
+    <div class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white" />
     <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
-      <Tab class="optional" style="padding-left: 0px;" name="option">
+      <Tab class="optional" style="padding-left: 0px" name="option">
         <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
         <template #title>
           <div class="tab_item">
@@ -17,7 +17,6 @@
         </template>
       </Tab>
       <Tab name="buy">
-        <buyCoin />
         <template #title>
           <div class="tab_item">
             <div v-show="openTab" class="tab_item_icon">
@@ -79,6 +78,10 @@
         </template>
       </Tab>
     </Tabs>
+    <buyCoin v-if="active === 'buy'" />
+
+    <!-- </PullRefresh> -->
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -151,7 +154,6 @@ const activatedIncludes = computed(() => {
   return ['option', 'stock', 'contract', '4', '5'].includes(active.value) ? activated.value : true
 })
 const scrollHandler = throttle(e => {
-  // console.log('e', e.target.scrollTop)
   scrollTop.value = e.target.scrollTop
   if (openTab.value) {
     openTab.value = false
@@ -431,6 +433,5 @@ const jump = name => {
       overflow: hidden;
     }
   }
-
 }
 </style>
