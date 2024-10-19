@@ -156,7 +156,6 @@ const loading = ref(false);
 const token = computed(() => store.state.token);
 
 // 搜索相关
-search.value = "";
 const searchList = computed(() => store.state.marketSearchList);
 const marketSearchTextList = computed(() => store.state.marketSearchTextList);
 const handleHistory = (data) => {
@@ -196,11 +195,7 @@ const resetData = () => {
   });
   getData();
 };
-const clearData = () => {
-  // 重置搜索
-  //   search.value = "";
-  resetData();
-};
+
 let timeout = null;
 const keydown = () => {
   // 输入事件监听
@@ -223,6 +218,8 @@ if (!searchList.value.length) {
 
 onMounted(() => {
   // 进入页面聚焦
+  search.value = "";
+  resetData();
   setTimeout(() => {
     iptRef.value.focus();
   }, 500);
