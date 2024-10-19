@@ -188,7 +188,7 @@
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
       <div class="market_bottom_symbol">
-        <div class="symbol">{{ route.query.type == 'contract' ? item.name : item.symbol || "--" }}</div>
+        <div class="symbol">{{ route.query.type == 'constract' ? item.name : item.symbol || "--" }}</div>
         <div class="time_type">{{ timeType }}</div>
       </div>
 
@@ -1057,7 +1057,6 @@ const showInfo = ref(false);
     }
 
     .time_type {
-      min-width: 0.54rem;
       height: 0.36rem;
       padding: 0 0.1rem;
       display: inline-flex;
