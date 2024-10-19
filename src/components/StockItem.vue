@@ -3,7 +3,7 @@
   <div
     ref="root"
     style="width: 100%"
-    :class="props.marketType != 'crypto' ? '' : 'mb-[0.14rem] pr-[0.32rem]'"
+    :class="props.marketType != 'crypto' ? '' : 'mb-[0.2rem] pr-[0.32rem]'"
   >
     <SwipeCell
       :class="
