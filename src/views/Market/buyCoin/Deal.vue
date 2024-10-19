@@ -114,7 +114,7 @@ const showAmount = computed(() => {
   return new Decimal(amount.value).mul(info.value.price)
 })
 const currWallet = computed(() => {
-  return wallet.value.find(item => item.name == info.value.currCrypto)
+  return wallet.value.find(item => item.name == info.value.currCrypto) || {}
 })
 
 // 账户

@@ -282,7 +282,7 @@ const jump = name => {
   height: 100%;
   overflow-y: auto;
   position: relative;
-
+  width: 7.5rem;
   &:has(.open_tabs) {
     :deep(.addBtn) {
       top: 1.76rem;
