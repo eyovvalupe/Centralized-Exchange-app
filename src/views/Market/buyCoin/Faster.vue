@@ -320,6 +320,7 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
 
 <style lang="less" scoped>
 .page_fasters {
+  width: 7.5rem;
   margin-top: -0.32rem;
   .form {
     padding: 0 0.32rem;
@@ -328,18 +329,18 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
       display: flex;
       align-items: center;
       justify-content: space-between;
-      line-height: 34px;
+      line-height: 0.68rem;
       margin: 20px 0;
       border: 0.5px solid #d0d8e2;
       width: 47%;
-      border-radius: 34px;
+      border-radius: 0.68rem;
 
       .tab {
         color: #666d80;
         margin: 0;
-        width: 80px;
+        width: 1.6rem;
         text-align: center;
-        border-radius: 34px;
+        border-radius: 0.68rem;
       }
 
       .active_tab {
@@ -353,7 +354,7 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
     .tip {
       color: #666d80;
       font-size: 0.24rem;
-      margin-top: 15px;
+      margin-top: 0.3rem;
     }
 
     .subtitle {
@@ -381,7 +382,7 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
         justify-content: space-between;
         position: relative;
         height: 1rem;
-        border-radius: 16px;
+        border-radius: 0.32rem;
         border: 1px solid #d0d8e2;
         padding: 0 0.2rem;
         font-size: 0.32rem;
@@ -460,7 +461,7 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
       }
 
       .item_box_left {
-        width: 204px;
+        width: 4.08rem;
         margin-right: 0.2rem;
         display: flex;
         flex-direction: column;
@@ -513,17 +514,17 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
     align-items: center;
     padding: 0 0.4rem;
     margin-bottom: 0.15rem;
-    height: 40px;
+    height: 0.8rem;
     background-color: #f4f5f7;
-    border-radius: 40px;
+    border-radius: 0.8rem;
 
     input {
-      padding-top: 3px;
+      padding-top: 0.06rem;
     }
     input::placeholder {
       // color: #014cfa; /* 占位符颜色 */
       color: #9ea3ae;
-      font-size: 15px;
+      font-size: 0.3rem;
     }
 
     .type_select {
@@ -571,7 +572,7 @@ if (inWallet.value[0]) currIn.value = inWallet.value[0]
     left: 0;
     text-align: center;
     line-height: 1rem;
-    font-size: 16px;
+    font-size: 0.32rem;
     width: 100%;
     color: #121826;
     pointer-events: none;

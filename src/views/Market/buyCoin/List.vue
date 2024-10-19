@@ -256,6 +256,7 @@ defineExpose({
 }
 
 .buycoin_list {
+  width: 7.5rem;
   padding: 0.08rem 0.32rem;
   .list {
     .item {

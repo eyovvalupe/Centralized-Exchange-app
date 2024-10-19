@@ -104,14 +104,18 @@ onUnmounted(() => {
 
 <style lang="less" scoped>
 .page-buycoin {
+  width: 7.5rem;
   .tabs {
     > :deep(.van-tabs__wrap) {
       background: #eff3f8;
       margin: 0 0.32rem;
-      border-radius: 16px;
-      height: 40px;
+      border-radius: 0.32rem;
+      height: 0.8rem;
       padding: 0 !important;
       overflow: visible;
+      // position: sticky !important;
+      // top: 0;
+      // left: 0;
       .van-tabs__nav--complete {
         overflow: visible;
         padding: 0;
@@ -132,7 +136,7 @@ onUnmounted(() => {
           box-shadow: 0px -2px 5px 0px #014cfa1a;
           background: white;
           padding: 0;
-          border-radius: 16px;
+          border-radius: 0.32rem;
           height: 120%;
           transform: translateY(-10%);
           color: #014cfa;
@@ -155,10 +159,10 @@ onUnmounted(() => {
         // &::after {
         //     content: '';
         //     width: 100%;
-        //     height: 1px;
+        //     height: 0.02rem;
         //     background-color: #3B82F6;
         //     position: absolute;
-        //     bottom: 16px;
+        //     bottom: 0.32rem;
         //     left: 0;
         //     opacity: 0.3;
         // }

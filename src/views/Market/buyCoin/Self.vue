@@ -22,7 +22,7 @@
       </div>
 
       <div class="w-full overflow-hidden">
-        <Tabs ref="currCryptoRef" class="encryption w-full" line-height="0.06rem" scrollspy line-width="0.32rem" @click-tab="cryptoChange">
+        <Tabs ref="currCryptoRef" :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" scrollspy line-width="0.32rem" @click-tab="cryptoChange">
           <Tab v-for="(item, index) in dryptoWallet" :key="index" :title="item.name" :name="item.name" />
         </Tabs>
       </div>
@@ -364,9 +364,10 @@ watch(() => scrollTop.value, scrollHandle)
 
 onActivated(() => {
   setTimeout(() => {
+    moreDom = document.querySelector('.buycoin_buss')
+    if (active.value !== '1') return
     const page2 = document.querySelector('.page')
     page2.scrollTop = buycoinScrollTop.value
-    moreDom = document.querySelector('.buycoin_buss')
   }, 500)
 })
 onMounted(() => {
@@ -432,18 +433,18 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    line-height: 34px;
+    line-height: 0.68rem;
     margin: 0.4rem 0 0.2rem;
     border: 0.5px solid #d0d8e2;
     width: 47%;
-    border-radius: 34px;
+    border-radius: 0.68rem;
 
     .tab {
       color: #666d80;
       margin: 0;
-      width: 80px;
+      width: 1.6rem;
       text-align: center;
-      border-radius: 34px;
+      border-radius: 0.68rem;
     }
 
     .active_tab {
@@ -602,8 +603,8 @@ defineExpose({
         }
 
         .btn {
-          width: 80px;
-          height: 36px;
+          width: 1.6rem;
+          height: 0.72rem;
           border-radius: 0.64rem;
           background-color: var(--main-color);
           color: #fff;
