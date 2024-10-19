@@ -302,7 +302,7 @@
                 updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
               ]"
             >
-              {{ updown === 0 ? "" : updown > 0 ? "+" : "-"
+              {{ updown === 0 ? "" : updown > 0 ? "+" : ""
               }}{{ Number(item.price * (item.ratio || 0)).toFixed(2) }}
             </div>
             <div
@@ -321,7 +321,7 @@
                   ? ""
                   : updown > 0
                   ? "+"
-                  : "-"
+                  : ""
               }}{{
                 item.ratio === undefined
                   ? "--"
