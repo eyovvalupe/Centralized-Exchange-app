@@ -62,7 +62,6 @@
       <LoadingMore style="margin-top: 0.8rem;" v-if="!(finish && ipoStockList.length == 0)" :loading="loading" :finish="finish" />
       <NoData v-if="(finish && ipoStockList.length == 0)" />
     </div>
-    <div style="height: 1rem"></div>
 
     <!-- 详情弹窗 -->
     <teleport to="body">

@@ -330,7 +330,7 @@
 
             <div class="lists">
                 <!-- 搜索列表 -->
-                <StockTable theme="classic" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                <StockTable theme="classic" market-type="crypto" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
                     :list="marketSearchList" />
             </div>
         </div>
@@ -356,7 +356,7 @@ const safeRef = ref()
 const _market = 'futures' //合约
 
 //搜索
-const marketSearchList = computed(() => store.state.futuresSearchList || [])
+const marketSearchList = computed(() => store.state.marketSearchList || [])
 const showSearchDialog = ref()
 const searchDialogStr = ref('')
 const openSearchDialog = () => {
@@ -379,7 +379,7 @@ const handleClick = item => {
 store.commit('setMarketSearch', {
     search: '',
     market: _market,
-    futuresSearchList: []
+    list: []
 })
 const goDialogSearch = (market) => {
     if (searchTimeout) clearTimeout(searchTimeout)
@@ -396,12 +396,12 @@ const goDialogSearch = (market) => {
                 store.commit('setMarketSearch', {
                     search: s,
                     market: market,
-                    futuresSearchList: res.data || []
+                    list: res.data || []
                 })
                 setTimeout(() => {
                     store.dispatch('subList', {
-                        commitKey: 'setFuturesSearchList',
-                        listKey: 'futuresSearchList',
+                        commitKey: 'setMarketSearchList',
+                        listKey: 'marketSearchList',
                     })
                 }, 100)
             }

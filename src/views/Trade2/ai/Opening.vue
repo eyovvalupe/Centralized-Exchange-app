@@ -30,12 +30,18 @@
             <!-- 时间 -->
             <div class="item_content">
                 <div class="subtitle">时间区域</div>
-                <div class="times">
-                    <div class="time" @click="currTime = obj"
-                        :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
-                        v-for="(obj, i) in times" :key="i">{{ obj.time }}{{ _dateUnitMap[obj.unit] }}
-                    </div>
+                <div class="item item_box disabled_item item_time" @click="showTime=true;">
+                    <span>{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
+                        <mask id="mask0_114_15377" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="17" height="16">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H16.3333V16H0V0Z" fill="white"/>
+                        </mask>
+                        <g mask="url(#mask0_114_15377)">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.08333 6L8.16667 10L12.25 6L4.08333 6Z" fill="#666D80" stroke="#666D80" stroke-width="1.5" stroke-linejoin="round"/>
+                        </g>
+                    </svg>
                 </div>
+                
             </div>
             <!-- 数量 -->
             <div class="item_content">
@@ -142,6 +148,18 @@
         <!-- 开仓-安全密码弹窗 -->
         <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 
+        <Popup class="time_popup" teleport="body" v-model:show="showTime"  position="bottom" closeable round>
+            <div class="time_popup_btn" @click="showTime=false;">确认</div>
+            <div class="van-popup-custom-title">选择时间区域</div>
+            <div class="time_list">
+                <div class="time" @click="currTime = obj"
+                    :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
+                    v-for="(obj, i) in times" :key="i">
+                    <span>{{ obj.time }}{{ _dateUnitMap[obj.unit] }}</span>
+                </div>
+            </div>
+            
+        </Popup>
 
         <!-- 股票行情弹窗 -->
         <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
@@ -178,6 +196,8 @@ import StockPopup from "../../trade/StockPopup.vue"
 import eventBus from "@/utils/eventBus"
 import SlideContainer from "@/components/SlideContainer.vue"
 import Top from "@/components/Top.vue"
+
+const showTime = ref(false)
 
 const goLogin = () => {
     store.commit('setIsLoginOpen', true)
@@ -440,8 +460,68 @@ defineExpose({
     box-sizing: border-box;
     padding-bottom: 2rem;
 }
+.time_popup{
+    :deep(.van-popup__close-icon){
+        right: inherit;
+        left:0.32rem;
+        top:0.28rem;
+    }
+}
+
+.time_popup_btn{
+    width: 1.2rem;
+    height: 0.6rem;
+    flex-shrink: 0;
+    border-radius: 1rem;
+    background: #014CFA;
+    line-height: 0.6rem;
+    position: absolute;
+    right:0.3rem;
+    top:0.22rem;
+    color: #FFF;
+    text-align: center;
+    font-size: 0.3rem;
+    font-weight: 500;
+}
+.item_time{
+    display: flex;
+    justify-content: space-between;
+}
+.time_list{
+    padding: 0.6rem 0.22rem 1rem 0.22rem;
+    .time{
+        width: 25%;
+        float: left;
+        box-sizing: border-box;
+        padding: 0.1rem;
+        span{
+            border-radius: 0.32rem;
+            display: block;
+            border: 1px solid #EFF3F8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.3rem;
+            color:#061023;
+            height: 0.8rem;
+            box-sizing: border-box;
+        }
+        
+    }
+    .curr_time span{
+        background-color: #014CFA;
+        border-color: #014CFA;
+        color:#fff;
+    }
+    &::after{
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
 .trade_ai {
     padding: 0.28rem 0.32rem 0 0.32rem;
+    
     
     .btns{
         position: absolute;
@@ -486,33 +566,7 @@ defineExpose({
         transition: all ease .3s
     }
 
-    .times {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-
-        .time {
-            background-color: #F7F7F7;
-            border-radius: 0.1rem;
-            height: 0.64rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 22%;
-            margin-bottom: 0.32rem;
-            margin-right: 4%;
-
-            &:nth-child(4n) {
-                margin-right: 0;
-            }
-        }
-
-        .curr_time {
-            background-color: #EEF3FF;
-            color: #014CFA;
-        }
-    }
+   
 
 
     .item {

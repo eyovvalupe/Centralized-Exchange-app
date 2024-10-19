@@ -10,16 +10,16 @@
               <div
                 :class="`${
                   marketStyle[props.item.type]
-                } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] w-[0.6rem] h-[0.3rem] `"
+                } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] w-[0.6rem] h-[0.3rem] `"
               >
                 {{ market[props.item.type] }}
-              </div>
+              </div> 
             </div>
             <div class="item_info" v-show="props.item.type != 'crypto'">
               {{ props.item.name || "--" }}
             </div>
             <div
-              class="text-[#0A54F9] text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border-2 items-center flex justify-center border-[#0A54F9]"
+              class="text-[#0A54F9] text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
               v-show="props.item.type == 'crypto'"
             >
               20X
@@ -29,7 +29,7 @@
             <div class="item_name flex items-center gap-1">
               {{ props.item.symbol }}
               <div
-                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] border-[#0A54F9]"
+                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9]"
               >
                 20X
               </div>
@@ -43,7 +43,7 @@
             "
           >
             <SparkLine
-              v-if="props.item.points"
+              v-if="props.item.points && showSparkLine"
               :style="
                 props.marketType != 'cryto'
                   ? 'width: 100%; height: 0.6rem;'
@@ -171,7 +171,12 @@ const props = defineProps({
   marketType: {
     type: String,
   },
+  showSparkLine:{
+    type:Boolean,
+    default:true
+  }
 });
+console.log(props.item)
 
 const mode = ref(1);
 const updown = computed(() => {
@@ -231,7 +236,6 @@ const removeStock = (item) => {
 <style lang="less" scoped>
 .stock_item_box {
   width: 100%;
-  transition: all ease 0.3s;
   border-radius: 0.12rem;
   overflow: hidden;
 
@@ -272,7 +276,6 @@ const removeStock = (item) => {
 }
 .stock_item_box_crypto {
   width: 100%;
-  transition: all ease 0.3s;
   overflow: hidden;
 
   .delete_content {
@@ -339,7 +342,6 @@ const removeStock = (item) => {
       color: #061023;
       line-height: 0.32rem;
       font-weight: 600;
-      margin-bottom: 0.06rem;
     }
 
     .item_info {

@@ -101,7 +101,7 @@ onMounted(() => {
 .ai-block {
     padding: 0.24rem 0.32rem 0.32rem;
     .ai-block-content {
-        padding: 0.4rem 0 1.22rem 0;
+        padding: 0.4rem 0 0 0;
 
         .ai-block-title {
             padding: 0 0.32rem;

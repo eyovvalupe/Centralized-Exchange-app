@@ -2,19 +2,18 @@
 <template>
   <div class="stock_table">
     <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
-    <div class="tr" v-for="(item, i) in props.list" :key="i">
-      <div v-show="props.marketType == 'all' || props.marketType == item.type">
-        <StockItem
-          :marketType="props.marketType"
-          :theme="theme"
-          :handleClick="props.handleClick"
-          :deleteItem="props.deleteItem"
-          :type="props.type"
-          @remove="remove"
-          :scrollBox="props.scrollBox"
-          :item="item"
-        />
-      </div>
+    <div class="tr" v-for="(item, i) in props.list" :key="i" v-show="props.marketType == 'all' || props.marketType == item.type">
+      <StockItem
+        :marketType="props.marketType"
+        :theme="theme"
+        :handleClick="props.handleClick"
+        :deleteItem="props.deleteItem"
+        :showSparkLine="showSparkLine"
+        :type="props.type"
+        @remove="remove"
+        :scrollBox="props.scrollBox"
+        :item="item"
+      />
     </div>
     <NoData v-if="!props.loading && !props.list.length" />
   </div>
@@ -69,6 +68,10 @@ const props = defineProps({
     type: Function,
     default: null,
   },
+  showSparkLine:{
+    type:Boolean,
+    default:true
+  }
 });
 
 const remove = (item) => {

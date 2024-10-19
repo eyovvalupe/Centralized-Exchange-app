@@ -93,7 +93,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, defineEmits } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { Tab, Tabs, Field, Slider, Button, Loading, showToast, Icon, PasswordInput, NumberKeyboard, Popup } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import store from "@/store";

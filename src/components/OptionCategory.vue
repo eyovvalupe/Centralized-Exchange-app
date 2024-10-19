@@ -30,20 +30,21 @@ const selectCategory = category => {
 <style scoped>
 .category-button-group {
     display: flex;
-    gap: 0.109rem;
+    gap: 0.12rem;
     padding: 0 0.289rem;
     margin-bottom: 0.2rem;
 }
 
 button {
     border: 1px solid #D0D8E2;
-    width: 1.14rem;
-    height: 0.68rem;
-    padding: 0.145rem 0.261rem;
+    height: 0.7rem;
+    padding: 0.2rem 0.26rem;
     border-radius: 1.178rem;
     background-color: transparent;
     cursor: pointer;
     transition: background-color 0.3s;
+    color:#666D80;
+    box-sizing: border-box;
 }
 
 button:hover {
@@ -52,6 +53,7 @@ button:hover {
 
 button.active {
     background-color: #014CFA;
+    border-color:#014CFA;
     color: white;
 }
 </style>
