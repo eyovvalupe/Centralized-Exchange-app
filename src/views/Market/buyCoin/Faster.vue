@@ -11,7 +11,7 @@
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>买入</span>
+            <span>{{ form1.offset == 'buy' ? '买入' : '卖出' }}</span>
             <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
@@ -110,23 +110,24 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
-import { Button, Popup, Icon, showToast, showConfirmDialog } from 'vant'
+import { Button, Popup, Icon, showToast } from 'vant'
 import Decimal from 'decimal.js'
-import store from '@/store'
-import router from '@/router'
+import store, { useMapState } from '@/store'
+// import router from '@/router'
 import { _swapRate, _orderFast } from '@/api/api'
 // import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import eventBus from '@/utils/eventBus'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 
+const active = inject('active')
 const safeRef = ref()
-const token = computed(() => store.state.token)
+const { sessionToken, token, deWeightCurrencyList: currencyList } = useMapState(['sessionToken', 'token', 'deWeightCurrencyList'])
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
 // const accountList = computed(() => store.state.accountList || []) // 收款方式列表
 // const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
-const userInfo = computed(() => store.state.userInfo || {})
-const currencyList = computed(() => store.state.deWeightCurrencyList || [])
+// const userInfo = computed(() => store.state.userInfo || {})
+// const currencyList = computed(() => store.state.deWeightCurrencyList || [])
 const searchValue = ref('')
 // 售出
 const loading = ref(false)
@@ -162,14 +163,13 @@ const inWallet = computed(() => {
   //   data = wallet.value.filter(item => item.type == 'crypto')
   //   // 模糊查询
   // } else {
+  // eslint-disable-next-line prefer-const
   data = currencyList.value.filter(item => item.type == 'fiat')
   // }
   // 模糊查询
   return filterSearchValue(data)
 })
-// sessionToken
-const sessionToken = computed(() => store.state.sessionToken || '')
-
+// 购买按钮触发
 const sell = () => {
   if (!token.value) return store.commit('setIsLoginOpen', true)
   if (!form1.value.volume || form1.value.volume <= 0) return showToast('请输入金额')
@@ -186,13 +186,15 @@ const submitSell = s => {
     offset: form1.value.offset,
     account_id: form1.value.offset == 'sell' ? form1.value.account_id : null,
     volume: form1.value.volume,
-    crypto: form1.value.offset == 'buy' ? currOut.value.currency : currIn.value.currency,
-    currency: form1.value.offset == 'buy' ? currIn.value.currency : currOut.value.currency,
+    crypto: form1.value.offset == 'buy' ? currOut.value.currency : currOut.value.currency, // buy
+    currency: form1.value.offset == 'buy' ? currIn.value.currency : currIn.value.currency,
     token: sessionToken.value,
     safeword: s,
   }
   _orderFast(params)
     .then(res => {
+      showToast('买入成功')
+      active.value = '2'
       console.error('???', res)
     })
     .finally(() => {
@@ -213,6 +215,7 @@ const outWallet = computed(() => {
   // console.log('currencyList.value', currencyList.value)
   // data = currencyList.value.filter(item => item.type == 'fiat')
   // } else {
+  // eslint-disable-next-line prefer-const
   data = wallet.value.filter(item => item.type == 'crypto')
   // }
   return filterSearchValue(data)
@@ -275,26 +278,23 @@ const clickAccountItem = item => {
   safeRef.value.open()
 }
 // 跳转添加
-const goAddAccount = () => {
-  // google检测
-  if (!userInfo.value.googlebind) {
-    return showConfirmDialog({
-      title: '谷歌验证器',
-      message: '你还未绑定谷歌验证器，是否去绑定?',
-    }).then(() => {
-      jump('google')
-    })
-  }
-  router.push({
-    name: 'account',
-  })
-}
+// const goAddAccount = () => {
+//   // google检测
+//   if (!userInfo.value.googlebind) {
+//     return showConfirmDialog({
+//       title: '谷歌验证器',
+//       message: '你还未绑定谷歌验证器，是否去绑定?',
+//     }).then(() => {
+//       jump('google')
+//     })
+//   }
+//   router.push({
+//     name: 'account',
+//   })
+// }
 
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
-}
-if (token.value) {
-  getSessionToken()
 }
 eventBus.on('loginSuccess', () => {
   getSessionToken()
@@ -304,18 +304,17 @@ onBeforeUnmount(() => {
 })
 
 // 跳转
-const jump = name => {
-  router.push({
-    name,
-  })
+// const jump = name => {
+//   router.push({
+//     name,
+//   })
+// }
+
+if (token.value) {
+  getSessionToken()
 }
 if (outWallet.value[0]) currOut.value = outWallet.value[0]
 if (inWallet.value[0]) currIn.value = inWallet.value[0]
-// const getData2 = async params => {
-//   const res = await _cryptoCoin()
-//   console.log('🚀 ~ getData2 ~ res:', res)
-// }
-// getData2()
 </script>
 
 <style lang="less" scoped>

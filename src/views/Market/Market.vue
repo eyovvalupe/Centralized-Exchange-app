@@ -51,7 +51,6 @@
         </template>
       </Tab>
       <Tab name="buy">
-        <buyCoin />
         <template #title>
           <div class="tab_item">
             <div v-show="openTab" class="tab_item_icon">
@@ -166,6 +165,8 @@
                 </template>
             </Tab> -->
     </Tabs>
+    <buyCoin v-if="active === 'buy'" />
+
     <!-- </PullRefresh> -->
     <!-- </transition> -->
   </div>
@@ -240,7 +241,6 @@ const activatedIncludes = computed(() => {
   return ['option', 'stock', 'contract', '4', '5'].includes(active.value) ? activated.value : true
 })
 const scrollHandler = throttle(e => {
-  // console.log('e', e.target.scrollTop)
   scrollTop.value = e.target.scrollTop
   if (openTab.value) {
     openTab.value = false

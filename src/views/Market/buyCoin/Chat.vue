@@ -15,12 +15,14 @@
         <template v-if="item.direction == 'send'">
           <!-- 我的文本 -->
           <div v-if="item.type == 'text'" :id="`a${item.msgid}`" class="my_text_box">
+            <div class="van-popover__arrow" />
             <div class="my_text">{{ item.content }}</div>
             <!-- <div class="time">{{ item.time }}</div> -->
           </div>
 
           <!-- 我的富文本 -->
           <div v-if="item.type == 'html'" :id="`a${item.msgid}`" class="my_text_box">
+            <div class="van-popover__arrow" />
             <div class="my_text" v-html="item.content" />
             <!-- <div class="time">{{ item.time }}</div> -->
           </div>
@@ -40,6 +42,7 @@
             </div>
 
             <div class="op_text">
+              <div class="van-popover__arrow" />
               <div class="op_text_content">{{ item.content }}</div>
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
@@ -53,6 +56,7 @@
             </div>
 
             <div class="op_text">
+              <div class="van-popover__arrow" />
               <div class="op_text_content" v-html="item.content" />
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
@@ -73,16 +77,18 @@
         </template>
       </template>
     </div>
-    <div class="-ml-4 h-[0.02rem] w-[7.5rem] bg-[#EAEEF3]" />
-    <div class="box item">
-      <div class="box_icon">
-        <!-- <img src="/static/img/chat/file.png" alt="img" /> -->
-        <IconSvg name="chatFile" class="text-30 text-my" />
-        <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
-      </div>
-      <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
-      <div class="box_icon" @click="sendText">
-        <IconSvg name="chatSend" class="text-30 text-my" />
+    <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white">
+      <div class="-ml-4 h-[0.02rem] w-[7.5rem] bg-[#EAEEF3]" />
+      <div class="box item">
+        <div class="box_icon">
+          <!-- <img src="/static/img/chat/file.png" alt="img" /> -->
+          <IconSvg name="chatFile" class="text-30 text-my" />
+          <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
+        </div>
+        <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
+        <div class="box_icon" @click="sendText">
+          <IconSvg name="chatSend" class="text-30 text-my" />
+        </div>
       </div>
     </div>
   </div>
@@ -91,6 +97,7 @@
 <script setup>
 import io from 'socket.io-client'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { showToast } from 'vant'
 import { CHAT_WEBSOCKET, UPLOAD_ADDRESS, UPLOAD_TOKEN } from '@/config'
 import store from '@/store'
 import { randomFileName, _compressImg } from '@/utils'
@@ -109,6 +116,13 @@ const listRef = ref()
 //  聊天区域
 let socket = null
 const list = ref([])
+
+// 发送文本消息
+const text = ref('')
+
+// 已读回执
+const readLoading = ref(false)
+const c2cLasttime = computed(() => store.state.c2cLasttime || {})
 const startSocket = () => {
   const WS_API = `${CHAT_WEBSOCKET}/c2cmsg`
   const query = {
@@ -138,6 +152,7 @@ const startSocket = () => {
     console.error('---消息', res.data)
     list.value.push(...(res.data || []))
     setTimeout(() => {
+      console.log('listRef', listRef.value)
       if (res.data && res.data.length > 1) {
         // 首次收到消息
         // 滚动到已读位置
@@ -151,13 +166,13 @@ const startSocket = () => {
         } else {
           scrollToBottom()
         }
+        // console.log('222', 222)
+        // scrollToBottom()
       }
     }, 1000)
   })
 }
 
-// 发送文本消息
-const text = ref('')
 const sendText = () => {
   if (text.value !== '') {
     socket.emit(
@@ -237,14 +252,11 @@ const uploadImg = event => {
 }
 
 const scrollToBottom = () => {
-  setTimeout(() => {
+  nextTick(() => {
     listRef.value.scrollTop = listRef.value.scrollHeight
-  }, 500)
+  })
 }
 
-// 已读回执
-const readLoading = ref(false)
-const c2cLasttime = computed(() => store.state.c2cLasttime || {})
 const scrollHandler = () => {
   // 当前滚动位置 + 可视区域高度
   const div = listRef.value
@@ -291,13 +303,21 @@ onBeforeUnmount(() => {
   padding: 0.2rem 0;
   display: flex;
   flex-direction: column;
+  position: relative;
   // overflow: hidden;
-
+  // .van-popover__arrow {
+  //   top: 0.32rem;
+  //   margin-left: calc(var(--van-popover-arrow-size) * -1);
+  //   border-left-width: 0;
+  //   border-right-color: #f6f8fe;
+  //   color: #f6f8fe;
+  // }
   .list {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     color: #333;
-    padding-bottom: 0.6rem;
+    padding-bottom: 1.64rem;
 
     .op_pic_box {
       display: flex;
@@ -379,16 +399,26 @@ onBeforeUnmount(() => {
       }
 
       .op_text {
+        position: relative;
+        .van-popover__arrow {
+          top: 0.2rem;
+          margin-left: calc(var(--van-popover-arrow-size) * -1);
+          border-left-width: 0;
+          border-right-color: #f6f8fe;
+          color: #f6f8fe;
+        }
         .op_text_content {
           display: inline-block;
+          // padding: 0.3rem 0.24rem;
           padding: 0.2rem 0.4rem;
           line-height: 0.4rem;
           background-color: #f6f8fe;
           color: #333;
           text-align: left;
-          border-top-right-radius: 0.24rem;
-          border-bottom-left-radius: 0.24rem;
-          border-bottom-right-radius: 0.24rem;
+          border-radius: 0.12rem;
+          // border-top-right-radius: 0.24rem;
+          // border-bottom-left-radius: 0.24rem;
+          // border-bottom-right-radius: 0.24rem;
           margin-bottom: 0.1rem;
         }
 
@@ -427,7 +457,16 @@ onBeforeUnmount(() => {
       align-items: flex-end;
       justify-content: flex-start;
       margin-top: 0.4rem;
-
+      padding-right: 0.12rem;
+      position: relative;
+      .van-popover__arrow {
+        top: 0.2rem;
+        border-left-color: #3d65f9;
+        border-right-width: 0;
+        right: -0.12rem;
+        color: #3d65f9;
+        border-width: 0.12rem;
+      }
       .my_text {
         display: inline-block;
         padding: 0.2rem 0.4rem;
@@ -436,9 +475,10 @@ onBeforeUnmount(() => {
         color: #fff;
         text-align: left;
         max-width: 84%;
-        border-top-left-radius: 0.24rem;
-        border-bottom-left-radius: 0.24rem;
-        border-bottom-right-radius: 0.24rem;
+        border-radius: 0.12rem;
+        // border-top-left-radius: 0.24rem;
+        // border-bottom-left-radius: 0.24rem;
+        // border-bottom-right-radius: 0.24rem;
         margin-bottom: 0.1rem;
       }
 
