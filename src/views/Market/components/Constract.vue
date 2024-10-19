@@ -124,7 +124,7 @@ const goInfo = (item) => {
   router.push({
     name: "market_info",
     query: {
-      symbol: item.symbol,
+      symbol: item.name,
       type: "constract",
     },
   });
