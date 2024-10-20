@@ -231,7 +231,7 @@ const goInfo = (item) => {
   .tr {
     display: flex;
     align-items: center;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.2rem;
     padding: 0.15rem 0.25rem;
 
     .td {

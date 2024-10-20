@@ -158,7 +158,6 @@ const getData = () => {
     // page: 1,
   })
     .then((res) => {
-      console.log(res.data);
       store.commit("setMarketSearch", {
         search: search.value,
         list: res.data || [],

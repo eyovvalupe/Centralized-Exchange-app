@@ -3,7 +3,7 @@
   <div
     ref="root"
     style="width: 100%"
-    :class="props.marketType != 'crypto' ? '' : 'mb-[0.14rem] px-[0.32rem]'"
+    :class="props.marketType != 'crypto' ? '' : 'mb-[0.2rem] pr-[0.32rem]'"
   >
     <SwipeCell
       :class="
@@ -18,7 +18,7 @@
             ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
             : ''
         "
-        @click="goInfo"
+        @click="goInfo(props.item.type)"
       >
         <div
           :class="
@@ -35,7 +35,7 @@
                 } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] w-[0.6rem] h-[0.3rem] `"
               >
                 {{ market[props.item.type] }}
-              </div> 
+              </div>
             </div>
             <div class="item_info" v-show="props.item.type != 'crypto'">
               {{ props.item.name || "--" }}
@@ -147,12 +147,12 @@
           :class="
             props.marketType != 'crypto'
               ? 'delete_content'
-              : 'delete_content_crypto'
+              : 'delete_content_crypto ml-[1px]'
           "
           @click="removeStock(item)"
         >
           <div class="delete_icon">
-            <img src="/static/img/assets/delete.svg" alt="🚮" />
+            <!-- <img src="/static/img/assets/delete.svg" alt="🚮" /> -->
           </div>
         </div>
       </template>
@@ -167,8 +167,6 @@ import router from "@/router";
 import { SwipeCell } from "vant";
 import store from "@/store";
 import { _formatNumber } from "@/utils/index";
-
-onMounted(() => console.log("=========>", props.item.type));
 
 const market = {
   stock: "股票",
@@ -208,12 +206,11 @@ const props = defineProps({
   marketType: {
     type: String,
   },
-  showSparkLine:{
-    type:Boolean,
-    default:true
-  }
+  showSparkLine: {
+    type: Boolean,
+    default: true,
+  },
 });
-console.log(props.item)
 
 const mode = ref(1);
 const updown = computed(() => {
@@ -239,9 +236,28 @@ watch(price, (newVal, oldVal) => {
   }
 });
 
-const goInfo = () => {
+const goInfo = (type) => {
   if (props.handleClick) return props.handleClick(props.item);
-  store.commit("setCurrStock", props.item);
+  if (type == "stock") {
+    store.commit("setCurrStock", props.item);
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: props.item.symbol,
+        type: "stock",
+      },
+    });
+  }
+  if (type == "crypto") {
+    store.commit("setCurrConstract", props.item);
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: props.item.name,
+        type: "constract",
+      },
+    });
+  }
   if (props.type === "trade") {
     const data = [
       {
@@ -252,16 +268,6 @@ const goInfo = () => {
     store.commit("setShowLeft", false);
     store.commit("setChooseSymbol", data);
     return;
-  } else {
-    setTimeout(() => {
-      router.push({
-        name: "market_info",
-        query: {
-          symbol: props.item.symbol,
-          type: "stock",
-        },
-      });
-    }, 100);
   }
 };
 
@@ -314,6 +320,7 @@ const removeStock = (item) => {
 .stock_item_box_crypto {
   width: 100%;
   overflow: hidden;
+  padding-left: 0.32rem;
 
   .delete_content {
     width: 0.78rem;
@@ -323,13 +330,9 @@ const removeStock = (item) => {
     justify-content: center;
     background-color: #d0d8e2;
     border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
-
-    .delete_icon {
-      font-size: 0.52rem;
-      height: 0.52rem;
-    }
+    border-bottom-right-radius: 16px;    
   }
+  
   .delete_content_crypto {
     width: 0.78rem;
     height: 100%;
@@ -338,15 +341,10 @@ const removeStock = (item) => {
     justify-content: center;
     background-color: #d0d8e2;
     border-radius: 0.32rem;
-    // margin-left: -0.32rem;
-    .delete_icon {
-      width: 0.52rem;
-      height: 0.52rem;
-      background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M15.4813 4.59546H4.5192C4.38792 4.59546 4.26758 4.70486 4.26758 4.84708V16.4218C4.26758 17.1767 4.88023 17.7893 5.6351 17.7893H14.3763C14.7373 17.7893 15.0765 17.6471 15.3281 17.3955C15.5797 17.1438 15.7219 16.7938 15.7219 16.4327V4.83614C15.7329 4.70486 15.6235 4.59546 15.4813 4.59546ZM7.80125 14.0806C7.80125 14.2119 7.74655 14.3432 7.65903 14.4307C7.56057 14.5291 7.44023 14.5729 7.30895 14.5729C7.03544 14.5729 6.81664 14.3541 6.81664 14.0806V7.99785C6.81664 7.72435 7.03544 7.50554 7.30895 7.50554C7.58245 7.50554 7.80125 7.72435 7.80125 7.99785V14.0806ZM10.4925 14.0806C10.4925 14.3541 10.2737 14.5729 10.0002 14.5729C9.72672 14.5729 9.50792 14.3541 9.50792 14.0806V7.99785C9.50792 7.72435 9.72672 7.50554 10.0002 7.50554C10.2737 7.50554 10.4925 7.72435 10.4925 7.99785V14.0806ZM13.1948 14...%3C/path%3E%3Cpath d="M17....%3C/path%3E%3C/svg%3E');
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
+    // margin-left: -0.32rem;    
   }
+
+  
 }
 .active_symbol {
   background-color: #f2f3f7;
@@ -532,4 +530,12 @@ const removeStock = (item) => {
     border-bottom: 1px solid rgba(250, 100, 102, 0.12);
   }
 }
+.delete_icon {
+      width: 0.36rem;
+      height: 0.34rem;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17"><path d="M14.4813 3.59546H3.5192C3.38792 3.59546 3.26758 3.70486 3.26758 3.84708V15.4218C3.26758 16.1767 3.88023 16.7893 4.6351 16.7893H13.3763C13.7373 16.7893 14.0765 16.6471 14.3281 16.3955C14.5797 16.1438 14.7219 15.7938 14.7219 15.4327V3.83614C14.7329 3.70486 14.6235 3.59546 14.4813 3.59546ZM6.80125 13.0806C6.80125 13.2119 6.74655 13.3432 6.65903 13.4307C6.56057 13.5291 6.44023 13.5729 6.30895 13.5729C6.03544 13.5729 5.81664 13.3541 5.81664 13.0806V6.99785C5.81664 6.72435 6.03544 6.50554 6.30895 6.50554C6.58245 6.50554 6.80125 6.72435 6.80125 6.99785V13.0806ZM9.49254 13.0806C9.49254 13.3541 9.27373 13.5729 9.00023 13.5729C8.72672 13.5729 8.50792 13.3541 8.50792 13.0806V6.99785C8.50792 6.72435 8.72672 6.50554 9.00023 6.50554C9.27373 6.50554 9.49254 6.72435 9.49254 6.99785V13.0806ZM12.1948 13.0806C12.1948 13.3541 11.976 13.5729 11.7024 13.5729C11.4289 13.5729 11.2101 13.3541 11.1992 13.0696V6.99785C11.1992 6.72435 11.418 6.50554 11.7024 6.50554C11.976 6.50554 12.1948 6.72435 12.1948 6.99785V13.0806Z" fill="%23666D80"/><path d="M16.5925 3.09238H12.9932V2.1187C12.9932 1.45135 12.4462 0.915283 11.7898 0.915283H6.24311C5.57576 0.915283 5.03969 1.46229 5.03969 2.1187V3.09238H1.40756C1.10123 3.09238 0.849609 3.344 0.849609 3.65033C0.849609 3.95665 1.10123 4.20827 1.40756 4.20827H16.5925C16.8988 4.20827 17.1505 3.95665 17.1505 3.65033C17.1505 3.344 16.8988 3.09238 16.5925 3.09238ZM11.8773 3.09238H6.15559V2.02024H11.8773V3.09238Z" fill="%23666D80"/></svg>');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 </style>
