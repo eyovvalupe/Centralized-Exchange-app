@@ -11,7 +11,7 @@
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>{{ form1.offset == 'buy' ? t('买入') : t('卖出') }}</span>
+            <span>{{ form1.offset == 'buy' ? t('收到') : t('卖出') }}</span>
             <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
@@ -45,7 +45,7 @@
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>{{ $t('收到') }}</span>
+            <span>{{ form1.offset == 'buy' ? t('支付') : t('收到') }}</span>
           </div>
           <div class="item">
             {{ getMoney }}
@@ -104,7 +104,7 @@
     </div>
   </Popup>
 
-  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" @on-add-collection="clickAccountItem" />
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank" @on-add-collection="clickAccountItem" />
 
   <!-- 安全密码弹窗 -->
   <SafePassword ref="safeRef" @submit="submitSell" />
@@ -112,7 +112,7 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
-import { Button, Popup, Icon, showToast } from 'vant'
+import { Button, Popup, Icon, showToast, showConfirmDialog } from 'vant'
 import Decimal from 'decimal.js'
 import store, { useMapState } from '@/store'
 // import router from '@/router'
@@ -122,6 +122,7 @@ import SafePassword from '@/components/SafePassword.vue'
 import eventBus from '@/utils/eventBus'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 import { useBuyCoinState } from './state'
+import router from '@/router'
 
 const { onChange, handleUrl } = useBuyCoinState()
 const safeRef = ref()
@@ -173,7 +174,24 @@ const sell = () => {
   if (!token.value) return store.commit('setIsLoginOpen', true)
   if (!form1.value.volume || form1.value.volume <= 0) return showToast(t('请输入金额'))
   if (form1.value.offset == 'sell') {
-    if (form1.value.volume > currOut.value.amount) return showToast(t('余额不足'))
+    if (form1.value.volume > currOut.value.amount) {
+      showConfirmDialog({
+        title: '提示',
+        message: '钱包余额不足，请充值或划转账户',
+        cancelButtonText: '去充值',
+        confirmButtonText: '去划转',
+        cancelButtonColor: 'var(--main-color)',
+        confirmButtonColor: 'var(--main-color)',
+        closeOnClickOverlay: !0,
+      })
+        .then(() => {
+          router.push({ name: 'transfer' })
+        })
+        .catch(() => {
+          router.push({ name: 'topUpCrypto' })
+        })
+      return
+    }
     showAccountDialog.value = true
   } else {
     safeRef.value.open()

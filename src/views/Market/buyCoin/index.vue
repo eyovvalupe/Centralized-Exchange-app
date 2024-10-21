@@ -54,10 +54,13 @@ const subs = () => {
     socket && socket.emit('c2corder', '#all')
     currLoading.value = true
     store.commit('setC2cList', [])
-    socket.on('c2corder', res => {
-      store.commit('setC2cList', res.data || [])
-      currLoading.value = false
-    })
+    socket.on(
+      'c2corder',
+      useThrottleFn(res => {
+        store.commit('setC2cList', res.data || [])
+        currLoading.value = false
+      }, 500)
+    )
   })
 }
 // 取消订阅

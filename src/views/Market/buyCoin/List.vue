@@ -3,7 +3,7 @@
   <div v-if="token" class="buycoin_list">
     <div class="list">
       <!-- 当前订单 -->
-      <div v-for="(item, i) in [...c2cLasttime, ...list]" :key="i" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
+      <div v-for="item in [...c2cLasttime, ...list]" :key="item.order_no + item.unread" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="c2cUnread[item.order_no]" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
@@ -64,11 +64,6 @@ import LoadingMore from '@/components/LoadingMore.vue'
 import router from '@/router'
 import { useBuyCoinState } from './state'
 
-const { active } = useBuyCoinState()
-const scrollTop = inject('scrollTop')
-// 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
-const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
-const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
 const { t } = useI18n()
 const statusEnum = {
   waitpayment: { name: t('等待付款'), color: 'var(--main-color)' },
@@ -76,6 +71,12 @@ const statusEnum = {
   done: { name: t('已完成'), color: '#18B762' },
   cancel: { name: t('已取消'), color: '#8F92A1' },
 }
+const { active } = useBuyCoinState()
+const scrollTop = inject('scrollTop')
+// 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
+const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
+const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
+
 const loginfinish = () => {
   setTimeout(() => {
     init()
@@ -185,7 +186,6 @@ const scrollHandle = () => {
     getData(true)
   }
 }
-watch(() => scrollTop.value, scrollHandle)
 
 // let interval = null
 const getC2cOrderInfo = async () => {
@@ -203,6 +203,7 @@ const getC2cOrderInfo = async () => {
     //
   }
 }
+watch(() => scrollTop.value, scrollHandle)
 init()
 onMounted(() => {
   // interval = setInterval(() => {

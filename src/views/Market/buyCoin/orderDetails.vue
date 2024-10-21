@@ -183,7 +183,7 @@ const getInfo = async () => {
       countDispatch('start', form.endtime)
     }
   } finally {
-    closeToast()
+    setTimeout(closeToast, 3000)
   }
 }
 
@@ -196,11 +196,11 @@ const apiSetOrderStatus = async safeword => {
       status: statusApiValue, // 我已付款  [ payment ]放行  [ confirm ]取消  [ cancel ]
       safeword,
     })
-    showToast(statusApiValue === 'payment' ? t('我已付款成功') : t('取消成功'))
+    setTimeout(() => showToast(statusApiValue === 'payment' ? t('我已付款成功') : t('取消成功')), 300)
     getInfo()
   } catch (e) {
     loading.value = false
-    closeToast()
+    setTimeout(closeToast, 3000)
   }
 }
 

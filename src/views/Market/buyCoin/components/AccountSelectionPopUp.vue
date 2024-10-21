@@ -10,13 +10,19 @@
         <!-- 二层容器 -->
         <div class="mb-5 flex text-16 text-[#666D80]">
           <div
+            v-if="currencyType.includes('crypto')"
             class="mr-[0.12rem] w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36"
             :class="{ 'border-none border-transparent bg-my text-white': tabsValue === 'crypto' }"
             @click="tabsValue = 'crypto'"
           >
             {{ $t('加密货币') }}
           </div>
-          <div class="w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36" :class="{ 'border-transparent bg-my text-white': tabsValue === 'bank' }" @click="tabsValue = 'bank'">
+          <div
+            v-if="currencyType.includes('bank')"
+            class="w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36"
+            :class="{ 'border-transparent bg-my text-white': tabsValue === 'bank' }"
+            @click="tabsValue = 'bank'"
+          >
             {{ $t('银行卡') }}
           </div>
         </div>
@@ -47,7 +53,7 @@
 <script setup>
 import { Popup, showConfirmDialog } from 'vant'
 import router from '@/router'
-import { useMapState } from '@/store'
+import store, { useMapState } from '@/store'
 import { _hiddenAccount } from '@/utils/index'
 
 const props = defineProps({
@@ -56,6 +62,10 @@ const props = defineProps({
     type: Object,
     default: () => ({}),
     required: !0,
+  },
+  currencyType: {
+    type: String,
+    default: 'crypto,bank',
   },
 })
 const emit = defineEmits(['update:show', 'onAddCollection'])
@@ -69,6 +79,15 @@ const showAccountDialog = computed({
 // 收款方式列表
 const bankList = computed(() => accountList.value.filter(item => item.channel === tabsValue.value)) // 银行账号列表
 
+watch(
+  () => props.show,
+  val => {
+    if (val) store.dispatch('updateAccountList')
+    if (props.currencyType === 'crypto' || props.currencyType === 'bank') {
+      tabsValue.value = props.currencyType
+    }
+  }
+)
 // 跳转添加
 const goAddAccount = () => {
   // google检测

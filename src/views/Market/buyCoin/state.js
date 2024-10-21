@@ -16,15 +16,15 @@ export const useBuyCoinState = createGlobalState(() => {
     switch (i) {
       case '1':
         nextTick(() => {
-          const page2 = document.querySelector('.page')
-          page2.scrollTop = buycoinScrollTop1.value
+          const page2 = document.querySelector('.page_market')
+          if (page2) page2.scrollTop = buycoinScrollTop1.value
           selfRef.value?.init()
         })
         break
       case '2':
         nextTick(() => {
-          const page2 = document.querySelector('.page')
-          page2.scrollTop = buycoinScrollTop2.value
+          const page2 = document.querySelector('.page_market')
+          if (page2) page2.scrollTop = buycoinScrollTop2.value
           listRef.value?.init()
         })
         break

@@ -58,8 +58,8 @@
       <div class="leading-18" style="margin-bottom: 0.12rem; margin-top: 0.32rem">{{ $t('账户') }}</div>
       <div v-if="bankList.length" class="card_box" @click="showAccountDialog = true">
         <div class="card_icon">
-          <img v-if="bank.symbol" class="rounded-50" :src="`/static/img/crypto/${bank.symbol.toUpperCase()}.png`" alt="currency" />
-          <img v-else src="/static/img/user/card_type_b.png" alt="img" />
+          <img v-if="bank.symbol" id="img" class="rounded-50" :src="`/static/img/crypto/${bank.symbol.toUpperCase()}.png`" alt="currency" />
+          <img v-else class="!size-[0.68rem]" src="/static/img/user/card_type_b.png" alt="img" />
         </div>
         <div class="card">
           <div class="code">{{ _hiddenAccount(bank.bankCardNumber || bank.address) }}</div>
@@ -77,7 +77,7 @@
     <!-- 安全密码弹窗 -->
     <SafePassword ref="safeRef" @submit="submitSell" />
     <!-- 账户选择弹窗 -->
-    <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="bank" @on-add-collection="clickAccountItem" />
+    <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="bank" currency-type="bank" @on-add-collection="clickAccountItem" />
   </div>
 </template>
 
@@ -99,8 +99,7 @@ const { accountList, wallet, sessionToken } = useMapState(['accountList', 'walle
 const { t } = useI18n()
 const { onChange } = useBuyCoinState()
 
-// .filter(item => item.channel == 'bank')
-const bankList = computed(() => accountList.value) // 银行账号列表
+const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const safeRef = ref()
 
 const route = useRoute()
@@ -203,7 +202,7 @@ getSessionToken()
         align-items: center;
         justify-content: center;
 
-        > img {
+        > #img {
           width: 0.96rem !important;
           height: 0.96rem !important;
         }
