@@ -2,8 +2,9 @@
 <template>
   <div class="page page_home">
     <!-- 顶部 -->
-    <div class="top_box bg-gradient-to-b from-blue-400 to-blue-300">
+    <div class="top_box">
       <div class="funcs">
+        <!-- style="padding: 0.2rem 0.32rem 1rem 0.32rem;" -->
         <div class="user_box">
           <!-- <img
             v-if="token"
@@ -23,13 +24,13 @@
           <div class="custom-lock-icon"></div>
         </div>
       </div>
-      <div class="pl-[0.32rem]">
+      <div class="pl-[0.285rem] mt-[1.25rem]">
         <div
-          class="text-[#014CFA] font-[1000] text-[0.4rem] w-[5.14rem] h-[0.72rem] bg-gradient-to-r from-blue-400 to-white rounded-r-3xl justify-center flex items-center mb-[0.16rem] font-alibaba"
+          class="text-[#014CFA] font-[1000] text-[0.4rem] w-[5.14rem] h-[0.72rem] bg-gradient-to-r from-blue-400 to-white rounded-r-3xl justify-center flex items-center mb-[0.24rem] font-alibaba"
         >
           Newcomer Registration
         </div>
-        <div
+        <!-- <div
           class="font-medium text-[0.32rem] text-white mb-[0.16rem] font-alibaba"
         >
           Reward Immediately
@@ -52,9 +53,9 @@
           >
             + USDT
           </span>
-        </div>
+        </div> -->
         <div
-          class="w-[2.2rem] h-[0.7rem] rounded-[1rem] text-[white] bg-gradient-to-b from-blue-400 to-blue-800 items-center flex justify-center gap-3"
+          class="w-[2.2rem] h-[0.7rem] rounded-[1rem] text-[white] bg-gradient-to-b from-blue-400 to-blue-800 items-center flex justify-center gap-3 mt-[1.924rem]"
         >
           Register
           <div class="custom-arrow-icon"></div>
@@ -138,10 +139,37 @@
           {{ openEye ? assets.total : "*******" }}
         </div>
       </div>
-    </div>
-    <!-- 广告 -->
-    <div class="home_ad">
-      <img src="/static/img/home/ad.png" alt="img" />
+      <div class="flex mt-[0.32rem] justify-between">
+        <div
+          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
+        >
+          <div class="w-1/2 absolute bottom-0 right-0">
+            <img src="/static/img/home/hand.svg" img="img" />
+          </div>
+          <div class="font-bold text-[0.32rem] mb-[0.32rem]">邀请朋友注册</div>
+          <div class="text-[0.28rem] text-[#666D80] mb-[0.32rem]">各得最高</div>
+          <div class="text-[0.28rem] text-[#666D80] mb-[0.64rem]">
+            1000 USDT 奖励
+          </div>
+          <div
+            class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] text-[0.28rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+          >
+            去邀请
+          </div>
+        </div>
+        <div
+          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] via-[#F5F7FC] to-[#F5F7FC]"
+        >
+          <div class="flex items-center justify-between px-[0.32rem] pt-[0.32rem]">
+            <div class="flex items-center gap-1">
+              <div class="font-bold text-[0.32rem]">热卖</div>
+              <div class="custom-heart-icon"></div>
+            </div>
+            <div class=""></div>
+          </div>
+          <div class="bg-[#FFF]"></div>
+        </div>
+      </div>
     </div>
 
     <!-- banner -->
@@ -385,7 +413,12 @@ const jump = (name, needToken) => {
   }
 
   .top_box {
-    padding: 0.2rem 0.32rem 1rem 0.32rem;
+    background-image: url("/public/static/img/home/back1.png");
+    background-size: cover;
+    // background-repeat: no-repeat;
+    // background-position: center;
+    padding: 0.2rem 0.32rem 0.32rem;
+    min-height: 7rem;
     .funcs {
       display: flex;
       align-items: center;
@@ -543,8 +576,8 @@ const jump = (name, needToken) => {
   }
 }
 .custom-arrow-icon {
-  width: 16px;
-  height: 7px;
+  width: 0.32rem;
+  height: 0.14rem;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 7"><path d="M13.7031 5L10.4531 1.75L11.3438 0.859375L15.4688 5H15.5V6.25H0.5V5H13.7031Z" fill="%23ffffff"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
@@ -570,6 +603,14 @@ const jump = (name, needToken) => {
   width: 0.32rem;
   height: 0.32rem;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.4307 12.8131H3.50661C3.22179 12.8131 2.95674 12.6715 2.79704 12.4361C2.63735 12.199 2.60607 11.9011 2.71308 11.636L3.52307 9.63571V6.59659C3.52307 5.95617 3.64984 5.33386 3.90008 4.74612C4.14044 4.17979 4.48453 3.67107 4.92245 3.23315C5.36037 2.79522 5.86909 2.45114 6.43542 2.21078C7.02316 1.96054 7.64547 1.83377 8.28589 1.83377H8.29742C8.93784 1.83377 9.56015 1.96054 10.1479 2.21078C10.7142 2.45114 11.2229 2.79522 11.6609 3.23315C12.0988 3.67107 12.4429 4.17979 12.6832 4.74612C12.9335 5.33386 13.0602 5.95617 13.0602 6.59659V9.59784L14.1715 11.5306C14.3263 11.799 14.3246 12.1184 14.1699 12.3867C14.0168 12.6534 13.7385 12.8131 13.4307 12.8131ZM3.79965 11.7595H13.0882L12.0066 9.87936V6.59659C12.0066 5.61044 11.6197 4.68027 10.9167 3.97729C10.2137 3.27431 9.28357 2.88742 8.29742 2.88742H8.28589C7.29974 2.88742 6.36957 3.27431 5.66659 3.97729C4.96361 4.68027 4.57672 5.61044 4.57672 6.59659V9.8415L3.79965 11.7595ZM6.982 3.03559C6.75975 3.03559 6.56384 2.87589 6.52432 2.65035C6.50621 2.54828 6.49798 2.44456 6.49798 2.34249C6.49798 1.36292 7.2948 0.564453 8.27601 0.564453C9.25723 0.564453 10.054 1.36127 10.054 2.34249C10.054 2.44456 10.0442 2.54828 10.0277 2.65035C9.98325 2.90059 9.74618 3.07016 9.4943 3.029L8.55918 2.87754C8.3715 2.84626 8.18053 2.84626 7.9912 2.87754L7.05609 3.029C7.03139 3.03394 7.0067 3.03559 6.982 3.03559ZM8.27437 1.92432C8.41924 1.92432 8.56412 1.93584 8.70735 1.95889L9.05637 2.01487C8.92796 1.7103 8.62668 1.49463 8.27437 1.49463C7.92205 1.49463 7.62078 1.7103 7.49236 2.01487L7.84138 1.95889C7.98626 1.93584 8.13114 1.92432 8.27437 1.92432ZM10.6895 14.7772H6.05841C5.76866 14.7772 5.53159 14.5401 5.53159 14.2504C5.53159 13.9606 5.76866 13.7235 6.05841 13.7235H10.6895C10.9793 13.7235 11.2164 13.9606 11.2164 14.2504C11.2164 14.5401 10.9793 14.7772 10.6895 14.7772Z" fill="%23014CFA"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.custom-heart-icon {
+  width: 12px;
+  height: 14px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 14"><path d="M4.49621 13.9937C4.49621 13.9937 -1.73347 12.5172 0.936838 5.875C1.24621 6.15938 1.43371 6.65625 1.57903 6.94531C1.91496 3.4625 4.5259 3.12344 4.1509 0C5.16028 0.359375 8.34309 1.41875 8.8384 5.31719C9.3134 4.42812 10.0447 3.95469 10.5993 3.86094C10.4603 4.56094 10.6868 5.76719 11.1931 7.00156C11.9743 8.9125 12.0243 12.7156 8.08684 13.7016C8.68059 12.3188 8.91809 10.0766 5.9509 8.17656C5.4259 10.5797 2.7759 11.2188 4.49621 13.9937Z" fill="%23E53E00"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
