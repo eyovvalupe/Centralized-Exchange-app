@@ -3,7 +3,7 @@
   <Popup
     v-model:show="show"
     :safe-area-inset-top="true"
-    close-on-click-overlay
+    :close-on-click-overlay="false"
     :safe-area-inset-bottom="true"
     class="self_van_popup"
     position="bottom"

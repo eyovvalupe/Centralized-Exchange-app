@@ -4,7 +4,12 @@
     <!-- 一层容器 tab -->
     <div class="tabs-buy !mb-5">
       <div class="tab" :class="{ active_tab: tabsValue == 'buy' }" @click="changeTab('buy')">{{ offsetEnum[form.offset] }}</div>
-      <div class="tab" :class="{ active_tab: tabsValue == 'contactTheMerchant' }" @click="changeTab('contactTheMerchant')">{{ $t('联系商家') }}</div>
+      <div class="tab" :class="{ active_tab: tabsValue == 'contactTheMerchant' }" @click="changeTab('contactTheMerchant')">
+        {{ $t('联系商家') }}
+        <div v-if="form.unread" class="absolute right-[40px] top-[3px] flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
+          {{ form.unread > 99 ? '+99' : form.unread }}
+        </div>
+      </div>
     </div>
     <template v-if="tabsValue !== 'contactTheMerchant'">
       <!-- 二层容器 -->
@@ -33,7 +38,7 @@
             <span>{{ form.merchant_avetime }}{{ $t('分钟') }}</span>
           </div>
 
-          <div class="dashed-my mb-4 h-[0.02rem] w-[6.86rem]" />
+          <div class="dashed-my -ml-4 mb-4 h-[0.02rem] w-[6.86rem]" />
           <!-- 银行卡 -->
           <template v-if="form.bank_status === 'done'">
             <div class="mb-1 flex text-center">
@@ -117,7 +122,7 @@ import Top from '@/components/Top.vue'
 import { _c2cOrderInfo, _c2cOrderStatus } from '@/api/api'
 import IconSvg from '@/components/IconSvg.vue'
 import { _copyTxt } from '@/utils'
-import { useMapState } from '@/store'
+import store, { useMapState } from '@/store'
 import SafePassword from '@/components/SafePassword.vue'
 import { useCountdown } from '@/utils/hooks'
 import Chat from './Chat.vue'
@@ -183,7 +188,7 @@ const getInfo = async () => {
       countDispatch('start', form.endtime)
     }
   } finally {
-    setTimeout(closeToast, 3000)
+    setTimeout(closeToast, 500)
   }
 }
 
@@ -200,7 +205,7 @@ const apiSetOrderStatus = async safeword => {
     getInfo()
   } catch (e) {
     loading.value = false
-    setTimeout(closeToast, 3000)
+    setTimeout(closeToast, 500)
   }
 }
 
@@ -226,6 +231,7 @@ onUnmounted(() => {
   countDispatch('stop')
 })
 function onInit() {
+  store.dispatch('updateSessionToken')
   getInfo()
 }
 onInit()
@@ -259,6 +265,7 @@ onInit()
       // width: 80px;
       text-align: center;
       border-radius: 0.68rem;
+      position: relative;
     }
 
     .active_tab {

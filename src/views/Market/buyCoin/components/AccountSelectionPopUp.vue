@@ -35,7 +35,7 @@
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }" class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
           <div class="card_icon">
             <img v-if="tabsValue === 'crypto'" class="rounded-50" :src="`/static/img/crypto/${item.symbol?.toUpperCase()}.png`" alt="currency" />
-            <img v-else src="/static/img/user/card_type_b.png" alt="img" />
+            <img v-else class="!size-[0.68rem]" src="/static/img/user/card_type_b.png" alt="img" />
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
@@ -51,7 +51,7 @@
 </template>
 
 <script setup>
-import { Popup, showConfirmDialog } from 'vant'
+import { closeToast, Popup, showConfirmDialog, showLoadingToast } from 'vant'
 import router from '@/router'
 import store, { useMapState } from '@/store'
 import { _hiddenAccount } from '@/utils/index'
@@ -82,7 +82,10 @@ const bankList = computed(() => accountList.value.filter(item => item.channel ==
 watch(
   () => props.show,
   val => {
-    if (val) store.dispatch('updateAccountList')
+    if (val) {
+      showLoadingToast({ duration: 0, loadingType: 'spinner' })
+      store.dispatch('updateAccountList').then(closeToast)
+    }
     if (props.currencyType === 'crypto' || props.currencyType === 'bank') {
       tabsValue.value = props.currencyType
     }
@@ -247,15 +250,15 @@ const clickAccountItem = val => {
     overflow: hidden;
 
     .card_icon {
-      // background-color: #d9e4ff;
+      background-color: #f5f7fc;
       width: 0.96rem;
       height: 0.96rem;
-      border-radius: 0.16rem;
+      border-radius: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
 
-      > img {
+      > #img {
         width: 0.96rem !important;
         height: 0.96rem !important;
       }

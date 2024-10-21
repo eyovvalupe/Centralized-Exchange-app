@@ -45,14 +45,14 @@
       </div>
       <!-- 二层容器 -->
       <div style="margin-bottom: 0.12rem; display: flex; align-items: center; justify-content: space-between">
-        <span>数量</span>
+        <span>{{ $t('数量') }}</span>
       </div>
       <div class="item form_item">
         <input v-model="amount" type="number" :placeholder="`≤${currWallet.amount}`" class="ipt" />
         <div class="all" @click="amount = currWallet.amount">{{ $t('全部') }}</div>
       </div>
       <!-- 三层容器 -->
-      <div class="tip">{{ $t('预计收到') }}：{{ showAmount }} {{ info.currWallet }}</div>
+      <div class="tip">{{ $t('预计收到') }} {{ showAmount }} {{ info.currWallet }}</div>
 
       <!-- 银行卡 -->
       <div class="leading-18" style="margin-bottom: 0.12rem; margin-top: 0.32rem">{{ $t('账户') }}</div>
@@ -90,7 +90,7 @@ import Top from '@/components/Top.vue'
 import store, { useMapState } from '@/store'
 import SafePassword from '@/components/SafePassword.vue'
 import router from '@/router'
-import { _buysell } from '@/api/api'
+import { _buysell, _swapRate } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 import { useBuyCoinState } from './state'
@@ -109,6 +109,7 @@ const title = ref(route.query.offset == 'buy' ? t('买入') : t('卖出'))
 const loading = ref(false)
 const info = ref(route.query || {})
 const amount = ref('')
+// ref('--')
 const showAmount = computed(() => {
   if (!amount.value || amount.value <= 0) return '--'
   if (info.value.offset == 'buy') {
@@ -167,6 +168,18 @@ const submitSell = s => {
       getSessionToken()
     })
 }
+const getRate = () => {
+  showAmount.value = '--'
+  _swapRate({
+    from: info.value.currCrypto,
+    to: info.value.currWallet,
+    amount: amount.value,
+  }).then(res => {
+    if (res.data.exchange_rate) {
+      showAmount.value = res.data.exchange_rate
+    }
+  })
+}
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }
@@ -194,7 +207,7 @@ getSessionToken()
       margin-bottom: 0.36rem;
       border-width: 1px;
       .card_icon {
-        background-color: #d9e4ff;
+        background-color: #f5f7fc;
         width: 0.96rem;
         height: 0.96rem;
         border-radius: 2rem;
