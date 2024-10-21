@@ -190,7 +190,7 @@
                     <span @click="putAll"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                         style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
-                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false"
+                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false;amountBlur()"
                         @change="changePercent" type="number" class="ipt">
                 </div>
             </div>
@@ -269,7 +269,9 @@
 
             <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
-                <input v-model="safePass" placeholder="请输入交易密码" type="password" class="ipt">
+                <input v-model="safePass" placeholder="请输入交易密码" :type="showPassword ? 'text' : 'password'" class="ipt" />
+                <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword=true" alt="off" />
+                <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword=false" />
             </div>
             <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit" color="#014cfa"
                 round>开仓</Button>
@@ -352,6 +354,7 @@ import SafePassword from "@/components/SafePassword.vue"
 import StockTable from "@/components/StockTable.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
 
+const showPassword = ref(false)
 const safeRef = ref()
 const _market = 'futures' //合约
 
@@ -681,6 +684,15 @@ const changePercent = () => {
     if (p < 0) p = 0
     if (p > 100) p = 100
     sliderValue.value = Number(p)
+    
+}
+
+const amountBlur = ()=>{
+    nextTick(()=>{
+        if(form1.value.volume > maxStockNum.value){
+            form1.value.volume = maxStockNum.value
+        }
+    })
 }
 // 市价-搜索
 const searchLoading = ref(false)
@@ -793,6 +805,8 @@ const paramHandle = data => {
     interest.value = data.interest || 0
     closingline.value = data.closingline || 100
     amountper.value = data.amountper || 1
+    form1.value.volume = ''
+    sliderValue.value  = 0
     if (data.fee) {
         openFee.value = data.fee || 0
         closeFee.value = data.fee || 0
@@ -1156,8 +1170,17 @@ defineExpose({
         height: 1.12rem;
         padding: 0.16rem 0.32rem;
         box-sizing: border-box;
+        position: relative;
+        img {
+            width: 0.4rem;
+            height: 0.4rem;
+            position: absolute;
+            right: 0.32rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
+        }
     }
-
     .money_box {
         margin: 0.32rem 0;
         display: flex;

@@ -71,7 +71,7 @@
                     <span @click="onSliderChange(100)"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                         class="put_all">全部</span>
-                    <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false" type="number"
+                    <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false;amountBlur()" type="number"
                         v-model="form1.volume" class="ipt" @change="changePercent">
                 </div>
             </div>
@@ -278,6 +278,15 @@ const changePercent = () => {
     if (p < 0) p = 0
     if (p > 100) p = 100
     sliderValue.value = Number(p)
+}
+
+
+const amountBlur = ()=>{
+    nextTick(()=>{
+        if(form1.value.volume > maxStockNum.value){
+            form1.value.volume = maxStockNum.value
+        }
+    })
 }
 
 // 开仓

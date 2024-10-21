@@ -173,6 +173,15 @@ const activeTab = ref(0)
 if(localStorage.tradeActiveTab > 0){
     activeTab.value = Number(localStorage.tradeActiveTab)
 }
+const reDir = () => {
+    if (route.query.to == 'constract') {
+        activeTab.value = 1
+    }
+    if (route.query.to == 'ai') {
+        activeTab.value = 2
+    }
+}
+reDir()
 const initialSwipe = ref(activeTab.value)
 const loadedTab = ref([activeTab.value])
 const swipe = ref(null)
@@ -189,15 +198,7 @@ const changeActiveTab = (val,slideSwipe=false)=>{
 const swipeChange = (val)=>{
    changeActiveTab(val)
 }
-const reDir = () => {
-    if (route.query.to == 'constract') {
-        activeTab.value = 1
-    }
-    if (route.query.to == 'ai') {
-        activeTab.value = 2
-    }
-}
-reDir()
+
 
 const transitionName = ref('slide-left')
 watch([activeTab], (newActive, oldActive) => {
