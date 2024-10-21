@@ -68,6 +68,8 @@ const props = defineProps({
   }
 });
 
+console.log(props.list)
+
 const remove = (item) => {
   emits("remove", item);
 };

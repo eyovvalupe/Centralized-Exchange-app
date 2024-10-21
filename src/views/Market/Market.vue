@@ -127,7 +127,7 @@ const changeTab = key => {
         OptionalRef.value && OptionalRef.value.init()
         break
       case 'stock':
-        StockRef.value.initData()
+        // StockRef.value && StockRef.value.init()
         break
       case 'ipo':
         IPORef.value && IPORef.value.init()
