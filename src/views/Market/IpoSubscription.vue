@@ -35,7 +35,7 @@
             </div>
             <div class="item item_box" :class="{ 'err_ipt': errStatus }">
                 
-                <input @change="inputNum" @focus="focus = true" @blur="focus = errStatus = false"
+                <input @change="inputNum" @focus="focus = true" @blur="focus = errStatus = false;amountBlur()"
                     v-model="form.volume" class="ipt" type="number" placeholder="">
                 <span class="put_all" :style="{ opacity: focus ? '1' : '0', visibility: focus ? '' : 'hidden' }" @click="onSliderChange(100)">全部</span>
             </div>
@@ -166,6 +166,16 @@ const inputLimit = () => {
         if (sliderValue.value > 100) sliderValue.value = 100
     }, 50)
 }
+
+
+const amountBlur = ()=>{
+    nextTick(()=>{
+        if(form.value.volume > maxNum.value){
+            form.value.volume = maxNum.value
+        }
+    })
+}
+
 const inputNum = () => {
     setTimeout(() => {
         if (form.value.volume) {
