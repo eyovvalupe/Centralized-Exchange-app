@@ -17,17 +17,17 @@
           {{ info.price }}
           <span class="text-12 font-normal">{{ info.currWallet }}</span>
         </div>
-        <div class="text-14 text-[#8F92A1]">订单限额 {{ info.limitmin }}-{{ info.limitmax }}</div>
+        <div class="text-14 text-[#8F92A1]">{{ $t('订单限额') }} {{ info.limitmin }}-{{ info.limitmax }}</div>
       </div>
 
-      <div class="mb-[0.12rem] text-14">数量</div>
+      <div class="mb-[0.12rem] text-14">{{ $t('数量') }}</div>
       <div class="item form_item">
         <input v-model="amount" type="number" class="ipt" />
         <span>{{ info.currCrypto }}</span>
       </div>
-      <div class="tip">预计支付 {{ showAmount }} {{ info.currWallet }}</div>
+      <div class="tip">{{ $t('预计支付') }} {{ showAmount }} {{ info.currWallet }}</div>
 
-      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">买入</Button>
+      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{ $t('买入') }}</Button>
     </div>
 
     <!-- 卖出 -->
@@ -41,7 +41,7 @@
           {{ info.merchant }}
         </div>
         <div class="info_item">{{ info.price }} {{ info.currWallet }}</div>
-        <div class="text-14 text-[#8F92A1]">订单限额 {{ info.limitmin }}-{{ info.limitmax }}</div>
+        <div class="text-14 text-[#8F92A1]">{{ $t('订单限额') }} {{ info.limitmin }}-{{ info.limitmax }}</div>
       </div>
       <!-- 二层容器 -->
       <div style="margin-bottom: 0.12rem; display: flex; align-items: center; justify-content: space-between">
@@ -49,13 +49,13 @@
       </div>
       <div class="item form_item">
         <input v-model="amount" type="number" :placeholder="`≤${currWallet.amount}`" class="ipt" />
-        <div class="all" @click="amount = currWallet.amount">全部</div>
+        <div class="all" @click="amount = currWallet.amount">{{ $t('全部') }}</div>
       </div>
       <!-- 三层容器 -->
-      <div class="tip">预计收到：{{ showAmount }} {{ info.currWallet }}</div>
+      <div class="tip">{{ $t('预计收到') }}：{{ showAmount }} {{ info.currWallet }}</div>
 
       <!-- 银行卡 -->
-      <div class="leading-18" style="margin-bottom: 0.12rem; margin-top: 0.32rem">账户</div>
+      <div class="leading-18" style="margin-bottom: 0.12rem; margin-top: 0.32rem">{{ $t('账户') }}</div>
       <div v-if="bankList.length" class="card_box" @click="showAccountDialog = true">
         <div class="card_icon">
           <img v-if="bank.symbol" class="rounded-50" :src="`/static/img/crypto/${bank.symbol.toUpperCase()}.png`" alt="currency" />
@@ -66,13 +66,13 @@
           <div class="name">{{ bank.bankName || bank.symbol }}</div>
         </div>
 
-        <div class="text-12 text-my" @click="goAddAccount">更改</div>
+        <div class="text-12 text-my" @click="goAddAccount">{{ $t('更改') }}</div>
       </div>
       <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my" @click="showAccountDialog = true">
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
-        <span class="text-12 leading-22">添加收款账户</span>
+        <span class="text-12 leading-22">{{ $t('添加收款账户') }}</span>
       </div>
-      <Button size="large" style="margin-top: 0.8rem" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">卖出</Button>
+      <Button size="large" style="margin-top: 0.8rem" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{ $t('卖出') }}</Button>
     </div>
     <!-- 安全密码弹窗 -->
     <SafePassword ref="safeRef" @submit="submitSell" />
@@ -93,14 +93,18 @@ import router from '@/router'
 import { _buysell } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
+import { useBuyCoinState } from './state'
 // 收款方式列表 所有钱包
 const { accountList, wallet, sessionToken } = useMapState(['accountList', 'wallet', 'sessionToken'])
+const { t } = useI18n()
+const { onChange } = useBuyCoinState()
+
 // .filter(item => item.channel == 'bank')
 const bankList = computed(() => accountList.value) // 银行账号列表
 const safeRef = ref()
 
 const route = useRoute()
-const title = ref(route.query.offset == 'buy' ? '买入' : '卖出')
+const title = ref(route.query.offset == 'buy' ? t('买入') : t('卖出'))
 
 // 表单
 const loading = ref(false)
@@ -126,12 +130,12 @@ const clickAccountItem = item => {
 }
 
 const goSubmit = () => {
-  if (!amount.value || amount.value <= 0) return showToast('请输入金额')
+  if (!amount.value || amount.value <= 0) return showToast(t('请输入金额'))
   if (amount.value < info.value.limitmin || amount.value > info.value.limitmax) return showToast(`限额：${info.value.limitmin}-${info.value.limitmax}`)
   if (info.value.offset == 'sell') {
     const cueeWallet = wallet.value.find(item => item.name == info.value.currCrypto)
-    if (amount.value > cueeWallet.amount) return showToast('余额不足')
-    if (!bank.value.id) return showToast('请选择先添加收款账户')
+    if (amount.value > cueeWallet.amount) return showToast(t('余额不足'))
+    if (!bank.value.id) return showToast(t('请选择先添加收款账户'))
   }
   // 打开密码
   safeRef.value.open()
@@ -150,9 +154,10 @@ const submitSell = s => {
   _buysell(params)
     .then(res => {
       if (res.code == 200) {
-        showToast('下单成功')
+        showToast(t('下单成功'))
         setTimeout(() => {
           router.back()
+          onChange('2')
         }, 500)
       }
     })

@@ -18,7 +18,11 @@ module.exports = defineConfig({
         lastResortScript: 'fallback.js', // 备用脚本，当重试次数用尽时加载
       }),
       AutoImport({
-        imports: ['vue', 'vue-router', 'vuex', 'vue-i18n'],
+        imports: ['vue', 'vue-router', 'vuex', 'vue-i18n', '@vueuse/core'],
+        // eslintrc: {
+        //   enabled: true,
+        //   filepath: './.eslintrc-auto-import.json',
+        // },
       }),
     ],
   },

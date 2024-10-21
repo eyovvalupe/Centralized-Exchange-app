@@ -45,32 +45,3 @@ export const useCountdown = () => {
   }
   return [showS, dispatch]
 }
-
-export function useSessionStorage(key, defaultValue = null) {
-  // 从 sessionStorage 中获取初始值
-  let initialValue
-  const value = ref()
-  try {
-    initialValue = sessionStorage.getItem(key)
-    value.value = initialValue ? JSON.parse(initialValue) : defaultValue
-  } catch {}
-
-  // 设置值到 sessionStorage
-  const setSessionItem = newValue => {
-    sessionStorage.setItem(key, JSON.stringify(newValue))
-    value.value = newValue
-  }
-
-  // 从 sessionStorage 中获取值
-  const getSessionItem = computed(() => {
-    return sessionStorage.getItem(key)
-  })
-
-  // 从 sessionStorage 中删除值
-  const removeSessionItem = () => {
-    sessionStorage.removeItem(key)
-    value.value = defaultValue
-  }
-
-  return [getSessionItem, setSessionItem, removeSessionItem]
-}

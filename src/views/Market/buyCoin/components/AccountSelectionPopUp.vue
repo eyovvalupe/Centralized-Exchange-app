@@ -5,7 +5,7 @@
       <div class="close_icon" @click="showAccountDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
-      <div class="title">账户选择</div>
+      <div class="title">{{ $t('账户选择') }}</div>
       <div class="list">
         <!-- 二层容器 -->
         <div class="mb-5 flex text-16 text-[#666D80]">
@@ -14,16 +14,16 @@
             :class="{ 'border-none border-transparent bg-my text-white': tabsValue === 'crypto' }"
             @click="tabsValue = 'crypto'"
           >
-            加密货币
+            {{ $t('加密货币') }}
           </div>
           <div class="w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36" :class="{ 'border-transparent bg-my text-white': tabsValue === 'bank' }" @click="tabsValue = 'bank'">
-            银行卡
+            {{ $t('银行卡') }}
           </div>
         </div>
         <!-- 三层容器 -->
         <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my" @click="goAddAccount">
           <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
-          <span class="text-12 leading-22">添加收款账户</span>
+          <span class="text-12 leading-22">{{ $t('添加收款账户') }}</span>
         </div>
 
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }" class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
@@ -59,6 +59,7 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:show', 'onAddCollection'])
+const { t } = useI18n()
 const tabsValue = ref('crypto')
 const { userInfo, accountList } = useMapState(['accountList', 'userInfo'])
 const showAccountDialog = computed({
@@ -73,8 +74,8 @@ const goAddAccount = () => {
   // google检测
   if (!userInfo.value.googlebind) {
     return showConfirmDialog({
-      title: '谷歌验证器',
-      message: '你还未绑定谷歌验证器，是否去绑定?',
+      title: t('谷歌验证器'),
+      message: t('你还未绑定谷歌验证器，是否去绑定?'),
     }).then(() => {
       router.push({
         name: 'google',
