@@ -99,6 +99,7 @@ const emitsKeys = () => {
 const checkedList = ref([]);
 try {
   checkedList.value = props.list.map((item) => true);
+  store.commit("setCheckState", true);
 } catch {
   checkedList.value = [];
 }

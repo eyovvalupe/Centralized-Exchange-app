@@ -13,7 +13,14 @@
       :marketType="marketType"
     />
     <div class="addBtn_container">
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
+      <Button
+        round
+        icon="plus"
+        plain
+        type="primary"
+        hairline=""
+        class="addBtn"
+        @click="jump('search')"
         >添加自选</Button
       >
     </div>
@@ -27,12 +34,22 @@
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
       </div>
       <p class="text">你还没有添加自选哦</p>
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')"
+      <Button
+        round
+        icon="plus"
+        plain
+        type="primary"
+        hairline=""
+        class="addBtn"
+        @click="jump('search')"
         >添加自选</Button
       >
     </div>
     <Teleport to=".page_market">
-      <div class="one_click_to_favorite_container">
+      <div
+        class="one_click_to_favorite_container"
+        v-show="stockList.length + contractList.length > 0"
+      >
         <Button
           round
           block
@@ -213,6 +230,7 @@ const openRecommendList = () => {
     .then((res) => {
       if (res.code == 200) {
         // 股票
+
         if (res.data?.stock) {
           const arr = res.data.stock.map((item) => {
             const target = marketSrockRecommendList.value.find(
@@ -339,11 +357,11 @@ const changeAllCheckState = () => {
   }
 };
 
-const jump = name => {
+const jump = (name) => {
   router.push({
     name,
-  })
-}
+  });
+};
 </script>
 
 <style lang="less" scoped>
@@ -428,10 +446,11 @@ const jump = name => {
   bottom: 1.866rem;
   width: 100%;
   padding: 0 0.271rem;
-
+  transition: all linear 3s;
   .one_click_to_favorite {
     background-color: #014cfa;
     color: #ffffff;
+    
   }
 }
 
