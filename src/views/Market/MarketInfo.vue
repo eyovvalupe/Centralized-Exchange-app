@@ -307,7 +307,7 @@
             </div>
             <div
               v-if="item.ratio"
-              style="margin-left: 0.32rem"
+              style="margin-left: 0.15rem"
               :class="[
                 updown === 0
                   ? ''
