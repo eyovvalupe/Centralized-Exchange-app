@@ -204,7 +204,7 @@ const apiSetOrderStatus = async safeword => {
 }
 
 function handleBotton(val) {
-  if (!form.bank_card_number) return showToast('请等待商家提供银行卡')
+  if (val === 'payment' && !form.bank_card_number) return showToast('请等待商家提供银行卡')
   statusApiValue = val
   safeRef.value.open()
 }

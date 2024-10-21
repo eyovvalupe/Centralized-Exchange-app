@@ -1,6 +1,6 @@
 <!-- 市场 -->
 <template>
-  <div v-if="activated" ref="marketPageRef" class="page page_market">
+  <div v-if="activatedIncludes" ref="marketPageRef" class="page page_market">
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
     <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
     <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">

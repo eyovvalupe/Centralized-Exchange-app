@@ -78,8 +78,8 @@
       </template>
     </div>
     <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white">
-      <div class="-ml-4 h-[0.02rem] w-[7.5rem] bg-[#EAEEF3]" />
-      <div class="box item">
+      <div class="h-[0.02rem] w-full bg-[#EAEEF3]" />
+      <div class="box item px-4">
         <div class="box_icon">
           <!-- <img src="/static/img/chat/file.png" alt="img" /> -->
           <IconSvg name="chatFile" class="text-30 text-my" />
