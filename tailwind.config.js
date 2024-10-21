@@ -14,6 +14,9 @@ module.exports = {
     }, {}),
 
     extend: {
+      fontFamily : {
+        'alibaba' : ['AlibabaPuHuiTi', 'sans-serif'],
+      },
       // 宽度
       width: Array.from({ length: 667 }).reduce((map, _, index) => {
         map[index] = index ? `${(index * 4) / 50}rem` : 0

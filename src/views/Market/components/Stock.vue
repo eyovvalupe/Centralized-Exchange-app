@@ -37,12 +37,12 @@
 
     <div class="total_box">
       <!-- 类型 -->
-      <div class="type_box" v-if="currAs" @click="showAS = true">
+      <!-- <div class="type_box" v-if="currAs" @click="showAS = true">
         <span>{{ currAs }}</span>
         <div class="type_icon">
           <img src="/static/img/common/menu.png" alt="img" />
         </div>
-      </div>
+      </div> -->
 
       <div class="total_title">
         <span>市场涨跌分布</span>
