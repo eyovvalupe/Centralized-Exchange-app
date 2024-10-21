@@ -4,7 +4,7 @@
     <div ref="listRef" class="list">
       <div class="notice_msg">
         <div class="time">{{ list[0]?.time }}</div>
-        <div class="content">您已经成功下单，请耐心等候商家付款</div>
+        <div class="content">{{ $t('您已经成功下单') }}，{{ $t('请耐心等候商家付款') }}</div>
       </div>
       <template v-for="item in list">
         <!-- 提示 -->
@@ -112,7 +112,9 @@ const props = defineProps({
     default: () => {},
   },
 })
+const { t } = useI18n()
 const listRef = ref()
+const { y } = useScroll(listRef, { throttle: 200, behavior: 'smooth', onScroll: scrollHandler })
 //  聊天区域
 let socket = null
 const list = ref([])
@@ -152,7 +154,7 @@ const startSocket = () => {
     console.error('---消息', res.data)
     list.value.push(...(res.data || []))
     setTimeout(() => {
-      console.log('listRef', listRef.value)
+      // console.log('listRef', listRef.value)
       if (res.data && res.data.length > 1) {
         // 首次收到消息
         // 滚动到已读位置
@@ -238,12 +240,12 @@ const uploadImg = event => {
           if (data.content && data.content.download_url) {
             sendMessage(data.content.download_url)
           } else {
-            showToast('上传失败')
+            showToast(t('上传失败'))
             console.error('上传失败:', data)
           }
         })
         .catch(error => {
-          showToast('上传出错')
+          showToast(t('上传出错'))
           console.error('上传出错:', error)
         })
     })
@@ -252,12 +254,17 @@ const uploadImg = event => {
 }
 
 const scrollToBottom = () => {
-  nextTick(() => {
-    listRef.value.scrollTop = listRef.value.scrollHeight
-  })
+  let onl
+  const { pause } = useIntervalFn(() => {
+    if (onl !== listRef.value.scrollHeight) {
+      onl = listRef.value.scrollHeight
+      y.value = listRef.value.scrollHeight
+    } else {
+      pause()
+    }
+  }, 500)
 }
-
-const scrollHandler = () => {
+function scrollHandler() {
   // 当前滚动位置 + 可视区域高度
   const div = listRef.value
   const { scrollTop } = div
@@ -285,12 +292,12 @@ const scrollHandler = () => {
 onMounted(() => {
   console.error('开始连接')
   startSocket()
-  setTimeout(() => {
-    listRef.value.addEventListener('scroll', scrollHandler)
-  }, 500)
+  // setTimeout(() => {
+  //   listRef.value.addEventListener('scroll', scrollHandler)
+  // }, 500)
 })
 onBeforeUnmount(() => {
-  listRef.value && listRef.value.removeEventListener('scroll', scrollHandler)
+  // listRef.value && listRef.value.removeEventListener('scroll', scrollHandler)
   if (socket) {
     socket.disconnect()
     console.error('断开连接')

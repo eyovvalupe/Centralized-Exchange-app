@@ -3,7 +3,7 @@
   <div v-if="token" class="buycoin_list">
     <div class="list">
       <!-- 当前订单 -->
-      <div v-for="(item, i) in [...c2cLasttime, ...list]" :key="i" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
+      <div v-for="item in [...c2cLasttime, ...list]" :key="item.order_no + item.unread" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="c2cUnread[item.order_no]" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
@@ -19,14 +19,14 @@
           <div class="text-12">
             <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
               <!-- 根据交易类型显示“购入”或“售出” -->
-              {{ item.offset == 'buy' ? '购入' : '售出' }}&nbsp;{{ item.crypto }}&nbsp;
+              {{ item.offset == 'buy' ? t('购入') : t('售出') }}&nbsp;{{ item.crypto }}&nbsp;
               <!-- 加密货币图标 -->
               <img class="!h-4 !w-4 rounded-50" :src="`/static/img/crypto/${item.crypto.toUpperCase()}.png`" alt="currency" />
             </div>
             <!-- 价格信息 -->
-            <div class="mb-[0.12rem] text-[#666D80]">价格&nbsp;{{ item.price }}&nbsp;{{ item.currency }}</div>
+            <div class="mb-[0.12rem] text-[#666D80]">{{ $t('价格') }}&nbsp;{{ item.price }}&nbsp;{{ item.currency }}</div>
             <!-- 数量信息 -->
-            <div class="text-[#666D80]">数量&nbsp;{{ item.volume }}&nbsp;{{ item.crypto }}</div>
+            <div class="text-[#666D80]">{{ $t('数量') }}&nbsp;{{ item.volume }}&nbsp;{{ item.crypto }}</div>
           </div>
 
           <!-- 交易总额 -->
@@ -46,37 +46,37 @@
   <UnLogin v-show="!token" @loginfinish="loginfinish" />
 
   <!-- 订单弹窗 -->
-  <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
+  <!-- <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
     <div class="buycoin_orderinfo_dialog">
-      <div class="orderinfo_dialog_title">订单详情</div>
+      <div class="orderinfo_dialog_title">{{ $t('订单详情') }}</div>
       <OrderInfo v-if="showPopupInfo" ref="OrderInfoRef" @success-hanlde="successOrder" />
     </div>
-  </Popup>
+  </Popup> -->
 </template>
 
 <script setup>
-import { Popup } from 'vant'
 import { nextTick } from 'vue'
 import store, { useMapState } from '@/store'
 import NoData from '@/components/NoData.vue'
 import UnLogin from '@/components/UnLogin.vue'
-import OrderInfo from './OrderInfo.vue'
 import { _c2cOrderInfo, _c2cOrderList } from '@/api/api'
 import LoadingMore from '@/components/LoadingMore.vue'
 import router from '@/router'
-import { useSessionStorage } from '@/utils/hooks'
+import { useBuyCoinState } from './state'
 
-const active = inject('active')
+const { t } = useI18n()
+const statusEnum = {
+  waitpayment: { name: t('等待付款'), color: 'var(--main-color)' },
+  waitconfirm: { name: t('等待确认'), color: 'var(--main-color)' },
+  done: { name: t('已完成'), color: '#18B762' },
+  cancel: { name: t('已取消'), color: '#8F92A1' },
+}
+const { active } = useBuyCoinState()
 const scrollTop = inject('scrollTop')
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
-const [buycoinScrollTop2] = useSessionStorage('buycoinScrollTop2')
-const statusEnum = {
-  waitpayment: { name: '等待付款', color: 'var(--main-color)' },
-  waitconfirm: { name: '等待确认', color: 'var(--main-color)' },
-  done: { name: '已完成', color: '#18B762' },
-  cancel: { name: '已取消', color: '#8F92A1' },
-}
+const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
+
 const loginfinish = () => {
   setTimeout(() => {
     init()
@@ -84,8 +84,8 @@ const loginfinish = () => {
 }
 
 // 订单详情
-const OrderInfoRef = ref()
-const showPopupInfo = ref(false)
+// const OrderInfoRef = ref()
+// const showPopupInfo = ref(false)
 let onOrderNoValue = {}
 const openOrderInfo = ({ order_no, ...row }) => {
   onOrderNoValue = { order_no, ...row }
@@ -98,14 +98,14 @@ const openOrderInfo = ({ order_no, ...row }) => {
     // OrderInfoRef.value && OrderInfoRef.value.open(item)
   }, 100)
 }
-const successOrder = () => {
-  showPopupInfo.value = false
-  // 获取列表数据
-  store.commit('setC2cList', [])
-  setTimeout(() => {
-    init()
-  }, 100)
-}
+// const successOrder = () => {
+//   showPopupInfo.value = false
+//   // 获取列表数据
+//   store.commit('setC2cList', [])
+//   setTimeout(() => {
+//     init()
+//   }, 100)
+// }
 
 // 列表
 const loading = ref(false)
@@ -186,7 +186,6 @@ const scrollHandle = () => {
     getData(true)
   }
 }
-watch(() => scrollTop.value, scrollHandle)
 
 // let interval = null
 const getC2cOrderInfo = async () => {
@@ -204,6 +203,7 @@ const getC2cOrderInfo = async () => {
     //
   }
 }
+watch(() => scrollTop.value, scrollHandle)
 init()
 onMounted(() => {
   // interval = setInterval(() => {

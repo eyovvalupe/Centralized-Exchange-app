@@ -3,8 +3,8 @@
   <div class="buycoin_self">
     <!-- 一层容器 tab -->
     <div class="tabs-buy">
-      <div class="tab" :class="{ active_tab: offset == 'buy' }" @click="changeTab('buy')">买入</div>
-      <div class="tab" :class="{ active_tab: offset == 'sell' }" @click="changeTab('sell')">卖出</div>
+      <div class="tab" :class="{ active_tab: offset == 'buy' }" @click="changeTab('buy')">{{ $t('买入') }}</div>
+      <div class="tab" :class="{ active_tab: offset == 'sell' }" @click="changeTab('sell')">{{ $t('卖出') }}</div>
     </div>
     <!-- 二层容器 -->
     <div class="tabs mb-4">
@@ -22,7 +22,7 @@
       </div>
 
       <div class="w-full overflow-hidden">
-        <Tabs ref="currCryptoRef" :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" line-width="0.32rem" @click-tab="cryptoChange">
+        <Tabs :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" line-width="0.32rem" @click-tab="cryptoChange">
           <Tab v-for="(item, index) in dryptoWallet" :key="item.name + index" :title="item.name" :name="item.name" />
         </Tabs>
       </div>
@@ -38,12 +38,12 @@
           <div class="top_content">
             <div class="name">{{ item.merchant }}</div>
             <div class="info">
-              <span>成交量 {{ item.volume }}</span>
+              <span>{{ $t('成交量') }} {{ item.volume }}</span>
               <span>|</span>
-              <span>成交率 {{ item.volumerate }}%</span>
+              <span>{{ $t('成交率') }} {{ item.volumerate }}%</span>
               <span>|</span>
               <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
-              <span>{{ item.avetime }}分钟</span>
+              <span>{{ item.avetime }}{{ $t('分钟') }}</span>
             </div>
           </div>
         </div>
@@ -55,7 +55,7 @@
             </div>
             <div class="text-14 text-[#8F92A1]">订单限额&nbsp;{{ item.limitmin }}-{{ item.limitmax }}</div>
           </div>
-          <div v-if="token" class="btn" @click="goBuy(item)">{{ offset == 'buy' ? '购买' : '出售' }}</div>
+          <div v-if="token" class="btn" @click="goBuy(item)">{{ offset == 'buy' ? t('购买') : t('出售') }}</div>
         </div>
       </div>
       <NoData v-if="!loading && !list.length" />
@@ -66,18 +66,18 @@
   <!-- 表单提交 -->
   <Popup v-model:show="showFormDialog" teleport="body" round position="bottom" closeable>
     <div class="buycoin_form_dialog">
-      <div class="title">{{ offset == 'buy' ? '买入' : '卖出' }}{{ currCrypto.name }}</div>
+      <div class="title">{{ offset == 'buy' ? t('买入') : t('卖出') }}{{ currCrypto.name }}</div>
 
       <div class="form">
         <div class="item form_item" :class="{ focus_item: amountFocus }">
           <div v-show="offset == 'sell'" v-if="!(!amountFocus && amount !== '')" class="tip_text">≤ {{ maxAmount }} {{ offset == 'sell' ? currCrypto.name : currCurrency.name }}</div>
           <input v-model="amount" type="number" class="ipt" @blur="amountFocus = false" @focus="amountFocus = true" />
-          <div class="all" @click="amount = currWallet.amount">全部</div>
+          <div class="all" @click="amount = currWallet.amount">{{ $t('全部') }}</div>
         </div>
-        <div class="tip">订单限额：{{ currItem.limitmin }}-{{ currItem.limitmax }} {{ offset == 'sell' ? currCrypto.name : currCurrency.name }}</div>
-        <div v-if="offset == 'sell'" class="tip">预计收到：{{ showAmount }} {{ currCurrency.name }}</div>
+        <div class="tip">{{ $t('订单限额') }}：{{ currItem.limitmin }}-{{ currItem.limitmax }} {{ offset == 'sell' ? currCrypto.name : currCurrency.name }}</div>
+        <div v-if="offset == 'sell'" class="tip">{{ $t('预计收到') }}：{{ showAmount }} {{ currCurrency.name }}</div>
 
-        <div class="btn" @click="preSubmit">确认{{ offset == 'buy' ? '买入' : '卖出' }}</div>
+        <div class="btn" @click="preSubmit">{{ $t('确认') }}{{ offset == 'buy' ? t('买入') : t('卖出') }}</div>
       </div>
     </div>
   </Popup>
@@ -85,7 +85,7 @@
   <!-- 订单弹窗 -->
   <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
     <div class="buycoin_orderinfo_dialog">
-      <div class="orderinfo_dialog_title">订单详情</div>
+      <div class="orderinfo_dialog_title">{{ $t('订单详情') }}</div>
       <OrderInfo />
     </div>
   </Popup>
@@ -96,10 +96,10 @@
       <div class="close_icon" @click="showDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
-      <div class="title">币种选择</div>
+      <div class="title">{{ $t('币种选择') }}</div>
       <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item" :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
         <div class="icon">
-          <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency" />
+          <img :src="handleUrl(item.name)" alt="currency" />
         </div>
         <span>{{ item.name.toUpperCase() }}</span>
         <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />
@@ -107,12 +107,12 @@
     </div>
   </Popup>
   <!-- 加密币种 -->
-  <Popup v-model:show="showDialog2" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
+  <!-- <Popup v-model:show="showDialog2" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog2 = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
-      <div class="title">币种选择</div>
+      <div class="title">{{ $t('币种选择') }}</div>
       <div v-for="(item, i) in dryptoWallet" :key="i" class="swap_dialog_item" :class="{ swap_dialog_item_active: currCrypto.name == item.name }" @click="clickCrypto(item)">
         <div class="icon">
           <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency" />
@@ -121,7 +121,7 @@
         <Icon v-if="currCrypto.name == item.name" class="check_icon" name="success" />
       </div>
     </div>
-  </Popup>
+  </Popup> -->
 
   <!-- 账户选择弹窗 -->
   <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
@@ -129,11 +129,11 @@
       <div class="close_icon" @click="showAccountDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
-      <div class="title">账户选择</div>
+      <div class="title">{{ $t('账户选择') }}</div>
       <div class="list">
         <div class="add_item" @click="goAddAccount">
           <Icon style="font-size: 0.48rem" name="add-o" />
-          <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">添加收款账户</span>
+          <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">{{ $t('添加收款账户') }}</span>
         </div>
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }" class="dialog_account_item" @click="clickAccountItem(item)">
           <div class="card_icon">
@@ -168,12 +168,13 @@ import router from '@/router'
 import { _hiddenAccount } from '@/utils/index'
 import SafePassword from '@/components/SafePassword.vue'
 import IconSvg from '@/components/IconSvg.vue'
-import { useSessionStorage } from '@/utils/hooks'
+import { useBuyCoinState } from './state'
 
 const { userInfo, token, deWeightCurrencyList: currencyList, accountList, sessionToken } = useMapState(['userInfo', 'token', 'deWeightCurrencyList', 'accountList', 'sessionToken'])
-const [buycoinScrollTop1] = useSessionStorage('buycoinScrollTop1')
-const active = inject('active')
+const buycoinScrollTop1 = useSessionStorage('buycoinScrollTop1')
+const { active, handleUrl } = useBuyCoinState()
 const scrollTop = inject('scrollTop')
+const { t } = useI18n()
 const safeRef = ref()
 const showPopupInfo = ref(false)
 const showDialog = ref(false)
@@ -195,7 +196,6 @@ const offset = ref(sessionStorage.getItem('buycoin_offset') || 'buy')
 const currCurrency = ref({}) // 计价货币
 if (fiatWallet.value[0]) currCurrency.value = fiatWallet.value[0]
 const currCrypto = ref({}) // 加密货币
-const currCryptoRef = ref(null) // 加密货币
 
 // 表单弹窗
 const showFormDialog = ref(false)
@@ -296,7 +296,7 @@ const submitSell = s => {
   _buysell(params)
     .then(res => {
       if (res.code == 200) {
-        showToast('下单成功')
+        showToast(t('下单成功'))
       }
     })
     .finally(() => {
@@ -374,7 +374,6 @@ onActivated(() => {
 })
 onMounted(() => {
   init()
-  currCryptoRef.value.scrollTo(currCrypto.value.name)
   setTimeout(() => {
     moreDom = document.querySelector('.buycoin_buss')
   }, 500)
@@ -390,8 +389,8 @@ const goAddAccount = () => {
   // google检测
   if (!userInfo.value.googlebind) {
     return showConfirmDialog({
-      title: '谷歌验证器',
-      message: '你还未绑定谷歌验证器，是否去绑定?',
+      title: t('谷歌验证器'),
+      message: t('你还未绑定谷歌验证器，是否去绑定?'),
     }).then(() => {
       jump('google')
     })

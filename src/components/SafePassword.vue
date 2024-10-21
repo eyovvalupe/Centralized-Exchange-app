@@ -3,7 +3,7 @@
   <Popup
     v-model:show="show"
     :safe-area-inset-top="true"
-    close-on-click-overlay
+    :close-on-click-overlay="false"
     :safe-area-inset-bottom="true"
     class="self_van_popup"
     position="bottom"
@@ -14,8 +14,8 @@
     <!--  :class="{ 'typing_dialog': showKeyboard }" -->
     <div class="safepassword_dialog" :class="{ safepassword_dialog_uncloseabled: !props.closeable }">
       <slot name="top" />
-      <div class="main_title">交易密码</div>
-      <div class="title">交易密码</div>
+      <div class="main_title">{{ $t('交易密码') }}</div>
+      <div class="title">{{ $t('交易密码') }}</div>
       <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
       <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
@@ -25,7 +25,7 @@
           v-model="val"
           :type="passwordInputType"
           :class="{ err_ipt: errStatus }"
-          placeholder="请输入交易密码"
+          :placeholder="$t('请输入交易密码')"
           class="pass_ipt"
           enterkeyhint="done"
           @blur="errStatus = false"
@@ -36,8 +36,10 @@
       </div>
 
       <div class="btns">
-        <Button round color="white" class="btn" type="primary" @click="close"><span style="color: #666d80">取消</span></Button>
-        <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">确定</Button>
+        <Button round color="white" class="btn" type="primary" @click="close">
+          <span style="color: #666d80">{{ $t('取消') }}</span>
+        </Button>
+        <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">{{ $t('确定') }}</Button>
       </div>
     </div>
   </Popup>
@@ -54,6 +56,7 @@ const props = defineProps({
   },
 })
 const emits = defineEmits(['submit'])
+const { t } = useI18n()
 const iptDom = ref()
 const errStatus = ref(false)
 const loading = ref(false)
@@ -91,7 +94,7 @@ const passwordInputType = computed(() => (showPassword.value ? 'text' : 'passwor
 const submit = () => {
   if (!val.value) {
     errStatus.value = true
-    showToast('请输入密码')
+    showToast(t('请输入密码'))
     return
   }
   close()

@@ -1366,6 +1366,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/web-bluetooth@^0.0.20":
+  version "0.0.20"
+  resolved "https://registry.npmmirror.com/@types/web-bluetooth/-/web-bluetooth-0.0.20.tgz"
+  integrity sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==
+
 "@types/ws@^8.5.5":
   version "8.5.12"
   resolved "https://registry.npmmirror.com/@types/ws/-/ws-8.5.12.tgz"
@@ -1757,6 +1762,28 @@
   version "1.3.0"
   resolved "https://registry.npmmirror.com/@vue/web-component-wrapper/-/web-component-wrapper-1.3.0.tgz"
   integrity sha512-Iu8Tbg3f+emIIMmI2ycSI8QcEuAUgPTgHwesDU1eKMLE4YC/c/sFbGc70QgMq31ijRftV0R7vCm9co6rldCeOA==
+
+"@vueuse/core@^11.1.0":
+  version "11.1.0"
+  resolved "https://registry.npmmirror.com/@vueuse/core/-/core-11.1.0.tgz"
+  integrity sha512-P6dk79QYA6sKQnghrUz/1tHi0n9mrb/iO1WTMk/ElLmTyNqgDeSZ3wcDf6fRBGzRJbeG1dxzEOvLENMjr+E3fg==
+  dependencies:
+    "@types/web-bluetooth" "^0.0.20"
+    "@vueuse/metadata" "11.1.0"
+    "@vueuse/shared" "11.1.0"
+    vue-demi ">=0.14.10"
+
+"@vueuse/metadata@11.1.0":
+  version "11.1.0"
+  resolved "https://registry.npmmirror.com/@vueuse/metadata/-/metadata-11.1.0.tgz"
+  integrity sha512-l9Q502TBTaPYGanl1G+hPgd3QX5s4CGnpXriVBR5fEZ/goI6fvDaVmIl3Td8oKFurOxTmbXvBPSsgrd6eu6HYg==
+
+"@vueuse/shared@11.1.0":
+  version "11.1.0"
+  resolved "https://registry.npmmirror.com/@vueuse/shared/-/shared-11.1.0.tgz"
+  integrity sha512-YUtIpY122q7osj+zsNMFAfMTubGz0sn5QzE5gPzAIiCmtt2ha3uQUY1+JPyL4gRCTsLPX82Y9brNbo/aqlA91w==
+  dependencies:
+    vue-demi ">=0.14.10"
 
 "@webassemblyjs/ast@1.12.1", "@webassemblyjs/ast@^1.12.1":
   version "1.12.1"
@@ -6363,6 +6390,11 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.npmmirror.com/vary/-/vary-1.1.2.tgz"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
+
+vue-demi@>=0.14.10:
+  version "0.14.10"
+  resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.14.10.tgz"
+  integrity sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==
 
 vue-eslint-parser@^8.0.1:
   version "8.3.0"

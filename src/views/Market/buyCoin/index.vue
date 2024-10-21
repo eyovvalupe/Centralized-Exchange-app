@@ -1,18 +1,18 @@
 <!-- 买币 -->
 <template>
   <div class="page-buycoin">
-    <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated color="#014CFA" shrink @change="onChange">
-      <Tab title="快捷区" name="0">
+    <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated color="#014CFA" shrink @change="e => onChange(e)">
+      <Tab :title="$t('快捷区')" name="0">
         <Faster />
       </Tab>
-      <Tab title="自选区" name="1">
+      <Tab :title="$t('自选区')" name="1">
         <Self ref="selfRef" />
       </Tab>
-      <Tab title="我的订单" name="2">
+      <Tab :title="$t('我的订单')" name="2">
         <List ref="listRef" />
         <template #title>
           <div class="tab_item">
-            <span>我的订单</span>
+            <span>{{ $t('我的订单') }}</span>
             <div v-if="store.state.c2cUnreadTotal > 0" class="nav_num">{{ store.state.c2cUnreadTotal }}</div>
           </div>
         </template>
@@ -34,7 +34,7 @@ import Faster from './Faster.vue'
 import List from './List.vue'
 import Self from './Self.vue'
 import store from '@/store'
-import { useSessionStorage } from '@/utils/hooks'
+import { useBuyCoinState } from './state'
 /* eslint-enable */
 const { startSocket } = useSocket()
 const token = computed(() => store.state.token)
@@ -42,13 +42,10 @@ const scrollTop = inject('scrollTop')
 const positionValue = ref('relative')
 // 订阅
 const currLoading = ref(false)
-const listRef = ref()
-const selfRef = ref()
-const active = ref(sessionStorage.getItem('buycoinActive') || 0)
-let active2
-provide('active', active)
-const [buycoinScrollTop1, setBuycoinScrollTop1, removeBuycoinScrollTop1] = useSessionStorage('buycoinScrollTop1')
-const [buycoinScrollTop2, setBuycoinScrollTop2, removeBuycoinScrollTop2] = useSessionStorage('buycoinScrollTop2')
+const buycoinScrollTop1 = useSessionStorage('buycoinScrollTop1')
+const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
+const { active, selfRef, listRef, onChange } = useBuyCoinState()
+
 const subs = () => {
   const socket = startSocket(() => {
     socket && socket.off('user')
@@ -57,10 +54,13 @@ const subs = () => {
     socket && socket.emit('c2corder', '#all')
     currLoading.value = true
     store.commit('setC2cList', [])
-    socket.on('c2corder', res => {
-      store.commit('setC2cList', res.data || [])
-      currLoading.value = false
-    })
+    socket.on(
+      'c2corder',
+      useThrottleFn(res => {
+        store.commit('setC2cList', res.data || [])
+        currLoading.value = false
+      }, 500)
+    )
   })
 }
 // 取消订阅
@@ -73,34 +73,14 @@ const cancelSubs = () => {
   })
 }
 
-const onChange = i => {
-  active2 = i
-  sessionStorage.setItem('buycoinActive', i)
-  const page2 = document.querySelector('.page')
-  switch (i) {
-    case '1':
-      nextTick(() => {
-        page2.scrollTop = buycoinScrollTop1.value
-        selfRef.value?.init()
-      })
-      break
-    case '2':
-      nextTick(() => {
-        page2.scrollTop = buycoinScrollTop2.value
-        listRef.value?.init()
-      })
-      break
-  }
-}
-
 const pageLoading = ref(true)
 
-watch(
-  () => active.value,
-  newValue => {
-    if (newValue !== active2) onChange(active.value)
-  }
-)
+// watch(
+//   () => active.value,
+//   newValue => {
+//     if (newValue !== active2) onChange(active.value)
+//   }
+// )
 watch(
   () => store.state.bottomTabBarValue,
   newValue => {
@@ -125,10 +105,10 @@ watch(
     }
     switch (active.value) {
       case '1':
-        setBuycoinScrollTop1(val)
+        buycoinScrollTop1.value = val
         break
       case '2':
-        setBuycoinScrollTop2(val)
+        buycoinScrollTop2.value = val
         break
     }
   }
@@ -142,8 +122,8 @@ onMounted(() => {
   }
 })
 onUnmounted(() => {
-  removeBuycoinScrollTop1()
-  removeBuycoinScrollTop2()
+  buycoinScrollTop1.value = null
+  buycoinScrollTop2.value = null
   cancelSubs()
 })
 </script>

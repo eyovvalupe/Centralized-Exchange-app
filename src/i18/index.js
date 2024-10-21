@@ -20,6 +20,8 @@ const i18n = createI18n({
   globalInjection: true,
   locale,
   messages,
+  missingWarn: false, // 关闭缺失键的警告
+  fallbackWarn: false, // 关闭回退键的警告
 })
 
 export default i18n

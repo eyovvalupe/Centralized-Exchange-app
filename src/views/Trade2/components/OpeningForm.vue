@@ -190,7 +190,7 @@
                     <span @click="putAll"
                         :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
                         style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
-                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false"
+                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false;amountBlur()"
                         @change="changePercent" type="number" class="ipt">
                 </div>
             </div>
@@ -272,7 +272,9 @@
 
             <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
-                <input v-model="safePass" placeholder="请输入交易密码" type="password" class="ipt">
+                <input v-model="safePass" placeholder="请输入交易密码" :type="showPassword ? 'text' : 'password'" class="ipt" />
+                <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword=true" alt="off" />
+                <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword=false" />
             </div>
             <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="#014cfa"
                 round>开仓</Button>
@@ -343,7 +345,7 @@
 
 <script setup>
 import { Loading, Slider, Button, showToast, Popup, ActionSheet, Picker } from "vant";
-import { ref, computed } from "vue"
+import { ref, computed, watch, nextTick } from "vue"
 import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api"
 import store from "@/store";
 import Decimal from 'decimal.js';
@@ -361,6 +363,8 @@ const goLogin = () => {
     //     eventBus.off('loginSuccess')
     // })
 }
+
+const showPassword = ref(false)
 
 const safeRef = ref()
 
@@ -534,6 +538,7 @@ try {
     currStock.value = {}
 }
 
+
 const form1 = ref({
     leverType: 'cross',
     lever: 1,
@@ -692,6 +697,14 @@ const changePercent = () => {
     if (p > 100) p = 100
     sliderValue.value = Number(p)
 }
+
+const amountBlur = ()=>{
+    nextTick(()=>{
+        if(form1.value.volume > maxStockNum.value){
+            form1.value.volume = maxStockNum.value
+        }
+    })
+}
 // 市价-搜索
 const searchLoading = ref(false)
 const searchFocus = ref(false)
@@ -779,7 +792,9 @@ const levers = ref([1]) // 杠杆
 const getParam = () => {
     configLoading.value = true
     paramHandle()
-    _stocksPara().then(res => {
+    _stocksPara({
+        symbol:currStock.value.symbol
+    }).then(res => {
         if (res && res.data) {
             paramHandle(res.data)
         }
@@ -809,6 +824,8 @@ const paramHandle = data => {
         closeFee.value = arr2[1] || 0
         flowerFee.value = arr2[2] || 0
     }
+    form1.value.volume = ''
+    sliderValue.value = 0
     if (data.lever) {
         levers.value = data.lever.split(',')
         if (levers.value[0]) {
@@ -816,8 +833,25 @@ const paramHandle = data => {
         }
     }
 }
-getParam()
 
+const initParam = ()=>{
+    if(currStock.value.symbol){
+        getParam()
+    }else{
+        min.value = 0
+        step.value = 1
+        openFee.value = 0
+        closeFee.value = 0
+        flowerFee.value = 0
+        configLoading.value = false
+        levers.value = [1]
+    }
+}
+initParam()
+
+watch(currStock,()=>{
+   initParam()
+})
 
 
 // 开仓
@@ -1167,6 +1201,16 @@ defineExpose({
         height: 1.12rem;
         padding: 0.16rem 0.32rem;
         box-sizing: border-box;
+        position: relative;
+        img {
+            width: 0.4rem;
+            height: 0.4rem;
+            position: absolute;
+            right: 0.32rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 9999;
+        }
     }
 
     .money_box {

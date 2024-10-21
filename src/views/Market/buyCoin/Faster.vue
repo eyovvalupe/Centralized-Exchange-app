@@ -3,15 +3,15 @@
   <div class="page_fasters">
     <div class="form">
       <div class="tabs">
-        <div class="tab" :class="{ active_tab: form1.offset == 'buy' }" @click="changeTab('buy')">买入</div>
-        <div class="tab" :class="{ active_tab: form1.offset == 'sell' }" @click="changeTab('sell')">卖出</div>
+        <div class="tab" :class="{ active_tab: form1.offset == 'buy' }" @click="changeTab('buy')">{{ $t('买入') }}</div>
+        <div class="tab" :class="{ active_tab: form1.offset == 'sell' }" @click="changeTab('sell')">{{ $t('卖出') }}</div>
       </div>
 
       <!-- 售出 -->
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>{{ form1.offset == 'buy' ? '买入' : '卖出' }}</span>
+            <span>{{ form1.offset == 'buy' ? t('收到') : t('卖出') }}</span>
             <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
@@ -44,7 +44,9 @@
       <!-- 收到 -->
       <div class="item_box">
         <div class="item_box_left">
-          <div class="subtitle"><span>收到</span></div>
+          <div class="subtitle">
+            <span>{{ form1.offset == 'buy' ? t('支付') : t('收到') }}</span>
+          </div>
           <div class="item">
             {{ getMoney }}
           </div>
@@ -54,7 +56,7 @@
           <div class="item justify-between" :class="{ item_focus: priceFocus }" style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
             <div class="flex items-center">
               <div v-if="currIn.name" class="icon">
-                <img class="rounded-50" :src="`/static/img/crypto/${currIn.name.toUpperCase()}.png`" alt="currency" />
+                <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
               </div>
               <span>{{ currIn.name || '--' }}</span>
             </div>
@@ -64,9 +66,9 @@
           </div>
         </div>
       </div>
-      <div v-if="rate" class="tip">预计价格&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
+      <div v-if="rate" class="tip">{{ $t('预计价格') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
 
-      <Button size="large" class="submit" round :loading="loading" :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? '卖出' : '买入' }}</Button>
+      <Button size="large" class="submit" round :loading="loading" :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? t('卖出') : t('买入') }}</Button>
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
       <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
@@ -83,9 +85,9 @@
         <div class="icon">
           <img src="/static/img/common/search.png" alt="🔍" />
         </div>
-        <input ref="iptRef" v-model.trim="searchValue" placeholder="输入币种" type="text" enterkeyhint="search" class="search" />
+        <input ref="iptRef" v-model.trim="searchValue" :placeholder="$t('输入币种')" type="text" enterkeyhint="search" class="search" />
       </div>
-      <div class="title">币种选择</div>
+      <div class="title">{{ $t('币种选择') }}</div>
       <div
         v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet"
         :key="i"
@@ -94,7 +96,7 @@
         @click="clickItem(item)"
       >
         <div class="icon">
-          <img class="rounded-50" :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency" />
+          <img class="rounded-50" :src="handleUrl(item.name)" alt="currency" />
         </div>
         <span>{{ item.name.toUpperCase() }}</span>
         <Icon v-if="showDialogType == 1 ? currOut.name == item.name : currIn.name == item.name" class="check_icon" name="success" />
@@ -102,7 +104,7 @@
     </div>
   </Popup>
 
-  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" @on-add-collection="clickAccountItem" />
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank" @on-add-collection="clickAccountItem" />
 
   <!-- 安全密码弹窗 -->
   <SafePassword ref="safeRef" @submit="submitSell" />
@@ -110,7 +112,7 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
-import { Button, Popup, Icon, showToast } from 'vant'
+import { Button, Popup, Icon, showToast, showConfirmDialog } from 'vant'
 import Decimal from 'decimal.js'
 import store, { useMapState } from '@/store'
 // import router from '@/router'
@@ -119,15 +121,14 @@ import { _swapRate, _orderFast } from '@/api/api'
 import SafePassword from '@/components/SafePassword.vue'
 import eventBus from '@/utils/eventBus'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
+import { useBuyCoinState } from './state'
+import router from '@/router'
 
-const active = inject('active')
+const { onChange, handleUrl } = useBuyCoinState()
 const safeRef = ref()
 const { sessionToken, token, deWeightCurrencyList: currencyList } = useMapState(['sessionToken', 'token', 'deWeightCurrencyList'])
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
-// const accountList = computed(() => store.state.accountList || []) // 收款方式列表
-// const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
-// const userInfo = computed(() => store.state.userInfo || {})
-// const currencyList = computed(() => store.state.deWeightCurrencyList || [])
+const { t } = useI18n()
 const searchValue = ref('')
 // 售出
 const loading = ref(false)
@@ -139,7 +140,6 @@ const form1 = ref({
   currency: '',
   account_id: '',
 })
-
 const currOut = ref({}) // 当前售出钱包
 const currIn = ref({}) // 当前收到钱包
 
@@ -172,9 +172,26 @@ const inWallet = computed(() => {
 // 购买按钮触发
 const sell = () => {
   if (!token.value) return store.commit('setIsLoginOpen', true)
-  if (!form1.value.volume || form1.value.volume <= 0) return showToast('请输入金额')
+  if (!form1.value.volume || form1.value.volume <= 0) return showToast(t('请输入金额'))
   if (form1.value.offset == 'sell') {
-    if (form1.value.volume > currOut.value.amount) return showToast('余额不足')
+    if (form1.value.volume > currOut.value.amount) {
+      showConfirmDialog({
+        title: '提示',
+        message: '钱包余额不足，请充值或划转账户',
+        cancelButtonText: '去充值',
+        confirmButtonText: '去划转',
+        cancelButtonColor: 'var(--main-color)',
+        confirmButtonColor: 'var(--main-color)',
+        closeOnClickOverlay: !0,
+      })
+        .then(() => {
+          router.push({ name: 'transfer' })
+        })
+        .catch(() => {
+          router.push({ name: 'topUpCrypto' })
+        })
+      return
+    }
     showAccountDialog.value = true
   } else {
     safeRef.value.open()
@@ -192,10 +209,9 @@ const submitSell = s => {
     safeword: s,
   }
   _orderFast(params)
-    .then(res => {
-      showToast('买入成功')
-      active.value = '2'
-      console.error('???', res)
+    .then(() => {
+      // showToast(t('买入成功'))
+      onChange('2')
     })
     .finally(() => {
       loading.value = false
