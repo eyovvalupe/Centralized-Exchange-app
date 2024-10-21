@@ -14,6 +14,11 @@ module.exports = {
     }, {}),
 
     extend: {
+      backgroundColor: {
+        'custom_green': '#18b762',
+        'custom_red': '#e8503a',
+        'custom_blue': '#7e99d6'
+      },
       fontFamily : {
         'alibaba' : ['AlibabaPuHuiTi', 'sans-serif'],
       },

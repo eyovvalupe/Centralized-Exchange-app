@@ -44,13 +44,12 @@
         </div>
       </div> -->
 
-      <div class="total_title">
-        <span>市场涨跌分布</span>
-        <span
-          v-if="!overviewLoading || count"
-          style="color: #121826; margin-left: 0.1rem"
-          >总计 {{ count }}</span
-        >
+      <div class="total_title flex flex-row justify-between">
+        <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">涨跌分布</span>
+        <div>
+            <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]">上涨：2998</span>
+            <span class="text-[0.28rem] text-[#e8503a]">下跌：1995</span>
+        </div>
       </div>
       <Loading
         v-if="overviewLoading && !count"
@@ -62,7 +61,7 @@
           <div class="table_item" v-for="(key, i) in keySoft" :key="key">
             <div
               class="table_item_num"
-              :class="[i == 5 ? '' : i < 5 ? 'item_red' : 'item_green']"
+              :class="[i == 5 ? 'item_center' : i < 5 ? 'item_green' : 'item_red']"
             >
               {{ overview[key] }}
             </div>
@@ -70,6 +69,8 @@
               class="table_item_bar"
               :style="{
                 height: getHeight(key) + 'rem',
+                borderTopLeftRadius: `${getHeight(key) > 0.48 ? 0.24 : getHeight(key) > 0.15 ? getHeight(key) : 0.15}rem`,
+                borderTopRightRadius: `${getHeight(key) > 0.48 ? 0.24 : getHeight(key) > 0.15 ? getHeight(key) : 0.15}rem`,
                 backgroundColor: bgColors[i],
               }"
             ></div>
@@ -155,7 +156,7 @@
 import { Tab, Tabs, ActionSheet } from "vant";
 import StockTable from "@/components/StockTable.vue";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { _sort, _marketOverview, _exchange } from "@/api/api";
+import { _sort, _marketOverview } from "@/api/api";
 import store from "@/store";
 import { _add, _del } from "@/api/api";
 import Recommend from "@/views/Home/components/Recommend.vue";
@@ -296,17 +297,17 @@ const getData = (list, key, query, listKey) => {
 const count = ref(0);
 const keySoft = ref([5, 4, 3, 2, 1, 0, "-1", "-2", "-3", "-4", "-5"]);
 const bgColors = ref([
-  "#F4AEAD",
-  "#F4AEAD",
-  "#F08685",
-  "#EF4444",
-  "#E8503A",
-  "#87878C",
-  "#18B762",
-  "#4ABA63",
-  "#77CC8A",
-  "#A4DDB0",
-  "#D2EED7",
+  "#18b762",
+  "#18b762",
+  "#18b762",
+  "#18b762",
+  "#18b762",
+  "#7e99d6",
+  "#e8503a",
+  "#e8503a",
+  "#e8503a",
+  "#e8503a",
+  "#e8503a",
 ]);
 const overview = ref({
   5: 0,
@@ -389,18 +390,6 @@ const getOverviewData = () => {
       overviewLoading.value = false;
     });
 };
-// 获取交易所类型
-const getExchange = () => {
-  _exchange().then((res) => {
-    if (res.data) {
-      currAs.value = res.data;
-      actionsMap.value.push(res.data);
-      const arr = res.data.split(",");
-      actionsMap.value.push(...arr);
-    }
-  });
-};
-getExchange();
 
 const initData = () => {
   // changeTab(active.value)
@@ -548,6 +537,10 @@ onBeforeUnmount(() => {
           color: #fc6c6b;
         }
 
+        .item_center {
+            color: #7e99d6
+        }
+
         .item_green {
           color: #19c09a;
         }
@@ -557,12 +550,10 @@ onBeforeUnmount(() => {
         }
 
         .table_item_bar {
-          min-height: 5px;
-          height: 5px;
+          min-height: 0.15rem;
+          height: 0.15rem;
           background-color: #87878c;
           transition: all ease 0.3s;
-          border-top-left-radius: 0.08rem;
-          border-top-right-radius: 0.08rem;
           margin: 0.08rem 0;
         }
       }
