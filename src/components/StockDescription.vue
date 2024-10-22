@@ -78,6 +78,7 @@
     }
 
     .stock_detail {
+        width: 100%;
       font-size: 0.24rem;
       font-weight: 400;
       color: #18b762;
@@ -94,6 +95,7 @@
     }
 
     .stock_detail {
+        width: 100%;
       font-size: 0.24rem;
       font-weight: 400;
       color: #e8503a;

@@ -36,14 +36,6 @@
     </div>
 
     <div class="total_box">
-      <!-- 类型 -->
-      <!-- <div class="type_box" v-if="currAs" @click="showAS = true">
-        <span>{{ currAs }}</span>
-        <div class="type_icon">
-          <img src="/static/img/common/menu.png" alt="img" />
-        </div>
-      </div> -->
-
       <div class="total_title flex flex-row justify-between">
         <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">涨跌分布</span>
         <div>
@@ -75,21 +67,17 @@
               }"
             ></div>
             <div
-              class="table_item_name"
-              :class="{ item_red: i == 0, item_green: i == 10 }"
+              class="table_item_name flex flex-row justify-center align-items-center"
+              :class="{ item_green: i == 0, item_red: i == 10 }"
             >
-              {{ overviewTitleMap[key] }}
+                {{ overviewTitleMap[key] }}
             </div>
           </div>
         </div>
-        <div class="table_tabs">
-          <div class="table_tab start_tab" :style="{ flex: getFlex(1) }">
-            <div class="left_radius"></div>
-          </div>
-          <div class="table_tab mid_tab" :style="{ flex: getFlex(0) }"></div>
-          <div class="table_tab end_tab" :style="{ flex: getFlex(-1) }">
-            <div class="right_radius"></div>
-          </div>
+        <div class="table_tabs flex flex-row justify-between">
+            <div class="bg-custom_green w-[3.04rem] h-[0.2rem]"></div>
+            <div class="bg-custom_blue w-[0.48rem]"></div>
+            <div class="bg-custom_red w-[3.04rem] h-[0.2rem]"></div>
         </div>
       </div>
     </div>
@@ -481,20 +469,12 @@ onBeforeUnmount(() => {
       }
     }
   }
-  // padding-bottom: 0.6rem;
-  // height: 100%;
-  // overflow-y: auto;
-
-  // .tabs {
-  //     :deep(.van-tabs__wrap) {
-  //         border-bottom: 1px solid rgba(59, 130, 246, 0.3) !important;
-  //         padding-bottom: 0 !important;
-  //     }
-  // }
 
   .total_box {
-    margin: 0.32rem;
+    padding: 0.48rem 0.32rem;
     position: relative;
+    background-image: linear-gradient(to bottom, #ffffff, #f5f7fc);
+    border-radius: 0.64rem;
 
     .type_box {
       position: absolute;
@@ -546,66 +526,31 @@ onBeforeUnmount(() => {
         }
 
         .table_item_num {
-          font-size: 0.2rem;
+          font-size: 0.22rem;
+          line-height: 0.308rem;
         }
 
         .table_item_bar {
           min-height: 0.15rem;
-          height: 0.15rem;
           background-color: #87878c;
           transition: all ease 0.3s;
-          margin: 0.08rem 0;
+        }
+
+        .table_item_name {
+            font-size: 0.22rem;
+            line-height: 0.308rem;
+            height: 0.36rem;
+            align-items: center;
         }
       }
     }
 
     .table_tabs {
-      margin-top: 0.08rem;
-      height: 0.16rem;
+      height: 0.2rem;
       display: flex;
       align-items: stretch;
-      padding: 0 0.12rem;
-
-      .table_tab {
-        transform: skew(-30deg);
-        position: relative;
-      }
-
-      .start_tab {
-        background-color: #e8503a;
-
-        .left_radius {
-          background-color: #e8503a;
-          height: 0.16rem;
-          width: 0.5rem;
-          border-top-left-radius: 0.16rem;
-          border-bottom-left-radius: 0.16rem;
-          position: absolute;
-          left: -0.12rem;
-          transform: skew(30deg);
-        }
-      }
-
-      .end_tab {
-        background-color: #18b762;
-
-        .right_radius {
-          background-color: #18b762;
-          height: 0.16rem;
-          width: 0.5rem;
-          border-top-right-radius: 0.16rem;
-          border-bottom-right-radius: 0.16rem;
-          position: absolute;
-          right: -0.12rem;
-          transform: skew(30deg);
-        }
-      }
-
-      .mid_tab {
-        background-color: #d9d9d9;
-        margin: 0 0.08rem;
-        transform: skew(-30deg);
-      }
+      border-radius: 0.1rem;
+      overflow: hidden;
     }
   }
 }

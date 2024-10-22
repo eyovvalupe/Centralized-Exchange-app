@@ -1,9 +1,12 @@
 <!-- 首页 -->
 <template>
-  <div class="page page_home">
+  <div class="page_home">
     <!-- 顶部 -->
-    <div class="top_box">
-      <div class="funcs">
+    <div class="top_box relative">
+      <div class="absolute left-0 top-0">
+      <img src = "/static/img/home/back1.png" alt = "img" />
+    </div>
+      <div class="funcs relative">
         <!-- style="padding: 0.2rem 0.32rem 1rem 0.32rem;" -->
         <div class="user_box">
           <!-- <img
@@ -63,7 +66,7 @@
       </div>
     </div>
     <div
-      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between"
+      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between relative"
     >
       <div class="flex items-center gap-2">
         <div class="custom-lock-small-icon"></div>
@@ -79,7 +82,7 @@
         v-show="!token"
       >
         <div
-          class="w-[1.36rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
+          class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
           @click="store.commit('setIsLoginOpen', true)"
         >
           登录
@@ -413,10 +416,6 @@ const jump = (name, needToken) => {
   }
 
   .top_box {
-    background-image: url("/public/static/img/home/back1.png");
-    background-size: cover;
-    // background-repeat: no-repeat;
-    // background-position: center;
     padding: 0.2rem 0.32rem 0.32rem;
     min-height: 7rem;
     .funcs {
@@ -428,7 +427,6 @@ const jump = (name, needToken) => {
       .user_box {
         width: 0.8rem;
         height: 0.8rem;
-        background-color: #d9d9d9;
         border-radius: 50%;
         display: flex;
         align-items: center;
