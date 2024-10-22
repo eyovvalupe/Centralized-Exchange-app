@@ -90,7 +90,7 @@ import Top from '@/components/Top.vue'
 import store, { useMapState } from '@/store'
 import SafePassword from '@/components/SafePassword.vue'
 import router from '@/router'
-import { _buysell, _swapRate } from '@/api/api'
+import { _buysell } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 import { useBuyCoinState } from './state'
@@ -109,7 +109,6 @@ const title = ref(route.query.offset == 'buy' ? t('买入') : t('卖出'))
 const loading = ref(false)
 const info = ref(route.query || {})
 const amount = ref('')
-// ref('--')
 const showAmount = computed(() => {
   if (!amount.value || amount.value <= 0) return '--'
   if (info.value.offset == 'buy') {
@@ -167,18 +166,6 @@ const submitSell = s => {
       }, 1000)
       getSessionToken()
     })
-}
-const getRate = () => {
-  showAmount.value = '--'
-  _swapRate({
-    from: info.value.currCrypto,
-    to: info.value.currWallet,
-    amount: amount.value,
-  }).then(res => {
-    if (res.data.exchange_rate) {
-      showAmount.value = res.data.exchange_rate
-    }
-  })
 }
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')

@@ -1,9 +1,29 @@
 <!-- 首页 -->
 <template>
-  <div class="page page_home">
+  <div class="page_home">
     <!-- 顶部 -->
-    <div class="top_box">
-      <div class="funcs">
+    <div class="top_box relative">
+      <div
+        class="flex transition-transform ease-out duration-700 absolute left-0 top-0"
+        :style="`transform: translateX(-${
+          slideIndex * 100
+        }%) ; animation: rotateImages 6s linear infinite;`"
+      >
+        <!-- <div class="flex-shrink-0 w-full">
+          <img :src="slides[slides.length - 1]" class="w-full" alt="img" />
+        </div> -->
+        <div
+          v-for="(slide, index) in slides.concat(slides)"
+          :key="index"
+          class="flex-shrink-0 w-full"
+        >
+          <img :src="slide" class="w-full" alt="img" />
+        </div>
+        <!-- <div class="flex-shrink-0 w-full">
+          <img :src="slides[0]" class="w-full" alt="img" />
+        </div> -->
+      </div>
+      <div class="funcs relative">
         <!-- style="padding: 0.2rem 0.32rem 1rem 0.32rem;" -->
         <div class="user_box">
           <!-- <img
@@ -25,11 +45,11 @@
         </div>
       </div>
       <div class="pl-[0.285rem] mt-[1.25rem]">
-        <div
+        <!-- <div
           class="text-[#014CFA] font-[1000] text-[0.4rem] w-[5.14rem] h-[0.72rem] bg-gradient-to-r from-blue-400 to-white rounded-r-3xl justify-center flex items-center mb-[0.24rem] font-alibaba"
         >
           Newcomer Registration
-        </div>
+        </div> -->
         <!-- <div
           class="font-medium text-[0.32rem] text-white mb-[0.16rem] font-alibaba"
         >
@@ -54,16 +74,16 @@
             + USDT
           </span>
         </div> -->
-        <div
+        <!-- <div
           class="w-[2.2rem] h-[0.7rem] rounded-[1rem] text-[white] bg-gradient-to-b from-blue-400 to-blue-800 items-center flex justify-center gap-3 mt-[1.924rem]"
         >
           Register
           <div class="custom-arrow-icon"></div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div
-      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between"
+      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between relative"
     >
       <div class="flex items-center gap-2">
         <div class="custom-lock-small-icon"></div>
@@ -74,12 +94,13 @@
       <div class="text-[0.24rem] text-[#7B7B7B]">10/16 16:10</div>
     </div>
     <div class="relative m-[0.32rem]">
+      <!--//////////////////////////////////-->
       <div
         class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
         v-show="!token"
       >
         <div
-          class="w-[1.36rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
+          class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
           @click="store.commit('setIsLoginOpen', true)"
         >
           登录
@@ -139,9 +160,10 @@
           {{ openEye ? assets.total : "*******" }}
         </div>
       </div>
-      <div class="flex mt-[0.32rem] justify-between">
+      <!--//////////////////////////////////-->
+      <div class="flex mt-[0.32rem] justify-between mb-[0.32rem]">
         <div
-          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
+          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
         >
           <div class="w-1/2 absolute bottom-0 right-0">
             <img src="/static/img/home/hand.svg" img="img" />
@@ -158,20 +180,102 @@
           </div>
         </div>
         <div
-          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] via-[#F5F7FC] to-[#F5F7FC]"
+          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC]"
         >
-          <div class="flex items-center justify-between px-[0.32rem] pt-[0.32rem]">
+          <div
+            class="flex items-center justify-between px-[0.32rem] py-[0.24rem]"
+          >
             <div class="flex items-center gap-1">
               <div class="font-bold text-[0.32rem]">热卖</div>
               <div class="custom-heart-icon"></div>
             </div>
             <div class=""></div>
           </div>
-          <div class="bg-[#FFF]"></div>
+          <div
+            class="bg-[#FFF] w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.32rem]"
+          >
+            <div class="text-[font-bold] text-[15px] mb-[0.32rem]">
+              BTC/USDT
+            </div>
+            <div class="flex justify-between mb-[0.32rem]">
+              <div class="text-[#18B762] text-[0.3rem] font-bold">465.5</div>
+              <div class="text-[#18B762] text-[0.3rem]">+1.72%</div>
+            </div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+      <!--//////////////////////////////////-->
+      <div class="flex w-full h-[2.18rem] border-[0.02rem] border-[#EFF3F8] bg-[#F5F7FC] rounded-[0.32rem] mb-[0.32rem]">
+        <div
+          class="flex flex-col items-center justify-center bg-white border-[0.02rem] rounded-[0.32rem] border-[#EFF3F8] w-[1.04rem]"
+        >
+          <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">今日</div>
+          <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">指数</div>
+          <div class="text[0.24rem] text-[#666D80]">10/17</div>
+        </div>
+      </div>
+      <!--//////////////////////////////////-->
+      <div class="mb-[0.32rem]">
+        <div class="flex justify-between items-center mb-[0.32rem]">
+          <div class="font-bold text-[0.32rem]">优选</div>
+          <div class="flex items-center gap-1">
+            <div class="bg-[#014CFA] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"></div>
+            <div class="bg-[#cad7f333] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"></div>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <div class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]">
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">NAHARCAP...</div>
+            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
+              <div class="text-[0.24rem] font-bold">465.4</div>
+              <div class="text-[0.22rem]">+1.7%</div>
+            </div>
+          </div>
+          <div class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]">
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">NAHARCAP...</div>
+            <div class="flex justify-between text-[#E53E00] mb-[0.1rem]">
+              <div class="text-[0.24rem] font-bold">465.4</div>
+              <div class="text-[0.22rem]">+1.7%</div>
+            </div>
+          </div>
+          <div class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]">
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">NAHARCAP...</div>
+            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
+              <div class="text-[0.24rem] font-bold">465.4</div>
+              <div class="text-[0.22rem]">+1.7%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!--//////////////////////////////////-->
+       <div class="mb-[0.32rem]">
+        <div class="flex justify-between items-center mb-[0.32rem]">
+          <div class="font-bold text-[0.32rem]">优选</div>
+          <div class="flex items-center gap-1">
+            <div class="bg-[#014CFA] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"></div>
+            <div class="bg-[#cad7f333] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"></div>
+          </div>
+          <div class="bg-[#F5F7FC] w-[0.84rem] h-[0.34rem] rounded-[0.32rem] text-[0.24rem] text-[#666D80] flex items-center justify-center">more+</div>
+        </div>
+        <div class="flex justify-between">
+          <div class="w-[3.33rem] h-[1.92rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]">
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">NAHARCAP...</div>
+            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
+              <div class="text-[0.28rem] font-bold">465.4</div>
+              <div class="text-[0.28rem]">+1.7%</div>
+            </div>
+          </div>
+          <div class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-[#F5F7FC]">
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">NAHARCAP...</div>
+            <div class="flex justify-between text-[#E53E00] mb-[0.1rem]">
+              <div class="text-[0.28rem] font-bold">465.4</div>
+              <div class="text-[0.28rem]">-1.7%</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
     <!-- banner -->
     <Banner v-if="activated" class="home_banner" />
 
@@ -226,7 +330,7 @@
 
 <script setup>
 import StockItem from "@/components/StockItem.vue";
-import { onDeactivated, ref, computed, onActivated } from "vue";
+import { onDeactivated, ref, computed, onActivated, onMounted } from "vue";
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
@@ -237,6 +341,7 @@ import router from "@/router";
 import IPO from "../Market/components/IPO.vue";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
+import { Translation } from "vue-i18n";
 
 const openEye = ref(false);
 
@@ -251,6 +356,20 @@ const actions = [
   { name: "合约", value: "-1" },
   { name: "IPO", value: "1" },
 ];
+const slides = [
+  "static/img/home/back1.png",
+  "static/img/home/back2.png",
+  "static/img/home/back3.png",
+];
+const slideIndex = ref(0);
+const showSlides = () => {
+  setInterval(() => {
+    slideIndex.value = (slideIndex.value + 1) % slides.length;
+  }, 2000);
+};
+onMounted(() => {
+  showSlides();
+});
 const onSelect = (item) => {
   showAS.value = false;
   if (item.value == -1) return;
@@ -413,10 +532,6 @@ const jump = (name, needToken) => {
   }
 
   .top_box {
-    background-image: url("/public/static/img/home/back1.png");
-    background-size: cover;
-    // background-repeat: no-repeat;
-    // background-position: center;
     padding: 0.2rem 0.32rem 0.32rem;
     min-height: 7rem;
     .funcs {
@@ -428,7 +543,6 @@ const jump = (name, needToken) => {
       .user_box {
         width: 0.8rem;
         height: 0.8rem;
-        background-color: #d9d9d9;
         border-radius: 50%;
         display: flex;
         align-items: center;

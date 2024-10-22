@@ -30,7 +30,7 @@
         </template>
       </Tab>
       <Tab name="stock">
-        <Stock v-if="active == 'stock'" ref="StockRef" />
+        <Stock v-if="active == 'stock'" />
         <template #title>
           <div class="tab_item">
             <div v-show="openTab" class="tab_item_icon">

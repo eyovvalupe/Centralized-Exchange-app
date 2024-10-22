@@ -68,7 +68,7 @@ const props = defineProps({
   }
 });
 
-console.log(props.list)
+console.log('props list =======> ', props.list)
 
 const remove = (item) => {
   emits("remove", item);
