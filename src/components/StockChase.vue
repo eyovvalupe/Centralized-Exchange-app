@@ -17,14 +17,18 @@
           <span style="margin-right: 0.05rem">:</span>
           <span style="color: #e8503a">117</span>
         </div>
-        <div class="chase_graph">graph</div>
+        <div class="chase_graph">
+          <img src="static/img/market/chase.svg" alt="chase" />
+        </div>
       </div>
       <div class="chase_status">
         <div class="chase_state_text">
           <span style="margin-right: 0.2rem">做涨停今表现</span>
           <span style="color: #18b762">99.26%</span>
         </div>
-        <div class="chase_graph">graph</div>
+        <div class="chase_graph">
+          <img src="static/img/market/todcondis.svg" alt="condi" />
+        </div>
       </div>
     </div>
   </div>
@@ -96,9 +100,10 @@
     line-height: 0.32rem;
 
     .chase_graph {
-      background-color: red;
+      /* background-color: red; */
       width: 3.12rem;
       height: 2rem;
+      margin-top: 0.36rem;
     }
   }
 }

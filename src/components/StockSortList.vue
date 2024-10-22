@@ -60,7 +60,7 @@
 import { Tab, Tabs, ActionSheet } from "vant";
 import StockTableForList from "@/components/StockTableForList.vue";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { _sort, _marketOverview } from "@/api/api";
+import { _sort } from "@/api/api";
 import store from "@/store";
 import Recommend from "@/views/Home/components/Recommend.vue";
 import Loading from "@/components/Loaidng.vue";

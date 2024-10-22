@@ -3,22 +3,22 @@
     <div class="flex flex-col mb-[0.42rem]">
       <div class="flex flex-row justify-between items-center mb-[0.16rem]">
         <span class="text-[0.32rem] text-[#061023] font-semibold">已收盘</span>
-        <span class="text-[0.24rem] text-[#061023]">10/16 16:00:00 美东</span>
+        <span class="text-[0.24rem] text-[#061023]">{{ props.data.closets }} {{ props.data.region == 'us' ? '美东' : props.data.region == 'india' ? '印度' :  props.data.region == 'japan' ? '日本' : '韩国' }}</span>
       </div>
       <div class="flex flex-row items-center">
         <div>
           <span class="text-[0.24rem] text-[#061023]"
-            >更新时间：10/17 11:10:10</span
+            >更新时间：{{ props.data.currentts }}</span
           >
         </div>
-        <div class="re_render"></div>
+        <div class="re_render" @click="update"></div>
       </div>
     </div>
     <div class="flex flex-row justify-between">
       <div
         class="flex flex-col up_price w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
       >
-        <span class="text-[0.28rem] text-[#061023]">道琼斯</span>
+        <span class="text-[0.28rem] text-[#061023]">{{ props.data.stock[0]['symbol'] }}</span>
         <span class="stock_price">43077.00</span>
         <div class="flex flex-row justify-between stock_detail">
           <span>337.28</span>
@@ -28,7 +28,7 @@
       <div
         class="flex flex-col down_price w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
       >
-        <span class="text-[0.28rem] text-[#061023]">纳斯达克</span>
+        <span class="text-[0.28rem] text-[#061023]">{{ props.data.stock[1]['symbol'] }}</span>
         <span class="stock_price">18367.08</span>
         <div class="flex flex-row justify-between stock_detail">
           <span>51.49</span>
@@ -38,7 +38,7 @@
       <div
         class="flex flex-col up_price w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
       >
-        <span class="text-[0.28rem] text-[#061023]">标普500</span>
+        <span class="text-[0.28rem] text-[#061023]">{{ props.data.stock[2]['symbol'] }}</span>
         <span class="stock_price">5842.47</span>
         <div class="flex flex-row justify-between stock_detail">
           <span>27.21</span>
@@ -49,7 +49,14 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const emits = defineEmits(['update'])
+const update = () => {
+  emits('update')
+}
+const props = defineProps({region: String, data: Object})
+
+</script>
 
 <style lang="less" scoped>
 .stock_description {

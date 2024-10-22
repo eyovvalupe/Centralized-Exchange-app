@@ -50,6 +50,7 @@ const showNavDialog = () => {
 const active = ref(sessionStorage.getItem('trade_stock_tab') || 0)
 const InquireRef = ref()
 const onChange = async (val) => {
+    console.log(val)
     active.value = val;
     sessionStorage.setItem('trade_stock_tab', val)
     if (val == 2) {
