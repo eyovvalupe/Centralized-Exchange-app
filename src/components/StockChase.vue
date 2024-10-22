@@ -30,7 +30,10 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+
+
+</script>
 <style>
 .market_stock_chase {
   height: 5rem;

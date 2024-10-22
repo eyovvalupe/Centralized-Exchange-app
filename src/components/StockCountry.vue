@@ -38,15 +38,32 @@
 
 <script setup>
 import { Tab, Tabs } from "vant";
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { _recommend } from '@/api/api';
+import store from "@/store";
+import Loading from "@/components/Loaidng.vue";
+import LoadingMore from "@/components/LoadingMore.vue";
 import StockDescription from "@/components/StockDescription.vue";
 
 const pageLoading = ref(true);
+
+const getData = () => {
+  pageLoading.value = true;
+  _recommend({
+    market: 'us',
+    type: 'index'
+  })
+  .then(res => {
+    console.log('recommend list ====> ', res.data)
+  })
+  .catch(err => console.log('can not get data'))
+}
 
 onMounted(() => {
   setTimeout(() => {
     pageLoading.value = false;
   }, 300);
+  getData()
 });
 
 const onChange = () => {

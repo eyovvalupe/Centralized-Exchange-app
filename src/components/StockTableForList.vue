@@ -68,8 +68,6 @@ const props = defineProps({
   }
 });
 
-console.log("stock table ============> ", props.list)
-
 const remove = (item) => {
   emits("remove", item);
 };

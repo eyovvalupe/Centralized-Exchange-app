@@ -74,8 +74,6 @@ const props = defineProps({
   },
 });
 
-console.log("props list in recommend list ===========> ", props.list);
-
 const updown = (item) => {
   if (item.ratio === undefined) return 0;
   return item.ratio > 0 ? 1 : -1;
