@@ -783,7 +783,9 @@ const levers = ref([1]) // 杠杆
 const getParam = () => {
     configLoading.value = true
     paramHandle()
-    _futuresPara().then(res => {
+    _futuresPara({
+        symbol:currStock.value.symbol
+    }).then(res => {
         if (res && res.data) {
             paramHandle(res.data)
         }
@@ -818,7 +820,28 @@ const paramHandle = data => {
         }
     }
 }
-getParam()
+
+
+const initParam = ()=>{
+    if(currStock.value.symbol){
+        getParam()
+    }else{
+        min.value = 0
+        step.value = 1
+        openFee.value = 0
+        closeFee.value = 0
+        interest.value = 0 
+        closingline.value = 100 
+        amountper.value = 1 
+        levers.value = ref([1]) 
+    }
+}
+initParam()
+
+watch(currStock,()=>{
+   initParam()
+})
+
 
 
 
@@ -867,7 +890,6 @@ const submitForm = (s) => {
         }, 500);
     })
 }
-
 
 
 // 打开行情
