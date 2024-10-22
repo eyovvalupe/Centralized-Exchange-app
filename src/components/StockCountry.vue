@@ -1,6 +1,5 @@
 <!-- 股票 -->
 <template>
-  <div class="market_stock">
     <div class="market_stock_block">
       <Tabs
         v-if="!pageLoading"
@@ -35,20 +34,12 @@
       <!-- <div style="height: 50vh" v-else></div> -->
     </div>
     
-  </div>
 </template>
 
 <script setup>
 import { Tab, Tabs } from "vant";
 import { ref, onMounted } from "vue";
 import StockDescription from "@/components/StockDescription.vue";
-
-// const active = ref(sessionStorage.getItem("trade_stock_tab") || 0);
-// const InquireRef = ref();
-// const onChange = async (val) => {
-//   active.value = val;
-  // sessionStorage.setItem('trade_stock_tab', val)
-// };
 
 const pageLoading = ref(true);
 
@@ -58,10 +49,13 @@ onMounted(() => {
   }, 300);
 });
 
+const onChange = () => {
+  
+}
+
 </script>
 
 <style lang="less" scoped>
-.market_stock {
   .market_stock_block {
     height: 4.38rem;
     border-radius: 0.64rem;
@@ -205,5 +199,4 @@ onMounted(() => {
       }
     }
   }
-}
 </style>

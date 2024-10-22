@@ -2,8 +2,8 @@
 <template>
   <div class="stock_table">
     <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
-    <div class="tr" v-for="(item, i) in props.list" :key="i" v-show="props.marketType == 'all' || props.marketType == item.type">
-      <StockItem
+    <div class="tr" v-for="(item, i) in props.list" :key="i">
+      <StockItemForList
         :marketType="props.marketType"
         :theme="theme"
         :handleClick="props.handleClick"
@@ -21,7 +21,7 @@
 
 <script setup>
 import Loading from "./Loaidng.vue";
-import StockItem from "./StockItem.vue";
+import StockItemForList from "./StockItemForList.vue";
 import NoData from "./NoData.vue";
 
 const emits = defineEmits(["remove"]);
@@ -32,7 +32,7 @@ const props = defineProps({
   },
   marketType: {
     type: String,
-    default: "all",
+    default: "stock",
   },
   list: {
     type: Array,
@@ -67,6 +67,8 @@ const props = defineProps({
     default:true
   }
 });
+
+console.log("stock table ============> ", props.list)
 
 const remove = (item) => {
   emits("remove", item);
