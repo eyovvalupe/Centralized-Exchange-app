@@ -52,14 +52,10 @@
 import { Tab, Tabs } from "vant";
 // import StockTable from "@/components/StockTable.vue";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { _sort } from "@/api/api";
+import { _marketOverview } from "@/api/api";
 import store from "@/store";
-// import { _add, _del } from "@/api/api";
-// import Recommend from "@/views/Home/components/Recommend.vue";
 import Loading from "@/components/Loaidng.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
-// import StockDescription from "@/components/StockDescription.vue";
-// import StockCountry from '@/components/StockCountry.vue';
 
 // const loading = ref(false);
 // const finish = ref(false);
@@ -276,6 +272,7 @@ const getOverviewData = () => {
     market: currAs.value.includes(",") ? "" : currAs.value,
   })
     .then((res) => {
+      console.log("market overview ======> ", res.data)
       if (!res.data) return;
       sessionStorage.setItem("overview_data", JSON.stringify(res.data));
       count.value = res.data.count || 0;

@@ -44,7 +44,7 @@
               class="text-[#0A54F9] text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
               v-show="props.item.type == 'crypto'"
             >
-              20X
+              {{ props.item.lever }}X
             </div>
           </div>
           <div class="td5" v-show="marketType == 'crypto'">
@@ -53,7 +53,7 @@
               <div
                 class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9]"
               >
-                20X
+                {{ props.item.lever }}X
               </div>
             </div>
           </div>
