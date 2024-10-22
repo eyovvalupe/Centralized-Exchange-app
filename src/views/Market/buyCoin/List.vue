@@ -3,7 +3,7 @@
   <div v-if="token" class="buycoin_list">
     <div class="list">
       <!-- 当前订单 -->
-      <div v-for="item in [...c2cLasttime, ...list]" :key="item.order_no + item.unread" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
+      <div v-for="item in list" :key="item.order_no + item.unread" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="c2cUnread[item.order_no]" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
@@ -72,7 +72,7 @@ const statusEnum = {
   cancel: { name: t('已取消'), color: '#8F92A1' },
 }
 const { active } = useBuyCoinState()
-const scrollTop = inject('scrollTop')
+const scrollData = inject('scrollData')
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
 const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
@@ -138,7 +138,7 @@ const getData = isBottom => {
         loading.value = false
       }, 100)
       if (!isBottom) {
-        list.value = res.data || []
+        list.value = [...c2cLasttime.value, ...res.data]
       } else {
         list.value.push(...(res.data || []))
       }
@@ -174,17 +174,12 @@ const init = () => {
   }, 0)
 }
 // 监听
-const totalHeight = window.innerHeight || document.documentElement.clientHeight
 let moreDom = null
-const scrollHandle = () => {
+const scrollHandle = bottom => {
   if (!moreDom) return
   if (active.value !== '2') return
-
-  const rect = moreDom.getBoundingClientRect()
-  if (rect.top <= totalHeight) {
-    // 加载更多
-    getData(true)
-  }
+  // 加载更多
+  if (bottom) getData(true)
 }
 
 // let interval = null
@@ -194,16 +189,17 @@ const getC2cOrderInfo = async () => {
       order_no: onOrderNoValue.order_no,
     })
     if (!res.data) return
-    c2cLasttime.value.forEach((element, i) => {
+    list.value.forEach((element, i) => {
       if (element.order_no === onOrderNoValue.order_no) {
-        c2cLasttime.value[i] = res.data
+        list.value[i] = res.data
+        throw new Error('break')
       }
     })
   } finally {
     //
   }
 }
-watch(() => scrollTop.value, scrollHandle)
+watch(() => scrollData.arrivedState.bottom, scrollHandle)
 init()
 onMounted(() => {
   // interval = setInterval(() => {

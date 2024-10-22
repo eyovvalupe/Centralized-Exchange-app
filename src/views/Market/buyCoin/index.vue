@@ -38,7 +38,7 @@ import { useBuyCoinState } from './state'
 /* eslint-enable */
 const { startSocket } = useSocket()
 const token = computed(() => store.state.token)
-const scrollTop = inject('scrollTop')
+const scrollData = inject('scrollData')
 const positionValue = ref('relative')
 // 订阅
 const currLoading = ref(false)
@@ -90,7 +90,7 @@ watch(
   }
 )
 watch(
-  () => scrollTop.value,
+  () => scrollData.y.value,
   (val, oldVal) => {
     if (val > 100) {
       if (val > oldVal) {
