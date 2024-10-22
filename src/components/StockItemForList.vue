@@ -27,7 +27,9 @@
         >
           <div class="td5" v-show="props.marketType != 'crypto'">
             <div class="item_name flex items-center gap-1">
-              <span v-show="marketType == 'stock'">{{ props.item.symbol }}</span>
+              <span v-show="marketType == 'stock'">{{
+                props.item.symbol
+              }}</span>
               <span v-show="marketType == 'crypto'">{{ props.item.name }}</span>
             </div>
             <div class="item_info" v-show="props.marketType != 'crypto'">
@@ -323,9 +325,9 @@ const removeStock = (item) => {
     justify-content: center;
     background-color: #d0d8e2;
     border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;    
+    border-bottom-right-radius: 16px;
   }
-  
+
   .delete_content_crypto {
     width: 0.78rem;
     height: 100%;
@@ -334,10 +336,8 @@ const removeStock = (item) => {
     justify-content: center;
     background-color: #d0d8e2;
     border-radius: 0.32rem;
-    // margin-left: -0.32rem;    
+    // margin-left: -0.32rem;
   }
-
-  
 }
 .active_symbol {
   background-color: #f2f3f7;
@@ -368,8 +368,8 @@ const removeStock = (item) => {
     .item_name {
       font-size: 0.32rem;
       color: #061023;
-      line-height: 0.32rem;
-      font-weight: 600;
+      line-height: 0.432rem;
+      font-weight: 400;
     }
 
     .item_info {
@@ -388,29 +388,33 @@ const removeStock = (item) => {
     flex-shrink: 0;
     flex: 2;
     overflow: hidden;
+    height: 0.92rem;
 
     .item_num {
-      font-size: 0.3rem;
+      font-size: 0.32rem;
       font-weight: 600;
-      line-height: 0.3rem;
+      line-height: 0.432rem;
       color: #6c7b90;
     }
 
     .item_info_box {
-      margin-top: 0.1rem;
+      height: 0.48rem;
       .item_percent {
+        width: 1.4rem;
+        height: 0.48rem;
         text-align: center;
-        width: 1rem;
-        height: 0.4rem;
-        line-height: 0.4rem;
-        font-size: 0.24rem;
-        display: inline-block;
+        line-height: 0.32rem;
+        font-size: 0.28rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-weight: 600;
         color: #fff;
-        border-radius: 0.12rem;
+        border-radius: 0.24rem;
       }
 
       .nodata_percent {
+        height: 0.48rem;
         background-color: #6c7b90;
       }
     }
@@ -524,11 +528,11 @@ const removeStock = (item) => {
   }
 }
 .delete_icon {
-      width: 0.36rem;
-      height: 0.34rem;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17"><path d="M14.4813 3.59546H3.5192C3.38792 3.59546 3.26758 3.70486 3.26758 3.84708V15.4218C3.26758 16.1767 3.88023 16.7893 4.6351 16.7893H13.3763C13.7373 16.7893 14.0765 16.6471 14.3281 16.3955C14.5797 16.1438 14.7219 15.7938 14.7219 15.4327V3.83614C14.7329 3.70486 14.6235 3.59546 14.4813 3.59546ZM6.80125 13.0806C6.80125 13.2119 6.74655 13.3432 6.65903 13.4307C6.56057 13.5291 6.44023 13.5729 6.30895 13.5729C6.03544 13.5729 5.81664 13.3541 5.81664 13.0806V6.99785C5.81664 6.72435 6.03544 6.50554 6.30895 6.50554C6.58245 6.50554 6.80125 6.72435 6.80125 6.99785V13.0806ZM9.49254 13.0806C9.49254 13.3541 9.27373 13.5729 9.00023 13.5729C8.72672 13.5729 8.50792 13.3541 8.50792 13.0806V6.99785C8.50792 6.72435 8.72672 6.50554 9.00023 6.50554C9.27373 6.50554 9.49254 6.72435 9.49254 6.99785V13.0806ZM12.1948 13.0806C12.1948 13.3541 11.976 13.5729 11.7024 13.5729C11.4289 13.5729 11.2101 13.3541 11.1992 13.0696V6.99785C11.1992 6.72435 11.418 6.50554 11.7024 6.50554C11.976 6.50554 12.1948 6.72435 12.1948 6.99785V13.0806Z" fill="%23666D80"/><path d="M16.5925 3.09238H12.9932V2.1187C12.9932 1.45135 12.4462 0.915283 11.7898 0.915283H6.24311C5.57576 0.915283 5.03969 1.46229 5.03969 2.1187V3.09238H1.40756C1.10123 3.09238 0.849609 3.344 0.849609 3.65033C0.849609 3.95665 1.10123 4.20827 1.40756 4.20827H16.5925C16.8988 4.20827 17.1505 3.95665 17.1505 3.65033C17.1505 3.344 16.8988 3.09238 16.5925 3.09238ZM11.8773 3.09238H6.15559V2.02024H11.8773V3.09238Z" fill="%23666D80"/></svg>');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
+  width: 0.36rem;
+  height: 0.34rem;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 17"><path d="M14.4813 3.59546H3.5192C3.38792 3.59546 3.26758 3.70486 3.26758 3.84708V15.4218C3.26758 16.1767 3.88023 16.7893 4.6351 16.7893H13.3763C13.7373 16.7893 14.0765 16.6471 14.3281 16.3955C14.5797 16.1438 14.7219 15.7938 14.7219 15.4327V3.83614C14.7329 3.70486 14.6235 3.59546 14.4813 3.59546ZM6.80125 13.0806C6.80125 13.2119 6.74655 13.3432 6.65903 13.4307C6.56057 13.5291 6.44023 13.5729 6.30895 13.5729C6.03544 13.5729 5.81664 13.3541 5.81664 13.0806V6.99785C5.81664 6.72435 6.03544 6.50554 6.30895 6.50554C6.58245 6.50554 6.80125 6.72435 6.80125 6.99785V13.0806ZM9.49254 13.0806C9.49254 13.3541 9.27373 13.5729 9.00023 13.5729C8.72672 13.5729 8.50792 13.3541 8.50792 13.0806V6.99785C8.50792 6.72435 8.72672 6.50554 9.00023 6.50554C9.27373 6.50554 9.49254 6.72435 9.49254 6.99785V13.0806ZM12.1948 13.0806C12.1948 13.3541 11.976 13.5729 11.7024 13.5729C11.4289 13.5729 11.2101 13.3541 11.1992 13.0696V6.99785C11.1992 6.72435 11.418 6.50554 11.7024 6.50554C11.976 6.50554 12.1948 6.72435 12.1948 6.99785V13.0806Z" fill="%23666D80"/><path d="M16.5925 3.09238H12.9932V2.1187C12.9932 1.45135 12.4462 0.915283 11.7898 0.915283H6.24311C5.57576 0.915283 5.03969 1.46229 5.03969 2.1187V3.09238H1.40756C1.10123 3.09238 0.849609 3.344 0.849609 3.65033C0.849609 3.95665 1.10123 4.20827 1.40756 4.20827H16.5925C16.8988 4.20827 17.1505 3.95665 17.1505 3.65033C17.1505 3.344 16.8988 3.09238 16.5925 3.09238ZM11.8773 3.09238H6.15559V2.02024H11.8773V3.09238Z" fill="%23666D80"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 </style>
