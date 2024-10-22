@@ -2,113 +2,54 @@
 <template>
   <div class="page_assets_cash">
     <!-- 总览 -->
-    <div class="overview">
+
+    <OverviewCard>
       <div class="top">
-        <div class="title">{{ $t('现金账户') }}</div>
+        <div class="title">{{ $t('现金账户') }}<span>(USDT)</span></div>
         <div class="eyes" @click="hidden = !hidden">
-          <Icon v-show="!hidden" name="eye-o" />
-          <Icon v-show="hidden" name="closed-eye" />
+          <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
+          <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
         </div>
       </div>
       <div class="money">
-        <span>{{ hidden ? '****' : mainWallet.amount || '0.00' }}</span>
+        <span>{{ hidden ? '********' : mainWallet.amount || '0.00' }}</span>
       </div>
       <div class="navs">
-        <!-- <div class="nav">
-                    <div class="nav_icon">
-                        <img src="/static/img/assets/cash_recharge_icon.png" alt="img">
-                    </div>
-                    <span>{{ $t('充值') }}</span>
-                </div>
-                <div class="line"></div>
-                <div class="nav">
-                    <div class="nav_icon">
-                        <img src="/static/img/assets/cash_withdraw_icon.png" alt="img">
-                    </div>
-                    <span>{{ $t('提现') }}</span>
-                </div> -->
         <div class="nav">
-          <div>{{ $t('现金') }}</div>
-          <div class="num" style="margin-left: 0.1rem">{{ hidden ? '***' : assets.money || '0.00' }}</div>
+            <div class="nav_label">{{ $t('现金') }}</div>
+            <div class="num">{{ hidden ? '********' : assets.money || '0' }}</div>
         </div>
         <div class="line" />
         <div class="nav">
-          <div>{{ $t('冻结') }}</div>
-          <div class="num" style="margin-left: 0.1rem">{{ hidden ? '****' : '--' }}</div>
+          <div class="nav_label">{{ $t('冻结') }}</div>
+          <div class="num">{{ hidden ? '********' :  '--' }}</div>
         </div>
       </div>
+    </OverviewCard>
 
-      <!-- 货币兑换 -->
-      <!-- <div class="currency_btn " @click="jump('swap')">
-                <span>{{ $t('货币兑换') }}</span>
-            </div> -->
-
-      <!-- <div class="loan_box">
-                <div>{{ $t('借贷') }}</div>
-                <div class="num">{{ hidden ? '***' : (assets.loan || '0.00') }}</div>
-            </div> -->
-    </div>
     <!-- 按钮 -->
-    <div class="btns">
-      <div class="btn" @click="jump('topUp', true)">
-        <div class="icon_box">
-          <div class="btn_icon">
-            <img src="/static/img/assets/recharge_icon.png" alt="img" />
-          </div>
-        </div>
-        <span>{{ $t('充值') }}</span>
-      </div>
-      <div class="btn btn2" @click="jump('withdraw', true)">
-        <div class="icon_box">
-          <div class="color_text">
-            <!-- <div class="withdraw_icon">
-                            <img src="/static/img/assets/withdraw_icon.svg" alt="icon">
-                        </div> -->
-            <span style="font-size: 0.2rem; font-weight: 400; color: #666; margin-right: 0.04rem">{{ $t('可提现') }}</span>
-            <span>{{ assets.money || '0.00' }}</span>
-          </div>
-          <div>
-            <span class="tip">{{ $t('冻结') }}</span>
-            <span>{{ '--' }}</span>
-          </div>
+    <Btns :money="assets.money" />
 
-          <div class="process">
-            <div class="left">
-              <div class="ball" />
-            </div>
-          </div>
-        </div>
-        <span>{{ $t('提现') }}</span>
-      </div>
-    </div>
-    <div class="cash_tab_content tabs">
+    <div class="tabs">
       <div class="tab_title">
-        <Switch v-model="show0" />
-        <span style="margin-left: 0.1rem">{{ show0 ? $t('已隐藏余额为0的币种') : $t('已展示余额为0的币种') }}</span>
+        <Switch v-model="show0" size="0.24rem" />
+        <span class="tab_title_desc">{{ show0 ? $t('已隐藏余额为0的币种') : $t('已展示余额为0的币种') }}</span>
       </div>
-      <div v-for="(item, i) in showList" :key="i" class="tab" @click="switchOpen(i, $event)">
+      <div v-for="(item, i) in showList" :key="i" class="tab" :class="{ open_tab: switchs[i] == true }" @click="switchOpen(i, $event)">
         <div class="tab_icon">
           <img :src="`/static/img/crypto/${item.name}.png`" alt="img" />
         </div>
-        <div :class="{ open_tab: switchs[i] == true }">
-          <div>{{ item.name }}</div>
+        <div class="name">{{ item.name }}</div>
+        <div class="amount">{{ item.amount }}</div>
+        <div class="more">
+          <img src="/static/img/common/menu.png?20241022" alt="img" />
         </div>
-        <div class="amount" :class="{ open_amount: switchs[i] == true }">{{ item.amount }}</div>
-        <div class="more" :class="{ open_tab: switchs[i] == true }">
-          <img src="/static/img/common/menu.png" alt="img" />
-        </div>
-        <div class="rights" style="width: 2.4rem" :class="{ open_tab: switchs[i] != true }">
-          <div class="right" style="background-color: #32d74b" @click="goTopUp(item.currency.toUpperCase())">
-            <div class="right_icon">
-              <img src="/static/img/assets/money.png" alt="img" />
-            </div>
-            <div>{{ $t('充值') }}</div>
+        <div class="rights">
+          <div class="right" @click="goTopUp(item.currency.toUpperCase())">
+            {{ $t('充值') }}
           </div>
-          <div class="right" style="background-color: #5e5ce6">
-            <div class="right_icon">
-              <img src="/static/img/assets/pay.png" alt="img" />
-            </div>
-            <div>{{ $t('提现') }}</div>
+          <div class="right right--yellow">
+            {{ $t('提现') }}
           </div>
         </div>
       </div>
@@ -122,6 +63,8 @@ import { Icon, Switch } from 'vant'
 import store from '@/store'
 import router from '@/router'
 import { _cryptoCoin } from '@/api/api'
+import Btns from './components/Btns'
+import OverviewCard from './components/OverviewCard'
 
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
@@ -207,342 +150,187 @@ defineExpose({
   refresh,
 })
 
-const jump = (name, check = false, query) => {
-  router.push({
-    name,
-    query,
-  })
-}
 </script>
 
 <style lang="less" scoped>
 .page_assets_cash {
-  border-top: 1px solid rgba(0, 0, 0, 0);
-  position: relative;
-  padding-bottom: 2rem;
-
-  .overview {
-    background-size: 100% 100%;
-    margin: 0 0.32rem 0.36rem 0.32rem;
-    padding: 0.4rem 0.3rem 0.24rem 0.3rem;
-    background-color: #1a59f6;
-    border-radius: 0.32rem;
-    position: relative;
-
-    .loan_btn {
-      position: absolute;
-      top: 0.4rem;
-      right: 0.6rem;
-      height: 0.52rem;
-      color: #fff;
-      font-size: 0.24rem;
-      border-radius: 0.3rem;
-      padding: 0 0.4rem;
-      display: flex;
-      align-items: center;
-      background-color: #000;
-
-      &:active {
-        background-color: #0b1e4a;
-      }
-    }
-
-    .loan_max {
-      position: absolute;
-      top: 1.04rem;
-      right: 0.2rem;
-      color: #fff;
-      font-size: 0.24rem;
-      font-weight: 400;
-      text-align: center;
-      min-width: 2.4rem;
-    }
-
-    .top {
-      font-size: 0.28rem;
-      font-weight: 400;
-      padding-left: 0.32rem;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-
-      .title {
-        color: #fff;
-        margin-right: 0.32rem;
-      }
-
-      .eyes {
-        width: 0.32rem;
-        height: 0.32rem;
-        color: #fff;
-        font-size: 0.32rem;
-      }
-    }
-
-    .money {
-      padding-left: 0.32rem;
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: #fff;
-      margin-top: 0.3rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .navs {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 0.44rem;
-      padding: 0.1rem 0;
-
-      .line {
-        width: 1px;
-        height: 0.44rem;
-        background-color: rgba(255, 255, 255, 0.4);
-      }
-
-      .nav {
-        color: #fff;
-        font-weight: 400;
-        flex: 1;
-        font-size: 0.24rem;
-        text-align: center;
-        border-radius: 0.26rem;
-        position: relative;
-
-        &:active {
-          background-color: #5045bd;
-        }
-
-        .hint {
-          background-color: #fff;
-          height: 0.24rem;
-          font-size: 0.2rem;
-          line-height: 0.24rem;
-          font-weight: 200;
-          padding: 0 0.1rem;
-          border-radius: 0.2rem;
-          position: absolute;
-          top: -0.1rem;
-          right: -0.08rem;
-          color: #000;
-        }
-      }
-    }
-  }
-
-  .btns {
-    margin: 0.16rem 0.32rem 0.1rem 0.32rem;
+  padding: 0.32rem 0;
+  .top {
+    font-size: 0.28rem;
+    font-weight: 400;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-
-    .btn {
-      width: 31%;
-      font-size: 0.24rem;
-      color: #333;
-      text-align: center;
-      margin-bottom: 0.3rem;
-      overflow: hidden;
-
-      &:active {
-        opacity: 0.8;
-        transform: scale(0.98);
-      }
-
-      .icon_box {
-        overflow: hidden;
-        width: 100%;
-        height: 0.8rem;
-        background-color: #ededed;
-        margin-bottom: 0.16rem;
-        border-radius: 0.12rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .btn_icon {
-          width: 0.42rem;
-          height: 0.42rem;
-        }
-
-        .tip {
-          font-size: 0.2rem;
-          font-weight: 400;
-          margin-right: 0.04rem;
-        }
+    height: 0.32rem;
+    .title {
+      color: #fff;
+      margin-right: 0.08rem;
+      font-size: 0.3rem;
+      span{
+        font-size: 0.24rem;
       }
     }
 
-    .btn2 {
-      width: 65.4%;
-
-      .icon_box {
-        padding: 0 0.3rem;
-        justify-content: space-between;
-        font-weight: 600;
-        position: relative;
-        color: #000;
-
-        .color_text {
-          color: #59ba4e;
-          display: flex;
-          align-items: center;
-
-          .withdraw_icon {
-            width: 0.28rem;
-            height: 0.28rem;
-            margin-right: 0.1rem;
-          }
-        }
-
-        .process {
-          background-color: #dadada;
-          width: 100%;
-          position: absolute;
-          bottom: 0;
-          height: 0.1rem;
-          left: 0;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          .left {
-            height: 100%;
-            width: 50%;
-            background: linear-gradient(to right, #f4df6b, #98d450, #6bd45f);
-            position: relative;
-
-            .ball {
-              background-color: #6bd45f;
-              width: 0.3rem;
-              height: 0.3rem;
-              border-radius: 50%;
-              position: absolute;
-              right: 0;
-              bottom: -0.12rem;
-            }
-          }
-        }
-      }
+    .eyes {
+      width: 0.32rem;
+      height: 0.32rem;
+      color: #fff;
     }
   }
 
-  .cash_tab_content {
-    padding: 0 0.32rem 0.32rem 0.32rem;
-    margin-bottom: 1rem;
+  .money {
+    color: #FFF;
+    font-family: "PingFang SC";
+    font-size: 0.52rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 0.52rem; 
+    margin-top: 0.26rem;
+  }
 
-    .cash_tab_item {
-      height: 1.2rem;
-      border-bottom: 1px solid #eaeaea;
+  .navs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.32rem;
+    background-color: #fff;
+    border-radius: 0.32rem;
+    margin-top: 0.34rem;
+    .line {
+      width: 1px;
+      height: 0.76rem;
+      background-color: #EFF3F8;
+    }
+    .nav{
+      flex: 1;
       display: flex;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
     }
-  }
-
-  .list_box {
-    margin: 0 0.32rem 0.32rem 0.32rem;
-  }
-
-  .tabs {
-    padding: 0 0.32rem;
-
-    .tab_title {
-      border-bottom: 1px solid #eaeaea;
-      line-height: 0.48rem;
-      padding: 0.24rem 0 0.24rem 0;
-      color: #121826;
+    .nav_label{
+      color: #8F92A1;
       font-size: 0.28rem;
-      display: flex;
-      align-items: center;
-      font-size: 0.24rem;
-      color: #999;
+      line-height: 100%;
     }
 
+    .num {
+      color: #061023;
+      font-size: 0.3rem;
+      font-weight: 600;
+      line-height: 0.3rem; 
+      margin-top: 0.2rem;
+
+    }
+  }
+
+  .tab_title{
+    height: 0.52rem;
+    display: flex;
+    align-items: center;
+    &_desc{
+      color:#8F92A1;
+      font-size: 0.24rem;
+      margin-left: 0.12rem;
+    }
+  }
+  
+  .tabs {
+    position: relative;
+    padding: 0 0.32rem;
     .tab {
+      padding: 0 0.32rem;
       overflow: hidden;
-      height: 1rem;
-      // border-bottom: 1px solid #EAEAEA;
+      height: 1.04rem;
+      margin-top: 0.12rem;
+      border-radius: 0.32rem;
+      background: #F5F7FC;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      &::before {
-        content: '';
-        width: 100%;
-        position: absolute;
-        height: 0;
-        border-bottom: 1px solid #eaeaea;
-        bottom: 0;
-        right: 0;
-        z-index: 1;
+      
+      .name{
+        font-size: 0.3rem;
       }
-
-      > div {
-        transition: all ease 0.2s;
-        overflow: hidden;
+      &:active {
+        background-color: rgba(237, 237, 237, 0.87);
       }
 
       .tab_icon {
-        width: 0.46rem;
-        height: 0.46rem;
-        margin-right: 0.3rem;
+        width: 0.52rem;
+        height: 0.52rem;
+        margin-right: 0.16rem;
+        background-color: #fff;
+        border-radius: 50%;
+        box-sizing: border-box;
+        padding: 0.1rem;
       }
-
-      .tab_info {
-        font-size: 0.2rem;
-        color: #666;
-        margin-top: 0.1rem;
-      }
-
-      .open_tab {
-        width: 0 !important;
-      }
-
+      
       .more {
-        width: 0.24rem;
-        height: 0.24rem;
+        width: 0.3rem;
+        height: 0.3rem;
       }
 
       .amount {
         flex: 1;
         text-align: right;
         padding: 0 0.2rem;
-      }
-
-      .open_amount {
-        text-align: left;
+        font-size: 0.32rem;
+        font-weight: 600;
+        transition: .3s;
       }
 
       .rights {
         display: flex;
-        align-items: stretch;
         height: 100%;
-
+        position: absolute;
+        right:-100%;
+        top:0;
+        transition: .3s;
         .right {
-          display: flex;
           height: 100%;
-          width: 1.2rem;
+          width: 1.04rem;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          font-size: 0.24rem;
+          font-size: 0.3rem;
           font-weight: 400;
           text-align: center;
           color: #fff;
-
-          .right_icon {
-            width: 0.44rem;
-            height: 0.44rem;
-            margin-bottom: 0.08rem;
-          }
+          background-color: #014CFA;
+        }
+        .right--yellow{
+          background-color: #FFAF2A;
+        }
+        .right--green{
+          background-color: #00AF70;
+        }
+        .right--red{
+          background-color: #E8503A;
+        }
+        .right:first-child{
+          border-radius: 0.32rem 0rem 0rem 0.32rem;
+        }
+        .right:last-child{
+          border-radius: 0rem 0.32rem 0.32rem 0rem;
         }
       }
     }
+   
+    .open_tab {
+      .name{
+        display: none;
+      }
+      .amount {
+        text-align: left;
+        padding:0px;
+      }
+      .rights{
+        right: 0;
+      }
+    }
   }
+
 }
 </style>

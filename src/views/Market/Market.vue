@@ -103,9 +103,14 @@ import Constract from './components/Constract.vue'
 import Ai from './components/Ai.vue'
 import buyCoin from './buyCoin/index.vue'
 import Iconfonts from '@/components/Iconfonts.vue'
-import { throttle } from '@/utils'
+import { useBuyCoinState } from './buyCoin/state'
 
+const { setScrollData } = useBuyCoinState()
 const marketPageRef = ref()
+const scrollData = useScroll(marketPageRef, {
+  throttle: 400,
+  onScroll: scrollHandler,
+})
 const openTab = ref(false)
 
 const active = ref(sessionStorage.getItem('market_active') || 'option')
@@ -115,8 +120,8 @@ const IPORef = ref()
 const reloading = ref(false)
 const detail = ref(null)
 const detailTransition = ref('slide-right')
-const scrollTop = ref(0)
-provide('scrollTop', scrollTop)
+provide('scrollData', scrollData)
+setScrollData(scrollData)
 const changeTab = key => {
   active.value = key
   sessionStorage.setItem('market_active', key)
@@ -153,23 +158,20 @@ const activatedIncludes = computed(() => {
   // 需要缓存的页面
   return ['option', 'stock', 'contract', '4', '5'].includes(active.value) ? activated.value : true
 })
-const scrollHandler = throttle(e => {
-  scrollTop.value = e.target.scrollTop
+function scrollHandler(e) {
   if (openTab.value) {
     openTab.value = false
   }
-}, 400)
+}
 onActivated(() => {
   activated.value = true
   setTimeout(() => {
     if (active.value == 'option') {
       OptionalRef.value && OptionalRef.value.init()
     }
-    marketPageRef.value && marketPageRef.value.addEventListener('scroll', scrollHandler)
   }, 100)
 })
 onDeactivated(() => {
-  marketPageRef.value && marketPageRef.value.removeEventListener('scroll', scrollHandler)
   setTimeout(() => {
     activated.value = false
   }, 100)

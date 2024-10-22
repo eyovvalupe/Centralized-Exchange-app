@@ -66,7 +66,7 @@
           </div>
         </div>
       </div>
-      <div v-if="rate" class="tip">{{ $t('预计价格') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
+      <div v-if="rate && token" class="tip">{{ $t('预计价格') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
 
       <Button size="large" class="submit" round :loading="loading" :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? t('卖出') : t('买入') }}</Button>
 
@@ -124,7 +124,7 @@ import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 import { useBuyCoinState } from './state'
 import router from '@/router'
 
-const { onChange, handleUrl } = useBuyCoinState()
+const { onChange, handleUrl, active } = useBuyCoinState()
 const safeRef = ref()
 const { sessionToken, token, deWeightCurrencyList: currencyList } = useMapState(['sessionToken', 'token', 'deWeightCurrencyList'])
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
@@ -283,10 +283,6 @@ const getRate = () => {
     })
 }
 
-setTimeout(() => {
-  if (token.value) getRate()
-}, 100)
-
 const clickAccountItem = item => {
   form1.value.account_id = item.id
   form1.value.id = item.id
@@ -312,25 +308,34 @@ const clickAccountItem = item => {
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }
-eventBus.on('loginSuccess', () => {
-  getSessionToken()
-})
-onBeforeUnmount(() => {
-  eventBus.off('loginSuccess')
-})
-
 // 跳转
 // const jump = name => {
 //   router.push({
 //     name,
 //   })
 // }
-
-if (token.value) {
+watch(
+  () => active.value,
+  val => {
+    if (val !== '0') return
+    getSessionToken()
+  }
+)
+const onInit = () => {
+  getRate()
+  if (!token.value) return
   getSessionToken()
 }
+
 if (outWallet.value[0]) currOut.value = outWallet.value[0]
 if (inWallet.value[0]) currIn.value = inWallet.value[0]
+onInit()
+eventBus.on('loginSuccess', () => {
+  getSessionToken()
+})
+onBeforeUnmount(() => {
+  eventBus.off('loginSuccess')
+})
 </script>
 
 <style lang="less" scoped>

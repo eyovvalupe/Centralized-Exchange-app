@@ -3,7 +3,7 @@
     <Top :title="statusEnum[form.status]?.title" :back-func="goBack" />
     <!-- 一层容器 tab -->
     <div class="tabs-buy !mb-5">
-      <div class="tab" :class="{ active_tab: tabsValue == 'buy' }" @click="changeTab('buy')">{{ offsetEnum[form.offset] }}</div>
+      <div class="tab" :class="{ active_tab: ['buy', 'sell'].includes(tabsValue) }" @click="changeTab('buy')">{{ offsetEnum[form.offset] }}</div>
       <div class="tab" :class="{ active_tab: tabsValue == 'contactTheMerchant' }" @click="changeTab('contactTheMerchant')">
         {{ $t('联系商家') }}
         <div v-if="form.unread" class="absolute right-[40px] top-[3px] flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
@@ -30,12 +30,14 @@
             <div class="text-base text-[#061023]">{{ form.merchant_name }}</div>
           </div>
           <div class="mb-[0.2rem] flex pl-[0.62rem] text-xs leading-17 text-[#8f92a1]">
-            <span>{{ $t('成交量') }} {{ form.volume }}</span>
+            <span>{{ $t('成交量') }} {{ form.volume || '0' }}</span>
             <span class="px-[0.12rem]">|</span>
-            <span>{{ $t('成交率') }} {{ form.volumerate }}%</span>
-            <span class="px-[0.12rem]">|</span>
-            <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
-            <span>{{ form.merchant_avetime }}{{ $t('分钟') }}</span>
+            <span>{{ $t('成交率') }} {{ form.volumerate || '0' }}%</span>
+            <template v-if="form.merchant_avetime">
+              <span class="px-[0.12rem]">|</span>
+              <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
+              <span>{{ form.merchant_avetime }}{{ $t('分钟') }}</span>
+            </template>
           </div>
 
           <div class="dashed-my -ml-4 mb-4 h-[0.02rem] w-[6.86rem]" />
@@ -106,7 +108,7 @@
         <div class="mr-4 flex-1 cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-48" @click="handleBotton('cancel')">{{ $t('取消订单') }}</div>
         <div
           class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white"
-          :class="{ 'disabled-btn': ['waitconfirm'].includes(form.status) }"
+          :class="{ 'disabled-btn': form.offset === 'sell' || ['waitconfirm'].includes(form.status) }"
           @click="handleBotton('payment')"
         >
           {{ $t('我已付款') }}
@@ -225,7 +227,7 @@ function handleBotton(val) {
 }
 const goBack = () => {
   if (tabsValue.value === 'contactTheMerchant') {
-    tabsValue.value = 'buy'
+    tabsValue.value = form.offset
   } else {
     router.back()
   }
