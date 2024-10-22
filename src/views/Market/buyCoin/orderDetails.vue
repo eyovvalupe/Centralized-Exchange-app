@@ -102,9 +102,15 @@
         </div>
       </div>
       <!-- 底部button -->
-      <div v-if="['waitpayment'].includes(form.status)" class="van-safe-area-bottom absolute inset-x-4 bottom-0 mb-5 flex justify-between text-16 text-[#666D80]">
+      <div v-if="['waitpayment', 'waitconfirm'].includes(form.status)" class="van-safe-area-bottom absolute inset-x-4 bottom-0 mb-5 flex justify-between text-16 text-[#666D80]">
         <div class="mr-4 flex-1 cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-48" @click="handleBotton('cancel')">{{ $t('取消订单') }}</div>
-        <div class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white" :disabled="true" @click="handleBotton('payment')">{{ $t('我已付款') }}</div>
+        <div
+          class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white"
+          :class="{ 'disabled-btn': ['waitconfirm'].includes(form.status) }"
+          @click="handleBotton('payment')"
+        >
+          {{ $t('我已付款') }}
+        </div>
       </div>
     </template>
 
@@ -201,7 +207,7 @@ const apiSetOrderStatus = async safeword => {
       status: statusApiValue, // 我已付款  [ payment ]放行  [ confirm ]取消  [ cancel ]
       safeword,
     })
-    setTimeout(() => showToast(statusApiValue === 'payment' ? t('我已付款成功') : t('取消成功')), 300)
+    setTimeout(() => showToast(statusApiValue === 'payment' ? t('付款成功') : t('取消成功')), 300)
     getInfo()
   } catch (e) {
     loading.value = false
@@ -210,7 +216,10 @@ const apiSetOrderStatus = async safeword => {
 }
 
 function handleBotton(val) {
-  if (val === 'payment' && !form.bank_card_number) return showToast(t('请等待商家提供银行卡'))
+  if (val === 'payment' && !form.bank_card_number) {
+    getInfo()
+    return showToast(t('请等待商家提供银行卡'))
+  }
   statusApiValue = val
   safeRef.value.open()
 }
@@ -293,6 +302,13 @@ onInit()
     background: linear-gradient(to left, transparent 0%, transparent 50%, #eff3f8 50%, #eff3f8 100%);
     background-size: 0.36rem 0.02rem;
     background-repeat: repeat-x;
+  }
+  .disabled-btn {
+    background: #f5f7fa;
+    border-color: #f5f7fa;
+    color: #c0c4cc;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 }
 </style>
