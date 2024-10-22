@@ -5,8 +5,8 @@
     <div class="list_box">
       <div
         class="list_item"
-        @click="() => {}"
         v-for="(item, i) in props.list"
+        @click="goInfo(item)"
         :key="i"
       >
         <div class="symbol">{{ item.symbol }}</div>
@@ -71,6 +71,8 @@ const props = defineProps({
   },
 });
 
+console.log('props list in recommend list ===========> ', props.list)
+
 const updown = (item) => {
   if (item.ratio === undefined) return 0;
   return item.ratio > 0 ? 1 : -1;
@@ -80,6 +82,17 @@ const loading = ref(false);
 const disabled = computed(
   () => !checkedList.value.some((item) => item == true)
 );
+
+const goInfo = (item) => {
+  store.commit("setCurrConstract", item);
+  router.push({
+    name: "market_info",
+    query: {
+      symbol: item.name,
+      type: "constract",
+    },
+  });
+};
 </script>
 
 <style lang="less" scoped>
