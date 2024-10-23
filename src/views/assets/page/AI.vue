@@ -4,25 +4,18 @@
         <!-- 总览 -->
         <OverviewCard>
             <div class="top">
-                <div class="title">合约资产({{ currency }})</div>
+                <div class="title">盈利资金({{ currency }})</div>
                 <div class="eyes" @click="hidden = !hidden">
                     <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
                     <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '********' : totalFutures }}</span>
+                <span>{{ hidden ? '********' : profitableFunds }}</span>
             </div>
             <div class="navs">
-                <div class="nav">
-                    <div class="nav_label">{{ $t('合约账户余额') }}</div>
-                    <div class="num">{{ hidden ? '********' : assets.futures || '0' }}</div>
-                </div>
-                <div class="line" />
-                <div class="nav">
                 <div class="nav_label">{{ $t('合约持仓金额') }}</div>
-                <div class="num">{{ hidden ? '********' : assets.futures_value || '0' }}</div>
-                </div>
+                <div class="num">{{ hidden ? '********' : assets.aiquant_value || '0' }}</div>
             </div>
         </OverviewCard>
         <div class="subtitle">我的持仓</div>
@@ -34,21 +27,19 @@
 import { ref, computed } from "vue"
 import store from "@/store"
 import OverviewCard from './components/OverviewCard'
-import Positions from "../../Trade2/contract/Positions.vue"
-const currency = computed(() => (store.state.accountCurrencyMap.futures || '') )
+import Positions from "../../Trade2/ai/Positions.vue"
+const currency = computed(() => (store.state.accountCurrencyMap.aiquant || '') )
 const hidden = ref(false)
 
 const assets = computed(() => store.state.assets || {})
-const totalFutures = computed(()=>{
-    let futures_value = assets.value.futures_value || 0
-    let futures = assets.value.futures || 0
-    return futures_value + futures
+const profitableFunds = computed(()=>{
+    return "0.00"
 })
 </script>
 
 <style lang="less" scoped>
 .page_assets_contract {
-    padding: 0.32rem 0;
+    padding-top: 0.32rem;
     .top {
         font-size: 0.28rem;
         font-weight: 400;
@@ -83,39 +74,27 @@ const totalFutures = computed(()=>{
     }
     
     .navs {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 1.32rem;
-    background-color: #fff;
-    border-radius: 0.32rem;
-    margin-top: 0.34rem;
-    .line {
-      width: 1px;
-      height: 0.76rem;
-      background-color: #EFF3F8;
-    }
-    .nav{
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    .nav_label{
-      color: #8F92A1;
-      font-size: 0.28rem;
-      line-height: 100%;
-    }
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 0.9rem;
+        background-color: #fff;
+        border-radius: 0.32rem;
+        margin-top: 0.32rem;
+        padding: 0 0.32rem;
+        .nav_label{
+            color: #8F92A1;
+            font-size: 0.28rem;
+            line-height: 100%;
+        }
 
-    .num {
-      color: #061023;
-      font-size: 0.3rem;
-      font-weight: 600;
-      line-height: 0.3rem; 
-      margin-top: 0.2rem;
+        .num {
+            color: #061023;
+            font-size: 0.3rem;
+            font-weight: 600;
+            line-height: 0.3rem; 
 
-    }
+        }
   }
 
   .subtitle {
@@ -125,7 +104,7 @@ const totalFutures = computed(()=>{
         font-size: 0.32rem;
         margin: 0.5rem 0.32rem 0 0.32rem;
     }
-    :deep(.positions){
+    :deep(.page_ai_position){
         padding: 0 0.32rem;
     }
 

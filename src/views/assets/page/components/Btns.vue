@@ -36,6 +36,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { ActionSheet } from 'vant'
+import router from '@/router'
 const { t } = useI18n()
 const jump = (name, check = false, query) => {
   router.push({

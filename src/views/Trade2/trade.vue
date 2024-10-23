@@ -53,11 +53,7 @@
                     <IpoBlock />
                 </div>
             </SwipeItem>
-            <SwipeItem>
-                <div  class="trade_body">
-                    <NoData />
-                </div>
-            </SwipeItem>
+            
         </Swipe>
 
         

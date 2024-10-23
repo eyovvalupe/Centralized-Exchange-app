@@ -65,7 +65,7 @@
         background: rgba(255, 255, 255, 0.05);
         position: absolute;
         left: 0;
-        top:-1.48rem;
+        top:-1.58rem;
       }
       &::after{
         content: '';
@@ -76,7 +76,7 @@
         border-radius: 0.6rem;
         position: absolute;
         left: 0.78rem;
-        top:-1.8rem;
+        top:-1.9rem;
         border-radius: 0.6rem;
         background: rgba(255, 255, 255, 0.05);
         box-shadow: 0px 4px 10px 0px rgba(1, 76, 250, 0.20);
