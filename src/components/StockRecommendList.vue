@@ -1,7 +1,7 @@
 <!-- 自选推荐 -->
 <template>
   <div class="recommend_list">
-    <Loading v-show="!props.list.length && props.loading" />
+    <Loading v-show="props.loading" />
     <div class="list_box" v-show="props.list.length && !props.loading">
       <div
         class="list_item"

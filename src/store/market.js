@@ -6,7 +6,7 @@ const { startSocket } = useSocket()
 
 // 不同页面对应的监听列表 key
 const pageKeys = {
-    'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList'],
+    'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList','marketVolumeList', 'marketUpList', 'marketDownList'],
     'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList', 'marketAiList', 'marketAiHisList', 'marketAi24List', 'marketAiGridList'],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
 }
@@ -47,10 +47,27 @@ export default {
         marketAiHisList: [], // ai量化历史收益率列表
         marketAi24List: [], // ai量化24小时收益率列表
         marketAiGridList: [], // ai量化最大网格(杠杆)列表
+
         currentRecommendData: {}, //当前选择的股票推荐区域
+        marketStockUsData: {}, //当前选择的美区数据内容
+        marketStockIndiaData: {}, //当前选择的美区数据内容
+        marketStockJapanData: {}, //当前选择的美区数据内容
+        marketStockKoreaData: {}, //当前选择的美区数据内容
 
     },
     mutations: {
+        setMarketStockUsData(state, data) {
+            state.marketStockUsData = data
+        },
+        setMarketStockIndiaData(state, data) {
+            state.marketStockIndiaData = data
+        },
+        setMarketStockJapanData(state, data) {
+            state.marketStockJapanData = data
+        },
+        setMarketStockKoreaData(state, data) {
+            state.marketStockKoreaData = data
+        },
         setCurrentRecommenData(state, data) {
             state.currentRecommendData = data
         },
