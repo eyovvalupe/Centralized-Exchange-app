@@ -30,6 +30,7 @@
               <span v-show="item.type == 'stock'">{{ props.item.symbol }}</span>
               <span v-show="item.type == 'crypto'">{{ props.item.name }}</span>
               <div
+                v-show="props.page != 'home'"
                 :class="`${
                   marketStyle[props.item.type]
                 } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] w-[0.6rem] h-[0.3rem] `"
@@ -209,6 +210,10 @@ const props = defineProps({
   showSparkLine: {
     type: Boolean,
     default: true,
+  },
+  page: {
+    type: String,
+    default: ""
   },
 });
 

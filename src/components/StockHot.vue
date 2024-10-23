@@ -60,7 +60,7 @@ import { useSocket } from "@/utils/ws";
 const { startSocket } = useSocket();
 
 const watchList = computed(() => store.state.marketWatchList || []);
-const active = ref(0);
+const marketRecommendStockList = computed(() => store.state.marketRecommendStockList || []);
 
 const token = computed(() => store.state.token || "");
 const loading = ref(true);
@@ -81,27 +81,29 @@ const marketSrockRecommendList = computed(
 const recommendLoading = ref(false);
 const openRecommendList = () => {
   recommendLoading.value = true;
+  // _recommend({
+  //   market: 'global',
+  //   type: 'index'
+  // })
   _watchlistDefault()
     .then((res) => {
-      if (res.code == 200) {
         // 股票
-
-        if (res.data?.stock) {
-          const arr = res.data.stock.map((item) => {
-            const target = marketSrockRecommendList.value.find(
-              (a) => a.symbol == item.symbol
-            );
-            return target || item;
-          });
-          store.commit("setMarketSrockRecommendList", arr || []);
-          setTimeout(() => {
-            store.dispatch("subList", {
-              commitKey: "setMarketSrockRecommendList",
-              listKey: "marketSrockRecommendList",
-            });
-          }, 500);
-        }
-      }
+        // if (res.data?.stock) {
+        //   const arr = res.data.stock.map((item) => {
+        //     const target = marketSrockRecommendList.value.find(
+        //       (a) => a.symbol == item.symbol
+        //     );
+        //     return target || item;
+        //   });
+        //   store.commit("setMarketSrockRecommendList", arr || []);
+        //   setTimeout(() => {
+        //     store.dispatch("subList", {
+        //       commitKey: "setMarketSrockRecommendList",
+        //       listKey: "marketSrockRecommendList",
+        //     });
+        //   }, 500);
+        // }
+        console.log(res.data)
     })
     .finally(() => {
       recommendLoading.value = false;
@@ -115,9 +117,9 @@ const changeStockList = (arr) => {
 // 添加自选
 const addLoading = ref(false);
 
-defineExpose({
-  init,
-});
+onMounted(() => {
+  init()
+})
 
 // 移除收藏
 const removeLoading = ref(false);

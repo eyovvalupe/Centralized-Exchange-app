@@ -366,7 +366,7 @@
               class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
               @click="clickPerformance(1)"
             >
-              涨幅榜
+              跌幅榜
             </div>
           </div>
           <div>
@@ -379,38 +379,40 @@
               class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
               @click="clickPerformance(2)"
             >
-              涨幅榜
+              成交榜
             </div>
           </div>
         </div>
       </div>
     </div>
     <StockTable
-        style="margin-top: 0.1rem"
-        v-if="marketPerformance == 0"
-        :loading="marketLoading"
-        :deleteItem="false"
-        :list="marketDownList"
-        :marketType="'all'"
-      />
-      <StockTable
-        style="margin-top: 0.1rem"
-        v-if="marketPerformance == 1"
-        :loading="marketLoading"
-        :deleteItem="false"
-        :list="marketUpList"
-        :marketType="'all'"
-      />
-      <StockTable
-        style="margin-top: 0.1rem"
-        v-if="marketPerformance == 2"
-        :loading="marketLoading"
-        :deleteItem="false"
-        :list="marketVolumeList"
-        :marketType="'all'"
-      />
+      style="margin-top: 0.1rem"
+      v-if="marketPerformance == 0"
+      :loading="marketLoading"
+      :deleteItem="false"
+      :list="marketDownList"
+      :marketType="'all'"
+      page = "home"
+    />
+    <StockTable
+      style="margin-top: 0.1rem"
+      v-if="marketPerformance == 1"
+      :loading="marketLoading"
+      :deleteItem="false"
+      :list="marketUpList"
+      :marketType="'all'"
+    />
+    <StockTable
+      style="margin-top: 0.1rem"
+      v-if="marketPerformance == 2"
+      :loading="marketLoading"
+      :deleteItem="false"
+      :list="marketVolumeList"
+      :marketType="'all'"
+    />
     <!-- banner -->
-    <Banner v-if="activated" class="home_banner" />
+    <div class="font-bold text-[0.32rem] m-[0.32rem]">市场推荐</div>
+    <!-- <Banner v-if="activated" class="home_banner" /> -->
 
     <!-- Tabs -->
     <Tabs
@@ -429,6 +431,7 @@
             :item="item"
             v-for="(item, i) in marketRecommndStockList"
             :key="'s_' + i"
+            page="home"
           />
         </div>
         <NoData v-if="!commendLoading && !marketRecommndStockList.length" />
@@ -438,16 +441,20 @@
         <div>
           <StockItem
             :item="item"
-            v-for="(item, i) in marketRecommndContractList"
+            v-for="(item, i) in contractList"
             :key="'c_' + i"
+            marketType="crypto"
           />
         </div>
-        <NoData v-if="!commendLoading && !marketRecommndContractList.length" />
+        <NoData v-if="!commendLoading && !contractList.length" />
       </Tab>
       <Tab :title="'IPO'">
         <div>
           <IPO ref="ipoRef" :page="'home'" />
         </div>
+      </Tab>
+      <Tab :title="'交易机器人'">
+        <div></div>
       </Tab>
     </Tabs>
 
@@ -468,7 +475,7 @@ import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
 import { Tab, Tabs, ActionSheet } from "vant";
-import { _sort, _watchlistDefault } from "@/api/api";
+import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import Iconfonts from "@/components/Iconfonts.vue";
 import router from "@/router";
 import IPO from "../Market/components/IPO.vue";
@@ -547,9 +554,11 @@ onActivated(() => {
   activated.value = true;
   setTimeout(() => {
     subs([
+      ...contractList.value,
       ...marketRecommndStockList.value,
-      ...marketRecommndContractList.value,
-      ...marketRecommndList.value,
+      ...marketVolumeList.value,
+      ...marketUpList.value,
+      ...marketDownList.value,
     ]);
   }, 500);
 });
@@ -569,27 +578,11 @@ const commendLoading = ref(false);
 const marketRecommndStockList = computed(
   () => store.state.marketRecommndStockList || []
 );
-const marketRecommndContractList = computed(
-  () => store.state.marketRecommndContractList || []
-);
-const marketRecommndList = computed(() => store.state.marketRecommndList || []);
+const contractList = computed(() => store.state.contractList || []);
 const getRecommendData = () => {
   commendLoading.value = true;
   _watchlistDefault()
     .then((res) => {
-      if (res.data?.chart) {
-        const rs = res.data.chart.map((item) => {
-          const target = marketRecommndList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          if (target) {
-            Object.assign(target, item);
-            item = target;
-          }
-          return item;
-        });
-        store.commit("setMarketRecommndList", rs);
-      }
       if (res.data?.stock) {
         const rs = res.data.stock.map((item) => {
           const target = marketRecommndStockList.value.find(
@@ -599,28 +592,42 @@ const getRecommendData = () => {
             Object.assign(target, item);
             item = target;
           }
-          return item;
+          return { ...item, type: "stock" };
         });
         store.commit("setMarketRecommndStockList", rs);
       }
-      if (res.data?.contract) {
-        const rs = res.data.contract.map((item) => {
-          const target = marketRecommndContractList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          if (target) {
-            Object.assign(target, item);
-            item = target;
-          }
-          return item;
-        });
-        store.commit("setMarketRecommndContractList", rs);
-      }
+      _futures().then((res) => {
+        if (res.code == 200) {
+          const rs = res.data.map((item) => {
+            const target = contractList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            if (target) {
+              Object.assign(target, item);
+              item = target;
+            }
+            return item;
+          });
+          store.commit("setContractList", rs || []);
+
+          setTimeout(() => {
+            subs([
+              ...contractList.value,
+              ...marketRecommndStockList.value,
+              ...marketVolumeList.value,
+              ...marketUpList.value,
+              ...marketDownList.value,
+            ]);
+          }, 500);
+        }
+      });
       setTimeout(() => {
         subs([
-          ...(res.data?.chart || []),
-          ...(res.data?.stock || []),
-          ...(res.data?.contract || []),
+          ...contractList.value,
+          ...marketRecommndStockList.value,
+          ...marketVolumeList.value,
+          ...marketUpList.value,
+          ...marketDownList.value,
         ]);
       }, 500);
     })
@@ -699,12 +706,7 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
     arr = [];
   }
   if (arr.length) {
-    subs([
-      ...arr,
-      ...marketRecommndStockList.value,
-      ...marketRecommndContractList.value,
-      ...marketRecommndList.value,
-    ]);
+    subs([...arr, ...marketRecommndStockList.value, ...contractList.value]);
   }
   const saveActive = marketPerformance.value;
   _sort({
@@ -726,6 +728,7 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
               ...target,
               ...item,
               ratio: target.ratio,
+              type: "stock",
             };
           }
           return item;
@@ -736,8 +739,7 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
           subs([
             ...arr,
             ...marketRecommndStockList.value,
-            ...marketRecommndContractList.value,
-            ...marketRecommndList.value,
+            ...contractList.value,
           ]);
         }, 500);
       }
@@ -884,11 +886,11 @@ onMounted(() => {
 
   .tabs {
     overflow: hidden;
-
-    :deep(.van-tab__panel) {
-      // height: calc(var(--app-height) - 3.4rem);
-      // overflow-y: auto;
-    }
+    margin-bottom: 0.32rem;
+    // :deep(.van-tab__panel) {
+    //   // height: calc(var(--app-height) - 3.4rem);
+    //   // overflow-y: auto;
+    // }
 
     :deep(.van-tabs__nav--card) {
       border: none;
@@ -897,20 +899,17 @@ onMounted(() => {
     :deep(.van-tab--card) {
       border-right: none;
       color: #061023;
-      // background-color: #f5f5f5;
-      // border-radius: 0.3rem;
-      // margin-left: 0.1rem;
-      // transition: all ease .2s;
+      border-radius: 0.32rem;
+      margin-left: 0.1rem;
+      transition: all ease 0.2s;
     }
 
     :deep(.van-tab--card.van-tab--active) {
-      // background-color: #014CFA;
-      // color: #fff;
-
-      background-color: #f6f8ff;
-      border-radius: 0.3rem;
-      color: #014cfa;
+      background-color: #014cfa;
+      border-radius: 0.32rem;
+      color: white;
       font-weight: 500;
+      font-size: 0.3rem;
     }
 
     :deep(.van-tab--shrink) {
@@ -919,17 +918,19 @@ onMounted(() => {
 
     :deep(.van-tabs__wrap) {
       height: 0.8rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0);
       padding-bottom: 0.2rem;
     }
 
     :deep(.van-tabs__nav--card) {
-      height: 0.6rem;
+      height: 0.68rem;
     }
 
     :deep(.van-tab) {
-      line-height: 0.6rem;
-      font-size: 0.28rem;
+      line-height: 0.68rem;
+      font-size: 0.3rem;
+      border: 0.02rem solid #d0d8e2;
+      border-radius: 0.32rem;
+      color: #666d80;
     }
   }
 }

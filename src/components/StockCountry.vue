@@ -10,7 +10,7 @@
       shrink
       @change="onChange"
     >
-      <Tab title="美国" name="0">
+      <Tab title="美股" name="0">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
