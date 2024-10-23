@@ -47,7 +47,7 @@ import OptionCategory from "@/components/OptionCategory.vue";
 import router from "@/router";
 import store from "@/store";
 import { computed, onMounted, ref, watch } from "vue";
-import { _watchlistDefault } from "@/api/api";
+import { _watchlistDefault, _recommend } from "@/api/api";
 import {
   showLoadingToast,
   closeToast,
@@ -75,7 +75,6 @@ const update = () => {
   openRecommendList();
 }
 // 推荐列表
-const marketType = computed(() => store.getters.getMarketType);
 const marketSrockRecommendList = computed(
   () => store.state.marketSrockRecommendList || []
 );
