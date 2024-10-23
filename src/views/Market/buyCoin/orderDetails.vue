@@ -1,6 +1,6 @@
 <template>
   <div class="orderDetails">
-    <Top :title="statusEnum[form.status]?.title" :back-func="goBack" />
+    <Top :title="statusEnum[form.status]?.title" class="!z-20" :back-func="goBack" />
     <!-- 一层容器 tab -->
     <div class="tabs-buy !mb-5">
       <div class="tab" :class="{ active_tab: ['buy', 'sell'].includes(tabsValue) }" @click="changeTab('buy')">{{ offsetEnum[form.offset] }}</div>
@@ -135,10 +135,12 @@ import SafePassword from '@/components/SafePassword.vue'
 import { useCountdown } from '@/utils/hooks'
 import Chat from './Chat.vue'
 import router from '@/router'
+import { useBuyCoinState } from './state'
 
 const { sessionToken } = useMapState(['sessionToken'])
 const [countState, countDispatch] = useCountdown()
 const { t } = useI18n()
+const { onChange, active, setScrollTop } = useBuyCoinState()
 const statusEnum = {
   waitpayment: { name: t('待付款'), title: t('待付款'), color: 'var(--main-color)' },
   waitconfirm: { name: t('待确认'), title: t('待确认'), color: 'var(--main-color)' },
@@ -228,8 +230,12 @@ function handleBotton(val) {
 const goBack = () => {
   if (tabsValue.value === 'contactTheMerchant') {
     tabsValue.value = form.offset
+  } else if (active.value === '2') {
+    router.back()
+    setTimeout(() => setScrollTop('2'), 300)
   } else {
     router.back()
+    onChange('2', false)
   }
 }
 //  复制

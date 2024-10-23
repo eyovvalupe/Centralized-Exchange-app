@@ -1,7 +1,7 @@
 <!-- 自选买卖 二级页面 -->
 <template>
   <div class="page-deal">
-    <Top :title="title" />
+    <Top :title="title" class="!z-20" />
 
     <!-- 买入 -->
     <div v-if="info.offset == 'buy'" class="form">
@@ -93,11 +93,9 @@ import router from '@/router'
 import { _buysell } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
-import { useBuyCoinState } from './state'
 // 收款方式列表 所有钱包
 const { accountList, wallet, sessionToken } = useMapState(['accountList', 'wallet', 'sessionToken'])
 const { t } = useI18n()
-const { onChange } = useBuyCoinState()
 
 const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const safeRef = ref()
@@ -151,20 +149,21 @@ const submitSell = s => {
   if (loading.value) return
   loading.value = true
   _buysell(params)
-    .then(res => {
-      if (res.code == 200) {
+    .then(({ code, data: { order_no } }) => {
+      if (code == 200) {
         showToast(t('下单成功'))
         setTimeout(() => {
-          router.back()
-          onChange('2')
-        }, 500)
+          router.push({
+            name: 'orderDetails',
+            query: { order_no },
+          })
+        }, 300)
       }
     })
     .finally(() => {
       setTimeout(() => {
         loading.value = false
       }, 1000)
-      getSessionToken()
     })
 }
 const getSessionToken = () => {

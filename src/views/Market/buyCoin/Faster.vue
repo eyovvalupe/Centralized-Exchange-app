@@ -124,7 +124,7 @@ import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 import { useBuyCoinState } from './state'
 import router from '@/router'
 
-const { onChange, handleUrl, active } = useBuyCoinState()
+const { handleUrl, active } = useBuyCoinState()
 const safeRef = ref()
 const { sessionToken, token, deWeightCurrencyList: currencyList } = useMapState(['sessionToken', 'token', 'deWeightCurrencyList'])
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
@@ -209,13 +209,17 @@ const submitSell = s => {
     safeword: s,
   }
   _orderFast(params)
-    .then(() => {
-      // showToast(t('买入成功'))
-      onChange('2')
+    .then(({ data: { order_no } }) => {
+      showToast(t('下单成功'))
+      setTimeout(() => {
+        router.push({
+          name: 'orderDetails',
+          query: { order_no },
+        })
+      }, 300)
     })
     .finally(() => {
       loading.value = false
-      getSessionToken()
     })
 }
 
