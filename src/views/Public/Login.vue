@@ -4,7 +4,7 @@
     <!-- 返回和语言 -->
     <div class="max-width top">
       <div class="top_back" @click="goBack">
-        <Icon name="cross" />
+        <Icon name="arrow-left" />
       </div>
 
       <div class="top_lang" @click="goLang">
@@ -19,9 +19,10 @@
 
     <!-- tab -->
     <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
-      <Tab :title="'邮箱登录'"> </Tab>
-      <Tab :title="'手机登录'"></Tab>
+      <Tab :title="'邮箱'"> </Tab>
+      <Tab :title="'手机'"></Tab>
     </Tabs>
+   
 
     <!-- 表单 -->
     <div class="form">
@@ -31,7 +32,7 @@
           class="form_item_user"
           v-show="saveAccount && saveAccount == form.email"
         >
-          <img src="/static/img/user/user.png" alt="user" />
+            <img class="van-icon" src="/static/img/assets/envelop.svg" alt= "envelope" />
         </div>
         <input
           @change="changeAccount"
@@ -42,6 +43,12 @@
           class="item_input"
         />
         <Loading v-if="accountLoading" :size="18" type="spinner" />
+        <div
+          class="form_item_clear"
+          v-show="saveAccount && saveAccount == form.email"
+        >
+            <Icon class ="" name="cross" />
+        </div>
       </div>
 
       <div class="form_title" v-show="activeTab == 1">手机号</div>
@@ -62,6 +69,12 @@
       </div>
       <div class="form_title">密码</div>
       <div class="form_item">
+       <div
+          class="form_item_user"
+          v-show="saveAccount "
+        >
+          <img class="van-icon" src="/static/img/assets/lock.svg" alt= "lock" />
+        </div>
         <input
           maxlength="20"
           v-show="!showPass"
@@ -385,7 +398,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-login {
-  padding-top: 1.12rem;
+  padding-top: 1rem;
 
   .tabs {
     overflow: hidden;
@@ -404,6 +417,7 @@ onMounted(() => {
     :deep(.van-tab--card) {
       border-right: none;
       color: #061023;
+      border-bottom: 3px solid #D0D8E2;
       // background-color: #f5f5f5;
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
@@ -411,15 +425,16 @@ onMounted(() => {
     }
 
     :deep(.van-tab--card.van-tab--active) {
-      // background-color: #014CFA;
-      // color: #fff;
-
-      background-color: #f6f8ff;
-      border-radius: 0.3rem;
-      color: #014cfa;
-      font-weight: 500;
+      background-color: white;
+      color:  #2168F6;
+      font-family: "PingFang SC";
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      border-bottom: 3px solid #014CFA;
     }
-
+   
     :deep(.van-tab--shrink) {
       padding: 0 0.3rem;
     }
@@ -431,12 +446,15 @@ onMounted(() => {
     }
 
     :deep(.van-tabs__nav--card) {
-      height: 0.6rem;
+      height: 0.8rem;
+      display : flex;
     }
 
     :deep(.van-tab) {
       line-height: 0.6rem;
       font-size: 0.28rem;
+      width:50%;
+      padding-bottom : 14.5px;
     }
   }
 
@@ -470,15 +488,19 @@ onMounted(() => {
   }
 
   .title_box {
-    padding: 0.12rem 0.32rem 0.8rem 0.32rem;
+    padding: 0.24rem 0.32rem 0.8rem 0.32rem;
 
     .title {
-      height: 0.78rem;
+      // height: 0.78rem;
       display: flex;
       align-items: center;
+      color: #061023;
+      text-align: center;
+      font-family: "PingFang SC";
+      font-size: 28px;
+      font-style: normal;
       font-weight: 600;
-      font-size: 0.56rem;
-      color: #0d0d12;
+      line-height: 140%; 
     }
   }
 
@@ -525,9 +547,37 @@ onMounted(() => {
       }
 
       .form_item_user {
-        width: 0.64rem;
-        height: 0.64rem;
-        margin-right: 0.32rem;
+        justify-content: center;
+        color: #014CFA;
+        margin-right: 0.12rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background-color : #CDD4E3;
+        border-radius : 50%;
+
+         .van-icon{
+            width: 18px !important;
+         }
+      }
+      .form_item_clear{
+        justify-content: center;
+        color: #161616;
+        margin-left: 0.12rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 16px;
+        height: 16px;
+        background-color : #CDD4E3;
+        padding : '1px';
+        border-radius: 50%;
+
+        .van-icon{
+          font-size: 12px;
+        }
       }
 
       .form_item_icon {
@@ -555,6 +605,13 @@ onMounted(() => {
     .submit {
       width: 100%;
       height: 1.12rem;
+      color: #FFF;
+      text-align: center;
+      font-family: "PingFang SC";
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%; /* 18px */
     }
   }
 
