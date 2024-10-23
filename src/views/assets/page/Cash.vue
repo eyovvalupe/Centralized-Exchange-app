@@ -12,19 +12,9 @@
         </div>
       </div>
       <div class="money">
-        <span>{{ hidden ? '********' : mainWallet.amount || '0.00' }}</span>
+        <span>{{ hidden ? '********' : assets.money || '0.00' }}</span>
       </div>
-      <div class="navs">
-        <div class="nav">
-            <div class="nav_label">{{ $t('现金') }}</div>
-            <div class="num">{{ hidden ? '********' : assets.money || '0' }}</div>
-        </div>
-        <div class="line" />
-        <div class="nav">
-          <div class="nav_label">{{ $t('冻结') }}</div>
-          <div class="num">{{ hidden ? '********' :  '--' }}</div>
-        </div>
-      </div>
+      
     </OverviewCard>
 
     <!-- 按钮 -->
@@ -161,9 +151,10 @@ defineExpose({
     display: flex;
     align-items: center;
     height: 0.32rem;
+    line-height: 0.32rem;
     .title {
       color: #fff;
-      margin-right: 0.08rem;
+      margin-right: 0.12rem;
       font-size: 0.3rem;
       span{
         font-size: 0.24rem;
@@ -183,8 +174,9 @@ defineExpose({
     font-size: 0.52rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 0.52rem; 
+    line-height: 0.6rem; 
     margin-top: 0.26rem;
+    padding-bottom: 0.4rem;
   }
 
   .navs {

@@ -4,7 +4,7 @@
     <!-- 总览 -->
     <OverviewCard>
       <div class="top">
-        <div class="title">{{ $t('总资产') }}<span>(USDT)</span></div>
+        <div class="title">{{ $t('总资产') }} <span>(USDT)</span></div>
         <div class="eyes" @click="hidden = !hidden">
           <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
           <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
@@ -222,11 +222,12 @@ const jump = (name, check = false, query) => {
     font-size: 0.28rem;
     font-weight: 400;
     display: flex;
-    align-items: center;
     height: 0.32rem;
+    align-items: center;
+    line-height: 0.32rem;
     .title {
       color: #fff;
-      margin-right: 0.08rem;
+      margin-right: 0.12rem;
       font-size: 0.3rem;
       span{
         font-size: 0.24rem;
@@ -246,7 +247,7 @@ const jump = (name, check = false, query) => {
     font-size: 0.52rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 0.52rem; 
+    line-height: 0.6rem; 
     margin-top: 0.26rem;
   }
 

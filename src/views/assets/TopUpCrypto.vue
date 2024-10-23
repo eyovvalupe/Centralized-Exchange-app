@@ -1,130 +1,146 @@
 <!-- 充值-虚拟货币 -->
 <template>
     <div class="page page_topup_crypto">
-        <Top :title="'充值'">
+        <Top :title="$t('topUpCrypto.recharge')">
             <template #right>
                 <div class="top-record" @click="goRecord">
                     <div class="top-record-icon">
-                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                        <img src="/static/img/assets/record.png" />
                     </div>
-                    <!-- <span>
-                        记录
-                    </span> -->
+                    <span>
+                        {{$t("topUpCrypto.rechargeRecord")}}
+                    </span>
                 </div>
             </template>
         </Top>
 
-
-
-        <div class="form">
-            <div class="subtitle">
-                <span>币种</span>
-                <span style="margin-left: 0.6rem">网络</span>
-            </div>
-            <div class="item">
-                <div class="select_item border_item" @click="showDialog = true">
-                    <div class="currency" v-if="form.currency">
-                        <div class="currency_icon">
-                            <img :src="`/static/img/crypto/${form.currency.toUpperCase()}.png`" alt="currency">
+        <Tabs type="custom-card" v-model:active="tabActive" :swipeable="false"
+            shrink>
+            <Tab :title="$t('topUpCrypto.cryptocurrency')" name="cryptocurrency">
+                <div class="form">
+                    <div class="subtitle">
+                        <span>{{$t("topUpCrypto.currency")}}</span>
+                    </div>
+                    
+                    <div class="item">
+                        <div class="select_item border_item" @click="showDialog = true">
+                            <div class="currency">
+                                <div class="currency_icon" v-if="form.currency">
+                                    <img :src="`/static/img/crypto/${form.currency.toUpperCase()}.png`" alt="currency">
+                                </div>
+                                <span>{{ form.currency || '' }}</span>
+                            </div>
+                            <div class="more">
+                                <img src="/static/img/assets/more.png" alt="more">
+                            </div>
                         </div>
-                        <span>{{ form.currency }}</span>
                     </div>
-                    <div class="more">
-                        <img src="/static/img/assets/more.png" alt="more">
+                    <div class="subtitle">
+                        <span>{{$t("topUpCrypto.network")}}</span>
                     </div>
-                </div>
-                <div class="select_item border_item" style="margin-left: 0.6rem;padding-left:0.4rem"
-                    @click="showNetDialog = true">
-                    <div class="currency" v-if="form.network">
-                        <span>{{ form.network }}</span>
+                    <div class="item">
+                        <div class="select_item border_item"
+                            @click="showNetDialog = true">
+                            <div class="currency">
+                                <span>{{ form.network || '' }}</span>
+                            </div>
+                            <div class="more">
+                                <img src="/static/img/assets/more.png" alt="more">
+                            </div>
+                        </div>
                     </div>
-                    <div class="more">
-                        <img src="/static/img/assets/more.png" alt="more">
+                    <!-- <div class="recommend_list">
+                        <div @click="clickItem(item)" class="recommend_item"
+                            :class="{ 'recommend_active': form.currency == item }" v-for="item in recommendList" :key="item">
+                            <div class="recommend_icon"><img :src="`/static/img/crypto/${item.toUpperCase()}.png`"
+                                    alt="currency">
+                            </div>
+                            <span>{{ item }}</span>
+                        </div>
+                    </div> -->
+
+                    <div class="subtitle">
+                        <span style="flex:none">{{$t("topUpCrypto.rechargeAmount")}}</span>
+                        <span class="subtitle_right" @click="goTransing" v-if="form.currency != 'USDT'">
+                            <span style="color: #014CFA;">{{ targetAmount }}</span>
+                            {{ topUpMode
+                                == 1 ?
+                                'USDT' : form.currency.toUpperCase() }}
+
+                        </span>
+                        <div style="width:0.44rem;height:0.44rem;margin-left: 0.1rem;" @click="goTransing"
+                            :class="[transing ? 'transing_icon' : 'transing_stop']" v-if="form.currency != 'USDT'">
+                            <img src="/static/img/assets/recharge_trans.png" alt="img">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="recommend_list">
-                <div @click="clickItem(item)" class="recommend_item"
-                    :class="{ 'recommend_active': form.currency == item }" v-for="item in recommendList" :key="item">
-                    <div class="recommend_icon"><img :src="`/static/img/crypto/${item.toUpperCase()}.png`"
-                            alt="currency">
+                    <div class="item border_item" :class="{ 'err_ipt': errStatus }">
+                        <div class="item_content">
+                            <input class="ipt" @blur="errStatus = false" type="number" v-model="form.amount" :placeholder="$t('topUpCrypto.inputPlaceholder')">
+                        </div>
+                        <div>{{ topUpMode == 1 ? form.currency : 'USDT' }}</div>
                     </div>
-                    <span>{{ item }}</span>
+
+                    <!-- <div>
+                        <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
+                    </div> -->
+                    <!-- <div class="tip" v-if="topUpMode == 2">
+                        <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
+                        <Loading v-show="rateLoading" type="spinner" size="12px" />
+                    </div> -->
+
                 </div>
-            </div>
+                <Button @click="goTopUp" :loading="loading" round color="#014CFA" class="submit" type="primary">{{$t("topUpCrypto.confirm")}}</Button>
+        
+            </Tab>
+            <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard">
+            </Tab>
+        </Tabs>
 
-            <div class="subtitle">
-                <span style="flex:none">充值金额</span>
-                <span class="subtitle_right" @click="goTransing" v-if="form.currency != 'USDT'">
-                    <span style="color: #014CFA;">{{ targetAmount }}</span>
-                    {{ topUpMode
-                        == 1 ?
-                        'USDT' : form.currency.toUpperCase() }}
-
-                </span>
-                <div style="width:0.52rem;height:0.52rem;margin-left: 0.1rem;" @click="goTransing"
-                    :class="[transing ? 'transing_icon' : 'transing_stop']" v-if="form.currency != 'USDT'">
-                    <img src="/static/img/assets/recharge_trans.png" alt="img">
-                </div>
-            </div>
-            <div class="item border_item" :class="{ 'err_ipt': errStatus }">
-                <div class="item_content">
-                    <input class="ipt" @blur="errStatus = false" type="number" v-model="form.amount" placeholder="请输入">
-                </div>
-                <div>{{ topUpMode == 1 ? form.currency : 'USDT' }}</div>
-            </div>
-
-            <!-- <div>
-                <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
-            </div> -->
-            <!-- <div class="tip" v-if="topUpMode == 2">
-                <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
-                <Loading v-show="rateLoading" type="spinner" size="12px" />
-            </div> -->
-
-            <!-- <div class="border_item act_body">
-                <div>活动内容</div>
-                <div>--</div>
-            </div> -->
-
-        </div>
-
-        <Button @click="goTopUp" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
-
-
+        
         <!-- 币种选择弹窗 -->
-        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-            v-model:show="showDialog" position="bottom" teleport="body">
-            <div class="topup_accounr_dialog">
-                <div class="close_icon" @click="showDialog = false">
-                    <img src="/static/img/common/close.png" alt="x">
-                </div>
-                <div @click="clickItem(keyStr)" class="swap_dialog_item"
-                    :class="{ 'swap_dialog_item_active': form.currency == keyStr }"
-                    v-for="(val, keyStr) in networkMapList" :key="keyStr">
-                    <div class="icon">
-                        <img :src="`/static/img/crypto/${keyStr.toUpperCase()}.png`" alt="currency">
-                    </div>
-                    <span>{{ keyStr.toUpperCase() }}</span>
+        <Popup v-model:show="showDialog" position="bottom" round closeable teleport="body">
 
-                    <Icon v-if="form.currency == keyStr" class="check_icon" name="success" />
+            <div class="van-popup-custom-title">{{$t("topUpCrypto.currencySelection")}}</div>
+             
+            <div class="topup_accounr_dialog">
+               <!-- 搜索 -->
+                <div class="search_box">
+                    <div class="search_icon">
+                        <img src="/static/img/common/search.png" alt="🔍">
+                    </div>
+                    <input v-model.trim="searchDialogStr" type="text" class="ipt"
+                        :placeholder="$t('topUpCrypto.searchPlaceholder')">
+                </div>
+                <div class="lists">
+                    <div @click="clickItem(keyStr)" class="swap_dialog_item"
+                        :class="{ 'swap_dialog_item_active': form.currency == keyStr }"
+                        v-for="(val, keyStr) in networkMapList" :key="keyStr" v-show="!searchDialogStr || keyStr.toUpperCase().indexOf(searchDialogStr) > -1">
+                        <div class="icon">
+                            <img :src="`/static/img/crypto/${keyStr.toUpperCase()}.png`" alt="currency">
+                        </div>
+                        <span>{{ keyStr.toUpperCase() }}</span>
+
+                        <div v-if="form.currency == keyStr" class="check_icon">
+                            <img src="/static/img/assets/success.svg" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </Popup>
 
         <!-- 网路选择弹窗 -->
-        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+        <Popup round closeable
             v-model:show="showNetDialog" position="bottom" teleport="body">
-            <div class="topup_accounr_dialog">
-                <div class="close_icon" @click="showNetDialog = false">
-                    <img src="/static/img/common/close.png" alt="x">
-                </div>
+            <div class="van-popup-custom-title">{{$t("topUpCrypto.networkSelection")}}</div>
+            <div class="topup_accounr_dialog network_accounr_dialog">
                 <div @click="clickNetItem(item.network)" class="swap_dialog_item"
                     :class="{ 'swap_dialog_item_active': form.network == item.network }"
                     v-for="(item, i) in currNetwork" :key="i">
                     <span>{{ item.network }}</span>
 
-                    <Icon v-if="form.network == item" class="check_icon" name="success" />
+                    <div v-if="form.network == item.network" class="check_icon">
+                        <img src="/static/img/assets/success.svg" />
+                    </div>
                 </div>
             </div>
         </Popup>
@@ -146,7 +162,7 @@ import Top from "@/components/Top.vue"
 import router from "@/router"
 import { ref, computed, onBeforeUnmount, onMounted } from "vue"
 import store from "@/store";
-import { Popup, Button, Icon, showToast, Checkbox, showLoadingToast, closeToast } from "vant"
+import { Popup, Button, Icon, showToast,Tabs,Tab, Checkbox, showLoadingToast, closeToast } from "vant"
 import { useRoute } from "vue-router"
 // import { _networkMapList } from "@/utils/dataMap.js"
 import RecordList from "@/components/RecordList.vue"
@@ -156,13 +172,12 @@ import { _swapRate } from "@/api/api"
 import Decimal from "decimal.js";
 import { _cryptoCoin } from "@/api/api"
 
-
+const tabActive = ref("cryptocurrency")
 
 const safeRef = ref()
 const userInfo = computed(() => store.state.userInfo || {})
 const RecordListRef = ref()
 const route = useRoute()
-
 
 
 const loading = ref(false)
@@ -173,6 +188,7 @@ const form = ref({
     currency: '',
     network: '',
 })
+
 
 const topUpMode = ref(1) // 1-选择的币种 2-法币
 const transing = ref(false) // 转换动画中
@@ -199,6 +215,8 @@ const clickItem = item => {
         initNetwork()
     }, 0)
 }
+
+const searchDialogStr = ref('')
 
 // 网络选择
 const networkMapList = ref({})
@@ -302,7 +320,6 @@ const getRate = () => {
         duration: 0,
         loadingType: 'spinner',
     })
-    // timeDown.value = 10
     rateLoading.value = true
     _swapRate({
         from: coinLists.value.find(item => item.network == form.value.network).currency,
@@ -311,14 +328,7 @@ const getRate = () => {
     }).then(res => {
         if (res.code == 200) {
             rate.value = res.data.exchange_rate
-            // if (route.name == 'topUpCrypto') {
-            //     interval = setInterval(() => {
-            //         timeDown.value--
-            //         if (timeDown.value <= 0) {
-            //             getRate()
-            //         }
-            //     }, 1000)
-            // }
+  
         }
     }).finally(() => {
         closeToast();
@@ -340,27 +350,22 @@ onBeforeUnmount(() => {
 
 <style lang="less" scoped>
 .page_topup_crypto {
-    padding: 1rem 0.32rem 1.5rem 0.32rem;
-
+    padding: 1.32rem 0.32rem 1.44rem 0.32rem;
     position: relative;
-
+    :deep(.top){
+        z-index: 10;
+    }
     .top-record {
-        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #0953fa;
-        font-size: 0.24rem;
-
+        font-size:0.28rem;
         .top-record-icon {
-            background-color: #EDEDED;
-            width: 0.52rem;
-            height: 0.52rem;
-            padding: 0.06rem;
-            border-radius: 50%;
-            margin-right: 0.04rem;
+            width: 0.3rem;
+            height: 0.3rem;
+            margin-right: 0.06rem;
         }
-
     }
 
     .recommend_list {
@@ -395,36 +400,26 @@ onBeforeUnmount(() => {
     }
 
     .form {
-        margin-top: 0.5rem;
 
         .item {
             width: 100%;
-            height: 0.88rem;
-            margin-bottom: 0.32rem;
+            height: 0.92rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-weight: 400;
 
-            &:has(.ipt:focus) {
-                height: 1.12rem;
-            }
-
-            .item_pre {
-                width: 1rem;
-                font-size: 0.28rem;
-                color: #707070;
-            }
 
             .item_content {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 flex: 1;
-                font-size: 0.28rem;
+                font-size: 0.3rem;
                 color: #000;
                 position: relative;
-                line-height: 0.28rem;
+                line-height: 0.36rem;
+                margin-right: 0.32rem;
                 height: 100%;
 
                 .ipt {
@@ -440,9 +435,9 @@ onBeforeUnmount(() => {
                 line-height: 1;
 
                 .currency_icon {
-                    width: 0.56rem;
-                    height: 0.56rem;
-                    margin-right: 0.12rem;
+                    width: 0.48rem;
+                    height: 0.48rem;
+                    margin-right: 0.16rem;
                 }
             }
 
@@ -453,7 +448,7 @@ onBeforeUnmount(() => {
         }
 
         .border_item {
-            border-radius: 0.12rem;
+            border-radius: 0.32rem;
             border: 1px solid #D0D8E2;
             padding: 0 0.32rem;
 
@@ -487,11 +482,11 @@ onBeforeUnmount(() => {
             display: flex;
             align-items: center;
             font-size: 0.28rem;
-            color: #333333;
+            color: #061023;
             font-weight: 400;
             line-height: 0.36rem;
-            margin: 0rem 0 0.12rem 0;
-
+            margin-top: 0.4rem;
+            margin-bottom: 0.12rem;
             >span {
                 flex: 1;
             }
@@ -508,75 +503,84 @@ onBeforeUnmount(() => {
 
             .subtitle_right {
                 text-align: right;
-                font-size: 0.24rem;
-
-                b {
-                    color: #014CFA;
-                    font-size: 0.28rem;
-                }
+                font-size: 0.28rem;
+                color:#666D80;
             }
-        }
-
-        .act_body {
-            padding: 0.4rem;
-            font-size: 0.28rem;
-            line-height: 0.36rem;
         }
     }
 
     .submit {
-        width: calc(100% - 0.64rem);
+        width: 100%;
         height: 1.12rem;
-        position: absolute;
-        bottom: 1rem;
-        left: 50%;
-        transform: translateX(-50%);
+        font-size: 0.36rem;
+        margin-top:0.8rem;
     }
 }
-</style>
-<style lang="less" scoped>
+.network_accounr_dialog{
+    padding-top: 0.2rem;
+    padding-bottom: 0.32rem;
+}
 .topup_accounr_dialog {
-    background-color: #fff;
-    border-top-left-radius: 0.4rem;
-    border-top-right-radius: 0.4rem;
-    overflow: hidden;
-    padding: 0.86rem 0.32rem 0.8rem 0.32rem;
-    position: relative;
-
-    .close_icon {
-        position: absolute;
-        width: 0.4rem;
-        height: 0.4rem;
-        top: 0.24rem;
-        right: 0.32rem;
+    
+    .lists{
+        height: 60vh;
+        overflow-y: auto;
+        margin-top:0.2rem;
+        padding-bottom: 0.32rem;
     }
-
-    .swap_dialog_item {
-        height: 1.12rem;
-        line-height: 0;
+    .search_box {
+        height: 0.8rem;
+        padding: 0 0.32rem;
+        margin:0.52rem 0.3rem 0 0.3rem;
         display: flex;
         align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid #F5F5F5;
-        overflow: hidden;
-        position: relative;
+        background-color: #F5F7FC;
+        border-radius: 0.6rem;
+        border: 1px solid #D0D8E2;
 
-        .icon {
-            width: 0.4rem;
-            height: 0.4rem;
+        .search_icon {
+            width: 0.48rem;
+            height: 0.48rem;
             margin-right: 0.24rem;
         }
-    }
 
+        .ipt {
+            height: 100%;
+            font-weight: 400;
+        }
+        .ipt::placeholder{
+            color:#A4ACB9;
+        }
+    }
+    .swap_dialog_item {
+        height: 1.04rem;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #EFF3F8;
+        overflow: hidden;
+        position: relative;
+        font-size:0.3rem;
+        margin:0 0.32rem;
+        .icon {
+            width: 0.64rem;
+            height: 0.64rem;
+            margin-right: 0.2rem;
+        }
+    }
+    .swap_dialog_item:last-child{
+        border-bottom: 0px;
+    }
     .swap_dialog_item_active {
         color: #014CFA;
         font-weight: 600;
-
         .check_icon {
             position: absolute;
             right: 0.24rem;
             color: #014CFA;
-            font-size: 0.28rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            top:50%;
+            margin-top: -0.24rem;
         }
     }
 }

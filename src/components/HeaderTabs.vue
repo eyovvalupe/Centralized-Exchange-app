@@ -1,10 +1,10 @@
 <template>
      <div class="header_tabs">
         <slot name="before" />
-        <div class="tabs">
+        <div class="tabs" ref="tabScroller">
             <div class="tab_body">
-                <div class="tab" v-for="(tabNmae,i) in tabs" :key="i" :class="{ 'active_tab': active == i }" @click="changeActiveTab(i)">
-                    <span class="tab-name">{{tabNmae}}</span>
+                <div class="tab" v-for="(tabName,i) in tabs" :key="i" :class="{ 'active_tab': active == i,'tab--last':i == tabs.length-1 }" @click="changeActiveTab(i)">
+                    <span class="tab-name">{{tabName}}</span>
                 </div>
                 
             </div>
@@ -13,6 +13,7 @@
     </div>
 </template>
 <script setup>
+import { nextTick,onMounted,ref, watch } from 'vue';
 const emit = defineEmits(['update:active','change'])
 const props = defineProps({
     active:{
@@ -26,10 +27,63 @@ const props = defineProps({
         }
     }
 })
+const tabScroller = ref(null)
+const animateScrollLeft = (el,x,n,s=5)=>{
+    n -= s
+    if(n < x){
+        n = x
+        el.scrollTo(n,0)
+    }else{
+        el.scrollTo(n,0)
+        setTimeout(()=>{
+            animateScrollLeft(el,x,n)
+        },15)
+    }
+}
+const animateScrollRight = (el,x,n,s=5)=>{
+    n += s
+    if(n > x){
+        n = x
+        el.scrollTo(n,0)
+    }else{
+        el.scrollTo(n,0)
+        setTimeout(()=>{
+            animateScrollRight(el,x,n)
+        },15)
+    }
+}
+const animateScroll = (el,x,s=5)=>{
+    if(el.scrollLeft > x){
+        animateScrollLeft(el,x,el.scrollLeft,s)
+    }else{
+        animateScrollRight(el,x,el.scrollLeft,s)
+    }
+}
+const initScrollLeft = ()=>{
+    if(tabScroller.value && tabScroller.value.querySelector('.active_tab')){
+        const activeTabEl = tabScroller.value.querySelector('.active_tab')
+        const left = activeTabEl.offsetLeft
+        if(left > tabScroller.value.offsetWidth/3){
+            const x = left - tabScroller.value.offsetWidth/3
+            animateScroll(tabScroller.value,x)
+        }else{
+            animateScroll(tabScroller.value,0)
+        }
+    }
+}
 const changeActiveTab = (val)=>{
     emit('update:active',val)
     emit('change',val)
+    
 }
+watch(()=>props.active,()=>{
+    nextTick(()=>{
+        initScrollLeft()
+    })
+})
+onMounted(()=>{
+    initScrollLeft()
+})
 
 </script>
 
@@ -39,21 +93,18 @@ const changeActiveTab = (val)=>{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    overflow-x: auto;
-
+    
     .tabs {
         flex: 1;
         display: flex;
         align-items: center;
-        flex-wrap: wrap;
         position: relative;
-
+        overflow-x: auto;
+        transition: .3s;
         .tab_body {
             flex: 1;
             display: flex;
             align-items: center;
-            flex-wrap: nowrap;
-            overflow-x: auto;
             margin: 0 0.2rem;
         }
 

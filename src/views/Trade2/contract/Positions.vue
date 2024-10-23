@@ -578,6 +578,7 @@ getSessionToken()
         padding: 0.48rem 0 0.24rem 0;
         background: none;
         margin-top:0px;
+        border-radius: 0px;
         
     }
 

@@ -580,6 +580,7 @@ getSessionToken()
             color: #061023;
             line-height: 0.32rem;
             margin-bottom: 0.18rem;
+            display: block;
         }
 
         .lever {

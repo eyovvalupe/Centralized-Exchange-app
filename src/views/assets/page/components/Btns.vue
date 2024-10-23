@@ -4,7 +4,7 @@
             <div class="btn-item__icon">
               <span><img src="/static/img/assets/recharge.png" /></span>
             </div>
-            <div class="btn-item__name">充值</div>
+            <div class="btn-item__name">{{$t("assets.recharge")}}</div>
         </div>
         <div class="btn-item" @click="jump('withdraw', true)">
             <div class="btn-item__icon">
@@ -12,7 +12,7 @@
                 <img src="/static/img/assets/withdrawal.png" />
               </span>
             </div>
-            <div class="btn-item__name">提现</div>
+            <div class="btn-item__name">{{$t("assets.withdraw")}}</div>
         </div>
         <div class="btn-item" @click="jump('transfer')">
             <div class="btn-item__icon">
@@ -20,7 +20,7 @@
                 <img src="/static/img/assets/transfer_icon.png" />
               </span>
             </div>
-            <div class="btn-item__name">划转</div>
+            <div class="btn-item__name">{{$t("assets.transfer")}}</div>
         </div>
         <div class="btn-item" @click="showAS = true">
             <div class="btn-item__icon">
@@ -28,7 +28,7 @@
                 <img src="/static/img/assets/record.png" />
               </span>
             </div>
-            <div class="btn-item__name">资金记录</div>
+            <div class="btn-item__name">{{$t("assets.financialRecords")}}</div>
         </div>
     </div>
     <ActionSheet v-model:show="showAS" teleport="body" :actions="actions" :title="$t('记录列表')" @select="onSelect" />
@@ -36,6 +36,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { ActionSheet } from 'vant'
+import router from '@/router'
 const { t } = useI18n()
 const jump = (name, check = false, query) => {
   router.push({
