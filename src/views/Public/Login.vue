@@ -32,8 +32,7 @@
         <div class="form_item_user" v-show="form.email">
           <img class="van-icon" src="/static/img/assets/envelop.svg" alt="envelope" />
         </div>
-        <input @change="changeAccount" v-model.trim="form.email" placeholder="您的邮箱" type="text"
-          class="item_input" />
+        <input @change="changeAccount" v-model.trim="form.email" placeholder="您的邮箱" type="text" class="item_input" />
         <Loading v-if="accountLoading" :size="18" type="spinner" />
         <!-- <div class="form_item_clear" v-show="saveAccount && saveAccount == form.email"> -->
         <div class="form_item_clear" v-show="form.email" @click="form.email = null">
@@ -337,6 +336,7 @@ onMounted(() => {
 <style lang="less" scoped>
 .page-login {
   padding-top: 1rem;
+  width: 375px;
 
   .tabs {
     overflow: hidden;
