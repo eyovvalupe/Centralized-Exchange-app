@@ -35,6 +35,7 @@ import { ref, computed } from "vue"
 import store from "@/store"
 import OverviewCard from './components/OverviewCard'
 import Positions from "../../Trade2/contract/Positions.vue"
+import Decimal from 'decimal.js';
 const currency = computed(() => (store.state.accountCurrencyMap.futures || '') )
 const hidden = ref(false)
 
@@ -42,7 +43,7 @@ const assets = computed(() => store.state.assets || {})
 const totalFutures = computed(()=>{
     let futures_value = assets.value.futures_value || 0
     let futures = assets.value.futures || 0
-    return futures_value + futures
+    return new Decimal(futures_value).add(futures)
 })
 </script>
 

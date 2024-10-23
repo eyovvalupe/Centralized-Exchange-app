@@ -14,7 +14,7 @@
                 <span>{{ hidden ? '********' : profitableFunds }}</span>
             </div>
             <div class="navs">
-                <div class="nav_label">{{ $t('合约持仓金额') }}</div>
+                <div class="nav_label">{{ $t('持仓金额') }}</div>
                 <div class="num">{{ hidden ? '********' : assets.aiquant_value || '0' }}</div>
             </div>
         </OverviewCard>
