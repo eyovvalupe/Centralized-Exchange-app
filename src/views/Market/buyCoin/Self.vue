@@ -173,7 +173,7 @@ import { useBuyCoinState } from './state'
 const { userInfo, token, deWeightCurrencyList: currencyList, accountList, sessionToken } = useMapState(['userInfo', 'token', 'deWeightCurrencyList', 'accountList', 'sessionToken'])
 const buycoinScrollTop1 = useSessionStorage('buycoinScrollTop1')
 const { active, handleUrl } = useBuyCoinState()
-const scrollTop = inject('scrollTop')
+const scrollData = inject('scrollData')
 const { t } = useI18n()
 const safeRef = ref()
 const showPopupInfo = ref(false)
@@ -350,17 +350,13 @@ const init = () => {
   }, 500)
 }
 
-const scrollHandle = () => {
+const scrollHandle = bottom => {
   if (!moreDom) return
   if (active.value !== '1') return
-  const rect = moreDom.getBoundingClientRect()
-  if (rect.top <= totalHeight) {
-    console.error('加载更多')
-    // 加载更多
-    getData()
-  }
+  // 加载更多
+  if (bottom) getData()
 }
-watch(() => scrollTop.value, scrollHandle)
+watch(() => scrollData.arrivedState.bottom, scrollHandle)
 
 onActivated(() => {
   setTimeout(() => {

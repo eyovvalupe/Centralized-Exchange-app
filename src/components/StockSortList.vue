@@ -1,9 +1,6 @@
 <!-- 股票 -->
 <template>
-  <div class="market_stock">
-    <StockCountry />
-    <StockDestribute />
-
+  <div class="market_stock_list">
     <!-- Tabs -->
     <Tabs
       v-if="!pageLoading"
@@ -12,33 +9,15 @@
       v-model:active="active"
       :swipeable="false"
       animated
-      :color="'#014CFA'"
       shrink
     >
-      <Tab :title="'活跃'">
-        <StockTable :key="'vol'" :loading="loading" :list="marketVolumeList" />
-        <LoadingMore
-          :classN="'stock_soft_more0'"
-          ref="more_1"
-          class="active_more"
-          :loading="!!(marketVolumeList.length && loading)"
-          :finish="finish"
-          v-if="((finish && marketVolumeList.length) || !finish) && active == 0"
+      <Tab :title="'涨幅榜'">
+        <!-- <StockTable :key="'down'" :loading="loading" :list="marketDownList" :marketType="'stock'" /> -->
+        <StockTableForList
+          v-if="marketDownList.length"
+          :loading="loading"
+          :list="marketDownList"
         />
-      </Tab>
-      <Tab :title="'涨幅'">
-        <StockTable :key="'up'" :loading="loading" :list="marketUpList" />
-        <LoadingMore
-          :classN="'stock_soft_more1'"
-          ref="more_2"
-          class="active_more"
-          :loading="!!(marketUpList.length && loading)"
-          :finish="finish"
-          v-if="((finish && marketUpList.length) || !finish) && active == 1"
-        />
-      </Tab>
-      <Tab :title="'跌幅'">
-        <StockTable :key="'down'" :loading="loading" :list="marketDownList" />
         <LoadingMore
           :classN="'stock_soft_more2'"
           ref="more_3"
@@ -46,6 +25,21 @@
           :loading="!!(marketDownList.length && loading)"
           :finish="finish"
           v-if="((finish && marketDownList.length) || !finish) && active == 2"
+        />
+      </Tab>
+      <Tab :title="'跌幅榜'">
+        <StockTableForList
+          :key="'up'"
+          :loading="loading"
+          :list="marketUpList"
+        />
+        <LoadingMore
+          :classN="'stock_soft_more1'"
+          ref="more_2"
+          class="active_more"
+          :loading="!!(marketUpList.length && loading)"
+          :finish="finish"
+          v-if="((finish && marketUpList.length) || !finish) && active == 1"
         />
       </Tab>
     </Tabs>
@@ -64,15 +58,13 @@
 
 <script setup>
 import { Tab, Tabs, ActionSheet } from "vant";
-import StockTable from "@/components/StockTable.vue";
+import StockTableForList from "@/components/StockTableForList.vue";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { _sort, _marketOverview } from "@/api/api";
+import { _sort } from "@/api/api";
 import store from "@/store";
 import Recommend from "@/views/Home/components/Recommend.vue";
 import Loading from "@/components/Loaidng.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
-import StockCountry from '@/components/StockCountry.vue';
-import StockDestribute from '@/components/StockDestribute.vue';
 
 const loading = ref(false);
 const finish = ref(false);
@@ -132,10 +124,10 @@ const changeTab = (key) => {
     target = document.querySelector(".stock_soft_more" + key);
   }, 350);
 };
-const readyRecommendData = () => {
-  // 推荐数据准备好了，一起监听
-  changeTab(active.value);
-};
+// const readyRecommendData = () => {
+//   // 推荐数据准备好了，一起监听
+//   changeTab(active.value);
+// };
 
 // 获取列表数据
 const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
@@ -189,7 +181,6 @@ const getData = (list, key, query, listKey) => {
         });
         arr.push(...rs);
         store.commit(key, arr || []);
-
         setTimeout(() => {
           subs(listKey, key);
           scrollHandler();
@@ -202,113 +193,6 @@ const getData = (list, key, query, listKey) => {
       }, 300);
     });
 };
-
-// 获取总览数据
-const count = ref(0);
-const keySoft = ref([5, 4, 3, 2, 1, 0, "-1", "-2", "-3", "-4", "-5"]);
-const bgColors = ref([
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#7e99d6",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-]);
-const overview = ref({
-  5: 0,
-  4: 0,
-  3: 0,
-  2: 0,
-  1: 0,
-  0: 0,
-  "-1": 0,
-  "-2": 0,
-  "-3": 0,
-  "-4": 0,
-  "-5": 0,
-});
-try {
-  const d = JSON.parse(sessionStorage.getItem("overview_data") || "{}");
-  count.value = d.count || 0;
-  for (let key in overview.value) {
-    overview.value[key] = d[key] || 0;
-  }
-} catch {}
-const overviewTitleMap = ref({
-  5: "涨停",
-  4: ">7%",
-  3: "7~5％",
-  2: "5~2％",
-  1: "2~0％",
-  0: "平",
-  "-1": "0~2％",
-  "-2": "2~5％",
-  "-3": "5~7％",
-  "-4": "7％<",
-  "-5": "跌停",
-});
-// 获取柱状图高度
-const getHeight = (key) => {
-  let max = 0;
-  for (let k in overview.value) {
-    if (overview.value[k] > max) max = overview.value[k];
-  }
-  return (overview.value[key] * 3) / max; // 最高的3rem
-};
-// 获取下方统计宽度
-const getFlex = (position) => {
-  if (position > 0) {
-    return (
-      overview.value[5] +
-        overview.value[4] +
-        overview.value[3] +
-        overview.value[2] +
-        overview.value[1] || 1
-    );
-  } else if (position == 0) {
-    return overview.value[0] || 1;
-  } else {
-    return (
-      overview.value["-1"] +
-        overview.value["-2"] +
-        overview.value["-3"] +
-        overview.value["-4"] +
-        overview.value["-5"] || 1
-    );
-  }
-};
-const overviewLoading = ref(false);
-const getOverviewData = () => {
-  overviewLoading.value = true;
-  _marketOverview({
-    market: currAs.value.includes(",") ? "" : currAs.value,
-  })
-    .then((res) => {
-      if (!res.data) return;
-      sessionStorage.setItem("overview_data", JSON.stringify(res.data));
-      count.value = res.data.count || 0;
-      for (let key in overview.value) {
-        overview.value[key] = res.data[key] || 0;
-      }
-    })
-    .finally(() => {
-      overviewLoading.value = false;
-    });
-};
-
-const initData = () => {
-  // changeTab(active.value)
-  getOverviewData();
-};
-
-defineExpose({
-  initData,
-});
 
 // 滚动监听
 const more_1 = ref();
@@ -361,3 +245,35 @@ onBeforeUnmount(() => {
 });
 </script>
 
+<style lang="less" scoped>
+.market_stock_list {
+  :deep(.van-tabs) {
+    .van-tabs__wrap {
+        margin: 0 !important;
+        height: 1rem !important;
+      .van-tabs__nav {
+        padding: 0 0.32rem;
+
+        .van-tab {
+            padding-right: 0.6rem;
+            font-size: 0.32rem;
+            color: #8f92a1;
+        }
+
+        .van-tab--active {
+            font-size: 0.36rem !important;
+            font-weight: 600 !important;
+            color: #014cfa !important;
+        }
+
+        .van-tabs__line {
+            bottom: 0;
+            margin-left: -0.3rem;
+            width: 0.8rem;
+            height: 0.06rem;
+        }
+      }
+    }
+  }
+}
+</style>

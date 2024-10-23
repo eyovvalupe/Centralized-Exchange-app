@@ -137,6 +137,8 @@ const token = computed(() => store.state.token);
 // 搜索相关
 const searchList = computed(() => store.state.marketSearchList);
 
+console.log('search list =======> ', searchList)
+
 const marketSearchTextList = computed(() => store.state.marketSearchTextList);
 const handleHistory = (data) => {
   search.value = data;

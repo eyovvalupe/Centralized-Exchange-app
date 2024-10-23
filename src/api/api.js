@@ -455,6 +455,13 @@ export const _exchange = (data = {}) => {
   });
 };
 
+// 股票推荐列表
+export const _recommend = (data = {}) => {
+  return http.post(`anon/v1/market/stock/recommend`, data, {
+    custom: { auth: false, toast: true, retry: true },
+  });
+};
+
 // 账号检测
 export const _userExist = (data = {}) => {
   return http.post(`/anon/v1/user/exist`, data, {

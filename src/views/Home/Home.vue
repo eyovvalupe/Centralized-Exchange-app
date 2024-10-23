@@ -1,9 +1,29 @@
 <!-- 首页 -->
 <template>
-  <div class="page page_home">
+  <div class="page_home">
     <!-- 顶部 -->
-    <div class="top_box">
-      <div class="funcs">
+    <div class="top_box relative">
+      <div
+        class="flex transition-transform ease-out duration-700 absolute left-0 top-0"
+        :style="`transform: translateX(-${
+          slideIndex * 100
+        }%) ; animation: rotateImages 6s linear infinite;`"
+      >
+        <!-- <div class="flex-shrink-0 w-full">
+          <img :src="slides[slides.length - 1]" class="w-full" alt="img" />
+        </div> -->
+        <div
+          v-for="(slide, index) in slides.concat(slides)"
+          :key="index"
+          class="flex-shrink-0 w-full"
+        >
+          <img :src="slide" class="w-full" alt="img" />
+        </div>
+        <!-- <div class="flex-shrink-0 w-full">
+          <img :src="slides[0]" class="w-full" alt="img" />
+        </div> -->
+      </div>
+      <div class="funcs relative">
         <!-- style="padding: 0.2rem 0.32rem 1rem 0.32rem;" -->
         <div class="user_box">
           <!-- <img
@@ -25,11 +45,11 @@
         </div>
       </div>
       <div class="pl-[0.285rem] mt-[1.25rem]">
-        <div
+        <!-- <div
           class="text-[#014CFA] font-[1000] text-[0.4rem] w-[5.14rem] h-[0.72rem] bg-gradient-to-r from-blue-400 to-white rounded-r-3xl justify-center flex items-center mb-[0.24rem] font-alibaba"
         >
           Newcomer Registration
-        </div>
+        </div> -->
         <!-- <div
           class="font-medium text-[0.32rem] text-white mb-[0.16rem] font-alibaba"
         >
@@ -54,16 +74,16 @@
             + USDT
           </span>
         </div> -->
-        <div
+        <!-- <div
           class="w-[2.2rem] h-[0.7rem] rounded-[1rem] text-[white] bg-gradient-to-b from-blue-400 to-blue-800 items-center flex justify-center gap-3 mt-[1.924rem]"
         >
           Register
           <div class="custom-arrow-icon"></div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div
-      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between"
+      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between relative"
     >
       <div class="flex items-center gap-2">
         <div class="custom-lock-small-icon"></div>
@@ -74,12 +94,13 @@
       <div class="text-[0.24rem] text-[#7B7B7B]">10/16 16:10</div>
     </div>
     <div class="relative m-[0.32rem]">
+      <!--//////////////////////////////////-->
       <div
         class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
         v-show="!token"
       >
         <div
-          class="w-[1.36rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
+          class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
           @click="store.commit('setIsLoginOpen', true)"
         >
           登录
@@ -139,9 +160,10 @@
           {{ openEye ? assets.total : "*******" }}
         </div>
       </div>
-      <div class="flex mt-[0.32rem] justify-between">
+      <!--//////////////////////////////////-->
+      <div class="flex mt-[0.32rem] justify-between mb-[0.32rem]">
         <div
-          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
+          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
         >
           <div class="w-1/2 absolute bottom-0 right-0">
             <img src="/static/img/home/hand.svg" img="img" />
@@ -158,20 +180,235 @@
           </div>
         </div>
         <div
-          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] via-[#F5F7FC] to-[#F5F7FC]"
+          class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC]"
         >
-          <div class="flex items-center justify-between px-[0.32rem] pt-[0.32rem]">
+          <div
+            class="flex items-center justify-between px-[0.32rem] py-[0.24rem]"
+          >
             <div class="flex items-center gap-1">
               <div class="font-bold text-[0.32rem]">热卖</div>
               <div class="custom-heart-icon"></div>
             </div>
             <div class=""></div>
           </div>
-          <div class="bg-[#FFF]"></div>
+          <div
+            class="bg-[#FFF] w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.32rem]"
+          >
+            <div class="text-[font-bold] text-[15px] mb-[0.32rem]">
+              BTC/USDT
+            </div>
+            <div class="flex justify-between mb-[0.32rem]">
+              <div class="text-[#18B762] text-[0.3rem] font-bold">465.5</div>
+              <div class="text-[#18B762] text-[0.3rem]">+1.72%</div>
+            </div>
+            <div></div>
+          </div>
         </div>
       </div>
+      <!--//////////////////////////////////-->
+      <div
+        class="flex w-full h-[2.18rem] border-[0.02rem] border-[#EFF3F8] bg-[#F5F7FC] rounded-[0.32rem] mb-[0.32rem]"
+      >
+        <div
+          class="flex flex-col items-center justify-center bg-white border-[0.02rem] rounded-[0.32rem] border-[#EFF3F8] w-[1.04rem]"
+        >
+          <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">今日</div>
+          <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">指数</div>
+          <div class="text[0.24rem] text-[#666D80]">10/17</div>
+        </div>
+      </div>
+      <!--//////////////////////////////////-->
+      <div class="mb-[0.32rem]">
+        <div class="flex justify-between items-center mb-[0.32rem]">
+          <div class="font-bold text-[0.32rem]">优选</div>
+          <div class="flex items-center gap-1">
+            <div
+              class="bg-[#014CFA] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"
+            ></div>
+            <div
+              class="bg-[#cad7f333] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"
+            ></div>
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <div
+            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+          >
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">
+              NAHARCAP...
+            </div>
+            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
+              <div class="text-[0.24rem] font-bold">465.4</div>
+              <div class="text-[0.22rem]">+1.7%</div>
+            </div>
+          </div>
+          <div
+            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+          >
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">
+              NAHARCAP...
+            </div>
+            <div class="flex justify-between text-[#E53E00] mb-[0.1rem]">
+              <div class="text-[0.24rem] font-bold">465.4</div>
+              <div class="text-[0.22rem]">+1.7%</div>
+            </div>
+          </div>
+          <div
+            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+          >
+            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">
+              NAHARCAP...
+            </div>
+            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
+              <div class="text-[0.24rem] font-bold">465.4</div>
+              <div class="text-[0.22rem]">+1.7%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--//////////////////////////////////-->
+      <div class="mb-[0.32rem]">
+        <div class="flex justify-between items-center mb-[0.32rem]">
+          <div class="font-bold text-[0.32rem]">优选</div>
+          <div class="flex items-center gap-1">
+            <div
+              class="bg-[#014CFA] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"
+            ></div>
+            <div
+              class="bg-[#cad7f333] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"
+            ></div>
+          </div>
+          <div
+            class="bg-[#F5F7FC] w-[0.84rem] h-[0.34rem] rounded-[0.32rem] text-[0.24rem] text-[#666D80] flex items-center justify-center"
+          >
+            more+
+          </div>
+        </div>
+        <div class="flex justify-between">
+          <div
+            class="w-[3.33rem] h-[1.92rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC] relative"
+          >
+            <div
+              class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem] flex justify-between items-center"
+            >
+              NAHARCAP...
+              <div
+                class="custom-star-icon-small absolute right-0 top-0 mr-[0.1rem] mt-[0.1rem]"
+              ></div>
+            </div>
+            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
+              <div class="text-[0.28rem] font-bold">465.4</div>
+              <div class="text-[0.28rem]">+1.7%</div>
+            </div>
+            <div class="flex">
+              <div class="w-1/2"></div>
+              <div class="w-1/2 flex items-center justify-center h-[0.82rem]">
+                <div
+                  class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] w-[0.96rem] h-[0.42rem] items-center justify-center flex"
+                >
+                  去看看
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-[#F5F7FC] relative"
+          >
+            <div
+              class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem] flex justify-between items-center"
+            >
+              NAHARCAP...
+              <div
+                class="custom-star-icon-small absolute right-0 top-0 mr-[0.1rem] mt-[0.1rem]"
+              ></div>
+            </div>
+            <div class="flex justify-between text-[#E53E00] mb-[0.1rem]">
+              <div class="text-[0.28rem] font-bold">465.4</div>
+              <div class="text-[0.28rem]">-1.7%</div>
+            </div>
+            <div class="flex">
+              <div class="w-1/2"></div>
+              <div class="w-1/2 flex items-center justify-center h-[0.82rem]">
+                <div
+                  class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] w-[0.96rem] h-[0.42rem] items-center justify-center flex"
+                >
+                  去看看
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--//////////////////////////////////-->
+      <div>
+        <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
+        <div class="flex gap-1">
+          <div>
+            <div
+              :class="
+                marketPerformance == 0
+                  ? 'bg-[#014CFA] text-white'
+                  : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+              "
+              class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+              @click="clickPerformance(0)"
+            >
+              涨幅榜
+            </div>
+          </div>
+          <div>
+            <div
+              :class="
+                marketPerformance == 1
+                  ? 'bg-[#014CFA] text-white'
+                  : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+              "
+              class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+              @click="clickPerformance(1)"
+            >
+              涨幅榜
+            </div>
+          </div>
+          <div>
+            <div
+              :class="
+                marketPerformance == 2
+                  ? 'bg-[#014CFA] text-white'
+                  : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+              "
+              class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+              @click="clickPerformance(2)"
+            >
+              涨幅榜
+            </div>
+          </div>
+        </div>
+        <StockTable
+          style="margin-top: 0.1rem"
+          v-if="marketPerformance == 2"
+          :loading="marketLoading"
+          :deleteItem="!!token"
+          :list="marketVolumeList"
+          :marketType="'all'"
+        />
+        <StockTable
+          style="margin-top: 0.1rem"
+          v-if="marketPerformance == 0"
+          :loading="marketLoading"
+          :deleteItem="!!token"
+          :list="marketUpList"
+          :marketType="'all'"
+        />
+        <StockTable
+          style="margin-top: 0.1rem"
+          v-if="marketPerformance == 1"
+          :loading="marketLoading"
+          :deleteItem="!!token"
+          :list="marketDownList"
+          :marketType="'all'"
+        />
+      </div>
     </div>
-
     <!-- banner -->
     <Banner v-if="activated" class="home_banner" />
 
@@ -226,7 +463,7 @@
 
 <script setup>
 import StockItem from "@/components/StockItem.vue";
-import { onDeactivated, ref, computed, onActivated } from "vue";
+import { onDeactivated, ref, computed, onActivated, onMounted } from "vue";
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
@@ -237,6 +474,9 @@ import router from "@/router";
 import IPO from "../Market/components/IPO.vue";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
+import StockTable from "@/components/StockTable.vue";
+
+import { Translation } from "vue-i18n";
 
 const openEye = ref(false);
 
@@ -251,6 +491,33 @@ const actions = [
   { name: "合约", value: "-1" },
   { name: "IPO", value: "1" },
 ];
+const slides = [
+  "static/img/home/back1.png",
+  "static/img/home/back2.png",
+  "static/img/home/back3.png",
+];
+const slideIndex = ref(0);
+const showSlides = () => {
+  setInterval(() => {
+    slideIndex.value = (slideIndex.value + 1) % slides.length;
+  }, 2000);
+};
+onMounted(() => {
+  showSlides();
+  // getMarketPerformanceData(
+  //   marketUpList,
+  //   "setMarketUpList",
+  //   "up",
+  //   "marketUpList"
+  // );
+  getMarketPerformanceData(
+    marketUpList,
+    "setMarketDownList",
+    "down",
+    "marketDownList"
+  );
+});
+
 const onSelect = (item) => {
   showAS.value = false;
   if (item.value == -1) return;
@@ -266,6 +533,7 @@ const onSelect = (item) => {
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading);
 store.commit("setPageLoading", true);
+
 Promise.all([
   import("@/views/Market/MarketInfo.vue"),
   import("@/views/Market/Search.vue"),
@@ -395,6 +663,142 @@ const jump = (name, needToken) => {
     name,
   });
 };
+const page = ref(0);
+const marketLoading = ref(true);
+const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+let target = null;
+const marketPerformance = ref(0);
+const clickPerformance = (key) => {
+  page.value = 0;
+  marketLoading.value = false;
+  marketPerformance.value = key;
+  setTimeout(() => {
+    // 加载更多元素
+    switch (key) {
+      case 2:
+        getMarketPerformanceData(
+          marketVolumeList,
+          "setMarketVolumeList",
+          "volume",
+          "marketVolumeList"
+        );
+        break;
+      case 1:
+        getMarketPerformanceData(
+          marketUpList,
+          "setMarketUpList",
+          "up",
+          "marketUpList"
+        );
+        break;
+      case 0:
+        getMarketPerformanceData(
+          marketDownList,
+          "setMarketDownList",
+          "down",
+          "marketDownList"
+        );
+        break;
+    }
+    target = document.querySelector(".stock_soft_more" + key);
+  }, 350);
+};
+
+const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
+const marketUpList = computed(() => store.state.marketUpList || []); // 涨幅列表
+const marketDownList = computed(() => store.state.marketDownList || []); // 跌幅列表
+const subsM = (listKey, key) => {
+  // 订阅ws
+  store.dispatch("subList", {
+    commitKey: key,
+    listKey: listKey,
+    // proxyListValue: list.value
+  });
+};
+const getMarketPerformanceData = (list, key, query, listKey) => {
+  if (marketLoading.value) return;
+  marketLoading.value = true;
+  page.value++;
+  let arr = JSON.parse(JSON.stringify(list.value));
+  if (page.value == 1) {
+    arr = [];
+  }
+  if (arr.length) {
+    subsM(listKey, key);
+  }
+  const saveActive = marketPerformance.value;
+  _sort({
+    exchange: "",
+    orderby: query,
+    page: page.value,
+  })
+    .then((res) => {
+      if (res.code == 200) {
+        if (saveActive != marketPerformance.value) return;
+        res.data = res.data.map((item) => {
+          item.ratio = undefined; // 弃用接口里的该字段
+          return item;
+        });
+        const rs = res.data.map((item) => {
+          const target = list.value.find((a) => a.symbol == item.symbol);
+          if (target) {
+            item = {
+              ...target,
+              ...item,
+              ratio: target.ratio,
+            };
+          }
+          return item;
+        });
+        arr.push(...rs);
+        store.commit(key, arr || []);
+        setTimeout(() => {
+          subsM(listKey, key);
+          scrollHandler();
+        }, 500);
+      }
+    })
+    .finally(() => {
+      setTimeout(() => {
+        subsM(listKey, key);
+        marketLoading.value = false;
+      }, 300);
+    });
+};
+
+const scrollHandler = () => {
+  if (!target) return;
+  const rect = target.getBoundingClientRect();
+  if (rect.top <= totalHeight) {
+    // 加载更多
+    switch (marketPerformance.value) {
+      case 2:
+        getMarketPerformanceData(
+          marketVolumeList,
+          "setMarketVolumeList",
+          "volume",
+          "marketVolumeList"
+        );
+        break;
+      case 1:
+        getMarketPerformanceData(
+          marketUpList,
+          "setMarketUpList",
+          "up",
+          "marketUpList"
+        );
+        break;
+      case 0:
+        getMarketPerformanceData(
+          marketDownList,
+          "setMarketDownList",
+          "down",
+          "marketDownList"
+        );
+        break;
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -413,10 +817,6 @@ const jump = (name, needToken) => {
   }
 
   .top_box {
-    background-image: url("/public/static/img/home/back1.png");
-    background-size: cover;
-    // background-repeat: no-repeat;
-    // background-position: center;
     padding: 0.2rem 0.32rem 0.32rem;
     min-height: 7rem;
     .funcs {
@@ -428,7 +828,6 @@ const jump = (name, needToken) => {
       .user_box {
         width: 0.8rem;
         height: 0.8rem;
-        background-color: #d9d9d9;
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -608,9 +1007,17 @@ const jump = (name, needToken) => {
   background-position: center;
 }
 .custom-heart-icon {
-  width: 12px;
-  height: 14px;
+  width: 0.24rem;
+  height: 0.28rem;
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 14"><path d="M4.49621 13.9937C4.49621 13.9937 -1.73347 12.5172 0.936838 5.875C1.24621 6.15938 1.43371 6.65625 1.57903 6.94531C1.91496 3.4625 4.5259 3.12344 4.1509 0C5.16028 0.359375 8.34309 1.41875 8.8384 5.31719C9.3134 4.42812 10.0447 3.95469 10.5993 3.86094C10.4603 4.56094 10.6868 5.76719 11.1931 7.00156C11.9743 8.9125 12.0243 12.7156 8.08684 13.7016C8.68059 12.3188 8.91809 10.0766 5.9509 8.17656C5.4259 10.5797 2.7759 11.2188 4.49621 13.9937Z" fill="%23E53E00"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.custom-star-icon-small {
+  width: 0.24rem;
+  height: 0.24rem;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><g clip-path="url(%23clip0_59_43813)"><path d="M11.9889 4.61328C11.9644 4.53776 11.9194 4.47055 11.8589 4.41914C11.7984 4.36772 11.7248 4.33414 11.6463 4.32213L7.99848 3.79979L6.37149 0.503005C6.33298 0.437284 6.27794 0.382781 6.21184 0.344908C6.14575 0.307035 6.0709 0.287109 5.99472 0.287109C5.91854 0.287109 5.84369 0.307035 5.7776 0.344908C5.7115 0.382781 5.65646 0.437284 5.61794 0.503005L3.99096 3.79979L0.360222 4.28788C0.281751 4.29989 0.208162 4.33347 0.147676 4.38488C0.0871903 4.4363 0.042189 4.50351 0.0176991 4.57902C-0.00448461 4.65376 -0.00584077 4.73314 0.0137769 4.80859C0.0333946 4.88405 0.0732414 4.95271 0.129019 5.00718L2.75788 7.5761L2.13278 11.224C2.12088 11.3016 2.13057 11.381 2.16077 11.4535C2.19098 11.526 2.24054 11.5888 2.30404 11.635C2.37629 11.6869 2.46343 11.7139 2.55237 11.7121C2.61848 11.711 2.68327 11.6933 2.74075 11.6607L5.99472 9.94807L9.24868 11.6607C9.31376 11.7027 9.38958 11.7251 9.46704 11.7251C9.54451 11.7251 9.62033 11.7027 9.6854 11.6607C9.7489 11.6145 9.79846 11.5517 9.82867 11.4792C9.85887 11.4067 9.86856 11.3273 9.85666 11.2497L9.23156 7.62748L11.8604 5.05856C11.9223 5.00449 11.9673 4.93375 11.9901 4.8548C12.0129 4.77584 12.0124 4.692 11.9889 4.61328Z" fill="%23014CFA"/></g><defs><clipPath id="clip0_59_43813"><rect width="12" height="12" fill="white"/></clipPath></defs></svg>');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

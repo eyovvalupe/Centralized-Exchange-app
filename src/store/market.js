@@ -47,9 +47,13 @@ export default {
         marketAiHisList: [], // ai量化历史收益率列表
         marketAi24List: [], // ai量化24小时收益率列表
         marketAiGridList: [], // ai量化最大网格(杠杆)列表
+        currentRecommendData: {}, //当前选择的股票推荐区域
 
     },
     mutations: {
+        setCurrentRecommenData(state, data) {
+            state.currentRecommendData = data
+        },
         setCheckState(state,data) {
             state.checkState = data;
         },
