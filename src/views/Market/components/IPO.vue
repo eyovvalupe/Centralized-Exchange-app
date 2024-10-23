@@ -456,12 +456,9 @@ function countdown(endTime) {
                     font-size: 0.3rem;
                     font-weight: 600;
                 }
-
-                
             }
         }
     }
-    
 }
 
 .market_ipo-popup {

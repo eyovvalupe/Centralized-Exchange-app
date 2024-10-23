@@ -2,7 +2,7 @@
 <template>
   <div class="page_home">
     <!-- 顶部 -->
-    <div class="top_box relative">
+    <div class="top_box relative overflow-hidden">
       <div
         class="flex transition-transform ease-out duration-700 absolute left-0 top-0"
         :style="`transform: translateX(-${
@@ -215,6 +215,9 @@
           <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">今日</div>
           <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">指数</div>
           <div class="text[0.24rem] text-[#666D80]">10/17</div>
+        </div>
+        <div style="width: 5.8rem; height: 2.18rem;">
+          <HomeCountry />
         </div>
       </div>
       <!--//////////////////////////////////-->
@@ -483,7 +486,7 @@ import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import StockTable from "@/components/StockTable.vue";
 import StockSortList from "@/components/StockSortList.vue";
-
+import HomeCountry from '@/components/HomeCountry.vue';
 import { Translation } from "vue-i18n";
 
 const openEye = ref(false);
