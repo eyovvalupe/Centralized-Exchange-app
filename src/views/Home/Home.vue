@@ -143,13 +143,13 @@
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[1.36rem] h-[0.52rem] border-[#014CFA] text-[#014CFA] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+              class="w-[1.36rem] h-[0.52rem] border-[#014CFA] text-[#014CFA] text-[0.24rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
               @click="showAS = true"
             >
               快速交易
             </div>
             <div
-              class="w-[1.36rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+              class="w-[0.88rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[0.24rem] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
               @click="jump('topUp', true)"
             >
               充值
@@ -201,7 +201,9 @@
               <div class="text-[#18B762] text-[0.3rem] font-bold">465.5</div>
               <div class="text-[#18B762] text-[0.3rem]">+1.72%</div>
             </div>
-            <div></div>
+            <div>
+              <img src="/static/img/home/btc.svg" alt="" />
+            </div>
           </div>
         </div>
       </div>
@@ -221,54 +223,7 @@
         </div>
       </div>
       <!--//////////////////////////////////-->
-      <div class="mb-[0.32rem]">
-        <div class="flex justify-between items-center mb-[0.32rem]">
-          <div class="font-bold text-[0.32rem]">优选</div>
-          <div class="flex items-center gap-1">
-            <div
-              class="bg-[#014CFA] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"
-            ></div>
-            <div
-              class="bg-[#cad7f333] w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"
-            ></div>
-          </div>
-        </div>
-        <div class="flex justify-between">
-          <div
-            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
-          >
-            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">
-              NAHARCAP...
-            </div>
-            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
-              <div class="text-[0.24rem] font-bold">465.4</div>
-              <div class="text-[0.22rem]">+1.7%</div>
-            </div>
-          </div>
-          <div
-            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
-          >
-            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">
-              NAHARCAP...
-            </div>
-            <div class="flex justify-between text-[#E53E00] mb-[0.1rem]">
-              <div class="text-[0.24rem] font-bold">465.4</div>
-              <div class="text-[0.22rem]">+1.7%</div>
-            </div>
-          </div>
-          <div
-            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
-          >
-            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem]">
-              NAHARCAP...
-            </div>
-            <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
-              <div class="text-[0.24rem] font-bold">465.4</div>
-              <div class="text-[0.22rem]">+1.7%</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <HomePriority />
       <!--//////////////////////////////////-->
       <div class="mb-[0.32rem]">
         <div class="flex justify-between items-center mb-[0.32rem]">
@@ -487,6 +442,7 @@ import Loaidng from "@/components/Loaidng.vue";
 import StockTable from "@/components/StockTable.vue";
 import StockSortList from "@/components/StockSortList.vue";
 import HomeCountry from '@/components/HomeCountry.vue';
+import HomePriority from '@/components/HomePriority.vue';
 import { Translation } from "vue-i18n";
 
 const openEye = ref(false);
