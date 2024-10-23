@@ -8,7 +8,7 @@
             </div>
 
             <div class="top_earphone_lang">
-                <div class="top_earphone" @click="router.push({ name: 'earphone' })">
+                <div class="top_earphone" @click="">
                     <img class="phoneImage" src="/static/img/common/Vector.png" alt="earphone" />
                 </div>
                 <div class="top_lang" @click="router.push({ name: 'language' })">

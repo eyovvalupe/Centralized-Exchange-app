@@ -1,6 +1,6 @@
 <!-- 登录页 -->
 <template>
-  <div class="page page-login">
+  <div class="page page-login max-width">
     <!-- 返回和语言 -->
     <div class="max-width top">
       <div class="top_back" @click="goBack">
@@ -344,6 +344,7 @@ onMounted(() => {
 <style lang="less" scoped>
 .page-login {
   padding-top: 1rem;
+  margin: auto;
 
   .tabs {
     overflow: hidden;
@@ -553,7 +554,7 @@ onMounted(() => {
 
   .submit_box {
     display: flex;
-    width: 343px;
+    width: 100%;
     height: 56px;
     padding: 8px;
     justify-content: center;
@@ -590,6 +591,8 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .register_accounr_dialog {
+  width: 100%;
+  height: 100%;
   background-color: #fff;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
