@@ -3,7 +3,18 @@
     <div class="flex flex-col mb-[0.42rem]">
       <div class="flex flex-row justify-between items-center mb-[0.16rem]">
         <span class="text-[0.32rem] text-[#061023] font-semibold">已收盘</span>
-        <span class="text-[0.24rem] text-[#061023]">{{ props.data.closets }} {{ props.data.region == 'us' ? '美东' : props.data.region == 'india' ? '印度' :  props.data.region == 'japan' ? '日本' : '韩国' }}</span>
+        <span class="text-[0.24rem] text-[#061023]"
+          >{{ props.data.closets }}
+          {{
+            props.data.region == "us"
+              ? "美东"
+              : props.data.region == "india"
+              ? "印度"
+              : props.data.region == "japan"
+              ? "日本"
+              : "韩国"
+          }}</span
+        >
       </div>
       <div class="flex flex-row items-center">
         <div>
@@ -16,33 +27,57 @@
     </div>
     <div class="flex flex-row justify-between">
       <div
-        class="flex flex-col up_price w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
+        :class="marketCountryStockList[0].ratio > 0 ? 'up_price' : 'down_price'"
+        class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
       >
-        <span class="text-[0.28rem] text-[#061023]">{{ props.data.stock[0]['symbol'] }}</span>
-        <span class="stock_price">43077.00</span>
+        <span class="text-[0.28rem] text-[#061023]">{{
+          props.data.stock[0]["symbol"]
+        }}</span>
+        <span class="stock_price">{{ marketCountryStockList[0].amount }}</span>
         <div class="flex flex-row justify-between stock_detail">
-          <span>337.28</span>
-          <span>+0.79%</span>
+          <span>{{ marketCountryStockList[0].price }}</span>
+          <span
+            >{{ marketCountryStockList[0].ratio > 0 ? "+" : ""
+            }}{{
+              ((marketCountryStockList[0].ratio || 0) * 100).toFixed(2)
+            }}%</span
+          >
         </div>
       </div>
       <div
-        class="flex flex-col down_price w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
+        :class="marketCountryStockList[1].ratio > 0 ? 'up_price' : 'down_price'"
+        class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
       >
-        <span class="text-[0.28rem] text-[#061023]">{{ props.data.stock[1]['symbol'] }}</span>
-        <span class="stock_price">18367.08</span>
+        <span class="text-[0.28rem] text-[#061023]">{{
+          props.data.stock[1]["symbol"]
+        }}</span>
+        <span class="stock_price">{{ marketCountryStockList[1].amount }}</span>
         <div class="flex flex-row justify-between stock_detail">
-          <span>51.49</span>
-          <span>-0.28%</span>
+          <span>{{ marketCountryStockList[1].price }}</span>
+          <span
+            >{{ marketCountryStockList[1].ratio > 0 ? "+" : ""
+            }}{{
+              ((marketCountryStockList[1].ratio || 0) * 100).toFixed(2)
+            }}%</span
+          >
         </div>
       </div>
       <div
-        class="flex flex-col up_price w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
+        :class="marketCountryStockList[2].ratio > 0 ? 'up_price' : 'down_price'"
+        class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
       >
-        <span class="text-[0.28rem] text-[#061023]">{{ props.data.stock[2]['symbol'] }}</span>
-        <span class="stock_price">5842.47</span>
+        <span class="text-[0.28rem] text-[#061023]">{{
+          props.data.stock[2]["symbol"]
+        }}</span>
+        <span class="stock_price">{{ marketCountryStockList[2].amount }}</span>
         <div class="flex flex-row justify-between stock_detail">
-          <span>27.21</span>
-          <span>+0.47%</span>
+          <span>{{ marketCountryStockList[2].price }}</span>
+          <span
+            >{{ marketCountryStockList[2].ratio > 0 ? "+" : ""
+            }}{{
+              ((marketCountryStockList[2].ratio || 0) * 100).toFixed(2)
+            }}%</span
+          >
         </div>
       </div>
     </div>
@@ -50,24 +85,69 @@
 </template>
 
 <script setup>
-const emits = defineEmits(['update'])
+import store from "@/store";
+import { computed, watch } from "vue";
+const emits = defineEmits(["update"]);
 const update = () => {
-  emits('update')
-}
+  emits("update");
+};
+
 const props = defineProps({
   region: {
     type: String,
-    default: ''
+    default: "",
   },
   data: {
     type: Object,
-    default: {}
+    default: {},
   },
   loading: {
     type: Boolean,
-    default: true
+    default: true,
+  },
+  active: {
+    type: String,
+    default: 0,
+  },
+});
+const marketCountryStockList = computed(
+  () => store.state.marketCountryStockList || []
+);
+const marketDownList = computed(() => store.state.marketDownList || []);
+const marketUpList = computed(() => store.state.marketUpList || []);
+const marketVolumeList = computed(() => store.state.markVolumeList || []);
+const subs = (arr) => {
+  store.commit(
+    "setMarketWatchKeys",
+    arr.map((item) => item.symbol || "")
+  );
+  store.dispatch("subList", {});
+};
+
+const getData = () => {
+  const arr = props.data.stock.map((item) => {
+    const target = marketCountryStockList.value.find(
+      (a) => a.symbol == item.symbol
+    );
+    return target || item;
+  });
+  store.commit("setMarketCountryStockList", arr);
+  setTimeout(() => {
+    subs([
+      ...arr,
+      ...marketDownList.value,
+      ...marketUpList.value,
+      ...marketVolumeList.value,
+    ]);
+  }, 300);
+};
+getData();
+watch(
+  () => props.active,
+  () => {
+    getData();
   }
-})
+);
 </script>
 
 <style lang="less" scoped>
@@ -97,7 +177,7 @@ const props = defineProps({
     }
 
     .stock_detail {
-        width: 100%;
+      width: 100%;
       font-size: 0.24rem;
       font-weight: 400;
       color: #18b762;
@@ -114,7 +194,7 @@ const props = defineProps({
     }
 
     .stock_detail {
-        width: 100%;
+      width: 100%;
       font-size: 0.24rem;
       font-weight: 400;
       color: #e8503a;

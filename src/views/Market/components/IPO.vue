@@ -1,20 +1,18 @@
 <!-- IPO -->
 <template>
     <div class="page_ipo">
-        
         <Tabs v-show="props.page != 'home'" type="custom-card" v-model:active="selectedOption" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="init(true)">
             <Tab :title="i.text" :name="i.value" v-for="(i, key) in option" :key="key">
             </Tab>
         </Tabs>
 
-         <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'#014CFA'"
+         <!-- <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'#014CFA'"
             shrink @change="init(true)">
             <Tab :title="i.text" :name="i.value" v-for="(i, key) in leverOption" :key="key">
             </Tab>
-        </Tabs>
-
-        <div class="list">
+        </Tabs> -->
+        <div class="list" :class="props.page == 'home' && 'mt-[-0.32rem]'">
             <div class="item" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
                 <div class="item_box">
                     <div class="name_box">
@@ -316,7 +314,6 @@ function countdown(endTime) {
 .page_ipo {
     padding: 0.28rem 0.32rem 0 0.32rem;
     .van-tabs--oval-sub{
-        margin-top:0.32rem;
     }
     :deep(.van-tab--custom-card){
         padding: 0 0.12rem !important;
@@ -459,12 +456,9 @@ function countdown(endTime) {
                     font-size: 0.3rem;
                     font-weight: 600;
                 }
-
-                
             }
         }
     }
-    
 }
 
 .market_ipo-popup {

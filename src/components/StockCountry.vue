@@ -10,28 +10,52 @@
       shrink
       @change="onChange"
     >
-      <Tab title="美国" name="0">
+      <Tab title="美股" name="0">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
-          <StockDescription :region="'us'" :data="usData" :loading="pageLoading" @update="getData('us')" />
+          <StockDescription
+            :region="'us'"
+            :data="usData"
+            :loading="pageLoading"
+            :active="active"
+            @update="getData('us')"
+          />
         </div>
       </Tab>
       <Tab title="印度" name="1">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
-          <StockDescription :region="'india'" :data="indiaData" :loading="pageLoading" @update="getData('india')"/>
+          <StockDescription
+            :region="'india'"
+            :data="indiaData"
+            :loading="pageLoading"
+            :active="active"
+            @update="getData('india')"
+          />
         </div>
       </Tab>
       <Tab title="日本" name="2">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
-          <StockDescription :region="'japan'" :data="japanData" :loading="pageLoading" @update="getData('japan')"/>
+          <StockDescription
+            :region="'japan'"
+            :data="japanData"
+            :loading="pageLoading"
+            :active="active"
+            @update="getData('japan')"
+          />
         </div>
       </Tab>
       <Tab title="韩国" name="3">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
-          <StockDescription :region="'korea'" :data="koreaData" :loading="pageLoading" @update="getData('korea')"/>
+          <StockDescription
+            :region="'korea'"
+            :data="koreaData"
+            :loading="pageLoading"
+            :active="active"
+            @update="getData('korea')"
+          />
         </div>
       </Tab>
     </Tabs>
@@ -58,11 +82,11 @@ const koreaData = computed(() => store.state.marketStockKoreaData);
 const onChange = async (val) => {
   active.value = val;
   sessionStorage.setItem("trade_stock_tab", val);
-  if (region[val] == 'us' && !usData) {
-    getData(region[val])
-  } 
-  if (region[val] == 'india' && !indiaData) {
-    getData(region[val])
+  if (region[val] == "us" && !usData) {
+    getData(region[val]);
+  }
+  if (region[val] == "india" && !indiaData) {
+    getData(region[val]);
   }
 };
 
@@ -85,7 +109,7 @@ const region = {
 };
 
 const getData = (region) => {
-  pageLoading.value = true
+  pageLoading.value = true;
   _recommend({
     market: region,
     type: "index",
@@ -96,38 +120,36 @@ const getData = (region) => {
         currentts: formatDate(new Date(res.data.currentts)),
         closets: formatDate(new Date(res.data.closets)),
         updated: formatDate(new Date()),
-        stock: res.data.index
-      }
-      store.commit("setCurrentRecommenData", data)
+        stock: res.data.index,
+      };
+      store.commit("setCurrentRecommenData", data);
 
-      if (region == 'us') {
-        store.commit("setMarketStockUsData", data)
-      } else if (region == 'india') {
-        store.commit("setMarketStockIndiaData", data)
-      } else if (region == 'japan') {
-        store.commit("setMarketStockJapanData", data)
+      if (region == "us") {
+        store.commit("setMarketStockUsData", data);
+      } else if (region == "india") {
+        store.commit("setMarketStockIndiaData", data);
+      } else if (region == "japan") {
+        store.commit("setMarketStockJapanData", data);
       } else {
-        store.commit("setMarketStockKoreaData", data)
+        store.commit("setMarketStockKoreaData", data);
       }
-
     })
     .catch((err) => console.error(err))
     .finally(() => {
-      (pageLoading.value = false)
+      pageLoading.value = false;
     });
 };
 
 function formatDate(date) {
-    const year = String(date.getFullYear()).slice(-2);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+  const year = String(date.getFullYear()).slice(-2);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
 
-    return `${month}/${day} ${hours}:${minutes}:${seconds}`;
+  return `${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
-
 </script>
 
 <style lang="less" scoped>

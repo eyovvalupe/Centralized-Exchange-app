@@ -13,6 +13,7 @@
         @remove="remove"
         :scrollBox="props.scrollBox"
         :item="item"
+        :page="props.page"
       />
     </div>
     <NoData v-if="!props.loading && !props.list.length" />
@@ -65,10 +66,13 @@ const props = defineProps({
   showSparkLine:{
     type:Boolean,
     default:true
+  },
+  page : {
+    type: String,
+    default: "",
   }
 });
 
-console.log('props list =======> ', props.list)
 
 const remove = (item) => {
   emits("remove", item);
