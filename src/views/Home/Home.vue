@@ -93,7 +93,7 @@
       </div>
       <div class="text-[0.24rem] text-[#7B7B7B]">10/16 16:10</div>
     </div>
-    <div class="relative m-[0.32rem]">
+    <div class="relative mt-[0.32rem] mx-[0.32rem]">
       <!--//////////////////////////////////-->
       <div
         class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
@@ -383,32 +383,32 @@
             </div>
           </div>
         </div>
-        <StockTable
-          style="margin-top: 0.1rem"
-          v-if="marketPerformance == 2"
-          :loading="marketLoading"
-          :deleteItem="!!token"
-          :list="marketVolumeList"
-          :marketType="'all'"
-        />
-        <StockTable
-          style="margin-top: 0.1rem"
-          v-if="marketPerformance == 0"
-          :loading="marketLoading"
-          :deleteItem="!!token"
-          :list="marketUpList"
-          :marketType="'all'"
-        />
-        <StockTable
-          style="margin-top: 0.1rem"
-          v-if="marketPerformance == 1"
-          :loading="marketLoading"
-          :deleteItem="!!token"
-          :list="marketDownList"
-          :marketType="'all'"
-        />
       </div>
     </div>
+    <StockTable
+        style="margin-top: 0.1rem"
+        v-if="marketPerformance == 0"
+        :loading="marketLoading"
+        :deleteItem="false"
+        :list="marketDownList"
+        :marketType="'all'"
+      />
+      <StockTable
+        style="margin-top: 0.1rem"
+        v-if="marketPerformance == 1"
+        :loading="marketLoading"
+        :deleteItem="false"
+        :list="marketUpList"
+        :marketType="'all'"
+      />
+      <StockTable
+        style="margin-top: 0.1rem"
+        v-if="marketPerformance == 2"
+        :loading="marketLoading"
+        :deleteItem="false"
+        :list="marketVolumeList"
+        :marketType="'all'"
+      />
     <!-- banner -->
     <Banner v-if="activated" class="home_banner" />
 
@@ -475,6 +475,7 @@ import IPO from "../Market/components/IPO.vue";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import StockTable from "@/components/StockTable.vue";
+import StockSortList from "@/components/StockSortList.vue";
 
 import { Translation } from "vue-i18n";
 
@@ -502,21 +503,6 @@ const showSlides = () => {
     slideIndex.value = (slideIndex.value + 1) % slides.length;
   }, 2000);
 };
-onMounted(() => {
-  showSlides();
-  // getMarketPerformanceData(
-  //   marketUpList,
-  //   "setMarketUpList",
-  //   "up",
-  //   "marketUpList"
-  // );
-  getMarketPerformanceData(
-    marketUpList,
-    "setMarketDownList",
-    "down",
-    "marketDownList"
-  );
-});
 
 const onSelect = (item) => {
   showAS.value = false;
@@ -664,10 +650,12 @@ const jump = (name, needToken) => {
   });
 };
 const page = ref(0);
-const marketLoading = ref(true);
-const totalHeight = window.innerHeight || document.documentElement.clientHeight;
-let target = null;
+const marketLoading = ref(false);
 const marketPerformance = ref(0);
+marketPerformance.value = 0;
+const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
+const marketUpList = computed(() => store.state.marketUpList || []); // 涨幅列表
+const marketDownList = computed(() => store.state.marketDownList || []); // 跌幅列表
 const clickPerformance = (key) => {
   page.value = 0;
   marketLoading.value = false;
@@ -675,12 +663,12 @@ const clickPerformance = (key) => {
   setTimeout(() => {
     // 加载更多元素
     switch (key) {
-      case 2:
+      case 0:
         getMarketPerformanceData(
-          marketVolumeList,
-          "setMarketVolumeList",
-          "volume",
-          "marketVolumeList"
+          marketDownList,
+          "setMarketDownList",
+          "down",
+          "marketDownList"
         );
         break;
       case 1:
@@ -691,29 +679,16 @@ const clickPerformance = (key) => {
           "marketUpList"
         );
         break;
-      case 0:
+      case 2:
         getMarketPerformanceData(
-          marketDownList,
-          "setMarketDownList",
-          "down",
-          "marketDownList"
+          marketVolumeList,
+          "setMarketVolumeList",
+          "volume",
+          "marketVolumeList"
         );
         break;
     }
-    target = document.querySelector(".stock_soft_more" + key);
   }, 350);
-};
-
-const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
-const marketUpList = computed(() => store.state.marketUpList || []); // 涨幅列表
-const marketDownList = computed(() => store.state.marketDownList || []); // 跌幅列表
-const subsM = (listKey, key) => {
-  // 订阅ws
-  store.dispatch("subList", {
-    commitKey: key,
-    listKey: listKey,
-    // proxyListValue: list.value
-  });
 };
 const getMarketPerformanceData = (list, key, query, listKey) => {
   if (marketLoading.value) return;
@@ -724,7 +699,12 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
     arr = [];
   }
   if (arr.length) {
-    subsM(listKey, key);
+    subs([
+      ...arr,
+      ...marketRecommndStockList.value,
+      ...marketRecommndContractList.value,
+      ...marketRecommndList.value,
+    ]);
   }
   const saveActive = marketPerformance.value;
   _sort({
@@ -735,7 +715,7 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
     .then((res) => {
       if (res.code == 200) {
         if (saveActive != marketPerformance.value) return;
-        res.data = res.data.map((item) => {
+        res.data = res.data.slice(0, 5).map((item) => {
           item.ratio = undefined; // 弃用接口里的该字段
           return item;
         });
@@ -753,52 +733,31 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
         arr.push(...rs);
         store.commit(key, arr || []);
         setTimeout(() => {
-          subsM(listKey, key);
-          scrollHandler();
+          subs([
+            ...arr,
+            ...marketRecommndStockList.value,
+            ...marketRecommndContractList.value,
+            ...marketRecommndList.value,
+          ]);
         }, 500);
       }
     })
     .finally(() => {
       setTimeout(() => {
-        subsM(listKey, key);
         marketLoading.value = false;
       }, 300);
     });
 };
 
-const scrollHandler = () => {
-  if (!target) return;
-  const rect = target.getBoundingClientRect();
-  if (rect.top <= totalHeight) {
-    // 加载更多
-    switch (marketPerformance.value) {
-      case 2:
-        getMarketPerformanceData(
-          marketVolumeList,
-          "setMarketVolumeList",
-          "volume",
-          "marketVolumeList"
-        );
-        break;
-      case 1:
-        getMarketPerformanceData(
-          marketUpList,
-          "setMarketUpList",
-          "up",
-          "marketUpList"
-        );
-        break;
-      case 0:
-        getMarketPerformanceData(
-          marketDownList,
-          "setMarketDownList",
-          "down",
-          "marketDownList"
-        );
-        break;
-    }
-  }
-};
+onMounted(() => {
+  showSlides();
+  getMarketPerformanceData(
+    marketDownList,
+    "setMarketDownList",
+    "down",
+    "marketDownList"
+  );
+});
 </script>
 
 <style lang="less" scoped>
