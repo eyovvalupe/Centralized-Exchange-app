@@ -43,6 +43,9 @@ module.exports = defineConfig({
   devServer: {
     port: 3000,
     hot: true, // 开启HMR功能(只能用于开发环境，生产环境不需要)
+    client: {
+      overlay: false,
+    },
     proxy: {
       '/api': {
         target: 'http://146.70.86.141:8000',

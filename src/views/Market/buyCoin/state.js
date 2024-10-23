@@ -1,5 +1,5 @@
 import { createGlobalState, useSessionStorage } from '@vueuse/core'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 
 const fiatEnum = {
   INR: 'FIAT_INR',
@@ -13,20 +13,33 @@ export const useBuyCoinState = createGlobalState(() => {
   const selfRef = ref()
   const listRef = ref()
   let scrollData = {}
-
-  const onChange = i => {
+  const setScrollTop = (key, value) => {
+    switch (key) {
+      case '1':
+        nextTick(() => {
+          scrollData.y.value = value || buycoinScrollTop1.value
+        })
+        break
+      case '2':
+        nextTick(() => {
+          scrollData.y.value = value || buycoinScrollTop2.value
+        })
+        break
+    }
+  }
+  const onChange = (i, isSetScroll = true) => {
     active.value = i
     buycoinActive.value = i
     switch (i) {
       case '1':
         nextTick(() => {
-          scrollData.y.value = buycoinScrollTop1.value
+          if (isSetScroll) setScrollTop(i)
           selfRef.value?.init()
         })
         break
       case '2':
         nextTick(() => {
-          scrollData.y.value = buycoinScrollTop2.value
+          if (isSetScroll) setScrollTop(i)
           listRef.value?.init()
         })
         break
@@ -37,5 +50,5 @@ export const useBuyCoinState = createGlobalState(() => {
     return `/static/img/crypto/${result}.png`
   }
   const setScrollData = params => (scrollData = params)
-  return { active, selfRef, listRef, onChange, handleUrl, setScrollData }
+  return { active, selfRef, listRef, onChange, handleUrl, setScrollData, setScrollTop }
 })

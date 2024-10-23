@@ -192,6 +192,7 @@ const getC2cOrderInfo = async () => {
     list.value.forEach((element, i) => {
       if (element.order_no === onOrderNoValue.order_no) {
         list.value[i] = res.data
+        onOrderNoValue = {}
         throw new Error('break')
       }
     })
@@ -218,10 +219,6 @@ onMounted(() => {
 
 onActivated(() => {
   if (active.value !== '2') return
-  nextTick(() => {
-    const page2 = document.querySelector('.page')
-    page2.scrollTop = buycoinScrollTop2.value
-  })
   const { status } = onOrderNoValue
   if (status === 'waitpayment' || status === 'waitconfirm') {
     getC2cOrderInfo()

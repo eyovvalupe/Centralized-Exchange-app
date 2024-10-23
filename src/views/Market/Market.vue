@@ -1,84 +1,52 @@
 <!-- 市场 -->
 <template>
-  <div v-if="activatedIncludes" ref="marketPageRef" class="page page_market">
+  <div v-if="activatedIncludes && !pageLoading" class="page page_market">
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
     <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
     <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
       <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
     </div>
     <div class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white" />
-    <Tabs v-if="!pageLoading" v-model:active="active" type="card" class="tab_content tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']" :swipeable="false" animated shrink @change="changeTab">
-      <Tab class="optional" style="padding-left: 0px" name="option">
-        <Optional v-if="activated && active == 'option'" ref="OptionalRef" />
-        <template #title>
-          <div class="tab_item">
-            <span>自选</span>
-          </div>
-        </template>
-      </Tab>
-      <Tab name="buy">
-        <template #title>
-          <div class="tab_item">
-            <div v-show="openTab" class="tab_item_icon">
-              <img v-show="active != 'buy'" src="/static/img/market/buy.svg" alt="icon" />
-              <img v-show="active == 'buy'" src="/static/img/market/buy2.svg" alt="icon" />
-            </div>
-            <span>买币</span>
+    <HeaderTabs v-model:active="active" class="w-[6.28rem]" :tabs="[$t('自选'), $t('买币'), $t('股票'), $t('合约'), $t('外汇'), $t('黄金')]" @change="e => changeTab(e, true)" />
 
-            <div v-if="store.state.c2cUnreadTotal > 0" class="nav_num">{{ store.state.c2cUnreadTotal }}</div>
-          </div>
-        </template>
-      </Tab>
-      <Tab name="stock">
-        <Stock v-if="active == 'stock'" />
-        <template #title>
-          <div class="tab_item">
-            <div v-show="openTab" class="tab_item_icon">
-              <img v-show="active != 'stock'" src="/static/img/market/stock.svg" alt="icon" />
-              <img v-show="active == 'stock'" src="/static/img/market/stock2.svg" alt="icon" />
-            </div>
-            <span>股票</span>
-          </div>
-        </template>
-      </Tab>
-      <Tab name="contract">
-        <Constract v-if="active == 'contract'" />
-        <template #title>
-          <div class="tab_item">
-            <div v-show="openTab" class="tab_item_icon">
-              <img v-show="active != 'contract'" src="/static/img/market/constract.svg" alt="icon" />
-              <img v-show="active == 'contract'" src="/static/img/market/constract2.svg" alt="icon" />
-            </div>
-            <span>合约</span>
-          </div>
-        </template>
-      </Tab>
-      <Tab>
-        <Foreign v-if="active == 5" />
-        <template #title>
-          <div class="tab_item">
-            <div v-show="openTab" class="tab_item_icon">
-              <img v-show="active != 5" src="/static/img/market/out.svg" alt="icon" />
-              <img v-show="active == 5" src="/static/img/market/out2.svg" alt="icon" />
-            </div>
-            <span>外汇</span>
-          </div>
-        </template>
-      </Tab>
-      <Tab>
-        <Foreign v-if="active == 5" />
-        <template #title>
-          <div class="tab_item">
-            <div v-show="openTab" class="tab_item_icon">
-              <img v-show="active != 5" src="/static/img/market/out.svg" alt="icon" />
-              <img v-show="active == 5" src="/static/img/market/out2.svg" alt="icon" />
-            </div>
-            <span>黄金</span>
-          </div>
-        </template>
-      </Tab>
-    </Tabs>
-    <buyCoin v-if="active === 'buy'" />
+    <Swipe ref="swipe" :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" @change="changeTab">
+      <SwipeItem>
+        <div v-if="active === 0 && activated" class="assets_body">
+          <!-- 自选 -->
+          <Optional ref="OptionalRef" />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div v-if="loadedTab.includes(1)" ref="marketPageRef" class="assets_body">
+          <!-- 买币 -->
+          <buyCoin />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div v-if="active === 2" class="assets_body">
+          <!-- 股票 -->
+          <Stock />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div v-if="active === 3" class="assets_body">
+          <!-- 合约 -->
+          <Constract />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div v-if="active === 4" class="assets_body">
+          <!-- 外汇 -->
+          <Foreign />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div v-if="active === 5" class="assets_body">
+          <!-- 黄金 -->
+          <Foreign />
+        </div>
+      </SwipeItem>
+    </Swipe>
 
     <!-- </PullRefresh> -->
     <!-- </transition> -->
@@ -86,26 +54,29 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, PullRefresh } from 'vant'
-import { ref, onDeactivated, computed, onActivated, watch } from 'vue'
+import { Swipe, SwipeItem } from 'vant'
+import { ref, onDeactivated, computed, onActivated } from 'vue'
+import { useSessionStorage } from '@vueuse/core'
 import router from '@/router'
 import Optional from './components/Optional.vue'
 import Stock from './components/Stock.vue'
-import Financial from './components/Financial.vue'
+// import Financial from './components/Financial.vue'
 import Foreign from './components/Foreign.vue'
-import IPO from './components/IPO.vue'
+// import IPO from './components/IPO.vue'
 import store from '@/store'
 import { useSocket } from '@/utils/ws'
 import IPODetail from '@/views/trade/IPODetail.vue'
 import Subscription from '@/views/trade/Subscription.vue'
-import NoData from '@/components/NoData.vue'
+// import NoData from '@/components/NoData.vue'
 import Constract from './components/Constract.vue'
-import Ai from './components/Ai.vue'
+// import Ai from './components/Ai.vue'
 import buyCoin from './buyCoin/index.vue'
 import Iconfonts from '@/components/Iconfonts.vue'
 import { useBuyCoinState } from './buyCoin/state'
+import HeaderTabs from '@/components/HeaderTabs.vue'
 
 const { setScrollData } = useBuyCoinState()
+const market_active = useSessionStorage('market_active', 0)
 const marketPageRef = ref()
 const scrollData = useScroll(marketPageRef, {
   throttle: 400,
@@ -113,22 +84,28 @@ const scrollData = useScroll(marketPageRef, {
 })
 const openTab = ref(false)
 
-const active = ref(sessionStorage.getItem('market_active') || 'option')
+const active = ref(market_active.value)
+const initialSwipe = active.value
 const OptionalRef = ref()
-const StockRef = ref()
+// const StockRef = ref()
 const IPORef = ref()
-const reloading = ref(false)
+// const reloading = ref(false)
 const detail = ref(null)
-const detailTransition = ref('slide-right')
+const swipe = ref(null)
+// const detailTransition = ref('slide-right')
+const loadedTab = ref([active.value])
 provide('scrollData', scrollData)
 setScrollData(scrollData)
-const changeTab = key => {
+const changeTab = (key, slideSwipe = false) => {
   active.value = key
-  sessionStorage.setItem('market_active', key)
+  market_active.value = key
   openTab.value = false
+  if (!loadedTab.value.includes(key)) loadedTab.value.push(key)
+  if (slideSwipe && swipe.value) swipe.value.swipeTo(key)
+
   setTimeout(() => {
     switch (key) {
-      case 'option':
+      case 0:
         OptionalRef.value && OptionalRef.value.init()
         break
       case 'stock':
@@ -156,9 +133,9 @@ const { startSocket } = useSocket()
 const activated = ref(false)
 const activatedIncludes = computed(() => {
   // 需要缓存的页面
-  return ['option', 'stock', 'contract', '4', '5'].includes(active.value) ? activated.value : true
+  return [0, 2, 3, 4, 5].includes(active.value) ? activated.value : true
 })
-function scrollHandler(e) {
+function scrollHandler() {
   if (openTab.value) {
     openTab.value = false
   }
@@ -166,7 +143,7 @@ function scrollHandler(e) {
 onActivated(() => {
   activated.value = true
   setTimeout(() => {
-    if (active.value == 'option') {
+    if (active.value == 0) {
       OptionalRef.value && OptionalRef.value.init()
     }
   }, 100)
@@ -195,13 +172,18 @@ const jump = name => {
 .page_market {
   padding-bottom: 1.4rem;
   height: 100%;
-  overflow-y: auto;
+  // overflow-y: auto;
   position: relative;
   width: 7.5rem;
   &:has(.open_tabs) {
     :deep(.addBtn) {
       top: 1.76rem;
     }
+  }
+
+  .assets_body {
+    overflow-y: auto;
+    height: calc(100vh - 2.52rem);
   }
 
   :deep(.van-sticky) {
