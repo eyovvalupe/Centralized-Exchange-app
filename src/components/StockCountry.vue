@@ -2,7 +2,6 @@
 <template>
   <div class="market_stock_block">
     <Tabs
-      v-if="!pageLoading"
       type="custom-card"
       v-model:active="active"
       :swipeable="false"
@@ -13,22 +12,26 @@
     >
       <Tab title="美国" name="0">
         <div class="stock_tab-body">
-          <StockDescription :region="'us'" :data="currentData" @update="getData(currentData.region)" />
+          <Loading :loading="pageLoading" />
+          <StockDescription :region="'us'" :data="usData" :loading="pageLoading" @update="getData('us')" />
         </div>
       </Tab>
       <Tab title="印度" name="1">
         <div class="stock_tab-body">
-          <StockDescription :region="'india'" :data="currentData" @update="getData(currentData.region)"/>
+          <Loading :loading="pageLoading" />
+          <StockDescription :region="'india'" :data="indiaData" :loading="pageLoading" @update="getData('india')"/>
         </div>
       </Tab>
       <Tab title="日本" name="2">
         <div class="stock_tab-body">
-          <StockDescription :region="'japan'" :data="currentData" @update="getData(currentData.region)"/>
+          <Loading :loading="pageLoading" />
+          <StockDescription :region="'japan'" :data="japanData" :loading="pageLoading" @update="getData('japan')"/>
         </div>
       </Tab>
       <Tab title="韩国" name="3">
         <div class="stock_tab-body">
-          <StockDescription :region="'korea'" :data="currentData" @update="getData(currentData.region)"/>
+          <Loading :loading="pageLoading" />
+          <StockDescription :region="'korea'" :data="koreaData" :loading="pageLoading" @update="getData('korea')"/>
         </div>
       </Tab>
     </Tabs>
@@ -46,10 +49,21 @@ import StockDescription from "@/components/StockDescription.vue";
 
 const active = ref(sessionStorage.getItem("trade_stock_tab") || 0);
 const currentData = computed(() => store.state.currentRecommendData);
+const checkStockList = computed(() => store.state.marketVolumeList);
+const usData = computed(() => store.state.marketStockUsData);
+const indiaData = computed(() => store.state.marketStockIndiaData);
+const japanData = computed(() => store.state.marketStockJapanData);
+const koreaData = computed(() => store.state.marketStockKoreaData);
+
 const onChange = async (val) => {
   active.value = val;
   sessionStorage.setItem("trade_stock_tab", val);
-  getData(region[val])
+  if (region[val] == 'us' && !usData) {
+    getData(region[val])
+  } 
+  if (region[val] == 'india' && !indiaData) {
+    getData(region[val])
+  }
 };
 
 const pageLoading = ref(true);
@@ -71,6 +85,7 @@ const region = {
 };
 
 const getData = (region) => {
+  pageLoading.value = true
   _recommend({
     market: region,
     type: "index",
@@ -84,6 +99,17 @@ const getData = (region) => {
         stock: res.data.index
       }
       store.commit("setCurrentRecommenData", data)
+
+      if (region == 'us') {
+        store.commit("setMarketStockUsData", data)
+      } else if (region == 'india') {
+        store.commit("setMarketStockIndiaData", data)
+      } else if (region == 'japan') {
+        store.commit("setMarketStockJapanData", data)
+      } else {
+        store.commit("setMarketStockKoreaData", data)
+      }
+
     })
     .catch((err) => console.error(err))
     .finally(() => {

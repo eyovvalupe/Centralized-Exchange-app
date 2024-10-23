@@ -135,6 +135,7 @@ const jump = (name) => {
   padding: 0.32rem 0.32rem;
 
   .item_block {
+    height: 5rem;
     .item_block_title {
       font-size: 0.32rem;
       font-weight: 600;

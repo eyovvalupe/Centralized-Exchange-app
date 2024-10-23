@@ -1,5 +1,5 @@
 <template>
-  <div class="stock_description">
+  <div class="stock_description" v-show="!loading">
     <div class="flex flex-col mb-[0.42rem]">
       <div class="flex flex-row justify-between items-center mb-[0.16rem]">
         <span class="text-[0.32rem] text-[#061023] font-semibold">已收盘</span>
@@ -54,8 +54,20 @@ const emits = defineEmits(['update'])
 const update = () => {
   emits('update')
 }
-const props = defineProps({region: String, data: Object})
-
+const props = defineProps({
+  region: {
+    type: String,
+    default: ''
+  },
+  data: {
+    type: Object,
+    default: {}
+  },
+  loading: {
+    type: Boolean,
+    default: true
+  }
+})
 </script>
 
 <style lang="less" scoped>
