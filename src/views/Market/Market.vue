@@ -63,8 +63,7 @@ import Stock from './components/Stock.vue'
 // import Financial from './components/Financial.vue'
 import Foreign from './components/Foreign.vue'
 // import IPO from './components/IPO.vue'
-import store from '@/store'
-import { useSocket } from '@/utils/ws'
+import store, { useMapState } from '@/store'
 import IPODetail from '@/views/trade/IPODetail.vue'
 import Subscription from '@/views/trade/Subscription.vue'
 // import NoData from '@/components/NoData.vue'
@@ -75,11 +74,12 @@ import Iconfonts from '@/components/Iconfonts.vue'
 import { useBuyCoinState } from './buyCoin/state'
 import HeaderTabs from '@/components/HeaderTabs.vue'
 
-const { setScrollData } = useBuyCoinState()
+const { setScrollData, cancelSubs, active: activeTwo, onChange } = useBuyCoinState()
+const { bottomTabBarValue } = useMapState(['bottomTabBarValue'])
 const market_active = useSessionStorage('market_active', 0)
 const marketPageRef = ref()
 const scrollData = useScroll(marketPageRef, {
-  throttle: 400,
+  throttle: 200,
   onScroll: scrollHandler,
 })
 const openTab = ref(false)
@@ -88,7 +88,7 @@ const active = ref(market_active.value)
 const initialSwipe = active.value
 const OptionalRef = ref()
 // const StockRef = ref()
-const IPORef = ref()
+// const IPORef = ref()
 // const reloading = ref(false)
 const detail = ref(null)
 const swipe = ref(null)
@@ -108,28 +108,22 @@ const changeTab = (key, slideSwipe = false) => {
       case 0:
         OptionalRef.value && OptionalRef.value.init()
         break
-      case 'stock':
-        // StockRef.value && StockRef.value.init()
+      case 1:
+        onChange(activeTwo.value)
         break
-      case 'ipo':
-        IPORef.value && IPORef.value.init()
+      // case 'stock':
+      //   // StockRef.value && StockRef.value.init()
+      //   break
+      // case 'ipo':
+      //   IPORef.value && IPORef.value.init()
+      //   break
+      default:
+        cancelSubs()
         break
     }
   }, 100)
 }
 
-// 预加载页面
-const pageLoading = computed(() => store.state.pageLoading)
-store.commit('setPageLoading', true)
-Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Search.vue'), import('@/views/Market/IpoSubscription.vue')]).finally(() => {
-  store.commit('setPageLoading', false)
-
-  setTimeout(() => {
-    changeTab(active.value)
-  }, 0)
-})
-
-const { startSocket } = useSocket()
 const activated = ref(false)
 const activatedIncludes = computed(() => {
   // 需要缓存的页面
@@ -140,6 +134,20 @@ function scrollHandler() {
     openTab.value = false
   }
 }
+// 跳转
+const jump = name => {
+  router.push({
+    name,
+  })
+}
+watch(
+  () => store.state.bottomTabBarValue,
+  newValue => {
+    if (newValue === 'market' && active.value == 1) {
+      onChange(activeTwo.value)
+    }
+  }
+)
 onActivated(() => {
   activated.value = true
   setTimeout(() => {
@@ -153,19 +161,20 @@ onDeactivated(() => {
     activated.value = false
   }, 100)
   // 取消订阅
-  const socket = startSocket(() => {
-    socket && socket.emit('realtime', '') // 价格变化
-    socket && socket.emit('snapshot', '') // 快照数据
-    socket && socket.off('realtime')
-    socket && socket.off('snapshot')
-  })
+  if (bottomTabBarValue.value !== 'market') {
+    cancelSubs()
+  }
 })
-// 跳转
-const jump = name => {
-  router.push({
-    name,
-  })
-}
+// 预加载页面
+const pageLoading = computed(() => store.state.pageLoading)
+store.commit('setPageLoading', true)
+Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Search.vue'), import('@/views/Market/IpoSubscription.vue')]).finally(() => {
+  store.commit('setPageLoading', false)
+
+  setTimeout(() => {
+    changeTab(active.value)
+  }, 0)
+})
 </script>
 
 <style lang="less" scoped>

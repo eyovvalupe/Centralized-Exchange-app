@@ -1,5 +1,7 @@
 import { createGlobalState, useSessionStorage } from '@vueuse/core'
 import { nextTick, ref } from 'vue'
+import { useSocket } from '@/utils/ws'
+import store from '@/store'
 
 const fiatEnum = {
   INR: 'FIAT_INR',
@@ -9,10 +11,13 @@ export const useBuyCoinState = createGlobalState(() => {
   const buycoinScrollTop1 = useSessionStorage('buycoinScrollTop1')
   const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
   const buycoinActive = useSessionStorage('buycoinActive', '0')
+  const { startSocket } = useSocket()
+  const token = computed(() => store.state.token)
   const active = ref(buycoinActive.value)
   const selfRef = ref()
   const listRef = ref()
   let scrollData = {}
+  let socket
   const setScrollTop = (key, value) => {
     switch (key) {
       case '1':
@@ -50,5 +55,32 @@ export const useBuyCoinState = createGlobalState(() => {
     return `/static/img/crypto/${result}.png`
   }
   const setScrollData = params => (scrollData = params)
-  return { active, selfRef, listRef, onChange, handleUrl, setScrollData, setScrollTop }
+
+  const subs = () => {
+    if (!token.value) return
+    return new Promise(resolve => {
+      socket = startSocket(() => {
+        socket && socket.off('user')
+        socket && socket.off('c2corder')
+        socket && socket.emit('user', token.value)
+        socket && socket.emit('c2corder', '#all')
+        store.commit('setC2cList', [])
+        socket.on('c2corder', res => {
+          store.commit('setC2cList', res.data || [])
+          resolve()
+        })
+      })
+    })
+  }
+  // 取消订阅
+  const cancelSubs = () => {
+    // const socket = startSocket(() => {
+    socket && socket.off('user')
+    socket && socket.off('c2corder')
+    // socket && socket.close()
+    // socket && socket.emit('user', '')
+    // socket && socket.emit('c2corder', '')
+    // })
+  }
+  return { active, selfRef, listRef, onChange, handleUrl, setScrollData, setScrollTop, subs, cancelSubs }
 })
