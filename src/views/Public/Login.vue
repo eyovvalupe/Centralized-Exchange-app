@@ -19,35 +19,25 @@
 
     <!-- tab -->
     <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
-      <Tab :title="'邮箱'"> </Tab>
+      <Tab :title="'邮箱'"></Tab>
       <Tab :title="'手机'"></Tab>
     </Tabs>
-   
+
 
     <!-- 表单 -->
     <div class="form">
       <div class="form_title" v-show="activeTab == 0">邮箱</div>
       <div class="form_item margin_item" v-show="activeTab == 0">
-        <div
-          class="form_item_user"
-          v-show="saveAccount && saveAccount == form.email"
-        >
-            <img class="van-icon" src="/static/img/assets/envelop.svg" alt= "envelope" />
+        <!-- <div class="form_item_user" v-show="saveAccount && saveAccount == form.email"> -->
+        <div class="form_item_user" v-show="form.email">
+          <img class="van-icon" src="/static/img/assets/envelop.svg" alt="envelope" />
         </div>
-        <input
-          @change="changeAccount"
-          maxlength="20"
-          v-model.trim="form.email"
-          placeholder="您的邮箱"
-          type="text"
-          class="item_input"
-        />
+        <input @change="changeAccount" v-model.trim="form.email" placeholder="您的邮箱" type="text"
+          class="item_input" />
         <Loading v-if="accountLoading" :size="18" type="spinner" />
-        <div
-          class="form_item_clear"
-          v-show="saveAccount && saveAccount == form.email"
-        >
-            <Icon class ="" name="cross" />
+        <!-- <div class="form_item_clear" v-show="saveAccount && saveAccount == form.email"> -->
+        <div class="form_item_clear" v-show="form.email" @click="form.email = null">
+          <Icon class="" name="cross" />
         </div>
       </div>
 
@@ -59,51 +49,26 @@
             <img src="/static/img/assets/more.png" alt="img" />
           </div>
         </div>
-        <input
-          maxlength="20"
-          v-model.trim="form.phone"
-          placeholder="您的手机号"
-          type="text"
-          class="item_input"
-        />
+        <input maxlength="20" v-model.trim="form.phone" placeholder="您的手机号" type="text" class="item_input" />
       </div>
       <div class="form_title">密码</div>
       <div class="form_item">
-       <div
-          class="form_item_user"
-          v-show="saveAccount "
-        >
-          <img class="van-icon" src="/static/img/assets/lock.svg" alt= "lock" />
+        <!-- 显示密码输入时的锁图标 -->
+        <div class="form_item_user" v-if="form.password">
+          <img class="van-icon" src="/static/img/assets/lock.svg" alt="lock" />
         </div>
-        <input
-          maxlength="20"
-          v-show="!showPass"
-          v-model.trim="form.password"
-          placeholder="请输入您的密码"
-          type="password"
-          class="item_input"
-        />
-        <input
-          maxlength="20"
-          v-show="showPass"
-          v-model.trim="form.password"
-          placeholder="请输入您的密码"
-          type="text"
-          class="item_input"
-        />
+
+        <!-- 密码输入框，使用 v-if/v-else 优化 -->
+        <input maxlength="20" :type="showPass ? 'text' : 'password'" v-model.trim="form.password" placeholder="请输入您的密码"
+          class="item_input" />
+
+        <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
-          <img
-            v-show="!showPass"
-            src="/static/img/user/eye-off.png"
-            alt="off"
-          />
-          <img
-            v-show="showPass"
-            src="/static/img/user/eye-open.png"
-            alt="open"
-          />
+          <img :src="showPass ? '/static/img/user/eye-open.png' : '/static/img/user/eye-off.png'"
+            :alt="showPass ? 'open' : 'off'" />
         </div>
       </div>
+
     </div>
 
     <!-- 忘记密码 -->
@@ -111,15 +76,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button
-        :loading="loading"
-        :disabled="disabled"
-        round
-        color="#014CFA"
-        class="submit"
-        type="primary"
-        >登录</Button
-      >
+      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">登录</Button>
     </div>
 
     <!-- 去注册 -->
@@ -132,40 +89,20 @@
     <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      class="self_van_popup"
-      v-model:show="showDialog"
-      position="bottom"
-      teleport="body"
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
+      position="bottom" teleport="body">
       <div class="register_accounr_dialog">
         <div class="close_icon" @click="showDialog = false">
           <img src="/static/img/common/close.png" alt="x" />
         </div>
         <div class="item search_box">
-          <input
-            v-model.trim="searchStr"
-            class="ipt"
-            type="text"
-            placeholder="搜索"
-          />
+          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="搜索" />
         </div>
         <div style="height: 60vh; overflow-y: auto">
-          <div
-            @click="clickItem(item)"
-            class="transfer_dialog_item"
-            :class="{ transfer_dialog_item_active: form.area == item.code }"
-            v-for="(item, i) in showAreas"
-            :key="i"
-          >
+          <div @click="clickItem(item)" class="transfer_dialog_item"
+            :class="{ transfer_dialog_item_active: form.area == item.code }" v-for="(item, i) in showAreas" :key="i">
             <span>{{ item.cn }} ({{ item.code }})</span>
-            <Icon
-              v-if="form.area == item.code"
-              class="check_icon"
-              name="success"
-            />
+            <Icon v-if="form.area == item.code" class="check_icon" name="success" />
           </div>
           <NoData v-if="!showAreas.length" />
         </div>
@@ -233,7 +170,7 @@ const changeAccount = () => {
           saveAccount.value = form.value.email;
           localStorage.setItem("saveAccount", saveAccount.value);
         } else {
-          // showToast('账号不存在')
+          showToast('账号不存在')
         }
       })
       .finally(() => {
@@ -371,6 +308,7 @@ const goFoget = () => {
   emits("closeDialog");
   router.push({ name: "fogot" });
 };
+
 // 跳转注册
 const goRegister = () => {
   emits("closeDialog");
@@ -426,7 +364,7 @@ onMounted(() => {
 
     :deep(.van-tab--card.van-tab--active) {
       background-color: white;
-      color:  #2168F6;
+      color: #2168F6;
       font-family: "PingFang SC";
       font-size: 18px;
       font-style: normal;
@@ -434,7 +372,7 @@ onMounted(() => {
       line-height: normal;
       border-bottom: 3px solid #014CFA;
     }
-   
+
     :deep(.van-tab--shrink) {
       padding: 0 0.3rem;
     }
@@ -447,14 +385,14 @@ onMounted(() => {
 
     :deep(.van-tabs__nav--card) {
       height: 0.8rem;
-      display : flex;
+      display: flex;
     }
 
     :deep(.van-tab) {
       line-height: 0.6rem;
       font-size: 0.28rem;
-      width:50%;
-      padding-bottom : 14.5px;
+      width: 50%;
+      padding-bottom: 14.5px;
     }
   }
 
@@ -500,7 +438,7 @@ onMounted(() => {
       font-size: 28px;
       font-style: normal;
       font-weight: 600;
-      line-height: 140%; 
+      line-height: 140%;
     }
   }
 
@@ -555,14 +493,15 @@ onMounted(() => {
         align-items: center;
         width: 32px;
         height: 32px;
-        background-color : #CDD4E3;
-        border-radius : 50%;
+        background-color: #CDD4E3;
+        border-radius: 50%;
 
-         .van-icon{
-            width: 18px !important;
-         }
+        .van-icon {
+          width: 18px !important;
+        }
       }
-      .form_item_clear{
+
+      .form_item_clear {
         justify-content: center;
         color: #161616;
         margin-left: 0.12rem;
@@ -571,11 +510,11 @@ onMounted(() => {
         align-items: center;
         width: 16px;
         height: 16px;
-        background-color : #CDD4E3;
-        padding : '1px';
+        background-color: #CDD4E3;
+        padding: '1px';
         border-radius: 50%;
 
-        .van-icon{
+        .van-icon {
           font-size: 12px;
         }
       }
@@ -611,7 +550,8 @@ onMounted(() => {
       font-size: 18px;
       font-style: normal;
       font-weight: 500;
-      line-height: 100%; /* 18px */
+      line-height: 100%;
+      /* 18px */
     }
   }
 
@@ -620,7 +560,7 @@ onMounted(() => {
     text-align: center;
     font-weight: 400;
 
-    > span {
+    >span {
       color: #1a59f6;
       font-weight: 600;
     }
