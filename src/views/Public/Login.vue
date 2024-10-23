@@ -43,6 +43,9 @@
       <div class="form_title" v-show="activeTab == 1">手机号</div>
       <div class="form_item margin_item" v-show="activeTab == 1">
         <div class="code" @click="showDialog = true">
+          <span class="flag_icon">
+            <img src="/static/img/common/flag_hongkong.svg" alt="">
+          </span>
           <span>{{ form.area }}</span>
           <div class="more_icon">
             <img src="/static/img/assets/more.png" alt="img" />
@@ -95,13 +98,18 @@
           <img src="/static/img/common/close.png" alt="x" />
         </div>
         <div class="item search_box">
-          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="搜索" />
+          <Icon class="search" name="search" size="24px" />
+          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="输入区号" />
         </div>
         <div style="height: 60vh; overflow-y: auto">
           <div @click="clickItem(item)" class="transfer_dialog_item"
             :class="{ transfer_dialog_item_active: form.area == item.code }" v-for="(item, i) in showAreas" :key="i">
-            <span>{{ item.cn }} ({{ item.code }})</span>
-            <Icon v-if="form.area == item.code" class="check_icon" name="success" />
+            <span class="flag_icon">
+              <img src="/static/img/common/flag_hongkong.svg" alt="HongKong">
+            </span>
+            <span>{{ item.cn }}</span>
+            <span>({{ item.code }})</span>
+            <Icon v-if="form.area == item.code" class="cross" name="success" />
           </div>
           <NoData v-if="!showAreas.length" />
         </div>
@@ -111,7 +119,7 @@
 </template>
 
 <script setup>
-import { Icon, Button, showToast, Loading, Popup, Tabs, Tab } from "vant";
+import { Icon, Button, showToast, Loading, Popup, Tabs, Tab, Calendar } from 'vant';
 import { ref, computed, onMounted } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -336,7 +344,6 @@ onMounted(() => {
 <style lang="less" scoped>
 .page-login {
   padding-top: 1rem;
-  width: 375px;
 
   .tabs {
     overflow: hidden;
@@ -465,6 +472,12 @@ onMounted(() => {
         display: flex;
         align-items: center;
         margin-right: 0.12rem;
+        gap: 5px;
+
+        .flag_icon {
+          width: 32px;
+          height: 32px;
+        }
 
         .more_icon {
           width: 0.24rem;
@@ -539,7 +552,14 @@ onMounted(() => {
   }
 
   .submit_box {
-    padding: 0 0.32rem;
+    display: flex;
+    width: 343px;
+    height: 56px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 
     .submit {
       width: 100%;
@@ -591,6 +611,8 @@ onMounted(() => {
     border-radius: 0.32rem;
     padding: 0 0.32rem;
     margin: 0.12rem 0;
+    display: flex;
+    align-items: center;
 
     .ipt {
       width: 100%;
@@ -601,10 +623,23 @@ onMounted(() => {
   .transfer_dialog_item {
     overflow: auto;
     height: 1.12rem;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     border-bottom: 1px solid #f5f5f5;
+    padding: 0 0.32rem;
+    gap: 10px;
+
+    .flag_icon {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    .cross {
+      position: absolute;
+      right: 5px;
+    }
   }
 
   .transfer_dialog_item_active {
