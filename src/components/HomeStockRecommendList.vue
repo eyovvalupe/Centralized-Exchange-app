@@ -3,29 +3,31 @@
   <div class="recommend_list">
     <Loading v-show="props.loading" />
     <div
-      class="w-[3.33rem] h-[1.92rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC] relative"
+      class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-[#F5F7FC] relative"
       v-if="!props.loading"
     >
       <div
-        class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem] flex justify-between items-center"
+        class="font-medium text-[0.3rem] text-[#061023] font-medium mb-[0.15rem] flex justify-between items-center"
       >
-        NAHARCAP...
+        {{ totalList[0].symbol }}
+      </div>
+      <div class="flex justify-between text-[#18B762] mb-[0.24rem]">
+        <div class="text-[0.28rem] font-medium">465.4</div>
+        <div class="text-[0.28rem] font-normal">+1.7%</div>
+      </div>
+      <div class="flex justify-between item-center">
+        <SparkLine 
+          v-if="totalList[0].points"
+          :points="totalList[0].points"
+          :ratio="totalList[0].ratio"
+          :style="'width: 100%; height: 0.5rem'"
+          :xtimes="1"
+        />
         <div
-          class="custom-star-icon-small absolute right-0 top-0 mr-[0.1rem] mt-[0.1rem]"
-        ></div>
-      </div>
-      <div class="flex justify-between text-[#18B762] mb-[0.1rem]">
-        <div class="text-[0.28rem] font-bold">465.4</div>
-        <div class="text-[0.28rem]">+1.7%</div>
-      </div>
-      <div class="flex">
-        <div class="w-1/2"></div>
-        <div class="w-1/2 flex items-center justify-center h-[0.82rem]">
-          <div
-            class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] w-[0.96rem] h-[0.42rem] items-center justify-center flex"
-          >
-            去看看
-          </div>
+          class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] items-center justify-center flex"
+          style="width: 1.4rem; height: 0.48rem;"
+        >
+          <span class="text-[0.22rem]" @click="add(totalList[0])">+自选</span>
         </div>
       </div>
     </div>
@@ -40,10 +42,13 @@ import { Button, showToast, showLoadingToast, closeToast } from "vant";
 import store from "@/store";
 import router from "@/router";
 import { _add, _del } from "@/api/api";
-import eventBus from "@/utils/eventBus";
 
-const emits = defineEmits(["init", "change"]);
+const emits = defineEmits(["init", "addWatchList"]);
 const token = computed(() => store.state.token || "");
+
+const add = (item) => {
+  emits('addWatchList', item)
+}
 
 const props = defineProps({
   keyStr: {
@@ -69,11 +74,18 @@ const updown = (item) => {
   return item.ratio > 0 ? 1 : -1;
 };
 
-const totalList = ref([])
-const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList);
-const marketContractRecommendList = computed(() => store.state.marketContractRecommendList);
-totalList.value = [...marketSrockRecommendList.value, ...marketContractRecommendList.value]
-console.log(totalList.value)
+const totalList = ref([]);
+const marketSrockRecommendList = computed(
+  () => store.state.marketSrockRecommendList
+);
+const marketContractRecommendList = computed(
+  () => store.state.marketContractRecommendList
+);
+totalList.value = [
+  ...marketSrockRecommendList.value,
+  ...marketContractRecommendList.value,
+];
+console.log(totalList.value);
 
 const loading = ref(false);
 const disabled = computed(

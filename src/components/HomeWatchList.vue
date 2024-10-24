@@ -2,8 +2,14 @@
 <template>
   <div>
     <div class="self_recommend">
-        <div class="flex flex-row text-center items-center"><span class="text-[0.32rem] font-semibold">自选推荐</span></div>
-        <div class="text_container flex flex-row text-center items-center"><span style="font-size: 0.24rem; font-weight: 400; color: #666d80;">more+</span></div>
+      <div class="flex flex-row text-center items-center">
+        <span class="text-[0.32rem] font-semibold">自选推荐</span>
+      </div>
+      <div class="text_container flex flex-row text-center items-center">
+        <span style="font-size: 0.24rem; font-weight: 400; color: #666d80"
+          >more+</span
+        >
+      </div>
     </div>
     <Loaidng
       v-if="
@@ -15,12 +21,17 @@
       :type="'spinner'"
     />
     <div class="recommend_block">
-      <div class="item_block" v-if="marketSrockRecommendList.length || marketContractRecommendList.length">
+      <div
+        class="item_block"
+        v-if="
+          marketSrockRecommendList.length || marketContractRecommendList.length
+        "
+      >
         <HomeStockRecommendList
           :loading="recommendLoading"
           :newState="newState"
           :flag="flag"
-          @init="init"
+          @addWatchList="addOptional"
           :stockList="marketSrockRecommendList"
           :contractList="marketContractRecommendList"
         />
@@ -171,14 +182,12 @@ const contractList = ref([]);
 
 // 添加自选
 const addLoading = ref(false);
-const addOptional = () => {
+const addOptional = (item) => {
   if (!token.value) return store.commit("setIsLoginOpen", true);
-  if (!stockList.value.length && !contractList.value.length) return;
-  const keys = [...stockList.value, ...contractList.value];
   if (addLoading.value) return;
   addLoading.value = true;
   _add({
-    symbol: keys.join(","),
+    symbol: [item.sysmbol],
   })
     .then((res) => {
       if (res.code == 200) {
@@ -204,32 +213,31 @@ const jump = (name) => {
     name,
   });
 };
-
 </script>
 
 <style lang="less" scoped>
-.self_recommend{
+.self_recommend {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 0.24rem;
+
+  .text_container {
+    width: 0.84rem;
+    height: 0.34rem;
+    background-color: #f5f7fc;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 0.24rem;
-
-    .text_container {
-        width: 0.84rem;
-        height: 0.34rem;
-        background-color: #f5f7fc;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        border-radius: 0.32rem;
-    }
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.32rem;
+  }
 }
 
 .recommend_block {
-  border-radius: 0.452rem;
 
   .item_block {
+    border-radius: 0.452rem;
     margin-bottom: 0.471rem;
 
     .item_block_title {

@@ -40,7 +40,7 @@
           v-model="currentSlide"
         >
           <Slide v-for="(list, index) in recomendedCryptoList" :key="index">
-            <div @click="goInfo(list)">
+            <div @click="goInfo(list) " class="carousel__item">
               <div class="text-[font-bold] text-[15px] mb-[0.32rem]">
                 {{ list.symbol }}
               </div>
