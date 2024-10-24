@@ -11,8 +11,8 @@
 
       <!-- 返回和语言 -->
       <div class="max-width top">
-        <div class=" top_back" @click="goBack">
-          <Icon name="cross" />
+        <div class="top_back" @click="goBack">
+          <Icon name="arrow-left" />
         </div>
 
         <div class=" top_lang" @click="router.push({ name: 'language' })">
@@ -23,12 +23,15 @@
       <!-- 标题 -->
       <div class="title_box">
         <div class="title">{{ guest ? '创建模拟账户' : '创建您的账户' }}</div>
+        <div class="login_title">有账号？
+          <span class="tologin" @click="router.push({ name: 'login' })">去登录</span>
+        </div>
       </div>
 
       <!-- tab -->
       <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
-        <Tab :title="'邮箱注册'"> </Tab>
-        <Tab :title="'手机注册'"></Tab>
+        <Tab :title="'邮箱'"> </Tab>
+        <Tab :title="'手机'"></Tab>
       </Tabs>
 
       <!-- 表单 -->
@@ -42,10 +45,16 @@
         <div class="form_item margin_item" v-show="activeTab == 0" :class="{ 'err_ipt': errorTip.error1 }">
           <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.email" placeholder="您的邮箱" type="text"
             class="item_input">
+          <div class="form_item_clear" v-show="form.email" @click="form.email = null">
+            <Icon class="" name="cross" />
+          </div>
         </div>
         <div class="form_title" v-show="activeTab == 1">手机号</div>
         <div class="form_item margin_item" v-show="activeTab == 1" :class="{ 'err_ipt': errorTip.error1 }">
           <div class="code" @click="showDialog = true">
+            <span class="flag_icon">
+              <img src="/static/img/common/flag_hongkong.svg" alt="">
+            </span>
             <span>{{ form.area }}</span>
             <div class="more_icon">
               <img src="/static/img/assets/more.png" alt="img">
@@ -141,12 +150,17 @@
           <img src="/static/img/common/close.png" alt="x">
         </div>
         <div class="item search_box">
+          <Icon class="search" name="search" size="24px" />
           <input v-model.trim="searchStr" class="ipt" type="text" placeholder="搜索">
         </div>
         <div style="height:60vh;overflow-y: auto;">
           <div @click="clickItem(item)" class="transfer_dialog_item"
             :class="{ 'transfer_dialog_item_active': form.area == item.code }" v-for="(item, i) in showAreas" :key="i">
-            <span>{{ item.cn }} ({{ item.code }})</span>
+            <span class="flag_icon">
+              <img src="/static/img/common/flag_hongkong.svg" alt="HongKong">
+            </span>
+            <span>{{ item.cn }}</span>
+            <span>({{ item.code }})</span>
             <Icon v-if="form.area == item.code" class="check_icon" name="success" />
           </div>
           <NoData v-if="!showAreas.length" />
@@ -402,6 +416,7 @@ const goChat = () => {
     :deep(.van-tab--card) {
       border-right: none;
       color: #061023;
+      border-bottom: 3px solid #D0D8E2;
       // background-color: #f5f5f5;
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
@@ -409,13 +424,14 @@ const goChat = () => {
     }
 
     :deep(.van-tab--card.van-tab--active) {
-      // background-color: #014CFA;
-      // color: #fff;
-
-      background-color: #F6F8FF;
-      border-radius: 0.3rem;
-      color: #014CFA;
-      font-weight: 500
+      background-color: white;
+      color: #2168F6;
+      font-family: "PingFang SC";
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      border-bottom: 3px solid #014CFA;
     }
 
     :deep(.van-tab--shrink) {
@@ -429,12 +445,15 @@ const goChat = () => {
     }
 
     :deep(.van-tabs__nav--card) {
-      height: 0.6rem;
+      height: 0.8rem;
+      display: flex;
     }
 
     :deep(.van-tab) {
       line-height: 0.6rem;
       font-size: 0.28rem;
+      width: 50%;
+      padding-bottom: 14.5px;
     }
   }
 
@@ -469,15 +488,40 @@ const goChat = () => {
   }
 
   .title_box {
-    padding: 0.12rem 0.32rem 0.56rem 0.32rem;
+    padding: 0.12rem 0.32rem 0.12rem 0.32rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     .title {
-      height: 0.78rem;
-      display: flex;
-      align-items: center;
+      color: var(--, #061023);
+      text-align: left;
+      font-family: "PingFang SC";
+      font-size: 28px;
+      font-style: normal;
       font-weight: 600;
-      font-size: 0.56rem;
-      color: #0D0D12;
+      line-height: 140%;
+      /* 39.2px */
+    }
+
+    .login_title {
+      color: #343434;
+      text-align: right;
+      font-family: "PingFang SC";
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 16px;
+      /* 133.333% */
+    }
+
+    .tologin {
+      color: #014CFA;
+      font-family: "PingFang SC";
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 16px;
     }
   }
 
@@ -499,11 +543,35 @@ const goChat = () => {
       border-radius: 0.32rem;
       padding: 0 0.32rem;
 
+      .form_item_clear {
+        justify-content: center;
+        color: #161616;
+        margin-left: 0.12rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 16px;
+        height: 16px;
+        background-color: #CDD4E3;
+        padding: '1px';
+        border-radius: 50%;
+
+        .van-icon {
+          font-size: 12px;
+        }
+      }
+
       .code {
         color: #666;
         display: flex;
         align-items: center;
         margin-right: 0.12rem;
+        gap: 5px;
+
+        .flag_icon {
+          width: 32px;
+          height: 32px;
+        }
 
         .more_icon {
           width: 0.24rem;
@@ -616,10 +684,12 @@ const goChat = () => {
 
   .search_box {
     height: 0.84rem;
-    border: 1px solid #D0D8E2;
+    border: 1px solid #d0d8e2;
     border-radius: 0.32rem;
     padding: 0 0.32rem;
     margin: 0.12rem 0;
+    display: flex;
+    align-items: center;
 
     .ipt {
       width: 100%;
@@ -632,8 +702,20 @@ const goChat = () => {
     height: 1.12rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     border-bottom: 1px solid #F5F5F5;
+    padding: 0 0.32rem;
+    gap: 10px;
+
+    .flag_icon {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    .cross {
+      position: absolute;
+      right: 5px;
+    }
   }
 
   .transfer_dialog_item_active {

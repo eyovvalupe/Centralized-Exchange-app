@@ -43,17 +43,7 @@
                 </div>
             </div>
 
-            <!-- Password Strength Indicator -->
-            <div class="form_passCheck">
-                <svg width="116" height="3" viewBox="0 0 116 3" fill="none">
-                    <path d="M0 1.5C0 0.671573 0.671573 0 1.5 0H26V3H1.5C0.671572 3 0 2.32843 0 1.5Z"
-                        :fill="svgColor" />
-                    <path d="M116 1.5C116 0.671573 115.328 0 114.5 0H90V3H114.5C115.328 3 116 2.32843 116 1.5Z"
-                        :fill="svgColor" />
-                    <path d="M30 0H56V3H30V0Z" :fill="svgColor" />
-                    <path d="M60 0H86V3H60V0Z" :fill="svgColor" />
-                </svg>
-            </div>
+            <PasswordLevel class="form_passCheck" :password="form.password" />
 
             <div class="form_title">确认新密码</div>
             <div class="form_item">
@@ -84,6 +74,7 @@ import router from "@/router";
 import { _forgetpw } from "@/api/api";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import store from "@/store";
+import PasswordLevel from "@/components/PasswordLevel.vue"
 
 // Refs and Variables
 const ggRef = ref();

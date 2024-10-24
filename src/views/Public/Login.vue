@@ -116,7 +116,7 @@
       </div>
     </Popup>
   </div>
-</template>
+</template> 
 
 <script setup>
 import { Icon, Button, showToast, Loading, Popup, Tabs, Tab, Calendar } from 'vant';
@@ -298,7 +298,7 @@ const submitCode = (code) => {
 
 // 返回
 const goBack = () => {
-  if (props.backFunc) return props.backFunc();
+  if (props.backFunc) return props.backFunc(); 
   if (route.query.reurl) {
     router.replace({
       name: route.query.reurl,
@@ -327,11 +327,7 @@ const goRegister = () => {
     },
   });
 };
-// 跳转多语言
-const goLang = () => {
-  emits("closeDialog");
-  router.push({ name: "language" });
-};
+ 
 
 onMounted(() => {
   Promise.all([
