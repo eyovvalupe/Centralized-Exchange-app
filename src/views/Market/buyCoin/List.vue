@@ -3,7 +3,7 @@
   <div v-if="token" class="buycoin_list">
     <div class="list">
       <!-- 当前订单 -->
-      <div v-for="item in list" :key="item.order_no + item.unread" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
+      <div v-for="item in [...c2cLasttime, ...list]" :key="item.order_no + item.unread" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="c2cUnread[item.order_no]" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
@@ -55,8 +55,7 @@
 </template>
 
 <script setup>
-import { nextTick } from 'vue'
-import store, { useMapState } from '@/store'
+import { useMapState } from '@/store'
 import NoData from '@/components/NoData.vue'
 import UnLogin from '@/components/UnLogin.vue'
 import { _c2cOrderInfo, _c2cOrderList } from '@/api/api'
@@ -71,11 +70,10 @@ const statusEnum = {
   done: { name: t('已完成'), color: '#18B762' },
   cancel: { name: t('已取消'), color: '#8F92A1' },
 }
-const { active } = useBuyCoinState()
+const { active, subs } = useBuyCoinState()
 const scrollData = inject('scrollData')
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
-const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
 
 const loginfinish = () => {
   setTimeout(() => {
@@ -83,30 +81,16 @@ const loginfinish = () => {
   }, 100)
 }
 
-// 订单详情
-// const OrderInfoRef = ref()
-// const showPopupInfo = ref(false)
 let onOrderNoValue = {}
 const openOrderInfo = ({ order_no, ...row }) => {
   onOrderNoValue = { order_no, ...row }
-  // showPopupInfo.value = true
   setTimeout(() => {
     router.push({
       name: 'orderDetails',
       query: { order_no },
     })
-    // OrderInfoRef.value && OrderInfoRef.value.open(item)
   }, 100)
 }
-// const successOrder = () => {
-//   showPopupInfo.value = false
-//   // 获取列表数据
-//   store.commit('setC2cList', [])
-//   setTimeout(() => {
-//     init()
-//   }, 100)
-// }
-
 // 列表
 const loading = ref(false)
 const finish = ref(false)
@@ -138,26 +122,27 @@ const getData = isBottom => {
         loading.value = false
       }, 100)
       if (!isBottom) {
-        list.value = [...c2cLasttime.value, ...res.data]
+        list.value = res.data
       } else {
         list.value.push(...(res.data || []))
       }
+      subs()
 
       if (!res.data?.length) {
         finish.value = true
       }
 
-      setTimeout(() => {
-        const obj = {}
-        list.value.forEach(item => {
-          if (c2cLasttime.value[item.order_no]) {
-            obj[item.order_no] = c2cLasttime.value[item.order_no]
-          } else {
-            obj[item.order_no] = Date.now()
-          }
-        })
-        store.commit('setC2cLasttime', obj)
-      }, 0)
+      // setTimeout(() => {
+      //   const obj = {}
+      //   list.value.forEach(item => {
+      //     if (c2cLasttime.value[item.order_no]) {
+      //       obj[item.order_no] = c2cLasttime.value[item.order_no]
+      //     } else {
+      //       obj[item.order_no] = Date.now()
+      //     }
+      //   })
+      //   store.commit('setC2cLasttime', obj)
+      // }, 0)
     })
     .catch(() => {
       loading.value = false
@@ -167,55 +152,32 @@ const init = () => {
   page.value = 0
   loading.value = false
   finish.value = false
-  setTimeout(() => {
-    if (token.value) {
-      getData(false)
-    }
-  }, 0)
+  if (token.value) {
+    getData(false)
+  }
 }
 // 监听
-let moreDom = null
 const scrollHandle = bottom => {
-  if (!moreDom) return
   if (active.value !== '2') return
   // 加载更多
   if (bottom) getData(true)
 }
 
-// let interval = null
 const getC2cOrderInfo = async () => {
-  try {
-    const res = await _c2cOrderInfo({
-      order_no: onOrderNoValue.order_no,
-    })
-    if (!res.data) return
-    list.value.forEach((element, i) => {
-      if (element.order_no === onOrderNoValue.order_no) {
-        list.value[i] = res.data
-        onOrderNoValue = {}
-        throw new Error('break')
-      }
-    })
-  } finally {
-    //
-  }
+  const res = await _c2cOrderInfo({
+    order_no: onOrderNoValue.order_no,
+  })
+  if (!res.data) return
+  list.value.forEach((element, i) => {
+    if (element.order_no === onOrderNoValue.order_no) {
+      list.value[i] = res.data
+      onOrderNoValue = {}
+      throw new Error('break')
+    }
+  })
 }
 watch(() => scrollData.arrivedState.bottom, scrollHandle)
 init()
-onMounted(() => {
-  // interval = setInterval(() => {
-  //   list.value.forEach(item => {
-  //     if (item.endtime) {
-  //       item.endtime--
-  //     }
-  //   })
-  // }, 1000)
-  if (token.value) {
-    setTimeout(() => {
-      moreDom = document.querySelector('.buycoin_self')
-    }, 500)
-  }
-})
 
 onActivated(() => {
   if (active.value !== '2') return
@@ -223,10 +185,6 @@ onActivated(() => {
   if (status === 'waitpayment' || status === 'waitconfirm') {
     getC2cOrderInfo()
   }
-
-  setTimeout(() => {
-    moreDom = document.querySelector('.buycoin_self')
-  }, 500)
 })
 
 defineExpose({

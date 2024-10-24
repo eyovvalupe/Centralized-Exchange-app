@@ -30,9 +30,9 @@
             <div class="text-base text-[#061023]">{{ form.merchant_name }}</div>
           </div>
           <div class="mb-[0.2rem] flex pl-[0.62rem] text-xs leading-17 text-[#8f92a1]">
-            <span>{{ $t('成交量') }} {{ form.volume || '0' }}</span>
+            <span>{{ $t('成交量') }} {{ form.merchant_volume || '0' }}</span>
             <span class="px-[0.12rem]">|</span>
-            <span>{{ $t('成交率') }} {{ form.volumerate || '0' }}%</span>
+            <span>{{ $t('成交率') }} {{ form.merchant_volumerate || '0' }}%</span>
             <template v-if="form.merchant_avetime">
               <span class="px-[0.12rem]">|</span>
               <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
@@ -234,7 +234,7 @@ const goBack = () => {
     router.back()
     setTimeout(() => setScrollTop('2'), 300)
   } else {
-    router.back()
+    router.push('/market')
     onChange('2', false)
   }
 }

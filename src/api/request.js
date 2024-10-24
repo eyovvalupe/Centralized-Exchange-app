@@ -116,9 +116,6 @@ instance.interceptors.response.use(
         case '1003':
           newShowToast('您尚未绑定谷歌验证器。请前往个人中心绑定谷歌验证器后再次尝试。')
           break
-        default:
-          newShowToast('发生了未知错误。请稍后再试，或联系技术支持。')
-          break
       }
       if (custom.toast) {
         setTimeout(() => {

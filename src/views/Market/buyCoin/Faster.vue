@@ -236,7 +236,7 @@ const outWallet = computed(() => {
   // data = currencyList.value.filter(item => item.type == 'fiat')
   // } else {
   // eslint-disable-next-line prefer-const
-  data = wallet.value.filter(item => item.type == 'crypto')
+  data = currencyList.value.filter(item => item.type == 'crypto')
   // }
   return filterSearchValue(data)
 })

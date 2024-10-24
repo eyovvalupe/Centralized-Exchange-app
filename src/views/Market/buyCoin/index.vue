@@ -36,59 +36,15 @@ import Self from './Self.vue'
 import store from '@/store'
 import { useBuyCoinState } from './state'
 /* eslint-enable */
-const { startSocket } = useSocket()
-const token = computed(() => store.state.token)
 const scrollData = inject('scrollData')
 const positionValue = ref('relative')
 // 订阅
-const currLoading = ref(false)
 const buycoinScrollTop1 = useSessionStorage('buycoinScrollTop1')
 const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
 const { active, selfRef, listRef, onChange } = useBuyCoinState()
 
-const subs = () => {
-  const socket = startSocket(() => {
-    socket && socket.off('user')
-    socket && socket.off('c2corder')
-    socket && socket.emit('user', token.value)
-    socket && socket.emit('c2corder', '#all')
-    currLoading.value = true
-    store.commit('setC2cList', [])
-    socket.on(
-      'c2corder',
-      useThrottleFn(res => {
-        store.commit('setC2cList', res.data || [])
-        currLoading.value = false
-      }, 500)
-    )
-  })
-}
-// 取消订阅
-const cancelSubs = () => {
-  const socket = startSocket(() => {
-    socket && socket.off('user')
-    socket && socket.off('c2corder')
-    socket && socket.emit('user', '')
-    socket && socket.emit('c2corder', '')
-  })
-}
-
 const pageLoading = ref(true)
 
-// watch(
-//   () => active.value,
-//   newValue => {
-//     if (newValue !== active2) onChange(active.value)
-//   }
-// )
-watch(
-  () => store.state.bottomTabBarValue,
-  newValue => {
-    if (newValue === 'market') {
-      onChange(active.value)
-    }
-  }
-)
 watch(
   () => scrollData.y.value,
   (val, oldVal) => {
@@ -117,14 +73,10 @@ onMounted(() => {
   setTimeout(() => {
     pageLoading.value = false
   }, 300)
-  if (token.value) {
-    subs()
-  }
 })
 onUnmounted(() => {
   buycoinScrollTop1.value = null
   buycoinScrollTop2.value = null
-  cancelSubs()
 })
 </script>
 

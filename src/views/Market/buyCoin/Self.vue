@@ -38,12 +38,14 @@
           <div class="top_content">
             <div class="name">{{ item.merchant }}</div>
             <div class="info">
-              <span>{{ $t('成交量') }} {{ item.volume }}</span>
+              <span>{{ $t('成交量') }} {{ item.volume || '0' }}</span>
               <span>|</span>
-              <span>{{ $t('成交率') }} {{ item.volumerate }}%</span>
-              <span>|</span>
-              <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
-              <span>{{ item.avetime }}{{ $t('分钟') }}</span>
+              <span>{{ $t('成交率') }} {{ item.volumerate || '0' }}%</span>
+              <template v-if="item.avetime">
+                <span>|</span>
+                <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
+                <span>{{ item.avetime }}{{ $t('分钟') }}</span>
+              </template>
             </div>
           </div>
         </div>
@@ -53,7 +55,7 @@
               {{ item.price }}
               <span class="text-12 font-normal">{{ currCurrency.name }}</span>
             </div>
-            <div class="text-14 text-[#8F92A1]">订单限额&nbsp;{{ item.limitmin }}-{{ item.limitmax }}</div>
+            <div class="text-14 text-[#8F92A1]">订单限额&nbsp;{{ item.limitmin || '0' }}-{{ item.limitmax || '0' }}</div>
           </div>
           <div v-if="token" class="btn" @click="goBuy(item)">{{ offset == 'buy' ? t('购买') : t('出售') }}</div>
         </div>
@@ -83,12 +85,12 @@
   </Popup>
 
   <!-- 订单弹窗 -->
-  <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
+  <!-- <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
     <div class="buycoin_orderinfo_dialog">
       <div class="orderinfo_dialog_title">{{ $t('订单详情') }}</div>
       <OrderInfo />
     </div>
-  </Popup>
+  </Popup> -->
 
   <!-- 法币币种 -->
   <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
@@ -159,7 +161,6 @@
 <script setup>
 import { Popup, Icon, showToast, showConfirmDialog, Tabs, Tab } from 'vant'
 import Decimal from 'decimal.js'
-import OrderInfo from './OrderInfo.vue'
 import NoData from '@/components/NoData.vue'
 import LoadingMore from '@/components/LoadingMore.vue'
 import { _adList, _buysell } from '@/api/api'
@@ -176,7 +177,6 @@ const { active, handleUrl } = useBuyCoinState()
 const scrollData = inject('scrollData')
 const { t } = useI18n()
 const safeRef = ref()
-const showPopupInfo = ref(false)
 const showDialog = ref(false)
 const showDialog2 = ref(false)
 const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
@@ -211,8 +211,6 @@ const list = ref([])
 const showAccountDialog = ref(false)
 const currAccount = ref({})
 // 监听
-const totalHeight = window.innerHeight || document.documentElement.clientHeight
-let moreDom = null
 try {
   list.value = JSON.parse(sessionStorage.getItem('deal_list') || '[]')
   currCrypto.value = JSON.parse(sessionStorage.getItem('buycoin_currCrypto') || '{}')
@@ -230,7 +228,6 @@ const clickItem = item => {
 }
 const clickCrypto = item => {
   currCrypto.value = item
-  // currCurrency.value = item
   showDialog2.value = false
   list.value = []
   init()
@@ -345,13 +342,9 @@ const init = () => {
   setTimeout(() => {
     getData()
   }, 0)
-  setTimeout(() => {
-    moreDom = document.querySelector('.buycoin_buss')
-  }, 500)
 }
 
 const scrollHandle = bottom => {
-  if (!moreDom) return
   if (active.value !== '1') return
   // 加载更多
   if (bottom) getData()
@@ -360,7 +353,6 @@ watch(() => scrollData.arrivedState.bottom, scrollHandle)
 
 onActivated(() => {
   setTimeout(() => {
-    moreDom = document.querySelector('.buycoin_buss')
     if (active.value !== '1') return
     nextTick(() => {
       const page2 = document.querySelector('.page')
@@ -370,9 +362,6 @@ onActivated(() => {
 })
 onMounted(() => {
   init()
-  setTimeout(() => {
-    moreDom = document.querySelector('.buycoin_buss')
-  }, 500)
 })
 
 const clickAccountItem = item => {
