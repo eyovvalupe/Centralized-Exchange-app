@@ -14,11 +14,13 @@
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'us'"
             :data="usData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('us')"
+            @update="update('us')"
           />
         </div>
       </Tab>
@@ -26,35 +28,41 @@
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'india'"
             :data="indiaData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('india')"
+            @update="update('india')"
           />
         </div>
       </Tab>
-      <Tab title="日本" name="2">
+      <Tab title="日本" name="3">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'japan'"
             :data="japanData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('japan')"
+            @update="update('japan')"
           />
         </div>
       </Tab>
-      <Tab title="韩国" name="3">
+      <Tab title="韩国" name="4">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'korea'"
             :data="koreaData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('korea')"
+            @update="update('korea')"
           />
         </div>
       </Tab>
@@ -82,21 +90,33 @@ const koreaData = computed(() => store.state.marketStockKoreaData);
 const onChange = async (val) => {
   active.value = val;
   sessionStorage.setItem("trade_stock_tab", val);
-  if (region[val] == "us" && !usData) {
+  if (region[val] == "us") {
     getData(region[val]);
   }
-  if (region[val] == "india" && !indiaData) {
+  if (region[val] == "japan") {
+    getData(region[val]);
+  }
+  if (region[val] == "korea") {
+    getData(region[val]);
+  }
+  if (region[val] == "india") {
     getData(region[val]);
   }
 };
-
+const update = (region) => {
+  store.commit("setMarketCountryStockList", []);
+  getData(region);
+};
 const pageLoading = ref(true);
 
 onMounted(() => {
   setTimeout(() => {
     pageLoading.value = false;
     setTimeout(() => {
-      onChange(active.value);
+      getData("us");
+      getData("india");
+      getData("japan");
+      getData("korea");
     }, 300);
   }, 300);
 });
@@ -107,8 +127,24 @@ const region = {
   2: "japan",
   3: "korea",
 };
-
+const marketCountryStockList = computed(
+  () => store.state.marketCountryStockList || []
+);
+const marketDownList = computed(() => store.state.marketDownList || []);
+const marketUpList = computed(() => store.state.marketUpList || []);
+const marketVolumeList = computed(() => store.state.markVolumeList || []);
+const subs = (arr) => {
+  store.commit(
+    "setMarketWatchKeys",
+    arr.map((item) => item.symbol || "")
+  );
+  store.dispatch("subList", {});
+};
 const getData = (region) => {
+  if (marketCountryStockList.value.length > 0) {
+    pageLoading.value = false;
+    return;
+  }
   pageLoading.value = true;
   _recommend({
     market: region,
@@ -123,6 +159,22 @@ const getData = (region) => {
         stock: res.data.index,
       };
       store.commit("setCurrentRecommenData", data);
+
+      const arr = res.data.index.map((item) => {
+        const target = marketCountryStockList.value.find(
+          (a) => a.symbol == item.symbol
+        );
+        return target || item;
+      });
+      store.commit("setMarketCountryStockList", arr);
+      setTimeout(() => {
+        subs([
+          ...arr,
+          ...marketDownList.value,
+          ...marketUpList.value,
+          ...marketVolumeList.value,
+        ]);
+      }, 300);
 
       if (region == "us") {
         store.commit("setMarketStockUsData", data);
@@ -177,6 +229,9 @@ function formatDate(date) {
           font-size: 0.32rem;
           line-height: 0.5rem;
         }
+      }
+      .van-tab--active {
+        padding: 0;
       }
     }
   }

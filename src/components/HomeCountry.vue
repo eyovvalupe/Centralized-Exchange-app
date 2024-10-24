@@ -9,17 +9,18 @@
       :color="'#014CFA'"
       shrink
       @change="onChange"
-      class="tabs"
     >
       <Tab title="美股" name="0">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <HomeStockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'us'"
             :data="usData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('us')"
+            @update="update('us')"
           />
         </div>
       </Tab>
@@ -27,11 +28,13 @@
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <HomeStockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'india'"
             :data="indiaData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('india')"
+            @update="update('india')"
           />
         </div>
       </Tab>
@@ -39,11 +42,13 @@
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <HomeStockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'japan'"
             :data="japanData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('japan')"
+            @update="update('japan')"
           />
         </div>
       </Tab>
@@ -51,11 +56,13 @@
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <HomeStockDescription
+            v-if="marketCountryStockList.length"
+            :list="marketCountryStockList"
             :region="'korea'"
             :data="koreaData"
             :loading="pageLoading"
             :active="active"
-            @update="getData('korea')"
+            @update="update('korea')"
           />
         </div>
       </Tab>
@@ -69,13 +76,9 @@ import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { _recommend } from "@/api/api";
 import store from "@/store";
 import Loading from "@/components/Loaidng.vue";
-import LoadingMore from "@/components/LoadingMore.vue";
-import StockDescription from "@/components/StockDescription.vue";
 import HomeStockDescription from "@/components/HomeStockDescription";
 
 const active = ref(sessionStorage.getItem("trade_stock_tab") || 0);
-const currentData = computed(() => store.state.currentRecommendData);
-const checkStockList = computed(() => store.state.marketVolumeList);
 const usData = computed(() => store.state.marketStockUsData);
 const indiaData = computed(() => store.state.marketStockIndiaData);
 const japanData = computed(() => store.state.marketStockJapanData);
@@ -84,33 +87,57 @@ const koreaData = computed(() => store.state.marketStockKoreaData);
 const onChange = async (val) => {
   active.value = val;
   sessionStorage.setItem("trade_stock_tab", val);
-  if (region[val] == "us" && !usData) {
+  if (region[val] == "us") {
     getData(region[val]);
   }
-  if (region[val] == "india" && !indiaData) {
+  if (region[val] == "japan") {
+    getData(region[val]);
+  }
+  if (region[val] == "korea") {
     getData(region[val]);
   }
 };
-
+const update = (region) => {
+  store.commit("setMarketCountryStockList", []);
+  getData(region);
+};
 const pageLoading = ref(true);
 
 onMounted(() => {
   setTimeout(() => {
     pageLoading.value = false;
     setTimeout(() => {
-      onChange(active.value);
+      getData("us");
+      getData("japan");
+      getData("korea");
     }, 300);
   }, 300);
 });
 
 const region = {
   0: "us",
-  1: "india",
-  2: "japan",
-  3: "korea",
+  // 1: "india",
+  1: "japan",
+  2: "korea",
 };
-
+const marketCountryStockList = computed(
+  () => store.state.marketCountryStockList || []
+);
+const marketDownList = computed(() => store.state.marketDownList || []);
+const marketUpList = computed(() => store.state.marketUpList || []);
+const marketVolumeList = computed(() => store.state.markVolumeList || []);
+const subs = (arr) => {
+  store.commit(
+    "setMarketWatchKeys",
+    arr.map((item) => item.symbol || "")
+  );
+  store.dispatch("subList", {});
+};
 const getData = (region) => {
+  if (marketCountryStockList.value.length > 0) {
+    pageLoading.value = false;
+    return;
+  }
   pageLoading.value = true;
   _recommend({
     market: region,
@@ -119,12 +146,25 @@ const getData = (region) => {
     .then((res) => {
       const data = {
         region,
-        currentts: formatDate(new Date(res.data.currentts)),
-        closets: formatDate(new Date(res.data.closets)),
-        updated: formatDate(new Date()),
         stock: res.data.index,
       };
       store.commit("setCurrentRecommenData", data);
+
+      const arr = res.data.index.map((item) => {
+        const target = marketCountryStockList.value.find(
+          (a) => a.symbol == item.symbol
+        );
+        return target || item;
+      });
+      store.commit("setMarketCountryStockList", arr);
+      setTimeout(() => {
+        subs([
+          ...arr,
+          ...marketDownList.value,
+          ...marketUpList.value,
+          ...marketVolumeList.value,
+        ]);
+      }, 300);
 
       if (region == "us") {
         store.commit("setMarketStockUsData", data);
@@ -141,17 +181,6 @@ const getData = (region) => {
       pageLoading.value = false;
     });
 };
-
-function formatDate(date) {
-  const year = String(date.getFullYear()).slice(-2);
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-
-  return `${month}/${day} ${hours}:${minutes}:${seconds}`;
-}
 </script>
 
 <style lang="less" scoped>

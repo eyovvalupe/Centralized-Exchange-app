@@ -1,177 +1,127 @@
 <template>
-    <div class="stock_description" v-show="!loading">
-      <div class="flex flex-row justify-between">
-        <div
-          :class="marketCountryStockList[0].ratio > 0 ? 'up_price' : 'down_price'"
-          class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
-        >
-          <span class="text-[0.24rem] text-[#061023]">{{
-            props.data.stock[0]["symbol"]
-          }}</span>
-          <span class="stock_price">{{ marketCountryStockList[0].amount }}</span>
-          <div class="flex flex-row justify-center stock_detail">
-            <span
-              >{{ marketCountryStockList[0].ratio > 0 ? "+" : ""
-              }}{{
-                ((marketCountryStockList[0].ratio || 0) * 100).toFixed(2)
-              }}%</span
-            >
-          </div>
+  <div
+    class="stock_description"
+    v-show="!loading && list.length > 0"
+  >
+    <div class="flex flex-row justify-between">
+      <div
+        :class="list[0].ratio > 0 ? 'up_price' : 'down_price'"
+        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
+      >
+        <span class="text-[0.24rem] text-[#061023]">{{
+          list[0]["symbol"]
+        }}</span>
+        <span class="stock_price">{{ list[0].amount }}</span>
+        <div class="flex flex-row justify-center stock_detail">
+          <span
+            >{{ list[0].ratio > 0 ? "+" : ""
+            }}{{
+              ((list[0].ratio || 0) * 100).toFixed(2)
+            }}%</span
+          >
         </div>
-        <div
-          :class="marketCountryStockList[1].ratio > 0 ? 'up_price' : 'down_price'"
-          class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
-        >
-          <span class="text-[0.24rem] text-[#061023]">{{
-            props.data.stock[1]["symbol"]
-          }}</span>
-          <span class="stock_price">{{ marketCountryStockList[1].amount }}</span>
-          <div class="flex flex-row justify-center stock_detail">
-            <span
-              >{{ marketCountryStockList[1].ratio > 0 ? "+" : ""
-              }}{{
-                ((marketCountryStockList[1].ratio || 0) * 100).toFixed(2)
-              }}%</span
-            >
-          </div>
+      </div>
+      <div
+        :class="list[1].ratio > 0 ? 'up_price' : 'down_price'"
+        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
+      >
+        <span class="text-[0.24rem] text-[#061023]">{{
+          list[1]["symbol"]
+        }}</span>
+        <span class="stock_price">{{ list[1].amount }}</span>
+        <div class="flex flex-row justify-center stock_detail">
+          <span
+            >{{ list[1].ratio > 0 ? "+" : ""
+            }}{{
+              ((list[1].ratio || 0) * 100).toFixed(2)
+            }}%</span
+          >
         </div>
-        <div
-          :class="marketCountryStockList[2].ratio > 0 ? 'up_price' : 'down_price'"
-          class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.1rem] pr-[0.1rem]"
-        >
-          <span class="text-[0.24rem] text-[#061023]">{{
-            props.data.stock[2]["symbol"]
-          }}</span>
-          <span class="stock_price">{{ marketCountryStockList[2].amount }}</span>
-          <div class="flex flex-row justify-center stock_detail">
-            <span
-              >{{ marketCountryStockList[2].ratio > 0 ? "+" : ""
-              }}{{
-                ((marketCountryStockList[2].ratio || 0) * 100).toFixed(2)
-              }}%</span
-            >
-          </div>
+      </div>
+      <div
+        :class="list[2].ratio > 0 ? 'up_price' : 'down_price'"
+        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
+      >
+        <span class="text-[0.24rem] text-[#061023]">{{
+          list[2]["symbol"]
+        }}</span>
+        <span class="stock_price">{{ list[2].amount }}</span>
+        <div class="flex flex-row justify-center stock_detail">
+          <span
+            >{{ list[2].ratio > 0 ? "+" : ""
+            }}{{
+              ((list[2].ratio || 0) * 100).toFixed(2)
+            }}%</span
+          >
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import store from "@/store";
-  import { computed, watch } from "vue";
-  const emits = defineEmits(["update"]);
-  const update = () => {
-    emits("update");
-  };
-  
-  const props = defineProps({
-    region: {
-      type: String,
-      default: "",
-    },
-    data: {
-      type: Object,
-      default: {},
-    },
-    loading: {
-      type: Boolean,
-      default: true,
-    },
-    active: {
-      type: String,
-      default: 0,
-    },
-  });
-  const marketCountryStockList = computed(
-    () => store.state.marketCountryStockList || []
-  );
-  const marketDownList = computed(() => store.state.marketDownList || []);
-  const marketUpList = computed(() => store.state.marketUpList || []);
-  const marketVolumeList = computed(() => store.state.markVolumeList || []);
-  const subs = (arr) => {
-    store.commit(
-      "setMarketWatchKeys",
-      arr.map((item) => item.symbol || "")
-    );
-    store.dispatch("subList", {});
-  };
-  
-  const getData = () => {
-    const arr = props.data.stock.map((item) => {
-      const target = marketCountryStockList.value.find(
-        (a) => a.symbol == item.symbol
-      );
-      return target || item;
-    });
-    store.commit("setMarketCountryStockList", arr);
-    setTimeout(() => {
-      subs([
-        ...arr,
-        ...marketDownList.value,
-        ...marketUpList.value,
-        ...marketVolumeList.value,
-      ]);
-    }, 300);
-  };
-  getData();
-  watch(
-    () => props.active,
-    () => {
-      getData();
+  </div>
+</template>
+
+<script setup>
+import store from "@/store";
+import { computed, watch } from "vue";
+
+const props = defineProps({
+  region: {
+    type: String,
+    default: "",
+  },
+  data: {
+    type: Object,
+    default: {},
+  },
+  loading: {
+    type: Boolean,
+    default: true,
+  },
+  active: {
+    type: String,
+    default: 0,
+  },
+  list: {
+    type: Array,
+    default: []
+  }
+});
+</script>
+
+<style lang="less" scoped>
+.stock_description {
+
+  .up_price {
+    background-image: linear-gradient(to bottom, #ffffff, #e4f6ed);
+
+    .stock_price {
+      font-size: 0.28rem;
+      font-weight: 600;
+      color: #18b762;
     }
-  );
-  </script>
-  
-  <style lang="less" scoped>
-  .stock_description {
-    // padding: 0 0.32rem;
-    // margin-top: 0.34rem;
-    display: flex;
-    flex-direction: column;
-  
-    .re_render {
-      width: 0.24rem;
-      height: 0.24rem;
-      margin-left: 0.12rem;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path d="M11.25 4.87489V2.24989L10.3939 3.10601C9.91589 2.38181 9.26575 1.78747 8.50169 1.37622C7.73762 0.96496 6.88347 0.74963 6.01576 0.749512C3.11626 0.749512 0.765381 3.10001 0.765381 5.99989C0.765381 8.89976 3.11626 11.2503 6.01576 11.2503C7.06067 11.2505 8.08189 10.9389 8.94873 10.3554C9.81558 9.77198 10.4886 8.94315 10.8818 7.97501C10.9267 7.86447 10.9258 7.74061 10.8794 7.63069C10.833 7.52077 10.7448 7.43379 10.6343 7.38889C10.5795 7.36665 10.5209 7.35542 10.4619 7.35582C10.4028 7.35623 10.3444 7.36826 10.2899 7.39125C10.18 7.43766 10.093 7.52584 10.0481 7.63639C9.72223 8.43857 9.16445 9.1253 8.44613 9.60874C7.72781 10.0922 6.88161 10.3504 6.01576 10.3503C3.61313 10.3503 1.66538 8.40251 1.66538 5.99989C1.66538 3.59726 3.61313 1.64951 6.01576 1.64951C7.56788 1.64951 8.96813 2.47076 9.74251 3.75701L8.62501 4.87489H11.25Z" fill="%23014CFA"/></svg>');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-  
-    .up_price {
-      background-image: linear-gradient(to bottom, #ffffff, #e4f6ed);
-  
-      .stock_price {
-        font-size: 0.28rem;
-        font-weight: 600;
-        color: #18b762;
-      }
-  
-      .stock_detail {
-        width: 100%;
-        font-size: 0.22rem;
-        font-weight: 400;
-        color: #18b762;
-      }
-    }
-  
-    .down_price {
-      background-image: linear-gradient(to bottom, #ffffff, #f4e7e5);
-  
-      .stock_price {
-        font-size: 0.28rem;
-        font-weight: 600;
-        color: #e8503a;
-      }
-  
-      .stock_detail {
-        width: 100%;
-        font-size: 0.22rem;
-        font-weight: 400;
-        color: #e8503a;
-      }
+
+    .stock_detail {
+      width: 100%;
+      font-size: 0.22rem;
+      font-weight: 400;
+      color: #18b762;
     }
   }
-  </style>
-  
+
+  .down_price {
+    background-image: linear-gradient(to bottom, #ffffff, #f4e7e5);
+
+    .stock_price {
+      font-size: 0.28rem;
+      font-weight: 600;
+      color: #e8503a;
+    }
+
+    .stock_detail {
+      width: 100%;
+      font-size: 0.22rem;
+      font-weight: 400;
+      color: #e8503a;
+    }
+  }
+}
+</style>

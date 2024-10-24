@@ -39,7 +39,7 @@
                 <div class="item_info" :class="{'item_info_nobb':item.status != 'issuing' && item.status != 'listed'}">
                     <div class="info_cell">
                         <span class="info_name">认购价格</span>
-                        <span class="info_price">{{ item.issue_price_max }}</span>
+                        <span class="info_price">${{ item.issue_price_max }}</span>
                     </div>
                     <div class="info_cell" v-if="item.lever > 1">
                         <span class="info_name">认购杠杆</span>
@@ -60,7 +60,7 @@
                     </div>
                     
                 </div>
-                <div class="control_box" v-if="item.status == 'issuing' || item.status == 'listed'">
+                <div class="control_box" v-if="(item.status == 'issuing' || item.status == 'listed') && props.page !='home'">
                     <div class="btn"
                         @click.stop="goBuy(item)">认购</div>
                 </div>
@@ -195,8 +195,13 @@ const getData = () => {
     }
     _ipoList(par).then(res => {
         if (res.data && res.data.length) {
+            console.log("ipoData===============>", res.data);
             res.data = res.data.map(item => {
-                item._timedown = countdown(item.listing_date)
+                item._timedown = countdown(item.listing_date);
+                item.issue_end_date = item.issue_end_date.replaceAll("-", "/");
+                item.listing_date = item.listing_date.replaceAll("-", "/");
+                item.issue_start_date = item.issue_start_date.replaceAll("-", "/")
+                console.log(item.issue_end_date,)
                 return item
             })
             if (page.value == 1) {
@@ -456,9 +461,12 @@ function countdown(endTime) {
                     font-size: 0.3rem;
                     font-weight: 600;
                 }
+
+                
             }
         }
     }
+    
 }
 
 .market_ipo-popup {
