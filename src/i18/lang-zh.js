@@ -22,6 +22,17 @@ export default {
         enterCurrency:"输入币种",
         networkSelection:"网络选择"
     },
+    withdraw:{
+        recharge:"充值",
+        rechargeRecord:"充值记录",
+        cryptocurrency:"加密货币",
+        bankCard:"银行卡",
+        currency:"币种",
+        network:"网络",
+        confirm:"确定",
+        currencySelection:"币种选择",
+        searchPlaceholder:"搜索",
+    },
     recharging:{
         recharge:"充值",
         countdown:"充值倒计时",

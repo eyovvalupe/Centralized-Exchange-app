@@ -19,6 +19,17 @@ export default {
         searchPlaceholder:"Enter currency",
         networkSelection:"Network selection"
     },
+    withdraw:{
+        recharge:"Recharge",
+        rechargeRecord:"recharge record",
+        cryptocurrency:"crypto currency",
+        bankCard:"bank card",
+        currency:"currency",
+        network:"network",
+        confirm:"confirm",
+        currencySelection:"Currency selection",
+        searchPlaceholder:"Enter currency",
+    },
     recharging:{
         recharge:"Recharge",
         countdown:"countdown",

@@ -337,6 +337,7 @@ const copyPrice = () => {
             box-sizing: border-box;
             position: relative;
             border-radius: 0.3rem;
+            overflow: hidden;
 
             .timeout_box {
                 width: 100%;
@@ -350,7 +351,7 @@ const copyPrice = () => {
                 top: 0;
                 left: 0;
                 background-color: rgba(255, 255, 255, 0.8);
-
+                backdrop-filter: blur(3px);
                 .warning_icon {
                     width: 1rem;
                     height: 1rem;
