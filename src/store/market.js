@@ -7,7 +7,7 @@ const { startSocket } = useSocket()
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList','marketVolumeList', 'marketUpList', 'marketDownList', 'marketCountryStockList'],
-    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList', 'marketAiList', 'marketAiHisList', 'marketAi24List', 'marketAiGridList', 'marketCountryStockList'],
+    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList', 'marketAiList', 'marketAiHisList', 'marketAi24List', 'marketAiGridList', 'marketCountryStockList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList'],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
 }
 
@@ -55,9 +55,30 @@ export default {
         marketStockKoreaData: {}, //当前选择的美区数据内容
         marketCountryStockList: [], //选择的区域股票列表
         marketRecommendStockList: [], //股票推荐列表
+        marketStockUsDataList: [],
+        marketStockIndiaDataList: [],
+        marketStockJapanDataList: [],
+        marketStockKoreaDataList: [],
+
+        graphColorGradient: false,
 
     },
     mutations: {
+        setMarketStockUsDataList(state, data) {
+            state.marketStockUsDataList = data
+        },
+        setMarketStockIndiaDataList(state, data) {
+            state.marketStockIndiaDataList = data
+        },
+        setMarketStockJapanDataList(state, data) {
+            state.marketStockJapanDataList = data
+        },
+        setMarketStockKoreaDataList(state, data) {
+            state.marketStockKoreaDataList = data
+        },
+        setGraphColorGradient(state, data) {
+            state.graphColorGradient = data
+        },
         setMarketRecommendStockList(state, data) {
             state.marketRecommendStockList = data
         },

@@ -14,8 +14,8 @@
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
-            v-if="marketCountryStockList.length"
-            :list="marketCountryStockList"
+            v-if="marketStockUsDataList.length"
+            :list="marketStockUsDataList"
             :region="'us'"
             :data="usData"
             :loading="pageLoading"
@@ -28,8 +28,8 @@
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
-            v-if="marketCountryStockList.length"
-            :list="marketCountryStockList"
+            v-if="marketStockIndiaDataList.length"
+            :list="marketStockIndiaDataList"
             :region="'india'"
             :data="indiaData"
             :loading="pageLoading"
@@ -38,12 +38,12 @@
           />
         </div>
       </Tab>
-      <Tab title="日本" name="3">
+      <Tab title="日本" name="2">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
-            v-if="marketCountryStockList.length"
-            :list="marketCountryStockList"
+            v-if="marketStockJapanDataList.length"
+            :list="marketStockJapanDataList"
             :region="'japan'"
             :data="japanData"
             :loading="pageLoading"
@@ -52,12 +52,12 @@
           />
         </div>
       </Tab>
-      <Tab title="韩国" name="4">
+      <Tab title="韩国" name="3">
         <div class="stock_tab-body">
           <Loading :loading="pageLoading" />
           <StockDescription
-            v-if="marketCountryStockList.length"
-            :list="marketCountryStockList"
+            v-if="marketStockKoreaDataList.length"
+            :list="marketStockKoreaDataList"
             :region="'korea'"
             :data="koreaData"
             :loading="pageLoading"
@@ -90,21 +90,13 @@ const koreaData = computed(() => store.state.marketStockKoreaData);
 const onChange = async (val) => {
   active.value = val;
   sessionStorage.setItem("trade_stock_tab", val);
-  if (region[val] == "us") {
-    getData(region[val]);
-  }
-  if (region[val] == "japan") {
-    getData(region[val]);
-  }
-  if (region[val] == "korea") {
-    getData(region[val]);
-  }
-  if (region[val] == "india") {
-    getData(region[val]);
-  }
+  getData(region[val]);
 };
 const update = (region) => {
-  store.commit("setMarketCountryStockList", []);
+  if (region == 'us') store.commit("setMarketStockUsDataList", [])
+  if (region == 'india') store.commit("setMarketStockIndiaDataList", [])
+  if (region == 'japan') store.commit("setMarketStockJapanDataList", [])
+  if (region == 'korea') store.commit("setMarketStockKoreaDataList", [])
   getData(region);
 };
 const pageLoading = ref(true);
@@ -127,9 +119,20 @@ const region = {
   2: "japan",
   3: "korea",
 };
-const marketCountryStockList = computed(
-  () => store.state.marketCountryStockList || []
+
+const marketStockUsDataList = computed(
+  () => store.state.marketStockUsDataList || []
 );
+const marketStockIndiaDataList = computed(
+  () => store.state.marketStockIndiaDataList || []
+);
+const marketStockJapanDataList = computed(
+  () => store.state.marketStockJapanDataList || []
+);
+const marketStockKoreaDataList = computed(
+  () => store.state.marketStockKoreaDataList || []
+);
+
 const marketDownList = computed(() => store.state.marketDownList || []);
 const marketUpList = computed(() => store.state.marketUpList || []);
 const marketVolumeList = computed(() => store.state.markVolumeList || []);
@@ -141,7 +144,19 @@ const subs = (arr) => {
   store.dispatch("subList", {});
 };
 const getData = (region) => {
-  if (marketCountryStockList.value.length > 0) {
+  if (region == 'us' && marketStockUsDataList.value.length > 0) {
+    pageLoading.value = false;
+    return;
+  }
+  if (region == 'india' && marketStockIndiaDataList.value.length > 0) {
+    pageLoading.value = false;
+    return;
+  }
+  if (region == 'japan' && marketStockJapanDataList.value.length > 0) {
+    pageLoading.value = false;
+    return;
+  }
+  if (region == 'korea' && marketStockKoreaDataList.value.length > 0) {
     pageLoading.value = false;
     return;
   }
@@ -158,18 +173,55 @@ const getData = (region) => {
         updated: formatDate(new Date()),
         stock: res.data.index,
       };
-      store.commit("setCurrentRecommenData", data);
+      // store.commit("setCurrentRecommenData", data);
+      if (region == "us") {
+        store.commit("setMarketStockUsData", data);
+        const usArr = res.data.index.map((item) => {
+          const target = marketStockUsDataList.value.find(
+            (a) => a.symbol == item.symbol
+          );
+          return target || item;
+        });
+        store.commit("setMarketStockUsDataList", usArr)
+      }
+      if (region == "india") {
+        store.commit("setMarketStockIndiaData", data);
+        const indiaArr = res.data.index.map((item) => {
+          const target = marketStockIndiaDataList.value.find(
+            (a) => a.symbol == item.symbol
+          );
+          return target || item;
+        });
+        store.commit("setMarketStockIndiaDataList", indiaArr)
+      }
+      if (region == "japan") {
+        store.commit("setMarketStockJapanData", data);
+        const japanArr = res.data.index.map((item) => {
+          const target = marketStockJapanDataList.value.find(
+            (a) => a.symbol == item.symbol
+          );
+          return target || item;
+        });
+        store.commit("setMarketStockJapanDataList", japanArr)
+      }
+      if (region == "korea") {
+        store.commit("setMarketStockKoreaData", data);
+        const koreaArr = res.data.index.map((item) => {
+          const target = marketStockKoreaDataList.value.find(
+            (a) => a.symbol == item.symbol
+          );
+          return target || item;
+        });
+        store.commit("setMarketStockKoreaDataList", koreaArr)
+      }
 
-      const arr = res.data.index.map((item) => {
-        const target = marketCountryStockList.value.find(
-          (a) => a.symbol == item.symbol
-        );
-        return target || item;
-      });
-      store.commit("setMarketCountryStockList", arr);
+      // store.commit("setMarketCountryStockList", arr);
       setTimeout(() => {
         subs([
-          ...arr,
+          ...marketStockUsDataList.value,
+          ...marketStockIndiaDataList.value,
+          ...marketStockJapanDataList.value,
+          ...marketStockKoreaDataList.value,
           ...marketDownList.value,
           ...marketUpList.value,
           ...marketVolumeList.value,
