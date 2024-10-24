@@ -33,7 +33,7 @@
           :points="marketCountryStockList[0].points"
           :ratio="marketCountryStockList[0].ratio"
           :style="'width: 100%; height: 0.5rem'"
-          xtimes="1.5"
+          :xtimes="1.6"
         />
       </div>
       <div
@@ -57,7 +57,7 @@
           :points="marketCountryStockList[1].points"
           :ratio="marketCountryStockList[1].ratio"
           :style="'width: 2.2rem; height: 0.5rem'"
-          xtimes="1.5"
+          :xtimes="1.6"
         />
       </div>
       <div
@@ -81,7 +81,7 @@
           :points="marketCountryStockList[2].points"
           :ratio="marketCountryStockList[2].ratio"
           :style="'width: 2.2rem; height: 0.5rem'"
-          xtimes="1.5"
+          :xtimes="1.6"
         />
       </div>
     </div>

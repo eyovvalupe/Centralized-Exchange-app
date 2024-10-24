@@ -20,7 +20,6 @@
             :data="usData"
             :loading="pageLoading"
             :active="active"
-            @update="update('us')"
           />
         </div>
       </Tab>
@@ -34,7 +33,6 @@
             :data="indiaData"
             :loading="pageLoading"
             :active="active"
-            @update="update('india')"
           />
         </div>
       </Tab>
@@ -48,7 +46,6 @@
             :data="japanData"
             :loading="pageLoading"
             :active="active"
-            @update="update('japan')"
           />
         </div>
       </Tab>
@@ -62,7 +59,6 @@
             :data="koreaData"
             :loading="pageLoading"
             :active="active"
-            @update="update('korea')"
           />
         </div>
       </Tab>
@@ -92,13 +88,7 @@ const onChange = async (val) => {
   sessionStorage.setItem("trade_stock_tab", val);
   getData(region[val]);
 };
-const update = (region) => {
-  if (region == 'us') store.commit("setMarketStockUsDataList", [])
-  if (region == 'india') store.commit("setMarketStockIndiaDataList", [])
-  if (region == 'japan') store.commit("setMarketStockJapanDataList", [])
-  if (region == 'korea') store.commit("setMarketStockKoreaDataList", [])
-  getData(region);
-};
+
 const pageLoading = ref(true);
 
 onMounted(() => {
