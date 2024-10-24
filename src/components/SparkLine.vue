@@ -43,6 +43,10 @@ const props = defineProps({
     ytimes: {
         type: Number,
         default: 1
+    },
+    height : {
+        type: Number,
+        default: 30,
     }
 })
 
@@ -63,9 +67,9 @@ const shadowPoints = computed(() => {
     const points = newPoints.value.split(' ').map(point => point.split(','));
     // 获取 SVG 的高度
     lineWidth.value = parseFloat(points[points.length-1][0]) - parseFloat(points[0][0]) ; 
-    const svgHeight = root.value ? root.value.clientHeight : 50;
+    // const svgHeight = root.value ? root.value.clientHeight : 50;
     // 构建 shadowPoints，多边形覆盖 polyline 并扩展到底部
-    const shadowPoints = points.map(p => p.join(',')).join(' ') + ` ${points[points.length - 1][0]},${svgHeight} ${points[0][0]},${svgHeight}`;
+    const shadowPoints = points.map(p => p.join(',')).join(' ') + ` ${points[points.length - 1][0]},${props.height*props.ytimes} ${points[0][0]},${props.height*props.ytimes}`;
     return shadowPoints;
 })
 

@@ -1,8 +1,6 @@
 <!-- 自选 -->
 <template>
     <div
-      v-if="!watchList.length && !loading"
-      style="position: relative; margin-bottom: 1rem"
     >
       <Loaidng
         v-if="
@@ -21,7 +19,6 @@
             :loading="recommendLoading"
             :newState="newState"
             :flag="flag"
-            @change="changeStockList"
             @init="init"
             :list="marketSrockRecommendList"
           />
@@ -34,7 +31,6 @@
             :loading="recommendLoading"
             :newState="newState"
             :flag="flag"
-            @change="changeContractList"
             @init="init"
             :list="marketContractRecommendList"
           />
@@ -49,79 +45,77 @@
   import router from "@/router";
   import store from "@/store";
   import { computed, onMounted, ref, watch } from "vue";
-  import { _watchlist, _del, _watchlistDefault, _add } from "@/api/api";
+  import { _watchlist, _watchlistDefault, _add } from "@/api/api";
   import {
-    showLoadingToast,
-    closeToast,
-    showToast,
-  } from "vant";
-  import { useSocket } from "@/utils/ws";
-  const { startSocket } = useSocket();
+  showLoadingToast,
+  closeToast,
+  showToast,
+  Tabs,
+  Tab,
+  Button,
+} from "vant";
   
-  const watchList = computed(() => store.state.marketWatchList || []);
-  
-  const token = computed(() => store.state.token || "");
-  const loading = ref(true);
-  const subs = () => {
-    // 订阅 ws
-    store.dispatch("subList", {
-      commitKey: "setMarketWatchList",
-      listKey: "marketWatchList",
-      // proxyListValue: watchList.value
-    });
-  };
-  
-  const getWatchList = () => {
-    // 获取订阅列表
-    loading.value = true;
-    // if (watchList.value.length) {
-    //     subs()
-    // }
-    _watchlist()
-      .then((res) => {
-        if (res.code == 200) {
-          if (watchList.value.length) {
-            // 有历史数据就更新
-            const rs = res.data.map((item) => {
-              const target = watchList.value.find((a) => a.symbol == item.symbol);
-              if (target) {
-                Object.assign(target, item);
-                item = target;
-              }
-              return item;
-            });
-            store.commit("setMarketWatchList", rs || []);
-          } else {
-            // 没有就直接提交
-            store.commit("setMarketWatchList", res.data || []);
-          }
-  
-          if (!res.data.length) {
-            // 还没有添加自选
-            setTimeout(() => {
-              openRecommendList();
-            }, 500);
-          } else {
-            // 有数据就订阅
-            // setTimeout(() => {
-            subs();
-            // }, 1000);
-          }
+const watchList = computed(() => store.state.marketWatchList || []);
+const loading = ref(true);
+const totalList = ref([])
+const token = computed(() => store.state.token || "");
+const subs = () => {
+  // 订阅 ws
+  store.dispatch("subList", {
+    commitKey: "setMarketWatchList",
+    listKey: "marketWatchList",
+  });
+};
+
+const getWatchList = () => {
+  // 获取订阅列表
+  loading.value = true;
+  _watchlist()
+    .then((res) => {
+      if (res.code == 200) {
+        if (watchList.value.length) {
+          // 有历史数据就更新
+          const rs = res.data.map((item) => {
+            const target = watchList.value.find((a) => a.symbol == item.symbol);
+            if (target) {
+              Object.assign(target, item);
+              item = target;
+            }
+            return item;
+          });
+          store.commit("setMarketWatchList", rs || []);
+        } else {
+          // 没有就直接提交
+          store.commit("setMarketWatchList", res.data || []);
         }
-      })
-      .finally(() => {
-        loading.value = false;
-      });
-  };
-  const init = () => {
-    if (token.value) {
-      getWatchList();
-    } else {
+
+        if (!res.data.length) {
+          // 还没有添加自选
+          setTimeout(() => {
+            openRecommendList();
+          }, 500);
+        } else {
+          // 有数据就订阅
+          // setTimeout(() => {
+          subs();
+          // }, 1000);
+        }
+      }
+    })
+    .finally(() => {
       loading.value = false;
-      // 打开推荐列表
-      openRecommendList();
-    }
-  };
+    });
+};
+const init = () => {
+  if (token.value) {
+    getWatchList();
+  } else {
+    loading.value = false;
+    // 打开推荐列表
+    openRecommendList();
+  }
+};
+const marketType = computed(() => store.getters.getMarketType);
   
   // 推荐列表
   const marketSrockRecommendList = computed(
@@ -137,7 +131,6 @@
       .then((res) => {
         if (res.code == 200) {
           // 股票
-  
           if (res.data?.stock) {
             const arr = res.data.stock.map((item) => {
               const target = marketSrockRecommendList.value.find(
@@ -180,12 +173,7 @@
   // 推荐股票选择
   const stockList = ref([]);
   const contractList = ref([]);
-  const changeStockList = (arr) => {
-    stockList.value = arr;
-  };
-  const changeContractList = (arr) => {
-    contractList.value = arr;
-  };
+
   // 添加自选
   const addLoading = ref(false);
   const addOptional = () => {
@@ -208,8 +196,8 @@
       });
   };
   
-  defineExpose({
-    init,
+  onMounted(() => {
+    init();
   });
   
   store.commit("setCheckState", true);

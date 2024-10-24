@@ -149,11 +149,11 @@ import {
 import { useSocket } from "@/utils/ws";
 const { startSocket } = useSocket();
 
-const watchList = computed(() => store.state.marketWatchList || []);
 const active = ref(0);
 
-const token = computed(() => store.state.token || "");
+const watchList = computed(() => store.state.marketWatchList || []);
 const loading = ref(true);
+const token = computed(() => store.state.token || "");
 const subs = () => {
   // 订阅 ws
   store.dispatch("subList", {
