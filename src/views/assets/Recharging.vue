@@ -1,82 +1,73 @@
 <!-- 充值中 -->
 <template>
     <div class="page page_recharge">
-        <Top :title="'充值'">
+        <Top :title="$t('recharging.recharge')">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img src="/static/img/user/server.png" alt="img">
+                    <span><img src="/static/img/user/server.png" alt="img"></span>
                 </div>
             </template>
         </Top>
+        <Loading :loading="loading" v-show="loading" />
+        <template v-if="!loading">
+            <div class="recharge_box">
 
-        <div class="recharge_box">
-
-            <div class="time_box" v-if="s && !loading">
-                <div class="time_box_label">充值倒计时</div>
-                <div class="time">{{ showS }}</div>
-                <div class="network-tag" v-if="form.name">
-                    <span>{{form.name}} · {{form.network }}</span>
-                </div>
-                <div class="amount" @click="copyPrice">
-                    {{ form.amount }}
-                    <span>{{form.name}}</span>
-                    <!-- <div v-if="rate">{{ratePrice }} USDT</div> -->
-
-                </div>
-                <div class="network-tag">
-                    <span style="color:#000;">$20,991.18</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="recharge_box">
-            <div class="qrcode_box">
-                <Loading :loading="loading" v-show="loading" />
-                <div id="qrcode" ref="qrcodeRef" v-show="!loading"></div>
-
-                <!-- 已过期  -->
-                <div v-if="s == 0 && !loading" style="width:100%;height:100%;position: absolute;top:0;left:0;z-index:1">
-                    <img src="/static/img/assets/Expired.png" alt="Expired">
-                </div>
-                <div class="timeout_box" v-if="s == 0 && !loading">
-                    <div class="warning_icon">
-                        <img src="/static/img/common/warning.png" alt="img">
+                <div class="time_box">
+                    <div class="time_label">{{$t('recharging.countdown')}}</div>
+                    <CountDown v-model:time="s" class="time_show" />
+                    <div class="network-tag">
+                        <span>{{form.network}} · {{form.currency }}</span>
                     </div>
-                    <div>二维码已过期</div>
+                    <div class="amount" @click="copyPrice">
+                        {{ form.amount }}<span>{{form.currency}}</span>
+                    </div>
+                    <div class="network-tag">
+                        <span style="color:#000;">${{ ratePrice }}</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="address" v-if="address">
-                <div class="address_label">收款人钱包地址</div>
-                <div class="address_val">{{ address }}</div>
-                <div class="address_copy_btn" @click="copy">复制</div>
+            <div class="recharge_box">
+                <div class="qrcode_box">
+                
+                    <div class="qrcode" ref="qrcodeRef" v-show="!loading"></div>
+
+                    <!-- 已过期  -->
+                    <div v-if="s == 0 && !loading" style="width:100%;height:100%;position: absolute;top:0;left:0;z-index:1">
+                        <img src="/static/img/assets/Expired.png" alt="Expired">
+                    </div>
+                    <div class="timeout_box" v-if="s == 0 && !loading">
+                        <div class="warning_icon">
+                            <img src="/static/img/common/warning.png" alt="img">
+                        </div>
+                        <div>{{$t('recharging.QRcodeExpired')}}</div>
+                    </div>
+                </div>
+
+                <div class="address">
+                    <div class="address_label">{{$t('recharging.walletAddress')}}</div>
+                    <div class="address_val">{{ address || '--' }}</div>
+                    <div class="address_copy_btn" @click="copy">{{$t('recharging.copy')}}</div>
+                </div>
+
+                <div class="tip">
+                    提示：请在截至时间内完成充值<br/>
+                    订单到期作废
+                </div>
             </div>
 
-            <div class="tip">
-                提示：请在截至时间内完成充值<br/>
-                订单到期作废
+            
+            <div class="btns">
+            
+                <Button v-if="orderStatus == 'success'" @click="router.back()" :loading="loading" round color="#18B762"
+                    style="width:100%" class="submit" type="info"><span style="color:#fff">{{ $t("recharging.success") }}</span></Button>
+                <Button v-else-if="orderStatus == 'failure'" @click="router.back()" :loading="loading" round color="#E8503A"
+                    style="width:100%" class="submit" type="info"><span style="color:#fff">{{ $t("recharging.fail") }}</span></Button>
+                <Button v-else @click="router.back()" :loading="loading" round color="#014CFA" style="width:100%"
+                    class="submit" type="info"><span style="color:#fff">{{ $t("recharging.finish") }}</span></Button>
             </div>
-        </div>
 
-        <!-- <div class="circle_box">
-            <Circle class="circle" :start-position="'right'" :stroke-linecap="'butt'" :stroke-width="150"
-                :layer-color="'#E5E5E5'" :color="'#014CFA'" size="40px" v-if="s && !loading"
-                v-model:current-rate="currentRate" :rate="0" :text="''" />
-            <div class="time_box" v-if="s && !loading">
-                <div class="time">{{ showS }}</div>
-                <div>截至时间</div>
-            </div>
-        </div> -->
-        
-        <div class="btns">
-           
-            <Button v-if="orderStatus == 'success'" @click="router.back()" :loading="loading" round color="#18B762"
-                style="width:100%" class="submit" type="info"><span style="color:#fff">成功</span></Button>
-            <Button v-else-if="orderStatus == 'failure'" @click="router.back()" :loading="loading" round color="#E8503A"
-                style="width:100%" class="submit" type="info"><span style="color:#fff">失败</span></Button>
-            <Button v-else @click="router.back()" :loading="loading" round color="#014CFA" style="width:100%"
-                class="submit" type="info"><span style="color:#fff">完成</span></Button>
-        </div>
+        </template>
 
     </div>
 </template>
@@ -92,6 +83,7 @@ import { _deposit1, _deposit, _depositGet, _swapRate } from "@/api/api"
 import store from "@/store"
 import router from "@/router"
 import Decimal from "decimal.js"
+import CountDown from "@/components/CountDown.vue"
 
 const route = useRoute()
 
@@ -183,40 +175,13 @@ if (order_no.value) { // 查看订单详情
     })
 }
 
-
-// 倒计时
-const s = ref(0)
-const showS = computed(() => {
-    if (s.value > 0) {
-        if (s.value < 3600) {
-            const m = Math.floor(s.value / 60)
-            const sec = s.value % 60
-            return `${m >= 10 ? m : '0' + m}:${sec >= 10 ? sec : '0' + sec}`
-        } else {
-            const h = Math.floor(s.value / 3600)
-            const m = Math.floor(s.value % 3600 / 60)
-            const sec = s.value % 60
-            return `${h}:${m >= 10 ? m : '0' + m}:${sec >= 10 ? sec : '0' + sec}`
-        }
-    }
-    return '--'
-})
-const currentRate = computed(() => {
-    return s.value * 100 / timeoutMax.value
-})
-let interval = null
+const s = ref(1)
 const timeoutMax = ref(1)
 const startCountDown = (max) => {
     if (!max || max <= 0) max = 0
     timeoutMax.value = max
     s.value = max
-    interval && clearInterval(interval)
-    interval = setInterval(() => {
-        s.value--
-        if (s.value == 0) {
-            clearInterval(interval)
-        }
-    }, 1000);
+
 }
 
 // 生成二维码
@@ -274,17 +239,36 @@ const copyPrice = () => {
     padding: 1.12rem 0.32rem 0.32rem 0.32rem;
 
     position: relative;
-
+    :deep(.top){
+        background: none;
+        background-image: linear-gradient(to top,rgba(255,255,255,0),rgba(255,255,255,1));
+        backdrop-filter: blur(3px);
+    }
     .top-record {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 0.72rem;
+        height: 0.72rem;
+        box-sizing: border-box;
+        border: 1px solid #EDF2F7;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span{
+            display: block;
+            width: 0.432rem;
+            height: 0.432rem;
+        }
     }
 
     .recharge_box {
         border-radius: 0.32rem;
         margin-top: 0.2rem;
         background: #FFF;
-        box-shadow: 0px 0.02rem 0.2rem 0 rgba(1, 76, 250, 0.20);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        box-shadow: 0px 0.08rem 0.8rem 0 rgba(1, 76, 250, 0.20);
         padding:0.32rem;
         .amount {
             color: #014CFA;
@@ -292,34 +276,32 @@ const copyPrice = () => {
             font-size: 0.48rem;
             font-weight: 600;
             line-height: 0.36rem;
+            margin-top: 0.3rem;
             span{
                 font-size: 0.32rem;
                 font-weight: 400;
+                margin-left: 0.06rem;
             }
         }
 
         .time_box {
-            margin-left: 0.12rem;
-            color: #666;
-            font-size: 0.24rem;
-            font-weight: 400;
-            text-align: left;
-            &_label{
+            padding-top: 0.06rem;
+            .time_label{
                 color: #666D80;
                 text-align: center;
                 font-size: 0.28rem;
                 line-height: 0.36rem; 
             }
-            .time {
-                color: #E8503A;
-                font-size: 0.32rem;
-                font-weight: 500;
-                margin-bottom: 0.07rem;
+          
+            .time_show{
+                margin-top: 0.2rem;
+                margin-bottom: 0.1rem;
             }
             .network-tag{
                 display: flex;
                 justify-content: center;
                 align-content: center;
+                padding-top: 0.26rem;
                 span{
                     height: 0.6rem;
                     padding: 0 0.28rem;
@@ -327,6 +309,9 @@ const copyPrice = () => {
                     background-color:#F5F7FC;
                     color: #014CFA;
                     font-size: 0.28rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
             }
         }
@@ -342,14 +327,16 @@ const copyPrice = () => {
         .qrcode_box {
             border: 1px solid #DFE2E4;
             background-color: #fff;
-            width: 3rem;
-            height: 3rem;
+            width: 3.18rem;
+            height: 3.18rem;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0.1rem;
+            padding: 0.16rem;
+            box-sizing: border-box;
             position: relative;
+            border-radius: 0.3rem;
 
             .timeout_box {
                 width: 100%;
@@ -371,40 +358,39 @@ const copyPrice = () => {
                 }
             }
 
-            #qrcode {
+            .qrcode {
                 width: 100%;
                 height: 100%;
-
-                img {
-                    width: 100%;
-                    height: 100%;
-                }
             }
         }
 
-        .address {
-            border-radius: 0.08rem;
-            padding: 0 0.4rem 0 0.24rem;
+        .address_label {
+            color: #666D80;
+            text-align: center;
+            font-size: 0.28rem;
+            line-height: 0.36rem;
+            margin-top: 0.32rem; 
+        }
+        .address_val{
+            color:#000;
+            font-size: 0.3rem;
+            font-weight: 600;
+            line-height: 0.36rem; 
+            margin-top: 0.22rem;
+            text-align: center;
+        }
+        .address_copy_btn{
+            width: 1.28rem;
+            margin: 0 auto;
+            height: 0.6rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 0.1rem;
-
-            >span {
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                color: #121212;
-                font-weight: 400;
-                font-size: 0.28rem;
-            }
-
-            .copy_icon {
-                width: 0.36rem;
-                height: 0.36rem;
-                margin-left: 0.1rem;
-                overflow: hidden;
-            }
+            color:#014CFA;
+            font-size: 0.3rem;
+            border: 1px solid #014CFA;
+            border-radius: 0.3rem;
+            margin-top: 0.16rem;
         }
     }
 
@@ -417,6 +403,7 @@ const copyPrice = () => {
         font-style: normal;
         font-weight: 400;
         line-height: 0.32rem; 
+        margin-top: 0.28rem;
     }
 
     .btns {
@@ -424,10 +411,11 @@ const copyPrice = () => {
         align-items: center;
         justify-content: space-between;
         margin-top: 0.6rem;
-        padding: 0 0.32rem;
+        padding-bottom: 0.28rem;
         .submit {
             width: 100%;
             height: 1.12rem;
+            font-size: 0.36rem;
         }
     }
 

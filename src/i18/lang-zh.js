@@ -21,6 +21,18 @@ export default {
         searchPlaceholder:"搜索",
         enterCurrency:"输入币种",
         networkSelection:"网络选择"
+    },
+    recharging:{
+        recharge:"充值",
+        countdown:"充值倒计时",
+        QRcodeExpired:"二维码已过期",
+        walletAddress:"收款人钱包地址",
+        copy:"复制",
+        tip1:'提示：请在截至时间内完成充值',
+        tip2:'订单到期作废',
+        success:"成功",
+        fail:'失败',
+        finish:'完成'
 
     }
 }
