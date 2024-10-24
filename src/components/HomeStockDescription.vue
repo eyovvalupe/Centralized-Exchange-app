@@ -60,9 +60,6 @@
 </template>
 
 <script setup>
-import store from "@/store";
-import { computed, watch } from "vue";
-
 const props = defineProps({
   region: {
     type: String,
@@ -85,6 +82,7 @@ const props = defineProps({
     default: []
   }
 });
+console.log(props.list)
 </script>
 
 <style lang="less" scoped>

@@ -1,6 +1,6 @@
 <!-- 股票 -->
 <template>
-  <div class="market_stock">
+  <div class="market_stock" v-if="!loading">
     <StockCountry />
     <StockDestribute />
     <StockChase />
@@ -19,6 +19,11 @@ import StockDestribute from "@/components/StockDestribute.vue";
 import StockSortList from "@/components/StockSortList.vue";
 import StockHot from "@/components/StockHot.vue";
 import StockChase from "@/components/StockChase.vue";
+import Loaidng from "@/components/Loaidng.vue";
+import { ref, onMounted } from 'vue';
+
+const loading = ref(true)
+onMounted(() => loading.value = false)
 
 </script>
 
