@@ -54,7 +54,7 @@
             </div>
         </div>
         
-        <div class="btns">
+        <div class="btns" v-if="props.page != 'home'">
             <div class="btn" @click="goTrade">交易</div>
         </div>
 
@@ -76,6 +76,10 @@ const props = defineProps({
     item: {
         type: Object,
         default: () => { }
+    },
+    page: {
+        type: String,
+        default: ""
     }
 })
 

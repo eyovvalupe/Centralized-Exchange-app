@@ -4,11 +4,17 @@
     <!-- 顶部 -->
     <div class="top_box relative overflow-hidden">
       <div class="absolute left-0 top-0">
-        <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag = "true">
+        <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag = "true" v-model="currentSlide">
           <Slide v-for="(slide, index) in slides" :key="index" >
-              <img :src="slide" class="w-full" alt="img" />
+            <img :src="slide" class="w-full" alt="img" />
           </Slide>
         </Carousel>
+      </div>
+      
+      <div class="absolute  flex gap-[0.05rem] transition-all bottom-0 mb-[1rem] left-0 ml-[3.6rem]"> 
+        <div @click="()=> currentSlide = 0" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[currentSlide == 0 ? 'h-[0.16rem] bg-[#014CFA]' : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50']"></div>
+        <div @click="()=> currentSlide = 1" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[currentSlide == 1 ? 'h-[0.16rem] bg-[#014CFA]' : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50']"></div>
+        <div @click="()=> currentSlide = 2" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[currentSlide == 2 ? 'h-[0.16rem] bg-[#014CFA]' : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50']"></div> 
       </div>
       <div class="funcs relative">
         <div class="user_box">
@@ -291,7 +297,7 @@
       v-if="marketPerformance == 0"
       :loading="marketLoading"
       :deleteItem="false"
-      :list="marketDownList"
+      :list="marketDownList.slice(0,5)"
       :marketType="'all'"
       page = "home"
     />
@@ -300,7 +306,7 @@
       v-if="marketPerformance == 1"
       :loading="marketLoading"
       :deleteItem="false"
-      :list="marketUpList"
+      :list="marketUpList.slice(0,5)"
       :marketType="'all'"
     />
     <StockTable
@@ -308,7 +314,7 @@
       v-if="marketPerformance == 2"
       :loading="marketLoading"
       :deleteItem="false"
-      :list="marketVolumeList"
+      :list="marketVolumeList.slice(0,5)"
       :marketType="'all'"
     />
     <!-- banner -->
@@ -355,7 +361,7 @@
         </div>
       </Tab>
       <Tab :title="'交易机器人'">
-        <div></div>
+        <div class="mx-[0.32rem]"><Ai page = "home"/></div>
       </Tab>
     </Tabs>
 
@@ -388,16 +394,20 @@ import HomeCountry from '@/components/HomeCountry.vue';
 import HomePriority from '@/components/HomePriority.vue';
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import Ai from "../Market/components/Ai.vue";
 import { Translation } from "vue-i18n";
 
 const openEye = ref(false);
 
 const { startSocket } = useSocket();
+const currentSlide =ref(0);
+
 const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
 const marketCountryStockList = computed(
   () => store.state.marketCountryStockList || []
 );
+
 // 打开添加类型选择弹窗
 const showAS = ref(false);
 const actions = [
@@ -620,7 +630,7 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
     .then((res) => {
       if (res.code == 200) {
         if (saveActive != marketPerformance.value) return;
-        res.data = res.data.slice(0, 5).map((item) => {
+        res.data = res.data.map((item) => {
           item.ratio = undefined; // 弃用接口里的该字段
           return item;
         });
