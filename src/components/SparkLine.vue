@@ -11,9 +11,9 @@
                 </linearGradient>
             </defs>
             <polygon :points="shadowPoints"
-                :style="`fill:url(#${Number(props.ratio)}); stroke: none; opacity: 1;width:100%`">
+                :style="`fill:url(#${Number(props.ratio)}); stroke: none; opacity: 1; width:100%`">
             </polygon>
-            <polyline :points="props.points" :style="`fill: none; stroke: ${color}; stroke-width:${polylineStrokeWidth};width:100%`">
+            <polyline :points="props.points" :style="`fill: none; stroke: ${color}; stroke-width:${polylineStrokeWidth}; width:100%`">
             </polyline>
         </svg>
     </div>

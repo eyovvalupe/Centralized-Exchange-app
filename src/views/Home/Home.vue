@@ -3,83 +3,26 @@
   <div class="page_home">
     <!-- 顶部 -->
     <div class="top_box relative overflow-hidden">
-      <div
-        class="flex transition-transform ease-out duration-700 absolute left-0 top-0"
-        :style="`transform: translateX(-${
-          slideIndex * 100
-        }%) ; animation: rotateImages 6s linear infinite;`"
-      >
-        <!-- <div class="flex-shrink-0 w-full">
-          <img :src="slides[slides.length - 1]" class="w-full" alt="img" />
-        </div> -->
-        <div
-          v-for="(slide, index) in slides.concat(slides)"
-          :key="index"
-          class="flex-shrink-0 w-full"
-        >
-          <img :src="slide" class="w-full" alt="img" />
-        </div>
-        <!-- <div class="flex-shrink-0 w-full">
-          <img :src="slides[0]" class="w-full" alt="img" />
-        </div> -->
+      <div class="absolute left-0 top-0">
+        <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag = "true">
+          <Slide v-for="(slide, index) in slides" :key="index" >
+              <img :src="slide" class="w-full" alt="img" />
+          </Slide>
+        </Carousel>
       </div>
       <div class="funcs relative">
-        <!-- style="padding: 0.2rem 0.32rem 1rem 0.32rem;" -->
         <div class="user_box">
-          <!-- <img
-            v-if="token"
-            src="/static/img/user/default_avatar.png"
-            alt="avatar"
-          /> -->
           <div class="user_default_avatar"></div>
-          <!-- <Iconfonts v-if="!token" :name="'icon-yonghuhui'" :size="0.52" /> -->
         </div>
         <div style="flex: 1"></div>
         <div class="func_box" @click="jump('search')">
-          <!-- <Iconfonts :name="'icon-sousuo'" :size="0.44" :color="'#000'" /> -->
           <div class="custom-search-icon"></div>
         </div>
         <div class="func_box">
-          <!-- <Iconfonts :name="'icon-xiaoxi'" :size="0.44" :color="'#000'" /> -->
           <div class="custom-lock-icon"></div>
         </div>
       </div>
       <div class="pl-[0.285rem] mt-[1.25rem]">
-        <!-- <div
-          class="text-[#014CFA] font-[1000] text-[0.4rem] w-[5.14rem] h-[0.72rem] bg-gradient-to-r from-blue-400 to-white rounded-r-3xl justify-center flex items-center mb-[0.24rem] font-alibaba"
-        >
-          Newcomer Registration
-        </div> -->
-        <!-- <div
-          class="font-medium text-[0.32rem] text-white mb-[0.16rem] font-alibaba"
-        >
-          Reward Immediately
-        </div>
-        <div class="font-[1000] text-[0.6rem] mb-[0.6rem] font-alibaba">
-          <span
-            class="text-transparent"
-            style="
-              background: linear-gradient(180deg, #ffab9f 0%, #e8503a 100%);
-              background-clip: text;
-            "
-            >1000</span
-          >
-          <span
-            class="text-transparent"
-            style="
-              background: linear-gradient(90deg, #b1c9ff 0%, #ffffff 100%);
-              background-clip: text;
-            "
-          >
-            + USDT
-          </span>
-        </div> -->
-        <!-- <div
-          class="w-[2.2rem] h-[0.7rem] rounded-[1rem] text-[white] bg-gradient-to-b from-blue-400 to-blue-800 items-center flex justify-center gap-3 mt-[1.924rem]"
-        >
-          Register
-          <div class="custom-arrow-icon"></div>
-        </div> -->
       </div>
     </div>
     <div
@@ -443,6 +386,8 @@ import StockTable from "@/components/StockTable.vue";
 import StockSortList from "@/components/StockSortList.vue";
 import HomeCountry from '@/components/HomeCountry.vue';
 import HomePriority from '@/components/HomePriority.vue';
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import { Translation } from "vue-i18n";
 
 const openEye = ref(false);
@@ -450,7 +395,9 @@ const openEye = ref(false);
 const { startSocket } = useSocket();
 const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
-
+const marketCountryStockList = computed(
+  () => store.state.marketCountryStockList || []
+);
 // 打开添加类型选择弹窗
 const showAS = ref(false);
 const actions = [
@@ -463,12 +410,6 @@ const slides = [
   "static/img/home/back2.png",
   "static/img/home/back3.png",
 ];
-const slideIndex = ref(0);
-const showSlides = () => {
-  setInterval(() => {
-    slideIndex.value = (slideIndex.value + 1) % slides.length;
-  }, 2000);
-};
 
 const onSelect = (item) => {
   showAS.value = false;
@@ -518,6 +459,7 @@ onActivated(() => {
       ...marketVolumeList.value,
       ...marketUpList.value,
       ...marketDownList.value,
+      ...marketCountryStockList.value
     ]);
   }, 500);
 });
@@ -576,6 +518,7 @@ const getRecommendData = () => {
               ...marketVolumeList.value,
               ...marketUpList.value,
               ...marketDownList.value,
+              ...marketCountryStockList.value
             ]);
           }, 500);
         }
@@ -587,6 +530,7 @@ const getRecommendData = () => {
           ...marketVolumeList.value,
           ...marketUpList.value,
           ...marketDownList.value,
+          ...marketCountryStockList.value
         ]);
       }, 500);
     })
@@ -699,6 +643,7 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
             ...arr,
             ...marketRecommndStockList.value,
             ...contractList.value,
+            ...marketCountryStockList.value
           ]);
         }, 500);
       }
@@ -711,7 +656,6 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
 };
 
 onMounted(() => {
-  showSlides();
   getMarketPerformanceData(
     marketDownList,
     "setMarketDownList",

@@ -103,7 +103,7 @@ const openRecommendList = () => {
         //     });
         //   }, 500);
         // }
-        console.log(res.data)
+        // console.log(res.data)
     })
     .finally(() => {
       recommendLoading.value = false;
