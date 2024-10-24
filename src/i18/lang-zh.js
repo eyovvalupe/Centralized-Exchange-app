@@ -23,8 +23,8 @@ export default {
         networkSelection:"网络选择"
     },
     withdraw:{
-        recharge:"充值",
-        rechargeRecord:"充值记录",
+        withdraw:"提现",
+        withdrawRecord:"提现记录",
         cryptocurrency:"加密货币",
         bankCard:"银行卡",
         currency:"币种",

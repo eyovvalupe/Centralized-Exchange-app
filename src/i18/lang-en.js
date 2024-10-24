@@ -20,8 +20,8 @@ export default {
         networkSelection:"Network selection"
     },
     withdraw:{
-        recharge:"Recharge",
-        rechargeRecord:"recharge record",
+        withdraw:"Withdraw",
+        withdrawRecord:"withdraw record",
         cryptocurrency:"crypto currency",
         bankCard:"bank card",
         currency:"currency",

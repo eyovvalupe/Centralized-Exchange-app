@@ -899,7 +899,6 @@ const openStockModel = () => {
     showStockModel.value = true
 }
 
-
 // sessionToken
 const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
