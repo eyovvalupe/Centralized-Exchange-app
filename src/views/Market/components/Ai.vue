@@ -74,7 +74,7 @@
           @clickItems="clickItem"
           v-for="(item, i) in marketAiList"
           :key="i"
-          :item="{...item, points: item.points?item.points.split(' ').map((val) => { const [x,y] = val.split(','); return `${parseFloat(x)*2},${y}`}).join(' ') : item.points}"
+          :item="item"
           :page="props.page"
         />
         <NoData v-if="!loading && marketAiList.length == 0" />

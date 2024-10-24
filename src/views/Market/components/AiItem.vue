@@ -32,7 +32,7 @@
                 <!-- 图表 -->
                 <div class="canvas">
                     <SparkLine v-if="item.points" :polyline-stroke-width="3" :points="props.item.points"
-                        :ratio="props.item.ratio" />
+                        :ratio="props.item.ratio" :xtimes="2" :ytimes="2" />
                 </div>
             </div>
             

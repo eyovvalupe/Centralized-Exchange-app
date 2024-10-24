@@ -146,18 +146,22 @@ const subs = (arr) => {
 const getData = (region) => {
   if (region == 'us' && marketStockUsDataList.value.length > 0) {
     pageLoading.value = false;
+    store.commit("setMarketCountryStockList", marketStockUsDataList);
     return;
   }
   if (region == 'india' && marketStockIndiaDataList.value.length > 0) {
     pageLoading.value = false;
+    store.commit("setMarketCountryStockList", marketStockIndiaDataList);
     return;
   }
   if (region == 'japan' && marketStockJapanDataList.value.length > 0) {
     pageLoading.value = false;
+    store.commit("setMarketCountryStockList", marketStockJapanDataList);
     return;
   }
   if (region == 'korea' && marketStockKoreaDataList.value.length > 0) {
     pageLoading.value = false;
+    store.commit("setMarketCountryStockList", marketStockKoreaDataList);
     return;
   }
   pageLoading.value = true;
@@ -215,7 +219,6 @@ const getData = (region) => {
         store.commit("setMarketStockKoreaDataList", koreaArr)
       }
 
-      // store.commit("setMarketCountryStockList", arr);
       setTimeout(() => {
         subs([
           ...marketStockUsDataList.value,

@@ -13,7 +13,7 @@
             <polygon :points="shadowPoints"
                 :style="`fill:url(#${Number(props.ratio)}); stroke: none; opacity: 1; width:100%`">
             </polygon>
-            <polyline :points="props.points" :style="`fill: none; stroke: ${color}; stroke-width:${polylineStrokeWidth}; width:100%`">
+            <polyline :points="newPoints" :style="`fill: none; stroke: ${color}; stroke-width:${polylineStrokeWidth}; width:100%`">
             </polyline>
         </svg>
     </div>
@@ -35,6 +35,14 @@ const props = defineProps({
     ratio: {
         type: [Number, String],
         default: 0
+    },
+    xtimes: {
+        type: Number,
+        default: 1
+    },
+    ytimes: {
+        type: Number,
+        default: 1
     }
 })
 
@@ -48,9 +56,11 @@ const color = computed(() => {
     }
 })
 const lineWidth = ref(0);
+const newPoints = computed(() => 
+    props.points ? props.points.split(' ').map((val) => { const [x,y] = val.split(','); return `${parseFloat(x)*props.xtimes},${parseFloat(y)*props.ytimes}`}).join(' ') : props.points)
 const shadowPoints = computed(() => {
     // 获取 polyline 的点
-    const points = props.points.split(' ').map(point => point.split(','));
+    const points = newPoints.value.split(' ').map(point => point.split(','));
     // 获取 SVG 的高度
     lineWidth.value = parseFloat(points[points.length-1][0]) - parseFloat(points[0][0]) ; 
     const svgHeight = root.value ? root.value.clientHeight : 50;
