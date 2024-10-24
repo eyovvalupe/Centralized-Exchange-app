@@ -1,139 +1,130 @@
 <!-- 提现 -->
 <template>
     <div class="page page_withdraw">
-        <Top :title="'提现'">
+        <Top :title="$t('withdraw.withdraw')">
             <template #right>
                 <div class="top-record" @click="goRecord">
                     <div class="top-record-icon">
-                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                        <img src="/static/img/assets/record.png" />
                     </div>
-                    <!-- <span>
-                        记录
-                    </span> -->
+                    <span>
+                        {{$t("withdraw.withdrawRecord")}}
+                    </span>
                 </div>
             </template>
         </Top>
 
-        <!-- 表单 -->
-        <div class="form">
-            <div class="subtitle">金额</div>
-            <div class="item2" :class="{ 'active_item': focus }">
-
-                <div class="item_box item_currency" @click="showDialog = true">
-                    <div class="currency" v-if="form.from">
-                        <div class="currency_icon">
-                            <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
-                        </div>
-                        <span>{{ form.from.toUpperCase() }}</span>
-                    </div>
-                    <div class="more">
-                        <img src="/static/img/assets/more.png" alt="more">
-                    </div>
-                </div>
-
-                <div class="item_box item_content" :class="{ 'err_ipt': errStatus }">
-                    <span class="item_tip" v-show="form.amount === '' || focus">≤ <span>{{ balance }}</span></span>
-                    <input class="ipt" @focus="focus = true" @blur="errStatus = focus = false" @change="changeAmount"
-                        type="number" v-model="form.amount" placeholder="">
-                    <span class="all" @click="maxIpt">全部</span>
-                </div>
-
-            </div>
-            <div class="tip">
-                <div>
-                    <span>手续费</span>
-                    <span class="num">{{ loading ? '--' : fee }}</span>
-                </div>
-            </div>
-
-
-            <!-- 提款方式 -->
-            <div class="subtitle" style="margin-top:0.24rem">收款账户</div>
-            <div class="account_box">
-
-                <div v-if="showAccount.length">
-                    <div class="card_box" @click="showAccountDialog = true">
-                        <div class="card_icon">
-                            <img v-show="form.from.toUpperCase() == 'MAIN'" src="/static/img/user/card_type_b.png"
-                                alt="img">
-                            <img v-show="form.from.toUpperCase() != 'MAIN'" src="/static/img/user/card_type_c.png"
-                                alt="img">
-                        </div>
-                        <div class="card">
-                            <div class="code">{{ _hiddenAccount(currAccount.bankCardNumber || currAccount.address)
-                                }}
+         <Tabs type="custom-card" v-model:active="tabActive" :swipeable="false"
+            shrink>
+            <Tab :title="$t('withdraw.cryptocurrency')" name="cryptocurrency">
+                 <!-- 表单 -->
+                <div class="form">
+                     <FormItem custom :title="$t('withdraw.currency')">
+                        <div class="select_item"  @click="showDialog = true">
+                            <div class="currency" v-if="form.from">
+                                <div class="currency_icon">
+                                    <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
+                                </div>
+                                <span>{{ form.from.toUpperCase() }}</span>
                             </div>
-                            <div class="name">{{ currAccount.symbol ? `${currAccount.symbol}-${currAccount.network}`
-                                :
-                                `${currAccount.bankName}` }}</div>
+                            <div class="more">
+                                <img src="/static/img/assets/more.png" alt="more">
+                            </div>
+                        </div>
+                        
+                    </FormItem>
+                   <FormItem  v-model="form.amount" show-all-btn title="提现金额"  @change="changeAmount" @allBtnClick="maxIpt">
+                        <template #title-right>可提现：{{ balance }}</template>
+                   </FormItem>
+
+                    <div class="tip">
+                        <span>手续费</span>
+                        <span class="num">{{ loading ? '--' : fee }}</span>
+                    </div>
+
+                    <!-- 提款方式 -->
+                    <div class="subtitle">收款账户</div>
+                    <div class="account_box">
+
+                        <div class="card_box" v-if="showAccount.length" @click="showAccountDialog = true">
+                            <div class="card_icon">
+                                <img v-if="form.from.toUpperCase() == 'MAIN'" src="/static/img/user/card_type_b.png"
+                                    alt="img">
+                                <img v-else :src="`/static/img/crypto/${currAccount.symbol.toUpperCase()}.png`" alt="currency">
+                            </div>
+                            <div class="card">
+                                <div class="code">{{ _hiddenAccount(currAccount.bankCardNumber || currAccount.address)
+                                    }}
+                                </div>
+                                <div class="name">{{ currAccount.symbol ? `${currAccount.symbol}-${currAccount.network}`
+                                    :
+                                    `${currAccount.bankName}` }}</div>
+
+                            </div>
+                            <div class="more_card">更改</div>
+
 
                         </div>
-                        <div class="more_card">更改</div>
-
+                        <div v-else class="add_account" @click="showAccountDialog = true">
+                            <Icon size="0.48rem" color="#014CFA" name="add-o" />
+                            <div class="add_account_text">添加收款方式</div>
+                        </div>
 
                     </div>
                 </div>
-                <div v-else>
-                    <div class="add_account" @click="showAccountDialog = true">
-                        <Icon style="font-size:0.48rem;" name="add-o" />
-                        <span style="margin-left: 0.28rem;color:#014CFA;font-size: 0.24rem;">添加收款方式</span>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-
-        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">提现</Button>
-
+                <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">提现</Button>
+            </Tab>
+            <Tab :title="$t('withdraw.bankCard')" name="bankCard">
+            </Tab>
+         </Tabs>
 
         <!-- 账户种类选择弹窗 -->
-        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-            v-model:show="showDialog" position="bottom" teleport="body">
+        <Popup v-model:show="showDialog" position="bottom" round closeable teleport="body">
+            <div class="van-popup-custom-title">{{$t("withdraw.currencySelection")}}</div>
+             
             <div class="withdraw_accounr_dialog">
-                <div class="close_icon" @click="showDialog = false">
-                    <img src="/static/img/common/close.png" alt="x">
-                </div>
-                <div class="title">币种选择</div>
-                <div @click="clickItem(item)" class="swap_dialog_item"
-                    :class="{ 'swap_dialog_item_active': form.from == item.name }" v-for="(item, i) in wallet" :key="i">
-                    <div class="icon">
-                        <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency">
+                <!-- 搜索 -->
+                <div class="search_box">
+                    <div class="search_icon">
+                        <img src="/static/img/common/search.png" alt="🔍">
                     </div>
-                    <span>{{ item.name.toUpperCase() }}</span>
-
-
-                    <Icon v-if="form.from == item.name" class="check_icon" name="success" />
+                    <input v-model.trim="searchDialogStr" type="text" class="ipt"
+                        :placeholder="$t('withdraw.searchPlaceholder')">
+                </div>
+                <div class="lists">
+                    <div @click="clickItem(item)" class="swap_dialog_item"
+                        :class="{ 'swap_dialog_item_active': form.from == item.name }" v-for="(item, i) in wallet" :key="i" v-show="!searchDialogStr || item.name.toUpperCase().indexOf(searchDialogStr) > -1">
+                        <div class="icon">
+                            <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency">
+                        </div>
+                        <span>{{ item.name.toUpperCase() }}</span>
+                        <div v-if="form.from == item.name" class="check_icon">
+                            <img src="/static/img/assets/success.svg" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </Popup>
 
         <!-- 账户选择弹窗 -->
-        <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-            v-model:show="showAccountDialog" position="bottom" teleport="body">
+        <Popup v-model:show="showAccountDialog" position="bottom" round closeable teleport="body">
+        
+            <div class="van-popup-custom-title">加密货币账户选择</div>
+
             <div class="withdraw_accounr_dialog">
-                <div class="close_icon" @click="showAccountDialog = false">
-                    <img src="/static/img/common/close.png" alt="x">
-                </div>
-                <div class="title">账户选择</div>
-                <!-- <div class="search_box">
-                    <input v-model.trim="searchStr" type="text" placeholder="搜索" />
-                    <Icon name="search" />
-                </div> -->
-                <!-- <div class="tabs">
-                    <div class="tab" :class="{ 'active_tab': form.from.toUpperCase() != 'MAIN' }">加密货币</div>
-                    <div class="tab" :class="{ 'active_tab': form.from.toUpperCase() == 'MAIN' }">银行卡</div>
-                </div> -->
-                <div class="list">
-                    <div class="add_item" @click="goAddAccount">
-                        <Icon style="font-size:0.48rem;" name="add-o" />
-                        <span style="margin-left: 0.2rem;color:#999999;font-size: 0.24rem;">添加收款账户</span>
+               
+                <div class="lists card_lists">
+                    <div class="add_account" @click="goAddAccount">
+                        <Icon size="0.48rem" color="#014CFA" name="add-o" />
+                        <div class="add_account_text">添加收款账户</div>
                     </div>
                     <div @click="clickAccountItem(item)"
-                        :class="{ 'dialog_account_item_active': currAccount.id == item.id }" class="dialog_account_item"
+                        :class="{ 'card_box_active': currAccount.id == item.id }" class="card_box"
                         v-for="(item, i) in searchList" :key="i">
                         <div class="card_icon">
                             <img v-if="item.bankName" src="/static/img/user/card_type_b.png" alt="img">
-                            <img v-else src="/static/img/user/card_type_c.png" alt="img">
+                            <img v-else :src="`/static/img/crypto/${item.symbol.toUpperCase()}.png`" alt="currency">
                         </div>
                         <div class="card">
                             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}
@@ -167,17 +158,17 @@
 import Top from "@/components/Top.vue"
 import { ref, computed, onMounted } from "vue"
 import store from "@/store"
-import { Icon, Button, Popup, showToast, showConfirmDialog } from "vant"
+import { Icon, Button, Popup, showToast,Tabs,Tab, showConfirmDialog } from "vant"
 import router from "@/router"
 import { _withdrawFee, _withdraw } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
 import { _hiddenAccount } from "@/utils/index"
 import RecordList from "@/components/RecordList.vue"
 import AccountCheck from "@/components/AccountCheck.vue"
-
+import FormItem from "@/components/form/FormItem.vue"
 const RecordListRef = ref()
 const userInfo = computed(() => store.state.userInfo || {})
-
+const tabActive = ref("cryptocurrency")
 const focus = ref(false)
 const loading = ref(false)
 // 表单
@@ -197,6 +188,8 @@ const changeAmount = () => {
         getFee()
     }, 0)
 }
+
+const searchDialogStr = ref('')
 
 // 提交
 const safeRef = ref()
@@ -395,454 +388,234 @@ Promise.all([
 
 <style lang="less" scoped>
 .page_withdraw {
-    padding: 1.4rem 0.32rem 1.5rem 0.32rem;
-
+    padding: 1.32rem 0.32rem 1.44rem 0.32rem;
     position: relative;
-
+    :deep(.top){
+        z-index: 10;
+    }
     .top-record {
-        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: #0953fa;
-        font-size: 0.24rem;
-
+        font-size:0.28rem;
         .top-record-icon {
-            background-color: #EDEDED;
-            width: 0.52rem;
-            height: 0.52rem;
-            padding: 0.06rem;
-            border-radius: 50%;
-            margin-right: 0.04rem;
+            width: 0.3rem;
+            height: 0.3rem;
+            margin-right: 0.06rem;
+        }
+    }
+    
+    .submit {
+        width: 100%;
+        height: 1.12rem;
+        font-size: 0.36rem;
+        margin-top:0.8rem;
+    }
+    
+    .form {
+        .tip {
+            color: #666D80;
+            font-size: 0.28rem;
+            line-height: 0.36rem; 
+            margin-top:0.24rem;
         }
 
-    }
-
-    .form {
-        .item2 {
-            width: 100%;
-            height: 0.88rem;
-            border-radius: 0.32rem;
+        .subtitle{
+            display: flex;
+            align-items: center;
+            font-size: 0.28rem;
+            color: #061023;
+            font-weight: 400;
+            line-height: 0.36rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.12rem;
+            justify-content: space-between;
+        }
+        .select_item {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-weight: 400;
-            transition: all ease .3s;
-
-            div {
-                transition: all ease .3s;
-            }
-
-            .item_box {
-                height: 100%;
+            height: 100%;
+             .currency {
                 display: flex;
                 align-items: center;
-                border-radius: 6px;
-                border: 1px solid #D0D8E2;
-            }
-
-            .err_ipt {
-                border: 1px solid #E8503A;
-            }
-
-            .item_currency {
-                padding: 0 0.16rem 0 0.34rem;
-                margin-right: 0.2rem;
-            }
-
-            .item_pre {
-                width: 1rem;
-                font-size: 0.32rem;
-                color: #707070;
-            }
-
-            .item_content {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                flex: 1;
-                font-size: 0.28rem;
-                color: #000;
-                position: relative;
-                line-height: 0.28rem;
-                height: 100%;
-                padding: 0 0.2rem;
-
-                .ipt {
-                    font-size: 0.24rem;
-                    height: 100%;
-                }
-
-                .item_tip {
-                    font-size: 0.24rem;
-                    font-weight: 400;
-                    color: #A4ACB9;
-                    pointer-events: none;
-                    white-space: nowrap;
-                    position: absolute;
-                    left: 0.2rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    transition: all ease .2s;
-
-                }
-
-                .all {
-                    color: #1A59F6;
-                    position: absolute;
-                    right: 0.24rem;
-                    font-size: 0.24rem;
-                }
-            }
-
-            .currency {
-                display: flex;
-                align-items: center;
-                line-height: 0;
-                color: #061023;
-                font-weight: 500;
-                font-size: 0.26rem;
+                margin-right: 0.24rem;
+                line-height: 1;
 
                 .currency_icon {
-                    width: 0.4rem;
-                    height: 0.4rem;
-                    margin-right: 0.12rem;
+                    width: 0.48rem;
+                    height: 0.48rem;
+                    margin-right: 0.16rem;
+                    img{
+                        border-radius: 50%;
+                    }
                 }
             }
 
             .more {
-                width: 0.28rem;
-                height: 0.28rem;
-                margin-left: 0.12rem;
-            }
-
-            .ipt {
-                flex: 1;
-                color: #292929;
-                font-size: 0.28rem;
-            }
-
-            .btn {
-                color: #1A59F6;
-                font-size: 0.28rem;
-                margin-left: 0.4rem;
+                width: 0.32rem;
+                height: 0.32rem;
             }
         }
 
-        .active_item {
-            height: 1rem;
+    }
 
-            .item_content {
-                border: 1px solid #014CFA;
-                padding-top: 0.2rem;
+}
 
-                .ipt {
-                    font-size: 0.28rem;
-                }
+.add_account {
+    background-color: #F5F7FC;
+    border-radius: 0.32rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0.24rem 0 0.2rem 0;
+}
+.add_account_text{
+    color:#014CFA;
+    text-align: center;
+    font-size: 0.24rem;
+    font-weight: 400;
+    line-height: 0.44rem; 
+    margin-top: 0.08rem;
+}
 
-                .item_tip {
-                    top: 0.24rem;
-                    left: 0.36rem;
-                    font-size: 0.2rem;
+.card_box {
+    border-radius: 0.32rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    border: 1px solid #D0D8E2;
+    background-color: #fff;
+    padding: 0.2rem 0.32rem 0.28rem 0.32rem;
+   
 
-                    span {
-                        color: #A4ACB9;
-                    }
-                }
-            }
-        }
-
-
-
-        .subtitle {
-            font-size: 0.28rem;
-            color: #061023;
-            font-weight: 400;
-            line-height: 0.5rem;
-            margin: 0 0 0.2rem 0;
-        }
-
-        .tip {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            font-weight: 400;
-            font-size: 0.24rem;
-            color: rgba(24, 24, 24, 0.5);
-            line-height: 0.4rem;
-            margin-top: 0.12rem;
-
-            .num {
-                color: #333333;
-                margin-left: 0.2rem;
-                font-weight: 500;
-            }
-
-        }
-
-        .account_box {
-            // padding-right: 0.24rem;
-
-            .add_account {
-                background-color: #F6F7FA;
-                border-radius: 0.16rem;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                height: 1.44rem;
-                padding-left: 0.5rem;
-            }
-
-            .card_box {
-                border-radius: 0.12rem;
-                height: 1.44rem;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                position: relative;
-                background-color: #F6F7FA;
-                padding: 0 0.4rem 0 0.36rem;
-                overflow: hidden;
-
-                .card_icon {
-                    background-color: #D9E4FF;
-                    width: 0.96rem;
-                    height: 0.96rem;
-                    border-radius: 0.16rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-
-                    >img {
-                        width: 0.64rem !important;
-                        height: 0.64rem !important;
-                    }
-                }
-
-                .card {
-                    flex: 1;
-                    margin: 0 0.2rem 0 0.36rem;
-                    text-align: left;
-                    font-size: 0.24rem;
-                    color: #061023;
-                    font-weight: 500;
-
-                    .code {
-                        font-size: 0.28rem;
-                        margin-bottom: 0.1rem;
-                        font-weight: 400;
-                    }
-                }
-
-                .more_card {
-                    color: #1A59F6;
-                    font-size: 0.24rem;
-                    font-weight: 400;
-                }
-
-
-            }
+    .card_icon {
+        width: 0.96rem;
+        height: 0.96rem;
+        margin-right: 0.18rem;
+        img{
+            border-radius: 50%;
         }
     }
 
-    .submit {
-        width: calc(100% - 0.64rem);
-        height: 1.12rem;
+    .card {
+        flex: 1;
+        margin-right: 0.32rem;
+        line-height: 0.44rem;
+        .code {
+            font-size: 0.32rem;
+            font-weight: 600;
+        }
+        .name{
+            font-size: 0.28rem;
+            color:#666D80;
+        }
+    }
+
+    .more_card {
+        color: #1A59F6;
+        font-size: 0.24rem;
+        font-weight: 400;
+    }
+
+
+}
+
+ .card_box_active {
+    border: 1px solid #1A59F6;
+
+    .checked {
         position: absolute;
-        bottom: 1rem;
-        left: 50%;
-        transform: translateX(-50%);
+        top: -1px;
+        right: -1px;
+        background-size: 100% 100%;
+        width: 0.42rem;
+        height: 0.36rem;
+
+        >img {
+            width: 0.17rem !important;
+            height: 0.14rem !important;
+            position: absolute;
+            right: 0.06rem;
+            top: 0.08rem;
+        }
     }
 }
-</style>
-<style lang="less" scoped>
+
 .withdraw_accounr_dialog {
-    background-color: #fff;
-    border-top-left-radius: 0.4rem;
-    border-top-right-radius: 0.4rem;
-    overflow: hidden;
-    padding: 1.2rem 0.32rem 0.8rem 0.32rem;
-    position: relative;
-
-    .title {
-        height: 1rem;
-        position: absolute;
-        top: 0.2rem;
-        left: 0;
-        text-align: center;
-        line-height: 1rem;
-        font-size: 0.32rem;
-        width: 100%;
-        color: #121826;
-        pointer-events: none;
-        font-weight: bold;
+    
+    .lists{
+        height: 60vh;
+        overflow-y: auto;
+        margin-top:0.2rem;
+        padding-bottom: 0.32rem;
     }
-
-    .close_icon {
-        position: absolute;
-        width: 0.4rem;
-        height: 0.4rem;
-        top: 0.24rem;
-        right: 0.32rem;
+    .card_lists{
+        padding: 0.2rem 0.32rem 0.32rem 0.32rem;
     }
-
-    .swap_dialog_item {
-        height: 1.12rem;
-        line-height: 0;
+    .search_box {
+        height: 0.8rem;
+        padding: 0 0.32rem;
+        margin:0.52rem 0.3rem 0 0.3rem;
         display: flex;
         align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid #F5F5F5;
-        overflow: hidden;
-        position: relative;
+        background-color: #F5F7FC;
+        border-radius: 0.6rem;
+        border: 1px solid #D0D8E2;
 
-        .icon {
-            width: 0.4rem;
-            height: 0.4rem;
+        .search_icon {
+            width: 0.48rem;
+            height: 0.48rem;
             margin-right: 0.24rem;
         }
-    }
 
+        .ipt {
+            height: 100%;
+            font-weight: 400;
+            color:#061023 !important;
+        }
+        .ipt::placeholder{
+            color:#A4ACB9;
+        }
+    }
+    .swap_dialog_item {
+        height: 1.04rem;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #EFF3F8;
+        overflow: hidden;
+        position: relative;
+        font-size:0.3rem;
+        margin:0 0.32rem;
+        .icon {
+            width: 0.64rem;
+            height: 0.64rem;
+            margin-right: 0.2rem;
+        }
+    }
+    .swap_dialog_item:last-child{
+        border-bottom: 0px;
+    }
     .swap_dialog_item_active {
         color: #014CFA;
         font-weight: 600;
-
         .check_icon {
             position: absolute;
             right: 0.24rem;
             color: #014CFA;
-            font-size: 0.28rem;
+            width: 0.48rem;
+            height: 0.48rem;
+            top:50%;
+            margin-top: -0.24rem;
         }
     }
-
-    .search_box {
-        height: 0.8rem;
-        background-color: #F5F5F5;
-        border-radius: 0.4rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 0.32rem;
-        padding: 0 0.4rem;
-
-        input {
-            flex: 1;
-            color: #121826;
-        }
-    }
-
-    .tabs {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin-bottom: 0.4rem;
-
-        .tab {
-            height: 0.72rem;
-            border-radius: 0.72rem;
-            display: flex;
-            align-items: center;
-            padding: 0 0.4rem;
-            color: #061023;
-            font-size: 0.32rem;
-            font-weight: 400;
-        }
-
-        .active_tab {
-            background-color: #F6F8FF;
-            color: #014CFA;
-            font-weight: 500;
-        }
-    }
-
-    .list {
-        max-height: 70vh;
-        overflow-y: auto;
-
-        .add_account {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.4rem 0;
-        }
-    }
-
-    .add_item {
-        margin-bottom: 0.36rem;
-        border: 1px dashed #CCD7FD;
-        border-radius: 0.12rem;
-        height: 1.44rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .dialog_account_item {
-        border-radius: 0.12rem;
-        height: 1.44rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: relative;
-        background-color: #F6F7FA;
-        padding: 0 0.4rem 0 0.36rem;
-        overflow: hidden;
-        margin-bottom: 0.36rem;
-
-        .card_icon {
-            background-color: #D9E4FF;
-            width: 0.96rem;
-            height: 0.96rem;
-            border-radius: 0.16rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            >img {
-                width: 0.64rem !important;
-                height: 0.64rem !important;
-            }
-        }
-
-        .card {
-            flex: 1;
-            margin: 0 0.2rem 0 0.36rem;
-            text-align: left;
-            font-size: 0.24rem;
-            color: #061023;
-            font-weight: 500;
-            line-height: 1;
-
-            .code {
-                font-size: 0.28rem;
-                margin-bottom: 0.1rem;
-                font-weight: 400;
-            }
-        }
-
-
-    }
-
-    .dialog_account_item_active {
-        border: 1px solid #1A59F6;
-
-        .checked {
-            position: absolute;
-            top: -0.04rem;
-            right: -0.04rem;
-            background-size: 100% 100%;
-            width: 0.46rem;
-            height: 0.42rem;
-
-            >img {
-                width: 0.18rem !important;
-                height: 0.12rem !important;
-                position: absolute;
-                right: 0.06rem;
-                top: 0.08rem;
-            }
-        }
+    .card_box{
+        margin-top: 0.22rem;
     }
 
 }
+
 </style>

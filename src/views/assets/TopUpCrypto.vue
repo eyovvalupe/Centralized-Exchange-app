@@ -79,7 +79,6 @@
                         </div>
                         <div>{{ topUpMode == 1 ? form.currency : 'USDT' }}</div>
                     </div>
-
                     <!-- <div>
                         <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
                     </div> -->
@@ -95,7 +94,6 @@
             <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard">
             </Tab>
         </Tabs>
-
         
         <!-- 币种选择弹窗 -->
         <Popup v-model:show="showDialog" position="bottom" round closeable teleport="body">
@@ -144,7 +142,6 @@
                 </div>
             </div>
         </Popup>
-
 
         <!-- 充提记录 -->
         <RecordList ref="RecordListRef" />
@@ -520,6 +517,7 @@ onBeforeUnmount(() => {
     padding-top: 0.2rem;
     padding-bottom: 0.32rem;
 }
+
 .topup_accounr_dialog {
     
     .lists{

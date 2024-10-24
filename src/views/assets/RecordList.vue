@@ -2,57 +2,60 @@
 <template>
     <div class="page page_record_list">
         <Top :title="title" />
-
-        <!-- 充值列表 -->
-        <div ref="list_0" v-if="active == 0" class="list active_list">
-            <NoData v-if="!loading && !list.length" />
-            <template v-if="active == 0">
-                <div v-for="(item, i) in list" :key="i" class="list_0_item">
-                    <div class="date" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">{{
-                        getDate(item.date) }}</div>
-                    <RechargeItem @close="showBottom = false" :item="item" />
-                </div>
-            </template>
-            <LoadingMore class="active_more" :loading="loading" :finish="finish"
-                v-if="((finish && list.length) || (!finish)) && active == 0" />
-        </div>
-
-        <!-- 提现列表 -->
-        <div ref="list_1" class="list active_list" v-if="active == 1">
-            <NoData v-if="!loading && !list.length" />
-            <template v-if="active == 1">
-                <div v-for="(item, i) in list" :key="i">
-                    <WithdrawItem :item="item" />
-                </div>
-            </template>
-            <LoadingMore class="active_more" :loading="loading" :finish="finish"
-                v-if="((finish && list.length) || (!finish)) && active == 1" />
-        </div>
-
-        <!-- 划转记录 -->
-        <div ref="list_2" class="list active_list" v-if="active == 2">
-            <NoData v-if="!loading && !list.length" />
-            <template v-if="active == 2">
-                <div v-for="(item, i) in list" :key="i">
-                    <TransferItem :item="item" />
-                </div>
-            </template>
-            <LoadingMore class="active_more" :loading="loading" :finish="finish"
-                v-if="((finish && list.length) || (!finish)) && active == 2" />
-        </div>
-
-        <!-- 兑换记录 -->
-        <div ref="list_3" class="list active_list" v-if="active == 3">
+         <!-- 兑换记录 -->
+         <div ref="list_3" class="list active_list" v-if="active == 3">
             <NoData v-if="!loading && !list.length" />
             <template v-if="active == 3">
                 <div v-for="(item, i) in list" :key="i">
-                    <!-- <SwapItem :item="item" /> -->
                     <TransferItem :item="item" />
                 </div>
             </template>
             <LoadingMore class="active_more" :loading="loading" :finish="finish"
                 v-if="((finish && list.length) || (!finish)) && active == 3" />
         </div>
+        
+        <Tabs type="oval-card" v-else v-model:active="active" :swipeable="false" animated 
+            shrink @change="onChange" >
+            <Tab title="充值记录" name="0">
+                 <div>
+                    <NoData v-if="!loading && !list.length" />
+                    <div v-for="(item, i) in list" :key="i" class="list_0_item">
+                        <div class="date" @click="dateClick(getDate(item.date))" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
+                            {{ getDate(item.date) }}
+                            <span class="date_more" :class="{'date_more_up':!openDates.includes(getDate(item.date))}"><img src="/static/img/assets/more.png" alt="more"></span>
+                        </div>
+                        <transition name="opacity">
+                            <RechargeItem @close="showBottom = false" :item="item" v-show="!openDates.includes(getDate(item.date))" />
+                        </transition>
+                    </div>
+                    <LoadingMore class="active_more" :loading="loading" :finish="finish"
+                        v-if="((finish && list.length) || (!finish)) && active == 0" />
+                 </div>
+            </Tab>
+            <Tab title="提现记录" name="1">
+                 <div>
+                    <NoData v-if="!loading && !list.length" />
+                    <div v-for="(item, i) in list" :key="i">
+                        <WithdrawItem :item="item" />
+                    </div>
+                    <LoadingMore class="active_more" :loading="loading" :finish="finish"
+                        v-if="((finish && list.length) || (!finish)) && active == 1" />
+                 </div>
+            </Tab>
+            <Tab title="划转" name="2">
+                <div>
+                    <NoData v-if="!loading && !list.length" />
+                    <div v-for="(item, i) in list" :key="i">
+                        <TransferItem :item="item" />
+                    </div>
+                    <LoadingMore class="active_more" :loading="loading" :finish="finish"
+                        v-if="((finish && list.length) || (!finish)) && active == 2" />
+                </div>
+            </Tab>
+        </Tabs>
+
+
+       
     </div>
 </template>
 
@@ -66,13 +69,20 @@ import LoadingMore from "@/components/LoadingMore.vue"
 import RechargeItem from "@/components/RecordItem/RechargeItem.vue"
 import WithdrawItem from "@/components/RecordItem/WithdrawItem.vue"
 import TransferItem from "@/components/RecordItem/TransferItem.vue"
-import SwapItem from "@/components/RecordItem/SwapItem.vue"
+
 import { useRoute } from "vue-router"
 
+const openDates = ref([])
+
 const route = useRoute()
-
-
-
+const dateClick = (date)=>{
+    const index = openDates.value.indexOf(date)
+    if(index > -1){
+        openDates.value.splice(index,1)
+    }else{
+        openDates.value.push(date)
+    }
+}
 
 const titles = ['充值记录', '提现记录', '划转记录', '兑换记录']
 const active = ref(route.query.tab || 0)
@@ -181,82 +191,29 @@ const getDate = str => {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .page_record_list {
-    padding-top: 1.12rem;
-    height: 100%;
-    overflow-y: auto;
-
-    .rsl_tabs {
-        .van-tabs__nav--card {
-            border: none;
-            margin: 0 0.76rem 0 0.32rem;
-        }
-
-        .van-tab--card {
-            border-right: none;
-            color: #061023;
-            // background-color: #f5f5f5;
-        }
-
-        .van-tab--card.van-tab--active {
-
-            background-color: #F6F8FF;
-            border-radius: 0.3rem;
-            color: #014CFA;
-            font-weight: 500
-        }
-
-        .van-tab--shrink {
-            padding: 0 0.24rem;
-        }
-
-        .van-tabs__wrap {
-            height: 0.8rem;
-            padding-bottom: 0.34rem;
-        }
-
-        .van-tabs__nav--card {
-            height: 0.6rem;
-        }
-
-        .van-tab {
-            line-height: 0.6rem;
-            font-size: 0.28rem;
-        }
-    }
-
-    &:has(.list_down) {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-
-    .close_icon {
-        width: 0.32rem;
-        height: 0.32rem;
-        position: absolute;
-        right: 0.24rem;
-        top: 0.2rem;
-        z-index: 999;
-    }
-
-    .list {
-        padding: 0 0.32rem 0.32rem 0.32rem;
-        transition: all ease .3s;
-    }
-
-    .list_down {
-        height: calc(var(--app-height) - 1.2rem);
-    }
-
-    .list_0_item {
-        .date {
-            color: #343434;
-            font-size: 0.28rem;
-            font-weight: 600;
-            line-height: 0.48rem;
-            padding: 0.36rem 0;
-        }
+    padding: 1.12rem 0.32rem 0.32rem 0.32rem;
+    
+}
+.date{
+    height: 0.32rem;
+    padding: 0.1rem 0;
+    margin-top: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+.date_more{
+    width: 0.32rem;
+    height: 0.32rem;
+    margin-left: 0.06rem;
+    img{
+        transition: .3s;
     }
 }
+.date_more_up img{
+    transform: rotate(-180deg);
+}
+
 </style>

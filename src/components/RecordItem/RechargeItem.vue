@@ -2,9 +2,7 @@
 <template>
     <div class="recgarge_item" @click="goInfo">
         <div class="icon_box">
-            <div class="icon">
-                <img src="/static/img/account/crypto_icon.png" alt="img">
-            </div>
+            <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
         </div>
         <div class="content">
             <div class="item_title">{{ item.currency }}</div>
@@ -53,39 +51,27 @@ const goInfo = () => {
 <style lang="less" scoped>
 .recgarge_item {
     display: flex;
-    align-items: stretch;
-    padding: 0.24rem 0;
-    border-bottom: 1px dashed #CBCBCB;
-
+    justify-content: space-between;
+    padding: 0.3rem 0.32rem;
+    border: 1px solid #D0D8E2;
+    border-radius: 0.32rem;
+    margin-top: 0.2rem;
     .icon_box {
-        width: 0.96rem;
-        height: 0.96rem;
-        background-color: #D9E4FF;
-        border-radius: 0.16rem;
-        padding: 0.16rem;
-
-        .icon {
-            width: 100%;
-            height: 100%;
-        }
+        width: 0.84rem;
+        height: 0.84rem;
     }
 
     .content {
-        padding: 0.0.16rem;
+        padding: 0 0.16rem;
         flex: 1;
-        text-align: left;
-        line-height: 1.2;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
-        align-items: flex-start;
 
         .item_title {
-            width: 100%;
-            color: #343434;
-            font-weight: 600;
-            font-size: 0.28rem;
-            text-align: left;
+            color: #061023;
+            font-size: 0.3rem;
+            font-weight: 400;
+            line-height: 0.3rem;
         }
 
         .address {
@@ -95,42 +81,36 @@ const goInfo = () => {
         }
 
         .time {
-            color: #A3A3A7;
-            font-size: 0.28rem;
+            color: #8F92A1;
+            font-size: 0.24rem;
+            font-weight: 400;
+            line-height: 0.24rem;
+            margin-top: 0.2rem
         }
     }
 
     .right {
         height: 100%;
-        // padding-top: 0.2rem;
         text-align: right;
-
+        line-height: 0.3rem;
         .amount {
-            font-size: 0.32rem;
+            font-size: 0.3rem;
             color: #000000;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .status {
-            color: rgba(136, 136, 136, 1);
-            background-color: rgba(136, 136, 136, 0.08);
-            padding: 0 0.3rem;
-            border-radius: 0.04rem;
-            display: flex;
-            align-items: center;
-            font-size: 0.24rem;
-            margin-top: 0.1rem;
-            height: 0.42rem;
+            font-size: 0.28rem;
+            color:#014CFA;
+            margin-top: 0.14rem;
         }
 
         .status_success {
-            color: rgba(10, 178, 125, 1);
-            background-color: rgba(10, 178, 125, 0.08);
+            color: #18B762;
         }
 
         .status_failed {
-            color: rgba(232, 80, 58, 1);
-            background-color: rgba(232, 80, 58, 0.08);
+            color: #8F92A1;
         }
     }
 }
