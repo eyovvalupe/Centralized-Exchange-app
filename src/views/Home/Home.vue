@@ -174,6 +174,7 @@
       <!--//////////////////////////////////-->
       <HomePriority />
       <!--//////////////////////////////////-->
+      <HomeWatchList />
       <div class="mb-[0.32rem]">
         <div class="flex justify-between items-center mb-[0.32rem]">
           <div class="font-bold text-[0.32rem]">优选</div>
@@ -396,6 +397,7 @@ import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import Ai from "../Market/components/Ai.vue";
 import { Translation } from "vue-i18n";
+import HomeWatchList from '@/components/HomeWatchList.vue'
 
 const openEye = ref(false);
 

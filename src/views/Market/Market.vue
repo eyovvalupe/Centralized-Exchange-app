@@ -8,8 +8,7 @@
     </div>
     <div class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white" />
     <HeaderTabs v-model:active="active" class="w-[6.28rem]" :tabs="[$t('自选'), $t('买币'), $t('股票'), $t('合约'), $t('外汇'), $t('黄金')]" @change="e => changeTab(e, true)" />
-
-    <Swipe ref="swipe" :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" @change="changeTab">
+    <Swipe ref="swipe" :autoplay="0" :initial-swipe="marketActiveTab" :show-indicators="false" @change="changeTab">
       <SwipeItem>
         <div v-if="active === 0 && activated" class="assets_body">
           <!-- 自选 -->
@@ -47,10 +46,10 @@
         </div>
       </SwipeItem>
     </Swipe>
-
-    <!-- </PullRefresh> -->
-    <!-- </transition> -->
-  </div>
+    
+  <!-- </PullRefresh> -->
+<!-- </transition> -->
+</div>
 </template>
 
 <script setup>
@@ -82,6 +81,8 @@ const scrollData = useScroll(marketPageRef, {
   throttle: 200,
   onScroll: scrollHandler,
 })
+const marketActiveTab = computed(() => store.state.marketActiveTab || 0);
+
 const openTab = ref(false)
 
 const active = ref(market_active.value)
@@ -97,6 +98,8 @@ const loadedTab = ref([active.value])
 provide('scrollData', scrollData)
 setScrollData(scrollData)
 const changeTab = (key, slideSwipe = false) => {
+  console.log("change ta===============>",key);
+  store.commit("setMarketActiveTab", key);
   active.value = key
   market_active.value = key
   openTab.value = false

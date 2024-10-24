@@ -61,9 +61,13 @@ export default {
         marketStockKoreaDataList: [],
 
         graphColorGradient: false,
+        marketActiveTab: 0,
 
     },
     mutations: {
+        setMarketActiveTab(state,data) {
+            state.marketActiveTab = data;
+        },
         setMarketStockUsDataList(state, data) {
             state.marketStockUsDataList = data
         },
