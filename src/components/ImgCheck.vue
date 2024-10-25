@@ -12,8 +12,10 @@
       </div>
     </div>
 
-    <div class="title">安全验证</div>
-    <div class="check_title">拖动滑块，使图片角度为正</div>
+    <div class="security_description">
+      <div class="title">安全验证</div>
+      <div class="check_title">拖动滑块，使图片角度为正</div>
+    </div>
     <div class="check_pic">
       <img
         class="check_img"
@@ -152,6 +154,7 @@ onMounted(() => {
     align-items: center;
     top: 0;
     background-color: #fff;
+    margin-bottom: 0.2rem;
 
     .top_back_container {
       .arrow_icon {
@@ -168,9 +171,10 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-width: 1px;
+      border-width: 0.02rem;
       border-color: #edf2f7;
       border-radius: 0.36rem;
+
       .language_icon {
         width: 0.432rem;
         height: 0.432rem;
@@ -182,49 +186,33 @@ onMounted(() => {
     }
   }
 
-  .top_back {
-    position: absolute;
-    top: 0.2rem;
-    left: 0.2rem;
-    color: #161616;
-    font-size: 0.4rem;
-    width: 0.8rem;
-    height: 0.8rem;
+  .security_description {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-  }
+    padding: 0.28rem 0 0.6rem 0;
 
-  .title {
-    color: var(--, #061023);
-    font-family: "PingFang SC";
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%;
-    margin-bottom: 8px;
-    /* 39.2px */
-  }
+    .title {
+        font-size: 0.56rem;
+        font-weight: 600;
+        line-height: 0.784rem;
+        margin-bottom: 0.16rem;
+    }
 
-  .check_title {
-    color: var(--, #000);
-    text-align: center;
-    font-family: "PingFang SC";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%;
-    /* 21px */
+    .check_title {
+        font-size: 0.28rem;
+        line-height: 0.42rem;
+    }
   }
 
   .check_pic {
-    margin: 0.64rem auto;
-    width: 219px;
-    height: 219px;
+    width: 4.38rem;
+    height: 4.38rem;
     flex-shrink: 0;
     background-color: #d0d8e2;
-    padding: 10px;
-    border-radius: 219px;
+    padding: 0.2rem;
+    border-radius: 2.19rem;
+    margin-bottom: 0.8rem;
   }
 
   .status_text {
