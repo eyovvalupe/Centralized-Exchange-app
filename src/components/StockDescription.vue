@@ -36,7 +36,7 @@
         class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.15rem] pr-[0.15rem]"
       >
         <span class="text-[0.28rem] text-[#061023]">{{
-          item["symbol"]
+          item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
         }}</span>
         <span class="stock_price">{{ item.amount }}</span>
         <div class="flex flex-row justify-between stock_detail">

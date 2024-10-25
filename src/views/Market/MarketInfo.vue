@@ -42,7 +42,7 @@
           :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
         >
           <template v-if="item.price || item.close">
-            {{ Number(item.price || item.close) }}
+            {{ Number(item.price.toFixed(6) || item.close) }}
           </template>
           <span v-else>--</span>
         </h1>
