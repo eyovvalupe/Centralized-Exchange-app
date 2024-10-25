@@ -92,6 +92,7 @@
         
             </Tab>
             <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard">
+                
             </Tab>
         </Tabs>
         

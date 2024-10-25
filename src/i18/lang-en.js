@@ -1,3 +1,4 @@
+
 export default {
     assets:{
         recharge:"recharge",
@@ -44,6 +45,8 @@ export default {
         success:"success",
         fail:'fail',
         finish:'finish'
-
+    },
+    transfer:{
+        transferRecord:"transfer record"
     }
 }
