@@ -20,7 +20,7 @@
         @click="goInfo(item)"
       >
         <div class="font-medium text-[0.28rem] mb-[0.1rem] text-center">
-          {{ item.symbol }}
+          {{ item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"] }}
         </div>
         <div class="flex justify-between mb-[0.1rem]">
           <div class="text-[0.24rem] font-bold">
