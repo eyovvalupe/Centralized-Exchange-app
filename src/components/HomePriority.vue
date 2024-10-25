@@ -13,10 +13,11 @@
     </div>
     <div class="flex justify-between">
       <div
-      v-for="(item, i) in marketCountryStockList"
-      :key="i"
-      :class="item.ratio > 0 ? 'up_price' : 'down_price'"  
-      class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+        v-for="(item, i) in marketCountryStockList"
+        :key="i"
+        :class="item.ratio > 0 ? 'up_price' : 'down_price'"
+        class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+        @click="goInfo(item)"
       >
         <div class="font-medium text-[0.28rem] mb-[0.1rem] text-center">
           {{ item.symbol }}
@@ -45,10 +46,24 @@
 import store from "@/store";
 import { onMounted } from "vue";
 import SparkLine from "@/components/SparkLine.vue";
+import router from "@/router";
 
 const marketCountryStockList = computed(
   () => store.state.marketCountryStockList || []
 );
+
+const goInfo = (item) => {
+  store.commit("setCurrStock", item);
+  setTimeout(() => {
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: item.symbol,
+        type: "stock",
+      },
+    });
+  }, 100);
+};
 
 onMounted(() => {
   console.log(marketCountryStockList.value);
