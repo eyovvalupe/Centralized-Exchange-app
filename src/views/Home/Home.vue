@@ -4,17 +4,48 @@
     <!-- 顶部 -->
     <div class="top_box relative overflow-hidden">
       <div class="absolute left-0 top-0">
-        <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag = "true" v-model="currentSlide">
-          <Slide v-for="(slide, index) in slides" :key="index" >
+        <Carousel
+          :autoplay="5000"
+          :wrap-around="true"
+          :mouseDrag="true"
+          v-model="currentSlide"
+        >
+          <Slide v-for="(slide, index) in slides" :key="index">
             <img :src="slide" class="w-full" alt="img" />
           </Slide>
         </Carousel>
       </div>
-      
-      <div class="absolute  flex gap-[0.05rem] transition-all bottom-0 mb-[1rem] left-0 ml-[3.6rem]"> 
-        <div @click="()=> currentSlide = 0" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[currentSlide == 0 ? 'h-[0.16rem] bg-[#014CFA]' : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50']"></div>
-        <div @click="()=> currentSlide = 1" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[currentSlide == 1 ? 'h-[0.16rem] bg-[#014CFA]' : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50']"></div>
-        <div @click="()=> currentSlide = 2" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[currentSlide == 2 ? 'h-[0.16rem] bg-[#014CFA]' : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50']"></div> 
+
+      <div
+        class="absolute flex gap-[0.05rem] transition-all bottom-0 mb-[1rem] left-0 ml-[3.6rem]"
+      >
+        <div
+          @click="() => (currentSlide = 0)"
+          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
+          :class="[
+            currentSlide == 0
+              ? 'h-[0.16rem] bg-[#014CFA]'
+              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+          ]"
+        ></div>
+        <div
+          @click="() => (currentSlide = 1)"
+          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
+          :class="[
+            currentSlide == 1
+              ? 'h-[0.16rem] bg-[#014CFA]'
+              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+          ]"
+        ></div>
+        <div
+          @click="() => (currentSlide = 2)"
+          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
+          :class="[
+            currentSlide == 2
+              ? 'h-[0.16rem] bg-[#014CFA]'
+              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+          ]"
+        ></div>
       </div>
       <div class="funcs relative">
         <div class="user_box">
@@ -28,8 +59,7 @@
           <div class="custom-lock-icon"></div>
         </div>
       </div>
-      <div class="pl-[0.285rem] mt-[1.25rem]">
-      </div>
+      <div class="pl-[0.285rem] mt-[1.25rem]"></div>
     </div>
     <div
       class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between relative"
@@ -40,7 +70,9 @@
           通知公告内容测试测试测试...
         </div>
       </div>
-      <div class="text-[0.24rem] text-[#7B7B7B]">10/16 16:10</div>
+      <div class="text-[0.24rem] text-[#7B7B7B]">
+        {{ formatDate(new Date()) }}
+      </div>
     </div>
     <div class="relative mt-[0.32rem] mx-[0.32rem]">
       <!--//////////////////////////////////-->
@@ -109,28 +141,10 @@
           {{ openEye ? assets.total : "*******" }}
         </div>
       </div>
-      <!--//////////////////////////////////-->
       <HomeCrypto />
-      <!--//////////////////////////////////-->
-      <div
-        class="flex w-full h-[2.18rem] border-[0.02rem] border-[#EFF3F8] bg-[#F5F7FC] rounded-[0.32rem] mb-[0.32rem]"
-      >
-        <div
-          class="flex flex-col items-center justify-center bg-white border-[0.02rem] rounded-[0.32rem] border-[#EFF3F8] w-[1.04rem]"
-        >
-          <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">今日</div>
-          <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">指数</div>
-          <div class="text[0.24rem] text-[#666D80]">10/17</div>
-        </div>
-        <div style="width: 5.8rem; height: 2.18rem;">
-          <HomeCountry />
-        </div>
-      </div>
-      <!--//////////////////////////////////-->
+      <HomeToday />
       <HomePriority />
-      <!--//////////////////////////////////-->
       <HomeWatchList />
-      <!--//////////////////////////////////-->
       <div>
         <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
         <div class="flex gap-1">
@@ -181,16 +195,15 @@
       v-if="marketPerformance == 0"
       :loading="marketLoading"
       :deleteItem="false"
-      :list="marketDownList.slice(0,5)"
+      :list="marketDownList.slice(0, 5)"
       :marketType="'all'"
-      page = "home"
     />
     <StockTable
       style="margin-top: 0.1rem"
       v-if="marketPerformance == 1"
       :loading="marketLoading"
       :deleteItem="false"
-      :list="marketUpList.slice(0,5)"
+      :list="marketUpList.slice(0, 5)"
       :marketType="'all'"
     />
     <StockTable
@@ -198,7 +211,7 @@
       v-if="marketPerformance == 2"
       :loading="marketLoading"
       :deleteItem="false"
-      :list="marketVolumeList.slice(0,5)"
+      :list="marketVolumeList.slice(0, 5)"
       :marketType="'all'"
     />
     <!-- banner -->
@@ -245,7 +258,7 @@
         </div>
       </Tab>
       <Tab :title="'交易机器人'">
-        <div class="mx-[0.32rem]"><Ai page = "home"/></div>
+        <div class="mx-[0.32rem]"><Ai page="home" /></div>
       </Tab>
     </Tabs>
 
@@ -274,19 +287,21 @@ import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import StockTable from "@/components/StockTable.vue";
 import StockSortList from "@/components/StockSortList.vue";
-import HomeCountry from '@/components/HomeCountry.vue';
-import HomePriority from '@/components/HomePriority.vue';
+import HomeCountry from "@/components/HomeCountry.vue";
+import HomePriority from "@/components/HomePriority.vue";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import Ai from "../Market/components/Ai.vue";
 import { Translation } from "vue-i18n";
-import HomeWatchList from '@/components/HomeWatchList.vue'
-import HomeCrypto from '@/components/HomeCrypto.vue'
+import HomeWatchList from "@/components/HomeWatchList.vue";
+import HomeCrypto from "@/components/HomeCrypto.vue";
+import HomeToday from '@/components/HomeToday.vue';
+import { formatDate } from "@/utils/formatDate";
 
 const openEye = ref(false);
 
 const { startSocket } = useSocket();
-const currentSlide =ref(0);
+const currentSlide = ref(0);
 
 const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
@@ -355,7 +370,7 @@ onActivated(() => {
       ...marketVolumeList.value,
       ...marketUpList.value,
       ...marketDownList.value,
-      ...marketCountryStockList.value
+      ...marketCountryStockList.value,
     ]);
   }, 500);
 });
@@ -414,7 +429,7 @@ const getRecommendData = () => {
               ...marketVolumeList.value,
               ...marketUpList.value,
               ...marketDownList.value,
-              ...marketCountryStockList.value
+              ...marketCountryStockList.value,
             ]);
           }, 500);
         }
@@ -426,7 +441,7 @@ const getRecommendData = () => {
           ...marketVolumeList.value,
           ...marketUpList.value,
           ...marketDownList.value,
-          ...marketCountryStockList.value
+          ...marketCountryStockList.value,
         ]);
       }, 500);
     })
@@ -539,7 +554,7 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
             ...arr,
             ...marketRecommndStockList.value,
             ...contractList.value,
-            ...marketCountryStockList.value
+            ...marketCountryStockList.value,
           ]);
         }, 500);
       }

@@ -13,75 +13,30 @@
     </div>
     <div class="flex justify-between">
       <div
-      :class="marketCountryStockList[0].ratio > 0 ? 'up_price' : 'down_price'"  
-      class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+        v-for="(item, i) in marketCountryStockList"
+        :key="i"
+        :class="item.ratio > 0 ? 'up_price' : 'down_price'"
+        class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+        @click="goInfo(item)"
       >
         <div class="font-medium text-[0.28rem] mb-[0.1rem] text-center">
-          {{ marketCountryStockList[0].symbol }}
+          {{ item.symbol }}
         </div>
         <div class="flex justify-between mb-[0.1rem]">
           <div class="text-[0.24rem] font-bold">
-            {{ marketCountryStockList[0].price }}
+            {{ item.price }}
           </div>
           <div class="text-[0.22rem]">
-            {{ marketCountryStockList[0].ratio > 0 ? "+" : ""
-            }}{{ ((marketCountryStockList[0].ratio || 0) * 100).toFixed(2) }}%
+            {{ item.ratio > 0 ? "+" : ""
+            }}{{ ((item.ratio || 0) * 100).toFixed(2) }}%
           </div>
         </div>
         <SparkLine
-          v-if="marketCountryStockList[0].points"
-          :points="marketCountryStockList[0].points"
-          :ratio="marketCountryStockList[0].ratio"
+          v-if="item.points"
+          :points="item.points"
+          :ratio="item.ratio"
           :style="'width: 100%; height: 0.5rem'"
-          :xtimes="1.6"
-        />
-      </div>
-      <div
-      :class="marketCountryStockList[1].ratio > 0 ? 'up_price' : 'down_price'"  
-      class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
-      >
-        <div class="font-medium text-[0.28rem] mb-[0.1rem] text-center">
-          {{ marketCountryStockList[1].symbol }}
-        </div>
-        <div class="flex justify-between mb-[0.1rem]">
-          <div class="text-[0.24rem] font-bold">
-            {{ marketCountryStockList[1].price }}
-          </div>
-          <div class="text-[0.22rem]">
-            {{ marketCountryStockList[1].ratio > 0 ? "+" : ""
-            }}{{ ((marketCountryStockList[1].ratio || 0) * 100).toFixed(2) }}%
-          </div>
-        </div>
-        <SparkLine
-          v-if="marketCountryStockList[1].points"
-          :points="marketCountryStockList[1].points"
-          :ratio="marketCountryStockList[1].ratio"
-          :style="'width: 2.2rem; height: 0.5rem'"
-          :xtimes="1.6"
-        />
-      </div>
-      <div
-      :class="marketCountryStockList[2].ratio > 0 ? 'up_price' : 'down_price'"  
-      class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
-      >
-        <div class="font-medium text-[0.28rem] mb-[0.1rem] text-center">
-          {{ marketCountryStockList[2].symbol }}
-        </div>
-        <div class="flex justify-between mb-[0.1rem]">
-          <div class="text-[0.24rem] font-bold">
-            {{ marketCountryStockList[2].price }}
-          </div>
-          <div class="text-[0.22rem]">
-            {{ marketCountryStockList[2].ratio > 0 ? "+" : ""
-            }}{{ ((marketCountryStockList[2].ratio || 0) * 100).toFixed(2) }}%
-          </div>
-        </div>
-        <SparkLine
-          v-if="marketCountryStockList[2].points"
-          :points="marketCountryStockList[2].points"
-          :ratio="marketCountryStockList[2].ratio"
-          :style="'width: 2.2rem; height: 0.5rem'"
-          :xtimes="1.6"
+          :xtimes="1.5"
         />
       </div>
     </div>
@@ -91,13 +46,26 @@
 import store from "@/store";
 import { onMounted } from "vue";
 import SparkLine from "@/components/SparkLine.vue";
+import router from "@/router";
 
 const marketCountryStockList = computed(
   () => store.state.marketCountryStockList || []
 );
 
+const goInfo = (item) => {
+  store.commit("setCurrStock", item);
+  setTimeout(() => {
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: item.symbol,
+        type: "stock",
+      },
+    });
+  }, 100);
+};
+
 onMounted(() => {
-  console.log(marketCountryStockList.value);
 });
 </script>
 <style lang="less">

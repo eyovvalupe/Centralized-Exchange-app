@@ -31,7 +31,7 @@
         <div class=""></div>
       </div>
       <div
-        class="bg-[#FFF] w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.32rem]"
+        class="bg-[#FFF] w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.24rem]"
       >
         <Carousel
           :autoplay="5000"
@@ -40,12 +40,12 @@
           v-model="currentSlide"
         >
           <Slide v-for="(list, index) in recomendedCryptoList" :key="index">
-            <div @click="goInfo(list) " class="carousel__item">
-              <div class="text-[font-bold] text-[15px] mb-[0.32rem]">
+            <div @click="goInfo(list) " class="carousel__item p-[0.08rem]">
+              <div class="text-[font-bold] text-[15px] mb-[0.32rem] mt-[0.12rem]">
                 {{ list.symbol }}
               </div>
               <div
-                class="flex justify-between mb-[0.32rem]"
+                class="flex justify-between mb-[0.3rem]"
                 :class="[
                   list.ratio == undefined
                     ? ''
@@ -70,7 +70,7 @@
                   :points="list.points"
                   :ratio="list.ratio"
                   :xtimes="2.2"
-                  :ytimes="2"
+                  :ytimes="1.6"
                 />
               </div>
             </div>

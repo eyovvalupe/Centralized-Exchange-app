@@ -1,10 +1,10 @@
 <!-- 登录页 -->
 <template>
-  <div class="page page-login">
+  <div class="page page-login max-width">
     <!-- 返回和语言 -->
     <div class="max-width top">
       <div class="top_back" @click="goBack">
-        <Icon name="cross" />
+        <Icon name="arrow-left" />
       </div>
 
       <div class="top_lang" @click="goLang">
@@ -19,78 +19,58 @@
 
     <!-- tab -->
     <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
-      <Tab :title="'邮箱登录'"> </Tab>
-      <Tab :title="'手机登录'"></Tab>
+      <Tab :title="'邮箱'"></Tab>
+      <Tab :title="'手机'"></Tab>
     </Tabs>
+
 
     <!-- 表单 -->
     <div class="form">
       <div class="form_title" v-show="activeTab == 0">邮箱</div>
       <div class="form_item margin_item" v-show="activeTab == 0">
-        <div
-          class="form_item_user"
-          v-show="saveAccount && saveAccount == form.email"
-        >
-          <img src="/static/img/user/user.png" alt="user" />
+        <!-- <div class="form_item_user" v-show="saveAccount && saveAccount == form.email"> -->
+        <div class="form_item_user" v-show="form.email">
+          <img class="van-icon" src="/static/img/assets/envelop.svg" alt="envelope" />
         </div>
-        <input
-          @change="changeAccount"
-          maxlength="20"
-          v-model.trim="form.email"
-          placeholder="您的邮箱"
-          type="text"
-          class="item_input"
-        />
+        <input @change="changeAccount" v-model.trim="form.email" placeholder="您的邮箱" type="text" class="item_input" />
         <Loading v-if="accountLoading" :size="18" type="spinner" />
+        <!-- <div class="form_item_clear" v-show="saveAccount && saveAccount == form.email"> -->
+        <div class="form_item_clear" v-show="form.email" @click="form.email = null">
+          <Icon class="" name="cross" />
+        </div>
       </div>
 
       <div class="form_title" v-show="activeTab == 1">手机号</div>
       <div class="form_item margin_item" v-show="activeTab == 1">
         <div class="code" @click="showDialog = true">
+          <span class="flag_icon">
+            <img src="/static/img/common/flag_hongkong.svg" alt="">
+          </span>
           <span>{{ form.area }}</span>
           <div class="more_icon">
             <img src="/static/img/assets/more.png" alt="img" />
           </div>
         </div>
-        <input
-          maxlength="20"
-          v-model.trim="form.phone"
-          placeholder="您的手机号"
-          type="text"
-          class="item_input"
-        />
+        <input maxlength="20" v-model.trim="form.phone" placeholder="您的手机号" type="text" class="item_input" />
       </div>
       <div class="form_title">密码</div>
       <div class="form_item">
-        <input
-          maxlength="20"
-          v-show="!showPass"
-          v-model.trim="form.password"
-          placeholder="请输入您的密码"
-          type="password"
-          class="item_input"
-        />
-        <input
-          maxlength="20"
-          v-show="showPass"
-          v-model.trim="form.password"
-          placeholder="请输入您的密码"
-          type="text"
-          class="item_input"
-        />
+        <!-- 显示密码输入时的锁图标 -->
+        <div class="form_item_user" v-if="form.password">
+          <img class="van-icon" src="/static/img/assets/lock.svg" alt="lock" />
+        </div>
+
+        <!-- 密码输入框，使用 v-if/v-else 优化 -->
+        <input maxlength="20" :type="showPass ? 'text' : 'password'" v-model.trim="form.password" placeholder="请输入您的密码"
+          class="item_input" />
+
+        <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
-          <img
-            v-show="!showPass"
-            src="/static/img/user/eye-off.png"
-            alt="off"
-          />
-          <img
-            v-show="showPass"
-            src="/static/img/user/eye-open.png"
-            alt="open"
-          />
+          <img :src="showPass ? '/static/img/user/eye-open.png' : '/static/img/user/eye-off.png'"
+            :alt="showPass ? 'open' : 'off'" />
         </div>
       </div>
+
     </div>
 
     <!-- 忘记密码 -->
@@ -98,15 +78,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button
-        :loading="loading"
-        :disabled="disabled"
-        round
-        color="#014CFA"
-        class="submit"
-        type="primary"
-        >登录</Button
-      >
+      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">登录</Button>
     </div>
 
     <!-- 去注册 -->
@@ -119,50 +91,35 @@
     <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      class="self_van_popup"
-      v-model:show="showDialog"
-      position="bottom"
-      teleport="body"
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
+      position="bottom" teleport="body">
       <div class="register_accounr_dialog">
         <div class="close_icon" @click="showDialog = false">
           <img src="/static/img/common/close.png" alt="x" />
         </div>
         <div class="item search_box">
-          <input
-            v-model.trim="searchStr"
-            class="ipt"
-            type="text"
-            placeholder="搜索"
-          />
+          <Icon class="search" name="search" size="24px" />
+          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="输入区号" />
         </div>
         <div style="height: 60vh; overflow-y: auto">
-          <div
-            @click="clickItem(item)"
-            class="transfer_dialog_item"
-            :class="{ transfer_dialog_item_active: form.area == item.code }"
-            v-for="(item, i) in showAreas"
-            :key="i"
-          >
-            <span>{{ item.cn }} ({{ item.code }})</span>
-            <Icon
-              v-if="form.area == item.code"
-              class="check_icon"
-              name="success"
-            />
+          <div @click="clickItem(item)" class="transfer_dialog_item"
+            :class="{ transfer_dialog_item_active: form.area == item.code }" v-for="(item, i) in showAreas" :key="i">
+            <span class="flag_icon">
+              <img src="/static/img/common/flag_hongkong.svg" alt="HongKong">
+            </span>
+            <span>{{ item.cn }}</span>
+            <span>({{ item.code }})</span>
+            <Icon v-if="form.area == item.code" class="cross" name="success" />
           </div>
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
     </Popup>
   </div>
-</template>
+</template> 
 
 <script setup>
-import { Icon, Button, showToast, Loading, Popup, Tabs, Tab } from "vant";
+import { Icon, Button, showToast, Loading, Popup, Tabs, Tab, Calendar } from 'vant';
 import { ref, computed, onMounted } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -220,7 +177,7 @@ const changeAccount = () => {
           saveAccount.value = form.value.email;
           localStorage.setItem("saveAccount", saveAccount.value);
         } else {
-          // showToast('账号不存在')
+          showToast('账号不存在')
         }
       })
       .finally(() => {
@@ -341,7 +298,7 @@ const submitCode = (code) => {
 
 // 返回
 const goBack = () => {
-  if (props.backFunc) return props.backFunc();
+  if (props.backFunc) return props.backFunc(); 
   if (route.query.reurl) {
     router.replace({
       name: route.query.reurl,
@@ -358,6 +315,7 @@ const goFoget = () => {
   emits("closeDialog");
   router.push({ name: "fogot" });
 };
+
 // 跳转注册
 const goRegister = () => {
   emits("closeDialog");
@@ -369,11 +327,7 @@ const goRegister = () => {
     },
   });
 };
-// 跳转多语言
-const goLang = () => {
-  emits("closeDialog");
-  router.push({ name: "language" });
-};
+ 
 
 onMounted(() => {
   Promise.all([
@@ -385,7 +339,8 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-login {
-  padding-top: 1.12rem;
+  padding-top: 1rem;
+  margin: auto;
 
   .tabs {
     overflow: hidden;
@@ -404,6 +359,7 @@ onMounted(() => {
     :deep(.van-tab--card) {
       border-right: none;
       color: #061023;
+      border-bottom: 3px solid #D0D8E2;
       // background-color: #f5f5f5;
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
@@ -411,13 +367,14 @@ onMounted(() => {
     }
 
     :deep(.van-tab--card.van-tab--active) {
-      // background-color: #014CFA;
-      // color: #fff;
-
-      background-color: #f6f8ff;
-      border-radius: 0.3rem;
-      color: #014cfa;
-      font-weight: 500;
+      background-color: white;
+      color: #2168F6;
+      font-family: "PingFang SC";
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      border-bottom: 3px solid #014CFA;
     }
 
     :deep(.van-tab--shrink) {
@@ -431,12 +388,15 @@ onMounted(() => {
     }
 
     :deep(.van-tabs__nav--card) {
-      height: 0.6rem;
+      height: 0.8rem;
+      display: flex;
     }
 
     :deep(.van-tab) {
       line-height: 0.6rem;
       font-size: 0.28rem;
+      width: 50%;
+      padding-bottom: 14.5px;
     }
   }
 
@@ -470,15 +430,19 @@ onMounted(() => {
   }
 
   .title_box {
-    padding: 0.12rem 0.32rem 0.8rem 0.32rem;
+    padding: 0.24rem 0.32rem 0.8rem 0.32rem;
 
     .title {
-      height: 0.78rem;
+      // height: 0.78rem;
       display: flex;
       align-items: center;
+      color: #061023;
+      text-align: center;
+      font-family: "PingFang SC";
+      font-size: 28px;
+      font-style: normal;
       font-weight: 600;
-      font-size: 0.56rem;
-      color: #0d0d12;
+      line-height: 140%;
     }
   }
 
@@ -505,6 +469,12 @@ onMounted(() => {
         display: flex;
         align-items: center;
         margin-right: 0.12rem;
+        gap: 5px;
+
+        .flag_icon {
+          width: 32px;
+          height: 32px;
+        }
 
         .more_icon {
           width: 0.24rem;
@@ -525,9 +495,38 @@ onMounted(() => {
       }
 
       .form_item_user {
-        width: 0.64rem;
-        height: 0.64rem;
-        margin-right: 0.32rem;
+        justify-content: center;
+        color: #014CFA;
+        margin-right: 0.12rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        background-color: #CDD4E3;
+        border-radius: 50%;
+
+        .van-icon {
+          width: 18px !important;
+        }
+      }
+
+      .form_item_clear {
+        justify-content: center;
+        color: #161616;
+        margin-left: 0.12rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 16px;
+        height: 16px;
+        background-color: #CDD4E3;
+        padding: '1px';
+        border-radius: 50%;
+
+        .van-icon {
+          font-size: 12px;
+        }
       }
 
       .form_item_icon {
@@ -550,11 +549,26 @@ onMounted(() => {
   }
 
   .submit_box {
-    padding: 0 0.32rem;
+    display: flex;
+    width: 100%;
+    height: 56px;
+    padding: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 
     .submit {
       width: 100%;
       height: 1.12rem;
+      color: #FFF;
+      text-align: center;
+      font-family: "PingFang SC";
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%;
+      /* 18px */
     }
   }
 
@@ -563,7 +577,7 @@ onMounted(() => {
     text-align: center;
     font-weight: 400;
 
-    > span {
+    >span {
       color: #1a59f6;
       font-weight: 600;
     }
@@ -573,6 +587,8 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .register_accounr_dialog {
+  width: 100%;
+  height: 100%;
   background-color: #fff;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
@@ -594,6 +610,8 @@ onMounted(() => {
     border-radius: 0.32rem;
     padding: 0 0.32rem;
     margin: 0.12rem 0;
+    display: flex;
+    align-items: center;
 
     .ipt {
       width: 100%;
@@ -604,10 +622,23 @@ onMounted(() => {
   .transfer_dialog_item {
     overflow: auto;
     height: 1.12rem;
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     border-bottom: 1px solid #f5f5f5;
+    padding: 0 0.32rem;
+    gap: 10px;
+
+    .flag_icon {
+      width: 32px !important;
+      height: 32px !important;
+    }
+
+    .cross {
+      position: absolute;
+      right: 5px;
+    }
   }
 
   .transfer_dialog_item_active {

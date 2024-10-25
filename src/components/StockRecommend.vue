@@ -137,7 +137,6 @@ const changeCheck = (i) => {
     store.commit("setCheckStockState", checkedList.value);
   if (props.keyStr == "recommend")
     store.commit("setCheckCryptoState", checkedList.value);
-  console.log("============> all", all.value);
   store.commit("setCheckState", all.value);
   emitsKeys();
 };

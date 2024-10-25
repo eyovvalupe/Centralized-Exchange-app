@@ -98,7 +98,6 @@ const loadedTab = ref([active.value])
 provide('scrollData', scrollData)
 setScrollData(scrollData)
 const changeTab = (key, slideSwipe = false) => {
-  console.log("change ta===============>",key);
   store.commit("setMarketActiveTab", key);
   active.value = key
   market_active.value = key
