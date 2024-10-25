@@ -1,7 +1,7 @@
 <!-- 记录列表 -->
 <template>
     <div class="page page_record_list">
-        <Top :title="title" />
+        <Top :title="'资金记录'" />
          <!-- 兑换记录 -->
          <div ref="list_3" class="list active_list" v-if="active == 3">
             <NoData v-if="!loading && !list.length" />
@@ -15,17 +15,17 @@
         </div>
         
         <Tabs type="oval-card" v-else v-model:active="active" :swipeable="false" animated 
-            shrink @change="onChange" >
+            shrink @change="init()" >
             <Tab title="充值记录" name="0">
                  <div>
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i" class="list_0_item">
-                        <div class="date" @click="dateClick(getDate(item.date))" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
+                        <div class="date" @click="dateClick(getDate(item.date),openDates)" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
                             {{ getDate(item.date) }}
                             <span class="date_more" :class="{'date_more_up':!openDates.includes(getDate(item.date))}"><img src="/static/img/assets/more.png" alt="more"></span>
                         </div>
                         <transition name="opacity">
-                            <RechargeItem @close="showBottom = false" :item="item" v-show="!openDates.includes(getDate(item.date))" />
+                            <RechargeItem :item="item" v-show="!openDates.includes(getDate(item.date))" />
                         </transition>
                     </div>
                     <LoadingMore class="active_more" :loading="loading" :finish="finish"
@@ -36,7 +36,14 @@
                  <div>
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i">
-                        <WithdrawItem :item="item" />
+                        <div class="date" @click="dateClick(getDate(item.date),withdrawOpenDates)" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
+                            {{ getDate(item.date) }}
+                            <span class="date_more" :class="{'date_more_up':!withdrawOpenDates.includes(getDate(item.date))}"><img src="/static/img/assets/more.png" alt="more"></span>
+                        </div>
+                        <transition name="opacity">
+                            <WithdrawItem :item="item" v-show="!withdrawOpenDates.includes(getDate(item.date))" />
+                        </transition>
+                        
                     </div>
                     <LoadingMore class="active_more" :loading="loading" :finish="finish"
                         v-if="((finish && list.length) || (!finish)) && active == 1" />
@@ -73,20 +80,20 @@ import TransferItem from "@/components/RecordItem/TransferItem.vue"
 import { useRoute } from "vue-router"
 
 const openDates = ref([])
+const withdrawOpenDates = ref([])
+const transferOpenDates = ref([])
 
 const route = useRoute()
-const dateClick = (date)=>{
-    const index = openDates.value.indexOf(date)
+const dateClick = (date,dates)=>{
+    const index = dates.indexOf(date)
     if(index > -1){
-        openDates.value.splice(index,1)
+        dates.splice(index,1)
     }else{
-        openDates.value.push(date)
+        dates.push(date)
     }
 }
 
-const titles = ['充值记录', '提现记录', '划转记录', '兑换记录']
 const active = ref(route.query.tab || 0)
-const title = computed(() => titles[active.value])
 const reqs = {
     0: _depositList,
     1: _withdrawList,
