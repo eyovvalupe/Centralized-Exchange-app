@@ -75,7 +75,7 @@
               class="item_num"
               :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
             >
-              {{ props.item.price ? props.item.price.toFixed(3) : "--" }}
+              {{ props.item.price ? fixLittleNum(props.item.price, 3) : "--" }}
             </div>
             <div
               class="item_info_box"
@@ -88,13 +88,13 @@
               >
                 <span v-if="mode == 1"
                   >{{
-                    ((props.item.ratio || 0) * 100).toFixed(2) > 0
+                    (props.item.ratio || 0) * 100 > 0
                       ? "+" + ((props.item.ratio || 0) * 100).toFixed(2)
                       : ((props.item.ratio || 0) * 100).toFixed(2)
                   }}%</span
                 >
                 <span v-else-if="mode == 2">{{
-                  (props.item.price || 0).toFixed(2) > 0
+                  props.item.price || 0 > 0
                     ? "+" + (props.item.price || 0).toFixed(2)
                     : (props.item.price || 0).toFixed(2)
                 }}</span>
@@ -128,7 +128,7 @@
           <div class="text-center w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'"
               >{{ item.ratio > 0 ? "+" : ""
-              }}{{ ((item.ratio || 0) * 100).toFixed(2) }}%</span
+              }}{{ fixLittleNum((item.ratio || 0) * 100, 2) }}%</span
             ><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal"
               >涨跌比</span
@@ -162,6 +162,7 @@ import router from "@/router";
 import { SwipeCell } from "vant";
 import store from "@/store";
 import { _formatNumber } from "@/utils/index";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const market = {
   stock: "股票",

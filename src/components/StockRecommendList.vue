@@ -12,13 +12,13 @@
         <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div>
         <div class="symbol">{{ item.symbol }}</div>
         <div class="name">{{ item.name || "--" }}</div>
-        <div class="price">{{ item.price ? item.price.toFixed(2) : "--" }}</div>
+        <div class="price">{{ item.price ? fixLittleNum(item.price, 2) : "--" }}</div>
         <div
           class="percent"
           :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']"
         >
           {{
-            ((item.ratio || 0) * 100).toFixed(2) > 0
+            (item.ratio || 0) * 100 > 0
               ? "+" + ((item.ratio || 0) * 100).toFixed(2)
               : ((item.ratio || 0) * 100).toFixed(2)
           }}%
@@ -46,6 +46,7 @@ import store from "@/store";
 import router from "@/router";
 import { _add, _del } from "@/api/api";
 import eventBus from "@/utils/eventBus";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 
 
 const emits = defineEmits(["init", "change"]);

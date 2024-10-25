@@ -29,6 +29,8 @@
 </template>
 
 <script setup>
+import { fixLittleNum } from '@/utils/fixLittleNum';
+
 const props = defineProps({
   region: {
     type: String,

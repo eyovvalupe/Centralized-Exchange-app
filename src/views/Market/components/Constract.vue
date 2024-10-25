@@ -41,7 +41,7 @@
           <div class="item_new_price text-center w-1/3">
             <span
               :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
-              >{{ item.price.toFixed(6) || '--' }}</span
+              >{{ fixLittleNum(item.price, 6) || '--' }}</span
             ><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal"
               >最新价</span
@@ -52,7 +52,7 @@
           >
             <span
               :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
-              >{{ item.change.toFixed(6) || '--' }}</span
+              >{{ fixLittleNum(item.change, 6) || '--' }}</span
             ><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal"
               >涨跌</span
@@ -83,6 +83,7 @@ import router from "@/router";
 import Decimal from "decimal.js";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const contractList = computed(() => store.state.contractList || []);
 

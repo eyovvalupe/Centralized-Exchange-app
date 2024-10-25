@@ -21,7 +21,7 @@
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2) > 0
+                  (totalList[slide * 2 - 1].ratio || 0) * 100 > 0
                     ? "+" + ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2)
                     : ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2)
                 }}%
@@ -62,9 +62,9 @@
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  ((totalList[slide * 2].ratio || 0) * 100).toFixed(2) > 0
-                    ? "+" + ((totalList[slide * 2].ratio || 0) * 100).toFixed(2)
-                    : ((totalList[slide * 2].ratio || 0) * 100).toFixed(2)
+                  fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2) > 0
+                    ? "+" + fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2)
+                    : fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2)
                 }}%
               </div>
             </div>
@@ -118,6 +118,7 @@ import eventBus from '@/utils/eventBus'
 import { Carousel, Slide } from "vue3-carousel";
 
 import "vue3-carousel/dist/carousel.css";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const emits = defineEmits(["init", "addWatchList"]);
 const watchlist = computed(() => store.state.marketWatchList)

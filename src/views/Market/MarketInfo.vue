@@ -42,7 +42,7 @@
           :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
         >
           <template v-if="item.price || item.close">
-            {{ Number(item.price.toFixed(6) || item.close) }}
+            {{ fixLittleNum(item.price || item.close, 6) }}
           </template>
           <span v-else>--</span>
         </h1>
@@ -53,23 +53,16 @@
         >
           <div
             class="ratio_price"
-            v-if="Number(item.price * (item.ratio || 0))"
+            v-if="fixLittleNum(item.price * (item.ratio || 0), 4)"
           >
             {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
-            {{ Number(item.price * (item.ratio || 0)).toFixed(4) }}
+            {{ fixLittleNum(item.price * (item.ratio || 0), 2)}}
           </div>
           <div class="ratio_percentage" v-if="item.ratio">
             {{
-              updown === 0 || item.ratio === undefined
-                ? ""
-                : updown > 0
-                ? "+"
-                : ""
-            }}
-            {{
               item.ratio === undefined
                 ? "--"
-                : (item.ratio * 100).toFixed(2) + "%"
+                : item.ratio > 0 ? "+" + fixLittleNum(item.ratio * 100, 2) + "%" : (item.ratio * 100).toFixed(2) + "%"
             }}
           </div>
         </div>
@@ -188,7 +181,7 @@
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
       <div class="market_bottom_symbol">
-        <div class="symbol">{{ route.query.type == 'constract' ? item.name : item.symbol || "--" }}</div>
+        <div class="symbol">{{ route.query.type == 'stock' ? item.symbol : item.name || "--" }}</div>
         <div class="time_type">{{ timeType }}</div>
       </div>
 
@@ -288,7 +281,7 @@
             :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
           >
             <template v-if="item.price || item.close">
-              {{ Number(item.price || item.close).toFixed(2) }}
+              {{ fixLittleNum(item.price || item.close, 2) }}
             </template>
             <span v-else>--</span>
           </div>
@@ -303,7 +296,7 @@
               ]"
             >
               {{ updown === 0 ? "" : updown > 0 ? "+" : ""
-              }}{{ Number(item.price * (item.ratio || 0)).toFixed(2) }}
+              }}{{ fixLittleNum(item.price * (item.ratio || 0), 2) }}
             </div>
             <div
               v-if="item.ratio"
@@ -325,7 +318,7 @@
               }}{{
                 item.ratio === undefined
                   ? "--"
-                  : (item.ratio * 100).toFixed(2) + "%"
+                  : fixLittleNum(item.ratio * 100, 2) + "%"
               }}
             </div>
           </div>
@@ -340,7 +333,7 @@
             "
           >
             <div class="name">开</div>
-            <div class="info_item__value">{{ item.open }}</div>
+            <div class="info_item__value">{{ fixLittleNum(item.open, 6) }}</div>
           </div>
           <div
             class="info_item"
@@ -351,7 +344,7 @@
             "
           >
             <div class="name">高</div>
-            <div class="info_item__value">{{ item.high }}</div>
+            <div class="info_item__value">{{ fixLittleNum(item.high, 6) }}</div>
           </div>
           <div
             class="info_item"
@@ -373,7 +366,7 @@
             "
           >
             <div class="name">收</div>
-            <div class="info_item__value">{{ item.close }}</div>
+            <div class="info_item__value">{{ fixLittleNum(item.close, 6) }}</div>
           </div>
           <div
             class="info_item"
@@ -384,7 +377,7 @@
             "
           >
             <div class="name">低</div>
-            <div class="info_item__value">{{ item.low }}</div>
+            <div class="info_item__value">{{ fixLittleNum(item.low, 6) }}</div>
           </div>
           <div
             class="info_item"
@@ -414,6 +407,7 @@ import KlineChart from "@/components/KlineCharts/KlineChart.vue";
 import { _formatNumber } from "@/utils/index";
 import { _basic, _profile, _add, _del } from "@/api/api";
 import { formatTimestamp } from "@/utils/time";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const route = useRoute();
 const token = computed(() => store.state.token);
