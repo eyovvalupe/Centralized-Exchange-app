@@ -197,7 +197,6 @@
       :deleteItem="false"
       :list="marketDownList.slice(0, 5)"
       :marketType="'all'"
-      page="home"
     />
     <StockTable
       style="margin-top: 0.1rem"
