@@ -81,7 +81,7 @@
               class="item_num"
               :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
             >
-              {{ props.item.price ? props.item.price.toFixed(3) : "--" }}
+              {{ props.item.price ? props.item.price.toFixed(6) : "--" }}
             </div>
             <div
               class="item_info_box"
@@ -117,7 +117,7 @@
         >
           <div class="text-center w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
-              item.price || "--"
+              item.price.toFixed(6) || "--"
             }}</span
             ><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal"
@@ -126,7 +126,7 @@
           </div>
           <div class="text-center border-x-[#eff3f8] border-x-2 w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
-              item.change || "--"
+              item.change.toFixed(6) || "--"
             }}</span
             ><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌</span>
