@@ -88,7 +88,7 @@
             class="item_input"
           />
         </div>
-        <div class="form_title">密码</div>
+        <div class="form_title">登录密码</div>
         <div
           class="form_item margin_item"
           :class="{ err_ipt: errorTip.error2 }"
@@ -216,7 +216,7 @@
       </div>
 
       <!-- 去注册 -->
-      <div class="go_register">
+      <!-- <div class="go_register">
         <div class="server_icon" @click="goChat">
           <img src="/static/img/common/server.png" alt="server" />
         </div>
@@ -224,7 +224,7 @@
           有账号吗？
           <span>去登录</span>
         </span>
-      </div>
+      </div> -->
     </template>
 
     <template v-else>
@@ -840,6 +840,10 @@ const goChat = () => {
   .submit_box {
     padding: 0 0.32rem;
 
+      :deep(.van-button__content) {
+        font-size: 0.36rem;
+        line-height: 0.36rem;
+      }
     .submit {
       width: 100%;
       height: 1.12rem;
