@@ -6,6 +6,7 @@
     :close-on-click-overlay="false"
     :safe-area-inset-bottom="true"
     class="self_van_popup"
+    round=""
     position="bottom"
     teleport="body"
     :close-on-popstate="true"
@@ -36,7 +37,7 @@
       </div>
 
       <div class="btns">
-        <Button round color="white" class="btn" type="primary" @click="close">
+        <Button round color="white" class="btn"  @click="close">
           <span style="color: #666d80">{{ $t('取消') }}</span>
         </Button>
         <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">{{ $t('确定') }}</Button>
@@ -117,9 +118,8 @@ defineExpose({
 <style lang="less" scoped>
 .safepassword_dialog {
   background-color: #fefefe;
-  padding: 0.96rem 0.32rem;
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
+  padding: 0.96rem 0.32rem 0.6rem 0.32rem;
+
   position: relative;
 
   .main_title {
@@ -136,14 +136,20 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 0.5rem;
-
+    margin-top: 0.6rem;
+    margin-left: -0.32rem;
     .btn {
-      border: 1px solid #d0d8e2 !important;
       height: 0.96rem;
       border-radius: 0.96rem;
-      width: 48%;
+      flex: 1;
+      margin-left: 0.32rem;
+      border: 1px solid #D0D8E2 !important;
     }
+
+    .btn.van-button--primary{
+      border-color:#014CFA !important;
+    }
+    
   }
 
   .title {
@@ -156,12 +162,12 @@ defineExpose({
   }
 
   .pass_ipt {
-    height: 0.88rem;
-    border: 1px solid #d0d8e2;
+    height: 1.12rem;
+    border: 1px solid #D0D8E2;
     width: 100%;
     display: block;
     box-sizing: border-box;
-    border-radius: 16px;
+    border-radius: 0.32rem;
     padding: 0 0.4rem;
 
     &:focus {
@@ -174,10 +180,10 @@ defineExpose({
     img {
       content: '';
       display: block;
-      width: 20px;
-      height: 20px;
+      width: 0.4rem;
+      height: 0.4rem;
       position: absolute;
-      right: 15px;
+      right: 0.32rem;
       top: 50%;
       transform: translateY(-50%);
       z-index: 9999;

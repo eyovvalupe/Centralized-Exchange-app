@@ -376,6 +376,14 @@ export const _withdraw = (data = {}) => {
     custom: { auth: true, toast: true, retry: false },
   });
 };
+
+// 提现查询
+export const _withdrawGet = (data = {}) => {
+  return http.post(`/authc/v1/wallet/withdraw/get`, data, {
+    custom: { auth: true, toast: true, retry: false },
+  });
+};
+
 // 提现记录
 export const _withdrawList = (data = {}) => {
   return http.post(`/authc/v1/wallet/withdraw/list`, data, {

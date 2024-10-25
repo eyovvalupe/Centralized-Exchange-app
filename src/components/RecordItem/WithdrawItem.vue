@@ -1,15 +1,13 @@
 <!-- 提现记录-元素 -->
 <template>
-    <div class="withdraw_item">
+    <div class="withdraw_item" @click="goInfo">
         <div class="icon_box">
-            <div class="icon">
-                <img v-if="item.symbol" :src="`/static/img/crypto/${item.symbol}.png`" alt="img">
-                <img v-else src="/static/img/crypto/MAIN.png" alt="img">
-            </div>
+            <img v-if="item.account && item.account.symbol" :src="`/static/img/crypto/${item.account.symbol}.png`" alt="img">
+            <img v-else src="/static/img/crypto/MAIN.png" alt="img">
         </div>
         <div class="content">
-            <div class="item_title">{{ item.symbol ? `${item.symbol} ${item.network}` : item.bank_name }}</div>
-            <div class="address">{{ item.symbol ? item.address : item.bank_card_number }}</div>
+            <div class="address">{{ item.account && item.account.address ? getAddress(item.account.address) : getAddress(item.bank_card_number) }}</div>
+            <div class="item_title">{{ item.account && item.account.symbol ? item.account.symbol : item.bank_name }}</div>
             <div class="time">{{ item.date }}</div>
         </div>
         <div class="right">
@@ -20,6 +18,7 @@
 </template>
 
 <script setup>
+import router from "@/router"
 import { _withdrawStatusMap } from "@/utils/dataMap"
 const props = defineProps({
     item: {
@@ -27,77 +26,89 @@ const props = defineProps({
         default: () => { }
     }
 })
+
+const emits = defineEmits(['close'])
+const goInfo = () => {
+    emits('close')
+    router.push({
+        name: 'withdrawInfo',
+        query: {
+            order_no: props.item.order_no
+        }
+    })
+}
+const getAddress = (address)=>{
+    if(!address){
+        return '--'
+    }
+    return '**** **** **** '+address.substr(address.length-4)
+}
 </script>
 
 <style lang="less" scoped>
 .withdraw_item {
     display: flex;
-    align-items: flex-start;
-    padding: 0.24rem 0;
-    border-bottom: 1px dashed #CBCBCB;
-
+    justify-content: space-between;
+    padding: 0.3rem 0.32rem;
+    border: 1px solid #D0D8E2;
+    border-radius: 0.32rem;
+    margin-top: 0.2rem;
     .icon_box {
-        width: 0.96rem;
-        height: 0.96rem;
-        border-radius: 0.16rem;
-        padding: 0.12rem;
+        width: 0.8rem;
+        height: 0.8rem;
     }
 
     .content {
-        padding: 0.0.16rem;
+        padding: 0 0.2rem;
         flex: 1;
-        text-align: left;
-
-        .item_title {
-            width: 100%;
-            color: #343434;
-            font-weight: 600;
-            font-size: 0.28rem;
-            text-align: left;
-        }
+        display: flex;
+        flex-direction: column;
 
         .address {
+            color: #061023;
+            font-size: 0.3rem;
+            font-weight: 400;
+            line-height: 0.3rem;
+        }
+
+        .item_title {
             color: #121212;
             font-weight: 400;
+            margin-top: 0.08rem;
             font-size: 0.28rem;
         }
 
         .time {
-            color: #A3A3A7;
-            font-size: 0.28rem;
+            color: #8F92A1;
+            font-size: 0.24rem;
+            font-weight: 400;
+            line-height: 0.24rem;
+            margin-top: 0.28rem
         }
     }
 
     .right {
         height: 100%;
-        padding-top: 0.2rem;
         text-align: right;
-
+        line-height: 0.3rem;
         .amount {
-            font-size: 0.32rem;
+            font-size: 0.3rem;
             color: #000000;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .status {
-            color: rgba(136, 136, 136, 1);
-            background-color: rgba(136, 136, 136, 0.08);
-            padding: 0 0.3rem;
-            border-radius: 0.04rem;
-            display: flex;
-            align-items: center;
-            font-size: 0.24rem;
-            margin-top: 0.1rem;
+            font-size: 0.28rem;
+            color:#014CFA;
+            margin-top: 0.14rem;
         }
 
         .status_success {
-            color: rgba(10, 178, 125, 1);
-            background-color: rgba(10, 178, 125, 0.08);
+            color: #18B762;
         }
 
         .status_failed {
-            color: rgba(232, 80, 58, 1);
-            background-color: rgba(232, 80, 58, 0.08);
+            color: #8F92A1;
         }
     }
 }
