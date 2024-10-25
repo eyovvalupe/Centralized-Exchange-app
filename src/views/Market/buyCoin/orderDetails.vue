@@ -108,7 +108,7 @@
         <div class="mr-4 flex-1 cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-48" @click="handleBotton('cancel')">{{ $t('取消订单') }}</div>
         <div
           class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white"
-          :class="{ 'disabled-btn': form.offset === 'sell' || ['waitconfirm'].includes(form.status) }"
+          :class="{ 'disabled-btn': ['waitconfirm'].includes(form.status) }"
           @click="handleBotton('payment')"
         >
           {{ $t('我已付款') }}

@@ -2,14 +2,22 @@
 <template>
     <div class="container">
 
-        <div class="top_back" @click="goBack">
-            <Icon name="cross" />
+        <!-- 返回和语言 -->
+        <div class="max-width top">
+            <div class="top_back" @click="goBack">
+                <Icon name="arrow-left" />
+            </div>
+
+            <div class="top_lang" @click="goLang">
+                <img src="/static/img/common/language.png" alt="language" />
+            </div>
         </div>
 
         <div class="title">安全验证</div>
         <div class="check_title">拖动滑块，使图片角度为正</div>
         <div class="check_pic">
-            <img :style="{ transform: `rotate(${slider * 3.5}deg)` }" src="/static/img/common/check.png" alt="img">
+            <img class="check_img" :style="{ transform: `rotate(${slider * 3.5}deg)` }"
+                src="/static/img/common/check.png" alt="img">
         </div>
         <div class="slider_box" style="width:100%">
             <Slider @change="changeSlider" @drag-start="activeVal = 0" v-model="slider" bar-height="40px"
@@ -25,25 +33,13 @@
             </div>
         </div>
         <div class="status_text status_success" v-else-if="sliderStatus == 'success'">
-            <div class="status_text_icon">
-                <img src="/static/img/common/check_success.png" alt="img">
-            </div>
-
-            <span>验证成功</span>
+            <span class="check_result">验证成功</span>
         </div>
         <div class="status_text status_error" v-else-if="sliderStatus == 'error'">
-            <div class="status_text_icon">
-                <img src="/static/img/common/check_error.png" alt="img">
-            </div>
-
-            <span>验证失败</span>
+            <span class="check_result">验证失败</span>
         </div>
         <div class="status_text" v-else>
-            <div class="status_text_icon">
-                <img src="/static/img/common/check_default.png" alt="img">
-            </div>
-
-            <span>待滑动验证</span>
+            <span class="check_result">待滑动验证</span>
         </div>
 
     </div>
@@ -56,6 +52,11 @@ import { ref, onMounted } from "vue"
 const show = ref(false)
 const loading = ref(false)
 const emits = defineEmits(['success', 'goBack'])
+// 跳转多语言
+const goLang = () => {
+  emits("closeDialog");
+  router.push({ name: "language" });
+};
 
 const colorMap = ref({
     'default': '#014CFA',
@@ -120,6 +121,34 @@ onMounted(() => {
     font-size: 0.32rem;
     padding: 0 1rem;
 
+    .top {
+        position: fixed;
+        width: 100%;
+        height: 1.12rem;
+        display: flex;
+        padding: 0 0.4rem 0 0.12rem;
+        align-items: center;
+        justify-content: flex-end;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        background-color: #fff;
+
+        .top_back {
+            color: #161616;
+            font-size: 0.4rem;
+            width: 0.8rem;
+            height: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .top_lang {
+            width: 0.8rem;
+            height: 0.8rem;
+        }
+    }
 
     .top_back {
         position: absolute;
@@ -135,17 +164,37 @@ onMounted(() => {
     }
 
     .title {
-        font-size: 0.4rem;
-        color: #B8B8B8;
-        margin-bottom: 0.4rem;
+        color: var(--, #061023);
+        font-family: "PingFang SC";
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 140%;
+        margin-bottom: 8px;
+        /* 39.2px */
+    }
+
+    .check_title {
+        color: var(--, #000);
+        text-align: center;
+        font-family: "PingFang SC";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        /* 21px */
     }
 
     .check_pic {
-        width: 4.8rem;
-        height: 4.8rem;
         margin: 0.64rem auto;
+        width: 219px;
+        height: 219px;
+        flex-shrink: 0;
+        background-color: #D0D8E2;
+        padding: 10px;
+        border-radius: 219px;
     }
-
+    
     .status_text {
         margin-top: 0.64rem;
         margin-bottom: 0.64rem;
@@ -153,7 +202,13 @@ onMounted(() => {
         text-align: left;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
+        color: var(--, #333);
+        font-family: "PingFang SC";
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 16px;
 
         .status_text_icon {
             width: 0.36rem;
