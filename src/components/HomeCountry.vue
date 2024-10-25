@@ -1,68 +1,70 @@
 <!-- 股票 -->
 <template>
-  <div class="market_stock_block">
-    <Tabs
-      type="custom-card"
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      :color="'#014CFA'"
-      shrink
-      @change="onChange"
-    >
-      <Tab title="美股" name="0">
-        <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
-          <HomeStockDescription
-            v-if="marketStockUsDataList.length"
-            :list="marketStockUsDataList"
-            :region="'us'"
-            :data="usData"
-            :loading="pageLoading"
-            :active="active"
-          />
-        </div>
-      </Tab>
-      <Tab title="印度" name="1">
-        <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
-          <HomeStockDescription
-            v-if="marketStockIndiaDataList.length"
-            :list="marketStockIndiaDataList"
-            :region="'india'"
-            :data="indiaData"
-            :loading="pageLoading"
-            :active="active"
-          />
-        </div>
-      </Tab>
-      <Tab title="日本" name="2">
-        <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
-          <HomeStockDescription
-            v-if="marketStockJapanDataList.length"
-            :list="marketStockJapanDataList"
-            :region="'japan'"
-            :data="japanData"
-            :loading="pageLoading"
-            :active="active"
-          />
-        </div>
-      </Tab>
-      <Tab title="韩国" name="3">
-        <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
-          <HomeStockDescription
-            v-if="marketStockKoreaDataList.length"
-            :list="marketStockKoreaDataList"
-            :region="'korea'"
-            :data="koreaData"
-            :loading="pageLoading"
-            :active="active"
-          />
-        </div>
-      </Tab>
-    </Tabs>
+  <div style="width: 5.8rem; height: 2.18rem">
+    <div class="market_stock_block">
+      <Tabs
+        type="custom-card"
+        v-model:active="active"
+        :swipeable="false"
+        animated
+        :color="'#014CFA'"
+        shrink
+        @change="onChange"
+      >
+        <Tab title="美股" name="0">
+          <div class="stock_tab-body">
+            <Loading :loading="pageLoading" />
+            <HomeStockDescription
+              v-if="marketStockUsDataList.length"
+              :list="marketStockUsDataList"
+              :region="'us'"
+              :data="usData"
+              :loading="pageLoading"
+              :active="active"
+            />
+          </div>
+        </Tab>
+        <Tab title="印度" name="1">
+          <div class="stock_tab-body">
+            <Loading :loading="pageLoading" />
+            <HomeStockDescription
+              v-if="marketStockIndiaDataList.length"
+              :list="marketStockIndiaDataList"
+              :region="'india'"
+              :data="indiaData"
+              :loading="pageLoading"
+              :active="active"
+            />
+          </div>
+        </Tab>
+        <Tab title="日本" name="2">
+          <div class="stock_tab-body">
+            <Loading :loading="pageLoading" />
+            <HomeStockDescription
+              v-if="marketStockJapanDataList.length"
+              :list="marketStockJapanDataList"
+              :region="'japan'"
+              :data="japanData"
+              :loading="pageLoading"
+              :active="active"
+            />
+          </div>
+        </Tab>
+        <Tab title="韩国" name="3">
+          <div class="stock_tab-body">
+            <Loading :loading="pageLoading" />
+            <HomeStockDescription
+              v-if="marketStockKoreaDataList.length"
+              :list="marketStockKoreaDataList"
+              :region="'korea'"
+              :data="koreaData"
+              :loading="pageLoading"
+              :active="active"
+            />
+          </div>
+        </Tab>
+      </Tabs>
+    </div>
   </div>
 </template>
 
@@ -134,22 +136,22 @@ const subs = (arr) => {
   store.dispatch("subList", {});
 };
 const getData = (region) => {
-  if (region == 'us' && marketStockUsDataList.value.length > 0) {
+  if (region == "us" && marketStockUsDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockUsDataList);
     return;
   }
-  if (region == 'india' && marketStockIndiaDataList.value.length > 0) {
+  if (region == "india" && marketStockIndiaDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockIndiaDataList);
     return;
   }
-  if (region == 'japan' && marketStockJapanDataList.value.length > 0) {
+  if (region == "japan" && marketStockJapanDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockJapanDataList);
     return;
   }
-  if (region == 'korea' && marketStockKoreaDataList.value.length > 0) {
+  if (region == "korea" && marketStockKoreaDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockKoreaDataList);
     return;
@@ -160,6 +162,8 @@ const getData = (region) => {
     type: "index",
   })
     .then((res) => {
+      console.log(region, "=============>", res.data);
+
       const data = {
         region,
         currentts: formatDate(new Date(res.data.currentts)),
@@ -176,7 +180,7 @@ const getData = (region) => {
           );
           return target || item;
         });
-        store.commit("setMarketStockUsDataList", usArr)
+        store.commit("setMarketStockUsDataList", usArr);
       }
       if (region == "india") {
         store.commit("setMarketStockIndiaData", data);
@@ -186,7 +190,7 @@ const getData = (region) => {
           );
           return target || item;
         });
-        store.commit("setMarketStockIndiaDataList", indiaArr)
+        store.commit("setMarketStockIndiaDataList", indiaArr);
       }
       if (region == "japan") {
         store.commit("setMarketStockJapanData", data);
@@ -196,7 +200,7 @@ const getData = (region) => {
           );
           return target || item;
         });
-        store.commit("setMarketStockJapanDataList", japanArr)
+        store.commit("setMarketStockJapanDataList", japanArr);
       }
       if (region == "korea") {
         store.commit("setMarketStockKoreaData", data);
@@ -206,7 +210,7 @@ const getData = (region) => {
           );
           return target || item;
         });
-        store.commit("setMarketStockKoreaDataList", koreaArr)
+        store.commit("setMarketStockKoreaDataList", koreaArr);
       }
 
       setTimeout(() => {

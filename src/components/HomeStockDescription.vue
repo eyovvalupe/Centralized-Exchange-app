@@ -5,52 +5,21 @@
   >
     <div class="flex flex-row justify-between">
       <div
-        :class="list[0].ratio > 0 ? 'up_price' : 'down_price'"
+        v-for="(item, i) in list"
+        :key="i"
+        :class="item.ratio > 0 ? 'up_price' : 'down_price'"
         class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
+        style="overflow-x: hidden;"
       >
-        <span class="text-[0.24rem] text-[#061023]">{{
-          list[0]["symbol"]
+        <span class="text-[0.24rem] text-[#061023]" style="max-width: 1.98rem;">{{
+          item["symbol"]
         }}</span>
-        <span class="stock_price">{{ list[0].amount }}</span>
+        <span class="stock_price">{{ item.amount }}</span>
         <div class="flex flex-row justify-center stock_detail">
           <span
-            >{{ list[0].ratio > 0 ? "+" : ""
+            >{{ item.ratio > 0 ? "+" : ""
             }}{{
-              ((list[0].ratio || 0) * 100).toFixed(2)
-            }}%</span
-          >
-        </div>
-      </div>
-      <div
-        :class="list[1].ratio > 0 ? 'up_price' : 'down_price'"
-        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
-      >
-        <span class="text-[0.24rem] text-[#061023]">{{
-          list[1]["symbol"]
-        }}</span>
-        <span class="stock_price">{{ list[1].amount }}</span>
-        <div class="flex flex-row justify-center stock_detail">
-          <span
-            >{{ list[1].ratio > 0 ? "+" : ""
-            }}{{
-              ((list[1].ratio || 0) * 100).toFixed(2)
-            }}%</span
-          >
-        </div>
-      </div>
-      <div
-        :class="list[2].ratio > 0 ? 'up_price' : 'down_price'"
-        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
-      >
-        <span class="text-[0.24rem] text-[#061023]">{{
-          list[2]["symbol"]
-        }}</span>
-        <span class="stock_price">{{ list[2].amount }}</span>
-        <div class="flex flex-row justify-center stock_detail">
-          <span
-            >{{ list[2].ratio > 0 ? "+" : ""
-            }}{{
-              ((list[2].ratio || 0) * 100).toFixed(2)
+              ((item.ratio || 0) * 100).toFixed(2)
             }}%</span
           >
         </div>
@@ -82,7 +51,7 @@ const props = defineProps({
     default: []
   }
 });
-console.log(props.list)
+console.log("props data =============> ", props.list)
 </script>
 
 <style lang="less" scoped>

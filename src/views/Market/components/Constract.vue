@@ -86,8 +86,6 @@ import Loaidng from "@/components/Loaidng.vue";
 
 const contractList = computed(() => store.state.contractList || []);
 
-console.log("contract list ==========> ", contractList.value[0]);
-
 const loading = ref(false);
 const getList = () => {
   loading.value = true;
