@@ -1,30 +1,31 @@
 <!-- 注册页 -->
 <template>
   <div class="page page-register">
-
     <!-- 图片验证 -->
     <template v-if="step == 1">
       <ImgCheck @success="step = 2" @goBack="goBack" />
     </template>
 
     <template v-else-if="step == 2">
-
       <!-- 返回和语言 -->
-      <div class="max-width top">
-        <div class="top_back" @click="goBack">
+      <div class="top_icon_container">
+        <div class="top_back_container text-[0.48rem]" @click="goBack">
           <Icon name="arrow-left" />
         </div>
 
-        <div class=" top_lang" @click="router.push({ name: 'language' })">
-          <img src="/static/img/common/language.png" alt="language">
+        <div class="language_icon_container" @click="goLang">
+          <div class="language_icon"></div>
         </div>
       </div>
 
       <!-- 标题 -->
       <div class="title_box">
-        <div class="title">{{ guest ? '创建模拟账户' : '创建您的账户' }}</div>
-        <div class="login_title">有账号？
-          <span class="tologin" @click="router.push({ name: 'login' })">去登录</span>
+        <div class="title">{{ guest ? "创建模拟账户" : "创建您的账户" }}</div>
+        <div class="login_title">
+          有账号？
+          <span class="tologin" @click="router.push({ name: 'login' })"
+            >去登录</span
+          >
         </div>
       </div>
 
@@ -42,49 +43,126 @@
             type="text" class="item_input">
         </div> -->
         <div class="form_title" v-show="activeTab == 0">邮箱</div>
-        <div class="form_item margin_item" v-show="activeTab == 0" :class="{ 'err_ipt': errorTip.error1 }">
-          <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.email" placeholder="您的邮箱" type="text"
-            class="item_input">
-          <div class="form_item_clear" v-show="form.email" @click="form.email = null">
+        <div
+          class="form_item margin_item"
+          v-show="activeTab == 0"
+          :class="{ err_ipt: errorTip.error1 }"
+        >
+          <input
+            maxlength="20"
+            @blur="errorTip.error1 = false"
+            v-model.trim="form.email"
+            placeholder="您的邮箱"
+            type="text"
+            class="item_input"
+          />
+          <div
+            class="form_item_clear"
+            v-show="form.email"
+            @click="form.email = null"
+          >
             <Icon class="" name="cross" />
           </div>
         </div>
         <div class="form_title" v-show="activeTab == 1">手机号</div>
-        <div class="form_item margin_item" v-show="activeTab == 1" :class="{ 'err_ipt': errorTip.error1 }">
+        <div
+          class="form_item margin_item"
+          v-show="activeTab == 1"
+          :class="{ err_ipt: errorTip.error1 }"
+        >
           <div class="code" @click="showDialog = true">
             <span class="flag_icon">
-              <img src="/static/img/common/flag_hongkong.svg" alt="">
+              <img src="/static/img/common/flag_hongkong.svg" alt="" />
             </span>
             <span>{{ form.area }}</span>
             <div class="more_icon">
-              <img src="/static/img/assets/more.png" alt="img">
+              <img src="/static/img/assets/more.png" alt="img" />
             </div>
           </div>
-          <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.phone" placeholder="您的手机号"
-            type="text" class="item_input">
+          <input
+            maxlength="20"
+            @blur="errorTip.error1 = false"
+            v-model.trim="form.phone"
+            placeholder="您的手机号"
+            type="text"
+            class="item_input"
+          />
         </div>
         <div class="form_title">密码</div>
-        <div class="form_item margin_item" :class="{ 'err_ipt': errorTip.error2 }">
-          <input maxlength="20" @blur="errorTip.error2 = false" v-show="!showPass" v-model.trim="form.password"
-            placeholder="密码最小8个字符" type="password" class="item_input">
-          <input maxlength="20" @blur="errorTip.error2 = false" v-show="showPass" v-model.trim="form.password"
-            placeholder="密码最小8个字符" type="text" class="item_input">
-          <div class=" form_item_icon" @click="showPass = !showPass">
-            <img v-show="!showPass" src="/static/img/user/eye-off.png" alt="off">
-            <img v-show="showPass" src="/static/img/user/eye-open.png" alt="open">
+        <div
+          class="form_item margin_item"
+          :class="{ err_ipt: errorTip.error2 }"
+        >
+          <input
+            maxlength="20"
+            @blur="errorTip.error2 = false"
+            v-show="!showPass"
+            v-model.trim="form.password"
+            placeholder="密码最小8个字符"
+            type="password"
+            class="item_input"
+          />
+          <input
+            maxlength="20"
+            @blur="errorTip.error2 = false"
+            v-show="showPass"
+            v-model.trim="form.password"
+            placeholder="密码最小8个字符"
+            type="text"
+            class="item_input"
+          />
+          <div class="form_item_icon" @click="showPass = !showPass">
+            <img
+              v-show="!showPass"
+              src="/static/img/user/eye-off.png"
+              alt="off"
+            />
+            <img
+              v-show="showPass"
+              src="/static/img/user/eye-open.png"
+              alt="open"
+            />
           </div>
         </div>
         <!-- 密码等级 -->
-        <PasswordLevel style="position: relative;top:-0.32rem;left:0.32rem" :password="form.password" />
+        <PasswordLevel
+          style="position: relative; top: -0.32rem; left: 0.32rem"
+          :password="form.password"
+        />
         <div class="form_title">交易密码</div>
-        <div class="form_item margin_item" :class="{ 'err_ipt': errorTip.error3 }">
-          <input maxlength="20" @blur="errorTip.error3 = false" v-show="!showPass2" v-model.trim="form.safeword"
-            placeholder="请输入交易密码" type="password" class="item_input">
-          <input maxlength="20" @blur="errorTip.error3 = false" v-show="showPass2" v-model.trim="form.safeword"
-            placeholder="请输入交易密码" type="text" class="item_input">
-          <div class=" form_item_icon" @click="showPass2 = !showPass2">
-            <img v-show="!showPass2" src="/static/img/user/eye-off.png" alt="off">
-            <img v-show="showPass2" src="/static/img/user/eye-open.png" alt="open">
+        <div
+          class="form_item margin_item"
+          :class="{ err_ipt: errorTip.error3 }"
+        >
+          <input
+            maxlength="20"
+            @blur="errorTip.error3 = false"
+            v-show="!showPass2"
+            v-model.trim="form.safeword"
+            placeholder="请输入交易密码"
+            type="password"
+            class="item_input"
+          />
+          <input
+            maxlength="20"
+            @blur="errorTip.error3 = false"
+            v-show="showPass2"
+            v-model.trim="form.safeword"
+            placeholder="请输入交易密码"
+            type="text"
+            class="item_input"
+          />
+          <div class="form_item_icon" @click="showPass2 = !showPass2">
+            <img
+              v-show="!showPass2"
+              src="/static/img/user/eye-off.png"
+              alt="off"
+            />
+            <img
+              v-show="showPass2"
+              src="/static/img/user/eye-open.png"
+              alt="open"
+            />
           </div>
         </div>
         <!-- <div class="form_title">确认交易密码</div>
@@ -99,264 +177,328 @@
         </div>
       </div> -->
 
-
-
         <div class="form_title">邀请码</div>
         <div class="form_item margin_item">
-          <input maxlength="20" v-model.trim="form.invateCode" placeholder="请输入您的邀请码" type="text" class="item_input">
+          <input
+            maxlength="20"
+            v-model.trim="form.invateCode"
+            placeholder="请输入您的邀请码"
+            type="text"
+            class="item_input"
+          />
         </div>
       </div>
 
       <!-- 协议 -->
-      <label class=" register_doc" @click="checked = !checked">
-        <Checkbox :icon-size="'0.36rem'" @click.stop="() => { }" class="register_doc_check" checked-color="#014CFA"
-          shape="square" v-model="checked"></Checkbox>
+      <label class="register_doc" @click="checked = !checked">
+        <Checkbox
+          :icon-size="'0.36rem'"
+          @click.stop="() => {}"
+          class="register_doc_check"
+          checked-color="#014CFA"
+          shape="square"
+          v-model="checked"
+        ></Checkbox>
         我同意<span>隐私政策</span>和<span>用户条款</span>
       </label>
 
       <!-- 按钮 -->
       <div class="submit_box">
-        <Button @click="submit" :loading="loading" round color="#014CFA" class="submit" type="primary">继续</Button>
+        <Button
+          @click="submit"
+          :loading="loading"
+          round
+          color="#014CFA"
+          class="submit"
+          type="primary"
+          >继续</Button
+        >
       </div>
 
       <!-- 去注册 -->
       <div class="go_register">
         <div class="server_icon" @click="goChat">
-          <img src="/static/img/common/server.png" alt="server">
+          <img src="/static/img/common/server.png" alt="server" />
         </div>
         <span @click="goLogin">
           有账号吗？
           <span>去登录</span>
         </span>
-
       </div>
     </template>
 
     <template v-else>
-      <RegisterCodeCheck :type="activeTab == 0 ? 'email' : 'phone'" :value="activeTab == 0 ? form.email : form.phone"
-        @success="registerSuccessNext" />
+      <RegisterCodeCheck
+        :type="activeTab == 0 ? 'email' : 'phone'"
+        :value="activeTab == 0 ? form.email : form.phone"
+        @success="registerSuccessNext"
+      />
     </template>
 
     <!-- 验证码 -->
-    <VerifCode :type="activeTab == 0 ? 'email' : 'phone'" :value="form.username" @submit="submitCode" to="body"
-      ref="verifCodeRef" />
-
+    <VerifCode
+      :type="activeTab == 0 ? 'email' : 'phone'"
+      :value="form.username"
+      @submit="submitCode"
+      to="body"
+      ref="verifCodeRef"
+    />
 
     <!-- 区号弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
-      position="bottom" teleport="body">
+    <Popup
+      :safe-area-inset-top="true"
+      :safe-area-inset-bottom="true"
+      class="self_van_popup"
+      v-model:show="showDialog"
+      position="bottom"
+      teleport="body"
+    >
       <div class="register_accounr_dialog">
         <div class="close_icon" @click="showDialog = false">
-          <img src="/static/img/common/close.png" alt="x">
+          <img src="/static/img/common/close.png" alt="x" />
         </div>
         <div class="item search_box">
           <Icon class="search" name="search" size="24px" />
-          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="搜索">
+          <input
+            v-model.trim="searchStr"
+            class="ipt"
+            type="text"
+            placeholder="搜索"
+          />
         </div>
-        <div style="height:60vh;overflow-y: auto;">
-          <div @click="clickItem(item)" class="transfer_dialog_item"
-            :class="{ 'transfer_dialog_item_active': form.area == item.code }" v-for="(item, i) in showAreas" :key="i">
+        <div style="height: 60vh; overflow-y: auto">
+          <div
+            @click="clickItem(item)"
+            class="transfer_dialog_item"
+            :class="{ transfer_dialog_item_active: form.area == item.code }"
+            v-for="(item, i) in showAreas"
+            :key="i"
+          >
             <span class="flag_icon">
-              <img src="/static/img/common/flag_hongkong.svg" alt="HongKong">
+              <img src="/static/img/common/flag_hongkong.svg" alt="HongKong" />
             </span>
             <span>{{ item.cn }}</span>
             <span>({{ item.code }})</span>
-            <Icon v-if="form.area == item.code" class="check_icon" name="success" />
+            <Icon
+              v-if="form.area == item.code"
+              class="check_icon"
+              name="success"
+            />
           </div>
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
     </Popup>
-
   </div>
-
-
 </template>
 
 <script setup>
-import { Icon, Button, showToast, Checkbox, showLoadingToast, closeToast, Tab, Tabs, Popup } from "vant"
-import { ref, computed } from "vue"
-import router from "@/router"
-import { useRoute, useRouter } from "vue-router"
-import PasswordLevel from "@/components/PasswordLevel.vue"
-import store from "@/store"
-import { _register } from "@/api/api"
-import VerifCode from "@/components/VerifCode.vue"
-import ImgCheck from "@/components/ImgCheck.vue"
-import { areaCode, validateEmail } from '@/utils/index'
-import NoData from "@/components/NoData.vue"
-import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue"
-
+import {
+  Icon,
+  Button,
+  showToast,
+  Checkbox,
+  showLoadingToast,
+  closeToast,
+  Tab,
+  Tabs,
+  Popup,
+} from "vant";
+import { ref, computed } from "vue";
+import router from "@/router";
+import { useRoute, useRouter } from "vue-router";
+import PasswordLevel from "@/components/PasswordLevel.vue";
+import store from "@/store";
+import { _register } from "@/api/api";
+import VerifCode from "@/components/VerifCode.vue";
+import ImgCheck from "@/components/ImgCheck.vue";
+import { areaCode, validateEmail } from "@/utils/index";
+import NoData from "@/components/NoData.vue";
+import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
 
 // 区号控制
 // const step = ref(1)
-const activeTab = ref(0)
-const defaultCode = '+244'
-const showDialog = ref(false)
-const searchStr = ref('')
+const activeTab = ref(0);
+const defaultCode = "+244";
+const showDialog = ref(false);
+const searchStr = ref("");
 const showAreas = computed(() => {
-  return areaCode.filter(item => {
-    return item.cn.includes(searchStr.value) || item.en.includes(searchStr.value) || item.code.includes(searchStr.value)
-  })
-})
-const clickItem = item => {
-  form.value.area = item.code
-  showDialog.value = false
-}
+  return areaCode.filter((item) => {
+    return (
+      item.cn.includes(searchStr.value) ||
+      item.en.includes(searchStr.value) ||
+      item.code.includes(searchStr.value)
+    );
+  });
+});
+const clickItem = (item) => {
+  form.value.area = item.code;
+  showDialog.value = false;
+};
 
+//跳转到语言设置页
+const goLang = () => {
+//   emits("closeDialog");
+  router.push({ name: "language" });
+};
 
 // 进入页面则重置登录状态信息
 store.commit("setToken", "");
 store.commit("setUserInfo", {});
 
-const route = useRoute()
+const route = useRoute();
 const routerApi = useRouter();
-const forwardUrl = routerApi.options.history.state.forward
-const step = ref(forwardUrl === '/language' || forwardUrl === '/chat' ? 2 : 1)
+const forwardUrl = routerApi.options.history.state.forward;
+const step = ref(forwardUrl === "/language" || forwardUrl === "/chat" ? 2 : 1);
 
-const guest = ref(route.query.guest)
-const showPass = ref(false) // 密码显示
-const showPass2 = ref(false) // 密码显示
-const showPass3 = ref(false) // 密码显示
-const checked = ref(true) // 同意协议
-const form = ref({ // 表单
+const guest = ref(route.query.guest);
+const showPass = ref(false); // 密码显示
+const showPass2 = ref(false); // 密码显示
+const showPass3 = ref(false); // 密码显示
+const checked = ref(true); // 同意协议
+const form = ref({
+  // 表单
   area: defaultCode,
-  email: '',
-  phone: '',
-  username: '',
-  password: '',
-  guest: guest.value ? 'true' : 'false',
-  invateCode: '',
-  safeword: '',
+  email: "",
+  phone: "",
+  username: "",
+  password: "",
+  guest: guest.value ? "true" : "false",
+  invateCode: "",
+  safeword: "",
   // safeword2: ''
-})
-const verifcode = ref('')
-const verifCodeRef = ref()
+});
+const verifcode = ref("");
+const verifCodeRef = ref();
 
 // 提交
 const errorTip = ref({
   error1: false,
   error2: false,
-  error3: false
-})
-const loading = ref(false)
+  error3: false,
+});
+const loading = ref(false);
 const submit = async () => {
-  if (!checked.value) return showToast('请先同意隐私政策和用户条款')
+  if (!checked.value) return showToast("请先同意隐私政策和用户条款");
   // if (!form.value.username) {
   //   errorTip.value.error1 = true
   //   return showToast('请输入用户名')
   // }
   if (activeTab.value == 0) {
     if (!form.value.email || !validateEmail(form.value.email)) {
-      errorTip.value.error1 = true
-      showToast('请输入有效邮箱')
-      return
+      errorTip.value.error1 = true;
+      showToast("请输入有效邮箱");
+      return;
     }
-    form.value.username = form.value.email
+    form.value.username = form.value.email;
   }
   if (activeTab.value == 1) {
     if (!form.value.phone) {
-      errorTip.value.error1 = true
-      showToast('请输入手机号码')
-      return
+      errorTip.value.error1 = true;
+      showToast("请输入手机号码");
+      return;
     }
-    form.value.username = form.value.area + form.value.phone
+    form.value.username = form.value.area + form.value.phone;
   }
   if (!form.value.password) {
-    errorTip.value.error2 = true
-    return showToast('请输入密码')
+    errorTip.value.error2 = true;
+    return showToast("请输入密码");
   }
   if (form.value.password.length < 8) {
-    errorTip.value.error2 = true
-    return showToast('密码最小8个字符')
+    errorTip.value.error2 = true;
+    return showToast("密码最小8个字符");
   }
   if (!form.value.safeword) {
-    errorTip.value.error3 = true
-    return showToast('请输入交易密码')
+    errorTip.value.error3 = true;
+    return showToast("请输入交易密码");
   }
   // if (form.value.safeword != form.value.safeword2) {
   //   errorTip.value.error3 = true
   //   return showToast('两次密码不一致')
   // }
-  sessionStorage.setItem('registerForm', JSON.stringify(form.value))
+  sessionStorage.setItem("registerForm", JSON.stringify(form.value));
 
   if (!sessionToken.value) {
-    const rs = await store.dispatch('updateSessionToken')
-    if (!rs) return showToast('网络异常，请重试')
+    const rs = await store.dispatch("updateSessionToken");
+    if (!rs) return showToast("网络异常，请重试");
   }
-  if (loading.value) return
-  loading.value = true
+  if (loading.value) return;
+  loading.value = true;
   showLoadingToast({
     duration: 0,
-    loadingType: 'spinner',
-  })
+    loadingType: "spinner",
+  });
   _register({
     ...form.value,
     token: sessionToken.value,
-    verifcode: verifcode.value
-  }).then(res => {
-    if (res.code == 200) {
-      setTimeout(() => {
-        store.dispatch('reset')
-        setTimeout(() => {
-          store.commit('setToken', res.data.auth)
-          store.commit('setUserInfo', res.data)
-        }, 100)
-        setTimeout(() => {
-          store.dispatch('updateUserInfo')
-          store.dispatch('updateAssets')
-          store.dispatch('updateWallet')
-          step.value = 3
-        }, 300)
-      }, 2000)
-    } else {
-      showToast(res.message)
-    }
-  }).catch(err => {
-    if (err.code == '1001') { // 弹出验证码
-      if (verifcode.value) { // 如果输入了验证码，旧提示验证码错误
-        showToast(err.message)
-      }
-      setTimeout(() => {
-        verifCodeRef.value.open()
-      }, 1000)
-    } else {
-      showToast(err.message || "网络异常")
-    }
-  }).finally(() => {
-    getSessionToken()
-    setTimeout(() => {
-      verifcode.value = ''
-      loading.value = false
-      closeToast()
-    }, 2500)
+    verifcode: verifcode.value,
   })
-}
+    .then((res) => {
+      if (res.code == 200) {
+        setTimeout(() => {
+          store.dispatch("reset");
+          setTimeout(() => {
+            store.commit("setToken", res.data.auth);
+            store.commit("setUserInfo", res.data);
+          }, 100);
+          setTimeout(() => {
+            store.dispatch("updateUserInfo");
+            store.dispatch("updateAssets");
+            store.dispatch("updateWallet");
+            step.value = 3;
+          }, 300);
+        }, 2000);
+      } else {
+        showToast(res.message);
+      }
+    })
+    .catch((err) => {
+      if (err.code == "1001") {
+        // 弹出验证码
+        if (verifcode.value) {
+          // 如果输入了验证码，旧提示验证码错误
+          showToast(err.message);
+        }
+        setTimeout(() => {
+          verifCodeRef.value.open();
+        }, 1000);
+      } else {
+        showToast(err.message || "网络异常");
+      }
+    })
+    .finally(() => {
+      getSessionToken();
+      setTimeout(() => {
+        verifcode.value = "";
+        loading.value = false;
+        closeToast();
+      }, 2500);
+    });
+};
 
 const registerSuccessNext = () => {
   if (guest.value) {
     router.replace({
-      name: 'registerSuccess2'
-    })
+      name: "registerSuccess2",
+    });
   } else {
     router.replace({
-      name: 'registerSuccess'
-    })
+      name: "registerSuccess",
+    });
   }
-}
+};
 
 // 通过验证码提交
-const submitCode = code => {
-  verifcode.value = code
-  submit()
-}
+const submitCode = (code) => {
+  verifcode.value = code;
+  submit();
+};
 
-
-const sessionToken = computed(() => store.state.sessionToken || '')
+const sessionToken = computed(() => store.state.sessionToken || "");
 const getSessionToken = () => {
-  store.dispatch('updateSessionToken')
-}
-getSessionToken()
+  store.dispatch("updateSessionToken");
+};
+getSessionToken();
 
 // 返回
 const goBack = () => {
@@ -365,20 +507,20 @@ const goBack = () => {
       name: route.query.reurl,
       query: {
         redata: route.query.redata,
-      }
-    })
+      },
+    });
   } else {
-    router.back()
+    router.back();
   }
-}
+};
 // 跳转登录
 const goLogin = () => {
   router.replace({
-    name: 'user',
-  })
+    name: "user",
+  });
   setTimeout(() => {
-    store.commit('setIsLoginOpen', true)
-  }, 300)
+    store.commit("setIsLoginOpen", true);
+  }, 300);
   // router.replace({
   //   name: 'login',
   //   query: {
@@ -386,18 +528,60 @@ const goLogin = () => {
   //     redata: route.query.redata,
   //   }
   // })
-}
+};
 const goChat = () => {
   router.push({
-    name: 'chat'
-  })
-}
+    name: "chat",
+  });
+};
 </script>
 
 <style lang="less" scoped>
 .page-register {
   padding-top: 1.12rem;
   height: 100%;
+
+  .top_icon_container {
+    position: fixed;
+    width: 7.5rem;
+    justify-content: space-between;
+    padding: 0 0.32rem;
+    height: 1.12rem;
+    display: flex;
+    align-items: center;
+    top: 0;
+    background-color: #fff;
+    margin-bottom: 0.2rem;
+
+    .top_back_container {
+      .arrow_icon {
+        width: 20px;
+        height: 20px;
+        clip-path: path("M13.4 2L5 10.4L13.4 18.8");
+        background-color: #061023;
+      }
+    }
+
+    .language_icon_container {
+      width: 0.72rem;
+      height: 0.72rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-width: 0.02rem;
+      border-color: #edf2f7;
+      border-radius: 0.36rem;
+
+      .language_icon {
+        width: 0.432rem;
+        height: 0.432rem;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><g clip-path="url(%23clip0_129_5851)"><path d="M10.8912 0.306641C4.98556 0.306641 0.199219 5.09298 0.199219 10.9986C0.199219 16.9043 4.98556 21.6906 10.8912 21.6906C16.7969 21.6906 21.5832 16.9043 21.5832 10.9986C21.5832 5.09298 16.7969 0.306641 10.8912 0.306641ZM20.1075 10.2858H17.2814C17.1588 7.20075 16.2567 4.47207 14.8952 2.65108C17.7993 4.04606 19.8458 6.91396 20.1075 10.2858ZM15.8446 10.2858H11.604V1.83805C13.8956 2.44782 15.6664 5.94778 15.8446 10.2858ZM10.1784 1.83805V10.2858H5.93782C6.11602 5.94778 7.88688 2.44782 10.1784 1.83805ZM6.88729 2.65108C5.52294 4.47207 4.62359 7.19797 4.50108 10.2858H1.67494C1.93667 6.91396 3.98318 4.04606 6.88729 2.65108ZM1.67494 11.7114H4.49829C4.62081 14.7965 5.52294 17.5252 6.8845 19.3462C3.98318 17.9512 1.93667 15.0833 1.67494 11.7114ZM5.93782 11.7114H10.1784V20.1592C7.88688 19.5495 6.11602 16.0495 5.93782 11.7114ZM11.604 20.1592V11.7114H15.8446C15.6664 16.0495 13.8956 19.5495 11.604 20.1592ZM14.8952 19.3462C16.2595 17.5252 17.1588 14.7993 17.2814 11.7114H20.1047C19.8458 15.0833 17.7993 17.9512 14.8952 19.3462Z" fill="%23666D80"/></g><defs><clipPath id="clip0_129_5851"><rect width="21.6" height="21.6" fill="white" transform="translate(0.199219 0.199219)"/></clipPath></defs></svg>');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+  }
 
   .tabs {
     overflow: hidden;
@@ -416,7 +600,7 @@ const goChat = () => {
     :deep(.van-tab--card) {
       border-right: none;
       color: #061023;
-      border-bottom: 3px solid #D0D8E2;
+      border-bottom: 3px solid #d0d8e2;
       // background-color: #f5f5f5;
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
@@ -425,13 +609,13 @@ const goChat = () => {
 
     :deep(.van-tab--card.van-tab--active) {
       background-color: white;
-      color: #2168F6;
+      color: #2168f6;
       font-family: "PingFang SC";
       font-size: 18px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
-      border-bottom: 3px solid #014CFA;
+      border-bottom: 3px solid #014cfa;
     }
 
     :deep(.van-tab--shrink) {
@@ -473,7 +657,7 @@ const goChat = () => {
 
     .top_back {
       color: #161616;
-      font-size: 0.40rem;
+      font-size: 0.4rem;
       width: 0.8rem;
       height: 0.8rem;
       display: flex;
@@ -516,7 +700,7 @@ const goChat = () => {
     }
 
     .tologin {
-      color: #014CFA;
+      color: #014cfa;
       font-family: "PingFang SC";
       font-size: 12px;
       font-style: normal;
@@ -538,7 +722,7 @@ const goChat = () => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 1px solid #D0D8E2;
+      border: 1px solid #d0d8e2;
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.32rem;
@@ -552,8 +736,8 @@ const goChat = () => {
         align-items: center;
         width: 16px;
         height: 16px;
-        background-color: #CDD4E3;
-        padding: '1px';
+        background-color: #cdd4e3;
+        padding: "1px";
         border-radius: 50%;
 
         .van-icon {
@@ -588,7 +772,7 @@ const goChat = () => {
       }
 
       &:has(.item_input:focus) {
-        border: 1px solid #014CFA;
+        border: 1px solid #014cfa;
       }
 
       .form_item_user {
@@ -609,7 +793,7 @@ const goChat = () => {
     }
 
     .err_ipt {
-      border: 1px solid #E8503A;
+      border: 1px solid #e8503a;
     }
   }
 
@@ -628,8 +812,8 @@ const goChat = () => {
       margin-right: 0.24rem;
     }
 
-    >span {
-      color: #014CFA;
+    > span {
+      color: #014cfa;
     }
   }
 
@@ -656,14 +840,13 @@ const goChat = () => {
       margin-right: 0.2rem;
     }
 
-    >span {
-      color: #1A59F6;
+    > span {
+      color: #1a59f6;
       font-weight: 600;
     }
   }
 }
 </style>
-
 
 <style lang="less" scoped>
 .register_accounr_dialog {
@@ -703,7 +886,7 @@ const goChat = () => {
     display: flex;
     align-items: center;
     justify-content: start;
-    border-bottom: 1px solid #F5F5F5;
+    border-bottom: 1px solid #f5f5f5;
     padding: 0 0.32rem;
     gap: 10px;
 
@@ -719,14 +902,14 @@ const goChat = () => {
   }
 
   .transfer_dialog_item_active {
-    color: #014CFA;
+    color: #014cfa;
     font-weight: 600;
     position: relative;
 
     .check_icon {
       position: absolute;
       right: 0.64rem;
-      color: #014CFA;
+      color: #014cfa;
       font-size: 0.28rem;
     }
   }

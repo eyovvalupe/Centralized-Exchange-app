@@ -25,6 +25,13 @@ import router from '@/router'
 import store from '@/store'
 import { setLocale } from '@/i18/utils'
 
+const props = defineProps({
+  from: {
+    type: String,
+    default: ''
+  }
+})
+
 const checked = ref([store.state.i18Data.locale])
 const navs = ref([
   { name: 'English', icon: '/static/img/common/en.png', val: 'en' },

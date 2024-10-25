@@ -61,13 +61,14 @@
 <script setup>
 import { Slider, showLoadingToast, closeToast, Icon } from "vant";
 import { ref, onMounted } from "vue";
+import router from "@/router";
 
 const show = ref(false);
 const loading = ref(false);
 const emits = defineEmits(["success", "goBack"]);
 // 跳转多语言
 const goLang = () => {
-  emits("closeDialog");
+//   emits("closeDialog");
   router.push({ name: "language" });
 };
 
@@ -105,7 +106,7 @@ const changeSlider = (val) => {
     setTimeout(() => {
       show.value = false;
       emits("success");
-    }, 1200);
+    }, 1000);
   } else {
     // 失败
     sliderStatus.value = "error";
