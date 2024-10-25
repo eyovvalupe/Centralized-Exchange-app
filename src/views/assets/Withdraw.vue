@@ -33,8 +33,8 @@
                         </div>
                         
                     </FormItem>
-                   <FormItem  v-model="form.amount" show-all-btn title="提现金额"  @change="changeAmount" @allBtnClick="maxIpt">
-                        <template #title-right>可提现：{{ balance }}</template>
+                   <FormItem type="number" v-model="form.amount" show-all-btn :title="$t('withdraw.withdrawalAmount')"  @change="changeAmount" @allBtnClick="maxIpt">
+                        <template #title-right>{{$t("withdraw.withdrawable")}}：{{ balance }}</template>
                    </FormItem>
 
                     <div class="tip">
@@ -67,7 +67,7 @@
                         </div>
                         <div v-else class="add_account" @click="showAccountDialog = true">
                             <Icon size="0.48rem" color="#014CFA" name="add-o" />
-                            <div class="add_account_text">添加收款方式</div>
+                            <div class="add_account_text">{{ $t('withdraw.addPaymentMethod') }}</div>
                         </div>
 
                     </div>
@@ -76,6 +76,27 @@
                 <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">提现</Button>
             </Tab>
             <Tab :title="$t('withdraw.bankCard')" name="bankCard">
+                <div class="form">
+                    <FormItem type="number" v-model="form.amount" show-all-btn :title="$t('withdraw.withdrawalAmount')"  @change="changeAmount" @allBtnClick="maxIpt">
+                        <template #title-right>{{$t("withdraw.withdrawable")}}：82771.85</template>
+                    </FormItem>
+                    <div class="tip">
+                        <span>手续费</span>
+                        <span class="num">{{ loading ? '--' : fee }}</span>
+                    </div>
+
+                    <!-- 提款方式 -->
+                    <div class="subtitle">收款账户</div>
+                    <div class="account_box">
+
+                        <div class="add_account" @click="showAccountDialog = true">
+                            <Icon size="0.48rem" color="#014CFA" name="add-o" />
+                            <div class="add_account_text">{{ $t('withdraw.addPaymentMethod') }}</div>
+                        </div>
+
+                    </div>
+                </div>
+                <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">提现</Button>
             </Tab>
          </Tabs>
 
@@ -165,24 +186,21 @@ import SafePassword from "@/components/SafePassword.vue"
 import { _hiddenAccount } from "@/utils/index"
 import RecordList from "@/components/RecordList.vue"
 import AccountCheck from "@/components/AccountCheck.vue"
-import FormItem from "@/components/form/FormItem.vue"
+import FormItem from "@/components/Form/FormItem.vue"
+import { useRoute } from "vue-router"
 const RecordListRef = ref()
 const userInfo = computed(() => store.state.userInfo || {})
 const tabActive = ref("cryptocurrency")
 const focus = ref(false)
 const loading = ref(false)
+const route = useRoute()
 // 表单
 const form = ref({
     amount: '',
     from: '',
     account: '',
 })
-const maxIpt = () => {
-    form.value.amount = balance.value
-    setTimeout(() => {
-        getFee()
-    }, 0)
-}
+
 const changeAmount = () => {
     setTimeout(() => {
         getFee()
@@ -255,7 +273,10 @@ const getFee = () => {
 const wallet = computed(() => { // 可选钱包列表
     return store.state.wallet || []
 })
-if (wallet.value[0]) {
+
+if(route.query.from){
+    form.value.from = route.query.from
+}else if (wallet.value[0]) {
     form.value.from = wallet.value[0].name
 }
 const balance = computed(() => { // main钱包余额
@@ -264,6 +285,13 @@ const balance = computed(() => { // main钱包余额
     if (main) b = main.amount
     return b
 })
+
+const maxIpt = () => {
+    form.value.amount = balance.value
+    setTimeout(() => {
+        getFee()
+    }, 0)
+}
 
 // 收款方式
 store.dispatch('updateAccountList')
@@ -306,6 +334,15 @@ const clickAccountItem = item => {
 const showDialog = ref(false)
 const clickItem = item => {
     form.value.from = item.name
+    const _query = {}
+    Object.keys(route.query).map(k=>{
+        _query[k] = route.query[k]
+    })
+    _query.from = item.name
+    router.replace({
+        path:route.path,
+        query:_query
+    })
     form.value.account = ''
     form.value.amount = ''
     showDialog.value = false
@@ -532,15 +569,15 @@ Promise.all([
         top: -1px;
         right: -1px;
         background-size: 100% 100%;
-        width: 0.42rem;
-        height: 0.36rem;
+        width: 0.48rem;
+        height: 0.41rem;
 
         >img {
             width: 0.17rem !important;
             height: 0.14rem !important;
             position: absolute;
             right: 0.06rem;
-            top: 0.08rem;
+            top: 0.07rem;
         }
     }
 }
@@ -594,6 +631,7 @@ Promise.all([
             width: 0.64rem;
             height: 0.64rem;
             margin-right: 0.2rem;
+            border-radius: 50%;
         }
     }
     .swap_dialog_item:last-child{

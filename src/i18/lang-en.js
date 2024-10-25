@@ -29,6 +29,9 @@ export default {
         confirm:"confirm",
         currencySelection:"Currency selection",
         searchPlaceholder:"Enter currency",
+        addPaymentMethod:"add payment method",
+        withdrawable:"withdrawable",
+        withdrawalAmount:"withdrawal amount"
     },
     recharging:{
         recharge:"Recharge",

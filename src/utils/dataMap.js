@@ -24,9 +24,9 @@ export const _loanStatusMap = {
 
 // 提现状态
 export const _withdrawStatusMap = {
-  "review": "审核中",
-  "success": "成功",
-  "failed": "失败"
+  "review": "提现处理中",
+  "success": "提现成功",
+  "failed": "提现失败"
 }
 
 // 提现状态

@@ -32,7 +32,10 @@ import { watch } from "vue"
 
 const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','allBtnClick'])
 const props = defineProps({
-    modelValue:String,
+    modelValue:{
+        type:[String,Number],
+        default:''
+    },
     title:String,
     custom:Boolean,
     percentTags:{
@@ -51,8 +54,11 @@ const props = defineProps({
 const inputFocus = ref(false)
 const inputVal = ref(props.value)
 
-watch(()=>props.value,()=>{
-    inputVal.value = props.value
+watch(()=>props.modelValue,()=>{
+    if(props.modelValue == inputVal.value){
+        return
+    }
+    inputVal.value = props.modelValue
 })
 const inputChange = ()=>{
     emit('update:modelValue',inputVal.value)
@@ -93,7 +99,6 @@ const percentTagClick = (percent)=>{
             height: 100%;
             font-size: 0.28rem;
             padding: 0;
-            color: #034cfa;
             position: relative;
             z-index: 1;
         }
