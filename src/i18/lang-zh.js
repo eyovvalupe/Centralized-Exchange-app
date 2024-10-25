@@ -45,5 +45,8 @@ export default {
         fail:'失败',
         finish:'完成'
 
+    },
+    transfer:{
+        transferRecord:"划转记录"
     }
 }
