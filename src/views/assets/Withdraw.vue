@@ -33,7 +33,7 @@
                         </div>
                         
                     </FormItem>
-                   <FormItem type="number" v-model="form.amount" show-all-btn :title="$t('withdraw.withdrawalAmount')"  @change="changeAmount" @allBtnClick="maxIpt">
+                   <FormItem type="number" v-model="form.amount" show-btn :title="$t('withdraw.withdrawalAmount')"  @change="changeAmount" @btnClick="maxIpt">
                         <template #title-right>{{$t("withdraw.withdrawable")}}：{{ balance }}</template>
                    </FormItem>
 

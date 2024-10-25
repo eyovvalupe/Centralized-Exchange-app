@@ -101,13 +101,7 @@ const loading = ref(false)
 const order_no = ref(route.query.order_no) // 订单编号
 
 // 获取订单详情
-const orderData = ref({
-    amount:500,
-    status:'success',
-    currency:"USDT",
-    address:"Hiku7501Ukfa9571F",
-    order_no:"15861958119025519819"
-})
+const orderData = ref({})
 const getOrderInfo = () => {
     loading.value = true
     

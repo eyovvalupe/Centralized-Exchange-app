@@ -17,14 +17,13 @@
         <!-- 表单 -->
         <div class="form">
 
-            <div class="form_box" :class="{ 'form_box_active': showPicker }" @click="openDialog('from')">
-                <div class="flex justify-between">
+            <div class="form_box" :class="{ 'form_box_active': showPicker }">
+                <div class="flex justify-between" @click="openDialog('from')">
                     <div class="flex items-center">
                         <div class="form_text">从</div>
                         <div class="account_item">
                             <div class="account_item_icon">
-                                <img v-if="form.from == 'money'" src="/static/img/assets/cash_icon.png" alt="icon">
-                                <img v-else :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="img">
+                                <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="icon">
                             </div>
                             <div class="item_content">
                                 <span>{{ _accountMap[form.from] }}</span>
@@ -44,84 +43,70 @@
                         <img src="/static/img/assets/arrow_right.svg" alt="arrow_right">
                     </div>
                 </div>
+
+                <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" title="转入" @btnClick="maxIpt" show-btn :btn-placeholder="form.fromCurrency.name">
+                    <template #title-right>
+                        <={{ balance }}
+                    </template>
+
+                </FormItem>
                 
             </div>
             
-            <div class="form_box"  @click="openDialog('to')">
-                    <!-- 到 -->
-                   
-                    <div class="form_text">到</div>
-                    <div class="item account_item">
-                        <div class="account_item_icon">
-                            <img v-if="form.to == 'money'" src="/static/img/assets/cash_icon.png" alt="icon">
-                            <img v-else :src="`/static/img/crypto/${form.to.toUpperCase()}.png`" alt="img">
-                        </div>
-                        <div class="item_content">
-                            <span>{{ _accountMap[form.to] }}</span>
-                        </div>
-                        <div style="flex:1"></div>
-                        <!-- <div class="more">
-                            <img src="/static/img/assets/more.png" alt="more">
-                        </div> -->
-                    </div>
-
-                    <div class="item account_item" style="flex: 1">
-                        <div class="account_item_icon">
-                            <img :src="`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`" alt="img">
-                        </div>
-                        <div class="item_content">
-                            <span class="monty_span">{{ form.toCurrency.name || '' }}</span>
-                        </div>
-                        <div style="flex:1"></div>
-                        <div class="more">
-                            <img src="/static/img/assets/more_icon.svg" alt="more">
-                        </div>
-                    </div>
-
-                    <!-- <div class="item ipt_item" style="background-color: #f5f5f5">
-                    <div class="ipt" v-show="formType == 'transfer'">{{ form.amount || '--' }}</div>
-                    <div class="ipt" v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}
-                    </div>
-                </div> -->
-            </div>
-            <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-                <img src="/static/img/assets/trans_icon2.png" alt="img">
-            </div>
-        </div>
-
-
-        <!-- 输入 -->
-        <div class="subtitle" style="margin-bottom: 0.32rem;">转出金额</div>
-        <div class="item_box">
-            <div class="item border_item ipt_item" :class="{ 'err_ipt': errStatus }">
-                <div class="ipt_tip" v-show="form.amount === '' || focus">最多可转&nbsp;&nbsp;<span>{{ balance }}</span>
-
+            <div class="form_box" >
+                <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
+                    <img src="/static/img/assets/recharge_trans.png" alt="img">
                 </div>
-                <input @focus="focus = true" @blur="blurInput" v-model="form.amount" type="number" :placeholder="``"
-                    class="ipt">
-                <div :style="{ opacity: focus ? '1' : '0', pointerEvents: focus ? 'all' : 'none' }" class="btn"
-                    @click="maxIpt">
-                    全部</div>
-                <div style="font-size: 0.24rem;color: #999;">{{ form.fromCurrency.name || '' }}</div>
-            </div>
-        </div>
-        <div class="subtitle" style="margin-bottom: 0.32rem;margin-top: 0.64rem">转入金额</div>
-        <div class="item_box">
-            <div class="item border_item ipt_item">
-                <div class="ipt">
-                    <span v-show="formType == 'transfer'">{{ form.amount || '--' }}</span>
-                    <span v-show="formType == 'swap'">{{ new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
+                <!-- 到 -->
+                <div class="flex justify-between" @click="openDialog('to')">
+                    <div class="flex items-center">
+                        <div class="form_text">到</div>
+                        <div class="account_item">
+                            <div class="account_item_icon">
+                                <img :src="`/static/img/crypto/${form.to.toUpperCase()}.png`" alt="icon">
+                            </div>
+                            <div class="item_content">
+                                <span>{{ _accountMap[form.to] }}</span>
+                            </div>
+                            
+                        </div>
+
+                        <div class="account_item">
+                            <div class="account_item_icon">
+                                <img :src="`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`" alt="img">
+                            </div>
+                            <div class="item_content">
+                                <span class="monty_span">{{ form.toCurrency.name || '' }}</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="more">
+                        <img src="/static/img/assets/arrow_right.svg" alt="arrow_right">
+                    </div>
+                    
                 </div>
-                <div style="font-size: 0.24rem;color: #999;">{{ form.toCurrency.name || '' }}</div>
+                <FormItem background="#EFF3F8" custom btn-show-mode="focus" title="转出" show-btn :btn-placeholder="form.toCurrency.name">
+                    <template #title-right>
+                        <={{ balance }}
+                    </template>
+                    <div>
+                        <span v-show="formType == 'transfer'">自动换算</span>
+                        <span :style="{color:form.amount === '' ? '#A4ACB9' : ''}" v-show="formType == 'swap'">{{ form.amount === '' ? '自动换算' : new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
+                    </div>
+
+                </FormItem>
+                
             </div>
-        </div>
-        <div class="right_tip" v-if="formType == 'swap'"> 1{{ form.fromCurrency.name }} ≈ {{ rateLoading ? '--' :
-            rate
-            }} {{ form.toCurrency.name }}
+
+            <div class="rate_tip" v-if="formType == 'swap'"> 1{{ form.fromCurrency.name }} ≈ {{ rateLoading ? '--' :
+                rate
+                }} {{ form.toCurrency.name }}
+            </div>
+            
         </div>
 
-
-        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">划转</Button>
 
         <!-- 充提记录 -->
         <RecordList ref="RecordListRef" />
@@ -132,20 +117,34 @@
         <!-- 账户和币种 -->
         <Popup v-model:show="showPicker" round position="bottom">
             <Picker :swipe-duration="200" :columns="columns" :columns-field-names="customFieldName"
-                @cancel="showPicker = false" @confirm="showPicker = false" @change="onConfirm" />
+                @cancel="showPicker = false" @confirm="showPicker = false" @change="onConfirm">
+                <template #option="option">
+                        <div class="picker-item">
+                            <span class="picker-item__icon">
+                                <img :src="`/static/img/crypto/${option.key.toUpperCase()}.png`" alt="icon">
+                            </span>
+                            <span class="picker-item__text">
+                                {{ option.value }}
+                            </span>
+                        </div>
+                    
+                </template>
+            </Picker>
+
         </Popup>
     </div>
 </template>
 
 <script setup>
 import Top from "@/components/Top.vue"
-import { Button, Popup, showToast, Picker } from "vant"
+import { Button, Popup, showToast, Picker,Row,Col } from "vant"
 import { ref, computed } from "vue"
 import { _accountMap, _accountMapList } from "@/utils/dataMap"
 import store from "@/store"
 import SafePassword from "@/components/SafePassword.vue"
 import { _transfer, _swapRate } from "@/api/api"
 import RecordList from "@/components/RecordList.vue"
+import FormItem from '@/components/Form/FormItem.vue'
 import { useRoute } from "vue-router"
 import router from "@/router"
 import Decimal from 'decimal.js';
@@ -235,6 +234,8 @@ const columns = computed(() => {
         return item
     })
 })
+
+console.log(columns.value)
 
 const customFieldName = {
     text: 'value',
@@ -408,6 +409,7 @@ const goRecord = () => {
             border: 1px solid #EFF3F8;
             padding: 0.42rem 0.32rem 0.4rem 0.32rem;
             margin-top: 0.52rem;
+            position: relative;
         }
         .form_text{
             color:#666D80;
@@ -440,8 +442,13 @@ const goRecord = () => {
         }
 
         .trans_icon {
-            width: 0.6rem;
-            height: 0.6rem;
+            width: 1rem;
+            height: 1rem;
+            position: absolute;
+            left:50%;
+            margin-left: -0.5rem;
+            top:-0.76rem;
+
         }
 
         .transing_icon {
@@ -454,23 +461,12 @@ const goRecord = () => {
             transform: rotate(0deg);
         }
 
-        .subtitle {
-            font-size: 0.28rem;
-            color: #333333;
-            font-weight: 400;
-            line-height: 0;
-            margin: 0 0.2rem 0 0;
-        }
-
-        .right_tip {
+        .rate_tip {
             font-size: 0.24rem;
-            text-align: right;
             margin-top: 0.2rem;
-            padding-right: 0.12rem;
-
-            span {
-                margin-left: 0.2rem;
-            }
+            line-height: 0.4rem;
+            color:#8F92A1;
+           
         }
 
         .tip {
@@ -491,48 +487,29 @@ const goRecord = () => {
     .submit {
         width: 100%;
         height: 1.12rem;
-        margin: 2.5rem 0 0.4rem 0;
-    }
-}
-</style>
-
-<style lang="less" scoped>
-.transfer_accounr_dialog {
-    background-color: #fff;
-    border-top-left-radius: 0.4rem;
-    border-top-right-radius: 0.4rem;
-    overflow: hidden;
-    padding: 0.86rem 0.32rem 0.8rem 0.32rem;
-    position: relative;
-
-    .close_icon {
-        position: absolute;
-        width: 0.4rem;
-        height: 0.4rem;
-        top: 0.24rem;
-        right: 0.32rem;
+        margin-top:0.84rem;
+        font-size: 0.36rem;
     }
 
-    .transfer_dialog_item {
-        overflow: auto;
-        height: 1.12rem;
+    .picker-item{
         display: flex;
         align-items: center;
-        justify-content: center;
-        border-bottom: 1px solid #F5F5F5;
-    }
-
-    .transfer_dialog_item_active {
-        color: #014CFA;
-        font-weight: 600;
-        position: relative;
-
-        .check_icon {
-            position: absolute;
-            right: 0.64rem;
-            color: #014CFA;
-            font-size: 0.28rem;
+        justify-content: flex-start;
+        padding-left: 0.6rem;
+        &__icon{
+            width: 0.48rem;
+            height: 0.48rem;
+            margin-right: 0.16rem;
+            img{
+                border-radius: 50%;
+            }
         }
+         
     }
+
+    :deep(.action-sheet-active)::after{
+        display: none;
+    }   
+    
 }
 </style>

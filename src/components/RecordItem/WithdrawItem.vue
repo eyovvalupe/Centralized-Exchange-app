@@ -3,7 +3,6 @@
     <div class="withdraw_item" @click="goInfo">
         <div class="icon_box">
             <img v-if="item.account && item.account.symbol" :src="`/static/img/crypto/${item.account.symbol}.png`" alt="img">
-            <img v-else src="/static/img/crypto/MAIN.png" alt="img">
         </div>
         <div class="content">
             <div class="address">{{ item.account && item.account.address ? getAddress(item.account.address) : getAddress(item.bank_card_number) }}</div>
