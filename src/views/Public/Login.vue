@@ -29,11 +29,7 @@
       <div class="form_item margin_item" v-show="activeTab == 0">
         <!-- <div class="form_item_user" v-show="saveAccount && saveAccount == form.email"> -->
         <div class="form_item_user" v-show="form.email">
-          <img
-            class="van-icon"
-            src="/static/img/assets/envelop.svg"
-            alt="envelope"
-          />
+          <div class="envelope-icon" ></div>
         </div>
         <input
           @change="changeAccount"
@@ -42,14 +38,14 @@
           type="text"
           class="item_input"
         />
-        <Loading v-if="accountLoading" :size="18" type="spinner" />
+        <Loading v-if="accountLoading" :size="'0.32rem'" type="spinner" />
         <!-- <div class="form_item_clear" v-show="saveAccount && saveAccount == form.email"> -->
         <div
           class="form_item_clear"
           v-show="form.email"
           @click="form.email = null"
         >
-          <Icon class="" name="cross" />
+          <div class="cross-icon"></div>
         </div>
       </div>
 
@@ -76,7 +72,7 @@
       <div class="form_item">
         <!-- 显示密码输入时的锁图标 -->
         <div class="form_item_user" v-if="form.password">
-          <img class="van-icon" src="/static/img/assets/lock.svg" alt="lock" />
+          <div class="lock-icon"></div>
         </div>
 
         <!-- 密码输入框，使用 v-if/v-else 优化 -->
@@ -197,7 +193,7 @@ const props = defineProps({
 
 // 区号控制
 const activeTab = ref(0);
-const defaultCode = "+244";
+const defaultCode = "+852";
 const showDialog = ref(false);
 const searchStr = ref("");
 const showAreas = computed(() => {
@@ -586,7 +582,7 @@ onMounted(() => {
 
       .item_input {
         flex: 1;
-        color: #333333;
+        color: #061023;
         font-weight: 400;
         font-size: 0.28rem;
       }
@@ -621,7 +617,6 @@ onMounted(() => {
         align-items: center;
         width: 0.32rem;
         height: 0.32rem;
-        background-color: #cdd4e3;
         padding: 0.02rem;
         border-radius: 50%;
 
@@ -769,6 +764,29 @@ onMounted(() => {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+}
+.envelope-icon {
+  width: 0.64rem;
+  height: 0.64rem;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="%23CDD4E3"/><path d="M9.21042 9.21094H23.7559C24.2022 9.21094 24.564 9.57273 24.564 10.019V22.9483C24.564 23.3946 24.2022 23.7564 23.7559 23.7564H9.21042C8.76414 23.7564 8.40234 23.3946 8.40234 22.9483V10.019C8.40234 9.57273 8.76414 9.21094 9.21042 9.21094ZM22.9478 12.6355L16.5412 18.373L10.0185 12.6178V22.1402H22.9478V12.6355ZM10.4318 10.8271L16.5332 16.2105L22.5446 10.8271H10.4318Z" fill="%23014CFA"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.lock-icon {
+  width: 0.64rem;
+  height: 0.64rem;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="%23CDD4E3"/><path d="M22.1402 14.867H22.9483C23.3946 14.867 23.7564 15.2288 23.7564 15.6751V23.7559C23.7564 24.2022 23.3946 24.564 22.9483 24.564H10.019C9.57273 24.564 9.21094 24.2022 9.21094 23.7559V15.6751C9.21094 15.2288 9.57273 14.867 10.019 14.867H10.8271V14.0589C10.8271 10.9349 13.3596 8.40234 16.4837 8.40234C19.6077 8.40234 22.1402 10.9349 22.1402 14.0589V14.867ZM10.8271 16.4832V22.9478H22.1402V16.4832H10.8271ZM15.6756 18.0993H17.2917V21.3316H15.6756V18.0993ZM20.5241 14.867V14.0589C20.5241 11.8275 18.7151 10.0185 16.4837 10.0185C14.2522 10.0185 12.4433 11.8275 12.4433 14.0589V14.867H20.5241Z" fill="%23014CFA"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.cross-icon {
+  width: 0.32rem;
+    height: 0.32rem;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="8" fill="%23A4ACB9"/><path d="M7.99997 7.46422L5.52417 4.98598L5.52441 4.98574L5.51759 4.97987C5.4456 4.91786 5.35287 4.88531 5.25791 4.88875C5.16296 4.89219 5.07282 4.93138 5.00551 4.99844C4.93821 5.06549 4.89868 5.15548 4.89479 5.25041C4.8909 5.34534 4.92295 5.43826 4.98454 5.5106L4.98427 5.51083L4.99084 5.51744L7.46704 8.00603L4.99153 10.4757C4.99146 10.4758 4.99139 10.4758 4.99131 10.4759C4.95608 10.5108 4.9281 10.5523 4.909 10.5981C4.88986 10.644 4.88 10.6932 4.88 10.7429C4.88 10.7926 4.88986 10.8418 4.909 10.8876C4.92809 10.9334 4.95605 10.9749 4.99126 11.0098C5.06194 11.0804 5.15771 11.12 5.25759 11.12C5.35756 11.12 5.45342 11.0803 5.52412 11.0096L5.52417 11.0095L8.00003 8.53125L10.4759 11.0079L10.4759 11.0079C10.5466 11.0786 10.6424 11.1183 10.7424 11.1183C10.8424 11.1183 10.9382 11.0786 11.0089 11.0079L10.9241 10.923M7.99997 7.46422L8.08484 8.44636L10.5607 10.923C10.6089 10.9712 10.6743 10.9983 10.7424 10.9983C10.8105 10.9983 10.8759 10.9712 10.9241 10.923M7.99997 7.46422L10.4758 4.98429L10.4788 4.98126L10.4789 4.98132C10.5504 4.91465 10.6449 4.87833 10.7427 4.88006C10.8404 4.88178 10.9336 4.92142 11.0027 4.99057C11.0718 5.05971 11.1113 5.15298 11.113 5.2507C11.1148 5.34842 11.0785 5.44302 11.0119 5.51456L11.0092 5.51749L11.0092 5.51744L8.53299 8.006L11.0085 10.474M7.99997 7.46422L11.0085 10.474M10.9241 10.923C10.9481 10.8992 10.9672 10.8709 10.9803 10.8397C10.9933 10.8085 11 10.775 11 10.7412C11 10.7073 10.9933 10.6738 10.9803 10.6426C10.9672 10.6114 10.9481 10.5831 10.9241 10.5593M10.9241 10.923L11.0085 11.0083C11.0438 10.9734 11.0719 10.9318 11.091 10.8859C11.1101 10.8401 11.12 10.7909 11.12 10.7412C11.12 10.6915 11.1101 10.6422 11.091 10.5964C11.0719 10.5506 11.0439 10.5091 11.0087 10.4742L11.0088 10.4743L10.9241 10.5593M10.9241 10.5593L11.0085 10.474M10.9241 10.5593L11.0085 10.474M5.43928 10.9247L7.91519 8.44638L7.63663 8.00634L5.07591 10.561C5.05186 10.5848 5.03277 10.6131 5.01974 10.6443C5.00671 10.6755 5 10.709 5 10.7429C5 10.7767 5.00671 10.8102 5.01974 10.8414C5.03277 10.8726 5.05186 10.901 5.07591 10.9247C5.12411 10.9729 5.18946 11 5.25759 11C5.32572 11 5.39107 10.9729 5.43928 10.9247Z" fill="%23161616" stroke="%23161616" stroke-width="0.24"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 </style>
