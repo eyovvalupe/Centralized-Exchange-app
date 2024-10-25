@@ -672,7 +672,7 @@ const goChat = () => {
   }
 
   .title_box {
-    padding: 0.12rem 0.32rem 0.12rem 0.32rem;
+    padding: 0.12rem 0.32rem 0.4rem 0.32rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -681,10 +681,10 @@ const goChat = () => {
       color: var(--, #061023);
       text-align: left;
       font-family: "PingFang SC";
-      font-size: 28px;
+      font-size: 0.56rem;
       font-style: normal;
       font-weight: 600;
-      line-height: 140%;
+      line-height: 0.784rem;
       /* 39.2px */
     }
 
@@ -692,20 +692,40 @@ const goChat = () => {
       color: #343434;
       text-align: right;
       font-family: "PingFang SC";
-      font-size: 12px;
+      font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
-      line-height: 16px;
+      line-height: 0.32rem;
       /* 133.333% */
     }
 
     .tologin {
       color: #014cfa;
       font-family: "PingFang SC";
-      font-size: 12px;
+      font-size: 0.24rem;
       font-style: normal;
       font-weight: 600;
-      line-height: 16px;
+      line-height: 0.32rem;
+    }
+  }
+
+  .van-tabs {
+    margin-bottom: 0.6rem;
+
+    .van-tabs__warp {
+      .van-tab__nav {
+        .van-tab {
+          .van-tab__text {
+            font-size: 0.32rem;
+            line-height: 0.448rem;
+          }
+
+          .van-tab--active {
+            font-size: 0.36rem;
+            line-height: 0.54rem;
+          }
+        }
+      }
     }
   }
 
