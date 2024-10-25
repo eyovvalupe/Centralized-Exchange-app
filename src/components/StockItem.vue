@@ -81,7 +81,7 @@
               class="item_num"
               :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
             >
-              {{ props.item.price ? props.item.price.toFixed(6) : "--" }}
+              {{ props.item.price ? props.item.price.toFixed(2) : "--" }}
             </div>
             <div
               class="item_info_box"
