@@ -16,8 +16,8 @@
         <div class="title">安全验证</div>
         <div class="check_title">拖动滑块，使图片角度为正</div>
         <div class="check_pic">
-            <img class="check_img" :style="{ transform: `rotate(${slider * 3.5}deg)` }"
-                src="/static/img/common/check.png" alt="img">
+            <img class="check_img" :style="{ transform: `rotate(${slider * 3.6 - initialRotate}deg)` }"
+                :src="`/static/img/common/check${initialImg}.png`" alt="img">
         </div>
         <div class="slider_box" style="width:100%">
             <Slider @change="changeSlider" @drag-start="activeVal = 0" v-model="slider" bar-height="40px"
@@ -83,7 +83,7 @@ const changeSlider = val => {
         duration: 0,
         loadingType: 'spinner',
     })
-    if (val >= 87 && val <= 93) { // 成功
+    if ((val*3.6 )>= (initialRotate.value - 5) && (val*3.6) <= (initialRotate.value + 5)) { // 成功
         sliderStatus.value = 'success'
         setTimeout(() => {
             show.value = false
@@ -105,8 +105,14 @@ const changeSlider = val => {
 const goBack = () => {
     emits('goBack')
 }
-
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+const initialRotate = ref(0);
+const initialImg = ref(0);
 onMounted(() => {
+    initialRotate.value = getRandomNumber(1,240) + 120;
+    initialImg.value = getRandomNumber(1,6)
     open()
 })
 
