@@ -211,6 +211,12 @@ const clickItem = (item) => {
   form.value.area = item.code;
   showDialog.value = false;
 };
+const goLang = () => {
+  emits("closeDialog");
+  router.push({ name: "language" });
+};
+
+
 
 // 进入页面则重置登录状态信息
 store.dispatch("reset");
