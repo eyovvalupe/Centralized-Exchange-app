@@ -1,3 +1,4 @@
+
 export default {
     assets:{
         recharge:"recharge",
@@ -29,6 +30,9 @@ export default {
         confirm:"confirm",
         currencySelection:"Currency selection",
         searchPlaceholder:"Enter currency",
+        addPaymentMethod:"add payment method",
+        withdrawable:"withdrawable",
+        withdrawalAmount:"withdrawal amount"
     },
     recharging:{
         recharge:"Recharge",
@@ -41,6 +45,8 @@ export default {
         success:"success",
         fail:'fail',
         finish:'finish'
-
+    },
+    transfer:{
+        transferRecord:"transfer record"
     }
 }

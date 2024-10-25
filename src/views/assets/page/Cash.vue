@@ -38,7 +38,7 @@
           <div class="right" @click="goTopUp(item.currency.toUpperCase())">
             {{ $t('充值') }}
           </div>
-          <div class="right right--yellow">
+          <div class="right right--yellow" @click="goWithdraw(item.currency.toUpperCase())">
             {{ $t('提现') }}
           </div>
         </div>
@@ -110,7 +110,17 @@ const switchOpen = (i, e) => {
 // 跳转充值
 const goTopUp = name => {
   router.push({
-    name: 'topUp',
+    name: 'topUpCrypto',
+    query: {
+      currency: name,
+    },
+  })
+}
+
+// 跳转提现
+const goWithdraw = name=>{
+  router.push({
+    name: 'withdraw',
     query: {
       currency: name,
     },

@@ -92,6 +92,7 @@
         
             </Tab>
             <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard">
+                
             </Tab>
         </Tabs>
         
@@ -168,7 +169,6 @@ import AccountCheck from "@/components/AccountCheck.vue"
 import { _swapRate } from "@/api/api"
 import Decimal from "decimal.js";
 import { _cryptoCoin } from "@/api/api"
-
 const tabActive = ref("cryptocurrency")
 
 const safeRef = ref()
@@ -205,8 +205,21 @@ const wallet = computed(() => { // 可选钱包列表
     return store.state.wallet.filter(item => !['stock', 'contract', 'main', 'USD'].includes(item.currency)) || []
 })
 form.value.currency = route.query.currency || 'BTC' // 初始化默认币种
+const updateRouteQuery = (key,value)=>{
+    const _query = {}
+    Object.keys(route.query).map(k=>{
+        _query[k] = route.query[k]
+    })
+    _query[key] = value
+    router.replace({
+        path:route.path,
+        query:_query
+    })
+}
 const clickItem = item => {
     form.value.currency = item
+    updateRouteQuery('currency',form.value.currency)
+    
     showDialog.value = false
     setTimeout(() => {
         initNetwork()
@@ -221,7 +234,6 @@ const currNetwork = computed(() => {
     return networkMapList.value[form.value.currency] || []
 })
 const initNetwork = () => {
-    console.error(form.value.currency, networkMapList.value, currNetwork.value)
     form.value.network = currNetwork.value[0]?.network
     setTimeout(() => {
         getRate()
@@ -230,6 +242,8 @@ const initNetwork = () => {
 const showNetDialog = ref(false)
 const clickNetItem = item => {
     form.value.network = item
+    updateRouteQuery('network',form.value.network)
+    
     showNetDialog.value = false
 }
 // initNetwork()
@@ -252,10 +266,7 @@ const getCoinNet = () => {
             }
         })
         networkMapList.value = obj
-        const k = res.data[0].currency
-        if (k) {
-            clickItem(k)
-        }
+        
     }).finally(() => {
         closeToast();
     })

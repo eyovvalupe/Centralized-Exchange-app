@@ -7,21 +7,26 @@
         </span>
     </div>
     <div class="form-item-box">
-        <div class="item" :class="{ 'item_focus': inputFocus && tip,'item_focus2':inputFocus && !tip }">
+        <div class="item" :class="{'disabled_item':disabled, 'item_focus': inputFocus && tip,'item_focus2':inputFocus && !tip }" :style="{background}">
             <span class="ipt_tip" v-if="tip" v-show="inputVal || inputFocus">{{tip}}</span>
             
             <slot v-if="custom" />
-            <input v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @change="inputChange">
+            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @input="emit('update:modelValue',inputVal)" @change="inputChange" :placeholder="placeholder">
 
             <template v-if="percentTags && percentTags.length">
             <span class="percent_tag" v-for="(percent,i) in percentTags" :key="i" @click="percentTagClick(percent)"
                 v-show="inputVal" :style="{ visibility: inputFocus ? '' : 'hidden' }">{{ percent }}</span>
             </template>
 
-            <span @click="emit('allBtnClick')"
-            v-if="showAllBtn"
-            class="put_all">全部</span>
-
+            <span class="put_all put_all_place" v-if="showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'">{{ btnPlaceholder }}</span>
+            <span @click="emit('btnClick')"
+            v-if="showBtn && btnShowMode == 'focus'"
+            :style="{ opacity: inputFocus ? '1' : '0', visibility: inputFocus ? '' : 'hidden' }"
+            class="put_all">{{ btnText }}</span>
+            <span @click="emit('btnClick')"
+            v-else-if="showBtn"
+            class="put_all">{{ btnText }}</span>
+            
         </div>
     </div>
 </div>
@@ -30,18 +35,33 @@
 <script setup>
 import { watch } from "vue"
 
-const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','allBtnClick'])
+const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','btnClick'])
 const props = defineProps({
-    modelValue:String,
+    modelValue:{
+        type:[String,Number],
+        default:''
+    },
+    background:String,
     title:String,
     custom:Boolean,
+    btnPlaceholder:String,
+    placeholder:String,
     percentTags:{
         type:Array,
         default(){
             return []
         }
     },
-    showAllBtn:Boolean,
+    disabled:Boolean,
+    btnShowMode:{
+        type:String,
+        default:'always'
+    },
+    btnText:{
+        type:String,
+        default:"全部"
+    },
+    showBtn:Boolean,
     tip:String,
     inputType:{
         type:String,
@@ -51,8 +71,11 @@ const props = defineProps({
 const inputFocus = ref(false)
 const inputVal = ref(props.value)
 
-watch(()=>props.value,()=>{
-    inputVal.value = props.value
+watch(()=>props.modelValue,()=>{
+    if(props.modelValue == inputVal.value){
+        return
+    }
+    inputVal.value = props.modelValue
 })
 const inputChange = ()=>{
     emit('update:modelValue',inputVal.value)
@@ -93,7 +116,6 @@ const percentTagClick = (percent)=>{
             height: 100%;
             font-size: 0.28rem;
             padding: 0;
-            color: #034cfa;
             position: relative;
             z-index: 1;
         }
@@ -135,6 +157,9 @@ const percentTagClick = (percent)=>{
         font-size: 0.3rem;
         z-index:9;
         transition: all ease .3s
+    }
+    .put_all_place{
+        color:#061023;
     }
 }
 

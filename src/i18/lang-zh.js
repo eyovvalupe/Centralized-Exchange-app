@@ -32,6 +32,9 @@ export default {
         confirm:"确定",
         currencySelection:"币种选择",
         searchPlaceholder:"搜索",
+        addPaymentMethod:"添加收款方式",
+        withdrawable:"可提现",
+        withdrawalAmount:"提现金额"
     },
     recharging:{
         recharge:"充值",
@@ -45,5 +48,8 @@ export default {
         fail:'失败',
         finish:'完成'
 
+    },
+    transfer:{
+        transferRecord:"划转记录"
     }
 }
