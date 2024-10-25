@@ -224,12 +224,10 @@ onMounted(() => {
 
       :deep(.van-slider__button) {
         box-shadow: 0 0.08rem 0.2rem 0 #014cfa33;
-        // width: 0.32rem;
-        // height: 0.32rem;
-        // background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M12.1716 6.9999L6.8076 1.63589L8.2218 0.22168L16 7.9999L8.2218 15.778L6.8076 14.3638L12.1716 8.9999H0V6.9999H12.1716Z" fill="%23014CFA"/></svg>');
-        // background-size: contain;
-        // background-repeat: no-repeat;
-        // background-position: center;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 36 36"><path d="M12.1716 6.9999L6.8076 1.63589L8.2218 0.22168L16 7.9999L8.2218 15.778L6.8076 14.3638L12.1716 8.9999H0V6.9999H12.1716Z" fill="%23014CFA"/></svg>');
+        background-size: contain; /* Scale the background image */
+        background-repeat: no-repeat; /* Prevent repetition */
+        background-position: center; /* Center the background */
       }
     }
   }
