@@ -190,7 +190,6 @@ const addOptional = (item) => {
     symbol: [item.sysmbol],
   })
     .then((res) => {
-      console.log('homewatchlist')
       if (res.code == 200) {
         showToast("添加成功");
         init();

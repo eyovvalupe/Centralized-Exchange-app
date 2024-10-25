@@ -51,7 +51,6 @@ const props = defineProps({
     default: []
   }
 });
-console.log("props data =============> ", props.list)
 </script>
 
 <style lang="less" scoped>

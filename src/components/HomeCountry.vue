@@ -162,8 +162,6 @@ const getData = (region) => {
     type: "index",
   })
     .then((res) => {
-      console.log(region, "=============>", res.data);
-
       const data = {
         region,
         currentts: formatDate(new Date(res.data.currentts)),

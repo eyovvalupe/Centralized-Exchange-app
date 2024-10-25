@@ -66,7 +66,6 @@ const goInfo = (item) => {
 };
 
 onMounted(() => {
-  console.log(marketCountryStockList.value);
 });
 </script>
 <style lang="less">

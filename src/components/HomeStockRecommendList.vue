@@ -121,7 +121,6 @@ import "vue3-carousel/dist/carousel.css";
 
 const emits = defineEmits(["init", "addWatchList"]);
 const watchlist = computed(() => store.state.marketWatchList)
-console.log('watch list ========> ', watchlist.value)
 const isInWatchList = ref(false)
 const currentSlide = ref(0)
 const config = {
@@ -224,7 +223,6 @@ const collect = (item) => {
       showToast("已添加");
       return ;
     } else {
-      console.log('no in watchlist')
       _add({
       symbol: item.symbol,
     })
