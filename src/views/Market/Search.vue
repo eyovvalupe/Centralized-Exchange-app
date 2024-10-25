@@ -75,7 +75,7 @@
       >
         <div class="info">
           <div class="title flex items-center gap-1">
-            {{ item.symbol || "--" }}
+            {{ item.type == 'stock' ? item.symbol || "--" : item.name || '--' }}
             <div
               :class="`${
                 marketStyle[item.type]
