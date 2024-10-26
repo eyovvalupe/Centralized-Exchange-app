@@ -2,7 +2,7 @@
 <template>
   <div class="page page-register">
     <!-- 图片验证 -->
-    <template v-if="step == 2">
+    <template v-if="step == 1">
       <ImgCheck @success="step = 2" @goBack="goBack" />
     </template>
 
@@ -204,7 +204,7 @@
       </div> -->
     </template>
 
-    <template v-else-if="step == 1">
+    <template v-else>
       <RegisterCodeCheck
         :type="activeTab == 0 ? 'email' : 'phone'"
         :value="activeTab == 0 ? form.email : form.phone"
@@ -332,7 +332,7 @@ store.commit("setUserInfo", {});
 const route = useRoute();
 const routerApi = useRouter();
 const forwardUrl = routerApi.options.history.state.forward;
-const step = ref(forwardUrl === "/language" || forwardUrl === "/chat" ? 2 : 1);
+const step = ref(forwardUrl === "/chat" ? 2 : 1);
 
 const guest = ref(route.query.guest);
 const showPass = ref(false); // 密码显示
