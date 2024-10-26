@@ -225,6 +225,7 @@ const safeRef2 = ref()
 
 const token = computed(() => store.state.token)
 const positionsList = computed(() => store.state.positionsList)
+
 const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 股票账户余额
     const target = elseWallet.value.find(item => item.account == 'stock')

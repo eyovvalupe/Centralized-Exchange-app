@@ -52,30 +52,18 @@
             </div>
 
             <!-- 简单模式 -->
-            <div class="subtitle" v-show="mode == 1">
-                <span>止损</span>
-            </div>
-            <div class="item_box" v-show="mode == 1">
-                <div class="item">
-                    <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
-                        v-model="form1.stop_loss_price" type="number" class="ipt">
-
-                    <span class="num-tag" @click="setPriceStop(20)"
-                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                            props.activeType ==
-                                1 ? '-' : '+' }}20%</span>
-                    <span class="num-tag" @click="setPriceStop(15)"
-                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                            props.activeType ==
-                                1 ? '-' : '+' }}15%</span>
-                    <span class="num-tag" @click="setPriceStop(10)"
-                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                            props.activeType ==
-                                1 ? '-' : '+' }}10%</span>
-                </div>
-            </div>
-
+            <FormItem
+                title="止损"
+                class="mb-[0.4rem]"
+                input-type="number"
+                v-model="form1.stop_loss_price"
+                :percent-tags="props.activeType == 1 ? [{label:'-20%',value:20},{label:'-15%',value:15},{label:'-10%',value:10}] : [{label:'+20%',value:20},{label:'+15%',value:15},{label:'+10%',value:10}]"
+                @percentTagClick="setPriceStop"
+                v-if="mode == 1"
+            />
+            
             <!-- 价格 -->
+          
             <div class="item_box">
                 <div class="item_box_left" @click="showPriceTypeDialog = true">
                     <div class="subtitle"><span>价格</span></div>
@@ -90,20 +78,23 @@
                     <div class="subtitle">
                         <span>&nbsp;</span>
                     </div>
-                    <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
-                        <span v-show="priceMode == 1" style="color: #A4ACB9;">最新价格成交</span>
-                        <input @focus="priceFocus2 = true" @blur="priceFocus2 = false" v-show="priceMode != 1"
-                            v-model="form1.price" type="number" class="ipt">
+                    <FormItem
+                        custom 
+                        disabled
+                        v-if="priceMode == 1"
+                    >
+                        <span  style="color: #A4ACB9;">最新价格成交</span>    
+                    </FormItem>
 
-                        <span class="num-tag"
-                            @click="setPricePercent(3)" v-show="currStock.price && priceMode != 1"
-                            :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
-                                1 ? '-' : '+' }}3%</span>
-                        <span class="num-tag"
-                            @click="setPricePercent(1)" v-show="currStock.price && priceMode != 1"
-                            :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
-                                1 ? '-' : '+' }}1%</span>
-                    </div>
+                    <FormItem
+                        v-model="form1.price"
+                        input-type="number"
+                        :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-1%',value:1}] : [{label:'+3%',value:3},{label:'+1%',value:1}]"
+                        v-else
+                        @percentTagClick="percentTagClick"
+                    >
+                    </FormItem>
+                    
                 </div>
 
                 <!-- <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
@@ -112,29 +103,16 @@
         </template>
 
         <!-- 价格 -->
-        <div class="subtitle" v-if="props.activeTab == 1">
-            <span>价格</span>
-        </div>
-        <div class="item_box" v-if="props.activeTab == 1">
-            <div class="item" :class="{ 'item_focus': priceFocus }">
-                <span class="ipt_tip" v-show="form1.price === '' || priceFocus">满足价格才能成交</span>
-                <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
-                    class="ipt">
 
-                <span class="num-tag" @click="setPricePercent(3)"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
-                        1 ? '-' : '+' }}3%</span>
-                <span class="num-tag" @click="setPricePercent(2)"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
-                        1 ? '-' : '+' }}2%</span>
-                <span class="num-tag" @click="setPricePercent(1)"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
-                        1 ? '-' : '+' }}1%</span>
-                <span class="num-tag" @click="setNowPrice"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">市价</span>
-            </div>
-        </div>
-
+        <FormItem
+            class="mb-[0.4rem]"
+            input-type="number"
+            title="价格" tip="满足价格才能成交" v-model="form1.price"
+            :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-2%',value:2},{label:'-1%',value:1},{label:'市价',value:0}] : [{label:'+3%',value:3},{label:'+2%',value:2},{label:'+1%',value:1},{label:'市价',value:0}]"
+            @percentTagClick="percentTagClick"
+            v-if="props.activeTab == 1"
+         />
+        
         <!-- 股票 -->
         <div class="subtitle">
             <span @click="showNavDialog">合约</span>
@@ -353,6 +331,7 @@ import StockPopup from "../../trade/StockPopup.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import StockTable from "@/components/StockTable.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
+import FormItem from "@/components/Form/FormItem.vue";
 
 const showPassword = ref(false)
 const safeRef = ref()
@@ -511,11 +490,20 @@ const maxStockNum = computed(() => { // 最大可买 可卖
 const setNowPrice = () => { // 设置为当前价格
     form1.value.price = currStock.value.price || ''
 }
+
 const setPricePercent = (i) => { // 设置浮动价格
     if (props.activeType == 1) { // 买涨
         form1.value.price = new Decimal(currStock.value.price).mul(100 - i).div(100).toNumber()
     } else { // 买跌
         form1.value.price = new Decimal(currStock.value.price).mul(100 + i).div(100).toNumber()
+    }
+}
+
+const percentTagClick = (percent)=>{
+    if(percent.value == 0){
+        setNowPrice()
+    }else{
+        setPricePercent(percent.value)
     }
 }
 
@@ -543,7 +531,8 @@ const form1 = ref({
 // 止盈止损参数
 const mode = ref(1) // 1-简单模式  2-复杂模式
 const priceMode = ref(1) // 1-市价 2-限价
-const setPriceStop = i => { // 设置止损价格
+const setPriceStop = p => { // 设置止损价格
+    const i = p.value
     if (props.activeType == 1) { // 买涨
         form1.value.stop_loss_price = new Decimal(currStock.value.price).mul(100 - i).div(100).toNumber()
     } else { // 买跌
@@ -808,6 +797,8 @@ const paramHandle = data => {
     closingline.value = data.closingline || 100
     amountper.value = data.amountper || 1
     form1.value.volume = ''
+    form1.value.stop_loss_price = ''
+    form1.value.price = ''
     sliderValue.value  = 0
     if (data.fee) {
         openFee.value = data.fee || 0
@@ -826,6 +817,8 @@ const initParam = ()=>{
     if(currStock.value.symbol){
         getParam()
     }else{
+        form1.value.stop_loss_price = ''
+        form1.value.price = ''
         min.value = 0
         step.value = 1
         openFee.value = 0
@@ -987,6 +980,9 @@ defineExpose({
         }
     }
 
+    :deep(.form-item-title){
+        margin-top: 0rem;
+    }
     .item_box {
         display: flex;
         align-items: stretch;
@@ -1002,6 +998,7 @@ defineExpose({
             border-radius: 0.32rem;
             border: 1px solid #d0d8e2;
             padding: 0 0.24rem;
+            transition: 0.3s;
 
             .info {
                 font-size: 0.28rem;
@@ -1171,6 +1168,7 @@ defineExpose({
             .lever {
                 min-width: 0.7rem;
                 text-align: right;
+                padding-left: 0.12rem;
             }
         }
     }
@@ -1234,15 +1232,5 @@ defineExpose({
         }
     }
 }
-.num-tag{
-    color: #2168F6;
-    margin-left: 0.08rem;
-    transition: all ease .3s;
-    border-radius: 0.3rem;
-    background: rgba(33, 104, 246, 0.10);
-    font-size: 0.24rem;
-    padding: 0 0.14rem;
-    height: 0.4rem;
-    line-height: 0.4rem;
-}
+
 </style>

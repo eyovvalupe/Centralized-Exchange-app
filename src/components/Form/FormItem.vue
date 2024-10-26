@@ -8,16 +8,17 @@
     </div>
     <div class="form-item-box">
         <div class="item" :class="{'disabled_item':disabled, 'item_focus': inputFocus && tip,'item_focus2':inputFocus && !tip }" :style="{background}">
-            <span class="ipt_tip" v-if="tip" v-show="inputVal || inputFocus">{{tip}}</span>
+            <span class="ipt_tip" v-if="tip" v-show="inputFocus">{{tip}}</span>
             
             <slot v-if="custom" />
             <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @input="emit('update:modelValue',inputVal)" @change="inputChange" :placeholder="placeholder">
 
-            <template v-if="percentTags && percentTags.length">
-            <span class="percent_tag" v-for="(percent,i) in percentTags" :key="i" @click="percentTagClick(percent)"
-                v-show="inputVal" :style="{ visibility: inputFocus ? '' : 'hidden' }">{{ percent }}</span>
-            </template>
-
+            <Transition name="opacity">
+            <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
+                <span class="percent_tag" v-for="(percent,i) in percentTags" :key="i" @click="percentTagClick(percent)">{{ percent.label }}</span>
+            </div>
+            </Transition>
+            
             <span class="put_all put_all_place" v-if="showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'">{{ btnPlaceholder }}</span>
             <span @click="emit('btnClick')"
             v-if="showBtn && btnShowMode == 'focus'"
@@ -34,7 +35,6 @@
 
 <script setup>
 import { watch } from "vue"
-
 const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','btnClick'])
 const props = defineProps({
     modelValue:{
@@ -89,11 +89,8 @@ const percentTagClick = (percent)=>{
 
 <style lang="less" scoped>
 .form-item-box {
-    display: flex;
-    align-items: stretch;
-
+    
     .item {
-        flex: 1;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -102,7 +99,7 @@ const percentTagClick = (percent)=>{
         border-radius: 0.32rem;
         border: 1px solid #d0d8e2;
         padding: 0 0.24rem;
-
+        transition: .3s;
         .ipt_tip {
             color: #b7b7b7;
             font-size: 0.24rem;
@@ -118,6 +115,7 @@ const percentTagClick = (percent)=>{
             padding: 0;
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
     }
@@ -149,6 +147,7 @@ const percentTagClick = (percent)=>{
         padding: 0 0.14rem;
         height: 0.4rem;
         line-height: 0.4rem;
+        display: block;
     }
     .put_all{
         color: #014CFA;
