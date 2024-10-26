@@ -79,7 +79,7 @@
   <div class="submit_box" @click="submit">
     <Button
       :loading="loading"
-     
+      :disabled="disabled"
       round
       color="#014CFA"
       class="submit"
