@@ -2,7 +2,7 @@
 <template>
   <div class="recommend_list relative">
     <Loading v-show="props.loading" />
-    <Carousel v-bind="config" v-model="currentSlide">
+    <Carousel v-bind="config" v-model="currentSlide" >
       <Slide v-for="slide in 2" :key="slide">
         <div class="carousel__item">
           <div
