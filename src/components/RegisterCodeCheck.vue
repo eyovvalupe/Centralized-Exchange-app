@@ -12,7 +12,6 @@
         <div class="language_icon"></div>
       </div>
     </div>
-    <!-- <div class="jump" @click="close">跳过验证</div> -->
     <div class="title">{{ titleMap[props.type] }}验证</div>
     <div class="info flex flex-col">
       <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem"
@@ -24,22 +23,7 @@
         <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400"
           >请输入6位数代码</span
         >
-        <div
-          style="
-            width: 1.56rem;
-            height: 0.6rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #d0d8e2;
-            border-radius: 1rem;
-            color: #014cfa;
-            font-size: 0.28rem;
-            line-height: 0.372rem;
-          "
-        >
-          timer
-        </div>
+        <div class="timer_container" @click="send">{{ s ? s + 's' : "再次发送" }}</div>
       </div>
     </div>
     <div class="ipt_box">
@@ -61,8 +45,10 @@
         @keydown.enter="submit"
       />
     </div>
-    <div>继续</div>
-    <div class="send" @click="send">{{ s ? s + "s" : "再次发送" }}</div>
+    <div class="flex justify-center pt-[0.8rem]">
+      <div class="button_container">继续</div>
+    </div>
+    <div class="jump" @click="close"><span>跳过验证</span></div>
   </div>
   <!-- </ElDialog> -->
 </template>
@@ -135,7 +121,7 @@ const focus = () => {
 const close = () => {
   showConfirmDialog({
     title: "",
-    message: "跳过验证将继续注册，是否继续？",
+    message: "跳过验证将继续注册",
   })
     .then(() => {
       emit("success");
@@ -225,12 +211,10 @@ const goLang = () => {
   }
 
   .jump {
-    position: absolute;
-    color: #1a59f6;
-    font-weight: 600;
-    right: 0.32rem;
-    top: 0;
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    color: #014cfa;
+    font-size: 0.32rem;
   }
 
   .title {
@@ -272,6 +256,30 @@ const goLang = () => {
     text-align: center;
     padding: 0.4rem 0;
     cursor: pointer;
+  }
+  .button_container {
+    width: 6.86rem;
+    height: 1.12rem;
+    background-color: #014cfa;
+    border-radius: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.3rem;
+    color: white;
+    margin-bottom: 0.6rem;
+  }
+  .timer_container {
+    width: 1.56rem;
+    height: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d0d8e2;
+    border-radius: 1rem;
+    color: #014cfa;
+    font-size: 0.28rem;
+    line-height: 0.372rem;
   }
 }
 </style>
