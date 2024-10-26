@@ -2,11 +2,11 @@
 <template>
   <div class="page page-register">
     <!-- 图片验证 -->
-    <template v-if="step == 1">
+    <template v-if="step == 2">
       <ImgCheck @success="step = 2" @goBack="goBack" />
     </template>
 
-    <template v-else-if="step == 2">
+    <template v-else-if="step == 1">
       <!-- 返回和语言 -->
       <div class="top_icon_container">
         <div class="top_back_container text-[0.48rem]" @click="goBack">
@@ -49,12 +49,13 @@
           :class="{ err_ipt: errorTip.error1 }"
         >
           <input
-            maxlength="20"
+            maxlength="30"
             @blur="errorTip.error1 = false"
             v-model.trim="form.email"
             placeholder="您的邮箱"
             type="text"
             class="item_input"
+            :class="{err_ipt1: errorTip.error1}"
           />
           <div
             class="form_item_clear"
@@ -767,7 +768,12 @@ const goChat = () => {
 
     .err_ipt {
       border: 1px solid #e8503a;
+
+      .err_ipt1 {
+      color: #e8503a;
     }
+    }
+    
   }
 
   .register_doc {
