@@ -51,7 +51,7 @@
 
       <div class="form_title" v-show="activeTab == 1">手机号</div>
       <div class="form_item margin_item" v-show="activeTab == 1">
-        <div class="code" @click="setFlag">
+        <div class="code" @click="showDialog = true">
           <span class="flag_icon">
             <img src="/static/img/common/flag_hongkong.svg" alt="" />
           </span>
@@ -128,13 +128,15 @@
           <img src="/static/img/common/close.png" alt="x" />
         </div>
         <div class="item search_box">
-          <Icon class="search" name="search" size="0.48rem" />
+          <!-- <Icon class="search" name="search" size="0.48rem" /> -->
+           <div class="search-svg-icon"></div>
           <input
             v-model.trim="searchStr"
             class="ipt"
             type="text"
             placeholder="输入区号"
           />
+          <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon"></div>
         </div>
         <div style="height: 60vh; overflow-y: auto">
           <div
@@ -203,10 +205,6 @@ const showAreas = computed(() => {
     );
   });
 });
-const setFlag = () => {
-  console.log("set Flag=========>");
-  showDialog.value = true;
-};
 const clickItem = (item) => {
   form.value.area = item.code;
   showDialog.value = false;
@@ -587,7 +585,7 @@ onMounted(() => {
         flex: 1;
         color: #061023;
         font-weight: 400;
-        font-size: 0.28rem;
+        font-size: 0.3rem;
       }
 
       &:has(.item_input:focus) {
@@ -705,8 +703,7 @@ onMounted(() => {
     height: 0.84rem;
     border: 0.02rem solid #d0d8e2;
     border-radius: 0.32rem;
-    padding: 0 0.32rem;
-    margin: 0.12rem 0;
+    padding-inline: 0.32rem;
     display: flex;
     align-items: center;
 
@@ -797,4 +794,20 @@ onMounted(() => {
   background-size: contain;
   background-repeat: no-repeat;
 }
+.search-svg-icon {
+  width: 0.48rem;
+  height: 0.48rem;
+  margin-right: 0.12rem;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><g clip-path="url(%23clip0_129_6995)"><mask id="mask0_129_6995" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H24V24H0V0Z" fill="white"/></mask><g mask="url(%23mask0_129_6995)"><path fill-rule="evenodd" clip-rule="evenodd" d="M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="%239EA3AE" stroke-width="1.5" stroke-linejoin="round"/><path d="M21 21L15 15" stroke="%239EA3AE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g></g><defs><clipPath id="clip0_129_6995"><rect width="24" height="24" fill="white"/></clipPath></defs></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.close-svg-icon {
+  width: 0.24rem;
+  height: 0.24rem;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.64645 4.93934L6 5.29289L6.35355 4.93934L10.6464 0.646447C10.8417 0.451185 11.1583 0.451185 11.3536 0.646446L11.7062 0.293812L11.3536 0.646447C11.5488 0.841709 11.5488 1.15829 11.3536 1.35355L11.675 1.67497L11.3536 1.35355L7.06066 5.64645L6.70711 6L7.06066 6.35355L11.3536 10.6464C11.5488 10.8417 11.5488 11.1583 11.3536 11.3536C11.1583 11.5488 10.8417 11.5488 10.6464 11.3536L6.35355 7.06066L6 6.70711L5.64645 7.06066L1.35355 11.3536L1.67497 11.675L1.35355 11.3536C1.15829 11.5488 0.841709 11.5488 0.646447 11.3536L0.292893 11.7071L0.646446 11.3536C0.451185 11.1583 0.451185 10.8417 0.646446 10.6464L4.93934 6.35355L5.29289 6L4.93934 5.64645L0.646447 1.35355C0.451184 1.15829 0.451184 0.841709 0.646447 0.646447C0.841709 0.451184 1.15829 0.451184 1.35355 0.646447L5.64645 4.93934Z" stroke="%23121826"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 </style>
