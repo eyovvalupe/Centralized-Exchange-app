@@ -148,7 +148,7 @@
       <div>
         <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
         <div class="flex gap-1">
-          <div>
+          <div class="mr-[0.05rem]">
             <div
               :class="
                 marketPerformance == 0
@@ -161,7 +161,7 @@
               涨幅榜
             </div>
           </div>
-          <div>
+          <div class="mr-[0.05rem]">
             <div
               :class="
                 marketPerformance == 1
@@ -174,7 +174,7 @@
               跌幅榜
             </div>
           </div>
-          <div>
+          <div class="mr-[0.05rem]">
             <div
               :class="
                 marketPerformance == 2

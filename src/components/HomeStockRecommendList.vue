@@ -202,6 +202,7 @@ const goInfo = (item) => {
 const collectLoading = ref(false);
 
 const collect = (item) => {
+  collectLoading.value = false
   isInWatchList.value = false
   if (!token.value) {
     store.commit("setIsLoginOpen", true);
@@ -210,6 +211,7 @@ const collect = (item) => {
     });
   } else {
     if (collectLoading.value) return;
+    // alert('dffdf')
     collectLoading.value = true;
     showLoadingToast({
       duration: 0,
