@@ -75,6 +75,17 @@ watch(val, (v) => {
   if (v && v.length == 6) {
     showKeyboard.value = false;
   }
+  for(let i = 0; i< 6 ;i++){
+      let inputStyle = document.getElementsByClassName('van-password-input__item')[i].style;
+      if(v.length != 6 && i<= v.length){
+        inputStyle.borderColor = "#014CFA";
+        inputStyle.color = "#014CFA";
+      }
+      else {
+        inputStyle.borderColor = "#D0D8E2";
+        inputStyle.color = "#666D80";
+      }     
+  }
 });
 
 const iptRef = ref();

@@ -92,6 +92,17 @@ watch(val, (v) => {
     showKeyboard.value = false;
     finishIpt();
   }
+  for(let i = 0; i< 6 ;i++){
+      let inputStyle = document.getElementsByClassName('van-password-input__item')[i].style;
+      if(v.length != 6 && i<= v.length){
+        inputStyle.borderColor = "#014CFA";
+        inputStyle.color = "#014CFA";
+      }
+      else {
+        inputStyle.borderColor = "#D0D8E2";
+        inputStyle.color = "#666D80";
+      }     
+  }
 });
 const finishIpt = () => {
   showLoadingToast({
@@ -240,15 +251,14 @@ const goLang = () => {
 
   .ipt_box {
     :deep(.van-password-input__item) {
-      border: 1px solid #eceff3;
+        border: 0.02rem solid #eceff3;
       background-color: #fff;
       width: 1rem;
-      height: 1rem;
+      height: 1.2rem;
       box-sizing: border-box;
-      border-radius: 0.16rem;
-
+      border-radius: 0.32rem;
       &:has(.van-password-input__cursor) {
-        border: 1px solid #014cfa;
+        border: 0.02rem solid #014cfa;
       }
     }
   }
