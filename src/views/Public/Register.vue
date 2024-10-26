@@ -2,7 +2,7 @@
 <template>
   <div class="page page-register">
     <!-- 图片验证 -->
-    <template v-if="step == 1">
+    <template v-if="step == 2">
       <ImgCheck @success="step = 2" @goBack="goBack" />
     </template>
 
@@ -204,7 +204,7 @@
       </div> -->
     </template>
 
-    <template v-else>
+    <template v-else-if="step == 1">
       <RegisterCodeCheck
         :type="activeTab == 0 ? 'email' : 'phone'"
         :value="activeTab == 0 ? form.email : form.phone"

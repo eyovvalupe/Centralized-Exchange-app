@@ -12,11 +12,14 @@
         <div class="language_icon"></div>
       </div>
     </div>
-    <div class="jump" @click="close">跳过验证</div>
+    <!-- <div class="jump" @click="close">跳过验证</div> -->
     <div class="title">{{ titleMap[props.type] }}验证</div>
-    <div class="info">
-      我们已将验证码发送至 <span>{{ props.value }}</span> <br />请输入以下 6
-      位数代码：
+    <div class="info flex flex-col">
+      <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem;">我们已将验证码发送至您的{{ props.type == 'email' ? '电子邮箱' : '手机号码' }}</span> 
+        <div class="flex flex-row justify-between ">
+      <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400;">请输入6位数代码</span>
+    <div style="width: 1.56rem; height: 0.6rem; display: flex; justify-content: center; align-items: center; background-color: #d0d8e2; border-radius: 1rem;">timer</div>
+        </div>
     </div>
     <div class="ipt_box">
       <PasswordInput
@@ -52,6 +55,9 @@ import {
   closeToast,
 } from "vant";
 import { ref, computed, watch } from "vue";
+import router from "@/router";
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
 const props = defineProps({
   type: {
@@ -132,7 +138,6 @@ const send = () => {
 
 open();
 const goBack = () => {
-    console.log(router.query.reurl)
   if (route.query.reurl) {
     router.replace({
       name: route.query.reurl,
@@ -166,7 +171,6 @@ const goLang = () => {
     align-items: center;
     top: 0;
     background-color: #fff;
-    margin-bottom: 0.2rem;
 
     .top_back_container {
       .arrow_icon {
@@ -208,16 +212,17 @@ const goLang = () => {
   }
 
   .title {
-    text-align: center;
+    padding: 0.48rem 0.32rem 0.32rem 0.32rem;
     font-weight: 600;
-    color: #000;
-    font-size: 0.48rem;
+    color: #0d0d12;
+    font-size: 0.54rem;
+    line-height: 0.784rem;
     width: 100%;
-    padding: 2rem 0 0.4rem 0;
+    // padding: 2rem 0 0.4rem 0;
   }
 
   .info {
-    text-align: center;
+    padding: 0 0.32rem;
     margin-bottom: 0.4rem;
     line-height: 0.5rem;
 
