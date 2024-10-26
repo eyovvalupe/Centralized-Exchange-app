@@ -581,11 +581,6 @@ const goChat = () => {
     margin-bottom: 0.4rem;
     z-index: 1;
 
-    :deep(.van-tab__panel) {
-      // height: calc(var(--app-height) - 3.4rem);
-      // overflow-y: auto;
-    }
-
     :deep(.van-tabs__nav--card) {
       border: none;
     }
@@ -593,7 +588,7 @@ const goChat = () => {
     :deep(.van-tab--card) {
       border-right: none;
       color: #061023;
-      border-bottom: 3px solid #d0d8e2;
+      border-bottom: 0.06rem solid #d0d8e2;
       // background-color: #f5f5f5;
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
@@ -604,11 +599,11 @@ const goChat = () => {
       background-color: white;
       color: #2168f6;
       font-family: "PingFang SC";
-      font-size: 18px;
+      font-size: 0.36rem;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
-      border-bottom: 3px solid #014cfa;
+      border-bottom: 0.08rem solid #014cfa;
     }
 
     :deep(.van-tab--shrink) {
@@ -617,7 +612,7 @@ const goChat = () => {
 
     :deep(.van-tabs__wrap) {
       height: 0.8rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0);
+      border-bottom: 0.02rem solid rgba(0, 0, 0, 0);
       padding-bottom: 0.2rem;
     }
 
@@ -627,42 +622,42 @@ const goChat = () => {
     }
 
     :deep(.van-tab) {
-      line-height: 0.6rem;
-      font-size: 0.28rem;
+      line-height: 0.54rem;
+      font-size: 0.32rem;
       width: 50%;
-      padding-bottom: 14.5px;
+      padding-bottom: 0.3rem;
     }
   }
 
-  .top {
-    position: fixed;
-    width: 100%;
-    height: 1.12rem;
-    display: flex;
-    padding: 0 0.4rem 0 0.12rem;
-    align-items: center;
-    justify-content: space-between;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 0;
-    background-color: #fff;
-    z-index: 99;
+  // .top {
+  //   position: fixed;
+  //   width: 100%;
+  //   height: 1.12rem;
+  //   display: flex;
+  //   padding: 0 0.4rem 0 0.12rem;
+  //   align-items: center;
+  //   justify-content: space-between;
+  //   left: 50%;
+  //   transform: translateX(-50%);
+  //   top: 0;
+  //   background-color: #fff;
+  //   z-index: 99;
 
-    .top_back {
-      color: #161616;
-      font-size: 0.4rem;
-      width: 0.8rem;
-      height: 0.8rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+  //   .top_back {
+  //     color: #161616;
+  //     font-size: 0.4rem;
+  //     width: 0.8rem;
+  //     height: 0.8rem;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //   }
 
-    .top_lang {
-      width: 0.8rem;
-      height: 0.8rem;
-    }
-  }
+  //   .top_lang {
+  //     width: 0.8rem;
+  //     height: 0.8rem;
+  //   }
+  // }
 
   .title_box {
     padding: 0.12rem 0.32rem 0.4rem 0.32rem;
@@ -818,7 +813,8 @@ const goChat = () => {
     justify-content: flex-start;
     color: #343434;
     font-weight: 400;
-    font-size: 0.26rem;
+    font-size: 0.28rem;
+    line-height: 0.32rem;
     margin-bottom: 0.5rem;
 
     .checked_icon_blue {
