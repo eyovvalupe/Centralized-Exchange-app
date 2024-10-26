@@ -17,7 +17,7 @@
         <!-- 表单 -->
         <div class="form">
 
-            <div class="form_box" :class="{ 'form_box_active': showPicker }">
+            <div class="form_box" :class="{ 'form_box_active': clickKey == 'from' }">
                 <div class="flex justify-between" @click="openDialog('from')">
                     <div class="flex items-center">
                         <div class="form_text">从</div>
@@ -53,7 +53,7 @@
                 
             </div>
             
-            <div class="form_box" >
+            <div class="form_box"  :class="{ 'form_box_active': clickKey == 'to' }">
                 <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
                     <img src="/static/img/assets/recharge_trans.png" alt="img">
                 </div>
@@ -115,9 +115,12 @@
         <SafePassword @submit="submit" ref="safeRef" />
 
         <!-- 账户和币种 -->
-        <Popup v-model:show="showPicker" round position="bottom">
-            <Picker :swipe-duration="200" :columns="columns" :columns-field-names="customFieldName"
-                @cancel="showPicker = false" @confirm="showPicker = false" @change="onConfirm">
+        <Popup class="van-popup-custom--bottom" v-model:show="showPicker" closeable round position="bottom" @closed="clickKey=''">
+            <div class="van-popup-custom__top-rbtn" @click="hideDialog">确认</div>
+            <div class="van-popup-custom-title">转入账户</div>
+            
+            <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
+                @cancel="hideDialog" @confirm="hideDialog" @change="onConfirm">
                 <template #option="option">
                         <div class="picker-item">
                             <span class="picker-item__icon">
@@ -194,10 +197,14 @@ const maxIpt = () => {
 
 // 账户选择
 const showPicker = ref(false)
-const clickKey = ref('from') // 从哪里点开弹窗
+const clickKey = ref('') // 从哪里点开弹窗
 const openDialog = val => {
     clickKey.value = val
     showPicker.value = true
+}
+const hideDialog = ()=>{
+    clickKey.value = ''
+    showPicker.value = false
 }
 const columns = computed(() => {
     return _accountMapList.map(item => {
