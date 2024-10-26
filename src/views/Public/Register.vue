@@ -2,11 +2,11 @@
 <template>
   <div class="page page-register">
     <!-- 图片验证 -->
-    <template v-if="step == 2">
+    <template v-if="step == 1">
       <ImgCheck @success="step = 2" @goBack="goBack" />
     </template>
 
-    <template v-else-if="step == 1">
+    <template v-else-if="step == 2">
       <!-- 返回和语言 -->
       <div class="top_icon_container">
         <div class="top_back_container text-[0.48rem]" @click="goBack">
@@ -204,7 +204,7 @@
       </div> -->
     </template>
 
-    <template v-if="step == 2">
+    <template v-else>
       <RegisterCodeCheck
         :type="activeTab == 0 ? 'email' : 'phone'"
         :value="activeTab == 0 ? form.email : form.phone"
