@@ -3,7 +3,7 @@
   <!-- <ElDialog v-model="show" align-center title="" width="500px" :close-on-click-modal="false"> -->
   <div class="code_check_box">
     <!-- 返回和语言 -->
-    <!-- <div class="top_icon_container">
+    <div class="top_icon_container">
       <div class="top_back_container text-[0.48rem]" @click="goBack">
         <Icon name="arrow-left" />
       </div>
@@ -11,7 +11,7 @@
       <div class="language_icon_container" @click="goLang">
         <div class="language_icon"></div>
       </div>
-    </div> -->
+    </div>
     <div class="jump" @click="close">跳过验证</div>
     <div class="title">{{ titleMap[props.type] }}验证</div>
     <div class="info">
@@ -44,6 +44,7 @@
 
 <script setup>
 import {
+  Icon,
   PasswordInput,
   showConfirmDialog,
   showToast,
@@ -131,6 +132,7 @@ const send = () => {
 
 open();
 const goBack = () => {
+    console.log(router.query.reurl)
   if (route.query.reurl) {
     router.replace({
       name: route.query.reurl,
