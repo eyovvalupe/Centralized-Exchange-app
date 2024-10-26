@@ -191,14 +191,7 @@
 
       <!-- 协议 -->
       <label class="register_doc" @click="checked = !checked">
-        <Checkbox
-          :icon-size="'0.36rem'"
-          @click.stop="() => {}"
-          class="register_doc_check"
-          checked-color="#014CFA"
-          shape="square"
-          v-model="checked"
-        ></Checkbox>
+        <div :class="checked ? 'checked_icon_blue' : 'unchecked_icon'" class="mr-[0.2rem]"></div>
         我同意<span>隐私政策</span>和<span>用户条款</span>
       </label>
 
@@ -338,7 +331,7 @@ const clickItem = (item) => {
 
 //跳转到语言设置页
 const goLang = () => {
-//   emits("closeDialog");
+  //   emits("closeDialog");
   router.push({ name: "language" });
 };
 
@@ -828,6 +821,23 @@ const goChat = () => {
     font-size: 0.26rem;
     margin-bottom: 0.5rem;
 
+    .checked_icon_blue {
+      width: 0.48rem;
+      height: 0.48rem;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none"><rect width="20" height="20" rx="6" fill="white"/><path d="M8.52645 13.3945C8.34635 13.3895 8.17542 13.3219 8.04962 13.2059L5.20301 10.6602C5.07277 10.5388 5 10.3767 5 10.208C5 10.0394 5.07277 9.87731 5.20301 9.7559C5.2686 9.69655 5.3466 9.64945 5.43253 9.61731C5.51845 9.58517 5.6106 9.56862 5.70367 9.56862C5.79674 9.56862 5.88889 9.58517 5.97481 9.61731C6.06074 9.64945 6.13874 9.69655 6.20433 9.7559L8.52645 11.8559L14.4581 7.18875C14.5229 7.12901 14.6004 7.08153 14.686 7.04912C14.7716 7.0167 14.8635 7 14.9564 7C15.0492 7 15.1412 7.0167 15.2267 7.04912C15.3123 7.08153 15.3898 7.12901 15.4547 7.18875C15.5207 7.2477 15.5731 7.31781 15.6088 7.39504C15.6446 7.47227 15.663 7.5551 15.663 7.63875C15.663 7.7224 15.6446 7.80523 15.6088 7.88246C15.5731 7.95969 15.5207 8.0298 15.4547 8.08875L9.02712 13.2059C8.89458 13.3258 8.71453 13.3937 8.52645 13.3945Z" fill="%23014CFA"/></svg>');
+      border: 0.02rem solid #d0d8e2;
+      background-size: contain;
+      border-radius: 0.11rem;
+      background-repeat: no-repeat;
+    }
+    .unchecked_icon {
+      width: 0.48rem;
+      height: 0.48rem;
+      background-color: transparent;
+      border: 0.02rem solid #d0d8e2;
+      border-radius: 0.11rem;
+    }
+
     .register_doc_check {
       margin-right: 0.24rem;
     }
@@ -840,10 +850,10 @@ const goChat = () => {
   .submit_box {
     padding: 0 0.32rem;
 
-      :deep(.van-button__content) {
-        font-size: 0.36rem;
-        line-height: 0.36rem;
-      }
+    :deep(.van-button__content) {
+      font-size: 0.36rem;
+      line-height: 0.36rem;
+    }
     .submit {
       width: 100%;
       height: 1.12rem;
