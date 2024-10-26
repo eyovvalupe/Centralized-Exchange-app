@@ -35,7 +35,6 @@
 
 <script setup>
 import { watch } from "vue"
-
 const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','btnClick'])
 const props = defineProps({
     modelValue:{

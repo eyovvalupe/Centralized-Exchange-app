@@ -1,7 +1,7 @@
 <!-- 提现详情 -->
 <template>
     <div class="withdraw_record_info">
-        <Top :title="'提现详情'">
+        <Top :title="$t('withdrawInfo.title')">
             <template #right>
                 <div class="top-record" @click="goChat">
                     <span><img src="/static/img/user/server.png" alt="img"></span>
@@ -14,15 +14,16 @@
                 <div class="status_icon">
                     <img src="/static/img/assets/status_success.png?241024" alt="img">
                 </div>
-                <div class="status_name">提现成功</div>
-                <div class="status_desc">您提现的{{orderData.amount}}{{orderData.currency}}已到账</div>
+                <div class="status_name">{{ $t('withdrawInfo.successful') }}</div>
+                <div class="status_desc" v-if="locale == 'en'">The {{orderData.amount}} {{orderData.currency}} you withdrew has been credited to your account</div>
+                <div class="status_desc" v-else>您提现的{{orderData.amount}}{{orderData.currency}}已到账</div>
             </div>
             <div class="status" v-else-if="orderData.status == 'failure'">
                 <div class="status_icon">
                     <img src="/static/img/assets/status_error.png?241024" alt="img">
                 </div>
-                <div  class="status_name">提现失败</div>
-                <div class="status_desc">请重新提现，或联系客服</div>
+                <div  class="status_name">{{ $t('withdrawInfo.Failed') }}</div>
+                <div class="status_desc">{{ $t('withdrawInfo.failurePrompt') }}</div>
             </div>
             <div class="status" v-else>
                 
@@ -30,39 +31,31 @@
                     <LoadEffect class="status_loading" color="#fff" />
                     <img src="/static/img/assets/status_wait.png" alt="img">
                 </div>
-                <div class="status_name">提现处理中</div>
-                <div class="status_desc">请等待提现结果</div>
+                <div class="status_name">{{ $t('withdrawInfo.processing') }}</div>
+                <div class="status_desc">{{ $t('withdrawInfo.processingTip') }}</div>
             </div>
            
         </div>
         <div class="bottom_info">
             <div class="bottom_item">
-                <div class="name">提现金额</div>
+                <div class="name">{{ $t('withdrawInfo.withdrawalAmount') }}</div>
                 <div class="value">{{orderData.amount}} <span class="value_currency">{{orderData.currency}}</span></div>
             </div>
             <div class="bottom_item">
-                <div class="name">收款账户</div>
-                <div class="value">中国银行(**** **** **** 1223)</div>
+                <div class="name">{{ $t('withdrawInfo.receivingAccount') }}</div>
+                <div class="value">{{orderData.account ? orderData.account.symbol || '' : '' }} {{ orderData.account ? getAddress(orderData.account.address) || '--' : '--' }}</div>
             </div>
             <div class="bottom_item">
-                <div class="name">提现币种</div>
+                <div class="name">{{ $t('withdrawInfo.withdrawalCurrency') }}</div>
                 <div class="value">USDT</div>
             </div>
             <div class="bottom_item">
-                <div class="name">提现网络</div>
+                <div class="name">{{ $t('withdrawInfo.withdrawalNetwork') }}</div>
                 <div class="value">TR200</div>
             </div>
+           
             <div class="bottom_item">
-                <div class="name">提现地址</div>
-                <div class="value">
-                    <div class="value_text van-omit1">{{ orderData.address }}</div>
-                    <div class="copy_icon" @click="copy(orderData.address)">
-                        <img src="/static/img/trade/copy.png" alt="copy">
-                    </div>
-                </div>
-            </div>
-            <div class="bottom_item">
-                <div class="name">订单编号</div>
+                <div class="name">{{ $t('withdrawInfo.orderNumber') }}</div>
                 <div class="value">
                     <div class="value_text van-omit1">{{ orderData.order_no }}</div>
                     <div class="copy_icon" @click="copy(orderData.order_no)">
@@ -71,8 +64,8 @@
                 </div>
             </div>
             <div class="bottom_item">
-                <div class="name">提现时间</div>
-                <div class="value">2024-04-22 22:22:22</div>
+                <div class="name">{{ $t('withdrawInfo.withdrawalTime') }}</div>
+                <div class="value">{{ orderData.date }}</div>
             </div>
         </div>
     </div>
@@ -87,6 +80,9 @@ import { useRoute } from "vue-router"
 import { _copyTxt } from "@/utils/index"
 import LoadEffect from '@/components/LoadEffect.vue'
 import router from '@/router'
+import store from '@/store'
+
+const locale = ref(store.state.i18Data.locale)
 
 const route = useRoute()
 
@@ -94,6 +90,13 @@ const route = useRoute()
 const copy = text => {
     _copyTxt(text)
     showToast('已复制')
+}
+
+const getAddress = (address)=>{
+    if(!address){
+        return '--'
+    }
+    return '(**** **** **** '+address.substr(address.length-4)+')'
 }
 
 

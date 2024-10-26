@@ -55,6 +55,7 @@
             <FormItem
                 title="止损"
                 class="mb-[0.4rem]"
+                input-type="number"
                 v-model="form1.stop_loss_price"
                 :percent-tags="props.activeType == 1 ? [{label:'-20%',value:20},{label:'-15%',value:15},{label:'-10%',value:10}] : [{label:'+20%',value:20},{label:'+15%',value:15},{label:'+10%',value:10}]"
                 @percentTagClick="setPriceStop"
@@ -87,7 +88,7 @@
 
                     <FormItem
                         v-model="form1.price"
-                        type="number"
+                        input-type="number"
                         :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-1%',value:1}] : [{label:'+3%',value:3},{label:'+1%',value:1}]"
                         v-else
                         @percentTagClick="percentTagClick"
@@ -105,6 +106,7 @@
 
         <FormItem
             class="mb-[0.4rem]"
+            input-type="number"
             title="价格" tip="满足价格才能成交" v-model="form1.price"
             :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-2%',value:2},{label:'-1%',value:1},{label:'市价',value:0}] : [{label:'+3%',value:3},{label:'+2%',value:2},{label:'+1%',value:1},{label:'市价',value:0}]"
             @percentTagClick="percentTagClick"

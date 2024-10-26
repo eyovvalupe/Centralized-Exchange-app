@@ -1,52 +1,74 @@
 
 export default {
+    form:{
+        all:"All"
+    },
     assets:{
-        recharge:"recharge",
-        withdraw:"withdraw",
-        transfer:"transfer",
-        financialRecords:"details"
+        recharge:"Recharge",
+        withdraw:"Withdraw",
+        transfer:"Transfer",
+        financialRecords:"Details"
     },
     topUpCrypto:{
         recharge:"Recharge",
-        rechargeRecord:"recharge record",
-        cryptocurrency:"crypto currency",
-        bankCard:"bank card",
-        currency:"currency",
-        network:"network",
-        rechargeAmount:"recharge amount",
+        rechargeRecord:"Recharge record",
+        cryptocurrency:"Crypto currency",
+        bankCard:"Bank card",
+        currency:"Currency",
+        network:"Network",
+        rechargeAmount:"Recharge amount",
         inputPlaceholder:"Please enter",
-        confirm:"confirm",
+        confirm:"Confirm",
         currencySelection:"Currency selection",
         searchPlaceholder:"Enter currency",
         networkSelection:"Network selection"
     },
     withdraw:{
         withdraw:"Withdraw",
-        withdrawRecord:"withdraw record",
-        cryptocurrency:"crypto currency",
-        bankCard:"bank card",
-        currency:"currency",
-        network:"network",
-        confirm:"confirm",
+        withdrawRecord:"Withdraw record",
+        cryptocurrency:"Crypto currency",
+        bankCard:"Bank card",
+        currency:"Currency",
+        network:"Network",
+        confirm:"Confirm",
         currencySelection:"Currency selection",
         searchPlaceholder:"Enter currency",
-        addPaymentMethod:"add payment method",
-        withdrawable:"withdrawable",
-        withdrawalAmount:"withdrawal amount"
+        addPaymentMethod:"Add payment method",
+        withdrawable:"Withdrawable",
+        withdrawalAmount:"Withdrawal amount",
+        serviceFee:"Service fee",
+        receiptAccount:"Receipt account",
+        change:"Change",
+        accountSelection:"Account selection"
     },
     recharging:{
         recharge:"Recharge",
-        countdown:"countdown",
+        countdown:"Countdown",
         QRcodeExpired:"QR code expired",
         walletAddress:"Payee's wallet address",
-        copy:"copy",
+        copy:"Copy",
         tip1:'Tip: Please complete the recharge within the deadline',
         tip2:'Order expiration and cancellation',
-        success:"success",
-        fail:'fail',
-        finish:'finish'
+        success:"Success",
+        fail:'Fail',
+        finish:'Finish'
+    },
+    withdrawInfo:{
+        title:'Withdrawal details',
+        successful:"Successful",
+        failed:"Failed",
+        failurePrompt:"Please withdraw again or contact customer service",
+        processing:"Processing",
+        processingTip:"Please wait for the withdrawal result",
+        withdrawalAmount:"Amount",
+        receivingAccount:"Account",
+        withdrawalCurrency:"Currency",
+        withdrawalNetwork:"Network",
+        orderNumber:"Order Number",
+        withdrawalTime:"Time"
+
     },
     transfer:{
-        transferRecord:"transfer record"
+        transferRecord:"Transfer record"
     }
 }

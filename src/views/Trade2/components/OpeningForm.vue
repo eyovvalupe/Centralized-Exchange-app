@@ -52,28 +52,15 @@
             </div>
 
             <!-- 简单模式 -->
-            <div class="subtitle" v-show="mode == 1">
-                <span>止损</span>
-            </div>
-            <div class="item_box" v-show="mode == 1">
-                <div class="item">
-                    <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
-                        v-model="form1.stop_loss_price" type="number" class="ipt">
-
-                    <span class="num-tag" @click="setPriceStop(20)"
-                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                            props.activeType ==
-                                1 ? '-' : '+' }}20%</span>
-                    <span class="num-tag" @click="setPriceStop(15)"
-                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                            props.activeType ==
-                                1 ? '-' : '+' }}15%</span>
-                    <span class="num-tag" @click="setPriceStop(10)"
-                        v-show="currStock.price" :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                            props.activeType ==
-                                1 ? '-' : '+' }}10%</span>
-                </div>
-            </div>
+            <FormItem
+                title="止损"
+                class="mb-[0.4rem]"
+                v-model="form1.stop_loss_price"
+                input-type="number"
+                :percent-tags="props.activeType == 1 ? [{label:'-20%',value:20},{label:'-15%',value:15},{label:'-10%',value:10}] : [{label:'+20%',value:20},{label:'+15%',value:15},{label:'+10%',value:10}]"
+                @percentTagClick="setPriceStop"
+                v-if="mode == 1"
+            />
 
             <!-- 价格 -->
             <div class="item_box">
@@ -90,20 +77,22 @@
                     <div class="subtitle">
                         <span>&nbsp;</span>
                     </div>
-                    <div class="item" :class="{ 'disabled_item': priceMode == 1 }">
-                        <span v-show="priceMode == 1" style="color: #999;">最新价格成交</span>
-                        <input @focus="priceFocus2 = true" @blur="priceFocus2 = false" v-show="priceMode != 1"
-                            v-model="form1.price" type="number" class="ipt">
+                    <FormItem
+                        custom 
+                        disabled
+                        v-if="priceMode == 1"
+                    >
+                        <span  style="color: #A4ACB9;">最新价格成交</span>    
+                    </FormItem>
 
-                        <span class="num-tag"
-                            @click="setPricePercent(3)" v-show="currStock.price && priceMode != 1"
-                            :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
-                                1 ? '-' : '+' }}3%</span>
-                        <span class="num-tag"
-                            @click="setPricePercent(1)" v-show="currStock.price && priceMode != 1"
-                            :style="{ visibility: priceFocus2 ? '' : 'hidden' }">{{ props.activeType ==
-                                1 ? '-' : '+' }}1%</span>
-                    </div>
+                    <FormItem
+                        v-model="form1.price"
+                        input-type="number"
+                        :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-1%',value:1}] : [{label:'+3%',value:3},{label:'+1%',value:1}]"
+                        v-else
+                        @percentTagClick="percentTagClick"
+                    >
+                    </FormItem>
                 </div>
 
                 <!-- <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
@@ -112,28 +101,15 @@
         </template>
 
         <!-- 价格 -->
-        <div class="subtitle" v-if="props.activeTab == 1">
-            <span>价格</span>
-        </div>
-        <div class="item_box" v-if="props.activeTab == 1">
-            <div class="item" :class="{ 'item_focus': priceFocus }">
-                <span class="ipt_tip" v-show="form1.price === '' || priceFocus">满足价格才能成交</span>
-                <input v-model="form1.price" @focus="priceFocus = true" @blur="priceFocus = false" type="number"
-                    class="ipt">
-
-                <span class="num-tag" @click="setPricePercent(3)"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
-                        1 ? '-' : '+' }}3%</span>
-                <span class="num-tag" @click="setPricePercent(2)"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
-                        1 ? '-' : '+' }}2%</span>
-                <span class="num-tag" @click="setPricePercent(1)"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">{{ props.activeType ==
-                        1 ? '-' : '+' }}1%</span>
-                <span class="num-tag" @click="setNowPrice"
-                    v-show="currStock.price" :style="{ visibility: priceFocus ? '' : 'hidden' }">市价</span>
-            </div>
-        </div>
+        <FormItem
+            class="mb-[0.4rem]"
+            input-type="number"
+            title="价格" tip="满足价格才能成交" v-model="form1.price"
+            :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-2%',value:2},{label:'-1%',value:1},{label:'市价',value:0}] : [{label:'+3%',value:3},{label:'+2%',value:2},{label:'+1%',value:1},{label:'市价',value:0}]"
+            @percentTagClick="percentTagClick"
+            v-if="props.activeTab == 1"
+         />
+         
 
         <!-- 股票 -->
         <div class="subtitle">
@@ -355,6 +331,7 @@ import StockPopup from "../../trade/StockPopup.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import StockTable from "@/components/StockTable.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
+import FormItem from "@/components/Form/FormItem.vue";
 import eventBus from "@/utils/eventBus"
 
 const goLogin = () => {
@@ -527,6 +504,17 @@ const setPricePercent = (i) => { // 设置浮动价格
         form1.value.price = new Decimal(currStock.value.price).mul(100 - i).div(100).toNumber()
     } else { // 买跌
         form1.value.price = new Decimal(currStock.value.price).mul(100 + i).div(100).toNumber()
+    }
+}
+
+const percentTagClick = (percent)=>{
+    if(!currStock.value.symbol){
+        return
+    }
+    if(percent.value == 0){
+        setNowPrice()
+    }else{
+        setPricePercent(percent.value)
     }
 }
 
@@ -995,6 +983,10 @@ defineExpose({
             width: 0.36rem;
             height: 0.36rem;
         }
+    }
+
+    :deep(.form-item-title){
+        margin-top: 0rem;
     }
 
     .item_box {

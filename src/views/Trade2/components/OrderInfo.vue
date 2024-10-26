@@ -124,7 +124,7 @@
                 <div>更新</div>
             </div>
             <div class="btn btn3" @click="emit('sell',currStock)"
-                v-if="['none', 'lock', 'open'].includes(currStock.status)">
+                v-if="[ 'lock', 'open'].includes(currStock.status)">
                 <div class="btn_icon">
                     <img src="/static/img/trade/close.png" alt="img">
                 </div>
