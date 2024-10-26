@@ -221,6 +221,7 @@ const jump = (name) => {
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 0.24rem;
+  padding: 0 0.32rem;
 
   .text_container {
     width: 0.84rem;
@@ -235,7 +236,7 @@ const jump = (name) => {
 }
 
 .recommend_block {
-
+  padding: 0 0.22rem;
   .item_block {
     border-radius: 0.452rem;
     margin-bottom: 0.471rem;
