@@ -56,7 +56,6 @@ const OpeningForm1Ref = ref()
 const OpeningForm2Ref = ref()
 
 
-
 const activeType = ref(1) // 1-买涨 2-买跌
 // url参数处理
 if (route.query.symbol) {
