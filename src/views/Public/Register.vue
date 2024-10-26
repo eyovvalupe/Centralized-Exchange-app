@@ -69,7 +69,7 @@
           v-show="activeTab == 1"
           :class="{ err_ipt: errorTip.error1 }"
         >
-          <div class="code" @click="showDialog = true">
+          <div class="code" @click="showDialog = true, searchStr=''">
             <span class="flag_icon">
               <img src="/static/img/common/flag_hongkong.svg" alt="" />
             </span>

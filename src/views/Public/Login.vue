@@ -51,7 +51,7 @@
 
       <div class="form_title" v-show="activeTab == 1">手机号</div>
       <div class="form_item margin_item" v-show="activeTab == 1">
-        <div class="code" @click="showDialog = true">
+        <div class="code" @click="showDialog = true, searchStr=''">
           <span class="flag_icon">
             <img src="/static/img/common/flag_hongkong.svg" alt="" />
           </span>
