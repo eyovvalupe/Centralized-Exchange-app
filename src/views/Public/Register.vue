@@ -6,7 +6,7 @@
       <ImgCheck @success="step = 2" @goBack="goBack" />
     </template>
 
-    <template v-else-if="step == 2">
+    <template v-else-if="step == 1">
       <!-- 返回和语言 -->
       <div class="top_icon_container">
         <div class="top_back_container text-[0.48rem]" @click="goBack">
@@ -69,7 +69,7 @@
           v-show="activeTab == 1"
           :class="{ err_ipt: errorTip.error1 }"
         >
-          <div class="code" @click="showDialog = true, searchStr=''">
+          <div class="code" @click="(showDialog = true), (searchStr = '')">
             <span class="flag_icon">
               <img src="/static/img/common/flag_hongkong.svg" alt="" />
             </span>
@@ -204,7 +204,7 @@
       </div> -->
     </template>
 
-    <template v-if="step == 1">
+    <template v-if="step == 2">
       <RegisterCodeCheck
         :type="activeTab == 0 ? 'email' : 'phone'"
         :value="activeTab == 0 ? form.email : form.phone"
@@ -231,11 +231,15 @@
       teleport="body"
     >
       <div class="register_accounr_dialog">
-        <div class="close_icon" @click="showDialog = false">
-          <img src="/static/img/common/close.png" alt="x" />
+        <div
+          class="close-svg-iconB absolute right-0 mr-[0.32rem]"
+          @click="showDialog = false"
+        ></div>
+        <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
+          区号选择
         </div>
         <div class="item search_box">
-          <!-- <Icon class="search" name="search" size="24px" /> -->
+          <!-- <Icon class="search" name="search" size="0.48rem" /> -->
           <div class="search-svg-icon"></div>
           <input
             v-model.trim="searchStr"
@@ -262,11 +266,7 @@
             </span>
             <span>{{ item.cn }}</span>
             <span>({{ item.code }})</span>
-            <Icon
-              v-if="form.area == item.code"
-              class="check_icon"
-              name="success"
-            />
+            <Icon v-if="form.area == item.code" class="cross" name="success" />
           </div>
           <NoData v-if="!showAreas.length" />
         </div>
@@ -859,7 +859,7 @@ const goChat = () => {
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   overflow: hidden;
-  padding: 0.86rem 0.32rem 0.8rem 0.32rem;
+  padding: 0.28rem 0.32rem 0.8rem 0.32rem;
   position: relative;
 
   :deep(.search-svg-icon) {
@@ -881,10 +881,10 @@ const goChat = () => {
 
   .search_box {
     height: 0.84rem;
-    border: 1px solid #d0d8e2;
+    border: 0.02rem solid #d0d8e2;
     border-radius: 0.32rem;
-    padding: 0 0.32rem;
-    margin: 0.12rem 0;
+    padding-inline: 0.32rem;
+    margin-bottom: 0.2rem;
     display: flex;
     align-items: center;
 
@@ -934,6 +934,14 @@ const goChat = () => {
     width: 0.24rem;
     height: 0.24rem;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M5.64645 4.93934L6 5.29289L6.35355 4.93934L10.6464 0.646447C10.8417 0.451185 11.1583 0.451185 11.3536 0.646446L11.7062 0.293812L11.3536 0.646447C11.5488 0.841709 11.5488 1.15829 11.3536 1.35355L11.675 1.67497L11.3536 1.35355L7.06066 5.64645L6.70711 6L7.06066 6.35355L11.3536 10.6464C11.5488 10.8417 11.5488 11.1583 11.3536 11.3536C11.1583 11.5488 10.8417 11.5488 10.6464 11.3536L6.35355 7.06066L6 6.70711L5.64645 7.06066L1.35355 11.3536L1.67497 11.675L1.35355 11.3536C1.15829 11.5488 0.841709 11.5488 0.646447 11.3536L0.292893 11.7071L0.646446 11.3536C0.451185 11.1583 0.451185 10.8417 0.646446 10.6464L4.93934 6.35355L5.29289 6L4.93934 5.64645L0.646447 1.35355C0.451184 1.15829 0.451184 0.841709 0.646447 0.646447C0.841709 0.451184 1.15829 0.451184 1.35355 0.646447L5.64645 4.93934Z" stroke="%23121826"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .close-svg-iconB {
+    width: 0.42rem;
+    height: 0.4rem;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none"><path d="M10.8729 9.61463L17.0186 3.43813C17.1276 3.32104 17.1869 3.16618 17.1841 3.00617C17.1813 2.84615 17.1165 2.69348 17.0035 2.58032C16.8904 2.46716 16.7379 2.40233 16.5781 2.39951C16.4182 2.39669 16.2635 2.45608 16.1465 2.56518L10.0008 8.7211L3.85504 2.5693C3.73724 2.46783 3.58553 2.41459 3.43021 2.42022C3.2749 2.42586 3.12743 2.48995 3.01728 2.59969C2.90712 2.70944 2.8424 2.85674 2.83604 3.01218C2.82967 3.16762 2.88214 3.31973 2.98296 3.43813L9.1287 9.61463L2.98296 15.7458C2.92525 15.8029 2.87943 15.8709 2.84816 15.9458C2.81688 16.0207 2.80078 16.1011 2.80078 16.1823C2.80078 16.2635 2.81688 16.3439 2.84816 16.4188C2.87943 16.4937 2.92525 16.5617 2.98296 16.6188C3.09865 16.7344 3.25548 16.7994 3.419 16.7994C3.58252 16.7994 3.73935 16.7344 3.85504 16.6188L10.0008 10.467L16.1465 16.6147C16.2622 16.7303 16.419 16.7953 16.5826 16.7953C16.7461 16.7953 16.9029 16.7303 17.0186 16.6147C17.0763 16.5576 17.1221 16.4896 17.1534 16.4147C17.1847 16.3398 17.2008 16.2594 17.2008 16.1782C17.2008 16.097 17.1847 16.0166 17.1534 15.9417C17.1221 15.8667 17.0763 15.7988 17.0186 15.7417L10.8729 9.61463Z" fill="%23161616"/></svg>');
     background-size: contain;
     background-repeat: no-repeat;
   }
