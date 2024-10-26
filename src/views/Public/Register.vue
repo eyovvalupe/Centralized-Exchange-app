@@ -363,10 +363,6 @@ const errorTip = ref({
 const loading = ref(false);
 const submit = async () => {
   if (!checked.value) return showToast("请先同意隐私政策和用户条款");
-  // if (!form.value.username) {
-  //   errorTip.value.error1 = true
-  //   return showToast('请输入用户名')
-  // }
   if (activeTab.value == 0) {
     if (!form.value.email || !validateEmail(form.value.email)) {
       errorTip.value.error1 = true;
@@ -395,12 +391,8 @@ const submit = async () => {
     errorTip.value.error3 = true;
     return showToast("请输入交易密码");
   }
-  // if (form.value.safeword != form.value.safeword2) {
-  //   errorTip.value.error3 = true
-  //   return showToast('两次密码不一致')
-  // }
   sessionStorage.setItem("registerForm", JSON.stringify(form.value));
-
+  console.log("session token =======> ", sessionToken.value);
   if (!sessionToken.value) {
     const rs = await store.dispatch("updateSessionToken");
     if (!rs) return showToast("网络异常，请重试");
