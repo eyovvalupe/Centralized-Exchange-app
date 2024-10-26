@@ -15,11 +15,32 @@
     <!-- <div class="jump" @click="close">跳过验证</div> -->
     <div class="title">{{ titleMap[props.type] }}验证</div>
     <div class="info flex flex-col">
-      <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem;">我们已将验证码发送至您的{{ props.type == 'email' ? '电子邮箱' : '手机号码' }}</span> 
-        <div class="flex flex-row justify-between ">
-      <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400;">请输入6位数代码</span>
-    <div style="width: 1.56rem; height: 0.6rem; display: flex; justify-content: center; align-items: center; background-color: #d0d8e2; border-radius: 1rem;">timer</div>
+      <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem"
+        >我们已将验证码发送至您的{{
+          props.type == "email" ? "电子邮箱" : "手机号码"
+        }}</span
+      >
+      <div class="flex flex-row justify-between mb-[0.6rem]">
+        <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400"
+          >请输入6位数代码</span
+        >
+        <div
+          style="
+            width: 1.56rem;
+            height: 0.6rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #d0d8e2;
+            border-radius: 1rem;
+            color: #014cfa;
+            font-size: 0.28rem;
+            line-height: 0.372rem;
+          "
+        >
+          timer
         </div>
+      </div>
     </div>
     <div class="ipt_box">
       <PasswordInput
@@ -40,6 +61,7 @@
         @keydown.enter="submit"
       />
     </div>
+    <div>继续</div>
     <div class="send" @click="send">{{ s ? s + "s" : "再次发送" }}</div>
   </div>
   <!-- </ElDialog> -->
@@ -56,7 +78,7 @@ import {
 } from "vant";
 import { ref, computed, watch } from "vue";
 import router from "@/router";
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
 const route = useRoute();
 
 const props = defineProps({
@@ -223,7 +245,6 @@ const goLang = () => {
 
   .info {
     padding: 0 0.32rem;
-    margin-bottom: 0.4rem;
     line-height: 0.5rem;
 
     span {
