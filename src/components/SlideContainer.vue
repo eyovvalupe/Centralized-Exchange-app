@@ -61,6 +61,7 @@ const onSliderChange = (newValue) => {
         width: .4rem;
         height: .4rem;
         border-radius: 50%;
+        top:0.02rem;
         .number {
             color: #014CFA;
             position: absolute;
