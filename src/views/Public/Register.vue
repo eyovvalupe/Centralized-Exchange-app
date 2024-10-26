@@ -882,7 +882,6 @@ const goChat = () => {
     align-items: center;
     justify-content: start;
     border-bottom: 1px solid #f5f5f5;
-    padding: 0 0.32rem;
     gap: 10px;
 
     .flag_icon {
@@ -903,7 +902,7 @@ const goChat = () => {
 
     .check_icon {
       position: absolute;
-      right: 0.64rem;
+      right: 0;
       color: #014cfa;
       font-size: 0.28rem;
     }
