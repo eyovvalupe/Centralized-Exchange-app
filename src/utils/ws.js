@@ -18,7 +18,7 @@ export const useSocket = () => {
         transportOptions: {
           polling: {
             extraHeaders: {
-              auth: "1cdbfe2addd74bc780ba7942d3c8395f"
+              auth: ""
             }
           }
         }
