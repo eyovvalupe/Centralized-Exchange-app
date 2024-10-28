@@ -1,9 +1,8 @@
 <!-- 收款账户 -->
 <template>
     <div class="page page_account">
-        <Top :title="'收款账户'"></Top>
+        <!-- <Top :title="'收款账户'"></Top>
 
-        <!-- Tabs -->
         <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
             :swipeable="false" animated shrink>
             <Tab :title="'银行卡'">
@@ -38,8 +37,23 @@
             </Tab>
         </Tabs>
 
-        <!-- 类型选择弹窗 -->
-        <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" />
+        <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" /> -->
+        <!-- <div class="text-[0.48rem]"><Icon name="arrow-left" /></div> -->
+        <div class="top_icon_container">
+      <div class="top_back_container text-[0.48rem]" @click="goBack">
+        <Icon name="arrow-left" />
+      </div>
+
+      <div class="flex flex-row">
+        <div class="server_icon" @click="goChat">
+          <div class="chat_icon"><img src="/static/img/user/server.svg" /></div>
+        </div>
+
+        <div class="language_icon_container" @click="goLang">
+          <div class="language_icon"></div>
+        </div>
+      </div>
+    </div>
     </div>
 </template>
 
@@ -121,7 +135,6 @@ Promise.all([
 
 <style lang="less" scoped>
 .page_account {
-    padding: 1.12rem 0.32rem 1.4rem 0.32rem;
     overflow-y: auto;
     height: 100%;
 
