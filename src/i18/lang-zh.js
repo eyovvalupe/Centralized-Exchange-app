@@ -1,6 +1,8 @@
 
 export default {
-    
+    form:{
+        all:"全部"
+    },
     assets:{
         recharge:"充值",
         withdraw:"提现",
@@ -34,7 +36,26 @@ export default {
         searchPlaceholder:"搜索",
         addPaymentMethod:"添加收款方式",
         withdrawable:"可提现",
-        withdrawalAmount:"提现金额"
+        withdrawalAmount:"提现金额",
+        serviceFee:"手续费",
+        receiptAccount:"收款账户",
+        change:"更改",
+        accountSelection:"加密货币账户选择"
+    },
+    withdrawInfo:{
+        title:'提现详情',
+        successful:"提现成功",
+        failed:"提现失败",
+        failurePrompt:"请重新提现，或联系客服",
+        processing:"提现处理中",
+        processingTip:"请等待提现结果",
+        withdrawalAmount:"提现金额",
+        receivingAccount:"收款账户",
+        withdrawalCurrency:"提现币种",
+        withdrawalNetwork:"提现网络",
+        orderNumber:"订单编号",
+        withdrawalTime:"提现时间"
+
     },
     recharging:{
         recharge:"充值",

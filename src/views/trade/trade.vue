@@ -18,10 +18,6 @@
       </div>
     </Popup>
 
-
-
-
-
     <!-- 侧边栏 -->
     <teleport to="body">
       <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showLeft" position="left"

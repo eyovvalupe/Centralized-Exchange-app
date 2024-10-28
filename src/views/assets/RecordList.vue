@@ -53,7 +53,14 @@
                 <div>
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i">
-                        <TransferItem :item="item" />
+                        <div class="date" @click="dateClick(getDate(item.created),transferOpenDates)" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
+                            {{ getDate(item.created) }}
+                            <span class="date_more" :class="{'date_more_up':!transferOpenDates.includes(getDate(item.created))}"><img src="/static/img/assets/more.png" alt="more"></span>
+                        </div>
+                        <transition name="opacity">
+                            <TransferItem :item="item" v-show="!transferOpenDates.includes(getDate(item.created))" />
+                        </transition>
+                        
                     </div>
                     <LoadingMore class="active_more" :loading="loading" :finish="finish"
                         v-if="((finish && list.length) || (!finish)) && active == 2" />

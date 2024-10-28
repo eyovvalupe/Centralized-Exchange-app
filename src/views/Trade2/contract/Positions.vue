@@ -2,16 +2,16 @@
 <template>
     <div v-if="token" class="positions">
         <div class="tr th">
-            <div class="td td-5">合约/状态</div>
+            <div class="td td-5">合约</div>
             <div class="td td-4">开仓/可售</div>
-            <div class="td td-4">现价/成本</div>
-            <div class="td td-4">盈亏/盈亏比</div>
+            <div class="td td-4">现价/买价</div>
+            <div class="td td-4">盈亏</div>
         </div>
         <NoData v-if="!contractPositionsList.length && !loading" />
-        
+
         <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
             <div class="td td-5">
-                <div class="name van-omit1">{{ item.symbol }}</div>
+                <div class="name van-omit1">{{ item.name }}</div>
                 <div class="lever">
                     <div class="status">{{ item.lever }}X</div>
                     <div class="status" :class="'status-' + item.status">{{ statusMap[item.status] || '--' }}</div>
@@ -32,12 +32,13 @@
                     getRatio(item.ratio) }}</div>
             </div>
         </div>
-        
 
-       <!-- 订单详情 -->
+
+        <!-- 订单详情 -->
         <Popup v-model:show="showInfo" position="right" style="width:100%;height:100%;" teleport="body">
-            <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel" @back="showInfo=false" />
-            
+            <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
+                @back="showInfo = false" />
+
         </Popup>
 
         <!-- 平仓 -->
@@ -57,7 +58,7 @@
                             @click="onSliderChange(100)">全部</span>
                     </div>
                     <div style="height:0.47rem;"></div>
-                    
+
                     <!-- 拖动 -->
                     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
@@ -81,12 +82,12 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
-                    <div class="item">
-                        <input v-model="sellForm.safeword" type="password" class="ipt">
-                    </div> -->
+                    <FormItem v-model="sellForm.safeword" size="large" input-type="password" title="交易密码">
+                    </FormItem>
+                   
 
-                    <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"  color="#014CFA">
+                    <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary"
+                        size="large" color="#014CFA">
                         确定
                     </Button>
                 </div>
@@ -136,18 +137,15 @@
                             <div class="item">
                                 <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
                                     v-model="updateForm.stop_loss_price" type="number" class="ipt">
-                                <span class="num-tag"
-                                    @click="setPriceStop(20)" v-show="currStock.open_price"
+                                <span class="num-tag" @click="setPriceStop(20)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}20%</span>
-                                <span class="num-tag"
-                                    @click="setPriceStop(15)" v-show="currStock.open_price"
+                                <span class="num-tag" @click="setPriceStop(15)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}15%</span>
-                                <span class="num-tag"
-                                    @click="setPriceStop(10)" v-show="currStock.open_price"
+                                <span class="num-tag" @click="setPriceStop(10)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}10%</span>
@@ -155,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="subtitle">
+                    <div class="subtitle">
                         <span>增加保证金</span>
                         <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
                     </div>
@@ -168,14 +166,15 @@
                     </div>
                     <div style="height:0.47rem;"></div>
                     <!-- 拖动 -->
-                    <SlideContainer v-model="sliderValue"  @change="onSliderChange" />
+                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
                     <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">
                         <input v-model="updateForm.safeword" type="password" class="ipt">
                     </div> -->
 
-                    <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary" color="#014CFA">
+                    <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading"
+                        type="primary" color="#014CFA">
                         确定
                     </Button>
                 </div>
@@ -214,7 +213,7 @@ import UnLogin from "@/components/UnLogin.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
 import OrderInfo from '../components/OrderInfo.vue'
-
+import FormItem from '@/components/Form/FormItem.vue'
 const loginfinish = () => {
 
 }
@@ -226,7 +225,7 @@ const token = computed(() => store.state.token)
 const contractPositionsList = computed(() => store.state.contractPositionsList)
 const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 合约账户余额
-    const target = elseWallet.value.find(item => item.account == 'stock')
+    const target = elseWallet.value.find(item => item.account == 'futures')
     if (target) return target.amount
     return 0
 })
@@ -282,9 +281,10 @@ const subs = () => {
         socket && socket.off('futuresorder')
         socket && socket.emit('user', token.value)
         socket && socket.emit('futuresorder', '#all')
+        console.error('---订阅futuresorder')
         loading.value = true
         socket.on('futuresorder', res => {
-
+            console.error('?????', res)
             store.commit('setContractPositionsList', (res.data || []).map(item => {
                 if (!item.order_no && item.father_username) {
                     item.order_no = item.father_username
@@ -320,7 +320,6 @@ const getRatio = (num) => {
 }
 
 
-
 // 详情
 const showInfo = ref(false)
 const currStock = ref({})
@@ -350,9 +349,10 @@ const sellLoading = ref(false)
 const goSellDialog = () => {
     if (sellLoading.value) return
     if (!sellForm.value.volume) return showToast('请输入平仓数量')
-    // if (!sellForm.value.safeword) return showToast('请输入交易密码')
-    showSell.value = false
-    safeRef2.value && safeRef2.value.open()
+    if (!sellForm.value.safeword) return showToast('请输入交易密码')
+    goSell(sellForm.value.safeword)
+    //showSell.value = false
+    //safeRef2.value && safeRef2.value.open()
 }
 const goSell = (s) => {
     sellLoading.value = true
@@ -483,11 +483,12 @@ const onSliderChange = (newValue) => {
     }
 };
 const changeValue = () => {
+   
     let val = 0
     if (showSell.value) val = sellForm.value.volume
     if (!val || val < 0) {
         sliderValue.value = 0
-        sellForm.value.volume = 0
+        sellForm.value.volume = ''
         return
     }
     if (val > currStock.value.unsold_volume) {
@@ -495,6 +496,7 @@ const changeValue = () => {
         if (showSell.value) sellForm.value.volume = currStock.value.unsold_volume
         return
     }
+    sellForm.value.volume = Math.floor(sellForm.value.volume)
     sliderValue.value = Number(new Decimal(val).mul(100).div(currStock.value.unsold_volume).floor())
 }
 const changeAmount = () => {
@@ -559,8 +561,8 @@ getSessionToken()
 
 <style lang="less" scoped>
 .positions {
-    padding:0 0 1.6rem 0;
-    
+    padding: 0 0 1.6rem 0;
+
     .tr {
         padding: 0.2rem;
         background-color: #F5F7FC;
@@ -569,7 +571,7 @@ getSessionToken()
         border-radius: 0.32rem;
         margin-top: 0.2rem;
     }
-   
+
 
     .th {
         color: #8F92A1;
@@ -577,9 +579,9 @@ getSessionToken()
         border-bottom: 1px solid #EFF3F8;
         padding: 0.48rem 0 0.24rem 0;
         background: none;
-        margin-top:0px;
+        margin-top: 0px;
         border-radius: 0px;
-        
+
     }
 
     .td {
@@ -604,7 +606,7 @@ getSessionToken()
         .lever {
             display: flex;
             align-items: center;
-            
+
         }
 
         .status {
@@ -612,14 +614,14 @@ getSessionToken()
             height: 0.3rem;
             padding: 0 0.08rem;
             border-radius: 0.3rem;
-            border:1px solid #014CFA;
+            border: 1px solid #014CFA;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.22rem;
             margin-right: 0.08rem;
         }
-        
+
 
         .status-open {
             color: #18B762;
@@ -627,15 +629,16 @@ getSessionToken()
         }
 
         .status-fail,
-        .status-lock{
-            color:#E8503A;
+        .status-lock {
+            color: #E8503A;
             border-color: #E8503A;
         }
-        .status-none{
-            color:#7E99D6;
-            border-color:#7E99D6;
+
+        .status-none {
+            color: #7E99D6;
+            border-color: #7E99D6;
         }
- 
+
 
         .state {
             width: 0.68rem;
@@ -647,7 +650,7 @@ getSessionToken()
             align-items: center;
             justify-content: center;
             font-size: 0.24rem;
-            margin:0 auto;
+            margin: 0 auto;
         }
 
         .state-short {
@@ -663,21 +666,24 @@ getSessionToken()
         .price {
             color: #666D80;
             font-size: 0.24rem;
-            
+
         }
-        .price:first-child{
-            color:#061023;
+
+        .price:first-child {
+            color: #061023;
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.36rem;
         }
+
         .num {
             color: #6C7B90;
             font-weight: 600;
             font-size: 0.24rem;
             text-align: right;
         }
-        .num:first-child{
+
+        .num:first-child {
             font-size: 0.28rem;
             line-height: 0.36rem;
         }
@@ -692,7 +698,7 @@ getSessionToken()
         flex: 4;
     }
 
-    
+
 }
 
 .order_sell_box {
@@ -713,14 +719,16 @@ getSessionToken()
             margin-bottom: 0.12rem;
             line-height: 0.42rem;
             align-items: center;
-            display:flex;
+            display: flex;
             justify-content: space-between;
         }
-        .subtitle-tip{
-            color:#666D80;
+
+        .subtitle-tip {
+            color: #666D80;
         }
-        .submit{
-            margin-top:0.6rem;
+
+        .submit {
+            margin-top: 0.6rem;
         }
 
         .item_box {
@@ -761,7 +769,7 @@ getSessionToken()
             }
         }
 
-    
+
         .tip {
             text-align: right;
             font-size: 0.24rem;
@@ -805,10 +813,11 @@ getSessionToken()
                 }
             }
         }
-        
+
     }
 }
-.num-tag{
+
+.num-tag {
     color: #2168F6;
     margin-left: 0.08rem;
     transition: all ease .3s;

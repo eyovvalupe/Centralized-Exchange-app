@@ -33,17 +33,17 @@
                         </div>
                         
                     </FormItem>
-                   <FormItem type="number" v-model="form.amount" show-all-btn :title="$t('withdraw.withdrawalAmount')"  @change="changeAmount" @allBtnClick="maxIpt">
+                   <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" :title="$t('withdraw.withdrawalAmount')"  @change="changeAmount" @btnClick="maxIpt">
                         <template #title-right>{{$t("withdraw.withdrawable")}}：{{ balance }}</template>
                    </FormItem>
 
                     <div class="tip">
-                        <span>手续费</span>
+                        <span>{{$t("withdraw.serviceFee")}}</span>
                         <span class="num">{{ loading ? '--' : fee }}</span>
                     </div>
 
                     <!-- 提款方式 -->
-                    <div class="subtitle">收款账户</div>
+                    <div class="subtitle">{{$t("withdraw.receiptAccount")}}</div>
                     <div class="account_box">
 
                         <div class="card_box" v-if="showAccount.length" @click="showAccountDialog = true">
@@ -61,7 +61,7 @@
                                     `${currAccount.bankName}` }}</div>
 
                             </div>
-                            <div class="more_card">更改</div>
+                            <div class="more_card">{{ $t("withdraw.change") }}</div>
 
 
                         </div>
@@ -73,7 +73,7 @@
                     </div>
                 </div>
 
-                <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">提现</Button>
+                <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{$t("withdraw.withdraw")}}</Button>
             </Tab>
             <Tab :title="$t('withdraw.bankCard')" name="bankCard">
                 <div class="form">
@@ -81,12 +81,12 @@
                         <template #title-right>{{$t("withdraw.withdrawable")}}：82771.85</template>
                     </FormItem>
                     <div class="tip">
-                        <span>手续费</span>
+                        <span>{{$t("withdraw.serviceFee")}}</span>
                         <span class="num">{{ loading ? '--' : fee }}</span>
                     </div>
 
                     <!-- 提款方式 -->
-                    <div class="subtitle">收款账户</div>
+                    <div class="subtitle">{{$t("withdraw.receiptAccount")}}</div>
                     <div class="account_box">
 
                         <div class="add_account" @click="showAccountDialog = true">
@@ -96,7 +96,7 @@
 
                     </div>
                 </div>
-                <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">提现</Button>
+                <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{$t("withdraw.withdraw")}}</Button>
             </Tab>
          </Tabs>
 
@@ -131,14 +131,14 @@
         <!-- 账户选择弹窗 -->
         <Popup v-model:show="showAccountDialog" position="bottom" round closeable teleport="body">
         
-            <div class="van-popup-custom-title">加密货币账户选择</div>
+            <div class="van-popup-custom-title">{{$t("withdraw.accountSelection")}}</div>
 
             <div class="withdraw_accounr_dialog">
                
                 <div class="lists card_lists">
                     <div class="add_account" @click="goAddAccount">
                         <Icon size="0.48rem" color="#014CFA" name="add-o" />
-                        <div class="add_account_text">添加收款账户</div>
+                        <div class="add_account_text">{{ $t('withdraw.addPaymentMethod') }}</div>
                     </div>
                     <div @click="clickAccountItem(item)"
                         :class="{ 'card_box_active': currAccount.id == item.id }" class="card_box"
@@ -456,6 +456,9 @@ Promise.all([
             font-size: 0.28rem;
             line-height: 0.36rem; 
             margin-top:0.24rem;
+            .num{
+                margin-left: 0.08rem;
+            }
         }
 
         .subtitle{

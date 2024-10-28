@@ -12,13 +12,13 @@
       >
         <div class="symbol">{{ item.symbol }}</div>
         <div class="name">{{ item.name || "--" }}</div>
-        <div class="price">{{ item.price ? item.price.toFixed(2) : "--" }}</div>
+        <div class="price">{{ item.price ? fixLittleNum(item.price, 2) : "--" }}</div>
         <div
           class="percent"
           :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']"
         >
           {{
-            ((item.ratio || 0) * 100).toFixed(2) > 0
+            (item.ratio || 0) * 100 > 0
               ? "+" + ((item.ratio || 0) * 100).toFixed(2)
               : ((item.ratio || 0) * 100).toFixed(2)
           }}%
@@ -53,6 +53,7 @@ import { Button, showToast } from "vant";
 import { _add } from "@/api/api";
 import store from "@/store";
 import router from "@/router";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const emits = defineEmits(["init", "change"]);
 const token = computed(() => store.state.token || "");

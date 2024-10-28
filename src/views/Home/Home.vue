@@ -144,48 +144,48 @@
       <HomeCrypto />
       <HomeToday />
       <HomePriority />
-      <HomeWatchList />
-      <div>
-        <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
-        <div class="flex gap-1">
-          <div>
-            <div
-              :class="
-                marketPerformance == 0
-                  ? 'bg-[#014CFA] text-white'
-                  : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
-              "
-              class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
-              @click="clickPerformance(0)"
-            >
-              涨幅榜
-            </div>
+    </div>
+    <HomeWatchList />
+    <div class="pl-[0.32rem] pr-[0.32rem]">
+      <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
+      <div class="flex gap-1">
+        <div class="mr-[0.05rem]">
+          <div
+            :class="
+              marketPerformance == 0
+                ? 'bg-[#014CFA] text-white'
+                : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            "
+            class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(0)"
+          >
+            涨幅榜
           </div>
-          <div>
-            <div
-              :class="
-                marketPerformance == 1
-                  ? 'bg-[#014CFA] text-white'
-                  : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
-              "
-              class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
-              @click="clickPerformance(1)"
-            >
-              跌幅榜
-            </div>
+        </div>
+        <div class="mr-[0.05rem]">
+          <div
+            :class="
+              marketPerformance == 1
+                ? 'bg-[#014CFA] text-white'
+                : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            "
+            class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(1)"
+          >
+            跌幅榜
           </div>
-          <div>
-            <div
-              :class="
-                marketPerformance == 2
-                  ? 'bg-[#014CFA] text-white'
-                  : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
-              "
-              class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
-              @click="clickPerformance(2)"
-            >
-              成交榜
-            </div>
+        </div>
+        <div class="mr-[0.05rem]">
+          <div
+            :class="
+              marketPerformance == 2
+                ? 'bg-[#014CFA] text-white'
+                : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            "
+            class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(2)"
+          >
+            成交榜
           </div>
         </div>
       </div>
@@ -317,9 +317,9 @@ const actions = [
   { name: "IPO", value: "1" },
 ];
 const slides = [
-  "static/img/home/back1.png",
-  "static/img/home/back2.png",
-  "static/img/home/back3.png",
+  "static/img/home/back1.webp",
+  "static/img/home/back2.webp",
+  "static/img/home/back3.webp",
 ];
 
 const onSelect = (item) => {

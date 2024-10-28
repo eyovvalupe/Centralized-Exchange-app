@@ -2,64 +2,68 @@
 <template>
   <div v-if="token" class="page_ipo_stock">
 
-    <Tabs  type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"  :color="'#014CFA'" 
-        shrink>
-        <Tab title="全部" name="">
-        </Tab>
-        <Tab title="待中签" name="lock">
-        </Tab>
-        <Tab title="已中签" name="success">
-        </Tab>
-        <Tab title="未中签" name="failure">
-        </Tab>
+    <Tabs type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange" :color="'#014CFA'"
+      shrink>
+      <Tab title="全部" name="">
+      </Tab>
+      <Tab title="待中签" name="lock">
+      </Tab>
+      <Tab title="已中签" name="success">
+      </Tab>
+      <Tab title="未中签" name="failure">
+      </Tab>
     </Tabs>
     <div class="list">
       <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="ipoOrderDetail(item)">
-          <div class="item_box">
-            <div class="name_box">
-              <div class="name">{{ item.company_name }}</div>
-              <img v-if="item.lever > 1" src="/static/img/trade/level.png"/>
-            </div>
-            
-            <div class="item_winning">
-              中签数量：<strong>{{ item.winning || '--' }}</strong>
-            </div>
+        <div class="item_box">
+          <div class="name_box">
+            <div class="name">{{ item.company_name }}</div>
+            <img v-if="item.lever > 1" src="/static/img/trade/level.png" />
+          </div>
 
-            <div class="status_box" v-if="item.status == 'success'" style="background-image: url(/static/img/trade/ipo_status_success.png);">
-              
-            </div>
-            <div class="status_box" v-else-if="item.status == 'failure'" style="background-image: url(/static/img/trade/ipo_status_failure.png);">
-              
-            </div>
-            <div class="status_box" v-else style="background-image: url(/static/img/trade/ipo_status_lock.png);">
-              
-            </div>
+          <div class="item_winning">
+            中签数量：<strong>{{ item.winning || '--' }}</strong>
           </div>
-          <div class="item_info">
-            <div class="info_cell">
-              <span class="info_name">认购价格</span>
-              <span class="info_val">{{ item.issue_price || '--' }}</span>
-            </div>
-            <div class="info_cell">
-              <span class="info_name">认购数量</span>
-              <span class="info_val">{{ item.volume || '--' }}<span class="info_lever" v-if="item.lever > 1">{{ item.lever }}X</span></span>
-            </div>
-            <div class="info_cell" v-if="item.listing_date">
-              <span class="info_name">上市日期</span>
-              <span class="info_val">{{ item.listing_date || '--' }}</span>
-            </div>
-            <div class="info_cell" v-if="item.listed_price">
-              <span class="info_name">上市价格</span>
-              <span class="info_val">{{ item.listed_price || '--' }}</span>
-            </div>
-            <div class="info_cell">
-              <span class="info_name">认购日期</span>
-              <span class="info_val">{{ item.created || '--' }}</span>
-            </div>
+
+          <div class="status_box" v-if="item.status == 'success'"
+            style="background-image: url(/static/img/trade/ipo_status_success.png);">
+
           </div>
+          <div class="status_box" v-else-if="item.status == 'failure'"
+            style="background-image: url(/static/img/trade/ipo_status_failure.png);">
+
+          </div>
+          <div class="status_box" v-else style="background-image: url(/static/img/trade/ipo_status_lock.png);">
+
+          </div>
+        </div>
+        <div class="item_info">
+          <div class="info_cell">
+            <span class="info_name">认购价格</span>
+            <span class="info_val">{{ item.issue_price || '--' }}</span>
+          </div>
+          <div class="info_cell">
+            <span class="info_name">认购数量</span>
+            <span class="info_val">{{ item.volume || '--' }}<span class="info_lever" v-if="item.lever > 1">{{ item.lever
+                }}X</span></span>
+          </div>
+          <div class="info_cell" v-if="item.listing_date">
+            <span class="info_name">上市日期</span>
+            <span class="info_val">{{ item.listing_date || '--' }}</span>
+          </div>
+          <div class="info_cell" v-if="item.listed_price">
+            <span class="info_name">上市价格</span>
+            <span class="info_val">{{ item.listed_price || '--' }}</span>
+          </div>
+          <div class="info_cell">
+            <span class="info_name">认购日期</span>
+            <span class="info_val">{{ item.created || '--' }}</span>
+          </div>
+        </div>
       </div>
 
-      <LoadingMore style="margin-top: 0.8rem;" v-if="!(finish && ipoStockList.length == 0)" :loading="loading" :finish="finish" />
+      <LoadingMore style="margin-top: 0.8rem;" v-if="!(finish && ipoStockList.length == 0)" :loading="loading"
+        :finish="finish" />
       <NoData v-if="(finish && ipoStockList.length == 0)" />
     </div>
 
@@ -125,7 +129,7 @@ import NoData from "@/components/NoData.vue"
 import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import store from "@/store"
 import { _orderList, _orderGet } from "@/api/api";
-import { Popup, Tabs,Tab } from "vant"
+import { Popup, Tabs, Tab } from "vant"
 import router from "@/router"
 import UnLogin from "@/components/UnLogin.vue"
 
@@ -133,7 +137,7 @@ const ipoActive = ref("")
 const loginfinish = () => {
 
 }
-const ipoOnChange = ()=>{
+const ipoOnChange = () => {
   init(true)
 }
 const token = computed(() => store.state.token)
@@ -179,7 +183,7 @@ const getData = () => {
   loading.value = true
   page.value++
   _orderList({
-    status:ipoActive.value,
+    status: ipoActive.value,
     page: page.value
   }).then(res => {
     if (res.data && res.data.length) {
@@ -210,14 +214,18 @@ const scrollHandler = () => {
     getData()
   }
 }
-// 倒计时
-onMounted(() => {
+
+const handleMounted = () => {
   setTimeout(() => {
     loadingMore = document.querySelector('.loading_more')
     try {
       document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
     } catch { }
   }, 500)
+}
+// 倒计时
+onMounted(() => {
+  handleMounted()
 })
 onBeforeUnmount(() => {
   try {
@@ -226,12 +234,13 @@ onBeforeUnmount(() => {
 })
 
 defineExpose({
-  init
+  init,
+  handleMounted
 })
 
 // 订单详情
-const ipoOrderDetail = (item)=>{
-    router.push('/ipo/orderDetail?order_no='+item.order_no)
+const ipoOrderDetail = (item) => {
+  router.push('/ipo/orderDetail?order_no=' + item.order_no)
 }
 
 // 详情
@@ -277,174 +286,189 @@ function countdown(endTime) {
 
   .list {
     padding-top: 0.12rem;
+
     .item {
-          border-radius: 0.32rem;
-          border: 1px solid #EFF3F8;
-          background: #F5F7FC;
-          margin-top: 0.2rem;
-              
-          .name {
-              color: #061023;
-              font-size: 0.32rem;
-              font-weight: 600;
-              line-height: 0.36rem; 
-              color: #0D0D12;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              height: 0.36rem; 
-              white-space: wrap;
-              word-break: keep-all;
-              margin-bottom: 0.14rem;
-              max-width: 80%;
-          }
-          .name_box{
-              display: flex;
-              img{
-                  width: 0.34rem !important;
-                  height: 0.34rem !important;
-                  margin-left: 0.08rem;
-              }
-          }
-          .item_winning{
-            color: #8F92A1;
-            font-size: 0.28rem;
-            font-weight: 400;
-            line-height: 0.36rem;
-            strong{
-              color:#014CFA;
-              margin-left: 0.18rem;
-            }
-          }
-          .item_box {
-              padding: 0.24rem 0.32rem ;
-              position: relative;
-              
-          }
-          .status_box{
-            width: 1.26738rem;
-            height: 1.17056rem;
-            position: absolute;
-            right:-0.14rem;
-            top:-0.02rem;
-            background-repeat: no-repeat;
-            background-size: 100% 100%;
-          }
-          
+      border-radius: 0.32rem;
+      border: 1px solid #EFF3F8;
+      background: #F5F7FC;
+      margin-top: 0.2rem;
 
-          .pre_times {
-              display: flex;
-              align-items: center;
-              .pre_time {
-                  height: 0.48rem;
-                  min-width: 0.48rem;
-                  display: flex;
-                  align-items: center;
-                  text-align: center;
-                  justify-content: center;
-                  color: #FFAF2A;
-                  border: 1px solid #FFAF2A;
-                  border-radius: 0.12rem;
-                  font-size: 0.28rem;
-                  font-weight: 600;
-                  box-sizing: border-box;
-
-              }
-              span {
-                  color: #FFAF2A;
-                  margin: 0 0.1rem;
-                  font-size: 0.28rem;
-              }
-          }
-
-          .status_ing {
-              height: 0.6rem;
-              border-radius: 0rem 0.32rem;
-              padding: 0 0.2rem;
-              background-color: #014CFA;
-              min-width: 1.1rem;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 0.24rem;
-              color: #fff;
-              position: absolute;
-              right:0;
-              top:0;
-          }
-
-          .status_pre {
-              background-color: #FFAF2A;
-              color: #fff;
-          }
-
-          .status_done {
-              background-color: #7E99D6;
-              color: #fff;
-          }
-
-          .status_ed {
-              background-color: #18B762;
-              color: #fff;
-          }
-
-          .item_info {
-              border-radius: 0.32rem;
-              border: 1px solid #EFF3F8;
-              border-bottom: 0px;
-              background: #FFF;
-              position: relative;
-              left:-1px;
-              width: calc(100% + 2px);
-              box-sizing: border-box;
-              line-height: 0.3rem;
-              .info_cell{
-                  display: flex;
-                  justify-content: space-between;
-                  padding: 0.24rem 0.32rem;
-              }
-              .info_cell + .info_cell{
-                  border-top: 1px dashed #EFF3F8;
-              }
-              .info_name{
-                  font-size: 0.28rem;
-                  color:#8F92A1;
-              }
-              .info_date,
-              .info_price {
-                  color: #061023;
-                  font-size: 0.28rem;
-              }
-              .info_lever{
-                border-radius: 0.32rem;
-                height: 0.44rem;
-                line-height: 0.44rem;
-                color:#014CFA;
-                font-size: 0.28rem;
-                padding: 0 0.12rem;
-                background: rgba(1, 76, 250, 0.08);
-                margin-left: 0.12rem;
-              }
-          }
-       
-
-          .control_box {
-              padding: 0.2rem 0.32rem;
-              .btn {
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  background-color: #014CFA;
-                  height: 0.8rem;
-                  border-radius: 0.5rem;
-                  color: #fff;
-                  font-size: 0.3rem;
-                  font-weight: 600;
-              }
-
-              
-          }
+      .name {
+        color: #061023;
+        font-size: 0.32rem;
+        font-weight: 600;
+        line-height: 0.36rem;
+        color: #0D0D12;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        height: 0.36rem;
+        white-space: wrap;
+        word-break: keep-all;
+        margin-bottom: 0.14rem;
+        max-width: 80%;
       }
+
+      .name_box {
+        display: flex;
+
+        img {
+          width: 0.34rem !important;
+          height: 0.34rem !important;
+          margin-left: 0.08rem;
+        }
+      }
+
+      .item_winning {
+        color: #8F92A1;
+        font-size: 0.28rem;
+        font-weight: 400;
+        line-height: 0.36rem;
+
+        strong {
+          color: #014CFA;
+          margin-left: 0.18rem;
+        }
+      }
+
+      .item_box {
+        padding: 0.24rem 0.32rem;
+        position: relative;
+
+      }
+
+      .status_box {
+        width: 1.26738rem;
+        height: 1.17056rem;
+        position: absolute;
+        right: -0.14rem;
+        top: -0.02rem;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+
+
+      .pre_times {
+        display: flex;
+        align-items: center;
+
+        .pre_time {
+          height: 0.48rem;
+          min-width: 0.48rem;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          justify-content: center;
+          color: #FFAF2A;
+          border: 1px solid #FFAF2A;
+          border-radius: 0.12rem;
+          font-size: 0.28rem;
+          font-weight: 600;
+          box-sizing: border-box;
+
+        }
+
+        span {
+          color: #FFAF2A;
+          margin: 0 0.1rem;
+          font-size: 0.28rem;
+        }
+      }
+
+      .status_ing {
+        height: 0.6rem;
+        border-radius: 0rem 0.32rem;
+        padding: 0 0.2rem;
+        background-color: #014CFA;
+        min-width: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.24rem;
+        color: #fff;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      .status_pre {
+        background-color: #FFAF2A;
+        color: #fff;
+      }
+
+      .status_done {
+        background-color: #7E99D6;
+        color: #fff;
+      }
+
+      .status_ed {
+        background-color: #18B762;
+        color: #fff;
+      }
+
+      .item_info {
+        border-radius: 0.32rem;
+        border: 1px solid #EFF3F8;
+        border-bottom: 0px;
+        background: #FFF;
+        position: relative;
+        left: -1px;
+        width: calc(100% + 2px);
+        box-sizing: border-box;
+        line-height: 0.3rem;
+
+        .info_cell {
+          display: flex;
+          justify-content: space-between;
+          padding: 0.24rem 0.32rem;
+        }
+
+        .info_cell+.info_cell {
+          border-top: 1px dashed #EFF3F8;
+        }
+
+        .info_name {
+          font-size: 0.28rem;
+          color: #8F92A1;
+        }
+
+        .info_date,
+        .info_price {
+          color: #061023;
+          font-size: 0.28rem;
+        }
+
+        .info_lever {
+          border-radius: 0.32rem;
+          height: 0.44rem;
+          line-height: 0.44rem;
+          color: #014CFA;
+          font-size: 0.28rem;
+          padding: 0 0.12rem;
+          background: rgba(1, 76, 250, 0.08);
+          margin-left: 0.12rem;
+        }
+      }
+
+
+      .control_box {
+        padding: 0.2rem 0.32rem;
+
+        .btn {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #014CFA;
+          height: 0.8rem;
+          border-radius: 0.5rem;
+          color: #fff;
+          font-size: 0.3rem;
+          font-weight: 600;
+        }
+
+
+      }
+    }
   }
 
 }

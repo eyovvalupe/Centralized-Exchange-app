@@ -1,5 +1,5 @@
 <template>
-<div class="form-item">
+<div class="form-item" :class="{'form-item--large':size == 'large'}">
     <div class="form-item-title" v-if="title">
         <span>{{title}}</span>
         <span class="form-item-title__right">
@@ -7,21 +7,32 @@
         </span>
     </div>
     <div class="form-item-box">
-        <div class="item" :class="{ 'item_focus': inputFocus && tip,'item_focus2':inputFocus && !tip }">
-            <span class="ipt_tip" v-if="tip" v-show="inputVal || inputFocus">{{tip}}</span>
+        <div class="item" :class="{'disabled_item':disabled, 'item_focus': inputFocus && tip,'item_focus2':inputFocus && !tip }" :style="{background}">
+            <span class="ipt_tip" v-if="tip" v-show="inputFocus">{{tip}}</span>
             
             <slot v-if="custom" />
-            <input v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @change="inputChange">
+            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @input="emit('update:modelValue',inputVal)" @change="inputChange" :placeholder="placeholder">
 
-            <template v-if="percentTags && percentTags.length">
-            <span class="percent_tag" v-for="(percent,i) in percentTags" :key="i" @click="percentTagClick(percent)"
-                v-show="inputVal" :style="{ visibility: inputFocus ? '' : 'hidden' }">{{ percent }}</span>
-            </template>
+            <span class="pwd_icon" v-if="inputType == 'password'">
+                <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword=true" alt="off" />
+                <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword=false" />
+            </span>
 
-            <span @click="emit('allBtnClick')"
-            v-if="showAllBtn"
-            class="put_all">全部</span>
-
+            <Transition name="opacity">
+            <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
+                <span class="percent_tag" v-for="(percent,i) in percentTags" :key="i" @click="percentTagClick(percent)">{{ percent.label }}</span>
+            </div>
+            </Transition>
+            
+            <span class="put_all put_all_place" v-if="showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'">{{ btnPlaceholder }}</span>
+            <span @click="emit('btnClick')"
+            v-if="showBtn && btnShowMode == 'focus'"
+            :style="{ opacity: inputFocus ? '1' : '0', visibility: inputFocus ? '' : 'hidden' }"
+            class="put_all">{{ btnText }}</span>
+            <span @click="emit('btnClick')"
+            v-else-if="showBtn"
+            class="put_all">{{ btnText }}</span>
+            
         </div>
     </div>
 </div>
@@ -29,22 +40,38 @@
 
 <script setup>
 import { watch } from "vue"
-
-const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','allBtnClick'])
+const showPassword = ref(false)
+const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','btnClick'])
 const props = defineProps({
     modelValue:{
         type:[String,Number],
         default:''
     },
+    size:{
+        type:String,
+        default:''
+    },
+    background:String,
     title:String,
     custom:Boolean,
+    btnPlaceholder:String,
+    placeholder:String,
     percentTags:{
         type:Array,
         default(){
             return []
         }
     },
-    showAllBtn:Boolean,
+    disabled:Boolean,
+    btnShowMode:{
+        type:String,
+        default:'always'
+    },
+    btnText:{
+        type:String,
+        default:"全部"
+    },
+    showBtn:Boolean,
     tip:String,
     inputType:{
         type:String,
@@ -72,11 +99,8 @@ const percentTagClick = (percent)=>{
 
 <style lang="less" scoped>
 .form-item-box {
-    display: flex;
-    align-items: stretch;
-
+    
     .item {
-        flex: 1;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -85,7 +109,7 @@ const percentTagClick = (percent)=>{
         border-radius: 0.32rem;
         border: 1px solid #d0d8e2;
         padding: 0 0.24rem;
-
+        transition: .3s;
         .ipt_tip {
             color: #b7b7b7;
             font-size: 0.24rem;
@@ -101,6 +125,7 @@ const percentTagClick = (percent)=>{
             padding: 0;
             position: relative;
             z-index: 1;
+            width: 100%;
         }
 
     }
@@ -132,6 +157,7 @@ const percentTagClick = (percent)=>{
         padding: 0 0.14rem;
         height: 0.4rem;
         line-height: 0.4rem;
+        display: block;
     }
     .put_all{
         color: #014CFA;
@@ -140,6 +166,18 @@ const percentTagClick = (percent)=>{
         font-size: 0.3rem;
         z-index:9;
         transition: all ease .3s
+    }
+    .put_all_place{
+        color:#061023;
+    }
+    .pwd_icon{
+        width: 0.4rem;
+        height: 0.4rem;
+        position: absolute;
+        right: 0.32rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9;
     }
 }
 
@@ -157,6 +195,14 @@ const percentTagClick = (percent)=>{
         text-align: right;
         font-size: 0.28rem;
         color:#666D80;
+    }
+}
+.form-item--large{
+    .item{
+        height: 1.12rem;
+    }
+    .item_focus{
+        height: 1.32rem;
     }
 }
 </style>

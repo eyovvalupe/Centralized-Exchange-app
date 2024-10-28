@@ -117,25 +117,41 @@
         <div class="btns"  v-if="currStock.status != 'done'">
         
             <div class="btn btn2" @click="emit('update',currStock)"
-                v-if="currStock.status != 'done'"
-                :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(currStock.status) }">
+                v-if="['none', 'lock', 'open'].includes(currStock.status)">
                 <div class="btn_icon">
                     <img src="/static/img/trade/update.png" alt="img">
                 </div>
                 <div>更新</div>
             </div>
+            <div class="btn btn2 disabled_btn" v-else>
+                <div class="btn_icon">
+                    <img src="/static/img/trade/update_disabled.png" alt="img">
+                </div>
+                <div>更新</div>
+            </div>
             <div class="btn btn3" @click="emit('sell',currStock)"
-               
-                :class="{ 'disabled_btn': !['none', 'lock', 'open'].includes(currStock.status) }">
+                v-if="['open'].includes(currStock.status)">
                 <div class="btn_icon">
                     <img src="/static/img/trade/close.png" alt="img">
                 </div>
                 <div>平仓</div>
             </div>
-            <div class="btn btn4" @click="emit('cancel',currStock)"
-                :class="{ 'disabled_btn': !['none'].includes(currStock.status) }">
+            <div class="btn btn3 disabled_btn" v-else>
+                <div class="btn_icon">
+                    <img src="/static/img/trade/close_disabled.png" alt="img">
+                </div>
+                <div>平仓</div>
+            </div>
+            <div class="btn btn4" @click="emit('cancel',currStock)" v-if="currStock.status == 'none'"
+            >
                 <div class="btn_icon">
                     <img src="/static/img/trade/cancel.png" alt="img">
+                </div>
+                <div>撤单</div>
+            </div>
+            <div class="btn btn4 disabled_btn" v-else>
+                <div class="btn_icon">
+                    <img src="/static/img/trade/cancel_disabled.png" alt="img">
                 </div>
                 <div>撤单</div>
             </div>
@@ -435,7 +451,8 @@ const copy = text => {
     }
 
     .disabled_btn {
-        opacity: 0.6;
+        background-color: #EFF3F8;
+        color:#D0D8E2;
     }
 }
 

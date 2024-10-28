@@ -1,17 +1,17 @@
 <!-- 合约 -->
 <template>
     <div class="stock_block">
-        <Tabs v-if="!pageLoading"  type="oval-card"  v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
-            shrink @change="onChange">
+        <Tabs v-if="!pageLoading" type="oval-card" v-model:active="active" :swipeable="false" animated
+            :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓" name="0">
                  <div class="stock_tab-body">
-                    <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
+                    <Opening @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
                  </div>
             </Tab>
             <Tab title="持仓" name="1">
-                 <div class="stock_tab-body">
+                <div class="stock_tab-body">
                     <Positions />
-                 </div>
+                </div>
             </Tab>
             <Tab title="查询" name="2">
                 <div class="stock_tab-body">
@@ -56,18 +56,26 @@ const choose = item => {
     active.value = 0
     OpeningRef.value && OpeningRef.value.choose(item)
 }
+const openSuccess = ()=>{
+    //开仓成功，切换到持仓
+    active.value = '1'
+}
 
-onMounted(() => {
+const handleMounted = () => {
     setTimeout(() => {
         pageLoading.value = false
         setTimeout(() => {
             onChange(active.value)
         }, 300)
     }, 300)
+}
+onMounted(() => {
+    handleMounted()
 })
 
 defineExpose({
-    choose
+    choose,
+    handleMounted
 })
 
 </script>
@@ -76,13 +84,15 @@ defineExpose({
 <style lang="less" scoped>
 .stock_block {
     position: relative;
-    padding:0.16rem 0 0.32rem 0;
-    :deep(.van-tabs__nav){
-        margin:0 0.32rem;
+    padding: 0.16rem 0 0.32rem 0;
+
+    :deep(.van-tabs__nav) {
+        margin: 0 0.32rem;
     }
-    .stock_tab-body{
-        padding:0 0.32rem;
+
+    .stock_tab-body {
+        padding: 0 0.32rem;
     }
-    
+
 }
 </style>

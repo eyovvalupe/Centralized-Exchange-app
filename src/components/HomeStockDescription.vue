@@ -12,7 +12,7 @@
         style="overflow-x: hidden;"
       >
         <span class="text-[0.24rem] text-[#061023]" style="max-width: 1.98rem;">{{
-          item["symbol"]
+          item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
         }}</span>
         <span class="stock_price">{{ item.amount }}</span>
         <div class="flex flex-row justify-center stock_detail">
@@ -29,6 +29,8 @@
 </template>
 
 <script setup>
+import { fixLittleNum } from '@/utils/fixLittleNum';
+
 const props = defineProps({
   region: {
     type: String,

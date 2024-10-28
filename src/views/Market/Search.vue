@@ -7,7 +7,6 @@
       <div class="icon">
         <!-- <img src="/static/img/common/search.png" alt="🔍" /> -->
         <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
-
       </div>
       <input
         ref="iptRef"
@@ -75,7 +74,7 @@
       >
         <div class="info">
           <div class="title flex items-center gap-1">
-            {{ item.symbol || "--" }}
+            {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
             <div
               :class="`${
                 marketStyle[item.type]
@@ -89,7 +88,7 @@
           <div class="text">超2万人搜索</div>
         </div>
         <div @click.stop="collect(item)">
-          <div :class="item.watchlist == 1 ? 'star': 'unstar'"></div>
+          <div :class="item.watchlist == 1 ? 'star' : 'unstar'"></div>
         </div>
       </div>
     </div>
@@ -113,7 +112,7 @@ import router from "@/router";
 import { _add, _del } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import eventBus from "@/utils/eventBus";
-import Iconfonts from '@/components/Iconfonts.vue'
+import Iconfonts from "@/components/Iconfonts.vue";
 
 const market = {
   stock: "股票",
@@ -205,24 +204,38 @@ onMounted(() => {
 
 // 查看详情
 const goItem = (item) => {
+  console.log(item);
   var prevList = [...marketSearchTextList.value];
   var flag = false;
   prevList.map((list) => {
     if (list.toUpperCase() == item.symbol.toUpperCase()) flag = true;
   });
-  var newList = flag ? prevList : [...prevList, item.symbol];
 
-  store.commit("setMarketSearchTextList", newList);
-  store.commit("setCurrStock", item);
-  setTimeout(() => {
+  if (item.type == "stock") {
+    var newList = flag ? prevList : [...prevList, item.symbol];
+    store.commit("setMarketSearchTextList", newList);
+    store.commit("setCurrStock", item);
+    setTimeout(() => {
+      router.push({
+        name: "market_info",
+        query: {
+          symbol: item.symbol,
+          type: "stock",
+        },
+      });
+    }, 100);
+  } else if (item.type == "crypto") {
+    var newList = flag ? prevList : [...prevList, item.name];
+    store.commit("setMarketSearchTextList", newList);
+    store.commit("setCurrConstract", item);
     router.push({
       name: "market_info",
       query: {
-        symbol: item.symbol,
-        type: "stock",
+        symbol: item.name,
+        type: "constract",
       },
     });
-  }, 100);
+  }
 };
 
 // 收藏

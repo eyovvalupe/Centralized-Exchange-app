@@ -1,7 +1,7 @@
 <!-- 充值记录-元素 -->
 <template>
     <div class="recgarge_item" @click="goInfo">
-        <div class="icon_box">
+        <div class="icon_box" v-if="item.currency">
             <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
         </div>
         <div class="content">

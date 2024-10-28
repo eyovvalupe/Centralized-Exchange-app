@@ -63,11 +63,11 @@ const clickLeft = () => {
   justify-content: center;
   padding: 0 0.8rem;
   color: var(--main-text-color);
-  font-size: 0.32rem;
+  font-size: 0.36rem;
   font-weight: 500;
   text-align: center;
   line-height: 1.05;
-  z-index: 9999;
+  z-index: 2000;
 
   .back {
     position: absolute;

@@ -1,11 +1,9 @@
 <!-- 添加加密货币 -->
 <template>
     <div class="page page_crypto">
-        <Top :title="'加密货币'" />
-
-        <div class="subtitle">加密货币</div>
+        <div class="subtitle">币种</div>
         <div class="item" @click="showCrypto = true">
-            <div class="iten_icon">
+            <div class="item_icon">
                 <img :src="`/static/img/crypto/${form.currency}.png`" alt="usdt">
             </div>
             <div class="ipt">{{ form.currency }}</div>
@@ -18,7 +16,7 @@
         </div>
         <div class="subtitle">地址</div>
         <div class="item">
-            <input type="text" v-model.trim="form.address" class="ipt" maxlength="50">
+            <input type="text" v-model.trim="form.address" class="ipt" maxlength="50" placeholder="请输入对应币种地址">
         </div>
 
         <div style="flex: 1;"></div>
@@ -162,7 +160,6 @@ getSessionToken()
 
 <style lang="less" scoped>
 .page_crypto {
-    padding: 1.4rem 0.32rem 1rem 0.32rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -173,25 +170,25 @@ getSessionToken()
         font-weight: 400;
         font-size: 0.28rem;
         line-height: 0.36rem;
-        color: #333333;
+        color: #061023;
         margin-bottom: 0.15rem;
     }
 
     .item {
         width: 100%;
-        height: 1.12rem;
-        border: 1px solid #D0D8E2;
+        height: 0.92rem;
+        border: 0.02rem solid #D0D8E2;
         border-radius: 0.32rem;
-        margin-bottom: 0.22rem;
+        margin-bottom: 0.4rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 0.44rem;
+        padding: 0 0.36rem;
 
         .ipt {
             flex: 1;
             height: 100%;
-            font-size: 0.24rem;
+            font-size: 0.28rem;
             text-align: left;
             outline: none;
             border: none;
@@ -203,16 +200,22 @@ getSessionToken()
             color: #061023;
         }
 
-        .iten_icon {
-            width: 0.45rem;
-            height: 0.45rem;
-            margin-right: 0.15rem;
+        .item_icon {
+            width: 0.48rem;
+            height: 0.48rem;
+            margin-right: 0.2rem;
         }
     }
 
     .submit {
-        height: 1.12rem;
+        margin-top: 0.4rem;
+        height: 1rem;
         width: 100%;
+
+        :deep(.van-button__text) {
+            font-size: 0.36rem;
+            line-height: 0.64rem;
+        }
     }
 
     .bottoms {

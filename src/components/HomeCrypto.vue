@@ -57,7 +57,7 @@
                 <div class="text-[0.3rem] font-bold">{{ list.price }}</div>
                 <div class="text-[0.3rem]">
                   {{
-                    ((list.ratio || 0) * 100).toFixed(2) > 0
+                    (list.ratio || 0) * 100 > 0
                       ? "+" + ((list.ratio || 0) * 100).toFixed(2)
                       : ((list.ratio || 0) * 100).toFixed(2)
                   }}%
@@ -100,6 +100,7 @@ import "vue3-carousel/dist/carousel.css";
 import SparkLine from "./SparkLine.vue";
 import router from "@/router";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 const recomendedCryptoList = computed(() =>
   store.state.marketContractRecommendList.length > 5
     ? store.state.marketContractRecommendList.slice(0, 5)

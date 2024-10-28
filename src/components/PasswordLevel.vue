@@ -71,7 +71,7 @@ const levels = computed(() => {
         margin-right: 0.16rem;
 
         .level {
-            width: 0.4rem;
+            width: 0.52rem;
             height: 0.06rem;
             background-color: #D9D9D9;
             margin-right: 0.08rem;

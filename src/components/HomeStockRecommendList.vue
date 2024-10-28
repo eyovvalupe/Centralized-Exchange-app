@@ -2,7 +2,7 @@
 <template>
   <div class="recommend_list relative">
     <Loading v-show="props.loading" />
-    <Carousel v-bind="config" v-model="currentSlide">
+    <Carousel v-bind="config" v-model="currentSlide" >
       <Slide v-for="slide in 2" :key="slide">
         <div class="carousel__item">
           <div
@@ -21,7 +21,7 @@
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2) > 0
+                  (totalList[slide * 2 - 1].ratio || 0) * 100 > 0
                     ? "+" + ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2)
                     : ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2)
                 }}%
@@ -62,9 +62,9 @@
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  ((totalList[slide * 2].ratio || 0) * 100).toFixed(2) > 0
-                    ? "+" + ((totalList[slide * 2].ratio || 0) * 100).toFixed(2)
-                    : ((totalList[slide * 2].ratio || 0) * 100).toFixed(2)
+                  fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2) > 0
+                    ? "+" + fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2)
+                    : fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2)
                 }}%
               </div>
             </div>
@@ -118,6 +118,7 @@ import eventBus from '@/utils/eventBus'
 import { Carousel, Slide } from "vue3-carousel";
 
 import "vue3-carousel/dist/carousel.css";
+import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const emits = defineEmits(["init", "addWatchList"]);
 const watchlist = computed(() => store.state.marketWatchList)
@@ -201,6 +202,7 @@ const goInfo = (item) => {
 const collectLoading = ref(false);
 
 const collect = (item) => {
+  collectLoading.value = false
   isInWatchList.value = false
   if (!token.value) {
     store.commit("setIsLoginOpen", true);
@@ -209,6 +211,7 @@ const collect = (item) => {
     });
   } else {
     if (collectLoading.value) return;
+    // alert('dffdf')
     collectLoading.value = true;
     showLoadingToast({
       duration: 0,

@@ -1,7 +1,8 @@
 <!-- 买币 -->
 <template>
   <div class="page-buycoin">
-    <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated color="#014CFA" shrink @change="e => onChange(e)">
+    <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated color="#014CFA" shrink
+      @change="e => onChange(e)">
       <Tab :title="$t('快捷区')" name="0">
         <Faster />
       </Tab>
@@ -28,7 +29,7 @@ export default { name: 'Buycoin' }
 <script setup>
 /* eslint-disable */
 import { Tab, Tabs } from 'vant'
-import { ref, onMounted, onUnmounted, computed, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, defineExpose } from 'vue'
 import { useSocket } from '@/utils/ws'
 import Faster from './Faster.vue'
 import List from './List.vue'
@@ -69,20 +70,30 @@ watch(
     }
   }
 )
-onMounted(() => {
+
+const handleMounted = () => {
+  console.error('onMounted')
   setTimeout(() => {
     pageLoading.value = false
   }, 300)
+}
+onMounted(() => {
+  handleMounted()
 })
 onUnmounted(() => {
   buycoinScrollTop1.value = null
   buycoinScrollTop2.value = null
+})
+
+defineExpose({
+  handleMounted
 })
 </script>
 
 <style lang="less" scoped>
 .page-buycoin {
   width: 7.5rem;
+
   .tabs {
     > :deep(.van-tabs__wrap) {
       box-sizing: unset;
@@ -95,24 +106,29 @@ onUnmounted(() => {
       left: 0;
       z-index: 999;
       margin: 0 0.32rem 0.2rem;
+
       .van-tabs__nav--complete {
         overflow: visible;
         padding: 0;
       }
-      > .van-tabs__nav {
+
+      >.van-tabs__nav {
         border-radius: 0.32rem;
         background: #eff3f8 !important;
         position: relative;
         display: flex;
         justify-content: space-between;
         background: initial;
+
         .van-tabs__line {
           display: none;
         }
+
         .van-tab {
           width: 33%;
           color: #666d80;
         }
+
         .van-tab--active {
           box-shadow: 0px -2px 5px 0px #014cfa1a;
           background: white;
@@ -121,6 +137,7 @@ onUnmounted(() => {
           height: 120%;
           transform: translateY(-10%);
           color: #014cfa;
+
           &:first-child {
             border-end-end-radius: 0;
           }
@@ -134,9 +151,11 @@ onUnmounted(() => {
             border-end-start-radius: 0;
           }
         }
+
         .van-tab__text {
           font-size: 0.32rem;
         }
+
         // &::after {
         //     content: '';
         //     width: 100%;
