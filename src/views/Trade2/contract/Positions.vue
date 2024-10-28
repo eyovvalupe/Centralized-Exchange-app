@@ -8,7 +8,7 @@
             <div class="td td-4">盈亏</div>
         </div>
         <NoData v-if="!contractPositionsList.length && !loading" />
-        
+
         <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
             <div class="td td-5">
                 <div class="name van-omit1">{{ item.name }}</div>
@@ -32,12 +32,13 @@
                     getRatio(item.ratio) }}</div>
             </div>
         </div>
-        
 
-       <!-- 订单详情 -->
+
+        <!-- 订单详情 -->
         <Popup v-model:show="showInfo" position="right" style="width:100%;height:100%;" teleport="body">
-            <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel" @back="showInfo=false" />
-            
+            <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
+                @back="showInfo = false" />
+
         </Popup>
 
         <!-- 平仓 -->
@@ -57,7 +58,7 @@
                             @click="onSliderChange(100)">全部</span>
                     </div>
                     <div style="height:0.47rem;"></div>
-                    
+
                     <!-- 拖动 -->
                     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
@@ -85,7 +86,8 @@
                     </FormItem>
                    
 
-                    <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"  color="#014CFA">
+                    <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary"
+                        size="large" color="#014CFA">
                         确定
                     </Button>
                 </div>
@@ -135,18 +137,15 @@
                             <div class="item">
                                 <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
                                     v-model="updateForm.stop_loss_price" type="number" class="ipt">
-                                <span class="num-tag"
-                                    @click="setPriceStop(20)" v-show="currStock.open_price"
+                                <span class="num-tag" @click="setPriceStop(20)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}20%</span>
-                                <span class="num-tag"
-                                    @click="setPriceStop(15)" v-show="currStock.open_price"
+                                <span class="num-tag" @click="setPriceStop(15)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}15%</span>
-                                <span class="num-tag"
-                                    @click="setPriceStop(10)" v-show="currStock.open_price"
+                                <span class="num-tag" @click="setPriceStop(10)" v-show="currStock.open_price"
                                     :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
                                         currStock.offset ==
                                             'long' ? '-' : '+' }}10%</span>
@@ -154,7 +153,7 @@
                             </div>
                         </div>
                     </div>
-                     <div class="subtitle">
+                    <div class="subtitle">
                         <span>增加保证金</span>
                         <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
                     </div>
@@ -167,14 +166,15 @@
                     </div>
                     <div style="height:0.47rem;"></div>
                     <!-- 拖动 -->
-                    <SlideContainer v-model="sliderValue"  @change="onSliderChange" />
+                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
                     <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">
                         <input v-model="updateForm.safeword" type="password" class="ipt">
                     </div> -->
 
-                    <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary" color="#014CFA">
+                    <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading"
+                        type="primary" color="#014CFA">
                         确定
                     </Button>
                 </div>
@@ -281,9 +281,10 @@ const subs = () => {
         socket && socket.off('futuresorder')
         socket && socket.emit('user', token.value)
         socket && socket.emit('futuresorder', '#all')
+        console.error('---订阅futuresorder')
         loading.value = true
         socket.on('futuresorder', res => {
-
+            console.error('?????', res)
             store.commit('setContractPositionsList', (res.data || []).map(item => {
                 if (!item.order_no && item.father_username) {
                     item.order_no = item.father_username
@@ -560,8 +561,8 @@ getSessionToken()
 
 <style lang="less" scoped>
 .positions {
-    padding:0 0 1.6rem 0;
-    
+    padding: 0 0 1.6rem 0;
+
     .tr {
         padding: 0.2rem;
         background-color: #F5F7FC;
@@ -570,7 +571,7 @@ getSessionToken()
         border-radius: 0.32rem;
         margin-top: 0.2rem;
     }
-   
+
 
     .th {
         color: #8F92A1;
@@ -578,9 +579,9 @@ getSessionToken()
         border-bottom: 1px solid #EFF3F8;
         padding: 0.48rem 0 0.24rem 0;
         background: none;
-        margin-top:0px;
+        margin-top: 0px;
         border-radius: 0px;
-        
+
     }
 
     .td {
@@ -605,7 +606,7 @@ getSessionToken()
         .lever {
             display: flex;
             align-items: center;
-            
+
         }
 
         .status {
@@ -613,14 +614,14 @@ getSessionToken()
             height: 0.3rem;
             padding: 0 0.08rem;
             border-radius: 0.3rem;
-            border:1px solid #014CFA;
+            border: 1px solid #014CFA;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.22rem;
             margin-right: 0.08rem;
         }
-        
+
 
         .status-open {
             color: #18B762;
@@ -628,15 +629,16 @@ getSessionToken()
         }
 
         .status-fail,
-        .status-lock{
-            color:#E8503A;
+        .status-lock {
+            color: #E8503A;
             border-color: #E8503A;
         }
-        .status-none{
-            color:#7E99D6;
-            border-color:#7E99D6;
+
+        .status-none {
+            color: #7E99D6;
+            border-color: #7E99D6;
         }
- 
+
 
         .state {
             width: 0.68rem;
@@ -648,7 +650,7 @@ getSessionToken()
             align-items: center;
             justify-content: center;
             font-size: 0.24rem;
-            margin:0 auto;
+            margin: 0 auto;
         }
 
         .state-short {
@@ -664,21 +666,24 @@ getSessionToken()
         .price {
             color: #666D80;
             font-size: 0.24rem;
-            
+
         }
-        .price:first-child{
-            color:#061023;
+
+        .price:first-child {
+            color: #061023;
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.36rem;
         }
+
         .num {
             color: #6C7B90;
             font-weight: 600;
             font-size: 0.24rem;
             text-align: right;
         }
-        .num:first-child{
+
+        .num:first-child {
             font-size: 0.28rem;
             line-height: 0.36rem;
         }
@@ -693,7 +698,7 @@ getSessionToken()
         flex: 4;
     }
 
-    
+
 }
 
 .order_sell_box {
@@ -714,14 +719,16 @@ getSessionToken()
             margin-bottom: 0.12rem;
             line-height: 0.42rem;
             align-items: center;
-            display:flex;
+            display: flex;
             justify-content: space-between;
         }
-        .subtitle-tip{
-            color:#666D80;
+
+        .subtitle-tip {
+            color: #666D80;
         }
-        .submit{
-            margin-top:0.6rem;
+
+        .submit {
+            margin-top: 0.6rem;
         }
 
         .item_box {
@@ -762,7 +769,7 @@ getSessionToken()
             }
         }
 
-    
+
         .tip {
             text-align: right;
             font-size: 0.24rem;
@@ -806,10 +813,11 @@ getSessionToken()
                 }
             }
         }
-        
+
     }
 }
-.num-tag{
+
+.num-tag {
     color: #2168F6;
     margin-left: 0.08rem;
     transition: all ease .3s;

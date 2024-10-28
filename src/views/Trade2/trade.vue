@@ -16,16 +16,16 @@
                 </div>
 
                 <div class="tab_body">
-                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="changeActiveTab(0,true)">
+                    <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="changeActiveTab(0, true)">
                         <span class="tab-name">股票</span>
                     </div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="changeActiveTab(1,true)">
+                    <div class="tab" :class="{ 'active_tab': activeTab == 1 }" @click="changeActiveTab(1, true)">
                         <span class="tab-name">合约</span>
                     </div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="changeActiveTab(2,true)">
+                    <div class="tab" :class="{ 'active_tab': activeTab == 2 }" @click="changeActiveTab(2, true)">
                         <span class="tab-name">交易机器人</span>
                     </div>
-                    <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="changeActiveTab(3,true)">
+                    <div class="tab" :class="{ 'active_tab': activeTab == 3 }" @click="changeActiveTab(3, true)">
                         <span class="tab-name">IPO</span>
                     </div>
                 </div>
@@ -34,29 +34,29 @@
         </div>
         <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
             <SwipeItem>
-                <div class="trade_body" v-if="loadedTab.indexOf(0) > -1">
+                <div class="trade_body" v-if="loadedTab.includes(0)">
                     <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" />
                 </div>
             </SwipeItem>
             <SwipeItem>
-                <div class="trade_body" v-if="loadedTab.indexOf(1) > -1">
+                <div class="trade_body" v-if="loadedTab.includes(1)">
                     <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" />
                 </div>
             </SwipeItem>
             <SwipeItem>
-                <div class="trade_body" v-if="loadedTab.indexOf(2) > -1">
-                    <AiBlock @showNavDialog="showNavDialogFunc" />
+                <div class="trade_body" v-if="loadedTab.includes(2)">
+                    <AiBlock @showNavDialog="showNavDialogFunc" ref="AiBlockRef" />
                 </div>
             </SwipeItem>
             <SwipeItem>
-                <div class="trade_body" v-if="loadedTab.indexOf(3) > -1">
-                    <IpoBlock />
+                <div class="trade_body" v-if="loadedTab.includes(3)">
+                    <IpoBlock ref="IpoBlockRef" />
                 </div>
             </SwipeItem>
-            
+
         </Swipe>
 
-        
+
 
 
         <!-- </PullRefresh> -->
@@ -65,7 +65,7 @@
         <!-- 自选列表 -->
         <Popup round v-model:show="showNavDialog" position="left" :style="{ width: '85%', height: '100%' }">
             <div class="trade_option_list">
-                 <!-- 搜索 -->
+                <!-- 搜索 -->
                 <div class="search_box_wrap">
                     <div class="item search_box">
                         <div class="search_icon">
@@ -77,38 +77,38 @@
                 </div>
                 <!-- 切换 -->
                 <Tabs @change="changeTab" class="van-tabs--sub" :lazy-render="false" v-model:active="navActiveTab"
-                     animated shrink>
+                    animated shrink>
                     <Tab :title="'自选'" name="option">
                         <OptionCategory class="option-category" />
                         <div class="lists" style="height:calc(100vh - 3.3rem);">
                             <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="optionLoading"
-                            :key="'option'" :list="watchList" />
+                                :key="'option'" :list="watchList" />
                         </div>
-                        
+
                     </Tab>
                     <Tab :title="'股票'" name="stock">
                         <div class="lists">
                             <!-- 搜索列表 -->
-                            <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
-                                :list="marketSearchList" />
+                            <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading"
+                                :key="'search'" :list="marketSearchList" />
                         </div>
                     </Tab>
                     <Tab :title="'合约'" name="contract">
                         <div class="lists">
-                            <StockTable :showSparkLine="false" :handleClick="handleClickContract" :loading="searchLoading" :key="'search'"
-                            :list="futuresSearchList" />
+                            <StockTable :showSparkLine="false" :handleClick="handleClickContract"
+                                :loading="searchLoading" :key="'search'" :list="futuresSearchList" />
                         </div>
                     </Tab>
                     <Tab :title="'交易机器人'" name="ai">
                         <div class="lists">
-                            <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
-                            :list="aiquantSearchList" />
+                            <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading"
+                                :key="'search'" :list="aiquantSearchList" />
                         </div>
                     </Tab>
                     <Tab :title="'外汇'" name="out">
                         <div class="lists">
-                            <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
-                            :list="forexSearchList" />
+                            <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading"
+                                :key="'search'" :list="forexSearchList" />
                         </div>
                     </Tab>
                 </Tabs>
@@ -139,7 +139,7 @@
 </template>
 
 <script setup>
-import { PullRefresh, Popup, Tabs, Tab,Swipe, SwipeItem } from "vant"
+import { PullRefresh, Popup, Tabs, Tab, Swipe, SwipeItem } from "vant"
 import { ref, watch, computed, onActivated, onDeactivated } from "vue"
 
 import IpoBlock from "./pages/IpoBlock.vue"
@@ -152,6 +152,9 @@ import { _search, _watchlist } from "@/api/api"
 import NoData from "@/components/NoData.vue"
 import { useRoute } from "vue-router"
 import OptionCategory from "@/components/OptionCategory.vue";
+
+const AiBlockRef = ref()
+const IpoBlockRef = ref()
 
 const route = useRoute()
 const openTab = ref(false)
@@ -166,10 +169,13 @@ const onRefresh = () => {
 
 // 一级导航
 const activeTab = ref(0)
-if(localStorage.tradeActiveTab > 0){
+if (localStorage.tradeActiveTab > 0) {
     activeTab.value = Number(localStorage.tradeActiveTab)
 }
 const reDir = () => {
+    if (route.query.to == 'stock') {
+        activeTab.value = 0
+    }
     if (route.query.to == 'constract') {
         activeTab.value = 1
     }
@@ -181,18 +187,35 @@ reDir()
 const initialSwipe = ref(activeTab.value)
 const loadedTab = ref([activeTab.value])
 const swipe = ref(null)
-const changeActiveTab = (val,slideSwipe=false)=>{
+const changeActiveTab = (val, slideSwipe = false) => {
     activeTab.value = val
-    if(loadedTab.value.indexOf(val) == -1){
+    if (loadedTab.value.indexOf(val) == -1) {
         loadedTab.value.push(val)
+    } else {
+        switch (val) {
+            case 0:
+                StockBlockRef.value.handleMounted()
+                break
+            case 1:
+                ContractBlockRef.value.handleMounted()
+                break
+            case 2:
+                AiBlockRef.value.handleMounted()
+                break
+            case 3:
+                // IpoBlockRef.value.handleMounted()
+                break
+        }
     }
     localStorage.tradeActiveTab = val
-    if(slideSwipe && swipe.value){
+    if (slideSwipe && swipe.value) {
         swipe.value.swipeTo(val)
     }
 }
-const swipeChange = (val)=>{
-   changeActiveTab(val)
+const swipeChange = (val) => {
+    if (activeTab.value !== val) {
+        changeActiveTab(val)
+    }
 }
 
 
@@ -220,14 +243,14 @@ const showNavDialogFunc = val => {
 }
 
 const marketType = computed(
-  () => store.getters.getMarketType
+    () => store.getters.getMarketType
 )
 const watchList = computed(() => {
     const marketWatchList = store.state.marketWatchList || []
-   
+
     const watchListResult = []
-    marketWatchList.map(item=>{
-        if((marketType.value == 'all' || item.type == marketType.value) && (!searchStr.value || (item.symbol && item.symbol.indexOf(searchStr.value) > -1))){
+    marketWatchList.map(item => {
+        if ((marketType.value == 'all' || item.type == marketType.value) && (!searchStr.value || (item.symbol && item.symbol.indexOf(searchStr.value) > -1))) {
             watchListResult.push(item)
         }
     })
@@ -411,7 +434,7 @@ onDeactivated(() => {
         position: relative;
     }
 
-    
+
     .trade_header {
         height: 1.12rem;
         padding: 0 0 0 0.24rem;
@@ -445,6 +468,7 @@ onDeactivated(() => {
                 cursor: pointer;
                 white-space: nowrap;
                 position: relative;
+
                 .mytab_title_icon {
                     width: 0.32rem;
                     height: 0.32rem;
@@ -457,19 +481,21 @@ onDeactivated(() => {
                     width: 0.32rem;
                     height: 0.32rem;
                 }
-                .tab-name{
+
+                .tab-name {
                     position: relative;
                     z-index: 1;
                     transition: .3s;
                 }
-                &::after{
+
+                &::after {
                     content: '';
                     width: 0.6rem;
                     height: 0.2rem;
                     background-color: #014CFA;
                     position: absolute;
                     bottom: 0;
-                    left:50%;
+                    left: 50%;
                     margin-left: -0.3rem;
                     border-radius: 0.6rem;
                     transition: .3s;
@@ -482,10 +508,12 @@ onDeactivated(() => {
                 color: #061023;
                 font-weight: 700;
                 opacity: 1;
-                .tab-name{
+
+                .tab-name {
                     font-size: 0.56rem;
                 }
-                &::after{
+
+                &::after {
                     opacity: 1;
                     transform: scale(1);
                 }
@@ -545,7 +573,7 @@ onDeactivated(() => {
             }
         }
 
-        
+
         .value {
             display: flex;
             align-items: center;
@@ -564,7 +592,7 @@ onDeactivated(() => {
         overflow-y: auto;
         height: calc(100vh - 2.52rem);
     }
-    
+
 
     .trade_option_list {
         height: 100%;
@@ -572,17 +600,19 @@ onDeactivated(() => {
         display: flex;
         flex-direction: column;
 
-        .van-tabs--sub :deep(.van-tabs__wrap){
+        .van-tabs--sub :deep(.van-tabs__wrap) {
             padding: 0 0.32rem;
         }
 
         .lists {
             overflow-y: auto;
-            height:calc(100vh - 2rem);
+            height: calc(100vh - 2rem);
         }
-        .search_box_wrap{
+
+        .search_box_wrap {
             padding: 0.24rem 0.32rem 0.28rem 0.32rem;
         }
+
         .search_box {
             height: 0.8rem;
             display: flex;
@@ -602,16 +632,19 @@ onDeactivated(() => {
                 height: 100%;
                 font-weight: 400;
             }
-            .ipt::placeholder{
-                color:#A4ACB9;
+
+            .ipt::placeholder {
+                color: #A4ACB9;
             }
         }
     }
-    .option-category{
+
+    .option-category {
         padding: 0.4rem 0.24rem 0.2rem 0.24rem;
         margin-bottom: 0px;
     }
 }
+
 .trade-popup_price {
     padding: 0 0.32rem 0.64rem 0.32rem;
 
