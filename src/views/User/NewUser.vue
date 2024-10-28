@@ -3,17 +3,26 @@
   <div class="page page_user">
     <!-- 标题 -->
     <!-- <div class="title">用户</div> -->
-    <div
-      class="user-login"
-    >
-      <div v-if="token" class="flex items-center -ml-[0.08rem] gap-[0.16rem] mb-[0.2rem]">
+    <div class="user-login">
+      <div
+        v-if="token"
+        class="flex items-center -ml-[0.08rem] gap-[0.16rem] mb-[0.2rem]"
+      >
         <div class="default-avatar"></div>
         <div>
-          <div class="text-[#061023] text-[0.32rem] mb-[0.1rem]" >{{ userInfo.username || "--" }}</div>
-          <div class="text-[#666D80] text-[0.28rem]" >ID:{{ userInfo.uid || "--" }}</div>
+          <div class="text-[#061023] text-[0.32rem] mb-[0.1rem]">
+            {{ userInfo.username || "--" }}
+          </div>
+          <div class="text-[#666D80] text-[0.28rem]">
+            ID:{{ userInfo.uid || "--" }}
+          </div>
         </div>
       </div>
-      <div v-else class="flex items-center -ml-[0.08rem] gap-[0.16rem] mb-[0.2rem]" @click="store.commit('setIsLoginOpen', true)">
+      <div
+        v-else
+        class="flex items-center -ml-[0.08rem] gap-[0.16rem] mb-[0.2rem]"
+        @click="store.commit('setIsLoginOpen', true)"
+      >
         <div class="default-avatar"></div>
         <div>登录/注册</div>
       </div>
@@ -28,36 +37,86 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center bg-[#F5F7FC] rounded-[0.32rem] w-full h-[1.22rem]">
+    <div
+      class="flex items-center bg-[#F5F7FC] rounded-[0.32rem] w-full h-[1.22rem] mb-[0.2rem]"
+    >
       <div class="w-1/3 text-center">
-        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">0</div>
+        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
+          0
+        </div>
         <div class="text-[0.24rem] text-[#8f92a1]">推荐用户</div>
       </div>
       <div class="w-1/3 text-center">
-        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">0</div>
+        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
+          0
+        </div>
         <div class="text-[0.24rem] text-[#8f92a1]">网络用户</div>
       </div>
       <div class="w-1/3 text-center">
-        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">0</div>
+        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
+          0
+        </div>
         <div class="text-[0.24rem] text-[#8f92a1]">推荐奖金</div>
       </div>
     </div>
-    <div
-      v-if="!token"
-      class="user-banner"
-      @click="jump('register', false, { guest: 1 })"
-    >
-      <img src="/static/img/user/bg.png" alt="banner" />
+    <div>
+      <!-- @click=" token ? jump('register', false, { guest: 1 }) : jump('kyc') -->
+      <Carousel
+        :autoplay="3000"
+        :wrap-around="true"
+        :mouseDrag="true"
+        v-model="currentSlide"
+        class="relative"
+      >
+        <Slide v-for="(slide, index) in slides" :key="index">
+          <img :src="slide" class="w-full rounded-[0.36rem]" alt="img" />
+          <div class="absolute left-0 ml-[0.32rem]">
+            <div class="text-white text-[0.3rem] font-bold mb-[0.2rem]">
+              领取投资模拟金
+            </div>
+            <div class="text-white text-[0.24rem]">模拟投资，收益在手</div>
+          </div>
+        </Slide>
+      </Carousel>
+      <div class="flex gap-[0.05rem] justify-center relative -mt-[0.2rem]">
+        <div
+          class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white"
+          :class="[currentSlide == 0 ? '' : 'opacity-50']"
+        ></div>
+        <div
+          class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white"
+          :class="[currentSlide == 1 ? '' : 'opacity-50']"
+        ></div>
+      </div>
     </div>
-    <div
-      v-else-if="userInfo.role == 'guest'"
-      class="user-banner"
-      @click="jump('kyc')"
-    >
-      <img src="/static/img/user/bg2.png" alt="banner" />
+    <div class="flex items-center w-full mb-[0.2rem] mt-[0.4rem] justify-between">
+      <div class="text-center flex flex-col items-center justify-center">
+        <div
+          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
+        >
+          <div class="idcard-icon"></div>
+      </div>
+        <div class="text-[#061023] text-[0.28rem]">收款账户</div>
+      </div>
+      <div class="text-center flex flex-col items-center justify-center">
+        <div
+          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
+        ></div>
+        <div class="text-[#061023] text-[0.28rem]">身份认证</div>
+      </div>
+      <div class="text-center flex flex-col items-center justify-center">
+        <div
+          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
+        ></div>
+        <div class="text-[#061023] text-[0.28rem]">谷歌验证器</div>
+      </div>
+      <div class="text-center flex flex-col items-center justify-center">
+        <div
+          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
+        ></div>
+        <div class="text-[#061023] text-[0.28rem]">推荐朋友</div>
+      </div>
     </div>
-    <div v-else style="height: 0.28rem" />
-
     <div class="user-comman">
       <div class="user-b-box" style="margin-right: 0.2rem">
         <div class="user-flex">
@@ -202,12 +261,14 @@ import router from "@/router";
 import store from "@/store";
 import storeChat from "@/store/chat";
 import { _logout } from "@/api/api";
-
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 const messageNum = computed(() => storeChat.state.messageNum);
 const token = computed(() => store.state.token);
 const userInfo = computed(() => store.state.userInfo || {});
 const i18Data = computed(() => store.state.i18Data || {});
-
+const slides = ["/static/img/user/userid.webp", "/static/img/user/userid.webp"];
+const currentSlide = ref(0);
 const getFirstCharacter = (username) => {
   return username ? username.charAt(0) : "-";
 };
@@ -329,48 +390,6 @@ if (token.value) {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-
-    img {
-      width: 0.96rem !important;
-      height: 0.96rem !important;
-      margin-right: 0.48rem;
-      vertical-align: middle;
-    }
-
-    span {
-      line-height: 1rem;
-      display: inline-block;
-      vertical-align: middle;
-      font-size: 0.36rem;
-      font-weight: 400;
-    }
-
-    .arrow-right {
-      margin-top: 0.04rem !important;
-      color: #797b81;
-    }
-
-    .user-login-block {
-      padding-top: 0.04rem;
-
-      span {
-        line-height: 0.6rem;
-        display: block;
-      }
-
-      .id {
-        color: #90939c;
-        font-weight: 400;
-        font-size: 0.28rem;
-        height: 0.44rem;
-        line-height: 0.44rem;
-        background-color: #e1e4ed;
-        padding: 0 0.1rem;
-        border-radius: 0.04rem;
-        display: inline-block;
-      }
-    }
   }
 
   .user-comman {
@@ -672,4 +691,5 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 </style>
