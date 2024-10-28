@@ -20,7 +20,7 @@
       <img
         class="check_img"
         :style="{ transform: `rotate(${slider * 3.6 - initialRotate}deg)` }"
-        :src="`/static/img/common/check${initialImg}.png`"
+        :src="`/static/img/common/check${initialImg}.webp`"
         alt="img"
       />
     </div>
@@ -68,7 +68,7 @@ const loading = ref(false);
 const emits = defineEmits(["success", "goBack"]);
 // 跳转多语言
 const goLang = () => {
-//   emits("closeDialog");
+  //   emits("closeDialog");
   router.push({ name: "language" });
 };
 
@@ -98,8 +98,8 @@ const changeSlider = (val) => {
     loadingType: "spinner",
   });
   if (
-    val * 3.6 >= initialRotate.value - 5 &&
-    val * 3.6 <= initialRotate.value + 5
+    val * 3.6 >= initialRotate.value - 10 &&
+    val * 3.6 <= initialRotate.value + 10
   ) {
     // 成功
     sliderStatus.value = "success";
@@ -155,7 +155,6 @@ onMounted(() => {
     align-items: center;
     top: 0;
     background-color: #fff;
-    margin-bottom: 0.2rem;
 
     .top_back_container {
       .arrow_icon {

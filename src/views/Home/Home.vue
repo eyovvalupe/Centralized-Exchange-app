@@ -317,9 +317,9 @@ const actions = [
   { name: "IPO", value: "1" },
 ];
 const slides = [
-  "static/img/home/back1.png",
-  "static/img/home/back2.png",
-  "static/img/home/back3.png",
+  "static/img/home/back1.webp",
+  "static/img/home/back2.webp",
+  "static/img/home/back3.webp",
 ];
 
 const onSelect = (item) => {

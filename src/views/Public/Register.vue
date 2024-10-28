@@ -2,7 +2,7 @@
 <template>
   <div class="page page-register">
     <!-- 图片验证 -->
-    <template v-if="step == 2">
+    <template v-if="step == 1">
       <ImgCheck @success="step = 2" @goBack="goBack" />
     </template>
 
@@ -13,8 +13,16 @@
           <Icon name="arrow-left" />
         </div>
 
-        <div class="language_icon_container" @click="goLang">
-          <div class="language_icon"></div>
+        <div class="flex flex-row">
+          <div class="server_icon" @click="goChat">
+            <div class="chat_icon">
+              <img src="/static/img/user/server.svg" />
+            </div>
+          </div>
+
+          <div class="language_icon_container" @click="goLang">
+            <div class="language_icon"></div>
+          </div>
         </div>
       </div>
 
@@ -204,7 +212,7 @@
       </div> -->
     </template>
 
-    <template v-else-if="step == 1">
+    <template v-else>
       <RegisterCodeCheck
         :type="activeTab == 0 ? 'email' : 'phone'"
         :value="activeTab == 0 ? form.email : form.phone"
@@ -332,7 +340,7 @@ store.commit("setUserInfo", {});
 const route = useRoute();
 const routerApi = useRouter();
 const forwardUrl = routerApi.options.history.state.forward;
-const step = ref(forwardUrl === "/chat" ? 2 : 1);
+const step = ref(1);
 
 const guest = ref(route.query.guest);
 const showPass = ref(false); // 密码显示
@@ -392,7 +400,6 @@ const submit = async () => {
     return showToast("请输入交易密码");
   }
   sessionStorage.setItem("registerForm", JSON.stringify(form.value));
-  console.log("session token =======> ", sessionToken.value);
   if (!sessionToken.value) {
     const rs = await store.dispatch("updateSessionToken");
     if (!rs) return showToast("网络异常，请重试");
@@ -409,7 +416,6 @@ const submit = async () => {
     verifcode: verifcode.value,
   })
     .then((res) => {
-      console.log(res.data)
       if (res.code == 200) {
         setTimeout(() => {
           store.dispatch("reset");
@@ -438,6 +444,8 @@ const submit = async () => {
         setTimeout(() => {
           verifCodeRef.value.open();
         }, 1000);
+      } else if (err.code == "400") {
+        if (err.message == "User already exist") showToast("此用户已注册");
       } else {
         showToast(err.message || "网络异常");
       }
@@ -527,7 +535,6 @@ const goChat = () => {
     align-items: center;
     top: 0;
     background-color: #fff;
-    margin-bottom: 0.2rem;
 
     .top_back_container {
       .arrow_icon {
@@ -535,6 +542,23 @@ const goChat = () => {
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
         background-color: #061023;
+      }
+    }
+
+    .server_icon {
+      width: 0.72rem;
+      height: 0.72rem;
+      border-width: 0.02rem;
+      border-radius: 0.36rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-color: #edf2f7;
+      margin-right: 0.12rem;
+
+      .chat_icon {
+        width: 0.432rem;
+        height: 0.432rem;
       }
     }
 

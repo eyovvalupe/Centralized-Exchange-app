@@ -8,8 +8,14 @@
         <Icon name="arrow-left" />
       </div>
 
-      <div class="language_icon_container" @click="goLang">
-        <div class="language_icon"></div>
+      <div class="flex flex-row">
+        <div class="server_icon" @click="goChat">
+          <div class="chat_icon"><img src="/static/img/user/server.svg" /></div>
+        </div>
+
+        <div class="language_icon_container" @click="goLang">
+          <div class="language_icon"></div>
+        </div>
       </div>
     </div>
     <div class="title">{{ titleMap[props.type] }}验证</div>
@@ -23,7 +29,9 @@
         <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400"
           >请输入6位数代码</span
         >
-        <div class="timer_container" @click="send">{{ s ? s + 's' : "再次发送" }}</div>
+        <div class="timer_container" @click="send">
+          {{ s ? s + "s" : "再次发送" }}
+        </div>
       </div>
     </div>
     <div class="ipt_box">
@@ -92,16 +100,17 @@ watch(val, (v) => {
     showKeyboard.value = false;
     finishIpt();
   }
-  for(let i = 0; i< 6 ;i++){
-      let inputStyle = document.getElementsByClassName('van-password-input__item')[i].style;
-      if(v.length != 6 && i<= v.length){
-        inputStyle.borderColor = "#014CFA";
-        inputStyle.color = "#014CFA";
-      }
-      else {
-        inputStyle.borderColor = "#D0D8E2";
-        inputStyle.color = "#666D80";
-      }     
+  for (let i = 0; i < 6; i++) {
+    let inputStyle = document.getElementsByClassName(
+      "van-password-input__item"
+    )[i].style;
+    if (v.length != 6 && i <= v.length) {
+      inputStyle.borderColor = "#014CFA";
+      inputStyle.color = "#014CFA";
+    } else {
+      inputStyle.borderColor = "#D0D8E2";
+      inputStyle.color = "#666D80";
+    }
   }
 });
 const finishIpt = () => {
@@ -132,9 +141,9 @@ const focus = () => {
 const close = () => {
   showConfirmDialog({
     title: "跳过验证将继续注册",
-    width: '6.23rem',
-    confirmButtonText: '确定',
-    confirmButtonColor: '#014cfa'
+    width: "6.23rem",
+    confirmButtonText: "确定",
+    confirmButtonColor: "#014cfa",
   })
     .then(() => {
       emit("success");
@@ -176,6 +185,10 @@ const goLang = () => {
   //   emits("closeDialog");
   router.push({ name: "language" });
 };
+
+const goChat = () => {
+  router.push({ name: "chat" });
+};
 </script>
 
 <style lang="less" scoped>
@@ -202,6 +215,23 @@ const goLang = () => {
       }
     }
 
+    .server_icon {
+      width: 0.72rem;
+      height: 0.72rem;
+      border-width: 0.02rem;
+      border-radius: 0.36rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-color: #edf2f7;
+      margin-right: 0.12rem;
+
+      .chat_icon {
+        width: 0.432rem;
+        height: 0.432rem;
+      }
+    }
+
     .language_icon_container {
       width: 0.72rem;
       height: 0.72rem;
@@ -222,90 +252,90 @@ const goLang = () => {
       }
     }
   }
+}
 
-  .jump {
-    display: flex;
-    justify-content: center;
-    color: #014cfa;
-    font-size: 0.32rem;
+.jump {
+  display: flex;
+  justify-content: center;
+  color: #014cfa;
+  font-size: 0.32rem;
+}
+
+.title {
+  padding: 0.48rem 0.32rem 0.32rem 0.32rem;
+  font-weight: 600;
+  color: #0d0d12;
+  font-size: 0.54rem;
+  line-height: 0.784rem;
+  width: 100%;
+  // padding: 2rem 0 0.4rem 0;
+}
+
+.info {
+  padding: 0 0.32rem;
+  line-height: 0.5rem;
+
+  span {
+    font-weight: bold;
   }
+}
 
-  .title {
-    padding: 0.48rem 0.32rem 0.32rem 0.32rem;
-    font-weight: 600;
-    color: #0d0d12;
-    font-size: 0.54rem;
-    line-height: 0.784rem;
-    width: 100%;
-    // padding: 2rem 0 0.4rem 0;
-  }
-
-  .info {
-    padding: 0 0.32rem;
-    line-height: 0.5rem;
-
-    span {
-      font-weight: bold;
+.ipt_box {
+  :deep(.van-password-input__item) {
+    border: 0.02rem solid #eceff3;
+    background-color: #fff;
+    width: 1rem;
+    height: 1.2rem;
+    box-sizing: border-box;
+    border-radius: 0.32rem;
+    &:has(.van-password-input__cursor) {
+      border: 0.02rem solid #014cfa;
     }
   }
+}
 
-  .ipt_box {
-    :deep(.van-password-input__item) {
-        border: 0.02rem solid #eceff3;
-      background-color: #fff;
-      width: 1rem;
-      height: 1.2rem;
-      box-sizing: border-box;
-      border-radius: 0.32rem;
-      &:has(.van-password-input__cursor) {
-        border: 0.02rem solid #014cfa;
-      }
-    }
-  }
-
-  .send {
-    color: #1a59f6;
-    text-align: center;
-    padding: 0.4rem 0;
-    cursor: pointer;
-  }
-  .button_container {
-    width: 6.86rem;
-    height: 1.12rem;
-    background-color: #014cfa;
-    border-radius: 1.3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 0.3rem;
-    color: white;
-    margin-bottom: 0.6rem;
-  }
-  .timer_container {
-    width: 1.56rem;
-    height: 0.6rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #d0d8e2;
-    border-radius: 1rem;
-    color: #014cfa;
-    font-size: 0.28rem;
-    line-height: 0.372rem;
-  }
+.send {
+  color: #1a59f6;
+  text-align: center;
+  padding: 0.4rem 0;
+  cursor: pointer;
+}
+.button_container {
+  width: 6.86rem;
+  height: 1.12rem;
+  background-color: #014cfa;
+  border-radius: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.3rem;
+  color: white;
+  margin-bottom: 0.6rem;
+}
+.timer_container {
+  width: 1.56rem;
+  height: 0.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d0d8e2;
+  border-radius: 1rem;
+  color: #014cfa;
+  font-size: 0.28rem;
+  line-height: 0.372rem;
 }
 </style>
 <style lang="css">
 .van-dialog {
-    padding-top: 0.96rem;
+  padding-top: 0.96rem;
 }
 .van-dialog__header {
-    padding: 0;
-    font-size: 0.32rem;
-    line-height: 0.44rem;
-    margin-bottom: 0.9rem;
+  padding: 0;
+  font-size: 0.32rem;
+  line-height: 0.44rem;
+  margin-bottom: 0.9rem;
 }
 .van-hairline--top {
-    padding: 0.36rem 0.36rem 0.18rem 0.36rem;
+  padding: 0.36rem 0.36rem 0.18rem 0.36rem;
 }
 </style>

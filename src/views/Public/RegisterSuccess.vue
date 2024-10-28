@@ -3,12 +3,18 @@
   <div class="page page_register_success">
     <!-- 返回和语言 -->
     <div class="top_icon_container">
-      <div class="close-svg-iconB text-[0.48rem]" @click="goBack">
-        <!-- <Icon name="arrow-left" /> -->
+      <div class="top_back_container text-[0.48rem]" @click="goBack">
+        <Icon name="arrow-left" />
       </div>
 
-      <div class="language_icon_container" @click="goLang">
-        <div class="language_icon"></div>
+      <div class="flex flex-row">
+        <div class="server_icon" @click="goChat">
+          <div class="chat_icon"><img src="/static/img/user/server.svg" /></div>
+        </div>
+
+        <div class="language_icon_container" @click="goLang">
+          <div class="language_icon"></div>
+        </div>
       </div>
     </div>
     <div class="icon">
@@ -66,6 +72,10 @@ const goLang = () => {
   //   emits("closeDialog");
   router.push({ name: "language" });
 };
+
+const goChat = () => {
+  router.push({ name: "chat" });
+};
 </script>
 
 <style lang="less" scoped>
@@ -93,6 +103,23 @@ const goLang = () => {
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
         background-color: #061023;
+      }
+    }
+
+    .server_icon {
+      width: 0.72rem;
+      height: 0.72rem;
+      border-width: 0.02rem;
+      border-radius: 0.36rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-color: #edf2f7;
+      margin-right: 0.12rem;
+
+      .chat_icon {
+        width: 0.432rem;
+        height: 0.432rem;
       }
     }
 
