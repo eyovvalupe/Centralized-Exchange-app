@@ -826,7 +826,7 @@ const submitForm = (s) => {
             form1.value.volume = ''
             sliderValue.value = 0
             setTimeout(()=>{
-                emit('success')
+                emits('success')
             },1500)
         }
     }).finally(() => {
