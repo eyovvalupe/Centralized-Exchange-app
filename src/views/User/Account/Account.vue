@@ -19,14 +19,17 @@ const route = useRoute();
 store.dispatch("updateAccountList");
 
 const userInfo = computed(() => store.state.userInfo || {});
+console.log('user info =============> ', userInfo.value)
 const accountList = computed(() => store.state.accountList || []); // 收款方式列表
+console.log('account list ============> ', accountList.value)
 const bankList = computed(() =>
   accountList.value.filter((item) => item.channel == "bank")
 ); // 银行卡
+console.log("bank list ==========> ", bankList.value)
 const cryptoList = computed(() =>
   accountList.value.filter((item) => item.channel == "crypto")
 ); // 加密货币
-
+console.log('crypto list =========> ', cryptoList.value)
 // tabs
 const active = ref(0);
 const changeTab = (key) => {
@@ -104,12 +107,12 @@ const goBack = () => {
 .page_account {
   display: flex;
   flex-direction: column;
+  padding: 0 0.32rem;
   height: 100%;
 
   .top_icon_container {
     width: 7.5rem;
     justify-content: space-between;
-    padding: 0 0.32rem;
     height: 1.12rem;
     display: flex;
     align-items: center;
@@ -148,7 +151,6 @@ const goBack = () => {
   }
 
   :deep(.van-tabs__wrap) {
-    padding: 0 0.32rem;
     height: 0.92rem;
   }
 
@@ -321,6 +323,18 @@ const goBack = () => {
         top: 0.24rem;
       }
     }
+  }
+
+  .add_btn {
+    width: 6.86rem;
+    height: 1.12rem;
+    background-color: #014cfa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1.6rem;
+    position: absolute;
+    bottom: 0.72rem;
   }
 }
 </style>
