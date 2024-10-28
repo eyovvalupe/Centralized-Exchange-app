@@ -113,7 +113,7 @@
             v-if="props.activeTab == 1"
          />
         
-        <!-- 股票 -->
+        <!-- 合约 -->
         <div class="subtitle">
             <span @click="showNavDialog">合约</span>
             <Loading v-show="searchLoading" type="spinner" style="width:0.28rem;height:0.28rem" color="#034cfa" />
@@ -123,19 +123,11 @@
         </div>
         <!-- 搜索 -->
         <div class="item_box" @click="openSearchDialog">
-            <div class="item" style="pointer-events: none;"
-                :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
-                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">合约代码</span>
-                <input disabled :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
-                    @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="blurSearch"
-                    v-model.trim="searchStr" @keyup="inputSearch" class="ipt" type="text">
-                <div class="base_ipt" v-show="currStock.symbol && searchFocus">{{ currStock.symbol }}
-                </div>
-
-                <div class="info" v-show="currStock.symbol && !searchFocus">
+            <div class="item">
+                <div class="info">
                     <div style="flex:1;">
-                        <div class="info-symbol">{{ currStock.symbol }}</div>
-                        <div class="info-name">{{ currStock.name }}</div>
+                        <div class="info-symbol" v-show="currStock.name">{{ currStock.name }}</div>
+                        
                     </div>
                     <div class="more_icon">
                         <img src="/static/img/trade/down.png" alt="↓">
@@ -146,10 +138,11 @@
 
         <!-- 数量 -->
         <div class="item_box">
-            <div class="item_box_left" @click="showTypeDialog = true">
+            <div class="item_box_left" @click="openTypeDialog">
                 <div class="subtitle"><span>保证金模式</span></div>
-                <div class="item" style="justify-content: center;">
-                    <span>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
+                <div class="item justify-between" :class="{disabled_item:!levers.length}">
+                    <span v-if="!levers.length">--</span>
+                    <span v-else>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
                     <div class="more_icon">
                         <img src="/static/img/trade/down.png" alt="↓">
                     </div>
@@ -158,8 +151,9 @@
 
             <div class="item_box_right">
                 <div class="subtitle">
-                    <span>数量</span>
-                     <span style="color:#666D80;">
+                    <span>张数</span>
+                    <span class="color-[#014CFA]" v-if="maxStockNum <= 0">账户余额不足</span>
+                    <span style="color:#666D80;">
                         ≤ {{ maxStockNum }}
                     </span>
                    
@@ -240,6 +234,13 @@
                 </div>
             </div>
 
+            <div class="item">
+                <div class="item_name">订单金额</div>
+                <div class="item_val">
+                    {{orderAmount}}
+                </div>
+            </div>
+
             <div class="money_box">
                 <div class="amount">支付 <strong>{{ payAmount }}</strong></div>
                 <div class="fee">保证金 <span>{{ payOrigin }}</span> + 手续费 <span>{{ payFee }}</span></div>
@@ -272,11 +273,12 @@
     </ActionSheet>
 
     <!-- 仓位模式选择 -->
-    <!-- <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
-        title="保证金模式">
-    </ActionSheet> -->
-    <Popup v-model:show="showTypeDialog" round position="bottom" teleport="body">
-        <Picker :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
+   
+    <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom" teleport="body">
+       
+        <div class="van-popup-custom-title">保证金模式</div>
+        <div class="van-popup-custom__top-rbtn" @click="showTypeDialog=false;">确认</div>
+        <Picker  :show-toolbar="false" :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
             @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
     </Popup>
 
@@ -292,7 +294,6 @@
 
     <!-- 开仓-安全密码弹窗 -->
     <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
-
 
     <!-- 搜索列表 -->
     <Popup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
@@ -345,30 +346,20 @@ const openSearchDialog = () => {
     showSearchDialog.value = true
     goDialogSearch(_market)
 }
-const handleClick = item => {
-    showSearchDialog.value = false
-    currStock.value = item
-    _basic({ symbol: currStock.value.symbol }).then(r => {
-        if (r && r.data && r.data.symbol) {
-            currStock.value = {
-                ...currStock.value,
-                ...r.data
-            }
-            sessionStorage.setItem('currConstract', JSON.stringify(currStock.value))
-        }
-    })
-}
+
 store.commit('setMarketSearch', {
     search: '',
     market: _market,
     list: []
 })
+let searchTimeout = null
+const searchLoading = ref(false)
+
 const goDialogSearch = (market) => {
     if (searchTimeout) clearTimeout(searchTimeout)
     searchLoading.value = true
     let s = searchDialogStr.value
     searchTimeout = setTimeout(() => {
-        
         _search({
             market: market || '',
             symbol: s,
@@ -390,10 +381,10 @@ const goDialogSearch = (market) => {
         }).finally(() => {
             searchLoading.value = false
         })
-    }, 500)
+    }, 100)
 }
 
-const emits = defineEmits(['showNavDialog'])
+const emits = defineEmits(['showNavDialog','success'])
 const showNavDialog = () => {
     emits('showNavDialog')
 }
@@ -600,8 +591,6 @@ const inputStop = key => { // 输入止盈止损
     }
 }
 
-
-
 const submit1 = () => {
     if (!currStock.value.symbol) return showToast('请输入合约代码')
     if (!form1.value.volume || form1.value.volume < min.value) return showToast(`最小交易量：${min.value}`)
@@ -617,6 +606,7 @@ const submit1 = () => {
             return showToast('请输入限价')
         }
     }
+    getSessionToken()
     // 打开确认弹窗
     params.value = {
         symbol: currStock.value.symbol,
@@ -665,8 +655,12 @@ const onSliderChange = (newValue) => {
         changePercent()
     }, 0)
 };
+
 const changePercent = () => {
-    if (maxStockNum.value == '--' || !form1.value.volume) return sliderValue.value = 0
+    if (maxStockNum.value == '--' || !form1.value.volume || form1.value.volume == 0){
+        form1.value.volume = ''
+        return sliderValue.value = 0
+    }
     let v = new Decimal(form1.value.volume)
     form1.value.volume = v.sub(v.mod(step.value))
     let p = new Decimal(form1.value.volume).div(maxStockNum.value).mul(100).toNumber()
@@ -683,80 +677,6 @@ const amountBlur = ()=>{
         }
     })
 }
-// 市价-搜索
-const searchLoading = ref(false)
-const searchFocus = ref(false)
-const searchStr = ref('')
-const blurSearch = () => {
-    searchFocus.value = false
-    if (!currStock.value.symbol && searchStr.value) { // 失去焦点时没有结果的情况
-        sureStock()
-    }
-}
-let searchTimeout = null
-const inputSearch = () => {
-    searchStr.value = searchStr.value.toUpperCase()
-    currStock.value = {}
-    if (searchTimeout) clearTimeout(searchTimeout)
-    searchTimeout = setTimeout(() => {
-        if (searchStr.value == '') {
-            currStock.value = {}
-            return
-        }
-        goSearch()
-    }, 600)
-}
-// 用详情接口来确认搜索到的股票
-const sureStock = () => {
-    searchLoading.value = true
-    _basic({ symbol: searchStr.value.toUpperCase() }).then(r => {
-        if (r && r.data && r.data.symbol) {
-            currStock.value = {
-                ...currStock.value,
-                ...r.data
-            }
-            sessionStorage.setItem('currConstract', JSON.stringify(currStock.value))
-        }
-    }).finally(() => {
-        searchLoading.value = false
-    })
-}
-const goSearch = () => {
-    searchLoading.value = true
-    const s = searchStr.value
-    _search({
-        symbol: s,
-        mode: 'right',
-        page: 1,
-        market: 'futures'
-    }).then(res => {
-        if (s != searchStr.value) return // 搜索内容已经变化就不处理了
-        if (!searchFocus.value) return // 失去焦点就不处理了
-        if (res && res.data && res.data[0]) {
-
-            currStock.value = res.data[0]
-            _basic({ symbol: currStock.value.symbol }).then(r => {
-                if (r && r.data && r.data.symbol) {
-                    currStock.value = {
-                        ...currStock.value,
-                        ...r.data
-                    }
-                    sessionStorage.setItem('currConstract', JSON.stringify(currStock.value))
-                }
-            })
-        } else {
-            currStock.value = {}
-        }
-    }).finally(() => {
-        searchLoading.value = false
-    })
-}
-// url参数处理
-if (route.query.symbol) {
-    searchStr.value = route.query.symbol
-    // activeType.value = route.query.type || 1
-    goSearch()
-}
 
 
 // 下单限制的参数
@@ -768,10 +688,12 @@ const interest = ref(0) // 持仓费
 const closingline = ref(100) // 强平线
 const amountper = ref(1) // 每张金额
 const configLoading = ref(false)
-const levers = ref([1]) // 杠杆
+const levers = ref([]) // 杠杆
+
+
 const getParam = () => {
+    levers.value = []
     configLoading.value = true
-    paramHandle()
     _futuresPara({
         symbol:currStock.value.symbol
     }).then(res => {
@@ -826,17 +748,40 @@ const initParam = ()=>{
         interest.value = 0 
         closingline.value = 100 
         amountper.value = 1 
-        levers.value = ref([1]) 
+        levers.value = []
     }
 }
 initParam()
 
-watch(currStock,()=>{
-   initParam()
-})
+const handleClick = item => {
+    showSearchDialog.value = false
+    currStock.value = item
+    initParam()
+    _basic({ symbol: currStock.value.symbol }).then(r => {
+        if (r && r.data && r.data.symbol) {
+            currStock.value = {
+                ...currStock.value,
+                ...r.data
+            }
+            sessionStorage.setItem('currConstract', JSON.stringify(currStock.value))
+        }
+    })
+}
 
 
+// url参数处理
+if (route.query.symbol) {
+    handleClick({
+        symbol:route.query.symbol
+    })
+}
 
+const openTypeDialog = ()=>{
+    if(!levers.value.length){
+        return
+    }
+    showTypeDialog.value = true
+}
 
 // 开仓
 const params = ref({})
@@ -845,9 +790,14 @@ const safePass = ref('')
 const payAmount = computed(() => { // 需要支付
     return new Decimal(payOrigin.value).add(payFee.value)
 })
+
+const orderAmount = computed(() => { // 订单金额
+    if (!params.value.volume || !amountper.value) return 0
+    return new Decimal(amountper.value).mul(params.value.volume)
+})
 const payOrigin = computed(() => { // 保证金
-    if (!params.value.volume || !currStock.value.price) return 0
-    return new Decimal(params.value.volume).mul(currStock.value.price).div(form1.value.lever)
+    if (!params.value.volume || !amountper.value || !params.value.lever) return 0
+    return new Decimal(params.value.volume).mul(amountper.value).div(form1.value.lever)
 })
 const payFee = computed(() => { // 手续费
     return new Decimal(payOrigin.value).mul(openFee.value)
@@ -875,6 +825,9 @@ const submitForm = (s) => {
             showToast('开仓成功')
             form1.value.volume = ''
             sliderValue.value = 0
+            setTimeout(()=>{
+                emit('success')
+            },1500)
         }
     }).finally(() => {
         getSessionToken()
@@ -906,23 +859,11 @@ const jump = (name) => {
     })
 }
 
-// 选择某个股票
-const choose = (item) => {
-    currStock.value = item
-    _basic({ symbol: item.symbol }).then(r => {
-        if (r && r.data && r.data.symbol) {
-            if (item.symbol == currStock.value.symbol) {
-                currStock.value = {
-                    ...currStock.value,
-                    ...r.data
-                }
-            }
-        }
-    })
-}
+
 
 defineExpose({
-    choose
+    // 选择某个股票
+    choose:handleClick
 })
 </script>
 

@@ -5,7 +5,7 @@
             shrink @change="onChange">
             <Tab title="开仓" name="0">
                  <div class="stock_tab-body">
-                    <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
+                    <Opening @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
                  </div>
             </Tab>
             <Tab title="持仓" name="1">
@@ -56,7 +56,10 @@ const choose = item => {
     active.value = 0
     OpeningRef.value && OpeningRef.value.choose(item)
 }
-
+const openSuccess = ()=>{
+    //开仓成功，切换到持仓
+    active.value = '1'
+}
 onMounted(() => {
     setTimeout(() => {
         pageLoading.value = false

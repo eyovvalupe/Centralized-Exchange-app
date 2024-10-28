@@ -274,7 +274,11 @@ const getOptionList = () => {
 const StockBlockRef = ref()
 const handleClick = (item) => {
     showNavDialog.value = false
-    StockBlockRef.value && StockBlockRef.value.choose(item)
+    if(item.type == 'crypto'){
+        ContractBlockRef.value && ContractBlockRef.value.choose(item)
+    }else{
+        StockBlockRef.value && StockBlockRef.value.choose(item)
+    }
 }
 
 // 选择合约
@@ -283,7 +287,6 @@ const handleClickContract = (item) => {
     showNavDialog.value = false
     ContractBlockRef.value && ContractBlockRef.value.choose(item)
 }
-
 
 const changeTab = val => {
     goSearch(val)
@@ -373,7 +376,6 @@ const goSearch = (market) => {
         })
     }, 500)
 }
-
 
 const pageActive = ref(true)
 onActivated(() => {
