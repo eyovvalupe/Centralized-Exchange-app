@@ -1,7 +1,7 @@
 <!-- 记录列表 -->
 <template>
     <div class="page page_record_list">
-        <Top :title="'资金记录'" />
+        <Top :title="$t('recordList.financialRecords')" />
          <!-- 兑换记录 -->
          <div ref="list_3" class="list active_list" v-if="active == 3">
             <NoData v-if="!loading && !list.length" />
@@ -16,7 +16,7 @@
         
         <Tabs type="oval-card" v-else v-model:active="active" :swipeable="false" animated 
             shrink @change="init()" >
-            <Tab title="充值记录" name="0">
+            <Tab :title="$t('recordList.rechargeRecord')" name="0">
                  <div>
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i" class="list_0_item">
@@ -32,7 +32,7 @@
                         v-if="((finish && list.length) || (!finish)) && active == 0" />
                  </div>
             </Tab>
-            <Tab title="提现记录" name="1">
+            <Tab :title="$t('recordList.withdrawalRecord')" name="1">
                  <div>
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i">
@@ -49,7 +49,7 @@
                         v-if="((finish && list.length) || (!finish)) && active == 1" />
                  </div>
             </Tab>
-            <Tab title="划转" name="2">
+            <Tab :title="$t('recordList.transfer')" name="2">
                 <div>
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i">

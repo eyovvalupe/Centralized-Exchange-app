@@ -48,5 +48,29 @@ export default {
     },
     transfer:{
         transferRecord:"transfer record"
+    },
+    recordList:{
+        financialRecords:"Financial records",
+        rechargeRecord:'Recharge',
+        withdrawalRecord:'Withdrawal',
+        transfer:'Transfer'
+    },
+    accountMap:{
+        cashAccount:"Cash account",
+        stockAccount:'Stock account',
+        contractAccount:'Contract account',
+        foreignExchangeAccount:'Foreign exchange account'
+    },
+    topUpStatusMap:{
+        review:'Under review',
+        success:'Successful',
+        fail:'Failed',
+        unknown:'Unknown'
+    },
+    withdrawStatusMap:{
+        review:'Under review',
+        success:'Successful',
+        fail:'Failed',
+        unknown:'Unknown'
     }
 }

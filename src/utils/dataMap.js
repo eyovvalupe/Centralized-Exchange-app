@@ -1,12 +1,14 @@
 // 一些公共的数据配置
 
+import i18n from '@/i18'
+const { t } = i18n.global
 
 // 账户类型
 export const _accountMap = {
-  "money": "现金账户",
-  "stock": "股票账户",
-  "futures": "合约账户",
-  "forex": "外汇账户",
+  "money": t('accountMap.cashAccount'),
+  "stock": t('accountMap.stockAccount'),
+  "futures": t('accountMap.contractAccount'),
+  "forex": t('accountMap.foreignExchangeAccount'),
 };
 export const _accountMapList = [
   { key: "money", value: "现金账户" },
@@ -24,16 +26,18 @@ export const _loanStatusMap = {
 
 // 提现状态
 export const _withdrawStatusMap = {
-  "review": "提现处理中",
-  "success": "提现成功",
-  "failed": "提现失败"
+  "review": t('topUpStatusMap.review'),
+  "success": t('topUpStatusMap.success'),
+  "failed": t('topUpStatusMap.failed'),
+  "unknown": t('topUpStatusMap.unknown')
 }
 
 // 提现状态
 export const _topUpStatusMap = {
-  "review": "审核中",
-  "success": "成功",
-  "failed": "失败"
+  "review": t('topUpStatusMap.review'),
+  "success": t('topUpStatusMap.success'),
+  "failed": t('topUpStatusMap.failed'),
+  "unknown": t('topUpStatusMap.unknown')
 }
 
 // 加密币种
