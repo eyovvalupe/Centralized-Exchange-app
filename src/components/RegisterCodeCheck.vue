@@ -141,6 +141,7 @@ const focus = () => {
 const close = () => {
   showConfirmDialog({
     title: "跳过验证将继续注册",
+    message: "",
     width: "6.23rem",
     confirmButtonText: "确定",
     confirmButtonColor: "#014cfa",
@@ -325,17 +326,4 @@ const goChat = () => {
   line-height: 0.372rem;
 }
 </style>
-<style lang="css">
-.van-dialog {
-  padding-top: 0.96rem;
-}
-.van-dialog__header {
-  padding: 0;
-  font-size: 0.32rem;
-  line-height: 0.44rem;
-  margin-bottom: 0.9rem;
-}
-.van-hairline--top {
-  padding: 0.36rem 0.36rem 0.18rem 0.36rem;
-}
-</style>
+

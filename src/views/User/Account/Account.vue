@@ -7,7 +7,6 @@
 
 <script setup>
 import { Tabs, Tab, Icon, ActionSheet, showConfirmDialog } from "vant";
-import Top from "@/components/Top.vue";
 import store from "@/store";
 import { computed, ref, onMounted } from "vue";
 import router from "@/router";
@@ -43,11 +42,20 @@ const actions = [
   { name: "加密货币", value: "crypto" },
 ];
 const goAddAccount = async () => {
-  // google检测
-  if (!userInfo.value.googlebind) {
+  //身份认证检测
+  if (userInfo.value.kyc12 != 2) {
     return showConfirmDialog({
-      title: "谷歌验证器",
-      message: "你还未绑定谷歌验证器，是否去绑定?",
+      title: "身份未认证",
+      message: "您的身份还未进行认证，请先认证再添加收款账户",
+      confirmButtonText: "去认证"
+    }).then(() => jump("kyc"))
+  }
+
+  // google检测
+  if (userInfo.value.kyc12 == 2 && !userInfo.value.googlebind) {
+    return showConfirmDialog({
+      title: "谷歌验证器未绑定",
+      message: "您的谷歌验证器还未绑定，请先绑定再添加收款账户",
     }).then(() => {
       jump("google");
     });
@@ -337,4 +345,35 @@ const goBack = () => {
     bottom: 0.72rem;
   }
 }
+</style>
+<style lang="css">
+.van-dialog {
+  padding-top: 0.8rem;
+}
+.van-dialog__header {
+  padding: 0;
+  font-size: 0.32rem;
+  line-height: 0.44rem;
+  margin-bottom: 0.2rem;
+}
+.van-dialog__message {
+  font-size: 0.28rem;
+  line-height: 0.44rem;
+  color: #333333;
+}
+.van-dialog__cancel {
+  .van-button__content {
+    font-size: 0.32rem;
+    line-height: 0.44rem;
+    color: #8f92a1;
+  }
+}
+.van-dialog__confirm {
+  .van-button__content {
+    font-size: 0.32rem;
+    line-height: 0.44rem;
+    color: #014cfa;
+  }
+}
+
 </style>

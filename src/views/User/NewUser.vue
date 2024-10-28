@@ -3,10 +3,10 @@
   <div class="page page_user">
     <!-- 标题 -->
     <!-- <div class="title">用户</div> -->
-    <div class="user-login">
+    <div class="flex items-center justify-between h-[0.98rem] mt-[0.28rem] mb-[0.2rem]">
       <div
         v-if="token"
-        class="flex items-center -ml-[0.08rem] gap-[0.16rem] mb-[0.2rem]"
+        class="flex items-center justify-center -ml-[0.08rem] gap-[0.16rem]"
       >
         <div class="default-avatar"></div>
         <div>
@@ -26,10 +26,15 @@
         <div class="default-avatar"></div>
         <div>登录/注册</div>
       </div>
-      <div class="flex items-center gap-[0.16rem]">
+      <div class="flex items-center justify-center gap-[0.16rem]">
         <div
+          @click="jump('chat', false)"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
-        ></div>
+        >
+          <div class="w-[0.4rem] h-[0.4rem]">
+            <img src="/static/img/user/serverB.svg" alt="server" />
+          </div>
+        </div>
         <div
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
         >
@@ -93,41 +98,65 @@
       class="flex items-center w-full mb-[0.4rem] mt-[0.56rem] justify-between"
     >
       <div
+        @click="jump('account', true)"
         class="text-center flex flex-col items-center justify-center relative"
       >
         <div
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
         ></div>
         <div
-          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.14rem]"
+          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]"
         >
           <img class="" src="/static/img/user/payment.svg" />
         </div>
         <div class="text-[#061023] text-[0.28rem]">收款账户</div>
       </div>
       <div
+        @click="jump('kyc', true)"
         class="text-center flex flex-col items-center justify-center relative"
       >
         <div
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
         ></div>
         <div
-          class="absolute w-[0.55rem] h-[0.55rem] opacity-100 top-0 mt-[0.14rem]"
+          class="absolute w-[0.55rem] h-[0.6rem] opacity-100 top-0 mt-[0.1rem]"
         >
           <img class="" src="/static/img/user/id_card.svg" />
+        </div>
+        <div
+          v-if="token"
+          class="absolute top-0 ml-[1rem] -mt-[0.03rem] text-white text-[0.22rem] w-[0.76rem] h-[0.32rem] rounded-[1.2rem] flex items-center justify-center"
+          :class="[
+            userInfo.kycl2 == 0
+              ? 'bg-[#E8503A]'
+              : `${userInfo.kycl2 == 1 ? 'bg-[#014CFA]' : 'bg-[#18B762]'}`,
+          ]"
+        >
+          <span v-if="userInfo.kycl2 == 0">未认证</span>
+          <span v-else-if="userInfo.kycl2 == 1">待审核</span>
+          <span v-else>已认证</span>
         </div>
         <div class="text-[#061023] text-[0.28rem]">身份认证</div>
       </div>
       <div
+        @click="jump('googleCode', true)"
         class="text-center flex flex-col items-center justify-center relative"
       >
         <div
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
         ></div>
         <div
-          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.14rem]"
+          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]"
         >
           <img class="" src="/static/img/user/google.svg" />
+        </div>
+        <div
+          v-if="token"
+          class="absolute top-0 ml-[1rem] -mt-[0.03rem] text-white text-[0.22rem] w-[0.76rem] h-[0.32rem] rounded-[1.2rem] flex items-center justify-center"
+          :class="[userInfo.googlebind == 0 ? 'bg-[#E8503A]' : 'bg-[#18B762]']"
+        >
+          <span v-if="userInfo.googlebind == 0">未认证</span>
+          <span v-else>已绑定</span>
         </div>
         <div class="text-[#061023] text-[0.28rem]">谷歌验证器</div>
       </div>
@@ -138,101 +167,17 @@
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
         ></div>
         <div
-          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.14rem]"
+          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]"
         >
           <img class="" src="/static/img/user/friend.svg" />
         </div>
         <div class="text-[#061023] text-[0.28rem]">推荐朋友</div>
       </div>
     </div>
-   <!-- ///////////////////////////////////////////////////// -->
-    <!-- <div class="user-comman">
-      <div class="user-b-box" style="margin-right: 0.2rem">
-        <div class="user-flex">
-          <img src="/static/img/user/user.svg" alt="" />
-          <Icon name="arrow" class="arrow-right" />
-        </div>
-        <div class="user-sub">推荐朋友</div>
-        <div class="user-small-title">分享给好友</div>
-      </div>
-
-      <div class="user-b-box" @click="jump('chat', false)">
-        <div class="user-flex">
-          <img src="/static/img/user/server.png" alt="" />
-
-          <div style="display: flex">
-            <div v-if="messageNum > 0" class="nums">{{ messageNum }}</div>
-            <Icon name="arrow" class="arrow-right" />
-          </div>
-        </div>
-        <div class="user-sub">客服</div>
-        <div class="user-small-title">联系客服</div>
-      </div>
-    </div>
-
-    <div class="user-h-box" @click="jump('account', true)">
-      <div class="">
-        <div class="user-flex">
-          <img src="/static/img/user/account.png" alt="" />
-          <Icon name="arrow" class="arrow-right" />
-        </div>
-        <div class="user-sub">收款账户</div>
-        <div class="user-small-title">收款银行卡添加</div>
-      </div>
-    </div>
-
-    <div class="user-comman">
-      <div
-        class="user-b-box"
-        style="margin-right: 0.2rem"
-        @click="jump('kyc', true)"
-      >
-        <div class="user-flex">
-          <img src="/static/img/user/iden.png" alt="" />
-          <div style="display: flex">
-            <span v-if="token">
-              <span
-                v-if="userInfo.kycl2 != 1 && userInfo.kycl2 != 2"
-                class="red-text"
-                >未认证</span
-              >
-              <span v-else class="red-text" style="color: #18b762">已认证</span>
-            </span>
-            <Icon name="arrow" class="arrow-right" />
-          </div>
-        </div>
-        <div class="user-sub">身份认证</div>
-        <div class="user-small-title">进行身份认证</div>
-      </div>
-
-      <div class="user-b-box" @click="jump('googleCode', true)">
-        <div class="user-flex">
-          <img src="/static/img/user/Google-lock.png" alt="" />
-          <div style="display: flex">
-            <span v-if="token && !userInfo.googlebind" class="red-text"
-              >谷歌验证器未绑定</span
-            >
-            <span
-              v-if="token && userInfo.googlebind"
-              class="red-text"
-              style="color: #18b762"
-              >谷歌验证器已绑定</span
-            >
-            <Icon name="arrow" class="arrow-right" />
-          </div>
-        </div>
-        <div class="user-sub">谷歌验证器</div>
-        <div class="user-small-title">谷歌验证器安全认证</div>
-      </div>
-    </div> -->
-   <!-- ///////////////////////////////////////////////////// -->
 
     <div class="navs">
-      <div
-        class="nav"
-        @click="jump('language')"
-      >
-          <div class="language-icon mr-[0.16rem]"></div>
+      <div class="nav" @click="jump('language')">
+        <div class="language-icon mr-[0.16rem]"></div>
         <div class="content">
           <div class="title">语言</div>
         </div>
@@ -244,10 +189,7 @@
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
-      <div
-        class="nav"
-        @click="jump('safety', true)"
-      >
+      <div class="nav" @click="jump('safety', true)">
         <div class="verify-icon mr-[0.16rem]"></div>
         <div class="content">
           <div class="title">安全</div>
@@ -263,8 +205,7 @@
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
       <div class="nav" @click="jump('about')">
-        <div class="info-icon mr-[0.16rem]">
-        </div>
+        <div class="info-icon mr-[0.16rem]"></div>
         <div class="content">
           <div class="title">关于</div>
         </div>
@@ -385,219 +326,16 @@ if (token.value) {
     line-height: 1.12rem;
   }
 
-  .user-header {
-    display: flex;
-    justify-content: right;
-    margin-bottom: 0.4rem;
-
-    div {
-      font-size: 0.4rem;
-    }
-  }
-
-  .user-banner {
-    position: relative;
-    margin-bottom: 0.1rem;
-
-    .banner-title {
-      position: absolute;
-      left: 0.2rem;
-      top: 0.48rem;
-      font-size: 0.28rem;
-      font-weight: 700;
-    }
-  }
-
-  .user-login {
-    margin-top: 0.28rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .user-comman {
-    display: flex;
-    margin-bottom: 0.28rem;
-    position: relative;
-    overflow: hidden;
-
-    .user-b-box {
-      flex: 1;
-      background-color: #f2f3f8;
-      padding: 0.2rem 0.3rem;
-      border-radius: 0.2rem;
-    }
-
-    .user-flex {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.2rem;
-
-      img {
-        width: 0.4rem !important;
-      }
-
-      .arrow-right {
-        color: #797b81;
-        margin-left: 0.24rem;
-        margin-top: 0.02rem;
-      }
-
-      .nums {
-        width: 0.32rem;
-        height: 0.32rem;
-        background-color: #ff3b30;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.2rem;
-        color: #fff;
-        font-weight: 400;
-      }
-    }
-
-    .user-sub {
-      font-size: 0.28rem;
-      font-weight: 600;
-      line-height: 0.48rem;
-    }
-
-    .user-small-title {
-      font-size: 0.24rem;
-      line-height: 0.32rem;
-      color: #4f5156;
-    }
-  }
-
-  .user-h-box {
-    background-color: #f2f3f8;
-    padding: 0.2rem 0.3rem;
-    border-radius: 0.2rem;
-    margin-bottom: 0.28rem;
-    position: relative;
-    overflow: hidden;
-
-    .user-flex {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.1rem;
-
-      img {
-        width: 0.48rem !important;
-      }
-
-      .arrow-right {
-        margin-top: 0.08rem;
-        color: #797b81;
-      }
-    }
-
-    .user-sub {
-      font-size: 0.28rem;
-      font-weight: 600;
-      line-height: 0.48rem;
-    }
-
-    .user-small-title {
-      font-size: 0.24rem;
-      line-height: 0.32rem;
-      color: #4f5156;
-    }
-  }
-
-  .user-bottom {
-    margin-top: 0.4rem;
-
-    .user-flex {
-      border-bottom: 0.02rem solid #f4f4f4;
-      display: flex;
-      justify-content: space-between;
-      padding: 0.2rem 0;
-
-      .user-item {
-        img {
-          width: 0.4rem !important;
-          vertical-align: middle;
-          margin-right: 0.2rem;
-        }
-
-        span {
-          vertical-align: middle;
-        }
-      }
-
-      .arrow-right {
-        margin-top: 0.08rem;
-        color: #797b81;
-      }
-    }
-  }
-
-  .user-login-login-box {
-    background-color: #f2f3f8;
-    padding: 0.2rem 0.3rem;
-    border-radius: 0.2rem;
-  }
-
-  .user-login-login {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.2rem;
-
-    .arrow-right {
-      margin-top: 0.08rem;
-      color: #797b81;
-    }
-
-    .login-user-box {
-      width: 1rem;
-      height: 1rem;
-      border-radius: 0.2rem;
-      background-color: #667d7f;
-      color: white;
-      line-height: 0.88rem;
-      text-align: center;
-      margin-right: 0.4rem;
-      font-size: 0.6rem;
-      font-weight: 900;
-    }
-
-    span {
-      font-size: 0.36rem;
-      font-weight: 700;
-      line-height: 0.6rem;
-    }
-  }
 
   .loginout {
     width: 100%;
     height: 1.04rem;
     border-radius: 0.32rem;
-    background-color: #F5F7FC;
+    background-color: #f5f7fc;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666D80;
-  }
-
-  .user-fllower {
-    display: flex;
-
-    .user-fllower-flex {
-      flex: 1;
-
-      .user-fllower-num {
-        font-size: 0.28rem;
-        font-weight: 600;
-        margin-bottom: 0.06rem;
-      }
-
-      .user-fllower-title {
-        font-size: 0.24rem;
-        color: #767880;
-      }
-    }
+    color: #666d80;
   }
 
   .navs {
@@ -609,7 +347,7 @@ if (token.value) {
       color: #061023;
       font-size: 0.3rem;
       overflow: hidden;
-      background-color: #F5F7FC;
+      background-color: #f5f7fc;
       border-radius: 0.32rem;
       padding-inline: 0.32rem;
       margin-bottom: 0.2rem;
@@ -648,7 +386,7 @@ if (token.value) {
 
       .nav_more {
         margin-left: 0.12rem;
-        color: #666D80;
+        color: #666d80;
         font-size: 0.32rem;
       }
 
@@ -678,14 +416,6 @@ if (token.value) {
         }
       }
     }
-  }
-
-  .red-text {
-    color: #ff3b30;
-    font-size: 0.2rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 0.32rem;
   }
 }
 .default-avatar {
