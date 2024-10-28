@@ -89,35 +89,64 @@
         ></div>
       </div>
     </div>
-    <div class="flex items-center w-full mb-[0.2rem] mt-[0.4rem] justify-between">
-      <div class="text-center flex flex-col items-center justify-center">
+    <div
+      class="flex items-center w-full mb-[0.32rem] mt-[0.52rem] justify-between"
+    >
+      <div
+        class="text-center flex flex-col items-center justify-center relative"
+      >
         <div
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
+        ></div>
+        <div
+          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.14rem]"
         >
-          <div class="idcard-icon"></div>
-      </div>
+          <img class="" src="/static/img/user/payment.svg" />
+        </div>
         <div class="text-[#061023] text-[0.28rem]">收款账户</div>
       </div>
-      <div class="text-center flex flex-col items-center justify-center">
+      <div
+        class="text-center flex flex-col items-center justify-center relative"
+      >
         <div
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
         ></div>
+        <div
+          class="absolute w-[0.55rem] h-[0.55rem] opacity-100 top-0 mt-[0.14rem]"
+        >
+          <img class="" src="/static/img/user/id_card.svg" />
+        </div>
         <div class="text-[#061023] text-[0.28rem]">身份认证</div>
       </div>
-      <div class="text-center flex flex-col items-center justify-center">
+      <div
+        class="text-center flex flex-col items-center justify-center relative"
+      >
         <div
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
         ></div>
+        <div
+          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.14rem]"
+        >
+          <img class="" src="/static/img/user/google.svg" />
+        </div>
         <div class="text-[#061023] text-[0.28rem]">谷歌验证器</div>
       </div>
-      <div class="text-center flex flex-col items-center justify-center">
+      <div
+        class="text-center flex flex-col items-center justify-center relative"
+      >
         <div
           class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
         ></div>
+        <div
+          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.14rem]"
+        >
+          <img class="" src="/static/img/user/friend.svg" />
+        </div>
         <div class="text-[#061023] text-[0.28rem]">推荐朋友</div>
       </div>
     </div>
-    <div class="user-comman">
+   <!-- ///////////////////////////////////////////////////// -->
+    <!-- <div class="user-comman">
       <div class="user-b-box" style="margin-right: 0.2rem">
         <div class="user-flex">
           <img src="/static/img/user/user.svg" alt="" />
@@ -195,7 +224,8 @@
         <div class="user-sub">谷歌验证器</div>
         <div class="user-small-title">谷歌验证器安全认证</div>
       </div>
-    </div>
+    </div> -->
+   <!-- ///////////////////////////////////////////////////// -->
 
     <div class="navs">
       <div
@@ -691,5 +721,11 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
-
+.payment-icon {
+  width: 24px;
+  height: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_481_5165)"><path d="M2.1445 1.27734H21.445C22.0138 1.27734 22.5592 1.50328 22.9614 1.90545C23.3636 2.30763 23.5895 2.85309 23.5895 3.42185V7.71085H0V3.42185C0 2.85309 0.225938 2.30763 0.62811 1.90545C1.03028 1.50328 1.57575 1.27734 2.1445 1.27734ZM0 9.85535H23.5895V20.5779C23.5895 21.1466 23.3636 21.6921 22.9614 22.0943C22.5592 22.4964 22.0138 22.7224 21.445 22.7224H2.1445C1.57575 22.7224 1.03028 22.4964 0.62811 22.0943C0.225938 21.6921 0 21.1466 0 20.5779L0 9.85535ZM13.5816 17.7188V19.8633H15.7261V17.7188H13.5816ZM16.4415 17.7188V19.8633H18.586V17.7188H16.4415ZM19.3005 17.7188V19.8633H21.445V17.7188H19.3005Z" fill="url(#paint0_linear_481_5165)"/><mask id="mask0_481_5165" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="1" width="24" height="22"><path d="M2.1445 1.27734H21.445C22.0138 1.27734 22.5592 1.50328 22.9614 1.90545C23.3636 2.30763 23.5895 2.85309 23.5895 3.42185V7.71085H0V3.42185C0 2.85309 0.225938 2.30763 0.62811 1.90545C1.03028 1.50328 1.57575 1.27734 2.1445 1.27734ZM0 9.85535H23.5895V20.5779C23.5895 21.1466 23.3636 21.6921 22.9614 22.0943C22.5592 22.4964 22.0138 22.7224 21.445 22.7224H2.1445C1.57575 22.7224 1.03028 22.4964 0.62811 22.0943C0.225938 21.6921 0 21.1466 0 20.5779L0 9.85535ZM13.5816 17.7188V19.8633H15.7261V17.7188H13.5816ZM16.4415 17.7188V19.8633H18.586V17.7188H16.4415ZM19.3005 17.7188V19.8633H21.445V17.7188H19.3005Z" fill="#014CFA"/></mask><g mask="url(#mask0_481_5165)"><rect x="12.79" y="-17" width="16" height="42" transform="rotate(37.8828 12.79 -17)" fill="white" fill-opacity="0.1"/></g></g><defs><linearGradient id="paint0_linear_481_5165" x1="11.9667" y1="1.98046" x2="10.1825" y2="22.5737" gradientUnits="userSpaceOnUse"><stop stop-color="%236794FB"/><stop offset="1" stop-color="%23014CFA"/></linearGradient><clipPath id="clip0_481_5165"><rect width="24" height="24" fill="white"/></clipPath></defs></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 </style>

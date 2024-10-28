@@ -115,6 +115,7 @@ const goBack = () => {
     align-items: center;
     top: 0;
     background-color: #fff;
+    margin-bottom: 0.2rem;
 
     .top_back_container {
       .arrow_icon {
@@ -180,6 +181,22 @@ const goBack = () => {
       font-size: 0.32rem;
       line-height: 0.5rem;
       color: white;
+    }
+  }
+
+  :deep(.van-tabs__content--animated) {
+    .tab_data {
+      display: flex;
+      justify-content: center;
+
+      .no_data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 1.932rem;
+        height: 1.934rem;
+        margin-top: 1rem;
+      }
     }
   }
 
