@@ -102,10 +102,10 @@ instance.interceptors.response.use(
           store.dispatch('updateSessionToken')
           break
         case '500':
-          newShowToast('服务器遇到了意外情况，无法完成您的请求。请稍后再试，或联系技术支持。')
+          // newShowToast('服务器遇到了意外情况，无法完成您的请求。请稍后再试，或联系技术支持。')
           break
         case '510':
-          newShowToast('请求参数有误。请检查您的输入并确保所有必填项都已填写。')
+          // newShowToast('请求参数有误。请检查您的输入并确保所有必填项都已填写。')
           break
         case '1001':
           newShowToast('图片验证码输入错误。请重新输入正确的验证码。')
@@ -133,7 +133,7 @@ instance.interceptors.response.use(
       if (error.config._retryTimes > 3) return Promise.reject(error) // 重试3次
       try {
         error.config.data = JSON.parse(error.config.data)
-      } catch {}
+      } catch { }
       return instance(error.config)
     }
     showToast(error.message || '网络异常,请重试')
