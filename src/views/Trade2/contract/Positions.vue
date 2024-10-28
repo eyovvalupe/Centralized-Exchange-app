@@ -2,16 +2,16 @@
 <template>
     <div v-if="token" class="positions">
         <div class="tr th">
-            <div class="td td-5">合约/状态</div>
+            <div class="td td-5">合约</div>
             <div class="td td-4">开仓/可售</div>
-            <div class="td td-4">现价/成本</div>
-            <div class="td td-4">盈亏/盈亏比</div>
+            <div class="td td-4">现价/买价</div>
+            <div class="td td-4">盈亏</div>
         </div>
         <NoData v-if="!contractPositionsList.length && !loading" />
 
         <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
             <div class="td td-5">
-                <div class="name van-omit1">{{ item.symbol }}</div>
+                <div class="name van-omit1">{{ item.name }}</div>
                 <div class="lever">
                     <div class="status">{{ item.lever }}X</div>
                     <div class="status" :class="'status-' + item.status">{{ statusMap[item.status] || '--' }}</div>
@@ -82,10 +82,9 @@
                         </div>
                     </div> -->
 
-                    <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
-                    <div class="item">
-                        <input v-model="sellForm.safeword" type="password" class="ipt">
-                    </div> -->
+                    <FormItem v-model="sellForm.safeword" size="large" input-type="password" title="交易密码">
+                    </FormItem>
+                   
 
                     <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary"
                         size="large" color="#014CFA">
@@ -214,7 +213,7 @@ import UnLogin from "@/components/UnLogin.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
 import OrderInfo from '../components/OrderInfo.vue'
-
+import FormItem from '@/components/Form/FormItem.vue'
 const loginfinish = () => {
 
 }
@@ -226,7 +225,7 @@ const token = computed(() => store.state.token)
 const contractPositionsList = computed(() => store.state.contractPositionsList)
 const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 合约账户余额
-    const target = elseWallet.value.find(item => item.account == 'stock')
+    const target = elseWallet.value.find(item => item.account == 'futures')
     if (target) return target.amount
     return 0
 })
@@ -321,7 +320,6 @@ const getRatio = (num) => {
 }
 
 
-
 // 详情
 const showInfo = ref(false)
 const currStock = ref({})
@@ -351,9 +349,10 @@ const sellLoading = ref(false)
 const goSellDialog = () => {
     if (sellLoading.value) return
     if (!sellForm.value.volume) return showToast('请输入平仓数量')
-    // if (!sellForm.value.safeword) return showToast('请输入交易密码')
-    showSell.value = false
-    safeRef2.value && safeRef2.value.open()
+    if (!sellForm.value.safeword) return showToast('请输入交易密码')
+    goSell(sellForm.value.safeword)
+    //showSell.value = false
+    //safeRef2.value && safeRef2.value.open()
 }
 const goSell = (s) => {
     sellLoading.value = true
@@ -484,11 +483,12 @@ const onSliderChange = (newValue) => {
     }
 };
 const changeValue = () => {
+   
     let val = 0
     if (showSell.value) val = sellForm.value.volume
     if (!val || val < 0) {
         sliderValue.value = 0
-        sellForm.value.volume = 0
+        sellForm.value.volume = ''
         return
     }
     if (val > currStock.value.unsold_volume) {
@@ -496,6 +496,7 @@ const changeValue = () => {
         if (showSell.value) sellForm.value.volume = currStock.value.unsold_volume
         return
     }
+    sellForm.value.volume = Math.floor(sellForm.value.volume)
     sliderValue.value = Number(new Decimal(val).mul(100).div(currStock.value.unsold_volume).floor())
 }
 const changeAmount = () => {

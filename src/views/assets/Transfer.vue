@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" title="转入" @btnClick="maxIpt" show-btn :btn-placeholder="form.fromCurrency.name">
+                <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" title="转出" @btnClick="maxIpt" show-btn :btn-placeholder="form.fromCurrency.name">
                     <template #title-right>
                         <={{ balance }}
                     </template>
@@ -86,7 +86,7 @@
                     </div>
                     
                 </div>
-                <FormItem background="#EFF3F8" custom btn-show-mode="focus" title="转出" show-btn :btn-placeholder="form.toCurrency.name">
+                <FormItem background="#EFF3F8" custom btn-show-mode="focus" title="转入" show-btn :btn-placeholder="form.toCurrency.name">
                     <template #title-right>
                         <={{ balance }}
                     </template>
