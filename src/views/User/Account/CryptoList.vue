@@ -1,23 +1,63 @@
 <template>
-  <div class="list_page">
+  <div class="list_page" v-for="item in props.list">
     <div class="list_delete_icon" @click="() => console.log('click')">
       <div class="delete_icon"></div>
     </div>
     <div class="list_detail">
-      <div class="usdt_icon mr-[0.2rem]"></div>
+      <div
+        class="mr-[0.2rem]"
+        :class="
+          item.symbol == 'USDT'
+            ? 'usdt_icon'
+            : item.symbol == 'DASH'
+            ? 'dash_icon'
+            : 'btc_icon'
+        "
+      ></div>
       <div class="flex flex-col">
         <div class="flex flex-row items-center">
           <span class="text-[0.32rem] text-[#121212] font-semibold mr-[0.2rem]"
             >**** **** **** 94re</span
           >
-          <div class="copy_icon"></div>
+          <div class="copy_icon" @click="copyToClipboard(item.address)"></div>
         </div>
         <span class="text-[0.28rem] text-[#666d80]">USDT</span>
       </div>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { showToast } from 'vant';
+
+const props = defineProps({
+  list: {
+    type: Array,
+    default: [
+      {
+        accountName: null,
+        address: "123123123",
+        bankCardNumber: null,
+        bankName: null,
+        channel: "crypto",
+        id: "",
+        network: "TRC20",
+        symbol: "USDT",
+      },
+    ],
+  },
+});
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+
+    setTimeout(() => {
+      showToast('成功复制好')
+    }, 200);
+  } catch (err) {
+    console.error("Failed to copy: ", err);
+  }
+};
+</script>
 <style lang="less">
 .list_page {
   position: relative;
@@ -29,6 +69,7 @@
   overflow: hidden;
   display: flex;
   align-items: center;
+  margin-bottom: 0.2rem;
 
   .list_detail {
     padding-left: 0.32rem;
@@ -36,8 +77,8 @@
     align-items: center;
 
     .copy_icon {
-      width: 0.24rem;
-      height: 0.24rem;
+      width: 12px;
+      height: 12px;
       background-image: url('data:image/svg+xml;utf8,<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.6 2.4H12V12H2.4V9.6H0V0H9.6V2.4ZM9.6 3.2V9.6H3.2V11.2H11.2V3.2H9.6ZM0.8 0.8V8.8H8.8V0.8H0.8Z" fill="%23014CFA"/></svg>');
     }
 

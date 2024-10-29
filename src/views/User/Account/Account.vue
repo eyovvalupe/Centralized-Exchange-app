@@ -21,12 +21,12 @@
     >
       <Tab :title="'加密货币'" name="0">
         <div class="tab_data">
-          <div class="no_data" v-if="bankList.length == 0">
+          <div class="no_data" v-if="cryptoList.length == 0">
             <img src="/static/img/user/noData.svg" />
             <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
           </div>
           <div class="list" v-else>
-            <CryptoList />
+            <CryptoList :list="cryptoList"/>
           </div>
         </div>
       </Tab>
@@ -69,7 +69,6 @@ const route = useRoute();
 store.dispatch("updateAccountList");
 
 const userInfo = computed(() => store.state.userInfo || {});
-console.log('user info =============> ', userInfo.value)
 const accountList = computed(() => store.state.accountList || []); // 收款方式列表
 console.log('account list ============> ', accountList.value)
 const bankList = computed(() =>
@@ -93,8 +92,9 @@ const actions = [
   { name: "加密货币", value: "crypto" },
 ];
 const goAddAccount = async () => {
+  console.log(userInfo.value)
   //身份认证检测
-  if (userInfo.value.kyc12 != 2) {
+  if (userInfo.value.kycl2 != 2) {
     return showConfirmDialog({
       title: "身份未认证",
       message: "您的身份还未进行认证，请先认证再添加收款账户",
@@ -103,7 +103,7 @@ const goAddAccount = async () => {
   }
 
   // google检测
-  if (userInfo.value.kyc12 == 2 && !userInfo.value.googlebind) {
+  if (userInfo.value.kycl2 == 2 && !userInfo.value.googlebind) {
     return showConfirmDialog({
       title: "谷歌验证器未绑定",
       message: "您的谷歌验证器还未绑定，请先绑定再添加收款账户",
@@ -111,7 +111,8 @@ const goAddAccount = async () => {
       jump("google");
     });
   }
-  showAS.value = true;
+  // showAS.value = true;
+  jump('crypto')
 };
 const onSelect = async (item) => {
   showAS.value = false;
