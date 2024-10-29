@@ -205,6 +205,10 @@ getSessionToken()
             height: 0.48rem;
             margin-right: 0.2rem;
         }
+
+        :deep(.van-icon) {
+            color: #666d80;
+        }
     }
 
     .submit {
