@@ -11,7 +11,7 @@
         </div>
         <div class="right">
             <div class="amount">{{ item.amount }}</div>
-            <div class="status" :class="['status_' + item.status]">{{ _topUpStatusMap[item.status] || '未知' }}</div>
+            <div class="status" :class="['status_' + item.status]">{{ _topUpStatusMap[item.status] || '' }}</div>
         </div>
     </div>
 </template>

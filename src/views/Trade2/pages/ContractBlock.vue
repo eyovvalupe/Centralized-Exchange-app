@@ -4,17 +4,17 @@
         <Tabs v-if="!pageLoading" type="oval-card" v-model:active="active" :swipeable="false" animated
             :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓" name="0">
-                 <div class="stock_tab-body">
+                 <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
                     <Opening @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
                  </div>
             </Tab>
             <Tab title="持仓" name="1">
-                <div class="stock_tab-body">
+                <div class="stock_tab-body" v-if="loadTab.indexOf('1') > -1">
                     <Positions />
                 </div>
             </Tab>
             <Tab title="查询" name="2">
-                <div class="stock_tab-body">
+                <div class="stock_tab-body" v-if="loadTab.indexOf('2') > -1">
                     <Inquire ref="InquireRef" />
                 </div>
             </Tab>
@@ -25,7 +25,7 @@
 
 <script setup>
 import { Tab, Tabs } from "vant";
-import { ref, onMounted } from "vue"
+import { ref, onMounted, nextTick } from "vue"
 import Opening from "../contract/Opening.vue"
 import Positions from "../contract/Positions.vue"
 import Inquire from "../contract/Inquire.vue"
@@ -36,15 +36,19 @@ const showNavDialog = () => {
     emits('showNavDialog', 'contract')
 }
 
-const active = ref(sessionStorage.getItem('trade_contract_tab') || 0)
+const loadTab = ref([])
+const active = ref(sessionStorage.getItem('trade_contract_tab') || '0')
 const InquireRef = ref()
 const onChange = async (val) => {
     active.value = val;
+    if(loadTab.value.indexOf(val) == -1){
+        loadTab.value.push(val)
+    }
     sessionStorage.setItem('trade_contract_tab', val)
     if (val == 2) {
-        setTimeout(() => {
+        nextTick(()=>{
             InquireRef.value && InquireRef.value.init()
-        }, 0)
+        })
     }
 };
 
@@ -70,7 +74,8 @@ const handleMounted = () => {
     }, 300)
 }
 onMounted(() => {
-    handleMounted()
+    pageLoading.value = false
+    onChange(active.value)
 })
 
 defineExpose({

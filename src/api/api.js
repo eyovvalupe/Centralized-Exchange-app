@@ -502,6 +502,7 @@ export const _futuresList = (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+
 // 合约开仓
 export const _futuresBuy = (data = {}) => {
   return http.post(`/authc/v1/futures/buy`, data, {

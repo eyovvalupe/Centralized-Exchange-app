@@ -7,7 +7,8 @@
             <div class="stock-info">
                 <div class="stock-info__head">
                     <div class="stock-info__hl">
-                        <span class="stock-info__symbol">{{ currStock.symbol || '--' }}</span>
+                        <span class="stock-info__symbol" v-if="type == 'contract'">{{ currStock.name || '--' }}</span>
+                        <span class="stock-info__symbol" v-else>{{ currStock.symbol || '--' }}</span>
                         <span class="stock-info__status">{{ statusMap[currStock.status] || '--' }}</span>
                     </div>
                     <div class="stock-info__trend" @click="openStockModel(currStock)">
@@ -23,7 +24,7 @@
             </div>
             <div class="info_boxs">
                 <div class="info_box">
-                    <div>可售{{type == 'stock' && '股票' || type == 'contract' && '合约' || ''}}</div>
+                    <div>可售{{type == 'stock' && '股票' || type == 'contract' && '张数' || ''}}</div>
                     <div class="amount">{{ currStock.unsold_volume || '--' }}</div>
                 </div>
                 <div class="info_box">
@@ -42,7 +43,6 @@
             
             <div class="order_info_box">
                 
-
                 <div class="info_item">
                     <div class="name">开仓</div>
                     <div class="val_box">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="info_item">
-                    <div class="name">开仓数量</div>
+                    <div class="name">开仓{{type == 'contract' ? '张数' : '数量'}}</div>
                     <div class="val_box">
                         <div class="text">{{ currStock.open_volume || '--' }}</div>
                     </div>
@@ -95,7 +95,7 @@
                 <div class="info_item">
                     <div class="name">订单价值</div>
                     <div class="val_box">
-                        <div class="text">{{ currStock.settled_price || '--' }}</div>
+                        <div class="text">{{ currStock.order_value || '--' }}</div>
                     </div>
                 </div>
                 <div class="info_item">
@@ -114,7 +114,7 @@
 
         </div>
 
-        <div class="btns"  v-if="currStock.status != 'done'">
+        <div class="btns">
         
             <div class="btn btn2" @click="emit('update',currStock)"
                 v-if="['none', 'lock', 'open'].includes(currStock.status)">
@@ -172,6 +172,8 @@ import store from "@/store";
 import Top from "@/components/Top.vue"
 import Decimal from 'decimal.js';
 import StockPopup from "../../trade/StockPopup.vue"
+import {_futuresGet} from '@/api/api'
+
 const emit = defineEmits(['update','sell','cancel','back'])
 const props = defineProps({
     type:{
@@ -192,7 +194,6 @@ const getRatio = (num) => {
     if (!num) return '--'
     return new Decimal(num).mul(100) + '%'
 }
-
 
 const showStockModel = ref(false)
 const openStockModel = (currStock)=>{

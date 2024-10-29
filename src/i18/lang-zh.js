@@ -72,5 +72,30 @@ export default {
     },
     transfer:{
         transferRecord:"划转记录"
+    },
+    recordList:{
+        financialRecords:"Financial records",
+        rechargeRecord:'Recharge',
+        withdrawalRecord:'Withdrawal',
+        transfer:'Transfer'
+    },
+    accountMap:{
+        cashAccount:"现金账户",
+        stockAccount:'股票账户',
+        contractAccount:'合约账户',
+        foreignExchangeAccount:'外汇账户'
+        
+    },
+    topUpStatusMap:{
+        review:'审核中',
+        success:'成功',
+        fail:'失败',
+        unknown:'未知'
+    },
+    withdrawStatusMap:{
+        review:'提现处理中',
+        success:'提现成功',
+        fail:'提现失败',
+        unknown:'未知'
     }
 }

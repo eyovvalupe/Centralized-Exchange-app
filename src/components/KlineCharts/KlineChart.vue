@@ -144,13 +144,18 @@ const subs = () => { // 订阅新数据
         socket && socket.off('kline')
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
+            console.error('kline', res)
             if (res.code == 200 && res.symbol == props.symbol && (res.period == props.period || res.period == currPeriod.value)) {
 
-                const item = res.data[0]
-                // setCurrData(item)
                 res.data.forEach(a => {
                     chart.updateData(a)
                 })
+
+                // 同步数据
+                if (route.name == 'market_info') {
+                    const item = res.data[0]
+                    setCurrData(item)
+                }
             }
         })
     })
@@ -237,14 +242,16 @@ const setCurrData = (item) => {
         case 'constract':
             obj = {
                 ...store.state.currConstact,
-                ...item
+                ...item,
+                price: item.close
             }
             store.commit('setCurrConstract', obj)
             break
         default:
             obj = {
                 ...store.state.currStock,
-                ...item
+                ...item,
+                price: item.close
             }
             store.commit('setCurrStock', obj)
             break

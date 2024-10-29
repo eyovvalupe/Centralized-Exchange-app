@@ -1,9 +1,6 @@
 <!-- 市场详情 -->
 <template>
-  <div
-    class="page page_marketinfo"
-    :class="{ innerpage_marketinfo: props.innerPage }"
-  >
+  <div class="page page_marketinfo" :class="{ innerpage_marketinfo: props.innerPage }">
     <!-- 头部 -->
     <div class="max-width info_header">
       <div class="top">
@@ -20,43 +17,27 @@
         </div>
         <!-- 详情 -->
         <div class="title_shadow"></div>
-        <div
-          v-if="!props.innerPage"
-          class="search star"
-          @click="addCollect"
-          :style="{ opacity: loading ? '0.5' : '1' }"
-        >
-          <div
-            :class="
-              item.watchlist == 1 ? 'check_star_icon' : 'uncheck_star_icon'
-            "
-          ></div>
+        <div v-if="!props.innerPage" class="search star" @click="addCollect"
+          :style="{ opacity: loading ? '0.5' : '1' }">
+          <div :class="item.watchlist == 1 ? 'check_star_icon' : 'uncheck_star_icon'
+            "></div>
         </div>
         <!-- <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
                     <Icon name="enlarge" />
                 </div> -->
       </div>
       <div class="header-price">
-        <h1
-          class="info"
-          :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
-        >
+        <h1 class="info" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
           <template v-if="item.price || item.close">
             {{ fixLittleNum(item.price || item.close, 6) }}
           </template>
           <span v-else>--</span>
         </h1>
-        <div
-          style="display: flex; align-items: center; margin-left: 0.2rem"
-          class="ratio"
-          :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
-        >
-          <div
-            class="ratio_price"
-            v-if="fixLittleNum(item.price * (item.ratio || 0), 4)"
-          >
+        <div style="display: flex; align-items: center; margin-left: 0.2rem" class="ratio"
+          :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+          <div class="ratio_price" v-if="fixLittleNum(item.price * (item.ratio || 0), 4)">
             {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
-            {{ fixLittleNum(item.price * (item.ratio || 0), 2)}}
+            {{ fixLittleNum(item.price * (item.ratio || 0), 2) }}
           </div>
           <div class="ratio_percentage" v-if="item.ratio">
             {{
@@ -83,63 +64,31 @@
       <!-- 图表 -->
       <div class="chart_box">
         <div class="tabs">
-          <div
-            class="tab"
-            :class="{ active_tab: timeType == 'Time' }"
-            @click="changeType('Time')"
-          >
+          <div class="tab" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
             Time
           </div>
-          <div
-            class="tab"
-            @click="showPicker = true"
-            :class="{ active_tab: minList.includes(timeType) }"
-          >
+          <div class="tab" @click="showPicker = true" :class="{ active_tab: minList.includes(timeType) }">
             {{ currMin }}
             <Icon style="transform: rotate(90deg)" name="play" />
           </div>
-          <div
-            class="tab"
-            :class="{ active_tab: timeType == '1h' }"
-            @click="changeType('1h')"
-          >
+          <div class="tab" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
             1h
           </div>
-          <div
-            class="tab"
-            v-if="!['stocks', 'forex'].includes(periodType)"
-            :class="{ active_tab: timeType == '4h' }"
-            @click="changeType('4h')"
-          >
+          <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '4h' }"
+            @click="changeType('4h')">
             4h
           </div>
-          <div
-            class="tab"
-            :class="{ active_tab: timeType == '1D' }"
-            @click="changeType('1D')"
-          >
+          <div class="tab" :class="{ active_tab: timeType == '1D' }" @click="changeType('1D')">
             1D
           </div>
-          <div
-            class="tab"
-            :class="{ active_tab: timeType == '1W' }"
-            @click="changeType('1W')"
-          >
+          <div class="tab" :class="{ active_tab: timeType == '1W' }" @click="changeType('1W')">
             1W
           </div>
-          <div
-            class="tab"
-            :class="{ active_tab: timeType == '1M' }"
-            @click="changeType('1M')"
-          >
+          <div class="tab" :class="{ active_tab: timeType == '1M' }" @click="changeType('1M')">
             1M
           </div>
-          <div
-            class="tab"
-            v-if="!['stocks', 'forex'].includes(periodType)"
-            :class="{ active_tab: timeType == '1Y' }"
-            @click="changeType('1Y')"
-          >
+          <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '1Y' }"
+            @click="changeType('1Y')">
             1Y
           </div>
           <!-- <div style="flex:1"></div> -->
@@ -151,26 +100,13 @@
                         <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                     </div> -->
         </div>
-        <div
-          class="chart_container"
-          :class="{ fullscreen_container: fullWindow }"
-        >
+        <div class="chart_container" :class="{ fullscreen_container: fullWindow }">
           <!-- 时区 -->
           <div v-if="showDate" class="chart_time">{{ showDate }}</div>
           <!-- 分时图 -->
-          <AreaChart
-            ref="AreaChartRef"
-            v-if="timeType == 'Time'"
-            :showY="true"
-            :symbol="item.symbol"
-          />
+          <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
           <!-- K线图 -->
-          <KlineChart
-            ref="KlineChartRef"
-            v-if="timeType != 'Time'"
-            :symbol="item.symbol"
-            :period="timeType"
-          />
+          <KlineChart ref="KlineChartRef" v-if="timeType != 'Time'" :symbol="item.symbol" :period="timeType" />
           <!-- 全屏关闭按钮 -->
           <div class="full_close" v-if="fullWindow" @click="fullScreen(false)">
             <Icon name="cross" />
@@ -196,21 +132,13 @@
                         </div> -->
           <span>数据</span>
         </div>
-        <div
-          class="bottom_btn"
-          @click="goBuy(true)"
-          style="background-color: #00af70"
-        >
+        <div class="bottom_btn" @click="goBuy(true)" style="background-color: #00af70">
           <!-- <div class="bottom_btn_icon">
                             <img src="/static/img/market/data_icon.png" alt="img">
                         </div> -->
           <span>买涨</span>
         </div>
-        <div
-          class="bottom_btn"
-          @click="goBuy(false)"
-          style="background-color: #e8503a"
-        >
+        <div class="bottom_btn" @click="goBuy(false)" style="background-color: #e8503a">
           <!-- <div class="bottom_btn_icon">
                             <img src="/static/img/market/data_icon.png" alt="img">
                         </div> -->
@@ -219,34 +147,17 @@
       </div>
     </div>
     <!-- 时间选择弹窗 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      v-model:show="showPicker"
-      round
-      position="bottom"
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round position="bottom">
       <div class="times_list">
-        <div
-          v-for="item in minList"
-          :key="item"
-          @click="chooseTime(item)"
-          class="item"
-          :class="{ active_item: currMin == item }"
-        >
+        <div v-for="item in minList" :key="item" @click="chooseTime(item)" class="item"
+          :class="{ active_item: currMin == item }">
           {{ item }}
         </div>
       </div>
     </Popup>
     <!-- 交易弹窗 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      v-model:show="showBuy"
-      round
-      position="bottom"
-      closeable
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBuy" round position="bottom"
+      closeable>
       <div class="buy_popup">
         <div class="buy_name">交易</div>
         <div class="buy_popup_btn" @click="goBuy(true)">
@@ -265,56 +176,37 @@
     </Popup>
 
     <!-- 数据弹窗 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      v-model:show="showInfo"
-      round
-      position="bottom"
-      closeable
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo" round position="bottom"
+      closeable>
       <div class="info_popup">
         <div class="info_name">数据</div>
         <div class="info_price">
-          <div
-            class="info_num"
-            :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
-          >
+          <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <template v-if="item.price || item.close">
               {{ fixLittleNum(item.price || item.close, 2) }}
             </template>
             <span v-else>--</span>
           </div>
-          <div
-            style="display: flex; align-items: center"
-            :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
-          >
-            <div
-              v-if="Number(item.price * (item.ratio || 0))"
-              :class="[
-                updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
-              ]"
-            >
+          <div style="display: flex; align-items: center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+            <div v-if="Number(item.price * (item.ratio || 0))" :class="[
+              updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
+            ]">
               {{ updown === 0 ? "" : updown > 0 ? "+" : ""
               }}{{ fixLittleNum(item.price * (item.ratio || 0), 2) }}
             </div>
-            <div
-              v-if="item.ratio"
-              style="margin-left: 0.15rem"
-              :class="[
-                updown === 0
-                  ? ''
-                  : updown > 0
+            <div v-if="item.ratio" style="margin-left: 0.15rem" :class="[
+              updown === 0
+                ? ''
+                : updown > 0
                   ? 'percentage_up'
                   : 'percentage_down',
-              ]"
-            >
+            ]">
               {{
                 updown === 0 || item.ratio === undefined
                   ? ""
                   : updown > 0
-                  ? "+"
-                  : ""
+                    ? "+"
+                    : ""
               }}{{
                 item.ratio === undefined
                   ? "--"
@@ -324,69 +216,51 @@
           </div>
         </div>
         <div class="info_items">
-          <div
-            class="info_item"
-            style="
+          <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            "
-          >
+            ">
             <div class="name">开</div>
             <div class="info_item__value">{{ fixLittleNum(item.open, 6) }}</div>
           </div>
-          <div
-            class="info_item"
-            style="
+          <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            "
-          >
+            ">
             <div class="name">高</div>
             <div class="info_item__value">{{ fixLittleNum(item.high, 6) }}</div>
           </div>
-          <div
-            class="info_item"
-            style="
+          <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            "
-          >
+            ">
             <div class="name">量</div>
             <div class="info_item__value">{{ _formatNumber(item.volume) }}</div>
           </div>
-          <div
-            class="info_item"
-            style="
+          <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            "
-          >
+            ">
             <div class="name">收</div>
             <div class="info_item__value">{{ fixLittleNum(item.close, 6) }}</div>
           </div>
-          <div
-            class="info_item"
-            style="
+          <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            "
-          >
+            ">
             <div class="name">低</div>
             <div class="info_item__value">{{ fixLittleNum(item.low, 6) }}</div>
           </div>
-          <div
-            class="info_item"
-            style="
+          <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            "
-          >
+            ">
             <div class="name">额</div>
             <div class="info_item__value">{{ _formatNumber(item.amount) }}</div>
           </div>
@@ -659,6 +533,7 @@ const showInfo = ref(false);
         width: 0.85rem;
         height: 0.85rem;
         padding: 0.025rem;
+
         .uncheck_star_icon {
           width: 0.8rem;
           height: 0.8rem;
@@ -668,6 +543,7 @@ const showInfo = ref(false);
           background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="0.8rem" height="0.8rem" viewBox="0 0 40 40" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.8934 14.7188C22.3378 15.8267 22.56 16.3807 23.0129 16.7173C23.4657 17.054 24.0602 17.1073 25.2491 17.2137L25.464 17.233C27.4099 17.4073 28.3828 17.4944 28.5909 18.1134C28.7991 18.7324 28.0766 19.3897 26.6315 20.7044L26.1493 21.1432C25.4178 21.8087 25.052 22.1414 24.8815 22.5776C24.8497 22.6589 24.8233 22.7423 24.8024 22.8271C24.6903 23.2817 24.7975 23.7645 25.0117 24.7299L25.0783 25.0305C25.472 26.8048 25.6688 27.692 25.3252 28.0746C25.1967 28.2176 25.0298 28.3206 24.8444 28.3712C24.3482 28.5066 23.6437 27.9325 22.2348 26.7844C21.3096 26.0305 20.847 25.6536 20.3159 25.5688C20.107 25.5354 19.8941 25.5354 19.6852 25.5688C19.1541 25.6536 18.6915 26.0305 17.7664 26.7844C16.3574 27.9325 15.6529 28.5066 15.1567 28.3712C14.9713 28.3206 14.8044 28.2176 14.676 28.0746C14.3323 27.692 14.5292 26.8048 14.9228 25.0305L14.9895 24.7299C15.2037 23.7645 15.3108 23.2817 15.1988 22.8271C15.1779 22.7423 15.1514 22.6589 15.1196 22.5776C14.9491 22.1414 14.5834 21.8087 13.8519 21.1432L13.3696 20.7044C11.9246 19.3897 11.202 18.7324 11.4102 18.1134C11.6184 17.4944 12.5913 17.4073 14.5371 17.233L14.7521 17.2137C15.941 17.1073 16.5354 17.054 16.9883 16.7173C17.4411 16.3807 17.6633 15.8267 18.1077 14.7188L18.1444 14.6275C18.931 12.6665 19.3242 11.686 20.0006 11.686C20.6769 11.686 21.0702 12.6665 21.8568 14.6275L21.8934 14.7188V14.7188Z" stroke="%23666D80" stroke-width="1"/></svg>');
           background-size: cover;
         }
+
         .check_star_icon {
           width: 0.8rem;
           height: 0.8rem;

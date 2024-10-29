@@ -136,11 +136,11 @@
             </div>
         </div>
 
-        <!-- 数量 -->
+        <!-- 张数 -->
         <div class="item_box">
             <div class="item_box_left" @click="openTypeDialog">
                 <div class="subtitle"><span>保证金模式</span></div>
-                <div class="item justify-between" :class="{disabled_item:!levers.length}">
+                <div class="item justify-between">
                     <span v-if="!levers.length">--</span>
                     <span v-else>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
                     <div class="more_icon">
@@ -150,21 +150,12 @@
             </div>
 
             <div class="item_box_right">
-                <div class="subtitle">
-                    <span>张数</span>
-                    <span class="color-[#014CFA]" v-if="maxStockNum <= 0">账户余额不足</span>
-                    <span style="color:#666D80;">
-                        ≤ {{ maxStockNum }}
-                    </span>
-                   
-                </div>
-                <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <span @click="putAll"
-                        :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                        style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
-                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false;amountBlur()"
-                        @change="changePercent" type="number" class="ipt">
-                </div>
+                <FormItem title="张数" @focus="volumeFocus" :max="maxStockNum" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent" tip-align="right" :tip="maxStockNum >= 1 ? '≤'+maxStockNum : ''" input-type="digit">
+                    <template #title-right>
+                        <span style="color:#014CFA" @click="openConfirmBox" v-if="maxStockNum < 1">账户余额不足</span>
+                    </template>
+                </FormItem>
+
             </div>
         </div>
 
@@ -191,8 +182,8 @@
                 <div class="item_name">合约</div>
                 <div class="item_val">
                     <div style="line-height: 0.36rem;">
-                        <div style="text-align: right;font-size:0.3rem;">{{ currStock.symbol }}</div>
-                        <div style="color: #9EA3AE;font-size: 0.24rem;">{{ currStock.name }}</div>
+                        <div style="text-align: right;font-size:0.3rem;">{{ currStock.name }}</div>
+                        <!-- <div style="color: #9EA3AE;font-size: 0.24rem;">{{ currStock.name }}</div> -->
                     </div>
                 </div>
             </div>
@@ -214,7 +205,7 @@
                 </div>
             </div>
             <div class="item">
-                <div class="item_name">开仓数量</div>
+                <div class="item_name">开仓张数</div>
                 <div class="item_val">{{ params.volume }}</div>
             </div>
             <div class="item">
@@ -245,6 +236,7 @@
                 <div class="amount">支付 <strong>{{ payAmount }}</strong></div>
                 <div class="fee">保证金 <span>{{ payOrigin }}</span> + 手续费 <span>{{ payFee }}</span></div>
             </div>
+
 
             <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
@@ -321,8 +313,8 @@
 </template>
 
 <script setup>
-import { Loading, Slider, Button, showToast, Popup, ActionSheet, Picker } from "vant";
-import { ref, computed } from "vue"
+import { Loading, Slider, Button, showToast,showConfirmDialog, Popup, ActionSheet, Picker } from "vant";
+import { ref, computed, onMounted } from "vue"
 import { _search, _basic, _futuresPara, _futuresBuy } from "@/api/api"
 import store from "@/store";
 import Decimal from 'decimal.js';
@@ -332,7 +324,7 @@ import StockPopup from "../../trade/StockPopup.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import StockTable from "@/components/StockTable.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
-import FormItem from "@/components/Form/FormItem.vue";
+import FormItem from "@/components/Form/FormItem.vue"
 
 const showPassword = ref(false)
 const safeRef = ref()
@@ -449,7 +441,6 @@ const onSelectForm1PriceType = item => {
     }
 }
 
-
 const route = useRoute()
 const token = computed(() => store.state.token)
 const modeList = computed(() => {
@@ -467,7 +458,17 @@ const stockWalletAmount = computed(() => { // 股票账户余额
     if (target) return target.amount
     return 0
 })
+
+const stockCurrency = computed(() => { // 股票账户余额
+    const target = elseWallet.value.find(item => item.account == 'futures')
+    if (target) return target.currency
+    return 0
+})
+
 const maxStockNum = computed(() => { // 最大可买 可卖
+    if(!levers.value.length){
+        return '--'
+    }
     if (currStock.value.price) {
         const max = new Decimal(stockWalletAmount.value).div(amountper.value).mul(form1.value.lever).floor()
         const rs = max - max.mod(step.value)
@@ -475,6 +476,30 @@ const maxStockNum = computed(() => { // 最大可买 可卖
     }
     return '--'
 })
+
+
+
+const openConfirmBox = ()=>{
+    showConfirmDialog({
+        closeOnClickOverlay:true,
+        className:"van-custom-confirm-dialog",
+        title:"账户余额不足",
+        message:"<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">合约账户余额 <span style=\"font-weight:600;color:#014CFA;\">"+stockWalletAmount.value+"</span> "+stockCurrency.value+"</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>",
+        allowHtml:true,
+        confirmButtonText:"去划转",
+        cancelButtonText:"去充值",
+        confirmButtonColor:"#014CFA",
+        cancelButtonColor:"#014CFA"
+    }).then(()=>{
+        router.push({
+            name:'transfer'
+        })
+    }).catch(()=>{
+        router.push({
+            name:'topUpCrypto'
+        })
+    })
+}
 
 
 // 限价
@@ -500,12 +525,6 @@ const percentTagClick = (percent)=>{
 
 // 市价
 const currStock = ref({}) // 当前股票
-try {
-    currStock.value = JSON.parse(sessionStorage.getItem('currConstract') || '{}')
-} catch {
-    currStock.value = {}
-}
-currStock.value = store.state.currConstact
 
 const form1 = ref({
     leverType: 'cross',
@@ -592,8 +611,8 @@ const inputStop = key => { // 输入止盈止损
 }
 
 const submit1 = () => {
-    if (!currStock.value.symbol) return showToast('请输入合约代码')
-    if (!form1.value.volume || form1.value.volume < min.value) return showToast(`最小交易量：${min.value}`)
+    if (!currStock.value.symbol) return showToast('请选择合约')
+    if (!form1.value.volume || form1.value.volume < min.value) return showToast(`最小张数：${min.value}`)
     // 止盈止损校验
     if (props.activeTab == 2) {
         if (mode.value == 1) { // 简单模式
@@ -633,10 +652,6 @@ const submit1 = () => {
     safePass.value = ''
     showModel.value = true
 }
-const amountFocus = ref(false)
-const priceFocus = ref(false)
-const priceFocus2 = ref(false)
-const priceFocus3 = ref(false)
 
 
 // 全部
@@ -670,17 +685,14 @@ const changePercent = () => {
     
 }
 
-const amountBlur = ()=>{
-    nextTick(()=>{
-        if(form1.value.volume > maxStockNum.value){
-            form1.value.volume = maxStockNum.value
-        }
-    })
+const volumeFocus = ()=>{
+     if (!currStock.value.symbol) return showToast('请选择合约')
 }
 
 
+
 // 下单限制的参数
-const min = ref(0) // 最小购买
+const min = ref(1) // 最小购买
 const step = ref(1) // 步长
 const openFee = ref(0) // 开仓手续费
 const closeFee = ref(0) // 平仓手续费
@@ -705,15 +717,7 @@ const getParam = () => {
     })
 }
 const paramHandle = data => {
-    if (data) {
-        sessionStorage.setItem('constarct_param', JSON.stringify(data))
-    } else {
-        try {
-            data = JSON.parse(sessionStorage.getItem('constarct_param') || '{}')
-        } catch {
-            data = {}
-        }
-    }
+    
     configLoading.value = false
     interest.value = data.interest || 0
     closingline.value = data.closingline || 100
@@ -741,7 +745,7 @@ const initParam = ()=>{
     }else{
         form1.value.stop_loss_price = ''
         form1.value.price = ''
-        min.value = 0
+        min.value = 1
         step.value = 1
         openFee.value = 0
         closeFee.value = 0
@@ -751,7 +755,7 @@ const initParam = ()=>{
         levers.value = []
     }
 }
-initParam()
+
 
 const handleClick = item => {
     showSearchDialog.value = false
@@ -768,16 +772,25 @@ const handleClick = item => {
     })
 }
 
-
 // url参数处理
 if (route.query.symbol) {
     handleClick({
         symbol:route.query.symbol
     })
+}else{
+    try {
+        currStock.value = JSON.parse(sessionStorage.getItem('currConstract') || '{}')
+    } catch {
+        currStock.value = {}
+    }
+    initParam()
 }
 
 const openTypeDialog = ()=>{
     if(!levers.value.length){
+        if(!currStock.value.symbol){
+            showToast('请选择合约')
+        }
         return
     }
     showTypeDialog.value = true
@@ -837,7 +850,6 @@ const submitForm = (s) => {
     })
 }
 
-
 // 打开行情
 const showStockModel = ref(false)
 const openStockModel = () => {
@@ -858,8 +870,6 @@ const jump = (name) => {
         name
     })
 }
-
-
 
 defineExpose({
     // 选择某个股票
