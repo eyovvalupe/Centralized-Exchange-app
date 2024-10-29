@@ -1,7 +1,80 @@
 <!-- 收款账户 -->
 <template>
   <div class="page page_account">
-    
+    <div class="top_icon_container">
+      <div class="top_back_container text-[0.48rem]" @click="goBack">
+        <Icon name="arrow-left" />
+      </div>
+
+      <div><span class="text-[0.36rem]">收款账户</span></div>
+      <div></div>
+    </div>
+    <Tabs
+      type="card"
+      class="tab_content tabs"
+      v-if="!pageLoading"
+      @change="changeTab"
+      v-model:active="active"
+      :swipeable="false"
+      animated
+      shrink
+    >
+      <Tab :title="'加密货币'">
+        <div class="tab_data">
+          <div class="no_data" v-if="bankList.length == 0">
+            <img src="/static/img/user/noData.svg" />
+            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
+          </div>
+          <div class="list" v-else>asd</div>
+        </div>
+        <!-- <div class="list">
+          <div class="add_item" @click="goAddAccount">
+            <Icon style="font-size: 0.48rem" name="add-o" />
+            <span
+              style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem"
+              >添加收款账户</span
+            >
+          </div>
+          <div class="item" v-for="(item, i) in bankList" :key="i">
+            <div class="address">{{ _hiddenAccount(item.bankCardNumber) }}</div>
+            <div class="title">{{ item.bankName }}</div>
+            <div class="icon_box">
+              <img src="/static/img/user/card_type_b.png" alt="img" />
+            </div>
+          </div>
+        </div> -->
+      </Tab>
+      <Tab :title="'银行卡'">
+        <div class="tab_data">
+          <div class="no_data" v-if="bankList.length == 0">
+            <img src="/static/img/user/noData.svg" />
+            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
+          </div>
+          <div class="list" v-else>asdf</div>
+        </div>
+        <!-- <div class="list">
+          <div class="add_item" @click="goAddAccount">
+            <Icon style="font-size: 0.48rem" name="add-o" />
+            <span
+              style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem"
+              >添加收款账户</span
+            >
+          </div>
+          <div class="item" v-for="(item, i) in cryptoList" :key="i">
+            <div class="address">{{ _hiddenAccount(item.address) }}</div>
+            <span class="title">{{ item.symbol }}-{{ item.network }}</span>
+            <div class="icon_box">
+              <img src="/static/img/user/card_type_c.png" alt="img" />
+            </div>
+          </div>
+        </div> -->
+      </Tab>
+    </Tabs>
+
+    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" />
+    <!-- <div class="text-[0.48rem]"><Icon name="arrow-left" /></div> -->
+
+    <div class="add_btn" @click="goAddAccount"><span class="text-[white] text-[0.36rem] font-normal">添加收款账户</span></div>
   </div>
 </template>
 
