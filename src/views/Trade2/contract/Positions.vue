@@ -148,10 +148,8 @@
                             </div>
                         </div>
                     </div>
-                    <FormItem size="large" input-type="number" v-model="updateForm.amount" title="增加保证金" btn-show-mode="focus" :show-btn="stockWalletAmount > 0" @change="changeAmount" @btnClick="onSliderChange(100)">
-                        <template #title-right>
-                            ≤ {{ stockWalletAmount }}
-                        </template>
+                    <FormItem size="large" input-type="number" v-model="updateForm.amount" title="增加保证金" btn-show-mode="focus" :tip="stockWalletAmount > 0 ? '≤ '+stockWalletAmount : ''" :show-btn="stockWalletAmount > 0" @change="changeAmount" @btnClick="onSliderChange(100)">
+                        
                     </FormItem>
                     
                     <div style="height:0.47rem;"></div>
@@ -573,7 +571,7 @@ getSessionToken()
         line-height: 0.3rem;
 
         .name {
-            font-size: 0.32rem;
+            font-size: 0.3rem;
             color: #061023;
             font-weight: 600;
             line-height: 0.32rem;

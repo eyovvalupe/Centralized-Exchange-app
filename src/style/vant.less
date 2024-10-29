@@ -128,11 +128,7 @@
         transform: translateY(-50%) translateX(calc(-50% - 27px)) !important;
     }
 
-    .van-popup--right {
-        left: none !important;
-        right: 0% !important;
-        transform: translateY(-50%) !important;
-    }
+   
 
     .van-popup--top {
         transform: translateX(-50%) !important;
@@ -388,9 +384,19 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    display: block;
 }
 .van-omit1{ -webkit-line-clamp: 1; }
 .van-omit2{ -webkit-line-clamp: 2; }
 .van-omit3{ -webkit-line-clamp: 3; }
 .van-omit4{ -webkit-line-clamp: 4; }
 
+
+.van-custom-confirm-dialog{
+    .van-dialog__header{
+        font-size: 0.32rem;
+    }
+    .van-button .van-button__text{
+        font-size: 0.32rem;
+    }
+}
