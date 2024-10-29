@@ -616,8 +616,8 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 0.36rem;
-        height: 0.36rem;
+        width: 0.37rem;
+        height: 0.37rem;
         padding: 0.02rem;
         border-radius: 50%;
 
