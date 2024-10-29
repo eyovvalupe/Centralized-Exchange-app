@@ -1,6 +1,6 @@
 <template>
   <div class="list_page" v-for="item in props.list">
-    <div class="list_delete_icon" @click="next">
+    <div class="list_delete_icon" @click="confirm">
       <div class="delete_icon"></div>
     </div>
     <GoogleVerfCode ref="googleRef" @submit="(code) => submit(code, item.id)" />
@@ -21,7 +21,7 @@
   </div>
 </template>
 <script setup>
-import { showToast } from "vant";
+import { showConfirmDialog, showToast } from "vant";
 import { ref } from 'vue';
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { _delAccount, _listAccount } from "@/api/api";
@@ -30,6 +30,15 @@ import store from "@/store";
 
 const loading = ref(false);
 const googleRef = ref();
+
+const confirm = () => {
+  showConfirmDialog({
+    title: '删除',
+    message: '确认删除该收款账户吗？'
+  })
+  .then(() => next())
+  .catch(() => {})
+}
 
 const next = () => {
   googleRef.value[0].open();

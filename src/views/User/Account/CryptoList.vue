@@ -1,6 +1,6 @@
 <template>
   <div class="list_page" v-for="item in props.list">
-    <div class="list_delete_icon" @click="next">
+    <div class="list_delete_icon" @click="confirm">
       <div class="delete_icon"></div>
     </div>
     <div class="list_detail">
@@ -30,7 +30,14 @@ import store from "@/store";
 
 const loading = ref(false);
 const googleRef = ref()
-
+const confirm = () => {
+  showConfirmDialog({
+    title: '删除',
+    message: '确认删除该收款账户吗？'
+  })
+  .then(() => next())
+  .catch(() => {})
+}
 const next = () => {
   googleRef.value[0].open()
 }

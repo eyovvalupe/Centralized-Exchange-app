@@ -63,7 +63,6 @@ const accountList = computed(() => store.state.accountList || []); // 收款方�
 const bankList = computed(() =>
   accountList.value.filter((item) => item.channel == "bank")
 ); // 银行卡
-console.log(bankList.value)
 const cryptoList = computed(() =>
   accountList.value.filter((item) => item.channel == "crypto")
 ); // 加密货币
@@ -90,6 +89,7 @@ const goAddAccount = async () => {
       message: "您的身份还未进行认证，请先认证再添加收款账户",
       confirmButtonText: "去认证"
     }).then(() => jump("kyc"))
+      .catch(() => goBack());
   }
 
   // google检测
@@ -99,7 +99,8 @@ const goAddAccount = async () => {
       message: "您的谷歌验证器还未绑定，请先绑定再添加收款账户",
     }).then(() => {
       jump("google");
-    });
+    })
+    .catch(() => goBack());
   }
   // showAS.value = true;
   jump('bank')
