@@ -11,7 +11,7 @@
             <span class="ipt_tip" :class="{'ipt_tip--right':tipAlign=='right'}" v-if="tip" v-show="inputFocus">{{tip}}</span>
             
             <slot v-if="custom" />
-            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false;inputBlur()" :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput" :placeholder="placeholder">
+            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true;emit('focus')" @blur="inputFocus = false;inputBlur()" :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput" :placeholder="placeholder">
 
             <span class="pwd_icon" v-if="inputType == 'password'">
                 <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword=true" alt="off" />
@@ -41,7 +41,7 @@
 <script setup>
 import { nextTick, watch } from "vue"
 const showPassword = ref(false)
-const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','btnClick'])
+const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','btnClick','focus','blur'])
 const props = defineProps({
     modelValue:{
         type:[String,Number],
@@ -106,6 +106,7 @@ const inputBlur = ()=>{
     }
     emit('update:modelValue',inputVal.value)
     emit('change',inputVal.value)
+    emit('blur')
 }
 
 const validateKeydown = (e)=>{
