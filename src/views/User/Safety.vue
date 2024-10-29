@@ -24,8 +24,8 @@
         </div>
         <div class="nav_title">谷歌验证器</div>
         <div class="nav_tip">
-          <span style="color: #ff3b30" v-if="!userInfo.googlebind">未绑定</span>
-          <span style="color: #18b762" v-if="userInfo.googlebind">已绑定</span>
+          <span style="color: #ff3b30; font-size: 0.3rem;" v-if="!userInfo.googlebind">未绑定</span>
+          <span style="color: #18b762; font-size: 0.3rem;" v-if="userInfo.googlebind">已绑定</span>
         </div>
         <Icon name="arrow" />
       </div>
