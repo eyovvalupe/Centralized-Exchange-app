@@ -63,10 +63,10 @@ const accountList = computed(() => store.state.accountList || []); // 收款方�
 const bankList = computed(() =>
   accountList.value.filter((item) => item.channel == "bank")
 ); // 银行卡
+console.log(bankList.value)
 const cryptoList = computed(() =>
   accountList.value.filter((item) => item.channel == "crypto")
 ); // 加密货币
-console.log(cryptoList.value)
 const selectedPayment = computed(() => store.state.selectedPayment || '0')
 // tabs
 const active = ref(0);

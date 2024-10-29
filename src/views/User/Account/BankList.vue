@@ -10,11 +10,11 @@
       <div class="flex flex-col">
         <div class="flex flex-row items-center">
           <span class="text-[0.32rem] text-[#121212] font-semibold mr-[0.2rem]"
-            >**** **** **** 2325</span
+            >**** **** **** {{ item.bankCardNumber.slice(-4) }}</span
           >
-          <div class="copy_icon" @click="copyToClipboard(item.address)"></div>
+          <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)"></div>
         </div>
-        <span class="text-[0.28rem] text-[#666d80]">建设银行</span>
+        <span class="text-[0.28rem] text-[#666d80]">{{ item.bankName }}</span>
       </div>
     </div>
   </div>
