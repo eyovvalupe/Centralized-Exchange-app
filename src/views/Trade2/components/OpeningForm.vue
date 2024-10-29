@@ -138,7 +138,7 @@
         <div class="item_box">
             <div class="item_box_left" @click="openTypeDialog">
                 <div class="subtitle"><span>保证金模式</span></div>
-                <div class="item justify-between" :class="{disabled_item:!levers.length}">
+                <div class="item justify-between">
                     <span v-if="!levers.length">--</span>
                     <span v-else>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
                     <div class="more_icon">
@@ -149,9 +149,9 @@
             
             <div class="item_box_right">
 
-                <FormItem title="数量"  v-model="form1.volume" show-btn @btnClick="putAll"  @change="changePercent" input-type="number" :tip="'余额 '+stockWalletAmount" tip-align="right">
+                <FormItem title="数量" @focus="volumeFocus" :max="maxStockNum" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent" tip-align="right" :tip="maxStockNum > 0 ? '≤'+maxStockNum : ''" input-type="number">
                     <template #title-right>
-                        {{ maxStockNum <= 0 ? '账户余额不足' : '≤ ' + maxStockNum }}
+                        <span style="color:#014CFA" @click="openConfirmBox" v-if="maxStockNum <= 0">账户余额不足</span>
                     </template>
                 </FormItem>
                 
@@ -462,6 +462,11 @@ const stockWalletAmount = computed(() => { // 股票账户余额
     if (target) return target.amount
     return 0
 })
+const stockCurrency = computed(() => { // 股票账户余额
+    const target = elseWallet.value.find(item => item.account == 'stock')
+    if (target) return target.currency
+    return 0
+})
 const maxStockNum = computed(() => { // 最大可买 可卖
     if (currStock.value.price) {
         const max = new Decimal(stockWalletAmount.value).div(form1.value.price || currStock.value.price).mul(form1.value.lever).floor()
@@ -470,6 +475,29 @@ const maxStockNum = computed(() => { // 最大可买 可卖
     }
     return '--'
 })
+
+
+const openConfirmBox = ()=>{
+    showConfirmDialog({
+        closeOnClickOverlay:true,
+        className:"van-custom-confirm-dialog",
+        title:"账户余额不足",
+        message:"<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">股票账户余额 <span style=\"font-weight:600;color:#014CFA;\">"+stockWalletAmount.value+"</span> "+stockCurrency.value+"</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>",
+        allowHtml:true,
+        confirmButtonText:"去划转",
+        cancelButtonText:"去充值",
+        confirmButtonColor:"#014CFA",
+        cancelButtonColor:"#014CFA"
+    }).then(()=>{
+        router.push({
+            name:'transfer'
+        })
+    }).catch(()=>{
+        router.push({
+            name:'topUpCrypto'
+        })
+    })
+}
 
 
 // 限价
@@ -497,12 +525,6 @@ const percentTagClick = (percent)=>{
 
 // 市价
 const currStock = ref({}) // 当前股票
-try {
-    currStock.value = JSON.parse(sessionStorage.getItem('currStock') || '{}')
-} catch {
-    currStock.value = {}
-}
-
 
 const form1 = ref({
     leverType: 'cross',
@@ -732,7 +754,6 @@ const initParam = ()=>{
         levers.value = []
     }
 }
-initParam()
 
 
 const handleClick = item => {
@@ -755,11 +776,21 @@ if (route.query.symbol) {
     handleClick({
         symbol:route.query.symbol
     })
+}else{
+    try {
+        currStock.value = JSON.parse(sessionStorage.getItem('currStock') || '{}')
+    } catch {
+        currStock.value = {}
+    }
+    initParam()
 }
 
 
 const openTypeDialog = ()=>{
     if(!levers.value.length){
+        if(!currStock.value.symbol){
+            showToast('请选择股票')
+        }
         return
     }
     showTypeDialog.value = true
