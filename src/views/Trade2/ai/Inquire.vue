@@ -1,7 +1,7 @@
 <!-- 查询 -->
 <template>
     <div class="inquire" v-if="token">
-        
+
         <NoData v-if="!loading && !aiInquireList.length" />
         <div class="list">
             <div class="item" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">
@@ -15,16 +15,16 @@
                 <div class="right">
                     <div class="amount" :class="[item.profit < 0 ? 'down_status' : 'up_status']">
                         {{ item.profit >= 0 ? '+' : '-' }}
-                        {{item.profit }}
+                        {{ item.profit }}
                     </div>
                     <div class="date">{{ formatDate(item.date) }}</div>
                 </div>
             </div>
-            
+
         </div>
         <LoadingMore :loading="loading" :finish="finish" v-if="(finish && aiInquireList.length) || (!finish)" />
     </div>
-        
+
 
     <UnLogin @loginfinish="loginfinish" v-show="!token" />
 
@@ -73,10 +73,10 @@ const init = () => {
         }, 0)
     }
 }
-const formatDate = (date)=>{
-    if(date){
-       let mat = date.match(/\d+\-(\d+\-\d+)\s(\d+:\d+)/) || []
-       return mat[1] + ' ' + mat[2]
+const formatDate = (date) => {
+    if (date) {
+        let mat = date.match(/\d+\-(\d+\-\d+)\s(\d+:\d+)/) || []
+        return mat[1] + ' ' + mat[2]
     }
     return ''
 }
@@ -88,7 +88,6 @@ const getList = () => {
     }
     loading.value = true
     _ailist(params).then(res => {
-        // console.error('----', res)
         if (page.value == 1) {
             store.commit('setAiInquireList', res.data || [])
         } else {
@@ -147,7 +146,7 @@ defineExpose({
         border-bottom: 1px solid #EFF3F8;
         line-height: 100%;
         padding: 0.32rem 0;
-        
+
         .ai_icon {
             width: 0.8rem;
             height: 0.8rem;
@@ -156,9 +155,10 @@ defineExpose({
             justify-content: center;
             border-radius: 0.24rem;
             background-color: rgba(1, 76, 250, 0.10);
-            img{
+
+            img {
                 width: 0.53rem !important;
-                height:0.53rem !important;
+                height: 0.53rem !important;
             }
         }
 
@@ -166,14 +166,15 @@ defineExpose({
             flex: 1;
             margin: 0 0.2rem 0 0.18rem;
             overflow: hidden;
+
             .name {
                 font-size: 0.3rem;
                 color: #061023;
                 font-weight: bold;
             }
 
-            .grid{
-                color:#8F92A1;
+            .grid {
+                color: #8F92A1;
                 font-weight: 400;
                 font-size: 0.28rem;
                 margin-top: 0.18rem;
@@ -182,16 +183,18 @@ defineExpose({
 
         .right {
             text-align: right;
+
             .amount {
                 font-size: 0.32rem;
                 font-weight: 600;
             }
 
-            .date{
-                color:#8F92A1;
+            .date {
+                color: #8F92A1;
                 font-size: 0.28rem;
-                margin-top:0.18rem;
+                margin-top: 0.18rem;
             }
+
             .down_status {
                 color: #E8503A;
             }
@@ -201,7 +204,8 @@ defineExpose({
             }
         }
     }
-    .item:last-child{
+
+    .item:last-child {
         border-bottom: 0px;
     }
 }

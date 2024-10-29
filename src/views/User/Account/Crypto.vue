@@ -103,9 +103,7 @@ const currNetwork = computed(() => {
     return coinMap.value[form.value.currency] || []
 })
 
-setTimeout(() => {
-    console.error('????', coinMap.value, form.value.currency, currNetwork.value)
-}, 5000)
+
 const initNetwork = () => {
     if (currNetwork.value[0]) {
         form.value.network = currNetwork.value[0].network

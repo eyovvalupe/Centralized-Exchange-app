@@ -45,13 +45,15 @@
             <div class="van-popup-custom-title">平仓</div>
             <div class="order_sell_box">
                 <div class="form">
-                    
-                    <FormItem title="张数" :max="currStock.unsold_volume" size="large" btn-show-mode="focus" v-model="sellForm.volume" input-type="digit" @change="changeValue" show-btn @btnClick="onSliderChange(100)">
+
+                    <FormItem title="张数" :max="currStock.unsold_volume" size="large" btn-show-mode="focus"
+                        v-model="sellForm.volume" input-type="digit" @change="changeValue" show-btn
+                        @btnClick="onSliderChange(100)">
                         <template #title-right>
                             持仓张数 {{ currStock.unsold_volume }}
                         </template>
                     </FormItem>
-                    
+
                     <div style="height:0.47rem;"></div>
 
                     <!-- 拖动 -->
@@ -79,7 +81,7 @@
 
                     <FormItem v-model="sellForm.safeword" size="large" input-type="password" title="交易密码">
                     </FormItem>
-                   
+
 
                     <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary"
                         size="large" color="#014CFA">
@@ -151,7 +153,7 @@
                     <FormItem size="large" input-type="number" v-model="updateForm.amount" title="增加保证金" btn-show-mode="focus" :tip="stockWalletAmount > 0 ? '≤ '+stockWalletAmount : ''" :show-btn="stockWalletAmount > 0" @change="changeAmount" @btnClick="onSliderChange(100)">
                         
                     </FormItem>
-                    
+
                     <div style="height:0.47rem;"></div>
                     <!-- 拖动 -->
                     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
@@ -159,7 +161,7 @@
                     <FormItem v-model="updateForm.safeword" size="large" input-type="password" title="交易密码">
                     </FormItem>
 
-                   
+
                     <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading"
                         type="primary" color="#014CFA">
                         确定
@@ -253,10 +255,8 @@ const subs = () => {
         socket && socket.off('futuresorder')
         socket && socket.emit('user', token.value)
         socket && socket.emit('futuresorder', '#all')
-        console.error('---订阅futuresorder')
         loading.value = true
         socket.on('futuresorder', res => {
-            console.error('?????', res)
             store.commit('setContractPositionsList', (res.data || []).map(item => {
                 if (!item.order_no && item.father_username) {
                     item.order_no = item.father_username
@@ -458,7 +458,7 @@ const onSliderChange = (newValue) => {
     }
 };
 const changeValue = () => {
-   
+
     let val = 0
     if (showSell.value) val = sellForm.value.volume
     if (!val || val < 0) {
