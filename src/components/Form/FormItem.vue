@@ -8,10 +8,10 @@
     </div>
     <div class="form-item-box">
         <div class="item" :class="{'disabled_item':disabled, 'item_focus': inputFocus && tip,'item_focus2':inputFocus && !tip }" :style="{background}">
-            <span class="ipt_tip" v-if="tip" v-show="inputFocus">{{tip}}</span>
+            <span class="ipt_tip" :class="{'ipt_tip--right':tipAlign=='right'}" v-if="tip" v-show="inputFocus">{{tip}}</span>
             
             <slot v-if="custom" />
-            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @input="emit('update:modelValue',inputVal)" @change="inputChange" :placeholder="placeholder">
+            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @input="onInput" @change="inputChange" :placeholder="placeholder">
 
             <span class="pwd_icon" v-if="inputType == 'password'">
                 <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword=true" alt="off" />
@@ -73,6 +73,7 @@ const props = defineProps({
     },
     showBtn:Boolean,
     tip:String,
+    tipAlign:String, //默认居左 right 居右
     inputType:{
         type:String,
         default:"text"
@@ -90,6 +91,12 @@ watch(()=>props.modelValue,()=>{
 const inputChange = ()=>{
     emit('update:modelValue',inputVal.value)
     emit('change',inputVal.value)
+}
+const onInput = ()=>{
+    if(inputVal.value == 0){
+        inputVal.value = ''
+    }
+    emit('update:modelValue',inputVal.value)
 }
 const percentTagClick = (percent)=>{
     emit('percentTagClick',percent)
@@ -117,7 +124,10 @@ const percentTagClick = (percent)=>{
             left: 0.24rem;
             transition: all ease .3s;
         }
-
+        .ipt_tip--right{
+            right: 0.24rem;
+            left: inherit
+        }
         .ipt {
             flex: 1;
             height: 100%;

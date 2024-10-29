@@ -33,7 +33,6 @@
             </div>
         </div>
 
-
         <!-- 订单详情 -->
         <Popup v-model:show="showInfo" position="right" style="width:100%;height:100%;" teleport="body">
             <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
@@ -168,11 +167,10 @@
                     <!-- 拖动 -->
                     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
-                    <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
-                    <div class="item">
-                        <input v-model="updateForm.safeword" type="password" class="ipt">
-                    </div> -->
+                    <FormItem v-model="updateForm.safeword" size="large" input-type="password" title="交易密码">
+                    </FormItem>
 
+                   
                     <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading"
                         type="primary" color="#014CFA">
                         确定
@@ -229,21 +227,6 @@ const stockWalletAmount = computed(() => { // 合约账户余额
     if (target) return target.amount
     return 0
 })
-
-const items = ref()
-const clickDom = (e, i) => {
-    if (e == 'cell' && items.value[i]) {
-        items.value[i]._opened = !(items.value[i]._opened)
-        if (items.value[i]._opened) {
-            setTimeout(() => {
-                items.value[i].open('right')
-            }, 0)
-        }
-    }
-}
-const closeDom = (i) => {
-    if (items.value[i]) items.value[i]._opened = false
-}
 
 
 const statusMap = ref({ // 仓位状态
@@ -337,6 +320,7 @@ const sellForm = ref({
 const showSell = ref(false)
 const sell = item => {
     if (!['none', 'lock', 'open'].includes(item.status)) return
+    getSessionToken()
     currStock.value = item
     showSell.value = true
     sellForm.value = {
@@ -385,6 +369,7 @@ const updateForm = ref({
 })
 const update = item => {
     if (!['none', 'lock', 'open'].includes(item.status)) return
+    getSessionToken()
     currStock.value = item
     showUpdate.value = true
     updateForm.value = {
@@ -401,9 +386,10 @@ const updateLoading = ref(false)
 const goUpdateDialog = () => {
     if (updateLoading.value) return
     if (!updateForm.value.amount) return showToast('请输入保证金')
-    // if (!updateForm.value.safeword) return showToast('请输入交易密码')
-    showUpdate.value = false
-    safeRef.value && safeRef.value.open()
+    if (!updateForm.value.safeword) return showToast('请输入交易密码')
+    goUpdate(updateForm.value.safeword)
+    // showUpdate.value = false
+    // safeRef.value && safeRef.value.open()
 }
 const goUpdate = (s) => {
     updateLoading.value = true

@@ -150,21 +150,13 @@
             </div>
 
             <div class="item_box_right">
-                <div class="subtitle">
-                    <span>张数</span>
-                    <span class="color-[#014CFA]" v-if="maxStockNum <= 0">账户余额不足</span>
-                    <span style="color:#666D80;">
-                        ≤ {{ maxStockNum }}
-                    </span>
-                   
-                </div>
-                <div class="item" :class="{ 'item_focus': amountFocus }">
-                    <span @click="putAll"
-                        :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                        style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
-                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false;amountBlur()"
-                        @change="changePercent" type="number" class="ipt">
-                </div>
+                <FormItem title="张数"  v-model="form1.volume" show-btn @btnClick="putAll" @change="changePercent"  input-type="number"  :tip="'余额 '+stockWalletAmount" tip-align="right">
+                    <template #title-right>
+                        {{ maxStockNum <= 0 ? '账户余额不足' : '≤ ' + maxStockNum }}
+                    </template>
+                </FormItem>
+
+                
             </div>
         </div>
 
@@ -633,10 +625,6 @@ const submit1 = () => {
     safePass.value = ''
     showModel.value = true
 }
-const amountFocus = ref(false)
-const priceFocus = ref(false)
-const priceFocus2 = ref(false)
-const priceFocus3 = ref(false)
 
 
 // 全部
@@ -680,7 +668,7 @@ const amountBlur = ()=>{
 
 
 // 下单限制的参数
-const min = ref(0) // 最小购买
+const min = ref(1) // 最小购买
 const step = ref(1) // 步长
 const openFee = ref(0) // 开仓手续费
 const closeFee = ref(0) // 平仓手续费
@@ -741,7 +729,7 @@ const initParam = ()=>{
     }else{
         form1.value.stop_loss_price = ''
         form1.value.price = ''
-        min.value = 0
+        min.value = 1
         step.value = 1
         openFee.value = 0
         closeFee.value = 0

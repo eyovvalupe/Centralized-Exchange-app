@@ -10,7 +10,7 @@
         <NoData v-if="!loading && !contractInquireList.length" />
 
         <SwipeCell ref="items" v-for="(item, i) in contractInquireList" :key="i" disabled>
-            <div class="tr">
+            <div class="tr" @click="OpeningForm(item)">
                 <div class="td td-5">
                     <div class="name">{{ item.name }}</div>
                     <div class="lever">
@@ -37,17 +37,25 @@
         <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || (!finish)" />
     </div>
 
+    <!-- 订单详情 -->
+    <Popup v-model:show="showInfo" position="right" style="width:100%;height:100%;" teleport="body">
+        <OrderInfo type="contract" :curr-stock="currStock" @back="showInfo = false" />
+
+    </Popup>
+
+
     <UnLogin @loginfinish="loginfinish" v-show="!token" />
 </template>
 
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
-import { SwipeCell } from "vant"
+import { SwipeCell, Popup } from "vant"
 import store from "@/store"
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import { _futuresList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
+import OrderInfo from '../components/OrderInfo.vue'
 import Decimal from 'decimal.js';
 
 
@@ -135,6 +143,12 @@ const getList = () => {
     })
 }
 
+const showInfo = ref(false)
+const currStock = ref({})
+const OpeningForm = item => {
+    currStock.value = item
+    showInfo.value = true
+}
 
 let moreDom = null
 const totalHeight = window.innerHeight || document.documentElement.clientHeight;

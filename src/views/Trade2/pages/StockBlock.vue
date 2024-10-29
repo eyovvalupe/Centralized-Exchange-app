@@ -10,17 +10,17 @@
         <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated
             :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓" name="0">
-                <div class="stock_tab-body">
+                <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
                     <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
                 </div>
             </Tab>
             <Tab title="持仓" name="1">
-                <div class="stock_tab-body">
+                <div class="stock_tab-body" v-if="loadTab.indexOf('1') > -1">
                     <Positions />
                 </div>
             </Tab>
             <Tab title="查询" name="2">
-                <div class="stock_tab-body">
+                <div class="stock_tab-body" v-if="loadTab.indexOf('2') > -1">
                     <Inquire ref="InquireRef" />
                 </div>
             </Tab>
@@ -46,11 +46,13 @@ const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
     emits('showNavDialog', 'stock')
 }
-
-const active = ref(sessionStorage.getItem('trade_stock_tab') || 0)
+const loadTab = ref([])
+const active = ref(sessionStorage.getItem('trade_stock_tab') || '0')
 const InquireRef = ref()
 const onChange = async (val) => {
-    console.log(val)
+    if(loadTab.value.indexOf(val) == -1){
+        loadTab.value.push(val)
+    }
     active.value = val;
     sessionStorage.setItem('trade_stock_tab', val)
     if (val == 2) {
@@ -70,7 +72,7 @@ const OpeningRef = ref()
 
 // 选择某个股票
 const choose = item => {
-    active.value = 0
+    active.value = '0'
     OpeningRef.value && OpeningRef.value.choose(item)
 }
 
@@ -83,7 +85,8 @@ const handleMounted = () => {
     }, 300)
 }
 onMounted(() => {
-    handleMounted()
+    pageLoading.value = false
+    onChange(active.value)
 })
 
 defineExpose({

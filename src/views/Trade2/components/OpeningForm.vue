@@ -121,16 +121,8 @@
         </div>
         <!-- 搜索 -->
         <div class="item_box" @click="openSearchDialog">
-            <div class="item" style="pointer-events: none;"
-                :class="{ 'item_focus': searchFocus || (searchStr && !currStock.symbol) }">
-                <span class="ipt_tip" v-show="!(currStock.symbol && !searchFocus)">股票代码</span>
-                <input disabled :style="{ 'opacity': (currStock.symbol && !searchFocus) ? '0' : '1' }"
-                    @focus="searchFocus = true, searchStr = currStock.symbol || searchStr" @blur="blurSearch"
-                    v-model.trim="searchStr" @keyup="inputSearch" class="ipt" type="text">
-                <div class="base_ipt" v-show="currStock.symbol && searchFocus">{{ currStock.symbol }}
-                </div>
-
-                <div class="info" v-show="currStock.symbol && !searchFocus">
+            <div class="item">
+                <div class="info">
                     <div style="flex:1;">
                         <div class="info-symbol">{{ currStock.symbol }}</div>
                         <div class="info-name">{{ currStock.name }}</div>
@@ -144,31 +136,25 @@
 
         <!-- 数量 -->
         <div class="item_box">
-            <div class="item_box_left" @click="showTypeDialog = true">
+            <div class="item_box_left" @click="openTypeDialog">
                 <div class="subtitle"><span>保证金模式</span></div>
-                <div class="item" style="justify-content: center;">
-                    <span>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
+                <div class="item justify-between" :class="{disabled_item:!levers.length}">
+                    <span v-if="!levers.length">--</span>
+                    <span v-else>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
                     <div class="more_icon">
                         <img src="/static/img/trade/down.png" alt="↓">
                     </div>
                 </div>
             </div>
-
+            
             <div class="item_box_right">
-                <div class="subtitle">
-                    <span>数量</span>
-                    <span style="color:#666D80;">
-                        ≤ {{ maxStockNum }}
-                    </span>
-                    
-                </div>
-                <div class="item" :class="{ 'item_focus2': amountFocus }">
-                    <span @click="putAll"
-                        :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                        style="color: #014CFA;position: absolute;right: 0.24rem;font-size: 0.24rem;z-index:9999;transition: all ease .3s">全部</span>
-                    <input v-model="form1.volume" @focus="amountFocus = true" @blur="amountFocus = false;amountBlur()"
-                        @change="changePercent" type="number" class="ipt">
-                </div>
+
+                <FormItem title="数量"  v-model="form1.volume" show-btn @btnClick="putAll"  @change="changePercent" input-type="number" :tip="'余额 '+stockWalletAmount" tip-align="right">
+                    <template #title-right>
+                        {{ maxStockNum <= 0 ? '账户余额不足' : '≤ ' + maxStockNum }}
+                    </template>
+                </FormItem>
+                
             </div>
         </div>
 
@@ -276,10 +262,13 @@
     <!-- <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
         title="保证金模式">
     </ActionSheet> -->
-    <Popup v-model:show="showTypeDialog" round position="bottom" teleport="body">
-        <Picker :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
-            @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
-    </Popup>
+    <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom" teleport="body">
+       
+       <div class="van-popup-custom-title">保证金模式</div>
+       <div class="van-popup-custom__top-rbtn" @click="showTypeDialog=false;">确认</div>
+       <Picker  :show-toolbar="false" :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
+           @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
+   </Popup>
 
     <!-- 限价模式选择 -->
     <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
@@ -353,19 +342,7 @@ const openSearchDialog = () => {
     showSearchDialog.value = true
     goDialogSearch('stock')
 }
-const handleClick = item => {
-    showSearchDialog.value = false
-    currStock.value = item
-    _basic({ symbol: currStock.value.symbol }).then(r => {
-        if (r && r.data && r.data.symbol) {
-            currStock.value = {
-                ...currStock.value,
-                ...r.data
-            }
-            sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
-        }
-    })
-}
+
 store.commit('setMarketSearch', {
     search: '',
     market: 'stock',
@@ -430,7 +407,7 @@ const modeMap = ref({
 // 市价-类型
 const showTypeDialog = ref(false)
 const onSelectForm1Type = (item) => {
-    // showTypeDialog.value = false
+    showTypeDialog.value = false
     form1.value.leverType = item.selectedValues[0]
     form1.value.lever = item.selectedValues[1]
 }
@@ -653,11 +630,6 @@ const submit1 = () => {
     safePass.value = ''
     showModel.value = true
 }
-const amountFocus = ref(false)
-const priceFocus = ref(false)
-const priceFocus2 = ref(false)
-const priceFocus3 = ref(false)
-
 
 // 全部
 const putAll = () => {
@@ -686,87 +658,11 @@ const changePercent = () => {
     sliderValue.value = Number(p)
 }
 
-const amountBlur = ()=>{
-    nextTick(()=>{
-        if(form1.value.volume > maxStockNum.value){
-            form1.value.volume = maxStockNum.value
-        }
-    })
-}
+
 // 市价-搜索
 const searchLoading = ref(false)
-const searchFocus = ref(false)
-const searchStr = ref('')
-const blurSearch = () => {
-    searchFocus.value = false
-    if (!currStock.value.symbol && searchStr.value) { // 失去焦点时没有结果的情况
-        sureStock()
-    }
-}
-let searchTimeout = null
-const inputSearch = () => {
-    searchStr.value = searchStr.value.toUpperCase()
-    currStock.value = {}
-    if (searchTimeout) clearTimeout(searchTimeout)
-    searchTimeout = setTimeout(() => {
-        if (searchStr.value == '') {
-            currStock.value = {}
-            return
-        }
-        goSearch()
-    }, 600)
-}
-// 用详情接口来确认搜索到的股票
-const sureStock = () => {
-    searchLoading.value = true
-    _basic({ symbol: searchStr.value.toUpperCase() }).then(r => {
-        if (r && r.data && r.data.symbol) {
-            currStock.value = {
-                ...currStock.value,
-                ...r.data
-            }
-            sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
-        }
-    }).finally(() => {
-        searchLoading.value = false
-    })
-}
-const goSearch = () => {
-    searchLoading.value = true
-    const s = searchStr.value
-    _search({
-        symbol: s,
-        mode: 'right',
-        page: 1,
-        market: 'stock'
-    }).then(res => {
-        if (s != searchStr.value) return // 搜索内容已经变化就不处理了
-        if (!searchFocus.value) return // 失去焦点就不处理了
-        if (res && res.data && res.data[0]) {
 
-            currStock.value = res.data[0]
-            _basic({ symbol: currStock.value.symbol }).then(r => {
-                if (r && r.data && r.data.symbol) {
-                    currStock.value = {
-                        ...currStock.value,
-                        ...r.data
-                    }
-                    sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
-                }
-            })
-        } else {
-            currStock.value = {}
-        }
-    }).finally(() => {
-        searchLoading.value = false
-    })
-}
-// url参数处理
-if (route.query.symbol) {
-    searchStr.value = route.query.symbol
-    // activeType.value = route.query.type || 1
-    goSearch()
-}
+let searchTimeout = null
 
 
 // 下单限制的参数
@@ -776,9 +672,10 @@ const openFee = ref(0) // 开仓手续费
 const closeFee = ref(0) // 平仓手续费
 const flowerFee = ref(0) // 印花税
 const configLoading = ref(false)
-const levers = ref([1]) // 杠杆
+const levers = ref([]) // 杠杆
 const getParam = () => {
     configLoading.value = true
+    levers.value = []
     paramHandle()
     _stocksPara({
         symbol:currStock.value.symbol
@@ -832,15 +729,41 @@ const initParam = ()=>{
         closeFee.value = 0
         flowerFee.value = 0
         configLoading.value = false
-        levers.value = [1]
+        levers.value = []
     }
 }
 initParam()
 
-watch(currStock,()=>{
-   initParam()
-})
 
+const handleClick = item => {
+    showSearchDialog.value = false
+    currStock.value = item
+    initParam()
+    _basic({ symbol: currStock.value.symbol }).then(r => {
+        if (r && r.data && r.data.symbol) {
+            currStock.value = {
+                ...currStock.value,
+                ...r.data
+            }
+            sessionStorage.setItem('currStock', JSON.stringify(currStock.value))
+        }
+    })
+}
+
+// url参数处理
+if (route.query.symbol) {
+    handleClick({
+        symbol:route.query.symbol
+    })
+}
+
+
+const openTypeDialog = ()=>{
+    if(!levers.value.length){
+        return
+    }
+    showTypeDialog.value = true
+}
 
 // 开仓
 const params = ref({})
@@ -914,17 +837,7 @@ const jump = (name) => {
 
 // 选择某个股票
 const choose = (item) => {
-    currStock.value = item
-    _basic({ symbol: item.symbol }).then(r => {
-        if (r && r.data && r.data.symbol) {
-            if (item.symbol == currStock.value.symbol) {
-                currStock.value = {
-                    ...currStock.value,
-                    ...r.data
-                }
-            }
-        }
-    })
+    handleClick(item)
 }
 
 defineExpose({
@@ -1072,19 +985,6 @@ defineExpose({
 
         .disabled_item {
             background-color: #f5f5f5;
-        }
-
-        .item_focus {
-            height: 1.12rem;
-            border: 1px solid #034cfa;
-
-            .ipt_tip {
-                font-size: 0.2rem;
-                transform: translateY(-0.36rem);
-            }
-        }
-        .item_focus2{
-            border: 1px solid #034cfa;
         }
 
         .item_box_left {
@@ -1237,15 +1137,5 @@ defineExpose({
         }
     }
 }
-.num-tag{
-    color: #2168F6;
-    margin-left: 0.08rem;
-    transition: all ease .3s;
-    border-radius: 0.3rem;
-    background: rgba(33, 104, 246, 0.10);
-    font-size: 0.24rem;
-    padding: 0 0.14rem;
-    height: 0.4rem;
-    line-height: 0.4rem;
-}
+
 </style>
