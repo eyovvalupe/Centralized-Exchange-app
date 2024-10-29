@@ -67,13 +67,11 @@ const cryptoList = computed(() =>
   accountList.value.filter((item) => item.channel == "crypto")
 ); // 加密货币
 const selectedPayment = computed(() => store.state.selectedPayment || '0')
-console.log("store key ===========> ", selectedPayment.value)
 // tabs
 const active = ref(0);
 const changeTab = (key) => {
-  console.log("key =============> ", key)
-  active.value = key;
   store.commit('setSelectedPayment', key)
+  active.value = selectedPayment.value;
 };
 
 // 打开添加类型选择弹窗

@@ -176,14 +176,14 @@ getSessionToken()
 
     .item {
         width: 100%;
-        height: 1.12rem;
-        border: 1px solid #D0D8E2;
+        height: 0.92rem;
+        border: 0.02rem solid #D0D8E2;
         border-radius: 0.32rem;
         margin-bottom: 0.22rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 0.44rem;
+        padding: 0 0.36rem;
 
         .ipt {
             flex: 1;

@@ -144,7 +144,7 @@
         <div class="flex justify-between items-center mx-[0.32rem] mt-[0.24rem]">
           <div @click="cancelDate" class="close-icon"></div>
           <div
-              @click="confirmDate"
+            @click="confirmDate"
             class="w-[1.2rem] h-[0.6rem] rounded-[0.32rem] bg-[#014CFA] text-white text-[0.3rem] flex items-center justify-center font-medium"
           >
             确认
@@ -157,6 +157,7 @@
           title="出生日期"
           :min-date="minDate"
           :max-date="maxDate"
+          class="date_picker"
         />
       </Popup>
     </div>
@@ -203,7 +204,7 @@
     showBottom.value = false;
   };
   const confirmDate = () => {
-   form.value.birthday = currentDate.value.join("/");
+    form.value.birthday = currentDate.value.join("/");
     showBottom.value = false;
   };
   
@@ -218,7 +219,7 @@
     form.value.idnum = props.kycInfo.idnum;
     form.value.birthday = props.kycInfo.birthday;
     if (props.kycInfo.birthday) {
-      currentDate.value = props.kycInfo.birthday.split(",");
+      currentDate.value = props.kycInfo.birthday.split("/");
     }
   }
   
@@ -372,6 +373,5 @@
     background-size: contain;
     background-repeat: no-repeat;
   }
-  
   </style>
   
