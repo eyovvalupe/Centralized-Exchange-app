@@ -262,10 +262,6 @@ const loginout = () => {
 const jump = (name, needLogin, query) => {
   if (needLogin && !token.value) {
     store.commit("setIsLoginOpen", true);
-    // router.push({
-    //     name: 'login',
-    //     query
-    // })
     return;
   }
   if (name == "googleCode") {

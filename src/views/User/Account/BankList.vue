@@ -5,16 +5,16 @@
     </div>
     <div class="list_detail">
       <div class="bank_icon_container mr-[0.2rem]">
-        <div class="building_icon"></div>
+        <div class="emg_company_icon"></div>
       </div>
       <div class="flex flex-col">
         <div class="flex flex-row items-center">
           <span class="text-[0.32rem] text-[#121212] font-semibold mr-[0.2rem]"
-            >**** **** **** 94re</span
+            >**** **** **** 2325</span
           >
           <div class="copy_icon" @click="copyToClipboard(item.address)"></div>
         </div>
-        <span class="text-[0.28rem] text-[#666d80]">USDT</span>
+        <span class="text-[0.28rem] text-[#666d80]">建设银行</span>
       </div>
     </div>
   </div>
