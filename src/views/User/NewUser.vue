@@ -20,11 +20,11 @@
       </div>
       <div
         v-else
-        class="flex items-center -ml-[0.08rem] gap-[0.16rem] mb-[0.2rem]"
+        class="flex items-center -ml-[0.08rem] gap-[0.16rem]"
         @click="store.commit('setIsLoginOpen', true)"
       >
         <div class="default-avatar"></div>
-        <div>登录/注册</div>
+        <div class="text-[0.32rem]">登录/注册</div>
       </div>
       <div class="flex items-center justify-center gap-[0.16rem]">
         <div

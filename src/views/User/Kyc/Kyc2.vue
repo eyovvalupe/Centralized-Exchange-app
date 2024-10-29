@@ -76,11 +76,30 @@
   
       <!-- 表单模式头部 -->
       <div class="steps" v-if="!checkMode">
-        <div class="step curr_step">1</div>
-        <div class="line"></div>
-        <div class="step finish_step">2</div>
-      </div>
-      <div class="title" v-if="!checkMode">上传照片</div>
+          <div
+            class="bg-[#D9E4FF] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center"
+          >
+            <div
+              class="bg-[#014CFA] w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center"
+            >
+              <div class="check-icon"></div>
+            </div>
+          </div>
+          <div class="w-[3.04rem] h-[0.16rem] bg-[#F5F7FC]"></div>
+          <div
+            class="bg-[#D9E4FF] w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center"
+          >
+            <div
+              class="bg-[#014CFA] w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center"
+            >
+              <div class="bg-[#D9E4FF] w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
+            </div>
+          </div>
+        </div>
+        <div class="steps" v-if="!checkMode">
+          <div class="text-[0.28rem] text-[#061023] mr-[2.52rem]">基本信息</div>
+          <div class="text-[0.28rem] text-[#8F92A1]">证件上传</div>
+        </div>
   
       <!-- 表单 -->
       <!-- 上传元素 -->
@@ -454,43 +473,12 @@
     padding: 1.24rem 0.32rem 0.4rem 0.32rem;
     height: 100%;
     overflow-y: auto;
-  
     .steps {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 0.52rem;
-  
-      .step {
-        background-color: #e5e4e9;
-        width: 0.48rem;
-        height: 0.48rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.28rem;
-        border-radius: 50%;
-        color: #b0afb4;
+        margin-bottom: 0.2rem;
       }
-  
-      .curr_step {
-        border: 2px solid #014cfa;
-        background-color: #fff;
-      }
-  
-      .finish_step {
-        background-color: #014cfa;
-        color: #fff;
-      }
-  
-      .line {
-        height: 3px;
-        border-radius: 3px;
-        background-color: #d9d9d9;
-        width: 1rem;
-        margin: 0 0.2rem;
-      }
-    }
   
     .kyc_status {
       display: flex;
@@ -731,6 +719,13 @@
         }
       }
     }
+  }
+  .check-icon {
+    width: 0.28rem; /* Adjust width as needed */
+    height: 0.22rem; /* Adjust height as needed */
+    background-image: url('data:image/svg+xml;utf8,<svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 6.6L4.2 9.8L13 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
   }
   </style>
   

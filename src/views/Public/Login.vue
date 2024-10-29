@@ -649,7 +649,7 @@ onMounted(() => {
     display: flex;
     width: 100%;
     height: 1.1rem;
-    padding: 0.16rem;
+    padding: 0.32rem;
     justify-content: center;
     align-items: center;
 
