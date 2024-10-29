@@ -6,7 +6,7 @@
     <GoogleVerfCode ref="googleRef" @submit="(code) => submit(code, item.id)" />
     <div class="list_detail">
       <div class="bank_icon_container mr-[0.2rem]">
-        <div class="emg_company_icon"></div>
+        <div :class="item.bankName == '建设银行' ? 'building_icon' : item.bankName == '工商银行' ? 'ecobusiness_icon' : item.bankName == '工商银行' ? 'company_icon' : 'emg_company_icon'"></div>
       </div>
       <div class="flex flex-col">
         <div class="flex flex-row items-center">
