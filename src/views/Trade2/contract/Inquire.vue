@@ -2,17 +2,17 @@
 <template>
     <div class="inquire" v-if="token">
         <div class="tr th">
-            <div class="td td-5">合约/状态</div>
-            <div class="td td-4">开仓/可售</div>
-            <div class="td td-4">现价/成本</div>
-            <div class="td td-4">盈亏/盈亏比</div>
+            <div class="td td-5">合约</div>
+            <div class="td td-4">开仓/数量</div>
+            <div class="td td-4">卖价/买价</div>
+            <div class="td td-4">盈亏</div>
         </div>
         <NoData v-if="!loading && !contractInquireList.length" />
 
         <SwipeCell ref="items" v-for="(item, i) in contractInquireList" :key="i" disabled>
             <div class="tr">
                 <div class="td td-5">
-                    <div class="name">{{ item.symbol }}</div>
+                    <div class="name">{{ item.name }}</div>
                     <div class="lever">
                         <div class="status">{{ item.lever }}X</div>
                         <div class="status" :class="'status-' + item.status">{{ statusMap[item.status] || '--' }}</div>
@@ -185,7 +185,7 @@ defineExpose({
         padding: 0.48rem 0 0.24rem 0;
         background: none;
         margin-top:0px;
-        
+        border-radius: 0px;
     }
 
     .td {
