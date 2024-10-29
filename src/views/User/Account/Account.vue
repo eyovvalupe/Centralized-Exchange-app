@@ -112,7 +112,7 @@ const goAddAccount = async () => {
     });
   }
   // showAS.value = true;
-  jump('crypto')
+  jump('bank')
 };
 const onSelect = async (item) => {
   showAS.value = false;
@@ -143,11 +143,6 @@ onMounted(() => {
     pageLoading.value = false;
   }, 500);
 });
-
-Promise.all([
-  import("@/views/User/Account/Bank.vue"),
-  import("@/views/User/Account/Crypto.vue"),
-]);
 
 const goBack = () => {
   if (route.query.reurl) {
@@ -264,128 +259,6 @@ const goBack = () => {
     }
   }
 
-  //   :deep(.van-action-sheet__content) {
-  //     padding: 0.4rem 0 1rem 0;
-
-  //     .van-action-sheet__item {
-  //       padding: 0.32rem;
-  //       border-bottom: 1px solid #f5f5f5;
-  //     }
-  //   }
-
-  //   .tabs {
-  //     overflow: hidden;
-
-  //     :deep(.van-tab__panel) {
-  //       // height: calc(var(--app-height) - 3.4rem);
-  //       // overflow-y: auto;
-  //     }
-
-  //     :deep(.van-tabs__nav--card) {
-  //       border: none;
-  //     }
-
-  //     :deep(.van-tab--card) {
-  //       border-right: none;
-  //       color: #061023;
-  //       // background-color: #f5f5f5;
-  //       // border-radius: 0.3rem;
-  //       // margin-left: 0.1rem;
-  //       // transition: all ease .2s;
-  //     }
-
-  //     :deep(.van-tab--card.van-tab--active) {
-  //       // background-color: #014CFA;
-  //       // color: #fff;
-
-  //       background-color: #f6f8ff;
-  //       border-radius: 0.3rem;
-  //       color: #014cfa;
-  //       font-weight: 500;
-  //     }
-
-  //     :deep(.van-tab--shrink) {
-  //       padding: 0 0.3rem;
-  //     }
-
-  //     :deep(.van-tabs__wrap) {
-  //       height: 0.8rem;
-  //       border-bottom: 1px solid rgba(0, 0, 0, 0);
-  //       padding-bottom: 0.2rem;
-  //     }
-
-  //     :deep(.van-tabs__nav--card) {
-  //       height: 0.6rem;
-  //     }
-
-  //     :deep(.van-tab) {
-  //       line-height: 0.6rem;
-  //       font-size: 0.28rem;
-  //     }
-  //   }
-
-  // .list {
-  //   padding-top: 0.5rem;
-
-  //   .add_item {
-  //     border: 1px dashed #ccd7fd;
-  //     border-radius: 0.24rem;
-  //     margin-bottom: 0.2rem;
-  //     height: 1.44rem;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  //   }
-
-  //   .subtitle {
-  //     margin-bottom: 0.2rem;
-  //     margin-top: 0.4rem;
-  //     font-size: 0.28rem;
-  //     line-height: 0.44rem;
-  //     color: #111111;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: space-between;
-
-  //     .add_box {
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       font-weight: 400;
-  //       font-size: 0.28rem;
-  //       color: #000000;
-
-  //       .add_icon {
-  //         width: 0.44rem;
-  //         height: 0.44rem;
-  //         margin-right: 0.08rem;
-  //       }
-  //     }
-  //   }
-
-  //   .item {
-  //     background-color: #f6f7fa;
-  //     padding: 0.24rem 0.24rem 0.24rem 1.44rem;
-  //     border-radius: 0.24rem;
-  //     margin-bottom: 0.2rem;
-  //     height: 1.44rem;
-  //     color: #061023;
-  //     font-size: 0.28rem;
-  //     line-height: 0.48rem;
-  //     position: relative;
-
-  //     .icon_box {
-  //       width: 0.96rem;
-  //       height: 0.96rem;
-  //       background-color: #d9e4ff;
-  //       border-radius: 0.24rem;
-  //       padding: 0.16rem;
-  //       position: absolute;
-  //       left: 0.24rem;
-  //       top: 0.24rem;
-  //     }
-  //   }
-  // }
   .list {
     width: 100%;
     padding: 0.02rem;
