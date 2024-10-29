@@ -45,17 +45,13 @@
             <div class="van-popup-custom-title">平仓</div>
             <div class="order_sell_box">
                 <div class="form">
-                    <div class="subtitle">
-                        <span>数量</span>
-                        <span class="subtitle-tip">持仓数量 {{ currStock.unsold_volume }}</span>
-                    </div>
-                    <div class="item">
-                        <input @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
-                            @input="changeValue" type="number" class="ipt">
-                        <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                            style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
-                            @click="onSliderChange(100)">全部</span>
-                    </div>
+                    
+                    <FormItem title="张数" :max="currStock.unsold_volume" size="large" btn-show-mode="focus" v-model="sellForm.volume" input-type="digit" @change="changeValue" show-btn @btnClick="onSliderChange(100)">
+                        <template #title-right>
+                            持仓张数 {{ currStock.unsold_volume }}
+                        </template>
+                    </FormItem>
+                    
                     <div style="height:0.47rem;"></div>
 
                     <!-- 拖动 -->
@@ -152,17 +148,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="subtitle">
-                        <span>增加保证金</span>
-                        <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
-                    </div>
-                    <div class="item">
-                        <input @focus="amountFocus = true" @blur="amountFocus = false" @input="changeAmount"
-                            v-model="updateForm.amount" type="number" class="ipt">
-                        <span :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                            style="color: #014CFA;word-break: keep-all;transition: all ease .3s"
-                            @click="onSliderChange(100)">全部</span>
-                    </div>
+                    <FormItem size="large" input-type="number" v-model="updateForm.amount" title="增加保证金" btn-show-mode="focus" :show-btn="stockWalletAmount > 0" @change="changeAmount" @btnClick="onSliderChange(100)">
+                        <template #title-right>
+                            ≤ {{ stockWalletAmount }}
+                        </template>
+                    </FormItem>
+                    
                     <div style="height:0.47rem;"></div>
                     <!-- 拖动 -->
                     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
@@ -332,7 +323,7 @@ const sell = item => {
 const sellLoading = ref(false)
 const goSellDialog = () => {
     if (sellLoading.value) return
-    if (!sellForm.value.volume) return showToast('请输入平仓数量')
+    if (!sellForm.value.volume) return showToast('请输入平仓张数')
     if (!sellForm.value.safeword) return showToast('请输入交易密码')
     goSell(sellForm.value.safeword)
     //showSell.value = false

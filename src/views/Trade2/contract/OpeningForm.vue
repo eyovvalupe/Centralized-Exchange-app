@@ -136,11 +136,11 @@
             </div>
         </div>
 
-        <!-- 数量 -->
+        <!-- 张数 -->
         <div class="item_box">
             <div class="item_box_left" @click="openTypeDialog">
                 <div class="subtitle"><span>保证金模式</span></div>
-                <div class="item justify-between" :class="{disabled_item:!levers.length}">
+                <div class="item justify-between">
                     <span v-if="!levers.length">--</span>
                     <span v-else>{{ modeMap[form1.leverType] || '--' }} {{ form1.lever }}X</span>
                     <div class="more_icon">
@@ -150,9 +150,9 @@
             </div>
 
             <div class="item_box_right">
-                <FormItem title="张数"  v-model="form1.volume" show-btn @btnClick="putAll" @change="changePercent"  input-type="number"  :tip="'余额 '+stockWalletAmount" tip-align="right">
+                <FormItem title="张数"  v-model="form1.volume" :show-btn="maxStockNum >= 1" @btnClick="putAll" @change="changePercent"  input-type="digit" tip-align="right">
                     <template #title-right>
-                        {{ maxStockNum <= 0 ? '账户余额不足' : '≤ ' + maxStockNum }}
+                        {{ (maxStockNum <= 0 && '账户余额不足') || (maxStockNum > 0 && '≤ ' + maxStockNum) || '' }}
                     </template>
                 </FormItem>
 
@@ -183,8 +183,8 @@
                 <div class="item_name">合约</div>
                 <div class="item_val">
                     <div style="line-height: 0.36rem;">
-                        <div style="text-align: right;font-size:0.3rem;">{{ currStock.symbol }}</div>
-                        <div style="color: #9EA3AE;font-size: 0.24rem;">{{ currStock.name }}</div>
+                        <div style="text-align: right;font-size:0.3rem;">{{ currStock.name }}</div>
+                        <!-- <div style="color: #9EA3AE;font-size: 0.24rem;">{{ currStock.name }}</div> -->
                     </div>
                 </div>
             </div>
@@ -206,7 +206,7 @@
                 </div>
             </div>
             <div class="item">
-                <div class="item_name">开仓数量</div>
+                <div class="item_name">开仓张数</div>
                 <div class="item_val">{{ params.volume }}</div>
             </div>
             <div class="item">
@@ -238,6 +238,7 @@
                 <div class="fee">保证金 <span>{{ payOrigin }}</span> + 手续费 <span>{{ payFee }}</span></div>
             </div>
 
+            
             <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
                 <input v-model="safePass" placeholder="请输入交易密码" :type="showPassword ? 'text' : 'password'" class="ipt" />
@@ -766,6 +767,9 @@ if (route.query.symbol) {
 
 const openTypeDialog = ()=>{
     if(!levers.value.length){
+        if(!currStock.symbol){
+            showToast('请选择合约')
+        }
         return
     }
     showTypeDialog.value = true

@@ -11,7 +11,7 @@
             <span class="ipt_tip" :class="{'ipt_tip--right':tipAlign=='right'}" v-if="tip" v-show="inputFocus">{{tip}}</span>
             
             <slot v-if="custom" />
-            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false" :type="inputType" class="ipt" @input="onInput" @change="inputChange" :placeholder="placeholder">
+            <input :disabled="disabled" v-else v-model="inputVal" @focus="inputFocus = true" @blur="inputFocus = false;inputBlur()" :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput" :placeholder="placeholder">
 
             <span class="pwd_icon" v-if="inputType == 'password'">
                 <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword=true" alt="off" />
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-import { watch } from "vue"
+import { nextTick, watch } from "vue"
 const showPassword = ref(false)
 const emit = defineEmits(['update:modelValue','percentTagClick','putAll','change','btnClick'])
 const props = defineProps({
@@ -50,6 +50,10 @@ const props = defineProps({
     size:{
         type:String,
         default:''
+    },
+    max:{
+        type:[Number,String],
+        default:0
     },
     background:String,
     title:String,
@@ -88,13 +92,35 @@ watch(()=>props.modelValue,()=>{
     }
     inputVal.value = props.modelValue
 })
-const inputChange = ()=>{
+
+const reg = /^\d$/
+const reg2 = /^[\d\.]$/
+const inputBlur = ()=>{
+    console.log('blur')
+    if(props.inputType == 'digit' || props.inputType == 'number'){
+        inputVal.value = parseFloat(inputVal.value).toString()
+        if(inputVal.value == '0'){
+            inputVal.value = ''
+        }
+        
+    }
     emit('update:modelValue',inputVal.value)
     emit('change',inputVal.value)
 }
+
+const validateKeydown = (e)=>{
+
+    if(props.inputType == 'digit' && e.key != 'Backspace'){
+        if (!reg.test(e.key)) {
+            e.preventDefault();
+        }
+
+    }
+}
+
 const onInput = ()=>{
-    if(inputVal.value == 0){
-        inputVal.value = ''
+    if((props.inputType == 'digit' || props.inputType == 'number') && props.max > 0 && inputVal.value > props.max){
+        inputVal.value = props.max
     }
     emit('update:modelValue',inputVal.value)
 }
