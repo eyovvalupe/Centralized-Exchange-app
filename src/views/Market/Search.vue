@@ -5,7 +5,6 @@
     <!-- 搜索框 -->
     <div class="search_box">
       <div class="icon">
-        <!-- <img src="/static/img/common/search.png" alt="🔍" /> -->
         <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
       </div>
       <input
@@ -31,7 +30,6 @@
       <div class="flex justify-between items-center mb-4">
         <div class="text-[0.32rem]">搜索历史</div>
         <div class="w-[0.4rem] h-[0.4rem]" @click="clearSearchHistory">
-          <!-- <img src="/static/img/market/clear.svg" alt="img" /> -->
           <div class="clearIcon"></div>
         </div>
       </div>
