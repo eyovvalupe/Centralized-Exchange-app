@@ -616,8 +616,8 @@ onMounted(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 0.32rem;
-        height: 0.32rem;
+        width: 0.36rem;
+        height: 0.36rem;
         padding: 0.02rem;
         border-radius: 50%;
 
@@ -649,7 +649,7 @@ onMounted(() => {
     display: flex;
     width: 100%;
     height: 1.1rem;
-    padding: 0.32rem;
+    padding-inline: 0.32rem;
     justify-content: center;
     align-items: center;
 
@@ -765,6 +765,7 @@ onMounted(() => {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .envelope-icon {
   width: 0.64rem;
   height: 0.64rem;
