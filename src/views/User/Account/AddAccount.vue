@@ -133,7 +133,6 @@ import {
   Tabs,
   Tab,
   Icon,
-  showConfirmDialog,
   Button,
   Popup,
   showToast,
@@ -142,7 +141,7 @@ import store from "@/store";
 import { computed, ref, onMounted } from "vue";
 import router from "@/router";
 import { _hiddenAccount } from "@/utils/index";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { _userinfo, _addAccount, _cryptoCoin } from "@/api/api";
 import Bank from "./Bank.vue";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";

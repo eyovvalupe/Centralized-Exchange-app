@@ -30,7 +30,7 @@
             <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
           </div>
           <div class="list" v-else>
-            <BankList />
+            <BankList :list="bankList"/>
           </div>
         </div>
       </Tab>
