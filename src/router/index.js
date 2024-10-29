@@ -137,7 +137,7 @@ const routes = [
     // 添加银行卡
     path: '/bank',
     name: 'bank',
-    component: () => import('../views/User/Account/bank.vue'),
+    component: () => import('../views/User/Account/AddAccount.vue'),
     meta: {
       keepAlive: false,
       pageType: 'child',

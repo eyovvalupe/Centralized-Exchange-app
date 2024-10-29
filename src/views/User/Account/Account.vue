@@ -1,14 +1,7 @@
 <!-- 收款账户 -->
 <template>
   <div class="page page_account">
-    <div class="top_icon_container">
-      <div class="top_back_container text-[0.48rem]" @click="goBack">
-        <Icon name="arrow-left" />
-      </div>
-
-      <div><span class="text-[0.36rem]">收款账户</span></div>
-      <div></div>
-    </div>
+    <Top :title="'收款账户'"/>
     <Tabs
       type="card"
       class="tab_content tabs"
@@ -42,10 +35,6 @@
         </div>
       </Tab>
     </Tabs>
-
-    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" />
-    <!-- <div class="text-[0.48rem]"><Icon name="arrow-left" /></div> -->
-
     <div class="add_btn" @click="goAddAccount"><span class="text-[white] text-[0.36rem] font-normal">添加收款账户</span></div>
   </div>
 </template>
@@ -63,6 +52,7 @@ import Crypto from './Crypto.vue'
 import Check from './Check.vue'
 import CryptoList from "./CryptoList.vue";
 import BankList from "./BankList.vue";
+import Top from "@/components/Top.vue";
 
 const route = useRoute();
 
@@ -70,19 +60,20 @@ store.dispatch("updateAccountList");
 
 const userInfo = computed(() => store.state.userInfo || {});
 const accountList = computed(() => store.state.accountList || []); // 收款方式列表
-console.log('account list ============> ', accountList.value)
 const bankList = computed(() =>
   accountList.value.filter((item) => item.channel == "bank")
 ); // 银行卡
-console.log("bank list ==========> ", bankList.value)
 const cryptoList = computed(() =>
   accountList.value.filter((item) => item.channel == "crypto")
 ); // 加密货币
-console.log('crypto list =========> ', cryptoList.value)
+const selectedPayment = computed(() => store.state.selectedPayment || '0')
+console.log("store key ===========> ", selectedPayment.value)
 // tabs
 const active = ref(0);
 const changeTab = (key) => {
+  console.log("key =============> ", key)
   active.value = key;
+  store.commit('setSelectedPayment', key)
 };
 
 // 打开添加类型选择弹窗
@@ -165,47 +156,8 @@ const goBack = () => {
   padding: 0 0.32rem;
   height: 100%;
 
-  .top_icon_container {
-    width: 7.5rem;
-    justify-content: space-between;
-    height: 1.12rem;
-    display: flex;
-    align-items: center;
-    top: 0;
-    background-color: #fff;
-    margin-bottom: 0.2rem;
-
-    .top_back_container {
-      .arrow_icon {
-        width: 20px;
-        height: 20px;
-        clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
-      }
-    }
-
-    .language_icon_container {
-      width: 0.72rem;
-      height: 0.72rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-width: 0.02rem;
-      border-color: #edf2f7;
-      border-radius: 0.36rem;
-
-      .language_icon {
-        width: 0.432rem;
-        height: 0.432rem;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><g clip-path="url(%23clip0_129_5851)"><path d="M10.8912 0.306641C4.98556 0.306641 0.199219 5.09298 0.199219 10.9986C0.199219 16.9043 4.98556 21.6906 10.8912 21.6906C16.7969 21.6906 21.5832 16.9043 21.5832 10.9986C21.5832 5.09298 16.7969 0.306641 10.8912 0.306641ZM20.1075 10.2858H17.2814C17.1588 7.20075 16.2567 4.47207 14.8952 2.65108C17.7993 4.04606 19.8458 6.91396 20.1075 10.2858ZM15.8446 10.2858H11.604V1.83805C13.8956 2.44782 15.6664 5.94778 15.8446 10.2858ZM10.1784 1.83805V10.2858H5.93782C6.11602 5.94778 7.88688 2.44782 10.1784 1.83805ZM6.88729 2.65108C5.52294 4.47207 4.62359 7.19797 4.50108 10.2858H1.67494C1.93667 6.91396 3.98318 4.04606 6.88729 2.65108ZM1.67494 11.7114H4.49829C4.62081 14.7965 5.52294 17.5252 6.8845 19.3462C3.98318 17.9512 1.93667 15.0833 1.67494 11.7114ZM5.93782 11.7114H10.1784V20.1592C7.88688 19.5495 6.11602 16.0495 5.93782 11.7114ZM11.604 20.1592V11.7114H15.8446C15.6664 16.0495 13.8956 19.5495 11.604 20.1592ZM14.8952 19.3462C16.2595 17.5252 17.1588 14.7993 17.2814 11.7114H20.1047C19.8458 15.0833 17.7993 17.9512 14.8952 19.3462Z" fill="%23666D80"/></g><defs><clipPath id="clip0_129_5851"><rect width="21.6" height="21.6" fill="white" transform="translate(0.199219 0.199219)"/></clipPath></defs></svg>');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-    }
-  }
-
   :deep(.van-tabs__wrap) {
+    margin-top: 1.2rem;
     height: 0.92rem;
     margin-bottom: 0.4rem;
 

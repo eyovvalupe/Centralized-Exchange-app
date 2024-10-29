@@ -14,6 +14,7 @@ const store = createStore({
     transitionName: '', // 页面过渡动画名字
     token: '',
     userInfo: {}, // 用户详情
+    selectedPayment: 0,
     accountList: [], // 收款方式列表
     sessionToken: '', // 关键请求token
     isLoginOpen: false, // 登录弹窗开关
@@ -24,6 +25,9 @@ const store = createStore({
     ...assets.state,
   },
   mutations: {
+    setSelectedPayment(state, data) {
+      state.selectedPayment = data
+    },
     setFullscreen(state, data) {
       state.fullscreen = data
     },

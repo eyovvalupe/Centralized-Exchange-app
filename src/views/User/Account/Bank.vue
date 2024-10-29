@@ -1,8 +1,6 @@
 <!-- 添加银行卡 -->
 <template>
     <div class="page page_bank">
-        <Top :title="'银行卡'" />
-
         <div class="subtitle">持卡人姓名</div>
         <div class="item">
             <span style="flex: 1;">{{ name || '--' }}</span>
@@ -86,15 +84,14 @@ getSessionToken()
 
 // 获取真实姓名
 const name = ref('')
-_kycGet().then(res => {
-    name.value = res?.data?.name || ''
-    form.value.account_name = res?.data?.name || ''
-})
+// _kycGet().then(res => {
+//     name.value = res?.data?.name || ''
+//     form.value.account_name = res?.data?.name || ''
+// })
 </script>
 
 <style lang="less" scoped>
 .page_bank {
-    padding: 1.4rem 0.32rem 1rem 0.32rem;
     height: 100%;
     display: flex;
     flex-direction: column;

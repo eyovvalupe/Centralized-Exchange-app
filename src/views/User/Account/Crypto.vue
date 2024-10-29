@@ -1,8 +1,7 @@
 <!-- 添加加密货币 -->
 <template>
     <div class="page page_crypto">
-
-        <div class="subtitle">加密货币</div>
+        <div class="subtitle">币种</div>
         <div class="item" @click="showCrypto = true">
             <div class="iten_icon">
                 <img :src="`/static/img/crypto/${form.currency}.png`" alt="usdt">
@@ -161,7 +160,6 @@ getSessionToken()
 
 <style lang="less" scoped>
 .page_crypto {
-    padding: 1.4rem 0.32rem 1rem 0.32rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -172,7 +170,7 @@ getSessionToken()
         font-weight: 400;
         font-size: 0.28rem;
         line-height: 0.36rem;
-        color: #333333;
+        color: #061023;
         margin-bottom: 0.15rem;
     }
 
