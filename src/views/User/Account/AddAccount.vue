@@ -57,12 +57,12 @@
                   type="primary"
                   round
                   color="#014CFA"
-                  @click="next"
+                  @click="submit"
                   >保存</Button
                 >
               </div>
               <!-- 谷歌验证 -->
-              <GoogleVerfCode ref="googleRef" @submit="submit" />
+              <!-- <GoogleVerfCode ref="googleRef" @submit="submit" /> -->
             </div>
           </div>
         </div>
@@ -177,9 +177,10 @@ const currNetwork = computed(() => {
   return coinMap.value[form.value.currency] || [];
 });
 
-setTimeout(() => {
-  console.error("????", coinMap.value, form.value.currency, currNetwork.value);
-}, 5000);
+// setTimeout(() => {
+//   console.error("????", coinMap.value, form.value.currency, currNetwork.value);
+// }, 5000);
+
 const initNetwork = () => {
   if (currNetwork.value[0]) {
     form.value.network = currNetwork.value[0].network;

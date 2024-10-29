@@ -261,10 +261,9 @@
   
     .title {
       color: #061023;
-      font-weight: 600;
       font-size: 0.36rem;
       margin-bottom: 0.2rem;
-      margin-top: 0.4rem;
+      margin-top: 0.6rem;
     }
   
     .tip {

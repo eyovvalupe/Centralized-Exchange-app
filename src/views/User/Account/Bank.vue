@@ -9,7 +9,7 @@
         </div>
         <span>已认证</span>
       </div>
-      <div class="subtitle">银行ming</div>
+      <div class="subtitle">银行名称</div>
       <div class="item">
         <input
           v-model="form.bank_name"
