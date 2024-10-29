@@ -25,9 +25,12 @@
 import { showToast } from "vant";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { ref } from 'vue';
-import { _delAccount } from "@/api/api";
+import { _delAccount, _listAccount } from "@/api/api";
+import store from "@/store";
 
+const loading = ref(false);
 const googleRef = ref()
+
 const next = () => {
   googleRef.value[0].open()
 }
@@ -71,9 +74,8 @@ const submit = (googleCode, id) => {
     .then((res) => {
       if (res.code == 200) {
         showToast("成功删除");
-        setTimeout(() => {
-          router.back();
-        }, 200);
+        _listAccount()
+        .then(res => store.commit("setAccountList", res.data || {}))
       }
     })
     .finally(() => {
@@ -81,6 +83,13 @@ const submit = (googleCode, id) => {
       loading.value = false;
     });
 };
+const getSessionToken = () => {
+  loading.value = true;
+  store.dispatch("updateSessionToken").finally(() => {
+    loading.value = false;
+  });
+};
+getSessionToken();
 </script>
 <style lang="less">
 .list_page {

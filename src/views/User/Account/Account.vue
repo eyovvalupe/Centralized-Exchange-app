@@ -69,7 +69,7 @@ const cryptoList = computed(() =>
 ); // 加密货币
 const selectedPayment = computed(() => store.state.selectedPayment || '0')
 // tabs
-const active = ref(0);
+const active = ref(selectedPayment.value);
 const changeTab = (key) => {
   store.commit('setSelectedPayment', key)
   active.value = selectedPayment.value;

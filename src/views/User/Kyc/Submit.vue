@@ -1,45 +1,73 @@
-<!-- 提交成功 -->
+<!-- 认证成功 -->
 <template>
-    <div class="page page_submit">
-
-        <div class="icon">
-            <img src="/static/img/user/submit.png" alt="√">
-        </div>
-
-        <div class="info">身份认证已提交审核，请耐心等待</div>
-        <Button @click="router.back()" round color="#014CFA" class="submit" type="primary">关闭</Button>
+    <div class="page page-kyc-Submit">
+      <Top :title="'身份认证'">
+          <template #right>
+          <div
+            @click="jump('chat')"
+            class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
+          >
+            <div class="w-[0.4rem] h-[0.4rem]">
+              <img src="/static/img/user/serverB.svg" alt="server" />
+            </div>
+          </div>
+        </template>
+      </Top>
+      <div class="icon">
+        <img src="/static/img/user/success.svg" alt="√" />
+      </div>
+      <div class="title">身份认证提交成功</div>
+      <div class="text-[0.24rem] text-[#8F92A1] -mt-[0.9rem] mb-[0.8rem]" >请等待审核结果，我们将严格保密您的身份信息</div>
+      <Button
+        round
+        color="#014CFA"
+        @click="router.back()"
+        class="w-full text-[0.3rem]"
+        type="primary"
+        :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"
+        >好的</Button
+      >
     </div>
-</template>
-
-<script setup>
-import { Button } from 'vant'
-import router from "@/router"
-</script>
-
-<style lang="less" scoped>
-.page_submit {
+  </template>
+  
+  <script setup>
+  import Top from "@/components/Top.vue";
+  import { ref } from "vue";
+  import router from "@/router";
+  import { Button } from "vant";
+  const jump = (name, query) => {
+    router.push({
+      name,
+      query,
+    });
+  };
+  const kycInfo = ref({});
+  try {
+    kycInfo.value = JSON.parse(localStorage.getItem("kycInfo"));
+  } catch {}
+  </script>
+  
+  <style lang="less" scoped>
+  .page-kyc-Submit {
+    padding: 0.32rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 0 0.32rem;
-
     .icon {
-        width: 3.84rem;
-        height: 3.84rem;
-        margin-bottom: 0.6rem;
+      width: 5.4rem;
+      height: 5.4rem;
+      margin-top: 1.7rem;
     }
-
-    .info {
-        font-weight: 400;
-        font-size: 0.28rem;
-        line-height: 0.56rem;
-        color: #333333;
-        margin-bottom: 3.2rem;
+  
+    .title {
+      position: relative;
+      top: -1.2rem;
+      color: #333333;
+      font-weight: 400;
+      font-size: 0.3rem;
+      line-height: 0.42rem;
     }
-
-    .submit {
-        width: 100%;
-    }
-}
-</style>
+  
+  }
+  </style>
+  
