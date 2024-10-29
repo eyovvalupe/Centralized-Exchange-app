@@ -1,6 +1,6 @@
 <template>
   <div class="list_page" v-for="item in props.list">
-    <div class="list_delete_icon" @click="() => console.log('click')">
+    <div class="list_delete_icon" @click="next">
       <div class="delete_icon"></div>
     </div>
     <div class="list_detail">
@@ -18,10 +18,19 @@
         <span class="text-[0.28rem] text-[#666d80]">{{ item.symbol }}</span>
       </div>
     </div>
+    <GoogleVerfCode ref="googleRef" @submit="(code) => submit(code, item.id)" />
   </div>
 </template>
 <script setup>
 import { showToast } from "vant";
+import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
+import { ref } from 'vue';
+import { _delAccount } from "@/api/api";
+
+const googleRef = ref()
+const next = () => {
+  googleRef.value[0].open()
+}
 
 const props = defineProps({
   list: {
@@ -45,11 +54,32 @@ const copyToClipboard = async (text) => {
     await navigator.clipboard.writeText(text);
 
     setTimeout(() => {
-      showToast("成功复制好");
+      showToast("成功复制支付地址");
     }, 200);
   } catch (err) {
     console.error("Failed to copy: ", err);
   }
+};
+const submit = (googleCode, id) => {
+  if (loading.value) return;
+  loading.value = true;
+  const params = {
+    id,
+    googlecode: googleCode,
+  };
+  _delAccount(params)
+    .then((res) => {
+      if (res.code == 200) {
+        showToast("成功删除");
+        setTimeout(() => {
+          router.back();
+        }, 200);
+      }
+    })
+    .finally(() => {
+      getSessionToken();
+      loading.value = false;
+    });
 };
 </script>
 <style lang="less">

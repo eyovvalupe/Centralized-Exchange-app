@@ -235,6 +235,13 @@ export const _addAccount = (data = {}) => {
     custom: { auth: true, toast: true, retry: false },
   });
 };
+
+//删除支付方式
+export const _delAccount = (data = {}) => {
+  return http.post(`/authc/v1/withdraw/account/del`, data, {
+    custom: { auth: true, toast: true, retry: false },
+  });
+};
 // 收款账户列表 
 export const _listAccount = (data = {}) => {
   return http.post(`/authc/v1/withdraw/account/list`, data, {

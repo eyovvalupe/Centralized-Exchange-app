@@ -245,6 +245,7 @@ const submit = (googleCode) => {
     });
 };
 const next = () => {
+  console.log(googleRef.value);
   googleRef.value.open();
 };
 
