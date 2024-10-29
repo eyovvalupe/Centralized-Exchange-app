@@ -1,7 +1,6 @@
 <!-- 添加加密货币 -->
 <template>
     <div class="page page_crypto">
-        <Top :title="'加密货币'" />
 
         <div class="subtitle">加密货币</div>
         <div class="item" @click="showCrypto = true">

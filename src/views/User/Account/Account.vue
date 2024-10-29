@@ -19,55 +19,27 @@
       animated
       shrink
     >
-      <Tab :title="'加密货币'">
+      <Tab :title="'加密货币'" name="0">
         <div class="tab_data">
           <div class="no_data" v-if="bankList.length == 0">
             <img src="/static/img/user/noData.svg" />
             <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
           </div>
-          <div class="list" v-else>asd</div>
+          <div class="list" v-else>
+            <CryptoList />
+          </div>
         </div>
-        <!-- <div class="list">
-          <div class="add_item" @click="goAddAccount">
-            <Icon style="font-size: 0.48rem" name="add-o" />
-            <span
-              style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem"
-              >添加收款账户</span
-            >
-          </div>
-          <div class="item" v-for="(item, i) in bankList" :key="i">
-            <div class="address">{{ _hiddenAccount(item.bankCardNumber) }}</div>
-            <div class="title">{{ item.bankName }}</div>
-            <div class="icon_box">
-              <img src="/static/img/user/card_type_b.png" alt="img" />
-            </div>
-          </div>
-        </div> -->
       </Tab>
-      <Tab :title="'银行卡'">
+      <Tab :title="'银行卡'" name="1">
         <div class="tab_data">
           <div class="no_data" v-if="bankList.length == 0">
             <img src="/static/img/user/noData.svg" />
             <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
           </div>
-          <div class="list" v-else>asdf</div>
+          <div class="list" v-else>
+            <BankList />
+          </div>
         </div>
-        <!-- <div class="list">
-          <div class="add_item" @click="goAddAccount">
-            <Icon style="font-size: 0.48rem" name="add-o" />
-            <span
-              style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem"
-              >添加收款账户</span
-            >
-          </div>
-          <div class="item" v-for="(item, i) in cryptoList" :key="i">
-            <div class="address">{{ _hiddenAccount(item.address) }}</div>
-            <span class="title">{{ item.symbol }}-{{ item.network }}</span>
-            <div class="icon_box">
-              <img src="/static/img/user/card_type_c.png" alt="img" />
-            </div>
-          </div>
-        </div> -->
       </Tab>
     </Tabs>
 
@@ -85,6 +57,12 @@ import { computed, ref, onMounted } from "vue";
 import router from "@/router";
 import { _hiddenAccount } from "@/utils/index";
 import { useRoute, useRouter } from "vue-router";
+import { _userinfo } from "@/api/api";
+import Bank from './Bank.vue'
+import Crypto from './Crypto.vue'
+import Check from './Check.vue'
+import CryptoList from "./CryptoList.vue";
+import BankList from "./BankList.vue";
 
 const route = useRoute();
 
@@ -233,6 +211,8 @@ const goBack = () => {
 
   :deep(.van-tabs__wrap) {
     height: 0.92rem;
+    margin-bottom: 0.4rem;
+
   }
 
   :deep(.van-tabs__nav) {
@@ -343,67 +323,71 @@ const goBack = () => {
   //     }
   //   }
 
+  // .list {
+  //   padding-top: 0.5rem;
+
+  //   .add_item {
+  //     border: 1px dashed #ccd7fd;
+  //     border-radius: 0.24rem;
+  //     margin-bottom: 0.2rem;
+  //     height: 1.44rem;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //   }
+
+  //   .subtitle {
+  //     margin-bottom: 0.2rem;
+  //     margin-top: 0.4rem;
+  //     font-size: 0.28rem;
+  //     line-height: 0.44rem;
+  //     color: #111111;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: space-between;
+
+  //     .add_box {
+  //       display: flex;
+  //       align-items: center;
+  //       justify-content: center;
+  //       font-weight: 400;
+  //       font-size: 0.28rem;
+  //       color: #000000;
+
+  //       .add_icon {
+  //         width: 0.44rem;
+  //         height: 0.44rem;
+  //         margin-right: 0.08rem;
+  //       }
+  //     }
+  //   }
+
+  //   .item {
+  //     background-color: #f6f7fa;
+  //     padding: 0.24rem 0.24rem 0.24rem 1.44rem;
+  //     border-radius: 0.24rem;
+  //     margin-bottom: 0.2rem;
+  //     height: 1.44rem;
+  //     color: #061023;
+  //     font-size: 0.28rem;
+  //     line-height: 0.48rem;
+  //     position: relative;
+
+  //     .icon_box {
+  //       width: 0.96rem;
+  //       height: 0.96rem;
+  //       background-color: #d9e4ff;
+  //       border-radius: 0.24rem;
+  //       padding: 0.16rem;
+  //       position: absolute;
+  //       left: 0.24rem;
+  //       top: 0.24rem;
+  //     }
+  //   }
+  // }
   .list {
-    padding-top: 0.5rem;
-
-    .add_item {
-      border: 1px dashed #ccd7fd;
-      border-radius: 0.24rem;
-      margin-bottom: 0.2rem;
-      height: 1.44rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .subtitle {
-      margin-bottom: 0.2rem;
-      margin-top: 0.4rem;
-      font-size: 0.28rem;
-      line-height: 0.44rem;
-      color: #111111;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .add_box {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 400;
-        font-size: 0.28rem;
-        color: #000000;
-
-        .add_icon {
-          width: 0.44rem;
-          height: 0.44rem;
-          margin-right: 0.08rem;
-        }
-      }
-    }
-
-    .item {
-      background-color: #f6f7fa;
-      padding: 0.24rem 0.24rem 0.24rem 1.44rem;
-      border-radius: 0.24rem;
-      margin-bottom: 0.2rem;
-      height: 1.44rem;
-      color: #061023;
-      font-size: 0.28rem;
-      line-height: 0.48rem;
-      position: relative;
-
-      .icon_box {
-        width: 0.96rem;
-        height: 0.96rem;
-        background-color: #d9e4ff;
-        border-radius: 0.24rem;
-        padding: 0.16rem;
-        position: absolute;
-        left: 0.24rem;
-        top: 0.24rem;
-      }
-    }
+    width: 100%;
+    padding: 0.02rem;
   }
 
   .add_btn {
