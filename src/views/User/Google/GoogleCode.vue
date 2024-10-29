@@ -2,7 +2,7 @@
 <template>
     <div class="page page_register_success">
       <!-- 返回和语言 -->
-      <Top :title="'身份认证'">
+      <Top :title="'谷歌验证器'">
         <template #right>
           <div
             @click="jump('chat')"
