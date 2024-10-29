@@ -57,12 +57,12 @@
                   type="primary"
                   round
                   color="#014CFA"
-                  @click="submit"
+                  @click="next"
                   >保存</Button
                 >
               </div>
               <!-- 谷歌验证 -->
-              <!-- <GoogleVerfCode ref="googleRef" @submit="submit" /> -->
+              <GoogleVerfCode ref="googleRef" @submit="submit" />
             </div>
           </div>
         </div>
