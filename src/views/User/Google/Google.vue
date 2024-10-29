@@ -21,7 +21,7 @@
       <img :src="gg.qrcode" alt="qrcode" v-if="gg.qrcode" />
     </div>
 
-    <div class="code_container">
+    <div class="code_container" v-if="gg.googlesecret">
       <div class="code_box">
         <div class="code text-[0.32rem] font-semibold">
           {{ gg.googlesecret }}
@@ -176,6 +176,13 @@ const goBind = () => {
     })
     .catch((err) => {
       errText.value = err.message;
+      for (let i = 0; i < 6; i++) {
+        let inputStyle = document.getElementsByClassName(
+          "van-password-input__item"
+        )[i].style;
+        inputStyle.borderColor = "#e8503a";
+        inputStyle.color = "#e8503a";
+      }
     })
     .finally(() => {
       loading.value = false;
@@ -311,6 +318,11 @@ const nextStep = () => {
     border-radius: 1.2rem;
     font-size: 0.28rem;
     margin-top: 0.4rem;
+
+    :deep(.van-button__text) {
+      font-size: 0.36rem;
+      line-height: 0.64rem;
+    }
   }
 
   .code_ipt {
@@ -332,7 +344,8 @@ const nextStep = () => {
 
   .error_ipt {
     :deep(.van-password-input__item) {
-      border: 1px solid #e8503a;
+      border: 0.02rem solid #e8503a;
+      border-color: #e8503a;
     }
   }
 
