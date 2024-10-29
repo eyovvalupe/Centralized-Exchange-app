@@ -7,8 +7,8 @@
                 <img src="/static/img/trade/time.png" alt="img">
             </div>
         </div> -->
-        <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
-            shrink @change="onChange">
+        <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated
+            :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓" name="0">
                 <div class="stock_tab-body">
                     <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
@@ -74,17 +74,21 @@ const choose = item => {
     OpeningRef.value && OpeningRef.value.choose(item)
 }
 
-onMounted(() => {
+const handleMounted = () => {
     setTimeout(() => {
         pageLoading.value = false
         setTimeout(() => {
             onChange(active.value)
         }, 300)
     }, 300)
+}
+onMounted(() => {
+    handleMounted()
 })
 
 defineExpose({
-    choose
+    choose,
+    handleMounted
 })
 
 // 日期选择
@@ -97,9 +101,10 @@ const openDate = () => {
 <style lang="less" scoped>
 .stock_block {
     position: relative;
-    padding: 0.24rem 0  0.32rem 0;
-    :deep(.van-tabs__nav){
-        margin:0 0.32rem;
+    padding: 0.24rem 0 0.32rem 0;
+
+    :deep(.van-tabs__nav) {
+        margin: 0 0.32rem;
     }
 
     .tabs {
@@ -109,18 +114,19 @@ const openDate = () => {
             margin: 0 .32rem;
             border-radius: 16px;
             height: 40px;
-            
+
             .van-tabs__nav {
                 padding-left: 0.32rem;
                 position: relative;
                 display: flex;
                 justify-content: space-between;
+
                 .van-tab {
                     width: 33%;
                 }
-        
+
             }
-            
+
         }
     }
 }

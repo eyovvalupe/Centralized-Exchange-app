@@ -3,11 +3,14 @@
   <div v-if="activatedIncludes && !pageLoading" class="page page_market">
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
     <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
-    <div class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border" @click="jump('search')">
+    <div
+      class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border"
+      @click="jump('search')">
       <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
     </div>
     <div class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white" />
-    <HeaderTabs v-model:active="active" class="w-[6.28rem]" :tabs="[$t('自选'), $t('买币'), $t('股票'), $t('合约'), $t('外汇'), $t('黄金')]" @change="e => changeTab(e, true)" />
+    <HeaderTabs v-model:active="active" class="w-[6.28rem]"
+      :tabs="[$t('自选'), $t('买币'), $t('股票'), $t('合约'), $t('外汇'), $t('黄金')]" @change="e => changeTab(e, true)" />
     <Swipe ref="swipe" :autoplay="0" :initial-swipe="marketActiveTab" :show-indicators="false" @change="changeTab">
       <SwipeItem>
         <div v-if="active === 0 && activated" class="assets_body">
@@ -18,7 +21,7 @@
       <SwipeItem>
         <div v-if="loadedTab.includes(1)" ref="marketPageRef" class="assets_body">
           <!-- 买币 -->
-          <buyCoin />
+          <buyCoin ref="BuyCoinRef" />
         </div>
       </SwipeItem>
       <SwipeItem>
@@ -46,10 +49,10 @@
         </div>
       </SwipeItem>
     </Swipe>
-    
-  <!-- </PullRefresh> -->
-<!-- </transition> -->
-</div>
+
+    <!-- </PullRefresh> -->
+    <!-- </transition> -->
+  </div>
 </template>
 
 <script setup>
@@ -88,6 +91,7 @@ const openTab = ref(false)
 const active = ref(market_active.value)
 const initialSwipe = active.value
 const OptionalRef = ref()
+const BuyCoinRef = ref()
 // const StockRef = ref()
 // const IPORef = ref()
 // const reloading = ref(false)
@@ -102,7 +106,15 @@ const changeTab = (key, slideSwipe = false) => {
   active.value = key
   market_active.value = key
   openTab.value = false
-  if (!loadedTab.value.includes(key)) loadedTab.value.push(key)
+  if (!loadedTab.value.includes(key)) {
+    loadedTab.value.push(key)
+  } else {
+    if (key == 1) {
+      setTimeout(() => {
+        BuyCoinRef.value && BuyCoinRef.value.handleMounted()
+      }, 300)
+    }
+  }
   if (slideSwipe && swipe.value) swipe.value.swipeTo(key)
 
   setTimeout(() => {
@@ -186,6 +198,7 @@ Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Sea
   // overflow-y: auto;
   position: relative;
   width: 7.5rem;
+
   &:has(.open_tabs) {
     :deep(.addBtn) {
       top: 1.76rem;
@@ -207,7 +220,7 @@ Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Sea
     align-items: center;
     transition: all ease 0.3s;
 
-    > span {
+    >span {
       margin-left: 0.08rem;
     }
 
@@ -353,11 +366,13 @@ Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Sea
       font-weight: 600;
       font-size: 0.5rem;
       position: relative;
+
       // border-bottom: 3px solid #014cfa;
       // border-width: 10px;
       .tab_item {
         z-index: 1;
       }
+
       &::after {
         content: '';
         position: absolute;
