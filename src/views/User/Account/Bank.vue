@@ -78,7 +78,10 @@ const submit = (googleCode) => {
   })
     .then((res) => {
       if (res.code == 200) {
-        showToast("添加成功");
+        store.commit('setShowSuccessToast', true)
+        setTimeout(() => {
+        store.commit('setShowSuccessToast', false)
+        }, 1000);
         setTimeout(() => {
           router.back();
         }, 200);

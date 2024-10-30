@@ -149,7 +149,9 @@ import Top from "@/components/Top.vue";
 
 const route = useRoute();
 const coinMap = computed(() => store.state.coinMap || {});
+const showSuccessToast = computed(() => store.state.showSuccessToast || false);
 const googleRef = ref();
+const successToast = ref(false)
 const loading = ref(false);
 const form = ref({
   channel: "crypto",
@@ -233,7 +235,10 @@ const submit = (googleCode) => {
   _addAccount(params)
     .then((res) => {
       if (res.code == 200) {
-        showToast("添加成功");
+        store.commit('setShowSuccessToast', true)
+        setTimeout(() => {
+          store.commit('setShowSuccessToast', false)
+        }, 1000);
         setTimeout(() => {
           router.back();
         }, 200);
@@ -245,7 +250,6 @@ const submit = (googleCode) => {
     });
 };
 const next = () => {
-  console.log(googleRef.value);
   googleRef.value.open();
 };
 

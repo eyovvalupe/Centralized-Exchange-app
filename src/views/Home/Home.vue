@@ -514,7 +514,7 @@ const clickPerformance = (key) => {
 const getMarketPerformanceData = (list, key, query, listKey) => {
   if (marketLoading.value) return;
   marketLoading.value = true;
-  page.value++;
+  page.value++; 
   let arr = JSON.parse(JSON.stringify(list.value));
   if (page.value == 1) {
     arr = [];

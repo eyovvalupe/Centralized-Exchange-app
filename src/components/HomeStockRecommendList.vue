@@ -109,11 +109,11 @@
 <script setup>
 import SparkLine from "@/components/SparkLine.vue";
 import Loading from "@/components/Loaidng.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { showToast, showLoadingToast, closeToast } from "vant";
 import store from "@/store";
 import router from "@/router";
-import { _add, _del } from "@/api/api";
+import { _add, _del, _watchlistDefault } from "@/api/api";
 import eventBus from '@/utils/eventBus'
 import { Carousel, Slide } from "vue3-carousel";
 
@@ -199,6 +199,58 @@ const goInfo = (item) => {
   }
 };
 
+const recommendLoading = ref(false);
+const openRecommendList = () => {
+  recommendLoading.value = true;
+  _watchlistDefault()
+    .then((res) => {
+      if (res.code == 200) {
+        // 股票
+        if (res.data?.stock) {
+          const newarr = res.data.stock.map((item) => {
+            const target = marketSrockRecommendList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            return target || item;
+          });
+          const arr = newarr.map((item) => {
+            return { ...item, type: "stock" };
+          });
+          store.commit("setMarketSrockRecommendList", arr || []);
+          setTimeout(() => {
+            store.dispatch("subList", {
+              commitKey: "setMarketSrockRecommendList",
+              listKey: "marketSrockRecommendList",
+            });
+          }, 500);
+        }
+
+        // 合约
+        if (res.data?.crypto) {
+          const newarr2 = res.data.crypto.map((item) => {
+            const target = marketContractRecommendList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            return target || item;
+          });
+          const arr2 = newarr2.map((item) => {
+            return { ...item, type: "crypto" };
+          });
+          store.commit("setMarketContractRecommendList", arr2 || []);
+          setTimeout(() => {
+            store.dispatch("subList", {
+              commitKey: "setMarketContractRecommendList",
+              listKey: "marketContractRecommendList",
+            });
+          }, 1000);
+        }
+      }
+    })
+    .finally(() => {
+      recommendLoading.value = false;
+    });
+};
+
 const collectLoading = ref(false);
 
 const collect = (item) => {
@@ -244,6 +296,10 @@ const collect = (item) => {
     
   }
 };
+
+onMounted(() => {
+  openRecommendList()
+})
 </script>
 
 <style>

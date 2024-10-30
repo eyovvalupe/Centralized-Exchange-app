@@ -63,9 +63,13 @@ export default {
 
         graphColorGradient: false,
         marketActiveTab: 0,
+        currDeleteId: ''
 
     },
     mutations: {
+        setCurrDeleteId(state, data) {
+            state.currDeleteId = data
+        },
         setMarketHomeTotalRecommendList(state, data) {
             state.marketHomeTotalRecommendList = data
         },

@@ -140,6 +140,7 @@
         :safe-area-inset-bottom="true"
         v-model:show="showBottom"
         position="bottom"
+        class="date_picker"
       >
         <div class="flex justify-between items-center mx-[0.32rem] mt-[0.24rem]">
           <div @click="cancelDate" class="close-icon"></div>
@@ -251,6 +252,17 @@
   <style lang="less" scoped>
   .kyc_1 {
     padding: 1.24rem 0.32rem 0.2rem 0.32rem;
+
+    .date_picker {
+      :deep(.van-picker__toolbar) {
+        .van-picker__cancel {
+          display: none;
+        }
+        .van-picker__confirm {
+          display: none;
+        }
+      }
+    }
   
     .steps {
       display: flex;

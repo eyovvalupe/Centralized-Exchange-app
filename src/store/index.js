@@ -20,6 +20,7 @@ const store = createStore({
     isLoginOpen: false, // 登录弹窗开关
     i18Data: { name: '中文简体', locale: 'zh', icon: '/static/img/common/cn.png' },
     bottomTabBarValue: '',
+    showSuccessToast: false,
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -60,6 +61,9 @@ const store = createStore({
     },
     setBottomTabBarValue(state, data) {
       state.bottomTabBarValue = data
+    },
+    setShowSuccessToast(state, data) {
+      state.showSuccessToast = data
     },
     ...market.mutations,
     ...trade.mutations,

@@ -18,6 +18,8 @@
 
   <!-- 登录弹窗 -->
   <LoginDialog />
+
+  <SuccessToast :showModal="true" v-if="showSuccessToast"/>
 </template>
 
 <script setup>
@@ -30,6 +32,9 @@ import store from '@/store/index'
 import { serviceChat } from '@/utils/serviceChat'
 import LoginDialog from './views/Public/LoginDialog.vue'
 import { setLocale } from './i18/utils'
+import SuccessToast from './views/User/Account/SuccessToast.vue'
+
+const showSuccessToast = computed(() => store.state.showSuccessToast);
 
 const BottomTabBar = defineAsyncComponent(() => import('@/components/BottomTabBar.vue'))
 // console.error("---storage---");

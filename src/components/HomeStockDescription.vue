@@ -50,7 +50,21 @@ const props = defineProps({
   },
   list: {
     type: Array,
-    default: []
+    default: [{
+      symbol: 'SHELTER',
+      amount: 1263060,
+      ratio: 0.0909
+    },
+    {
+      symbol: 'DHRUV',
+      amount: 128101.8,
+      ratio: 0.0472
+    },
+    {
+      symbol: 'ECOBOAR',
+      amount: 7128.87,
+      ratio: -0.0218
+    }]
   }
 });
 </script>

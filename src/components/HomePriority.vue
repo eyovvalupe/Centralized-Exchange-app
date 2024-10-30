@@ -47,7 +47,6 @@ import store from "@/store";
 import { onMounted } from "vue";
 import SparkLine from "@/components/SparkLine.vue";
 import router from "@/router";
-import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const marketCountryStockList = computed(
   () => store.state.marketCountryStockList || []

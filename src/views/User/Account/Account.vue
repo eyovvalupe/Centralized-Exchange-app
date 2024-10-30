@@ -66,6 +66,7 @@ const bankList = computed(() =>
 const cryptoList = computed(() =>
   accountList.value.filter((item) => item.channel == "crypto")
 ); // 加密货币
+console.log(cryptoList.value)
 const selectedPayment = computed(() => store.state.selectedPayment || '0')
 // tabs
 const active = ref(selectedPayment.value);

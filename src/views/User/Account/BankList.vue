@@ -1,9 +1,9 @@
 <template>
   <div class="list_page" v-for="item in props.list">
-    <div class="list_delete_icon" @click="confirm">
+    <div class="list_delete_icon" @click="confirm(item.id)">
       <div class="delete_icon"></div>
     </div>
-    <GoogleVerfCode ref="googleRef" @submit="(code) => submit(code, item.id)" />
+    <GoogleVerfCode ref="googleRef" @submit="submit" />
     <div class="list_detail">
       <div class="bank_icon_container mr-[0.2rem]">
         <div :class="item.bankName == '建设银行' ? 'building_icon' : item.bankName == '工商银行' ? 'ecobusiness_icon' : item.bankName == '工商银行' ? 'company_icon' : 'emg_company_icon'"></div>
@@ -30,8 +30,10 @@ import store from "@/store";
 
 const loading = ref(false);
 const googleRef = ref();
+const currDeleteId = computed(() => store.state.currDeleteId || '')
 
-const confirm = () => {
+const confirm = (id) => {
+  store.commit('setCurrDeleteId', id)
   showConfirmDialog({
     title: '删除',
     message: '确认删除该收款账户吗？'
@@ -72,11 +74,11 @@ const copyToClipboard = async (text) => {
   }
 };
 // 提交
-const submit = (googleCode, id) => {
+const submit = (googleCode) => {
   if (loading.value) return;
   loading.value = true;
   const params = {
-    id,
+    id: currDeleteId.value,
     googlecode: googleCode,
   };
   _delAccount(params)

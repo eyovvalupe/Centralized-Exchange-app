@@ -125,9 +125,6 @@ const marketStockKoreaDataList = computed(
   () => store.state.marketStockKoreaDataList || []
 );
 
-const marketDownList = computed(() => store.state.marketDownList || []);
-const marketUpList = computed(() => store.state.marketUpList || []);
-const marketVolumeList = computed(() => store.state.markVolumeList || []);
 const subs = (arr) => {
   store.commit(
     "setMarketWatchKeys",
@@ -169,7 +166,6 @@ const getData = (region) => {
         updated: formatDate(new Date()),
         stock: res.data.index,
       };
-      // store.commit("setCurrentRecommenData", data);
       if (region == "us") {
         store.commit("setMarketStockUsData", data);
         const usArr = res.data.index.map((item) => {
@@ -217,9 +213,6 @@ const getData = (region) => {
           ...marketStockIndiaDataList.value,
           ...marketStockJapanDataList.value,
           ...marketStockKoreaDataList.value,
-          ...marketDownList.value,
-          ...marketUpList.value,
-          ...marketVolumeList.value,
         ]);
       }, 300);
 

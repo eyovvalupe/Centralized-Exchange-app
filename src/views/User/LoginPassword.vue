@@ -1,7 +1,7 @@
 <!-- 修改交易密码 -->
 <template>
   <div class="page page-loginpass">
-    <Top :title="'修改交易密码'" />
+    <Top :title="'修改登录密码'" />
 
     <!-- 表单 -->
     <div class="form">
