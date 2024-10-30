@@ -150,7 +150,7 @@
             </div>
 
             <div class="item_box_right">
-                <FormItem title="张数" @focus="volumeFocus" :max="maxStockNum" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent" tip-align="right" :tip="maxStockNum >= 1 ? '≤'+maxStockNum : ''" input-type="digit">
+                <FormItem title="张数" @focus="volumeFocus"  v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right" :tip="maxStockNum >= 1 ? '≤'+maxStockNum : ''" input-type="digit">
                     <template #title-right>
                         <span style="color:#014CFA" @click="openConfirmBox" v-if="maxStockNum < 1">账户余额不足</span>
                     </template>
@@ -407,6 +407,8 @@ const onSelectForm1Type = (item) => {
     // showTypeDialog.value = false
     form1.value.leverType = item.selectedValues[0]
     form1.value.lever = item.selectedValues[1]
+    form1.value.volume = ''
+    sliderValue.value = 0
 }
 
 // 限价模式
@@ -612,7 +614,8 @@ const inputStop = key => { // 输入止盈止损
 
 const submit1 = () => {
     if (!currStock.value.symbol) return showToast('请选择合约')
-    if (!form1.value.volume || form1.value.volume < min.value) return showToast(`最小张数：${min.value}`)
+    console.log(form1.value.volume)
+    if (!form1.value.volume || form1.value.volume < min.value) return showToast(`请输入张数`)
     // 止盈止损校验
     if (props.activeTab == 2) {
         if (mode.value == 1) { // 简单模式
@@ -676,8 +679,6 @@ const changePercent = () => {
         form1.value.volume = ''
         return sliderValue.value = 0
     }
-    let v = new Decimal(form1.value.volume)
-    form1.value.volume = v.sub(v.mod(step.value))
     let p = new Decimal(form1.value.volume).div(maxStockNum.value).mul(100).toNumber()
     if (p < 0) p = 0
     if (p > 100) p = 100

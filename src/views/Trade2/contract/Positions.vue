@@ -257,6 +257,7 @@ const subs = () => {
         socket && socket.emit('futuresorder', '#all')
         loading.value = true
         socket.on('futuresorder', res => {
+            
             store.commit('setContractPositionsList', (res.data || []).map(item => {
                 if (!item.order_no && item.father_username) {
                     item.order_no = item.father_username
@@ -451,7 +452,7 @@ const sliderValue = ref(0);
 const onSliderChange = (newValue) => {
     sliderValue.value = newValue;
     if (showSell.value) { // 平仓
-        sellForm.value.volume = new Decimal(currStock.value.unsold_volume).mul(newValue).div(100).toNumber()
+        sellForm.value.volume = new Decimal(currStock.value.unsold_volume).mul(newValue).div(100).floor()
     }
     if (showUpdate.value) { // 更新
         updateForm.value.amount = new Decimal(stockWalletAmount.value).mul(newValue).div(100).toNumber()

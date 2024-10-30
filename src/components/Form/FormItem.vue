@@ -53,7 +53,7 @@ const props = defineProps({
     },
     max:{
         type:[Number,String],
-        default:0
+        default:99999999999999
     },
     background:String,
     title:String,
@@ -96,9 +96,8 @@ watch(()=>props.modelValue,()=>{
 const reg = /^\d$/
 const reg2 = /^[\d\.]$/
 const inputBlur = ()=>{
-    console.log('blur')
     if(props.inputType == 'digit' || props.inputType == 'number'){
-        inputVal.value = parseFloat(inputVal.value).toString()
+        inputVal.value = inputVal.value ? parseFloat(inputVal.value).toString() : ''
         if(inputVal.value == '0'){
             inputVal.value = ''
         }
@@ -120,7 +119,7 @@ const validateKeydown = (e)=>{
 }
 
 const onInput = ()=>{
-    if((props.inputType == 'digit' || props.inputType == 'number') && props.max > 0 && inputVal.value > props.max){
+    if((props.inputType == 'digit' || props.inputType == 'number') &&  inputVal.value > props.max){
         inputVal.value = props.max
     }
     emit('update:modelValue',inputVal.value)
