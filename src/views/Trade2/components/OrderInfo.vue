@@ -172,7 +172,6 @@ import store from "@/store";
 import Top from "@/components/Top.vue"
 import Decimal from 'decimal.js';
 import StockPopup from "../../trade/StockPopup.vue"
-import {_futuresGet} from '@/api/api'
 
 const emit = defineEmits(['update','sell','cancel','back'])
 const props = defineProps({
