@@ -193,7 +193,7 @@
 
 import { SwipeCell, Popup, Button, Slider, showToast, ActionSheet, showConfirmDialog, showLoadingToast, closeToast } from 'vant';
 import { useSocket } from "@/utils/ws";
-import { onMounted, onUnmounted, computed, ref } from "vue"
+import { onMounted, onUnmounted, computed, ref, watch } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
@@ -211,6 +211,7 @@ const safeRef = ref()
 const safeRef2 = ref()
 
 const token = computed(() => store.state.token)
+
 const contractPositionsList = computed(() => store.state.contractPositionsList)
 const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 合约账户余额
@@ -249,7 +250,10 @@ const stopMap = ref({ // 止损类型
 const { startSocket } = useSocket();
 // 订阅
 const loading = ref(false)
+let prevToken = ''
 const subs = () => {
+    console.log("subs")
+    prevToken = token.value
     const socket = startSocket(() => {
         socket && socket.off('user')
         socket && socket.off('futuresorder')
@@ -282,7 +286,19 @@ onMounted(() => {
     if (token.value) {
         subs()
     }
+    watch(token=>{
+        if(token.value){
+            if(prevToken != token.value){
+                subs()
+            }
+        }else{
+            cancelSubs()
+        }
+    })
 })
+
+
+
 onUnmounted(() => {
     cancelSubs()
 })

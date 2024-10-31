@@ -42,6 +42,7 @@ const store = createStore({
       state.transitionName = data
     },
     setToken(state, data) {
+      console.log('token',data)
       state.token = data
     },
     setUserInfo(state, data) {
@@ -141,6 +142,7 @@ const store = createStore({
     ...assets.actions,
   },
   getters: {
+    ...assets.getters,
     ...market.getters
   },
   plugins: [

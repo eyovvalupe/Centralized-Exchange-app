@@ -403,13 +403,13 @@ export const _cryptoCoin = (data = {}) => {
     custom: { auth: false, toast: true, retry: true },
   });
 };
-// 现金账户支持的货币
+// 现金账户支持的货币 (已弃用)
 export const _currency = (data = {}) => {
   return http.post(`/authc/v1/account/balance`, data, {
     custom: { auth: true, toast: false, retry: true },
   });
 };
-// 其他账户支持的货币
+// 其他账户支持的货币 (已弃用)
 export const accountCurrency = (data = {}) => {
   return http.post(`/anon/v1/account/currency`, data, {
     custom: { auth: false, toast: false, retry: true },

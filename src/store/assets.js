@@ -1,18 +1,34 @@
 // 市场
-import { _assets, _balance, _accountHint, _currency,accountCurrency, _cryptoCoin } from '@/api/api'
+import { _assets, _balance, _accountHint, _cryptoCoin } from '@/api/api'
 
 export default {
   state: {
     assets: {}, // 总资产
     wallet: [], // 现金钱包
-    elseWallet: [], // 其他账户钱包
+    elseWallet:[], //其他账户
+    elseWalletMap: { // 其他账户信息
+      stock:[],
+      futures:[],
+      forex:[],
+      blocktrade:[]
+    }, 
     currencyList: [], // 币种列表
-    accountCurrencyMap:{},
+    accountCurrencyMap:{ //业务账户对应货币
+      stock:"",
+      futures:"",
+      forex:"",
+      aiquant:"",
+      ipo:"",
+      wealth:""
+    },
     deWeightCurrencyList: [], // 去重币种列表
     rechargeAmount: '', // 充值金额
     hintNum: 0, // 待处理的订单笔数
     loanNum: 0, // 借贷重的订单数
     coinMap: {}, // 币种 网络 map
+  },
+  getters: {
+    
   },
   mutations: {
     setAssets(state, data) {
@@ -21,15 +37,30 @@ export default {
     setWallet(state, data) {
       state.wallet = data
     },
-    setElseWallet(state, data) {
-      state.elseWallet = data
+  
+    setElseWalletMap(state, obj) {
+      const account = obj.account
+      const data = obj.data
+      state.elseWalletMap[account] = data
+      if(data[0]){
+        state.accountCurrencyMap[account] = data[0].currency
+      }
+
+      const list = []
+    
+      Object.keys(state.elseWalletMap).map(_acc=>{
+        if(state.elseWalletMap[_acc] && state.elseWalletMap[_acc].length){
+          state.elseWalletMap[_acc].map(item=>{
+            list.push(item)
+          })
+        }
+      })
+      state.elseWallet = list
     },
     setCurrencyList(state, data) {
       state.currencyList = data
     },
-    setAccountCurrencyMap(state, data) {
-      state.accountCurrencyMap = data
-    },
+    
     setRechargeAmount(state, data) {
       state.rechargeAmount = data
     },
@@ -70,29 +101,40 @@ export default {
           .catch(() => resolve(false))
       })
     },
-    updateWallet({ commit }) {
+    updateWallet({ commit },account='all') {
       // 更新钱包
-      _balance() // 现金账户
-        .then(res => {
+
+      if(account == 'all' || account == 'money'){
+        _balance({
+          account:'money' // 现金账户
+        }).then(res => {
           if (res && res.code == 200 && res.data) {
             commit('setWallet', res.data || [])
           }
         })
-      _currency() // 其他账户
-        .then(res => {
-          if (res && res.code == 200 && res.data) {
-            commit('setElseWallet', res.data || [])
-          }
-        })
-    },
-    updateCurrency({ commit }) {
-      
-      accountCurrency().then(res=>{
-        if (res.code == 200 && res.data) {
-          commit('setAccountCurrencyMap', res.data || {})
+      }
+
+
+      // 其他账户
+      const elseAccount = ['stock','futures','forex','blocktrade']
+      elseAccount.map(_acc=>{
+        if(account == 'all' || account == _acc){
+          _balance({
+            account:_acc
+          }).then(res => {
+            if (res && res.code == 200 && res.data) {
+              commit('setElseWalletMap', {
+                account:_acc,
+                data:res.data || []
+              })
+            }
+          })
         }
       })
-
+      
+    },
+    updateCurrency({ commit }) {
+     
       // 获取账户对应货币 其它账户对应货币
       _cryptoCoin({ dedup: false }).then(res => {
         if (res.code == 200 && res.data) {
