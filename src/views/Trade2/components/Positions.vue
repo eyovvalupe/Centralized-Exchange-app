@@ -206,7 +206,7 @@
 <script setup>
 import { SwipeCell, Popup, Button, Slider, showToast, ActionSheet, showConfirmDialog, showLoadingToast, closeToast } from 'vant';
 import { useSocket } from "@/utils/ws";
-import { onMounted, onUnmounted, computed, ref } from "vue"
+import { onMounted, onUnmounted, computed, ref,watch } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
