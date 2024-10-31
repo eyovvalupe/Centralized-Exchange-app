@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="money">
-                <span>{{ hidden ? '********' : new Decimal(assets.stock).add(assets.stock_value) }}</span>
+                <span>{{ hidden ? '********' : stockAmount }}</span>
             </div>
             <div class="navs">
                 <div class="nav">
@@ -47,9 +47,17 @@ import OverviewCard from './components/OverviewCard'
 
 const hidden = ref(false)
 const assets = computed(() => store.state.assets || {})
+console.log(assets)
 const currency = computed(() => (store.state.accountCurrencyMap.stock || '') )
 
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == currency) || {}) // 主钱包
+
+const stockAmount = computed(()=> {
+    if(assets.stock && assets.stock_value){
+        new Decimal(assets.stock).add(assets.stock_value)
+    }
+    return '--'
+})
 const maxLoan = computed(() => {
     if (lever.value.length) {
         const x = lever.value[lever.value.length - 1]

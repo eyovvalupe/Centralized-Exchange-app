@@ -141,6 +141,7 @@ const store = createStore({
     ...assets.actions,
   },
   getters: {
+    ...assets.getters,
     ...market.getters
   },
   plugins: [

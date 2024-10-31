@@ -193,7 +193,7 @@
 
 import { SwipeCell, Popup, Button, Slider, showToast, ActionSheet, showConfirmDialog, showLoadingToast, closeToast } from 'vant';
 import { useSocket } from "@/utils/ws";
-import { onMounted, onUnmounted, computed, ref } from "vue"
+import { onMounted, onUnmounted, computed, ref, watch, onActivated, onDeactivated } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
@@ -210,7 +210,8 @@ const loginfinish = () => {
 const safeRef = ref()
 const safeRef2 = ref()
 
-const token = computed(() => store.state.token)
+const token = computed(()=>store.state.token)
+
 const contractPositionsList = computed(() => store.state.contractPositionsList)
 const elseWallet = computed(() => store.state.elseWallet || [])
 const stockWalletAmount = computed(() => { // 合约账户余额
@@ -249,15 +250,16 @@ const stopMap = ref({ // 止损类型
 const { startSocket } = useSocket();
 // 订阅
 const loading = ref(false)
+
 const subs = () => {
+    console.log('subs')
     const socket = startSocket(() => {
         socket && socket.off('user')
         socket && socket.off('futuresorder')
-        socket && socket.emit('user', token.value)
+        socket && socket.emit('user', store.state.token)
         socket && socket.emit('futuresorder', '#all')
         loading.value = true
         socket.on('futuresorder', res => {
-            
             store.commit('setContractPositionsList', (res.data || []).map(item => {
                 if (!item.order_no && item.father_username) {
                     item.order_no = item.father_username
@@ -278,13 +280,22 @@ const cancelSubs = () => {
     })
 }
 
-onMounted(() => {
-    if (token.value) {
+onMounted(()=>{
+    if (store.state.token) {
         subs()
     }
 })
-onUnmounted(() => {
+
+onUnmounted(()=>{
     cancelSubs()
+})
+
+watch(()=>store.state.token,()=>{
+    if(store.state.token){
+        subs()
+    }else{
+        cancelSubs()
+    }
 })
 
 const getRatio = (num) => {

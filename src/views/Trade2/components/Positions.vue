@@ -206,7 +206,7 @@
 <script setup>
 import { SwipeCell, Popup, Button, Slider, showToast, ActionSheet, showConfirmDialog, showLoadingToast, closeToast } from 'vant';
 import { useSocket } from "@/utils/ws";
-import { onMounted, onUnmounted, computed, ref } from "vue"
+import { onMounted, onUnmounted, computed, ref,watch } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
@@ -274,7 +274,7 @@ const subs = () => {
     const socket = startSocket(() => {
         socket && socket.off('user')
         socket && socket.off('stockorder')
-        socket && socket.emit('user', token.value)
+        socket && socket.emit('user', store.state.token)
         socket && socket.emit('stockorder', '#all')
         loading.value = true
         socket.on('stockorder', res => {
@@ -293,13 +293,23 @@ const cancelSubs = () => {
     })
 }
 
-onMounted(() => {
-    if (token.value) {
+
+onMounted(()=>{
+    if (store.state.token) {
         subs()
     }
 })
-onUnmounted(() => {
+
+onUnmounted(()=>{
     cancelSubs()
+})
+
+watch(()=>store.state.token,()=>{
+    if(store.state.token){
+        subs()
+    }else{
+        cancelSubs()
+    }
 })
 
 const getRatio = (num) => {
