@@ -165,13 +165,6 @@ const check = () => {
     }
     return true
 }
-const jump = name => {
-    close()
-    router.push({
-        name
-    })
-}
-
 
 defineExpose({
     open,
