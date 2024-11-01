@@ -124,7 +124,7 @@
   
             <div
               class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-tr-[0.32rem] rounded-bl-[0.32rem] absolute top-0 right-0"
-              @click="deleteImg('front')"
+              @click.stop="deleteImg('front')"
               v-if="!checkMode"
             >
               <div class="delete_svg_icon"></div>
@@ -132,7 +132,7 @@
           </div>
           <!-- 上传 -->
           <Uploader
-            v-if="!checkMode"
+            v-if="!checkMode && !files.front.url"
             :name="'front'"
             class="uploader"
             :after-read="afterRead"
@@ -165,7 +165,7 @@
           </div>
           <!-- 上传 -->
           <Uploader
-            v-if="!checkMode"
+            v-if="!checkMode && !files.back.url"
             :name="'back'"
             class="uploader"
             :after-read="afterRead"
@@ -198,7 +198,7 @@
           </div>
           <!-- 上传 -->
           <Uploader
-            v-if="!checkMode"
+            v-if="!checkMode && !files.hand.url"
             :name="'hand'"
             class="uploader"
             :after-read="afterRead"
@@ -557,6 +557,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
+
       .uploader {
         position: absolute;
         width: 100%;

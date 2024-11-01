@@ -59,14 +59,14 @@
             class="w-full bg-white rounded-[0.32rem] border-[0.02rem] border-[#EFF3F8] h-[4.32rem] flex flex-wrap justify-between p-[0.32rem]"
           >
               <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]">
-                  <img :src = "kycInfo.idimg_1 || '/static/img/home/1.jpg'" alt = 'img' />
+                  <img :src = "kycInfo.idimg_1" style="object-fit: fill !important;" alt = 'img' />
               </div>
               <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]">
-                  <img :src = "kycInfo.idimg_2 || '/static/img/home/1.jpg'" alt = 'img' />
+                  <img :src = "kycInfo.idimg_2" style="object-fit: fill !important;" alt = 'img' />
   
               </div>
               <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem]">
-                  <img :src = "kycInfo.idimg_3 || '/static/img/home/1.jpg'" alt = 'img' />
+                  <img :src = "kycInfo.idimg_3" style="object-fit: fill !important;" alt = 'img' />
   
               </div>
           </div>
@@ -99,7 +99,6 @@
       default: () => {},
     },
   });
-  console.log("==================>kycinfo", props.kycInfo);
   const emits = defineEmits(["next"]);
   const nextStep = () => {
     emits("next");
