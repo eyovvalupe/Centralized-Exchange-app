@@ -202,7 +202,6 @@ onMounted(() => {
 
 // 查看详情
 const goItem = (item) => {
-  console.log(item);
   var prevList = [...marketSearchTextList.value];
   var flag = false;
   prevList.map((list) => {
