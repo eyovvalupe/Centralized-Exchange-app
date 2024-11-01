@@ -364,16 +364,16 @@
     })
       .then((res) => {
         if (res.code == 200) {
-          if ((from.value = "register")) {
-            setTimeout(() => {
-              showToast("提交成功");
-            }, 300);
-            nextStep();
-          } else {
+          // if ((from.value = "register")) {
+          //   setTimeout(() => {
+          //     showToast("提交成功");
+          //   }, 300);
+          //   nextStep();
+          // } else {
             router.replace({
               name: "submit",
             });
-          }
+          // }
         }
       })
       .finally(() => {

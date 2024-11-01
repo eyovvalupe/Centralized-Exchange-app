@@ -21,7 +21,9 @@
       <Button
         round
         color="#014CFA"
-        @click="router.back()"
+        @click="router.replace({
+          name: 'kyc'
+        })"
         class="w-full text-[0.3rem]"
         type="primary"
         :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"
