@@ -45,17 +45,11 @@
               class="user-icon"
               v-if="item.direction !== 'receive' && item.type !== 'img'"
             ></div>
-            <div class="user-avatar" v-if="item.direction !== 'receive'">
-              <img
-                class="user-avatar-img"
-                src="/static/img/user/user-block.png"
-                alt="img"
-              />
-            </div>
+            <UserAvatar />
           </div>
           <div class="receive-box" v-if="item.direction === 'receive'">
             <div class="mr-[0.2rem]">
-              <Avatar />
+              <ServiceAvatar />
             </div>
             <div class="con break-all receive-text" :class="item.type" v-if="item.type !== 'img'">
               <div class="receive_text" >
@@ -89,11 +83,9 @@
         :key="item.msgid"
         :class="item.direction"
       >
-        <div class="avatar" v-if="item.direction === 'receive'">
-          <img :src="avatar" :alt="item.msgid" />
-        </div>
+        <ServiceAvatar />
         <div class="msg-item-con">
-          <div class="con" :class="item.type">
+          <div class="con break-all receive-text" :class="item.type">
             <template v-if="item.type !== 'img'">
               {{ item.content }}
             </template>
@@ -124,7 +116,8 @@ import { transferTime } from "@/utils";
 import storeChat from "@/store/chat";
 import avatar from "@/assets/avatar.png";
 import Loaidng from "@/components/Loaidng.vue";
-import Avatar from "./Avatar.vue";
+import ServiceAvatar from "./ServiceAvatar.vue";
+import UserAvatar from "./UserAvatar.vue";
 
 const props = defineProps({
   chatLoading: {
