@@ -1,6 +1,6 @@
 
 import storeChat from '@/store/chat'
-import storeUser from '@/store'
+import storeUser from "@/store/index";
 import { CHAT_WEBSOCKET } from "@/config.js"
 import io from 'socket.io-client'
 class Service {
@@ -38,12 +38,12 @@ class Service {
         console.log(message);
         const arr = message.data || [];
         storeChat.commit('setNewMessageList', arr)
-        // if(arr.length!==1 || arr[0].direction ==='send'){
-        //   storeChat.commit('setMessageList', arr)
-        // }else{
-        //   storeChat.commit('setNewMessageList', arr)
-        // }
-        // isfirst=false;
+      })
+      this.socket.on('delmsg', msgIDs => {
+        console.log(msgIDs)
+        const toDelMsgIDList = msgIDs.split(",")
+        const messageList = computed(() => storeChat.getters.getMessageList);
+        storeChat.commit('setMessageList', messageList.filter(ml => !toDelMsgIDList.includes(ml.id)))
       })
     }
   }
@@ -69,10 +69,9 @@ class Service {
         console.log('连接断开')
       })
       this.socketNum.on('receive', message => {
-        console.log(message);
         const num=message.data.num;
         storeChat.commit('setMessageNum', num)
-        console.log('连接成功')
+        console.log('接收成功')
       })
     }
   }

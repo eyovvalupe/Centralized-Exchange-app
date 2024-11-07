@@ -71,7 +71,6 @@ export default createStore({
       return new Promise((resolve) => {
         getList({
           nologinid: storeChat.getters.getNologinid,
-          lasttime: Date.now()
         }).then((res) => {
           if (res.code == 200 && res.data) {
             commit("setHistoryMsg", res.data || '');

@@ -1,47 +1,75 @@
 <template>
   <div class="msg-content">
-    <div v-if="!messageList || !messageList.length">
-      <p class="no-message">--------- 暂无消息 ---------</p>
+    <div
+      v-if="
+        (!messageList || !messageList.length) &&
+        (!hasNewMessage || !hasNewMessage.length) &&
+        props.chatLoading
+      "
+    >
+      <p class="no-message">{{ formatDate(new Date()) }}</p>
     </div>
     <template v-else>
-      <div class="msg-item" v-for="item in messageList" :key="item.msgid" :class="item.direction">
-        <small v-show="false"> {{ storeChat.state.readMessageTime }}****{{ item.time }}***{{
-          storeChat.state.readMessageTime > item.time }}</small>
-        <!-- <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div> -->
-        <div class="msg-item-con"
-
+      <div
+        class="msg-item"
+        v-for="item in messageList"
+        :key="item.msgid"
+        :class="item.direction"
+      >
+        <small v-show="false">
+          {{ storeChat.state.readMessageTime }}****{{ item.time }}***{{
+            storeChat.state.readMessageTime > item.time
+          }}</small
         >
-          <div class="user-box"
-            v-if="item.direction !== 'receive'"
-          >
-            <div class="con" :class="item.type">
+        <!-- <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div> -->
+        <div class="msg-item-con">
+          <div class="user-box" v-if="item.direction !== 'receive'">
+            <div class="con break-all" :class="item.type">
               <template v-if="item.type !== 'img'">
                 {{ item.content }}
               </template>
-              <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
+              <van-image
+                v-else
+                class="send-conimg"
+                radius="6"
+                Lazyload
+                :src="item.content"
+                fit="scale-down"
+              >
                 <template v-slot:loading>
                   <Loaidng type="spinner" size="20" />
                 </template>
               </van-image>
-
             </div>
-            <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
+            <div
+              class="user-icon"
+              v-if="item.direction !== 'receive' && item.type !== 'img'"
+            ></div>
             <div class="user-avatar" v-if="item.direction !== 'receive'">
-              <img class="user-avatar-img" src="/static/img/user/user-block.png" alt="img">
+              <img
+                class="user-avatar-img"
+                src="/static/img/user/user-block.png"
+                alt="img"
+              />
             </div>
           </div>
-          <div class="receive-box"
-            v-if="item.direction === 'receive'"
-          >
-            <div class="user-avatar">
-              <img class="receive-avatar-img" :src="avatar" :alt="item.msgid">
+          <div class="receive-box" v-if="item.direction === 'receive'">
+            <div class="mr-[0.2rem]">
+              <Avatar />
             </div>
-            <div class="user-icon"></div>
-            <div class="con receive-text" :class="item.type">
-              <template v-if="item.type !== 'img'">
+            <div class="con break-all receive-text" :class="item.type" v-if="item.type !== 'img'">
+              <div class="receive_text" >
                 {{ item.content }}
-              </template>
-              <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
+              </div>
+            </div>
+            <div class="con break-all" :class="item.type" v-else>
+              <van-image
+                class="send-conimg"
+                radius="6"
+                Lazyload
+                :src="item.content"
+                fit="scale-down"
+              >
                 <template v-slot:loading>
                   <Loaidng type="spinner" size="20" />
                 </template>
@@ -52,37 +80,71 @@
         </div>
         <!-- <div class="avatar" v-if="item.direction === 'send'"><img :src="avatarMy" :alt="item.msgid"></div> -->
       </div>
-      <div id="hasNewMessage" v-if="hasNewMessage.length">{{ hasNewMessage.length }}条未读消息</div>
-      <div class="msg-item" v-for="item in hasNewMessage" :key="item.msgid" :class="item.direction">
-        <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div>
+      <div id="hasNewMessage" v-if="hasNewMessage && hasNewMessage.length">
+        {{ hasNewMessage.length }}条未读消息
+      </div>
+      <div
+        class="msg-item"
+        v-for="item in hasNewMessage"
+        :key="item.msgid"
+        :class="item.direction"
+      >
+        <div class="avatar" v-if="item.direction === 'receive'">
+          <img :src="avatar" :alt="item.msgid" />
+        </div>
         <div class="msg-item-con">
           <div class="con" :class="item.type">
             <template v-if="item.type !== 'img'">
               {{ item.content }}
             </template>
-            <van-image v-else class="send-conimg" :src="item.content1" fit="scale-down">
-              <template v-slot:error>加载失败</template>
+            <van-image
+              v-else
+              class="send-conimg"
+              radius="6"
+              Lazyload
+              :src="item.content"
+              fit="scale-down"
+            >
+              <template v-slot:loading>
+                <Loaidng type="spinner" size="20" />
+              </template>
             </van-image>
           </div>
           <div class="time">{{ transferTime(item.time) }}</div>
         </div>
       </div>
-
     </template>
-
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
-import { Lazyload, Image as VanImage } from 'vant';
-import { transferTime } from '@/utils'
-import storeChat from "@/store/chat"
-import avatar from '@/assets/avatar.png'
-import Loaidng from "@/components/Loaidng.vue"
-// import avatarMy from '@/assets/avatar-my.png'
-const messageList = computed(() => storeChat.getters.getMessageList)
-const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
+import { computed, ref } from "vue";
+import { Lazyload, Image as VanImage } from "vant";
+import { transferTime } from "@/utils";
+import storeChat from "@/store/chat";
+import avatar from "@/assets/avatar.png";
+import Loaidng from "@/components/Loaidng.vue";
+import Avatar from "./Avatar.vue";
+
+const props = defineProps({
+  chatLoading: {
+    type: Boolean,
+    default: true,
+  },
+});
+const messageList = computed(() => storeChat.getters.getMessageList);
+const hasNewMessage = computed(() => storeChat.state.hasNewMessage);
+
+function formatDate(date) {
+  const year = String(date.getFullYear()).slice(-4);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
 </script>
 
 <style lang="less" scoped>
@@ -106,6 +168,7 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
     .msg-item-con {
       .con {
         padding: 12px 12px;
+        max-width: 5.84rem;
         min-height: 30px;
         line-height: 22px;
         font-size: 15px;
@@ -120,32 +183,55 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
           margin: 0 !important;
           padding: 0 !important;
         }
-        &.receive-text{
-          margin-left: -9px;
+        &.receive-text {
+          position: relative;
+          &::before {
+          content: "";
+          position: absolute;
+          left: -0.1rem;
+          top: 0.26rem;
+          width: 0;
+          height: 0;
+          border-left: 0.1rem solid transparent;
+          border-right: 0 solid transparent;
+          border-bottom: 0.1rem solid #f5f7fc;
         }
-        &.img{
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: -0.1rem;
+          top: 0.36rem;
+          width: 0;
+          height: 0;
+          border-left: 0.1rem solid transparent;
+          border-right: 0 solid transparent;
+          border-top: 0.1rem solid #f5f7fc;
+        }
+        }
+        &.img {
           padding: 0 !important;
           margin-right: 6px;
         }
       }
-      .user-box{
+      .user-box {
         display: flex;
         justify-content: flex-end;
-        .user-avatar{
+        .user-avatar {
           width: 0.8rem;
           height: 0.8rem;
           border-radius: 0.4rem;
           overflow: hidden;
           margin-left: 7px;
-          .user-avatar-img{
+          .user-avatar-img {
             width: 0.8rem !important;
             height: 0.8rem !important;
           }
         }
-        .user-icon{
+        .user-icon {
           width: 0;
           height: 0;
-          border-left: 15px solid #014CFA;
+          border-left: 15px solid #014cfa;
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
           margin-left: -9px;
@@ -157,35 +243,35 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
         padding: 5px 0 0 10px;
         color: #666;
       }
-      .receive-box{
+      .receive-box {
         display: flex;
-        .user-icon{
+        .user-icon {
           width: 0;
           height: 0;
-          border-right: 15px solid #EFF3F8;
+          border-right: 15px solid #eff3f8;
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
           margin-left: 7px;
           margin-top: 8px;
         }
-        .user-avatar{
+        .user-avatar {
           width: 0.8rem;
           height: 0.8rem;
           border-radius: 0.4rem;
           overflow: hidden;
           margin-left: 7px;
-          .receive-avatar-img{
+          .receive-avatar-img {
             width: 0.8rem !important;
             height: 0.8rem !important;
           }
         }
       }
     }
-    &.receive{
+    &.receive {
       .con {
-        background: #EFF3F8;
+        background: #eff3f8;
         color: #061023;
-        &.img{
+        &.img {
           padding: 0 !important;
           margin-left: 6px;
         }
@@ -197,11 +283,10 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
       .msg-item-con {
         margin: 0 5px 30px 5px;
         text-align: right;
-
       }
 
       .con {
-        background: #014CFA;
+        background: #014cfa;
         color: #fff;
 
         &.img {
@@ -240,7 +325,7 @@ const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
       max-height: 10rem;
       max-width: 10rem;
     }
-    .van-image__img{
+    .van-image__img {
       display: block;
       border-radius: 6px !important;
     }

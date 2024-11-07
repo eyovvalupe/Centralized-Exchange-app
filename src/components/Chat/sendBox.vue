@@ -25,7 +25,7 @@ const message = ref('');
 const token = computed(() => storeUser.state.token);
 const isConnected = computed(() => storeChat.state.isConnected);
 const sendMessage = (type, content) => {
-  if (!isConnected.value) {
+  if (!isConnected.value && message.value !== "") {
     showToast('网络错误,请稍等')
     return
   }

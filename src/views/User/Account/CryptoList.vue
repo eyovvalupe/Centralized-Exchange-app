@@ -190,13 +190,6 @@ getSessionToken();
       background-size: cover;
       background-repeat: no-repeat;
     }
-    .dash_icon {
-      width: 0.96rem;
-      height: 0.96rem;
-      background-image: url('data:image/svg+xml;utf8,<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_1862_22543)"><path d="M31.864 15.9575C31.864 24.7503 24.7364 31.8779 15.9436 31.8779C7.15091 31.8779 0.0231934 24.7503 0.0231934 15.9575C0.0231934 7.16483 7.15091 0.0371094 15.9436 0.0371094C24.7364 0.0371094 31.864 7.16483 31.864 15.9575Z" fill="%230986D3"/><path d="M26.381 13.7805L24.1187 20.331C23.8871 21.0024 23.4519 21.5848 22.8737 21.9972C22.2955 22.4096 21.6031 22.6314 20.8929 22.6318H7.04102L8.10768 19.1977H20.8779L23.1273 12.686H10.1294L11.1961 9.25195H23.1552C24.2562 9.25195 25.2949 9.78847 25.9345 10.6856C26.25 11.1286 26.4551 11.6406 26.5328 12.179C26.6104 12.7173 26.5584 13.2664 26.381 13.7805Z" fill="white"/><path d="M15.5852 14.2251V14.4419L14.5872 17.6591H5.31958L6.38625 14.2251H15.5852Z" fill="white"/></g><defs><clipPath id="clip0_1862_22543"><rect width="32" height="32" fill="white"/></clipPath></defs></svg>');
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
     .rvn_icon {
       width: 0.96rem;
       height: 0.96rem;

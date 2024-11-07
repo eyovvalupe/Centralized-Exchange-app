@@ -4,7 +4,7 @@
         <div class="layout-chat">
             <loading v-show="!isConnected || chatLoading" />
             <div class="chat-con" @touchstart="setRead" @scroll="handleScroll" ref="scrollContainer">
-                <messageBox />
+                <messageBox :chatLoading="chatLoading"/>
             </div>
             <div class="chat-send">
                 <sendBox @scrollToBottom="sendEvent" />
@@ -38,8 +38,8 @@ const isReadMessage = (currTime) => {
     apiMsgRead({ nologinid: storeChat.getters.getNologinid }).then((res) => {
         const { lasttime } = res.data
         storeChat.commit('setreadMessageTime', currTime ? lasttime : new Date().valueOf() + 1000)
-        const tmp_arr = messageList.value.concat(hasNewMessage.value);
-        storeChat.commit('setNewMessageList', tmp_arr)
+        // const tmp_arr = messageList.value.concat(hasNewMessage.value);
+        // storeChat.commit('setNewMessageList', tmp_arr)
     })
 }
 isReadMessage(true);
