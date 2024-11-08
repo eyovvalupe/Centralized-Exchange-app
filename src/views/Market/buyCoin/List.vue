@@ -3,15 +3,19 @@
   <div v-if="token" class="buycoin_list">
     <div class="list">
       <!-- 当前订单 -->
-      <div v-for="item in [...c2cLasttime, ...list]" :key="item.order_no + item.unread" class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]" @click="openOrderInfo(item)">
+      <div v-for="(item, i) in showList" :key="i"
+        class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]"
+        @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
-        <div v-if="c2cUnread[item.order_no]" class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
+        <div v-if="c2cUnread[item.order_no]"
+          class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
         </div>
         <div class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]">
           <!-- order_no 订单号 -->
           <div class="text-14 text-[#666]">{{ item.order_no }}</div>
-          <div class="text-14" :style="{ color: statusEnum[item.status].color }">{{ statusEnum[item.status].name }}</div>
+          <div class="text-14" :style="{ color: statusEnum[item.status].color }">{{ statusEnum[item.status].name }}
+          </div>
         </div>
         <!-- 交易信息展示 -->
         <div class="flex items-center justify-between">
@@ -21,7 +25,8 @@
               <!-- 根据交易类型显示“购入”或“售出” -->
               {{ item.offset == 'buy' ? t('购入') : t('售出') }}&nbsp;{{ item.crypto }}&nbsp;
               <!-- 加密货币图标 -->
-              <img class="!h-4 !w-4 rounded-50" :src="`/static/img/crypto/${item.crypto.toUpperCase()}.png`" alt="currency" />
+              <img class="!h-4 !w-4 rounded-50" :src="`/static/img/crypto/${item.crypto.toUpperCase()}.png`"
+                alt="currency" />
             </div>
             <!-- 价格信息 -->
             <div class="mb-[0.12rem] text-[#666D80]">{{ $t('价格') }}&nbsp;{{ item.price }}&nbsp;{{ item.currency }}</div>
@@ -40,7 +45,8 @@
       </div>
 
       <NoData v-if="!loading && !list.length" />
-      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_self" :loading="loading" :finish="finish" />
+      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_self" :loading="loading"
+        :finish="finish" />
     </div>
   </div>
   <UnLogin v-show="!token" @loginfinish="loginfinish" />
@@ -62,6 +68,7 @@ import { _c2cOrderInfo, _c2cOrderList } from '@/api/api'
 import LoadingMore from '@/components/LoadingMore.vue'
 import router from '@/router'
 import { useBuyCoinState } from './state'
+import { computed } from "vue"
 
 const { t } = useI18n()
 const statusEnum = {
@@ -156,6 +163,15 @@ const init = () => {
     getData(false)
   }
 }
+
+const showList = computed(() => {
+  return [
+    ...c2cLasttime.value,
+    ...list.value
+  ]
+})
+
+
 // 监听
 const scrollHandle = bottom => {
   if (active.value !== '2') return
@@ -209,6 +225,7 @@ defineExpose({
 .buycoin_list {
   width: 7.5rem;
   padding: 0.08rem 0.32rem;
+
   .list {
     .item {
       padding: 0.24rem 0.32rem;

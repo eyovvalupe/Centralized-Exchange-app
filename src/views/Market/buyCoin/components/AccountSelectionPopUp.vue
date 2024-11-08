@@ -1,6 +1,7 @@
 <template>
   <!-- 账户选择弹窗 AccountSelectionPopUp -->
-  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="AccountSelectionPopUp" position="bottom" teleport="body">
+  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+    class="AccountSelectionPopUp" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
@@ -9,32 +10,30 @@
       <div class="list">
         <!-- 二层容器 -->
         <div class="mb-5 flex text-16 text-[#666D80]">
-          <div
-            v-if="currencyType.includes('crypto')"
+          <div v-if="currencyType.includes('crypto')"
             class="mr-[0.12rem] w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36"
             :class="{ 'border-none border-transparent bg-my text-white': tabsValue === 'crypto' }"
-            @click="tabsValue = 'crypto'"
-          >
+            @click="tabsValue = 'crypto'">
             {{ $t('加密货币') }}
           </div>
-          <div
-            v-if="currencyType.includes('bank')"
+          <div v-if="currencyType.includes('bank')"
             class="w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36"
-            :class="{ 'border-transparent bg-my text-white': tabsValue === 'bank' }"
-            @click="tabsValue = 'bank'"
-          >
+            :class="{ 'border-transparent bg-my text-white': tabsValue === 'bank' }" @click="tabsValue = 'bank'">
             {{ $t('银行卡') }}
           </div>
         </div>
         <!-- 三层容器 -->
-        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my" @click="goAddAccount">
+        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my"
+          @click="goAddAccount">
           <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
           <span class="text-12 leading-22">{{ $t('添加收款账户') }}</span>
         </div>
 
-        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }" class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
+        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }"
+          class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
           <div class="card_icon">
-            <img v-if="tabsValue === 'crypto'" class="rounded-50" :src="`/static/img/crypto/${item.symbol?.toUpperCase()}.png`" alt="currency" />
+            <img v-if="tabsValue === 'crypto'" class="rounded-50"
+              :src="`/static/img/crypto/${item.symbol?.toUpperCase()}.png`" alt="currency" />
             <img v-else class="!size-[0.68rem]" src="/static/img/user/card_type_b.png" alt="img" />
           </div>
           <div class="card">
@@ -55,6 +54,7 @@ import { closeToast, Popup, showConfirmDialog, showLoadingToast } from 'vant'
 import router from '@/router'
 import store, { useMapState } from '@/store'
 import { _hiddenAccount } from '@/utils/index'
+import { onMounted, computed } from "vue"
 
 const props = defineProps({
   show: Boolean,
@@ -69,6 +69,8 @@ const props = defineProps({
   },
 })
 const emit = defineEmits(['update:show', 'onAddCollection'])
+
+const token = computed(() => store.state.token)
 const { t } = useI18n()
 const tabsValue = ref('crypto')
 const { userInfo, accountList } = useMapState(['accountList', 'userInfo'])
@@ -82,7 +84,7 @@ const bankList = computed(() => accountList.value.filter(item => item.channel ==
 watch(
   () => props.show,
   val => {
-    if (val) {
+    if (val && !accountList.value.length) {
       showLoadingToast({ duration: 0, loadingType: 'spinner' })
       store.dispatch('updateAccountList').then(closeToast)
     }
@@ -91,6 +93,13 @@ watch(
     }
   }
 )
+onMounted(() => {
+  setTimeout(() => {
+    if (token.value && !accountList.value.length) {
+      store.dispatch('updateAccountList')
+    }
+  }, 500)
+})
 // 跳转添加
 const goAddAccount = () => {
   // google检测
@@ -118,6 +127,7 @@ const clickAccountItem = val => {
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
 }
+
 .withdraw_accounr_dialog {
   background-color: #fff;
   overflow: hidden;
@@ -258,7 +268,7 @@ const clickAccountItem = val => {
       align-items: center;
       justify-content: center;
 
-      > #img {
+      >#img {
         width: 0.96rem !important;
         height: 0.96rem !important;
       }
@@ -292,7 +302,7 @@ const clickAccountItem = val => {
       width: 0.46rem;
       height: 0.42rem;
 
-      > img {
+      >img {
         width: 0.18rem !important;
         height: 0.12rem !important;
         position: absolute;

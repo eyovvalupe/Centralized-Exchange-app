@@ -3,10 +3,13 @@
     <Top :title="statusEnum[form.status]?.title" class="!z-20" :back-func="goBack" />
     <!-- 一层容器 tab -->
     <div class="tabs-buy !mb-5">
-      <div class="tab" :class="{ active_tab: ['buy', 'sell'].includes(tabsValue) }" @click="changeTab('buy')">{{ offsetEnum[form.offset] }}</div>
-      <div class="tab" :class="{ active_tab: tabsValue == 'contactTheMerchant' }" @click="changeTab('contactTheMerchant')">
+      <div class="tab" :class="{ active_tab: ['buy', 'sell'].includes(tabsValue) }" @click="changeTab('buy')">{{
+        offsetEnum[form.offset] }}</div>
+      <div class="tab" :class="{ active_tab: tabsValue == 'contactTheMerchant' }"
+        @click="changeTab('contactTheMerchant')">
         {{ $t('联系商家') }}
-        <div v-if="form.unread" class="absolute right-[40px] top-[3px] flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
+        <div v-if="form.unread"
+          class="absolute right-[40px] top-[3px] flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ form.unread > 99 ? '+99' : form.unread }}
         </div>
       </div>
@@ -16,17 +19,23 @@
       <div class="mb-[0.2rem] w-full rounded-2xl border border-[#d0d8e2] bg-[#f5f7fc] pt-[0.28rem]">
         <template v-if="['waitpayment', 'waitconfirm'].includes(form.status)">
           <div class="flex items-center px-4">
-            <div class="mr-2 text-15 font-semibold leading-25 text-black">{{ $t('等待') }}{{ form.status === 'waitpayment' ? t('买家付款') : t('卖家确认') }}</div>
+            <div class="mr-2 text-15 font-semibold leading-25 text-black">{{ $t('等待') }}{{ form.status === 'waitpayment'
+              ? t('买家付款') : t('卖家确认') }}</div>
             <div class="text-base font-semibold text-[#e8503a]">{{ countState }}</div>
           </div>
-          <div class="mb-[0.14rem] w-full px-4 text-xs leading-25 text-[#8f92a1]">{{ $t('请根据总价') }}，{{ $t('向商家提供的银行卡转账') }}</div>
+          <div class="mb-[0.14rem] w-full px-4 text-xs leading-25 text-[#8f92a1]">{{ $t('请根据总价') }}，{{ $t('向商家提供的银行卡转账')
+            }}</div>
         </template>
-        <div v-else class="mb-[0.22rem] text-center text-15 leading-25" :style="{ color: statusEnum[form.status]?.color }">{{ statusEnum[form.status]?.name }}</div>
+        <div v-else class="mb-[0.22rem] text-center text-15 leading-25"
+          :style="{ color: statusEnum[form.status]?.color }">{{
+            statusEnum[form.status]?.name }}</div>
 
         <!-- 三层容器 rounded-2xl border border-[#d0d8e2]-->
         <div class="box-3 relative h-[4.26rem] w-full rounded-2xl bg-white px-4 py-[0.2rem]">
           <div class="mb-1 flex items-center">
-            <div class="mr-[0.12rem] w-6 rounded-full bg-[#a6bef4] text-center text-xs font-semibold leading-24 text-[#014cfa]">{{ form.merchant_name ? form.merchant_name.slice(0, 1) : '' }}</div>
+            <div
+              class="mr-[0.12rem] w-6 rounded-full bg-[#a6bef4] text-center text-xs font-semibold leading-24 text-[#014cfa]">
+              {{ form.merchant_name ? form.merchant_name.slice(0, 1) : '' }}</div>
             <div class="text-base text-[#061023]">{{ form.merchant_name }}</div>
           </div>
           <div class="mb-[0.2rem] flex pl-[0.62rem] text-xs leading-17 text-[#8f92a1]">
@@ -56,7 +65,8 @@
                 <div class="text-sm text-[#666d80]">{{ $t('卡号') }}</div>
               </div>
               <div class="w-52 bg-[#f5f7fc] leading-35">
-                <div class="flex items-center justify-center text-sm text-[#061023]" @click="copy(form.bank_card_number)">
+                <div class="flex items-center justify-center text-sm text-[#061023]"
+                  @click="copy(form.bank_card_number)">
                   {{ form.bank_card_number }}
                   <img class="ml-1 !size-[0.2rem]" src="/static/img/trade/copy.png" alt="" />
                 </div>
@@ -80,7 +90,8 @@
 
       <!-- 四层容器 -->
       <div class="h-[2.3rem] w-[6.86rem] rounded-2xl bg-[#f5f7fc]">
-        <div class="flex h-[0.68rem] items-center justify-between border border-transparent border-b-[#EFF3F8] px-4 text-sm leading-34 text-[#666666]">
+        <div
+          class="flex h-[0.68rem] items-center justify-between border border-transparent border-b-[#EFF3F8] px-4 text-sm leading-34 text-[#666666]">
           <div class="flex items-center" @click="copy(form.order_no)">
             {{ form.order_no }}
             <img class="ml-1 !size-[0.2rem]" src="/static/img/trade/copy.png" alt="" />
@@ -88,29 +99,33 @@
           <div class="text-12 text-[#8f92a1]">{{ form.date }}</div>
         </div>
 
-        <div class="flex h-20 items-center justify-between px-4 text-center text-sm text-[#666d80]">
-          <div class="">
-            <div class="mb-[0.2rem] w-[1.64rem] text-base font-semibold leading-none text-[#061023]">{{ form.totalprice }}</div>
+        <div style="word-break: break-all;"
+          class="flex h-20 items-center justify-between px-4 text-center text-sm text-[#666d80]">
+          <div class="bottom_nav_item">
+            <div class="mb-[0.2rem] w-[1.9rem] text-base font-semibold leading-none text-[#061023]">{{ form.totalprice
+              }}
+            </div>
             <div class="w-[1.9rem] leading-14">{{ $t('总价') }}({{ form.currency }})</div>
           </div>
-          <div class="">
-            <div class="mb-[0.2rem] w-[1.64rem] text-base font-semibold leading-none text-[#061023]">{{ form.price }}</div>
+          <div class="bottom_nav_item">
+            <div class="mb-[0.2rem] w-[1.9rem] text-base font-semibold leading-none text-[#061023]">{{ form.price }}
+            </div>
             <div class="w-[1.9rem] leading-14">{{ $t('价格') }}({{ form.currency }})</div>
           </div>
-          <div class="">
-            <div class="mb-[0.2rem] w-[1.64rem] text-base font-semibold leading-none text-[#061023]">{{ form.volume }}</div>
+          <div class="bottom_nav_item">
+            <div class="mb-[0.2rem] w-[1.9rem] text-base font-semibold leading-none text-[#061023]">{{ form.volume }}
+            </div>
             <div class="w-[1.9rem] leading-14">{{ $t('数量') }}({{ form.crypto }})</div>
           </div>
         </div>
       </div>
       <!-- 底部button -->
-      <div v-if="['waitpayment', 'waitconfirm'].includes(form.status)" class="van-safe-area-bottom absolute inset-x-4 bottom-0 mb-5 flex justify-between text-16 text-[#666D80]">
-        <div class="mr-4 flex-1 cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-48" @click="handleBotton('cancel')">{{ $t('取消订单') }}</div>
-        <div
-          class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white"
-          :class="{ 'disabled-btn': ['waitconfirm'].includes(form.status) }"
-          @click="handleBotton('payment')"
-        >
+      <div v-if="['waitpayment', 'waitconfirm'].includes(form.status)"
+        class="van-safe-area-bottom absolute inset-x-4 bottom-0 mb-5 flex justify-between text-16 text-[#666D80]">
+        <div class="mr-4 flex-1 cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-48"
+          @click="handleBotton('cancel')">{{ $t('取消订单') }}</div>
+        <div class="flex-1 cursor-pointer rounded-3xl border border-transparent bg-my text-center leading-48 text-white"
+          :class="{ 'disabled-btn': ['waitconfirm'].includes(form.status) }" @click="handleBotton('payment')">
           {{ $t('我已付款') }}
         </div>
       </div>
@@ -228,15 +243,16 @@ function handleBotton(val) {
   safeRef.value.open()
 }
 const goBack = () => {
-  if (tabsValue.value === 'contactTheMerchant') {
-    tabsValue.value = form.offset
-  } else if (active.value === '2') {
-    router.back()
-    setTimeout(() => setScrollTop('2'), 300)
-  } else {
-    router.push('/market')
-    onChange('2', false)
-  }
+  // if (tabsValue.value === 'contactTheMerchant') {
+  //   tabsValue.value = form.offset
+  // } else if (active.value === '2') {
+  //   router.back()
+  //   setTimeout(() => setScrollTop('2'), 300)
+  // } else {
+  //   router.push('/market')
+  //   onChange('2', false)
+  // }
+  router.back()
 }
 //  复制
 const copy = text => {
@@ -292,6 +308,7 @@ onInit()
       text-align: center;
     }
   }
+
   .box-3 {
     &::before {
       content: '';
@@ -306,17 +323,26 @@ onInit()
       border-bottom-color: transparent;
     }
   }
+
   .dashed-my {
     background: linear-gradient(to left, transparent 0%, transparent 50%, #eff3f8 50%, #eff3f8 100%);
     background-size: 0.36rem 0.02rem;
     background-repeat: repeat-x;
   }
+
   .disabled-btn {
     background: #f5f7fa;
     border-color: #f5f7fa;
     color: #c0c4cc;
     cursor: not-allowed;
     pointer-events: none;
+  }
+
+  .bottom_nav_item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

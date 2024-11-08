@@ -15,8 +15,10 @@
             <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
-            <span v-if="form1.offset == 'sell' && token" v-show="form1.volume === '' || priceFocus" class="ipt_tip">≤ {{ currOut.amount }}</span>
-            <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false" @blur="priceFocus = false" />
+            <span v-if="form1.offset == 'sell' && token" v-show="form1.volume === '' || priceFocus" class="ipt_tip">≤ {{
+              currOut.amount }}</span>
+            <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false"
+              @blur="priceFocus = false" />
           </div>
         </div>
 
@@ -27,7 +29,8 @@
             <!-- <span class="link">划转</span> -->
           </div>
           <div v-if="!token" class="subtitle">&nbsp;</div>
-          <div class="item justify-between" :class="{ item_focus: priceFocus }" style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
+          <div class="item justify-between" :class="{ item_focus: priceFocus }"
+            style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
             <div class="flex items-center">
               <div v-if="currOut.name" class="icon">
                 <img class="rounded-50" :src="`/static/img/crypto/${currOut.name.toUpperCase()}.png`" alt="currency" />
@@ -53,7 +56,8 @@
         </div>
         <div class="item_box_right">
           <div class="subtitle"><span>&nbsp;</span></div>
-          <div class="item justify-between" :class="{ item_focus: priceFocus }" style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
+          <div class="item justify-between" :class="{ item_focus: priceFocus }"
+            style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
             <div class="flex items-center">
               <div v-if="currIn.name" class="icon">
                 <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
@@ -66,9 +70,12 @@
           </div>
         </div>
       </div>
-      <div v-if="rate && token" class="tip">{{ $t('预计价格') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--' }}&nbsp;{{ currIn.name }}</div>
+      <div v-if="rate && token" class="tip">{{ $t('预计价格') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--'
+        }}&nbsp;{{ currIn.name }}</div>
 
-      <Button size="large" class="submit" round :loading="loading" :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? t('卖出') : t('买入') }}</Button>
+      <Button size="large" class="submit" round :loading="loading"
+        :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? t('卖出') :
+          t('买入') }}</Button>
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
       <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
@@ -76,7 +83,8 @@
   </div>
 
   <!-- 售出币种 -->
-  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
+  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+    position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
@@ -85,33 +93,32 @@
         <div class="icon">
           <img src="/static/img/common/search.png" alt="🔍" />
         </div>
-        <input ref="iptRef" v-model.trim="searchValue" :placeholder="$t('输入币种')" type="text" enterkeyhint="search" class="search" />
+        <input ref="iptRef" v-model.trim="searchValue" :placeholder="$t('输入币种')" type="text" enterkeyhint="search"
+          class="search" />
       </div>
       <div class="title">{{ $t('币种选择') }}</div>
-      <div
-        v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet"
-        :key="i"
-        class="swap_dialog_item"
+      <div v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet" :key="i" class="swap_dialog_item"
         :class="{ swap_dialog_item_active: showDialogType == 1 ? currOut.name == item.name : currIn.name == item.name }"
-        @click="clickItem(item)"
-      >
+        @click="clickItem(item)">
         <div class="icon">
           <img class="rounded-50" :src="handleUrl(item.name)" alt="currency" />
         </div>
         <span>{{ item.name.toUpperCase() }}</span>
-        <Icon v-if="showDialogType == 1 ? currOut.name == item.name : currIn.name == item.name" class="check_icon" name="success" />
+        <Icon v-if="showDialogType == 1 ? currOut.name == item.name : currIn.name == item.name" class="check_icon"
+          name="success" />
       </div>
     </div>
   </Popup>
 
-  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank" @on-add-collection="clickAccountItem" />
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
+    @on-add-collection="clickAccountItem" />
 
   <!-- 安全密码弹窗 -->
   <SafePassword ref="safeRef" @submit="submitSell" />
 </template>
 
 <script setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, computed, onBeforeUnmount, onMounted } from 'vue'
 import { Button, Popup, Icon, showToast, showConfirmDialog } from 'vant'
 import Decimal from 'decimal.js'
 import store, { useMapState } from '@/store'
@@ -123,6 +130,7 @@ import eventBus from '@/utils/eventBus'
 import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 import { useBuyCoinState } from './state'
 import router from '@/router'
+
 
 const { handleUrl, active } = useBuyCoinState()
 const safeRef = ref()
@@ -211,14 +219,14 @@ const submitSell = s => {
   _orderFast(params)
     .then(({ data: { order_no } }) => {
       showToast(t('下单成功'))
+      form1.value.volume = ''
       setTimeout(() => {
         router.push({
           name: 'orderDetails',
           query: { order_no },
         })
       }, 300)
-    })
-    .finally(() => {
+    }).finally(() => {
       loading.value = false
     })
 }
@@ -346,6 +354,7 @@ onBeforeUnmount(() => {
 .page_fasters {
   width: 7.5rem;
   margin-top: -0.32rem;
+
   .form {
     padding: 0 0.32rem;
 
@@ -410,6 +419,7 @@ onBeforeUnmount(() => {
         border: 1px solid #d0d8e2;
         padding: 0 0.2rem;
         font-size: 0.32rem;
+
         .icon {
           margin-right: 0.12rem;
           width: 0.64rem;
@@ -545,6 +555,7 @@ onBeforeUnmount(() => {
     input {
       padding-top: 0.06rem;
     }
+
     input::placeholder {
       // color: #014cfa; /* 占位符颜色 */
       color: #9ea3ae;
@@ -620,6 +631,7 @@ onBeforeUnmount(() => {
     overflow: hidden;
     position: relative;
     color: #333333;
+
     .icon {
       width: 0.6rem;
       height: 0.6rem;
@@ -705,7 +717,7 @@ onBeforeUnmount(() => {
       align-items: center;
       justify-content: center;
 
-      > img {
+      >img {
         width: 0.64rem !important;
         height: 0.64rem !important;
       }
@@ -739,7 +751,7 @@ onBeforeUnmount(() => {
       width: 0.46rem;
       height: 0.42rem;
 
-      > img {
+      >img {
         width: 0.18rem !important;
         height: 0.12rem !important;
         position: absolute;

@@ -27,7 +27,8 @@
       </div>
       <div class="tip">{{ $t('预计支付') }} {{ showAmount }} {{ info.currWallet }}</div>
 
-      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{ $t('买入') }}</Button>
+      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{ $t('买入')
+        }}</Button>
     </div>
 
     <!-- 卖出 -->
@@ -58,7 +59,8 @@
       <div class="leading-18" style="margin-bottom: 0.12rem; margin-top: 0.32rem">{{ $t('账户') }}</div>
       <div v-if="bankList.length" class="card_box" @click="showAccountDialog = true">
         <div class="card_icon">
-          <img v-if="bank.symbol" id="img" class="rounded-50" :src="`/static/img/crypto/${bank.symbol.toUpperCase()}.png`" alt="currency" />
+          <img v-if="bank.symbol" id="img" class="rounded-50"
+            :src="`/static/img/crypto/${bank.symbol.toUpperCase()}.png`" alt="currency" />
           <img v-else class="!size-[0.68rem]" src="/static/img/user/card_type_b.png" alt="img" />
         </div>
         <div class="card">
@@ -68,16 +70,19 @@
 
         <div class="text-12 text-my" @click="goAddAccount">{{ $t('更改') }}</div>
       </div>
-      <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my" @click="showAccountDialog = true">
+      <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my"
+        @click="showAccountDialog = true">
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
         <span class="text-12 leading-22">{{ $t('添加收款账户') }}</span>
       </div>
-      <Button size="large" style="margin-top: 0.8rem" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{ $t('卖出') }}</Button>
+      <Button size="large" style="margin-top: 0.8rem" class="btn" round :loading="loading" color="var(--main-color)"
+        @click="goSubmit">{{ $t('卖出') }}</Button>
     </div>
     <!-- 安全密码弹窗 -->
     <SafePassword ref="safeRef" @submit="submitSell" />
     <!-- 账户选择弹窗 -->
-    <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="bank" currency-type="bank" @on-add-collection="clickAccountItem" />
+    <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="bank" currency-type="bank"
+      @on-add-collection="clickAccountItem" />
   </div>
 </template>
 
@@ -153,7 +158,7 @@ const submitSell = s => {
       if (code == 200) {
         showToast(t('下单成功'))
         setTimeout(() => {
-          router.push({
+          router.replace({
             name: 'orderDetails',
             query: { order_no },
           })
@@ -192,6 +197,7 @@ getSessionToken()
       overflow: hidden;
       margin-bottom: 0.36rem;
       border-width: 1px;
+
       .card_icon {
         background-color: #f5f7fc;
         width: 0.96rem;
@@ -201,7 +207,7 @@ getSessionToken()
         align-items: center;
         justify-content: center;
 
-        > #img {
+        >#img {
           width: 0.96rem !important;
           height: 0.96rem !important;
         }
@@ -272,6 +278,7 @@ getSessionToken()
       border-radius: 0.32rem;
       background-color: #f5f7fc;
       font-size: 0.32rem;
+
       .avatar {
         width: 0.4rem;
         height: 0.4rem;
@@ -286,6 +293,7 @@ getSessionToken()
         color: #fff;
         line-height: 0;
       }
+
       .info_item {
         font-weight: bold;
         margin: 0.48rem 0 0.16rem;

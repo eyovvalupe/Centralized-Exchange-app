@@ -79,13 +79,15 @@
     </div>
     <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white">
       <div class="h-[0.02rem] w-full bg-[#EAEEF3]" />
-      <div class="box item px-4">
+      <div class="box  px-4">
         <div class="box_icon">
           <!-- <img src="/static/img/chat/file.png" alt="img" /> -->
           <IconSvg name="chatFile" class="text-30 text-my" />
           <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
         </div>
-        <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
+        <div class="item">
+          <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
+        </div>
         <div class="box_icon" @click="sendText">
           <IconSvg name="chatSend" class="text-30 text-my" />
         </div>
@@ -109,7 +111,7 @@ import IconSvg from '@/components/IconSvg.vue'
 const props = defineProps({
   currItem: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 })
 const { t } = useI18n()
@@ -311,6 +313,7 @@ onBeforeUnmount(() => {
   display: flex;
   flex-direction: column;
   position: relative;
+
   // overflow: hidden;
   // .van-popover__arrow {
   //   top: 0.32rem;
@@ -407,6 +410,7 @@ onBeforeUnmount(() => {
 
       .op_text {
         position: relative;
+
         .van-popover__arrow {
           top: 0.2rem;
           margin-left: calc(var(--van-popover-arrow-size) * -1);
@@ -414,6 +418,7 @@ onBeforeUnmount(() => {
           border-right-color: #f6f8fe;
           color: #f6f8fe;
         }
+
         .op_text_content {
           display: inline-block;
           // padding: 0.3rem 0.24rem;
@@ -466,6 +471,7 @@ onBeforeUnmount(() => {
       margin-top: 0.4rem;
       padding-right: 0.12rem;
       position: relative;
+
       .van-popover__arrow {
         top: 0.2rem;
         border-left-color: #3d65f9;
@@ -474,6 +480,7 @@ onBeforeUnmount(() => {
         color: #3d65f9;
         border-width: 0.12rem;
       }
+
       .my_text {
         display: inline-block;
         padding: 0.2rem 0.4rem;
@@ -504,6 +511,7 @@ onBeforeUnmount(() => {
         color: #8f92a1;
         margin-bottom: 0.26rem;
       }
+
       .content {
         // width: 5.22rem;
         // height: 0.6rem;
@@ -512,7 +520,8 @@ onBeforeUnmount(() => {
         color: var(--666D80, #666d80);
         text-align: center;
         font-size: 0.3rem;
-        line-height: 0.6rem; /* 133.333% */
+        line-height: 0.6rem;
+        /* 133.333% */
         padding: 0 0.18rem;
       }
     }
@@ -529,13 +538,18 @@ onBeforeUnmount(() => {
     // border-top: 1px solid #d0d8e2;
     // padding: 0 0.32rem;
 
-    .ipt {
+    .item {
       height: 0.96rem;
       padding: 0 0.24rem;
       border: 0.02rem solid #d0d8e2;
       flex: 1;
       margin: 0 0.3rem;
       border-radius: 0.32rem;
+    }
+
+    .ipt {
+      width: 100%;
+      height: 100%;
     }
 
     .box_icon {

@@ -560,7 +560,7 @@ export const _aiget = (data = {}) => {
 // 快捷买入或卖出
 export const _orderFast = (data = {}) => {
   return http.post(`/authc/v1/c2c/order/fast`, data, {
-    custom: { auth: true, toast: false, retry: false },
+    custom: { auth: true, toast: true, retry: false },
   });
 };
 // 自选列表
