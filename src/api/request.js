@@ -5,8 +5,8 @@ import router from '@/router/index'
 import { BASE_ADDRESS } from '@/config'
 
 const instance = axios.create({
-  // baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
-  baseURL: BASE_ADDRESS,
+  baseURL: process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS,
+  // baseURL: BASE_ADDRESS,
   timeout: 15000,
   transformRequest: [
     function (data, headers) {
