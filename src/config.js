@@ -1,7 +1,14 @@
+
+/* 开发环境 */
+export const BASE_SOCKET = 'ws://54.169.182.60:9093'; // ws地址
+export const BASE_ADDRESS = 'http://146.70.86.141:8000'; // 请求地址 62.112.10.184:8302
+export const CHAT_WEBSOCKET = 'http://54.169.182.60:9095'; // 客服ws地址
+
+
 /* 内测版本 */
-export const BASE_SOCKET = 'wss://9093.sungame.shop'; // ws地址
-export const BASE_ADDRESS = 'https://api.sungame.shop'; // 请求地址 62.112.10.184:8302
-export const CHAT_WEBSOCKET = 'wss://9095.sungame.shop'; // 客服ws地址
+// export const BASE_SOCKET = 'wss://9093.sungame.shop'; // ws地址
+// export const BASE_ADDRESS = 'https://api.sungame.shop'; // 请求地址 62.112.10.184:8302
+// export const CHAT_WEBSOCKET = 'wss://9095.sungame.shop'; // 客服ws地址
 
 /* 演示版本 */
 // export const BASE_SOCKET = 'wss://9093.sunex.game'; // ws地址
