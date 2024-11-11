@@ -60,19 +60,53 @@
     </div>
 
     <div class="cash_tab" v-if="activeTab == 1">
-        <DefaultWallet :name="'股票'" :balance="10000"/>
+      <OtherWallet :name="'股票'" :balance="10000"  />
+      <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
+        <div
+          class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
+          style="box-shadow: 0px 4px 20px 0px #0610231a"
+        >
+          <span class="text-[0.28rem] text-[#666d80]">股票余额</span>
+          <span class="text-[0.3rem] text-[#061023] font-semibold">8000.00</span>
+        </div>
+        <div
+          class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
+          style="box-shadow: 0px 4px 20px 0px #0610231a"
+        >
+          <span class="text-[0.28rem] text-[#666d80]">持仓金额</span>
+          <span class="text-[0.3rem] text-[#061023] font-semibold">8000.00</span>
+        </div>
+      </div>
     </div>
 
     <div class="cash_tab" v-if="activeTab == 2">
-        <DefaultWallet :name="'合约'" :balance="10000"/>
+      <OtherWallet :name="'合约'" :balance="10000"  />
+      <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
+        <div
+          class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
+          style="box-shadow: 0px 4px 20px 0px #0610231a"
+        >
+          <span class="text-[0.28rem] text-[#666d80]">合约余额</span>
+          <span class="text-[0.3rem] text-[#061023] font-semibold">8000.00</span>
+        </div>
+        <div
+          class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
+          style="box-shadow: 0px 4px 20px 0px #0610231a"
+        >
+          <span class="text-[0.28rem] text-[#666d80]">持仓金额</span>
+          <span class="text-[0.3rem] text-[#061023] font-semibold">8000.00</span>
+        </div>
+      </div>
     </div>
 
     <div class="cash_tab" v-if="activeTab == 3">
-        <DefaultWallet :name="'外汇'" :balance="10000"/>
+      <DefaultWallet :name="'外汇'" :balance="10000" />
+      <Btns />
+      <Cash />
     </div>
 
     <div class="cash_tab" v-if="activeTab == 4">
-        <DefaultWallet :name="'大宗商品'" :balance="10000"/>
+      <DefaultWallet :name="'大宗商品'" :balance="10000" />
     </div>
 
     <!-- <div>
@@ -97,6 +131,7 @@ import { ref } from "vue";
 import DefaultWallet from "./components/DefaultWallet.vue";
 import Btns from "./components/Btns.vue";
 import Cash from "./Cash.vue";
+import OtherWallet from "./components/OtherWallet.vue";
 
 const activeTab = ref(0);
 const initialSwipe = ref(activeTab.value);
@@ -161,11 +196,11 @@ const swipeChange = (val) => {
 
   .cash_tab {
     .btns {
-        padding: 0;
+      padding: 0;
     }
-     
+
     .tabs {
-        padding: 0 !important;
+      padding: 0 !important;
     }
   }
 }

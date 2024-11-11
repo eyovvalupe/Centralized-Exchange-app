@@ -51,8 +51,8 @@
                 </div>
 
                 <div class="tip">
-                    提示：请在截至时间内完成充值<br/>
-                    订单到期作废
+                    when your payment status will change, we all send to<br/>
+                    you notification <span class="text-[#014cfa]">leave your email</span>
                 </div>
             </div>
 
