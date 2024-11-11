@@ -17,7 +17,7 @@
         <Tabs type="oval-card" v-else v-model:active="active" :swipeable="false" animated 
             shrink @change="init()" >
             <Tab :title="$t('recordList.rechargeRecord')" name="0">
-                 <div>
+                 <div class="w-full justify-center">
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i" class="list_0_item">
                         <div class="date" @click="dateClick(getDate(item.date),openDates)" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
@@ -207,8 +207,12 @@ const getDate = str => {
 
 <style lang="less" scoped>
 .page_record_list {
-    padding: 1.12rem 0.32rem 0.32rem 0.32rem;
-    
+    // padding: 1.12rem 0.32rem 0.32rem 0.32rem;
+    :deep(.list_0_item) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .date{
     height: 0.32rem;

@@ -50,10 +50,11 @@ const goInfo = () => {
 
 <style lang="less" scoped>
 .recgarge_item {
+    width: 6.86rem;
     display: flex;
     justify-content: space-between;
     padding: 0.3rem 0.32rem;
-    border: 1px solid #D0D8E2;
+    border: 0.02rem solid #D0D8E2;
     border-radius: 0.32rem;
     margin-top: 0.2rem;
     .icon_box {
