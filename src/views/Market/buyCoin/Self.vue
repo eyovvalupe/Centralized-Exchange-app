@@ -9,7 +9,9 @@
     <!-- 二层容器 -->
     <div class="tabs mb-4">
       <div>
-        <div class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12" @click="showDialog = true">
+        <div
+          class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
+          @click="showDialog = true">
           <span class="mr-[0.2rem]">{{ currCurrency.name }}</span>
           <div class="sizi-16 mr-1">
             <img src="/static/img/assets/more.png" alt="img" />
@@ -22,7 +24,8 @@
       </div>
 
       <div class="w-full overflow-hidden">
-        <Tabs :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" line-width="0.32rem" @click-tab="cryptoChange">
+        <Tabs :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" line-width="0.32rem"
+          @click-tab="cryptoChange">
           <Tab v-for="(item, index) in dryptoWallet" :key="item.name + index" :title="item.name" :name="item.name" />
         </Tabs>
       </div>
@@ -61,7 +64,8 @@
         </div>
       </div>
       <NoData v-if="!loading && !list.length" />
-      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_buss" :loading="loading" :finish="finish" />
+      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_buss" :loading="loading"
+        :finish="finish" />
     </div>
   </div>
 
@@ -72,11 +76,13 @@
 
       <div class="form">
         <div class="item form_item" :class="{ focus_item: amountFocus }">
-          <div v-show="offset == 'sell'" v-if="!(!amountFocus && amount !== '')" class="tip_text">≤ {{ maxAmount }} {{ offset == 'sell' ? currCrypto.name : currCurrency.name }}</div>
+          <div v-show="offset == 'sell'" v-if="!(!amountFocus && amount !== '')" class="tip_text">≤ {{ maxAmount }} {{
+            offset == 'sell' ? currCrypto.name : currCurrency.name }}</div>
           <input v-model="amount" type="number" class="ipt" @blur="amountFocus = false" @focus="amountFocus = true" />
           <div class="all" @click="amount = currWallet.amount">{{ $t('全部') }}</div>
         </div>
-        <div class="tip">{{ $t('订单限额') }}：{{ currItem.limitmin }}-{{ currItem.limitmax }} {{ offset == 'sell' ? currCrypto.name : currCurrency.name }}</div>
+        <div class="tip">{{ $t('订单限额') }}：{{ currItem.limitmin }}-{{ currItem.limitmax }} {{ offset == 'sell' ?
+          currCrypto.name : currCurrency.name }}</div>
         <div v-if="offset == 'sell'" class="tip">{{ $t('预计收到') }}：{{ showAmount }} {{ currCurrency.name }}</div>
 
         <div class="btn" @click="preSubmit">{{ $t('确认') }}{{ offset == 'buy' ? t('买入') : t('卖出') }}</div>
@@ -93,13 +99,15 @@
   </Popup> -->
 
   <!-- 法币币种 -->
-  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
+  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+    position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
       <div class="title">{{ $t('币种选择') }}</div>
-      <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item" :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
+      <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
+        :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
         <div class="icon">
           <img :src="handleUrl(item.name)" alt="currency" />
         </div>
@@ -126,7 +134,8 @@
   </Popup> -->
 
   <!-- 账户选择弹窗 -->
-  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
+  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+    class="self_van_popup" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
@@ -137,7 +146,8 @@
           <Icon style="font-size: 0.48rem" name="add-o" />
           <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">{{ $t('添加收款账户') }}</span>
         </div>
-        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }" class="dialog_account_item" @click="clickAccountItem(item)">
+        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }"
+          class="dialog_account_item" @click="clickAccountItem(item)">
           <div class="card_icon">
             <img v-if="item.bankName" src="/static/img/user/card_type_b.png" alt="img" />
             <img v-else src="/static/img/user/card_type_c.png" alt="img" />
@@ -146,7 +156,8 @@
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
             <div class="name">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }}</div>
           </div>
-          <div v-if="currAccount.id == item.id" class="checked" style="background-image: url('/static/img/user/check_bg.png')">
+          <div v-if="currAccount.id == item.id" class="checked"
+            style="background-image: url('/static/img/user/check_bg.png')">
             <img src="/static/img/common/ok.png" alt="img" />
           </div>
         </div>
@@ -214,7 +225,7 @@ const currAccount = ref({})
 try {
   list.value = JSON.parse(sessionStorage.getItem('deal_list') || '[]')
   currCrypto.value = JSON.parse(sessionStorage.getItem('buycoin_currCrypto') || '{}')
-} catch {}
+} catch { }
 if (dryptoWallet.value[0] && !currCrypto.value.name) {
   const target = dryptoWallet.value.find(item => item.name == 'USDT')
   currCrypto.value = target || dryptoWallet.value[0]
@@ -281,25 +292,33 @@ const preSubmit = () => {
   }, 0)
 }
 const submitSell = s => {
-  const params = {
-    ad_id: currItem.value.id,
-    volume: amount.value,
-    account_id: offset.value == 'buy' ? null : currAccount.value.id,
-    token: sessionToken.value,
-    safeword: s,
-  }
   if (loading.value) return
-  loading.value = true
-  _buysell(params)
-    .then(res => {
-      if (res.code == 200) {
-        showToast(t('下单成功'))
+  store.dispatch('updateSessionToken').then(st => {
+    if (st) {
+      const params = {
+        ad_id: currItem.value.id,
+        volume: amount.value,
+        account_id: offset.value == 'buy' ? null : currAccount.value.id,
+        token: sessionToken.value,
+        safeword: s,
       }
-    })
-    .finally(() => {
-      loading.value = false
-      getSessionToken()
-    })
+      loading.value = true
+      _buysell(params)
+        .then(res => {
+          if (res.code == 200) {
+            showToast(t('下单成功'))
+          }
+        })
+        .finally(() => {
+          loading.value = false
+        })
+    } else {
+      setTimeout(() => {
+        submitSell(s)
+      }, 1000)
+    }
+  })
+
 }
 
 const page = ref(0)
@@ -385,12 +404,6 @@ const goAddAccount = () => {
   })
 }
 
-const getSessionToken = () => {
-  store.dispatch('updateSessionToken')
-}
-if (token.value) {
-  getSessionToken()
-}
 
 // 跳转
 const jump = name => {
@@ -414,6 +427,7 @@ defineExpose({
   width: 7.5rem;
   padding: 0 0.32rem;
   margin-top: -0.32rem;
+
   .tabs-buy {
     display: flex;
     align-items: center;
@@ -439,6 +453,7 @@ defineExpose({
       text-align: center;
     }
   }
+
   .tabs {
     height: 0.8rem;
     padding-top: 0.2rem;
@@ -461,19 +476,23 @@ defineExpose({
       font-weight: bold;
       color: var(--main-text-color);
     }
+
     .encryption {
       > :deep(.van-tabs__wrap) {
         border-bottom: 1px solid #f0f3f8;
         padding-right: 0;
+
         .van-tabs__line {
           background-color: var(--main-color) !important;
         }
+
         .van-tabs__nav,
         .van-tab--grow {
           padding-right: 0 !important;
           padding-left: 0 !important;
           margin-right: 14px !important;
         }
+
         .van-tabs__nav:last-child {
           margin-right: 0 !important;
         }
@@ -559,6 +578,7 @@ defineExpose({
             display: flex;
             align-items: center;
             color: #8f92a1;
+
             span {
               margin-right: 0.1rem;
             }
@@ -830,7 +850,7 @@ defineExpose({
       align-items: center;
       justify-content: center;
 
-      > img {
+      >img {
         width: 0.64rem !important;
         height: 0.64rem !important;
       }
@@ -864,7 +884,7 @@ defineExpose({
       width: 0.46rem;
       height: 0.42rem;
 
-      > img {
+      >img {
         width: 0.18rem !important;
         height: 0.12rem !important;
         position: absolute;

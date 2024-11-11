@@ -177,7 +177,7 @@ const routes = [
     // 买币-订单详情
     path: '/orderDetails',
     name: 'orderDetails',
-    component: () => import('../views/Market/buyCoin/orderDetails.vue'),
+    component: () => import('../views/Market/buyCoin/OrderDetail.vue'),
     meta: {
       keepAlive: false,
       pageType: 'child',
@@ -536,8 +536,8 @@ const routes = [
     },
   },
   {
-    path:'/ipo/detail',
-    name:'ipoDetail',
+    path: '/ipo/detail',
+    name: 'ipoDetail',
     component: () => import('../views/Market/IpoDetail.vue'),
     meta: {
       keepAlive: false,
@@ -545,8 +545,8 @@ const routes = [
     },
   },
   {
-    path:'/ipo/orderDetail',
-    name:'ipoOrderDetail',
+    path: '/ipo/orderDetail',
+    name: 'ipoOrderDetail',
     component: () => import('../views/Market/IpoOrderDetail.vue'),
     meta: {
       keepAlive: false,
