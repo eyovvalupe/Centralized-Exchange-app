@@ -3,221 +3,311 @@
   <div class="page_assets_overview">
     <!-- 总览 -->
     <OverviewCard>
-      <div class="top">
-        <div class="title">{{ $t('总资产') }} <span>(USDT)</span></div>
-        <div class="eyes" @click="hidden = !hidden">
-          <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
-          <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
+      <div class="p-[0.7rem]">
+        <div class="top">
+          <div class="title">{{ $t("总资产") }} <span>(USDT)</span></div>
+          <div class="eyes" @click="hidden = !hidden">
+            <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
+            <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
+          </div>
         </div>
-      </div>
-      <div class="money">
-        <span>{{ hidden ? '********' : assets.total || '0' }}</span>
-      </div>
-      <div class="navs">
-        <div class="nav">
-            <div class="nav_label">{{ $t('现金账户合计') }}</div>
-            <div class="num">{{ hidden ? '********' : assets.money || '0' }}</div>
+        <div class="money">
+          <span>{{ hidden ? "********" : assets.total || "0" }}</span>
         </div>
-        <div class="line" />
-        <div class="nav">
-          <div class="nav_label">{{ $t('持仓金额') }}</div>
-          <div class="num">{{ hidden ? '********' : assets.ordervalue || '0' }}</div>
+        <div class="navs">
+          <div class="nav">
+            <div class="nav_label">{{ $t("现金账户") }}</div>
+            <div class="num">
+              {{ hidden ? "********" : assets.money || "0" }}
+            </div>
+          </div>
+          <div class="nav">
+            <div class="nav_label">{{ $t("持仓金额") }}</div>
+            <div class="num">
+              {{ hidden ? "********" : assets.ordervalue || "0" }}
+            </div>
+          </div>
         </div>
       </div>
     </OverviewCard>
-    
 
     <!-- 按钮 -->
     <Btns :money="assets.money" />
-    
+
     <!-- 列表 -->
     <div class="tabs">
-      <div ref="tab1" :key="1" class="tab" :class="{ open_tab: rightSwitch1 == true }" @click="rightSwitch1 = !rightSwitch1">
+      <div
+        ref="tab1"
+        :key="1"
+        class="tab"
+        :class="{ open_tab: rightSwitch1 == true }"
+        @click="rightSwitch1 = !rightSwitch1"
+      >
         <div class="tab_icon">
-          <img src="/static/img/assets/cash_icon.svg" alt="img" />
+          <CashIcon />
         </div>
-        <div class="name">{{ $t('现金账户') }}</div>
-        <div class="amount">{{ assets.money || '0' }}</div>
+        <div class="name">{{ $t("现金账户") }}</div>
+        <div class="amount">{{ assets.money || "0" }}</div>
         <div class="more">
-          <img src="/static/img/common/menu.png?20241022" alt="img" />
+          <NextIcon />
         </div>
         <div class="rights">
           <div class="right" @click="jump('topUp', true)">
-            {{ $t('充值') }}
+            {{ $t("充值") }}
           </div>
           <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t('提现') }}
+            {{ $t("提现") }}
           </div>
-          <div class="right right--green"  @click="jump('transfer', false, { from: 'stock', to: 'money' })">
-            {{ $t('转入') }}
+          <div
+            class="right right--green"
+            @click="jump('transfer', false, { from: 'stock', to: 'money' })"
+          >
+            {{ $t("转入") }}
           </div>
           <div class="right right--red" @click="jump('transfer')">
-            {{ $t('转出') }}
+            {{ $t("转出") }}
           </div>
         </div>
       </div>
-      <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="rightSwitch2 = !rightSwitch2">
+      <div
+        ref="tab2"
+        :key="2"
+        class="tab"
+        :class="{ open_tab: rightSwitch2 == true }"
+        @click="rightSwitch2 = !rightSwitch2"
+      >
         <div class="tab_icon">
-          <img src="/static/img/assets/stock_icon.svg" alt="img" />
+          <StockIcon />
         </div>
-        <div class="name">{{ $t('股票') }}</div>
-        <div class="amount">{{ new Decimal(assets && assets.stock ? assets.stock : 0).add(assets && assets.stock_value ? assets.stock_value : 0) }}</div>
-        <div class="more">
-          <img src="/static/img/common/menu.png" alt="img" />
-        </div>
-        <div class="rights">
-          <div class="right"  @click="jump('topUp', true)">
-            {{ $t('充值') }}
-          </div>
-          <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t('提现') }}
-          </div>
-        </div>
-      </div>
-      <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="rightSwitch3 = !rightSwitch3">
-        <div class="tab_icon">
-          <img src="/static/img/assets/contract_icon.svg" alt="img" />
-        </div>
-        <div class="name">{{ $t('合约') }}</div>
+        <div class="name">{{ $t("股票") }}</div>
         <div class="amount">
-          {{ new Decimal(assets && assets.futures ? assets.futures : 0).add(assets && assets.futures_value ? assets.futures_value : 0) }}
+          {{
+            new Decimal(assets && assets.stock ? assets.stock : 0).add(
+              assets && assets.stock_value ? assets.stock_value : 0
+            )
+          }}
         </div>
         <div class="more">
-          <img src="/static/img/common/menu.png" alt="img" />
+          <NextIcon />
         </div>
         <div class="rights">
           <div class="right" @click="jump('topUp', true)">
-            {{ $t('充值') }}
+            {{ $t("充值") }}
           </div>
           <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t('提现') }}
+            {{ $t("提现") }}
           </div>
         </div>
       </div>
-      <div ref="tab5" :key="5" class="tab" :class="{ open_tab: rightSwitch5 == true }" @click="rightSwitch5 = !rightSwitch5">
+      <div
+        ref="tab3"
+        :key="3"
+        class="tab"
+        :class="{ open_tab: rightSwitch3 == true }"
+        @click="rightSwitch3 = !rightSwitch3"
+      >
         <div class="tab_icon">
-          <img src="/static/img/assets/out_icon.svg" alt="img" />
+          <ContractIcon />
         </div>
-        <div class="name">{{ $t('外汇') }}</div>
+        <div class="name">{{ $t("合约") }}</div>
         <div class="amount">
-          {{ new Decimal(assets && assets.forex ? assets.forex : 0).add(assets && assets.forex_value ? assets.forex_value : 0) }}
+          {{
+            new Decimal(assets && assets.futures ? assets.futures : 0).add(
+              assets && assets.futures_value ? assets.futures_value : 0
+            )
+          }}
         </div>
         <div class="more">
-          <img src="/static/img/common/menu.png" alt="img" />
+          <NextIcon />
         </div>
         <div class="rights">
           <div class="right" @click="jump('topUp', true)">
-            {{ $t('充值') }}
+            {{ $t("充值") }}
           </div>
           <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t('提现') }}
+            {{ $t("提现") }}
+          </div>
+        </div>
+      </div>
+      <div
+        ref="tab5"
+        :key="5"
+        class="tab"
+        :class="{ open_tab: rightSwitch5 == true }"
+        @click="rightSwitch5 = !rightSwitch5"
+      >
+        <div class="tab_icon">
+          <ForeignCashIcon />
+        </div>
+        <div class="name">{{ $t("外汇") }}</div>
+        <div class="amount">
+          {{
+            new Decimal(assets && assets.forex ? assets.forex : 0).add(
+              assets && assets.forex_value ? assets.forex_value : 0
+            )
+          }}
+        </div>
+        <div class="more">
+          <NextIcon />
+        </div>
+        <div class="rights">
+          <div class="right" @click="jump('topUp', true)">
+            {{ $t("充值") }}
+          </div>
+          <div class="right right--yellow" @click="jump('withdraw', true)">
+            {{ $t("提现") }}
+          </div>
+        </div>
+      </div>
+      <div
+        ref="tab5"
+        :key="5"
+        class="tab"
+        :class="{ open_tab: rightSwitch5 == true }"
+        @click="rightSwitch5 = !rightSwitch5"
+      >
+        <div class="tab_icon">
+          <TraditionIcon />
+        </div>
+        <div class="name">{{ $t("大宗商品") }}</div>
+        <div class="amount">
+          {{
+            new Decimal(assets && assets.forex ? assets.forex : 0).add(
+              assets && assets.forex_value ? assets.forex_value : 0
+            )
+          }}
+        </div>
+        <div class="more">
+          <NextIcon />
+        </div>
+        <div class="rights">
+          <div class="right" @click="jump('topUp', true)">
+            {{ $t("充值") }}
+          </div>
+          <div class="right right--yellow" @click="jump('withdraw', true)">
+            {{ $t("提现") }}
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- 类型选择弹窗 -->
-    <ActionSheet v-model:show="showAS" teleport="body" :actions="actions" :title="$t('记录列表')" @select="onSelect" />
+    <ActionSheet
+      v-model:show="showAS"
+      teleport="body"
+      :actions="actions"
+      :title="$t('记录列表')"
+      @select="onSelect"
+    />
   </div>
 </template>
 
 <script setup>
-import { Icon, ActionSheet } from 'vant'
-import { ref, computed, onMounted } from 'vue'
-import { useClickAway } from '@vant/use'
-import Decimal from 'decimal.js'
-import { useI18n } from 'vue-i18n'
-import { _assets } from '@/api/api'
-import store from '@/store'
-import router from '@/router'
-import AccountCheck from '@/components/AccountCheck.vue'
-import Btns from './components/Btns'
-import OverviewCard from './components/OverviewCard'
+import { Icon, ActionSheet } from "vant";
+import { ref, computed, onMounted } from "vue";
+import { useClickAway } from "@vant/use";
+import Decimal from "decimal.js";
+import { useI18n } from "vue-i18n";
+import { _assets } from "@/api/api";
+import store from "@/store";
+import router from "@/router";
+import AccountCheck from "@/components/AccountCheck.vue";
+import Btns from "./components/Btns";
+import OverviewCard from "./components/OverviewCard";
+import CashIcon from "./components/CashIcon.vue";
+import NextIcon from "./components/NextIcon.vue";
+import StockIcon from "./components/StockIcon.vue";
+import ContractIcon from "./components/ContractIcon.vue";
+import ForeignCashIcon from "./components/ForeignCashIcon.vue";
+import TraditionIcon from "./components/TraditionIcon.vue";
 
-const { t } = useI18n()
-const hintNum = computed(() => store.state.hintNum || 0)
+const { t } = useI18n();
+const hintNum = computed(() => store.state.hintNum || 0);
 
-const showAS = ref(false)
+const showAS = ref(false);
 const actions = computed(() => {
   return [
-    { name: t('充值记录'), value: '0' },
-    { name: t('提现记录'), value: '1' },
-    { name: t('划转记录'), value: '2' },
-  ]
-})
-const onSelect = item => {
-  showAS.value = false
+    { name: t("充值记录"), value: "0" },
+    { name: t("提现记录"), value: "1" },
+    { name: t("划转记录"), value: "2" },
+  ];
+});
+const onSelect = (item) => {
+  showAS.value = false;
   router.push({
-    name: 'recordList',
+    name: "recordList",
     query: {
       tab: item.value,
     },
-  })
-}
+  });
+};
 
-const emits = defineEmits(['setLoading', 'openRecordPopup'])
-const token = computed(() => store.state.token || '')
-const hidden = ref(false) // 隐藏数字
+const emits = defineEmits(["setLoading", "openRecordPopup"]);
+const token = computed(() => store.state.token || "");
+const hidden = ref(false); // 隐藏数字
 
 const openRecordPopup = () => {
-  emits('openRecordPopup')
-}
+  emits("openRecordPopup");
+};
 
 // 功能区域控制
-const tab1 = ref()
-const tab2 = ref()
-const tab3 = ref()
-const tab5 = ref()
-const rightSwitch1 = ref(false)
-const rightSwitch2 = ref(false)
-const rightSwitch3 = ref(false)
-const rightSwitch5 = ref(false)
+const tab1 = ref();
+const tab2 = ref();
+const tab3 = ref();
+const tab5 = ref();
+const rightSwitch1 = ref(false);
+const rightSwitch2 = ref(false);
+const rightSwitch3 = ref(false);
+const rightSwitch5 = ref(false);
 useClickAway(tab1, () => {
-  rightSwitch1.value = false
-})
+  rightSwitch1.value = false;
+});
 useClickAway(tab2, () => {
-  rightSwitch2.value = false
-})
+  rightSwitch2.value = false;
+});
 useClickAway(tab3, () => {
-  rightSwitch3.value = false
-})
+  rightSwitch3.value = false;
+});
 useClickAway(tab5, () => {
-  rightSwitch5.value = false
-})
+  rightSwitch5.value = false;
+});
 
 // 刷新总资产
-const assets = computed(() => store.state.assets || {})
+const assets = computed(() => store.state.assets || {});
 const getAssets = () => {
-  if (!token.value) return
-  store.dispatch('updateAssets').finally(() => {
-    emits('setLoading', false)
-  })
-  store.dispatch('updateWallet')
-}
+  if (!token.value) return;
+  store.dispatch("updateAssets").finally(() => {
+    emits("setLoading", false);
+  });
+  store.dispatch("updateWallet");
+};
 
 onMounted(() => {
-  getAssets()
-})
+  getAssets();
+});
 
 const refresh = () => {
-  getAssets()
-}
+  getAssets();
+};
 
 defineExpose({
   refresh,
-})
+});
 
 const jump = (name, check = false, query) => {
   router.push({
     name,
     query,
-  })
-}
+  });
+};
 </script>
 
 <style lang="less" scoped>
 .page_assets_overview {
-  padding: 0.32rem 0;
+  width: 7.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   .top {
     font-size: 0.28rem;
     font-weight: 400;
@@ -229,7 +319,7 @@ const jump = (name, check = false, query) => {
       color: #fff;
       margin-right: 0.12rem;
       font-size: 0.3rem;
-      span{
+      span {
         font-size: 0.24rem;
       }
     }
@@ -242,53 +332,50 @@ const jump = (name, check = false, query) => {
   }
 
   .money {
-    color: #FFF;
+    color: #fff;
     font-family: "PingFang SC";
     font-size: 0.52rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 0.6rem; 
+    line-height: 0.6rem;
     margin-top: 0.26rem;
+    margin-bottom: 0.28rem;
   }
 
   .navs {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 1.32rem;
-    background-color: #fff;
-    border-radius: 0.32rem;
-    margin-top: 0.34rem;
-    .line {
-      width: 1px;
-      height: 0.76rem;
-      background-color: #EFF3F8;
-    }
-    .nav{
-      flex: 1;
+    justify-content: space-between;
+    
+    .nav {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      width: 2.8rem;
+      height: 1.12rem;
+      background: #FFFFFF1A;
+      // backdrop-filter: blur(50px);
+      border-radius: 0.32rem;
     }
-    .nav_label{
-      color: #8F92A1;
+    .nav_label {
+      color: #fff;
       font-size: 0.28rem;
       line-height: 100%;
+      margin-top: 0.1rem;
     }
 
     .num {
-      color: #061023;
+      color: #fff;
       font-size: 0.3rem;
       font-weight: 600;
-      line-height: 0.3rem; 
+      line-height: 0.3rem;
       margin-top: 0.2rem;
-
     }
   }
 
   .tabs {
     position: relative;
+    width: 100%;
     padding: 0 0.32rem;
     .tab {
       padding: 0 0.32rem;
@@ -296,13 +383,13 @@ const jump = (name, check = false, query) => {
       height: 1.04rem;
       margin-top: 0.12rem;
       border-radius: 0.32rem;
-      background: #F5F7FC;
+      background: #f5f7fc;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      
-      .name{
+
+      .name {
         font-size: 0.3rem;
       }
       &:active {
@@ -317,11 +404,17 @@ const jump = (name, check = false, query) => {
         border-radius: 50%;
         box-sizing: border-box;
         padding: 0.1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-      
+
       .more {
         width: 0.3rem;
         height: 0.3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
 
       .amount {
@@ -330,16 +423,16 @@ const jump = (name, check = false, query) => {
         padding: 0 0.2rem;
         font-size: 0.32rem;
         font-weight: 600;
-        transition: .3s;
+        transition: 0.3s;
       }
 
       .rights {
         display: flex;
         height: 100%;
         position: absolute;
-        right:-100%;
-        top:0;
-        transition: .3s;
+        right: -100%;
+        top: 0;
+        transition: 0.3s;
         .right {
           height: 100%;
           width: 1.04rem;
@@ -351,38 +444,38 @@ const jump = (name, check = false, query) => {
           font-weight: 400;
           text-align: center;
           color: #fff;
-          background-color: #014CFA;
+          background-color: #014cfa;
         }
-        .right--yellow{
-          background-color: #FFAF2A;
+        .right--yellow {
+          background-color: #ffaf2a;
         }
-        .right--green{
-          background-color: #00AF70;
+        .right--green {
+          background-color: #00af70;
         }
-        .right--red{
-          background-color: #E8503A;
+        .right--red {
+          background-color: #e8503a;
         }
-        .right:first-child{
+        .right:first-child {
           border-radius: 0.32rem 0rem 0rem 0.32rem;
         }
-        .right:last-child{
+        .right:last-child {
           border-radius: 0rem 0.32rem 0.32rem 0rem;
         }
       }
     }
-    .tab:first-child{
-      margin-top:0px;
+    .tab:first-child {
+      margin-top: 0px;
     }
 
     .open_tab {
-      .name{
+      .name {
         display: none;
       }
       .amount {
         text-align: left;
-        padding:0px;
+        padding: 0px;
       }
-      .rights{
+      .rights {
         right: 0;
       }
     }

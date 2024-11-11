@@ -1,0 +1,16 @@
+<template>
+  <div class="absolute top-[0.02rem] left-[0.01rem] z-[-1]">
+    <svg
+      width="2.38rem"
+      height="1.02rem"
+      viewBox="0 0 119 51"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 32C0 16.9151 0 9.37258 4.68629 4.68629C9.37258 0 16.9151 0 32 0H119L100.032 51H0V32Z"
+        fill="#FFAF2A"
+      />
+    </svg>
+  </div>
+</template>

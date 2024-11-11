@@ -1,0 +1,128 @@
+<template>
+  <div>
+    <div>
+    <svg
+      width="7.5rem"
+      height="4.01rem"
+      viewBox="0 0 375 205"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <!-- Shadow filter definition -->
+        <filter
+          id="dropShadow"
+          x="-20%"
+          y="-20%"
+          width="140%"
+          height="140%"
+          filterUnits="userSpaceOnUse"
+        >
+          <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#014CFA80" />
+        </filter>
+
+        <filter
+          id="filter1_f_0_1"
+          x="53"
+          y="-228"
+          width="527"
+          height="545"
+          filterUnits="userSpaceOnUse"
+          color-interpolation-filters="sRGB"
+        >
+          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="BackgroundImageFix"
+            result="shape"
+          />
+          <feGaussianBlur
+            stdDeviation="100"
+            result="effect1_foregroundBlur_0_1"
+          />
+        </filter>
+
+        <!-- Gradient Definitions -->
+        <linearGradient
+          id="paint0_linear_0_1"
+          x1="359"
+          y1="169"
+          x2="16"
+          y2="16"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#427BFF" />
+          <stop offset="1" stop-color="#0F49CF" />
+        </linearGradient>
+
+        <linearGradient
+          id="paint1_linear_0_1"
+          x1="187.5"
+          y1="16"
+          x2="187.5"
+          y2="141"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stop-color="#0F49CF" />
+          <stop offset="1" stop-color="#427BFF" />
+        </linearGradient>
+      </defs>
+
+      <g filter="url(#filter0_d_0_1)" width="10rem" height="3.3rem">
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M252.302 16C258.764 16 261.995 16 264.857 16.8761C268.44 17.973 271.643 20.0544 274.1 22.8831C276.063 25.1424 277.376 28.0949 280 34V34C282.624 39.9051 283.937 42.8576 285.9 45.1169C288.357 47.9456 291.56 50.027 295.143 51.1239C298.005 52 301.236 52 307.698 52H319C337.856 52 347.284 52 353.142 57.8579C359 63.7157 359 73.1438 359 92V165C359 173.837 351.837 181 343 181H32C23.1635 181 16 173.837 16 165V32C16 23.1634 23.1634 16 32 16H252.302Z"
+          fill="url(#paint0_linear_0_1)"
+          filter="url(#dropShadow)"
+        />
+      </g>
+
+      <mask
+        id="mask0_0_1"
+        style="mask-type: alpha"
+        maskUnits="userSpaceOnUse"
+        x="16"
+        y="16"
+        width="6.86rem"
+        height="3.3rem"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M252.302 16C258.764 16 261.995 16 264.857 16.8761C268.44 17.973 271.643 20.0544 274.1 22.8831C276.063 25.1424 277.376 28.0949 280 34V34C282.624 39.9051 283.937 42.8576 285.9 45.1169C288.357 47.9456 291.56 50.027 295.143 51.1239C298.005 52 301.236 52 307.698 52H319C337.856 52 347.284 52 353.142 57.8579C359 63.7157 359 73.1438 359 92V165C359 173.837 351.837 181 343 181H32C23.1635 181 16 173.837 16 165V32C16 23.1634 23.1634 16 32 16H252.302Z"
+          fill="url(#paint1_linear_0_1)"
+        />
+      </mask>
+
+      <g mask="url(#mask0_0_1)">
+        <g filter="url(#filter1_f_0_1)">
+          <ellipse
+            cx="316.5"
+            cy="44.5"
+            rx="63.5"
+            ry="72.5"
+            fill="#18B762"
+            filter="url(#dropShadow)"
+          />
+        </g>
+      </g>
+    </svg>
+  </div>
+  <div style="position: absolute;" class="wallet_icon">
+    <img src="static/img/assets/wallet_icon.webp">
+  </div>
+  </div>
+</template>
+<style>
+.wallet_icon {
+    width: 2rem;
+    height: 1.82rem;
+    top: 0rem;
+    right: 0.32rem;
+    gap: 0px;
+    opacity: 0px;
+    transform: rotate(20.81deg);
+}
+</style>
