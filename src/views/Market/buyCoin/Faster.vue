@@ -16,7 +16,7 @@
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
             <span v-if="form1.offset == 'sell' && token" v-show="form1.volume === '' || priceFocus" class="ipt_tip">≤ {{
-              currOut.amount }}</span>
+              currWallet.amount || '--' }}</span>
             <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false"
               @blur="priceFocus = false" />
           </div>
@@ -33,7 +33,7 @@
             style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
             <div class="flex items-center">
               <div v-if="currOut.name" class="icon">
-                <img class="rounded-50" :src="`/static/img/crypto/${currOut.name.toUpperCase()}.png`" alt="currency" />
+                <img class="rounded-50" :src="`/static/img/crypto/${currOut.name}.png`" alt="currency" />
               </div>
               <span>{{ currOut.name || '--' }}</span>
             </div>
@@ -103,7 +103,7 @@
         <div class="icon">
           <img class="rounded-50" :src="handleUrl(item.name)" alt="currency" />
         </div>
-        <span>{{ item.name.toUpperCase() }}</span>
+        <span>{{ item.name }}</span>
         <Icon v-if="showDialogType == 1 ? currOut.name == item.name : currIn.name == item.name" class="check_icon"
           name="success" />
       </div>
@@ -135,7 +135,11 @@ import router from '@/router'
 const { handleUrl, active } = useBuyCoinState()
 const safeRef = ref()
 const { sessionToken, token, deWeightCurrencyList: currencyList } = useMapState(['sessionToken', 'token', 'deWeightCurrencyList'])
-const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
+const wallet = computed(() => store.state.wallet) // 所有钱包
+const currWallet = computed(() => {
+  let target = wallet.value.find(item => item.currency == currOut.value.currency)
+  return target || {}
+})
 const { t } = useI18n()
 const searchValue = ref('')
 // 售出
@@ -182,7 +186,7 @@ const sell = () => {
   if (!token.value) return store.commit('setIsLoginOpen', true)
   if (!form1.value.volume || form1.value.volume <= 0) return showToast(t('请输入金额'))
   if (form1.value.offset == 'sell') {
-    if (form1.value.volume > currOut.value.amount) {
+    if (form1.value.volume > (currWallet.value.amount || 0)) {
       showConfirmDialog({
         title: '提示',
         message: '钱包余额不足，请充值或划转账户',
@@ -207,28 +211,36 @@ const sell = () => {
 }
 const submitSell = s => {
   loading.value = true
-  const params = {
-    offset: form1.value.offset,
-    account_id: form1.value.offset == 'sell' ? form1.value.account_id : null,
-    volume: form1.value.volume,
-    crypto: form1.value.offset == 'buy' ? currOut.value.currency : currOut.value.currency, // buy
-    currency: form1.value.offset == 'buy' ? currIn.value.currency : currIn.value.currency,
-    token: sessionToken.value,
-    safeword: s,
-  }
-  _orderFast(params)
-    .then(({ data: { order_no } }) => {
-      showToast(t('下单成功'))
-      form1.value.volume = ''
-      setTimeout(() => {
-        router.push({
-          name: 'orderDetails',
-          query: { order_no },
+  store.dispatch('updateSessionToken').then(st => {
+    if (st) {
+      const params = {
+        offset: form1.value.offset,
+        account_id: form1.value.offset == 'sell' ? form1.value.account_id : null,
+        volume: form1.value.volume,
+        crypto: form1.value.offset == 'buy' ? currOut.value.currency : currOut.value.currency, // buy
+        currency: form1.value.offset == 'buy' ? currIn.value.currency : currIn.value.currency,
+        token: sessionToken.value,
+        safeword: s,
+      }
+      _orderFast(params)
+        .then(({ data: { order_no } }) => {
+          showToast(t('下单成功'))
+          form1.value.volume = ''
+          setTimeout(() => {
+            router.push({
+              name: 'orderDetails',
+              query: { order_no },
+            })
+          }, 300)
+        }).finally(() => {
+          loading.value = false
         })
-      }, 300)
-    }).finally(() => {
-      loading.value = false
-    })
+    } else {
+      setTimeout(() => {
+        submitSell(s)
+      }, 1000)
+    }
+  })
 }
 
 const getMoney = computed(() => {
@@ -317,37 +329,15 @@ const clickAccountItem = item => {
 //   })
 // }
 
-const getSessionToken = () => {
-  store.dispatch('updateSessionToken')
-}
-// 跳转
-// const jump = name => {
-//   router.push({
-//     name,
-//   })
-// }
-watch(
-  () => active.value,
-  val => {
-    if (val !== '0') return
-    getSessionToken()
-  }
-)
+
+
 const onInit = () => {
   getRate()
-  if (!token.value) return
-  getSessionToken()
 }
 
 if (outWallet.value[0]) currOut.value = outWallet.value[0]
 if (inWallet.value[0]) currIn.value = inWallet.value[0]
 onInit()
-eventBus.on('loginSuccess', () => {
-  getSessionToken()
-})
-onBeforeUnmount(() => {
-  eventBus.off('loginSuccess')
-})
 </script>
 
 <style lang="less" scoped>

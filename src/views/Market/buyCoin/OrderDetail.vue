@@ -5,7 +5,7 @@
         <!-- Tabs -->
         <div class="tabs">
             <div @click="active = 1" class="tab" :class="{ 'tab_active': active == 1 }">
-                <span>买入</span>
+                <span>{{ offsetEnum[currItem.offset] || '--' }}</span>
             </div>
             <div @click="active = 2" class="tab" :class="{ 'tab_active': active == 2 }">
                 <span style="position: relative;">
@@ -136,7 +136,7 @@
                     </div>
                     <div class="info">
                         <div class="amount">{{ currItem.volume }}</div>
-                        <div>数量({{ currItem.currency }})</div>
+                        <div>数量({{ currItem.crypto }})</div>
                     </div>
                 </div>
             </div>
@@ -186,6 +186,10 @@ const c2cUnread = computed(() => store.state.c2cUnread || {})
 const active = ref(1) // 1-详情 2-聊天
 const safeRef = ref()
 
+const offsetEnum = {
+    buy: '买入',
+    sell: '卖出',
+}
 const statusEnum = {
     waitpayment: { name: '待付款', title: '待付款', color: 'var(--main-color)' },
     waitconfirm: { name: '待确认', title: '待确认', color: 'var(--main-color)' },
