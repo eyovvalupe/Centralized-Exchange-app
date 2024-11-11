@@ -61,7 +61,7 @@
 
                     <div class="subtitle">
                         <span style="flex:none">{{$t("topUpCrypto.rechargeAmount")}}</span>
-                        <span class="subtitle_right" @click="goTransing" v-if="form.currency != 'USDT'">
+                        <!-- <span class="subtitle_right" @click="goTransing" v-if="form.currency != 'USDT'">
                             <span style="color: #014CFA;">{{ targetAmount }}</span>
                             {{ topUpMode
                                 == 1 ?
@@ -71,7 +71,7 @@
                         <div style="width:0.44rem;height:0.44rem;margin-left: 0.1rem;" @click="goTransing"
                             :class="[transing ? 'transing_icon' : 'transing_stop']" v-if="form.currency != 'USDT'">
                             <img src="/static/img/assets/recharge_trans.png" alt="img">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="item border_item" :class="{ 'err_ipt': errStatus }">
                         <div class="item_content">
@@ -363,6 +363,12 @@ onBeforeUnmount(() => {
     :deep(.top){
         z-index: 10;
     }
+
+    :deep(span.van-tab__text) {
+        font-size: 0.32rem;
+        color: #666d80;
+    }
+
     .top-record {
         display: flex;
         align-items: center;
