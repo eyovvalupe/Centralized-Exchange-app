@@ -74,10 +74,10 @@ export default {
         transferRecord:"划转记录"
     },
     recordList:{
-        financialRecords:"Financial records",
-        rechargeRecord:'Recharge',
-        withdrawalRecord:'Withdrawal',
-        transfer:'Transfer'
+        financialRecords:"资金记录",
+        rechargeRecord:'充值记录',
+        withdrawalRecord:'提现记录',
+        transfer:'划转记录'
     },
     accountMap:{
         cashAccount:"现金账户",
@@ -87,10 +87,10 @@ export default {
         
     },
     topUpStatusMap:{
-        review:'审核中',
-        success:'成功',
-        fail:'失败',
-        unknown:'未知'
+        review:'充值审核中',
+        success:'充值成功',
+        fail:'充值失败',
+        unknown:'充值处理中'
     },
     withdrawStatusMap:{
         review:'提现处理中',

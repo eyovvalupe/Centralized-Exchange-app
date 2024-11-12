@@ -1,25 +1,6 @@
 <!-- 现金账户 -->
 <template>
   <div class="page_assets_cash">
-    <!-- 总览 -->
-
-    <OverviewCard>
-      <div class="top">
-        <div class="title">{{ $t('现金账户') }}<span>(USDT)</span></div>
-        <div class="eyes" @click="hidden = !hidden">
-          <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
-          <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
-        </div>
-      </div>
-      <div class="money">
-        <span>{{ hidden ? '********' : assets.money || '0.00' }}</span>
-      </div>
-      
-    </OverviewCard>
-
-    <!-- 按钮 -->
-    <Btns :money="assets.money" />
-
     <div class="tabs">
       <div class="tab_title">
         <Switch v-model="show0" size="0.24rem" />
@@ -55,6 +36,7 @@ import router from '@/router'
 import { _cryptoCoin } from '@/api/api'
 import Btns from './components/Btns'
 import OverviewCard from './components/OverviewCard'
+
 
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')

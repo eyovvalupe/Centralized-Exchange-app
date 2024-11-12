@@ -18,9 +18,9 @@
         <div class="form">
 
             <div class="form_box" :class="{ 'form_box_active': clickKey == 'from' }">
-                <div class="flex justify-between" @click="openDialog('from')">
+                <div class="mb-[0.32rem]"><span class="text-[0.28rem] text-[#666d80]">转出</span></div>
+                <div class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]" @click="openDialog('from')">
                     <div class="flex items-center">
-                        <div class="form_text">从</div>
                         <div class="account_item">
                             <div class="account_item_icon">
                                 <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="icon">
@@ -39,28 +39,20 @@
                             </div>
                         </div>
                     </div>
-                    <div class="more">
-                        <img src="/static/img/assets/arrow_right.svg" alt="arrow_right">
-                    </div>
+                    <ArrowIcon />                    
                 </div>
 
-                <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" title="转出" @btnClick="maxIpt" show-btn :btn-placeholder="form.fromCurrency.name">
-                    <template #title-right>
-                        <={{ balance }}
-                    </template>
-
-                </FormItem>
+                <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt" show-btn :btn-placeholder="form.fromCurrency.name"  :placeholder="'请输入金额'" />
                 
             </div>
             
             <div class="form_box"  :class="{ 'form_box_active': clickKey == 'to' }">
+                <div class="mb-[0.32rem]"><span class="text-[0.28rem] text-[#666d80]">转入</span></div>
                 <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
                     <img src="/static/img/assets/recharge_trans.png" alt="img">
                 </div>
-                <!-- 到 -->
-                <div class="flex justify-between" @click="openDialog('to')">
+                <div class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]" @click="openDialog('to')">
                     <div class="flex items-center">
-                        <div class="form_text">到</div>
                         <div class="account_item">
                             <div class="account_item_icon">
                                 <img :src="`/static/img/crypto/${form.to.toUpperCase()}.png`" alt="icon">
@@ -81,22 +73,14 @@
                             
                         </div>
                     </div>
-                    <div class="more">
-                        <img src="/static/img/assets/arrow_right.svg" alt="arrow_right">
-                    </div>
-                    
+                    <ArrowIcon />                    
                 </div>
-                <FormItem background="#EFF3F8" custom btn-show-mode="focus" title="转入" show-btn :btn-placeholder="form.toCurrency.name">
-                    <template #title-right>
-                        <={{ balance }}
-                    </template>
+                <FormItem background="#EFF3F8" custom btn-show-mode="focus" show-btn :btn-placeholder="form.toCurrency.name">
                     <div>
                         <span v-show="formType == 'transfer'">自动换算</span>
                         <span :style="{color:form.amount === '' ? '#A4ACB9' : ''}" v-show="formType == 'swap'">{{ form.amount === '' ? '自动换算' : new Decimal(form.amount || 0).mul(rate) || '--' }}</span>
                     </div>
-
                 </FormItem>
-                
             </div>
 
             <div class="rate_tip" v-if="formType == 'swap'"> 1{{ form.fromCurrency.name }} ≈ {{ rateLoading ? '--' :
@@ -151,6 +135,7 @@ import FormItem from '@/components/Form/FormItem.vue'
 import { useRoute } from "vue-router"
 import router from "@/router"
 import Decimal from 'decimal.js';
+import ArrowIcon from "./page/components/ArrowIcon.vue"
 
 
 const route = useRoute()
@@ -392,9 +377,15 @@ const goRecord = () => {
 .page_trnsfer {
     padding: 1rem 0.32rem 1.44rem 0.32rem;
     position: relative;
+
     :deep(.top){
         z-index: 10;
     }
+
+    :deep(li.van-picker-column__item) {
+        justify-content: flex-start;
+    }
+
     .top-record {
         display: flex;
         align-items: center;
@@ -412,11 +403,14 @@ const goRecord = () => {
        
         .form_box {
             border-radius: 0.32rem;
-            background-color: #F5F7FC;
             border: 1px solid #EFF3F8;
             padding: 0.42rem 0.32rem 0.4rem 0.32rem;
             margin-top: 0.52rem;
             position: relative;
+
+            :deep(.item) {
+                height: 1.12rem;
+            }
         }
         .form_text{
             color:#666D80;

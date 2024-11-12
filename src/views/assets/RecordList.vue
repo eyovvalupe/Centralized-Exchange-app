@@ -17,7 +17,7 @@
         <Tabs type="oval-card" v-else v-model:active="active" :swipeable="false" animated 
             shrink @change="init()" >
             <Tab :title="$t('recordList.rechargeRecord')" name="0">
-                 <div>
+                 <div class="w-full justify-center">
                     <NoData v-if="!loading && !list.length" />
                     <div v-for="(item, i) in list" :key="i" class="list_0_item">
                         <div class="date" @click="dateClick(getDate(item.date),openDates)" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
@@ -35,7 +35,7 @@
             <Tab :title="$t('recordList.withdrawalRecord')" name="1">
                  <div>
                     <NoData v-if="!loading && !list.length" />
-                    <div v-for="(item, i) in list" :key="i">
+                    <div v-for="(item, i) in list" :key="i" class="list_0_item">
                         <div class="date" @click="dateClick(getDate(item.date),withdrawOpenDates)" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
                             {{ getDate(item.date) }}
                             <span class="date_more" :class="{'date_more_up':!withdrawOpenDates.includes(getDate(item.date))}"><img src="/static/img/assets/more.png" alt="more"></span>
@@ -52,7 +52,7 @@
             <Tab :title="$t('recordList.transfer')" name="2">
                 <div>
                     <NoData v-if="!loading && !list.length" />
-                    <div v-for="(item, i) in list" :key="i">
+                    <div v-for="(item, i) in list" :key="i" class="list_0_item">
                         <div class="date" @click="dateClick(getDate(item.created),transferOpenDates)" v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
                             {{ getDate(item.created) }}
                             <span class="date_more" :class="{'date_more_up':!transferOpenDates.includes(getDate(item.created))}"><img src="/static/img/assets/more.png" alt="more"></span>
@@ -207,8 +207,12 @@ const getDate = str => {
 
 <style lang="less" scoped>
 .page_record_list {
-    padding: 1.12rem 0.32rem 0.32rem 0.32rem;
-    
+    // padding: 1.12rem 0.32rem 0.32rem 0.32rem;
+    :deep(.list_0_item) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }
 .date{
     height: 0.32rem;

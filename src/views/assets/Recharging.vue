@@ -51,19 +51,19 @@
                 </div>
 
                 <div class="tip">
-                    提示：请在截至时间内完成充值<br/>
-                    订单到期作废
+                    when your payment status will change, we all send to<br/>
+                    you notification <span class="text-[#014cfa]">leave your email</span>
                 </div>
             </div>
 
             
             <div class="btns">
             
-                <Button v-if="orderStatus == 'success'" @click="router.back()" :loading="loading" round color="#18B762"
+                <Button v-if="orderStatus == 'success'" @click="router.replace({name: 'rechargeInfo'})" :loading="loading" round color="#18B762"
                     style="width:100%" class="submit" type="info"><span style="color:#fff">{{ $t("recharging.success") }}</span></Button>
-                <Button v-else-if="orderStatus == 'failure'" @click="router.back()" :loading="loading" round color="#E8503A"
+                <Button v-else-if="orderStatus == 'failure'" @click="router.replace({name: 'rechargeInfo'})" :loading="loading" round color="#E8503A"
                     style="width:100%" class="submit" type="info"><span style="color:#fff">{{ $t("recharging.fail") }}</span></Button>
-                <Button v-else @click="router.back()" :loading="loading" round color="#014CFA" style="width:100%"
+                <Button v-else @click="router.replace({name: 'rechargeInfo'})" :loading="loading" round color="#014CFA" style="width:100%"
                     class="submit" type="info"><span style="color:#fff">{{ $t("recharging.finish") }}</span></Button>
             </div>
 
@@ -147,6 +147,7 @@ const getOrderInfo = () => {
         order_no: order_no.value
     }).then(res => {
         if (res.data) {
+            console.log("recharging >>> get order info ============> ", res.data)
             orderStatus.value = res.data.status
             form.value = {
                 amount: res.data.amount,
@@ -248,7 +249,7 @@ const copyPrice = () => {
         width: 0.72rem;
         height: 0.72rem;
         box-sizing: border-box;
-        border: 1px solid #EDF2F7;
+        border: 0.02rem solid #EDF2F7;
         border-radius: 50%;
         display: flex;
         align-items: center;

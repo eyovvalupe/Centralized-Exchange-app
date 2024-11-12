@@ -13,10 +13,13 @@
     :closeable="props.closeable"
   >
     <!--  :class="{ 'typing_dialog': showKeyboard }" -->
-    <div class="safepassword_dialog" :class="{ safepassword_dialog_uncloseabled: !props.closeable }">
+    <div
+      class="safepassword_dialog"
+      :class="{ safepassword_dialog_uncloseabled: !props.closeable }"
+    >
       <slot name="top" />
-      <div class="main_title">{{ $t('交易密码') }}</div>
-      <div class="title">{{ $t('交易密码') }}</div>
+      <div class="main_title">{{ $t("交易密码") }}</div>
+      <div class="title">{{ $t("交易密码") }}</div>
       <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
       <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
@@ -32,43 +35,57 @@
           @blur="errStatus = false"
           @keydown.enter="submit"
         />
-        <img v-if="!showPassword" src="../assets/password_hide.png" @click="passwordVisibility" />
-        <img v-else src="/static/img/user/eye-open.png" alt="open" @click="passwordVisibility" />
+        <!-- <img v-if="!showPassword" src="../assets/password_hide.png" @click="passwordVisibility" /> -->
+        <!-- <img v-else src="/static/img/user/eye-open.png" alt="open" @click="passwordVisibility" /> -->
+        <div class="show_hidden_icon">
+          <ShowEye v-if="showPassword" @click="passwordVisibility" />
+          <HiddenEye v-else @click="passwordVisibility" />
+        </div>
       </div>
 
       <div class="btns">
-        <Button round color="white" class="btn"  @click="close">
-          <span style="color: #666d80">{{ $t('取消') }}</span>
+        <Button round color="white" class="btn" @click="close">
+          <span style="color: #666d80">{{ $t("取消") }}</span>
         </Button>
-        <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">{{ $t('确定') }}</Button>
+        <Button
+          :loading="loading"
+          round
+          color="#014CFA"
+          class="btn"
+          type="primary"
+          @click="submit"
+          >{{ $t("确认") }}</Button
+        >
       </div>
     </div>
   </Popup>
 </template>
 
 <script setup>
-import { Popup, Button, showToast } from 'vant'
-import { ref, computed } from 'vue'
+import HiddenEye from "@/views/assets/page/components/HiddenEye.vue";
+import ShowEye from "@/views/assets/page/components/ShowEye.vue";
+import { Popup, Button, showToast } from "vant";
+import { ref, computed } from "vue";
 
 const props = defineProps({
   closeable: {
     type: Boolean,
     default: true,
   },
-})
-const emits = defineEmits(['submit'])
-const { t } = useI18n()
-const iptDom = ref()
-const errStatus = ref(false)
-const loading = ref(false)
+});
+const emits = defineEmits(["submit"]);
+const { t } = useI18n();
+const iptDom = ref();
+const errStatus = ref(false);
+const loading = ref(false);
 // const disabled = computed(() => {
 //     return !(val.value)
 // })
 
-const show = ref(false)
-const showKeyboard = ref(true)
-const val = ref('')
-const showPassword = ref(false)
+const show = ref(false);
+const showKeyboard = ref(true);
+const val = ref("");
+const showPassword = ref(false);
 // watch(val, v => {
 //     if (v && v.length == 6) {
 //         showKeyboard.value = false
@@ -76,43 +93,45 @@ const showPassword = ref(false)
 // })
 
 const close = () => {
-  show.value = false
-}
+  show.value = false;
+};
 const open = () => {
-  val.value = ''
-  show.value = true
-  showKeyboard.value = true
-  focus()
-}
+  val.value = "";
+  show.value = true;
+  showKeyboard.value = true;
+  focus();
+};
 
 const passwordVisibility = () => {
-  showPassword.value = !showPassword.value
-}
+  showPassword.value = !showPassword.value;
+};
 
-const passwordInputType = computed(() => (showPassword.value ? 'text' : 'password'))
+const passwordInputType = computed(() =>
+  showPassword.value ? "text" : "password"
+);
 // const icon = computed(() => (isPasswordVisible.value ? '🙈' : '👁️'));
 
 const submit = () => {
   if (!val.value) {
-    errStatus.value = true
-    showToast(t('请输入密码'))
-    return
+    errStatus.value = true;
+    showToast(t("请输入密码"));
+    return;
   }
-  close()
-  emits('submit', val.value)
-}
+  close();
+  emits("submit", val.value);
+};
 
 const focus = () => {
-  showKeyboard.value = true
+  showKeyboard.value = true;
   setTimeout(() => {
-    iptDom.value && iptDom.value.focus()
-  }, 300)
-}
+    iptDom.value && iptDom.value.focus();
+  }, 300);
+};
 
 defineExpose({
   open,
   close,
-})
+});
 </script>
 
 <style lang="less" scoped>
@@ -143,13 +162,16 @@ defineExpose({
       border-radius: 0.96rem;
       flex: 1;
       margin-left: 0.32rem;
-      border: 1px solid #D0D8E2 !important;
+      border: 1px solid #d0d8e2 !important;
+
+      :deep(span.van-button__text) {
+        font-size: 0.32rem;
+      }
     }
 
-    .btn.van-button--primary{
-      border-color:#014CFA !important;
+    .btn.van-button--primary {
+      border-color: #014cfa !important;
     }
-    
   }
 
   .title {
@@ -163,7 +185,7 @@ defineExpose({
 
   .pass_ipt {
     height: 1.12rem;
-    border: 1px solid #D0D8E2;
+    border: 1px solid #d0d8e2;
     width: 100%;
     display: block;
     box-sizing: border-box;
@@ -177,8 +199,8 @@ defineExpose({
 
   .show_pass {
     position: relative;
-    img {
-      content: '';
+    .show_hidden_icon {
+      content: "";
       display: block;
       width: 0.4rem;
       height: 0.4rem;
@@ -187,6 +209,11 @@ defineExpose({
       top: 50%;
       transform: translateY(-50%);
       z-index: 9999;
+
+      :deep(svg) {
+        width: 0.4rem !important;
+        height: 0.4rem !important;
+      }
     }
   }
 
