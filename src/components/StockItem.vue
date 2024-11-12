@@ -11,6 +11,9 @@
           ? 'stock_item_box'
           : 'stock_item_box_crypto') + `${' stock_item_' + updownStatus}`
       "
+      @touchstart.stop="" 
+      @touchmove.stop="" 
+      @touchend.stop=""
     >
       <div
         :class="

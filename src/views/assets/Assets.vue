@@ -32,7 +32,7 @@
       <SwipeItem>
         <div class="assets_body" v-if="loadedTab.indexOf(2) > -1">
           <!-- 记录弹窗 -->
-          <RecordList ref="RecordListRef" />
+          <OrderCenter />
         </div>
       </SwipeItem>
       <!-- <SwipeItem>
@@ -68,6 +68,7 @@ import store from "@/store";
 import router from "@/router";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import Wallet from "./page/Wallet.vue";
+import OrderCenter from "./page/OrderCenter.vue";
 
 // import HintBlock from "@/components/HintBlock.vue"
 

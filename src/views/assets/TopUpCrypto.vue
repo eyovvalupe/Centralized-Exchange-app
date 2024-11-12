@@ -267,7 +267,9 @@ const getCoinNet = () => {
         })
         networkMapList.value = obj
         
-    }).finally(() => {
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
         closeToast();
     })
 }
@@ -338,7 +340,9 @@ const getRate = () => {
             rate.value = res.data.exchange_rate
   
         }
-    }).finally(() => {
+    })
+    .catch(err => console.log(err))
+    .finally(() => {
         closeToast();
         rateLoading.value = false
     })

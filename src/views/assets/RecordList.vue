@@ -141,6 +141,7 @@ const getData = () => { // 获取数据
     reqs[active.value]({
         page: page.value
     }).then(res => {
+        console.log('record list >>> record list =========> ', res.data)
         if (saveActive != active.value) return // 不是当前列表的请求返回
         if (!res.data?.length) {
             finish.value = true
