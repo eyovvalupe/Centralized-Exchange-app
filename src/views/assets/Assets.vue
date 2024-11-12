@@ -35,22 +35,6 @@
           <OrderCenter />
         </div>
       </SwipeItem>
-      <!-- <SwipeItem>
-            <div class="assets_body" v-if="loadedTab.indexOf(3) > -1">
-                <Contract />
-            </div>
-        </SwipeItem>
-        <SwipeItem>
-            <div class="assets_body" v-if="loadedTab.indexOf(4) > -1">
-               <AI />
-            </div>
-        </SwipeItem>
-        
-        <SwipeItem>
-            <div class="assets_body" v-if="loadedTab.indexOf(5) > -1">
-              <IPO  ref="ipoRef"  />
-            </div>
-        </SwipeItem> -->
     </Swipe>
 
     <!-- 充提记录 -->
@@ -69,6 +53,7 @@ import router from "@/router";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import Wallet from "./page/Wallet.vue";
 import OrderCenter from "./page/OrderCenter.vue";
+import { _cryptoCoin } from '@/api/api'
 
 // import HintBlock from "@/components/HintBlock.vue"
 
@@ -158,6 +143,25 @@ Promise.all(loadingList).finally(() => {
 onActivated(() => {
   // store.dispatch('updateOrderHint')
 });
+const currencyMapList = ref([]);
+
+const getCoinMap = () => {
+  _cryptoCoin({ type: "crypto", dedup: false })
+    .then((res) => {
+      store.commit("setCoinMap", res.data);
+
+      currencyMapList.value = res.data.reduce((acc, cur) => {
+        if (!acc[cur.name]) acc[cur.name] = [];
+        acc[cur.name].push(cur.network);
+        return acc;
+      }, {});
+
+      store.commit("setCurrencyMapList", currencyMapList.value);
+
+    })
+    .catch((err) => console.error(err));
+};
+getCoinMap();
 </script>
 
 <style lang="less" scoped>

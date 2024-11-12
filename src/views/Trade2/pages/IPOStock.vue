@@ -3,7 +3,7 @@
   <div v-if="token" class="page_ipo_stock">
 
     <Tabs type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange" :color="'#014CFA'"
-      shrink>
+      shrink v-if="props.from != 'assets'">
       <Tab title="全部" name="">
       </Tab>
       <Tab title="待中签" name="lock">
@@ -154,6 +154,10 @@ const props = defineProps({
     default: '.page'
   },
   page: {
+    type: String,
+    default: ''
+  },
+  from: {
     type: String,
     default: ''
   }

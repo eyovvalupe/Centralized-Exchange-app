@@ -26,11 +26,15 @@ export default {
     hintNum: 0, // 待处理的订单笔数
     loanNum: 0, // 借贷重的订单数
     coinMap: {}, // 币种 网络 map
+    currencyMapList: [],
   },
   getters: {
     
   },
   mutations: {
+    setCurrencyMapList(state, data) {
+      state.currencyMapList = data
+    },
     setAssets(state, data) {
       state.assets = data || {}
     },

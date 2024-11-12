@@ -52,7 +52,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 0">
-        <CashOrderList />
+        <List />
       </div>
 
       <div class="tab" v-if="activeTab == 1">
@@ -60,69 +60,37 @@
       </div>
 
       <div class="tab" v-if="activeTab == 2">
-        <OtherWallet :name="'合约'" :balance="10000" />
-        <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
-          <div
-            class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
-            style="box-shadow: 0px 4px 20px 0px #0610231a"
-          >
-            <span class="text-[0.28rem] text-[#666d80]">合约余额</span>
-            <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >8000.00</span
-            >
-          </div>
-          <div
-            class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
-            style="box-shadow: 0px 4px 20px 0px #0610231a"
-          >
-            <span class="text-[0.28rem] text-[#666d80]">持仓金额</span>
-            <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >8000.00</span
-            >
-          </div>
-        </div>
+        <CryptoOrderList />
       </div>
 
       <div class="tab" v-if="activeTab == 3">
-        <DefaultWallet :name="'外汇'" :balance="10000" />
-        <Btns />
-        <Cash />
+        <AIOrderList />
       </div>
 
       <div class="tab" v-if="activeTab == 4">
-        <!-- <DefaultWallet :name="'大宗商品'" :balance="10000" /> -->
+        <IPOStock ref="IPOStockRef" :from="'assets'"/>
       </div>
     </div>
-
-    <!-- <div>
-        <Contract />
-        <AI />
-        <IPO />
-        <Stock />
-      </div> -->
   </div>
 </template>
 <script setup>
-import CashWallet from "./components/CashWallet.vue";
-import StockWallet from "./components/StockWallet.vue";
-import ContractWallet from "./components/ContractWallet.vue";
-import ForexWallet from "./components/ForexWallet.vue";
-import TradeWallet from "./components/TradeWallet.vue";
-import AI from "./AI.vue";
-import Contract from "./Contract.vue";
-import IPO from "./IPO.vue";
-import Stock from "./Stock.vue";
 import { ref } from "vue";
-import DefaultWallet from "./components/DefaultWallet.vue";
-import Btns from "./components/Btns.vue";
-import Cash from "./Cash.vue";
-import OtherWallet from "./components/OtherWallet.vue";
 import CashOrderList from "./components/CashOrderList.vue";
 import StockOrderList from "./components/StockOrderList.vue";
+import CryptoOrderList from "./components/CryptoOrderList.vue";
+import IPOStock from "@/views/Trade2/pages/IPOStock.vue";
+import AIOrderList from "./components/AIOrderList.vue";
+import List from "@/views/Market/buyCoin/List.vue";
 
 const activeTab = ref(0);
+const IPOStockRef = ref();
 const changeActiveTab = (val) => {
   activeTab.value = val;
+  if (val == 4) {
+    setTimeout(() => {
+      IPOStockRef.value && IPOStockRef.value.init();
+    }, 0);
+  }
 };
 </script>
 <style lang="less">
@@ -186,6 +154,10 @@ const changeActiveTab = (val) => {
   }
 
   .tab {
+    .page_ipo_stock {
+      padding: 0;
+    }
+
     .btns {
       padding: 0;
     }

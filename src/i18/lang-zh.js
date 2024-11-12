@@ -33,6 +33,7 @@ export default {
         network:"网络",
         confirm:"确定",
         currencySelection:"币种选择",
+        networkSelection: "网络选择",
         searchPlaceholder:"搜索",
         addPaymentMethod:"添加收款方式",
         withdrawable:"可提现",
