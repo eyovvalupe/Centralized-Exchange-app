@@ -108,6 +108,7 @@ const getOrderInfo = () => {
     }).then(res => {
         
         if (res.data) {
+            console.log('recharge info >>> res data =======> ', res.data)
             orderData.value = res.data
         }
     }).finally(() => {

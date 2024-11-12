@@ -113,7 +113,6 @@ const check = () => {
     //     open()
     // }
     // return val
-    console.error(userInfo.value)
     if (userInfo.value.role != 'user') {
         setTimeout(() => {
             showConfirmDialog({

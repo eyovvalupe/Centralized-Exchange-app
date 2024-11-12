@@ -429,7 +429,7 @@ export const _deposit1 = (data = {}) => {
 };
 // 查询/刷新超时
 export const _depositGet = (data = {}) => {
-  return http.post(`/authc/v1/wallet/crypto/get`, data, {
+  return http.post(`/authc/v1/wallet/deposit/get`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
