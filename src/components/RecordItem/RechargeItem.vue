@@ -4,7 +4,6 @@
         <div class="icon_box" v-if="item.currency">
             <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
         </div>
-        {{ console.log(item) }}
         <div class="content">
             <div class="item_title">{{ item.currency }}</div>
             <!-- <div class="address">{{ item.address }}</div> -->
