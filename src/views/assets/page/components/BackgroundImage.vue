@@ -122,7 +122,6 @@
     top: 0rem;
     right: 0.32rem;
     gap: 0px;
-    opacity: 0px;
     transform: rotate(20.81deg);
 }
 </style>
