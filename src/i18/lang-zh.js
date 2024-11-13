@@ -41,7 +41,8 @@ export default {
         serviceFee:"手续费",
         receiptAccount:"收款账户",
         change:"更改",
-        accountSelection:"加密货币账户选择"
+        accountSelection:"加密货币账户选择",
+        bankSelection: "银行卡账户选择"
     },
     withdrawInfo:{
         title:'提现详情',
@@ -90,13 +91,13 @@ export default {
     topUpStatusMap:{
         review:'充值审核中',
         success:'充值成功',
-        fail:'充值失败',
+        failure:'充值失败',
         unknown:'充值处理中'
     },
     withdrawStatusMap:{
         review:'提现处理中',
         success:'提现成功',
-        fail:'提现失败',
-        unknown:'未知'
+        failure:'提现失败',
+        unknown:'提现处理中'
     }
 }

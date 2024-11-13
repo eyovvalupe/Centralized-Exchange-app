@@ -26,17 +26,17 @@ export const _loanStatusMap = {
 
 // 提现状态
 export const _withdrawStatusMap = {
-  "review": t('topUpStatusMap.review'),
-  "success": t('topUpStatusMap.success'),
-  "failed": t('topUpStatusMap.failed'),
-  "unknown": t('topUpStatusMap.unknown')
+  "review": t('withdrawStatusMap.review'),
+  "success": t('withdrawStatusMap.success'),
+  "failure": t('withdrawStatusMap.failure'),
+  "unknown": t('withdrawStatusMap.unknown')
 }
 
 // 提现状态
 export const _topUpStatusMap = {
   "review": t('topUpStatusMap.review'),
   "success": t('topUpStatusMap.success'),
-  "failed": t('topUpStatusMap.failed'),
+  "failure": t('topUpStatusMap.failure'),
   "unknown": t('topUpStatusMap.unknown')
 }
 

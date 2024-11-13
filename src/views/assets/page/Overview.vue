@@ -12,13 +12,21 @@
           </div>
         </div>
         <div class="money">
-          <span>{{ hidden ? "********" : assets.total || "0" }}</span>
+          <span>{{
+            hidden
+              ? "********"
+              : parseFloat(assets.total).toLocaleString() || "0"
+          }}</span>
         </div>
         <div class="navs">
           <div class="nav">
             <div class="nav_label">{{ $t("现金账户") }}</div>
             <div class="num">
-              {{ hidden ? "********" : assets.money || "0" }}
+              {{
+                hidden
+                  ? "********"
+                  : parseFloat(assets.money).toLocaleString() || "0"
+              }}
             </div>
           </div>
           <div class="nav">
@@ -47,7 +55,9 @@
           <CashIcon />
         </div>
         <div class="name">{{ $t("现金账户") }}</div>
-        <div class="amount">{{ assets.money || "0" }}</div>
+        <div class="amount">
+          {{ parseFloat(assets.money).toLocaleString() || "0" }}
+        </div>
         <div class="more">
           <NextIcon />
         </div>
@@ -82,9 +92,7 @@
         <div class="name">{{ $t("股票") }}</div>
         <div class="amount">
           {{
-            new Decimal(assets && assets.stock ? assets.stock : 0).add(
-              assets && assets.stock_value ? assets.stock_value : 0
-            )
+            parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -112,9 +120,7 @@
         <div class="name">{{ $t("合约") }}</div>
         <div class="amount">
           {{
-            new Decimal(assets && assets.futures ? assets.futures : 0).add(
-              assets && assets.futures_value ? assets.futures_value : 0
-            )
+            parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -142,9 +148,7 @@
         <div class="name">{{ $t("外汇") }}</div>
         <div class="amount">
           {{
-            new Decimal(assets && assets.forex ? assets.forex : 0).add(
-              assets && assets.forex_value ? assets.forex_value : 0
-            )
+            parseFloat(assets && assets.forex ? assets.forex : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -172,9 +176,7 @@
         <div class="name">{{ $t("大宗商品") }}</div>
         <div class="amount">
           {{
-            new Decimal(assets && assets.forex ? assets.forex : 0).add(
-              assets && assets.forex_value ? assets.forex_value : 0
-            )
+            parseFloat(assets && assets.forex ? assets.forex : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -345,7 +347,7 @@ const jump = (name, check = false, query) => {
   .navs {
     display: flex;
     justify-content: space-between;
-    
+
     .nav {
       display: flex;
       justify-content: center;
@@ -353,7 +355,7 @@ const jump = (name, check = false, query) => {
       flex-direction: column;
       width: 2.8rem;
       height: 1.12rem;
-      background: #FFFFFF1A;
+      background: #ffffff1a;
       // backdrop-filter: blur(50px);
       border-radius: 0.32rem;
     }

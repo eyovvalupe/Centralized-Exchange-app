@@ -4,6 +4,7 @@
     <div class="item_box flex justify-between">
       <div class="flex items-center">
         <span class="item_icon"
+        v-if="item.account_from"
           ><img
             :src="`/static/img/crypto/${item.account_from.toUpperCase()}.png`"
             alt="currency"
@@ -17,7 +18,7 @@
 
     <div class="item_box flex justify-between">
       <div class="icon_to">
-        <img src="/static/img/assets/to.png" alt="to" />
+        <ChangeIcon/>
       </div>
       <div class="flex items-center">
         <span class="item_icon"
@@ -37,6 +38,7 @@
 
 <script setup>
 import { _accountMap } from "@/utils/dataMap";
+import ChangeIcon from "@/views/assets/page/icons/ChangeIcon.vue";
 const props = defineProps({
   item: {
     type: Object,
@@ -62,7 +64,7 @@ const formatDate = (date) => {
 <style lang="less" scoped>
 .transfer_item {
   margin-top: 0.2rem;
-  width: 100%;
+  width: calc(100% - 0.02rem);
   background-color: #f5f7fc;
   border: 1px solid #eff3f8;
   border-radius: 0.32rem;

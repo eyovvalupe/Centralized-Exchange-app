@@ -4,10 +4,11 @@
         <div class="icon_box" v-if="item.currency">
             <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
         </div>
+        {{ console.log(item) }}
         <div class="content">
             <div class="item_title">{{ item.currency }}</div>
             <!-- <div class="address">{{ item.address }}</div> -->
-            <div class="time">{{ item.date ? (item.date.split(' ')[1] || item.date) : '--' }}</div>
+            <div class="time">{{ item.date ? formatDate(item.date) : '--' }}</div>
         </div>
         <div class="right">
             <div class="amount">{{ item.amount }}</div>
@@ -46,6 +47,25 @@ const goInfo = () => {
         })
     }
 }
+const formatDate = (date) => {
+  const currentDate = new Date();
+  const newDate = date.split(" ");
+  const newDate1 = newDate[0].split("-");
+  const isToday =
+    newDate1[2] == currentDate.getDate().toString() &&
+    newDate1[1] == currentDate.getMonth().toString() &&
+    newDate1[0] == currentDate.getFullYear().toString();
+
+  const isYesterday =
+    newDate1[2] + 1 == currentDate.getDate().toString() &&
+    newDate1[1] == currentDate.getMonth().toString() &&
+    newDate1[0] == currentDate.getFullYear().toString();
+  if (isToday) {
+    return `今天 ${newDate[1]}`;
+  } else if (isYesterday) {
+    return `昨天 ${newDate[1]}`
+  } else return `${newDate1[1]}/${newDate1[2]} ${newDate[1]}`;
+};
 </script>
 
 <style lang="less" scoped>
@@ -63,6 +83,7 @@ const goInfo = () => {
     }
 
     .content {
+        margin-top: 0.08rem;
         padding: 0 0.16rem;
         flex: 1;
         display: flex;
@@ -110,7 +131,7 @@ const goInfo = () => {
             color: #18B762;
         }
 
-        .status_failed {
+        .status_failure {
             color: #8F92A1;
         }
     }

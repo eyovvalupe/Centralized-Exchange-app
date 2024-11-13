@@ -169,7 +169,7 @@ export function generateUUID() {
 export const _hiddenAccount = str => {
   if (!str) return '**'
   if (str.length > 8) {
-    return `${str.substr(0, 3)}***${str.substr(str.length - 3, 3)}`
+    return `**** **** **** ${str.substr(str.length - 4, 4)}`
   }
   return `${str.substr(0, 2)}***${str.substr(str.length - 2, 2)}`
 }

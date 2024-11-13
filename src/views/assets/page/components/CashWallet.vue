@@ -20,7 +20,7 @@
           <HiddenEye />
         </div>
       </div>
-      <span class="text-[0.52rem] text-[#061023] font-semibold">{{ showInfo ? '10,000.00' : '********' }}</span>
+      <span class="text-[0.52rem] text-[#061023] font-semibold">{{ showInfo ? parseFloat(amount).toLocaleString() : '********' }}</span>
     </div>
   </div>
 </template>
@@ -32,6 +32,12 @@ import HiddenEye from "./HiddenEye.vue";
 import ShowEye from "./ShowEye.vue";
 import { ref } from 'vue';
 
+const props = defineProps({
+  amount: {
+    type: Number,
+    default: 0
+  }
+})
 const showInfo = ref(false);
 
 const toggleShow = () => {

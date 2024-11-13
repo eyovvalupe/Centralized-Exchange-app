@@ -28,7 +28,7 @@
       @change="init()"
     >
       <Tab :title="$t('recordList.rechargeRecord')" name="0">
-        <div class="w-full justify-center">
+        <div class="w-full justify-center" v-if="active == 0">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
             <div
@@ -61,7 +61,7 @@
         </div>
       </Tab>
       <Tab :title="$t('recordList.withdrawalRecord')" name="1">
-        <div>
+        <div v-if="active == 1">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
             <div
@@ -94,7 +94,7 @@
         </div>
       </Tab>
       <Tab :title="$t('recordList.transfer')" name="2">
-        <div>
+        <div v-if="active == 2">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
             <div
@@ -169,7 +169,6 @@ const reqs = {
   0: _depositList,
   1: _withdrawList,
   2: _transferLog,
-  // 3: _converterLog,
   3: _transferLog,
 };
 
@@ -207,7 +206,6 @@ const getData = () => {
     page: page.value,
   })
     .then((res) => {
-      console.log("record list >>> record list =========> ", res.data);
       if (saveActive != active.value) return; // 不是当前列表的请求返回
       if (!res.data?.length) {
         finish.value = true;

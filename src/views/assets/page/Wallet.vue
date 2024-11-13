@@ -1,13 +1,13 @@
 <template>
   <div class="wallet_container">
     <div class="flex flex-col items-center" v-if="activeTab == -1">
-      <div @click="changeActiveTab(0)"><CashWallet /></div>
-      <div @click="changeActiveTab(1)"><StockWallet /></div>
-      <div @click="changeActiveTab(2)"><ContractWallet /></div>
-      <div @click="changeActiveTab(3)"><ForexWallet /></div>
-      <div @click="changeActiveTab(4)"><TradeWallet /></div>
+      <div @click="changeActiveTab(0)"><CashWallet :amount="assets.money" /></div>
+      <div @click="changeActiveTab(1)"><StockWallet :amount="assets.stock"/></div>
+      <div @click="changeActiveTab(2)"><ContractWallet :amount="assets.futures"/></div>
+      <div @click="changeActiveTab(3)"><ForexWallet :amount="assets.forex"/></div>
+      <div @click="changeActiveTab(4)"><TradeWallet :amount="assets.blocktrade"/></div>
     </div>
-
+    {{ console.log(assets) }}
     <div v-if="activeTab != -1">
       <div
         class="wallet_tabs"
@@ -142,16 +142,45 @@ import AI from "./AI.vue";
 import Contract from "./Contract.vue";
 import IPO from "./IPO.vue";
 import Stock from "./Stock.vue";
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import DefaultWallet from "./components/DefaultWallet.vue";
 import Btns from "./components/Btns.vue";
 import Cash from "./Cash.vue";
 import OtherWallet from "./components/OtherWallet.vue";
+import store from '@/store';
 
 const activeTab = ref(-1);
 const changeActiveTab = (val) => {
-    activeTab.value = val
-}
+  activeTab.value = val;
+};
+// 刷新总资产
+const assets = computed(() => store.state.assets || {});
+const token = computed(() => store.state.token || "");
+
+const getAssets = () => {
+  if (!token.value) return;
+  store.dispatch("updateAssets")
+  store.dispatch("updateWallet");
+};
+
+onMounted(() => {
+  getAssets();
+});
+
+const refresh = () => {
+  getAssets();
+};
+
+defineExpose({
+  refresh,
+});
+
+const jump = (name, check = false, query) => {
+  router.push({
+    name,
+    query,
+  });
+};
 </script>
 <style lang="less">
 .wallet_container {
