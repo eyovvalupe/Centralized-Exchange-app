@@ -64,7 +64,7 @@ export const useBuyCoinState = createGlobalState(() => {
         socket && socket.off('c2corder')
         socket && socket.emit('user', token.value)
         socket && socket.emit('c2corder', '#all')
-        store.commit('setC2cList', [])
+        // store.commit('setC2cList', [])
         socket.on('c2corder', res => {
           store.commit('setC2cList', res.data || [])
           resolve()
