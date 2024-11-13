@@ -15,8 +15,8 @@
                     <img src="/static/img/assets/status_success.png?241024" alt="img">
                 </div>
                 <div class="status_name">{{ $t('withdrawInfo.successful') }}</div>
-                <div class="status_desc" v-if="locale == 'en'">The {{orderData.amount}} {{orderData.currency}} you withdrew has been credited to your account</div>
-                <div class="status_desc" v-else>您提现的{{orderData.amount}}{{orderData.currency}}已到账</div>
+                <div class="status_desc" v-if="locale == 'en'">The {{parseFloat(orderData.amount).toFixed(2)}} {{orderData.currency}} you withdrew has been credited to your account</div>
+                <div class="status_desc" v-else>您提现的{{parseFloat(orderData.amount).toFixed(2)}}{{orderData.currency}}已到账</div>
             </div>
             <div class="status" v-else-if="orderData.status == 'failure'">
                 <div class="status_icon">
@@ -39,11 +39,11 @@
         <div class="bottom_info">
             <div class="bottom_item">
                 <div class="name">{{ $t('withdrawInfo.withdrawalAmount') }}</div>
-                <div class="value">{{orderData.amount}} <span class="value_currency">{{orderData.currency}}</span></div>
+                <div class="value">{{parseFloat(orderData.amount).toFixed(2)}} <span class="value_currency">{{orderData.currency}}</span></div>
             </div>
             <div class="bottom_item">
                 <div class="name">{{ $t('withdrawInfo.receivingAccount') }}</div>
-                <div class="value">{{orderData.account ? orderData.account.symbol || '' : '' }} {{ orderData.account ? getAddress(orderData.account.address) || '--' : '--' }}</div>
+                <div class="value">{{orderData.account ? orderData.account.symbol.toUpperCase() || '' : '' }} {{ orderData.account ? getAddress(orderData.account.address) || '--' : '--' }}</div>
             </div>
             <div class="bottom_item">
                 <div class="name">{{ $t('withdrawInfo.withdrawalCurrency') }}</div>

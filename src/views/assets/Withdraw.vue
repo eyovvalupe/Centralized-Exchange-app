@@ -443,6 +443,7 @@ const submit = (s) => {
         store.dispatch("updateWallet"); // 更新钱包
         router.push({
           name: "withdrawInfo",
+          query: res.data
         });
       }
     })

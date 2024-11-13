@@ -34,9 +34,6 @@ import { Icon, Switch } from 'vant'
 import store from '@/store'
 import router from '@/router'
 import { _cryptoCoin } from '@/api/api'
-import Btns from './components/Btns'
-import OverviewCard from './components/OverviewCard'
-
 
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
