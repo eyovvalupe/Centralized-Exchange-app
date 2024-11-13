@@ -509,12 +509,13 @@ const maxIpt = () => {
 // 收款方式
 store.dispatch("updateAccountList");
 const accountList = computed(() => store.state.accountList || []); // 收款方式列表
+
 // 可用钱包列表
 const showAccount = computed(() => {
     // 虚拟货币
     return (
       accountList.value.filter(
-        (item) => item.channel == 'crypto'
+        (item) => item.channel == 'crypto' && item.symbol == form.value.from.toLowerCase()
       ) || []
     );
 });
