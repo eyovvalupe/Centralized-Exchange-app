@@ -183,7 +183,7 @@
         >
       </Tab>
     </Tabs>
-
+ 
     <!-- 账户种类选择弹窗 -->
     <Popup
       v-model:show="showDialog"
@@ -516,7 +516,7 @@ const showAccount = computed(() => {
     // 虚拟货币
     return (
       accountList.value.filter(
-        (item) => item.channel == 'crypto' && item.symbol == form.value.from.toLowerCase()
+        (item) => item.channel == 'crypto' && item.symbol.toLocaleUpperCase() == form.value.from.toLocaleUpperCase()
       ) || []
     );
 });
