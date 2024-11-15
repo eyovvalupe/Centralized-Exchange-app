@@ -62,6 +62,8 @@
           show-btn
           :btn-placeholder="form.fromCurrency.name"
           :placeholder="'请输入金额'"
+          :inputType="'number'"
+          @update:modelValue="changeAmount('from')"
         />
       </div>
 
@@ -108,13 +110,17 @@
           <ArrowIcon />
         </div>
         <FormItem
-          background="#EFF3F8"
-          custom
+          background="#fff"
+          v-model="toAmount"
           btn-show-mode="focus"
+          @btnClick="maxIpt"
           show-btn
           :btn-placeholder="form.toCurrency.name"
-        >
-          <div>
+          :placeholder="'请输入金额'"
+          :inputType="'number'"
+          @update:modelValue="changeAmount('to')"
+        />
+          <!-- <div>
             <span v-show="formType == 'transfer'">自动换算</span>
             <span
               :style="{ color: form.amount === '' ? '#A4ACB9' : '' }"
@@ -125,8 +131,8 @@
                   : new Decimal(form.amount || 0).mul(rate) || "--"
               }}</span
             >
-          </div>
-        </FormItem>
+          </div> -->
+         
       </div>
 
       <div class="rate_tip" v-if="formType == 'swap'">
@@ -210,7 +216,7 @@ import AccountCheck from "@/components/AccountCheck.vue";
 
 
 const AccountCheckRef = ref();
-
+const toAmount = ref('')
 const route = useRoute();
 const focus = ref(false); // 是否在输入中
 const blurInput = () => {
@@ -481,6 +487,15 @@ const goRecord = () => {
     },
   });
 };
+
+const changeAmount = (val) => {
+    if (val == 'to') {
+        form.value.amount = Number(parseFloat(toAmount.value) / parseFloat(rate.value))
+    }
+    if (val == 'from') {
+        toAmount.value = Number(parseFloat(form.value.amount) * parseFloat(rate.value))
+    }
+}
 </script>
 
 <style lang="less" scoped>
