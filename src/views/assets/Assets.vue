@@ -19,7 +19,7 @@
         <div class="assets_body" v-if="loadedTab.indexOf(0) > -1">
           <Overview
             ref="overviewRef"
-            @openRecordPopup="openRecordPopup"
+            @jumpToWallet="(val) => jumpToWallet(val)"
             @setLoading="(val) => (loading = val)"
           />
         </div>
@@ -53,12 +53,13 @@ import router from "@/router";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import Wallet from "./page/Wallet.vue";
 import OrderCenter from "./page/OrderCenter.vue";
-import { _cryptoCoin } from '@/api/api'
+import { _cryptoCoin } from "@/api/api";
 
 // import HintBlock from "@/components/HintBlock.vue"
 
 const route = useRoute();
 const hintNum = computed(() => store.state.hintNum || 0);
+const currSelectedWallet = computed(() => store.state.currSelectedWallet || -1);
 
 const RecordListRef = ref();
 const activeTab = ref(0);
@@ -80,6 +81,11 @@ const changeActiveTab = (val, slideSwipe = false) => {
 };
 const swipeChange = (val) => {
   changeActiveTab(val);
+};
+
+const jumpToWallet = (val) => {
+  store.commit("setCurrSelectedWallet", val);
+  changeActiveTab(1, true);
 };
 
 const loading = ref(false);
@@ -157,7 +163,6 @@ const getCoinMap = () => {
       }, {});
 
       store.commit("setCurrencyMapList", currencyMapList.value);
-
     })
     .catch((err) => console.error(err));
 };

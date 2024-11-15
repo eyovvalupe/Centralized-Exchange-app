@@ -1,71 +1,70 @@
 <template>
   <div class="wallet_container">
-    <div class="flex flex-col items-center" v-if="activeTab == -1">
-      <div @click="changeActiveTab(0)"><CashWallet :amount="assets.money" /></div>
-      <div @click="changeActiveTab(1)"><StockWallet :amount="assets.stock"/></div>
-      <div @click="changeActiveTab(2)"><ContractWallet :amount="assets.futures"/></div>
-      <div @click="changeActiveTab(3)"><ForexWallet :amount="assets.forex"/></div>
-      <div @click="changeActiveTab(4)"><TradeWallet :amount="assets.blocktrade"/></div>
+    <div class="flex flex-col items-center" v-if="currSelectedWallet == -1">
+      <div @click="changeActiveTab(1)"><CashWallet :amount="assets.money" /></div>
+      <div @click="changeActiveTab(2)"><StockWallet :amount="assets.stock"/></div>
+      <div @click="changeActiveTab(3)"><ContractWallet :amount="assets.futures"/></div>
+      <div @click="changeActiveTab(4)"><ForexWallet :amount="assets.forex"/></div>
+      <div @click="changeActiveTab(5)"><TradeWallet :amount="assets.blocktrade"/></div>
     </div>
-    {{ console.log("============> ", assets) }}
-    <div v-if="activeTab != -1">
+    <div v-if="currSelectedWallet != -1">
       <div
         class="wallet_tabs"
         @touchstart.stop=""
         @touchmove.stop=""
         @touchend.stop=""
       >
-        <div class="wallet_tabs_scroll flex">
+        <div ref="tabscroll" class="wallet_tabs_scroll flex">
           <div
             class="wallet_tab"
-            :class="activeTab == 0 ? 'actived' : ''"
+            :class="currSelectedWallet == 1 ? 'actived' : ''"
             :key="0"
-            @click="changeActiveTab(0)"
+            @click="changeActiveTab(1)"
           >
             <span class="wallet_tab_text">现金账户</span>
           </div>
           <div
             class="wallet_tab"
-            :class="activeTab == 1 ? 'actived' : ''"
+            :class="currSelectedWallet == 2 ? 'actived' : ''"
             :key="1"
-            @click="changeActiveTab(1)"
+            @click="changeActiveTab(2)"
           >
             <span class="wallet_tab_text">股票账户</span>
           </div>
           <div
             class="wallet_tab"
-            :class="activeTab == 2 ? 'actived' : ''"
+            :class="currSelectedWallet == 3 ? 'actived' : ''"
             :key="2"
-            @click="changeActiveTab(2)"
+            @click="changeActiveTab(3)"
           >
             <span class="wallet_tab_text">合约账户</span>
           </div>
           <div
             class="wallet_tab"
-            :class="activeTab == 3 ? 'actived' : ''"
+            :class="currSelectedWallet == 4 ? 'actived' : ''"
             :key="3"
-            @click="changeActiveTab(3)"
+            @click="changeActiveTab(4)"
           >
             <span class="wallet_tab_text">外汇账户</span>
           </div>
           <div
             class="wallet_tab"
-            :class="activeTab == 4 ? 'actived' : ''"
+            :class="currSelectedWallet == 5 ? 'actived' : ''"
             :key="4"
-            @click="changeActiveTab(4)"
+            @click="changeActiveTab(5)"
           >
             <span class="wallet_tab_text">大宗账户</span>
           </div>
         </div>
       </div>
 
-      <div class="tab" v-if="activeTab == 0">
+      <div class="tab" v-if="currSelectedWallet == 1">
         <DefaultWallet :name="'现金'" :balance="assets.money" />
         <Btns />
         <Cash />
       </div>
 
-      <div class="tab" v-if="activeTab == 1">
+      <div class="tab" v-if="currSelectedWallet == 2">
         <OtherWallet :name="'股票'" :balance="assets.stock" />
         <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
           <div
@@ -74,7 +73,7 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">股票余额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >8000.00</span
+              >{{ parseFloat(assets.stock).toLocaleString() }}</span
             >
           </div>
           <div
@@ -83,13 +82,14 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">持仓金额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >8000.00</span
+              >{{ parseFloat(assets.order_value).toLocaleString() }}</span
             >
           </div>
         </div>
+        <StockMyWallet />
       </div>
 
-      <div class="tab" v-if="activeTab == 2">
+      <div class="tab" v-if="currSelectedWallet == 3">
         <OtherWallet :name="'合约'" :balance="assets.futures" />
         <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
           <div
@@ -98,7 +98,7 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">合约余额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >8000.00</span
+              >{{ parseFloat(assets.stock).toLocaleString() }}</span
             >
           </div>
           <div
@@ -107,19 +107,20 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">持仓金额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >8000.00</span
+              >{{ parseFloat(assets.order_value).toLocaleString() }}</span
             >
           </div>
         </div>
+        <CryptoWallet />
       </div>
 
-      <div class="tab" v-if="activeTab == 3">
+      <div class="tab" v-if="currSelectedWallet == 4">
         <DefaultWallet :name="'外汇'" :balance="assets.forex" />
         <Btns />
-        <Cash />
+        <ForexMyWallet />
       </div>
 
-      <div class="tab" v-if="activeTab == 4">
+      <div class="tab" v-if="currSelectedWallet == 5">
         <!-- <DefaultWallet :name="'大宗商品'" :balance="10000" /> -->
       </div>
     </div>
@@ -142,20 +143,32 @@ import AI from "./AI.vue";
 import Contract from "./Contract.vue";
 import IPO from "./IPO.vue";
 import Stock from "./Stock.vue";
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import DefaultWallet from "./components/DefaultWallet.vue";
 import Btns from "./components/Btns.vue";
 import Cash from "./Cash.vue";
 import OtherWallet from "./components/OtherWallet.vue";
 import store from '@/store';
+import StockMyWallet from "./StockWallet.vue";
+import CryptoWallet from "./CryptoWallet.vue";
+import ForexMyWallet from "./ForexWallet.vue";
 
 const activeTab = ref(-1);
+const tabscroll = ref(null)
 const changeActiveTab = (val) => {
-  activeTab.value = val;
+  store.commit("setCurrSelectedWallet", val)
 };
 // 刷新总资产
 const assets = computed(() => store.state.assets || {});
 const token = computed(() => store.state.token || "");
+const currSelectedWallet = computed(() => store.state.currSelectedWallet || '-1')
+const walletState = computed(() => store.state.wallet)
+const elseWalletState = computed(() => store.state.elseWallet)
+const elseWalletMapState = computed(() => store.state.elseWalletMap)
+console.log("wallet ============> ", walletState.value)
+console.log("wallet1 ============> ", elseWalletState.value)
+console.log("wallet2 ============> ", elseWalletMapState.value)
+
 
 const getAssets = () => {
   if (!token.value) return;
@@ -175,6 +188,12 @@ defineExpose({
   refresh,
 });
 
+watch(() => currSelectedWallet.value, (val) => {
+  console.log("changed tab")
+  // if (val==5) {
+  //   tabscroll.value.scrollTop = 42;
+  // }
+})
 const jump = (name, check = false, query) => {
   router.push({
     name,
@@ -197,6 +216,7 @@ const jump = (name, check = false, query) => {
       width: 200%;
       display: flex;
       justify-content: space-between;
+      transition: all 0.3s linear;
 
       .wallet_tab {
         min-width: 1.84rem;

@@ -364,6 +364,16 @@ const routes = [
       pageType: 'tab',
     },
   },
+  // {
+  //   // 账户
+  //   path: '/wallet',
+  //   name: 'wallet',
+  //   component: () => import('../views/assets/page/Wallet.vue'),
+  //   meta: {
+  //     keepAlive: true,
+  //     pageType: 'tab',
+  //   },
+  // },
   {
     // 划转
     path: '/transfer',

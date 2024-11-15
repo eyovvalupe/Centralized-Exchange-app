@@ -48,8 +48,7 @@
         ref="tab1"
         :key="1"
         class="tab"
-        :class="{ open_tab: rightSwitch1 == true }"
-        @click="rightSwitch1 = !rightSwitch1"
+        @click="jumpToWallet(1)"
       >
         <div class="tab_icon">
           <CashIcon />
@@ -61,30 +60,13 @@
         <div class="more">
           <NextIcon />
         </div>
-        <div class="rights">
-          <div class="right" @click="jump('topUp', true)">
-            {{ $t("充值") }}
-          </div>
-          <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t("提现") }}
-          </div>
-          <div
-            class="right right--green"
-            @click="jump('transfer', false, { from: 'stock', to: 'money' })"
-          >
-            {{ $t("转入") }}
-          </div>
-          <div class="right right--red" @click="jump('transfer')">
-            {{ $t("转出") }}
-          </div>
-        </div>
       </div>
       <div
         ref="tab2"
         :key="2"
         class="tab"
         :class="{ open_tab: rightSwitch2 == true }"
-        @click="rightSwitch2 = !rightSwitch2"
+        @click="jumpToWallet(2)"
       >
         <div class="tab_icon">
           <StockIcon />
@@ -98,21 +80,13 @@
         <div class="more">
           <NextIcon />
         </div>
-        <div class="rights">
-          <div class="right" @click="jump('topUp', true)">
-            {{ $t("充值") }}
-          </div>
-          <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t("提现") }}
-          </div>
-        </div>
       </div>
       <div
         ref="tab3"
         :key="3"
         class="tab"
         :class="{ open_tab: rightSwitch3 == true }"
-        @click="rightSwitch3 = !rightSwitch3"
+        @click="jumpToWallet(3)"
       >
         <div class="tab_icon">
           <ContractIcon />
@@ -126,21 +100,13 @@
         <div class="more">
           <NextIcon />
         </div>
-        <div class="rights">
-          <div class="right" @click="jump('topUp', true)">
-            {{ $t("充值") }}
-          </div>
-          <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t("提现") }}
-          </div>
-        </div>
       </div>
       <div
-        ref="tab5"
-        :key="5"
+        ref="tab4"
+        :key="4"
         class="tab"
         :class="{ open_tab: rightSwitch5 == true }"
-        @click="rightSwitch5 = !rightSwitch5"
+        @click="jumpToWallet(4)"
       >
         <div class="tab_icon">
           <ForeignCashIcon />
@@ -154,21 +120,13 @@
         <div class="more">
           <NextIcon />
         </div>
-        <div class="rights">
-          <div class="right" @click="jump('topUp', true)">
-            {{ $t("充值") }}
-          </div>
-          <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t("提现") }}
-          </div>
-        </div>
       </div>
       <div
         ref="tab5"
         :key="5"
         class="tab"
         :class="{ open_tab: rightSwitch5 == true }"
-        @click="rightSwitch5 = !rightSwitch5"
+        @click="jumpToWallet(5)"
       >
         <div class="tab_icon">
           <TraditionIcon />
@@ -213,7 +171,6 @@ import { useI18n } from "vue-i18n";
 import { _assets } from "@/api/api";
 import store from "@/store";
 import router from "@/router";
-import AccountCheck from "@/components/AccountCheck.vue";
 import Btns from "./components/Btns";
 import OverviewCard from "./components/OverviewCard.vue";
 import CashIcon from "./components/CashIcon.vue";
@@ -244,13 +201,14 @@ const onSelect = (item) => {
   });
 };
 
-const emits = defineEmits(["setLoading", "openRecordPopup"]);
+const emits = defineEmits(["setLoading", "jumpToWallet"]);
+
+const jumpToWallet = (val) => {
+  emits('jumpToWallet', val)
+}
+
 const token = computed(() => store.state.token || "");
 const hidden = ref(false); // 隐藏数字
-
-const openRecordPopup = () => {
-  emits("openRecordPopup");
-};
 
 // 功能区域控制
 const tab1 = ref();

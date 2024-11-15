@@ -27,11 +27,15 @@ export default {
     loanNum: 0, // 借贷重的订单数
     coinMap: {}, // 币种 网络 map
     currencyMapList: [],
+    currSelectedWallet: -1,
   },
   getters: {
     
   },
   mutations: {
+    setCurrSelectedWallet(state, data) {
+      state.currSelectedWallet = data
+    },
     setCurrencyMapList(state, data) {
       state.currencyMapList = data
     },
