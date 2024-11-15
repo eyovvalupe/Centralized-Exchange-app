@@ -7,7 +7,7 @@
       <div @click="changeActiveTab(3)"><ForexWallet :amount="assets.forex"/></div>
       <div @click="changeActiveTab(4)"><TradeWallet :amount="assets.blocktrade"/></div>
     </div>
-    {{ console.log(assets) }}
+    {{ console.log("============> ", assets) }}
     <div v-if="activeTab != -1">
       <div
         class="wallet_tabs"
@@ -60,13 +60,13 @@
       </div>
 
       <div class="tab" v-if="activeTab == 0">
-        <DefaultWallet :name="'现金'" :balance="10000" />
+        <DefaultWallet :name="'现金'" :balance="assets.money" />
         <Btns />
         <Cash />
       </div>
 
       <div class="tab" v-if="activeTab == 1">
-        <OtherWallet :name="'股票'" :balance="10000" />
+        <OtherWallet :name="'股票'" :balance="assets.stock" />
         <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
           <div
             class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
@@ -90,7 +90,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 2">
-        <OtherWallet :name="'合约'" :balance="10000" />
+        <OtherWallet :name="'合约'" :balance="assets.futures" />
         <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
           <div
             class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
@@ -114,7 +114,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 3">
-        <DefaultWallet :name="'外汇'" :balance="10000" />
+        <DefaultWallet :name="'外汇'" :balance="assets.forex" />
         <Btns />
         <Cash />
       </div>

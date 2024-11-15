@@ -215,7 +215,7 @@ import store from "@/store";
 import router from "@/router";
 import AccountCheck from "@/components/AccountCheck.vue";
 import Btns from "./components/Btns";
-import OverviewCard from "./components/OverviewCard";
+import OverviewCard from "./components/OverviewCard.vue";
 import CashIcon from "./components/CashIcon.vue";
 import NextIcon from "./components/NextIcon.vue";
 import StockIcon from "./components/StockIcon.vue";

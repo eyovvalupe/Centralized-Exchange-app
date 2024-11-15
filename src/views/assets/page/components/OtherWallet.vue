@@ -22,7 +22,7 @@
         </div>
       </div>
       <span class="text-[0.52rem] text-[#061023] font-semibold">{{
-        showInfo ? balance : "********"
+        showInfo ? balance.toLocaleString() : "********"
       }}</span>
     </div>
   </div>
