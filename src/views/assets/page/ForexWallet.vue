@@ -44,8 +44,8 @@ const assets = computed(() => store.state.assets || {})
 const wallet1 = computed(() => store.state.wallet || []) // 钱包
 const elseWalletMap = computed(() => store.state.elseWalletMap || [])
 const wallet = computed(() => {
-  if (show0.value) return elseWalletMap.value['stock'].filter(item => item.amount)
-  return elseWalletMap.value['stock']
+  if (show0.value) return elseWalletMap.value['forex'].filter(item => item.amount)
+  return elseWalletMap.value['forex']
 })
 
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
