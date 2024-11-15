@@ -98,7 +98,7 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">合约余额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >{{ parseFloat(assets.stock).toLocaleString() }}</span
+              >{{ parseFloat(assets.futures).toLocaleString() }}</span
             >
           </div>
           <div
