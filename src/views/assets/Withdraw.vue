@@ -309,7 +309,9 @@
           </div>
           <div
             class="card_box"
-            v-for="(item, i) in tabActive == 'cryptocurrency' ? showAccount : showBankAccount"
+            v-for="(item, i) in tabActive == 'cryptocurrency'
+              ? showAccount
+              : showBankAccount"
             @click="clickAccountItem(item)"
             :class="{
               card_box_active:
@@ -335,15 +337,14 @@
                 {{ _hiddenAccount(item.bankCardNumber || item.address) }}
               </div>
               <div class="name">
-                {{
-                  item.symbol
-                    ? item.symbol.toUpperCase()
-                    : item.bankName
-                }}
+                {{ item.symbol ? item.symbol.toUpperCase() : item.bankName }}
               </div>
             </div>
             <div
-              v-if="tabActive == 'cryptocurrency' && currAccount.id == item.id || tabActive == 'bankCard' && currBankAccount.id == item.id"
+              v-if="
+                (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
+                (tabActive == 'bankCard' && currBankAccount.id == item.id)
+              "
               class="checked"
               style="background-image: url('/static/img/user/check_bg.png')"
             >
@@ -413,17 +414,19 @@ const safeRef = ref();
 const errStatus = ref(false);
 const AccountCheckRef = ref();
 const openSafePass = () => {
-  if (!form.value.amount || form.value.amount <= 0) {
-    errStatus.value = true;
-    return showToast("请输入金额");
+  if (AccountCheckRef.value.check()) {
+    if (!form.value.amount || form.value.amount <= 0) {
+      errStatus.value = true;
+      return showToast("请输入金额");
+    }
+    if (form.value.amount > balance.value) {
+      return showToast("余额不足");
+    }
+    if (!showAccount.value.length) {
+      return showToast("请添加收款账户");
+    }
+    safeRef.value.open();
   }
-  if (form.value.amount > balance.value) {
-    return showToast("余额不足");
-  }
-  if (!showAccount.value.length) {
-    return showToast("请添加收款账户");
-  }
-  safeRef.value.open();
 };
 const submit = (s) => {
   if (loading.value) return;
@@ -443,7 +446,7 @@ const submit = (s) => {
         store.dispatch("updateWallet"); // 更新钱包
         router.push({
           name: "withdrawInfo",
-          query: res.data
+          query: res.data,
         });
       }
     })
@@ -513,26 +516,25 @@ const accountList = computed(() => store.state.accountList || []); // 收款方�
 
 // 可用钱包列表
 const showAccount = computed(() => {
-    // 虚拟货币
-    return (
-      accountList.value.filter(
-        (item) => item.channel == 'crypto' && item.symbol == form.value.from.toLowerCase()
-      ) || []
-    );
+  // 虚拟货币
+  return (
+    accountList.value.filter(
+      (item) =>
+        item.channel == "crypto" && item.symbol == form.value.from.toLowerCase()
+    ) || []
+  );
 });
 
 const showBankAccount = computed(() => {
-    return (
-      accountList.value.filter(
-        (item) => item.channel == 'bank'
-      ) || []
-    );
+  return accountList.value.filter((item) => item.channel == "bank") || [];
 });
 
 // 当前钱包
 const currAccount = computed(() => {
   if (tabActive.value == "cryptocurrency" && form.value.account) {
-    const result = showAccount.value.find((item) => item.id == form.value.account);
+    const result = showAccount.value.find(
+      (item) => item.id == form.value.account
+    );
     return result;
   } else if (tabActive.value == "cryptocurrency" && !form.value.account) {
     return showAccount.value[0] || {};
@@ -661,9 +663,9 @@ const goAddAccount = () => {
 };
 
 onMounted(() => {
-  if (AccountCheckRef.value.check()) {
-    getSessionToken();
-  }
+  // if (AccountCheckRef.value.check()) {
+  getSessionToken();
+  // }
 });
 
 // 添加
@@ -694,9 +696,12 @@ watch(
   }
 );
 
-watch(() => tabActive.value, (val) => {
-  form.value.account = ''
-})
+watch(
+  () => tabActive.value,
+  (val) => {
+    form.value.account = "";
+  }
+);
 </script>
 
 <style lang="less" scoped>
