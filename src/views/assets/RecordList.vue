@@ -140,7 +140,6 @@ import {
   _depositList,
   _withdrawList,
   _transferLog,
-  _converterLog,
 } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
