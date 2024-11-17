@@ -419,26 +419,39 @@ const openSafePass = () => {
       errStatus.value = true;
       return showToast("请输入金额");
     }
-    if (form.value.amount > balance.value) {
-      return showToast("余额不足");
-    }
-    if (!showAccount.value.length) {
-      return showToast("请添加收款账户");
-    }
+    // if (form.value.amount > balance.value) {
+    //   return showToast("余额不足");
+    // }
+    // if (!showAccount.value.length) {
+    //   return showToast("请添加收款账户");
+    // }
     safeRef.value.open();
   }
 };
+
+const withdrawParams = ref({})
 const submit = (s) => {
   if (loading.value) return;
   loading.value = true;
-  if (tabActive == "bankCard") form.value.from = "main";
-  _withdraw({
+  if (tabActive.value == "bankCard") {
+    withdrawParams.value = {
+      currency: 'main',
+      amount: form.value.amount,
+      account_id: currBankAccount.value.id,
+      safeword: s,
+      token: sessionToken.value
+    }
+  } else {
+    withdrawParams.value = {
     currency: form.value.from,
     amount: form.value.amount,
     account_id: currAccount.value.id,
     safeword: s,
     token: sessionToken.value,
-  })
+  }
+  }
+  console.log(withdrawParams.value)
+  _withdraw(withdrawParams.value)
     .then((res) => {
       if (res.code == 200) {
         showToast("操作成功");
@@ -529,6 +542,8 @@ const showAccount = computed(() => {
 const showBankAccount = computed(() => {
   return accountList.value.filter((item) => item.channel == "bank") || [];
 });
+
+console.log('showbank account =======> ', showBankAccount.value)
 
 // 当前钱包
 const currAccount = computed(() => {

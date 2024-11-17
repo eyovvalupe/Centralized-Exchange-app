@@ -1,7 +1,6 @@
 <template>
   <div
-    class="relative overflow-hidden w-[6.86rem] h-[3.04rem] pt-[0.16rem] pl-[0.24rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]"
-    style="box-shadow: 0px 4px 20px 0px #0610231a"
+    class="relative w-[6.86rem] h-[3.04rem] pt-[0.16rem] pl-[0.24rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]"
   >
     <OtherWalletBtn />
     <OtherWalletInfoContainer />

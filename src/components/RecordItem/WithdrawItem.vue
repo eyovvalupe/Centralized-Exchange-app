@@ -7,7 +7,6 @@
         :src="`/static/img/crypto/${item.account.symbol}.png`"
         alt="img"
       /> -->
-      {{ console.log(item.account) }}
       <div :class="`${item.account.symbol}_icon`"></div>
       <img
         v-if="item.account && item.account.bank_name"

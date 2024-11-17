@@ -1,5 +1,8 @@
 <template>
-  <div class="absolute top-[0] left-[0] z-[-1]">
+  <div
+    class="absolute top-[0] left-[0] z-[-1] rounded-[0.32rem]"
+    style="box-shadow: 0px 4px 20px 0px #0610231a"
+  >
     <svg
       width="6.86rem"
       height="2.42rem"

@@ -122,12 +122,14 @@ const init = () => {
     page.value = 0
     list.value = []
     initWatch()
+    console.log('init')
     getData()
     setTimeout(() => {
         lastTop.value = 0
     }, 100)
 }
 const getData = () => { // 获取数据
+    console.log('here')
     if (loading.value || finish.value) return
     loading.value = true
     page.value++
@@ -143,6 +145,7 @@ const getData = () => { // 获取数据
     reqs[active.value]({
         page: page.value
     }).then(res => {
+        console.log(res.data)
         if (saveActive != active.value) return // 不是当前列表的请求返回
         if (!res.data?.length) {
             finish.value = true
