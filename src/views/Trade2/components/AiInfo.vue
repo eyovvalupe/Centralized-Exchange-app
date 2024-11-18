@@ -47,19 +47,19 @@
             </div>
             <div class="info_boxs">
                
-                <div class="info_box" v-if="currItem.status == 'close'">
+                <div class="info_box">
                     <div>时间区域</div>
                     <div class="amount">
                         {{ currItem.time }}{{ currItem.unit }}
                     </div>
                 </div>
-                <div class="info_box info_box--line" v-if="currItem.status == 'close'">
+                <div class="info_box info_box--line">
                     <div>网格数量</div>
                     <div class="amount">
                         {{ currItem.lever }}
                     </div>
                 </div>
-                <div class="split-line" v-if="currItem.status == 'close'"></div>
+                <div class="split-line"></div>
                 <div class="info_box">
                     <div>投资额(USDT)</div>
                     <div class="amount">

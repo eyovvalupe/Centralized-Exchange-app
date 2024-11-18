@@ -2,25 +2,8 @@
 <template>
     <div class="ai-block">
 
-        <Tabs v-if="!pageLoading" type="round-card" v-model:active="active" :swipeable="false" animated
-            :color="'#014CFA'" shrink @change="onChange">
-            <Tab title="开仓" name="0">
-                <div class="ai-block-content" style="padding-top: 0.4rem;">
-                    <Opening @showNavDialog="showNavDialog" mode="page" ref="OpeningRef" @back="showModel = false" @success="onChange('1')" />
-                    <!-- <Ai @clickItems="clickItem"></Ai> -->
-                </div>
-            </Tab>
-            <Tab title="持仓" name="1">
-                <div class="ai-block-content">
-                    <Positions />
-                </div>
-            </Tab>
-            <Tab title="订单" name="2">
-
-                <Inquire ref="InquireRef" />
-
-            </Tab>
-        </Tabs>
+        <Ai @clickItems="clickItem" :show-tabs="false" v-if="!pageLoading"></Ai>
+        
         <div style="height:50vh" v-else></div>
 
         <!-- 下单弹窗 -->
@@ -31,39 +14,37 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, Popup } from "vant";
-import { ref, onMounted, computed, defineExpose, watch } from "vue"
+import {  Popup } from "vant";
+import { ref, onMounted, computed, defineExpose } from "vue"
 import Opening from "../ai/Opening.vue"
-import Positions from "../ai/Positions.vue"
-import Inquire from "../ai/Inquire.vue"
+import Ai from "../../Market/components/Ai.vue"
 import store from "@/store";
-import { useRoute } from "vue-router";
-const route = useRoute()
 
+const token = computed(() => store.state.token || '')
+const activeType = ref(1)
 const OpeningRef = ref()
 const showModel = ref(false)
-
-
-watch(()=>route.query.symbol,()=>{
-    OpeningRef.value && OpeningRef.value.init()
-})
-
+const clickItem = item => {
+    if (!token.value) {
+        return store.commit('setIsLoginOpen', true)
+        // return router.push({
+        //     name: 'login',
+        //     query: {
+        //         reurl: "trade"
+        //     }
+        // })
+    }
+    showModel.value = true
+    setTimeout(() => {
+        OpeningRef.value.init()
+    }, 100)
+}
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
     emits('showNavDialog', 'ai')
 }
 
-const active = ref(sessionStorage.getItem('trade_ai_tab') || 0)
-const InquireRef = ref()
-const onChange = async (val) => {
-    active.value = val;
-    sessionStorage.setItem('trade_ai_tab', val)
-
-    if (val == 2) {
-        InquireRef.value && InquireRef.value.init()
-    }
-};
 
 
 const pageLoading = ref(true)
@@ -86,7 +67,8 @@ defineExpose({
     padding: 0.24rem 0.32rem 0.32rem;
 
     .ai-block-content {
-        width: calc(100% - 1px);
+        padding: 0.4rem 0 0 0;
+
         .ai-block-title {
             padding: 0 0.32rem;
             font-weight: 600;

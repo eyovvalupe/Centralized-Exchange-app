@@ -40,7 +40,6 @@ const openInfo = item => {
 }
 
 
-
 const formatEndtime = (endtime)=>{
     let time = formatSec2(endtime)
     let html = ''

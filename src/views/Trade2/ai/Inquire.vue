@@ -14,7 +14,7 @@
                 </div>
                 <div class="right">
                     <div class="amount" :class="[item.profit < 0 ? 'down_status' : 'up_status']">
-                        {{ item.profit >= 0 ? '+' : '-' }}
+                        {{ item.profit >= 0 ? '+' : '' }}
                         {{ item.profit }}
                     </div>
                     <div class="date">{{ formatDate(item.date) }}</div>

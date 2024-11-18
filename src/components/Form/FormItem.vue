@@ -77,7 +77,10 @@ const props = defineProps({
     },
     showBtn:Boolean,
     tip:String,
-    tipAlign:String, //默认居左 right 居右
+    tipAlign:{
+        type:String,
+        default:"right"
+    },
     inputType:{
         type:String,
         default:"text"
