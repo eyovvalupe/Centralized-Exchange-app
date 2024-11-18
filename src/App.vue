@@ -121,6 +121,7 @@ const transitionName = computed(() => store.state.transitionName || '')
 watch(
   token,
   () => {
+    serviceChat.initc2c()
     serviceChat.destroyNum()
     serviceChat.initNum()
   },

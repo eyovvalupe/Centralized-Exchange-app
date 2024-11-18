@@ -3,12 +3,12 @@
   <div class="buycoin-chat">
     <div ref="listRef" class="list">
       <div class="notice_msg">
-        <div class="time">{{ list[0]?.time }}</div>
+        <div class="time">{{ messageList[0]?.time }}</div>
         <div class="content">
           {{ $t("您已经成功下单") }}，{{ $t("请耐心等候商家付款") }}
         </div>
       </div>
-      <template v-for="item in list">
+      <template v-for="item in messageList">
         <!-- 提示 -->
         <!-- <div class="notice_msg">
           <div class="time">2024-10-28 10:25:08</div>
@@ -157,6 +157,8 @@ import { _c2cRead } from "@/api/api";
 import IconSvg from "@/components/IconSvg.vue";
 import DialogCIcon from "./components/DialogCIcon.vue";
 import UserAvatar from "@/components/Chat/UserAvatar.vue";
+import serviceC2C from "@/store/serviceC2C";
+import { serviceChat } from "@/utils/serviceChat";
 
 const props = defineProps({
   currItem: {
@@ -177,6 +179,9 @@ const list = ref([]);
 
 // 发送文本消息
 const text = ref("");
+
+const messageList = computed(() => serviceC2C.state.messageList);
+console.log("message list in chat =============> ", messageList.value);
 
 // 已读回执
 const readLoading = ref(false);
@@ -226,41 +231,22 @@ const sendText = () => {
       type: "text",
       content: text.value,
     };
-    socket.emit("apisend", JSON.stringify(data));
+    serviceChat.sendC2CMessage(data);
     console.log("sent message!!!");
     scrollToBottom();
     setTimeout(() => {
       text.value = "";
     }, 50);
-
-    // data.time = Date.now();
-    // data.direction = "send";
-    // list.value.push(data);
-    // setTimeout(() => {
-    //   const t = c2cLasttime.value[props.currItem.order_no];
-    //   const target = list.value.find((item) => {
-    //     return Date.parse(new Date(item.time)) == t;
-    //   });
-    //   if (target) {
-    //     const element = document.querySelector(`#a${target.msgid}`);
-    //     element.scrollIntoView({ behavior: "smooth" });
-    //   } else {
-    //     scrollToBottom();
-    //   }
-    // }, 1000);
   }
 };
 // 发送
 const sendMessage = (url) => {
   if (url) {
-    socket.emit(
-      "apisend",
-      JSON.stringify({
-        order_no: props.currItem.order_no,
-        type: "img",
-        content: url,
-      })
-    );
+    serviceChat.sendC2CMessage({
+      order_no: props.currItem.order_no,
+      type: "img",
+      content: url,
+    });
     scrollToBottom();
   }
 };
@@ -351,7 +337,8 @@ function scrollHandler() {
 onMounted(() => {
   // console.log(props.currItem.order_no)
   console.error("开始连接");
-  startSocket();
+  serviceChat.subscribe(props.currItem.order_no);
+  // startSocket();
   // setTimeout(() => {
   //   listRef.value.addEventListener('scroll', scrollHandler)
   // }, 500)
@@ -504,7 +491,6 @@ onBeforeUnmount(() => {
             border-top: 0.14rem solid transparent;
             border-bottom: 0.14rem solid transparent;
           }
-
         }
 
         .time {

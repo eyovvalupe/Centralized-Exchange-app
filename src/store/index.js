@@ -5,6 +5,7 @@ import { _listAccount, _sessionToken, _userinfo } from "@/api/api";
 import assets from "./assets";
 import market from "./market";
 import trade from "./trade";
+import serviceC2C from "./serviceC2C";
 
 const store = createStore({
   state: {
@@ -28,6 +29,7 @@ const store = createStore({
     ...market.state,
     ...trade.state,
     ...assets.state,
+    ...serviceC2C.state,
   },
   mutations: {
     setSelectedPayment(state, data) {
