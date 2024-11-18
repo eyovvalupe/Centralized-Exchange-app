@@ -6,7 +6,7 @@ const { startSocket } = useSocket()
 
 // 不同页面对应的监听列表 key
 const pageKeys = {
-    'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList','marketVolumeList', 'marketUpList', 'marketDownList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketAiList', 'marketWatchList', 'marketSrockRecommendList', 'marketContractRecommendList'],
+    'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketAiList', 'marketWatchList', 'marketSrockRecommendList', 'marketContractRecommendList'],
     'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList', 'marketAiList', 'marketAiHisList', 'marketAi24List', 'marketAiGridList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList'],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
 }
@@ -112,16 +112,16 @@ export default {
         setCurrentRecommenData(state, data) {
             state.currentRecommendData = data
         },
-        setCheckState(state,data) {
+        setCheckState(state, data) {
             state.checkState = data;
         },
-        setCheckStockState(state,data) {
+        setCheckStockState(state, data) {
             state.checkStockList = data;
         },
-        setCheckCryptoState(state,data) {
+        setCheckCryptoState(state, data) {
             state.checkCryptoList = data;
         },
-        setMarketType(state,data) {
+        setMarketType(state, data) {
             state.marketType = data;
         },
         setMarketWatchList(state, data) {
@@ -274,13 +274,22 @@ export default {
         },
     },
     actions: {
-        subList({ commit, state }, { commitKey, listKey }) {
+        /*
+           这里订阅分3种情况
+           1. 只订阅某个列表数据，比如contractList(当前合约列表), 那么传 listKey：contractList，即可。此时ws只订阅此列表
+           2. 需要同时订阅多个列表数据，则把symbol字段数组组合后，传 allKeys：所有symbol。此时ws会订阅 allKeys 所有数据
+           3. 在订阅了 A 列表之后，还需要订阅 B 列表，甚至 C 列表时，通过 marketWatchKeys 实现，marketWatchKeys中的key会始终订阅，不影响后来的订阅。
+       */
+        subList({ commit, state }, { commitKey, listKey, allKeys }) {
             let proxyKeys = []
             if (listKey) {
                 const proxyListValue = state[listKey]
                 if (proxyListValue) {
                     proxyKeys = proxyListValue.map(item => item.symbol)
                 }
+            }
+            if (allKeys) {
+                proxyKeys = allKeys
             }
             const socket = startSocket(() => {
                 const keys = Array.from(new Set([
@@ -307,7 +316,7 @@ export default {
                             })
                             state[ck] = arr
                         })
-                        
+
                     }
                 })
 
@@ -326,7 +335,7 @@ export default {
                 })
             })
         },
-        setMarketType({commit, state}) {
+        setMarketType({ commit, state }) {
             commit("setMarketType", state)
         }
     },
