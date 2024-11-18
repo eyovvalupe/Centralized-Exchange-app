@@ -7,6 +7,7 @@ class Service {
   constructor() {
     this.socket = null;
     this.socketNum = null;
+    this.socketC2C = null;
     this.isConnected = false
   }
   init() {
@@ -26,7 +27,7 @@ class Service {
       this.socket.on('connect', () => {
         this.isConnected = true;
         storeChat.commit('setConnected', this.isConnected)
-        console.log('连接成功')
+        console.log('support连接成功')
       })
 
       this.socket.on('disconnect', () => {
@@ -75,6 +76,31 @@ class Service {
       })
     }
   }
+  
+  initc2c() {
+    if (!this.socket) {
+      const token = storeUser.state.token;
+      const nologinid = storeChat.getters.getNologinid;
+      const URL = CHAT_WEBSOCKET + '/c2cmsg'
+      this.socket = io.connect(URL, {
+        transports : ['websocket'],
+        reconnectionDelayMax: 10000,
+        query
+      })
+      this.socket.on('connect', () => {
+        this.isConnected = true;
+        storeChat.commit('setConnected', this.isConnected)
+        console.log('c2c 连接成功')
+      })
+
+      this.socket.on('disconnect', () => {
+        console.log('连接断开')
+        this.isConnected = false
+        storeChat.commit('setConnected', this.isConnected)
+      })
+    }
+  }
+
   // 发送消息
   sendMessage(type, message) {
     console.log(message);
@@ -89,6 +115,20 @@ class Service {
       throw e;
     }
   }
+
+  // sendC2CMessage(type, message) {
+  //   console.log(message);
+  //   if (!this.socketC2C) {
+  //     console.warn('Socket is not initialized.');
+  //     return;
+  //   }
+  //   try {
+  //     this.socketC2C.emit(type, JSON.stringify(message));
+  //   } catch (e) {
+  //     console.error('Failed to send message', e);
+  //     throw e;
+  //   }
+  // }
 
   // 断开
   destroy() {

@@ -369,6 +369,7 @@ const balance = computed(() => {
   } else {
     // 转入
     const w = elseWallet.value.find((item) => item.account == form.value.from);
+    console.log(w.amount)
     return w ? w.amount : 0;
   }
 });

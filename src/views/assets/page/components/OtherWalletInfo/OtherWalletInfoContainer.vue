@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-[0] left-[0] z-[-1]"
+    class="absolute top-[0] left-[0] z-[-1] rounded-[0.36rem]"
     style="box-shadow: 0px 4px 20px 0px #0610231a"
   >
     <svg
