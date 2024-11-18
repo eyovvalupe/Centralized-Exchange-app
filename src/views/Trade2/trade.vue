@@ -32,7 +32,7 @@
             </div>
 
         </div>
-        <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
+        <Swipe :autoplay="0" v-if="showSwipe" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
             <SwipeItem>
                 <div class="trade_body" v-if="loadedTab.includes(0)">
                     <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" />
@@ -55,8 +55,6 @@
             </SwipeItem>
 
         </Swipe>
-
-
 
 
         <!-- </PullRefresh> -->
@@ -140,7 +138,7 @@
 
 <script setup>
 import { PullRefresh, Popup, Tabs, Tab, Swipe, SwipeItem } from "vant"
-import { ref, watch, computed, onActivated, onDeactivated } from "vue"
+import { ref, watch, computed, onActivated, onDeactivated, onMounted, nextTick } from "vue"
 
 import IpoBlock from "./pages/IpoBlock.vue"
 import StockBlock from "./pages/StockBlock.vue"
@@ -169,21 +167,7 @@ const onRefresh = () => {
 
 // 一级导航
 const activeTab = ref(0)
-if (localStorage.tradeActiveTab > 0) {
-    activeTab.value = Number(localStorage.tradeActiveTab)
-}
-const reDir = () => {
-    if (route.query.to == 'stock') {
-        activeTab.value = 0
-    }
-    if (route.query.to == 'constract') {
-        activeTab.value = 1
-    }
-    if (route.query.to == 'ai') {
-        activeTab.value = 2
-    }
-}
-reDir()
+const showSwipe = ref(false)
 const initialSwipe = ref(activeTab.value)
 const loadedTab = ref([activeTab.value])
 const swipe = ref(null)
@@ -212,6 +196,26 @@ const changeActiveTab = (val, slideSwipe = false) => {
         swipe.value.swipeTo(val)
     }
 }
+
+const reDir = () => {
+    let prevActiveTabVal = activeTab.value 
+    if (route.query.to == 'stock') {
+        activeTab.value = 0
+    }else if (route.query.to == 'constract') {
+        activeTab.value = 1
+    } else if (route.query.to == 'ai') {
+        activeTab.value = 2
+    }else if (localStorage.tradeActiveTab > 0) {
+        activeTab.value = Number(localStorage.tradeActiveTab)
+    }
+    initialSwipe.value = activeTab.value
+    showSwipe.value = true
+    loadedTab.value = [activeTab.value]
+    nextTick(()=>{
+        changeActiveTab(activeTab.value,prevActiveTabVal != activeTab.value)
+    })
+}
+
 const swipeChange = (val) => {
     if (activeTab.value !== val) {
         changeActiveTab(val)

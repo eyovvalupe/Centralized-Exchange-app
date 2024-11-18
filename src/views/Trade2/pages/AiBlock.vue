@@ -57,7 +57,7 @@ const showNavDialog = () => {
     emits('showNavDialog', 'ai')
 }
 
-const active = ref(sessionStorage.getItem('trade_ai_tab') || 0)
+const active = ref(sessionStorage.getItem('trade_ai_tab') || '0')
 const InquireRef = ref()
 const onChange = async (val) => {
     active.value = val;
@@ -71,6 +71,7 @@ const onChange = async (val) => {
 
 const pageLoading = ref(true)
 const handleMounted = () => {
+    active.value = '0'
     setTimeout(() => {
         pageLoading.value = false
     }, 300)
