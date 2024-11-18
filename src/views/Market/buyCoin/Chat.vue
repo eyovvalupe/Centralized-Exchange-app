@@ -15,36 +15,39 @@
           <div class="content">您已经成功下单，请耐心等候商家付款</div>
         </div> -->
         <template v-if="item.direction == 'send'">
-          <!-- 我的文本 -->
-          <div
-            v-if="item.type == 'text'"
-            :id="`a${item.msgid}`"
-            class="my_text_box"
-          >
-            <div class="van-popover__arrow" />
-            <div class="my_text">{{ item.content }}</div>
-            <!-- <div class="time">{{ item.time }}</div> -->
-          </div>
+          <div class="flex justify-end w-full items-top mt-[0.4rem]">
+            <!-- 我的文本 -->
 
-          <!-- 我的富文本 -->
-          <div
-            v-if="item.type == 'html'"
-            :id="`a${item.msgid}`"
-            class="my_text_box"
-          >
-            <div class="van-popover__arrow" />
-            <div class="my_text" v-html="item.content" />
-            <!-- <div class="time">{{ item.time }}</div> -->
-          </div>
+            <div
+              v-if="item.type == 'text'"
+              :id="`a${item.msgid}`"
+              class="my_text_box"
+            >
+              <div class="my_text break-all">{{ item.content }}</div>
+              <!-- <div class="time">{{ item.time }}</div> -->
+            </div>
 
-          <!-- 我的图片 -->
-          <div
-            v-if="item.type == 'img'"
-            :id="`a${item.msgid}`"
-            class="my_pic_box"
-          >
-            <img class="my_pic" :src="item.content" alt="img" />
-            <!-- <div class="time">{{ item.time }}</div> -->
+            <!-- 我的富文本 -->
+            <div
+              v-if="item.type == 'html'"
+              :id="`a${item.msgid}`"
+              class="my_text_box"
+            >
+              <div class="van-popover__arrow" />
+              <div class="my_text" v-html="item.content" />
+              <!-- <div class="time">{{ item.time }}</div> -->
+            </div>
+
+            <!-- 我的图片 -->
+            <div
+              v-if="item.type == 'img'"
+              :id="`a${item.msgid}`"
+              class="my_pic_box"
+            >
+              <img class="my_pic" :src="item.content" alt="img" />
+              <!-- <div class="time">{{ item.time }}</div> -->
+            </div>
+            <UserAvatar />
           </div>
         </template>
         <template v-else>
@@ -54,18 +57,12 @@
             :id="`a${item.msgid}`"
             class="op_text_box"
           >
-            <div class="avatar">
-              <!-- <div class="pointer"></div> -->
-              {{
-                props.currItem.merchant_name
-                  ? props.currItem.merchant_name.slice(0, 1)
-                  : ""
-              }}
+            <div class="mr-[0.2rem]">
+              <DialogCIcon />
             </div>
 
             <div class="op_text">
-              <div class="van-popover__arrow" />
-              <div class="op_text_content">{{ item.content }}</div>
+              <div class="op_text_content break-all">{{ item.content }}</div>
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
           </div>
@@ -158,6 +155,8 @@ import { _fetchWithTimeout } from "@/api/upload";
 import storeChat from "@/store/chat";
 import { _c2cRead } from "@/api/api";
 import IconSvg from "@/components/IconSvg.vue";
+import DialogCIcon from "./components/DialogCIcon.vue";
+import UserAvatar from "@/components/Chat/UserAvatar.vue";
 
 const props = defineProps({
   currItem: {
@@ -228,7 +227,7 @@ const sendText = () => {
       content: text.value,
     };
     socket.emit("apisend", JSON.stringify(data));
-    console.log('sent message!!!')
+    console.log("sent message!!!");
     scrollToBottom();
     setTimeout(() => {
       text.value = "";
@@ -481,6 +480,7 @@ onBeforeUnmount(() => {
         .op_text_content {
           display: inline-block;
           // padding: 0.3rem 0.24rem;
+          max-width: 4rem;
           padding: 0.2rem 0.4rem;
           line-height: 0.4rem;
           background-color: #f6f8fe;
@@ -491,6 +491,20 @@ onBeforeUnmount(() => {
           // border-bottom-left-radius: 0.24rem;
           // border-bottom-right-radius: 0.24rem;
           margin-bottom: 0.1rem;
+
+          &::before {
+            content: "";
+            position: absolute;
+            left: -0.1rem;
+            top: 0.24rem;
+            width: 0;
+            height: 0;
+            border-left: 0 solid transparent;
+            border-right: 0.14rem solid #f6f8fe;
+            border-top: 0.14rem solid transparent;
+            border-bottom: 0.14rem solid transparent;
+          }
+
         }
 
         .time {
@@ -527,17 +541,20 @@ onBeforeUnmount(() => {
       flex-direction: column;
       align-items: flex-end;
       justify-content: flex-start;
-      margin-top: 0.4rem;
-      padding-right: 0.12rem;
+      // margin-top: 0.4rem;
       position: relative;
 
-      .van-popover__arrow {
-        top: 0.2rem;
-        border-left-color: #3d65f9;
-        border-right-width: 0;
-        right: -0.12rem;
-        color: #3d65f9;
-        border-width: 0.12rem;
+      &::before {
+        content: "";
+        position: absolute;
+        right: -0.08rem;
+        top: 0.24rem;
+        width: 0;
+        height: 0;
+        border-left: 0.14rem solid #3d65f9;
+        border-right: 0 solid transparent;
+        border-top: 0.14rem solid transparent;
+        border-bottom: 0.14rem solid transparent;
       }
 
       .my_text {
@@ -547,7 +564,7 @@ onBeforeUnmount(() => {
         background-color: #3d65f9;
         color: #fff;
         text-align: left;
-        max-width: 84%;
+        max-width: 4rem;
         border-radius: 0.12rem;
         // border-top-left-radius: 0.24rem;
         // border-bottom-left-radius: 0.24rem;
