@@ -45,7 +45,10 @@ const showModel = ref(false)
 
 
 watch(()=>route.query.symbol,()=>{
-    OpeningRef.value && OpeningRef.value.init()
+    if(route.query.symbol){
+        OpeningRef.value && OpeningRef.value.init()
+    }
+    
 })
 
 

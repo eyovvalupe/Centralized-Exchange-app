@@ -10,7 +10,7 @@
     </div>
     <div class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white" />
     <HeaderTabs v-model:active="active" class="w-[6.28rem]"
-      :tabs="[$t('自选'), $t('买币'), $t('股票'), $t('合约'), $t('外汇'), $t('黄金')]" @change="e => changeTab(e, true)" />
+      :tabs="[$t('自选'), $t('买币'), $t('股票'), $t('合约'), $t('交易机器人')]" @change="e => changeTab(e, true)" />
     <Swipe ref="swipe" :autoplay="0" :initial-swipe="marketActiveTab" :show-indicators="false" @change="changeTab">
       <SwipeItem>
         <div v-if="active === 0 && activated" class="assets_body">
@@ -36,18 +36,17 @@
           <Constract />
         </div>
       </SwipeItem>
+
       <SwipeItem>
         <div v-if="active === 4" class="assets_body">
-          <!-- 外汇 -->
-          <Foreign />
+          <AiBlockList />
         </div>
       </SwipeItem>
-      <SwipeItem>
+      <!--<SwipeItem>
         <div v-if="active === 5" class="assets_body">
-          <!-- 黄金 -->
           <Foreign />
         </div>
-      </SwipeItem>
+      </SwipeItem> -->
     </Swipe>
 
     <!-- </PullRefresh> -->
@@ -72,6 +71,7 @@ import Subscription from '@/views/trade/Subscription.vue'
 import Constract from './components/Constract.vue'
 // import Ai from './components/Ai.vue'
 import buyCoin from './buyCoin/index.vue'
+import AiBlockList from '../Trade2/pages/AiBlockList.vue'
 import Iconfonts from '@/components/Iconfonts.vue'
 import { useBuyCoinState } from './buyCoin/state'
 import HeaderTabs from '@/components/HeaderTabs.vue'
