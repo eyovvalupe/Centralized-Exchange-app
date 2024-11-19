@@ -7,12 +7,13 @@
             <div @click="active = 1" class="tab" :class="{ 'tab_active': active == 1 }">
                 <span>{{ offsetEnum[currItem.offset] || '--' }}</span>
             </div>
+            {{ console.log(currItem) }}
             <div @click="active = 2" class="tab" :class="{ 'tab_active': active == 2 }">
                 <span style="position: relative;">
                     联系商家
-
-                    <div class="hint" v-if="c2cUnread[currItem.order_no] || currItem.unread">{{
-                        c2cUnread[currItem.order_no] || currItem.unread }}</div>
+                    <div class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center">{{ unreadMessage[currItem.order_no] }}</div>
+                    <!-- <div class="hint" v-if="c2cUnread[currItem.order_no] || currItem.unread">{{
+                        c2cUnread[currItem.order_no] || currItem.unread }}</div> -->
                 </span>
 
             </div>
@@ -183,6 +184,7 @@ import Chat from './Chat.vue'
 const route = useRoute()
 // 未读消息
 const c2cUnread = computed(() => store.state.c2cUnread || {})
+const unreadMessage = computed(() => store.state.unreadMessage)
 const active = ref(1) // 1-详情 2-聊天
 const safeRef = ref()
 

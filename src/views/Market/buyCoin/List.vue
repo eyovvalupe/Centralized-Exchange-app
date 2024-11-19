@@ -3,18 +3,35 @@
   <div v-if="token" class="buycoin_list">
     <div class="list">
       <!-- 当前订单 -->
-      <div v-for="(item, i) in showList" :key="i"
+      <div
+        v-for="(item, i) in showList"
+        :key="i"
         class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]"
-        @click="openOrderInfo(item)">
+        @click="openOrderInfo(item)"
+      >
         <!-- 消息右上角小红点 -->
-        <div v-if="c2cUnread[item.order_no]"
-          class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
-          {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }}
+        <div
+          v-if="unreadMessage[item.order_no] > 0"
+          class="w-[0.24rem] h-[0.24rem] top-[0] right-[0] rounded-[0.12rem] bg-[#e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center absolute"
+        >
+          {{ unreadMessage[item.order_no] }}
         </div>
-        <div class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]">
+        <div
+          v-if="c2cUnread[item.order_no]"
+          class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white"
+        >
+          <!-- {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }} -->
+        </div>
+        <div
+          class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]"
+        >
           <!-- order_no 订单号 -->
           <div class="text-14 text-[#666]">{{ item.order_no }}</div>
-          <div class="text-14" :style="{ color: statusEnum[item.status].color }">{{ statusEnum[item.status].name }}
+          <div
+            class="text-14"
+            :style="{ color: statusEnum[item.status].color }"
+          >
+            {{ statusEnum[item.status].name }}
           </div>
         </div>
         <!-- 交易信息展示 -->
@@ -23,30 +40,45 @@
           <div class="text-12">
             <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
               <!-- 根据交易类型显示“购入”或“售出” -->
-              {{ item.offset == 'buy' ? t('购入') : t('售出') }}&nbsp;{{ item.crypto }}&nbsp;
+              {{ item.offset == "buy" ? t("购入") : t("售出") }}&nbsp;{{
+                item.crypto
+              }}&nbsp;
               <!-- 加密货币图标 -->
-              <img class="!h-4 !w-4 rounded-50" :src="`/static/img/crypto/${item.crypto.toUpperCase()}.png`"
-                alt="currency" />
+              <img
+                class="!h-4 !w-4 rounded-50"
+                :src="`/static/img/crypto/${item.crypto.toUpperCase()}.png`"
+                alt="currency"
+              />
             </div>
             <!-- 价格信息 -->
-            <div class="mb-[0.12rem] text-[#666D80]">{{ $t('价格') }}&nbsp;{{ item.price }}&nbsp;{{ item.currency }}</div>
+            <div class="mb-[0.12rem] text-[#666D80]">
+              {{ $t("价格") }}&nbsp;{{ item.price }}&nbsp;{{ item.currency }}
+            </div>
             <!-- 数量信息 -->
-            <div class="text-[#666D80]">{{ $t('数量') }}&nbsp;{{ item.volume }}&nbsp;{{ item.crypto }}</div>
+            <div class="text-[#666D80]">
+              {{ $t("数量") }}&nbsp;{{ item.volume }}&nbsp;{{ item.crypto }}
+            </div>
           </div>
 
           <!-- 交易总额 -->
           <div class="flex items-center text-18">
             <!-- 根据交易类型显示正负号 -->
-            {{ item.offset == 'buy' ? '-' : '+' }}{{ item.totalprice }}
+            {{ item.offset == "buy" ? "-" : "+" }}{{ item.totalprice }}
             <!-- 货币类型 -->
-            <span class="ml-2 text-12 font-normal text-[#121826]">{{ item.currency }}</span>
+            <span class="ml-2 text-12 font-normal text-[#121826]">{{
+              item.currency
+            }}</span>
           </div>
         </div>
       </div>
 
       <NoData v-if="!loading && !list.length" />
-      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_self" :loading="loading"
-        :finish="finish" />
+      <LoadingMore
+        v-if="(finish && list.length) || !finish"
+        class-n="buycoin_self"
+        :loading="loading"
+        :finish="finish"
+      />
     </div>
   </div>
   <UnLogin v-show="!token" @loginfinish="loginfinish" />
@@ -61,46 +93,53 @@
 </template>
 
 <script setup>
-import { useMapState } from '@/store'
-import NoData from '@/components/NoData.vue'
-import UnLogin from '@/components/UnLogin.vue'
-import { _c2cOrderInfo, _c2cOrderList } from '@/api/api'
-import LoadingMore from '@/components/LoadingMore.vue'
-import router from '@/router'
-import { useBuyCoinState } from './state'
-import { computed } from "vue"
+import store, { useMapState } from "@/store";
+import NoData from "@/components/NoData.vue";
+import UnLogin from "@/components/UnLogin.vue";
+import { _c2cOrderInfo, _c2cOrderList } from "@/api/api";
+import LoadingMore from "@/components/LoadingMore.vue";
+import router from "@/router";
+import { useBuyCoinState } from "./state";
+import { computed } from "vue";
 
-const { t } = useI18n()
+const { t } = useI18n();
 const statusEnum = {
-  waitpayment: { name: t('等待付款'), color: 'var(--main-color)' },
-  waitconfirm: { name: t('等待确认'), color: 'var(--main-color)' },
-  done: { name: t('已完成'), color: '#18B762' },
-  cancel: { name: t('已取消'), color: '#8F92A1' },
-}
-const { active, subs } = useBuyCoinState()
-const scrollData = inject('scrollData')
+  waitpayment: { name: t("等待付款"), color: "var(--main-color)" },
+  waitconfirm: { name: t("等待确认"), color: "var(--main-color)" },
+  done: { name: t("已完成"), color: "#18B762" },
+  cancel: { name: t("已取消"), color: "#8F92A1" },
+};
+const { active, subs } = useBuyCoinState();
+const scrollData = inject("scrollData");
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
-const { c2cList: c2cLasttime, token, c2cUnread } = useMapState(['c2cList', 'token', 'c2cUnread'])
+const {
+  c2cList: c2cLasttime,
+  token,
+  c2cUnread,
+} = useMapState(["c2cList", "token", "c2cUnread"]);
 
 const loginfinish = () => {
   setTimeout(() => {
-    init()
-  }, 100)
-}
+    init();
+  }, 100);
+};
 
-let onOrderNoValue = {}
+const unreadMessage = computed(() => store.state.unreadMessage);
+console.log("unread message list ==========> ", unreadMessage.value);
+
+let onOrderNoValue = {};
 const openOrderInfo = ({ order_no, ...row }) => {
-  onOrderNoValue = { order_no, ...row }
+  onOrderNoValue = { order_no, ...row };
   setTimeout(() => {
     router.push({
-      name: 'orderDetails',
+      name: "orderDetails",
       query: { order_no },
-    })
-  }, 100)
-}
+    });
+  }, 100);
+};
 // 列表
-const loading = ref(false)
-const finish = ref(false)
+const loading = ref(false);
+const finish = ref(false);
 /** 
 interface Order {
   order_no: string; // 订单号
@@ -115,28 +154,28 @@ interface Order {
   date: string; // 订单时间，格式：MM-dd hh:mm
 }
 */
-const list = ref([])
-const page = ref(0)
-const getData = isBottom => {
-  if (loading.value || finish.value) return
-  loading.value = true
-  if (isBottom) page.value += 1
+const list = ref([]);
+const page = ref(0);
+const getData = (isBottom) => {
+  if (loading.value || finish.value) return;
+  loading.value = true;
+  if (isBottom) page.value += 1;
   _c2cOrderList({
     page: page.value,
   })
-    .then(res => {
+    .then((res) => {
       setTimeout(() => {
-        loading.value = false
-      }, 100)
+        loading.value = false;
+      }, 100);
       if (!isBottom) {
-        list.value = res.data
+        list.value = res.data;
       } else {
-        list.value.push(...(res.data || []))
+        list.value.push(...(res.data || []));
       }
-      subs()
+      subs();
 
       if (!res.data?.length) {
-        finish.value = true
+        finish.value = true;
       }
 
       // setTimeout(() => {
@@ -152,60 +191,56 @@ const getData = isBottom => {
       // }, 0)
     })
     .catch(() => {
-      loading.value = false
-    })
-}
+      loading.value = false;
+    });
+};
 const init = () => {
-  page.value = 0
-  loading.value = false
-  finish.value = false
+  page.value = 0;
+  loading.value = false;
+  finish.value = false;
   if (token.value) {
-    getData(false)
+    getData(false);
   }
-}
+};
 
 const showList = computed(() => {
-  return [
-    ...c2cLasttime.value,
-    ...list.value
-  ]
-})
-
+  return [...c2cLasttime.value, ...list.value];
+});
 
 // 监听
-const scrollHandle = bottom => {
-  if (active.value !== '2') return
+const scrollHandle = (bottom) => {
+  if (active.value !== "2") return;
   // 加载更多
-  if (bottom) getData(true)
-}
+  if (bottom) getData(true);
+};
 
 const getC2cOrderInfo = async () => {
   const res = await _c2cOrderInfo({
     order_no: onOrderNoValue.order_no,
-  })
-  if (!res.data) return
+  });
+  if (!res.data) return;
   list.value.forEach((element, i) => {
     if (element.order_no === onOrderNoValue.order_no) {
-      list.value[i] = res.data
-      onOrderNoValue = {}
-      throw new Error('break')
+      list.value[i] = res.data;
+      onOrderNoValue = {};
+      throw new Error("break");
     }
-  })
-}
-watch(() => scrollData.arrivedState.bottom, scrollHandle)
-init()
+  });
+};
+watch(() => scrollData.arrivedState.bottom, scrollHandle);
+init();
 
 onActivated(() => {
-  if (active.value !== '2') return
-  const { status } = onOrderNoValue
-  if (status === 'waitpayment' || status === 'waitconfirm') {
-    getC2cOrderInfo()
+  if (active.value !== "2") return;
+  const { status } = onOrderNoValue;
+  if (status === "waitpayment" || status === "waitconfirm") {
+    getC2cOrderInfo();
   }
-})
+});
 
 defineExpose({
   init,
-})
+});
 </script>
 
 <style lang="less" scoped>
