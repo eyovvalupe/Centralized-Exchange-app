@@ -9,12 +9,10 @@
             <!-- <div class="menu" @click="showNavDialog = true">
                     <img src="/static/img/trade/open.png" alt="menu" />
                 </div> -->
-
             <div class="tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']">
                 <div class="tab_icon my_icon2" @click="showNavDialog = true">
                     <img src="/static/img/trade/open.png" alt="img">
                 </div>
-
                 <div class="tab_body">
                     <div class="tab" :class="{ 'active_tab': activeTab == 0 }" @click="changeActiveTab(0, true)">
                         <span class="tab-name">股票</span>

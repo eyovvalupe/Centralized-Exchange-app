@@ -3,7 +3,7 @@
     class="flex mt-[0.32rem] justify-between mb-[0.32rem]"
     v-if="recomendedCryptoList.length"
   >
-    <div
+    <!-- <div
       class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
     >
       <div class="w-1/2 absolute bottom-0 right-0">
@@ -19,11 +19,11 @@
       >
         去邀请
       </div>
-    </div>
+    </div> -->
     <div
-      class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC] relative"
+      class=" w-full h-[3.48rem] relative"
     >
-      <div class="flex items-center justify-between px-[0.32rem] py-[0.24rem]">
+      <div class="flex items-center justify-between py-[0.24rem]">
         <div class="flex items-center gap-1">
           <div class="font-bold text-[0.32rem]">热卖</div>
           <div class="custom-heart-icon"></div>

@@ -95,6 +95,14 @@ onMounted(() => {
 onUnmounted(() => {
     cancelSubs()
 })
+
+watch(()=>store.state.token,()=>{
+    if(store.state.token){
+        subs()
+    }else{
+        cancelSubs()
+    }
+})
 </script>
 
 <style lang="less" scoped>

@@ -27,6 +27,8 @@
         <Popup teleport="body" v-model:show="showModel" position="right" style="width:100%;height:100%;">
             <Opening @showNavDialog="showNavDialog" ref="OpeningRef" @back="showModel = false" />
         </Popup>
+
+
     </div>
 </template>
 
@@ -42,6 +44,7 @@ const route = useRoute()
 
 const OpeningRef = ref()
 const showModel = ref(false)
+
 
 
 watch(()=>route.query.symbol,()=>{

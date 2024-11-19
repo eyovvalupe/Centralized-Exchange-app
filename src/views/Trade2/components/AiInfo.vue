@@ -2,17 +2,25 @@
 <template>
     <Popup teleport="body" lazy-render v-model:show="showModel" position="right" style="width:100%;height:100%;">
          <Top title="订单详情" :backFunc="backFunc" />
-         <div class="ai_order_info">
+         
+         <div class="loading-wrap" v-if="loading">
+            <Loading v-if="loading" size="44px" color="#2168F6" />
+         </div>
+         <div class="ai_order_info" v-show="!loading">
             
             <!-- 盈利 -->
-            <div class="win" :style="{backgroundImage:currItem.profit >= 0 ? 'url(/static/img/trade/profit_bg.png)' : 'url(/static/img/trade/loss_bg.png)'}" v-if="currItem.status == 'close'">
-                <div class="win-animate-bg"></div>
+            <div class="win" v-if="currItem.status == 'close'">
+                <img src="/static/img/trade/profit_bg.png" class="win_bg" v-if="currItem.profit >= 0" />
+                <img src="/static/img/trade/loss_bg.png" class="win_bg" v-else />
+                <div class="win-animate-bg" v-if="!loading"></div>
                 <div class="win_name">盈利</div>
                 <div class="amount" :class="[currItem.profit < 0 ? 'down' : 'up']">{{ currItem.profit >= 0 ? '+'
                     : ''
                     }}{{ currItem.profit }}</div>
+
+                
             </div>
-           
+            
             <div class="win-box" v-else>
                  <!-- 加载 -->
                
@@ -36,6 +44,18 @@
                     </div>
             </div>
 
+            <div class="win-animate" @click="showWin=false;" v-show="showWin">
+                <div class="win-animate-gold">
+                    <img src="/static/img/trade/gold.png" @load="goldLoad=true" />
+                </div>
+                <div class="win-animate-text" v-if="goldLoad">
+                    <img src="/static/img/trade/wintext.png" />
+                    <div class="win-animate-amount">
+                        {{animateProfit}}
+                    </div>
+                </div>
+               
+            </div>
              <div class="stock-info">
                 <div class="stock-info__symbol">{{ currItem.name || '--' }}</div>
                 <div class="stock-info__order_no">
@@ -79,14 +99,13 @@
 </template>
 
 <script setup>
-import { Button, Popup, Circle,showToast } from "vant"
+import { Button, Popup, Circle,showToast,Loading } from "vant"
 import { _copyTxt } from "@/utils/index"
 import { ref, computed, onBeforeUnmount } from "vue"
 import { _aiget } from "@/api/api"
 import { formatSec2 } from "@/utils/time"
 import Decimal from 'decimal.js';
 import { _dateUnitMap } from "@/utils/dataMap"
-import Loaidng from "@/components/Loaidng.vue"
 import Top from "@/components/Top.vue"
 const emits = defineEmits(['back'])
 
@@ -105,6 +124,33 @@ const rate = computed(() => {
     return p > 100 ? 100 : p
 })
 
+const animateProfit = ref(0)
+
+const goldLoad = ref(false)
+
+const incrementCounter = ( targetNumber, duration = 1200)=> {
+    if(!goldLoad.value){
+        setTimeout(()=>{
+            incrementCounter(targetNumber,duration)
+        },300)
+        return
+    }
+    const startTime = Date.now();
+    const startNumber = 0; 
+    const incrementAmount = (targetNumber - startNumber) / duration; // 计算每毫秒递增的量
+
+    const intervalId = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        let currentNumber = startNumber + incrementAmount * elapsed;
+
+        if (elapsed >= duration) {
+            currentNumber = targetNumber;
+            clearInterval(intervalId);
+        }
+        animateProfit.value = currentNumber.toFixed(2);
+    }, 10); // 每10毫秒更新一次，可以根据需要调整
+}
+
 
 //  复制
 const copy = text => {
@@ -121,10 +167,13 @@ const gradientColor = {
     '100%': '#608BEF'
 };
 
+const showWin = ref(false)
+
 const showModel = ref(false)
 const currItem = ref({})
 const open = (item) => {
     currItem.value = item
+    
     getInfo()
     showModel.value = true
     if (timeout) clearInterval(timeout)
@@ -132,13 +181,19 @@ const open = (item) => {
 
 // 获取详情
 let timeout = null
-const loading = ref(false)
+const loading = ref(true)
 const getInfo = () => {
     loading.value = true
     _aiget({
         order_no: currItem.value.order_no
     }).then(res => {
         if (res.data) {
+            if(res.data.profit > 0 && res.data.status == 'close'){
+                animateProfit.value = 0
+                showWin.value = true
+                incrementCounter(res.data.profit)
+            }
+
             currItem.value = res.data
             if (currItem.value.endtime) { // 开始倒计时
                 if (timeout) clearInterval(timeout)
@@ -205,13 +260,17 @@ defineExpose({
         align-items: center;
         flex-direction: column;    
         height: 4.6rem;
-        background-size: 100% 3.3rem;
-        background-repeat: no-repeat;
-        background-position: 0 100%;
         padding-top: 0.58rem;
         box-sizing: border-box;
         position: relative;
         overflow: hidden;
+        .win_bg{
+            width: 100%;
+            height: 3.3rem;
+            position: absolute;
+            left:0;
+            bottom:0;
+        }
         .win_name {
             color: #000;
             text-align: center;
@@ -363,6 +422,12 @@ defineExpose({
 
 }
 
+.loading-wrap{
+    min-height: calc(100vh - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
 .info_boxs {
     padding: 0.3rem 0;
@@ -455,5 +520,58 @@ defineExpose({
         height: 1px;
         background-color: #EFF3F8;
     }
+}
+.win-animate{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left:0;
+    top:0;
+    box-sizing: border-box;
+    z-index: 10000;
+    background-color: rgba(0,0,0,0.6);
+}
+.win-animate-gold{
+    left:0;
+    z-index: 1;
+    img{
+        width: 100%;
+        height:auto;
+    }
+}
+.win-animate-text{
+    height: 0.6rem;
+    position: absolute;
+    top:6.6rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    left:0;
+    transform: scale(1);
+    animation:  scaleanimate 0.6s;
+    img{
+        height: 100%;
+    }
+}
+
+@keyframes scaleanimate {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.win-animate-amount{
+    color: #FFF;
+    text-align: center;
+    font-family: "Alibaba PuHuiTi 3.0";
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 1000;
+    line-height: 0.44rem; /* 55% */
+    margin-top:0.4rem;
 }
 </style>
