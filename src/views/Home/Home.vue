@@ -4,48 +4,29 @@
     <!-- 顶部 -->
     <div class="top_box relative overflow-hidden">
       <div class="absolute left-0 top-0">
-        <Carousel
-          :autoplay="5000"
-          :wrap-around="true"
-          :mouseDrag="true"
-          v-model="currentSlide"
-        >
+        <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide">
           <Slide v-for="(slide, index) in slides" :key="index">
             <img :src="slide" class="w-full" alt="img" />
           </Slide>
         </Carousel>
       </div>
 
-      <div
-        class="absolute flex gap-[0.05rem] transition-all bottom-0 mb-[1rem] left-0 ml-[3.6rem]"
-      >
-        <div
-          @click="() => (currentSlide = 0)"
-          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
-          :class="[
-            currentSlide == 0
-              ? 'h-[0.16rem] bg-[#014CFA]'
-              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
-          ]"
-        ></div>
-        <div
-          @click="() => (currentSlide = 1)"
-          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
-          :class="[
-            currentSlide == 1
-              ? 'h-[0.16rem] bg-[#014CFA]'
-              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
-          ]"
-        ></div>
-        <div
-          @click="() => (currentSlide = 2)"
-          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
-          :class="[
-            currentSlide == 2
-              ? 'h-[0.16rem] bg-[#014CFA]'
-              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
-          ]"
-        ></div>
+      <div class="absolute flex gap-[0.05rem] transition-all bottom-0 mb-[1rem] left-0 ml-[3.6rem]">
+        <div @click="() => (currentSlide = 0)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
+          currentSlide == 0
+            ? 'h-[0.16rem] bg-[#014CFA]'
+            : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+        ]"></div>
+        <div @click="() => (currentSlide = 1)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
+          currentSlide == 1
+            ? 'h-[0.16rem] bg-[#014CFA]'
+            : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+        ]"></div>
+        <div @click="() => (currentSlide = 2)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
+          currentSlide == 2
+            ? 'h-[0.16rem] bg-[#014CFA]'
+            : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+        ]"></div>
       </div>
       <div class="funcs relative">
         <div class="user_box">
@@ -62,8 +43,7 @@
       <div class="pl-[0.285rem] mt-[1.25rem]"></div>
     </div>
     <div
-      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between relative"
-    >
+      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between relative">
       <div class="flex items-center gap-2">
         <div class="custom-lock-small-icon"></div>
         <div class="text-[0.28rem] text-[#061023]">
@@ -78,27 +58,19 @@
       <!--//////////////////////////////////-->
       <div
         class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
-        v-show="!token"
-      >
+        v-show="!token">
         <div
           class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
-          @click="store.commit('setIsLoginOpen', true)"
-        >
+          @click="store.commit('setIsLoginOpen', true)">
           登录
         </div>
         <div class="text-[0.24rem] text-[#8F92A1]">登录才能查看资产</div>
       </div>
-      <div
-        class="bg-[#EFF3F8] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] py-[0.28rem] z-10"
-      >
+      <div class="bg-[#EFF3F8] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] py-[0.28rem] z-10">
         <div class="flex justify-between mb-[0.2rem] items-center">
           <div class="flex items-center gap-1">
             <div class="text-[0.26rem] text-[#333333]">总资产(USDT)</div>
-            <div
-              class="assets"
-              v-if="!token"
-              @click="store.commit('setIsLoginOpen', true)"
-            >
+            <div class="assets" v-if="!token" @click="store.commit('setIsLoginOpen', true)">
               <!-- <div class="assets_login">登录</div>
           <div>查看资产</div> -->
               <div class="assets_icon">
@@ -107,32 +79,20 @@
             </div>
             <div class="assets" v-if="token">
               <div class="assets_icon" @click="openEye = !openEye">
-                <Iconfonts
-                  v-show="!openEye"
-                  :name="'icon-biyan'"
-                  :size="0.32"
-                  :color="'#333'"
-                />
-                <Iconfonts
-                  v-show="openEye"
-                  :name="'icon-zhengyan'"
-                  :size="0.32"
-                  :color="'#333'"
-                />
+                <Iconfonts v-show="!openEye" :name="'icon-biyan'" :size="0.32" :color="'#333'" />
+                <Iconfonts v-show="openEye" :name="'icon-zhengyan'" :size="0.32" :color="'#333'" />
               </div>
             </div>
           </div>
           <div class="flex items-center gap-2">
             <div
               class="w-[1.36rem] h-[0.52rem] border-[#014CFA] text-[#014CFA] text-[0.24rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
-              @click="showAS = true"
-            >
+              @click="showAS = true">
               快速交易
             </div>
             <div
               class="w-[0.88rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[0.24rem] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
-              @click="jump('topUp', true)"
-            >
+              @click="jump('topUp', true)">
               充值
             </div>
           </div>
@@ -150,125 +110,75 @@
       <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
       <div class="flex gap-1">
         <div class="mr-[0.05rem]">
-          <div
-            :class="
-              marketPerformance == 0
-                ? 'bg-[#014CFA] text-white'
-                : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
-            "
-            class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
-            @click="clickPerformance(0)"
-          >
+          <div :class="marketPerformance == 0
+              ? 'bg-[#014CFA] text-white'
+              : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            " class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(0)">
             涨幅榜
           </div>
         </div>
         <div class="mr-[0.05rem]">
-          <div
-            :class="
-              marketPerformance == 1
-                ? 'bg-[#014CFA] text-white'
-                : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
-            "
-            class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
-            @click="clickPerformance(1)"
-          >
+          <div :class="marketPerformance == 1
+              ? 'bg-[#014CFA] text-white'
+              : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            " class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(1)">
             跌幅榜
           </div>
         </div>
         <div class="mr-[0.05rem]">
-          <div
-            :class="
-              marketPerformance == 2
-                ? 'bg-[#014CFA] text-white'
-                : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
-            "
-            class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
-            @click="clickPerformance(2)"
-          >
+          <div :class="marketPerformance == 2
+              ? 'bg-[#014CFA] text-white'
+              : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            " class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(2)">
             成交榜
           </div>
         </div>
       </div>
     </div>
-    <StockTable
-      style="margin-top: 0.1rem"
-      v-if="marketPerformance == 0"
-      :loading="marketLoading"
-      :deleteItem="false"
-      :list="marketDownList.slice(0, 5)"
-      :marketType="'all'"
-    />
-    <StockTable
-      style="margin-top: 0.1rem"
-      v-if="marketPerformance == 1"
-      :loading="marketLoading"
-      :deleteItem="false"
-      :list="marketUpList.slice(0, 5)"
-      :marketType="'all'"
-    />
-    <StockTable
-      style="margin-top: 0.1rem"
-      v-if="marketPerformance == 2"
-      :loading="marketLoading"
-      :deleteItem="false"
-      :list="marketVolumeList.slice(0, 5)"
-      :marketType="'all'"
-    />
+    <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 0" :loading="marketLoading" :deleteItem="false"
+      :list="marketDownList.slice(0, 5)" :marketType="'all'" />
+    <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 1" :loading="marketLoading" :deleteItem="false"
+      :list="marketUpList.slice(0, 5)" :marketType="'all'" />
+    <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 2" :loading="marketLoading" :deleteItem="false"
+      :list="marketVolumeList.slice(0, 5)" :marketType="'all'" />
     <!-- banner -->
     <div class="font-bold text-[0.32rem] m-[0.32rem]">市场推荐</div>
     <!-- <Banner v-if="activated" class="home_banner" /> -->
 
     <!-- Tabs -->
-    <Tabs
-      @change="tabChange"
-      v-if="!pageLoading && activated"
-      type="card"
-      class="tabs"
-      v-model:active="activeTab"
-      animated
-      shrink
-    >
+    <Tabs @change="tabChange" v-if="!pageLoading && activated" type="card" class="tabs" v-model:active="activeTab"
+      animated shrink>
       <Tab :title="'股票'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div>
-          <StockItem
-            :item="item"
-            v-for="(item, i) in marketRecommndStockList"
-            :key="'s_' + i"
-            page="home"
-          />
+          <StockItem :item="item" v-for="(item, i) in marketRecommndStockList" :key="'s_' + i" page="home" />
         </div>
         <NoData v-if="!commendLoading && !marketRecommndStockList.length" />
       </Tab>
       <Tab :title="'合约'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div>
-          <StockItem
-            :item="item"
-            v-for="(item, i) in contractList"
-            :key="'c_' + i"
-            marketType="crypto"
-          />
+          <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" />
         </div>
         <NoData v-if="!commendLoading && !contractList.length" />
       </Tab>
-      <Tab :title="'IPO'">
+      <!-- <Tab :title="'IPO'">
         <div>
           <IPO ref="ipoRef" :page="'home'" />
         </div>
-      </Tab>
+      </Tab> -->
       <Tab :title="'交易机器人'">
-        <div class="mx-[0.32rem]"><Ai page="home" /></div>
+        <div class="mx-[0.32rem]">
+          <Ai page="home" />
+        </div>
       </Tab>
     </Tabs>
 
     <!-- 类型选择弹窗 -->
-    <ActionSheet
-      v-model:show="showAS"
-      :actions="actions"
-      @select="onSelect"
-      title="快速交易"
-    ></ActionSheet>
+    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="快速交易"></ActionSheet>
   </div>
 </template>
 
@@ -514,7 +424,7 @@ const clickPerformance = (key) => {
 const getMarketPerformanceData = (list, key, query, listKey) => {
   if (marketLoading.value) return;
   marketLoading.value = true;
-  page.value++; 
+  page.value++;
   let arr = JSON.parse(JSON.stringify(list.value));
   if (page.value == 1) {
     arr = [];
@@ -594,6 +504,7 @@ onMounted(() => {
   .top_box {
     padding: 0.2rem 0.32rem 0.32rem;
     min-height: 7rem;
+
     .funcs {
       display: flex;
       align-items: center;
@@ -607,6 +518,7 @@ onMounted(() => {
         display: flex;
         align-items: center;
         justify-content: center;
+
         .user_default_avatar {
           width: 0.8rem;
           height: 0.8rem;
@@ -748,6 +660,7 @@ onMounted(() => {
     }
   }
 }
+
 .custom-arrow-icon {
   width: 0.32rem;
   height: 0.14rem;
@@ -756,6 +669,7 @@ onMounted(() => {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .custom-search-icon {
   width: 0.46rem;
   height: 0.46rem;
@@ -764,6 +678,7 @@ onMounted(() => {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .custom-lock-icon {
   width: 0.44rem;
   height: 0.44rem;
@@ -772,6 +687,7 @@ onMounted(() => {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .custom-lock-small-icon {
   width: 0.32rem;
   height: 0.32rem;
@@ -780,6 +696,7 @@ onMounted(() => {
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .custom-star-icon-small {
   width: 0.24rem;
   height: 0.24rem;

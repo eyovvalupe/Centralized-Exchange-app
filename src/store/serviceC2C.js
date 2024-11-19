@@ -24,7 +24,7 @@ export default createStore({
       state.unreadMessage[id] = state.unreadMessage[id] - 1;
     },
     setClearUnreadMessage(state, id) {
-      state.unreadMessage[id] = 0;
+      state.unreadMessage[id] = -1;
     },
     setOrderNo(state, orderNo) {
       state.orderNo = orderNo;

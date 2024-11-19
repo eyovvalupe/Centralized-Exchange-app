@@ -1,101 +1,92 @@
 <!-- ai量化交易 -->
 <template>
-    <div class="trade_ai">
-        <Top title="交易" :backFunc="backFunc" />
+    <div class="trade_ai" :class="['trade_ai--'+mode]">
+        <Top title="交易" :backFunc="backFunc" v-if="mode == 'popup'" />
+        
+        <div style="height:1.12rem;" v-if="mode == 'popup'"></div>
+        <div class="tabs-container">
+            <!-- 涨跌 -->
+            <Tabs type="line-card" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
+                <Tab title="看涨" :name="1">
+                </Tab>
+                <Tab title="看跌" :name="2">
+                </Tab>
+            </Tabs>
+            <div class="scroller">
+                
+                <!-- 品种 -->
+                <div class="item_content">
+                    <div class="subtitle">
+                        交易品种
+                        <div class="stock_icon" v-if="form1.name" @click="openStockModel">
+                            <img src="/static/img/trade/blue-stock.png" alt="icon">
+                        </div>
+                    </div>
 
-        <!-- 涨跌 -->
-        <Tabs type="custom-card" style="margin-top: 1.12rem;" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
-            <Tab title="看涨" :name="1">
-            </Tab>
-            <Tab title="看跌" :name="2">
-            </Tab>
-        </Tabs>
-        <div class="scroller">
-            
-            <!-- 品种 -->
-            <div class="item_content">
-                <div class="subtitle">
-                    交易品种
-                    <div class="stock_icon" v-if="form1.name" @click="openStockModel">
-                        <img src="/static/img/trade/blue-stock.png" alt="icon">
+                    <div class="item item_box" @click="showNavDialog">
+                        {{ form1.name }}
                     </div>
                 </div>
 
-                <div class="item item_box" @click="showNavDialog">
-                    {{ form1.name }}
+                <!-- 时间 -->
+                <div class="item_content">
+                    <div class="subtitle">时间区域</div>
+                    <!-- <div class="item item_box disabled_item item_time" @click="showTime=true;">
+                        <span>{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</span>
+                        
+                    </div> -->
+                    <div class="time_list">
+                        <div class="time" @click="currTime = obj"
+                            :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
+                            v-for="(obj, i) in times" :key="i">
+                            <span>{{ obj.time }}{{ _dateUnitMap[obj.unit] }}</span>
+                        </div>
+                    </div>
+                    
                 </div>
+                <!-- 数量 -->
+
+                <FormItem  input-type="number" v-model="form1.grid" title="网格数量" btn-show-mode="focus" :max="maxgrid" :tip="maxgrid > 0 ? '最大网格 '+maxgrid : ''"   @change="changeGrid">
                 
-            </div>
+                </FormItem>
 
-            <!-- 时间 -->
-            <div class="item_content">
-                <div class="subtitle">时间区域</div>
-                <div class="item item_box disabled_item item_time" @click="showTime=true;">
-                    <span>{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16" viewBox="0 0 17 16" fill="none">
-                        <mask id="mask0_114_15377" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="17" height="16">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H16.3333V16H0V0Z" fill="white"/>
-                        </mask>
-                        <g mask="url(#mask0_114_15377)">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.08333 6L8.16667 10L12.25 6L4.08333 6Z" fill="#666D80" stroke="#666D80" stroke-width="1.5" stroke-linejoin="round"/>
-                        </g>
-                    </svg>
-                </div>
                 
-            </div>
-            <!-- 数量 -->
-            <div class="item_content">
-                <div class="subtitle">网格数量</div>
-                <div class="item item_box" :class="{'item_focus':gridFocus, 'error_border': error1 }">
-                    <span class="ipt_tip" v-show="!(form1.grid && !gridFocus)">最大网格 {{ maxgrid }}</span>
-                    <input @focus="gridFocus = true, error1 = false" @blur="gridFocus = false" type="number" class="ipt"
-                        v-model="form1.grid" :min="1" :max="maxgrid" @change="changeGrid">
-                </div>
-            </div>
 
-            <!-- 利润 -->
-            <div class="item_content">
-                <div class="subtitle">每格利润</div>
-                <div class="item item_box disabled_item">
-                    {{ getPercent() }}
+                <!-- 利润 -->
+                <div class="item_content">
+                    <div class="subtitle">每格利润</div>
+                    <div class="item item_box disabled_item">
+                        {{ getPercent() }}
+                    </div>
                 </div>
-            </div>
 
-            <!-- 投资额 -->
-            <div class="item_content">
-                <div class="subtitle">
-                    <span>投资额</span>
-                    <span style="color:#666D80;" v-show="!(form1.volume !== '' && !amountFocus)">≤ {{ usdt.amount }}</span>
-                </div>
-                <div class="item item_box" style="margin-top: 0" :class="{ 'error_border': error2 }">
-                    <span @click="onSliderChange(100)"
-                        :style="{ opacity: amountFocus ? '1' : '0', visibility: amountFocus ? '' : 'hidden' }"
-                        class="put_all">全部</span>
-                    <input @focus="amountFocus = true, error2 = false" @blur="amountFocus = false;amountBlur()" type="number"
-                        v-model="form1.volume" class="ipt" @change="changePercent">
-                </div>
+                <!-- 投资额 -->
+                
+                <FormItem  input-type="number" v-model="form1.volume" title="投资额" btn-show-mode="focus" :tip="usdt.amount > 0 ? '≤ '+usdt.amount : ''" :show-btn="usdt.amount > 0" @change="changePercent" @btnClick="onSliderChange(100)">
+                        
+                </FormItem>
+                
+                <div style="height:0.47rem;"></div>
+                <!-- 拖动 -->
+                <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+
+            
             </div>
 
-            <div style="height:0.47rem;"></div>
-            <!-- 拖动 -->
-            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-
-           
-        </div>
-
-         <!-- 按钮 -->
-        <div class="btns" v-if="!token">
-            <Button size="large" color="#014cfa" class="btn" round 
-                @click="goLogin">登录</Button>
-            <Button size="large" color="#f2f2f2" class="btn" round style="color: #999999"
-                @click="jump('register')">注册</Button>
-        </div>
-        <div class="btns" v-else>
-            <Button :loading="loading || submitLoading"  @click="checkForm" v-if="token" size="large" class="btn"
-                :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
-                    tab == 1 ?
-                        '买涨' : '买跌' }}</Button>
-           
+            <!-- 按钮 -->
+            <div class="btns" v-if="!token">
+                <Button size="large" color="#014cfa" class="btn" round 
+                    @click="goLogin">登录</Button>
+                <Button size="large" color="#f2f2f2" class="btn" round style="color: #999999"
+                    @click="jump('register')">注册</Button>
+            </div>
+            <div class="btns" v-else>
+                <Button :loading="loading || submitLoading"  @click="checkForm" v-if="token" size="large" class="btn"
+                    :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
+                        tab == 1 ?
+                            '买涨' : '买跌' }}</Button>
+            
+            </div>
         </div>
 
         <!-- 开仓确认弹窗 -->
@@ -135,11 +126,10 @@
                     </div>
                 </div>
 
-                <!-- <div class="subtitle" style="margin-top: 0.6rem;">请输入交易密码</div>
-                <div class="item pass_ipt">
-                    <input v-model="safePass" type="password" class="ipt">
-                </div> -->
-                <Button @click="submitFormDialog" size="large" class="submit" color="#014cfa" round>确定</Button>
+                <FormItem v-model="form1.safeword" size="large" input-type="password" title="交易密码">
+                </FormItem>
+
+                <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit" color="#014cfa" round>确定</Button>
             </div>
         </Popup>
 
@@ -147,19 +137,6 @@
         <AiInfo ref="AiInfoRef" />
         <!-- 开仓-安全密码弹窗 -->
         <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
-
-        <Popup class="time_popup" teleport="body" v-model:show="showTime"  position="bottom" closeable round>
-            <div class="time_popup_btn" @click="showTime=false;">确认</div>
-            <div class="van-popup-custom-title">选择时间区域</div>
-            <div class="time_list">
-                <div class="time" @click="currTime = obj"
-                    :class="{ 'curr_time': currTime.time == obj.time && currTime.unit == obj.unit }"
-                    v-for="(obj, i) in times" :key="i">
-                    <span>{{ obj.time }}{{ _dateUnitMap[obj.unit] }}</span>
-                </div>
-            </div>
-            
-        </Popup>
 
         <!-- 股票行情弹窗 -->
         <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
@@ -193,11 +170,18 @@ import { _aipara, _aibuy, _aiquant } from "@/api/api"
 import SafePassword from "@/components/SafePassword.vue"
 import { _dateUnitMap } from "@/utils/dataMap"
 import StockPopup from "../../trade/StockPopup.vue"
+import FormItem from '@/components/Form/FormItem.vue'
 import eventBus from "@/utils/eventBus"
 import SlideContainer from "@/components/SlideContainer.vue"
 import Top from "@/components/Top.vue"
 
-const showTime = ref(false)
+const props = defineProps({
+    mode:{
+        type:String,
+        default:"page"
+    }
+})
+
 
 const goLogin = () => {
     store.commit('setIsLoginOpen', true)
@@ -213,7 +197,7 @@ const route = useRoute()
 const wallet = computed(() => store.state.wallet || [])
 const usdt = computed(() => wallet.value.find(item => item.currency == 'USDT') || {})
 
-const emits = defineEmits(['showNavDialog','back'])
+const emits = defineEmits(['showNavDialog','back','success'])
 const showNavDialog = () => {
     // emits('showNavDialog', 'ai')
     showBottom.value = true
@@ -226,24 +210,20 @@ const backFunc = ()=>{
 const safeRef = ref()
 
 const AiInfoRef = ref()
-const openInfo = () => {
-    showModel.value = false
-    AiInfoRef.value.open()
-}
+
 const token = computed(() => store.state.token)
 const tab = ref(1) // 1-看涨 2-看跌
 const showModel = ref(false)
 
 // 表单
-const amountFocus = ref(false)
-const gridFocus = ref(false)
+
 const form1 = ref({
     name: route.query.name || '',
     symbol: route.query.symbol || '',
     grid: '1',
-    volume: ''
+    volume: '',
+    safeword:""
 })
-const safePass = ref('')
 const changeGrid = () => {
     setTimeout(() => {
         form1.value.grid = parseInt(form1.value.grid)
@@ -281,13 +261,6 @@ const changePercent = () => {
 }
 
 
-const amountBlur = ()=>{
-    nextTick(()=>{
-        if(form1.value.volume > maxStockNum.value){
-            form1.value.volume = maxStockNum.value
-        }
-    })
-}
 
 // 开仓
 const error1 = ref(false)
@@ -309,16 +282,16 @@ const checkForm = () => {
         showToast('最小投资额: ' + minamount.value)
         return
     }
-
+    getSessionToken()
     showModel.value = true
 }
-const submitFormDialog = () => {
-    showModel.value = false
-    safeRef.value && safeRef.value.open()
-}
+
 const submitLoading = ref(false)
 const submitForm = (s) => {
     if (submitLoading.value) return
+    if(!s){
+        return  showToast('请输入交易密码')
+    }
     submitLoading.value = true
     _aibuy({
         symbol: form1.value.symbol,
@@ -334,6 +307,8 @@ const submitForm = (s) => {
             showModel.value = false
             store.dispatch('updateWallet')
             showToast('开仓成功')
+            emits('success')
+            form1.value.safeword = ''
             form1.value.volume = ''
             form1.value.grid = ''
             sliderValue.value = 0
@@ -403,7 +378,6 @@ const sessionToken = computed(() => store.state.sessionToken || '')
 const getSessionToken = () => {
     store.dispatch("updateSessionToken")
 }
-getSessionToken()
 
 // 打开行情
 const showStockModel = ref(false)
@@ -464,10 +438,9 @@ defineExpose({
 
 <style lang="less" scoped>
 .scroller{
-    height: calc(100vh - 2.42rem);
-    overflow-y: auto;
+   
     box-sizing: border-box;
-    padding-bottom: 2rem;
+    padding: 0 0.32rem;
 }
 .time_popup{
     :deep(.van-popup__close-icon){
@@ -497,22 +470,22 @@ defineExpose({
     justify-content: space-between;
 }
 .time_list{
-    padding: 0.6rem 0.22rem 1rem 0.22rem;
+    margin-left: -0.2rem;
     .time{
         width: 25%;
         float: left;
         box-sizing: border-box;
-        padding: 0.1rem;
+        padding: 0.1rem 0 0.1rem 0.2rem;
         span{
-            border-radius: 0.32rem;
+            border-radius: 0.7rem;
             display: block;
             border: 1px solid #EFF3F8;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.3rem;
-            color:#061023;
-            height: 0.8rem;
+            font-size: 0.28rem;
+            color:#666D80;
+            height: 0.6rem;
             box-sizing: border-box;
         }
         
@@ -528,18 +501,28 @@ defineExpose({
         clear: both;
     }
 }
-.trade_ai {
+.trade_ai--popup{
     padding: 0.28rem 0.32rem 0 0.32rem;
-    
-    
+    .scroller{
+        height: calc(100vh - 2.42rem);
+        overflow-y: auto;
+        padding-bottom: 2rem;
+    }
     .btns{
         position: absolute;
         bottom: 0;
         width: 100%;
         left:0;
-        padding: 0.32rem 0.16rem;
+        
         background-color: rgba(255,255,255,0.7);
         z-index: 1000;
+    }
+}
+.trade_ai {
+    
+    
+    .btns{
+        padding: 0.32rem 0.16rem 0.4rem 0.16rem;
         display: flex;
         .btn{
             flex: 1;
@@ -667,7 +650,7 @@ defineExpose({
             justify-content: flex-end;
             color: #121826;
             font-size: 0.28rem;
-            font-weight: 500;
+            font-weight: 600;
 
             &_unit {
                 margin-left: 0.06rem;
@@ -716,5 +699,9 @@ defineExpose({
         padding: 0.4rem 0.32rem;
         overflow-y: auto;
     }
+}
+.tabs-container{
+    border: 1px solid #EFF3F8;
+    border-radius: 0.32rem;
 }
 </style>

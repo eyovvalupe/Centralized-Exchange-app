@@ -108,16 +108,17 @@ class Service {
       this.socketC2C.on("receive", (message) => {
         console.log('received message =========> ', message.data[0]['order_no'])
         console.log(message.data)
-        storeC2C.commit('setUnreadMessage', message.data[0]['order_no'])
+        // store.commit('setUnreadMessage', message.data[0]['order_no'])
+        // console.log("unread ===========>", 'storeC2C.state.unreadMessage')
         const arr = message.data
         if (storeC2C.state.messageList.length) {
           const index = storeC2C.state.messageList.findIndex(fitem => fitem.isTmp)
           if (index !== -1 && arr[0].type == 'img') {
             storeC2C.state.messageList.splice(index, 1)
           }
-          storeC2C.commit('pushMessageList', ...arr)
+          store.commit('pushMessageList', ...arr)
         } else {
-          storeC2C.commit('setMessageList', arr)
+          store.commit('setMessageList', arr)
         }
       });
     }

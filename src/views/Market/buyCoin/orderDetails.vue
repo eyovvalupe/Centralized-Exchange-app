@@ -8,10 +8,11 @@
       <div class="tab" :class="{ active_tab: tabsValue == 'contactTheMerchant' }"
         @click="changeTab('contactTheMerchant')">
         {{ $t('联系商家') }}
-        <div v-if="form.unread"
+        <!-- <div v-if="form.unread"
           class="absolute right-[40px] top-[3px] flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ form.unread > 99 ? '+99' : form.unread }}
-        </div>
+        </div> -->
+        <div class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[#e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center"></div>
       </div>
     </div>
     <template v-if="tabsValue !== 'contactTheMerchant'">
@@ -194,6 +195,10 @@ const loading = ref(false)
 const tabsValue = ref('buy')
 const safeRef = ref(null)
 // eslint-disable-next-line no-undef
+
+const unreadMessage = computed(() => store.state.unreadMessage)
+console.log('unread message list =======> ', unreadMessage.value)
+
 const route = useRoute()
 const changeTab = name => {
   tabsValue.value = name

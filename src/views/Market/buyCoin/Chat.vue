@@ -186,43 +186,7 @@ console.log("message list in chat =============> ", messageList.value);
 // 已读回执
 const readLoading = ref(false);
 const c2cLasttime = computed(() => store.state.c2cLasttime || {});
-const startSocket = () => {
-  const WS_API = `${CHAT_WEBSOCKET}/c2cmsg`;
-  const query = {
-    auth: store.state.token,
-  };
-  // console.error(WS_API)
-  socket = io(WS_API, {
-    transports: ["websocket"],
-    reconnectionDelayMax: 10000,
-    query,
-  });
-  socket.on("connect", () => {
-    setTimeout(() => {
-      console.log("seller connect...", props.currItem.order_no);
-      socket.emit("subscribe", props.currItem.order_no);
-    }, 500);
-  });
-  socket.on("receive", (res) => {
-    console.log(res);
-    console.error("---消息", res.data);
-    list.value.push(...(res.data || []));
-    setTimeout(() => {
-      if (res.data && res.data.length > 1) {
-        const t = c2cLasttime.value[props.currItem.order_no];
-        const target = list.value.find((item) => {
-          return Date.parse(new Date(item.time)) == t;
-        });
-        if (target) {
-          const element = document.querySelector(`#a${target.msgid}`);
-          element.scrollIntoView({ behavior: "smooth" });
-        } else {
-          scrollToBottom();
-        }
-      }
-    }, 1000);
-  });
-};
+
 
 const sendText = () => {
   if (text.value !== "") {
@@ -335,20 +299,16 @@ function scrollHandler() {
 }
 
 onMounted(() => {
-  // console.log(props.currItem.order_no)
-  console.error("开始连接");
   serviceChat.subscribe(props.currItem.order_no);
-  // startSocket();
-  // setTimeout(() => {
-  //   listRef.value.addEventListener('scroll', scrollHandler)
-  // }, 500)
+  serviceC2C.commit('setClearUnreadMessage', props.currItem.order_no)
+  serviceC2C.commit('setIsOpenningWindow', props.currItem.order_no)
+
+  setTimeout(() => {
+    scrollToBottom()
+  }, 100);
 });
 onBeforeUnmount(() => {
-  // listRef.value && listRef.value.removeEventListener('scroll', scrollHandler)
-  if (socket) {
-    socket.disconnect();
-    console.error("断开连接");
-  }
+  serviceC2C.commit('setClosedWindow', props.currItem.order_no)
 });
 </script>
 

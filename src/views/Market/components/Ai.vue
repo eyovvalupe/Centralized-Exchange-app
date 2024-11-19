@@ -96,6 +96,10 @@
     emits("clickItems", item);
   };
   const props = defineProps({
+    showTabs:{
+      type:Boolean,
+      default:true
+    },
     page: {
       type: String,
       default: "market",

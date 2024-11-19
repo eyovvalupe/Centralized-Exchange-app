@@ -74,6 +74,7 @@ const store = createStore({
     ...market.mutations,
     ...trade.mutations,
     ...assets.mutations,
+    ...serviceC2C.mutations
   },
   actions: {
     reset({ commit }) {
@@ -145,10 +146,12 @@ const store = createStore({
     ...market.actions,
     ...trade.actions,
     ...assets.actions,
+    ...serviceC2C.actions,
   },
   getters: {
     ...assets.getters,
     ...market.getters,
+    ...serviceC2C.getters
   },
   plugins: [
     createPersistedState({
