@@ -1,6 +1,6 @@
 <!-- ai交易元素 -->
 <template>
-    <div class="ai_item">
+    <div class="ai_item"  @click="props.page == 'home' ? goTrade() : null">
 
         <div class="head">
             <div>

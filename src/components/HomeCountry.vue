@@ -97,10 +97,7 @@ onMounted(() => {
   setTimeout(() => {
     pageLoading.value = false;
     setTimeout(() => {
-      getData("us");
-      getData("india");
-      getData("japan");
-      getData("korea");
+      getData(region[active.value]);
     }, 300);
   }, 300);
 });
@@ -132,33 +129,39 @@ const subs = (arr) => {
   );
   store.dispatch("subList", {});
 };
+const loaded = []
 const getData = (region) => {
+  pageLoading.value = true;
   if (region == "us" && marketStockUsDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockUsDataList);
-    return;
   }
   if (region == "india" && marketStockIndiaDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockIndiaDataList);
-    return;
   }
   if (region == "japan" && marketStockJapanDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockJapanDataList);
-    return;
   }
   if (region == "korea" && marketStockKoreaDataList.value.length > 0) {
     pageLoading.value = false;
     store.commit("setMarketCountryStockList", marketStockKoreaDataList);
-    return;
   }
-  pageLoading.value = true;
+
+  if(loaded.indexOf(region) > -1){
+    //已更新过一遍，不再静默刷新
+    pageLoading.value = false;
+    return
+  }
+
+  
   _recommend({
     market: region,
     type: "index",
   })
     .then((res) => {
+      loaded.push(region)
       const data = {
         region,
         currentts: formatDate(new Date(res.data.currentts)),
@@ -252,6 +255,10 @@ function formatDate(date) {
 
   :deep(.van-tabs__nav) {
     width: 100%;
+  }
+  
+  .stock_tab-body{
+    width: 5.58rem;
   }
 
   .van-tabs {

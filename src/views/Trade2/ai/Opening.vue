@@ -134,7 +134,7 @@
         </Popup>
 
         <!-- ai订单详情 -->
-        <AiInfo ref="AiInfoRef" />
+        <AiInfo ref="infoRef" />
         <!-- 开仓-安全密码弹窗 -->
         <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 
@@ -182,7 +182,6 @@ const props = defineProps({
     }
 })
 
-
 const goLogin = () => {
     store.commit('setIsLoginOpen', true)
     // eventBus.on('loginSuccess', () => {
@@ -193,11 +192,17 @@ const goLogin = () => {
 //     eventBus.off('loginSuccess')
 // })
 
+// 详情
+const infoRef = ref()
+const openInfo = item => {
+    infoRef.value && infoRef.value.open(item)
+}
+
 const route = useRoute()
 const wallet = computed(() => store.state.wallet || [])
 const usdt = computed(() => wallet.value.find(item => item.currency == 'USDT') || {})
 
-const emits = defineEmits(['showNavDialog','back','success'])
+const emits = defineEmits(['showNavDialog','back'])
 const showNavDialog = () => {
     // emits('showNavDialog', 'ai')
     showBottom.value = true
@@ -208,8 +213,6 @@ const backFunc = ()=>{
 }
 
 const safeRef = ref()
-
-const AiInfoRef = ref()
 
 const token = computed(() => store.state.token)
 const tab = ref(1) // 1-看涨 2-看跌
@@ -260,8 +263,6 @@ const changePercent = () => {
     sliderValue.value = Number(p)
 }
 
-
-
 // 开仓
 const error1 = ref(false)
 const error2 = ref(false)
@@ -307,7 +308,9 @@ const submitForm = (s) => {
             showModel.value = false
             store.dispatch('updateWallet')
             showToast('开仓成功')
-            emits('success')
+            setTimeout(()=>{
+                openInfo(res.data)
+            },500)
             form1.value.safeword = ''
             form1.value.volume = ''
             form1.value.grid = ''

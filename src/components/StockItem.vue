@@ -16,6 +16,7 @@
       @touchend.stop=""
     >
       <div
+        class="stock_item_bg"
         :class="
           props.marketType == 'crypto'
             ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
@@ -523,6 +524,10 @@ const removeStock = (item) => {
     padding-right: 0.4rem;
     padding-left: 0.2rem;
   }
+}
+
+.stock_item_bg:active{
+  background-color: #eef0f7;
 }
 .stock_item_up {
   background-color: rgba(24, 183, 98, 0.12);

@@ -6,7 +6,7 @@ const { startSocket } = useSocket()
 
 // 不同页面对应的监听列表 key
 const pageKeys = {
-    'home': ['marketRecommndList', 'marketRecommndContractList', 'marketRecommndStockList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketAiList', 'marketWatchList', 'marketSrockRecommendList', 'marketContractRecommendList'],
+    'home': ['marketRecommndList', 'marketRecommndContractList','contractList', 'marketRecommndStockList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketAiList', 'marketWatchList', 'marketSrockRecommendList', 'marketContractRecommendList'],
     'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList', 'marketAiList', 'marketAiHisList', 'marketAi24List', 'marketAiGridList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList'],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
 }
@@ -324,10 +324,12 @@ export default {
                 socket && socket.emit('snapshot', keys.join(',')) // 快照数据
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
+                       
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const target = state[ck].find(item => item.symbols == res.symbol || item.symbol == res.symbol)
                             if (target) {
+                                
                                 target.points = _getSnapshotLine(res.data)
                             }
                         })

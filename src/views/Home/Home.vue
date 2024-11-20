@@ -2,16 +2,28 @@
 <template>
   <div class="page_home">
     <!-- 顶部 -->
+    <div class="funcs relative">
+      <div class="user_box">
+        <div class="user_default_avatar">
+          <img src="/static/img/user/avatar2.png"/>
+        </div>
+      </div>
+      <div style="flex: 1"></div>
+      <div class="func_box" @click="jump('search')">
+        <div class="custom-search-icon"></div>
+      </div>
+      <div class="func_box">
+        <div class="custom-lock-icon"></div>
+      </div>
+    </div>
     <div class="top_box relative overflow-hidden">
-      <div class="absolute left-0 top-0">
-        <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide">
-          <Slide v-for="(slide, index) in slides" :key="index">
-            <img :src="slide" class="w-full" alt="img" />
+        <Carousel :autoplay="5000" style="height:2.4rem;border-radius: 0.32rem;overflow: hidden;" :wrap-around="true" :mouseDrag="true" v-model="currentSlide">
+          <Slide v-for="(slide, index) in slides" :key="index" style="height:2.4rem;">
+            <img :src="slide" class="w-full h-full !object-cover" alt="img" />
           </Slide>
         </Carousel>
-      </div>
 
-      <div class="absolute flex gap-[0.05rem] transition-all bottom-0 mb-[1rem] left-0 ml-[3.6rem]">
+      <div class="absolute flex gap-[0.05rem] transition-all bottom-[0.08rem]  left-0 ml-[3.6rem]">
         <div @click="() => (currentSlide = 0)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
           currentSlide == 0
             ? 'h-[0.16rem] bg-[#014CFA]'
@@ -28,22 +40,11 @@
             : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
         ]"></div>
       </div>
-      <div class="funcs relative">
-        <div class="user_box">
-          <div class="user_default_avatar"></div>
-        </div>
-        <div style="flex: 1"></div>
-        <div class="func_box" @click="jump('search')">
-          <div class="custom-search-icon"></div>
-        </div>
-        <div class="func_box">
-          <div class="custom-lock-icon"></div>
-        </div>
-      </div>
+     
       <div class="pl-[0.285rem] mt-[1.25rem]"></div>
     </div>
     <div
-      class="h-[0.82rem] bg-[#F5F7FC] rounded-t-[0.5rem] rounded-b-[0.32rem] -mt-[0.5rem] px-[0.32rem] flex items-center justify-between relative">
+      class="h-[1.24rem] bg-[#F5F7FC]  rounded-b-[0.32rem] pt-[0.32rem] -mt-[0.32rem] px-[0.32rem] mx-[0.32rem] flex items-center justify-between relative">
       <div class="flex items-center gap-2">
         <div class="custom-lock-small-icon"></div>
         <div class="text-[0.28rem] text-[#061023]">
@@ -54,7 +55,7 @@
         {{ formatDate(new Date()) }}
       </div>
     </div>
-    <div class="relative mt-[0.32rem] mx-[0.32rem]">
+    <div class="relative mt-[0.24rem] mx-[0.32rem]">
       <!--//////////////////////////////////-->
       <div
         class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
@@ -66,8 +67,8 @@
         </div>
         <div class="text-[0.24rem] text-[#8F92A1]">登录才能查看资产</div>
       </div>
-      <div class="bg-[#EFF3F8] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] py-[0.28rem] z-10">
-        <div class="flex justify-between mb-[0.2rem] items-center">
+      <div class="bg-[#F5F7FC] mb-[0.32rem] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] border-[1px] border-[#EFF3F8] py-[0.28rem] z-10">
+        <div class="flex justify-between mb-[0.14rem] items-center">
           <div class="flex items-center gap-1">
             <div class="text-[0.26rem] text-[#333333]">总资产(USDT)</div>
             <div class="assets" v-if="!token" @click="store.commit('setIsLoginOpen', true)">
@@ -101,12 +102,14 @@
           {{ openEye ? assets.total : "*******" }}
         </div>
       </div>
-      <HomeCrypto />
+      
+      <!-- <HomeCrypto /> -->
       <HomeToday />
-      <HomePriority />
+      <HomePriority type="BestSellers" />
+
     </div>
     <HomeWatchList />
-    <div class="pl-[0.32rem] pr-[0.32rem]">
+    <!-- <div class="pl-[0.32rem] pr-[0.32rem]">
       <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
       <div class="flex gap-1">
         <div class="mr-[0.05rem]">
@@ -137,13 +140,13 @@
           </div>
         </div>
       </div>
-    </div>
-    <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 0" :loading="marketLoading" :deleteItem="false"
+    </div> -->
+    <!-- <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 0" :loading="marketLoading" :deleteItem="false"
       :list="marketDownList.slice(0, 5)" :marketType="'all'" />
     <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 1" :loading="marketLoading" :deleteItem="false"
       :list="marketUpList.slice(0, 5)" :marketType="'all'" />
     <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 2" :loading="marketLoading" :deleteItem="false"
-      :list="marketVolumeList.slice(0, 5)" :marketType="'all'" />
+      :list="marketVolumeList.slice(0, 5)" :marketType="'all'" /> -->
     <!-- banner -->
     <div class="font-bold text-[0.32rem] m-[0.32rem]">市场推荐</div>
     <!-- <Banner v-if="activated" class="home_banner" /> -->
@@ -153,23 +156,23 @@
       animated shrink>
       <Tab :title="'股票'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-        <div>
+        <div class="pt-[0.12rem]">
           <StockItem :item="item" v-for="(item, i) in marketRecommndStockList" :key="'s_' + i" page="home" />
         </div>
         <NoData v-if="!commendLoading && !marketRecommndStockList.length" />
       </Tab>
       <Tab :title="'合约'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-        <div>
+        <div class="pt-[0.32rem]">
           <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" />
         </div>
         <NoData v-if="!commendLoading && !contractList.length" />
       </Tab>
-      <!-- <Tab :title="'IPO'">
+      <Tab :title="'IPO'">
         <div>
           <IPO ref="ipoRef" :page="'home'" />
         </div>
-      </Tab> -->
+      </Tab>
       <Tab :title="'交易机器人'">
         <div class="mx-[0.32rem]">
           <Ai page="home" />
@@ -184,7 +187,7 @@
 
 <script setup>
 import StockItem from "@/components/StockItem.vue";
-import { onDeactivated, ref, computed, onActivated, onMounted } from "vue";
+import { onDeactivated, ref, computed, onActivated, onMounted, nextTick } from "vue";
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
@@ -227,9 +230,9 @@ const actions = [
   { name: "IPO", value: "1" },
 ];
 const slides = [
-  "static/img/home/back1.webp",
-  "static/img/home/back2.webp",
-  "static/img/home/back3.webp",
+  "static/img/home/banner1.png",
+  "static/img/home/banner2.png",
+  "static/img/home/banner3.png",
 ];
 
 const onSelect = (item) => {
@@ -264,9 +267,9 @@ const ipoRef = ref();
 const ipoDataList = computed(() => store.state.ipoDataList || []);
 const tabChange = (val) => {
   if (val == 2 && !ipoDataList.value.length) {
-    setTimeout(() => {
+    nextTick(()=>{
       ipoRef.value && ipoRef.value.init();
-    }, 500);
+    })
   }
 };
 
@@ -324,6 +327,7 @@ const getRecommendData = () => {
             const target = contractList.value.find(
               (a) => a.symbol == item.symbol
             );
+            item.type = 'crypto'
             if (target) {
               Object.assign(target, item);
               item = target;
@@ -501,48 +505,13 @@ onMounted(() => {
     }
   }
 
+  :deep(.page_ai .list){
+    padding-top: 0.12rem;
+  }
   .top_box {
-    padding: 0.2rem 0.32rem 0.32rem;
-    min-height: 7rem;
-
-    .funcs {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.52rem;
-
-      .user_box {
-        width: 0.8rem;
-        height: 0.8rem;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .user_default_avatar {
-          width: 0.8rem;
-          height: 0.8rem;
-          background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="white" fill-opacity="0.1"/><path d="M2 20C2 29.9381 10.0619 38 20 38C29.9381 38 38 29.9381 38 20C38 10.0619 29.9381 2 20 2C10.0619 2 2 10.0615 2 20Z" fill="%236C8CD6"/><path d="M17.2891 24.8727H22.9362V29.5327H17.2704L17.2891 24.8727ZM13.7038 18.6344C13.7038 19.4633 13.2024 20.1348 12.5708 20.1348C11.9393 20.1348 11.4395 19.4633 11.4395 18.6344C11.4395 17.8056 11.9409 17.1345 12.5725 17.1345C13.204 17.1345 13.7055 17.806 13.7055 18.6344M28.8075 18.6137C28.8075 19.4421 28.3056 20.1136 27.6741 20.1136C27.0426 20.1136 26.5399 19.4409 26.5399 18.6137C26.5399 17.7865 27.0414 17.1133 27.6729 17.1133C28.3044 17.1133 28.8075 17.806 28.8075 18.6137Z" fill="%23F8ECEC"/><path d="M17.2879 25.541C17.2879 25.541 18.3655 26.0981 19.907 26.0981C21.7274 26.1726 22.9162 25.5598 22.9162 25.5598V26.1168C22.9162 26.1168 20.9103 27.1934 20.0187 27.1934C19.1083 27.1934 17.2871 25.9302 17.2871 25.9302L17.2879 25.541Z" fill="%23E9CFCF"/><path d="M33.1333 32.2817C32.2233 31.5576 30.5974 29.5108 28.8883 28.6934C26.1204 27.3381 22.9167 27.7333 22.9167 27.7333V27.8242C22.6937 28.0658 21.5978 29.1424 20.1117 29.1424C18.644 29.1424 17.5298 28.14 17.2884 27.8792L17.2696 27.7492C17.2696 27.7492 13.7357 27.3356 10.9503 28.6909C9.05569 29.6196 7.70416 31.6481 6.88672 32.3534C8.56413 34.1434 10.5926 35.5686 12.8457 36.5402C15.0987 37.5118 17.5279 38.0089 19.9817 38.0004C25.1831 37.9816 29.8639 35.791 33.1333 32.2817Z" fill="%23485B80"/><path d="M27.4857 17.4133C27.4857 19.3338 26.9044 21.9364 25.9283 23.3426C24.5829 25.2806 21.5488 26.1763 20.1296 26.1763C18.6949 26.1763 15.9649 25.4457 14.6179 23.7314C13.4698 22.2697 12.7734 19.5151 12.7734 17.4153C12.7734 12.8482 16.0615 9.13477 20.1296 9.13477C24.1976 9.13477 27.4857 12.8482 27.4857 17.4153" fill="%23F8ECEC"/><path d="M28.1358 13.6228C28.1358 13.6228 28.0718 10.7639 26.441 8.72645C25.3019 7.3035 21.6709 6.27052 19.0706 6.47508C19.0706 6.47508 13.9772 6.67882 13.8712 10.061C12.9404 10.618 11.9839 11.5789 11.8816 13.1937C11.6778 16.443 12.253 17.2971 12.253 17.2971C12.253 17.2971 13.0705 17.2971 13.2751 18.522C13.2751 18.522 13.6465 18.7453 13.6828 18.522C13.7383 18.1508 13.3485 16.3685 14.1284 14.7349C14.2247 14.5283 14.3209 14.3441 14.4138 14.1799C16.9677 11.3405 24.4584 11.6347 26.2135 14.7393C26.2854 14.9554 26.3374 15.1776 26.3689 15.4031C26.5173 16.4626 26.7032 18.4666 26.7032 18.4666C26.7032 18.4666 26.9816 18.652 27.1675 18.2066C27.3535 17.7425 27.3163 17.2971 27.4835 17.1671C28.4326 16.5368 28.1913 13.9015 28.1358 13.6228Z" fill="%23485B80"/></svg>');
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-position: center;
-        }
-      }
-
-      .func_box {
-        // background-color: #ededed;
-        width: 0.72rem;
-        height: 0.72rem;
-        border-radius: 50%;
-        margin-left: 0.28rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-color: #d0d8e2;
-        border-width: 0.02rem;
-      }
-    }
-
+    padding: 0 0.32rem;
+    height: 2.4rem;
+    z-index: 1;
     .subtitle {
       color: #333333;
       font-size: 0.26rem;
@@ -600,6 +569,43 @@ onMounted(() => {
     }
   }
 
+  .funcs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.2rem 0.32rem 0.32rem;
+    .user_box {
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      .user_default_avatar {
+        width: 0.8rem;
+        height: 0.8rem;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .func_box {
+      // background-color: #ededed;
+      width: 0.72rem;
+      height: 0.72rem;
+      border-radius: 50%;
+      margin-left: 0.28rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-color: #d0d8e2;
+      border-width: 0.02rem;
+    }
+  }
+  
   .home_ad {
     height: 2.8rem;
     width: 100%;
@@ -626,12 +632,13 @@ onMounted(() => {
       border-right: none;
       color: #061023;
       border-radius: 0.32rem;
-      margin-left: 0.1rem;
+      margin-right: 0.1rem;
       transition: all ease 0.2s;
     }
 
     :deep(.van-tab--card.van-tab--active) {
       background-color: #014cfa;
+      border-color: #014cfa;
       border-radius: 0.32rem;
       color: white;
       font-weight: 500;
@@ -643,8 +650,7 @@ onMounted(() => {
     }
 
     :deep(.van-tabs__wrap) {
-      height: 0.8rem;
-      padding-bottom: 0.2rem;
+      height: 0.68rem;
     }
 
     :deep(.van-tabs__nav--card) {
@@ -673,7 +679,7 @@ onMounted(() => {
 .custom-search-icon {
   width: 0.46rem;
   height: 0.46rem;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.0893 17.8637C13.7154 18.8645 12.0508 19.4134 10.3297 19.4134C8.18582 19.4134 6.12972 18.5617 4.61374 17.0457C3.09776 15.5298 2.24609 13.4737 2.24609 11.3297C2.24609 9.18582 3.09776 7.12972 4.61374 5.61374C6.12972 4.09776 8.18582 3.24609 10.3297 3.24609C12.4737 3.24609 14.5298 4.09776 16.0457 5.61374C17.5617 7.12972 18.4134 9.18582 18.4134 11.3297C18.4134 13.4019 17.6177 15.3921 16.1956 16.8918L19.0036 19.6998C19.0097 19.7057 19.0157 19.7117 19.0217 19.7179C19.0919 19.7857 19.1478 19.8667 19.1864 19.9564C19.2249 20.0461 19.2451 20.1425 19.246 20.2401C19.2468 20.3376 19.2282 20.4344 19.1913 20.5247C19.1543 20.615 19.0998 20.6971 19.0308 20.7661C18.9618 20.8351 18.8797 20.8897 18.7894 20.9266C18.6991 20.9636 18.6023 20.9821 18.5048 20.9813C18.4072 20.9805 18.3107 20.9602 18.2211 20.9217C18.1314 20.8832 18.0503 20.8272 17.9826 20.757C17.9764 20.7511 17.9704 20.745 17.9645 20.7389L15.0893 17.8637ZM5.65301 16.0065C6.89336 17.2468 8.57563 17.9436 10.3297 17.9436C12.0839 17.9436 13.7661 17.2468 15.0065 16.0065C16.2468 14.7661 16.9436 13.0839 16.9436 11.3297C16.9436 9.57563 16.2468 7.89336 15.0065 6.65301C13.7661 5.41267 12.0839 4.71585 10.3297 4.71585C8.57563 4.71585 6.89336 5.41267 5.65301 6.65301C4.41267 7.89336 3.71585 9.57563 3.71585 11.3297C3.71585 13.0839 4.41267 14.7661 5.65301 16.0065Z" fill="%23ffffff"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.0893 17.8637C13.7154 18.8645 12.0508 19.4134 10.3297 19.4134C8.18582 19.4134 6.12972 18.5617 4.61374 17.0457C3.09776 15.5298 2.24609 13.4737 2.24609 11.3297C2.24609 9.18582 3.09776 7.12972 4.61374 5.61374C6.12972 4.09776 8.18582 3.24609 10.3297 3.24609C12.4737 3.24609 14.5298 4.09776 16.0457 5.61374C17.5617 7.12972 18.4134 9.18582 18.4134 11.3297C18.4134 13.4019 17.6177 15.3921 16.1956 16.8918L19.0036 19.6998C19.0097 19.7057 19.0157 19.7117 19.0217 19.7179C19.0919 19.7857 19.1478 19.8667 19.1864 19.9564C19.2249 20.0461 19.2451 20.1425 19.246 20.2401C19.2468 20.3376 19.2282 20.4344 19.1913 20.5247C19.1543 20.615 19.0998 20.6971 19.0308 20.7661C18.9618 20.8351 18.8797 20.8897 18.7894 20.9266C18.6991 20.9636 18.6023 20.9821 18.5048 20.9813C18.4072 20.9805 18.3107 20.9602 18.2211 20.9217C18.1314 20.8832 18.0503 20.8272 17.9826 20.757C17.9764 20.7511 17.9704 20.745 17.9645 20.7389L15.0893 17.8637ZM5.65301 16.0065C6.89336 17.2468 8.57563 17.9436 10.3297 17.9436C12.0839 17.9436 13.7661 17.2468 15.0065 16.0065C16.2468 14.7661 16.9436 13.0839 16.9436 11.3297C16.9436 9.57563 16.2468 7.89336 15.0065 6.65301C13.7661 5.41267 12.0839 4.71585 10.3297 4.71585C8.57563 4.71585 6.89336 5.41267 5.65301 6.65301C4.41267 7.89336 3.71585 9.57563 3.71585 11.3297C3.71585 13.0839 4.41267 14.7661 5.65301 16.0065Z" fill="%23666D80"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -682,7 +688,7 @@ onMounted(() => {
 .custom-lock-icon {
   width: 0.44rem;
   height: 0.44rem;
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><path d="M18.4674 17.6193H4.82183C4.43021 17.6193 4.06576 17.4246 3.84618 17.1009C3.6266 16.7749 3.58359 16.3652 3.73073 16.0007L4.84447 13.2503V9.07153C4.84447 8.19096 5.01877 7.33528 5.36285 6.52714C5.69335 5.74843 6.16647 5.04894 6.76861 4.4468C7.37076 3.84465 8.07024 3.37154 8.84895 3.04104C9.65709 2.69696 10.5128 2.52266 11.3933 2.52266H11.4092C12.2898 2.52266 13.1454 2.69696 13.9536 3.04104C14.7323 3.37154 15.4318 3.84465 16.0339 4.4468C16.6361 5.04894 17.1092 5.74843 17.4397 6.52714C17.7838 7.33528 17.9581 8.19096 17.9581 9.07153V13.1983L19.4861 15.8558C19.6989 16.2248 19.6966 16.664 19.4838 17.033C19.2733 17.3997 18.8907 17.6193 18.4674 17.6193ZM5.22477 16.1705H17.9966L16.5093 13.5853V9.07153C16.5093 7.71558 15.9773 6.43659 15.0107 5.46999C14.0441 4.50339 12.7651 3.97142 11.4092 3.97142H11.3933C10.0374 3.97142 8.7584 4.50339 7.7918 5.46999C6.8252 6.43659 6.29323 7.71558 6.29323 9.07153V13.5333L5.22477 16.1705ZM9.6005 4.17515C9.2949 4.17515 9.02552 3.95558 8.97119 3.64545C8.94629 3.5051 8.93497 3.36249 8.93497 3.22214C8.93497 1.87524 10.0306 0.777344 11.3798 0.777344C12.7289 0.777344 13.8246 1.87297 13.8246 3.22214C13.8246 3.36249 13.811 3.5051 13.7883 3.64545C13.7272 3.98953 13.4012 4.22269 13.0549 4.1661L11.7691 3.95784C11.5111 3.91483 11.2485 3.91483 10.9881 3.95784L9.70236 4.1661C9.66841 4.17289 9.63445 4.17515 9.6005 4.17515ZM11.3775 2.64716C11.5767 2.64716 11.7759 2.663 11.9729 2.6947L12.4528 2.77166C12.2762 2.35288 11.8619 2.05633 11.3775 2.05633C10.8931 2.05633 10.4788 2.35288 10.3022 2.77166L10.7821 2.6947C10.9814 2.663 11.1806 2.64716 11.3775 2.64716ZM14.6983 20.3198H8.33056C7.93215 20.3198 7.60618 19.9939 7.60618 19.5955C7.60618 19.1971 7.93215 18.8711 8.33056 18.8711H14.6983C15.0968 18.8711 15.4227 19.1971 15.4227 19.5955C15.4227 19.9939 15.0968 20.3198 14.6983 20.3198Z" fill="%23ffffff"/><circle cx="16.5" cy="4.5" r="2.5" fill="%23E8503A"/></svg>');
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22"><path d="M18.4674 17.6193H4.82183C4.43021 17.6193 4.06576 17.4246 3.84618 17.1009C3.6266 16.7749 3.58359 16.3652 3.73073 16.0007L4.84447 13.2503V9.07153C4.84447 8.19096 5.01877 7.33528 5.36285 6.52714C5.69335 5.74843 6.16647 5.04894 6.76861 4.4468C7.37076 3.84465 8.07024 3.37154 8.84895 3.04104C9.65709 2.69696 10.5128 2.52266 11.3933 2.52266H11.4092C12.2898 2.52266 13.1454 2.69696 13.9536 3.04104C14.7323 3.37154 15.4318 3.84465 16.0339 4.4468C16.6361 5.04894 17.1092 5.74843 17.4397 6.52714C17.7838 7.33528 17.9581 8.19096 17.9581 9.07153V13.1983L19.4861 15.8558C19.6989 16.2248 19.6966 16.664 19.4838 17.033C19.2733 17.3997 18.8907 17.6193 18.4674 17.6193ZM5.22477 16.1705H17.9966L16.5093 13.5853V9.07153C16.5093 7.71558 15.9773 6.43659 15.0107 5.46999C14.0441 4.50339 12.7651 3.97142 11.4092 3.97142H11.3933C10.0374 3.97142 8.7584 4.50339 7.7918 5.46999C6.8252 6.43659 6.29323 7.71558 6.29323 9.07153V13.5333L5.22477 16.1705ZM9.6005 4.17515C9.2949 4.17515 9.02552 3.95558 8.97119 3.64545C8.94629 3.5051 8.93497 3.36249 8.93497 3.22214C8.93497 1.87524 10.0306 0.777344 11.3798 0.777344C12.7289 0.777344 13.8246 1.87297 13.8246 3.22214C13.8246 3.36249 13.811 3.5051 13.7883 3.64545C13.7272 3.98953 13.4012 4.22269 13.0549 4.1661L11.7691 3.95784C11.5111 3.91483 11.2485 3.91483 10.9881 3.95784L9.70236 4.1661C9.66841 4.17289 9.63445 4.17515 9.6005 4.17515ZM11.3775 2.64716C11.5767 2.64716 11.7759 2.663 11.9729 2.6947L12.4528 2.77166C12.2762 2.35288 11.8619 2.05633 11.3775 2.05633C10.8931 2.05633 10.4788 2.35288 10.3022 2.77166L10.7821 2.6947C10.9814 2.663 11.1806 2.64716 11.3775 2.64716ZM14.6983 20.3198H8.33056C7.93215 20.3198 7.60618 19.9939 7.60618 19.5955C7.60618 19.1971 7.93215 18.8711 8.33056 18.8711H14.6983C15.0968 18.8711 15.4227 19.1971 15.4227 19.5955C15.4227 19.9939 15.0968 20.3198 14.6983 20.3198Z" fill="%23666D80"/><circle cx="16.5" cy="4.5" r="2.5" fill="%23E8503A"/></svg>');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
