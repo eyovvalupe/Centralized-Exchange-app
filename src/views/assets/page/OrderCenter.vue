@@ -52,7 +52,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 0">
-        <List :from="'orderCenter'"/>
+        <List :from="'orderCenter'" />
       </div>
 
       <div class="tab" v-if="activeTab == 1">
@@ -68,7 +68,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 4">
-        <IPOStock ref="IPOStockRef" :from="'assets'"/>
+        <IPOStock ref="IPOStockRef" :from="'assets'" />
       </div>
     </div>
   </div>

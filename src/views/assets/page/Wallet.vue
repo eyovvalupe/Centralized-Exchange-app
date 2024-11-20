@@ -65,7 +65,7 @@
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 2">
-        <OtherWallet :name="'股票'" :balance="assets.stock" />
+        <OtherWallet :name="'股票'" :balance="assets.stock" @toggleShow="(val) => toggleShow(val)"/>
         <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
           <div
             class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
@@ -73,7 +73,7 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">股票余额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >{{ parseFloat(assets.stock).toLocaleString() }}</span
+              >{{ showData ? parseFloat(assets.stock).toLocaleString() : '********' }}</span
             >
           </div>
           <div
@@ -82,7 +82,7 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">持仓金额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >{{ parseFloat(assets.order_value).toLocaleString() }}</span
+              >{{ showData ? parseFloat(assets.order_value).toLocaleString() : '********' }}</span
             >
           </div>
         </div>
@@ -90,7 +90,7 @@
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 3">
-        <OtherWallet :name="'合约'" :balance="assets.futures" />
+        <OtherWallet :name="'合约'" :balance="assets.futures" @toggleShow="(val) => toggleShow(val)"/>
         <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
           <div
             class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] pb-[0.1rem] flex flex-col items-center justify-between"
@@ -98,7 +98,7 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">合约余额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >{{ parseFloat(assets.futures).toLocaleString() }}</span
+              >{{ showData ? parseFloat(assets.futures).toLocaleString() : '********' }}</span
             >
           </div>
           <div
@@ -107,7 +107,7 @@
           >
             <span class="text-[0.28rem] text-[#666d80]">持仓金额</span>
             <span class="text-[0.3rem] text-[#061023] font-semibold"
-              >{{ parseFloat(assets.order_value).toLocaleString() }}</span
+              >{{ showData ? parseFloat(assets.order_value).toLocaleString() : '********' }}</span
             >
           </div>
         </div>
@@ -162,13 +162,11 @@ const changeActiveTab = (val) => {
 const assets = computed(() => store.state.assets || {});
 const token = computed(() => store.state.token || "");
 const currSelectedWallet = computed(() => store.state.currSelectedWallet || '-1')
-const walletState = computed(() => store.state.wallet)
-const elseWalletState = computed(() => store.state.elseWallet)
-const elseWalletMapState = computed(() => store.state.elseWalletMap)
-console.log("wallet ============> ", walletState.value)
-console.log("wallet1 ============> ", elseWalletState.value)
-console.log("wallet2 ============> ", elseWalletMapState.value)
 
+const showData = ref(false)
+const toggleShow = (val) => {
+  showData.value = val
+} 
 
 const getAssets = () => {
   if (!token.value) return;

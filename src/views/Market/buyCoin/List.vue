@@ -1,6 +1,14 @@
 <!-- 订单列表 -->
 <template>
-  <div v-if="token" class="buycoin_list" :style="props.from == 'orderCenter' ? 'width: 100%; padding: 0' : 'width: 7.5rem; padding: 0.08rem 0.32rem;'">
+  <div
+    v-if="token"
+    class="buycoin_list"
+    :style="
+      props.from == 'orderCenter'
+        ? 'width: 100%; padding: 0'
+        : 'width: 7.5rem; padding: 0.08rem 0.32rem;'
+    "
+  >
     <div class="list">
       <!-- 当前订单 -->
       <div
@@ -105,9 +113,9 @@ import { computed } from "vue";
 const props = defineProps({
   from: {
     type: String,
-    default: ''
-  }
-})
+    default: "",
+  },
+});
 
 const { t } = useI18n();
 const statusEnum = {
