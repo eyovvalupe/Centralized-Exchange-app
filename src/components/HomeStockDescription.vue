@@ -10,6 +10,7 @@
         :class="item.ratio > 0 ? 'up_price' : 'down_price'"
         class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
         style="overflow-x: hidden;"
+        @click="goInfo(item)"
       >
         <span class="text-[0.24rem] text-[#061023]" style="max-width: 1.98rem;">{{
           item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
@@ -29,7 +30,10 @@
 </template>
 
 <script setup>
-import { fixLittleNum } from '@/utils/fixLittleNum';
+import { useRouter } from 'vue-router';
+
+import store from "@/store";
+const router = useRouter()
 
 const props = defineProps({
   region: {
@@ -67,6 +71,18 @@ const props = defineProps({
     }]
   }
 });
+const goInfo = (item)=>{
+  store.commit("setCurrStock", item);
+  setTimeout(()=>{
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: item.symbol,
+        type: "stock",
+      },
+    });
+  },100)
+}
 </script>
 
 <style lang="less" scoped>

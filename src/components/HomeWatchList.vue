@@ -5,7 +5,7 @@
       <div class="flex flex-row text-center items-center">
         <span class="text-[0.32rem] font-semibold">自选推荐</span>
       </div>
-      <div class="text_container flex flex-row text-center items-center">
+      <div class="text_container flex flex-row text-center items-center" @click="more">
         <span style="font-size: 0.24rem; font-weight: 400; color: #666d80"
           >more+</span
         >
@@ -68,6 +68,9 @@ const subs = () => {
   });
 };
 
+const more = ()=>{
+  router.push('/market')
+}
 const getWatchList = () => {
   // 获取订阅列表
   loading.value = true;

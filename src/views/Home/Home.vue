@@ -156,23 +156,23 @@
       animated shrink>
       <Tab :title="'股票'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-        <div>
+        <div class="pt-[0.12rem]">
           <StockItem :item="item" v-for="(item, i) in marketRecommndStockList" :key="'s_' + i" page="home" />
         </div>
         <NoData v-if="!commendLoading && !marketRecommndStockList.length" />
       </Tab>
       <Tab :title="'合约'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-        <div>
+        <div class="pt-[0.32rem]">
           <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" />
         </div>
         <NoData v-if="!commendLoading && !contractList.length" />
       </Tab>
-      <!-- <Tab :title="'IPO'">
+      <Tab :title="'IPO'">
         <div>
           <IPO ref="ipoRef" :page="'home'" />
         </div>
-      </Tab> -->
+      </Tab>
       <Tab :title="'交易机器人'">
         <div class="mx-[0.32rem]">
           <Ai page="home" />
@@ -187,7 +187,7 @@
 
 <script setup>
 import StockItem from "@/components/StockItem.vue";
-import { onDeactivated, ref, computed, onActivated, onMounted } from "vue";
+import { onDeactivated, ref, computed, onActivated, onMounted, nextTick } from "vue";
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
@@ -267,9 +267,9 @@ const ipoRef = ref();
 const ipoDataList = computed(() => store.state.ipoDataList || []);
 const tabChange = (val) => {
   if (val == 2 && !ipoDataList.value.length) {
-    setTimeout(() => {
+    nextTick(()=>{
       ipoRef.value && ipoRef.value.init();
-    }, 500);
+    })
   }
 };
 
@@ -327,6 +327,7 @@ const getRecommendData = () => {
             const target = contractList.value.find(
               (a) => a.symbol == item.symbol
             );
+            item.type = 'crypto'
             if (target) {
               Object.assign(target, item);
               item = target;
@@ -504,6 +505,9 @@ onMounted(() => {
     }
   }
 
+  :deep(.page_ai .list){
+    padding-top: 0.12rem;
+  }
   .top_box {
     padding: 0 0.32rem;
     height: 2.4rem;
@@ -646,8 +650,7 @@ onMounted(() => {
     }
 
     :deep(.van-tabs__wrap) {
-      height: 0.8rem;
-      padding-bottom: 0.2rem;
+      height: 0.68rem;
     }
 
     :deep(.van-tabs__nav--card) {
