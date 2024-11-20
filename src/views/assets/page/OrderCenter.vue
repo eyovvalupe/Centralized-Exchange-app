@@ -52,7 +52,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 0">
-        <List />
+        <List :from="'orderCenter'"/>
       </div>
 
       <div class="tab" v-if="activeTab == 1">
