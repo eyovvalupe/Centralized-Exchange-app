@@ -207,6 +207,7 @@
             type="text"
             class="ipt"
             :placeholder="$t('withdraw.searchPlaceholder')"
+            @input="searchList"
           />
         </div>
         <div class="lists">
@@ -214,12 +215,9 @@
             @click="clickItem(item)"
             class="swap_dialog_item"
             :class="{ swap_dialog_item_active: form.from == item.name }"
-            v-for="(item, i) in wallet"
+            v-for="(item, i) in searchDialogStr ? searchResult : wallet"
             :key="i"
-            v-show="
-              !searchDialogStr ||
-              item.name.toUpperCase().indexOf(searchDialogStr) > -1
-            "
+            
           >
             <div class="icon">
               <img
@@ -268,10 +266,6 @@
             v-for="(item, i) in currencyMapList[form.from]"
             @click="clickNetworkItem(item)"
             :key="i"
-            v-show="
-              !searchDialogStr ||
-              item.name.toUpperCase().indexOf(searchDialogStr) > -1
-            "
             style="justify-content: space-between"
           >
             <span>{{ item }}</span>
@@ -450,7 +444,6 @@ const submit = (s) => {
     token: sessionToken.value,
   }
   }
-  console.log(withdrawParams.value)
   _withdraw(withdrawParams.value)
     .then((res) => {
       if (res.code == 200) {
@@ -543,7 +536,6 @@ const showBankAccount = computed(() => {
   return accountList.value.filter((item) => item.channel == "bank") || [];
 });
 
-console.log('showbank account =======> ', showBankAccount.value)
 
 // 当前钱包
 const currAccount = computed(() => {
@@ -567,25 +559,9 @@ const currBankAccount = computed(() => {
 });
 
 const showAccountDialog = ref(false);
-const searchStr = ref(""); // 账号搜索
+const searchResult = ref([])
 const searchList = computed(() => {
-  if (tabActive.value == "cryptocurrency") {
-    return showAccount.value.filter((item) => {
-      return (
-        (item.accountName && item.accountName.includes(searchStr.value)) ||
-        (item.address && item.address.includes(searchStr.value)) ||
-        (item.bankCardNumber &&
-          item.bankCardNumber.includes(searchStr.value)) ||
-        (item.bankName && item.bankName.includes(searchStr.value)) ||
-        (item.network && item.network.includes(searchStr.value)) ||
-        (item.symbol && item.symbol.includes(searchStr.value))
-      );
-    });
-  } else {
-    return accountList.value.filter((item) => {
-      return item.channel == "bank";
-    });
-  }
+  searchResult.value = wallet.value.filter(item => item.name.includes(searchDialogStr.value.toUpperCase()) || item.name.includes(searchDialogStr.value))
 });
 
 const clickAccountItem = (item) => {
