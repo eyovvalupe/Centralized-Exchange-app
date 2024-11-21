@@ -419,12 +419,12 @@ const openSafePass = () => {
       errStatus.value = true;
       return showToast("请输入金额");
     }
-    // if (form.value.amount > balance.value) {
-    //   return showToast("余额不足");
-    // }
-    // if (!showAccount.value.length) {
-    //   return showToast("请添加收款账户");
-    // }
+    if (form.value.amount > balance.value) {
+      return showToast("余额不足");
+    }
+    if (!showAccount.value.length) {
+      return showToast("请添加收款账户");
+    }
     safeRef.value.open();
   }
 };
