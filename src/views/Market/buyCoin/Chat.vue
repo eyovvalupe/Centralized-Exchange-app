@@ -8,13 +8,13 @@
           {{ $t("您已经成功下单") }}，{{ $t("请耐心等候商家付款") }}
         </div>
       </div>
-      <template v-for="item in messageList">
+      <div v-for="item in messageList">
         <!-- 提示 -->
         <!-- <div class="notice_msg">
           <div class="time">2024-10-28 10:25:08</div>
           <div class="content">您已经成功下单，请耐心等候商家付款</div>
         </div> -->
-        <template v-if="item.direction == 'send'">
+        <div v-if="item.direction == 'send'">
           <div class="flex justify-end w-full items-top mt-[0.4rem]">
             <!-- 我的文本 -->
 
@@ -49,8 +49,8 @@
             </div>
             <UserAvatar />
           </div>
-        </template>
-        <template v-else>
+        </div>
+        <div v-else>
           <!-- 对方文本 -->
           <div
             v-if="item.type == 'text'"
@@ -73,15 +73,16 @@
             :id="`a${item.msgid}`"
             class="op_text_box"
           >
-            <div class="avatar">
-              <!-- <div class="pointer"></div> -->
+            <!-- <div class="avatar">
               {{
                 props.currItem.merchant_name
                   ? props.currItem.merchant_name.slice(0, 1)
                   : ""
               }}
+            </div> -->
+            <div class="mr-[0.2rem]">
+              <DialogCIcon />
             </div>
-
             <div class="op_text">
               <div class="van-popover__arrow" />
               <div class="op_text_content" v-html="item.content" />
@@ -95,22 +96,23 @@
             :id="`a${item.msgid}`"
             class="op_pic_box"
           >
-            <div class="avatar">
-              <!-- <div class="pointer"></div> -->
+            <!-- <div class="avatar">
               {{
                 props.currItem.merchant_name
                   ? props.currItem.merchant_name.slice(0, 1)
                   : ""
               }}
+            </div> -->
+            <div class="mr-[0.2rem]">
+              <DialogCIcon />
             </div>
-
             <div class="op_pic">
               <img class="op_pic_content" :src="item.content" alt="img" />
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
           </div>
-        </template>
-      </template>
+        </div>
+      </div>
     </div>
     <div
       class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white"
@@ -146,7 +148,7 @@
 
 <script setup>
 import io from "socket.io-client";
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, onUpdated } from "vue";
 import { showToast } from "vant";
 import { CHAT_WEBSOCKET, UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config";
 import store from "@/store";
@@ -181,12 +183,10 @@ const list = ref([]);
 const text = ref("");
 
 const messageList = computed(() => serviceC2C.state.messageList);
-console.log("message list in chat =============> ", messageList.value);
 
 // 已读回执
 const readLoading = ref(false);
 const c2cLasttime = computed(() => store.state.c2cLasttime || {});
-
 
 const sendText = () => {
   if (text.value !== "") {
@@ -263,16 +263,23 @@ const uploadImg = (event) => {
 };
 
 const scrollToBottom = () => {
-  let onl;
-  const { pause } = useIntervalFn(() => {
-    if (onl !== listRef.value.scrollHeight) {
-      onl = listRef.value.scrollHeight;
-      y.value = listRef.value.scrollHeight;
-    } else {
-      pause();
-    }
-  }, 500);
+  // let onl;
+  // const { pause } = useIntervalFn(() => {
+  //   if (onl !== listRef.value.scrollHeight) {
+  //     onl = listRef.value.scrollHeight;
+  //     y.value = listRef.value.scrollHeight;
+  //   } else {
+  //     pause();
+  //   }
+  // }, 20);
+  console.log(listRef.value.scrollTop);
+  listRef.value.scrollTop = listRef.value.scrollHeight + 100;
 };
+
+onUpdated(() => {
+  scrollToBottom();
+});
+
 function scrollHandler() {
   // 当前滚动位置 + 可视区域高度
   const div = listRef.value;
@@ -300,15 +307,15 @@ function scrollHandler() {
 
 onMounted(() => {
   serviceChat.subscribe(props.currItem.order_no);
-  serviceC2C.commit('setClearUnreadMessage', props.currItem.order_no)
-  serviceC2C.commit('setIsOpenningWindow', props.currItem.order_no)
+  serviceC2C.commit("setClearUnreadMessage", props.currItem.order_no);
+  serviceC2C.commit("setIsOpenningWindow", props.currItem.order_no);
 
   setTimeout(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, 100);
 });
 onBeforeUnmount(() => {
-  serviceC2C.commit('setClosedWindow', props.currItem.order_no)
+  serviceC2C.commit("setMessageList", []);
 });
 </script>
 
@@ -331,8 +338,8 @@ onBeforeUnmount(() => {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    color: #333;
-    padding-bottom: 1.64rem;
+    // background-color: red;
+    max-height: 13rem;
 
     .op_pic_box {
       display: flex;
@@ -465,7 +472,6 @@ onBeforeUnmount(() => {
       flex-direction: column;
       align-items: flex-end;
       justify-content: flex-start;
-      margin-top: 0.4rem;
 
       .my_pic {
         display: inline-block;

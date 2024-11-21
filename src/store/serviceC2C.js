@@ -5,11 +5,15 @@ export default createStore({
     orderNo: "",
     isConnected: false,
     messageList: [],
+    hasNewC2CMessage: {},
     unreadMessage: {},
     isOpenningWindow: {},
   },
   getters: {},
   mutations: {
+    setHasNewC2CMessage(state, data) {
+      state.hasNewC2CMessage[data.id] = data.item
+    },
     setIsOpenningWindow(state, id) {
       state.isOpenningWindow[id] = true;
     },
@@ -42,5 +46,4 @@ export default createStore({
       state.messageList.push(obj);
     },
   },
-}
-) 
+});

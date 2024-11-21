@@ -100,8 +100,7 @@ const changeActiveTab = (val) => {
 
   .order_tabs {
     width: 6.86rem;
-    height: 0.8rem;
-    margin-bottom: 0.4rem;
+    height: 1.2rem;
     display: flex;
     overflow-x: scroll;
 
