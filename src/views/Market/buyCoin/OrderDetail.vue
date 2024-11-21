@@ -337,7 +337,7 @@ getSessionToken()
 
 <style lang="less" scoped>
 .page-detail {
-    padding: 1.44rem 0.32rem 2.4rem 0.32rem;
+    padding: 1.44rem 0.32rem 1.6rem 0.32rem;
 
     .tabs {
         height: 0.8rem;

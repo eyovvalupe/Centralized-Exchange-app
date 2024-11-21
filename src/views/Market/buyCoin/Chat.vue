@@ -272,7 +272,7 @@ const scrollToBottom = () => {
   //   }
   // }, 20);
   console.log(listRef.value.scrollTop)
-  listRef.value.scrollTop = listRef.value.scrollHeight
+  listRef.value.scrollTop = listRef.value.scrollHeight + 100
 };
 
 onUpdated(() => {
@@ -305,7 +305,6 @@ function scrollHandler() {
 }
 
 onMounted(() => {
-  console.log('on mounted !!!')
   serviceChat.subscribe(props.currItem.order_no);
   serviceC2C.commit('setClearUnreadMessage', props.currItem.order_no)
   serviceC2C.commit('setIsOpenningWindow', props.currItem.order_no)
@@ -338,9 +337,8 @@ onBeforeUnmount(() => {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    color: #333;
-    padding-bottom: 1.64rem;
-    max-height: 14rem;
+    // background-color: red;
+    max-height: 13rem;
 
     .op_pic_box {
       display: flex;
