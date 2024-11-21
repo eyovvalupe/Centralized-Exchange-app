@@ -31,7 +31,6 @@ storeChat.dispatch('updateMessage').then(res => {
     chatLoading.value = false
 })
 const isConnected = computed(() => storeChat.state.isConnected)
-const messageList = computed(() => storeChat.getters.getMessageList)
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
 const scrollContainer = ref(null);
 const isReadMessage = (currTime) => {
@@ -88,11 +87,11 @@ onUnmounted(() => {
     storeChat.commit('setHistoryMsg', [])
     serviceChat.destroy();
 })
-// watch(hasNewMessage, (val) => {
-//     if (val.length) {
-//         scrollToBottom();
-//     }
-// }, { deep: true })
+watch(hasNewMessage, (val) => {
+    if (val.length) {
+        scrollToBottom();
+    }
+}, { deep: true })
 </script>
 
 <style lang="less">

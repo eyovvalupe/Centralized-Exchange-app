@@ -1,7 +1,7 @@
 <!-- 与商家的会话 -->
 <template>
   <div class="buycoin-chat">
-    <div ref="listRef" class="list">
+    <div ref="listRef" class="list" @touchstart="scrollToBottom">
       <div class="notice_msg">
         <div class="time">{{ messageList[0]?.time }}</div>
         <div class="content">
@@ -146,7 +146,7 @@
 
 <script setup>
 import io from "socket.io-client";
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, onUpdated } from "vue";
 import { showToast } from "vant";
 import { CHAT_WEBSOCKET, UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config";
 import store from "@/store";
@@ -181,7 +181,6 @@ const list = ref([]);
 const text = ref("");
 
 const messageList = computed(() => serviceC2C.state.messageList);
-console.log("message list in chat =============> ", messageList.value);
 
 // 已读回执
 const readLoading = ref(false);
@@ -263,16 +262,22 @@ const uploadImg = (event) => {
 };
 
 const scrollToBottom = () => {
-  let onl;
-  const { pause } = useIntervalFn(() => {
-    if (onl !== listRef.value.scrollHeight) {
-      onl = listRef.value.scrollHeight;
-      y.value = listRef.value.scrollHeight;
-    } else {
-      pause();
-    }
-  }, 500);
+  // let onl;
+  // const { pause } = useIntervalFn(() => {
+  //   if (onl !== listRef.value.scrollHeight) {
+  //     onl = listRef.value.scrollHeight;
+  //     y.value = listRef.value.scrollHeight;
+  //   } else {
+  //     pause();
+  //   }
+  // }, 20);
+  listRef.value.scrollTop = listRef.value.scrollHeight
 };
+
+onUpdated(() => {
+  scrollToBottom()
+})
+
 function scrollHandler() {
   // 当前滚动位置 + 可视区域高度
   const div = listRef.value;
@@ -299,6 +304,7 @@ function scrollHandler() {
 }
 
 onMounted(() => {
+  console.log('on mounted !!!')
   serviceChat.subscribe(props.currItem.order_no);
   serviceC2C.commit('setClearUnreadMessage', props.currItem.order_no)
   serviceC2C.commit('setIsOpenningWindow', props.currItem.order_no)
@@ -308,7 +314,7 @@ onMounted(() => {
   }, 100);
 });
 onBeforeUnmount(() => {
-  serviceC2C.commit('setClosedWindow', props.currItem.order_no)
+  serviceC2C.commit('setMessageList', [])
 });
 </script>
 
