@@ -1,20 +1,20 @@
 <!-- 与商家的会话 -->
 <template>
   <div class="buycoin-chat">
-    <div ref="listRef" class="list" @touchstart="scrollToBottom">
+    <div ref="listRef" class="list">
       <div class="notice_msg">
         <div class="time">{{ messageList[0]?.time }}</div>
         <div class="content">
           {{ $t("您已经成功下单") }}，{{ $t("请耐心等候商家付款") }}
         </div>
       </div>
-      <template v-for="item in messageList">
+      <div v-for="item in messageList">
         <!-- 提示 -->
         <!-- <div class="notice_msg">
           <div class="time">2024-10-28 10:25:08</div>
           <div class="content">您已经成功下单，请耐心等候商家付款</div>
         </div> -->
-        <template v-if="item.direction == 'send'">
+        <div v-if="item.direction == 'send'">
           <div class="flex justify-end w-full items-top mt-[0.4rem]">
             <!-- 我的文本 -->
 
@@ -49,8 +49,8 @@
             </div>
             <UserAvatar />
           </div>
-        </template>
-        <template v-else>
+        </div>
+        <div v-else>
           <!-- 对方文本 -->
           <div
             v-if="item.type == 'text'"
@@ -109,8 +109,8 @@
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
           </div>
-        </template>
-      </template>
+        </div>
+      </div>
     </div>
     <div
       class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white"
@@ -271,6 +271,7 @@ const scrollToBottom = () => {
   //     pause();
   //   }
   // }, 20);
+  console.log(listRef.value.scrollTop)
   listRef.value.scrollTop = listRef.value.scrollHeight
 };
 
@@ -339,6 +340,7 @@ onBeforeUnmount(() => {
     overflow-x: hidden;
     color: #333;
     padding-bottom: 1.64rem;
+    max-height: 14rem;
 
     .op_pic_box {
       display: flex;
