@@ -548,7 +548,6 @@ getSessionToken()
 
 <style lang="less" scoped>
 .positions {
-    padding: 0 0 1.6rem 0;
 
     .tr {
         padding: 0.2rem;

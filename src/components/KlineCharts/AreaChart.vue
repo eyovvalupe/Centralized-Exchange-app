@@ -36,7 +36,7 @@ const props = defineProps({
     }
 })
 const symbol = computed(() => props.symbol || '')
-watch(symbol, val => {
+watch(()=>props.symbol, val => {
     setTimeout(() => {
         initData()
     }, 0)
@@ -222,14 +222,14 @@ const getData = (params) => { // 获取数据
             }
         }
         _time(params).then(res => {
-            console.error(res)
+            console.log(res)
             if (res.code == 200) {
                 const dd = res.data.map(item => {
                     item.open = item.price
                     item.close = item.price
                     item.high = item.price
                     item.low = item.price
-                    item.timestamp *= 1000
+                    item.timestamp = item.timestamp * 1000
                     return item
                 }).reverse()
                 resolve(dd)

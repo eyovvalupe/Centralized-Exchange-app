@@ -98,7 +98,6 @@
         <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
             <div class="van-popup-custom-title">更新订单</div>
             <div class="order_sell_box">
-                
                 <div class="form">
                     <!-- <div class="item_box">
                         <div class="item_box_left" @click="showUpModelDialog = true">
@@ -132,29 +131,17 @@
                             </div>
                         </div> -->
                         <div class="item_box_right">
-                            <div class="subtitle">
-                                <span>止损</span>
-                            </div>
-                            <div class="item">
-                                <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
-                                    v-model="updateForm.stop_loss_price" type="number" class="ipt">
-                                <span class="num-tag"
-                                    @click="setPriceStop(20)" v-show="currStock.open_price"
-                                    :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                                        currStock.offset ==
-                                            'long' ? '-' : '+' }}20%</span>
-                                <span class="num-tag"
-                                    @click="setPriceStop(15)" v-show="currStock.open_price"
-                                    :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                                        currStock.offset ==
-                                            'long' ? '-' : '+' }}15%</span>
-                                <span class="num-tag"
-                                    @click="setPriceStop(10)" v-show="currStock.open_price"
-                                    :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{
-                                        currStock.offset ==
-                                            'long' ? '-' : '+' }}10%</span>
-                                <!-- <span v-if="updateForm.stop_loss_type == 'ratio'">%</span> -->
-                            </div>
+                            <FormItem
+                                input-type="number"
+                                title="止损" 
+                                :min="0"
+                                :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999"
+                                size="large"
+                                v-model="updateForm.stop_loss_price"
+                                :percent-tags="currStock.offset ==  'long' ? [{label:'-20%',value:20},{label:'-15%',value:15},{label:'-10%',value:10}] : [{label:'+20%',value:20},{label:'+15%',value:15},{label:'+10%',value:10}]"
+                                @percentTagClick="setPriceStop"
+                            />
+                            
                         </div>
                     </div>
                     <div class="subtitle">
@@ -215,6 +202,7 @@ import UnLogin from "@/components/UnLogin.vue"
 import SafePassword from "@/components/SafePassword.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
 import OrderInfo from './OrderInfo.vue'
+import FormItem from '@/components/Form/FormItem.vue';
 
 const loginfinish = () => {
 
@@ -461,7 +449,8 @@ const inputStop = key => { // 输入止盈止损
     }
 }
 const priceFocus3 = ref(false)
-const setPriceStop = i => { // 设置止损价格
+const setPriceStop = tag => { // 设置止损价格
+    const i = tag.value
     if (currStock.value.offset == 'long') { // 买涨
         updateForm.value.stop_loss_price = new Decimal(currStock.value.open_price).mul(100 - i).div(100).toNumber()
     } else { // 买跌
@@ -557,7 +546,7 @@ getSessionToken()
 
 <style lang="less" scoped>
 .positions {
-    padding:0 0.32rem 1.6rem 0.32rem;
+    padding:0 0.32rem ;
     
     .tr {
         padding: 0.24rem 0;

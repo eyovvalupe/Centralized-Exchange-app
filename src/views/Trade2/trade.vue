@@ -32,12 +32,12 @@
         </div>
         <Swipe :autoplay="0" v-if="showSwipe" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
             <SwipeItem>
-                <div class="trade_body" v-if="loadedTab.includes(0)">
+                <div class="trade_body" ref="stockTradeBody" v-if="loadedTab.includes(0)" @scroll="tradeBodyScroll('stockTradeBody')">
                     <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" />
                 </div>
             </SwipeItem>
             <SwipeItem>
-                <div class="trade_body" v-if="loadedTab.includes(1)">
+                <div class="trade_body" ref="contractTradeBody" v-if="loadedTab.includes(1)"  @scroll="tradeBodyScroll('contractTradeBody')">
                     <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" />
                 </div>
             </SwipeItem>
@@ -148,6 +148,7 @@ import { _search, _watchlist } from "@/api/api"
 import NoData from "@/components/NoData.vue"
 import { useRoute } from "vue-router"
 import OptionCategory from "@/components/OptionCategory.vue";
+import eventBus from '@/utils/eventBus'
 
 const AiBlockRef = ref()
 const IpoBlockRef = ref()
@@ -155,6 +156,9 @@ const IpoBlockRef = ref()
 const route = useRoute()
 const openTab = ref(false)
 const token = computed(() => store.state.token)
+
+const stockTradeBody = ref(null)
+const contractTradeBody = ref(null)
 
 // 下拉刷新
 const disabled = ref(false)
@@ -411,6 +415,16 @@ onActivated(() => {
 onDeactivated(() => {
     pageActive.value = false
 })
+
+const tradeBodyScroll = (refName)=>{
+    if(refName == 'stockTradeBody'){
+
+    }else if(refName == 'contractTradeBody'){
+        if(contractTradeBody.value.scrollTop + 10 > contractTradeBody.value.scrollHeight - contractTradeBody.value.offsetHeight){
+            eventBus.emit("contractTradeBodyScrollToBottom")
+        }
+    }
+}
 </script>
 
 <style lang="less" scoped>

@@ -11,7 +11,7 @@
             :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓" name="0">
                 <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
-                    <Opening @showNavDialog="showNavDialog" ref="OpeningRef" />
+                    <Opening @showNavDialog="showNavDialog" @success="onChange('1')" ref="OpeningRef" />
                 </div>
             </Tab>
             <Tab title="持仓" name="1">
@@ -133,4 +133,5 @@ const openDate = () => {
         }
     }
 }
+
 </style>

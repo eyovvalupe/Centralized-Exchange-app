@@ -245,7 +245,7 @@
 
     <!-- 股票行情弹窗 -->
     <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
-        <StockPopup style="height:90vh" />
+        <StockPopup style="height:90vh" v-if="showStockModel" />
     </Popup>
 
     <!-- 止盈类型选择 -->
@@ -379,7 +379,7 @@ const goDialogSearch = (market) => {
 }
 
 
-const emits = defineEmits(['showNavDialog'])
+const emits = defineEmits(['showNavDialog','success'])
 const showNavDialog = () => {
     emits('showNavDialog')
 }
@@ -651,6 +651,7 @@ const submit1 = () => {
 
     safePass.value = ''
     showModel.value = true
+    getSessionToken()
 }
 
 // 全部
@@ -831,6 +832,7 @@ const submitForm = (s) => {
             showModel.value = false
             store.dispatch('updateWallet')
             showToast('开仓成功')
+            emits("success")
             form1.value.volume = ''
             sliderValue.value = 0
         }

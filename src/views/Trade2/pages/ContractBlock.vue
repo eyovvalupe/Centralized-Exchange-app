@@ -98,6 +98,6 @@ defineExpose({
     .stock_tab-body {
         padding: 0 0.32rem;
     }
-
 }
+
 </style>

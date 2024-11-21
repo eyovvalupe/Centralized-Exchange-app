@@ -274,7 +274,7 @@
 import { Icon, Popup, showToast } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import store from "@/store";
 import AreaChart from "@/components/KlineCharts/AreaChart.vue";
 import KlineChart from "@/components/KlineCharts/KlineChart.vue";

@@ -159,7 +159,7 @@
 
         <!-- 行情弹窗 -->
         <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
-            <StockPopup style="height:90vh" />
+            <StockPopup style="height:90vh" v-if="showStockModel" />
         </Popup>
     </div>
 </template>

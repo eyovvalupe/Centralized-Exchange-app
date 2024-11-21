@@ -140,7 +140,7 @@
 
         <!-- 股票行情弹窗 -->
         <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
-            <StockPopup type="ai" style="height:90vh" />
+            <StockPopup type="ai" style="height:90vh" v-if="showStockModel" />
         </Popup>
 
         <!-- ai列表 -->

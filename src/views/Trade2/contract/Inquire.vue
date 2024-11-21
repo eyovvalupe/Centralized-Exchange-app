@@ -57,7 +57,7 @@ import { _futuresList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
 import OrderInfo from '../components/OrderInfo.vue'
 import Decimal from 'decimal.js';
-
+import eventBus from '@/utils/eventBus'
 
 const loginfinish = () => {
     setTimeout(() => {
@@ -150,28 +150,15 @@ const OpeningForm = item => {
     showInfo.value = true
 }
 
-let moreDom = null
-const totalHeight = window.innerHeight || document.documentElement.clientHeight;
-const scrolHandle = () => {
-    const rect = moreDom.getBoundingClientRect()
-    if (rect.top <= totalHeight) {
+onMounted(() => {
+    eventBus.on("contractTradeBodyScrollToBottom",()=>{
         // 加载更多
         getList()
-    }
-}
-onMounted(() => {
-    setTimeout(() => {
-        try {
-            moreDom = document.querySelector('.loading_more')
-            document.querySelector('.page').addEventListener('scroll', scrolHandle)
-        } catch {
-        }
-    }, 500)
+    })
 })
 onUnmounted(() => {
-    try {
-        document.querySelector('.page').removeEventListener('scroll', scrolHandle)
-    } catch { }
+    eventBus.off("contractTradeBodyScrollToBottom")
+   
 })
 
 defineExpose({
@@ -181,7 +168,6 @@ defineExpose({
 
 <style lang="less" scoped>
 .inquire {
-    padding:0 0 1.6rem 0;
     .tr {
         padding: 0.2rem;
         background-color: #F5F7FC;

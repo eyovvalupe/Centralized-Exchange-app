@@ -12,19 +12,19 @@
                     <span class="type_tab_text">买跌</span>
                 </div>
             </div>
-
+            
             <Tabs key="form" v-if="!pageLoading" class="van-tabs--sub" @change="e => activeTab = e" v-model="activeTab"
                 :swipeable="false" animated :color="'#014CFA'" shrink>
                 <Tab title="市价" name="0">
-                    <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0"
+                    <OpeningForm @showNavDialog="showNavDialog" @success="onSuccess" v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0"
                         :activeTab="activeTab" :activeType="activeType" />
                 </Tab>
                 <Tab title="限价" name="1">
-                    <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1"
+                    <OpeningForm @showNavDialog="showNavDialog" @success="onSuccess" v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1"
                         :activeTab="activeTab" :activeType="activeType" />
                 </Tab>
                 <Tab title="止盈/止损" name="2">
-                    <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2"
+                    <OpeningForm @showNavDialog="showNavDialog" @success="onSuccess" v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2"
                         :activeTab="activeTab" :activeType="activeType" />
                 </Tab>
             </Tabs>
@@ -44,7 +44,7 @@ import { useRoute } from "vue-router"
 import OpeningForm from "./OpeningForm.vue"
 
 
-const emits = defineEmits(['showNavDialog'])
+const emits = defineEmits(['showNavDialog','success'])
 const showNavDialog = () => {
     emits('showNavDialog')
 }
@@ -53,8 +53,6 @@ const route = useRoute()
 const OpeningForm0Ref = ref()
 const OpeningForm1Ref = ref()
 const OpeningForm2Ref = ref()
-
-
 
 const activeType = ref(1) // 1-买涨 2-买跌
 // url参数处理
@@ -78,7 +76,9 @@ const choose = (item) => {
     OpeningForm2Ref.value && OpeningForm2Ref.value.choose(item)
 }
 
-
+const onSuccess = ()=>{
+    emits("success")
+}
 
 defineExpose({
     choose
