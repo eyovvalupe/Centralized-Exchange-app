@@ -111,14 +111,18 @@ class Service {
         // store.commit('setUnreadMessage', message.data[0]['order_no'])
         // console.log("unread ===========>", 'storeC2C.state.unreadMessage')
         const arr = message.data
-        if (storeC2C.state.messageList.length) {
+        if (!storeC2C.state.messageList.length) {
           const index = storeC2C.state.messageList.findIndex(fitem => fitem.isTmp)
           if (index !== -1 && arr[0].type == 'img') {
             storeC2C.state.messageList.splice(index, 1)
           }
-          store.commit('pushMessageList', ...arr)
+          storeC2C.commit('setMessageList', arr)
         } else {
-          store.commit('setMessageList', arr)
+          const index = storeC2C.state.messageList.findIndex(fitem => fitem.isTmp)
+          if (index !== -1 && arr[0].type == 'img') {
+            storeC2C.state.messageList.splice(index, 1)
+          }
+          storeC2C.commit('setMessageList', [...storeC2C.state.messageList, ...arr])
         }
       });
     }

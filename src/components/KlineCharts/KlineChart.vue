@@ -29,6 +29,7 @@ import { useSocket } from '@/utils/ws'
 import store from "@/store";
 import { useRoute } from "vue-router"
 import Loading from "../LoadingMore"
+import { _maxTail } from "@/utils/index"
 
 const route = useRoute()
 const { startSocket } = useSocket()
@@ -112,6 +113,8 @@ const initData = async () => { // 初始化数据
             } catch {
                 num = 2
             }
+            const maxTail = _maxTail(datas[0].high)
+            if (num > maxTail) num = maxTail
             chart.setPriceVolumePrecision(num, 2)
             chart.applyNewData(datas) // 重设图表数据
             if (datas[0] && datas[0].timezone) {
@@ -144,7 +147,6 @@ const subs = () => { // 订阅新数据
         socket && socket.off('kline')
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
-            console.log('kline', res)
             if (res.code == 200 && res.symbol == props.symbol && (res.period == props.period || res.period == currPeriod.value)) {
 
                 res.data.forEach(a => {

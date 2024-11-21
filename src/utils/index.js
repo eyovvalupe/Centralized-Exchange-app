@@ -1,5 +1,23 @@
 // 常用工具类
 
+// 根据值来获取最大小数位数
+export const _maxTail = num => {
+  let tail = 100
+  if (num > 10) {
+    tail = 6
+  }
+  if (num > 1000) {
+    tail = 4
+  }
+  if (num > 10000) {
+    tail = 2
+  }
+  if (num > 100000) {
+    tail = 0
+  }
+  return tail
+}
+
 // 压缩图片
 export const _compressImg = (base64, multiple, fn) => {
   // , useImg, targetObj

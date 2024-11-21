@@ -52,7 +52,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 0">
-        <List />
+        <List :from="'orderCenter'" />
       </div>
 
       <div class="tab" v-if="activeTab == 1">
@@ -68,7 +68,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 4">
-        <IPOStock ref="IPOStockRef" :from="'assets'"/>
+        <IPOStock ref="IPOStockRef" :from="'assets'" />
       </div>
     </div>
   </div>
@@ -100,8 +100,7 @@ const changeActiveTab = (val) => {
 
   .order_tabs {
     width: 6.86rem;
-    height: 0.8rem;
-    margin-bottom: 0.4rem;
+    height: 1.2rem;
     display: flex;
     overflow-x: scroll;
 

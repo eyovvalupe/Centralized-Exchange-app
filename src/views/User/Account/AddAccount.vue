@@ -85,6 +85,9 @@
       class="popup_container"
     >
       <div class="bottoms">
+        <div class="absolute top-[0.2rem] right-[0.5rem]">
+          <CrossIcon @click="showCrypto = false" />
+        </div>
         <div
           @click="chooseCurrency(item)"
           class="bottom"
@@ -100,7 +103,6 @@
           </div>
           <span>{{ item }}</span>
         </div>
-        <Icon @click="showCrypto = false" class="close" name="cross" />
       </div>
     </Popup>
     <!-- 网络 -->
@@ -129,14 +131,7 @@
 </template>
 
 <script setup>
-import {
-  Tabs,
-  Tab,
-  Icon,
-  Button,
-  Popup,
-  showToast,
-} from "vant";
+import { Tabs, Tab, Icon, Button, Popup, showToast } from "vant";
 import store from "@/store";
 import { computed, ref, onMounted } from "vue";
 import router from "@/router";
@@ -146,12 +141,13 @@ import { _userinfo, _addAccount, _cryptoCoin } from "@/api/api";
 import Bank from "./Bank.vue";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import Top from "@/components/Top.vue";
+import CrossIcon from "./components/Icons/CrossIcon.vue";
 
 const route = useRoute();
 const coinMap = computed(() => store.state.coinMap || {});
 const showSuccessToast = computed(() => store.state.showSuccessToast || false);
 const googleRef = ref();
-const successToast = ref(false)
+const successToast = ref(false);
 const loading = ref(false);
 const form = ref({
   channel: "crypto",
@@ -235,9 +231,9 @@ const submit = (googleCode) => {
   _addAccount(params)
     .then((res) => {
       if (res.code == 200) {
-        store.commit('setShowSuccessToast', true)
+        store.commit("setShowSuccessToast", true);
         setTimeout(() => {
-          store.commit('setShowSuccessToast', false)
+          store.commit("setShowSuccessToast", false);
         }, 1000);
         setTimeout(() => {
           router.back();
@@ -277,7 +273,7 @@ getSessionToken();
       width: 100%;
       height: 50vh;
       position: relative;
-      padding: 1.12rem 0;
+      padding: 0.7rem 0;
 
       :deep(.van-popup--bottom.van-popup--round) {
         width: 6.86rem;
@@ -296,7 +292,8 @@ getSessionToken();
         height: 1.12rem;
         display: flex;
         align-items: center;
-        justify-content: center;
+        // justify-content: center;
+        padding-left: 3rem;
         overflow: hidden;
         border-bottom: 0.02rem solid #f5f5f5;
 

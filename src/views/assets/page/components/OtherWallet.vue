@@ -45,9 +45,12 @@ const props = defineProps({
   },
 });
 
+const emits = defineEmits(['toggleShow'])
+
 const showInfo = ref(false);
 
 const toggleShow = () => {
   showInfo.value = !showInfo.value;
+  emits('toggleShow', showInfo.value)
 };
 </script>
