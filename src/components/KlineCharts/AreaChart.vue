@@ -22,6 +22,7 @@ import { klineConfig } from './kline.conf';
 import { _time } from "@/api/api"
 import { useSocket } from '@/utils/ws'
 import { Loading } from "vant"
+import { _maxTail } from "@/utils/index"
 
 const { startSocket } = useSocket()
 let socket = null
@@ -169,8 +170,16 @@ const initData = async () => {
             } catch {
                 num = 2
             }
+            const maxTail = _maxTail(datas[0].high)
+            if (num > maxTail) num = maxTail
             chart.setPriceVolumePrecision(num, 2)
-            chart.applyNewData(datas) // 重设图表数据
+            chart.applyNewData(datas.map(item => {
+                item.timestamp = item.timestamp || item.ts
+                return item
+            })) // 重设图表数据
+            if (datas[0] && datas[0].timezone) {
+                chart.setTimezone(datas[0].timezone)
+            }
             subs()
             timeout = setTimeout(() => {
                 chart.resize()
@@ -186,15 +195,17 @@ const subs = () => { // 订阅新数据
         socket && socket.off('time')
         socket && socket.on('time', res => {
             if (res.code == 200 && res.symbol == props.symbol) {
-                const item = res.data[0]
-                chart.updateData({
-                    ...item,
-                    open: item.price,
-                    close: item.price,
-                    high: item.price,
-                    low: item.price,
-                    timestamp: item.timestamp * 1000
+                res.data.forEach(item => {
+                    chart.updateData({
+                        ...item,
+                        open: item.price,
+                        close: item.price,
+                        high: item.price,
+                        low: item.price,
+                        timestamp: item.timestamp || item.ts
+                    })
                 })
+                chart.updateData()
             }
         })
     })
