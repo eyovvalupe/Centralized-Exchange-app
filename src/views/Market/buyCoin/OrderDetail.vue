@@ -9,7 +9,7 @@
             </div>
             {{ console.log(currItem) }}
             <div @click="active = 2" class="tab" :class="{ 'tab_active': active == 2 }">
-                <span style="position: relative;">
+                <span style="position: relative; top: 0.1rem;">
                     联系商家
                     <div class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center">{{ unreadMessage[currItem.order_no] }}</div>
                     <!-- <div class="hint" v-if="c2cUnread[currItem.order_no] || currItem.unread">{{

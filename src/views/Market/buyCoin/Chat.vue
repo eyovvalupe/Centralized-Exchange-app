@@ -73,15 +73,16 @@
             :id="`a${item.msgid}`"
             class="op_text_box"
           >
-            <div class="avatar">
-              <!-- <div class="pointer"></div> -->
+            <!-- <div class="avatar">
               {{
                 props.currItem.merchant_name
                   ? props.currItem.merchant_name.slice(0, 1)
                   : ""
               }}
+            </div> -->
+            <div class="mr-[0.2rem]">
+              <DialogCIcon />
             </div>
-
             <div class="op_text">
               <div class="van-popover__arrow" />
               <div class="op_text_content" v-html="item.content" />
@@ -95,15 +96,16 @@
             :id="`a${item.msgid}`"
             class="op_pic_box"
           >
-            <div class="avatar">
-              <!-- <div class="pointer"></div> -->
+            <!-- <div class="avatar">
               {{
                 props.currItem.merchant_name
                   ? props.currItem.merchant_name.slice(0, 1)
                   : ""
               }}
+            </div> -->
+            <div class="mr-[0.2rem]">
+              <DialogCIcon />
             </div>
-
             <div class="op_pic">
               <img class="op_pic_content" :src="item.content" alt="img" />
               <!-- <div class="time">{{ item.time }}</div> -->
@@ -185,7 +187,6 @@ const messageList = computed(() => serviceC2C.state.messageList);
 // 已读回执
 const readLoading = ref(false);
 const c2cLasttime = computed(() => store.state.c2cLasttime || {});
-
 
 const sendText = () => {
   if (text.value !== "") {
@@ -271,13 +272,13 @@ const scrollToBottom = () => {
   //     pause();
   //   }
   // }, 20);
-  console.log(listRef.value.scrollTop)
-  listRef.value.scrollTop = listRef.value.scrollHeight + 100
+  console.log(listRef.value.scrollTop);
+  listRef.value.scrollTop = listRef.value.scrollHeight + 100;
 };
 
 onUpdated(() => {
-  scrollToBottom()
-})
+  scrollToBottom();
+});
 
 function scrollHandler() {
   // 当前滚动位置 + 可视区域高度
@@ -306,15 +307,15 @@ function scrollHandler() {
 
 onMounted(() => {
   serviceChat.subscribe(props.currItem.order_no);
-  serviceC2C.commit('setClearUnreadMessage', props.currItem.order_no)
-  serviceC2C.commit('setIsOpenningWindow', props.currItem.order_no)
+  serviceC2C.commit("setClearUnreadMessage", props.currItem.order_no);
+  serviceC2C.commit("setIsOpenningWindow", props.currItem.order_no);
 
   setTimeout(() => {
-    scrollToBottom()
+    scrollToBottom();
   }, 100);
 });
 onBeforeUnmount(() => {
-  serviceC2C.commit('setMessageList', [])
+  serviceC2C.commit("setMessageList", []);
 });
 </script>
 
@@ -471,7 +472,6 @@ onBeforeUnmount(() => {
       flex-direction: column;
       align-items: flex-end;
       justify-content: flex-start;
-      margin-top: 0.4rem;
 
       .my_pic {
         display: inline-block;
