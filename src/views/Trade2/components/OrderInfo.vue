@@ -2,7 +2,7 @@
     <div>
         <Top title="股票订单" :backFunc="backFunc" v-if="type == 'stock'" />
         <Top title="合约订单" :backFunc="backFunc" v-else-if="type == 'contract'" />
-        
+
         <div class="scroller">
             <div class="stock-info">
                 <div class="stock-info__head">
@@ -23,8 +23,8 @@
                 </div>
             </div>
             <div class="info_boxs">
-                <div class="info_box">
-                    <div>可售{{type == 'stock' && '股票' || type == 'contract' && '张数' || ''}}</div>
+                <div class="info_box" v-if="!finalStatus">
+                    <div>可售{{ type == 'stock' && '股票' || type == 'contract' && '张数' || '' }}</div>
                     <div class="amount">{{ currStock.unsold_volume || '--' }}</div>
                 </div>
                 <div class="info_box">
@@ -40,9 +40,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="order_info_box">
-                
+
                 <div class="info_item">
                     <div class="name">开仓</div>
                     <div class="val_box">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
                 <div class="info_item">
-                    <div class="name">开仓{{type == 'contract' ? '张数' : '数量'}}</div>
+                    <div class="name">开仓{{ type == 'contract' ? '张数' : '数量' }}</div>
                     <div class="val_box">
                         <div class="text">{{ currStock.open_volume || '--' }}</div>
                     </div>
@@ -92,31 +92,31 @@
                     </div>
 
                 </div>
-                <div class="info_item">
+                <div class="info_item" v-if="!finalStatus">
                     <div class="name">订单价值</div>
                     <div class="val_box">
                         <div class="text">{{ currStock.order_value || '--' }}</div>
                     </div>
                 </div>
-                <div class="info_item">
+                <div class="info_item" v-if="!finalStatus">
                     <div class="name">保证金</div>
                     <div class="val_box">
                         <div class="text">{{ currStock.margin || '0' }}</div>
                     </div>
                 </div>
-                <div class="info_item">
+                <!-- <div class="info_item">
                     <div class="name">持仓利息</div>
                     <div class="val_box">
                         <div class="text">0</div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
         </div>
 
         <div class="btns">
-        
-            <div class="btn btn2" @click="emit('update',currStock)"
+
+            <div class="btn btn2" @click="emit('update', currStock)"
                 v-if="['none', 'lock', 'open'].includes(currStock.status)">
                 <div class="btn_icon">
                     <img src="/static/img/trade/update.png" alt="img">
@@ -129,8 +129,7 @@
                 </div>
                 <div>更新</div>
             </div>
-            <div class="btn btn3" @click="emit('sell',currStock)"
-                v-if="['open'].includes(currStock.status)">
+            <div class="btn btn3" @click="emit('sell', currStock)" v-if="['open'].includes(currStock.status)">
                 <div class="btn_icon">
                     <img src="/static/img/trade/close.png" alt="img">
                 </div>
@@ -142,8 +141,7 @@
                 </div>
                 <div>平仓</div>
             </div>
-            <div class="btn btn4" @click="emit('cancel',currStock)" v-if="currStock.status == 'none'"
-            >
+            <div class="btn btn4" @click="emit('cancel', currStock)" v-if="currStock.status == 'none'">
                 <div class="btn_icon">
                     <img src="/static/img/trade/cancel.png" alt="img">
                 </div>
@@ -165,28 +163,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { _copyTxt } from "@/utils/index"
-import { showToast,Popup } from 'vant';
+import { showToast, Popup } from 'vant';
 import store from "@/store";
 import Top from "@/components/Top.vue"
 import Decimal from 'decimal.js';
 import StockPopup from "../../trade/StockPopup.vue"
 
-const emit = defineEmits(['update','sell','cancel','back'])
+const emit = defineEmits(['update', 'sell', 'cancel', 'back'])
 const props = defineProps({
-    type:{
-        type:String,
-        default:'stock' //stock 股票 contract 合约
+    type: {
+        type: String,
+        default: 'stock' //stock 股票 contract 合约
     },
-    currStock:{
-        type:Object,
-        default(){
+    currStock: {
+        type: Object,
+        default() {
             return {}
         }
     }
 })
-const backFunc = ()=>{
+const backFunc = () => {
     emit('back')
 }
 const getRatio = (num) => {
@@ -195,7 +193,7 @@ const getRatio = (num) => {
 }
 
 const showStockModel = ref(false)
-const openStockModel = (currStock)=>{
+const openStockModel = (currStock) => {
     store.commit('setCurrStock', currStock)
     showStockModel.value = true
 }
@@ -207,6 +205,10 @@ const statusMap = ref({ // 仓位状态
     'fail': '失败',
     'cancel': '已取消'
 })
+const finalStatus = computed(() => {
+    return ['done', 'fail', 'cancel'].includes(props.currStock.status)
+})
+
 const stopMap = ref({ // 止损类型
     'price': '价格',
     'amount': '金额',
@@ -235,33 +237,37 @@ const copy = text => {
 </script>
 
 <style lang="less" scoped>
-.scroller{
-    height:calc(100vh - 3.2rem);
+.scroller {
+    height: calc(100vh - 3.2rem);
     overflow-y: auto;
     margin-top: 1.12rem;
 }
 
-.stock-info{
+.stock-info {
     background-color: #F5F7FC;
     border-radius: 0.32rem;
-    margin:0.2rem 0.32rem 0 0.32rem;
+    margin: 0.2rem 0.32rem 0 0.32rem;
     padding: 0.2rem 0.32rem 0.6rem 0.32rem;
-    &__head{
+
+    &__head {
         display: flex;
         height: 0.4rem;
         justify-content: space-between;
     }
-    &__hl{
+
+    &__hl {
         display: flex;
         align-items: center;
     }
-    &__symbol{
+
+    &__symbol {
         font-size: 0.3rem;
         font-weight: 600;
     }
-    &__status{
+
+    &__status {
         border: 1px solid #7E99D6;
-        color:#7E99D6;
+        color: #7E99D6;
         padding: 0.04rem 0.08rem;
         height: 0.3rem;
         line-height: 100%;
@@ -272,19 +278,23 @@ const copy = text => {
         display: flex;
         align-items: center;
     }
-    &__trend{
+
+    &__trend {
         width: 0.4rem;
         height: 0.4rem;
-        img{
+
+        img {
             width: 100%;
             height: 100%;
         }
     }
-    &__order_no{
+
+    &__order_no {
         display: flex;
         align-items: center;
-        color:#8F92A1;
-        span{
+        color: #8F92A1;
+
+        span {
             font-size: 0.28rem;
         }
     }
@@ -293,7 +303,8 @@ const copy = text => {
         width: 0.24rem;
         height: 0.24rem;
         margin-left: 0.12rem;
-        img{
+
+        img {
             width: 100%;
             height: 100%;
         }
@@ -312,6 +323,7 @@ const copy = text => {
     background-color: #fff;
     margin: -0.5rem 0.32rem 0 0.32rem;
     z-index: 1;
+
     .info_box {
         flex: 1;
         display: flex;
@@ -322,6 +334,7 @@ const copy = text => {
         font-size: 0.28rem;
         line-height: 0.44rem;
         position: relative;
+
         .amount {
             flex: 1;
             display: flex;
@@ -335,20 +348,22 @@ const copy = text => {
             font-size: 0.36rem;
         }
     }
-    .info_box + .info_box::after{
+
+    .info_box+.info_box::after {
         content: '';
         width: 1px;
         height: 0.9rem;
         background-color: #EFF3F8;
         position: absolute;
-        left:0;
-        top:50%;
-        margin-top:-0.45rem;
+        left: 0;
+        top: 50%;
+        margin-top: -0.45rem;
     }
 
 }
+
 .order_info_box {
-    padding:0.16rem 0.64rem 0.32rem 0.64rem;
+    padding: 0.16rem 0.64rem 0.32rem 0.64rem;
 
     .title {
         text-align: center;
@@ -356,7 +371,7 @@ const copy = text => {
         color: #121826;
         font-weight: bold;
     }
-    
+
 
     .info_item {
         display: flex;
@@ -378,7 +393,7 @@ const copy = text => {
             font-size: 0.28rem;
             color: #121826;
 
-            
+
             .tag {
                 color: #014CFA;
                 font-size: 0.24rem;
@@ -412,15 +427,16 @@ const copy = text => {
         }
     }
 
-    
+
 }
 
 .btns {
-   
+
     display: flex;
     align-content: center;
     justify-content: center;
     padding-top: 0.32rem;
+
     .btn {
         width: 2.1532rem;
         height: 1.4rem;
@@ -435,6 +451,7 @@ const copy = text => {
         line-height: 100%;
         border-radius: 0.32rem;
         margin: 0 0.1rem;
+
         .btn_icon {
             width: 0.4rem;
             height: 0.4rem;
@@ -452,8 +469,7 @@ const copy = text => {
 
     .disabled_btn {
         background-color: #EFF3F8;
-        color:#D0D8E2;
+        color: #D0D8E2;
     }
 }
-
 </style>

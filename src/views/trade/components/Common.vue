@@ -482,7 +482,6 @@ const handleBlur = (val) => {
       const symbol = matchName.symbol;
       _basic({ symbol }).then(res => {
         if (res.code == 200 && res.data) {
-          console.log(res.data)
           stockCo.value = [res.data];
           isFocused.value = null
           matchName.symbol = matchName.symbolHtml = value.value = ''
