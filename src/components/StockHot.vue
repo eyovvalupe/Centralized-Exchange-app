@@ -88,22 +88,22 @@ const openRecommendList = () => {
   _watchlistDefault()
     .then((res) => {
         // 股票
-        // if (res.data?.stock) {
-        //   const arr = res.data.stock.map((item) => {
-        //     const target = marketSrockRecommendList.value.find(
-        //       (a) => a.symbol == item.symbol
-        //     );
-        //     return target || item;
-        //   });
-        //   store.commit("setMarketSrockRecommendList", arr || []);
-        //   setTimeout(() => {
-        //     store.dispatch("subList", {
-        //       commitKey: "setMarketSrockRecommendList",
-        //       listKey: "marketSrockRecommendList",
-        //     });
-        //   }, 500);
-        // }
-        // console.log(res.data)
+        if (res.data && res.data.stock) {
+          const arr = res.data.stock.map((item) => {
+            const target = marketSrockRecommendList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            return target || item;
+          });
+          console.log(arr)
+          store.commit("setMarketSrockRecommendList", arr || []);
+          setTimeout(() => {
+            store.dispatch("subList", {
+              commitKey: "setMarketSrockRecommendList",
+              listKey: "marketSrockRecommendList",
+            });
+          }, 500);
+        }
     })
     .finally(() => {
       recommendLoading.value = false;

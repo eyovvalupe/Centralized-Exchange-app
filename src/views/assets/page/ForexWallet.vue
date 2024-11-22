@@ -48,11 +48,11 @@ const wallet = computed(() => {
   return elseWalletMap.value['forex']
 })
 
-const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
+
 const getAssets = () => {
   if (!token.value) return
   // emits('setLoading', true)
-  store.dispatch('updateWallet').finally(() => {
+  store.dispatch('updateWallet','forex').finally(() => {
     emits('setLoading', false)
   })
   // store.dispatch('updateOrderHint')

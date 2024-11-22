@@ -9,7 +9,7 @@
         @click="goInfo(item)"
         :key="i"
       >
-        <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div>
+        <!-- <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div> -->
         <div class="symbol">{{ item.symbol }}</div>
         <div class="name">{{ item.name || "--" }}</div>
         <div class="price">{{ item.price ? fixLittleNum(item.price, 2) : "--" }}</div>
@@ -124,7 +124,7 @@ const collect = (item) => {
       .then((res) => {
         if (res.code == 200) {
           setTimeout(() => {
-            showToast(item.watchlist ? "移除成功" : "添加成功");
+            showToast(item.watchlist ? "添加成功" : "移除成功");
           }, 300);
           const i = props.list.find((a) => a.symbol == item.symbol);
           if (i) {
@@ -220,7 +220,7 @@ const collect = (item) => {
         position: absolute;
         width: 1.6rem;
         height: 0.5rem;
-        right: -0.15rem;
+        right: 0;
         bottom: 0.25rem;
       }
     }

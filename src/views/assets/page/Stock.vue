@@ -150,17 +150,17 @@ getConfig()
         flex-direction: column;
         }
         .nav_label{
-        color: #8F92A1;
-        font-size: 0.28rem;
-        line-height: 100%;
+            color: #8F92A1;
+            font-size: 0.28rem;
+            line-height: 100%;
         }
 
         .num {
-        color: #061023;
-        font-size: 0.3rem;
-        font-weight: 600;
-        line-height: 0.3rem; 
-        margin-top: 0.2rem;
+            color: #061023;
+            font-size: 0.3rem;
+            font-weight: 600;
+            line-height: 0.3rem; 
+            margin-top: 0.2rem;
 
         }
     }

@@ -256,7 +256,7 @@ function formatDate(date) {
 
 <style lang="less" scoped>
 .market_stock_block {
-  height: 4.38rem;
+  height: 4.18rem;
   border-radius: 0.64rem;
   background-image: linear-gradient(to bottom, #ffffff, #f5f7fc);
 

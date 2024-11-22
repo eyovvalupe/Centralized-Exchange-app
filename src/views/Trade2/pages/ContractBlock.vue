@@ -29,7 +29,7 @@ import { ref, onMounted, nextTick } from "vue"
 import Opening from "../contract/Opening.vue"
 import Positions from "../contract/Positions.vue"
 import Inquire from "../contract/Inquire.vue"
-
+import eventBus from '@/utils/eventBus'
 
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
@@ -76,6 +76,17 @@ const handleMounted = () => {
 onMounted(() => {
     pageLoading.value = false
     onChange(active.value)
+
+    eventBus.on("contractTradeBodyScrollToBottom",()=>{
+        if(active.value == '2'){
+            // 加载更多
+            InquireRef.value && InquireRef.value.getList()
+        }
+    })
+})
+onUnmounted(() => {
+    eventBus.off("contractTradeBodyScrollToBottom")
+   
 })
 
 defineExpose({

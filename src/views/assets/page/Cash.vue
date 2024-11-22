@@ -40,13 +40,12 @@ const token = computed(() => store.state.token || '')
 const hidden = ref(false)
 
 // 刷新现金钱包
-const assets = computed(() => store.state.assets || {})
 const wallet = computed(() => store.state.wallet || []) // 钱包
-const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == 'main') || {}) // 主钱包
+
 const getAssets = () => {
   if (!token.value) return
   // emits('setLoading', true)
-  store.dispatch('updateWallet').finally(() => {
+  store.dispatch('updateWallet',"money").finally(() => {
     emits('setLoading', false)
   })
   // store.dispatch('updateOrderHint')
