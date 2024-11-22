@@ -13,7 +13,6 @@
         @touchmove.stop=""
         @touchend.stop=""
       >
-        
         <HeaderTabs type="card" v-model:active="activeTab" :tabs="[$t('现金账户'), $t('股票账户'), $t('合约账户'),$t('外汇账户'),$t('大宗账户')]" @change="changeActiveTab(activeTab)" />
       </div> 
 

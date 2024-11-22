@@ -7,7 +7,28 @@ const { startSocket } = useSocket()
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': ['marketRecommndList', 'marketRecommndContractList','contractList', 'marketRecommndStockList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketAiList', 'marketWatchList', 'marketSrockRecommendList', 'marketContractRecommendList'],
-    'market': ['marketWatchList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketSrockRecommendList', 'marketContractRecommendList', 'contractList', 'marketAiList', 'marketAiHisList', 'marketAi24List', 'marketAiGridList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList'],
+    'market': [
+        'marketWatchList',
+        'marketVolumeList',
+        'marketUpList',
+        'marketDownList',
+        'marketSrockRecommendList',
+        'marketContractRecommendList',
+        'contractList',
+        'marketAiList',
+        'marketAiHisList',
+        'marketAi24List',
+        'marketAiGridList',
+        'marketStockUsIndexList',
+        'marketStockIndiaIndexList',
+        'marketStockJapanIndexList',
+        'marketStockKoreaIndexList',
+
+        'marketStockUsDataList',
+        'marketStockIndiaDataList',
+        'marketStockJapanDataList',
+        'marketStockKoreaDataList',
+    ],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
 }
 
@@ -33,6 +54,7 @@ export default {
         marketRecommndContractList: [], // 首页合约列表
         marketRecommndStockList: [], // 首页股票列表
         marketStockList: [], // 股票页列表
+        
         marketSrockRecommendList: [], // 推荐股票列表
         marketContractRecommendList: [], // 推荐合约列表
         marketRankList: [], // 排行列表
@@ -55,17 +77,29 @@ export default {
         marketStockKoreaData: {}, //当前选择的美区数据内容
         marketCountryStockList: [], //选择的区域股票列表
         marketRecommendStockList: [], //股票推荐列表
+
+        marketCurrent:"", //当前选中的市场
+
+        //指数
+        marketStockUsIndexList: [],
+        marketStockIndiaIndexList: [],
+        marketStockJapanIndexList: [],
+        marketStockKoreaIndexList: [],
+
+        //股票
         marketStockUsDataList: [],
         marketStockIndiaDataList: [],
         marketStockJapanDataList: [],
         marketStockKoreaDataList: [],
         marketHomeTotalRecommendList: [],
 
+
         graphColorGradient: false,
         marketActiveTab: 0,
         currDeleteId: ''
 
     },
+   
     mutations: {
         setCurrDeleteId(state, data) {
             state.currDeleteId = data
@@ -76,6 +110,8 @@ export default {
         setMarketActiveTab(state, data) {
             state.marketActiveTab = data;
         },
+
+        //更新市场股票
         setMarketStockUsDataList(state, data) {
             state.marketStockUsDataList = data
         },
@@ -88,6 +124,22 @@ export default {
         setMarketStockKoreaDataList(state, data) {
             state.marketStockKoreaDataList = data
         },
+
+        //更新市场指数
+        setMarketStockUsIndexList(state, data) {
+            state.marketStockUsIndexList = data
+        },
+        setMarketStockIndiaIndexList(state, data) {
+            state.marketStockIndiaIndexList = data
+        },
+        setMarketStockJapanIndexList(state, data) {
+            state.marketStockJapanIndexList = data
+        },
+        setMarketStockKoreaIndexList(state, data) {
+            state.marketStockKoreaIndexList = data
+        },
+
+        //
         setGraphColorGradient(state, data) {
             state.graphColorGradient = data
         },
@@ -147,6 +199,9 @@ export default {
         },
         setMarketStockList(state, data) {
             state.marketStockList = data;
+        },
+        setMarketCurrent(state,data){
+            state.marketCurrent = data
         },
         setMarketSrockRecommendList(state, data) {
             state.marketSrockRecommendList = data;
@@ -342,6 +397,20 @@ export default {
         }
     },
     getters: {
+        getMarketStockCurrentList(state){
+            switch(state.marketCurrent){
+                case 'us':
+                    return state.marketStockUsDataList
+                case 'india':
+                    return state.marketStockIndiaDataList
+                case 'japan':
+                    return state.marketStockJapanDataList
+                case 'korea':
+                    return state.marketStockKoreaDataList
+                    
+            }
+            return []
+        },
         getMarketType(state) {
             return state.marketType;
         }
