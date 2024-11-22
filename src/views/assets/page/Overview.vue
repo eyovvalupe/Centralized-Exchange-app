@@ -242,10 +242,6 @@ const getAssets = () => {
   store.dispatch("updateWallet");
 };
 
-onMounted(() => {
-  getAssets();
-});
-
 const refresh = () => {
   getAssets();
 };

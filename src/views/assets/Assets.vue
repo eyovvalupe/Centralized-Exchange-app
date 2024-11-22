@@ -16,7 +16,7 @@
       @change="swipeChange"
     >
       <SwipeItem>
-        <div class="assets_body" v-if="loadedTab.indexOf(0) > -1">
+        <div class="assets_body pb-[0.32rem]" v-if="loadedTab.indexOf(0) > -1">
           <Overview
             ref="overviewRef"
             @jumpToWallet="(val) => jumpToWallet(val)"

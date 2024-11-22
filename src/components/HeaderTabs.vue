@@ -1,5 +1,5 @@
 <template>
-     <div class="header_tabs">
+     <div class="header_tabs" :class="['header_tabs--'+type]">
         <slot name="before" />
         <div class="tabs" ref="tabScroller">
             <div class="tab_body">
@@ -16,6 +16,10 @@
 import { nextTick,onMounted,ref, watch } from 'vue';
 const emit = defineEmits(['update:active','change'])
 const props = defineProps({
+    type:{
+        type:String,
+        default:"default"
+    },
     active:{
         type:Number,
         default:0
@@ -53,7 +57,9 @@ const animateScrollRight = (el,x,n,s=5)=>{
     }
 }
 const animateScroll = (el,x,s=5)=>{
+    
     if(el.scrollLeft > x){
+        
         animateScrollLeft(el,x,el.scrollLeft,s)
     }else{
         animateScrollRight(el,x,el.scrollLeft,s)
@@ -71,6 +77,7 @@ const initScrollLeft = ()=>{
         }
     }
 }
+
 const changeActiveTab = (val)=>{
     emit('update:active',val)
     emit('change',val)
@@ -157,6 +164,33 @@ onMounted(()=>{
         }
 
     }
-
+}
+.header_tabs--card{
+    height: 0.8rem;
+    .tabs{
+        .tab_body{
+            margin: 0;
+        }
+        .tab{
+            border: 1px solid #D0D8E2;
+            margin-right: 0.12rem;
+            padding: 0 .32rem;
+            height: .8rem;
+            font-size: 0.32rem;
+            box-sizing: border-box;
+        }
+        .active_tab{
+            background-color: #014CFA;
+            border-color:#014CFA;
+            font-weight: normal;
+            .tab-name{
+                font-size: 0.32rem;
+                color:#fff;
+            }
+            &::after{
+                display: none;
+            }
+        }
+    }
 }
 </style>

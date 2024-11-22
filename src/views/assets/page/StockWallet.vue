@@ -52,7 +52,7 @@ const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currenc
 const getAssets = () => {
   if (!token.value) return
   // emits('setLoading', true)
-  store.dispatch('updateWallet').finally(() => {
+  store.dispatch('updateWallet','stock').finally(() => {
     emits('setLoading', false)
   })
   // store.dispatch('updateOrderHint')
