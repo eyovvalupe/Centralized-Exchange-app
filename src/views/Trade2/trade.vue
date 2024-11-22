@@ -224,7 +224,6 @@ const swipeChange = (val) => {
     }
 }
 
-
 const transitionName = ref('slide-left')
 watch([activeTab], (newActive, oldActive) => {
     if (newActive > oldActive) {

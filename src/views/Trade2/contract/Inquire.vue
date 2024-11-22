@@ -34,7 +34,7 @@
                 </div>
             </div>
         </SwipeCell>
-        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || (!finish)" />
+        <LoadingMore :loading="loading" :finish="finish"  />
     </div>
 
     <!-- 订单详情 -->
@@ -57,7 +57,7 @@ import { _futuresList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
 import OrderInfo from '../components/OrderInfo.vue'
 import Decimal from 'decimal.js';
-import eventBus from '@/utils/eventBus'
+
 
 const loginfinish = () => {
     setTimeout(() => {
@@ -111,7 +111,7 @@ const init = (times) => {
         if (times) {
             timeMap.value = times
         }
-        page.value = false
+        page.value = 0
         loading.value = false
         finish.value = false
         setTimeout(() => {
@@ -128,14 +128,15 @@ const getList = () => {
     }
     loading.value = true
     _futuresList(params).then(res => {
+        res.data = res.data || []
+        console.log()
         if (page.value == 1) {
-            store.commit('setContractInquireList', res.data || [])
+            store.commit('setContractInquireList', res.data)
         } else {
-            const arr = contractInquireList.value
-            arr.push(...LoadingMore(res.data || []))
+            const arr = contractInquireList.value.concat(res.data)
             store.commit('setContractInquireList', arr)
         }
-        if (!res.data?.length) {
+        if (!res.data.length) {
             finish.value = true
         }
     }).finally(() => {
@@ -150,18 +151,10 @@ const OpeningForm = item => {
     showInfo.value = true
 }
 
-onMounted(() => {
-    eventBus.on("contractTradeBodyScrollToBottom",()=>{
-        // 加载更多
-        getList()
-    })
-})
-onUnmounted(() => {
-    eventBus.off("contractTradeBodyScrollToBottom")
-   
-})
+
 
 defineExpose({
+    getList,
     init
 })
 </script>
