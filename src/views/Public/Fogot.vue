@@ -28,7 +28,7 @@
   </div>
 
   <!-- 表单 -->
-  <div class="form">
+  <div class="form relative">
     <div class="form_title">邮箱/手机号</div>
     <div class="form_item margin_item">
       <input
@@ -48,7 +48,7 @@
     </div>
 
     <div class="form_title">新密码</div>
-    <div class="form_item">
+    <div class="form_item mb-[0.05rem]">
       <input
         maxlength="20"
         v-model.trim="form.password"
@@ -61,8 +61,8 @@
           <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
       </div>
     </div>
+    <PasswordLevel class="form_passCheck" :password="form.password" :from="'forgot'"/>
 
-    <PasswordLevel class="form_passCheck" :password="form.password" />
     <div class="mb-[0.32rem]"></div>
     <div class="form_title">确认新密码</div>
     <div class="form_item">

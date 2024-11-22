@@ -5,7 +5,7 @@
             <div class="level level_active" v-for="i in levels" :key="i"></div>
             <div class="level" v-for="i in (4 - levels)" :key="i"></div>
         </div>
-        <span v-if="levels" class="absolute top-[-0.05rem] left-[2.5rem]">
+        <span v-if="levels" :class=" props.from == 'forgot' ? 'relative ' : 'absolute top-[-0.05rem] left-[2.5rem]'">
             {{ levelsMap[levels] }}
         </span>
     </div>
@@ -16,6 +16,10 @@ import { computed } from "vue"
 
 const props = defineProps({
     password: {
+        type: String,
+        default: ''
+    },
+    from: {
         type: String,
         default: ''
     }
