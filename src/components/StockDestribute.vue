@@ -1,7 +1,7 @@
 <!-- 股票 -->
 <template>
     <div class="total_box">
-      <div class="total_title flex flex-row justify-between">
+      <div class="total_title flex flex-row justify-between items-center">
         <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">涨跌分布</span>
         <div>
             <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]">上涨：{{ up }}</span>
@@ -178,7 +178,7 @@ const getDownNum = () => {
 
 <style lang="less" scoped>
   .total_box {
-    padding: 0.48rem 0.32rem;
+    padding: 0.4rem 0.32rem;
     position: relative;
     background-image: linear-gradient(to bottom, #ffffff, #f5f7fc);
     border-radius: 0.64rem;
@@ -206,7 +206,7 @@ const getDownNum = () => {
     .total_title {
       color: #9ea3ae;
       font-size: 0.28rem;
-      margin-bottom: 0.32rem;
+      margin-bottom: 0.4rem;
     }
 
     .table_list {

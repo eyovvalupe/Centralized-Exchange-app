@@ -3,10 +3,10 @@
     class="stock_description"
     v-show="!loading && list.length >0"
   >
-    <div class="flex flex-col mb-[0.56rem]">
+    <div class="flex flex-col mb-[0.4rem]">
       <div class="flex flex-row justify-between items-center mb-[0.16rem]">
         <span class="text-[0.32rem] text-[#061023] font-semibold">已收盘</span>
-        <span class="text-[0.24rem] text-[#061023]"
+        <span class="text-[0.24rem] text-[#8F92A1]"
           >{{ props.data.closets }}
           {{
             props.data.region == "us"
@@ -21,7 +21,7 @@
       </div>
       <div class="flex flex-row items-center">
         <div>
-          <span class="text-[0.24rem] text-[#061023]"
+          <span class="text-[0.24rem] text-[#8F92A1]"
             >更新时间：{{ props.data.currentts }}</span
           >
         </div>
@@ -34,6 +34,7 @@
         :key="i"
         :class="item.ratio > 0 ? 'up_price' : 'down_price'"
         class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.15rem] pr-[0.15rem]"
+        @click="goInfo(item)"
       >
         <span class="text-[0.28rem] text-[#061023]">{{
           item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
@@ -57,6 +58,7 @@
 import store from "@/store";
 import { fixLittleNum } from "@/utils/fixLittleNum";
 import { computed, watch } from "vue";
+import router from "@/router";
 const emits = defineEmits(["update"]);
 const update = () => {
   emits("update");
@@ -84,6 +86,20 @@ const props = defineProps({
     default: () => []
   }
 });
+
+const goInfo = (item) => {
+  store.commit("setCurrStock", item);
+  setTimeout(() => {
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: item.symbol,
+        type: "stock",
+      },
+    });
+  }, 100);
+};
+
 </script>
 
 <style lang="less" scoped>

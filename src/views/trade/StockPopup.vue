@@ -21,7 +21,7 @@ const back = () => {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .stockPopup {
   height: 100%;
   width: 100%;

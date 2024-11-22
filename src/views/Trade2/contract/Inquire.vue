@@ -129,7 +129,6 @@ const getList = () => {
     loading.value = true
     _futuresList(params).then(res => {
         res.data = res.data || []
-        console.log()
         if (page.value == 1) {
             store.commit('setContractInquireList', res.data)
         } else {
@@ -150,7 +149,6 @@ const OpeningForm = item => {
     currStock.value = item
     showInfo.value = true
 }
-
 
 
 defineExpose({

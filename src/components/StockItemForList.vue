@@ -63,7 +63,7 @@
               v-if="props.item.points && showSparkLine"
               :style="
                 props.marketType != 'cryto'
-                  ? 'width: 100%; height: 0.6rem;'
+                  ? 'width: 100%; height: 0.6rem;margin-top:0.16rem;'
                   : 'width: 100%; height: 0.54rem;'
               "
               :points="props.item.points"

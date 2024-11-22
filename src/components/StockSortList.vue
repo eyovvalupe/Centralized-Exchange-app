@@ -249,13 +249,23 @@ onBeforeUnmount(() => {
 .market_stock_list {
   :deep(.van-tabs) {
     .van-tabs__wrap {
-        margin: 0 !important;
+        margin: 0  0 0.32rem 0 !important;
         height: 1rem !important;
       .van-tabs__nav {
         padding: 0 0.32rem;
-
+        position: relative;
+        &::after{
+          content: '';
+          background-color: #EFF3F8;
+          height: 1px;
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+          left: 0
+        }
         .van-tab {
-            padding-right: 0.6rem;
+            padding-left: 0px;
+            padding-right: 0.76rem;
             font-size: 0.32rem;
             color: #8f92a1;
         }
@@ -267,10 +277,11 @@ onBeforeUnmount(() => {
         }
 
         .van-tabs__line {
-            bottom: 0;
-            margin-left: -0.3rem;
+            bottom: 1px;
+            margin-left: -0.4rem;
             width: 0.8rem;
             height: 0.06rem;
+            border-radius: 0.2rem;
         }
       }
     }

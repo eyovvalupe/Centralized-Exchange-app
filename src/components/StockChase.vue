@@ -12,7 +12,7 @@
     <div class="graph_container">
       <div class="chase_container">
         <div class="chase_text">
-          <span style="margin-right: 0.2rem">涨跌停对比</span>
+          <span class="text-[#666D80] mr-[0.16rem]" >涨跌停对比</span>
           <span style="color: #18b762; margin-right: 0.05rem">356</span>
           <span style="margin-right: 0.05rem">:</span>
           <span style="color: #e8503a">117</span>
@@ -23,7 +23,7 @@
       </div>
       <div class="chase_status">
         <div class="chase_state_text">
-          <span style="margin-right: 0.2rem">做涨停今表现</span>
+          <span class="text-[#666D80] mr-[0.16rem]" >做涨停今表现</span>
           <span style="color: #18b762">99.26%</span>
         </div>
         <div class="chase_graph">
