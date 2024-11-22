@@ -179,10 +179,11 @@
       </div>
 
       <!-- 协议 -->
-      <label class="register_doc" @click="checked = !checked">
+      <label class="register_doc">
         <div
           :class="checked ? 'checked_icon_blue' : 'unchecked_icon'"
           class="mr-[0.2rem]"
+          @click="checked = !checked"
         ></div>
         我同意<span>隐私政策</span>和<span>用户条款</span>
       </label>
@@ -261,7 +262,10 @@
             class="close-svg-icon"
           ></div>
         </div>
-        <div style="height: 60vh; overflow-y: auto">
+        <div 
+        ref="scrollRef"
+        @touchstart="scrollCountryCode"
+        style="height: 60vh; overflow-y: auto">
           <div
             @click="clickItem(item)"
             class="transfer_dialog_item"
@@ -313,6 +317,7 @@ const activeTab = ref(0);
 const defaultCode = "+244";
 const showDialog = ref(false);
 const searchStr = ref("");
+const scrollRef = ref(null);
 const showAreas = computed(() => {
   return areaCode.filter((item) => {
     return (
@@ -523,6 +528,10 @@ const goChat = () => {
     name: "chat",
   });
 };
+
+const scrollCountryCode = () => {
+  scrollRef.value.scrollTop = scrollRef.value.scrollTop + 100
+}
 </script>
 
 <style lang="less" scoped>
