@@ -410,6 +410,11 @@ const submit = async () => {
     duration: 0,
     loadingType: "spinner",
   });
+  console.log({
+    ...form.value,
+    token: sessionToken.value,
+    verifcode: verifcode.value,
+  })
   _register({
     ...form.value,
     token: sessionToken.value,
@@ -785,7 +790,7 @@ const goChat = () => {
     }
 
     .margin_item {
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
     }
 
     .err_ipt {

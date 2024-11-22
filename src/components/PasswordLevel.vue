@@ -5,7 +5,7 @@
             <div class="level level_active" v-for="i in levels" :key="i"></div>
             <div class="level" v-for="i in (4 - levels)" :key="i"></div>
         </div>
-        <span v-if="levels">
+        <span v-if="levels" class="absolute top-[-0.05rem] left-[2.5rem]">
             {{ levelsMap[levels] }}
         </span>
     </div>
