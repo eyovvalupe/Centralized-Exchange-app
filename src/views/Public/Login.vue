@@ -671,6 +671,7 @@ onMounted(() => {
     margin: 0.6rem 0 0.4rem 0;
     text-align: center;
     font-weight: 400;
+    color: #666d80;
 
     > span {
       color: #1a59f6;
