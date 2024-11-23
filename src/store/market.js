@@ -23,11 +23,20 @@ const pageKeys = {
         'marketStockIndiaIndexList',
         'marketStockJapanIndexList',
         'marketStockKoreaIndexList',
-
+        'marketStockGermanyIndexList',
+        'marketStockUkIndexList',
+        'marketStockSingaporeIndexList',
+        'marketStockHongkongIndexList',
+        'marketStockMalaysiaIndexList',
         'marketStockUsDataList',
         'marketStockIndiaDataList',
         'marketStockJapanDataList',
         'marketStockKoreaDataList',
+        'marketStockGermanyDataList',
+        'marketStockUkDataList',
+        'marketStockSingaporeDataList',
+        'marketStockHongkongDataList',
+        'marketStockMalaysiaDataList'
     ],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
 }
@@ -70,30 +79,43 @@ export default {
         marketAi24List: [], // ai量化24小时收益率列表
         marketAiGridList: [], // ai量化最大网格(杠杆)列表
 
-        currentRecommendData: {}, //当前选择的股票推荐区域
-        marketStockUsData: {}, //当前选择的美区数据内容
-        marketStockIndiaData: {}, //当前选择的美区数据内容
-        marketStockJapanData: {}, //当前选择的美区数据内容
-        marketStockKoreaData: {}, //当前选择的美区数据内容
+        
         marketCountryStockList: [], //选择的区域股票列表
-        marketRecommendStockList: [], //股票推荐列表
 
         marketCurrent:"", //当前选中的市场
+        
+        marketStockUsData: {}, //当前选择的美区数据内容
+        marketStockIndiaData: {}, //当前选择的印度数据内容
+        marketStockJapanData: {}, //当前选择的日本数据内容
+        marketStockKoreaData: {}, //当前选择的韩国数据内容
+        marketStockGermanyData: {}, //当前选择的德国数据内容
+        marketStockUkData: {},  //当前选择的英国数据内容
+        marketStockSingaporeData: {},  //当前选择的新加坡数据内容
+        marketStockHongkongData: {}, //当前选择的香港数据内容
+        marketStockMalaysiaData: {}, //当前选择的马来西亚数据内容
 
         //指数
         marketStockUsIndexList: [],
         marketStockIndiaIndexList: [],
         marketStockJapanIndexList: [],
         marketStockKoreaIndexList: [],
-
+        marketStockGermanyIndexList: [],
+        marketStockUkIndexList: [],
+        marketStockSingaporeIndexList: [],
+        marketStockHongkongIndexList: [],
+        marketStockMalaysiaIndexList: [],
+        
         //股票
         marketStockUsDataList: [],
         marketStockIndiaDataList: [],
         marketStockJapanDataList: [],
         marketStockKoreaDataList: [],
-        marketHomeTotalRecommendList: [],
-
-
+        marketStockGermanyDataList: [],
+        marketStockUkDataList: [],
+        marketStockSingaporeDataList: [],
+        marketStockHongkongDataList: [],
+        marketStockMalaysiaDataList: [],
+        
         graphColorGradient: false,
         marketActiveTab: 0,
         currDeleteId: ''
@@ -104,13 +126,41 @@ export default {
         setCurrDeleteId(state, data) {
             state.currDeleteId = data
         },
-        setMarketHomeTotalRecommendList(state, data) {
-            state.marketHomeTotalRecommendList = data
-        },
+        
         setMarketActiveTab(state, data) {
             state.marketActiveTab = data;
         },
 
+        //当前选择的市场数据内容
+
+        setMarketStockUsData(state, data) {
+            state.marketStockUsData = data
+        },
+        setMarketStockIndiaData(state, data) {
+            state.marketStockIndiaData = data
+        },
+        setMarketStockJapanData(state, data) {
+            state.marketStockJapanData = data
+        },
+        setMarketStockKoreaData(state, data) {
+            state.marketStockKoreaData = data
+        },
+        setMarketStockGermanyData(state, data) {
+            state.marketStockGermanyData = data
+        },
+        setMarketStockUkData(state, data) {
+            state.marketStockUkData = data
+        },
+        setMarketStockSingaporeData(state, data) {
+            state.marketStockSingaporeData = data
+        },
+        setMarketStockHongkongData(state, data) {
+            state.marketStockHongkongData = data
+        },
+        setMarketStockMalaysiaData(state, data) {
+            state.marketStockMalaysiaData = data
+        },
+       
         //更新市场股票
         setMarketStockUsDataList(state, data) {
             state.marketStockUsDataList = data
@@ -123,6 +173,21 @@ export default {
         },
         setMarketStockKoreaDataList(state, data) {
             state.marketStockKoreaDataList = data
+        },
+        setMarketStockGermanyDataList(state, data) {
+            state.marketStockGermanyDataList = data
+        },
+        setMarketStockUkDataList(state, data) {
+            state.marketStockUkDataList = data
+        },
+        setMarketStockSingaporeDataList(state, data) {
+            state.marketStockSingaporeDataList = data
+        },
+        setMarketStockHongkongDataList(state, data) {
+            state.marketStockHongkongDataList = data
+        },
+        setMarketStockMalaysiaDataList(state, data) {
+            state.marketStockMalaysiaDataList = data
         },
 
         //更新市场指数
@@ -138,32 +203,30 @@ export default {
         setMarketStockKoreaIndexList(state, data) {
             state.marketStockKoreaIndexList = data
         },
-
+        setMarketStockGermanyIndexList(state, data) {
+            state.marketStockGermanyIndexList = data
+        },
+        setMarketStockUkIndexList(state, data) {
+            state.marketStockUkIndexList = data
+        },
+        setMarketStockSingaporeIndexList(state, data) {
+            state.marketStockSingaporeIndexList = data
+        },
+        setMarketStockHongkongIndexList(state, data) {
+            state.marketStockHongkongIndexList = data
+        },
+        setMarketStockMalaysiaIndexList(state, data) {
+            state.marketStockMalaysiaIndexList = data
+        },
         //
         setGraphColorGradient(state, data) {
             state.graphColorGradient = data
         },
-        setMarketRecommendStockList(state, data) {
-            state.marketRecommendStockList = data
-        },
+      
         setMarketCountryStockList(state, data) {
             state.marketCountryStockList = data
         },
-        setMarketStockUsData(state, data) {
-            state.marketStockUsData = data
-        },
-        setMarketStockIndiaData(state, data) {
-            state.marketStockIndiaData = data
-        },
-        setMarketStockJapanData(state, data) {
-            state.marketStockJapanData = data
-        },
-        setMarketStockKoreaData(state, data) {
-            state.marketStockKoreaData = data
-        },
-        setCurrentRecommenData(state, data) {
-            state.currentRecommendData = data
-        },
+       
         setCheckState(state, data) {
             state.checkState = data;
         },
@@ -407,7 +470,16 @@ export default {
                     return state.marketStockJapanDataList
                 case 'korea':
                     return state.marketStockKoreaDataList
-                    
+                case 'germany':
+                    return state.marketStockGermanyDataList
+                case 'uk':
+                    return state.marketStockUkDataList
+                case 'singapore':
+                    return state.marketStockSingaporeDataList
+                case 'hongkong':
+                    return state.marketStockHongkongDataList
+                case 'malaysia':
+                    return state.marketStockMalaysiaDataList
             }
             return []
         },

@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-[0.32rem]" v-if="getMarketStockCurrentList.length > 0">
+  <div class="mb-[0.32rem]" v-if="slideArr.length > 0">
     <div class="flex justify-between items-center mb-[0.24rem]">
 
       <div class="flex items-center gap-1" v-if="type == 'BestSellers'">
@@ -16,17 +16,16 @@
           ]"
           class="w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"
         ></div>
-        
       </div>
     </div>
     <Carousel v-bind="config" v-model="currentSlide" >
       <Slide v-for="(arr,slide) in slideArr" :key="slide">
-        <div class="w-full flex justify-between">
+        <div class="w-full flex ml-[-0.1rem]">
           <div
             v-for="(item, i) in arr"
             :key="i"
             :class="item.ratio > 0 ? 'up_price' : 'down_price'"
-            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] rounded-[0.32rem] bg-[#F5F7FC]"
+            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] ml-[0.1rem] rounded-[0.32rem] bg-[#F5F7FC]"
             @click="goInfo(item)"
           >
             <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem] text-center">
@@ -56,7 +55,7 @@
 </template>
 <script setup>
 import store from "@/store";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, watch } from "vue";
 import SparkLine from "@/components/SparkLine.vue";
 import { Carousel, Slide } from "vue3-carousel";
 import router from "@/router";
@@ -71,25 +70,28 @@ const props = defineProps({
     default:""
   }
 })
-const getMarketStockCurrentList = computed(
-  () => store.getters.getMarketStockCurrentList || []
-);
+
 
 const slideArr = computed(()=>{
   const len = 3
-  const val = Math.ceil(getMarketStockCurrentList.value.length/len)
+  const val = Math.ceil(store.getters.getMarketStockCurrentList.length/len)
   const arr = []
   for(let i=0;i<val;i++){
     arr.push([])
     let index = i*len
     for(let s=0;s<len;s++){
-      if(getMarketStockCurrentList.value[index+s]){
-        arr[i].push(getMarketStockCurrentList.value[index+s])
+      if(store.getters.getMarketStockCurrentList[index+s]){
+        arr[i].push(store.getters.getMarketStockCurrentList[index+s])
       }
     }
   }
   return arr
 })
+
+watch(()=>store.state.marketCurrent,()=>{
+  currentSlide.value = 0
+})
+
 
 const goInfo = (item) => {
   store.commit("setCurrStock", item);

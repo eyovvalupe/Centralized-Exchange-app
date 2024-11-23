@@ -1,7 +1,7 @@
 <!-- 自选推荐 -->
 <template>
   <div class="recommend_list">
-    <Loading v-show="props.loading" />
+    <Loading  v-show="props.loading" />
     <div class="list_box" v-show="props.list.length && !props.loading">
       <div
         class="list_item"
@@ -49,7 +49,7 @@ import eventBus from "@/utils/eventBus";
 import { fixLittleNum } from "@/utils/fixLittleNum";
 
 
-const emits = defineEmits(["init", "change"]);
+const emits = defineEmits(["change"]);
 const token = computed(() => store.state.token || "");
 
 const props = defineProps({
