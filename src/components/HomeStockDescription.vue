@@ -3,12 +3,12 @@
     class="stock_description"
     v-show="!loading && list.length > 0"
   >
-    <div class="flex flex-row justify-between">
+    <div class="flex flex-row">
+      <template v-for="(item, i) in list" :key="i">
       <div
-        v-for="(item, i) in list"
-        :key="i"
+        v-if="i < 3"
         :class="item.ratio > 0 ? 'up_price' : 'down_price'"
-        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem]"
+        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] mx-[0.06rem]"
         style="overflow-x: hidden;"
         @click="goInfo(item)"
       >
@@ -25,6 +25,7 @@
           >
         </div>
       </div>
+    </template>
     </div>
   </div>
 </template>

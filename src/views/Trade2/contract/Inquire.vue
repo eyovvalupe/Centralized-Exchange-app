@@ -34,7 +34,7 @@
                 </div>
             </div>
         </SwipeCell>
-        <LoadingMore :loading="loading" :finish="finish"  />
+        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || (!finish)" />
     </div>
 
     <!-- 订单详情 -->
@@ -151,6 +151,32 @@ const OpeningForm = item => {
 }
 
 
+
+let moreDom = null
+const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+const scrolHandle = () => {
+    const rect = moreDom.getBoundingClientRect()
+    if (rect.top <= totalHeight) {
+        console.error('加载更多')
+        // 加载更多
+        getList()
+    }
+}
+onMounted(() => {
+    setTimeout(() => {
+        try {
+            moreDom = document.querySelector('.loading_more')
+            document.querySelector('.trade_body').addEventListener('scroll', scrolHandle)
+        } catch {
+        }
+    }, 500)
+})
+onUnmounted(() => {
+    try {
+        document.querySelector('.trade_body').removeEventListener('scroll', scrolHandle)
+    } catch { }
+})
+
 defineExpose({
     getList,
     init
@@ -167,7 +193,7 @@ defineExpose({
         border-radius: 0.32rem;
         margin-top: 0.2rem;
     }
-   
+
 
     .th {
         color: #8F92A1;
@@ -175,7 +201,7 @@ defineExpose({
         border-bottom: 1px solid #EFF3F8;
         padding: 0.48rem 0 0.24rem 0;
         background: none;
-        margin-top:0px;
+        margin-top: 0px;
         border-radius: 0px;
     }
 
@@ -200,7 +226,7 @@ defineExpose({
         .lever {
             display: flex;
             align-items: center;
-            
+
         }
 
         .status {
@@ -208,14 +234,14 @@ defineExpose({
             height: 0.3rem;
             padding: 0 0.08rem;
             border-radius: 0.3rem;
-            border:1px solid #014CFA;
+            border: 1px solid #014CFA;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.22rem;
             margin-right: 0.08rem;
         }
-        
+
 
         .status-open {
             color: #18B762;
@@ -223,15 +249,16 @@ defineExpose({
         }
 
         .status-fail,
-        .status-lock{
-            color:#E8503A;
+        .status-lock {
+            color: #E8503A;
             border-color: #E8503A;
         }
-        .status-none{
-            color:#7E99D6;
-            border-color:#7E99D6;
+
+        .status-none {
+            color: #7E99D6;
+            border-color: #7E99D6;
         }
- 
+
 
         .state {
             width: 0.68rem;
@@ -243,7 +270,7 @@ defineExpose({
             align-items: center;
             justify-content: center;
             font-size: 0.24rem;
-            margin:0 auto;
+            margin: 0 auto;
         }
 
         .state-short {
@@ -259,21 +286,24 @@ defineExpose({
         .price {
             color: #666D80;
             font-size: 0.24rem;
-            
+
         }
-        .price:first-child{
-            color:#061023;
+
+        .price:first-child {
+            color: #061023;
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.36rem;
         }
+
         .num {
             color: #6C7B90;
             font-weight: 600;
             font-size: 0.24rem;
             text-align: right;
         }
-        .num:first-child{
+
+        .num:first-child {
             font-size: 0.28rem;
             line-height: 0.36rem;
         }

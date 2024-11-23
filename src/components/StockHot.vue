@@ -3,8 +3,7 @@
   <div class="stock_hot">
     <Loaidng
       v-if="
-        !marketSrockRecommendList.length &&
-        !marketContractRecommendList.length &&
+        !marketStockCurrentList.length &&
         recommendLoading
       "
       :loading="recommendLoading"
@@ -12,15 +11,14 @@
     />
     <NoData
       v-if="
-        !marketSrockRecommendList.length &&
-        !marketContractRecommendList.length &&
+        !marketStockCurrentList.length &&
         !loading &&
         !recommendLoading
       "
     />
 
     <div class="recommend_block">
-      <div class="item_block" v-if="marketSrockRecommendList.length">
+      <div class="item_block" v-if="marketStockCurrentList.length">
         <div class="item_block_title flex justify-between">
           <div>热门股</div>
           <div class="re_render" @click.stop="update"></div>
@@ -31,7 +29,7 @@
           :loading="recommendLoading"
           @change="changeStockList"
           @init="init"
-          :list="marketSrockRecommendList"
+          :list="marketStockCurrentList"
         />
       </div>
     </div>
@@ -48,78 +46,38 @@ import router from "@/router";
 import store from "@/store";
 import { computed, onMounted, ref, watch } from "vue";
 import { _watchlistDefault, _recommend } from "@/api/api";
-import {
-  showLoadingToast,
-  closeToast,
-  showToast,
-  Tabs,
-  Tab,
-  Button,
-} from "vant";
+
 import { useSocket } from "@/utils/ws";
 const { startSocket } = useSocket();
 
-const watchList = computed(() => store.state.marketWatchList || []);
-const marketRecommendStockList = computed(() => store.state.marketRecommendStockList || []);
-
-const token = computed(() => store.state.token || "");
-const loading = ref(true);
+const loading = ref(false);
+const recommendLoading = ref(false)
 
 const init = () => {
   loading.value = false;
   // 打开推荐列表
-  openRecommendList();
 };
 
 const update = () => {
-  openRecommendList();
+  
 }
 // 推荐列表
-const marketSrockRecommendList = computed(
-  () => store.state.marketSrockRecommendList || []
+const marketStockCurrentList = computed(
+  () => {
+    const arr = []
+    for(let i=0;i<store.getters.getMarketStockCurrentList.length;i++){
+      if(i < 4){
+        arr.push(store.getters.getMarketStockCurrentList[i])
+      }
+    }
+    return arr
+  }
 );
-const recommendLoading = ref(false);
-const openRecommendList = () => {
-  recommendLoading.value = true;
-  // _recommend({
-  //   market: 'global',
-  //   type: 'index'
-  // })
-  _watchlistDefault()
-    .then((res) => {
-        // 股票
-        if (res.data && res.data.stock) {
-          const arr = res.data.stock.map((item) => {
-            const target = marketSrockRecommendList.value.find(
-              (a) => a.symbol == item.symbol
-            );
-            return target || item;
-          });
-          console.log(arr)
-          store.commit("setMarketSrockRecommendList", arr || []);
-          setTimeout(() => {
-            store.dispatch("subList", {
-              commitKey: "setMarketSrockRecommendList",
-              listKey: "marketSrockRecommendList",
-            });
-          }, 500);
-        }
-    })
-    .finally(() => {
-      recommendLoading.value = false;
-    });
-};
+
 // 推荐股票选择
-const stockList = ref([]);
 const changeStockList = (arr) => {
 };
 
-// 添加自选
-const addLoading = ref(false);
-
-onMounted(() => {
-  init()
-})
 
 // 移除收藏
 const removeLoading = ref(false);
@@ -136,7 +94,6 @@ const jump = (name) => {
   padding: 0.32rem 0.32rem;
 
   .item_block {
-    height: 5rem;
     .item_block_title {
       font-size: 0.32rem;
       font-weight: 600;

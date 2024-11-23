@@ -3,7 +3,6 @@
   <div style="width: 5.8rem; height: 2.18rem">
     <div class="market_stock_block">
       <Tabs
-        type="custom-card"
         v-model:active="active"
         :swipeable="false"
         animated
@@ -15,8 +14,8 @@
           <div class="stock_tab-body">
             <Loading :loading="pageLoading" />
             <HomeStockDescription
-              v-if="marketStockUsDataList.length"
-              :list="marketStockUsDataList"
+              v-if="marketStockUsIndexList.length"
+              :list="marketStockUsIndexList"
               :region="'us'"
               :data="usData"
               :loading="pageLoading"
@@ -28,8 +27,8 @@
           <div class="stock_tab-body">
             <Loading :loading="pageLoading" />
             <HomeStockDescription
-              v-if="marketStockIndiaDataList.length"
-              :list="marketStockIndiaDataList"
+              v-if="marketStockIndiaIndexList.length"
+              :list="marketStockIndiaIndexList"
               :region="'india'"
               :data="indiaData"
               :loading="pageLoading"
@@ -41,8 +40,8 @@
           <div class="stock_tab-body">
             <Loading :loading="pageLoading" />
             <HomeStockDescription
-              v-if="marketStockJapanDataList.length"
-              :list="marketStockJapanDataList"
+              v-if="marketStockJapanIndexList.length"
+              :list="marketStockJapanIndexList"
               :region="'japan'"
               :data="japanData"
               :loading="pageLoading"
@@ -54,8 +53,8 @@
           <div class="stock_tab-body">
             <Loading :loading="pageLoading" />
             <HomeStockDescription
-              v-if="marketStockKoreaDataList.length"
-              :list="marketStockKoreaDataList"
+              v-if="marketStockKoreaIndexList.length"
+              :list="marketStockKoreaIndexList"
               :region="'korea'"
               :data="koreaData"
               :loading="pageLoading"
@@ -109,17 +108,17 @@ const region = {
   3: "korea",
 };
 
-const marketStockUsDataList = computed(
-  () => store.state.marketStockUsDataList || []
+const marketStockUsIndexList = computed(
+  () => store.state.marketStockUsIndexList || []
 );
-const marketStockIndiaDataList = computed(
-  () => store.state.marketStockIndiaDataList || []
+const marketStockIndiaIndexList = computed(
+  () => store.state.marketStockIndiaIndexList || []
 );
-const marketStockJapanDataList = computed(
-  () => store.state.marketStockJapanDataList || []
+const marketStockJapanIndexList = computed(
+  () => store.state.marketStockJapanIndexList || []
 );
-const marketStockKoreaDataList = computed(
-  () => store.state.marketStockKoreaDataList || []
+const marketStockKoreaIndexList = computed(
+  () => store.state.marketStockKoreaIndexList || []
 );
 
 const subs = (arr) => {
@@ -130,110 +129,97 @@ const subs = (arr) => {
   store.dispatch("subList", {});
 };
 const loaded = []
+
 const getData = (region) => {
   pageLoading.value = true;
-  if (region == "us" && marketStockUsDataList.value.length > 0) {
-    pageLoading.value = false;
-    store.commit("setMarketCountryStockList", marketStockUsDataList);
+  if (region == 'us' && marketStockUsIndexList.value.length > 0) {
+    pageLoading.value = false;//使用静默刷新
   }
-  if (region == "india" && marketStockIndiaDataList.value.length > 0) {
+  if (region == 'india' && marketStockIndiaIndexList.value.length > 0) {
     pageLoading.value = false;
-    store.commit("setMarketCountryStockList", marketStockIndiaDataList);
   }
-  if (region == "japan" && marketStockJapanDataList.value.length > 0) {
+  if (region == 'japan' && marketStockJapanIndexList.value.length > 0) {
     pageLoading.value = false;
-    store.commit("setMarketCountryStockList", marketStockJapanDataList);
   }
-  if (region == "korea" && marketStockKoreaDataList.value.length > 0) {
+  if (region == 'korea' && marketStockKoreaIndexList.value.length > 0) {
     pageLoading.value = false;
-    store.commit("setMarketCountryStockList", marketStockKoreaDataList);
   }
-
+  
   if(loaded.indexOf(region) > -1){
     //已更新过一遍，不再静默刷新
     pageLoading.value = false;
     return
   }
-
-  
   _recommend({
     market: region,
-    type: "index",
   })
     .then((res) => {
-      loaded.push(region)
       const data = {
         region,
         currentts: formatDate(new Date(res.data.currentts)),
         closets: formatDate(new Date(res.data.closets)),
         updated: formatDate(new Date()),
-        stock: res.data.index,
+        stock: res.data.stock,
+        index:res.data.index
       };
+    
+
+      
       if (region == "us") {
         store.commit("setMarketStockUsData", data);
-        const usArr = res.data.index.map((item) => {
-          const target = marketStockUsDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
-        store.commit("setMarketStockUsDataList", usArr);
+        const usIndexArr = getArr(res.data.index,'marketStockUsIndexList')
+        const usArr = getArr(res.data.stock,'marketStockUsDataList')
+        store.commit("setMarketStockUsIndexList", usIndexArr)
+        store.commit("setMarketStockUsDataList", usArr)
       }
       if (region == "india") {
         store.commit("setMarketStockIndiaData", data);
-        const indiaArr = res.data.index.map((item) => {
-          const target = marketStockIndiaDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
-        store.commit("setMarketStockIndiaDataList", indiaArr);
+        const indiaIndexArr = getArr(res.data.index,'marketStockIndiaIndexList')
+        const indiaArr = getArr(res.data.stock,'marketStockIndiaDataList')
+        store.commit("setMarketStockIndiaIndexList", indiaIndexArr)
+        store.commit("setMarketStockIndiaDataList", indiaArr)
       }
       if (region == "japan") {
         store.commit("setMarketStockJapanData", data);
-        const japanArr = res.data.index.map((item) => {
-          const target = marketStockJapanDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
-        store.commit("setMarketStockJapanDataList", japanArr);
+        const japanIndexArr = getArr(res.data.index,'marketStockJapanIndexList')
+        const japanArr = getArr(res.data.stock,'marketStockJapanDataList')
+        store.commit("setMarketStockJapanIndexList", japanIndexArr)
+        store.commit("setMarketStockJapanDataList", japanArr)
       }
       if (region == "korea") {
         store.commit("setMarketStockKoreaData", data);
-        const koreaArr = res.data.index.map((item) => {
-          const target = marketStockKoreaDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
-        store.commit("setMarketStockKoreaDataList", koreaArr);
+        const koreaIndexArr = getArr(res.data.index,'marketStockKoreaIndexList')
+        const koreaArr = getArr(res.data.stock,'marketStockKoreaDataList')
+        store.commit("setMarketStockKoreaIndexList", koreaIndexArr)
+        store.commit("setMarketStockKoreaDataList", koreaArr)
       }
+      console.log(...store.state.marketStockUsDataList)
 
       setTimeout(() => {
         subs([
-          ...marketStockUsDataList.value,
-          ...marketStockIndiaDataList.value,
-          ...marketStockJapanDataList.value,
-          ...marketStockKoreaDataList.value,
+          //指数
+          ...store.state.marketStockUsIndexList,
+          ...store.state.marketStockIndiaIndexList,
+          ...store.state.marketStockJapanIndexList,
+          ...store.state.marketStockKoreaIndexList,
+
+          //股票
+          ...store.state.marketStockUsDataList,
+          ...store.state.marketStockIndiaDataList,
+          ...store.state.marketStockJapanDataList,
+          ...store.state.marketStockKoreaDataList,
+
         ]);
       }, 300);
 
-      if (region == "us") {
-        store.commit("setMarketStockUsData", data);
-      } else if (region == "india") {
-        store.commit("setMarketStockIndiaData", data);
-      } else if (region == "japan") {
-        store.commit("setMarketStockJapanData", data);
-      } else {
-        store.commit("setMarketStockKoreaData", data);
-      }
     })
     .catch((err) => console.error(err))
     .finally(() => {
       pageLoading.value = false;
     });
 };
+
+
 
 function formatDate(date) {
   const year = String(date.getFullYear()).slice(-2);
@@ -264,6 +250,9 @@ function formatDate(date) {
   .van-tabs {
     margin: 0;
 
+    :deep(.van-tabs__line){
+      display: none;
+    }
     :deep(.van-tabs__wrap) {
       height: 0.68rem;
 

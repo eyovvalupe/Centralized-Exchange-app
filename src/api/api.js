@@ -107,6 +107,13 @@ export const _sort = (data = {}) => {
   });
 };
 
+// 获取市场信息
+export const _marketGet = (data = {}) => {
+  return http.post(`/anon/v1/market/get`, data, {
+    custom: { auth: false, toast: true, retry: true },
+  });
+};
+
 // 订单列表
 export const _stocksList = (data = {}) => {
   return http.post(`/authc/v1/stock/list`, data, {

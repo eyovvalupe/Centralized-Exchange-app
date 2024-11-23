@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-[0.32rem]" v-if="marketCountryStockList.length > 0">
+  <div class="mb-[0.32rem]" v-if="getMarketStockCurrentList.length > 0">
     <div class="flex justify-between items-center mb-[0.24rem]">
 
       <div class="flex items-center gap-1" v-if="type == 'BestSellers'">
@@ -71,20 +71,20 @@ const props = defineProps({
     default:""
   }
 })
-const marketCountryStockList = computed(
-  () => store.state.marketCountryStockList || []
+const getMarketStockCurrentList = computed(
+  () => store.getters.getMarketStockCurrentList || []
 );
 
 const slideArr = computed(()=>{
   const len = 3
-  const val = Math.ceil(marketCountryStockList.value.length/len)
+  const val = Math.ceil(getMarketStockCurrentList.value.length/len)
   const arr = []
   for(let i=0;i<val;i++){
     arr.push([])
     let index = i*len
     for(let s=0;s<len;s++){
-      if(marketCountryStockList.value[index+s]){
-        arr[i].push(marketCountryStockList.value[index+s])
+      if(getMarketStockCurrentList.value[index+s]){
+        arr[i].push(getMarketStockCurrentList.value[index+s])
       }
     }
   }

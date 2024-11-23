@@ -1,8 +1,13 @@
 <!-- 股票 -->
 <template>
-  <div class="market_stock_block">
+  <div class="market_stock_block flex items-center justify-center" v-if="marketLoading">
+    <Loading :loading="marketLoading" />
+  </div>
+  <div class="market_stock_block" :class="{'market_stock_block--hide-nav':marketList.length <= 1}" v-else>
+    
     <Tabs
       type="custom-card"
+      
       v-model:active="active"
       :swipeable="false"
       animated
@@ -10,62 +15,48 @@
       shrink
       @change="onChange"
     >
-      <Tab title="美股" name="0">
+      <Tab :title="marketItem.market_name" :name="marketItem.market" v-for="marketItem in marketList" :key="marketItem.market">
         <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
+          
           <StockDescription
-            v-if="marketStockUsDataList.length"
-            :list="marketStockUsDataList"
-            :region="'us'"
+            v-if="marketItem.market == 'us' && marketStockUsIndexList.length"
+            :list="marketStockUsIndexList"
+            :region="marketItem.market"
             :data="usData"
             :loading="pageLoading"
             :active="active"
-            @update="update('us')"
+            @update="update(marketItem.market)"
           />
-        </div>
-      </Tab>
-      <Tab title="印度" name="1">
-        <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
           <StockDescription
-            v-if="marketStockIndiaDataList.length"
-            :list="marketStockIndiaDataList"
-            :region="'india'"
+            v-else-if="marketItem.market == 'india' && marketStockIndiaIndexList.length"
+            :list="marketStockIndiaIndexList"
+            :region="marketItem.market"
             :data="indiaData"
             :loading="pageLoading"
             :active="active"
-            @update="update('india')"
+            @update="update(marketItem.market)"
           />
-        </div>
-      </Tab>
-      <Tab title="日本" name="2">
-        <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
           <StockDescription
-            v-if="marketStockJapanDataList.length"
-            :list="marketStockJapanDataList"
-            :region="'japan'"
+            v-else-if="marketItem.market == 'japan' && marketStockJapanIndexList.length"
+            :list="marketStockJapanIndexList"
+            :region="marketItem.market"
             :data="japanData"
             :loading="pageLoading"
             :active="active"
-            @update="update('japan')"
+            @update="update(marketItem.market)"
           />
-        </div>
-      </Tab>
-      <Tab title="韩国" name="3">
-        <div class="stock_tab-body">
-          <Loading :loading="pageLoading" />
           <StockDescription
-            v-if="marketStockKoreaDataList.length"
-            :list="marketStockKoreaDataList"
-            :region="'korea'"
+            v-else-if="marketItem.market == 'korea' && marketStockKoreaIndexList.length"
+            :list="marketStockKoreaIndexList"
+            :region="marketItem.market"
             :data="koreaData"
             :loading="pageLoading"
             :active="active"
-            @update="update('korea')"
+            @update="update(marketItem.market)"
           />
         </div>
       </Tab>
+      
     </Tabs>
   </div>
 </template>
@@ -73,69 +64,133 @@
 <script setup>
 import { Tab, Tabs } from "vant";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { _recommend } from "@/api/api";
+import { _recommend,_marketGet } from "@/api/api";
 import store from "@/store";
 import Loading from "@/components/Loaidng.vue";
-import LoadingMore from "@/components/LoadingMore.vue";
 import StockDescription from "@/components/StockDescription.vue";
 
-const active = ref(sessionStorage.getItem("trade_stock_tab") || 0);
-const currentData = computed(() => store.state.currentRecommendData);
-const checkStockList = computed(() => store.state.marketVolumeList);
+const active = ref('');
+
 const usData = computed(() => store.state.marketStockUsData);
 const indiaData = computed(() => store.state.marketStockIndiaData);
 const japanData = computed(() => store.state.marketStockJapanData);
 const koreaData = computed(() => store.state.marketStockKoreaData);
 
-const onChange = async (val) => {
-  active.value = val;
-  sessionStorage.setItem("trade_stock_tab", val);
-  getData(region[val]);
-};
-const update = (region) => {
-  if (region == 'us') store.commit("setMarketStockUsDataList", [])
-  if (region == 'india') store.commit("setMarketStockIndiaDataList", [])
-  if (region == 'japan') store.commit("setMarketStockJapanDataList", [])
-  if (region == 'korea') store.commit("setMarketStockKoreaDataList", [])
+const marketList = ref([])
+const getMarket = ()=>{
+  return new Promise(resolve=>{
+    _marketGet().then(res=>{
+      res.data = res.data || []
+      const _data = []
+      res.data.map(item=>{
+        switch(item.market){
+          case 'us':
+            item.market_name = '美股'
+            _data.push(item)
+            break;
+          case 'japan':
+            item.market_name = '日本'
+            _data.push(item)
+            break;
+          case 'india':
+            item.market_name = '印度'
+            _data.push(item)
+            break;
+          case 'korea':
+            item.market_name = '韩国'
+            _data.push(item)
+            break;
+          case 'germany':
+            item.market_name = '德国'
+            break;
+          case 'uk':
+            item.market_name = '英国'
+            break;
+          case 'singapore':
+            item.market_name = '新加坡'
+            break;
+          case 'hongkong':
+            item.market_name = '香港'
+            break;
+          case 'malaysia ':
+            item.market_name = '马来西亚'
+            break;
+        }
+      })
+      marketList.value = _data
+      resolve(_data)
+    }) 
+  })
+}
+
+const onChange = async (region) => {
+  active.value = region;
+  store.commit("setMarketCurrent",region)
   getData(region);
 };
-const pageLoading = ref(true);
-
-onMounted(() => {
-  setTimeout(() => {
-    pageLoading.value = false;
-    setTimeout(() => {
-      getData("us");
-      getData("india");
-      getData("japan");
-      getData("korea");
-    }, 300);
-  }, 300);
-});
-
-const region = {
-  0: "us",
-  1: "india",
-  2: "japan",
-  3: "korea",
+const update = (region) => {
+  if (region == 'us'){
+    store.commit("setMarketStockUsIndexList", [])
+    store.commit("setMarketStockUsDataList", [])
+  }
+  if (region == 'india'){
+    store.commit("setMarketStockIndiaIndexList", [])
+    store.commit("setMarketStockIndiaDataList", [])
+  }
+  if (region == 'japan') {
+    store.commit("setMarketStockJapanIndexList", [])
+    store.commit("setMarketStockJapanDataList", [])
+  }
+  if (region == 'korea') {
+    store.commit("setMarketStockKoreaIndexList", [])
+    store.commit("setMarketStockKoreaDataList", [])
+  }
+  getData(region);
 };
+const marketLoading = ref(true);
+const pageLoading = ref(true);
+const initTab = (_data)=>{
+  let stockTab = store.state.marketCurrent || ''
+  let hasTab = false
+  _data.map(item=>{
+    getData(item.market);
+    if(stockTab && item.market == stockTab){
+      hasTab = true
+    }
+  })
+  if(!hasTab && _data[0]){
+    stockTab = _data[0].market
+  }
+  active.value = stockTab
+  store.commit("setMarketCurrent",stockTab)
+  marketList.value = _data
+  marketLoading.value = false;
+}
+onMounted(()=>{
+  if(sessionStorage.marketListData){
+    initTab(JSON.parse(sessionStorage.marketListData))
+  }else{
+    getMarket().then((_data)=>{
+      sessionStorage.marketListData = JSON.stringify(_data)
+      initTab(_data)
+    })
+  }
+})
 
-const marketStockUsDataList = computed(
-  () => store.state.marketStockUsDataList || []
+const marketStockUsIndexList = computed(
+  () => store.state.marketStockUsIndexList || []
 );
-const marketStockIndiaDataList = computed(
-  () => store.state.marketStockIndiaDataList || []
+const marketStockIndiaIndexList = computed(
+  () => store.state.marketStockIndiaIndexList || []
 );
-const marketStockJapanDataList = computed(
-  () => store.state.marketStockJapanDataList || []
+const marketStockJapanIndexList = computed(
+  () => store.state.marketStockJapanIndexList || []
 );
-const marketStockKoreaDataList = computed(
-  () => store.state.marketStockKoreaDataList || []
+const marketStockKoreaIndexList = computed(
+  () => store.state.marketStockKoreaIndexList || []
 );
 
-const marketDownList = computed(() => store.state.marketDownList || []);
-const marketUpList = computed(() => store.state.marketUpList || []);
-const marketVolumeList = computed(() => store.state.markVolumeList || []);
+
 const subs = (arr) => {
   store.commit(
     "setMarketWatchKeys",
@@ -143,27 +198,33 @@ const subs = (arr) => {
   );
   store.dispatch("subList", {});
 };
+
+const getArr = (data,key)=>{
+  const arr = data.map((item) => {
+    const target = store.state[key].find(
+      (a) => a.symbol == item.symbol
+    );
+    return target || item;
+  });
+  return arr
+}
 const getData = (region) => {
-  if (region == 'us' && marketStockUsDataList.value.length > 0) {
-    pageLoading.value = false;
-    return;
-  }
-  if (region == 'india' && marketStockIndiaDataList.value.length > 0) {
-    pageLoading.value = false;
-    return;
-  }
-  if (region == 'japan' && marketStockJapanDataList.value.length > 0) {
-    pageLoading.value = false;
-    return;
-  }
-  if (region == 'korea' && marketStockKoreaDataList.value.length > 0) {
-    pageLoading.value = false;
-    return;
-  }
   pageLoading.value = true;
+  if (region == 'us' && marketStockUsIndexList.value.length > 0) {
+    pageLoading.value = false;//使用静默刷新
+  }
+  if (region == 'india' && marketStockIndiaIndexList.value.length > 0) {
+    pageLoading.value = false;
+  }
+  if (region == 'japan' && marketStockJapanIndexList.value.length > 0) {
+    pageLoading.value = false;
+  }
+  if (region == 'korea' && marketStockKoreaIndexList.value.length > 0) {
+    pageLoading.value = false;
+  }
+  
   _recommend({
     market: region,
-    type: "index",
   })
     .then((res) => {
       const data = {
@@ -171,76 +232,66 @@ const getData = (region) => {
         currentts: formatDate(new Date(res.data.currentts)),
         closets: formatDate(new Date(res.data.closets)),
         updated: formatDate(new Date()),
-        stock: res.data.index,
+        stock: res.data.stock,
+        index:res.data.index
       };
+    
+
+      
       if (region == "us") {
         store.commit("setMarketStockUsData", data);
-        const usArr = res.data.index.map((item) => {
-          const target = marketStockUsDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
+        const usIndexArr = getArr(res.data.index,'marketStockUsIndexList')
+        const usArr = getArr(res.data.stock,'marketStockUsDataList')
+        store.commit("setMarketStockUsIndexList", usIndexArr)
         store.commit("setMarketStockUsDataList", usArr)
       }
       if (region == "india") {
         store.commit("setMarketStockIndiaData", data);
-        const indiaArr = res.data.index.map((item) => {
-          const target = marketStockIndiaDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
+        const indiaIndexArr = getArr(res.data.index,'marketStockIndiaIndexList')
+        const indiaArr = getArr(res.data.stock,'marketStockIndiaDataList')
+        store.commit("setMarketStockIndiaIndexList", indiaIndexArr)
         store.commit("setMarketStockIndiaDataList", indiaArr)
       }
       if (region == "japan") {
         store.commit("setMarketStockJapanData", data);
-        const japanArr = res.data.index.map((item) => {
-          const target = marketStockJapanDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
+        const japanIndexArr = getArr(res.data.index,'marketStockJapanIndexList')
+        const japanArr = getArr(res.data.stock,'marketStockJapanDataList')
+        store.commit("setMarketStockJapanIndexList", japanIndexArr)
         store.commit("setMarketStockJapanDataList", japanArr)
       }
       if (region == "korea") {
         store.commit("setMarketStockKoreaData", data);
-        const koreaArr = res.data.index.map((item) => {
-          const target = marketStockKoreaDataList.value.find(
-            (a) => a.symbol == item.symbol
-          );
-          return target || item;
-        });
+        const koreaIndexArr = getArr(res.data.index,'marketStockKoreaIndexList')
+        const koreaArr = getArr(res.data.stock,'marketStockKoreaDataList')
+        store.commit("setMarketStockKoreaIndexList", koreaIndexArr)
         store.commit("setMarketStockKoreaDataList", koreaArr)
       }
+      console.log(...store.state.marketStockUsDataList)
 
       setTimeout(() => {
         subs([
-          ...marketStockUsDataList.value,
-          ...marketStockIndiaDataList.value,
-          ...marketStockJapanDataList.value,
-          ...marketStockKoreaDataList.value,
-          ...marketDownList.value,
-          ...marketUpList.value,
-          ...marketVolumeList.value,
+          //指数
+          ...store.state.marketStockUsIndexList,
+          ...store.state.marketStockIndiaIndexList,
+          ...store.state.marketStockJapanIndexList,
+          ...store.state.marketStockKoreaIndexList,
+
+          //股票
+          ...store.state.marketStockUsDataList,
+          ...store.state.marketStockIndiaDataList,
+          ...store.state.marketStockJapanDataList,
+          ...store.state.marketStockKoreaDataList,
+
         ]);
       }, 300);
 
-      if (region == "us") {
-        store.commit("setMarketStockUsData", data);
-      } else if (region == "india") {
-        store.commit("setMarketStockIndiaData", data);
-      } else if (region == "japan") {
-        store.commit("setMarketStockJapanData", data);
-      } else {
-        store.commit("setMarketStockKoreaData", data);
-      }
     })
     .catch((err) => console.error(err))
     .finally(() => {
       pageLoading.value = false;
     });
 };
+
 
 function formatDate(date) {
   const year = String(date.getFullYear()).slice(-2);
@@ -256,7 +307,7 @@ function formatDate(date) {
 
 <style lang="less" scoped>
 .market_stock_block {
-  height: 4.18rem;
+  height: 4.3rem;
   border-radius: 0.64rem;
   background-image: linear-gradient(to bottom, #ffffff, #f5f7fc);
 
@@ -284,6 +335,12 @@ function formatDate(date) {
         padding: 0;
       }
     }
+  }
+}
+.market_stock_block--hide-nav {
+  height:3.5rem;
+  :deep(.van-tabs__wrap) {
+    display: none;
   }
 }
 </style>

@@ -385,10 +385,12 @@ const updown = computed(() => {
 if (item.value.symbol) {
   _basic({ symbol: item.value.symbol }).then((res) => {
     if (res.code == 200) {
-      store.commit("setCurrStock", {
-        ...item.value,
-        ...res.data,
-      });
+      if (res.data.symbol == item.value.symbol) {
+        store.commit("setCurrStock", {
+          ...item.value,
+          ...res.data,
+        });
+      }
     }
   });
   // _profile({ symbol: item.value.symbol }).then(res => {
