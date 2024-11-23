@@ -4,9 +4,17 @@
     <div class="tabs">
       <div class="tab_title">
         <Switch v-model="show0" size="0.24rem" />
-        <span class="tab_title_desc">{{ show0 ? $t('已隐藏余额为0的币种') : $t('已展示余额为0的币种') }}</span>
+        <span class="tab_title_desc">{{
+          show0 ? $t("已隐藏余额为0的币种") : $t("已展示余额为0的币种")
+        }}</span>
       </div>
-      <div v-for="(item, i) in showList" :key="i" class="tab" :class="{ open_tab: switchs[i] == true }" @click="switchOpen(i, $event)">
+      <div
+        v-for="(item, i) in showList"
+        :key="i"
+        class="tab"
+        :class="{ open_tab: switchs[i] == true }"
+        @click="switchOpen(i, $event)"
+      >
         <div class="tab_icon">
           <img :src="`/static/img/crypto/${item.name}.png`" alt="img" />
         </div>
@@ -17,10 +25,13 @@
         </div>
         <div class="rights">
           <div class="right" @click="goTopUp(item.currency.toUpperCase())">
-            {{ $t('充值') }}
+            {{ $t("充值") }}
           </div>
-          <div class="right right--yellow" @click="goWithdraw(item.currency.toUpperCase())">
-            {{ $t('提现') }}
+          <div
+            class="right right--yellow"
+            @click="goWithdraw(item.currency.toUpperCase())"
+          >
+            {{ $t("提现") }}
           </div>
         </div>
       </div>
@@ -29,105 +40,106 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { Icon, Switch } from 'vant'
-import store from '@/store'
-import router from '@/router'
-import { _cryptoCoin } from '@/api/api'
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { Icon, Switch } from "vant";
+import store from "@/store";
+import router from "@/router";
+import { _cryptoCoin } from "@/api/api";
 
-const emits = defineEmits(['setLoading'])
-const token = computed(() => store.state.token || '')
-const hidden = ref(false)
+const emits = defineEmits(["setLoading"]);
+const token = computed(() => store.state.token || "");
+const hidden = ref(false);
 
 // 刷新现金钱包
-const wallet = computed(() => store.state.wallet || []) // 钱包
+const wallet = computed(() => store.state.wallet || []); // 钱包
 
 const getAssets = () => {
-  if (!token.value) return
+  if (!token.value) return;
   // emits('setLoading', true)
-  store.dispatch('updateWallet',"money").finally(() => {
-    emits('setLoading', false)
-  })
+  store.dispatch("updateWallet", "money").finally(() => {
+    emits("setLoading", false);
+  });
   // store.dispatch('updateOrderHint')
-}
-const show0 = ref(false) // 是否隐藏余额为0的钱包
-const coinMap = computed(() => store.state.coinMap || {})
+};
+const show0 = ref(false); // 是否隐藏余额为0的钱包
+const coinMap = computed(() => store.state.coinMap || {});
 const showList = computed(() => {
-  const arr = [...wallet.value]
+  const arr = [...wallet.value];
   for (const key in coinMap.value) {
-    const target = wallet.value.find(item => item.currency == key)
+    const target = wallet.value.find((item) => item.currency == key);
     if (target) {
-      if (!arr.find(item => item.currency == key)) {
-        arr.push(target)
+      if (!arr.find((item) => item.currency == key)) {
+        arr.push(target);
       }
     } else {
       arr.push({
         currency: key,
         name: key,
         amount: 0,
-      })
+      });
     }
   }
-  if (show0.value) return arr.filter(item => item.amount)
-  return arr
-})
-_cryptoCoin({ dedup: false }).then(res => {
-  store.commit('setCoinMap', res.data || [])
-})
+  if (show0.value) return arr.filter((item) => item.amount);
+  return arr;
+});
+_cryptoCoin({ dedup: false }).then((res) => {
+  store.commit("setCoinMap", res.data || []);
+});
 
 // 展开状态
-const switchs = ref([])
+const switchs = ref([]);
 const switchOpen = (i, e) => {
-  switchs.value[i] = !switchs.value[i]
+  switchs.value[i] = !switchs.value[i];
   switchs.value = switchs.value.map((item, index) => {
-    return i == index ? item : false
-  })
-  e.stopPropagation()
-}
+    return i == index ? item : false;
+  });
+  e.stopPropagation();
+};
 
 // 跳转充值
-const goTopUp = name => {
+const goTopUp = (name) => {
   router.push({
-    name: 'topUpCrypto',
+    name: "topUpCrypto",
     query: {
       currency: name,
     },
-  })
-}
+  });
+};
 
 // 跳转提现
-const goWithdraw = name=>{
+const goWithdraw = (name) => {
   router.push({
-    name: 'withdraw',
+    name: "withdraw",
     query: {
       currency: name,
     },
-  })
-}
+  });
+};
 
 const removeSwitch = () => {
   switchs.value = switchs.value.map(() => {
-    return false
-  })
-}
+    return false;
+  });
+};
 
 onMounted(() => {
-  getAssets()
-  document.querySelector('.page').addEventListener('click', removeSwitch)
-})
+  getAssets();
+  document.querySelector(".page").addEventListener("click", removeSwitch);
+  store.dispatch("updateWallet");
+  store.dispatch("updateAssets");
+});
 onUnmounted(() => {
   try {
-    document.querySelector('.page').removeEventListener('click', removeSwitch)
+    document.querySelector(".page").removeEventListener("click", removeSwitch);
   } catch {}
-})
+});
 
 const refresh = () => {
-  getAssets()
-}
+  getAssets();
+};
 defineExpose({
   refresh,
-})
-
+});
 </script>
 
 <style lang="less" scoped>
@@ -144,7 +156,7 @@ defineExpose({
       color: #fff;
       margin-right: 0.12rem;
       font-size: 0.3rem;
-      span{
+      span {
         font-size: 0.24rem;
       }
     }
@@ -157,12 +169,12 @@ defineExpose({
   }
 
   .money {
-    color: #FFF;
+    color: #fff;
     font-family: "PingFang SC";
     font-size: 0.52rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 0.6rem; 
+    line-height: 0.6rem;
     margin-top: 0.26rem;
     padding-bottom: 0.4rem;
   }
@@ -178,17 +190,17 @@ defineExpose({
     .line {
       width: 1px;
       height: 0.76rem;
-      background-color: #EFF3F8;
+      background-color: #eff3f8;
     }
-    .nav{
+    .nav {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
     }
-    .nav_label{
-      color: #8F92A1;
+    .nav_label {
+      color: #8f92a1;
       font-size: 0.28rem;
       line-height: 100%;
     }
@@ -197,23 +209,22 @@ defineExpose({
       color: #061023;
       font-size: 0.3rem;
       font-weight: 600;
-      line-height: 0.3rem; 
+      line-height: 0.3rem;
       margin-top: 0.2rem;
-
     }
   }
 
-  .tab_title{
+  .tab_title {
     height: 0.52rem;
     display: flex;
     align-items: center;
-    &_desc{
-      color:#8F92A1;
+    &_desc {
+      color: #8f92a1;
       font-size: 0.24rem;
       margin-left: 0.12rem;
     }
   }
-  
+
   .tabs {
     position: relative;
     padding: 0 0.32rem;
@@ -223,13 +234,13 @@ defineExpose({
       height: 1.04rem;
       margin-top: 0.12rem;
       border-radius: 0.32rem;
-      background: #F5F7FC;
+      background: #f5f7fc;
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      
-      .name{
+
+      .name {
         font-size: 0.3rem;
       }
       &:active {
@@ -245,7 +256,7 @@ defineExpose({
         box-sizing: border-box;
         padding: 0.1rem;
       }
-      
+
       .more {
         width: 0.3rem;
         height: 0.3rem;
@@ -257,16 +268,16 @@ defineExpose({
         padding: 0 0.2rem;
         font-size: 0.32rem;
         font-weight: 600;
-        transition: .3s;
+        transition: 0.3s;
       }
 
       .rights {
         display: flex;
         height: 100%;
         position: absolute;
-        right:-100%;
-        top:0;
-        transition: .3s;
+        right: -100%;
+        top: 0;
+        transition: 0.3s;
         .right {
           height: 100%;
           width: 1.04rem;
@@ -278,39 +289,38 @@ defineExpose({
           font-weight: 400;
           text-align: center;
           color: #fff;
-          background-color: #014CFA;
+          background-color: #014cfa;
         }
-        .right--yellow{
-          background-color: #FFAF2A;
+        .right--yellow {
+          background-color: #ffaf2a;
         }
-        .right--green{
-          background-color: #00AF70;
+        .right--green {
+          background-color: #00af70;
         }
-        .right--red{
-          background-color: #E8503A;
+        .right--red {
+          background-color: #e8503a;
         }
-        .right:first-child{
+        .right:first-child {
           border-radius: 0.32rem 0rem 0rem 0.32rem;
         }
-        .right:last-child{
+        .right:last-child {
           border-radius: 0rem 0.32rem 0.32rem 0rem;
         }
       }
     }
-   
+
     .open_tab {
-      .name{
+      .name {
         display: none;
       }
       .amount {
         text-align: left;
-        padding:0px;
+        padding: 0px;
       }
-      .rights{
+      .rights {
         right: 0;
       }
     }
   }
-
 }
 </style>
