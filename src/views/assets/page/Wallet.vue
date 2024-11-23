@@ -158,6 +158,7 @@ import HeaderTabs from "@/components/HeaderTabs.vue";
 
 const activeTab = ref(-1);
 const changeActiveTab = (val) => {
+  showData.value = false;
   activeTab.value = val;
   store.commit("setCurrSelectedWallet", val);
   store.dispatch("updateWallet");
