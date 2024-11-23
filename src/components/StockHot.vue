@@ -1,22 +1,6 @@
 <!-- 自选 -->
 <template>
   <div class="stock_hot">
-    <Loaidng
-      v-if="
-        !marketStockCurrentList.length &&
-        recommendLoading
-      "
-      :loading="recommendLoading"
-      :type="'spinner'"
-    />
-    <NoData
-      v-if="
-        !marketStockCurrentList.length &&
-        !loading &&
-        !recommendLoading
-      "
-    />
-
     <div class="recommend_block">
       <div class="item_block" v-if="marketStockCurrentList.length">
         <div class="item_block_title flex justify-between">
@@ -28,7 +12,6 @@
           :keyStr="'stock'"
           :loading="recommendLoading"
           @change="changeStockList"
-          @init="init"
           :list="marketStockCurrentList"
         />
       </div>
@@ -37,29 +20,20 @@
 </template>
 
 <script setup>
-import Loaidng from "@/components/Loaidng.vue";
-import NoData from "@/components/NoData.vue";
+
 // import StockTable from "@/components/StockTable.vue";
 import StockRecommendList from "@/components/StockRecommendList.vue";
 import OptionCategory from "@/components/OptionCategory.vue";
 import router from "@/router";
 import store from "@/store";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { _watchlistDefault, _recommend } from "@/api/api";
+import { getData } from "@/utils/stock";
 
-import { useSocket } from "@/utils/ws";
-const { startSocket } = useSocket();
-
-const loading = ref(false);
 const recommendLoading = ref(false)
 
-const init = () => {
-  loading.value = false;
-  // 打开推荐列表
-};
-
 const update = () => {
-  
+  getData(store.state.marketCurrent,recommendLoading,2)
 }
 // 推荐列表
 const marketStockCurrentList = computed(

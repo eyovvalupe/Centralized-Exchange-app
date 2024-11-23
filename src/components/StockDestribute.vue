@@ -8,12 +8,13 @@
             <span class="text-[0.28rem] text-[#e8503a]">下跌：{{ down }}</span>
         </div>
       </div>
-      <Loading
-        v-if="overviewLoading && !count"
-        :loading="overviewLoading"
-        :type="'spinner'"
-      />
-      <div class="table_box" v-if="!overviewLoading || count">
+      <div class="table_box justify-center"  v-if="overviewLoading && !count">
+        <Loading
+          :loading="overviewLoading"
+          :type="'spinner'"
+        />
+      </div>
+      <div class="table_box justify-end" v-if="!overviewLoading || count">
         <div class="table_list">
           <div class="table_item" v-for="(key, i) in keySoft" :key="key">
             <div
@@ -50,7 +51,7 @@
 
 <script setup>
 import { Tab, Tabs } from "vant";
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue";
 import { _marketOverview } from "@/api/api";
 import store from "@/store";
 import Loading from "@/components/Loaidng.vue";
@@ -105,7 +106,7 @@ const overview = ref({
   "-5": 0,
 });
 try {
-  const d = JSON.parse(sessionStorage.getItem("overview_data") || "{}");
+  const d = JSON.parse(sessionStorage.getItem("overview_data_"+store.state.marketCurrent) || "{}");
   count.value = d.count || 0;
   for (let key in overview.value) {
     overview.value[key] = d[key] || 0;
@@ -134,13 +135,26 @@ const getHeight = (key) => {
 };
 const overviewLoading = ref(false);
 const getOverviewData = () => {
-  overviewLoading.value = true;
+  if(!store.state.marketCurrent){
+    return
+  }
+  const market = store.state.marketCurrent
+  if(sessionStorage.getItem("overview_data_"+market)){
+    const d = JSON.parse(sessionStorage.getItem("overview_data_"+market))
+    count.value = d.count || 0;
+    for (let key in overview.value) {
+      overview.value[key] = d[key] || 0;
+    }
+  }else{
+    overviewLoading.value = true;
+  }
+  
   _marketOverview({
-    market: ""
+    market: store.state.marketCurrent
   })
     .then((res) => {
       if (!res.data) return;
-      sessionStorage.setItem("overview_data", JSON.stringify(res.data));
+      sessionStorage.setItem("overview_data_"+store.state.marketCurrent, JSON.stringify(res.data));
       count.value = res.data.count || 0;
       for (let key in overview.value) {
         overview.value[key] = res.data[key] || 0;
@@ -156,6 +170,10 @@ const initData = () => {
   getUpNum();
   getDownNum();
 };
+
+watch(()=> store.state.marketCurrent,()=>{
+  initData()
+})
 onMounted(() => {
   initData()
 })
@@ -208,7 +226,11 @@ const getDownNum = () => {
       font-size: 0.28rem;
       margin-bottom: 0.4rem;
     }
-
+    .table_box{
+      height: 3.88rem;
+      display: flex;
+      flex-direction: column;
+    }
     .table_list {
       display: flex;
       align-items: flex-end;

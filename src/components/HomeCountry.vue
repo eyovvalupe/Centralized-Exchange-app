@@ -1,62 +1,22 @@
 <!-- 股票 -->
 <template>
   <div style="width: 5.8rem; height: 2.18rem">
-    <div class="market_stock_block">
+    <div class="market_stock_block" v-if="marketList.length">
       <Tabs
         v-model:active="active"
         :swipeable="false"
-        animated
         :color="'#014CFA'"
         shrink
         @change="onChange"
       >
-        <Tab title="美股" name="0">
+        <Tab style="min-width: 2rem;" :title="marketItem.market_name" :name="marketItem.market" v-for="marketItem in marketList" :key="marketItem.market">
           <div class="stock_tab-body">
-            <Loading :loading="pageLoading" />
+            <Loading :loading="pageLoading" v-if="pageLoading" style="margin:0.3rem 0 0;" />
             <HomeStockDescription
-              v-if="marketStockUsIndexList.length"
-              :list="marketStockUsIndexList"
-              :region="'us'"
-              :data="usData"
-              :loading="pageLoading"
-              :active="active"
-            />
-          </div>
-        </Tab>
-        <Tab title="印度" name="1">
-          <div class="stock_tab-body">
-            <Loading :loading="pageLoading" />
-            <HomeStockDescription
-              v-if="marketStockIndiaIndexList.length"
-              :list="marketStockIndiaIndexList"
-              :region="'india'"
-              :data="indiaData"
-              :loading="pageLoading"
-              :active="active"
-            />
-          </div>
-        </Tab>
-        <Tab title="日本" name="2">
-          <div class="stock_tab-body">
-            <Loading :loading="pageLoading" />
-            <HomeStockDescription
-              v-if="marketStockJapanIndexList.length"
-              :list="marketStockJapanIndexList"
-              :region="'japan'"
-              :data="japanData"
-              :loading="pageLoading"
-              :active="active"
-            />
-          </div>
-        </Tab>
-        <Tab title="韩国" name="3">
-          <div class="stock_tab-body">
-            <Loading :loading="pageLoading" />
-            <HomeStockDescription
-              v-if="marketStockKoreaIndexList.length"
-              :list="marketStockKoreaIndexList"
-              :region="'korea'"
-              :data="koreaData"
+              v-else-if="marketStockIndexList[marketItem.market].length"
+              :list="marketStockIndexList[marketItem.market]"
+              :region="marketItem.market"
+              :data="marketStockData[marketItem.market]"
               :loading="pageLoading"
               :active="active"
             />
@@ -76,161 +36,81 @@ import Loading from "@/components/Loaidng.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
 import HomeStockDescription from "@/components/HomeStockDescription.vue";
 
-const active = ref(sessionStorage.getItem("trade_stock_tab") || 0);
-const currentData = computed(() => store.state.currentRecommendData);
-const checkStockList = computed(() => store.state.marketVolumeList);
-const usData = computed(() => store.state.marketStockUsData);
-const indiaData = computed(() => store.state.marketStockIndiaData);
-const japanData = computed(() => store.state.marketStockJapanData);
-const koreaData = computed(() => store.state.marketStockKoreaData);
+const active = ref(store.state.marketCurrent);
+const marketLoading = ref(true);
+const marketList = ref([])
 
-const onChange = async (val) => {
-  active.value = val;
-  sessionStorage.setItem("trade_stock_tab", val);
-  getData(region[val]);
-};
+import { getData,getMarket } from "@/utils/stock";
 
 const pageLoading = ref(true);
 
-onMounted(() => {
-  setTimeout(() => {
-    pageLoading.value = false;
-    setTimeout(() => {
-      getData(region[active.value]);
-    }, 300);
-  }, 300);
-});
-
-const region = {
-  0: "us",
-  1: "india",
-  2: "japan",
-  3: "korea",
+const onChange = async (region) => {
+  active.value = region;
+  store.commit("setMarketCurrent",region)
+  getData(region,pageLoading);
 };
 
-const marketStockUsIndexList = computed(
-  () => store.state.marketStockUsIndexList || []
-);
-const marketStockIndiaIndexList = computed(
-  () => store.state.marketStockIndiaIndexList || []
-);
-const marketStockJapanIndexList = computed(
-  () => store.state.marketStockJapanIndexList || []
-);
-const marketStockKoreaIndexList = computed(
-  () => store.state.marketStockKoreaIndexList || []
+const marketStockData = computed(
+  () => {
+    return {
+      "us":store.state.marketStockUsData,
+      "india":store.state.marketStockIndiaData,
+      "japan":store.state.marketStockJapanData,
+      "korea":store.state.marketStockKoreaData,
+      "germany":store.state.marketStockGermanyData,
+      "uk":store.state.marketStockUkData,
+      "singapore":store.state.marketStockSingaporeData,
+      "hongkong":store.state.marketStockHongkongData,
+      "malaysia":store.state.marketStockMalaysiaData
+    }
+  }
 );
 
-const subs = (arr) => {
-  store.commit(
-    "setMarketWatchKeys",
-    arr.map((item) => item.symbol || "")
-  );
-  store.dispatch("subList", {});
-};
-const loaded = []
+const marketStockIndexList = computed(
+  () => {
 
-const getData = (region) => {
-  pageLoading.value = true;
-  if (region == 'us' && marketStockUsIndexList.value.length > 0) {
-    pageLoading.value = false;//使用静默刷新
+    return {
+      "us":store.state.marketStockUsIndexList,
+      "india":store.state.marketStockIndiaIndexList,
+      "japan":store.state.marketStockJapanIndexList,
+      "korea":store.state.marketStockKoreaIndexList,
+      "germany":store.state.marketStockGermanyIndexList,
+      "uk":store.state.marketStockUkIndexList,
+      "singapore":store.state.marketStockSingaporeIndexList,
+      "hongkong":store.state.marketStockHongkongIndexList,
+      "malaysia":store.state.marketStockMalaysiaIndexList
+    }
   }
-  if (region == 'india' && marketStockIndiaIndexList.value.length > 0) {
-    pageLoading.value = false;
-  }
-  if (region == 'japan' && marketStockJapanIndexList.value.length > 0) {
-    pageLoading.value = false;
-  }
-  if (region == 'korea' && marketStockKoreaIndexList.value.length > 0) {
-    pageLoading.value = false;
-  }
-  
-  if(loaded.indexOf(region) > -1){
-    //已更新过一遍，不再静默刷新
-    pageLoading.value = false;
-    return
-  }
-  _recommend({
-    market: region,
+);
+
+const initTab = (_data)=>{
+  let stockTab = store.state.marketCurrent || ''
+  let hasTab = false
+  _data.map(item=>{
+    if(stockTab && item.market == stockTab){
+      hasTab = true
+    }
   })
-    .then((res) => {
-      const data = {
-        region,
-        currentts: formatDate(new Date(res.data.currentts)),
-        closets: formatDate(new Date(res.data.closets)),
-        updated: formatDate(new Date()),
-        stock: res.data.stock,
-        index:res.data.index
-      };
-    
-
-      
-      if (region == "us") {
-        store.commit("setMarketStockUsData", data);
-        const usIndexArr = getArr(res.data.index,'marketStockUsIndexList')
-        const usArr = getArr(res.data.stock,'marketStockUsDataList')
-        store.commit("setMarketStockUsIndexList", usIndexArr)
-        store.commit("setMarketStockUsDataList", usArr)
-      }
-      if (region == "india") {
-        store.commit("setMarketStockIndiaData", data);
-        const indiaIndexArr = getArr(res.data.index,'marketStockIndiaIndexList')
-        const indiaArr = getArr(res.data.stock,'marketStockIndiaDataList')
-        store.commit("setMarketStockIndiaIndexList", indiaIndexArr)
-        store.commit("setMarketStockIndiaDataList", indiaArr)
-      }
-      if (region == "japan") {
-        store.commit("setMarketStockJapanData", data);
-        const japanIndexArr = getArr(res.data.index,'marketStockJapanIndexList')
-        const japanArr = getArr(res.data.stock,'marketStockJapanDataList')
-        store.commit("setMarketStockJapanIndexList", japanIndexArr)
-        store.commit("setMarketStockJapanDataList", japanArr)
-      }
-      if (region == "korea") {
-        store.commit("setMarketStockKoreaData", data);
-        const koreaIndexArr = getArr(res.data.index,'marketStockKoreaIndexList')
-        const koreaArr = getArr(res.data.stock,'marketStockKoreaDataList')
-        store.commit("setMarketStockKoreaIndexList", koreaIndexArr)
-        store.commit("setMarketStockKoreaDataList", koreaArr)
-      }
-      console.log(...store.state.marketStockUsDataList)
-
-      setTimeout(() => {
-        subs([
-          //指数
-          ...store.state.marketStockUsIndexList,
-          ...store.state.marketStockIndiaIndexList,
-          ...store.state.marketStockJapanIndexList,
-          ...store.state.marketStockKoreaIndexList,
-
-          //股票
-          ...store.state.marketStockUsDataList,
-          ...store.state.marketStockIndiaDataList,
-          ...store.state.marketStockJapanDataList,
-          ...store.state.marketStockKoreaDataList,
-
-        ]);
-      }, 300);
-
-    })
-    .catch((err) => console.error(err))
-    .finally(() => {
-      pageLoading.value = false;
-    });
-};
-
-
-
-function formatDate(date) {
-  const year = String(date.getFullYear()).slice(-2);
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-
-  return `${month}/${day} ${hours}:${minutes}:${seconds}`;
+  if(!hasTab && _data[0]){
+    stockTab = _data[0].market
+  }
+  active.value = stockTab
+  store.commit("setMarketCurrent",stockTab)
+  marketList.value = _data
+  marketLoading.value = false;
 }
+onMounted(()=>{
+  if(sessionStorage.marketListData){
+    initTab(JSON.parse(sessionStorage.marketListData))
+    getData(active.value,pageLoading);
+  }else{
+    getMarket().then((_data)=>{
+      initTab(_data)
+      getData(active.value,pageLoading);
+    })
+  }
+})
+
 </script>
 
 <style lang="less" scoped>
@@ -238,9 +118,10 @@ function formatDate(date) {
   margin: 0;
   padding: 0 0.106rem;
   height: 2.18rem;
-
+ 
   :deep(.van-tabs__nav) {
     width: 100%;
+    display: flex;
   }
   
   .stock_tab-body{
@@ -258,7 +139,7 @@ function formatDate(date) {
 
       .van-tabs__nav {
         position: relative;
-        width: 4.4rem;
+        width: 5.2rem;
         display: flex;
         justify-content: space-between;
         border-radius: 0;
@@ -267,11 +148,11 @@ function formatDate(date) {
         line-height: 0.32rem;
 
         .van-tab {
-          flex: 1;
-          max-width: 1rem;
+          flex: 1 0 auto;
           height: 0.52rem;
+          margin-right: 0.12rem;
           text-align: center;
-          padding: 0;
+          padding: 0 0.22rem;
           font-size: 0.32rem;
           line-height: 0.5rem;
           border-bottom-left-radius: 0.2rem;
