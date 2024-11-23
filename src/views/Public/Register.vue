@@ -262,24 +262,27 @@
             class="close-svg-icon"
           ></div>
         </div>
-        <div 
-        ref="scrollRef"
-        @touchstart="scrollCountryCode"
-        style="height: 60vh; overflow-y: auto">
-          <div
-            @click="clickItem(item)"
-            class="transfer_dialog_item"
-            :class="{ transfer_dialog_item_active: form.area == item.code }"
-            v-for="(item, i) in showAreas"
-            :key="i"
-          >
-            <span class="flag_icon">
-              <img src="/static/img/common/flag_hongkong.svg" alt="HongKong" />
-            </span>
-            <span>{{ item.cn }}</span>
-            <span>({{ item.code }})</span>
-            <Icon v-if="form.area == item.code" class="cross" name="success" />
-          </div>
+        <div ref="scrollRef" style="height: 60vh; overflow-y: auto">
+          <van-list>
+            <van-cell v-for="item in showAreas">
+              <div
+                @click="clickItem(item)"
+                class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-[#eff3f8]"
+                :class="{ transfer_dialog_item_active: form.area == item.code }"
+              >
+                <div class="flex h-[1.08rem] items-center">
+                  <HKFlagIcon class="mr-[0.2rem]" />
+                  <span>{{ item.cn }}</span>
+                  <span>({{ item.code }})</span>
+                </div>
+                <Icon
+                  v-if="form.area == item.code"
+                  class="cross"
+                  name="success"
+                />
+              </div>
+            </van-cell>
+          </van-list>
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
@@ -310,6 +313,7 @@ import ImgCheck from "@/components/ImgCheck.vue";
 import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
 import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
+import HKFlagIcon from "./Icons/HKFlagIcon.vue";
 
 // 区号控制
 // const step = ref(1)
@@ -419,7 +423,7 @@ const submit = async () => {
     ...form.value,
     token: sessionToken.value,
     verifcode: verifcode.value,
-  })
+  });
   _register({
     ...form.value,
     token: sessionToken.value,
@@ -530,8 +534,8 @@ const goChat = () => {
 };
 
 const scrollCountryCode = () => {
-  scrollRef.value.scrollTop = scrollRef.value.scrollTop + 100
-}
+  scrollRef.value.scrollTop = scrollRef.value.scrollTop + 100;
+};
 </script>
 
 <style lang="less" scoped>
