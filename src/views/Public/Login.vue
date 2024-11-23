@@ -51,12 +51,18 @@
 
       <div class="form_title" v-show="activeTab == 1">手机号</div>
       <div class="form_item margin_item" v-show="activeTab == 1">
-        <div class="code" @click="showDialog = true ; searchStr = ''">
+        <div
+          class="code"
+          @click="
+            showDialog = true;
+            searchStr = '';
+          "
+        >
           <span class="flag_icon">
             <img src="/static/img/common/flag_hongkong.svg" alt="" />
           </span>
           <span>{{ form.area }}</span>
-             <div class="more-svg-icon" ></div>
+          <div class="more-svg-icon"></div>
         </div>
         <input
           maxlength="20"
@@ -124,35 +130,48 @@
       teleport="body"
     >
       <div class="register_accounr_dialog">
-        <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="showDialog = false">
+        <div
+          class="close-svg-iconB absolute right-0 mr-[0.32rem]"
+          @click="showDialog = false"
+        ></div>
+        <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
+          区号选择
         </div>
-        <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">区号选择</div>
         <div class="item search_box">
-          <!-- <Icon class="search" name="search" size="0.48rem" /> -->
-           <div class="search-svg-icon"></div>
+          <div class="search-svg-icon"></div>
           <input
             v-model.trim="searchStr"
             class="ipt"
             type="text"
             placeholder="输入区号"
           />
-          <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon"></div>
+          <div
+            v-if="searchStr.length"
+            @click="searchStr = ''"
+            class="close-svg-icon"
+          ></div>
         </div>
         <div style="height: 60vh; overflow-y: auto">
-          <div
-            @click="clickItem(item)"
-            class="transfer_dialog_item"
-            :class="{ transfer_dialog_item_active: form.area == item.code }"
-            v-for="(item, i) in showAreas"
-            :key="i"
-          >
-            <span class="flag_icon">
-              <img src="/static/img/common/flag_hongkong.svg" alt="HongKong" />
-            </span>
-            <span>{{ item.cn }}</span>
-            <span>({{ item.code }})</span>
-            <Icon v-if="form.area == item.code" class="cross" name="success" />
-          </div>
+          <van-list>
+            <van-cell v-for="item in showAreas">
+              <div
+                @click="clickItem(item)"
+                class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-[#eff3f8]"
+                :class="{ transfer_dialog_item_active: form.area == item.code }"
+              >
+                <div class="flex h-[1.08rem] items-center">
+                  <HKFlagIcon class="mr-[0.2rem]"/>
+                  <span>{{ item.cn }}</span>
+                  <span>({{ item.code }})</span>
+                </div>
+                <Icon
+                  v-if="form.area == item.code"
+                  class="cross"
+                  name="success"
+                />
+              </div>
+            </van-cell>
+          </van-list>
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
@@ -170,6 +189,7 @@ import {
   Tabs,
   Tab,
   Calendar,
+  Sku,
 } from "vant";
 import { ref, computed, onMounted } from "vue";
 import router from "@/router";
@@ -179,6 +199,7 @@ import VerifCode from "@/components/VerifCode.vue";
 import store from "@/store";
 import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
+import HKFlagIcon from "./Icons/HKFlagIcon.vue";
 const emits = defineEmits(["closeDialog"]);
 const props = defineProps({
   backFunc: {
@@ -213,8 +234,6 @@ const goLang = () => {
   emits("closeDialog");
   router.push({ name: "language" });
 };
-
-
 
 // 进入页面则重置登录状态信息
 store.dispatch("reset");
@@ -578,7 +597,6 @@ onMounted(() => {
           width: 0.64rem;
           height: 0.64rem;
         }
-        
       }
 
       .item_input {
