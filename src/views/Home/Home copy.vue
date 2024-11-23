@@ -103,12 +103,51 @@
         </div>
       </div>
       
+      <!-- <HomeCrypto /> -->
       <HomeToday />
       <HomePriority type="BestSellers" />
 
     </div>
     <HomeWatchList />
-    
+    <!-- <div class="pl-[0.32rem] pr-[0.32rem]">
+      <div class="font-bold text-[0.32rem] mb-[0.32rem]">市场表现</div>
+      <div class="flex gap-1">
+        <div class="mr-[0.05rem]">
+          <div :class="marketPerformance == 0
+              ? 'bg-[#014CFA] text-white'
+              : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            " class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(0)">
+            涨幅榜
+          </div>
+        </div>
+        <div class="mr-[0.05rem]">
+          <div :class="marketPerformance == 1
+              ? 'bg-[#014CFA] text-white'
+              : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            " class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(1)">
+            跌幅榜
+          </div>
+        </div>
+        <div class="mr-[0.05rem]">
+          <div :class="marketPerformance == 2
+              ? 'bg-[#014CFA] text-white'
+              : 'border-[0.02rem] text-[#666D80] border-[#D0D8E2]'
+            " class="rounded-[0.32rem] w-[1.44rem] h-[0.68rem] flex items-center justify-center"
+            @click="clickPerformance(2)">
+            成交榜
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 0" :loading="marketLoading" :deleteItem="false"
+      :list="marketDownList.slice(0, 5)" :marketType="'all'" />
+    <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 1" :loading="marketLoading" :deleteItem="false"
+      :list="marketUpList.slice(0, 5)" :marketType="'all'" />
+    <StockTable style="margin-top: 0.1rem" v-if="marketPerformance == 2" :loading="marketLoading" :deleteItem="false"
+      :list="marketVolumeList.slice(0, 5)" :marketType="'all'" /> -->
+    <!-- banner -->
     <div class="font-bold text-[0.32rem] m-[0.32rem]">市场推荐</div>
     <!-- <Banner v-if="activated" class="home_banner" /> -->
 
@@ -118,9 +157,9 @@
       <Tab :title="'股票'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div class="pt-[0.12rem]">
-          <StockItem :item="item" v-for="(item, i) in marketStockCurrentList" :key="'s_' + i" page="home" />
+          <StockItem :item="item" v-for="(item, i) in marketRecommndStockList" :key="'s_' + i" page="home" />
         </div>
-        <NoData v-if="!commendLoading && !marketStockCurrentList.length" />
+        <NoData v-if="!commendLoading && !marketRecommndStockList.length" />
       </Tab>
       <Tab :title="'合约'">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
@@ -148,7 +187,7 @@
 
 <script setup>
 import StockItem from "@/components/StockItem.vue";
-import { onDeactivated, ref, computed, onActivated, onMounted, nextTick, watch } from "vue";
+import { onDeactivated, ref, computed, onActivated, onMounted, nextTick } from "vue";
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
@@ -179,7 +218,9 @@ const currentSlide = ref(0);
 
 const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
-
+const marketCountryStockList = computed(
+  () => store.state.marketCountryStockList || []
+);
 
 // 打开添加类型选择弹窗
 const showAS = ref(false);
@@ -238,8 +279,11 @@ onActivated(() => {
   setTimeout(() => {
     subs([
       ...contractList.value,
+      ...marketRecommndStockList.value,
       ...marketVolumeList.value,
-      ...marketStockCurrentList.value
+      ...marketUpList.value,
+      ...marketDownList.value,
+      ...marketCountryStockList.value,
     ]);
   }, 500);
 });
@@ -256,50 +300,68 @@ onDeactivated(() => {
 
 // 获取推荐数据
 const commendLoading = ref(false);
-
+const marketRecommndStockList = computed(
+  () => store.state.marketRecommndStockList || []
+);
 const contractList = computed(() => store.state.contractList || []);
-
-const marketStockCurrentList =  computed(() => store.getters.getMarketStockCurrentList || []);
-
 const getRecommendData = () => {
   commendLoading.value = true;
-
-      
-    _futures().then((res) => {
-      if (res.code == 200) {
-        const rs = res.data.map((item) => {
-          const target = contractList.value.find(
+  _watchlistDefault()
+    .then((res) => {
+      if (res.data?.stock) {
+        const rs = res.data.stock.map((item) => {
+          const target = marketRecommndStockList.value.find(
             (a) => a.symbol == item.symbol
           );
-          item.type = 'crypto'
           if (target) {
             Object.assign(target, item);
             item = target;
           }
-          return item;
+          return { ...item, type: "stock" };
         });
-        store.commit("setContractList", rs || []);
-
-        setTimeout(() => {
-          subs([
-            ...marketStockCurrentList.value,
-            ...contractList.value,
-            ...marketVolumeList.value
-          ]);
-        }, 500);
+        store.commit("setMarketRecommndStockList", rs);
       }
-    }).finally(() => {
+      _futures().then((res) => {
+        if (res.code == 200) {
+          const rs = res.data.map((item) => {
+            const target = contractList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            item.type = 'crypto'
+            if (target) {
+              Object.assign(target, item);
+              item = target;
+            }
+            return item;
+          });
+          store.commit("setContractList", rs || []);
+
+          setTimeout(() => {
+            subs([
+              ...contractList.value,
+              ...marketRecommndStockList.value,
+              ...marketVolumeList.value,
+              ...marketUpList.value,
+              ...marketDownList.value,
+              ...marketCountryStockList.value,
+            ]);
+          }, 500);
+        }
+      });
+      setTimeout(() => {
+        subs([
+          ...contractList.value,
+          ...marketRecommndStockList.value,
+          ...marketVolumeList.value,
+          ...marketUpList.value,
+          ...marketDownList.value,
+          ...marketCountryStockList.value,
+        ]);
+      }, 500);
+    })
+    .finally(() => {
       commendLoading.value = false;
     });
-    setTimeout(() => {
-      subs([
-        ...marketStockCurrentList.value,
-        ...contractList.value,
-        ...marketVolumeList.value
-      ]);
-    }, 500);
-    
-    
 };
 getRecommendData();
 
@@ -312,7 +374,12 @@ const subs = (arr) => {
 // 跳转
 const jump = (name, needToken) => {
   if (needToken && !token.value) return store.commit("setIsLoginOpen", true);
-
+  // router.push({
+  //   name: 'login',
+  //   query: {
+  //     reurl: 'home'
+  //   }
+  // })
   router.push({
     name,
   });
@@ -322,9 +389,44 @@ const marketLoading = ref(false);
 const marketPerformance = ref(0);
 marketPerformance.value = 0;
 const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
-
+const marketUpList = computed(() => store.state.marketUpList || []); // 涨幅列表
+const marketDownList = computed(() => store.state.marketDownList || []); // 跌幅列表
+const clickPerformance = (key) => {
+  page.value = 0;
+  marketLoading.value = false;
+  marketPerformance.value = key;
+  setTimeout(() => {
+    // 加载更多元素
+    switch (key) {
+      case 0:
+        getMarketPerformanceData(
+          marketDownList,
+          "setMarketDownList",
+          "down",
+          "marketDownList"
+        );
+        break;
+      case 1:
+        getMarketPerformanceData(
+          marketUpList,
+          "setMarketUpList",
+          "up",
+          "marketUpList"
+        );
+        break;
+      case 2:
+        getMarketPerformanceData(
+          marketVolumeList,
+          "setMarketVolumeList",
+          "volume",
+          "marketVolumeList"
+        );
+        break;
+    }
+  }, 350);
+};
 const getMarketPerformanceData = (list, key, query, listKey) => {
-  if (marketLoading.value || !store.state.marketCurrent) return;
+  if (marketLoading.value) return;
   marketLoading.value = true;
   page.value++;
   let arr = JSON.parse(JSON.stringify(list.value));
@@ -332,11 +434,11 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
     arr = [];
   }
   if (arr.length) {
-    subs([...arr, ...contractList.value,...marketStockCurrentList.value]);
+    subs([...arr, ...marketRecommndStockList.value, ...contractList.value]);
   }
   const saveActive = marketPerformance.value;
   _sort({
-    market: store.state.marketCurrent,
+    exchange: "",
     orderby: query,
     page: page.value,
   })
@@ -364,8 +466,9 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
         setTimeout(() => {
           subs([
             ...arr,
+            ...marketRecommndStockList.value,
             ...contractList.value,
-            ...marketStockCurrentList.value
+            ...marketCountryStockList.value,
           ]);
         }, 500);
       }
@@ -377,21 +480,12 @@ const getMarketPerformanceData = (list, key, query, listKey) => {
     });
 };
 
-watch(()=>store.state.marketCurrent,()=>{
-  getMarketPerformanceData(
-    marketVolumeList,
-    "setMarketVolumeList",
-    "volume",
-    "marketVolumeList"
-  );
-})
-
 onMounted(() => {
   getMarketPerformanceData(
-    marketVolumeList,
-    "setMarketVolumeList",
-    "volume",
-    "marketVolumeList"
+    marketDownList,
+    "setMarketDownList",
+    "down",
+    "marketDownList"
   );
 });
 </script>
