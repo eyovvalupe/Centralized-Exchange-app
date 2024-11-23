@@ -188,7 +188,10 @@ const changePassSuccess = ref(false);
 const submitForm = (code) => {
 if (loading.value) return;
 loading.value = true;
-
+console.log({
+  ...form.value,
+  googlecode: code,
+})
 _forgetpw({
   ...form.value,
   googlecode: code,
