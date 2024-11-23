@@ -524,7 +524,7 @@ export const _futuresSell = (data = {}) => {
 };
 // 合约撤单
 export const _futuresCancel = (data = {}) => {
-  return http.post(`/authc/v1/stocks/cancel`, data, {
+  return http.post(`/authc/v1/futures/cancel`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };

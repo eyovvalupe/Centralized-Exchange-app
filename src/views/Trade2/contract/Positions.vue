@@ -150,8 +150,10 @@
                             </div>
                         </div>
                     </div>
-                    <FormItem size="large" input-type="number" v-model="updateForm.amount" title="增加保证金" btn-show-mode="focus" :tip="stockWalletAmount > 0 ? '≤ '+stockWalletAmount : ''" :show-btn="stockWalletAmount > 0" @change="changeAmount" @btnClick="onSliderChange(100)">
-                        
+                    <FormItem size="large" input-type="number" v-model="updateForm.amount" title="增加保证金"
+                        btn-show-mode="focus" :tip="stockWalletAmount > 0 ? '≤ ' + stockWalletAmount : ''"
+                        :show-btn="stockWalletAmount > 0" @change="changeAmount" @btnClick="onSliderChange(100)">
+
                     </FormItem>
 
                     <div style="height:0.47rem;"></div>
@@ -210,7 +212,7 @@ const loginfinish = () => {
 const safeRef = ref()
 const safeRef2 = ref()
 
-const token = computed(()=>store.state.token)
+const token = computed(() => store.state.token)
 
 const contractPositionsList = computed(() => store.state.contractPositionsList)
 const elseWallet = computed(() => store.state.elseWallet || [])
@@ -252,7 +254,6 @@ const { startSocket } = useSocket();
 const loading = ref(false)
 
 const subs = () => {
-    console.log('subs')
     const socket = startSocket(() => {
         socket && socket.off('user')
         socket && socket.off('futuresorder')
@@ -280,20 +281,20 @@ const cancelSubs = () => {
     })
 }
 
-onMounted(()=>{
+onMounted(() => {
     if (store.state.token) {
         subs()
     }
 })
 
-onUnmounted(()=>{
+onUnmounted(() => {
     cancelSubs()
 })
 
-watch(()=>store.state.token,()=>{
-    if(store.state.token){
+watch(() => store.state.token, () => {
+    if (store.state.token) {
         subs()
-    }else{
+    } else {
         cancelSubs()
     }
 })

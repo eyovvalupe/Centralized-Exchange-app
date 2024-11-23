@@ -4,9 +4,9 @@
         <Tabs v-if="!pageLoading" type="oval-card" v-model:active="active" :swipeable="false" animated
             :color="'#014CFA'" shrink @change="onChange">
             <Tab title="开仓" name="0">
-                 <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
+                <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
                     <Opening @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
-                 </div>
+                </div>
             </Tab>
             <Tab title="持仓" name="1">
                 <div class="stock_tab-body" v-if="loadTab.indexOf('1') > -1">
@@ -41,12 +41,12 @@ const active = ref(sessionStorage.getItem('trade_contract_tab') || '0')
 const InquireRef = ref()
 const onChange = async (val) => {
     active.value = val;
-    if(loadTab.value.indexOf(val) == -1){
+    if (loadTab.value.indexOf(val) == -1) {
         loadTab.value.push(val)
     }
     sessionStorage.setItem('trade_contract_tab', val)
     if (val == 2) {
-        nextTick(()=>{
+        nextTick(() => {
             InquireRef.value && InquireRef.value.init()
         })
     }
@@ -60,9 +60,10 @@ const choose = item => {
     active.value = 0
     OpeningRef.value && OpeningRef.value.choose(item)
 }
-const openSuccess = ()=>{
+const openSuccess = () => {
     //开仓成功，切换到持仓
-    active.value = '1'
+    // active.value = '1'
+    onChange('1')
 }
 
 const handleMounted = () => {
@@ -77,8 +78,8 @@ onMounted(() => {
     pageLoading.value = false
     onChange(active.value)
 
-    eventBus.on("contractTradeBodyScrollToBottom",()=>{
-        if(active.value == '2'){
+    eventBus.on("contractTradeBodyScrollToBottom", () => {
+        if (active.value == '2') {
             // 加载更多
             InquireRef.value && InquireRef.value.getList()
         }
@@ -86,7 +87,7 @@ onMounted(() => {
 })
 onUnmounted(() => {
     eventBus.off("contractTradeBodyScrollToBottom")
-   
+
 })
 
 defineExpose({
@@ -110,5 +111,4 @@ defineExpose({
         padding: 0 0.32rem;
     }
 }
-
 </style>
