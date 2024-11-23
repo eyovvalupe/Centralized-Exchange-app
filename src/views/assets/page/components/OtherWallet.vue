@@ -32,7 +32,7 @@ import OtherImg from "./OtherWalletInfo/OtherImg.vue";
 import OtherWalletBtn from "./OtherWalletInfo/OtherWalletBtn.vue";
 import OtherWalletInfoContainer from "./OtherWalletInfo/OtherWalletInfoContainer.vue";
 import ShowEye from "./ShowEye.vue";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const props = defineProps({
   name: {
@@ -53,4 +53,5 @@ const toggleShow = () => {
   showInfo.value = !showInfo.value;
   emits('toggleShow', showInfo.value)
 };
+
 </script>

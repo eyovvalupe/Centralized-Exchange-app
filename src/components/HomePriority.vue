@@ -71,17 +71,16 @@ const props = defineProps({
   }
 })
 
-
 const slideArr = computed(()=>{
   const len = 3
-  const val = Math.ceil(store.getters.getMarketStockCurrentList.length/len)
+  const val = Math.ceil(store.state.marketVolumeList.length/len)
   const arr = []
   for(let i=0;i<val;i++){
     arr.push([])
     let index = i*len
     for(let s=0;s<len;s++){
-      if(store.getters.getMarketStockCurrentList[index+s]){
-        arr[i].push(store.getters.getMarketStockCurrentList[index+s])
+      if(store.state.marketVolumeList[index+s]){
+        arr[i].push(store.state.marketVolumeList[index+s])
       }
     }
   }
@@ -106,8 +105,6 @@ const goInfo = (item) => {
   }, 100);
 };
 
-onMounted(() => {
-});
 </script>
 <style lang="less">
 .up_price {

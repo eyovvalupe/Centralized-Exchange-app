@@ -6,7 +6,36 @@ const { startSocket } = useSocket()
 
 // 不同页面对应的监听列表 key
 const pageKeys = {
-    'home': ['marketRecommndList', 'marketRecommndContractList','contractList', 'marketRecommndStockList', 'marketVolumeList', 'marketUpList', 'marketDownList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketAiList', 'marketWatchList', 'marketSrockRecommendList', 'marketContractRecommendList'],
+    'home': [
+        'marketRecommndList',
+        'marketRecommndContractList',
+        'contractList',
+        'marketRecommndStockList',
+        'marketVolumeList',
+        'marketAiList',
+        'marketWatchList',
+        'marketSrockRecommendList',
+        'marketContractRecommendList',
+        
+        'marketStockUsIndexList',
+        'marketStockIndiaIndexList',
+        'marketStockJapanIndexList',
+        'marketStockKoreaIndexList',
+        'marketStockGermanyIndexList',
+        'marketStockUkIndexList',
+        'marketStockSingaporeIndexList',
+        'marketStockHongkongIndexList',
+        'marketStockMalaysiaIndexList',
+        'marketStockUsDataList',
+        'marketStockIndiaDataList',
+        'marketStockJapanDataList',
+        'marketStockKoreaDataList',
+        'marketStockGermanyDataList',
+        'marketStockUkDataList',
+        'marketStockSingaporeDataList',
+        'marketStockHongkongDataList',
+        'marketStockMalaysiaDataList'
+    ],
     'market': [
         'marketWatchList',
         'marketVolumeList',

@@ -31,8 +31,8 @@
         >
           <div class="td5" v-show="props.marketType != 'crypto'">
             <div class="item_name flex items-center gap-1">
-              <span v-show="item.type == 'stock'">{{ props.item.symbol }}</span>
-              <span v-show="item.type == 'crypto'">{{ props.item.name }}</span>
+              <span v-if="item.type == 'crypto'">{{ props.item.name }}</span>
+              <span v-else>{{ props.item.symbol }}</span>
               <div
                 v-show="props.page != 'home'"
                 :class="`${

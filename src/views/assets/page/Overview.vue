@@ -234,6 +234,8 @@ useClickAway(tab5, () => {
 
 // 刷新总资产
 const assets = computed(() => store.state.assets || {});
+console.log('assets =======> ', assets.value)
+
 const getAssets = () => {
   if (!token.value) return;
   store.dispatch("updateAssets").finally(() => {

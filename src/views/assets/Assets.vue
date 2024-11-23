@@ -78,6 +78,8 @@ const changeActiveTab = (val, slideSwipe = false) => {
   if (slideSwipe && swipe.value) {
     swipe.value.swipeTo(val);
   }
+  store.dispatch("updateWallet");
+  store.dispatch("updateAssets");
 };
 const swipeChange = (val) => {
   changeActiveTab(val);
