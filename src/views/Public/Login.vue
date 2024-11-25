@@ -14,32 +14,30 @@
 
     <!-- 标题 -->
     <div class="title_box">
-      <div class="title">登录</div>
+      <div class="title">{{ $t("login.login") }}</div>
     </div>
 
     <!-- tab -->
     <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
-      <Tab :title="'邮箱'"></Tab>
-      <Tab :title="'手机'"></Tab>
+      <Tab :title="t('login.email')"></Tab>
+      <Tab :title="t('login.phone')"></Tab>
     </Tabs>
 
     <!-- 表单 -->
     <div class="form">
-      <div class="form_title" v-show="activeTab == 0">邮箱</div>
+      <div class="form_title" v-show="activeTab == 0">{{ $t("login.email") }}</div>
       <div class="form_item margin_item" v-show="activeTab == 0">
-        <!-- <div class="form_item_user" v-show="saveAccount && saveAccount == form.email"> -->
         <div class="form_item_user" v-show="form.email">
           <div class="envelope-icon"></div>
         </div>
         <input
           @change="changeAccount"
           v-model.trim="form.email"
-          placeholder="您的邮箱"
+          :placeholder="t('login.pw_placeholder1')"
           type="text"
           class="item_input"
         />
         <Loading v-if="accountLoading" :size="'0.32rem'" type="spinner" />
-        <!-- <div class="form_item_clear" v-show="saveAccount && saveAccount == form.email"> -->
         <div
           class="form_item_clear"
           v-show="form.email"
@@ -49,7 +47,7 @@
         </div>
       </div>
 
-      <div class="form_title" v-show="activeTab == 1">手机号</div>
+      <div class="form_title" v-show="activeTab == 1">{{ $t("login.phone_number") }}</div>
       <div class="form_item margin_item" v-show="activeTab == 1">
         <div
           class="code"
@@ -67,12 +65,12 @@
         <input
           maxlength="20"
           v-model.trim="form.phone"
-          placeholder="您的手机号"
+          :placeholder="t('login.pw_placeholder2')"
           type="text"
           class="item_input"
         />
       </div>
-      <div class="form_title">密码</div>
+      <div class="form_title">{{ $t("login.password") }}</div>
       <div class="form_item">
         <!-- 显示密码输入时的锁图标 -->
         <div class="form_item_user" v-if="form.password">
@@ -84,7 +82,7 @@
           maxlength="20"
           :type="showPass ? 'text' : 'password'"
           v-model.trim="form.password"
-          placeholder="请输入您的密码"
+          :placeholder="t('login.pw_placeholder3')"
           class="item_input"
         />
 
@@ -96,7 +94,7 @@
     </div>
 
     <!-- 忘记密码 -->
-    <div class="fogot" @click="goFoget">忘记密码？</div>
+    <div class="fogot" @click="goFoget">{{ $t("login.forget_pw") }}</div>
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
@@ -107,14 +105,14 @@
         color="#014CFA"
         class="submit"
         type="primary"
-        >登录</Button
+        >{{ $t("login.login") }}</Button
       >
     </div>
 
     <!-- 去注册 -->
     <div class="go_register" @click="goRegister">
-      没有账号吗？
-      <span>去注册</span>
+      {{ $t("login.no_account_con1") }}
+      <span>{{ $t("login.no_account_con2") }}</span>
     </div>
 
     <!-- 验证码 -->
@@ -135,7 +133,7 @@
           @click="showDialog = false"
         ></div>
         <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
-          区号选择
+          {{ $t("login.country_number") }}
         </div>
         <div class="item search_box">
           <div class="search-svg-icon"></div>
@@ -143,7 +141,7 @@
             v-model.trim="searchStr"
             class="ipt"
             type="text"
-            placeholder="输入区号"
+            :placeholder="t('login.pw_placeholder4')"
           />
           <div
             v-if="searchStr.length"
@@ -160,7 +158,7 @@
                 :class="{ transfer_dialog_item_active: form.area == item.code }"
               >
                 <div class="flex h-[1.08rem] items-center">
-                  <HKFlagIcon class="mr-[0.2rem]"/>
+                  <HKFlagIcon class="mr-[0.2rem]" />
                   <span>{{ item.cn }}</span>
                   <span>({{ item.code }})</span>
                 </div>
@@ -200,6 +198,10 @@ import store from "@/store";
 import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
 import HKFlagIcon from "./Icons/HKFlagIcon.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
 const emits = defineEmits(["closeDialog"]);
 const props = defineProps({
   backFunc: {
@@ -253,7 +255,7 @@ const changeAccount = () => {
           saveAccount.value = form.value.email;
           localStorage.setItem("saveAccount", saveAccount.value);
         } else {
-          showToast("账号不存在");
+          showToast(t('login.no_account_warning'));
         }
       })
       .finally(() => {
@@ -338,10 +340,10 @@ const submit = () => {
           })
           .finally(() => {
             emits("closeDialog");
-            showToast("登录成功");
+            showToast(t('login.login_success'));
           });
       } else {
-        return showToast(res.message || "登录异常");
+        return showToast(res.message || t('login.login_failed'));
       }
     })
     .catch((err) => {
@@ -355,7 +357,7 @@ const submit = () => {
           verifCodeRef.value.open();
         }, 1000);
       } else {
-        showToast(err.message || "网络异常");
+        showToast(err.message || t('login.network_error'));
       }
     })
     .finally(() => {
