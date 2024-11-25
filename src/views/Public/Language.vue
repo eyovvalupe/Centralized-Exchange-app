@@ -37,6 +37,7 @@ const props = defineProps({
 const checked = ref([store.state.i18Data.locale])
 const navs = ref([
   { name: '中文简体', icon: 'china_icon', val: 'zh' },
+  { name: '中文繁體', icon: 'china_icon', val: 'ch'},
   { name: 'English', icon: 'us_icon', val: 'en' },
 ])
 

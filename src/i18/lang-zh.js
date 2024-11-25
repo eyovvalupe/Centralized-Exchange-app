@@ -1,5 +1,29 @@
 
 export default {
+    user_page: {
+        login_out: "注册/登录",
+        recommended_user: "推荐用户",
+        social_user: "网络用户",
+        recommend_bonus: "推荐奖金",
+        ad_head: "领取投资模拟金",
+        ad_con1: "模拟投资",
+        ad_con2: "收益在售",
+        receive_payment: "收款账户",
+        verify_identity: "身份认证",
+        google_verification: "谷歌验证器",
+        already_verified: "已认证",
+        pending_verified: "待处理",
+        not_verified: "未认证",
+        already_set: "已绑定",
+        not_set: "未绑定",
+        recommend_friend: "推荐好友",
+        set_language: "语言",
+        security: "安全",
+        about: "关于",
+        logout: "退出登录",
+        already_set_google: "谷歌验证器已绑定",
+        not_set_google_yet: "谷歌验证器未绑定",
+    },
     form:{
         all:"全部"
     },

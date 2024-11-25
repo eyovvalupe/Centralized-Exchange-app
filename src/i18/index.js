@@ -1,10 +1,13 @@
 import { createI18n } from 'vue-i18n'
 import en from './lang-en'
 import zh from './lang-zh'
+import ch from './lang-ch'
+
 // 设置语言资源包
 const messages = {
   en,
-  zh
+  zh,
+  ch,
 }
 
 // 设置语言
