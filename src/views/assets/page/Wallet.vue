@@ -156,7 +156,7 @@ import ForexMyWallet from "./ForexWallet.vue";
 
 import HeaderTabs from "@/components/HeaderTabs.vue";
 
-const activeTab = ref(-1);
+const activeTab = ref(store.state.currSelectedWallet);
 const changeActiveTab = (val) => {
   showData.value = false;
   activeTab.value = val;
@@ -188,12 +188,11 @@ defineExpose({
 });
 
 watch(
-  () => currSelectedWallet.value,
+  () => store.state.currSelectedWallet,
   (val) => {
-    console.log("changed tab");
-    // if (val==5) {
-    //   tabscroll.value.scrollTop = 42;
-    // }
+    if(store.state.currSelectedWallet != activeTab.value){
+      changeActiveTab(val)
+    }
   }
 );
 const jump = (name, check = false, query) => {

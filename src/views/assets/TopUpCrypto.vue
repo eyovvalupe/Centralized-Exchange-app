@@ -85,7 +85,7 @@
             <div class="item_content">
               <input
                 class="ipt"
-                @blur="errStatus = false"
+                @blur="errStatus = false;form.amount <= 0 ? form.amount='' : ''"
                 type="number"
                 v-model="form.amount"
                 :placeholder="$t('topUpCrypto.inputPlaceholder')"
@@ -230,6 +230,7 @@ import AccountCheck from "@/components/AccountCheck.vue";
 import { _swapRate } from "@/api/api";
 import Decimal from "decimal.js";
 import { _cryptoCoin } from "@/api/api";
+
 const tabActive = ref("cryptocurrency");
 
 const safeRef = ref();

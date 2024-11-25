@@ -84,6 +84,10 @@ const props = defineProps({
     inputType:{
         type:String,
         default:"text"
+    },
+    allowZero:{
+        type:Boolean,
+        default:false
     }
 })
 const inputFocus = ref(false)
@@ -101,7 +105,7 @@ const reg2 = /^[\d\.]$/
 const inputBlur = ()=>{
     if(props.inputType == 'digit' || props.inputType == 'number'){
         inputVal.value = inputVal.value ? parseFloat(inputVal.value).toString() : ''
-        if(inputVal.value == '0'){
+        if(inputVal.value <= '0' && !props.allowZero){
             inputVal.value = ''
         }
         

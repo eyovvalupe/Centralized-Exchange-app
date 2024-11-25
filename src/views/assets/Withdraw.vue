@@ -125,9 +125,10 @@
             v-model="form.amount"
             show-btn
             :btn-text="$t('form.all')"
+            :min="0"
             :title="$t('withdraw.withdrawalAmount')"
             @change="changeAmount"
-            @allBtnClick="maxIpt"
+            @btnClick="maxIpt"
           >
             <template #title-right
               >{{ $t("withdraw.withdrawable") }}：{{ totalAmount }}</template
@@ -389,7 +390,7 @@ const route = useRoute();
 // 表单
 const form = ref({
   amount: "",
-  from: "",
+  from: '',
   account: "",
   network: "",
 });
@@ -400,6 +401,7 @@ const changeAmount = () => {
     getFee();
   }, 0);
 };
+
 
 const searchDialogStr = ref("");
 
@@ -487,13 +489,7 @@ const wallet = computed(() => {
   return store.state.wallet || [];
 });
 
-if (route.query.from) {
-  form.value.from = route.query.from;
-  form.value.network = currencyMapList.value[form.value.from][0];
-} else if (wallet.value[0]) {
-  form.value.from = wallet.value[0].name;
-  form.value.network = currencyMapList.value[form.value.from][0];
-}
+
 const balance = computed(() => {
   // main钱包余额
   let b = 0;
@@ -655,6 +651,12 @@ const goAddAccount = () => {
 };
 
 onMounted(() => {
+  if (route.query.currency) {
+    form.value.from = route.query.currency;
+  } else if (wallet.value[0]) {
+    form.value.from = wallet.value[0].name;
+  
+  }
   // if (AccountCheckRef.value.check()) {
   getSessionToken();
   // }
@@ -676,7 +678,7 @@ watch(
   () => form.value.from,
   (val) => {
     if (Object.keys(currencyMapList.value).length) {
-      form.value.network = currencyMapList.value[val][0];
+      form.value.network = currencyMapList.value[val] && currencyMapList.value[val][0] ? currencyMapList.value[val][0] : '';
     }
   }
 );

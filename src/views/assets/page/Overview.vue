@@ -48,7 +48,7 @@
         ref="tab1"
         :key="1"
         class="tab"
-        @click="jumpToWallet(1)"
+        @click="jumpToWallet(0)"
       >
         <div class="tab_icon">
           <CashIcon />
@@ -66,7 +66,7 @@
         :key="2"
         class="tab"
         :class="{ open_tab: rightSwitch2 == true }"
-        @click="jumpToWallet(2)"
+        @click="jumpToWallet(1)"
       >
         <div class="tab_icon">
           <StockIcon />
@@ -86,7 +86,7 @@
         :key="3"
         class="tab"
         :class="{ open_tab: rightSwitch3 == true }"
-        @click="jumpToWallet(3)"
+        @click="jumpToWallet(2)"
       >
         <div class="tab_icon">
           <ContractIcon />
@@ -106,7 +106,7 @@
         :key="4"
         class="tab"
         :class="{ open_tab: rightSwitch5 == true }"
-        @click="jumpToWallet(4)"
+        @click="jumpToWallet(3)"
       >
         <div class="tab_icon">
           <ForeignCashIcon />
@@ -126,7 +126,7 @@
         :key="5"
         class="tab"
         :class="{ open_tab: rightSwitch5 == true }"
-        @click="jumpToWallet(5)"
+        @click="jumpToWallet(4)"
       >
         <div class="tab_icon">
           <TraditionIcon />

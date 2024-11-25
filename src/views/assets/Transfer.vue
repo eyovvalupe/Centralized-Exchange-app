@@ -166,7 +166,7 @@
       position="bottom"
       @closed="clickKey = ''"
     >
-      <div class="van-popup-custom__top-rbtn" @click="hideDialog">确认</div>
+      <div class="van-popup-custom__top-rbtn" @click="onConfirm">确认</div>
       <div class="van-popup-custom-title">转入账户</div>
 
       <Picker
@@ -175,8 +175,7 @@
         :columns="columns"
         :columns-field-names="customFieldName"
         @cancel="hideDialog"
-        @confirm="hideDialog"
-        @change="onConfirm"
+        @change="onChange"
       >
         <template #option="option">
           <div class="picker-item">
@@ -253,9 +252,7 @@ if (t1) {
   form.value.toCurrency = t1;
 }
 setTimeout(() => {
-  if (formType.value == "swap") {
-    getRate();
-  }
+  getRate();
 }, 0);
 const maxIpt = () => {
   form.value.amount = balance.value;
@@ -335,27 +332,29 @@ const columns = computed(() => {
   });
 });
 
-console.log(columns.value);
 
 const customFieldName = {
   text: "value",
   value: "key",
   children: "currencys",
 };
-const onConfirm = ({ selectedOptions }) => {
+let selectedOption = {}
+const onConfirm = ()=>{
   if (clickKey.value == "from") {
-    form.value.from = selectedOptions[0].key;
-    form.value.fromCurrency = selectedOptions[1];
+    form.value.from = selectedOption.key;
+    form.value.fromCurrency = selectedOption.currency;
   } else {
-    form.value.to = selectedOptions[0].key;
-    form.value.toCurrency = selectedOptions[1];
+    form.value.to = selectedOption.key;
+    form.value.toCurrency = selectedOption.currency;
   }
-  // showPicker.value = false
-  setTimeout(() => {
-    if (formType.value == "swap") {
-      getRate();
-    }
-  }, 0);
+  getRate()
+  hideDialog()
+}
+const onChange = ({ selectedOptions }) => {
+  selectedOption.key = selectedOptions[0].key
+  selectedOption.currency = selectedOptions[1]
+  
+ 
 };
 
 const balance = computed(() => {
@@ -442,9 +441,7 @@ const transAccount = () => {
   form.value.toCurrency = form.value.fromCurrency;
   form.value.fromCurrency = currency;
   setTimeout(() => {
-    if (formType.value == "swap") {
-      getRate();
-    }
+    getRate();
   }, 0);
 };
 
@@ -461,21 +458,30 @@ getSessionToken();
 const rate = ref(0);
 const rateLoading = ref(false);
 const getRate = () => {
+  console.log(666)
   // 获取汇率
   rateLoading.value = true;
-  _swapRate({
-    from: form.value.fromCurrency.currency,
-    to: form.value.toCurrency.currency,
-    amount: 0,
-  })
-    .then((res) => {
-      if (res.code == 200) {
-        rate.value = res.data.exchange_rate;
-      }
+  if(formType.value == 'swap'){
+    _swapRate({
+      from: form.value.fromCurrency.currency,
+      to: form.value.toCurrency.currency,
+      amount: 0,
     })
-    .finally(() => {
+      .then((res) => {
+        if (res.code == 200) {
+          rate.value = res.data.exchange_rate;
+        }
+      })
+      .finally(() => {
+        rateLoading.value = false;
+      });
+  }else{
+    
+    rate.value = 1
+    setTimeout(()=>{
       rateLoading.value = false;
-    });
+    },100)
+  }
 };
 
 // 跳转记录
