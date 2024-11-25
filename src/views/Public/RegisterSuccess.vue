@@ -20,7 +20,7 @@
     <div class="icon">
       <img src="/static/img/user/success.svg" alt="√" />
     </div>
-    <div class="title">注册成功</div>
+    <div class="title">{{ $t("register.success_sign_up") }}</div>
 
     <Button
       round
@@ -29,9 +29,13 @@
       type="primary"
       @click="next"
       :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"
-      >身份验证&谷歌验证器绑定</Button
+      >{{ $t("register.success_btn") }}</Button
     >
-    <div @click="back"><span style="color: #014cfa; font-size: 0.32rem; line-height: 0.448rem;">完成</span></div>
+    <div @click="back">
+      <span style="color: #014cfa; font-size: 0.32rem; line-height: 0.448rem"
+        >{{ $t('register.success_finish') }}</span
+      >
+    </div>
   </div>
 </template>
 
@@ -39,6 +43,10 @@
 import { Button, Icon } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
 const route = useRoute();
 
 const next = () => {

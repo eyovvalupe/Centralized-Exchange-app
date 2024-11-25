@@ -57,7 +57,11 @@ export default {
     code_con2: "請輸入6位數代碼",
     code_jump: "跳過驗證",
     code_again: '再次發送',
-
+    code_jump_title: "跳過驗證將繼續註冊",
+    code_jump_confirm: "確定",
+    success_sign_up: "註冊成功",
+    success_btn: "身份驗證&谷歌驗證器綁定",
+    success_finish: "完成",
   },
   password_level: {
     weak: "弱",

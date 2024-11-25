@@ -58,7 +58,11 @@ export default {
     code_con2: "Input 6 letter code",
     code_jump: "Jump verify",
     code_again: 'Send again',
-
+    code_jump_title: "Jump verification and go on to register",
+    code_jump_confirm: "Confirm",
+    success_sign_up: "Succes sign up",
+    success_btn: "Identity & Google Authenticator",
+    success_finish: "Finish",
   },
   password_level: {
     weak: "Weak",

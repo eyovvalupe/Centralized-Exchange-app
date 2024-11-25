@@ -274,7 +274,7 @@ import HKFlagIcon from "./Icons/HKFlagIcon.vue";
 import { useI18n } from "vue-i18n";
 
 // 区号控制
-const step = ref(1)
+const step = ref(3)
 const {t} = useI18n()
 const activeTab = ref(0);
 const defaultCode = "+244";

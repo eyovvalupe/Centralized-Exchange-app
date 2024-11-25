@@ -132,10 +132,10 @@ const focus = () => {
 
 const close = () => {
   showConfirmDialog({
-    title: "跳过验证将继续注册",
+    title: t('register.code_jump_title'),
     message: "",
     width: "6.23rem",
-    confirmButtonText: "确定",
+    confirmButtonText: t('register.code_jump_confirm'),
     confirmButtonColor: "#014cfa",
   })
     .then(() => {
