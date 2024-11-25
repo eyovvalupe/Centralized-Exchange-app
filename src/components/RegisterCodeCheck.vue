@@ -70,7 +70,7 @@ import {
   showLoadingToast,
   closeToast,
 } from "vant";
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
 const route = useRoute();
@@ -158,7 +158,7 @@ let timeInterval = null;
 const s = ref(0);
 const send = () => {
   if (s.value) return;
-  s.value = 59;
+  s.value = 119;
   timeInterval = setInterval(() => {
     s.value--;
     if (s.value == 0) {
@@ -190,6 +190,10 @@ const goLang = () => {
 const goChat = () => {
   router.push({ name: "chat" });
 };
+
+onMounted(() => {
+  send()
+})
 </script>
 
 <style lang="less" scoped>

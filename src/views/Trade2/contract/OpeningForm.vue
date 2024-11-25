@@ -52,18 +52,12 @@
             </div>
 
             <!-- 简单模式 -->
-            <FormItem
-                title="止损"
-                class="mb-[0.4rem]"
-                input-type="number"
-                v-model="form1.stop_loss_price"
-                :percent-tags="props.activeType == 1 ? [{label:'-20%',value:20},{label:'-15%',value:15},{label:'-10%',value:10}] : [{label:'+20%',value:20},{label:'+15%',value:15},{label:'+10%',value:10}]"
-                @percentTagClick="setPriceStop"
-                v-if="mode == 1"
-            />
-            
+            <FormItem title="止损" class="mb-[0.4rem]" input-type="number" v-model="form1.stop_loss_price"
+                :percent-tags="props.activeType == 1 ? [{ label: '-20%', value: 20 }, { label: '-15%', value: 15 }, { label: '-10%', value: 10 }] : [{ label: '+20%', value: 20 }, { label: '+15%', value: 15 }, { label: '+10%', value: 10 }]"
+                @percentTagClick="setPriceStop" v-if="mode == 1" />
+
             <!-- 价格 -->
-          
+
             <div class="item_box">
                 <div class="item_box_left" @click="showPriceTypeDialog = true">
                     <div class="subtitle"><span>价格</span></div>
@@ -78,23 +72,15 @@
                     <div class="subtitle">
                         <span>&nbsp;</span>
                     </div>
-                    <FormItem
-                        custom 
-                        disabled
-                        v-if="priceMode == 1"
-                    >
-                        <span  style="color: #A4ACB9;">最新价格成交</span>    
+                    <FormItem custom disabled v-if="priceMode == 1">
+                        <span style="color: #A4ACB9;">最新价格成交</span>
                     </FormItem>
 
-                    <FormItem
-                        v-model="form1.price"
-                        input-type="number"
-                        :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-1%',value:1}] : [{label:'+3%',value:3},{label:'+1%',value:1}]"
-                        v-else
-                        @percentTagClick="percentTagClick"
-                    >
+                    <FormItem v-model="form1.price" input-type="number"
+                        :percent-tags="props.activeType == 1 ? [{ label: '-3%', value: 3 }, { label: '-1%', value: 1 }] : [{ label: '+3%', value: 3 }, { label: '+1%', value: 1 }]"
+                        v-else @percentTagClick="percentTagClick">
                     </FormItem>
-                    
+
                 </div>
 
                 <!-- <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
@@ -104,15 +90,10 @@
 
         <!-- 价格 -->
 
-        <FormItem
-            class="mb-[0.4rem]"
-            input-type="number"
-            title="价格" tip="满足价格才能成交" v-model="form1.price"
-            :percent-tags="props.activeType == 1 ? [{label:'-3%',value:3},{label:'-2%',value:2},{label:'-1%',value:1},{label:'市价',value:0}] : [{label:'+3%',value:3},{label:'+2%',value:2},{label:'+1%',value:1},{label:'市价',value:0}]"
-            @percentTagClick="percentTagClick"
-            v-if="props.activeTab == 1"
-         />
-        
+        <FormItem class="mb-[0.4rem]" input-type="number" title="价格" tip="满足价格才能成交" v-model="form1.price"
+            :percent-tags="props.activeType == 1 ? [{ label: '-3%', value: 3 }, { label: '-2%', value: 2 }, { label: '-1%', value: 1 }, { label: '市价', value: 0 }] : [{ label: '+3%', value: 3 }, { label: '+2%', value: 2 }, { label: '+1%', value: 1 }, { label: '市价', value: 0 }]"
+            @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
+
         <!-- 合约 -->
         <div class="subtitle">
             <span @click="showNavDialog">合约</span>
@@ -127,7 +108,7 @@
                 <div class="info">
                     <div style="flex:1;">
                         <div class="info-symbol" v-show="currStock.name">{{ currStock.name }}</div>
-                        
+
                     </div>
                     <div class="more_icon">
                         <img src="/static/img/trade/down.png" alt="↓">
@@ -150,7 +131,9 @@
             </div>
 
             <div class="item_box_right">
-                <FormItem title="张数" @focus="volumeFocus"  v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right" :tip="maxStockNum >= 1 ? '≤'+maxStockNum : ''" input-type="digit">
+                <FormItem title="张数" @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1"
+                    btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum"
+                    tip-align="right" :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
                     <template #title-right>
                         <span style="color:#014CFA" @click="openConfirmBox" v-if="maxStockNum < 1">账户余额不足</span>
                     </template>
@@ -159,7 +142,7 @@
             </div>
         </div>
 
-         <!-- 拖动 -->
+        <!-- 拖动 -->
         <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
         <!-- 按钮 -->
@@ -228,7 +211,7 @@
             <div class="item">
                 <div class="item_name">订单金额</div>
                 <div class="item_val">
-                    {{orderAmount}}
+                    {{ orderAmount }}
                 </div>
             </div>
 
@@ -240,9 +223,10 @@
 
             <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
-                <input v-model="safePass" placeholder="请输入交易密码" :type="showPassword ? 'text' : 'password'" class="ipt" />
-                <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword=true" alt="off" />
-                <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword=false" />
+                <input v-model="safePass" placeholder="请输入交易密码" :type="showPassword ? 'text' : 'password'"
+                    class="ipt" />
+                <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
+                <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
             </div>
             <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit" color="#014cfa"
                 round>开仓</Button>
@@ -265,12 +249,13 @@
     </ActionSheet>
 
     <!-- 仓位模式选择 -->
-   
-    <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom" teleport="body">
-       
+
+    <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom"
+        teleport="body">
+
         <div class="van-popup-custom-title">保证金模式</div>
-        <div class="van-popup-custom__top-rbtn" @click="showTypeDialog=false;">确认</div>
-        <Picker  :show-toolbar="false" :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
+        <div class="van-popup-custom__top-rbtn" @click="showTypeDialog = false;">确认</div>
+        <Picker :show-toolbar="false" :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
             @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
     </Popup>
 
@@ -303,8 +288,8 @@
 
             <div class="lists">
                 <!-- 搜索列表 -->
-                <StockTable theme="classic" market-type="crypto" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
-                    :list="marketSearchList" />
+                <StockTable theme="classic" market-type="crypto" :handleClick="handleClick" :loading="searchLoading"
+                    :key="'search'" :list="marketSearchList" />
             </div>
         </div>
 
@@ -313,7 +298,7 @@
 </template>
 
 <script setup>
-import { Loading, Slider, Button, showToast,showConfirmDialog, Popup, ActionSheet, Picker } from "vant";
+import { Loading, Slider, Button, showToast, showConfirmDialog, Popup, ActionSheet, Picker } from "vant";
 import { ref, computed, onMounted } from "vue"
 import { _search, _basic, _futuresPara, _futuresBuy } from "@/api/api"
 import store from "@/store";
@@ -376,7 +361,7 @@ const goDialogSearch = (market) => {
     }, 100)
 }
 
-const emits = defineEmits(['showNavDialog','success'])
+const emits = defineEmits(['showNavDialog', 'success'])
 const showNavDialog = () => {
     emits('showNavDialog')
 }
@@ -440,6 +425,9 @@ const onSelectForm1PriceType = item => {
     priceMode.value = item.value
     if (priceMode.value == 1) {
         form1.value.price = ''
+        form1.value.price_type = 'market'
+    } else {
+        form1.value.price_type = 'limit'
     }
 }
 
@@ -468,7 +456,7 @@ const stockCurrency = computed(() => { // 股票账户余额
 })
 
 const maxStockNum = computed(() => { // 最大可买 可卖
-    if(!levers.value.length){
+    if (!levers.value.length) {
         return '--'
     }
     if (currStock.value.price) {
@@ -481,24 +469,24 @@ const maxStockNum = computed(() => { // 最大可买 可卖
 
 
 
-const openConfirmBox = ()=>{
+const openConfirmBox = () => {
     showConfirmDialog({
-        closeOnClickOverlay:true,
-        className:"van-custom-confirm-dialog",
-        title:"账户余额不足",
-        message:"<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">合约账户余额 <span style=\"font-weight:600;color:#014CFA;\">"+stockWalletAmount.value+"</span> "+stockCurrency.value+"</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>",
-        allowHtml:true,
-        confirmButtonText:"去划转",
-        cancelButtonText:"去充值",
-        confirmButtonColor:"#014CFA",
-        cancelButtonColor:"#014CFA"
-    }).then(()=>{
+        closeOnClickOverlay: true,
+        className: "van-custom-confirm-dialog",
+        title: "账户余额不足",
+        message: "<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">合约账户余额 <span style=\"font-weight:600;color:#014CFA;\">" + stockWalletAmount.value + "</span> " + stockCurrency.value + "</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>",
+        allowHtml: true,
+        confirmButtonText: "去划转",
+        cancelButtonText: "去充值",
+        confirmButtonColor: "#014CFA",
+        cancelButtonColor: "#014CFA"
+    }).then(() => {
         router.push({
-            name:'transfer'
+            name: 'transfer'
         })
-    }).catch(()=>{
+    }).catch(() => {
         router.push({
-            name:'topUpCrypto'
+            name: 'topUpCrypto'
         })
     })
 }
@@ -517,10 +505,10 @@ const setPricePercent = (i) => { // 设置浮动价格
     }
 }
 
-const percentTagClick = (percent)=>{
-    if(percent.value == 0){
+const percentTagClick = (percent) => {
+    if (percent.value == 0) {
         setNowPrice()
-    }else{
+    } else {
         setPricePercent(percent.value)
     }
 }
@@ -544,6 +532,7 @@ const form1 = ref({
 const mode = ref(1) // 1-简单模式  2-复杂模式
 const priceMode = ref(1) // 1-市价 2-限价
 const setPriceStop = p => { // 设置止损价格
+    if (!currStock.value.price) return
     const i = p.value
     if (props.activeType == 1) { // 买涨
         form1.value.stop_loss_price = new Decimal(currStock.value.price).mul(100 - i).div(100).toNumber()
@@ -637,6 +626,7 @@ const submit1 = () => {
         lever_type: form1.value.leverType,
         lever: form1.value.lever,
         price_type: form1.value.price_type,
+
         price: form1.value.price || '',
         stop_profit_type: form1.value.stop_profit_type,
         stop_profit_price: form1.value.stop_profit_price,
@@ -675,7 +665,7 @@ const onSliderChange = (newValue) => {
 };
 
 const changePercent = () => {
-    if (maxStockNum.value == '--' || !form1.value.volume || form1.value.volume == 0){
+    if (maxStockNum.value == '--' || !form1.value.volume || form1.value.volume == 0) {
         form1.value.volume = ''
         return sliderValue.value = 0
     }
@@ -683,11 +673,11 @@ const changePercent = () => {
     if (p < 0) p = 0
     if (p > 100) p = 100
     sliderValue.value = Number(p)
-    
+
 }
 
-const volumeFocus = ()=>{
-     if (!currStock.value.symbol) return showToast('请选择合约')
+const volumeFocus = () => {
+    if (!currStock.value.symbol) return showToast('请选择合约')
 }
 
 
@@ -708,7 +698,7 @@ const getParam = () => {
     levers.value = []
     configLoading.value = true
     _futuresPara({
-        symbol:currStock.value.symbol
+        symbol: currStock.value.symbol
     }).then(res => {
         if (res && res.data) {
             paramHandle(res.data)
@@ -718,7 +708,7 @@ const getParam = () => {
     })
 }
 const paramHandle = data => {
-    
+
     configLoading.value = false
     interest.value = data.interest || 0
     closingline.value = data.closingline || 100
@@ -726,7 +716,7 @@ const paramHandle = data => {
     form1.value.volume = ''
     form1.value.stop_loss_price = ''
     form1.value.price = ''
-    sliderValue.value  = 0
+    sliderValue.value = 0
     if (data.fee) {
         openFee.value = data.fee || 0
         closeFee.value = data.fee || 0
@@ -740,19 +730,19 @@ const paramHandle = data => {
 }
 
 
-const initParam = ()=>{
-    if(currStock.value.symbol){
+const initParam = () => {
+    if (currStock.value.symbol) {
         getParam()
-    }else{
+    } else {
         form1.value.stop_loss_price = ''
         form1.value.price = ''
         min.value = 1
         step.value = 1
         openFee.value = 0
         closeFee.value = 0
-        interest.value = 0 
-        closingline.value = 100 
-        amountper.value = 1 
+        interest.value = 0
+        closingline.value = 100
+        amountper.value = 1
         levers.value = []
     }
 }
@@ -776,9 +766,9 @@ const handleClick = item => {
 // url参数处理
 if (route.query.symbol) {
     handleClick({
-        symbol:route.query.symbol
+        symbol: route.query.symbol
     })
-}else{
+} else {
     try {
         currStock.value = JSON.parse(sessionStorage.getItem('currConstract') || '{}')
     } catch {
@@ -787,9 +777,9 @@ if (route.query.symbol) {
     initParam()
 }
 
-const openTypeDialog = ()=>{
-    if(!levers.value.length){
-        if(!currStock.value.symbol){
+const openTypeDialog = () => {
+    if (!levers.value.length) {
+        if (!currStock.value.symbol) {
             showToast('请选择合约')
         }
         return
@@ -818,7 +808,7 @@ const payFee = computed(() => { // 手续费
 })
 const submitLoading = ref(false)
 const submitFormDialog = () => {
-    if(!safePass.value){
+    if (!safePass.value) {
         return showToast('请输入交易密码')
     }
     submitForm(safePass.value)
@@ -839,9 +829,9 @@ const submitForm = (s) => {
             showToast('开仓成功')
             form1.value.volume = ''
             sliderValue.value = 0
-            setTimeout(()=>{
+            setTimeout(() => {
                 emits('success')
-            },1500)
+            }, 1500)
         }
     }).finally(() => {
         getSessionToken()
@@ -874,22 +864,23 @@ const jump = (name) => {
 
 defineExpose({
     // 选择某个股票
-    choose:handleClick
+    choose: handleClick
 })
 </script>
 
 <style lang="less" scoped>
 .search_dialog_trade {
-    
+
     .lists {
         height: 60vh;
         overflow-y: auto;
-        margin-top:0.32rem;
+        margin-top: 0.32rem;
     }
+
     .search_box {
         height: 0.8rem;
         padding: 0 0.32rem;
-        margin:0.52rem 0.3rem 0 0.3rem;
+        margin: 0.52rem 0.3rem 0 0.3rem;
         display: flex;
         align-items: center;
         background-color: #F5F7FC;
@@ -906,15 +897,16 @@ defineExpose({
             height: 100%;
             font-weight: 400;
         }
-        .ipt::placeholder{
-            color:#A4ACB9;
+
+        .ipt::placeholder {
+            color: #A4ACB9;
         }
     }
 
 }
 
 .form {
-    padding:0.48rem 0.32rem 0.32rem;
+    padding: 0.48rem 0.32rem 0.32rem;
     position: relative;
 
     .subtitle {
@@ -932,9 +924,10 @@ defineExpose({
         }
     }
 
-    :deep(.form-item-title){
+    :deep(.form-item-title) {
         margin-top: 0rem;
     }
+
     .item_box {
         display: flex;
         align-items: stretch;
@@ -957,25 +950,28 @@ defineExpose({
                 font-weight: 400;
                 position: absolute;
                 width: 100%;
-                left:0;
+                left: 0;
                 box-sizing: border-box;
                 padding-left: 0.32rem;
                 pointer-events: none;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                .more_icon{
+
+                .more_icon {
                     margin-right: 0.3rem;
                 }
             }
-            .info-symbol{
+
+            .info-symbol {
                 color: #061023;
-                font-size:0.3rem;
+                font-size: 0.3rem;
             }
-            .info-name{
+
+            .info-name {
                 color: #9ea3ae;
                 font-size: 0.24rem;
-                margin-top:0.08rem;
+                margin-top: 0.08rem;
             }
 
             .ipt_tip {
@@ -1030,7 +1026,8 @@ defineExpose({
                 transform: translateY(-0.36rem);
             }
         }
-        .item_focus2{
+
+        .item_focus2 {
             border: 1px solid #034cfa;
         }
 
@@ -1142,6 +1139,7 @@ defineExpose({
         padding: 0.16rem 0.32rem;
         box-sizing: border-box;
         position: relative;
+
         img {
             width: 0.4rem;
             height: 0.4rem;
@@ -1152,6 +1150,7 @@ defineExpose({
             z-index: 9999;
         }
     }
+
     .money_box {
         margin: 0.32rem 0;
         display: flex;
@@ -1161,14 +1160,16 @@ defineExpose({
         background-color: #F5F7FC;
         border-radius: 0.32rem;
         padding: 0.24rem 0.32rem;
+
         .amount {
-            color:#666D80;
-             line-height: 0.56rem;
-            strong{
+            color: #666D80;
+            line-height: 0.56rem;
+
+            strong {
                 color: #061023;
                 font-size: 0.36rem;
                 font-weight: 600;
-               margin-left: 0.12rem;
+                margin-left: 0.12rem;
             }
         }
 
@@ -1178,11 +1179,11 @@ defineExpose({
             font-weight: 400;
             line-height: 0.36rem;
             padding: 0.1rem 0 0 0.2rem;
-            span{
-                color:#061023;
+
+            span {
+                color: #061023;
             }
         }
     }
 }
-
 </style>

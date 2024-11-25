@@ -293,7 +293,7 @@
 </template>
 
 <script setup>
-import { Loading, Slider, Button, showToast, Popup, ActionSheet, Picker } from "vant";
+import { Loading, Slider, Button, showToast, Popup, ActionSheet, Picker, showConfirmDialog } from "vant";
 import { ref, computed, watch, nextTick } from "vue"
 import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api"
 import store from "@/store";
@@ -425,6 +425,9 @@ const onSelectForm1PriceType = item => {
     priceMode.value = item.value
     if (priceMode.value == 1) {
         form1.value.price = ''
+        form1.value.price_type = 'market'
+    } else {
+        form1.value.price_type = 'limit'
     }
 }
 
@@ -441,13 +444,14 @@ const modeList = computed(() => {
 
 
 const elseWallet = computed(() => store.state.elseWallet || [])
-const stockWalletAmount = computed(() => { // 股票账户余额
-    const target = elseWallet.value.find(item => item.account == 'stock')
+const wallet = computed(() => store.state.wallet || [])
+const stockWalletAmount = computed(() => { // 钱包余额
+    const target = wallet.value.find(item => item.currency == paramCurrency.value)
     if (target) return target.amount
     return 0
 })
 const stockCurrency = computed(() => { // 股票账户余额
-    const target = elseWallet.value.find(item => item.account == 'stock')
+    const target = elseWallet.value.find(item => item.account == 'stock' && item.currency == paramCurrency.value)
     if (target) return target.currency
     return 0
 })
@@ -526,6 +530,7 @@ const form1 = ref({
 const mode = ref(1) // 1-简单模式  2-复杂模式
 const priceMode = ref(1) // 1-市价 2-限价
 const setPriceStop = i => { // 设置止损价格
+    if (!currStock.value.price) return
     if (props.activeType == 1) { // 买涨
         form1.value.stop_loss_price = new Decimal(currStock.value.price).mul(100 - i).div(100).toNumber()
     } else { // 买跌
@@ -680,6 +685,7 @@ const closeFee = ref(0) // 平仓手续费
 const flowerFee = ref(0) // 印花税
 const configLoading = ref(false)
 const levers = ref([]) // 杠杆
+const paramCurrency = ref('') // 交易使用的货币
 const getParam = () => {
     configLoading.value = true
     levers.value = []
@@ -715,6 +721,9 @@ const paramHandle = data => {
         openFee.value = arr2[0] || 0
         closeFee.value = arr2[1] || 0
         flowerFee.value = arr2[2] || 0
+    }
+    if (data.currency) {
+        paramCurrency.value = data.currency || ''
     }
     form1.value.volume = ''
     sliderValue.value = 0
