@@ -44,18 +44,30 @@ export default {
     pw_placeholder6: "Please input the invite code",
     invite_code: "Invite code",
     agree_con1: "I agree with",
-    agree_con2: "security policy ",
-    agree_con3: "and ",
+    agree_con2: "security policy",
+    agree_con3: "and",
     agree_con4: "user rules",
     register_success: "Signed up successfully",
     register_failed: "Failed to sign up",
     network_error: "Network Error",
     next: "Go on",
+    code_email: "Email ",
+    code_phone: "Phone ",
+    code_verify: "Verification",
+    code_con1: "Already sent verification code to your ",
+    code_con2: "Input 6 letter code",
+    code_jump: "Jump verify",
+    code_again: 'Send again',
+
   },
   password_level: {
     weak: "Weak",
     normal: "Normal",
     strong: "Strong"
+  },
+  code_input: {
+    btn_text1: "Next",
+    btn_text2: "Bound",
   },
   user_page: {
     login_out: "Sign In / Sign Out",

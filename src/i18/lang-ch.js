@@ -50,11 +50,23 @@ export default {
     register_failed: "註冊異常",
     network_error: "網絡異常",
     next: "繼續",
+    code_email: "電子郵件",
+    code_phone: "手機",
+    code_verify: "驗證",
+    code_con1: "我們已將驗證碼發送至您的",
+    code_con2: "請輸入6位數代碼",
+    code_jump: "跳過驗證",
+    code_again: '再次發送',
+
   },
   password_level: {
     weak: "弱",
     normal: "強",
     strong: "優"
+  },
+  code_input: {
+    btn_text1: "繼續",
+    btn_text2: "綁定",
   },
   user_page: {
     login_out: "註冊/登錄",

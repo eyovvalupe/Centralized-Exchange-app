@@ -50,11 +50,22 @@ export default {
     register_failed: "注册异常",
     network_error: "网络异常",
     next: "继续",
+    code_email: "电子邮件",
+    code_phone: "手机",
+    code_verify: "验证",
+    code_con1: "我们已将验证码发送至您的",
+    code_con2: "请输入6位数代码",
+    code_jump: "跳过验证",
+    code_again: '再次发送',
   },
   password_level: {
     weak: "弱",
     normal: "强",
     strong: "优"
+  },
+  code_input: {
+    btn_text1: "继续",
+    btn_text2: "绑定",
   },
   user_page: {
     login_out: "注册/登录",

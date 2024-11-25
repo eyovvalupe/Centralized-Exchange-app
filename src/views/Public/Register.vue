@@ -153,7 +153,7 @@
           class="mr-[0.2rem]"
           @click="checked = !checked"
         ></div>
-        {{ $t("register.agree_con1") }}&nbsp;<span>{{ $t("register.agree_con2") }}&nbsp;</span>{{ $t("register.agree_con3") }}&nbsp;<span>{{ $t("register.agree_con4") }}</span>
+        {{ $t("register.agree_con1") }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3") }}<span>{{ $t("register.agree_con4") }}</span>
       </label>
 
       <!-- 按钮 -->
@@ -274,7 +274,7 @@ import HKFlagIcon from "./Icons/HKFlagIcon.vue";
 import { useI18n } from "vue-i18n";
 
 // 区号控制
-const step = ref(2)
+const step = ref(1)
 const {t} = useI18n()
 const activeTab = ref(0);
 const defaultCode = "+244";

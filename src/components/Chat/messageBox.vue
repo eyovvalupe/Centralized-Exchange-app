@@ -7,7 +7,7 @@
         !props.chatLoading
       "
     >
-      <p class="no-message">{{ formatDate(new Date()) }}</p>
+      <p class="no-message mb-[0.2rem]">{{ formatDate(new Date()) }}</p>
       <div class="flex">
         <div class="mr-[0.2rem]">
           <ServiceAvatar />

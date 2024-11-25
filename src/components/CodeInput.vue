@@ -1,12 +1,18 @@
 <template>
   <div class="password-input">
-    <div class="flex items-center justify-between mb-[0.32rem]" v-if="!props.from == 'register'">
+    <div
+      class="flex items-center justify-between mb-[0.32rem]"
+      v-if="!props.from == 'register'"
+    >
       <span class="text-[0.32rem] text-[#061023] mr-[0.2rem]"
         >Google Verification Code</span
       >
       <div class="clear_icon" style="cursor: pointer" @click="clean"></div>
     </div>
-    <div class="flex justify-between w-full" :class="props.from == 'register' ? 'mb-[0.8rem]' : 'mb-[0.8rem]'">
+    <div
+      class="flex justify-between w-full"
+      :class="props.from == 'register' ? 'mb-[0.8rem]' : 'mb-[0.8rem]'"
+    >
       <div v-for="(digit, index) in passwordDigits" class="relative">
         <input
           :key="index"
@@ -33,7 +39,7 @@
                 : '#e8503a !important',
             caretColor:
               !isSentCodeError || !isAllFilled ? '#014cfa' : '#e8503a',
-            borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem'
+            borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem',
           }"
           ref="digitInputs"
         />
@@ -51,7 +57,7 @@
       class="submit-button"
       type="primary"
       @click="handleSubmit"
-      >{{ props.from == 'register' ? '继续' : '绑定' }}</Button
+      >{{ props.from == "register" ? t('code_input.btn_text1') : t('code_input.btn_text2') }}</Button
     >
   </div>
 </template>
@@ -60,6 +66,9 @@
 import { ref, onMounted, nextTick, computed, watch } from "vue";
 import store from "@/store";
 import { Button } from "vant";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const isSentCodeError = computed(() => store.state.isSentCodeError || false);
 
@@ -74,12 +83,12 @@ const props = defineProps({
   },
   loading: {
     type: Boolean,
-    default: false
+    default: false,
   },
   from: {
     type: String,
-    default: ''
-  }
+    default: "",
+  },
 });
 const isAllFilled = computed(() => {
   return passwordDigits.value.every((digit) => digit !== "");
@@ -120,7 +129,7 @@ const handleKeydown = (index, event) => {
     } else {
       passwordDigits.value[index] = "";
     }
-    store.commit("setIsSentCodeError", false)
+    store.commit("setIsSentCodeError", false);
   }
 };
 watch(
@@ -139,7 +148,7 @@ const handleSubmit = () => {
 
 onMounted(() => {
   digitInputs.value[0].focus();
-})
+});
 </script>
 
 <style>
