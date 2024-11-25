@@ -1,12 +1,12 @@
 <template>
   <div class="password-input">
-    <div class="flex items-center justify-between mb-[0.32rem]">
+    <div class="flex items-center justify-between mb-[0.32rem]" v-if="!props.from == 'register'">
       <span class="text-[0.32rem] text-[#061023] mr-[0.2rem]"
         >Google Verification Code</span
       >
       <div class="clear_icon" style="cursor: pointer" @click="clean"></div>
     </div>
-    <div class="flex justify-between w-full mb-[0.8rem]">
+    <div class="flex justify-between w-full" :class="props.from == 'register' ? 'mb-[0.8rem]' : 'mb-[0.8rem]'">
       <div v-for="(digit, index) in passwordDigits" class="relative">
         <input
           :key="index"
@@ -16,7 +16,7 @@
           @input="(event) => handleInput(event.target.value, index)"
           @keydown="(event) => handleKeydown(index, event)"
           @focus="focusIndex = index"
-          class="digit-input"
+          class="digit-input pt-[0.1rem]"
           :class="{ filled: digit !== '' }"
           :style="{
             borderColor:
@@ -33,6 +33,7 @@
                 : '#e8503a !important',
             caretColor:
               !isSentCodeError || !isAllFilled ? '#014cfa' : '#e8503a',
+            borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem'
           }"
           ref="digitInputs"
         />
@@ -50,7 +51,7 @@
       class="submit-button"
       type="primary"
       @click="handleSubmit"
-      >绑定</Button
+      >{{ props.from == 'register' ? '继续' : '绑定' }}</Button
     >
   </div>
 </template>
@@ -74,6 +75,10 @@ const props = defineProps({
   loading: {
     type: Boolean,
     default: false
+  },
+  from: {
+    type: String,
+    default: ''
   }
 });
 const isAllFilled = computed(() => {
@@ -140,7 +145,7 @@ onMounted(() => {
 <style>
 .password-input {
   display: flex;
-  gap: 0.2rem;
+  /* gap: 0.2rem; */
   flex-direction: column;
 }
 
@@ -149,7 +154,7 @@ onMounted(() => {
   height: 1.2rem;
   text-align: center;
   border: 0.03rem solid #d0d8e2;
-  border-radius: 0.16rem;
+  /* border-radius: 0.16rem; */
   font-size: 0.48rem;
 }
 

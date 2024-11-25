@@ -349,7 +349,7 @@ store.commit("setUserInfo", {});
 const route = useRoute();
 const routerApi = useRouter();
 const forwardUrl = routerApi.options.history.state.forward;
-const step = ref(1);
+const step = ref(3);
 
 const guest = ref(route.query.guest);
 const showPass = ref(false); // 密码显示
@@ -443,7 +443,7 @@ const submit = async () => {
             store.dispatch("updateWallet");
             step.value = 3;
           }, 300);
-        }, 2000);
+        }, 1000);
       } else {
         showToast(res.message);
       }

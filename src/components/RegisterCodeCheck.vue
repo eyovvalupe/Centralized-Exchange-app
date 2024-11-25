@@ -34,27 +34,8 @@
         </div>
       </div>
     </div>
-    <div class="ipt_box">
-      <PasswordInput
-        :focused="showKeyboard"
-        @focus="focus"
-        class="code_ipt"
-        :value="val"
-        :length="6"
-        :gutter="'0.16rem'"
-        :mask="false"
-      />
-      <input
-        style="opacity: 0"
-        ref="iptRef"
-        v-model="val"
-        maxlength="6"
-        enterkeyhint="done"
-        @keydown.enter="submit"
-      />
-    </div>
-    <div class="flex justify-center pt-[0.8rem]">
-      <div class="button_container">继续</div>
+    <div class="w-full px-[0.32rem] mb-[0.6rem]">
+      <CodeInput :from="'register'" @submit="(code) => console.log(code)"/>
     </div>
     <div class="jump" @click="close"><span>跳过验证</span></div>
   </div>
@@ -73,6 +54,7 @@ import {
 import { ref, computed, watch, onMounted } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import CodeInput from "./CodeInput.vue";
 const route = useRoute();
 
 const props = defineProps({
