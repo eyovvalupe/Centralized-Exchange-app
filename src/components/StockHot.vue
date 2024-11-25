@@ -28,11 +28,10 @@ const recommendLoading = ref(false)
 
 const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
 
-const subs = (listKey, key) => {
+const subs = () => {
   // 订阅ws
   store.commit("setMarketWatchKeysByPage")
-  store.dispatch("subList", {
-  });
+  store.dispatch("subList", {});
 };
 
 const getData = (list, key, query, listKey) => {
@@ -67,7 +66,7 @@ const getData = (list, key, query, listKey) => {
         arr.push(...rs);
         store.commit(key, arr || []);
         setTimeout(() => {
-          subs(listKey, key);
+          subs();
         }, 100);
       }
     })

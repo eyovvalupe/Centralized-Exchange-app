@@ -88,13 +88,11 @@ const changeTab = (key) => {
 const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
 const marketUpList = computed(() => store.state.marketUpList || []); // 涨幅列表
 const marketDownList = computed(() => store.state.marketDownList || []); // 跌幅列表
-const subs = (listKey, key) => {
-  // 订阅ws
-  store.dispatch("subList", {
-    commitKey: key,
-    listKey: listKey,
-    // proxyListValue: list.value
-  });
+const subs = () => {
+
+store.commit("setMarketWatchKeysByPage")
+// 订阅 ws
+store.dispatch("subList", {});
 };
 const getData = (list, key, query, listKey) => {
   if (loading.value || finish.value || !store.state.marketCurrent) return;
@@ -105,9 +103,7 @@ const getData = (list, key, query, listKey) => {
     arr = [];
     store.commit(key,[]);
   }
-  if (arr.length) {
-    subs(listKey, key);
-  }
+
   const saveActive = active.value;
   _sort({
     orderby: query,
@@ -137,8 +133,8 @@ const getData = (list, key, query, listKey) => {
         });
         arr.push(...rs);
         store.commit(key, arr || []);
+        subs();
         setTimeout(() => {
-          subs(listKey, key);
           scrollHandler();
         }, 500);
       }

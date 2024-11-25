@@ -56,8 +56,6 @@
 
 <script setup>
 import store from "@/store";
-import { fixLittleNum } from "@/utils/fixLittleNum";
-import { computed, watch } from "vue";
 import router from "@/router";
 const emits = defineEmits(["update"]);
 const update = () => {
