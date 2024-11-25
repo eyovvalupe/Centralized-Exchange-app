@@ -1,5 +1,5 @@
 <template>
-  <div class="msg-content">
+  <div ref="messageBoxRef" class="msg-content">
     <div
       v-if="
         (!messageList || !messageList.length) &&
@@ -29,10 +29,17 @@
       >
         <div class="w-full flex flex-col justify-center">
           <!-- {{ console.log(messageList[i-1] ? () : '') }} -->
-          <div 
-          v-if="!messageList[i - 1] || messageList[i - 1] && (messageList[i]['time'] - messageList[i-1]['time']) > 60000"
-          class="text-center mb-[0.2rem] text-[#8f92a1] text-[0.28rem]">{{ transferTime(item.time) }}</div>
-          
+          <div
+            v-if="
+              !messageList[i - 1] ||
+              (messageList[i - 1] &&
+                messageList[i]['time'] - messageList[i - 1]['time'] > 60000)
+            "
+            class="text-center mb-[0.2rem] text-[#8f92a1] text-[0.28rem]"
+          >
+            {{ transferTime(item.time) }}
+          </div>
+
           <div class="msg-item-con">
             <div class="user-box" v-if="item.direction !== 'receive'">
               <div class="con break-all" :class="item.type">
@@ -97,7 +104,9 @@
         :key="item.msgid"
         :class="item.direction"
       >
-        <ServiceAvatar />
+        <div class="mr-[0.2rem]">
+          <ServiceAvatar />
+        </div>
         <div class="msg-item-con">
           <div class="con break-all receive-text" :class="item.type">
             <template v-if="item.type !== 'img'">
@@ -116,7 +125,7 @@
               </template>
             </van-image>
           </div>
-          <div class="time">{{ transferTime(item.time) }}</div>
+          <!-- <div class="time">{{ transferTime(item.time) }}</div> -->
         </div>
       </div>
     </template>
@@ -124,7 +133,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { Lazyload, Image as VanImage } from "vant";
 import { transferTime } from "@/utils";
 import storeChat from "@/store/chat";
@@ -139,6 +148,7 @@ const props = defineProps({
     default: true,
   },
 });
+const messageBoxRef = ref(null);
 const messageList = computed(() => storeChat.getters.getMessageList);
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage);
 
@@ -152,6 +162,16 @@ function formatDate(date) {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+// const scrollToBottom = () => {
+//   if (messageBoxRef.value) {
+//     messageBoxRef.value.scrollTop = messageBoxRef.value.scrollHeight;
+//   }
+// };
+// watch(messageList, (val) => {
+//   setTimeout(() => {
+//     scrollToBottom();
+//   }, 200);
+// });
 </script>
 
 <style lang="less" scoped>
