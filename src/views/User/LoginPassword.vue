@@ -38,8 +38,9 @@
       </div>
       <!-- 密码等级 -->
       <PasswordLevel
-        style="position: relative; top: -0.32rem; left: 0.32rem"
+        style="position: relative; top: -0.25rem; left: 0.32rem"
         :password="form.password"
+        :from="'reset'"
       />
 
       <div class="form_title">确认新密码</div>
@@ -90,6 +91,7 @@ import router from "@/router";
 import { _login } from "@/api/api";
 import PasswordLevel from "@/components/PasswordLevel.vue";
 import { showToast } from "vant";
+
 const ggRef = ref();
 const showPass0 = ref(false);
 const showPass = ref(false); // 密码显示

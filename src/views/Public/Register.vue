@@ -349,7 +349,7 @@ store.commit("setUserInfo", {});
 const route = useRoute();
 const routerApi = useRouter();
 const forwardUrl = routerApi.options.history.state.forward;
-const step = ref(3);
+const step = ref(1);
 
 const guest = ref(route.query.guest);
 const showPass = ref(false); // 密码显示
@@ -782,7 +782,7 @@ const scrollCountryCode = () => {
         flex: 1;
         color: #333333;
         font-weight: 400;
-        font-size: 0.28rem;
+        font-size: 0.3rem;
       }
 
       &:has(.item_input:focus) {

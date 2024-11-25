@@ -237,7 +237,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     color: var(--, #333);
-    font-size: 0.28rem;
+    font-size: 0.32rem;
     font-weight: 400;
     line-height: 0.32rem;
 
