@@ -85,7 +85,7 @@ export default {
     verify_identity: "Identity verify",
     google_verification: "Google Authenticator",
     already_verified: "Set",
-    pending_verified: "Pendding",
+    pendding_verified: "Pendding",
     not_verified: "Unset",
     already_set: "Bounded",
     not_set: "Unbounded",

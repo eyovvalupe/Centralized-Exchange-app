@@ -84,7 +84,7 @@ export default {
     verify_identity: "身份認證",
     google_verification: "谷歌驗證器",
     already_verified: "已認證",
-    pending_verified: "待處理",
+    pendding_verified: "待處理",
     not_verified: "未認證",
     already_set: "已綁定",
     not_set: "未綁定",
