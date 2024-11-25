@@ -30,10 +30,19 @@
         <div class="form_item_user" v-show="form.email">
           <div class="envelope-icon"></div>
         </div>
-        <input @change="changeAccount" v-model.trim="form.email" placeholder="您的邮箱" type="text" class="item_input" />
+        <input
+          @change="changeAccount"
+          v-model.trim="form.email"
+          :placeholder="t('login.pw_placeholder1')"
+          type="text"
+          class="item_input"
+        />
         <Loading v-if="accountLoading" :size="'0.32rem'" type="spinner" />
-        <!-- <div class="form_item_clear" v-show="saveAccount && saveAccount == form.email"> -->
-        <div class="form_item_clear" v-show="form.email" @click="form.email = null">
+        <div
+          class="form_item_clear"
+          v-show="form.email"
+          @click="form.email = null"
+        >
           <div class="cross-icon"></div>
         </div>
       </div>
@@ -50,7 +59,13 @@
           <span>{{ form.area }}</span>
           <div class="more-svg-icon"></div>
         </div>
-        <input maxlength="20" v-model.trim="form.phone" placeholder="您的手机号" type="text" class="item_input" />
+        <input
+          maxlength="20"
+          v-model.trim="form.phone"
+          :placeholder="t('login.pw_placeholder2')"
+          type="text"
+          class="item_input"
+        />
       </div>
       <div class="form_title">{{ $t("login.password") }}</div>
       <div class="form_item">
@@ -60,8 +75,13 @@
         </div>
 
         <!-- 密码输入框，使用 v-if/v-else 优化 -->
-        <input maxlength="20" :type="showPass ? 'text' : 'password'" v-model.trim="form.password" placeholder="请输入您的密码"
-          class="item_input" />
+        <input
+          maxlength="20"
+          :type="showPass ? 'text' : 'password'"
+          v-model.trim="form.password"
+          :placeholder="t('login.pw_placeholder3')"
+          class="item_input"
+        />
 
         <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
@@ -75,7 +95,15 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">登录</Button>
+      <Button
+        :loading="loading"
+        :disabled="disabled"
+        round
+        color="#014CFA"
+        class="submit"
+        type="primary"
+        >{{ $t("login.login") }}</Button
+      >
     </div>
 
     <!-- 去注册 -->
@@ -97,8 +125,17 @@
         </div>
         <div class="item search_box">
           <div class="search-svg-icon"></div>
-          <input v-model.trim="searchStr" class="ipt" type="text" placeholder="输入区号" />
-          <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon"></div>
+          <input
+            v-model.trim="searchStr"
+            class="ipt"
+            type="text"
+            :placeholder="t('login.pw_placeholder4')"
+          />
+          <div
+            v-if="searchStr.length"
+            @click="searchStr = ''"
+            class="close-svg-icon"
+          ></div>
         </div>
         <div style="height: 60vh; overflow-y: auto">
           <van-list>
