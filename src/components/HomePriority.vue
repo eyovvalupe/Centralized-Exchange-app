@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-[0.24rem]">
 
       <div class="flex items-center gap-1">
-          <div class="font-bold text-[0.32rem]">热卖</div>
+          <div class="font-bold text-[0.32rem]">{{ $t("home.hotSale") }}</div>
           <div class="custom-heart-icon"></div>
       </div>
      

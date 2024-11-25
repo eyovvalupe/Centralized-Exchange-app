@@ -4,7 +4,7 @@
     <div class="recommend_block">
       <div class="item_block" v-if="marketVolumeList.length">
         <div class="item_block_title flex justify-between">
-          <div>热门股</div>
+          <div>{{ $t("market.stock.hot") }}</div>
           <div class="re_render" @click.stop="update"></div>
         </div>
         <StockRecommendList

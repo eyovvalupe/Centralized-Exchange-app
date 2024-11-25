@@ -10,7 +10,7 @@
       animated
       shrink
     >
-      <Tab :title="'涨幅榜'" name="up">
+      <Tab :title="$t('market.stock.upList')" name="up">
         <!-- <StockTable :key="'down'" :loading="loading" :list="marketDownList" :marketType="'stock'" /> -->
         <StockTableForList
           :loading="loading"
@@ -24,7 +24,7 @@
           v-if="((finish && marketUpList.length) || !finish) && active == 2"
         />
       </Tab>
-      <Tab :title="'跌幅榜'" name="down">
+      <Tab :title="$t('market.stock.downList')" name="down">
         <StockTableForList
           :key="'up'"
           :loading="loading"

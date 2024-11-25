@@ -3,7 +3,7 @@
   <div>
     <div class="self_recommend">
       <div class="flex flex-row text-center items-center">
-        <span class="text-[0.32rem] font-semibold">自选推荐</span>
+        <span class="text-[0.32rem] font-semibold">{{ $t("home.selfSelectedRecommend") }}</span>
       </div>
       <div class="text_container flex flex-row text-center items-center" @click="more">
         <span style="font-size: 0.24rem; font-weight: 400; color: #666d80"

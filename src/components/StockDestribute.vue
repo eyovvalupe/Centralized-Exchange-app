@@ -2,10 +2,10 @@
 <template>
     <div class="total_box">
       <div class="total_title flex flex-row justify-between items-center">
-        <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">涨跌分布</span>
+        <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">{{$t("market.stock.riseAndFall")}}</span>
         <div>
-            <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]">上涨：{{ up }}</span>
-            <span class="text-[0.28rem] text-[#e8503a]">下跌：{{ down }}</span>
+            <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]">{{$t("market.stock.up")}}：{{ up }}</span>
+            <span class="text-[0.28rem] text-[#e8503a]">{{$t("market.stock.down")}}：{{ down }}</span>
         </div>
       </div>
       <div class="table_box justify-center"  v-if="overviewLoading && !count">

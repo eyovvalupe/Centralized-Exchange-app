@@ -5,8 +5,8 @@
     <div
       class="flex flex-col items-center justify-center bg-white border-[0.02rem] rounded-[0.32rem] border-[#EFF3F8] w-[1.04rem]"
     >
-      <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">今日</div>
-      <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">指数</div>
+      <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">{{$t("home.today")}}</div>
+      <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">{{$t("home.index")}}</div>
       <div class="text[0.24rem] text-[#666D80]">{{ formatDate(new Date) }}</div>
     </div>
     <HomeCountry />
