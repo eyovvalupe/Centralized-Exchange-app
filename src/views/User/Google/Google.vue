@@ -30,17 +30,13 @@
       </div>
       <div class="copy" @click="copy" v-if="gg.googlesecret">Copy</div>
     </div>
+    <div class="w-full h-[1rem] mb-[0.8rem]" v-if="!gg.googlesecret"></div>
 
-    <div class="subtitle">
-      <span>Google verification code</span>
-      <!-- <span class="clear" @click="clear">Clear</span> -->
-      <div class="clearIcon" @click="clear"></div>
-    </div>
-
-    <PasswordInput
+    <!-- <PasswordInput
       :focused="showKeyboard"
       @focus="focus"
       class="code_ipt"
+      style="caret-color: #014cfa;"
       :class="{ error_ipt: errText }"
       :value="val"
       :length="6"
@@ -54,9 +50,12 @@
       maxlength="6"
       enterkeyhint="done"
       @keydown.enter="goBind"
-    />
-
-    <div class="error_text" v-if="errText">{{ errText }}</div>
+      class="caret-[#014cfa]"
+    /> -->
+    <div class="w-full relative">
+      <CodeInput :errText="errText" @submit="(code) => goBind(code)"/>
+      <div class="absolute top-[2.3rem] left-[0] text-[#e8503a]" v-if="isSentCodeError">{{ errText }}</div>
+    </div>
 
     <!-- <div class="cautions">
             <div style="margin-bottom: 0.24rem;">Cautions</div>
@@ -64,7 +63,7 @@
             <div>2. Scan the QR code above and enter the verification code to complete the binding</div>
         </div> -->
 
-    <Button
+    <!-- <Button
       :loading="loading"
       :disabled="disabled"
       round
@@ -73,7 +72,7 @@
       type="primary"
       @click="goBind"
       >绑定</Button
-    >
+    > -->
   </div>
 </template>
 
@@ -93,9 +92,12 @@ import { _copyTxt } from "@/utils/index";
 import router from "@/router";
 import store from "@/store";
 import { useRoute } from "vue-router";
+import CodeInput from "@/components/CodeInput.vue";
 
 const route = useRoute();
 const from = ref(route.query.from); // 'register'-表示从注册来
+
+const isSentCodeError = computed(() => store.state.isSentCodeError || false)
 
 const loading = ref(false);
 const disabled = computed(() => {
@@ -151,13 +153,13 @@ getGoogle();
 
 // 绑定
 const errText = ref("");
-const goBind = () => {
+const goBind = (code) => {
   if (loading.value) return;
   errText.value = "";
   loading.value = true;
   _googleBind({
     googlesecret: gg.value.googlesecret,
-    googlecode: val.value,
+    googlecode: code,
   })
     .then((res) => {
       if (res.code == 200) {
@@ -176,13 +178,7 @@ const goBind = () => {
     })
     .catch((err) => {
       errText.value = err.message;
-      for (let i = 0; i < 6; i++) {
-        let inputStyle = document.getElementsByClassName(
-          "van-password-input__item"
-        )[i].style;
-        inputStyle.borderColor = "#e8503a";
-        inputStyle.color = "#e8503a";
-      }
+      store.commit('setIsSentCodeError', true)
     })
     .finally(() => {
       loading.value = false;
