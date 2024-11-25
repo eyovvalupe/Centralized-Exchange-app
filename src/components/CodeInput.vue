@@ -6,7 +6,7 @@
       >
       <div class="clear_icon" style="cursor: pointer" @click="clean"></div>
     </div>
-    <div class="flex justify-between w-full" :class="errText ? 'mb-[0.8rem]' : 'mb-[0.8rem]'">
+    <div class="flex justify-between w-full mb-[0.8rem]">
       <div v-for="(digit, index) in passwordDigits" class="relative">
         <input
           :key="index"
@@ -42,20 +42,23 @@
         ></div>
       </div>
     </div>
-    <button
+    <Button
+      :loading="props.loading"
       :disabled="!isAllFilled"
-      @click="handleSubmit"
+      round
+      color="#014CFA"
       class="submit-button"
-      :class="isAllFilled ? 'bg-[#014cfa]' : 'bg-[#014cfa8a]'"
+      type="primary"
+      @click="handleSubmit"
+      >绑定</Button
     >
-      继续
-    </button>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, nextTick, computed, watch } from "vue";
 import store from "@/store";
+import { Button } from "vant";
 
 const isSentCodeError = computed(() => store.state.isSentCodeError || false);
 
@@ -68,9 +71,9 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  errText: {
-    type: String,
-    default: ''
+  loading: {
+    type: Boolean,
+    default: false
   }
 });
 const isAllFilled = computed(() => {

@@ -31,48 +31,10 @@
       <div class="copy" @click="copy" v-if="gg.googlesecret">Copy</div>
     </div>
     <div class="w-full h-[1rem] mb-[0.8rem]" v-if="!gg.googlesecret"></div>
-
-    <!-- <PasswordInput
-      :focused="showKeyboard"
-      @focus="focus"
-      class="code_ipt"
-      style="caret-color: #014cfa;"
-      :class="{ error_ipt: errText }"
-      :value="val"
-      :length="6"
-      :gutter="'0.16rem'"
-      :mask="false"
-    />
-    <input
-      style="opacity: 0"
-      ref="iptRef"
-      v-model="val"
-      maxlength="6"
-      enterkeyhint="done"
-      @keydown.enter="goBind"
-      class="caret-[#014cfa]"
-    /> -->
     <div class="w-full relative">
-      <CodeInput :errText="errText" @submit="(code) => goBind(code)"/>
+      <CodeInput :loading="loading" @submit="(code) => goBind(code)"/>
       <div class="absolute top-[2.3rem] left-[0] text-[#e8503a]" v-if="isSentCodeError">{{ errText }}</div>
     </div>
-
-    <!-- <div class="cautions">
-            <div style="margin-bottom: 0.24rem;">Cautions</div>
-            <div style="margin-bottom: 0.24rem;">1.Download Google Authenticator App</div>
-            <div>2. Scan the QR code above and enter the verification code to complete the binding</div>
-        </div> -->
-
-    <!-- <Button
-      :loading="loading"
-      :disabled="disabled"
-      round
-      color="#014CFA"
-      class="submit"
-      type="primary"
-      @click="goBind"
-      >绑定</Button
-    > -->
   </div>
 </template>
 
