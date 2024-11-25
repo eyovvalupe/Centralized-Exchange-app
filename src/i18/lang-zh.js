@@ -128,6 +128,15 @@ export default {
     final_title: "身份认证提交成功",
     final_description: "请等待审核结果，我们将严格保密您的身份信息",
     final_ok: "好的",
+    status_success: "认证成功",
+    status_pendding: "审核中",
+    status_pendding_description: "身份认证已提交审核，请耐心等待",
+    status_failure: "认证失败",
+    status_card_no: "证件号码",
+    status_birthday: "出生日期",
+    status_reverify: "重新认证",
+    status_service: "联系客服",
+
   },
   form: {
     all: "全部",
