@@ -125,7 +125,9 @@ export default {
     second_failed2: "拍摄模糊",
     second_failed3: "闪光过度",
     second_btn: "完成",
-    
+    final_title: "身份认证提交成功",
+    final_description: "请等待审核结果，我们将严格保密您的身份信息",
+    final_ok: "好的",
   },
   form: {
     all: "全部",

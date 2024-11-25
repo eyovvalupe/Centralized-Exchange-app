@@ -125,6 +125,9 @@ export default {
     second_failed2: "拍攝魔術",
     second_failed3: "閃光過度",
     second_btn: "完成",
+    final_title: "身份認證提交成功",
+    final_description: "請等待審核結果，我們將嚴格保密您的身分資訊",
+    final_ok: "好的",
   },
   form: {
     all: "全部",

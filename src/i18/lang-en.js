@@ -126,6 +126,9 @@ export default {
     second_failed2: "Blurred shooting",
     second_failed3: "Excessive flash",
     second_btn: "Finish",
+    final_title: "Identity authentication submitted successfully",
+    final_description: "Please wait for the review results. We will strictly keep your identity information confidential.",
+    final_ok: "OK",
   },
   form: {
     all: "All",
