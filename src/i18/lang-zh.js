@@ -17,7 +17,13 @@ export default {
     login_success: "登录成功",
     login_failed: "登录异常",
     network_error: "网络异常",
-
+  },
+  register: {
+    security: "安全验证",
+    security_con: "拖动滑块，使图片角度为正",
+    security_result_success: "验证成功",
+    security_result_failed: "验证失败",
+    security_result_pedding: "待滑动验证",
   },
   user_page: {
     login_out: "注册/登录",

@@ -17,7 +17,13 @@ export default {
     login_success: "登錄成功",
     login_failed: "登錄異常",
     network_error: "網絡異常",
-
+  },
+  register: {
+    security: "安全驗證",
+    security_con: "拖動滑塊，使圖片角度為正",
+    security_result_success: "驗證成功",
+    security_result_failed: "驗證失敗",
+    security_result_pedding: "待滑動驗證",
   },
   user_page: {
     login_out: "註冊/登錄",

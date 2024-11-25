@@ -18,6 +18,13 @@ export default {
     login_failed: "Failed to sign in",
     network_error: "Network Error",
   },
+  register: {
+    security: "Security Verification",
+    security_con: "Drag the slider to make the image angle positive",
+    security_result_success: "Verification success",
+    security_result_failed: "Verification failed",
+    security_result_pedding: "Waiting for sliding verification",
+  },
   user_page: {
     login_out: "Sign In / Sign Out",
     recommended_user: "Recommended User",
