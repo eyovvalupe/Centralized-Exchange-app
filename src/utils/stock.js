@@ -52,12 +52,9 @@ const getArr = (data,key)=>{
     return arr
 }
 
-const subs = (arr) => {
-    store.commit(
-        "setMarketWatchKeys",
-        arr.map((item) => item.symbol || "")
-    );
-    store.dispatch("subList", {});
+const subs = () => {
+  store.commit("setMarketWatchKeysByPage")
+  store.dispatch("subList", {});
 };
 
 function formatDate(date) {
@@ -112,14 +109,7 @@ export const getData = (region,pageLoading,loadingType=1) => {
           const listArr = getArr(res.data.stock,'market'+key+'DataList')
           store.commit("setMarket"+key+"IndexList", indexArr)
           store.commit("setMarket"+key+"DataList", listArr)
-          subs([
-              //指数
-              ...store.state["market"+key+"IndexList"],
-  
-              //股票
-              ...store.state["market"+key+"DataList"]
-          ]);
-      
+          subs();
       
       })
       .catch((err) => console.error(err))

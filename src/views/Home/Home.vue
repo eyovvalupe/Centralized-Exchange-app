@@ -104,7 +104,7 @@
       </div>
       
       <HomeToday />
-      <HomePriority type="BestSellers" />
+      <HomePriority />
 
     </div>
     <HomeWatchList />
@@ -232,16 +232,17 @@ const tabChange = (val) => {
   }
 };
 
+const subs = (arr) => {
+  store.commit("setMarketWatchKeysByPage")
+  store.dispatch("subList", {});
+};
+
 const activated = ref(false);
 onActivated(() => {
+  store.commit("setMarketWatchKeys",[])
+  
   activated.value = true;
-  setTimeout(() => {
-    subs([
-      ...contractList.value,
-      ...marketVolumeList.value,
-      ...marketStockCurrentList.value
-    ]);
-  }, 500);
+  subs()
 });
 onDeactivated(() => {
   activated.value = false;
@@ -263,8 +264,6 @@ const marketStockCurrentList =  computed(() => store.getters.getMarketStockCurre
 
 const getRecommendData = () => {
   commendLoading.value = true;
-
-      
     _futures().then((res) => {
       if (res.code == 200) {
         const rs = res.data.map((item) => {
@@ -280,34 +279,14 @@ const getRecommendData = () => {
         });
         store.commit("setContractList", rs || []);
 
-        setTimeout(() => {
-          subs([
-            ...marketStockCurrentList.value,
-            ...contractList.value,
-            ...marketVolumeList.value
-          ]);
-        }, 500);
+        subs()
+
       }
     }).finally(() => {
       commendLoading.value = false;
     });
-    setTimeout(() => {
-      subs([
-        ...marketStockCurrentList.value,
-        ...contractList.value,
-        ...marketVolumeList.value
-      ]);
-    }, 500);
-    
-    
 };
 getRecommendData();
-
-const subs = (arr) => {
-  // 订阅 ws
-  store.commit("setMarketWatchKeys", arr.map((item) => item.symbol) || []);
-  store.dispatch("subList", {});
-};
 
 // 跳转
 const jump = (name, needToken) => {
@@ -317,83 +296,7 @@ const jump = (name, needToken) => {
     name,
   });
 };
-const page = ref(0);
-const marketLoading = ref(false);
-const marketPerformance = ref(0);
-marketPerformance.value = 0;
-const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
 
-const getMarketPerformanceData = (list, key, query, listKey) => {
-  if (marketLoading.value || !store.state.marketCurrent) return;
-  marketLoading.value = true;
-  page.value++;
-  let arr = JSON.parse(JSON.stringify(list.value));
-  if (page.value == 1) {
-    arr = [];
-  }
-  if (arr.length) {
-    subs([...arr, ...contractList.value,...marketStockCurrentList.value]);
-  }
-  const saveActive = marketPerformance.value;
-  _sort({
-    market: store.state.marketCurrent,
-    orderby: query,
-    page: page.value,
-  })
-    .then((res) => {
-      if (res.code == 200) {
-        if (saveActive != marketPerformance.value) return;
-        res.data = res.data.map((item) => {
-          item.ratio = undefined; // 弃用接口里的该字段
-          return item;
-        });
-        const rs = res.data.map((item) => {
-          const target = list.value.find((a) => a.symbol == item.symbol);
-          if (target) {
-            item = {
-              ...target,
-              ...item,
-              ratio: target.ratio,
-              type: "stock",
-            };
-          }
-          return item;
-        });
-        arr.push(...rs);
-        store.commit(key, arr || []);
-        setTimeout(() => {
-          subs([
-            ...arr,
-            ...contractList.value,
-            ...marketStockCurrentList.value
-          ]);
-        }, 500);
-      }
-    })
-    .finally(() => {
-      setTimeout(() => {
-        marketLoading.value = false;
-      }, 300);
-    });
-};
-
-watch(()=>store.state.marketCurrent,()=>{
-  getMarketPerformanceData(
-    marketVolumeList,
-    "setMarketVolumeList",
-    "volume",
-    "marketVolumeList"
-  );
-})
-
-onMounted(() => {
-  getMarketPerformanceData(
-    marketVolumeList,
-    "setMarketVolumeList",
-    "volume",
-    "marketVolumeList"
-  );
-});
 </script>
 
 <style lang="less" scoped>

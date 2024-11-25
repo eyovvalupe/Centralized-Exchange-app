@@ -14,29 +14,29 @@
         <!-- <StockTable :key="'down'" :loading="loading" :list="marketDownList" :marketType="'stock'" /> -->
         <StockTableForList
           :loading="loading"
-          :list="marketDownList"
+          :list="marketUpList"
         />
         <LoadingMore
           :classN="'stock_soft_moreup'"
           class="active_more"
-          :loading="!!(marketDownList.length && loading)"
+          :loading="!!(marketUpList.length && loading)"
           :finish="finish"
-          v-if="((finish && marketDownList.length) || !finish) && active == 2"
+          v-if="((finish && marketUpList.length) || !finish) && active == 2"
         />
       </Tab>
       <Tab :title="'跌幅榜'" name="down">
         <StockTableForList
           :key="'up'"
           :loading="loading"
-          :list="marketUpList"
+          :list="marketDownList"
         />
         
         <LoadingMore
           :classN="'stock_soft_moredown'"
           class="active_more"
-          :loading="!!(marketUpList.length && loading)"
+          :loading="!!(marketDownList.length && loading)"
           :finish="finish"
-          v-if="((finish && marketUpList.length) || !finish) && active == 1"
+          v-if="((finish && marketDownList.length) || !finish) && active == 1"
         />
       </Tab>
     </Tabs>

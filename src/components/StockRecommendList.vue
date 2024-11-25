@@ -2,12 +2,12 @@
 <template>
   <div class="recommend_list">
     <Loading  v-show="props.loading" />
-    <div class="list_box" v-show="props.list.length && !props.loading">
+    <div class="list_box" v-if="props.list.length && !props.loading">
+      <template  v-for="(item, i) in props.list" :key="i">
       <div
         class="list_item"
-        v-for="(item, i) in props.list"
         @click="goInfo(item)"
-        :key="i"
+        v-if="showLen == 0 || i < showLen"
       >
         <!-- <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div> -->
         <div class="symbol">{{ item.symbol }}</div>
@@ -33,6 +33,7 @@
           />
         </div>
       </div>
+      </template>
     </div>
   </div>
 </template>
@@ -53,10 +54,7 @@ const emits = defineEmits(["change"]);
 const token = computed(() => store.state.token || "");
 
 const props = defineProps({
-  keyStr: {
-    type: String,
-    default: "",
-  },
+
   loading: {
     type: Boolean,
     default: true,
@@ -73,6 +71,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  showLen:{
+    type:Number,
+    default:0
+  }
 });
 
 const updown = (item) => {

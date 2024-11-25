@@ -61,11 +61,10 @@ const loading = ref(true);
 const totalList = ref([]);
 const token = computed(() => store.state.token || "");
 const subs = () => {
+
+  store.commit("setMarketWatchKeysByPage")
   // 订阅 ws
-  store.dispatch("subList", {
-    commitKey: "setMarketWatchList",
-    listKey: "marketWatchList",
-  });
+  store.dispatch("subList", {});
 };
 
 const more = ()=>{
@@ -119,7 +118,6 @@ const init = () => {
     openRecommendList();
   }
 };
-const marketType = computed(() => store.getters.getMarketType);
 
 // 推荐列表
 const marketSrockRecommendList = computed(
@@ -146,12 +144,7 @@ const openRecommendList = () => {
             return { ...item, type: "stock" };
           });
           store.commit("setMarketSrockRecommendList", arr || []);
-          setTimeout(() => {
-            store.dispatch("subList", {
-              commitKey: "setMarketSrockRecommendList",
-              listKey: "marketSrockRecommendList",
-            });
-          }, 500);
+          
         }
 
         // 合约
@@ -166,13 +159,10 @@ const openRecommendList = () => {
             return { ...item, type: "crypto" };
           });
           store.commit("setMarketContractRecommendList", arr2 || []);
-          setTimeout(() => {
-            store.dispatch("subList", {
-              commitKey: "setMarketContractRecommendList",
-              listKey: "marketContractRecommendList",
-            });
-          }, 1000);
+          
         }
+
+        subs()
       }
     })
     .finally(() => {
