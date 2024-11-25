@@ -97,7 +97,7 @@
       </div>
     </div>
     <div
-      class="flex items-center w-full mb-[0.4rem] mt-[0.56rem] justify-between"
+      class="flex items-center w-full mb-[0.64rem] mt-[0.56rem] justify-between px-[0.18rem]"
     >
       <div
         @click="jump('account', true)"
@@ -111,7 +111,7 @@
         >
           <img class="" src="/static/img/user/payment.svg" />
         </div>
-        <div class="text-[#061023] text-[0.28rem]">{{ $t("user_page.receive_payment") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.receive_payment") }}</div>
       </div>
       <div
         @click="jump('kyc', true)"
@@ -127,7 +127,7 @@
         </div>
         <div
           v-if="token"
-          class="absolute top-0 ml-[1rem] -mt-[0.03rem] text-white text-[0.22rem] w-[0.76rem] h-[0.32rem] rounded-[1.2rem] flex items-center justify-center"
+          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-[#E8503A]'
@@ -138,7 +138,7 @@
           <span v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pendding_verified") }}</span>
           <span v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
-        <div class="text-[#061023] text-[0.28rem]">{{ $t("user_page.verify_identity") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.verify_identity") }}</div>
       </div>
       <div
         @click="jump('googleCode', true)"
@@ -154,13 +154,13 @@
         </div>
         <div
           v-if="token"
-          class="absolute top-0 ml-[1rem] -mt-[0.03rem] text-white text-[0.22rem] w-[0.76rem] h-[0.32rem] rounded-[1.2rem] flex items-center justify-center"
+          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[userInfo.googlebind == 0 ? 'bg-[#E8503A]' : 'bg-[#18B762]']"
         >
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_verified") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
         </div>
-        <div class="text-[#061023] text-[0.28rem]">{{ $t("user_page.google_verification") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.google_verification") }}</div>
       </div>
       <div
         class="text-center flex flex-col items-center justify-center relative"
@@ -173,7 +173,7 @@
         >
           <img class="" src="/static/img/user/friend.svg" />
         </div>
-        <div class="text-[#061023] text-[0.28rem]">{{ $t("user_page.recommend_friend") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.recommend_friend") }}</div>
       </div>
     </div>
 
@@ -248,8 +248,8 @@ const getFirstCharacter = (username) => {
 const loginout = () => {
   if (token.value) {
     showConfirmDialog({
-      title: "退出登录",
-      message: "您当前确定要退出吗？",
+      title: t("user_page.logout"),
+      message: t("user_page.message_box_con"),
       confirmButtonColor: "#014CFA",
       cancelButtonColor: "#323233",
     })

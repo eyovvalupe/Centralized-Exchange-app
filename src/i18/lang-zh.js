@@ -23,6 +23,9 @@ export default {
         logout: "退出登录",
         already_set_google: "谷歌验证器已绑定",
         not_set_google_yet: "谷歌验证器未绑定",
+        message_box_con: "您当前确定要退出吗",
+        message_box_confirm: "取消",
+        message_box_cancel: "确认",
     },
     form:{
         all:"全部"

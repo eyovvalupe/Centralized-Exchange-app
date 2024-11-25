@@ -23,6 +23,9 @@ export default {
         logout: "退出登錄",
         already_set_google: "谷歌驗證器已綁定",
         not_set_google_yet: "谷歌驗證器未綁定",
+        message_box_con: "您當前確定要退出嗎",
+        message_box_confirm: "取消",
+        message_box_cancel: "確認",
     },
     form:{
         all:"全部"
