@@ -254,8 +254,8 @@ getSessionToken();
       width: 6.86rem;
 
       :deep(.van-button__text) {
-        font-size: 0.36rem;
-        line-height: 0.64rem;
+        font-size: 0.32rem;
+        line-height: 0.44rem;
       }
     }
   }

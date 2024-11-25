@@ -217,8 +217,8 @@ const submitSell = s => {
         offset: form1.value.offset,
         account_id: form1.value.offset == 'sell' ? form1.value.account_id : null,
         volume: form1.value.volume,
-        crypto: form1.value.offset == 'buy' ? currOut.value.currency : currOut.value.currency, // buy
-        currency: form1.value.offset == 'buy' ? currIn.value.currency : currIn.value.currency,
+        crypto: currOut.value.currency,
+        currency: currIn.value.currency,
         token: sessionToken.value,
         safeword: s,
       }

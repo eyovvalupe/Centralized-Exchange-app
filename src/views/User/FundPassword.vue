@@ -21,7 +21,7 @@
         </div>
   
         <div class="form_title">新密码</div>
-        <div class="form_item margin_item"  :class="[isSame ? 'border-[#D0D8E2]' : 'border-[#E8503A]']">
+        <div class="form_item margin_item mb-[0.05rem]"  :class="[isSame ? 'border-[#D0D8E2]' : 'border-[#E8503A]']">
           <input
             maxlength="20"
             v-model.trim="form.password"
@@ -36,7 +36,7 @@
         </div>
         <!-- 密码等级 -->
         <PasswordLevel
-          style="position: relative; top: -0.32rem; left: 0.32rem"
+          style="position: relative; top: -0.25rem; left: 0.32rem"
           :password="form.password"
         />
   

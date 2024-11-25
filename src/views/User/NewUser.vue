@@ -26,7 +26,7 @@
         @click="store.commit('setIsLoginOpen', true)"
       >
         <div class="default-avatar"></div>
-        <div class="text-[0.32rem]">登录/注册</div>
+        <div class="text-[0.32rem]">{{ $t("user_page.login_out") }}</div>
       </div>
       <div class="flex items-center justify-center gap-[0.16rem]">
         <div
@@ -51,22 +51,22 @@
         <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
           0
         </div>
-        <div class="text-[0.24rem] text-[#8f92a1]">推荐用户</div>
+        <div class="text-[0.24rem] text-[#8f92a1]">{{ $t("user_page.recommended_user") }}</div>
       </div>
       <div class="w-1/3 text-center">
         <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
           0
         </div>
-        <div class="text-[0.24rem] text-[#8f92a1]">网络用户</div>
+        <div class="text-[0.24rem] text-[#8f92a1]">{{ $t("user_page.social_user") }}</div>
       </div>
       <div class="w-1/3 text-center">
         <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
           0
         </div>
-        <div class="text-[0.24rem] text-[#8f92a1]">推荐奖金</div>
+        <div class="text-[0.24rem] text-[#8f92a1]">{{ $t("user_page.recommend_bonus") }}</div>
       </div>
     </div>
-    <div>
+    <div class="rounded-[0.32rem] h-[1.6rem] overflow-hidden">
       <!-- @click=" token ? jump('register', false, { guest: 1 }) : jump('kyc') -->
       <Carousel
         :autoplay="3000"
@@ -79,9 +79,9 @@
           <img :src="slide" class="w-full rounded-[0.36rem]" alt="img" />
           <div class="absolute left-0 ml-[0.32rem]">
             <div class="text-white text-[0.3rem] font-bold mb-[0.2rem]">
-              领取投资模拟金
+              {{ $t("user_page.ad_head") }}
             </div>
-            <div class="text-white text-[0.24rem]">模拟投资，收益在手</div>
+            <div class="text-white text-[0.24rem]">{{ $t("user_page.ad_con1") }}，{{ $t("user_page.ad_con2") }}</div>
           </div>
         </Slide>
       </Carousel>
@@ -97,7 +97,7 @@
       </div>
     </div>
     <div
-      class="flex items-center w-full mb-[0.4rem] mt-[0.56rem] justify-between"
+      class="flex items-center w-full mb-[0.64rem] mt-[0.56rem] justify-between px-[0.18rem]"
     >
       <div
         @click="jump('account', true)"
@@ -111,7 +111,7 @@
         >
           <img class="" src="/static/img/user/payment.svg" />
         </div>
-        <div class="text-[#061023] text-[0.28rem]">收款账户</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.receive_payment") }}</div>
       </div>
       <div
         @click="jump('kyc', true)"
@@ -127,18 +127,18 @@
         </div>
         <div
           v-if="token"
-          class="absolute top-0 ml-[1rem] -mt-[0.03rem] text-white text-[0.22rem] w-[0.76rem] h-[0.32rem] rounded-[1.2rem] flex items-center justify-center"
+          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-[#E8503A]'
               : `${userInfo.kycl2 == 1 ? 'bg-[#014CFA]' : 'bg-[#18B762]'}`,
           ]"
         >
-          <span v-if="userInfo.kycl2 == 0">未认证</span>
-          <span v-else-if="userInfo.kycl2 == 1">待审核</span>
-          <span v-else>已认证</span>
+          <span v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
+          <span v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pendding_verified") }}</span>
+          <span v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
-        <div class="text-[#061023] text-[0.28rem]">身份认证</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.verify_identity") }}</div>
       </div>
       <div
         @click="jump('googleCode', true)"
@@ -154,13 +154,13 @@
         </div>
         <div
           v-if="token"
-          class="absolute top-0 ml-[1rem] -mt-[0.03rem] text-white text-[0.22rem] w-[0.76rem] h-[0.32rem] rounded-[1.2rem] flex items-center justify-center"
+          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[userInfo.googlebind == 0 ? 'bg-[#E8503A]' : 'bg-[#18B762]']"
         >
-          <span v-if="userInfo.googlebind == 0">未认证</span>
-          <span v-else>已绑定</span>
+          <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
+          <span v-else>{{ $t("user_page.already_set") }}</span>
         </div>
-        <div class="text-[#061023] text-[0.28rem]">谷歌验证器</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.google_verification") }}</div>
       </div>
       <div
         class="text-center flex flex-col items-center justify-center relative"
@@ -173,7 +173,7 @@
         >
           <img class="" src="/static/img/user/friend.svg" />
         </div>
-        <div class="text-[#061023] text-[0.28rem]">推荐朋友</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.recommend_friend") }}</div>
       </div>
     </div>
 
@@ -181,12 +181,12 @@
       <div class="nav" @click="jump('language')">
         <div class="language-icon mr-[0.16rem]"></div>
         <div class="content">
-          <div class="title">语言</div>
+          <div class="title">{{ $t("user_page.set_language") }}</div>
         </div>
         <div class="lang">
           <div style="width: 0.57rem; height: 0.57rem; padding: 0.01rem;" class="mr-[0.1rem]">
             <div
-            :class="i18Data.locale == 'zh' ? 'china_icon' : 'us_icon'"
+            :class="i18Data.locale == 'zh' || i18Data.locale == 'ch' ? 'china_icon' : 'us_icon'"
           ></div>
           </div>
           <span class="font-1">{{ i18Data.name }}</span>
@@ -196,14 +196,14 @@
       <div class="nav" @click="jump('safety', true)">
         <div class="verify-icon mr-[0.16rem]"></div>
         <div class="content">
-          <div class="title">安全</div>
+          <div class="title">{{ $t("user_page.security") }}</div>
         </div>
         <div v-if="token" class="gg">
           <span v-if="!userInfo.googlebind" style="color: #ff3b30"
-            >谷歌验证器未绑定</span
+            >{{ $t("user_page.not_set_google_yet") }}</span
           >
           <span v-if="userInfo.googlebind" style="color: #18b762"
-            >谷歌验证器已绑定</span
+            >{{ $t("user_page.already_set_google") }}</span
           >
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
@@ -211,14 +211,14 @@
       <div class="nav" @click="jump('about')">
         <div class="info-icon mr-[0.16rem]"></div>
         <div class="content">
-          <div class="title">关于</div>
+          <div class="title">{{ $t("user_page.about") }}</div>
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
     </div>
 
     <!-- 退出登录 -->
-    <div v-if="token" class="loginout" @click="loginout">退出登录</div>
+    <div v-if="token" class="loginout" @click="loginout">{{ $t("user_page.logout") }}</div>
   </div>
 </template>
 
@@ -231,6 +231,10 @@ import storeChat from "@/store/chat";
 import { _logout } from "@/api/api";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+
 const messageNum = computed(() => storeChat.state.messageNum);
 const token = computed(() => store.state.token);
 const userInfo = computed(() => store.state.userInfo || {});
@@ -244,8 +248,8 @@ const getFirstCharacter = (username) => {
 const loginout = () => {
   if (token.value) {
     showConfirmDialog({
-      title: "退出登录",
-      message: "您当前确定要退出吗？",
+      title: t("user_page.logout"),
+      message: t("user_page.message_box_con"),
       confirmButtonColor: "#014CFA",
       cancelButtonColor: "#323233",
     })

@@ -1,78 +1,99 @@
 <template>
-  <div class="msg-content">
+  <div ref="messageBoxRef" class="msg-content">
     <div
       v-if="
         (!messageList || !messageList.length) &&
         (!hasNewMessage || !hasNewMessage.length) &&
-        props.chatLoading
+        !props.chatLoading
       "
     >
-      <p class="no-message">{{ formatDate(new Date()) }}</p>
+      <p class="no-message mb-[0.2rem]">{{ formatDate(new Date()) }}</p>
+      <div class="flex">
+        <div class="mr-[0.2rem]">
+          <ServiceAvatar />
+        </div>
+        <div class="flex flex-col">
+          <span
+            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-[#eff3f8] rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-[#061023]"
+            >您好，有什么能帮到您？</span
+          >
+        </div>
+      </div>
     </div>
     <template v-else>
       <div
         class="msg-item"
-        v-for="item in messageList"
+        v-for="(item, i) in messageList"
         :key="item.msgid"
         :class="item.direction"
       >
-        <small v-show="false">
-          {{ storeChat.state.readMessageTime }}****{{ item.time }}***{{
-            storeChat.state.readMessageTime > item.time
-          }}</small
-        >
-        <!-- <div class="avatar" v-if="item.direction === 'receive'"><img :src="avatar" :alt="item.msgid"></div> -->
-        <div class="msg-item-con">
-          <div class="user-box" v-if="item.direction !== 'receive'">
-            <div class="con break-all" :class="item.type">
-              <template v-if="item.type !== 'img'">
-                {{ item.content }}
-              </template>
-              <van-image
-                v-else
-                class="send-conimg"
-                radius="6"
-                Lazyload
-                :src="item.content"
-                fit="scale-down"
-              >
-                <template v-slot:loading>
-                  <Loaidng type="spinner" size="20" />
-                </template>
-              </van-image>
-            </div>
-            <div
-              class="user-icon"
-              v-if="item.direction !== 'receive' && item.type !== 'img'"
-            ></div>
-            <UserAvatar />
+        <div class="w-full flex flex-col justify-center">
+          <!-- {{ console.log(messageList[i-1] ? () : '') }} -->
+          <div
+            v-if="
+              !messageList[i - 1] ||
+              (messageList[i - 1] &&
+                messageList[i]['time'] - messageList[i - 1]['time'] > 60000)
+            "
+            class="text-center mb-[0.2rem] text-[#8f92a1] text-[0.28rem]"
+          >
+            {{ transferTime(item.time) }}
           </div>
-          <div class="receive-box" v-if="item.direction === 'receive'">
-            <div class="mr-[0.2rem]">
-              <ServiceAvatar />
+
+          <div class="msg-item-con">
+            <div class="user-box" v-if="item.direction !== 'receive'">
+              <div class="con break-all" :class="item.type">
+                <template v-if="item.type !== 'img'">
+                  {{ item.content }}
+                </template>
+                <van-image
+                  v-else
+                  class="send-conimg"
+                  radius="6"
+                  Lazyload
+                  :src="item.content"
+                  fit="scale-down"
+                >
+                  <template v-slot:loading>
+                    <Loaidng type="spinner" size="20" />
+                  </template>
+                </van-image>
+              </div>
+              <div
+                class="user-icon"
+                v-if="item.direction !== 'receive' && item.type !== 'img'"
+              ></div>
+              <UserAvatar />
             </div>
-            <div class="con break-all receive-text" :class="item.type" v-if="item.type !== 'img'">
-              <div class="receive_text" >
-                {{ item.content }}
+            <div class="receive-box" v-if="item.direction === 'receive'">
+              <div class="mr-[0.2rem]">
+                <ServiceAvatar />
+              </div>
+              <div
+                class="con break-all receive-text"
+                :class="item.type"
+                v-if="item.type !== 'img'"
+              >
+                <div class="receive_text">
+                  {{ item.content }}
+                </div>
+              </div>
+              <div class="con break-all" :class="item.type" v-else>
+                <van-image
+                  class="send-conimg"
+                  radius="6"
+                  Lazyload
+                  :src="item.content"
+                  fit="scale-down"
+                >
+                  <template v-slot:loading>
+                    <Loaidng type="spinner" size="20" />
+                  </template>
+                </van-image>
               </div>
             </div>
-            <div class="con break-all" :class="item.type" v-else>
-              <van-image
-                class="send-conimg"
-                radius="6"
-                Lazyload
-                :src="item.content"
-                fit="scale-down"
-              >
-                <template v-slot:loading>
-                  <Loaidng type="spinner" size="20" />
-                </template>
-              </van-image>
-            </div>
           </div>
-          <!-- <div class="time">{{ transferTime(item.time) }}</div> -->
         </div>
-        <!-- <div class="avatar" v-if="item.direction === 'send'"><img :src="avatarMy" :alt="item.msgid"></div> -->
       </div>
       <div id="hasNewMessage" v-if="hasNewMessage && hasNewMessage.length">
         {{ hasNewMessage.length }}条未读消息
@@ -83,7 +104,9 @@
         :key="item.msgid"
         :class="item.direction"
       >
-        <ServiceAvatar />
+        <div class="mr-[0.2rem]">
+          <ServiceAvatar />
+        </div>
         <div class="msg-item-con">
           <div class="con break-all receive-text" :class="item.type">
             <template v-if="item.type !== 'img'">
@@ -102,7 +125,7 @@
               </template>
             </van-image>
           </div>
-          <div class="time">{{ transferTime(item.time) }}</div>
+          <!-- <div class="time">{{ transferTime(item.time) }}</div> -->
         </div>
       </div>
     </template>
@@ -110,7 +133,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { Lazyload, Image as VanImage } from "vant";
 import { transferTime } from "@/utils";
 import storeChat from "@/store/chat";
@@ -125,6 +148,7 @@ const props = defineProps({
     default: true,
   },
 });
+const messageBoxRef = ref(null);
 const messageList = computed(() => storeChat.getters.getMessageList);
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage);
 
@@ -138,6 +162,16 @@ function formatDate(date) {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+// const scrollToBottom = () => {
+//   if (messageBoxRef.value) {
+//     messageBoxRef.value.scrollTop = messageBoxRef.value.scrollHeight;
+//   }
+// };
+// watch(messageList, (val) => {
+//   setTimeout(() => {
+//     scrollToBottom();
+//   }, 200);
+// });
 </script>
 
 <style lang="less" scoped>
@@ -160,17 +194,15 @@ function formatDate(date) {
 
     .msg-item-con {
       .con {
-        padding: 12px 12px;
+        display: flex;
+        align-items: center;
+        padding: 0 15px;
         max-width: 5.84rem;
-        min-height: 30px;
+        min-height: 1rem;
         line-height: 22px;
         font-size: 15px;
         border-radius: 6px;
-        // border-top-right-radius: 0;
         position: relative;
-        // box-shadow: 0 2px 3px #d4d4d4;
-        // max-width: 80%;
-        flex: 1;
 
         :deep(p) {
           margin: 0 !important;
@@ -179,28 +211,17 @@ function formatDate(date) {
         &.receive-text {
           position: relative;
           &::before {
-          content: "";
-          position: absolute;
-          left: -0.1rem;
-          top: 0.26rem;
-          width: 0;
-          height: 0;
-          border-left: 0.1rem solid transparent;
-          border-right: 0 solid transparent;
-          border-bottom: 0.1rem solid #f5f7fc;
-        }
-
-        &::after {
-          content: "";
-          position: absolute;
-          left: -0.1rem;
-          top: 0.36rem;
-          width: 0;
-          height: 0;
-          border-left: 0.1rem solid transparent;
-          border-right: 0 solid transparent;
-          border-top: 0.1rem solid #f5f7fc;
-        }
+            content: "";
+            position: absolute;
+            left: -0.3rem;
+            top: 0.26rem;
+            width: 0;
+            height: 0;
+            border-left: 0.2rem solid transparent;
+            border-right: 0.2rem solid #eff3f8;
+            border-bottom: 0.2rem solid transparent;
+            border-top: 0.2rem solid transparent;
+          }
         }
         &.img {
           padding: 0 !important;

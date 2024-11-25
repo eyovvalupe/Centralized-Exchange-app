@@ -18,7 +18,7 @@
             <div class="ipo_info_lt">
                 <div class="ipo_info_name">{{ currIpo.company_name }}</div>
                 <div class="ipo_info_price">
-                   认购价格 <span>${{ currIpo.issue_price_max }}</span>
+                    认购价格 <span>${{ currIpo.issue_price_max }}</span>
                 </div>
                 <div v-show="avtiveTab == 2" class="ipo_info_price">
                     认购杠杆 <span class="blue">{{ currIpo.lever }}X</span>
@@ -28,19 +28,20 @@
         </div>
 
         <div class="form">
-           
+
             <div class="subtitle">
                 <span>认购数量</span>
                 <span style="color:#666D80;">最大认购 {{ maxNum }}</span>
             </div>
             <div class="item item_box" :class="{ 'err_ipt': errStatus }">
-                
-                <input @change="inputNum" @focus="focus = true" @blur="focus = errStatus = false;amountBlur()"
+
+                <input @change="inputNum" @focus="focus = true" @blur="focus = errStatus = false; amountBlur()"
                     v-model="form.volume" class="ipt" type="number" placeholder="">
-                <span class="put_all" :style="{ opacity: focus ? '1' : '0', visibility: focus ? '' : 'hidden' }" @click="onSliderChange(100)">全部</span>
+                <span class="put_all" :style="{ opacity: focus ? '1' : '0', visibility: focus ? '' : 'hidden' }"
+                    @click="onSliderChange(100)">全部</span>
             </div>
-            
-            
+
+
             <div style="height:0.47rem;"></div>
             <!-- 拖动 -->
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
@@ -50,11 +51,11 @@
                     <div class="subtitle">订购数量</div>
                     <div class="item item_box disabled_item">{{ form.volume }}</div>
                 </div>
-                <div  v-show="avtiveTab == 2">
+                <div v-show="avtiveTab == 2">
                     <div class="subtitle">冻结金额</div>
                     <div class="item item_box disabled_item">{{ freezeNum }}</div>
                 </div>
-                <div  v-show="avtiveTab == 2">
+                <div v-show="avtiveTab == 2">
                     <div class="subtitle">借贷金额</div>
                     <div class="item item_box disabled_item">{{ loanNum }}</div>
                 </div>
@@ -67,18 +68,19 @@
             <div class="subtitle" v-show="avtiveTab == 2">VIP认购码</div>
             <div class="item item_box" v-show="avtiveTab == 2" :class="{ 'err_ipt': errStatus2 }">
                 <input @blur="errStatus2 = false" v-model="form.keyword" type="text" class="ipt2" placeholder="">
-        
+
             </div>
 
 
         </div>
 
 
-        <Button @click="openSafe" :loading="loading" round  size="large" color="#014CFA" class="submit" type="primary">认购</Button>
+        <Button @click="openSafe" :loading="loading" round size="large" color="#014CFA" class="submit"
+            type="primary">认购</Button>
 
         <!-- 安全密码弹窗 -->
         <SafePassword @submit="submit" ref="safeRef">
-            
+
         </SafePassword>
     </div>
 </template>
@@ -88,7 +90,7 @@
 import Top from '@/components/Top.vue';
 import { ref, computed, nextTick } from "vue"
 import { useRoute } from "vue-router"
-import { Button, showToast, Slider,Icon } from "vant"
+import { Button, showToast, Slider, Icon } from "vant"
 import SafePassword from "@/components/SafePassword.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
 import store from '@/store';
@@ -97,14 +99,15 @@ import { _orderBuy, _orderPara, _basic } from "@/api/api"
 import Decimal from 'decimal.js';
 import router from '@/router'
 
-const currency = computed(() => (store.state.accountCurrencyMap.ipo || '') )
-const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == currency.value) || {}) // 主钱包
+
+const currency = computed(() => (store.state.accountCurrencyMap.ipo || ''))
+const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == params.value.currency) || {}) // 主钱包
 const route = useRoute()
 
 const currIpo = ref(route.query)
 const avtiveTab = ref(1)
 const lever = currIpo.value.lever
-if(lever > 1){
+if (lever > 1) {
     avtiveTab.value = 2
 }
 const loading = ref(false)
@@ -120,15 +123,11 @@ const changeTab = key => {
     avtiveTab.value = key
 }
 // 最大值
-const maxNum = computed(() => { 
-    if(!mainWallet.value.amount){
-        return 0
-    }
-    const amount = (avtiveTab.value == 2) ? (new Decimal(mainWallet.value.amount).mul(lever)) : new Decimal(mainWallet.value.amount)
-    return amount.div(currIpo.value.issue_price_max).toNumber()
+const maxNum = computed(() => {
+    return new Decimal(mainWallet.value.amount || 0).mul(1 - (params.value.fee || 0)).div(currIpo.value.issue_price_max || 1)
 })
-const ipoDetail = ()=>{
-    router.push('/ipo/detail?id='+currIpo.value.id)
+const ipoDetail = () => {
+    router.push('/ipo/detail?id=' + currIpo.value.id)
 }
 const form = ref({
     volume: '',
@@ -138,7 +137,7 @@ const sliderValue = ref(0);
 const onSliderChange = (newValue) => {
     errStatus.value = false
     sliderValue.value = newValue;
-    nextTick(()=>{
+    nextTick(() => {
         const val = new Decimal(maxNum.value).mul(newValue).div(100).toFixed(2)
         if (!Number(val)) {
             sliderValue.value = 0
@@ -147,7 +146,7 @@ const onSliderChange = (newValue) => {
             form.value.volume = Number(val)
             inputLimit()
         }
-        if (form.value.volume == 0 ) {
+        if (form.value.volume == 0) {
             sliderValue.value = 0
         }
     })
@@ -168,9 +167,9 @@ const inputLimit = () => {
 }
 
 
-const amountBlur = ()=>{
-    nextTick(()=>{
-        if(form.value.volume > maxNum.value){
+const amountBlur = () => {
+    nextTick(() => {
+        if (form.value.volume > maxNum.value) {
             form.value.volume = maxNum.value
         }
     })
@@ -236,7 +235,6 @@ const getSessionToken = () => {
 getSessionToken()
 
 // 手续费
-const fee = ref(0)
 const freezeNum = computed(() => {
     if (!form.value.volume) return 0
     return new Decimal(form.value.volume).div(lever).mul(currIpo.value.issue_price_max).toFixed(2)
@@ -248,26 +246,25 @@ const loanNum = computed(() => {
 })
 const feeNum = computed(() => {
     if (!form.value.volume) return 0
-    return new Decimal(loanNum.value).mul(fee.value).toFixed(2)
+    return new Decimal(loanNum.value).mul(params.value.fee || 1).toFixed(2)
 })
 const volumeMap = ref({
     min: 0, // 最小值
     step: 1, // 步长
 })
+// 获取订购配置
+const params = ref({})
 const getFee = () => {
-    _orderPara().then(res => {
+    _orderPara({
+        market: currIpo.value.market
+    }).then(res => {
         if (res.code == 200) {
-            fee.value = res.data.fee
-            try {
-                const arr = res.data.volume.split(',')
-                volumeMap.value.min = arr[0]
-                volumeMap.value.step = arr[1]
-            } catch { }
+            params.value = res.data || {}
             inputLimit()
         }
     })
 }
-//getFee()
+getFee()
 </script>
 
 <style lang="less" scoped>
@@ -316,51 +313,59 @@ const getFee = () => {
         }
     }
 
-    .ipo_info{
+    .ipo_info {
         border-radius: 0.32rem;
-        border: 1px solid  #EFF3F8;
+        border: 1px solid #EFF3F8;
         background: #F5F7FC;
-        padding:0.28rem 0.32rem;
+        padding: 0.28rem 0.32rem;
         display: flex;
         justify-content: space-between;
         margin-top: 0.28rem;
-        &_lt{
+
+        &_lt {
             flex: 1;
         }
-        &_arrow{
+
+        &_arrow {
             margin-top: 0.32rem;
         }
-        &_name{
+
+        &_name {
             color: #061023;
             font-size: 0.32rem;
             font-weight: 600;
-            line-height: 0.36rem; /* 112.5% */
+            line-height: 0.36rem;
+            /* 112.5% */
         }
-        &_price{
+
+        &_price {
             color: #8F92A1;
             font-size: 0.3rem;
             font-weight: 400;
             line-height: 0.36rem;
             margin-top: 0.2rem;
-            span{
+
+            span {
                 margin-left: 0.12rem;
                 color: #E8503A;
             }
-            .blue{
-                color:#014CFA;
+
+            .blue {
+                color: #014CFA;
             }
         }
-        
+
     }
-    
-     .put_all{
+
+    .put_all {
         color: #014CFA;
         position: absolute;
         right: 0.32rem;
         font-size: 0.3rem;
-        z-index:9;
+        z-index: 9;
         transition: all ease .3s;
     }
+
     .subtitle {
         color: #061023;
         font-size: 0.28rem;
@@ -369,13 +374,15 @@ const getFee = () => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-top:0.4rem;
+        margin-top: 0.4rem;
     }
+
     .item {
         display: flex;
         align-items: center;
         justify-content: space-between;
         position: relative;
+
         .ipt {
             flex: 1;
             height: 100%;
@@ -385,6 +392,7 @@ const getFee = () => {
             position: relative;
             z-index: 1;
         }
+
         .ipt_tip {
             color: #b7b7b7;
             font-size: 0.24rem;
@@ -402,6 +410,7 @@ const getFee = () => {
         padding: 0 0.24rem;
 
     }
+
     .item_focus {
         height: 1.12rem;
         border: 1px solid #034cfa;
@@ -411,6 +420,7 @@ const getFee = () => {
             transform: translateY(-0.36rem);
         }
     }
+
     .disabled_item {
         background-color: #F5F7FC;
     }
@@ -424,5 +434,4 @@ const getFee = () => {
         margin-top: 0.8rem;
     }
 }
-
 </style>

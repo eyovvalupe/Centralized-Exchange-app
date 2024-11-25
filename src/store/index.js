@@ -26,12 +26,16 @@ const store = createStore({
     },
     bottomTabBarValue: "",
     showSuccessToast: false,
+    isSentCodeError: false,
     ...market.state,
     ...trade.state,
     ...assets.state,
     ...serviceC2C.state,
   },
   mutations: {
+    setIsSentCodeError(state, data) {
+      state.isSentCodeError = data
+    },
     setSelectedPayment(state, data) {
       state.selectedPayment = data;
     },
@@ -158,7 +162,7 @@ const store = createStore({
       key: "sunx",
       storage: window.localStorage,
       reducer: (state) => {
-        const { currSelectedWallet, ...stateWithoutThese } = state;
+        const { currSelectedWallet, isSentCodeError, ...stateWithoutThese } = state;
         return stateWithoutThese;
       },
     }),

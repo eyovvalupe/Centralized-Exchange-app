@@ -183,6 +183,9 @@ if (route.query.reurl) {
 const goChat = () => {
   router.push({ name: "chat" });
 };
+const goLang = () => {
+  router.push({ name: "language" });
+};
 // 提交用户信息
 const changePassSuccess = ref(false);
 const submitForm = (code) => {
@@ -291,7 +294,7 @@ padding-top: 1.12rem;
     color: #014cfa;
     text-align: right;
     font-family: "PingFang SC";
-    font-size: 0.24rem;
+    font-size: 0.32rem;
     font-style: normal;
     font-weight: 600;
     /* 133.333% */

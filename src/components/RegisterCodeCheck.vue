@@ -18,45 +18,33 @@
         </div>
       </div>
     </div>
-    <div class="title">{{ titleMap[props.type] }}验证</div>
+    <div class="title">
+      {{ titleMap[props.type] }}{{ $t("register.code_verify") }}
+    </div>
     <div class="info flex flex-col">
-      <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem"
-        >我们已将验证码发送至您的{{
-          props.type == "email" ? "电子邮箱" : "手机号码"
-        }}</span
+      <div class="flex">
+        <span
+        style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem"
+        >{{$t("register.code_con1") }}</span
       >
+      <span
+        style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem"
+        >{{ props.type == "email" ? t('register.email') : t('register.phone') }}</span
+      >
+      </div>
       <div class="flex flex-row justify-between mb-[0.6rem]">
         <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400"
-          >请输入6位数代码</span
+          >{{ $t('register.code_con2') }}</span
         >
         <div class="timer_container" @click="send">
-          {{ s ? s + "s" : "再次发送" }}
+          {{ s ? s + "s" : t('register.code_again') }}
         </div>
       </div>
     </div>
-    <div class="ipt_box">
-      <PasswordInput
-        :focused="showKeyboard"
-        @focus="focus"
-        class="code_ipt"
-        :value="val"
-        :length="6"
-        :gutter="'0.16rem'"
-        :mask="false"
-      />
-      <input
-        style="opacity: 0"
-        ref="iptRef"
-        v-model="val"
-        maxlength="6"
-        enterkeyhint="done"
-        @keydown.enter="submit"
-      />
+    <div class="w-full px-[0.32rem] mb-[0.6rem]">
+      <CodeInput :from="'register'" @submit="(code) => console.log(code)" />
     </div>
-    <div class="flex justify-center pt-[0.8rem]">
-      <div class="button_container">继续</div>
-    </div>
-    <div class="jump" @click="close"><span>跳过验证</span></div>
+    <div class="jump" @click="close"><span>{{ $t("register.code_jump") }}</span></div>
   </div>
   <!-- </ElDialog> -->
 </template>
@@ -73,6 +61,10 @@ import {
 import { ref, computed, watch, onMounted } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import CodeInput from "./CodeInput.vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const route = useRoute();
 
 const props = defineProps({
@@ -86,8 +78,8 @@ const props = defineProps({
   },
 });
 const titleMap = ref({
-  email: "电子邮件",
-  phone: "手机",
+  email: t("register.code_email"),
+  phone: t("register.code_phone"),
 });
 
 const emit = defineEmits(["success"]);
@@ -140,10 +132,10 @@ const focus = () => {
 
 const close = () => {
   showConfirmDialog({
-    title: "跳过验证将继续注册",
+    title: t('register.code_jump_title'),
     message: "",
     width: "6.23rem",
-    confirmButtonText: "确定",
+    confirmButtonText: t('register.code_jump_confirm'),
     confirmButtonColor: "#014cfa",
   })
     .then(() => {
@@ -192,8 +184,8 @@ const goChat = () => {
 };
 
 onMounted(() => {
-  send()
-})
+  send();
+});
 </script>
 
 <style lang="less" scoped>
@@ -330,4 +322,3 @@ onMounted(() => {
   line-height: 0.372rem;
 }
 </style>
-

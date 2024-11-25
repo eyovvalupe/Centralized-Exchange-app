@@ -2,7 +2,8 @@
     <div class="page page_language">
         <Top :title="'在线客服'" />
         <div class="layout-chat">
-            <loading v-show="!isConnected || chatLoading" />
+            <!-- <Loading v-show="!isConnected || chatLoading" /> -->
+             <Loaidng v-show="!isConnected || chatLoading"/>
             <div class="chat-con" @touchstart="setRead" @scroll="handleScroll" ref="scrollContainer">
                 <messageBox :chatLoading="chatLoading"/>
             </div>
@@ -15,13 +16,13 @@
 
 <script setup>
 import Top from "@/components/Top.vue"
-import loading from '@/components/Chat/loading.vue'
 import messageBox from '@/components/Chat/messageBox.vue'
 import sendBox from '@/components/Chat/sendBox.vue'
 import { apiMsgRead } from '@/api/chat'
-import { ref, nextTick, computed, onUnmounted } from 'vue'
+import { ref, nextTick, computed, onUnmounted, onMounted } from 'vue'
 import storeChat from "@/store/chat"
 import { serviceChat } from '@/utils/serviceChat'
+import Loaidng from "@/components/Loaidng.vue"
 
 serviceChat.init();
 const chatLoading = ref(true);
@@ -32,6 +33,7 @@ storeChat.dispatch('updateMessage').then(res => {
 })
 const isConnected = computed(() => storeChat.state.isConnected)
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage)
+const messageList = computed(() => storeChat.state.messageList)
 const scrollContainer = ref(null);
 const isReadMessage = (currTime) => {
     apiMsgRead({ nologinid: storeChat.getters.getNologinid }).then((res) => {
@@ -92,11 +94,17 @@ watch(hasNewMessage, (val) => {
         scrollToBottom();
     }
 }, { deep: true })
+watch(messageList, (val) => {
+    if (val.length) {
+        scrollToBottom();
+    }
+}, { deep: true })
 </script>
 
 <style lang="less">
 .layout-chat {
     display: flex;
+    max-height: calc(100vh - 1.12rem);
     flex-direction: column;
     margin-top: 1.12rem;
     overflow: hidden;

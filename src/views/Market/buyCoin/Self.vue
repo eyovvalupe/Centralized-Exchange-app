@@ -24,8 +24,8 @@
       </div>
 
       <div class="w-full overflow-hidden">
-        <Tabs :active="currCrypto.name" class="encryption w-full" line-height="0.06rem" line-width="0.32rem"
-          @click-tab="cryptoChange">
+        <Tabs @touchstart.stop @touchmove.stop @touchup.stop :active="currCrypto.name" class="encryption w-full"
+          line-height="0.06rem" line-width="0.32rem" @click-tab="cryptoChange">
           <Tab v-for="(item, index) in dryptoWallet" :key="item.name + index" :title="item.name" :name="item.name" />
         </Tabs>
       </div>

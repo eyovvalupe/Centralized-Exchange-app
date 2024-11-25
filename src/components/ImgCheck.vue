@@ -13,8 +13,8 @@
     </div>
 
     <div class="security_description">
-      <div class="title">安全验证</div>
-      <div class="check_title">拖动滑块，使图片角度为正</div>
+      <div class="title">{{ $t("register.security") }}</div>
+      <div class="check_title text-center">{{ $t("register.security_con") }}</div>
     </div>
     <div class="check_pic">
       <img
@@ -47,13 +47,13 @@
       class="status_text status_success"
       v-else-if="sliderStatus == 'success'"
     >
-      <span class="check_result">验证成功</span>
+      <span class="check_result">{{ $t("register.security_result_success") }}</span>
     </div>
     <div class="status_text status_error" v-else-if="sliderStatus == 'error'">
-      <span class="check_result">验证失败</span>
+      <span class="check_result">{{ $t("register.security_result_failed") }}</span>
     </div>
     <div class="status_text" v-else>
-      <span class="check_result">待滑动验证</span>
+      <span class="check_result">{{ $t("register.security_result_pedding") }}</span>
     </div>
   </div>
 </template>
@@ -62,6 +62,9 @@
 import { Slider, showLoadingToast, closeToast, Icon } from "vant";
 import { ref, onMounted } from "vue";
 import router from "@/router";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const show = ref(false);
 const loading = ref(false);
@@ -237,7 +240,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     color: var(--, #333);
-    font-size: 0.28rem;
+    font-size: 0.32rem;
     font-weight: 400;
     line-height: 0.32rem;
 

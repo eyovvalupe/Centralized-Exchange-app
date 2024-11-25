@@ -28,19 +28,19 @@
 
       <!-- 标题 -->
       <div class="title_box">
-        <div class="title">{{ guest ? "创建模拟账户" : "创建您的账户" }}</div>
+        <div class="title">{{ guest ? t('register.create_guest_account') : t('register.create_user_account') }}</div>
         <div class="login_title">
-          有账号？
+          {{ $t("register.has_account") }}
           <span class="tologin" @click="router.push({ name: 'login' })"
-            >去登录</span
+            >{{ $t("register.go_login") }}</span
           >
         </div>
       </div>
 
       <!-- tab -->
       <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
-        <Tab :title="'邮箱'"> </Tab>
-        <Tab :title="'手机'"></Tab>
+        <Tab :title="t('register.email')"> </Tab>
+        <Tab :title="t('register.phone')"></Tab>
       </Tabs>
 
       <!-- 表单 -->
@@ -50,7 +50,7 @@
           <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.username" placeholder="您的用户名"
             type="text" class="item_input">
         </div> -->
-        <div class="form_title" v-show="activeTab == 0">邮箱</div>
+        <div class="form_title" v-show="activeTab == 0">{{ $t("register.email") }}</div>
         <div
           class="form_item margin_item"
           v-show="activeTab == 0"
@@ -60,7 +60,7 @@
             maxlength="30"
             @blur="errorTip.error1 = false"
             v-model.trim="form.email"
-            placeholder="您的邮箱"
+            :placeholder="t('register.pw_placeholder1')"
             type="text"
             class="item_input"
             :class="{ err_ipt1: errorTip.error1 }"
@@ -71,7 +71,7 @@
             @click="form.email = null"
           ></div>
         </div>
-        <div class="form_title" v-show="activeTab == 1">手机号</div>
+        <div class="form_title" v-show="activeTab == 1">{{ $t("register.phone_number") }}</div>
         <div
           class="form_item margin_item"
           v-show="activeTab == 1"
@@ -90,35 +90,25 @@
             maxlength="20"
             @blur="errorTip.error1 = false"
             v-model.trim="form.phone"
-            placeholder="您的手机号"
+            :placeholder="t('register.pw_placeholder2')"
             type="text"
             class="item_input"
           />
         </div>
-        <div class="form_title">登录密码</div>
+        <div class="form_title">{{ $t("register.login_password") }}</div>
         <div
-          class="form_item margin_item"
+          class="form_item margin_item relative"
           :class="{ err_ipt: errorTip.error2 }"
         >
           <input
             maxlength="20"
             @blur="errorTip.error2 = false"
-            v-show="!showPass"
             v-model.trim="form.password"
-            placeholder="密码最小8个字符"
-            type="password"
+            :placeholder="t('register.pw_placeholder3')"
+            :type="showPass ? 'text' : 'password'"
             class="item_input"
           />
-          <input
-            maxlength="20"
-            @blur="errorTip.error2 = false"
-            v-show="showPass"
-            v-model.trim="form.password"
-            placeholder="密码最小8个字符"
-            type="text"
-            class="item_input"
-          />
-          <div class="form_item_icon" @click="showPass = !showPass">
+          <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass = !showPass">
             <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
           </div>
         </div>
@@ -127,51 +117,29 @@
           style="position: relative; top: -0.32rem; left: 0.32rem"
           :password="form.password"
         />
-        <div class="form_title">交易密码</div>
+        <div class="form_title">{{ $t("register.trade_password") }}</div>
         <div
-          class="form_item margin_item"
+          class="form_item margin_item relative"
           :class="{ err_ipt: errorTip.error3 }"
         >
           <input
             maxlength="20"
             @blur="errorTip.error3 = false"
-            v-show="!showPass2"
             v-model.trim="form.safeword"
-            placeholder="请输入交易密码"
-            type="password"
+            :placeholder="t('register.pw_placeholder5')"
+            :type="showPass2 ? 'text' : 'password'"
             class="item_input"
           />
-          <input
-            maxlength="20"
-            @blur="errorTip.error3 = false"
-            v-show="showPass2"
-            v-model.trim="form.safeword"
-            placeholder="请输入交易密码"
-            type="text"
-            class="item_input"
-          />
-          <div class="form_item_icon" @click="showPass2 = !showPass2">
+          <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass2 = !showPass2">
             <div :class="showPass2 ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
           </div>
         </div>
-        <!-- <div class="form_title">确认交易密码</div>
-      <div class="form_item margin_item" :class="{ 'err_ipt': errorTip.error3 }">
-        <input maxlength="20" @blur="errorTip.error3 = false" v-show="!showPass3" v-model.trim="form.safeword2"
-          placeholder="请确认交易密码" type="password" class="item_input">
-        <input maxlength="20" @blur="errorTip.error3 = false" v-show="showPass3" v-model.trim="form.safeword2"
-          placeholder="请确认交易密码" type="text" class="item_input">
-        <div class=" form_item_icon" @click="showPass3 = !showPass3">
-          <img v-show="!showPass3" src="/static/img/user/eye-off.png" alt="off">
-          <img v-show="showPass3" src="/static/img/user/eye-open.png" alt="open">
-        </div>
-      </div> -->
-
-        <div class="form_title">邀请码</div>
+        <div class="form_title">{{ $t("register.invite_code") }}</div>
         <div class="form_item margin_item">
           <input
             maxlength="20"
             v-model.trim="form.invateCode"
-            placeholder="请输入您的邀请码"
+            :placeholder="t('register.pw_placeholder6')"
             type="text"
             class="item_input"
           />
@@ -185,7 +153,7 @@
           class="mr-[0.2rem]"
           @click="checked = !checked"
         ></div>
-        我同意<span>隐私政策</span>和<span>用户条款</span>
+        {{ $t("register.agree_con1") }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3") }}<span>{{ $t("register.agree_con4") }}</span>
       </label>
 
       <!-- 按钮 -->
@@ -197,20 +165,9 @@
           color="#014CFA"
           class="submit"
           type="primary"
-          >继续</Button
+          >{{ $t("register.next") }}</Button
         >
       </div>
-
-      <!-- 去注册 -->
-      <!-- <div class="go_register">
-        <div class="server_icon" @click="goChat">
-          <img src="/static/img/common/server.png" alt="server" />
-        </div>
-        <span @click="goLogin">
-          有账号吗？
-          <span>去登录</span>
-        </span>
-      </div> -->
     </template>
 
     <template v-else>
@@ -245,7 +202,7 @@
           @click="showDialog = false"
         ></div>
         <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
-          区号选择
+          {{ $t("register.country_number") }}
         </div>
         <div class="item search_box">
           <!-- <Icon class="search" name="search" size="0.48rem" /> -->
@@ -254,7 +211,7 @@
             v-model.trim="searchStr"
             class="ipt"
             type="text"
-            placeholder="输入区号"
+            :placeholder="t('register.pw_placeholder4')"
           />
           <div
             v-if="searchStr.length"
@@ -314,9 +271,11 @@ import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
 import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
 import HKFlagIcon from "./Icons/HKFlagIcon.vue";
+import { useI18n } from "vue-i18n";
 
 // 区号控制
-// const step = ref(1)
+const step = ref(3)
+const {t} = useI18n()
 const activeTab = ref(0);
 const defaultCode = "+244";
 const showDialog = ref(false);
@@ -349,7 +308,6 @@ store.commit("setUserInfo", {});
 const route = useRoute();
 const routerApi = useRouter();
 const forwardUrl = routerApi.options.history.state.forward;
-const step = ref(1);
 
 const guest = ref(route.query.guest);
 const showPass = ref(false); // 密码显示
@@ -443,7 +401,7 @@ const submit = async () => {
             store.dispatch("updateWallet");
             step.value = 3;
           }, 300);
-        }, 2000);
+        }, 1000);
       } else {
         showToast(res.message);
       }
@@ -782,7 +740,7 @@ const scrollCountryCode = () => {
         flex: 1;
         color: #333333;
         font-weight: 400;
-        font-size: 0.28rem;
+        font-size: 0.3rem;
       }
 
       &:has(.item_input:focus) {

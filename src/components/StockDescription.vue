@@ -1,53 +1,45 @@
 <template>
-  <div
-    class="stock_description"
-    v-show="!loading && list.length >0"
-  >
+  <div class="stock_description" v-show="!loading && list.length > 0">
     <div class="flex flex-col mb-[0.4rem]">
       <div class="flex flex-row justify-between items-center mb-[0.16rem]">
-        <span class="text-[0.32rem] text-[#061023] font-semibold">{{$t("common.closed")}}</span>
-        <span class="text-[0.24rem] text-[#8F92A1]"
-          >{{ props.data.closets }}
+        <span class="text-[0.32rem] text-[#061023] font-semibold">{{ $t("common.closed") }}</span>
+        <span class="text-[0.24rem] text-[#8F92A1]">{{ props.data.closets }}
           {{
             props.data.region == "us"
               ? "美东"
               : props.data.region == "india"
-              ? "印度"
-              : props.data.region == "japan"
-              ? "日本"
-              : "韩国"
-          }}</span
-        >
+                ? "印度"
+                : props.data.region == "japan"
+                  ? "日本"
+                  : "韩国"
+          }}</span>
       </div>
       <div class="flex flex-row items-center">
         <div>
-          <span class="text-[0.24rem] text-[#8F92A1]"
-            >{{$t("market.stock.updateTime")}}：{{ props.data.currentts }}</span
-          >
+          <span class="text-[0.24rem] text-[#8F92A1]">{{ $t("market.stock.updateTime") }}：{{ props.data.currentts
+            }}</span>
         </div>
         <div class="re_render" @click="update"></div>
       </div>
     </div>
     <div class="flex flex-row justify-between">
-      <div
-        v-for="(item, i) in list"
-        :key="i"
-        :class="item.ratio > 0 ? 'up_price' : 'down_price'"
+      <div v-for="(item, i) in list" :key="i" :class="item.ratio > 0 ? 'up_price' : 'down_price'"
         class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.15rem] pr-[0.15rem]"
-        @click="goInfo(item)"
-      >
+        @click="goInfo(item)">
         <span class="text-[0.28rem] text-[#061023]">{{
           item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
         }}</span>
-        <span class="stock_price">{{ item.amount }}</span>
+        <span class="stock_price">{{ item.price }}</span>
         <div class="flex flex-row justify-between stock_detail">
-          <span>{{ item.price }}</span>
-          <span
-            >{{ item.ratio > 0 ? "+" : ""
+          <span>{{
+            (item.ratio || 0) * 100 > 0
+              ? "+" + ((item.ratio || 0) * item.price).toFixed(2)
+              : ((item.ratio || 0) * item.price).toFixed(2)
+          }}</span>
+          <span>{{ item.ratio > 0 ? "+" : ""
             }}{{
               ((item.ratio || 0) * 100).toFixed(2)
-            }}%</span
-          >
+            }}%</span>
         </div>
       </div>
     </div>
