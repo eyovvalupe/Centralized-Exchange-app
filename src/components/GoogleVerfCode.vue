@@ -133,6 +133,10 @@ defineExpose({
       height: 0.96rem;
       border-radius: 0.96rem;
       width: 3.27rem;
+
+      :deep(span.van-button__text) {
+        font-size: 0.32rem;
+      }
     }
   }
 
