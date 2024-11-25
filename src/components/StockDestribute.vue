@@ -145,11 +145,12 @@ const getOverviewData = () => {
   }
 
   _marketOverview({
-    market: store.state.marketCurrent
+    market: market
   })
     .then((res) => {
       if (!res.data) return;
-      sessionStorage.setItem("overview_data_" + store.state.marketCurrent, JSON.stringify(res.data));
+      sessionStorage.setItem("overview_data_" + market, JSON.stringify(res.data));
+      if (market != store.state.marketCurrent) return
       count.value = res.data.count || 0;
       for (let key in overview.value) {
         overview.value[key] = res.data[key] || 0;
