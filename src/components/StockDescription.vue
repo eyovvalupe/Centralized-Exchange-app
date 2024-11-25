@@ -2,7 +2,7 @@
   <div class="stock_description" v-show="!loading && list.length > 0">
     <div class="flex flex-col mb-[0.4rem]">
       <div class="flex flex-row justify-between items-center mb-[0.16rem]">
-        <span class="text-[0.32rem] text-[#061023] font-semibold">已收盘</span>
+        <span class="text-[0.32rem] text-[#061023] font-semibold">{{ $t("common.closed") }}</span>
         <span class="text-[0.24rem] text-[#8F92A1]">{{ props.data.closets }}
           {{
             props.data.region == "us"
@@ -16,7 +16,8 @@
       </div>
       <div class="flex flex-row items-center">
         <div>
-          <span class="text-[0.24rem] text-[#8F92A1]">更新时间：{{ props.data.currentts }}</span>
+          <span class="text-[0.24rem] text-[#8F92A1]">{{ $t("market.stock.updateTime") }}：{{ props.data.currentts
+            }}</span>
         </div>
         <div class="re_render" @click="update"></div>
       </div>
@@ -47,8 +48,6 @@
 
 <script setup>
 import store from "@/store";
-import { fixLittleNum } from "@/utils/fixLittleNum";
-import { computed, watch } from "vue";
 import router from "@/router";
 const emits = defineEmits(["update"]);
 const update = () => {

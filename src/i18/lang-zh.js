@@ -1,5 +1,41 @@
 
 export default {
+    common:{
+        stock:"股票",
+        crypto:"合约",
+        AI:"交易机器人",
+        IPO:"IPO",
+        closed:"已收盘"
+    },
+    home:{
+        login:'登录',
+        loginDesc:"登录才能查看资产",
+        totalAssets:"总资产",
+        fastTrading:"快速交易",
+        recharge:"充值",
+        today:"今日",
+        index:"指数",
+        hotSale:"热卖",
+        marketRecommend:"市场推荐",
+        selfSelectedRecommend:"自选推荐"
+    },
+    market:{
+        stock:{
+            updateTime:"更新时间",
+            riseAndFall:"涨跌分布",
+            up:'上涨',
+            down:'下跌',
+            limitUpPursuit:"涨停追击",
+            profitMakingEffect:"赚钱效应",
+            strong:"强",
+            weak:'弱',
+            contrast:"涨跌停对比",
+            performance:"做涨停今表现",
+            hot:"热门股",
+            upList:"涨幅榜",
+            downList:"跌幅榜"
+        }
+    },
     form:{
         all:"全部"
     },

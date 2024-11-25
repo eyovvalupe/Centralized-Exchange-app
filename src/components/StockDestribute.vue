@@ -2,10 +2,11 @@
 <template>
   <div class="total_box">
     <div class="total_title flex flex-row justify-between items-center">
-      <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">涨跌分布</span>
+      <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">{{ $t("market.stock.riseAndFall")
+        }}</span>
       <div>
-        <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]">上涨：{{ up }}</span>
-        <span class="text-[0.28rem] text-[#e8503a]">下跌：{{ down }}</span>
+        <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]">{{ $t("market.stock.up") }}：{{ up }}</span>
+        <span class="text-[0.28rem] text-[#e8503a]">{{ $t("market.stock.down") }}：{{ down }}</span>
       </div>
     </div>
     <div class="table_box justify-center" v-if="overviewLoading && !count">
@@ -30,9 +31,9 @@
         </div>
       </div>
       <div class="table_tabs flex flex-row justify-between">
-        <div class="bg-custom_green h-[0.2rem]" style="flex: 1;" :style="{ flex: up || 1 }"></div>
-        <div class="bg-custom_blue" style="flex: 1;margin: 0 0.12rem;min-width: 0.48rem;"></div>
-        <div class="bg-custom_red  h-[0.2rem]" style="flex: 1;" :style="{ flex: down || 1 }"></div>
+        <div class="bg-custom_green w-[3.04rem] h-[0.2rem]"></div>
+        <div class="bg-custom_blue w-[0.48rem]"></div>
+        <div class="bg-custom_red w-[3.04rem] h-[0.2rem]"></div>
       </div>
     </div>
   </div>

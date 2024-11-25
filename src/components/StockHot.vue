@@ -2,17 +2,15 @@
 <template>
   <div class="stock_hot">
     <div class="recommend_block">
-      <div class="item_block" v-if="marketStockCurrentList.length">
+      <div class="item_block" v-if="marketVolumeList.length">
         <div class="item_block_title flex justify-between">
-          <div>热门股</div>
+          <div>{{ $t("market.stock.hot") }}</div>
           <div class="re_render" @click.stop="update"></div>
         </div>
         <StockRecommendList
-          :key="'stock'"
-          :keyStr="'stock'"
           :loading="recommendLoading"
-          @change="changeStockList"
-          :list="marketStockCurrentList"
+          :list="marketVolumeList"
+          :show-len="4"
         />
       </div>
     </div>
@@ -23,44 +21,81 @@
 
 // import StockTable from "@/components/StockTable.vue";
 import StockRecommendList from "@/components/StockRecommendList.vue";
-import OptionCategory from "@/components/OptionCategory.vue";
-import router from "@/router";
 import store from "@/store";
-import { computed, ref } from "vue";
-import { _watchlistDefault, _recommend } from "@/api/api";
-import { getData } from "@/utils/stock";
-
+import { computed, ref, watch } from "vue";
+import { _sort } from "@/api/api";
 const recommendLoading = ref(false)
 
-const update = () => {
-  getData(store.state.marketCurrent,recommendLoading,2)
-}
-// 推荐列表
-const marketStockCurrentList = computed(
-  () => {
-    const arr = []
-    for(let i=0;i<store.getters.getMarketStockCurrentList.length;i++){
-      if(i < 4){
-        arr.push(store.getters.getMarketStockCurrentList[i])
+const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
+
+const subs = () => {
+  // 订阅ws
+  store.commit("setMarketWatchKeysByPage")
+  store.dispatch("subList", {});
+};
+
+const getData = (list, key, query, listKey) => {
+  if (!store.state.marketCurrent) return;
+  const market = store.state.marketCurrent
+  let arr = []
+  _sort({
+    orderby: query,
+    page: 1,
+    market:market
+  })
+    .then((res) => {
+      if (res.code == 200) {
+        if(store.state.marketCurrent != market){
+          return
+        }
+        res.data = res.data.map((item) => {
+          item.ratio = undefined; // 弃用接口里的该字段
+          return item;
+        });
+        const rs = res.data.map((item) => {
+          const target = list.value.find((a) => a.symbol == item.symbol);
+          if (target) {
+            item = {
+              ...target,
+              ...item,
+              ratio: target.ratio,
+            };
+          }
+          return item;
+        });
+        arr.push(...rs);
+        store.commit(key, arr || []);
+        setTimeout(() => {
+          subs();
+        }, 100);
       }
-    }
-    return arr
-  }
+    })
+    .finally(() => {
+        recommendLoading.value = false;
+    });
+};
+const update = () => {
+  recommendLoading.value = true;
+  getData(
+    marketVolumeList,
+    "setMarketVolumeList",
+    "volume",
+    "marketVolumeList"
+  );
+}
+watch(()=>store.state.marketCurrent,()=>{
+  update()
+})
+
+if(!marketVolumeList.value.length){
+  recommendLoading.value = true;
+}
+getData(
+  marketVolumeList,
+  "setMarketVolumeList",
+  "volume",
+  "marketVolumeList"
 );
-
-// 推荐股票选择
-const changeStockList = (arr) => {
-};
-
-
-// 移除收藏
-const removeLoading = ref(false);
-
-const jump = (name) => {
-  router.push({
-    name,
-  });
-};
 </script>
 
 <style lang="less" scoped>

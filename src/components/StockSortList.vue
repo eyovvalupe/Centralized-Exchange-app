@@ -10,33 +10,33 @@
       animated
       shrink
     >
-      <Tab :title="'涨幅榜'" name="up">
+      <Tab :title="$t('market.stock.upList')" name="up">
         <!-- <StockTable :key="'down'" :loading="loading" :list="marketDownList" :marketType="'stock'" /> -->
         <StockTableForList
           :loading="loading"
-          :list="marketDownList"
+          :list="marketUpList"
         />
         <LoadingMore
           :classN="'stock_soft_moreup'"
           class="active_more"
-          :loading="!!(marketDownList.length && loading)"
+          :loading="!!(marketUpList.length && loading)"
           :finish="finish"
-          v-if="((finish && marketDownList.length) || !finish) && active == 2"
+          v-if="((finish && marketUpList.length) || !finish) && active == 2"
         />
       </Tab>
-      <Tab :title="'跌幅榜'" name="down">
+      <Tab :title="$t('market.stock.downList')" name="down">
         <StockTableForList
           :key="'up'"
           :loading="loading"
-          :list="marketUpList"
+          :list="marketDownList"
         />
         
         <LoadingMore
           :classN="'stock_soft_moredown'"
           class="active_more"
-          :loading="!!(marketUpList.length && loading)"
+          :loading="!!(marketDownList.length && loading)"
           :finish="finish"
-          v-if="((finish && marketUpList.length) || !finish) && active == 1"
+          v-if="((finish && marketDownList.length) || !finish) && active == 1"
         />
       </Tab>
     </Tabs>
@@ -88,13 +88,11 @@ const changeTab = (key) => {
 const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
 const marketUpList = computed(() => store.state.marketUpList || []); // 涨幅列表
 const marketDownList = computed(() => store.state.marketDownList || []); // 跌幅列表
-const subs = (listKey, key) => {
-  // 订阅ws
-  store.dispatch("subList", {
-    commitKey: key,
-    listKey: listKey,
-    // proxyListValue: list.value
-  });
+const subs = () => {
+
+store.commit("setMarketWatchKeysByPage")
+// 订阅 ws
+store.dispatch("subList", {});
 };
 const getData = (list, key, query, listKey) => {
   if (loading.value || finish.value || !store.state.marketCurrent) return;
@@ -105,9 +103,7 @@ const getData = (list, key, query, listKey) => {
     arr = [];
     store.commit(key,[]);
   }
-  if (arr.length) {
-    subs(listKey, key);
-  }
+
   const saveActive = active.value;
   _sort({
     orderby: query,
@@ -137,8 +133,8 @@ const getData = (list, key, query, listKey) => {
         });
         arr.push(...rs);
         store.commit(key, arr || []);
+        subs();
         setTimeout(() => {
-          subs(listKey, key);
           scrollHandler();
         }, 500);
       }
