@@ -116,7 +116,10 @@ const initData = async () => { // 初始化数据
             const maxTail = _maxTail(datas[0].high)
             if (num > maxTail) num = maxTail
             chart.setPriceVolumePrecision(num, 2)
-            chart.applyNewData(datas) // 重设图表数据
+            chart.applyNewData(datas.map(item => {
+                item.timestamp = item.timestamp || item.ts
+                return item
+            })) // 重设图表数据
             if (datas[0] && datas[0].timezone) {
                 chart.setTimezone(datas[0].timezone)
             }
@@ -150,7 +153,10 @@ const subs = () => { // 订阅新数据
             if (res.code == 200 && res.symbol == props.symbol && (res.period == props.period || res.period == currPeriod.value)) {
 
                 res.data.forEach(a => {
-                    chart.updateData(a)
+                    chart.updateData({
+                        ...a,
+                        timestamp: a.timestamp || a.ts
+                    })
                 })
 
                 // 同步数据

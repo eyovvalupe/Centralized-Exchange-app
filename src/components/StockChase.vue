@@ -2,17 +2,17 @@
   <div class="market_stock_chase">
     <div class="header_container flex flex-row justify-between items-center">
       <div class="text-[0.32rem] items-center font-semibold">
-        <span>涨停追击</span>
+        <span>{{ $t("market.stock.limitUpPursuit") }}</span>
       </div>
       <div class="header_text flex items-center text-[0.28rem]">
-        <div class="header_eff_text"><span>赚钱效应</span></div>
-        <div class="header_noti_text"><span>强</span></div>
+        <div class="header_eff_text"><span>{{ $t("market.stock.profitMakingEffect") }}</span></div>
+        <div class="header_noti_text"><span>{{ $t("market.stock.strong") }}</span></div>
       </div>
     </div>
     <div class="graph_container">
       <div class="chase_container">
         <div class="chase_text">
-          <span class="text-[#666D80] mr-[0.16rem]" >涨跌停对比</span>
+          <span class="text-[#666D80] mr-[0.16rem]" >{{ $t("market.stock.contrast") }}</span>
           <span style="color: #18b762; margin-right: 0.05rem">356</span>
           <span style="margin-right: 0.05rem">:</span>
           <span style="color: #e8503a">117</span>
@@ -23,7 +23,7 @@
       </div>
       <div class="chase_status">
         <div class="chase_state_text">
-          <span class="text-[#666D80] mr-[0.16rem]" >做涨停今表现</span>
+          <span class="text-[#666D80] mr-[0.16rem]" >{{ $t("market.stock.performance") }}</span>
           <span style="color: #18b762">99.26%</span>
         </div>
         <div class="chase_graph">

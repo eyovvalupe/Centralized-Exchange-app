@@ -307,6 +307,23 @@ export default {
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
         },
+        setMarketWatchKeysByPage(state){
+            const data = []
+            const page = router.currentRoute.value && router.currentRoute.value.name ? router.currentRoute.value.name : ''
+            if(pageKeys[page]){
+                pageKeys[page].map(k=>{
+                    if(state[k] && state[k].length){
+                        state[k].map(item=>{
+                            if(data.indexOf(item.symbol) == -1){
+                                data.push(item.symbol)
+                            }
+                        })
+                    }
+                })
+            }
+           
+            state.marketWatchKeys = data;
+        },
         setMarketRankList(state, data) {
             state.marketRankList = data;
             const arr = Array.from(new Set(data.map(item => item.symbol)))
@@ -321,7 +338,6 @@ export default {
             state.marketSearchList = (data.list || []).map(item => {
                 return item;
             });
-
         },
         setMarketSearchList(state, data) {
             state.marketSearchList = data;

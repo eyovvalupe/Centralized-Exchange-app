@@ -63,14 +63,14 @@
         <div
           class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
           @click="store.commit('setIsLoginOpen', true)">
-          登录
+          {{ $t('home.login') }}
         </div>
-        <div class="text-[0.24rem] text-[#8F92A1]">登录才能查看资产</div>
+        <div class="text-[0.24rem] text-[#8F92A1]">{{ $t('home.loginDesc') }}</div>
       </div>
       <div class="bg-[#F5F7FC] mb-[0.32rem] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] border-[1px] border-[#EFF3F8] py-[0.28rem] z-10">
         <div class="flex justify-between mb-[0.14rem] items-center">
           <div class="flex items-center gap-1">
-            <div class="text-[0.26rem] text-[#333333]">总资产(USDT)</div>
+            <div class="text-[0.26rem] text-[#333333]">{{$t("home.totalAssets")}}(USDT)</div>
             <div class="assets" v-if="!token" @click="store.commit('setIsLoginOpen', true)">
               <!-- <div class="assets_login">登录</div>
           <div>查看资产</div> -->
@@ -87,14 +87,14 @@
           </div>
           <div class="flex items-center gap-2">
             <div
-              class="w-[1.36rem] h-[0.52rem] border-[#014CFA] text-[#014CFA] text-[0.24rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+              class="px-[0.2rem] h-[0.52rem] border-[#014CFA] text-[#014CFA] text-[0.24rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
               @click="showAS = true">
-              快速交易
+              {{ $t("home.fastTrading") }}
             </div>
             <div
-              class="w-[0.88rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[0.24rem] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+              class="px-[0.2rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[0.24rem] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
               @click="jump('topUp', true)">
-              充值
+              {{ $t("home.recharge") }}
             </div>
           </div>
         </div>
@@ -104,37 +104,37 @@
       </div>
       
       <HomeToday />
-      <HomePriority type="BestSellers" />
+      <HomePriority />
 
     </div>
     <HomeWatchList />
     
-    <div class="font-bold text-[0.32rem] m-[0.32rem]">市场推荐</div>
+    <div class="font-bold text-[0.32rem] m-[0.32rem]">{{$t("home.marketRecommend")}}</div>
     <!-- <Banner v-if="activated" class="home_banner" /> -->
 
     <!-- Tabs -->
     <Tabs @change="tabChange" v-if="!pageLoading && activated" type="card" class="tabs" v-model:active="activeTab"
       animated shrink>
-      <Tab :title="'股票'">
+      <Tab :title="$t('common.stock')">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div class="pt-[0.12rem]">
           <StockItem :item="item" v-for="(item, i) in marketStockCurrentList" :key="'s_' + i" page="home" />
         </div>
         <NoData v-if="!commendLoading && !marketStockCurrentList.length" />
       </Tab>
-      <Tab :title="'合约'">
+      <Tab :title="$t('common.crypto')">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div class="pt-[0.32rem]">
           <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" />
         </div>
         <NoData v-if="!commendLoading && !contractList.length" />
       </Tab>
-      <Tab :title="'IPO'">
+      <Tab :title="$t('common.IPO')">
         <div>
           <IPO ref="ipoRef" :page="'home'" />
         </div>
       </Tab>
-      <Tab :title="'交易机器人'">
+      <Tab :title="$t('common.AI')">
         <div class="mx-[0.32rem]">
           <Ai page="home" />
         </div>
@@ -142,7 +142,7 @@
     </Tabs>
 
     <!-- 类型选择弹窗 -->
-    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="快速交易"></ActionSheet>
+    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')"></ActionSheet>
   </div>
 </template>
 
@@ -171,7 +171,8 @@ import HomeWatchList from "@/components/HomeWatchList.vue";
 import HomeCrypto from "@/components/HomeCrypto.vue";
 import HomeToday from '@/components/HomeToday.vue';
 import { formatDate } from "@/utils/formatDate";
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 const openEye = ref(false);
 
 const { startSocket } = useSocket();
@@ -184,9 +185,9 @@ const token = computed(() => store.state.token || "");
 // 打开添加类型选择弹窗
 const showAS = ref(false);
 const actions = [
-  { name: "股票", value: "0" },
-  { name: "合约", value: "-1" },
-  { name: "IPO", value: "1" },
+  { name: t("common.stock"), value: "0" },
+  { name: t("common.crypto"), value: "-1" },
+  { name: t("common.IPO"), value: "1" },
 ];
 const slides = [
   "static/img/home/banner1.png",
@@ -232,16 +233,17 @@ const tabChange = (val) => {
   }
 };
 
+const subs = (arr) => {
+  store.commit("setMarketWatchKeysByPage")
+  store.dispatch("subList", {});
+};
+
 const activated = ref(false);
 onActivated(() => {
+  store.commit("setMarketWatchKeys",[])
+  
   activated.value = true;
-  setTimeout(() => {
-    subs([
-      ...contractList.value,
-      ...marketVolumeList.value,
-      ...marketStockCurrentList.value
-    ]);
-  }, 500);
+  subs()
 });
 onDeactivated(() => {
   activated.value = false;
@@ -263,8 +265,6 @@ const marketStockCurrentList =  computed(() => store.getters.getMarketStockCurre
 
 const getRecommendData = () => {
   commendLoading.value = true;
-
-      
     _futures().then((res) => {
       if (res.code == 200) {
         const rs = res.data.map((item) => {
@@ -280,34 +280,14 @@ const getRecommendData = () => {
         });
         store.commit("setContractList", rs || []);
 
-        setTimeout(() => {
-          subs([
-            ...marketStockCurrentList.value,
-            ...contractList.value,
-            ...marketVolumeList.value
-          ]);
-        }, 500);
+        subs()
+
       }
     }).finally(() => {
       commendLoading.value = false;
     });
-    setTimeout(() => {
-      subs([
-        ...marketStockCurrentList.value,
-        ...contractList.value,
-        ...marketVolumeList.value
-      ]);
-    }, 500);
-    
-    
 };
 getRecommendData();
-
-const subs = (arr) => {
-  // 订阅 ws
-  store.commit("setMarketWatchKeys", arr.map((item) => item.symbol) || []);
-  store.dispatch("subList", {});
-};
 
 // 跳转
 const jump = (name, needToken) => {
@@ -317,83 +297,7 @@ const jump = (name, needToken) => {
     name,
   });
 };
-const page = ref(0);
-const marketLoading = ref(false);
-const marketPerformance = ref(0);
-marketPerformance.value = 0;
-const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
 
-const getMarketPerformanceData = (list, key, query, listKey) => {
-  if (marketLoading.value || !store.state.marketCurrent) return;
-  marketLoading.value = true;
-  page.value++;
-  let arr = JSON.parse(JSON.stringify(list.value));
-  if (page.value == 1) {
-    arr = [];
-  }
-  if (arr.length) {
-    subs([...arr, ...contractList.value,...marketStockCurrentList.value]);
-  }
-  const saveActive = marketPerformance.value;
-  _sort({
-    market: store.state.marketCurrent,
-    orderby: query,
-    page: page.value,
-  })
-    .then((res) => {
-      if (res.code == 200) {
-        if (saveActive != marketPerformance.value) return;
-        res.data = res.data.map((item) => {
-          item.ratio = undefined; // 弃用接口里的该字段
-          return item;
-        });
-        const rs = res.data.map((item) => {
-          const target = list.value.find((a) => a.symbol == item.symbol);
-          if (target) {
-            item = {
-              ...target,
-              ...item,
-              ratio: target.ratio,
-              type: "stock",
-            };
-          }
-          return item;
-        });
-        arr.push(...rs);
-        store.commit(key, arr || []);
-        setTimeout(() => {
-          subs([
-            ...arr,
-            ...contractList.value,
-            ...marketStockCurrentList.value
-          ]);
-        }, 500);
-      }
-    })
-    .finally(() => {
-      setTimeout(() => {
-        marketLoading.value = false;
-      }, 300);
-    });
-};
-
-watch(()=>store.state.marketCurrent,()=>{
-  getMarketPerformanceData(
-    marketVolumeList,
-    "setMarketVolumeList",
-    "volume",
-    "marketVolumeList"
-  );
-})
-
-onMounted(() => {
-  getMarketPerformanceData(
-    marketVolumeList,
-    "setMarketVolumeList",
-    "volume",
-    "marketVolumeList"
-  );
-});
 </script>
 
 <style lang="less" scoped>
