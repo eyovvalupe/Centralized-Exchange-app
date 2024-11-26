@@ -1,13 +1,13 @@
 <!-- ai量化-订单详情 -->
 <template>
     <Popup teleport="body" lazy-render v-model:show="showModel" position="right" style="width:100%;height:100%;">
-         <Top title="订单详情" :backFunc="backFunc" />
-         
-         <div class="loading-wrap" v-if="loading">
+        <Top title="订单详情" :backFunc="backFunc" />
+
+        <div class="loading-wrap" v-if="loading">
             <Loading v-if="loading" size="44px" color="#2168F6" />
-         </div>
-         <div class="ai_order_info" v-show="!loading">
-            
+        </div>
+        <div class="ai_order_info" v-show="!loading">
+
             <!-- 盈利 -->
             <div class="win" v-if="currItem.status == 'close'">
                 <img src="/static/img/trade/profit_bg.png" class="win_bg" v-if="currItem.profit >= 0" />
@@ -18,45 +18,45 @@
                     : ''
                     }}{{ currItem.profit }}</div>
 
-                
+
             </div>
-            
+
             <div class="win-box" v-else>
-                 <!-- 加载 -->
-               
-                    <div class="circle-wrap">
-                        <div class="circle-mid">
-                            <div class="time">{{ formatSec2(currItem.endtime,true) }}</div>
-                            <div class="text">倒计时</div>
-                        </div>
-                        <Circle v-if="currItem.status == 'open'" start-position="bottom"
-                            stroke-linecap="round" stroke-width="142" layer-color="#F5F7FC" :color="gradientColor"
-                            size="182" :rate="100" :current-rate="100-rate" />
-                    </div>
+                <!-- 加载 -->
 
-                    <div class="time_bg" >
-                        <strong>{{currItem.time}}</strong>
-                        <span class="unit">{{_dateUnitMap[currItem.unit]}}</span>
+                <div class="circle-wrap">
+                    <div class="circle-mid">
+                        <div class="time">{{ formatSec2(currItem.endtime, true) }}</div>
+                        <div class="text">倒计时</div>
                     </div>
+                    <Circle v-if="currItem.status == 'open'" start-position="bottom" stroke-linecap="round"
+                        stroke-width="142" layer-color="#F5F7FC" :color="gradientColor" size="182" :rate="100"
+                        :current-rate="100 - rate" />
+                </div>
 
-                    <div class="time_tip" >
-                        {{currItem.time + _dateUnitMap[currItem.unit]}}交易结束
-                    </div>
+                <div class="time_bg">
+                    <strong>{{ currItem.time }}</strong>
+                    <span class="unit">{{ _dateUnitMap[currItem.unit] }}</span>
+                </div>
+
+                <div class="time_tip">
+                    {{ currItem.time + _dateUnitMap[currItem.unit] }}交易结束
+                </div>
             </div>
 
-            <div class="win-animate" @click="showWin=false;" v-show="showWin">
+            <div class="win-animate" @click="showWin = false;" v-show="showWin">
                 <div class="win-animate-gold">
-                    <img src="/static/img/trade/gold.png" @load="goldLoad=true" />
+                    <img src="/static/img/trade/gold.png" @load="goldLoad = true" />
                 </div>
                 <div class="win-animate-text" v-if="goldLoad">
                     <img src="/static/img/trade/wintext.png" />
                     <div class="win-animate-amount">
-                        {{animateProfit}}
+                        {{ animateProfit }}
                     </div>
                 </div>
-               
+
             </div>
-             <div class="stock-info">
+            <div class="stock-info">
                 <div class="stock-info__symbol">{{ currItem.name || '--' }}</div>
                 <div class="stock-info__order_no">
                     <span>订单号 {{ currItem.order_no || '--' }}</span>
@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="info_boxs">
-               
+
                 <div class="info_box">
                     <div>时间区域</div>
                     <div class="amount">
@@ -83,13 +83,13 @@
                 <div class="info_box">
                     <div>投资额(USDT)</div>
                     <div class="amount">
-                       {{ currItem.amount }}
+                        {{ currItem.amount }}
                     </div>
                 </div>
                 <div class="info_box info_box--line">
                     <div>预期盈亏金额(USDT)</div>
                     <div class="amount">
-                       {{ getRange() }}
+                        {{ currItem.amountreturn }}
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
 </template>
 
 <script setup>
-import { Button, Popup, Circle,showToast,Loading } from "vant"
+import { Button, Popup, Circle, showToast, Loading } from "vant"
 import { _copyTxt } from "@/utils/index"
 import { ref, computed, onBeforeUnmount } from "vue"
 import { _aiget } from "@/api/api"
@@ -128,15 +128,15 @@ const animateProfit = ref(0)
 
 const goldLoad = ref(false)
 
-const incrementCounter = ( targetNumber, duration = 1200)=> {
-    if(!goldLoad.value){
-        setTimeout(()=>{
-            incrementCounter(targetNumber,duration)
-        },300)
+const incrementCounter = (targetNumber, duration = 1200) => {
+    if (!goldLoad.value) {
+        setTimeout(() => {
+            incrementCounter(targetNumber, duration)
+        }, 300)
         return
     }
     const startTime = Date.now();
-    const startNumber = 0; 
+    const startNumber = 0;
     const incrementAmount = (targetNumber - startNumber) / duration; // 计算每毫秒递增的量
 
     const intervalId = setInterval(() => {
@@ -158,7 +158,7 @@ const copy = text => {
     showToast('已复制')
 }
 
-const backFunc = ()=>{
+const backFunc = () => {
     showModel.value = false
 }
 
@@ -173,7 +173,7 @@ const showModel = ref(false)
 const currItem = ref({})
 const open = (item) => {
     currItem.value = item
-    
+
     getInfo()
     showModel.value = true
     if (timeout) clearInterval(timeout)
@@ -188,7 +188,7 @@ const getInfo = () => {
         order_no: currItem.value.order_no
     }).then(res => {
         if (res.data) {
-            if(res.data.profit > 0 && res.data.status == 'close'){
+            if (res.data.profit > 0 && res.data.status == 'close') {
                 animateProfit.value = 0
                 showWin.value = true
                 incrementCounter(res.data.profit)
@@ -248,6 +248,7 @@ defineExpose({
     height: calc(100vh - 1.12rem);
     overflow-y: auto;
     box-sizing: border-box;
+
     .title {
         font-size: 0.32rem;
         line-height: 0.6rem;
@@ -258,29 +259,32 @@ defineExpose({
     .win {
         display: flex;
         align-items: center;
-        flex-direction: column;    
+        flex-direction: column;
         height: 4.6rem;
         padding-top: 0.58rem;
         box-sizing: border-box;
         position: relative;
         overflow: hidden;
-        .win_bg{
+
+        .win_bg {
             width: 100%;
             height: 3.3rem;
             position: absolute;
-            left:0;
-            bottom:0;
+            left: 0;
+            bottom: 0;
         }
+
         .win_name {
             color: #000;
             text-align: center;
             font-size: 0.3rem;
             font-weight: 400;
-            line-height: 100%; 
+            line-height: 100%;
             position: relative;
             z-index: 1;
             animation: opacityanimate 0.5s;
         }
+
         .amount {
             font-size: 0.6rem;
             font-weight: 600;
@@ -292,8 +296,8 @@ defineExpose({
 
         }
     }
-    
-    .win-box{
+
+    .win-box {
         box-sizing: border-box;
         border-radius: 0.32rem;
         padding: 0.52rem;
@@ -306,29 +310,30 @@ defineExpose({
         box-shadow: 0px 4px 40px 0px rgba(1, 76, 250, 0.20);
         margin: 0 0.32rem;
     }
-    
+
 
     .circle-wrap {
         width: 182px;
         position: relative;
     }
 
-    .circle-mid{
-        box-shadow:0px 0px 20px rgba(1, 76, 250, 0.10);
+    .circle-mid {
+        box-shadow: 0px 0px 20px rgba(1, 76, 250, 0.10);
         width: 136px;
         height: 136px;
         border-radius: 50%;
         position: absolute;
-        left:23px;
-        top:23px;
+        left: 23px;
+        top: 23px;
         border-radius: 50%;
         z-index: 1;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
+
         .time {
-            color:#014CFA;
+            color: #014CFA;
             text-align: center;
             font-family: "SF Pro Display";
             font-size: 0.52rem;
@@ -336,8 +341,9 @@ defineExpose({
             font-weight: 800;
             line-height: 0.6rem;
         }
-        .text{
-            color:#8F92A1;
+
+        .text {
+            color: #8F92A1;
             text-align: center;
             font-size: 0.28rem;
             font-style: normal;
@@ -346,66 +352,70 @@ defineExpose({
             margin-top: 0.1rem;
         }
     }
-  
+
     .name {
         font-weight: 600;
         color: #000;
         font-size: 0.32rem;
         margin: 0 0 0.2rem 0;
-        
+
     }
 
-    .time_bg{
+    .time_bg {
         width: 3.42rem;
         height: 1.2rem;
         border-radius: 1rem;
         background: #014CFA;
-        color:#fff;
+        color: #fff;
         font-weight: 600;
         font-size: 0.3rem;
         justify-content: center;
         display: flex;
         margin-top: 0.4rem;
         align-items: center;
-        strong{
-            font-size:0.8rem;
+
+        strong {
+            font-size: 0.8rem;
             margin-right: 0.1rem;
         }
-        .unit{
+
+        .unit {
             position: relative;
-            top:0.1rem;
+            top: 0.1rem;
         }
     }
-    .time_tip{
+
+    .time_tip {
         color: #8F92A1;
         text-align: center;
         font-size: 0.28rem;
         font-weight: 400;
         line-height: 100%;
         height: 0.28rem;
-        margin-top:0.2rem;
+        margin-top: 0.2rem;
     }
-    
+
 }
 
-.stock-info{
+.stock-info {
     background-color: #F5F7FC;
     border-radius: 0.32rem;
-    margin:0.4rem 0.32rem 0 0.32rem;
+    margin: 0.4rem 0.32rem 0 0.32rem;
     padding: 0.2rem 0.32rem 0.6rem 0.32rem;
-    
-    &__symbol{
+
+    &__symbol {
         font-size: 0.3rem;
         font-weight: 600;
         line-height: 0.36rem;
     }
-    
-    &__order_no{
+
+    &__order_no {
         display: flex;
         align-items: center;
-        color:#8F92A1;
+        color: #8F92A1;
         margin-top: 0.12rem;
-        span{
+
+        span {
             font-size: 0.28rem;
         }
     }
@@ -414,7 +424,8 @@ defineExpose({
         width: 0.24rem;
         height: 0.24rem;
         margin-left: 0.12rem;
-        img{
+
+        img {
             width: 100%;
             height: 100%;
         }
@@ -422,7 +433,7 @@ defineExpose({
 
 }
 
-.loading-wrap{
+.loading-wrap {
     min-height: calc(100vh - 100px);
     display: flex;
     align-items: center;
@@ -438,11 +449,13 @@ defineExpose({
     margin: -0.5rem 0.32rem 0 0.32rem;
 
     z-index: 1;
-    &::after{
+
+    &::after {
         content: '';
         display: block;
         clear: both;
     }
+
     .info_box {
         width: 50%;
         float: left;
@@ -454,6 +467,7 @@ defineExpose({
         font-size: 0.28rem;
         line-height: 0.44rem;
         position: relative;
+
         .amount {
             flex: 1;
             display: flex;
@@ -467,21 +481,23 @@ defineExpose({
             font-size: 0.36rem;
         }
     }
-    .info_box--line::after{
+
+    .info_box--line::after {
         content: '';
         width: 1px;
         height: 0.9rem;
         background-color: #EFF3F8;
         position: absolute;
-        left:0;
-        top:50%;
-        margin-top:-0.45rem;
+        left: 0;
+        top: 50%;
+        margin-top: -0.45rem;
     }
 }
-.win-animate-bg{
+
+.win-animate-bg {
     position: absolute;
-    left:100%;
-    top:0;
+    left: 100%;
+    top: 0;
     width: 100%;
     height: 100%;
     background-color: #fff;
@@ -490,10 +506,11 @@ defineExpose({
 
 @keyframes bganimate {
     0% {
-        left:0;
+        left: 0;
     }
+
     100% {
-        left:100%;
+        left: 100%;
     }
 }
 
@@ -501,57 +518,64 @@ defineExpose({
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
 }
 
-.split-line{
+.split-line {
     clear: both;
     height: 0.62rem;
     position: relative;
-    margin:0 0.42rem;
-    &::after{
+    margin: 0 0.42rem;
+
+    &::after {
         content: '';
         width: 100%;
         position: absolute;
-        left:0;
-        top:50%;
+        left: 0;
+        top: 50%;
         height: 1px;
         background-color: #EFF3F8;
     }
 }
-.win-animate{
+
+.win-animate {
     position: absolute;
     width: 100%;
     height: 100%;
-    left:0;
-    top:0;
+    left: 0;
+    top: 0;
     box-sizing: border-box;
     z-index: 10000;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
 }
-.win-animate-gold{
-    left:0;
+
+.win-animate-gold {
+    left: 0;
     z-index: 1;
-    img{
+
+    img {
         width: 100%;
-        height:auto;
+        height: auto;
     }
 }
-.win-animate-text{
+
+.win-animate-text {
     height: 0.6rem;
     position: absolute;
-    top:6.6rem;
+    top: 6.6rem;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    left:0;
+    left: 0;
     transform: scale(1);
-    animation:  scaleanimate 0.6s;
-    img{
+    animation: scaleanimate 0.6s;
+
+    img {
         height: 100%;
     }
 }
@@ -560,18 +584,21 @@ defineExpose({
     0% {
         transform: scale(0);
     }
+
     100% {
         transform: scale(1);
     }
 }
-.win-animate-amount{
+
+.win-animate-amount {
     color: #FFF;
     text-align: center;
     font-family: "Alibaba PuHuiTi 3.0";
     font-size: 0.8rem;
     font-style: normal;
     font-weight: 1000;
-    line-height: 0.44rem; /* 55% */
-    margin-top:0.4rem;
+    line-height: 0.44rem;
+    /* 55% */
+    margin-top: 0.4rem;
 }
 </style>

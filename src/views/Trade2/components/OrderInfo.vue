@@ -56,7 +56,7 @@
                     <div class="name">价格</div>
                     <div class="val_box">
                         <div class="tag">{{ priceTypeMap[currStock.price_type] || '--' }}</div>
-                        <div class="text">{{ currStock.settled_price || '--' }}</div>
+                        <div class="text">{{ currStock.price || '--' }}</div>
                     </div>
                 </div>
                 <div class="info_item">
@@ -75,13 +75,13 @@
                     <div class="name">止盈/止损</div>
                     <div>
                         <div class="val_box" style="margin-bottom:0.1rem" v-if="currStock.stop_profit">
-                            <div class="tag red_tag">止盈({{ stopMap[currStock.stop_profit_type] }})</div>
+                            <div class="tag green_tag">止盈({{ stopMap[currStock.stop_profit_type] }})</div>
                             <div class="text">{{ currStock.stop_profit_price }}{{ currStock.stop_profit_type == 'ratio'
                                 ? '%' :
                                 '' }}</div>
                         </div>
                         <div class="val_box" v-if="currStock.stop_loss">
-                            <div class="tag green_tag">止损({{ stopMap[currStock.stop_loss_type] }})</div>
+                            <div class="tag  red_tag">止损({{ stopMap[currStock.stop_loss_type] }})</div>
                             <div class="text">{{ currStock.stop_loss_price }}{{ currStock.stop_loss_type == 'ratio' ?
                                 '%' : '' }}
                             </div>
@@ -189,7 +189,7 @@ const backFunc = () => {
 }
 const getRatio = (num) => {
     if (!num) return '--'
-    return new Decimal(num).mul(100) + '%'
+    return new Decimal(num) + '%'
 }
 
 const showStockModel = ref(false)
@@ -409,14 +409,15 @@ const copy = text => {
 
             .red_tag,
             .tag_long {
-                color: #E8503A;
-                background-color: rgba(232, 80, 58, 0.08);
+                color: #18B762;
+                background-color: rgba(24, 183, 98, 0.08);
             }
 
             .green_tag,
             .tag_short {
-                color: #18B762;
-                background-color: rgba(24, 183, 98, 0.08);
+
+                color: #E8503A;
+                background-color: rgba(232, 80, 58, 0.08);
             }
 
             .text {
