@@ -219,6 +219,9 @@ export default {
     add_subtitle_card_number: "卡號",
     add_bank_address_placeholder: "請輸入銀行卡卡號"
   },
+  succes_toast: {
+    message: "添加成功"
+  },
   form: {
     all: "全部",
   },

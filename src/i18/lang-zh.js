@@ -220,6 +220,9 @@ export default {
     add_subtitle_card_number: "卡号",
     add_bank_address_placeholder: "请输入银行卡卡号",
   },
+  succes_toast: {
+    message: "添加成功"
+  },
   common: {
     stock: "股票",
     crypto: "合约",

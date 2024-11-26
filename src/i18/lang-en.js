@@ -220,6 +220,9 @@ export default {
     add_subtitle_card_number: "Card number",
     add_bank_address_placeholder: "Please input bank card no"
   },
+  succes_toast: {
+    message: "Added successfully"
+  },
   form: {
     all: "All",
   },
