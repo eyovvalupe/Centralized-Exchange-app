@@ -29,21 +29,21 @@
       <div class="header-price">
         <h1 class="info" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
           <template v-if="item.price || item.close">
-            {{ fixLittleNum(item.price || item.close, 6) }}
+            {{ item.price || item.close }}
           </template>
           <span v-else>--</span>
         </h1>
         <div style="display: flex; align-items: center; margin-left: 0.2rem" class="ratio"
           :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
-          <div class="ratio_price" v-if="fixLittleNum(item.price * (item.ratio || 0), 4)">
+          <div class="ratio_price" v-if="item.price * (item.ratio || 0)">
             {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
-            {{ fixLittleNum(item.price * (item.ratio || 0), 2) }}
+            {{ item.price * (item.ratio || 0) }}
           </div>
           <div class="ratio_percentage" v-if="item.ratio">
             {{
               item.ratio === undefined
                 ? "--"
-                : item.ratio > 0 ? "+" + fixLittleNum(item.ratio * 100, 2) + "%" : (item.ratio * 100).toFixed(2) + "%"
+                : item.ratio > 0 ? "+" + (item.ratio * 100) + "%" : (item.ratio * 100).toFixed(2) + "%"
             }}
           </div>
         </div>
@@ -183,7 +183,7 @@
         <div class="info_price">
           <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <template v-if="item.price || item.close">
-              {{ fixLittleNum(item.price || item.close, 2) }}
+              {{ item.price || item.close }}
             </template>
             <span v-else>--</span>
           </div>
@@ -192,7 +192,7 @@
               updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
             ]">
               {{ updown === 0 ? "" : updown > 0 ? "+" : ""
-              }}{{ fixLittleNum(item.price * (item.ratio || 0), 2) }}
+              }}{{ item.price * (item.ratio || 0) }}
             </div>
             <div v-if="item.ratio" style="margin-left: 0.15rem" :class="[
               updown === 0
@@ -210,7 +210,7 @@
               }}{{
                 item.ratio === undefined
                   ? "--"
-                  : fixLittleNum(item.ratio * 100, 2) + "%"
+                  : (item.ratio * 100) + "%"
               }}
             </div>
           </div>
@@ -222,7 +222,7 @@
               background-position: center bottom;
             ">
             <div class="name">开</div>
-            <div class="info_item__value">{{ fixLittleNum(item.open, 6) }}</div>
+            <div class="info_item__value">{{ item.open }}</div>
           </div>
           <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
@@ -230,7 +230,7 @@
               background-position: center bottom;
             ">
             <div class="name">高</div>
-            <div class="info_item__value">{{ fixLittleNum(item.high, 6) }}</div>
+            <div class="info_item__value">{{ item.high }}</div>
           </div>
           <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
@@ -246,7 +246,7 @@
               background-position: center bottom;
             ">
             <div class="name">收</div>
-            <div class="info_item__value">{{ fixLittleNum(item.close, 6) }}</div>
+            <div class="info_item__value">{{ item.close }}</div>
           </div>
           <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
@@ -254,7 +254,7 @@
               background-position: center bottom;
             ">
             <div class="name">低</div>
-            <div class="info_item__value">{{ fixLittleNum(item.low, 6) }}</div>
+            <div class="info_item__value">{{ item.low }}</div>
           </div>
           <div class="info_item" style="
               background-image: url('/static/img/common/price_bg.png');
@@ -281,7 +281,6 @@ import KlineChart from "@/components/KlineCharts/KlineChart.vue";
 import { _formatNumber } from "@/utils/index";
 import { _basic, _profile, _add, _del } from "@/api/api";
 import { formatTimestamp } from "@/utils/time";
-import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const route = useRoute();
 const token = computed(() => store.state.token);
