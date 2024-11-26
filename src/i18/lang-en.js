@@ -154,6 +154,19 @@ export default {
     first_message: "Hello, how can I help you?",
     input_message: "Please input message..."
   },
+  language: {
+    page_title: "Language"
+  },
+  safety: {
+    page_title: "Safety",
+    change_login_pw: "Login password",
+    change_trade_pw: "Trade password",
+    bind_google_auth: "Google authenticator",
+    google_status_not: "No bind",
+    google_status_ok: "Bound",
+    no_google_dialog_title: "Google Authenticator",
+    no_google_dialog_con: "You have not bound Google Authenticator, go for it?",
+  },
   form: {
     all: "All",
   },

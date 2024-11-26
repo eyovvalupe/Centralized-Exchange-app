@@ -154,6 +154,19 @@ export default {
     first_message: "您好，有什么能帮到您？",
     input_message: "请输入..."
   },
+  language: {
+    page_title: "语言选择"
+  },
+  safety: {
+    page_title: "安全",
+    change_login_pw: "登录密码",
+    change_trade_pw: "交易密码",
+    bind_google_auth: "谷歌验证器",
+    google_status_not: "未绑定",
+    google_status_ok: "已绑定",
+    no_google_dialog_title: "谷歌验证器",
+    no_google_dialog_con: "你还未绑定谷歌验证器，是否去绑定",
+  },
   common: {
     stock: "股票",
     crypto: "合约",

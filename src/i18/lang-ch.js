@@ -153,6 +153,19 @@ export default {
     first_message: "您好，有什麼能幫到您？",
     input_message: "請輸入..."
   },
+  language: {
+    page_title: "語言選擇"
+  },
+  safety: {
+    page_title: "安全",
+    change_login_pw: "登入密碼",
+    change_trade_pw: "交易密碼",
+    bind_google_auth: "谷歌驗證器",
+    google_status_not: "未綁定",
+    google_status_ok: "已綁定",
+    no_google_dialog_title: "谷歌驗證器",
+    no_google_dialog_con: "你還未綁定谷歌驗證器，是否去綁定",
+  },
   form: {
     all: "全部",
   },
