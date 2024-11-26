@@ -8,6 +8,13 @@
       "
     >
       <p class="no-message mb-[0.2rem]">{{ formatDate(new Date()) }}</p>
+      <div class="w-full flex justify-center items-center">
+        <p
+          class="w-[5.22rem] rounded-[1rem] text-center h-[0.6rem] mb-[0.6rem] flex justify-center items-center bg-[#f5f7fc] text-[0.3rem] text-[#666d80]"
+        >
+          asfsf
+        </p>
+      </div>
       <div class="flex">
         <div class="mr-[0.2rem]">
           <ServiceAvatar />
@@ -15,7 +22,7 @@
         <div class="flex flex-col">
           <span
             class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-[#eff3f8] rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-[#061023]"
-            >您好，有什么能帮到您？</span
+            >{{ $t("service.first_message") }}</span
           >
         </div>
       </div>
@@ -28,7 +35,6 @@
         :class="item.direction"
       >
         <div class="w-full flex flex-col justify-center">
-          <!-- {{ console.log(messageList[i-1] ? () : '') }} -->
           <div
             v-if="
               !messageList[i - 1] ||
@@ -141,7 +147,9 @@ import avatar from "@/assets/avatar.png";
 import Loaidng from "@/components/Loaidng.vue";
 import ServiceAvatar from "./ServiceAvatar.vue";
 import UserAvatar from "./UserAvatar.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps({
   chatLoading: {
     type: Boolean,
@@ -177,6 +185,23 @@ function formatDate(date) {
 <style lang="less" scoped>
 .msg-content {
   padding: 0 16px;
+
+  .service_first {
+    position: relative;
+    &::before {
+      content: "";
+      position: absolute;
+      left: -0.3rem;
+      top: 0.26rem;
+      width: 0;
+      height: 0;
+      border-left: 0.2rem solid transparent;
+      border-right: 0.2rem solid #eff3f8;
+      border-bottom: 0.2rem solid transparent;
+      border-top: 0.2rem solid transparent;
+    }
+  }
+
   .msg-item {
     display: flex;
 

@@ -149,6 +149,11 @@ export default {
     google_result_con: "如果您有任何问题可联系在线客服",
     google_result_btn: "好的"
   },
+  service: {
+    page_title: "在线客服",
+    first_message: "您好，有什么能帮到您？",
+    input_message: "请输入..."
+  },
   common: {
     stock: "股票",
     crypto: "合约",

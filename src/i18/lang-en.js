@@ -149,6 +149,11 @@ export default {
     google_result_con: "If you have any questions, please contact online customer service",
     google_result_btn: "OK"
   },
+  service: {
+    page_title: "Online Customer Service",
+    first_message: "Hello, how can I help you?",
+    input_message: "Please input message..."
+  },
   form: {
     all: "All",
   },

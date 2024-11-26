@@ -148,6 +148,11 @@ export default {
     google_result_con: "如果您有任何問題可聯絡線上客服",
     google_result_btn: "好的"
   },
+  service: {
+    page_title: "網路客服",
+    first_message: "您好，有什麼能幫到您？",
+    input_message: "請輸入..."
+  },
   form: {
     all: "全部",
   },
