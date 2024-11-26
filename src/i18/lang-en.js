@@ -189,6 +189,19 @@ export default {
     btn: "Change",
     no_match_noti: "New passwords are not matched"
   },
+  account: {
+    page_title: "Payment account",
+    crypto: "Crypto wallet",
+    no_data: "No data",
+    bank: "Bank card",
+    no_kyc_title: "Not in id verified",
+    no_kyc_con: "You are not in id verified, please do it before adding account",
+    no_kyc_confirm: "Go for id verify",
+    no_google_title: "Not in google auth",
+    no_google_con: "You has not bound google auth, please do it before adding account",
+    no_google_confirm: "Go for binding google auth",
+    add_account_btn: "Add payment account",
+  },
   form: {
     all: "All",
   },

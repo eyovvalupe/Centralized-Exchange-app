@@ -188,6 +188,19 @@ export default {
     btn: "修改",
     no_match_noti: "兩次密碼不一致"
   },
+  account: {
+    page_title: "收款賬戶",
+    crypto: "加密代幣",
+    no_data: "暫無數據",
+    bank: "銀行卡",
+    no_kyc_title: "身份未認證",
+    no_kyc_con: "您的身份還未進行認證，清閒認證再添加收款賬戶",
+    no_kyc_confirm: "去認證",
+    no_google_title: "谷歌驗證器未綁定",
+    no_google_con: "您的谷歌驗證器還未綁定，請先綁定再添加收款賬戶",
+    no_google_confirm: "去綁定",
+    add_account_btn: "添加收款賬戶",
+  },
   form: {
     all: "全部",
   },

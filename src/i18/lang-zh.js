@@ -178,6 +178,30 @@ export default {
     btn: "修改",
     no_match_noti: "两次密码不一致"
   },
+  change_trade_pw: {
+    page_title: "修改交易密码",
+    origin_pw: "原密码",
+    origin_pw_placeholder: "输入您的原密码",
+    new_pw: "新密码",
+    new_pw_placeholder: "密码最小8个字符",
+    confirm_pw: "确认新密码",
+    confirm_pw_placeholder: "请再次输入新密码",
+    btn: "修改",
+    no_match_noti: "两次密码不一致"
+  },
+  account: {
+    page_title: "收款账户",
+    crypto: "加密货币",
+    no_data: "暂无数据",
+    bank: "银行卡",
+    no_kyc_title: "身份未认证",
+    no_kyc_con: "您的身份还未进行认证，请先认证再添加收款账户",
+    no_kyc_confirm: "去认证",
+    no_google_title: "谷歌验证器未绑定",
+    no_google_con: "您的谷歌验证器还未绑定，请先绑定再添加收款账户",
+    no_google_confirm: "去绑定",
+    add_account_btn: "添加收款账户",
+  },
   common: {
     stock: "股票",
     crypto: "合约",
