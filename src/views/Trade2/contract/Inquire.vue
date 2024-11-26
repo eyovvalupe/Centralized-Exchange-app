@@ -95,7 +95,7 @@ const stopMap = ref({ // 止损类型
 })
 const getRatio = (num) => {
     if (!num) return '--'
-    return new Decimal(num).mul(100) + '%'
+    return new Decimal(num) + '%'
 }
 
 
@@ -263,9 +263,9 @@ defineExpose({
         .state {
             width: 0.68rem;
             height: 0.36rem;
-            color: #E8503A;
             border-radius: 0.12rem;
-            background: rgba(232, 80, 58, 0.10);
+            color: #18B762;
+            background-color: rgba(24, 183, 98, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -274,8 +274,9 @@ defineExpose({
         }
 
         .state-short {
-            color: #18B762;
-            background-color: rgba(24, 183, 98, 0.08);
+
+            background: rgba(232, 80, 58, 0.10);
+            color: #E8503A;
         }
 
         .amount {

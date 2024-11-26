@@ -10,7 +10,7 @@
         <NoData v-if="!loading && !inquireList.length" />
 
         <SwipeCell ref="items" v-for="(item, i) in inquireList" :key="i" disabled>
-            <div class="tr">
+            <div class="tr" @click="OpeningForm(item)">
                 <div class="td td-5">
                     <div class="name">{{ item.symbol }}</div>
                     <div class="lever">
@@ -38,17 +38,23 @@
     </div>
 
     <UnLogin @loginfinish="loginfinish" v-show="!token" />
+
+    <!-- 订单详情 -->
+    <Popup v-model:show="showInfo" position="right" style="width:100%;height:100%;" teleport="body">
+        <OrderInfo :curr-stock="currStock" @back="showInfo = false" />
+    </Popup>
 </template>
 
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
-import { SwipeCell } from "vant"
+import { SwipeCell, Popup } from "vant"
 import store from "@/store"
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import { _stocksList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
 import Decimal from 'decimal.js';
+import OrderInfo from './OrderInfo.vue'
 
 const loginfinish = () => {
     setTimeout(() => {
@@ -86,7 +92,7 @@ const stopMap = ref({ // 止损类型
 })
 const getRatio = (num) => {
     if (!num) return '--'
-    return new Decimal(num).mul(100) + '%'
+    return new Decimal(num) + '%'
 }
 
 
@@ -132,6 +138,15 @@ const getList = () => {
     }).finally(() => {
         loading.value = false
     })
+}
+
+
+// 详情
+const showInfo = ref(false)
+const currStock = ref({})
+const OpeningForm = item => {
+    currStock.value = item
+    showInfo.value = true
 }
 
 
@@ -244,9 +259,9 @@ defineExpose({
         .state {
             width: 0.68rem;
             height: 0.36rem;
-            color: #E8503A;
             border-radius: 0.12rem;
-            background: rgba(232, 80, 58, 0.10);
+            color: #18B762;
+            background-color: rgba(24, 183, 98, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -255,8 +270,8 @@ defineExpose({
         }
 
         .state-short {
-            color: #18B762;
-            background-color: rgba(24, 183, 98, 0.08);
+            color: #E8503A;
+            background: rgba(232, 80, 58, 0.10);
         }
 
         .amount {

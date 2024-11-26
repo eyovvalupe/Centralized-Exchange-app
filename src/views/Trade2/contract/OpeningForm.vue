@@ -173,7 +173,7 @@
             <div class="item">
                 <div class="item_name">开仓</div>
                 <div class="item_val">
-                    <div class="tag" :class="activeType == 1 ? 'red_tag' : 'green_tag'">{{ activeType == 1 ? '买涨' :
+                    <div class="tag" :class="activeType == 1 ? 'green_tag' : 'red_tag'">{{ activeType == 1 ? '买涨' :
                         '买跌' }}
                     </div>
                     <div class="tag">{{ modeMap[params.lever_type] }}</div>
@@ -198,11 +198,11 @@
                 </div>
                 <div v-if="props.activeTab == 2">
                     <div class="item_val" style="margin-bottom:0.12rem" v-if="mode == 2">
-                        <div class="tag red_tag">止盈</div>
+                        <div class="tag green_tag">止盈</div>
                         <div class="lever">{{ params.stop_profit_price }}</div>
                     </div>
                     <div class="item_val">
-                        <div class="tag green_tag">止损</div>
+                        <div class="tag red_tag ">止损</div>
                         <div class="lever">{{ params.stop_loss_price }}</div>
                     </div>
                 </div>
@@ -223,8 +223,8 @@
 
             <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
-                <input v-model="safePass" placeholder="请输入交易密码" :type="showPassword ? 'text' : 'password'"
-                    class="ipt" />
+                <input style="width:100%;height:100%" v-model="safePass" placeholder="请输入交易密码"
+                    :type="showPassword ? 'text' : 'password'" class="ipt" />
                 <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
                 <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
             </div>
@@ -603,8 +603,11 @@ const inputStop = key => { // 输入止盈止损
 
 const submit1 = () => {
     if (!currStock.value.symbol) return showToast('请选择合约')
-    console.log(form1.value.volume)
     if (!form1.value.volume || form1.value.volume < min.value) return showToast(`请输入张数`)
+    // 限价校验
+    if (props.activeTab == 1) {
+        if (!form1.value.price) return showToast('请输入价格')
+    }
     // 止盈止损校验
     if (props.activeTab == 2) {
         if (mode.value == 1) { // 简单模式
@@ -627,7 +630,7 @@ const submit1 = () => {
         lever: form1.value.lever,
         price_type: form1.value.price_type,
 
-        price: form1.value.price || '',
+        price: form1.value.price_type == 'market' ? '' : (form1.value.price || ''),
         stop_profit_type: form1.value.stop_profit_type,
         stop_profit_price: form1.value.stop_profit_price,
         stop_loss_type: form1.value.stop_loss_type,

@@ -8,7 +8,7 @@
             <div class="td td-4">盈亏/盈亏比</div>
         </div>
         <NoData v-if="!positionsList.length && !loading" />
-        
+
         <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
             <div class="td td-5">
                 <div class="name van-omit1">{{ item.symbol }}</div>
@@ -32,12 +32,12 @@
                     getRatio(item.ratio) }}</div>
             </div>
         </div>
-            
+
 
         <!-- 订单详情 -->
         <Popup v-model:show="showInfo" position="right" style="width:100%;height:100%;" teleport="body">
-            <OrderInfo :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel" @back="showInfo=false" />
-            
+            <OrderInfo :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
+                @back="showInfo = false" />
         </Popup>
 
         <!-- 平仓 -->
@@ -57,7 +57,7 @@
                             @click="onSliderChange(100)">全部</span>
                     </div>
                     <div style="height:0.47rem;"></div>
-                    
+
                     <!-- 拖动 -->
                     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
@@ -86,13 +86,14 @@
                         <input v-model="sellForm.safeword" type="password" class="ipt">
                     </div> -->
 
-                    <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"  color="#014CFA">
+                    <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary"
+                        size="large" color="#014CFA">
                         确定
                     </Button>
                 </div>
             </div>
         </Popup>
-        
+
 
         <!-- 更新 -->
         <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
@@ -131,17 +132,12 @@
                             </div>
                         </div> -->
                         <div class="item_box_right">
-                            <FormItem
-                                input-type="number"
-                                title="止损" 
-                                :min="0"
-                                :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999"
-                                size="large"
+                            <FormItem input-type="number" title="止损" :min="0"
+                                :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999" size="large"
                                 v-model="updateForm.stop_loss_price"
-                                :percent-tags="currStock.offset ==  'long' ? [{label:'-20%',value:20},{label:'-15%',value:15},{label:'-10%',value:10}] : [{label:'+20%',value:20},{label:'+15%',value:15},{label:'+10%',value:10}]"
-                                @percentTagClick="setPriceStop"
-                            />
-                            
+                                :percent-tags="currStock.offset == 'long' ? [{ label: '-20%', value: 20 }, { label: '-15%', value: 15 }, { label: '-10%', value: 10 }] : [{ label: '+20%', value: 20 }, { label: '+15%', value: 15 }, { label: '+10%', value: 10 }]"
+                                @percentTagClick="setPriceStop" />
+
                         </div>
                     </div>
                     <div class="subtitle">
@@ -157,14 +153,15 @@
                     </div>
                     <div style="height:0.47rem;"></div>
                     <!-- 拖动 -->
-                    <SlideContainer v-model="sliderValue"  @change="onSliderChange" />
-                    
+                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+
                     <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">
                         <input v-model="updateForm.safeword" type="password" class="ipt">
                     </div> -->
 
-                    <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary" color="#014CFA">
+                    <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading"
+                        type="primary" color="#014CFA">
                         确定
                     </Button>
                 </div>
@@ -193,7 +190,7 @@
 <script setup>
 import { SwipeCell, Popup, Button, Slider, showToast, ActionSheet, showConfirmDialog, showLoadingToast, closeToast } from 'vant';
 import { useSocket } from "@/utils/ws";
-import { onMounted, onUnmounted, computed, ref,watch } from "vue"
+import { onMounted, onUnmounted, computed, ref, watch } from "vue"
 import store from '@/store';
 import NoData from "@/components/NoData.vue"
 import Decimal from 'decimal.js';
@@ -282,27 +279,27 @@ const cancelSubs = () => {
 }
 
 
-onMounted(()=>{
+onMounted(() => {
     if (store.state.token) {
         subs()
     }
 })
 
-onUnmounted(()=>{
+onUnmounted(() => {
     cancelSubs()
 })
 
-watch(()=>store.state.token,()=>{
-    if(store.state.token){
+watch(() => store.state.token, () => {
+    if (store.state.token) {
         subs()
-    }else{
+    } else {
         cancelSubs()
     }
 })
 
 const getRatio = (num) => {
     if (!num) return '--'
-    return new Decimal(num).mul(100) + '%'
+    return new Decimal(num) + '%'
 }
 
 
@@ -546,15 +543,16 @@ getSessionToken()
 
 <style lang="less" scoped>
 .positions {
-    padding:0 0.32rem ;
-    
+    padding: 0 0.32rem;
+
     .tr {
         padding: 0.24rem 0;
         border-bottom: 1px solid #EFF3F8;
         display: flex;
         align-items: stretch;
     }
-    .tr:last-child{
+
+    .tr:last-child {
         border-bottom: 0px;
     }
 
@@ -586,7 +584,7 @@ getSessionToken()
         .lever {
             display: flex;
             align-items: center;
-            
+
         }
 
         .status {
@@ -594,14 +592,14 @@ getSessionToken()
             height: 0.3rem;
             padding: 0 0.08rem;
             border-radius: 0.3rem;
-            border:1px solid #014CFA;
+            border: 1px solid #014CFA;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.22rem;
             margin-right: 0.08rem;
         }
-        
+
 
         .status-open {
             color: #18B762;
@@ -609,32 +607,33 @@ getSessionToken()
         }
 
         .status-fail,
-        .status-lock{
-            color:#E8503A;
+        .status-lock {
+            color: #E8503A;
             border-color: #E8503A;
         }
-        .status-none{
-            color:#7E99D6;
-            border-color:#7E99D6;
+
+        .status-none {
+            color: #7E99D6;
+            border-color: #7E99D6;
         }
- 
+
 
         .state {
             width: 0.68rem;
             height: 0.36rem;
-            color: #E8503A;
             border-radius: 0.12rem;
-            background: rgba(232, 80, 58, 0.10);
+            color: #18B762;
+            background-color: rgba(24, 183, 98, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.24rem;
-            margin:0 auto;
+            margin: 0 auto;
         }
 
         .state-short {
-            color: #18B762;
-            background-color: rgba(24, 183, 98, 0.08);
+            color: #E8503A;
+            background: rgba(232, 80, 58, 0.10);
         }
 
         .amount {
@@ -645,21 +644,24 @@ getSessionToken()
         .price {
             color: #666D80;
             font-size: 0.24rem;
-            
+
         }
-        .price:first-child{
-            color:#061023;
+
+        .price:first-child {
+            color: #061023;
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.36rem;
         }
+
         .num {
             color: #6C7B90;
             font-weight: 600;
             font-size: 0.24rem;
             text-align: right;
         }
-        .num:first-child{
+
+        .num:first-child {
             font-size: 0.28rem;
             line-height: 0.36rem;
         }
@@ -674,7 +676,7 @@ getSessionToken()
         flex: 4;
     }
 
-    
+
 }
 
 .order_sell_box {
@@ -695,14 +697,16 @@ getSessionToken()
             margin-bottom: 0.12rem;
             line-height: 0.42rem;
             align-items: center;
-            display:flex;
+            display: flex;
             justify-content: space-between;
         }
-        .subtitle-tip{
-            color:#666D80;
+
+        .subtitle-tip {
+            color: #666D80;
         }
-        .submit{
-            margin-top:0.6rem;
+
+        .submit {
+            margin-top: 0.6rem;
         }
 
         .item_box {
@@ -743,7 +747,7 @@ getSessionToken()
             }
         }
 
-    
+
         .tip {
             text-align: right;
             font-size: 0.24rem;
@@ -787,10 +791,11 @@ getSessionToken()
                 }
             }
         }
-        
+
     }
 }
-.num-tag{
+
+.num-tag {
     color: #2168F6;
     margin-left: 0.08rem;
     transition: all ease .3s;

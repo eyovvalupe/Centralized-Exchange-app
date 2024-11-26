@@ -1,8 +1,8 @@
 <!-- ai量化交易 -->
 <template>
-    <div class="trade_ai" :class="['trade_ai--'+mode]">
+    <div class="trade_ai" :class="['trade_ai--' + mode]">
         <Top title="交易" :backFunc="backFunc" v-if="mode == 'popup'" />
-        
+
         <div style="height:1.12rem;" v-if="mode == 'popup'"></div>
         <div class="tabs-container">
             <!-- 涨跌 -->
@@ -13,7 +13,7 @@
                 </Tab>
             </Tabs>
             <div class="scroller">
-                
+
                 <!-- 品种 -->
                 <div class="item_content">
                     <div class="subtitle">
@@ -29,7 +29,7 @@
                 </div>
 
                 <!-- 时间 -->
-                <div class="item_content">
+                <div class="item_content" v-if="times.length">
                     <div class="subtitle">时间区域</div>
                     <!-- <div class="item item_box disabled_item item_time" @click="showTime=true;">
                         <span>{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</span>
@@ -42,15 +42,16 @@
                             <span>{{ obj.time }}{{ _dateUnitMap[obj.unit] }}</span>
                         </div>
                     </div>
-                    
+
                 </div>
                 <!-- 数量 -->
 
-                <FormItem  input-type="number" v-model="form1.grid" title="网格数量" btn-show-mode="focus" :max="maxgrid" :tip="maxgrid > 0 ? '最大网格 '+maxgrid : ''"   @change="changeGrid">
-                
+                <FormItem input-type="number" v-model="form1.grid" title="网格数量" btn-show-mode="focus" :max="maxgrid"
+                    :tip="maxgrid > 0 ? '最大网格 ' + maxgrid : ''" @change="changeGrid">
+
                 </FormItem>
 
-                
+
 
                 <!-- 利润 -->
                 <div class="item_content">
@@ -61,37 +62,38 @@
                 </div>
 
                 <!-- 投资额 -->
-                
-                <FormItem  input-type="number" v-model="form1.volume" title="投资额" btn-show-mode="focus" :tip="usdt.amount > 0 ? '≤ '+usdt.amount : ''" :show-btn="usdt.amount > 0" @change="changePercent" @btnClick="onSliderChange(100)">
-                        
+
+                <FormItem input-type="number" v-model="form1.volume" title="投资额" btn-show-mode="focus"
+                    :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0" @change="changePercent"
+                    @btnClick="onSliderChange(100)">
+
                 </FormItem>
-                
+
                 <div style="height:0.47rem;"></div>
                 <!-- 拖动 -->
                 <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
-            
+
             </div>
 
             <!-- 按钮 -->
             <div class="btns" v-if="!token">
-                <Button size="large" color="#014cfa" class="btn" round 
-                    @click="goLogin">登录</Button>
+                <Button size="large" color="#014cfa" class="btn" round @click="goLogin">登录</Button>
                 <Button size="large" color="#f2f2f2" class="btn" round style="color: #999999"
                     @click="jump('register')">注册</Button>
             </div>
             <div class="btns" v-else>
-                <Button :loading="loading || submitLoading"  @click="checkForm" v-if="token" size="large" class="btn"
+                <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn"
                     :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
                         tab == 1 ?
                             '买涨' : '买跌' }}</Button>
-            
+
             </div>
         </div>
 
         <!-- 开仓确认弹窗 -->
         <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
-             <div class="van-popup-custom-title">订单确认</div>
+            <div class="van-popup-custom-title">订单确认</div>
             <div class="stock_submit_box">
                 <div class="item">
                     <div class="item_name">交易品种</div>
@@ -129,7 +131,8 @@
                 <FormItem v-model="form1.safeword" size="large" input-type="password" title="交易密码">
                 </FormItem>
 
-                <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit" color="#014cfa" round>确定</Button>
+                <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit"
+                    color="#014cfa" round>确定</Button>
             </div>
         </Popup>
 
@@ -159,7 +162,7 @@
 
 <script setup>
 import { ref, computed, onBeforeUnmount } from "vue"
-import { Slider, Button, Popup, showToast,Tabs,Tab } from "vant"
+import { Slider, Button, Popup, showToast, Tabs, Tab } from "vant"
 import Decimal from 'decimal.js';
 import store from "@/store"
 import router from "@/router"
@@ -176,9 +179,9 @@ import SlideContainer from "@/components/SlideContainer.vue"
 import Top from "@/components/Top.vue"
 
 const props = defineProps({
-    mode:{
-        type:String,
-        default:"page"
+    mode: {
+        type: String,
+        default: "page"
     }
 })
 
@@ -202,13 +205,13 @@ const route = useRoute()
 const wallet = computed(() => store.state.wallet || [])
 const usdt = computed(() => wallet.value.find(item => item.currency == 'USDT') || {})
 
-const emits = defineEmits(['showNavDialog','back'])
+const emits = defineEmits(['showNavDialog', 'back'])
 const showNavDialog = () => {
     // emits('showNavDialog', 'ai')
     showBottom.value = true
 }
 
-const backFunc = ()=>{
+const backFunc = () => {
     emits('back')
 }
 
@@ -225,7 +228,7 @@ const form1 = ref({
     symbol: route.query.symbol || '',
     grid: '1',
     volume: '',
-    safeword:""
+    safeword: ""
 })
 const changeGrid = () => {
     setTimeout(() => {
@@ -290,8 +293,8 @@ const checkForm = () => {
 const submitLoading = ref(false)
 const submitForm = (s) => {
     if (submitLoading.value) return
-    if(!s){
-        return  showToast('请输入交易密码')
+    if (!s) {
+        return showToast('请输入交易密码')
     }
     submitLoading.value = true
     _aibuy({
@@ -308,9 +311,9 @@ const submitForm = (s) => {
             showModel.value = false
             store.dispatch('updateWallet')
             showToast('开仓成功')
-            setTimeout(()=>{
+            setTimeout(() => {
                 openInfo(res.data)
-            },500)
+            }, 500)
             form1.value.safeword = ''
             form1.value.volume = ''
             form1.value.grid = ''
@@ -440,20 +443,21 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-.scroller{
-   
+.scroller {
+
     box-sizing: border-box;
     padding: 0 0.32rem;
 }
-.time_popup{
-    :deep(.van-popup__close-icon){
+
+.time_popup {
+    :deep(.van-popup__close-icon) {
         right: inherit;
-        left:0.32rem;
-        top:0.28rem;
+        left: 0.32rem;
+        top: 0.28rem;
     }
 }
 
-.time_popup_btn{
+.time_popup_btn {
     width: 1.2rem;
     height: 0.6rem;
     flex-shrink: 0;
@@ -461,25 +465,29 @@ defineExpose({
     background: #014CFA;
     line-height: 0.6rem;
     position: absolute;
-    right:0.3rem;
-    top:0.22rem;
+    right: 0.3rem;
+    top: 0.22rem;
     color: #FFF;
     text-align: center;
     font-size: 0.3rem;
     font-weight: 500;
 }
-.item_time{
+
+.item_time {
     display: flex;
     justify-content: space-between;
 }
-.time_list{
+
+.time_list {
     margin-left: -0.2rem;
-    .time{
+
+    .time {
         width: 25%;
         float: left;
         box-sizing: border-box;
         padding: 0.1rem 0 0.1rem 0.2rem;
-        span{
+
+        span {
             border-radius: 0.7rem;
             display: block;
             border: 1px solid #EFF3F8;
@@ -487,51 +495,59 @@ defineExpose({
             align-items: center;
             justify-content: center;
             font-size: 0.28rem;
-            color:#666D80;
+            color: #666D80;
             height: 0.6rem;
             box-sizing: border-box;
         }
-        
+
     }
-    .curr_time span{
+
+    .curr_time span {
         background-color: #014CFA;
         border-color: #014CFA;
-        color:#fff;
+        color: #fff;
     }
-    &::after{
+
+    &::after {
         content: '';
         display: block;
         clear: both;
     }
 }
-.trade_ai--popup{
+
+.trade_ai--popup {
     padding: 0.28rem 0.32rem 0 0.32rem;
-    .scroller{
+
+    .scroller {
         height: calc(100vh - 2.42rem);
         overflow-y: auto;
         padding-bottom: 2rem;
     }
-    .btns{
+
+    .btns {
         position: absolute;
         bottom: 0;
         width: 100%;
-        left:0;
-        
-        background-color: rgba(255,255,255,0.7);
+        left: 0;
+
+        background-color: rgba(255, 255, 255, 0.7);
         z-index: 1000;
     }
 }
+
 .trade_ai {
-    
-    
-    .btns{
+
+
+    .btns {
         padding: 0.32rem 0.16rem 0.4rem 0.16rem;
         display: flex;
-        .btn{
+
+        .btn {
             flex: 1;
             margin: 0 0.16rem;
         }
     }
+
     .subtitle {
         color: #061023;
         font-size: 0.28rem;
@@ -549,19 +565,19 @@ defineExpose({
 
     .item_content {
         margin-top: 0.4rem;
-       
+
     }
-    
-    .put_all{
+
+    .put_all {
         color: #014CFA;
         position: absolute;
         right: 0.32rem;
         font-size: 0.3rem;
-        z-index:9;
+        z-index: 9;
         transition: all ease .3s
     }
 
-   
+
 
 
     .item {
@@ -569,6 +585,7 @@ defineExpose({
         align-items: center;
         justify-content: space-between;
         position: relative;
+
         .ipt {
             flex: 1;
             height: 100%;
@@ -578,6 +595,7 @@ defineExpose({
             position: relative;
             z-index: 1;
         }
+
         .ipt_tip {
             color: #b7b7b7;
             font-size: 0.24rem;
@@ -613,7 +631,8 @@ defineExpose({
         padding: 0 0.24rem;
 
     }
-     .item_focus {
+
+    .item_focus {
         height: 1.12rem;
         border: 1px solid #034cfa;
 
@@ -622,6 +641,7 @@ defineExpose({
             transform: translateY(-0.36rem);
         }
     }
+
     .disabled_item {
         background-color: #F5F7FC;
     }
@@ -649,7 +669,7 @@ defineExpose({
 
         .item_val {
             display: flex;
-            align-items:center;
+            align-items: center;
             justify-content: flex-end;
             color: #121826;
             font-size: 0.28rem;
@@ -681,7 +701,8 @@ defineExpose({
             height: 0.8rem;
         }
     }
-    .submit{
+
+    .submit {
         margin-top: 0.5rem;
     }
 
@@ -703,7 +724,8 @@ defineExpose({
         overflow-y: auto;
     }
 }
-.tabs-container{
+
+.tabs-container {
     border: 1px solid #EFF3F8;
     border-radius: 0.32rem;
 }
