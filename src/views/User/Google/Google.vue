@@ -4,7 +4,7 @@
     <Top :title="t('google_auth.page_title')">
       <template #right v-if="from == 'register'">
         <span
-          @click="nextStep"
+          @click="confirmNext"
           style="color: #014cfa; font-weight: 400; font-size: 0.28rem"
           >{{ $t("google_auth.from_register_skip") }}</span
         >
@@ -12,7 +12,9 @@
     </Top>
 
     <div class="w-full flex flex-col items-center">
-      <span class="text-[0.4rem] p-[0.1rem] font-semibold">{{ $t("google_auth.google_title") }}</span>
+      <span class="text-[0.4rem] p-[0.1rem] font-semibold">{{
+        $t("google_auth.google_title")
+      }}</span>
       <span class="text-[0.24rem] p-[0.04rem] text-[#8f92a1] mb-[0.4rem]"
         >Please back up your key in case you lose it</span
       >
@@ -32,8 +34,13 @@
     </div>
     <div class="w-full h-[1rem] mb-[0.8rem]" v-if="!gg.googlesecret"></div>
     <div class="w-full relative">
-      <CodeInput :loading="loading" @submit="(code) => goBind(code)"/>
-      <div class="absolute top-[2.3rem] left-[0] text-[#e8503a]" v-if="isSentCodeError">{{ errText }}</div>
+      <CodeInput :loading="loading" @submit="(code) => goBind(code)" />
+      <div
+        class="absolute top-[2.3rem] left-[0] text-[#e8503a]"
+        v-if="isSentCodeError"
+      >
+        {{ errText }}
+      </div>
     </div>
   </div>
 </template>
@@ -45,6 +52,7 @@ import {
   Button,
   showToast,
   showLoadingToast,
+  showDialog,
   closeToast,
 } from "vant";
 import { ref, computed, watch } from "vue";
@@ -57,11 +65,11 @@ import { useRoute } from "vue-router";
 import CodeInput from "@/components/CodeInput.vue";
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n();
+const { t } = useI18n();
 const route = useRoute();
 const from = ref(route.query.from); // 'register'-表示从注册来
 
-const isSentCodeError = computed(() => store.state.isSentCodeError || false)
+const isSentCodeError = computed(() => store.state.isSentCodeError || false);
 
 const loading = ref(false);
 const disabled = computed(() => {
@@ -129,7 +137,7 @@ const goBind = (code) => {
       if (res.code == 200) {
         store.dispatch("updateUserInfo");
         setTimeout(() => {
-          showToast("绑定成功");
+          showToast(t('google_auth.bound_success'));
         }, 300);
         if (from.value == "register") {
           nextStep();
@@ -142,7 +150,7 @@ const goBind = (code) => {
     })
     .catch((err) => {
       errText.value = err.message;
-      store.commit('setIsSentCodeError', true)
+      store.commit("setIsSentCodeError", true);
     })
     .finally(() => {
       loading.value = false;
@@ -174,7 +182,7 @@ const clear = () => {
 };
 const copy = () => {
   _copyTxt(gg.value.googlesecret);
-  showToast("复制成功");
+  showToast(t('google_auth.copy_success'));
 };
 
 const nextStep = () => {
@@ -182,6 +190,21 @@ const nextStep = () => {
     name: "kyc",
     query: route.query,
   });
+};
+
+const confirmNext = () => {
+  setTimeout(() => {
+    showConfirmDialog({
+      title: t('google_auth.confirm_title'),
+      // message: "模拟账号不能进行该操作，去升级？",
+    })
+      .then(() => {
+        router.push({ name: "kyc" });
+      })
+      .catch(() => {
+        
+      });
+  }, 400);
 };
 </script>
 
