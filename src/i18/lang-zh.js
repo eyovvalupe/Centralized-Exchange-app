@@ -201,6 +201,10 @@ export default {
     no_google_con: "您的谷歌验证器还未绑定，请先绑定再添加收款账户",
     no_google_confirm: "去绑定",
     add_account_btn: "添加收款账户",
+    delete_dialog_title: "删除",
+    delete_dialog_con: "确认删除该收款账户吗？",
+    delete_success: "成功删除",
+    copy_address: "成功复制支付地址",
   },
   common: {
     stock: "股票",

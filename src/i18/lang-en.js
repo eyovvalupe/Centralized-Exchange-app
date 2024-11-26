@@ -201,6 +201,10 @@ export default {
     no_google_con: "You has not bound google auth, please do it before adding account",
     no_google_confirm: "Go for binding google auth",
     add_account_btn: "Add payment account",
+    delete_dialog_title: "Delete",
+    delete_dialog_con: "Are you sure to delete the account?",
+    delete_success: "Deleted successfully",
+    copy_address: "Copied address",
   },
   form: {
     all: "All",

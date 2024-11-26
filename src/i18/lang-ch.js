@@ -200,6 +200,10 @@ export default {
     no_google_con: "您的谷歌驗證器還未綁定，請先綁定再添加收款賬戶",
     no_google_confirm: "去綁定",
     add_account_btn: "添加收款賬戶",
+    delete_dialog_title: "刪除",
+    delete_dialog_con: "確認刪除該收款賬戶嗎？",
+    delete_success: "成功刪除",
+    copy_address: "成功複製支付地址",
   },
   form: {
     all: "全部",
