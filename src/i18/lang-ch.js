@@ -177,6 +177,17 @@ export default {
     btn: "修改",
     no_match_noti: "兩次密碼不一致"
   },
+  change_trade_pw: {
+    page_title: "修改交易密碼",
+    origin_pw: "原密碼",
+    origin_pw_placeholder: "輸入您的原密碼",
+    new_pw: "新密碼",
+    new_pw_placeholder: "密碼最小8個字符",
+    confirm_pw: "確認新密碼",
+    confirm_pw_placeholder: "請再次輸入新密碼",
+    btn: "修改",
+    no_match_noti: "兩次密碼不一致"
+  },
   form: {
     all: "全部",
   },

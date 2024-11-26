@@ -178,6 +178,17 @@ export default {
     btn: "Change",
     no_match_noti: "New passwords are not matched"
   },
+  change_trade_pw: {
+    page_title: "Change trade password",
+    origin_pw: "Origin password",
+    origin_pw_placeholder: "Please input origin password",
+    new_pw: "New password",
+    new_pw_placeholder: "Input at least 8 letters",
+    confirm_pw: "Confirm new password",
+    confirm_pw_placeholder: "Please input new password again",
+    btn: "Change",
+    no_match_noti: "New passwords are not matched"
+  },
   form: {
     all: "All",
   },
