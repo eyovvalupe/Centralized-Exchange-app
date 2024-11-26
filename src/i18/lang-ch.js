@@ -212,6 +212,12 @@ export default {
     add_subtitle_address: "地址",
     add_address_placeholder: "請輸入對應幣種地址",
     add_btn: "保存",
+    add_subtitle_user_name: "持卡人姓名",
+    add_subtitle_status: "已認證",
+    add_subtitle_bank_name: "銀行名稱",
+    add_bank_name_placeholder: "請輸入銀行名稱",
+    add_subtitle_card_number: "卡號",
+    add_bank_address_placeholder: "請輸入銀行卡卡號"
   },
   form: {
     all: "全部",

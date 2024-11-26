@@ -2,31 +2,31 @@
 <template>
   <div class="page page_bank">
     <div style="flex: 1; margin-bottom: 0.8rem">
-      <div class="subtitle">持卡人姓名</div>
+      <div class="subtitle">{{ $t("account.add_subtitle_user_name") }}</div>
       <div class="item">
         <span style="flex: 1">{{ name || "--" }}</span>
         <div class="icon_ok">
         </div>
-        <span>已认证</span>
+        <span>{{ $t("account.add_subtitle_status") }}</span>
       </div>
-      <div class="subtitle">银行名称</div>
+      <div class="subtitle">{{ $t("account.add_subtitle_bank_name") }}</div>
       <div class="item">
         <input
           v-model="form.bank_name"
           type="text"
           class="ipt"
           maxlength="50"
-          placeholder="请输入银行名称"
+          :placeholder="t('account.add_bank_name_placeholder')"
         />
       </div>
-      <div class="subtitle">卡号</div>
+      <div class="subtitle">{{ $t("account.add_subtitle_card_number") }}</div>
       <div class="item">
         <input
           v-model.trim="form.bank_card_number"
           type="text"
           class="ipt"
           maxlength="50"
-          placeholder="请输入银行卡卡号"
+          :placeholder="t('account.add_bank_address_placeholder')"
         />
       </div>
     </div>
@@ -37,7 +37,7 @@
       round
       color="#014CFA"
       @click="next"
-      >保存</Button
+      >{{ $t("account.add_btn") }}</Button
     >
 
     <!-- 谷歌验证 -->
@@ -59,9 +59,6 @@ const googleRef = ref();
 const loading = ref(false);
 const form = ref({
   channel: "bank",
-  // currency: null,
-  // network: null,
-  // address: null,
   account_name: "",
   bank_name: "",
   bank_card_number: "",

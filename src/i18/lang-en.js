@@ -213,6 +213,12 @@ export default {
     add_subtitle_address: "Address",
     add_address_placeholder: "Please input wallet address",
     add_btn: "Save",
+    add_subtitle_user_name: "Owner name",
+    add_subtitle_status: "ID verified",
+    add_subtitle_bank_name: "Bank name",
+    add_bank_name_placeholder: "Please input bank name",
+    add_subtitle_card_number: "Card number",
+    add_bank_address_placeholder: "Please input bank card no"
   },
   form: {
     all: "All",

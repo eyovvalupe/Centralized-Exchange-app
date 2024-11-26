@@ -213,6 +213,12 @@ export default {
     add_subtitle_address: "地址",
     add_address_placeholder: "请输入对应币种地址",
     add_btn: "保存",
+    add_subtitle_user_name: "持卡人姓名",
+    add_subtitle_status: "已认证",
+    add_subtitle_bank_name: "银行名称",
+    add_bank_name_placeholder: "请输入银行名称",
+    add_subtitle_card_number: "卡号",
+    add_bank_address_placeholder: "请输入银行卡卡号",
   },
   common: {
     stock: "股票",
