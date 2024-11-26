@@ -142,6 +142,12 @@ export default {
     page_title: "谷歌验证器",
     from_register_skip: "跳过",
     google_title: "绑定谷歌验证器",
+    bound_success: "绑定成功",
+    copy_success: "复制成功",
+    confirm_title: "是否确定跳过谷歌验证器绑定",
+    google_result_title: "已绑定",
+    google_result_con: "如果您有任何问题可联系在线客服",
+    google_result_btn: "好的"
   },
   common: {
     stock: "股票",

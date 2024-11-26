@@ -52,7 +52,7 @@ import {
   Button,
   showToast,
   showLoadingToast,
-  showDialog,
+  showConfirmDialog,
   closeToast,
 } from "vant";
 import { ref, computed, watch } from "vue";

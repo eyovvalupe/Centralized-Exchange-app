@@ -142,6 +142,12 @@ export default {
     page_title: "Google Authenticator",
     from_register_skip: "Skip",
     google_title: "Bound Google Auth",
+    bound_success: "Successful bound",
+    copy_success: "Copied",
+    confirm_title: "Skip bounding google auth?",
+    google_result_title: "Bound",
+    google_result_con: "If you have any questions, please contact online customer service",
+    google_result_btn: "OK"
   },
   form: {
     all: "All",

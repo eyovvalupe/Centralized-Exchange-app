@@ -141,6 +141,12 @@ export default {
     page_title: "谷歌驗證器",
     from_register_skip: "跳過",
     google_title: "綁定谷歌驗證器",
+    bound_success: "綁定成功",
+    copy_success: "復製成功",
+    confirm_title: "是否確定跳過谷歌驗證器綁定",
+    google_result_title: "已綁定",
+    google_result_con: "如果您有任何問題可聯絡線上客服",
+    google_result_btn: "好的"
   },
   form: {
     all: "全部",
