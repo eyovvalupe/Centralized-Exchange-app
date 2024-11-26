@@ -1,16 +1,16 @@
 <!-- 修改交易密码 -->
 <template>
   <div class="page page-loginpass">
-    <Top :title="'修改登录密码'" />
+    <Top :title="t('change_login_pw.page_title')" />
 
     <!-- 表单 -->
     <div class="form">
-      <div class="form_title">原密码</div>
+      <div class="form_title">{{ $t("change_login_pw.origin_pw") }}</div>
       <div class="form_item margin_item">
         <input
           maxlength="20"
           v-model.trim="form.prevPassword"
-          placeholder="输入您的原密码"
+          :placeholder="t('change_login_pw.origin_pw_placeholder')"
           :type="showPass0 ? 'text' : 'password'"
           class="item_input"
         />
@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <div class="form_title">新密码</div>
+      <div class="form_title">{{ $t("change_login_pw.new_pw") }}</div>
       <div
         class="form_item margin_item"
         :class="[isSame ? 'border-[#D0D8E2]' : 'border-[#E8503A]']"
@@ -27,7 +27,7 @@
         <input
           maxlength="20"
           v-model.trim="form.password"
-          placeholder="密码最小8个字符"
+          :placeholder="t('change_login_pw.new_pw_placeholder')"
           :type="showPass ? 'text' : 'password'"
           class="item_input"
           @focus="isSame = true"
@@ -43,7 +43,7 @@
         :from="'reset'"
       />
 
-      <div class="form_title">确认新密码</div>
+      <div class="form_title">{{ $t("change_login_pw.confirm_pw") }}</div>
       <div
         class="form_item margin_item"
         :class="[isSame ? 'border-[#D0D8E2]' : 'border-[#E8503A]']"
@@ -51,7 +51,7 @@
         <input
           maxlength="20"
           v-model.trim="form.password2"
-          placeholder="请再次输入新密码"
+          :placeholder="t('change_login_pw.confirm_pw_placeholder')"
           :type="showPass2 ? 'text' : 'password'"
           class="item_input"
           @focus="isSame = true"
@@ -72,7 +72,7 @@
         class="submit"
         type="primary"
         @click="submit"
-        >修改</Button
+        >{{ $t("change_login_pw.btn") }}</Button
       >
     </div>
 
@@ -91,7 +91,9 @@ import router from "@/router";
 import { _login } from "@/api/api";
 import PasswordLevel from "@/components/PasswordLevel.vue";
 import { showToast } from "vant";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const ggRef = ref();
 const showPass0 = ref(false);
 const showPass = ref(false); // 密码显示
@@ -110,7 +112,7 @@ const loading = ref(false); // 加载
 const isSame = ref(true);
 const submit = () => {
   if (form.value.password != form.value.password2) {
-    showToast("两次密码不一致");
+    showToast(t('change_login_pw.no_match_noti'));
     isSame.value = false;
   } else ggRef.value.open();
 };

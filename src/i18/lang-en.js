@@ -167,6 +167,17 @@ export default {
     no_google_dialog_title: "Google Authenticator",
     no_google_dialog_con: "You have not bound Google Authenticator, go for it?",
   },
+  change_login_pw: {
+    page_title: "Change login password",
+    origin_pw: "Origin password",
+    origin_pw_placeholder: "Please input origin password",
+    new_pw: "New password",
+    new_pw_placeholder: "Input at least 8 letters",
+    confirm_pw: "Confirm new password",
+    confirm_pw_placeholder: "Please input new password again",
+    btn: "Change",
+    no_match_noti: "New passwords are not matched"
+  },
   form: {
     all: "All",
   },

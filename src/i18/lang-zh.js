@@ -167,6 +167,17 @@ export default {
     no_google_dialog_title: "谷歌验证器",
     no_google_dialog_con: "你还未绑定谷歌验证器，是否去绑定",
   },
+  change_login_pw: {
+    page_title: "修改登录密码",
+    origin_pw: "原密码",
+    origin_pw_placeholder: "输入您的原密码",
+    new_pw: "新密码",
+    new_pw_placeholder: "密码最小8个字符",
+    confirm_pw: "确认新密码",
+    confirm_pw_placeholder: "请再次输入新密码",
+    btn: "修改",
+    no_match_noti: "两次密码不一致"
+  },
   common: {
     stock: "股票",
     crypto: "合约",
