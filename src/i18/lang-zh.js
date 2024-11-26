@@ -151,6 +151,7 @@ export default {
   },
   service: {
     page_title: "在线客服",
+    message_title: "客服为您服务",
     first_message: "您好，有什么能帮到您？",
     input_message: "请输入..."
   },

@@ -50,7 +50,7 @@ export default {
     register_success: "Signed up successfully",
     register_failed: "Failed to sign up",
     network_error: "Network Error",
-    next: "Go on",
+    next: "Next",
     code_email: "Email ",
     code_phone: "Phone ",
     code_verify: "Verification",
@@ -152,7 +152,8 @@ export default {
   service: {
     page_title: "Online Customer Service",
     first_message: "Hello, how can I help you?",
-    input_message: "Please input message..."
+    input_message: "Please input message...",
+    message_title: "Service for you"
   },
   language: {
     page_title: "Language"

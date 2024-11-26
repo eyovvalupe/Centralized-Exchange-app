@@ -12,7 +12,7 @@
         <p
           class="w-[5.22rem] rounded-[1rem] text-center h-[0.6rem] mb-[0.6rem] flex justify-center items-center bg-[#f5f7fc] text-[0.3rem] text-[#666d80]"
         >
-          asfsf
+          {{ $t("service.message_title") }}
         </p>
       </div>
       <div class="flex">

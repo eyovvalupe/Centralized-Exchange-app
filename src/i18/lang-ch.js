@@ -151,7 +151,8 @@ export default {
   service: {
     page_title: "網路客服",
     first_message: "您好，有什麼能幫到您？",
-    input_message: "請輸入..."
+    input_message: "請輸入...",
+    message_title: "客服為您服務",
   },
   language: {
     page_title: "語言選擇"
