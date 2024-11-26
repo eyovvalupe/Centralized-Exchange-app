@@ -138,6 +138,11 @@ export default {
     status_reverify: "重新认证",
     status_service: "联系客服",
   },
+  google_auth: {
+    page_title: "谷歌验证器",
+    from_register_skip: "跳过",
+    google_title: "绑定谷歌验证器",
+  },
   common: {
     stock: "股票",
     crypto: "合约",

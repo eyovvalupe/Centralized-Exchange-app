@@ -56,9 +56,9 @@ export default {
     code_verify: "Verification",
     code_con1: "Already sent verification code to your ",
     code_con2: "Input 6 letter code",
-    code_jump: "Jump verify",
+    code_jump: "Skip verify",
     code_again: 'Send again',
-    code_jump_title: "Jump verification and go on to register",
+    code_jump_title: "Skip verification and go on to register",
     code_jump_confirm: "Confirm",
     success_sign_up: "Succes sign up",
     success_btn: "Identity & Google Authenticator",
@@ -137,6 +137,11 @@ export default {
     status_birthday: "Date of Birth",
     status_reverify: "Recertification",
     status_service: "Contact Customer Service",
+  },
+  google_auth: {
+    page_title: "Google Authenticator",
+    from_register_skip: "Skip",
+    google_title: "Bound Google Auth",
   },
   form: {
     all: "All",

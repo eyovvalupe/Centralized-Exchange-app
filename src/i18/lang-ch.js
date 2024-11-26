@@ -137,6 +137,11 @@ export default {
     status_reverify: "重新認證",
     status_service: "聯絡客服",
   },
+  google_auth: {
+    page_title: "谷歌驗證器",
+    from_register_skip: "跳過",
+    google_title: "綁定谷歌驗證器",
+  },
   form: {
     all: "全部",
   },

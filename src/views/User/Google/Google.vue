@@ -1,18 +1,18 @@
 <!-- 谷歌验证器 -->
 <template>
   <div class="page page_google">
-    <Top :title="'谷歌验证器'">
+    <Top :title="t('google_auth.page_title')">
       <template #right v-if="from == 'register'">
         <span
           @click="nextStep"
           style="color: #014cfa; font-weight: 400; font-size: 0.28rem"
-          >跳过</span
+          >{{ $t("google_auth.from_register_skip") }}</span
         >
       </template>
     </Top>
 
     <div class="w-full flex flex-col items-center">
-      <span class="text-[0.4rem] p-[0.1rem] font-semibold">绑定谷歌验证器</span>
+      <span class="text-[0.4rem] p-[0.1rem] font-semibold">{{ $t("google_auth.google_title") }}</span>
       <span class="text-[0.24rem] p-[0.04rem] text-[#8f92a1] mb-[0.4rem]"
         >Please back up your key in case you lose it</span
       >
@@ -55,7 +55,9 @@ import router from "@/router";
 import store from "@/store";
 import { useRoute } from "vue-router";
 import CodeInput from "@/components/CodeInput.vue";
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const route = useRoute();
 const from = ref(route.query.from); // 'register'-表示从注册来
 
