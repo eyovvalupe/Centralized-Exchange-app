@@ -6,14 +6,27 @@
     <GoogleVerfCode ref="googleRef" @submit="submit" />
     <div class="list_detail">
       <div class="bank_icon_container mr-[0.2rem]">
-        <div :class="item.bankName == '建设银行' ? 'building_icon' : item.bankName == '工商银行' ? 'ecobusiness_icon' : item.bankName == '工商银行' ? 'company_icon' : 'emg_company_icon'"></div>
+        <div
+          :class="
+            item.bankName == '建设银行'
+              ? 'building_icon'
+              : item.bankName == '工商银行'
+              ? 'ecobusiness_icon'
+              : item.bankName == '工商银行'
+              ? 'company_icon'
+              : 'emg_company_icon'
+          "
+        ></div>
       </div>
       <div class="flex flex-col">
         <div class="flex flex-row items-center">
           <span class="text-[0.32rem] text-[#121212] font-semibold mr-[0.2rem]"
             >**** **** **** {{ item.bankCardNumber.slice(-4) }}</span
           >
-          <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)"></div>
+          <div
+            class="copy_icon"
+            @click="copyToClipboard(item.bankCardNumber)"
+          ></div>
         </div>
         <span class="text-[0.28rem] text-[#666d80]">{{ item.bankName }}</span>
       </div>
@@ -22,25 +35,27 @@
 </template>
 <script setup>
 import { showConfirmDialog, showToast } from "vant";
-import { ref } from 'vue';
+import { ref } from "vue";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { _delAccount, _listAccount } from "@/api/api";
 import router from "@/router";
 import store from "@/store";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const loading = ref(false);
 const googleRef = ref();
-const currDeleteId = computed(() => store.state.currDeleteId || '')
+const currDeleteId = computed(() => store.state.currDeleteId || "");
 
 const confirm = (id) => {
-  store.commit('setCurrDeleteId', id)
+  store.commit("setCurrDeleteId", id);
   showConfirmDialog({
-    title: '删除',
-    message: '确认删除该收款账户吗？'
+    title: t('account.delete_dialog_title'),
+    message: t('account.delete_dialog_con'),
   })
-  .then(() => next())
-  .catch(() => {})
-}
+    .then(() => next())
+    .catch(() => {});
+};
 
 const next = () => {
   googleRef.value[0].open();
@@ -67,7 +82,7 @@ const copyToClipboard = async (text) => {
     await navigator.clipboard.writeText(text);
 
     setTimeout(() => {
-      showToast("成功复制支付地址");
+      showToast(t('account.copy_address'));
     }, 200);
   } catch (err) {
     console.error("Failed to copy: ", err);
@@ -84,9 +99,10 @@ const submit = (googleCode) => {
   _delAccount(params)
     .then((res) => {
       if (res.code == 200) {
-        showToast("成功删除");
-        _listAccount()
-        .then(res => store.commit("setAccountList", res.data || {}))
+        showToast(t('account.delete_success'));
+        _listAccount().then((res) =>
+          store.commit("setAccountList", res.data || {})
+        );
       }
     })
     .finally(() => {
@@ -121,13 +137,13 @@ getSessionToken();
     align-items: center;
 
     .bank_icon_container {
-        width: 0.96rem;
-        height: 0.96rem;
-        background-color: #f5f7fc;
-        border-radius: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      width: 0.96rem;
+      height: 0.96rem;
+      background-color: #f5f7fc;
+      border-radius: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .copy_icon {

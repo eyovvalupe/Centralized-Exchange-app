@@ -97,7 +97,7 @@
       </div>
     </div>
     <div
-      class="flex items-center w-full mb-[0.64rem] mt-[0.56rem] justify-between px-[0.18rem]"
+      class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.18rem]"
     >
       <div
         @click="jump('account', true)"

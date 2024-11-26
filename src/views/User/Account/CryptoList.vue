@@ -27,15 +27,17 @@ import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { ref } from "vue";
 import { _delAccount, _listAccount } from "@/api/api";
 import store from "@/store";
+import { useI18n } from "vue-i18n";
 
-const currDeleteId = computed(() => store.state.currDeleteId || '')
+const { t } = useI18n();
+const currDeleteId = computed(() => store.state.currDeleteId || "");
 const loading = ref(false);
 const googleRef = ref();
 const confirm = (id) => {
-  store.commit('setCurrDeleteId', id)
+  store.commit("setCurrDeleteId", id);
   showConfirmDialog({
-    title: "删除",
-    message: "确认删除该收款账户吗？",
+    title: t('account.delete_dialog_title'),
+    message: t('account.delete_dialog_con'),
   })
     .then(() => next(id))
     .catch(() => {});
@@ -66,7 +68,7 @@ const copyToClipboard = async (text) => {
     await navigator.clipboard.writeText(text);
 
     setTimeout(() => {
-      showToast("成功复制支付地址");
+      showToast(t('account.copy_address'));
     }, 200);
   } catch (err) {
     console.error("Failed to copy: ", err);
@@ -82,7 +84,7 @@ const submit = (googleCode) => {
   _delAccount(params)
     .then((res) => {
       if (res.code == 200) {
-        showToast("成功删除");
+        showToast(t('account.delete_success'));
         _listAccount().then((res) =>
           store.commit("setAccountList", res.data || {})
         );

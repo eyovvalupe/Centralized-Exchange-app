@@ -1,7 +1,7 @@
 <!-- 收款账户 -->
 <template>
   <div class="page page_account">
-    <Top :title="'添加收款账户'" />
+    <Top :title="t('account.add_page_title')" />
     <Tabs
       type="card"
       class="tab_content tabs"
@@ -12,13 +12,13 @@
       animated
       shrink
     >
-      <Tab :title="'加密货币'" name="0">
+      <Tab :title="t('account.add_tab1')" name="0">
         <div class="tab_data">
           <div class="list">
             <div class="page_crypto">
               <div class="flex flex-col items-center">
                 <div style="float: left">
-                  <div class="subtitle">币种</div>
+                  <div class="subtitle">{{ $t("account.add_subtitle_type") }}</div>
                   <div class="item" @click="showCrypto = true">
                     <div class="item_icon">
                       <img
@@ -31,21 +31,21 @@
                   </div>
                 </div>
                 <div style="float: left">
-                  <div class="subtitle">网络</div>
+                  <div class="subtitle">{{ $t("account.add_subtitle_network") }}</div>
                   <div class="item" @click="showNet = true">
                     <div class="ipt">{{ form.network }}</div>
                     <Icon style="transform: rotate(90deg)" name="play" />
                   </div>
                 </div>
                 <div style="float: left">
-                  <div class="subtitle">地址</div>
+                  <div class="subtitle">{{ $t("account.add_subtitle_address") }}</div>
                   <div class="item">
                     <input
                       type="text"
                       v-model.trim="form.address"
                       class="ipt"
                       maxlength="50"
-                      placeholder="请输入对应币种地址"
+                      :placeholder="t('account.add_address_placeholder')"
                     />
                   </div>
                 </div>
@@ -58,7 +58,7 @@
                   round
                   color="#014CFA"
                   @click="next"
-                  >保存</Button
+                  >{{ $t("account.add_btn") }}</Button
                 >
               </div>
               <!-- 谷歌验证 -->
@@ -67,7 +67,7 @@
           </div>
         </div>
       </Tab>
-      <Tab :title="'银行卡'" name="1">
+      <Tab :title="t('account.add_tab2')" name="1">
         <div class="tab_data">
           <div class="list">
             <Bank />
@@ -142,7 +142,9 @@ import Bank from "./Bank.vue";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import Top from "@/components/Top.vue";
 import CrossIcon from "./components/Icons/CrossIcon.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const route = useRoute();
 const coinMap = computed(() => store.state.coinMap || {});
 const showSuccessToast = computed(() => store.state.showSuccessToast || false);
