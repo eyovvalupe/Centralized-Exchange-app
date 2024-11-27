@@ -201,7 +201,7 @@ export default {
   account: {
     page_title: "Payment Methods",
     crypto: "Crypto Wallet",
-    no_data: "No Data",
+    no_data: "No Wallet",
     bank: "Bank Card",
     no_kyc_title: "Identity Not Verified",
     no_kyc_con: "You need to verify your identity to add payment methods.",

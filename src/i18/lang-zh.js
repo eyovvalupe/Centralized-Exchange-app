@@ -204,7 +204,7 @@ export default {
   account: {
     page_title: "收款账户",
     crypto: "加密货币",
-    no_data: "暂无数据",
+    no_data: "暂无账户",
     bank: "银行卡",
     no_kyc_title: "身份未认证",
     no_kyc_con: "您的身份还未进行认证，请先认证再添加收款账户",

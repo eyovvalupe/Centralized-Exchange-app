@@ -203,7 +203,7 @@ export default {
   account: {
     page_title: "收款賬戶",
     crypto: "加密代幣",
-    no_data: "暫無數據",
+    no_data: "暫無賬戶",
     bank: "銀行卡",
     no_kyc_title: "身份未認證",
     no_kyc_con: "您的身份還未進行認證，清閒認證再添加收款賬戶",
