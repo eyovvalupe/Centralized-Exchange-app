@@ -16,7 +16,7 @@ const pageKeys = {
         'marketWatchList',
         'marketSrockRecommendList',
         'marketContractRecommendList',
-        
+
         'marketStockUsIndexList',
         'marketStockIndiaIndexList',
         'marketStockJapanIndexList',
@@ -92,7 +92,7 @@ export default {
         marketRecommndContractList: [], // 首页合约列表
         marketRecommndStockList: [], // 首页股票列表
         marketStockList: [], // 股票页列表
-        
+
         marketSrockRecommendList: [], // 推荐股票列表
         marketContractRecommendList: [], // 推荐合约列表
         marketRankList: [], // 排行列表
@@ -108,11 +108,11 @@ export default {
         marketAi24List: [], // ai量化24小时收益率列表
         marketAiGridList: [], // ai量化最大网格(杠杆)列表
 
-        
+
         marketCountryStockList: [], //选择的区域股票列表
 
-        marketCurrent:"", //当前选中的市场
-        
+        marketCurrent: "", //当前选中的市场
+
         marketStockUsData: {}, //当前选择的美区数据内容
         marketStockIndiaData: {}, //当前选择的印度数据内容
         marketStockJapanData: {}, //当前选择的日本数据内容
@@ -133,7 +133,7 @@ export default {
         marketStockSingaporeIndexList: [],
         marketStockHongkongIndexList: [],
         marketStockMalaysiaIndexList: [],
-        
+
         //股票
         marketStockUsDataList: [],
         marketStockIndiaDataList: [],
@@ -144,18 +144,18 @@ export default {
         marketStockSingaporeDataList: [],
         marketStockHongkongDataList: [],
         marketStockMalaysiaDataList: [],
-        
+
         graphColorGradient: false,
         marketActiveTab: 0,
         currDeleteId: ''
 
     },
-   
+
     mutations: {
         setCurrDeleteId(state, data) {
             state.currDeleteId = data
         },
-        
+
         setMarketActiveTab(state, data) {
             state.marketActiveTab = data;
         },
@@ -189,7 +189,7 @@ export default {
         setMarketStockMalaysiaData(state, data) {
             state.marketStockMalaysiaData = data
         },
-       
+
         //更新市场股票
         setMarketStockUsDataList(state, data) {
             state.marketStockUsDataList = data
@@ -251,11 +251,11 @@ export default {
         setGraphColorGradient(state, data) {
             state.graphColorGradient = data
         },
-      
+
         setMarketCountryStockList(state, data) {
             state.marketCountryStockList = data
         },
-       
+
         setCheckState(state, data) {
             state.checkState = data;
         },
@@ -292,7 +292,7 @@ export default {
         setMarketStockList(state, data) {
             state.marketStockList = data;
         },
-        setMarketCurrent(state,data){
+        setMarketCurrent(state, data) {
             state.marketCurrent = data
         },
         setMarketSrockRecommendList(state, data) {
@@ -307,21 +307,21 @@ export default {
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
         },
-        setMarketWatchKeysByPage(state){
+        setMarketWatchKeysByPage(state) {
             const data = []
             const page = router.currentRoute.value && router.currentRoute.value.name ? router.currentRoute.value.name : ''
-            if(pageKeys[page]){
-                pageKeys[page].map(k=>{
-                    if(state[k] && state[k].length){
-                        state[k].map(item=>{
-                            if(data.indexOf(item.symbol) == -1){
+            if (pageKeys[page]) {
+                pageKeys[page].map(k => {
+                    if (state[k] && state[k].length) {
+                        state[k].map(item => {
+                            if (data.indexOf(item.symbol) == -1) {
                                 data.push(item.symbol)
                             }
                         })
                     }
                 })
             }
-           
+
             state.marketWatchKeys = data;
         },
         setMarketRankList(state, data) {
@@ -374,8 +374,6 @@ export default {
                 }
                 return
             }
-            // 兼容后端的symbols 和 symbol
-            // data.symbol = data.symbols || data.symbol
             state.currStock = data;
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
@@ -398,8 +396,6 @@ export default {
                 }
                 return
             }
-            // 兼容后端的symbols 和 symbol
-            // data.symbol = data.symbols || data.symbol
             state.currConstact = Object.assign({}, state.currConstact, data);
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
@@ -422,8 +418,6 @@ export default {
                 }
                 return
             }
-            // 兼容后端的symbols 和 symbol
-            // data.symbol = data.symbols || data.symbol
             state.currAi = Object.assign({}, state.currAi, data);
             // 当前股票有更新，则同步到列表里去
             setTimeout(() => {
@@ -467,7 +461,7 @@ export default {
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
-                                const target = res.data.find(a => a.symbols == item.symbol || a.symbol == item.symbol)
+                                const target = res.data.find(a => a.symbol == item.symbol)
                                 if (target) {
                                     return {
                                         ...item,
@@ -480,19 +474,42 @@ export default {
                             state[ck] = arr
                         })
 
+                        // 同步到当前 股票
+                        const cStock = res.data.find(a => a.symbol == state.currStock.symbol)
+                        if (cStock) {
+                            let obj = JSON.parse(JSON.stringify(cStock))
+                            delete obj.symbol
+                            commit('setCurrStock', obj)
+                        }
+                        // 同步到当前 合约
+                        const cConstract = res.data.find(a => a.symbol == state.currConstact.symbol)
+                        if (cConstract) {
+                            let obj = JSON.parse(JSON.stringify(cStock))
+                            delete obj.symbol
+                            commit('setCurrConstract', obj)
+                        }
+                        // 同步到当前 ai
+                        const cAi = res.data.find(a => a.symbol == state.currAi.symbol)
+                        if (cAi) {
+                            let obj = JSON.parse(JSON.stringify(cStock))
+                            delete obj.symbol
+                            commit('setCurrAi', obj)
+                        }
+
                     }
                 })
+
 
                 socket && socket.off('snapshot')
                 socket && socket.emit('snapshot', keys.join(',')) // 快照数据
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
-                       
+
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                            const target = state[ck].find(item => item.symbols == res.symbol || item.symbol == res.symbol)
+                            const target = state[ck].find(item => item.symbol == res.symbol)
                             if (target) {
-                                
+
                                 target.points = _getSnapshotLine(res.data)
                             }
                         })
@@ -505,8 +522,8 @@ export default {
         }
     },
     getters: {
-        getMarketStockCurrentList(state){
-            switch(state.marketCurrent){
+        getMarketStockCurrentList(state) {
+            switch (state.marketCurrent) {
                 case 'us':
                     return state.marketStockUsDataList
                 case 'india':
