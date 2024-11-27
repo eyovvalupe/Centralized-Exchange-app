@@ -145,7 +145,7 @@ export default {
   google_auth: {
     page_title: "Google Authenticator",
     from_register_skip: "Skip",
-    google_title: "Linked Google Authenticator",
+    google_title: "Link Google Authenticator",
     bound_success: "Successfully linked",
     copy_success: "Copied",
     confirm_title: "Skip linking Google Authenticator?",
