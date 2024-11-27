@@ -135,7 +135,7 @@
           ]"
         >
           <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
-          <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pendding_verified") }}</span>
+          <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified") }}</span>
           <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
         <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.verify_identity") }}</div>

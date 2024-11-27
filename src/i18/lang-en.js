@@ -23,7 +23,7 @@ export default {
     security_con: "Drag to rotate image",
     security_result_success: "Verification successful",
     security_result_failed: "Verification failed",
-    security_result_pedding: "Please complete the security check",
+    security_result_pending: "Please complete the security check",
     create_user_account: "Create Account",
     create_guest_account: "Create Guest Account",
     has_account: "Have an account?",

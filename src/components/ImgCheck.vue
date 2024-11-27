@@ -53,7 +53,7 @@
       <span class="check_result">{{ $t("register.security_result_failed") }}</span>
     </div>
     <div class="status_text" v-else>
-      <span class="check_result">{{ $t("register.security_result_pedding") }}</span>
+      <span class="check_result">{{ $t("register.security_result_pending") }}</span>
     </div>
   </div>
 </template>
