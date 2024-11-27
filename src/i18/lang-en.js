@@ -26,7 +26,7 @@ export default {
     security_result_pedding: "Please complete the security check",
     create_user_account: "Create Account",
     create_guest_account: "Create Guest Account",
-    has_account: "Already have an account?",
+    has_account: "Have an account?",
     go_login: "Log in",
     email: "Email",
     phone: "Phone",
