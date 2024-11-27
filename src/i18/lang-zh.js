@@ -62,6 +62,13 @@ export default {
     success_sign_up: "注册成功",
     success_btn: "身份验证&谷歌验证器绑定",
     success_finish: "完成",
+    no_email_error: "请输入有效邮箱",
+    no_phone_error: "请输入手机号码",
+    no_login_pw_error: "请输入密码",
+    login_pw_length_error: "密码最小8个字符",
+    no_trade_pw_error: "请输入交易密码",
+    no_agree_error: "请先同意隐私政策和用户条款",
+    network_error: "网络异常，请重试"
   },
   password_level: {
     weak: "弱",

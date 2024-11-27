@@ -62,6 +62,13 @@ export default {
     success_sign_up: "註冊成功",
     success_btn: "身份驗證&谷歌驗證器綁定",
     success_finish: "完成",
+    no_email_error: "請輸入有效信箱",
+    no_phone_error: "請輸入手機號碼",
+    no_login_pw_error: "請輸入密碼",
+    login_pw_length_error: "密碼最小8個字符",
+    no_trade_pw_error: "請輸入交易密碼",
+    no_agree_error: "請先同意隱私權政策和使用者條款",
+    network_error: "網路異常，請重試"
   },
   password_level: {
     weak: "弱",

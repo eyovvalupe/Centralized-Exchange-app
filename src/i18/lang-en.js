@@ -63,6 +63,13 @@ export default {
     success_sign_up: "Succes sign up",
     success_btn: "Identity & Google Authenticator",
     success_finish: "Finish",
+    no_email_error: "Please enter a valid email address",
+    no_phone_error: "Please enter your mobile number",
+    no_login_pw_error: "Please enter your password",
+    login_pw_length_error: "Password minimum 8 characters",
+    no_trade_pw_error: "Please enter the transaction password",
+    no_agree_error: "Please agree to the Privacy Policy and User Rules first",
+    network_error: "Network error, try again"
   },
   password_level: {
     weak: "Weak",
