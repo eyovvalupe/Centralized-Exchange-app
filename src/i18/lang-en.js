@@ -175,6 +175,8 @@ export default {
     google_status_ok: "Linked",
     no_google_dialog_title: "Google Authenticator",
     no_google_dialog_con: "You haven't bound Google Authenticator. Set it up now?",
+    success_title: "Success",
+    success_btn: "Close"
   },
   change_login_pw: {
     page_title: "Change Login Password",

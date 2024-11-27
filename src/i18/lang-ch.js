@@ -177,6 +177,8 @@ export default {
     google_status_ok: "已綁定",
     no_google_dialog_title: "谷歌驗證器",
     no_google_dialog_con: "你還未綁定谷歌驗證器，是否去綁定",
+    success_title: "操作成功",
+    success_btn: "關閉"
   },
   change_login_pw: {
     page_title: "修改登入密碼",

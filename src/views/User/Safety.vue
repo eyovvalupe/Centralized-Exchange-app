@@ -70,8 +70,8 @@ const goGG = () => {
 const checkGG = async (name) => {
   if (!userInfo.value.googlebind) {
     return showConfirmDialog({
-      title: "谷歌验证器",
-      message: "你还未绑定谷歌验证器，是否去绑定?",
+      title: t('safety.bind_google_auth'),
+      message: t('safety.no_google_dialog_con'),
     }).then(() => {
       jump("google");
     });
