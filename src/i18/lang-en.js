@@ -80,7 +80,7 @@ export default {
     btn_text2: "Bind",
   },
   user_page: {
-    login_out: "Sign In / Sign Out",
+    login_out: "Sign In / Out",
     recommended_user: "Suggested Users",
     social_user: "Social Users",
     recommend_bonus: "Referral Bonus",
