@@ -78,7 +78,7 @@ export default {
   },
   code_input: {
     btn_text1: "Next",
-    btn_text2: "Bound",
+    btn_text2: "Bind",
   },
   user_page: {
     login_out: "Sign In / Sign Out",
