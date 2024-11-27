@@ -150,8 +150,8 @@ const subs = () => { // 订阅新数据
         socket && socket.off('kline')
         socket && socket.emit('kline', JSON.stringify(params)) // 快照数据
         socket && socket.on('kline', res => {
-            if (res.code == 200 && res.symbol == props.symbol && (res.period == props.period || res.period == currPeriod.value)) {
 
+            if (res.code == 200 && res.symbol == props.symbol && (res.period == props.period || res.period == currPeriod.value)) {
                 res.data.forEach(a => {
                     chart.updateData({
                         ...a,
@@ -160,10 +160,10 @@ const subs = () => { // 订阅新数据
                 })
 
                 // 同步数据
-                if (route.name == 'market_info') {
-                    const item = res.data[0]
-                    setCurrData(item)
-                }
+                // if (route.name == 'market_info') {
+                //     const item = res.data[0]
+                //     setCurrData(item)
+                // }
             }
         })
     })
