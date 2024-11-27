@@ -874,7 +874,7 @@ watch(
     align-items: center;
     background-color: #f5f7fc;
     border-radius: 0.6rem;
-    border: 1px solid #d0d8e2;
+    // border: 1px solid #d0d8e2;
 
     .search_icon {
       width: 0.48rem;

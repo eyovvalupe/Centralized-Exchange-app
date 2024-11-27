@@ -127,16 +127,16 @@
         </div>
         <div
           v-if="token"
-          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
+          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-[#E8503A]'
               : `${userInfo.kycl2 == 1 ? 'bg-[#014CFA]' : 'bg-[#18B762]'}`,
           ]"
         >
-          <span v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
-          <span v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pendding_verified") }}</span>
-          <span v-else>{{ $t("user_page.already_verified") }}</span>
+          <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
+          <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pendding_verified") }}</span>
+          <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
         <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.verify_identity") }}</div>
       </div>

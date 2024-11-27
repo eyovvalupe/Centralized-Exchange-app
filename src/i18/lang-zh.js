@@ -147,7 +147,11 @@ export default {
     confirm_title: "是否确定跳过谷歌验证器绑定",
     google_result_title: "已绑定",
     google_result_con: "如果您有任何问题可联系在线客服",
-    google_result_btn: "好的"
+    google_result_btn: "好的",
+    google_input_title: "谷歌验证码",
+    google_input_con: "请输入6位数代码",
+    google_input_btn_cancel: "取消",
+    google_input_btn_confirm: "确认"
   },
   service: {
     page_title: "在线客服",
@@ -221,7 +225,7 @@ export default {
     add_subtitle_card_number: "卡号",
     add_bank_address_placeholder: "请输入银行卡卡号",
   },
-  succes_toast: {
+  success_toast: {
     message: "添加成功"
   },
   common: {

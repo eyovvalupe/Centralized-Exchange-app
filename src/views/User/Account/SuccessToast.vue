@@ -5,7 +5,7 @@
       :class="[show ? 'opacity-100' : 'opacity-0 pointer-events-none']"
     >
       <div class="success_icon mb-[0.24rem]"></div>
-      <div class="text-white text-[0.36rem]">{{ $t("success_toast.message") }}</div>
+      <div class="text-white text-[0.36rem] max-w-[1.5rem] text-center">{{ $t("success_toast.message") }}</div>
     </div>
   </div>
 </template>

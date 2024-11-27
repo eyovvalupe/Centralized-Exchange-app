@@ -146,7 +146,11 @@ export default {
     confirm_title: "是否確定跳過谷歌驗證器綁定",
     google_result_title: "已綁定",
     google_result_con: "如果您有任何問題可聯絡線上客服",
-    google_result_btn: "好的"
+    google_result_btn: "好的",
+    google_input_title: "谷歌驗證碼",
+    google_input_con: "請輸入6位數代碼",
+    google_input_btn_cancel: "取消",
+    google_input_btn_confirm: "確認"
   },
   service: {
     page_title: "網路客服",
@@ -220,7 +224,7 @@ export default {
     add_subtitle_card_number: "卡號",
     add_bank_address_placeholder: "請輸入銀行卡卡號"
   },
-  succes_toast: {
+  success_toast: {
     message: "添加成功"
   },
   form: {

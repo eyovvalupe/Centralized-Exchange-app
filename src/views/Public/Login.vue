@@ -62,8 +62,8 @@
         <input
           maxlength="20"
           v-model.trim="form.phone"
+          type="number"
           :placeholder="t('login.pw_placeholder2')"
-          type="text"
           class="item_input"
         />
       </div>
