@@ -254,7 +254,11 @@ export default {
     over_view_contract: "合約",
     over_view_forex: "外匯",
     over_view_trade: "大宗商品",
-
+    wallet_header_cash: "現金帳戶",
+    wallet_header_stock: "股票帳戶",
+    wallet_header_contract: "合約帳戶",
+    wallet_header_forex: "外匯帳戶",
+    wallet_header_trade: "大宗帳戶",
   },
   topUpCrypto: {
     recharge: "充值",

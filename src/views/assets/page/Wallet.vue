@@ -23,25 +23,25 @@
           type="card"
           v-model:active="activeTab"
           :tabs="[
-            $t('现金账户'),
-            $t('股票账户'),
-            $t('合约账户'),
-            $t('外汇账户'),
-            $t('大宗账户'),
+            t('assets.wallet_header_cash'),
+            t('assets.wallet_header_stock'),
+            t('assets.wallet_header_contract'),
+            t('assets.wallet_header_forex'),
+            t('assets.wallet_header_trade'),
           ]"
           @change="changeActiveTab(activeTab)"
         />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 0">
-        <DefaultWallet :name="'现金'" :balance="assets.money" />
+        <DefaultWallet :name="t('assets.wallet_header_cash')" :balance="assets.money" />
         <Btns />
         <Cash />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 1">
         <OtherWallet
-          :name="'股票'"
+          :name="t('assets.wallet_header_stock')"
           :balance="assets.stock"
           @toggleShow="(val) => toggleShow(val)"
         />
@@ -153,9 +153,10 @@ import store from "@/store";
 import StockMyWallet from "./StockWallet.vue";
 import CryptoWallet from "./CryptoWallet.vue";
 import ForexMyWallet from "./ForexWallet.vue";
-
 import HeaderTabs from "@/components/HeaderTabs.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const activeTab = ref(store.state.currSelectedWallet);
 const changeActiveTab = (val) => {
   showData.value = false;
@@ -190,8 +191,8 @@ defineExpose({
 watch(
   () => store.state.currSelectedWallet,
   (val) => {
-    if(store.state.currSelectedWallet != activeTab.value){
-      changeActiveTab(val)
+    if (store.state.currSelectedWallet != activeTab.value) {
+      changeActiveTab(val);
     }
   }
 );

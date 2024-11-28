@@ -291,6 +291,11 @@ export default {
     over_view_contract: "合约",
     over_view_forex: "外汇",
     over_view_trade: "大宗商品",
+    wallet_header_cash: "现金账户",
+    wallet_header_stock: "股票账户",
+    wallet_header_contract: "合约账户",
+    wallet_header_forex: "外汇账户",
+    wallet_header_trade: "大宗账户",
   },
   topUpCrypto: {
     recharge: "充值",
@@ -343,12 +348,6 @@ export default {
   },
   form: {
     all: "全部",
-  },
-  assets: {
-    recharge: "充值",
-    withdraw: "提现",
-    transfer: "划转",
-    financialRecords: "资金记录",
   },
   topUpCrypto: {
     recharge: "充值",

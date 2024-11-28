@@ -5,7 +5,7 @@
     <OtherWalletBtn />
     <OtherWalletInfoContainer />
     <OtherImg />
-    <span class="text-[0.32rem] text-[#fff]">{{ name }}账户</span>
+    <span class="text-[0.32rem] text-[#fff]">{{ name }}</span>
     <div
       class="flex flex-col w-[2.52rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]"
     >

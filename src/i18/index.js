@@ -12,7 +12,7 @@ const messages = {
 const supportedLanguage = ['en', 'zh', 'ch'];
 
 const getUserLanguage = () => {
-  const userLanguage = localStorage.getItem('language') || null;
+  const userLanguage = localStorage.getItem('language') ? JSON.parse(localStorage.getItem('language')).val : null;
   const environmentLanguage = navigator.language.slice(0, 2);
   const defaultLanguage = default_language;
   const language = userLanguage || (supportedLanguage.includes(environmentLanguage) ? environmentLanguage : defaultLanguage )

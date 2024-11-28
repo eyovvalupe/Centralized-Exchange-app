@@ -14,9 +14,9 @@
           <div :class="item.icon"></div>
         </div>
         <div class="name">{{ item.name }}</div>
-        <div :class="checked == item.val ? 'check' : 'uncheck'">
+        <div :class="checked.val == item.val ? 'check' : 'uncheck'">
           <!-- <Checkbox checked-color="#014CFA" :name="item.val" /> -->
-          <div :class="checked == item.val ? 'inner' : ''"></div>
+          <div :class="checked.val == item.val ? 'inner' : ''"></div>
         </div>
       </div>
     </CheckboxGroup>
@@ -47,11 +47,11 @@ const envLangList = ref(
     return acc;
   }, [])
 );
-const checked = ref(localStorage.getItem("language") || "");
+const checked = ref(JSON.parse(localStorage.getItem("language")) || "");
 const langList = ref(_langMap);
 const filteredLangList = ref(langList.value.filter(item => envLangList.value.includes(item.val)))
 const clickItem = (item) => {
-  localStorage.setItem('lang', JSON.stringify(item))
+  localStorage.setItem('language', JSON.stringify(item))
   store.commit("setLanguage", item)
   checked.value = [item.val];
   locale.value = item.val

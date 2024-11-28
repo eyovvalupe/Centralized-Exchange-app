@@ -4,7 +4,7 @@
     <!-- 头部 -->
     <HeaderTabs
       v-model:active="activeTab"
-      :tabs="[$t('assets.header_total'), $t('assets.header_wallet'), $t('assets.header_order')]"
+      :tabs="[t('assets.header_total'), t('assets.header_wallet'), t('assets.header_order')]"
       @change="changeActiveTab(activeTab, true)"
     />
 
