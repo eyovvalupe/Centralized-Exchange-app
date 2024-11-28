@@ -44,6 +44,7 @@
                 </div>
             </div>
 
+
             <div class="win-animate" @click="showWin = false;" v-show="showWin">
                 <div class="win-animate-gold">
                     <img src="/static/img/trade/gold.png" @load="goldLoad = true" />
@@ -190,7 +191,7 @@ const getInfo = () => {
         if (res.data) {
             if (res.data.profit > 0 && res.data.status == 'close') {
                 animateProfit.value = 0
-                showWin.value = true
+                // showWin.value = true
                 incrementCounter(res.data.profit)
             }
 
