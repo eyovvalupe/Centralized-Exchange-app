@@ -161,7 +161,7 @@ const changeActiveTab = (val) => {
   showData.value = false;
   activeTab.value = val;
   store.commit("setCurrSelectedWallet", val);
-  store.dispatch("updateWallet");
+  store.dispatch("updateWallet",val);
   store.dispatch("updateAssets");
 };
 // 刷新总资产

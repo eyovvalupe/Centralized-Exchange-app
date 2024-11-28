@@ -2,7 +2,7 @@
 <template>
     <div class="recgarge_item" @click="goInfo">
         <div class="icon_box" v-if="item.currency">
-            <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
+            <img class="rounded-full" :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
         </div>
         <div class="content">
             <div class="item_title">{{ item.currency }}</div>
@@ -79,6 +79,7 @@ const formatDate = (date) => {
     .icon_box {
         width: 0.84rem;
         height: 0.84rem;
+        
     }
 
     .content {

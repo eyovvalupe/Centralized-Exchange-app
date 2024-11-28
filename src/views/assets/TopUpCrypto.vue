@@ -33,6 +33,7 @@
                   <img
                     :src="`/static/img/crypto/${form.currency.toUpperCase()}.png`"
                     alt="currency"
+                    class="rounded-full"
                   />
                 </div>
                 <span>{{ form.currency || "" }}</span>
@@ -155,6 +156,7 @@
               <img
                 :src="`/static/img/crypto/${keyStr.toUpperCase()}.png`"
                 alt="currency"
+                class="rounded-full"
               />
             </div>
             <span>{{ keyStr.toUpperCase() }}</span>

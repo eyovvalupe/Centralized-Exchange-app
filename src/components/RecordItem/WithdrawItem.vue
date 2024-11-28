@@ -7,7 +7,7 @@
         :src="`/static/img/crypto/${item.account.symbol}.png`"
         alt="img"
       /> -->
-      <div :class="`${item.account.symbol}_icon`"></div>
+      <div :class="`${item.currency.toLocaleLowerCase()}_icon`"></div>
       <img
         v-if="item.account && item.account.bank_name"
         src="/static/img/user/card_type_b.png"

@@ -22,7 +22,7 @@
                 <div class="status_icon">
                     <img src="/static/img/assets/status_error.png?241024" alt="img">
                 </div>
-                <div  class="status_name">{{ $t('withdrawInfo.Failed') }}</div>
+                <div  class="status_name">{{ $t('withdrawInfo.failed') }}</div>
                 <div class="status_desc">{{ $t('withdrawInfo.failurePrompt') }}</div>
             </div>
             <div class="status" v-else>
@@ -39,19 +39,19 @@
         <div class="bottom_info">
             <div class="bottom_item">
                 <div class="name">{{ $t('withdrawInfo.withdrawalAmount') }}</div>
-                <div class="value">{{parseFloat(orderData.amount).toFixed(2)}} <span class="value_currency">{{orderData.currency}}</span></div>
+                <div class="value">{{orderData.amount ? parseFloat(orderData.amount).toFixed(2) : '--'}} <span class="value_currency">{{orderData.currency}}</span></div>
             </div>
             <div class="bottom_item">
                 <div class="name">{{ $t('withdrawInfo.receivingAccount') }}</div>
-                <div class="value">{{orderData.account ? orderData.account.symbol.toUpperCase() || '' : '' }} {{ orderData.account ? getAddress(orderData.account.address) || '--' : '--' }}</div>
+                <div class="value">{{orderData.account ? orderData.account.symbol || '' : '' }} {{ orderData.account ? getAddress(orderData.account.address) || '--' : '--' }}</div>
             </div>
             <div class="bottom_item">
                 <div class="name">{{ $t('withdrawInfo.withdrawalCurrency') }}</div>
-                <div class="value">USDT</div>
+                <div class="value">{{ orderData.account ? orderData.account.symbol : '' }}</div>
             </div>
             <div class="bottom_item">
                 <div class="name">{{ $t('withdrawInfo.withdrawalNetwork') }}</div>
-                <div class="value">TR200</div>
+                <div class="value">{{ orderData.account ? orderData.account.network : '' }}</div>
             </div>
            
             <div class="bottom_item">
@@ -80,9 +80,11 @@ import { useRoute } from "vue-router"
 import { _copyTxt } from "@/utils/index"
 import LoadEffect from '@/components/LoadEffect.vue'
 import router from '@/router'
-import store from '@/store'
 
-const locale = ref(JSON.parse(localStorage.getItem('language')).val)
+import { useI18n } from "vue-i18n";
+
+const { locale } = useI18n();
+
 
 const route = useRoute()
 
