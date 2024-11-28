@@ -56,7 +56,7 @@ export default {
     code_con1: "Verification code sent to your",
     code_con2: "Enter the 6-digit code",
     code_jump: "Skip verification",
-    code_again: 'Resend code',
+    code_again: "Resend code",
     code_jump_title: "Skip verification",
     code_jump_confirm: "Confirm",
     success_sign_up: "Sign-up successful",
@@ -111,7 +111,8 @@ export default {
     first_basic_info: "Basic Info",
     first_upload_card: "Upload ID",
     first_title: "Verify Your Identity",
-    first_description: "For security, we need to match your details with your government-issued ID.",
+    first_description:
+      "For security, we need to match your details with your government-issued ID.",
     first_legal_name: "Full Name",
     first_card_id: "ID Number",
     first_birthday: "Date of Birth",
@@ -126,18 +127,21 @@ export default {
     second_card_back: "Back of ID",
     second_card_hand: "Hold your ID",
     second_upload_rule: "Photo Guidelines",
-    second_upload_description: "Ensure the ID is clear, well-lit, and in focus.",
+    second_upload_description:
+      "Ensure the ID is clear, well-lit, and in focus.",
     second_standard_img: "Standard Photo",
     second_failed1: "Incomplete Image",
     second_failed2: "Blurry Image",
     second_failed3: "Too Much Flash",
     second_btn: "Submit",
     final_title: "Identity Verification Submitted",
-    final_description: "Your ID is being reviewed. We will keep your info confidential.",
+    final_description:
+      "Your ID is being reviewed. We will keep your info confidential.",
     final_ok: "OK",
     status_success: "Verified",
     status_pending: "Under Review",
-    status_pending_description: "Your verification is under review, please be patient.",
+    status_pending_description:
+      "Your verification is under review, please be patient.",
     status_failure: "Verification Failed",
     status_reverify: "Retry Verification",
     status_service: "Contact Support",
@@ -150,12 +154,13 @@ export default {
     copy_success: "Copied",
     confirm_title: "Skip linking Google Authenticator?",
     google_result_title: "Linked",
-    google_result_con: "If you have any questions, please contact customer support",
+    google_result_con:
+      "If you have any questions, please contact customer support",
     google_result_btn: "OK",
     google_input_title: "Google Authenticator Code",
     google_input_con: "Enter 6-digit code",
     google_input_btn_cancel: "Cancel",
-    google_input_btn_confirm: "Confirm"
+    google_input_btn_confirm: "Confirm",
   },
   service: {
     page_title: "Customer Service",
@@ -174,9 +179,10 @@ export default {
     google_status_not: "Unlinked",
     google_status_ok: "Linked",
     no_google_dialog_title: "Google Authenticator",
-    no_google_dialog_con: "You haven't bound Google Authenticator. Set it up now?",
+    no_google_dialog_con:
+      "You haven't bound Google Authenticator. Set it up now?",
     success_title: "Success",
-    success_btn: "Close"
+    success_btn: "Close",
   },
   change_login_pw: {
     page_title: "Change Login Password",
@@ -251,12 +257,12 @@ export default {
     over_view_stock: "Stock",
     over_view_contract: "Contracts",
     over_view_forex: "Forex",
-    over_view_trade: "Commodity",
+    over_view_trade: "Block Trade",
     wallet_header_cash: "Cash",
     wallet_header_stock: "Stock",
     wallet_header_contract: "Contract",
     wallet_header_forex: "Forex",
-    wallet_header_trade: "Commodity",
+    wallet_header_trade: "Block Trade",
     wallet_cash_balance: "Cash Balance",
     wallet_stock_balance: "Stock Balance",
     wallet_contract_balance: "Contract Balance",
@@ -274,7 +280,7 @@ export default {
     safety_trade_placeholder: "Enter your trade password",
     safety_trade_cancel: "Cancel",
     safety_trade_confirm: "Confirm",
-    safety_trade_no_password: "Please enter your password"
+    safety_trade_no_password: "Please enter your password",
   },
   topUpCrypto: {
     recharge: "Deposit Funds",
@@ -291,6 +297,12 @@ export default {
     networkSelection: "Choose Network",
     no_amount_msg: "Please Entera Deposit Amount",
     getting_rate_msg: "Fetching Exchange Rate",
+    no_auth_title: "Identity Verification",
+    no_auth_con:
+      "You have not completed identity verification. Would you like to verify now?",
+    no_google_msg: "Google Authenticator",
+    no_google_con:
+      "You have not linked Google Authenticator. Would you like to link it now?",
   },
   withdraw: {
     withdraw: "Withdraw Funds",
@@ -314,9 +326,11 @@ export default {
     no_account_msg: "Please add a receiving account",
     success_msg: "Operation successful",
     no_auth_title: "Identity Verification",
-    no_auth_con: "You haven't completed identity verification. Would you like to verify now?",
+    no_auth_con:
+      "You haven't completed identity verification. Would you like to verify now?",
     no_google_msg: "Google Authenticator",
-    no_google_con: "You haven't linked Google Authenticator. Would you like to link it now?",
+    no_google_con:
+      "You haven't linked Google Authenticator. Would you like to link it now?",
   },
   recharging: {
     recharge: "Deposit Funds",
@@ -379,7 +393,7 @@ export default {
     transfer_map_stock: "Stock",
     transfer_map_futures: "Contract",
     transfer_map_forex: "Forex",
-    transfer_map_trade: "Commodity"
+    transfer_map_trade: "Block Trade",
   },
   recordList: {
     financialRecords: "Transaction History",
@@ -413,7 +427,7 @@ export default {
     closed: "Closed",
   },
   home: {
-    login: 'Log In',
+    login: "Log In",
     loginDesc: "Log in to view your assets",
     totalAssets: "Total Assets",
     fastTrading: "Fast Trading",
@@ -428,8 +442,8 @@ export default {
     stock: {
       updateTime: "Last Updated",
       riseAndFall: "Price Changes",
-      up: 'Up',
-      down: 'Down',
+      up: "Up",
+      down: "Down",
       limitUpPursuit: "Limit-Up Watch",
       profitMakingEffect: "Profit Potential",
       strong: "Strong",
