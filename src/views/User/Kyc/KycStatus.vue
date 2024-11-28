@@ -27,10 +27,10 @@
       <template v-if="kycInfo.status == 'review'">
         <div class="review_icon"></div>
         <div class="text-[0.36rem] text-[#061023] my-[0.24rem]">
-          {{ $t("kyc.status_pendding") }}
+          {{ $t("kyc.status_pending") }}
         </div>
         <div class="text-[#8F92A1] text-[0.28rem] mb-[0.4rem]">
-          {{ $t("kyc.status_pendding_description") }}
+          {{ $t("kyc.status_pending_description") }}
         </div>
       </template>
       <!-- 失败 -->

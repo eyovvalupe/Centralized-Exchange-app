@@ -1,7 +1,7 @@
 <!-- 收款账户 -->
 <template>
   <div class="page page_account">
-    <Top :title="'收款账户'"/>
+    <Top :title="t('account.page_title')" />
     <Tabs
       type="card"
       class="tab_content tabs"
@@ -12,30 +12,36 @@
       animated
       shrink
     >
-      <Tab :title="'加密货币'" name="0">
+      <Tab :title="t('account.crypto')" name="0">
         <div class="tab_data">
           <div class="no_data" v-if="cryptoList.length == 0">
             <img src="/static/img/user/noData.svg" />
-            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
+            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]"
+              >{{ $t("account.no_data") }}</span
+            >
           </div>
           <div class="list" v-else>
-            <CryptoList :list="cryptoList"/>
+            <CryptoList :list="cryptoList" />
           </div>
         </div>
       </Tab>
-      <Tab :title="'银行卡'" name="1">
+      <Tab :title="t('account.bank')" name="1">
         <div class="tab_data">
           <div class="no_data" v-if="bankList.length == 0">
             <img src="/static/img/user/noData.svg" />
-            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">暂无数据</span>
+            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]"
+              >{{ $t("account.no_data") }}</span
+            >
           </div>
           <div class="list" v-else>
-            <BankList :list="bankList"/>
+            <BankList :list="bankList" />
           </div>
         </div>
       </Tab>
     </Tabs>
-    <div class="add_btn" @click="goAddAccount"><span class="text-[white] text-[0.36rem] font-normal">添加收款账户</span></div>
+    <div class="add_btn" @click="goAddAccount">
+      <span class="text-[white] text-[0.36rem] font-normal">{{ $t("account.add_account_btn") }}</span>
+    </div>
   </div>
 </template>
 
@@ -47,13 +53,15 @@ import router from "@/router";
 import { _hiddenAccount } from "@/utils/index";
 import { useRoute, useRouter } from "vue-router";
 import { _userinfo } from "@/api/api";
-import Bank from './Bank.vue'
-import Crypto from './Crypto.vue'
-import Check from './Check.vue'
+import Bank from "./Bank.vue";
+import Crypto from "./Crypto.vue";
+import Check from "./Check.vue";
 import CryptoList from "./CryptoList.vue";
 import BankList from "./BankList.vue";
 import Top from "@/components/Top.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const route = useRoute();
 
 store.dispatch("updateAccountList");
@@ -66,59 +74,43 @@ const bankList = computed(() =>
 const cryptoList = computed(() =>
   accountList.value.filter((item) => item.channel == "crypto")
 ); // 加密货币
-const selectedPayment = computed(() => store.state.selectedPayment || '0')
+const selectedPayment = computed(() => store.state.selectedPayment || "0");
 // tabs
 const active = ref(selectedPayment.value);
 const changeTab = (key) => {
-  store.commit('setSelectedPayment', key)
+  store.commit("setSelectedPayment", key);
   active.value = selectedPayment.value;
 };
 
 // 打开添加类型选择弹窗
 const showAS = ref(false);
-const actions = [
-  { name: "银行卡", value: "bank" },
-  { name: "加密货币", value: "crypto" },
-];
 const goAddAccount = async () => {
-  console.log(userInfo.value)
+  console.log(userInfo.value);
   //身份认证检测
   if (userInfo.value.kycl2 != 2) {
     return showConfirmDialog({
-      title: "身份未认证",
-      message: "您的身份还未进行认证，请先认证再添加收款账户",
-      confirmButtonText: "去认证"
-    }).then(() => jump("kyc"))
+      title: t('account.no_kyc_title'),
+      message: t('account.no_kyc_con'),
+      confirmButtonText: t('account.no_kyc_confirm'),
+    })
+      .then(() => jump("kyc"))
       .catch(() => goBack());
   }
 
   // google检测
   if (userInfo.value.kycl2 == 2 && !userInfo.value.googlebind) {
     return showConfirmDialog({
-      title: "谷歌验证器未绑定",
-      message: "您的谷歌验证器还未绑定，请先绑定再添加收款账户",
-    }).then(() => {
-      jump("google");
+      title: t('account.no_google_title'),
+      message: t('account.no_google_con'),
+      confirmButtonText: t('account.no_google_confirm'),
     })
-    .catch(() => goBack());
+      .then(() => {
+        jump("google");
+      })
+      .catch(() => goBack());
   }
   // showAS.value = true;
-  jump('bank')
-};
-const onSelect = async (item) => {
-  showAS.value = false;
-  if (item.value == "bank") {
-    // 银行卡
-    if (userInfo.value.kycl2 != 2) {
-      return showConfirmDialog({
-        title: "身份认证",
-        message: "你还未完成身份认证，是否去认证?",
-      }).then(() => {
-        jump("kyc");
-      });
-    }
-  }
-  jump(item.value);
+  jump("bank");
 };
 
 // 添加
@@ -160,7 +152,6 @@ const goBack = () => {
     margin-top: 1.2rem;
     height: 0.92rem;
     margin-bottom: 0.4rem;
-
   }
 
   :deep(.van-tabs__nav) {
@@ -258,5 +249,4 @@ const goBack = () => {
     color: #014cfa;
   }
 }
-
 </style>

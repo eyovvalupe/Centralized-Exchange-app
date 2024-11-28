@@ -37,7 +37,7 @@ const props = defineProps({
     }
 })
 const symbol = computed(() => props.symbol || '')
-watch(()=>props.symbol, val => {
+watch(() => props.symbol, val => {
     setTimeout(() => {
         initData()
     }, 0)
@@ -233,7 +233,6 @@ const getData = (params) => { // 获取数据
             }
         }
         _time(params).then(res => {
-            console.log(res)
             if (res.code == 200) {
                 const dd = res.data.map(item => {
                     item.open = item.price

@@ -17,7 +17,7 @@
       <img src="/static/img/user/success.svg" alt="√" />
     </div>
     <div class="title">{{ $t("kyc.final_title") }}</div>
-    <div class="text-[0.24rem] text-[#8F92A1] -mt-[0.9rem] mb-[0.8rem]">
+    <div class="text-[0.24rem] text-[#8F92A1] text-center -mt-[0.9rem] mb-[0.8rem]">
       {{ $t("kyc.final_description") }}
     </div>
     <Button

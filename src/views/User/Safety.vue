@@ -1,31 +1,39 @@
 <!-- 安全 -->
 <template>
   <div class="page page-safety">
-    <Top :title="'安全'" />
+    <Top :title="t('safety.page_title')" />
 
     <div class="navs">
       <div class="nav" @click="checkGG('password')">
         <div class="nav_icon">
           <div class="change_login_pw"></div>
         </div>
-        <div class="nav_title">登录密码</div>
+        <div class="nav_title">{{ $t("safety.change_login_pw") }}</div>
         <Icon name="arrow" />
       </div>
       <div class="nav" @click="checkGG('fund')">
         <div class="nav_icon">
-            <div class="change_trade_pw"></div>
+          <div class="change_trade_pw"></div>
         </div>
-        <div class="nav_title">交易密码</div>
+        <div class="nav_title">{{ $t("safety.change_trade_pw") }}</div>
         <Icon name="arrow" />
       </div>
       <div class="nav" @click="goGG">
         <div class="nav_icon">
-            <div class="google_verify"></div>
+          <div class="google_verify"></div>
         </div>
-        <div class="nav_title">谷歌验证器</div>
+        <div class="nav_title">{{ $t("safety.bind_google_auth") }}</div>
         <div class="nav_tip">
-          <span style="color: #ff3b30; font-size: 0.3rem;" v-if="!userInfo.googlebind">未绑定</span>
-          <span style="color: #18b762; font-size: 0.3rem;" v-if="userInfo.googlebind">已绑定</span>
+          <span
+            style="color: #ff3b30; font-size: 0.3rem"
+            v-if="!userInfo.googlebind"
+            >{{ $t("safety.google_status_not") }}</span
+          >
+          <span
+            style="color: #18b762; font-size: 0.3rem"
+            v-if="userInfo.googlebind"
+            >{{ $t("safety.google_status_ok") }}</span
+          >
         </div>
         <Icon name="arrow" />
       </div>
@@ -39,7 +47,9 @@ import { Icon, showConfirmDialog } from "vant";
 import store from "@/store";
 import { computed } from "vue";
 import router from "@/router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const userInfo = computed(() => store.state.userInfo || {});
 
 const jump = (name) => {
@@ -60,8 +70,8 @@ const goGG = () => {
 const checkGG = async (name) => {
   if (!userInfo.value.googlebind) {
     return showConfirmDialog({
-      title: "谷歌验证器",
-      message: "你还未绑定谷歌验证器，是否去绑定?",
+      title: t('safety.bind_google_auth'),
+      message: t('safety.no_google_dialog_con'),
     }).then(() => {
       jump("google");
     });

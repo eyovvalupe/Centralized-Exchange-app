@@ -1,7 +1,7 @@
 <!-- 自选推荐 -->
 <template>
   <div class="recommend_list">
-    <Loading  v-show="props.loading" />
+    <Loading v-show="props.loading" />
     <div class="list_box" v-if="props.list.length && !props.loading">
       <template  v-for="(item, i) in props.list" :key="i">
       <div
@@ -12,7 +12,7 @@
         <!-- <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div> -->
         <div class="symbol">{{ item.symbol }}</div>
         <div class="name">{{ item.name || "--" }}</div>
-        <div class="price">{{ item.price ? fixLittleNum(item.price, 2) : "--" }}</div>
+        <div class="price">{{ item.price ? item.price : "--" }}</div>
         <div
           class="percent"
           :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']"
@@ -24,15 +24,11 @@
           }}%
         </div>
 
-        <div class="sparkLine">
-          <SparkLine
-            v-if="item.points"
-            style="width: 100%; height: 0.45rem"
-            :points="item.points"
-            :ratio="item.ratio"
-          />
+          <div class="sparkLine">
+            <SparkLine v-if="item.points" style="width: 100%; height: 0.45rem" :points="item.points"
+              :ratio="item.ratio" />
+          </div>
         </div>
-      </div>
       </template>
     </div>
   </div>
@@ -47,7 +43,6 @@ import store from "@/store";
 import router from "@/router";
 import { _add, _del } from "@/api/api";
 import eventBus from "@/utils/eventBus";
-import { fixLittleNum } from "@/utils/fixLittleNum";
 
 
 const emits = defineEmits(["change"]);
@@ -71,9 +66,9 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  showLen:{
-    type:Number,
-    default:0
+  showLen: {
+    type: Number,
+    default: 0
   }
 });
 

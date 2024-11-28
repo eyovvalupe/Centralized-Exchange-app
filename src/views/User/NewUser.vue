@@ -97,7 +97,7 @@
       </div>
     </div>
     <div
-      class="flex items-center w-full mb-[0.64rem] mt-[0.56rem] justify-between px-[0.18rem]"
+      class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.18rem]"
     >
       <div
         @click="jump('account', true)"
@@ -127,16 +127,16 @@
         </div>
         <div
           v-if="token"
-          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
+          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-[#E8503A]'
               : `${userInfo.kycl2 == 1 ? 'bg-[#014CFA]' : 'bg-[#18B762]'}`,
           ]"
         >
-          <span v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
-          <span v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pendding_verified") }}</span>
-          <span v-else>{{ $t("user_page.already_verified") }}</span>
+          <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
+          <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified") }}</span>
+          <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
         <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.verify_identity") }}</div>
       </div>
@@ -186,10 +186,10 @@
         <div class="lang">
           <div style="width: 0.57rem; height: 0.57rem; padding: 0.01rem;" class="mr-[0.1rem]">
             <div
-            :class="i18Data.locale == 'zh' || i18Data.locale == 'ch' ? 'china_icon' : 'us_icon'"
+            :class="Object.keys(language).length ? language.icon : defaultLang.icon"
           ></div>
           </div>
-          <span class="font-1">{{ i18Data.name }}</span>
+          <span class="font-1">{{ Object.keys(language).length ? language.name : defaultLang.name }}</span>
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
@@ -232,18 +232,24 @@ import { _logout } from "@/api/api";
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import { useI18n } from "vue-i18n";
+import { _langMap } from "@/utils/dataMap";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const messageNum = computed(() => storeChat.state.messageNum);
 const token = computed(() => store.state.token);
 const userInfo = computed(() => store.state.userInfo || {});
-const i18Data = computed(() => store.state.i18Data || {});
+const language = computed(() => store.state.language || {});
 const slides = ["/static/img/user/userid.webp", "/static/img/user/userid.webp"];
 const currentSlide = ref(0);
-const getFirstCharacter = (username) => {
-  return username ? username.charAt(0) : "-";
-};
+// const getFirstCharacter = (username) => {
+//   return username ? username.charAt(0) : "-";
+// };
+
+const defaultLang = _langMap.reduce((acc, cur) => {
+  if (cur.val == locale.value) acc = cur
+  return acc
+}, {})
 
 const loginout = () => {
   if (token.value) {

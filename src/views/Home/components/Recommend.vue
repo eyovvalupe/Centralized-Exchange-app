@@ -12,7 +12,7 @@
             <div v-if="active == 1" class="recommend_charts">
                 <!-- 折线图 -->
                 <div class="padding_block stock_chatsline" v-if="!pageLoading && marketRecommndList.length">
-                    <div class="title" v-if="activeStockSymbol.price">{{ fixLittleNum(activeStockSymbol.price, 2) }}</div>
+                    <div class="title" v-if="activeStockSymbol.price">{{ activeStockSymbol.price }}</div>
                     <div class="subtitle" v-if="activeStockSymbol.ratio && !isNaN(activeStockSymbol.ratio)"
                         :class="[(activeStockSymbol.ratio > 0 ? 'up' : 'down')]">{{
                             activeStockSymbol.ratio > 0 ? '+' : '' }}{{ activeStockSymbol.ratio  }}%
@@ -32,7 +32,7 @@
                                     <!-- <div class="tab_subtitle">{{ item.name || '--' }}</div> -->
                                     <div style="display: flex;align-items: center;justify-content: space-between;">
                                         <div class="tab_num" v-if="item.price">{{ item.price ?
-                                            fixLittleNum(item.price, 2) : '--' }}</div>
+                                            item.price : '--' }}</div>
                                         <div class="tab_num" v-if="item.ratio"
                                             :class="[(item.ratio > 0 ? 'up' : 'down')]">
                                             {{ isNaN(item.ratio) ? '--' : item.ratio }}%</div>
@@ -76,7 +76,6 @@ import Loading from "@/components/Loaidng.vue";
 import SparkLine from "@/components/SparkLine.vue"
 import AreaChart from "@/components/KlineCharts/AreaChart.vue"
 import { _news } from "@/api/api"
-import { fixLittleNum } from "@/utils/fixLittleNum";
 
 
 const emits = defineEmits(['ready'])

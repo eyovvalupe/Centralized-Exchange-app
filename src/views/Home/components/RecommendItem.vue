@@ -5,7 +5,7 @@
         <!-- <div class="tab_subtitle">{{ item.name || '--' }}</div> -->
         <div style="display: flex;align-items: center;justify-content: space-between;">
             <div class="tab_num" v-if="props.item.price">{{ props.item.price ?
-                fixLittleNum(props.item.price, 2) : '--' }}</div>
+                props.item.price : '--' }}</div>
             <div class="tab_num" v-if="props.item.ratio" :class="[(props.item.ratio > 0 ? 'up' : 'down')]">
                 {{ isNaN(props.item.ratio) ? '--' : props.item.ratio }}%</div>
         </div>
@@ -19,7 +19,6 @@
 
 <script setup>
 import SparkLine from "@/components/SparkLine.vue"
-import { fixLittleNum } from "@/utils/fixLittleNum";
 const props = defineProps({
     item: {
         type: Object,

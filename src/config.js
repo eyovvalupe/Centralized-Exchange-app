@@ -20,3 +20,5 @@ export const CHAT_WEBSOCKET = 'wss://9095.sunex.game'; // 客服ws地址
 // export const UPLOAD_ADDRESS = 'https://api.github.com/repos/watershui1222/image/contents/'; 
 export const UPLOAD_ADDRESS = 'https://api.github.com/repos/eyovvalupe/saveImage/contents/';
 export const UPLOAD_TOKEN = 'Bearer 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';
+
+export const default_language = 'en'

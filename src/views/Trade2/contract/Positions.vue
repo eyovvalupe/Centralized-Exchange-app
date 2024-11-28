@@ -37,7 +37,6 @@
         <Popup v-model:show="showInfo" position="right" style="width:100%;height:100%;" teleport="body">
             <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
                 @back="showInfo = false" />
-
         </Popup>
 
         <!-- 平仓 -->
@@ -301,7 +300,7 @@ watch(() => store.state.token, () => {
 
 const getRatio = (num) => {
     if (!num) return '--'
-    return new Decimal(num).mul(100) + '%'
+    return new Decimal(num) + '%'
 }
 
 
@@ -630,9 +629,9 @@ getSessionToken()
         .state {
             width: 0.68rem;
             height: 0.36rem;
-            color: #E8503A;
             border-radius: 0.12rem;
-            background: rgba(232, 80, 58, 0.10);
+            color: #18B762;
+            background-color: rgba(24, 183, 98, 0.08);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -641,8 +640,8 @@ getSessionToken()
         }
 
         .state-short {
-            color: #18B762;
-            background-color: rgba(24, 183, 98, 0.08);
+            background: rgba(232, 80, 58, 0.10);
+            color: #E8503A;
         }
 
         .amount {

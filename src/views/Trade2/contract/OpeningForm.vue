@@ -135,7 +135,10 @@
                     btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum"
                     tip-align="right" :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
                     <template #title-right>
-                        <span style="color:#014CFA" @click="openConfirmBox" v-if="maxStockNum < 1">账户余额不足</span>
+                        <span style="color:#014CFA" @click="openConfirmBox(1)" v-if="maxStockNum < 1">账户余额不足</span>
+                        <span style="color:#014CFA;font-size: 12px;" v-else @click="openConfirmBox(2)"><span
+                                style="color:#666D80;">余额</span> {{
+                                    stockWalletAmount }} {{ stockCurrency }}</span>
                     </template>
                 </FormItem>
 
@@ -173,7 +176,7 @@
             <div class="item">
                 <div class="item_name">开仓</div>
                 <div class="item_val">
-                    <div class="tag" :class="activeType == 1 ? 'red_tag' : 'green_tag'">{{ activeType == 1 ? '买涨' :
+                    <div class="tag" :class="activeType == 1 ? 'green_tag' : 'red_tag'">{{ activeType == 1 ? '买涨' :
                         '买跌' }}
                     </div>
                     <div class="tag">{{ modeMap[params.lever_type] }}</div>
@@ -198,11 +201,11 @@
                 </div>
                 <div v-if="props.activeTab == 2">
                     <div class="item_val" style="margin-bottom:0.12rem" v-if="mode == 2">
-                        <div class="tag red_tag">止盈</div>
+                        <div class="tag green_tag">止盈</div>
                         <div class="lever">{{ params.stop_profit_price }}</div>
                     </div>
                     <div class="item_val">
-                        <div class="tag green_tag">止损</div>
+                        <div class="tag red_tag ">止损</div>
                         <div class="lever">{{ params.stop_loss_price }}</div>
                     </div>
                 </div>
@@ -223,8 +226,8 @@
 
             <div class="subtitle">交易密码</div>
             <div class="item pass_ipt">
-                <input v-model="safePass" placeholder="请输入交易密码" :type="showPassword ? 'text' : 'password'"
-                    class="ipt" />
+                <input style="width:100%;height:100%" v-model="safePass" placeholder="请输入交易密码"
+                    :type="showPassword ? 'text' : 'password'" class="ipt" />
                 <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
                 <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
             </div>
@@ -452,7 +455,7 @@ const stockWalletAmount = computed(() => { // 股票账户余额
 const stockCurrency = computed(() => { // 股票账户余额
     const target = elseWallet.value.find(item => item.account == 'futures')
     if (target) return target.currency
-    return 0
+    return ''
 })
 
 const maxStockNum = computed(() => { // 最大可买 可卖
@@ -469,12 +472,20 @@ const maxStockNum = computed(() => { // 最大可买 可卖
 
 
 
-const openConfirmBox = () => {
+const openConfirmBox = (type) => { // type 1-余额不足 2-余额展示
+    const title = type == 1 ? '账户余额不足' : '账户余额'
+    const content = type == 1 ? "<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">合约账户余额 <span style=\"font-weight:600;color:#014CFA;\">" + stockWalletAmount.value + "</span> " + stockCurrency.value + "</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>"
+        : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
+        <div style="color:#061023;font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">合约账户余额</div>
+        <div style="display:flex;align-items:center;justify-content:center;">
+            <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${stockWalletAmount.value}</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${stockCurrency.value}</span>
+        </div>
+        `
     showConfirmDialog({
         closeOnClickOverlay: true,
         className: "van-custom-confirm-dialog",
-        title: "账户余额不足",
-        message: "<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">合约账户余额 <span style=\"font-weight:600;color:#014CFA;\">" + stockWalletAmount.value + "</span> " + stockCurrency.value + "</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>",
+        title: title,
+        message: content,
         allowHtml: true,
         confirmButtonText: "去划转",
         cancelButtonText: "去充值",
@@ -603,8 +614,11 @@ const inputStop = key => { // 输入止盈止损
 
 const submit1 = () => {
     if (!currStock.value.symbol) return showToast('请选择合约')
-    console.log(form1.value.volume)
     if (!form1.value.volume || form1.value.volume < min.value) return showToast(`请输入张数`)
+    // 限价校验
+    if (props.activeTab == 1) {
+        if (!form1.value.price) return showToast('请输入价格')
+    }
     // 止盈止损校验
     if (props.activeTab == 2) {
         if (mode.value == 1) { // 简单模式
@@ -627,7 +641,7 @@ const submit1 = () => {
         lever: form1.value.lever,
         price_type: form1.value.price_type,
 
-        price: form1.value.price || '',
+        price: form1.value.price_type == 'market' ? '' : (form1.value.price || ''),
         stop_profit_type: form1.value.stop_profit_type,
         stop_profit_price: form1.value.stop_profit_price,
         stop_loss_type: form1.value.stop_loss_type,

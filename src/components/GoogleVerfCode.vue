@@ -16,9 +16,9 @@
         @click="close"
       ></div>
       <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
-        谷歌验证码
+        {{ $t("google_auth.google_input_title") }}
       </div>
-      <div class="text-[0.3rem] mt-[0.34rem] mb-[0.6rem]">请输入6位数代码</div>
+      <div class="text-[0.3rem] mt-[0.34rem] mb-[0.6rem]">{{ $t("google_auth.google_input_con") }}</div>
       <PasswordInput
         :focused="showKeyboard"
         @focus="focus"
@@ -41,7 +41,7 @@
           @click="close"
           class="flex justify-center items-center rounded-[1.6rem] border-[0.02rem] border-[#D0D8E2] text-[#666D80] w-[3.27rem] h-[0.97rem]"
         >
-          取消
+        {{ $t("google_auth.google_input_btn_cancel") }}
         </div>
         <Button
           :loading="loading"
@@ -51,7 +51,7 @@
           class="btn"
           type="primary"
           @click="submit"
-          >确认</Button
+          >{{ $t("google_auth.google_input_btn_confirm") }}</Button
         >
       </div>
     </div>
@@ -61,6 +61,9 @@
 <script setup>
 import { Popup, PasswordInput, Button } from "vant";
 import { ref, computed, watch } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const emits = defineEmits(["submit"]);
 
 const loading = ref(false);
@@ -75,16 +78,17 @@ watch(val, (v) => {
   if (v && v.length == 6) {
     showKeyboard.value = false;
   }
-  for(let i = 0; i< 6 ;i++){
-      let inputStyle = document.getElementsByClassName('van-password-input__item')[i].style;
-      if(v.length != 6 && i<= v.length){
-        inputStyle.borderColor = "#014CFA";
-        inputStyle.color = "#014CFA";
-      }
-      else {
-        inputStyle.borderColor = "#D0D8E2";
-        inputStyle.color = "#666D80";
-      }     
+  for (let i = 0; i < 6; i++) {
+    let inputStyle = document.getElementsByClassName(
+      "van-password-input__item"
+    )[i].style;
+    if (v.length != 6 && i <= v.length) {
+      inputStyle.borderColor = "#014CFA";
+      inputStyle.color = "#014CFA";
+    } else {
+      inputStyle.borderColor = "#D0D8E2";
+      inputStyle.color = "#666D80";
+    }
   }
 });
 
@@ -112,7 +116,6 @@ const submit = () => {
 defineExpose({
   open,
 });
-
 </script>
 
 <style lang="less" scoped>
@@ -156,8 +159,6 @@ defineExpose({
     font-weight: 400;
     margin-bottom: 0.4rem;
   }
-
-  
 }
 
 .typing_dialog {
@@ -184,19 +185,20 @@ defineExpose({
   padding-bottom: 0.2rem;
 }
 .code_ipt {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 
-    :deep(.van-password-input__item) {
-      border: 0.02rem solid #eceff3;
-      background-color: #fff;
-      width: 1rem;
-      height: 1.2rem;
-      box-sizing: border-box;
-      border-radius: 0.32rem;
-      &:has(.van-password-input__cursor) {
-        border: 0.02rem solid #014cfa;
-      }
+  :deep(.van-password-input__item) {
+    border: 0.02rem solid #eceff3;
+    background-color: #fff;
+    width: 1rem;
+    height: 1.2rem;
+    box-sizing: border-box;
+    border-radius: 0.32rem;
+    font-size: 0.48rem;
+    &:has(.van-password-input__cursor) {
+      border: 0.02rem solid #014cfa;
     }
   }
+}
 </style>

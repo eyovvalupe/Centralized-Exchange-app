@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="flex mt-[0.32rem] justify-between mb-[0.32rem]"
-    v-if="recomendedCryptoList.length"
-  >
+  <div class="flex mt-[0.32rem] justify-between mb-[0.32rem]" v-if="recomendedCryptoList.length">
     <!-- <div
       class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
     >
@@ -20,9 +17,7 @@
         去邀请
       </div>
     </div> -->
-    <div
-      class=" w-full h-[3.48rem] relative"
-    >
+    <div class=" w-full h-[3.48rem] relative">
       <div class="flex items-center justify-between py-[0.24rem]">
         <div class="flex items-center gap-1">
           <div class="font-bold text-[0.32rem]">热卖</div>
@@ -30,30 +25,20 @@
         </div>
         <div class=""></div>
       </div>
-      <div
-        class="bg-[#FFF] w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.24rem]"
-      >
-        <Carousel
-          :autoplay="5000"
-          :wrap-around="true"
-          :mouseDrag="true"
-          v-model="currentSlide"
-        >
+      <div class="bg-[#FFF] w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.24rem]">
+        <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide">
           <Slide v-for="(list, index) in recomendedCryptoList" :key="index">
-            <div @click="goInfo(list) " class="carousel__item p-[0.08rem]">
+            <div @click="goInfo(list)" class="carousel__item p-[0.08rem]">
               <div class="text-[font-bold] text-[15px] mb-[0.32rem] mt-[0.12rem]">
                 {{ list.symbol }}
               </div>
-              <div
-                class="flex justify-between mb-[0.3rem]"
-                :class="[
-                  list.ratio == undefined
-                    ? ''
-                    : list.ratio > 0
+              <div class="flex justify-between mb-[0.3rem]" :class="[
+                list.ratio == undefined
+                  ? ''
+                  : list.ratio > 0
                     ? 'text-[#18B762]'
                     : 'text-[#E8503A]',
-                ]"
-              >
+              ]">
                 <div class="text-[0.3rem] font-bold">{{ list.price }}</div>
                 <div class="text-[0.3rem]">
                   {{
@@ -64,31 +49,18 @@
                 </div>
               </div>
               <div>
-                <SparkLine
-                  v-if="list.points"
-                  :style="'width: 100%; height: 0.94rem; '"
-                  :points="list.points"
-                  :ratio="list.ratio"
-                  :xtimes="2.2"
-                  :ytimes="1.6"
-                />
+                <SparkLine v-if="list.points" :style="'width: 100%; height: 0.94rem; '" :points="list.points"
+                  :ratio="list.ratio" :xtimes="2.2" :ytimes="1.6" />
               </div>
             </div>
           </Slide>
         </Carousel>
       </div>
-      <div
-        class="absolute flex gap-[0.05rem] transition-all top-0 right-0 mr-[0.32rem] mt-[0.4rem]"
-      >
-        <div
-          v-for="(val, index) in recomendedCryptoList"
-          :key="index"
-          @click="() => (currentSlide = index)"
-          class="h-[0.06rem] w-[0.12rem] rounded-[0.2rem] transition-all"
-          :class="[
+      <div class="absolute flex gap-[0.05rem] transition-all top-0 right-0 mr-[0.32rem] mt-[0.4rem]">
+        <div v-for="(val, index) in recomendedCryptoList" :key="index" @click="() => (currentSlide = index)"
+          class="h-[0.06rem] w-[0.12rem] rounded-[0.2rem] transition-all" :class="[
             currentSlide == index ? 'bg-[#014CFA]' : 'bg-[#FFFFFF] opacity-50',
-          ]"
-        ></div>
+          ]"></div>
       </div>
     </div>
   </div>
@@ -100,7 +72,6 @@ import "vue3-carousel/dist/carousel.css";
 import SparkLine from "./SparkLine.vue";
 import router from "@/router";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-import { fixLittleNum } from "@/utils/fixLittleNum";
 const recomendedCryptoList = computed(() =>
   store.state.marketContractRecommendList.length > 5
     ? store.state.marketContractRecommendList.slice(0, 5)
@@ -109,14 +80,14 @@ const recomendedCryptoList = computed(() =>
 const currentSlide = ref(0);
 
 const goInfo = (item) => {
-    store.commit("setCurrConstract", item);
-    router.push({
-      name: "market_info",
-      query: {
-        symbol: item.name,
-        type: "constract",
-      },
-    });
+  store.commit("setCurrConstract", item);
+  router.push({
+    name: "market_info",
+    query: {
+      symbol: item.name,
+      type: "constract",
+    },
+  });
 };
 
 </script>

@@ -274,7 +274,7 @@ import HKFlagIcon from "./Icons/HKFlagIcon.vue";
 import { useI18n } from "vue-i18n";
 
 // 区号控制
-const step = ref(3)
+const step = ref(1)
 const {t} = useI18n()
 const activeTab = ref(0);
 const defaultCode = "+244";
@@ -337,11 +337,11 @@ const errorTip = ref({
 });
 const loading = ref(false);
 const submit = async () => {
-  if (!checked.value) return showToast("请先同意隐私政策和用户条款");
+  if (!checked.value) return showToast(t('register.no_agree_error'));
   if (activeTab.value == 0) {
     if (!form.value.email || !validateEmail(form.value.email)) {
       errorTip.value.error1 = true;
-      showToast("请输入有效邮箱");
+      showToast(t('register.no_email_error'));
       return;
     }
     form.value.username = form.value.email;
@@ -349,27 +349,27 @@ const submit = async () => {
   if (activeTab.value == 1) {
     if (!form.value.phone) {
       errorTip.value.error1 = true;
-      showToast("请输入手机号码");
+      showToast(t('register.no_phone_error'));
       return;
     }
     form.value.username = form.value.area + form.value.phone;
   }
   if (!form.value.password) {
     errorTip.value.error2 = true;
-    return showToast("请输入密码");
+    return showToast(t('register.no_login_pw_error'));
   }
   if (form.value.password.length < 8) {
     errorTip.value.error2 = true;
-    return showToast("密码最小8个字符");
+    return showToast(t('register.login_pw_length_error'));
   }
   if (!form.value.safeword) {
     errorTip.value.error3 = true;
-    return showToast("请输入交易密码");
+    return showToast(t('register.no_trade_pw_error'));
   }
   sessionStorage.setItem("registerForm", JSON.stringify(form.value));
   if (!sessionToken.value) {
     const rs = await store.dispatch("updateSessionToken");
-    if (!rs) return showToast("网络异常，请重试");
+    if (!rs) return showToast(t('register.network_error'));
   }
   if (loading.value) return;
   loading.value = true;

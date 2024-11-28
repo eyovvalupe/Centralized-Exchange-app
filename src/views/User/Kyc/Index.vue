@@ -18,8 +18,8 @@ import { showLoadingToast, closeToast } from 'vant';
 
 const userInfo = computed(() => store.state.userInfo || {})
 console.log(userInfo.value)
-// const step = ref(-1) // 0-审核中或审核成功
-const step = ref(3) // 0-审核中或审核成功
+const step = ref(-1) // 0-审核中或审核成功
+// const step = ref(1) // 0-审核中或审核成功
 
 const nextStep = () => {
     step.value++

@@ -9,54 +9,33 @@
     <div class="coinbuy_content">
       <Loaidng :loading="loading" v-if="loading && !contractList.length" />
       <NoData v-if="!loading && !contractList.length" />
-      <div
-        class="tr flex-col bg-[#F5F7FC] rounded-[0.32rem]"
-        v-for="(item, i) in contractList"
-        :key="i"
-        @click="goInfo(item)"
-      >
+      <div class="tr flex-col bg-[#F5F7FC] rounded-[0.32rem]" v-for="(item, i) in contractList" :key="i"
+        @click="goInfo(item)">
         <div class="stock_item_crypto">
           <div class="td5">
             <div class="item_name flex items-center gap-1">
               {{ item.name }}
               <div
-                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] border-[#0A54F9]"
-              >
+                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] border-[#0A54F9]">
                 <span class="item_lever">{{ item.lever }}X</span>
               </div>
             </div>
           </div>
           <div class="td2 ml-[2rem]">
-            <SparkLine
-              v-if="item.points"
-              :style="'width: 100%; height: 0.54rem;'"
-              :points="item.points"
-              :ratio="item.ratio"
-            />
+            <SparkLine v-if="item.points" :style="'width: 100%; height: 0.54rem;'" :points="item.points"
+              :ratio="item.ratio" />
           </div>
         </div>
         <div
-          class="flex items-center justify-between text-[0.32rem] font-bold w-[100%] pt-[0.15rem] pb-[0.15rem] w-[7.14rem]"
-        >
+          class="flex items-center justify-between text-[0.32rem] font-bold w-[100%] pt-[0.15rem] pb-[0.15rem] w-[7.14rem]">
           <div class="item_new_price text-center w-1/3">
-            <span
-              :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
-              >{{ fixLittleNum(item.price, 6) || '--' }}</span
-            ><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal"
-              >最新价</span
-            >
+            <span :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'">{{ item.price || '--' }}</span><br />
+            <span class="text-[0.22rem] text-[#8F92A1] font-normal">最新价</span>
           </div>
-          <div
-            class="item_loss_price text-center border-x-[#eff3f8] border-x-2 w-1/3"
-          >
-            <span
-              :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
-              >{{ fixLittleNum(item.change, 6) || '--' }}</span
-            ><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal"
-              >涨跌</span
-            >
+          <div class="item_loss_price text-center border-x-[#eff3f8] border-x-2 w-1/3">
+            <span :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'">{{ item.change ||
+              '--' }}</span><br />
+            <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌</span>
           </div>
           <div class="item_loss_percentage text-center w-1/3">
             <span
@@ -83,7 +62,6 @@ import router from "@/router";
 import Decimal from "decimal.js";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
-import { fixLittleNum } from "@/utils/fixLittleNum";
 
 const contractList = computed(() => store.state.contractList || []);
 
@@ -200,6 +178,7 @@ const goInfo = (item) => {
 
       .item_info_box {
         margin-top: 0.1rem;
+
         .item_percent {
           text-align: center;
           width: 1rem;
@@ -227,6 +206,7 @@ const goInfo = (item) => {
       padding-left: 0.2rem;
     }
   }
+
   .tr {
     display: flex;
     align-items: center;
