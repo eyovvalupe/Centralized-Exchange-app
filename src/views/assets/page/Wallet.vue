@@ -34,7 +34,7 @@
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 0">
-        <DefaultWallet :name="t('assets.wallet_header_cash')" :balance="assets.money" />
+        <DefaultWallet :name="t('assets.wallet_header_cash')" :type="t('assets.wallet_cash_value')" :balance="assets.money" />
         <Btns />
         <Cash />
       </div>
@@ -42,6 +42,7 @@
       <div class="tab" v-if="currSelectedWallet == 1">
         <OtherWallet
           :name="t('assets.wallet_header_stock')"
+          :type="t('assets.wallet_stock_balance')"
           :balance="assets.stock"
           @toggleShow="(val) => toggleShow(val)"
         />
@@ -53,7 +54,7 @@
             <span
               class="text-[0.28rem] text-[#666d80]"
               :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >股票余额</span
+              >{{ t('assets.wallet_stock_value') }}</span
             >
             <span class="text-[0.3rem] text-[#061023] font-semibold">{{
               showData ? parseFloat(assets.stock).toLocaleString() : "********"
@@ -66,7 +67,7 @@
             <span
               class="text-[0.28rem] text-[#666d80]"
               :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >持仓金额</span
+              >{{ t('assets.wallet_order_value') }}</span
             >
             <span class="text-[0.3rem] text-[#061023] font-semibold">{{
               showData
@@ -80,7 +81,8 @@
 
       <div class="tab" v-if="currSelectedWallet == 2">
         <OtherWallet
-          :name="'合约'"
+          :name="t('assets.wallet_header_contract')"
+          :type="t('assets.wallet_contract_balance')"
           :balance="assets.futures"
           @toggleShow="(val) => toggleShow(val)"
         />
@@ -92,7 +94,7 @@
             <span
               class="text-[0.28rem] text-[#666d80]"
               :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >合约余额</span
+              >{{ t('assets.wallet_contract_value') }}</span
             >
             <span class="text-[0.3rem] text-[#061023] font-semibold">{{
               showData
@@ -107,7 +109,7 @@
             <span
               class="text-[0.28rem] text-[#666d80]"
               :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >持仓金额</span
+              >{{ t('assets.wallet_order_value') }}</span
             >
             <span class="text-[0.3rem] text-[#061023] font-semibold">{{
               showData
@@ -120,7 +122,7 @@
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 3">
-        <DefaultWallet :name="'外汇'" :balance="assets.forex" />
+        <DefaultWallet :name="t('assets.wallet_header_forex')" :type="t('assets.wallet_forex_value')" :balance="assets.forex" />
         <Btns />
         <ForexMyWallet />
       </div>

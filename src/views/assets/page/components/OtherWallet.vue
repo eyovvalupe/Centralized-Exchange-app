@@ -7,11 +7,17 @@
     <OtherImg />
     <span class="text-[0.32rem] text-[#fff]">{{ name }}</span>
     <div
-      class="flex flex-col w-[2.52rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]"
+      class="flex flex-col px-[0.1rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]"
     >
       <div class="flex">
-        <span class="text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
-          >{{ name }}资产(USDT)</span
+        <span
+          class="text-[0.3rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
+          style="width: max-content"
+          >{{ type }}</span
+        ><span
+          class="flex items-end text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
+          style="width: max-content"
+          >(USDT)</span
         >
         <div @click.stop="toggleShow" v-if="showInfo">
           <ShowEye />
@@ -39,19 +45,22 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  type: {
+    type: String,
+    default: "",
+  },
   balance: {
     type: Number,
     default: 10000,
   },
 });
 
-const emits = defineEmits(['toggleShow'])
+const emits = defineEmits(["toggleShow"]);
 
 const showInfo = ref(false);
 
 const toggleShow = () => {
   showInfo.value = !showInfo.value;
-  emits('toggleShow', showInfo.value)
+  emits("toggleShow", showInfo.value);
 };
-
 </script>

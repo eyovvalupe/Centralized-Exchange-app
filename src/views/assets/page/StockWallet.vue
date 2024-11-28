@@ -4,7 +4,7 @@
     <div class="tabs">
       <div class="tab_title">
         <Switch v-model="show0" size="0.24rem" />
-        <span class="tab_title_desc">{{ show0 ? $t('已隐藏余额为0的币种') : $t('已展示余额为0的币种') }}</span>
+        <span class="tab_title_desc">{{ show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show") }}</span>
       </div>
       <div v-for="(item, i) in wallet" :key="i" class="tab" :class="{ open_tab: switchs[i] == true }" @click="switchOpen(i, $event)">
         <div class="tab_icon">
@@ -16,11 +16,11 @@
           <img src="/static/img/common/menu.png?20241022" alt="img" />
         </div>
         <div class="rights">
-          <div class="right" @click="goTopUp(item.currency.toUpperCase())">
-            {{ $t('充值') }}
+          <div class="right px-[0.1rem]" style="width: max-content;" @click="goTopUp(item.currency.toUpperCase())">
+            {{ $t("assets.coin_list_recharge") }}
           </div>
-          <div class="right right--yellow" @click="goWithdraw(item.currency.toUpperCase())">
-            {{ $t('提现') }}
+          <div class="right right--yellow px-[0.1rem]" style="width: max-content;" @click="goWithdraw(item.currency.toUpperCase())">
+            {{ $t("assets.coin_list_withdraw") }}
           </div>
         </div>
       </div>
@@ -34,7 +34,9 @@ import { Icon, Switch } from 'vant'
 import store from '@/store'
 import router from '@/router'
 import { _cryptoCoin } from '@/api/api'
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const emits = defineEmits(['setLoading'])
 const token = computed(() => store.state.token || '')
 const hidden = ref(false)
@@ -278,7 +280,6 @@ defineExpose({
         transition: .3s;
         .right {
           height: 100%;
-          width: 1.04rem;
           display: flex;
           flex-direction: column;
           align-items: center;
