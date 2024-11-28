@@ -62,7 +62,7 @@
             <span
               :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
               >{{ item.ratio > 0 ? "+" : ""
-              }}{{ ((item.ratio || 0) * 100).toFixed(2) }}%</span
+              }}{{ (item.ratio || 0) }}%</span
             ><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal"
               >涨跌比</span

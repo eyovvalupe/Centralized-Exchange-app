@@ -21,9 +21,9 @@
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  (totalList[slide * 2 - 1].ratio || 0) * 100 > 0
-                    ? "+" + ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2)
-                    : ((totalList[slide * 2 - 1].ratio || 0) * 100).toFixed(2)
+                  (totalList[slide * 2 - 1].ratio || 0) > 0
+                    ? "+" + (totalList[slide * 2 - 1].ratio || 0) 
+                    : (totalList[slide * 2 - 1].ratio || 0)
                 }}%
               </div>
             </div>
@@ -62,9 +62,9 @@
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2) > 0
-                    ? "+" + fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2)
-                    : fixLittleNum((totalList[slide * 2].ratio || 0) * 100, 2)
+                  (totalList[slide * 2].ratio || 0)  > 0
+                    ? "+" + (totalList[slide * 2].ratio || 0)
+                    : (totalList[slide * 2].ratio || 0) 
                 }}%
               </div>
             </div>

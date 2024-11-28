@@ -32,13 +32,13 @@
         <span class="stock_price">{{ item.price }}</span>
         <div class="flex flex-row justify-between stock_detail">
           <span>{{
-            (item.ratio || 0) * 100 > 0
+            (item.ratio || 0) > 0
               ? "+" + ((item.ratio || 0) * item.price).toFixed(2)
               : ((item.ratio || 0) * item.price).toFixed(2)
           }}</span>
           <span>{{ item.ratio > 0 ? "+" : ""
             }}{{
-              ((item.ratio || 0) * 100).toFixed(2)
+              (item.ratio || 0) 
             }}%</span>
         </div>
       </div>
