@@ -270,6 +270,11 @@ export default {
     coin_list_withdraw: "Withdraw",
     coin_list_hide: "Hidden currencies with no balance",
     coin_list_show: "Show currencies with no balance",
+    safety_trade_pw: "Trade Password",
+    safety_trade_placeholder: "Enter your trade password",
+    safety_trade_cancel: "Cancel",
+    safety_trade_confirm: "Confirm",
+    safety_trade_no_password: "Please enter your password"
   },
   topUpCrypto: {
     recharge: "Deposit Funds",

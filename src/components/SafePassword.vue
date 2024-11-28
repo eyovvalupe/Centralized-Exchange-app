@@ -18,8 +18,8 @@
       :class="{ safepassword_dialog_uncloseabled: !props.closeable }"
     >
       <slot name="top" />
-      <div class="main_title">{{ $t("交易密码") }}</div>
-      <div class="title">{{ $t("交易密码") }}</div>
+      <div class="main_title">{{ $t("assets.safety_trade_pw") }}</div>
+      <div class="title">{{ $t("assets.safety_trade_pw") }}</div>
       <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
       <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
@@ -29,7 +29,7 @@
           v-model="val"
           :type="passwordInputType"
           :class="{ err_ipt: errStatus }"
-          :placeholder="$t('请输入交易密码')"
+          :placeholder="$t('assets.safety_trade_placeholder')"
           class="pass_ipt"
           enterkeyhint="done"
           @blur="errStatus = false"
@@ -45,7 +45,7 @@
 
       <div class="btns">
         <Button round color="white" class="btn" @click="close">
-          <span style="color: #666d80">{{ $t("取消") }}</span>
+          <span style="color: #666d80">{{ $t("assets.safety_trade_cancel") }}</span>
         </Button>
         <Button
           :loading="loading"
@@ -54,7 +54,7 @@
           class="btn"
           type="primary"
           @click="submit"
-          >{{ $t("确认") }}</Button
+          >{{ $t("assets.safety_trade_confirm") }}</Button
         >
       </div>
     </div>
@@ -114,7 +114,7 @@ const passwordInputType = computed(() =>
 const submit = () => {
   if (!val.value) {
     errStatus.value = true;
-    showToast(t("请输入密码"));
+    showToast(t("assets.safety_trade_no_password"));
     return;
   }
   close();

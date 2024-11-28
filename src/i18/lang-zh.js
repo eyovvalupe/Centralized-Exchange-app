@@ -309,6 +309,11 @@ export default {
     coin_list_withdraw: "提现",
     coin_list_hide: "隐藏余额为0的币种",
     coin_list_show: "展示余额为0的币种",
+    safety_trade_pw: "交易密码",
+    safety_trade_placeholder: "请输入交易密码",
+    safety_trade_cancel: "取消",
+    safety_trade_confirm: "确认",
+    safety_trade_no_password: "请输入密码"
   },
   topUpCrypto: {
     recharge: "充值",
