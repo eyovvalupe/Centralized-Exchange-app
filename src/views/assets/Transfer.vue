@@ -1,7 +1,7 @@
 <!-- 划转 -->
 <template>
   <div class="page page_trnsfer">
-    <Top :title="'划转'">
+    <Top :title="t('transfer.page_title')">
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
@@ -18,7 +18,7 @@
     <div class="form">
       <div class="form_box" :class="{ form_box_active: clickKey == 'from' }">
         <div class="mb-[0.32rem]">
-          <span class="text-[0.28rem] text-[#666d80]">转出</span>
+          <span class="text-[0.28rem] text-[#666d80]">{{ $t("transfer.out") }}</span>
         </div>
         <div
           class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
@@ -61,7 +61,7 @@
           @btnClick="maxIpt"
           show-btn
           :btn-placeholder="form.fromCurrency.name"
-          :placeholder="'请输入金额'"
+          :placeholder="t('transfer.out_amount')"
           :inputType="'number'"
           @update:modelValue="changeAmount('from')"
         />
@@ -69,7 +69,7 @@
 
       <div class="form_box" :class="{ form_box_active: clickKey == 'to' }">
         <div class="mb-[0.32rem]">
-          <span class="text-[0.28rem] text-[#666d80]">转入</span>
+          <span class="text-[0.28rem] text-[#666d80]">{{ $t("transfer.in") }}</span>
         </div>
         <div
           class="trans_icon"
@@ -116,11 +116,11 @@
           @btnClick="maxIpt"
           show-btn
           :btn-placeholder="form.toCurrency.name"
-          :placeholder="'请输入金额'"
+          :placeholder="t('transfer.in_amount')"
           :inputType="'number'"
           @update:modelValue="changeAmount('to')"
         />
-          <!-- <div>
+        <!-- <div>
             <span v-show="formType == 'transfer'">自动换算</span>
             <span
               :style="{ color: form.amount === '' ? '#A4ACB9' : '' }"
@@ -132,7 +132,6 @@
               }}</span
             >
           </div> -->
-         
       </div>
 
       <div class="rate_tip" v-if="formType == 'swap'">
@@ -148,7 +147,7 @@
       color="#014CFA"
       class="submit"
       type="primary"
-      >划转</Button
+      >{{ $t("transfer.btn") }}</Button
     >
 
     <!-- 充提记录 -->
@@ -166,8 +165,8 @@
       position="bottom"
       @closed="clickKey = ''"
     >
-      <div class="van-popup-custom__top-rbtn" @click="onConfirm">确认</div>
-      <div class="van-popup-custom-title">转入账户</div>
+      <div class="van-popup-custom__top-rbtn" @click="onConfirm">{{ $t("transfer.confirm") }}</div>
+      <div class="van-popup-custom-title">{{ $t("transfer.confirm_con") }}</div>
 
       <Picker
         :swipe-duration="200"
@@ -212,10 +211,11 @@ import router from "@/router";
 import Decimal from "decimal.js";
 import ArrowIcon from "./page/components/ArrowIcon.vue";
 import AccountCheck from "@/components/AccountCheck.vue";
+import { useI18n } from "vue-i18n";
 
-
+const { t } = useI18n();
 const AccountCheckRef = ref();
-const toAmount = ref('')
+const toAmount = ref("");
 const route = useRoute();
 const focus = ref(false); // 是否在输入中
 const blurInput = () => {
@@ -332,14 +332,13 @@ const columns = computed(() => {
   });
 });
 
-
 const customFieldName = {
   text: "value",
   value: "key",
   children: "currencys",
 };
-let selectedOption = {}
-const onConfirm = ()=>{
+let selectedOption = {};
+const onConfirm = () => {
   if (clickKey.value == "from") {
     form.value.from = selectedOption.key;
     form.value.fromCurrency = selectedOption.currency;
@@ -347,14 +346,12 @@ const onConfirm = ()=>{
     form.value.to = selectedOption.key;
     form.value.toCurrency = selectedOption.currency;
   }
-  getRate()
-  hideDialog()
-}
+  getRate();
+  hideDialog();
+};
 const onChange = ({ selectedOptions }) => {
-  selectedOption.key = selectedOptions[0].key
-  selectedOption.currency = selectedOptions[1]
-  
- 
+  selectedOption.key = selectedOptions[0].key;
+  selectedOption.currency = selectedOptions[1];
 };
 
 const balance = computed(() => {
@@ -368,7 +365,7 @@ const balance = computed(() => {
   } else {
     // 转入
     const w = elseWallet.value.find((item) => item.account == form.value.from);
-    console.log(w.amount)
+    console.log(w.amount);
     return w ? w.amount : 0;
   }
 });
@@ -380,16 +377,16 @@ const openSafePass = () => {
   if (AccountCheckRef.value.check()) {
     if (!form.value.amount || form.value.amount <= 0) {
       errStatus.value = true;
-      return showToast("请输入金额");
+      return showToast(t('transfer.no_amount'));
     }
     if (balance.value < form.value.amount) {
-      return showToast("余额不足");
+      return showToast(t('transfer.no_enough_balance'));
     }
     if (
       form.value.from == form.value.to &&
       form.value.fromCurrency.currency == form.value.toCurrency.currency
     ) {
-      return showToast("同一账户无法划转");
+      return showToast(t('transfer.account_same'));
     }
     safeRef.value.open();
   }
@@ -410,7 +407,7 @@ const submit = (s) => {
   _transfer(params)
     .then((res) => {
       if (res.code == 200) {
-        showToast("划转成功");
+        showToast(t('transfer.success'));
         form.value.amount = "";
         store.dispatch("updateWallet"); // 更新资产
         setTimeout(() => {
@@ -458,10 +455,10 @@ getSessionToken();
 const rate = ref(0);
 const rateLoading = ref(false);
 const getRate = () => {
-  console.log(666)
+  console.log(666);
   // 获取汇率
   rateLoading.value = true;
-  if(formType.value == 'swap'){
+  if (formType.value == "swap") {
     _swapRate({
       from: form.value.fromCurrency.currency,
       to: form.value.toCurrency.currency,
@@ -475,12 +472,11 @@ const getRate = () => {
       .finally(() => {
         rateLoading.value = false;
       });
-  }else{
-    
-    rate.value = 1
-    setTimeout(()=>{
+  } else {
+    rate.value = 1;
+    setTimeout(() => {
       rateLoading.value = false;
-    },100)
+    }, 100);
   }
 };
 
@@ -496,13 +492,17 @@ const goRecord = () => {
 };
 
 const changeAmount = (val) => {
-    if (val == 'to') {
-        form.value.amount = Number(parseFloat(toAmount.value) / parseFloat(rate.value))
-    }
-    if (val == 'from') {
-        toAmount.value = Number(parseFloat(form.value.amount) * parseFloat(rate.value))
-    }
-}
+  if (val == "to") {
+    form.value.amount = Number(
+      parseFloat(toAmount.value) / parseFloat(rate.value)
+    );
+  }
+  if (val == "from") {
+    toAmount.value = Number(
+      parseFloat(form.value.amount) * parseFloat(rate.value)
+    );
+  }
+};
 </script>
 
 <style lang="less" scoped>

@@ -456,6 +456,18 @@ export default {
   },
   transfer: {
     transferRecord: "划转记录",
+    page_title: "划转",
+    out: "转出",
+    out_amount: "请输入金额",
+    in: "转入",
+    in_amount: "请输入金额",
+    btn: "划转",
+    confirm: "确认",
+    confirm_con: "转入账户",
+    no_amount: "请输入金额",
+    no_enough_balance: "余额不足",
+    account_same: "同一账户无法划转",
+    success: "划转成功",
   },
   recordList: {
     financialRecords: "资金记录",

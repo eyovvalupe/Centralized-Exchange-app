@@ -360,7 +360,20 @@ export default {
     withdrawalTime: "Time",
   },
   transfer: {
-    transferRecord: "Transfer History",
+    transferRecord: "History",
+    page_title: "Transfer",
+    out: "Transfer Out",
+    out_amount: "Please enter amount",
+    in: "Transfer In",
+    in_amount: "Please enter amount",
+    btn: "Transfer",
+    confirm: "Confirm",
+    confirm_con: "Transfer Account",
+    no_amount: "Amount is required",
+    no_enough_balance: "Insufficient funds",
+    account_same: "You cannot transfer to the same account",
+    success: "Transfer successful",
+
   },
   recordList: {
     financialRecords: "Transaction History",

@@ -367,6 +367,19 @@ export default {
   },
   transfer: {
     transferRecord: "劃轉記錄",
+    page_title: "劃轉",
+    out: "轉出",
+    out_amount: "請輸入金額",
+    in: "轉入",
+    in_amount: "請輸入金額",
+    btn: "劃轉",
+    confirm: "確認",
+    confirm_con: "轉入帳戶",
+    no_amount: "請輸入金額",
+    no_enough_balance: "餘額不足",
+    account_same: "同一帳戶無法轉轉",
+    success: "劃轉成功",
+
   },
   recordList: {
     financialRecords: "資金記錄",
