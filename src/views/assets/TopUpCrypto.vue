@@ -85,7 +85,10 @@
             <div class="item_content">
               <input
                 class="ipt"
-                @blur="errStatus = false;form.amount <= 0 ? form.amount='' : ''"
+                @blur="
+                  errStatus = false;
+                  form.amount <= 0 ? (form.amount = '') : '';
+                "
                 type="number"
                 v-model="form.amount"
                 :placeholder="$t('topUpCrypto.inputPlaceholder')"
@@ -230,7 +233,9 @@ import AccountCheck from "@/components/AccountCheck.vue";
 import { _swapRate } from "@/api/api";
 import Decimal from "decimal.js";
 import { _cryptoCoin } from "@/api/api";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const tabActive = ref("cryptocurrency");
 
 const safeRef = ref();
@@ -352,10 +357,10 @@ const AccountCheckRef = ref();
 const goTopUp = () => {
   if (!form.value.amount || form.value.amount <= 0) {
     errStatus.value = true;
-    return showToast("请输入金额");
+    return showToast(t("topUpCrypto.no_amount_msg"));
   }
   if (topUpMode.value == 2 && !rate.value) {
-    return showToast("正在获取汇率");
+    return showToast(t("topUpCrypto.getting_rate_msg"));
   }
   submit();
 };

@@ -27,7 +27,7 @@ export default {
     loanNum: 0, // 借贷重的订单数
     coinMap: {}, // 币种 网络 map
     currencyMapList: [],
-    currSelectedWallet: -1,
+    currSelectedWallet: 0,
   },
   getters: {
     
