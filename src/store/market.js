@@ -484,14 +484,14 @@ export default {
                         // 同步到当前 合约
                         const cConstract = res.data.find(a => a.symbol == state.currConstact.symbol)
                         if (cConstract) {
-                            let obj = JSON.parse(JSON.stringify(cStock))
+                            let obj = JSON.parse(JSON.stringify(cConstract))
                             delete obj.symbol
                             commit('setCurrConstract', obj)
                         }
                         // 同步到当前 ai
                         const cAi = res.data.find(a => a.symbol == state.currAi.symbol)
                         if (cAi) {
-                            let obj = JSON.parse(JSON.stringify(cStock))
+                            let obj = JSON.parse(JSON.stringify(cAi))
                             delete obj.symbol
                             commit('setCurrAi', obj)
                         }
