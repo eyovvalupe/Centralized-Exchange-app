@@ -5,7 +5,7 @@
 
     <CheckboxGroup v-model="checked" class="lang_box" :max="2">
       <div
-        v-for="(item, i) in navs"
+        v-for="(item, i) in filteredLangList"
         :key="i"
         class="lang_item"
         @click="clickItem(item)"
@@ -29,32 +29,32 @@ import { ref } from "vue";
 import Top from "@/components/Top.vue";
 import router from "@/router";
 import store from "@/store";
-import { setLocale } from "@/i18/utils";
+// import { setLocale } from "@/i18/utils";
 import { useI18n } from "vue-i18n";
+import { _langMap } from "@/utils/dataMap";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const props = defineProps({
   from: {
     type: String,
     default: "",
   },
 });
-
-const checked = ref([store.state.i18Data.locale]);
-const navs = ref([
-  { name: "中文简体", icon: "china_icon", val: "zh" },
-  { name: "中文繁體", icon: "china_icon", val: "ch" },
-  { name: "English", icon: "us_icon", val: "en" },
-]);
-
+const envLangList = ref(
+  navigator.languages.reduce((acc, cur) => {
+    if (cur == "zh-TW" || cur == "zh-HK") acc = acc.concat("ch");
+    else acc = acc.concat(cur.slice(0, 2));
+    return acc;
+  }, [])
+);
+const checked = ref(localStorage.getItem("language") || "");
+const langList = ref(_langMap);
+const filteredLangList = ref(langList.value.filter(item => envLangList.value.includes(item.val)))
 const clickItem = (item) => {
+  localStorage.setItem('lang', JSON.stringify(item))
+  store.commit("setLanguage", item)
   checked.value = [item.val];
-  store.commit("setI18Data", {
-    name: item.name,
-    locale: item.val,
-    icon: item.icon,
-  });
-  setLocale();
+  locale.value = item.val
   router.back();
 };
 </script>

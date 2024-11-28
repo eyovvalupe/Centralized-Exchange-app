@@ -24,6 +24,7 @@ const store = createStore({
       locale: "zh",
       icon: "/static/img/common/cn.png",
     },
+    language: {},
     bottomTabBarValue: "",
     showSuccessToast: false,
     isSentCodeError: false,
@@ -33,8 +34,11 @@ const store = createStore({
     ...serviceC2C.state,
   },
   mutations: {
+    setLanguage(state, data) {
+      state.language = data
+    },
     setIsSentCodeError(state, data) {
-      state.isSentCodeError = data
+      state.isSentCodeError = data;
     },
     setSelectedPayment(state, data) {
       state.selectedPayment = data;
@@ -78,7 +82,7 @@ const store = createStore({
     ...market.mutations,
     ...trade.mutations,
     ...assets.mutations,
-    ...serviceC2C.mutations
+    ...serviceC2C.mutations,
   },
   actions: {
     reset({ commit }) {
@@ -155,14 +159,19 @@ const store = createStore({
   getters: {
     ...assets.getters,
     ...market.getters,
-    ...serviceC2C.getters
+    ...serviceC2C.getters,
   },
   plugins: [
     createPersistedState({
       key: "sunx",
       storage: window.localStorage,
       reducer: (state) => {
-        const { currSelectedWallet, isSentCodeError, ...stateWithoutThese } = state;
+        const {
+          currSelectedWallet,
+          isSentCodeError,
+          language,
+          ...stateWithoutThese
+        } = state;
         return stateWithoutThese;
       },
     }),

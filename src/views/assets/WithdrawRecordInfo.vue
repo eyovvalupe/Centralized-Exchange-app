@@ -82,7 +82,7 @@ import LoadEffect from '@/components/LoadEffect.vue'
 import router from '@/router'
 import store from '@/store'
 
-const locale = ref(store.state.i18Data.locale)
+const locale = ref(JSON.parse(localStorage.getItem('language')).val)
 
 const route = useRoute()
 
