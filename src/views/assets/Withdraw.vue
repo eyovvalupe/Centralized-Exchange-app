@@ -115,7 +115,7 @@
           color="#014CFA"
           class="submit"
           type="primary"
-          >{{ $t("withdraw.withdraw") }}</Button
+          >{{ $t("withdraw.confirm") }}</Button
         >
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
@@ -180,7 +180,7 @@
           color="#014CFA"
           class="submit"
           type="primary"
-          >{{ $t("withdraw.withdraw") }}</Button
+          >{{ $t("withdraw.confirm") }}</Button
         >
       </Tab>
     </Tabs>
@@ -218,7 +218,6 @@
             :class="{ swap_dialog_item_active: form.from == item.name }"
             v-for="(item, i) in searchDialogStr ? searchResult : wallet"
             :key="i"
-            
           >
             <div class="icon">
               <img
@@ -382,6 +381,9 @@ import RecordList from "@/components/RecordList.vue";
 import AccountCheck from "@/components/AccountCheck.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const RecordListRef = ref();
 const userInfo = computed(() => store.state.userInfo || {});
 const tabActive = ref("cryptocurrency");
@@ -390,7 +392,7 @@ const route = useRoute();
 // 表单
 const form = ref({
   amount: "",
-  from: '',
+  from: "",
   account: "",
   network: "",
 });
@@ -402,7 +404,6 @@ const changeAmount = () => {
   }, 0);
 };
 
-
 const searchDialogStr = ref("");
 
 // 提交
@@ -413,43 +414,43 @@ const openSafePass = () => {
   if (AccountCheckRef.value.check()) {
     if (!form.value.amount || form.value.amount <= 0) {
       errStatus.value = true;
-      return showToast("请输入金额");
+      return showToast(t("withdraw.no_amount_msg"));
     }
     if (form.value.amount > balance.value) {
-      return showToast("余额不足");
+      return showToast(t("withdraw.no_enough_msg"));
     }
-    if (!showAccount.value.length) {
-      return showToast("请添加收款账户");
+    if ((tabActive == 'cryptoCurrency' && !showAccount.value.length) || (tabActive == 'bankCard' && !showBankAccount.value.length)) {
+      return showToast(t("withdraw.no_account_msg"));
     }
     safeRef.value.open();
   }
 };
 
-const withdrawParams = ref({})
+const withdrawParams = ref({});
 const submit = (s) => {
   if (loading.value) return;
   loading.value = true;
   if (tabActive.value == "bankCard") {
     withdrawParams.value = {
-      currency: 'main',
+      currency: "main",
       amount: form.value.amount,
       account_id: currBankAccount.value.id,
       safeword: s,
-      token: sessionToken.value
-    }
+      token: sessionToken.value,
+    };
   } else {
     withdrawParams.value = {
-    currency: form.value.from,
-    amount: form.value.amount,
-    account_id: currAccount.value.id,
-    safeword: s,
-    token: sessionToken.value,
-  }
+      currency: form.value.from,
+      amount: form.value.amount,
+      account_id: currAccount.value.id,
+      safeword: s,
+      token: sessionToken.value,
+    };
   }
   _withdraw(withdrawParams.value)
     .then((res) => {
       if (res.code == 200) {
-        showToast("操作成功");
+        showToast(t("withdraw.success_msg"));
         form.value.amount = "";
         store.dispatch("updateWallet"); // 更新钱包
         router.push({
@@ -488,7 +489,6 @@ const wallet = computed(() => {
   // 可选钱包列表
   return store.state.wallet || [];
 });
-
 
 const balance = computed(() => {
   // main钱包余额
@@ -532,7 +532,6 @@ const showBankAccount = computed(() => {
   return accountList.value.filter((item) => item.channel == "bank") || [];
 });
 
-
 // 当前钱包
 const currAccount = computed(() => {
   if (tabActive.value == "cryptocurrency" && form.value.account) {
@@ -555,9 +554,13 @@ const currBankAccount = computed(() => {
 });
 
 const showAccountDialog = ref(false);
-const searchResult = ref([])
+const searchResult = ref([]);
 const searchList = computed(() => {
-  searchResult.value = wallet.value.filter(item => item.name.includes(searchDialogStr.value.toUpperCase()) || item.name.includes(searchDialogStr.value))
+  searchResult.value = wallet.value.filter(
+    (item) =>
+      item.name.includes(searchDialogStr.value.toUpperCase()) ||
+      item.name.includes(searchDialogStr.value)
+  );
 });
 
 const clickAccountItem = (item) => {
@@ -621,8 +624,8 @@ const goAddAccount = () => {
   // google检测
   if (!userInfo.value.googlebind) {
     return showConfirmDialog({
-      title: "谷歌验证器",
-      message: "你还未绑定谷歌验证器，是否去绑定?",
+      title: t("withdraw.no_auth_title"),
+      message: t("withdraw.no_auth_con"),
     }).then(() => {
       jump("google");
     });
@@ -631,8 +634,8 @@ const goAddAccount = () => {
   if (target.type == "fiat") {
     if (userInfo.value.kycl2 != 2) {
       return showConfirmDialog({
-        title: "身份认证",
-        message: "你还未完成身份认证，是否去认证?",
+        title: t("withdraw.no_google_msg"),
+        message: t("withdraw.no_google_con"),
       }).then(() => {
         jump("kyc");
       });
@@ -655,7 +658,6 @@ onMounted(() => {
     form.value.from = route.query.currency;
   } else if (wallet.value[0]) {
     form.value.from = wallet.value[0].name;
-  
   }
   // if (AccountCheckRef.value.check()) {
   getSessionToken();
@@ -678,7 +680,10 @@ watch(
   () => form.value.from,
   (val) => {
     if (Object.keys(currencyMapList.value).length) {
-      form.value.network = currencyMapList.value[val] && currencyMapList.value[val][0] ? currencyMapList.value[val][0] : '';
+      form.value.network =
+        currencyMapList.value[val] && currencyMapList.value[val][0]
+          ? currencyMapList.value[val][0]
+          : "";
     }
   }
 );
@@ -705,6 +710,11 @@ watch(
   :deep(.top) {
     z-index: 10;
   }
+
+  :deep(span.van-tab__text) {
+    font-size: 0.32rem;
+  }
+
   .top-record {
     display: flex;
     align-items: center;
