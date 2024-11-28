@@ -330,6 +330,8 @@ export default {
     failurePrompt: "聽重新提現，或重新聯繫客服",
     processing: "提現處理中",
     processingTip: "請等待提現結果",
+    info_recharge_success_con1: "您提现的",
+    info_recharge_success_con2: "已到账",
     withdrawalAmount: "提現金額",
     receivingAccount: "收款賬戶",
     withdrawalCurrency: "提現幣種",
@@ -379,7 +381,11 @@ export default {
     no_enough_balance: "餘額不足",
     account_same: "同一帳戶無法轉轉",
     success: "劃轉成功",
-
+    transfer_map_money: "現金帳戶",
+    transfer_map_stock: "股票帳戶",
+    transfer_map_futures: "合約帳戶",
+    transfer_map_forex: "外匯帳戶",
+    transfer_map_trade: "大宗商品帳戶"
   },
   recordList: {
     financialRecords: "資金記錄",

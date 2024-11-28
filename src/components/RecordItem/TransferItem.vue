@@ -10,12 +10,11 @@
             alt="currency"
         /></span>
         <span>{{
-          _accountMap[item.account_from] + `(${item.from})` || "未知"
+          dataMap[item.account_from] + `(${item.from})` || "未知"
         }}</span>
       </div>
       <span class="amount">{{ item.amount_from }}</span>
     </div>
-
     <div class="item_box flex justify-between">
       <div class="icon_to">
         <ChangeIcon/>
@@ -27,7 +26,7 @@
             alt="currency"
         /></span>
         <span>{{
-          _accountMap[item.account_to] + `(${item.to})` || "未知"
+          dataMap[item.account_to] + `(${item.to})` || "未知"
         }}</span>
       </div>
       <span class="amount">{{ item.amountt_to }}</span>
@@ -39,12 +38,24 @@
 <script setup>
 import { _accountMap } from "@/utils/dataMap";
 import ChangeIcon from "@/views/assets/page/icons/ChangeIcon.vue";
+import { useI18n } from "vue-i18n";
+
+const {t} = useI18n();
 const props = defineProps({
   item: {
     type: Object,
     default: () => {},
   },
 });
+
+const dataMap = {
+  money: t('transfer.transfer_map_money'),
+  stock: t('transfer.transfer_map_stock'),
+  futures: t('transfer.transfer_map_futures'),
+  forex: t('transfer.transfer_map_forex'),
+  blacktrade: t('transfer.transfer_map_blacktrade'),
+
+}
 
 const formatDate = (date) => {
   const currentDate = new Date();

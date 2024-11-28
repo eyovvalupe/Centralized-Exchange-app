@@ -1,7 +1,7 @@
 <!-- 记录列表 -->
 <template>
   <div class="page page_record_list">
-    <Top :title="$t('recordList.financialRecords')" />
+    <Top :title="t('recordList.financialRecords')" />
     <!-- 兑换记录 -->
     <div ref="list_3" class="list active_list" v-if="active == 3">
       <NoData v-if="!loading && !list.length" />
@@ -27,7 +27,7 @@
       shrink
       @change="init()"
     >
-      <Tab :title="$t('recordList.rechargeRecord')" name="0">
+      <Tab :title="t('recordList.rechargeRecord')" name="0">
         <div class="w-full justify-center" v-if="active == 0">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
@@ -60,7 +60,7 @@
           />
         </div>
       </Tab>
-      <Tab :title="$t('recordList.withdrawalRecord')" name="1">
+      <Tab :title="t('recordList.withdrawalRecord')" name="1">
         <div v-if="active == 1">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
@@ -93,7 +93,7 @@
           />
         </div>
       </Tab>
-      <Tab :title="$t('recordList.transfer')" name="2">
+      <Tab :title="t('recordList.transfer')" name="2">
         <div v-if="active == 2">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
@@ -136,19 +136,16 @@
 import Top from "@/components/Top.vue";
 import { Tab, Tabs } from "vant";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import {
-  _depositList,
-  _withdrawList,
-  _transferLog,
-} from "@/api/api";
+import { _depositList, _withdrawList, _transferLog } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
 import RechargeItem from "@/components/RecordItem/RechargeItem.vue";
 import WithdrawItem from "@/components/RecordItem/WithdrawItem.vue";
 import TransferItem from "@/components/RecordItem/TransferItem.vue";
-
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const openDates = ref([]);
 const withdrawOpenDates = ref([]);
 const transferOpenDates = ref([]);
@@ -274,7 +271,7 @@ const getDate = (str) => {
     const newDate = str.split(" ");
     const newDate1 = newDate[0].split("-");
     return `${newDate1[0]}/${newDate1[1]}`;
-}
+  }
 };
 </script>
 

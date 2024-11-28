@@ -34,7 +34,15 @@
     <div class="right">
       <div class="amount">{{ parseFloat(item.amount).toFixed(2) }}</div>
       <div class="status" :class="['status_' + item.status]">
-        {{ _withdrawStatusMap[item.status] || "未知" }}
+        {{
+          item.status == "review"
+            ? $t("withdrawStatusMap.review")
+            : item.status == "success"
+            ? $t("withdrawStatusMap.success")
+            : item.status == "failure"
+            ? $t("withdrawStatusMap.failure")
+            : $t("withdrawStatusMap.unknown")
+        }}
       </div>
     </div>
   </div>
@@ -43,6 +51,9 @@
 <script setup>
 import router from "@/router";
 import { _withdrawStatusMap } from "@/utils/dataMap";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
   item: {
     type: Object,

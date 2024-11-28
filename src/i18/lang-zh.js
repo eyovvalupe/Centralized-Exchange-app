@@ -419,6 +419,8 @@ export default {
     failurePrompt: "请重新提现，或联系客服",
     processing: "提现处理中",
     processingTip: "请等待提现结果",
+    info_recharge_success_con1: "您提现的",
+    info_recharge_success_con2: "已到账",
     withdrawalAmount: "提现金额",
     receivingAccount: "收款账户",
     withdrawalCurrency: "提现币种",
@@ -468,6 +470,11 @@ export default {
     no_enough_balance: "余额不足",
     account_same: "同一账户无法划转",
     success: "划转成功",
+    transfer_map_money: "现金账户",
+    transfer_map_stock: "股票账户",
+    transfer_map_futures: "合约账户",
+    transfer_map_forex: "外汇账户",
+    transfer_map_trade: "大宗商品账户"
   },
   recordList: {
     financialRecords: "资金记录",
