@@ -38,9 +38,14 @@
             <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌</span>
           </div>
           <div class="item_loss_percentage text-center w-1/3">
-            <span :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'">{{ item.ratio > 0 ? "+" : ""
-              }}{{ ((item.ratio || 0) * 100).toFixed(2) }}%</span><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌比</span>
+            <span
+              :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
+              >{{ item.ratio > 0 ? "+" : ""
+              }}{{ (item.ratio || 0) }}%</span
+            ><br />
+            <span class="text-[0.22rem] text-[#8F92A1] font-normal"
+              >涨跌比</span
+            >
           </div>
         </div>
       </div>

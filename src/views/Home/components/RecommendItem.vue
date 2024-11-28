@@ -7,7 +7,7 @@
             <div class="tab_num" v-if="props.item.price">{{ props.item.price ?
                 props.item.price : '--' }}</div>
             <div class="tab_num" v-if="props.item.ratio" :class="[(props.item.ratio > 0 ? 'up' : 'down')]">
-                {{ isNaN(props.item.ratio) ? '--' : (props.item.ratio * 100).toFixed(2) }}%</div>
+                {{ isNaN(props.item.ratio) ? '--' : props.item.ratio }}%</div>
         </div>
 
         <div class="tab_line">

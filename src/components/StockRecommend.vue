@@ -10,9 +10,9 @@
         <div class="price">{{ item.price ? item.price : "--" }}</div>
         <div class="percent" :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']">
           {{
-            (item.ratio || 0) * 100 > 0
-              ? "+" + ((item.ratio || 0) * 100).toFixed(2)
-              : ((item.ratio || 0) * 100).toFixed(2)
+            (item.ratio || 0) > 0
+              ? "+" + (item.ratio || 0) 
+              : (item.ratio || 0)
           }}%
         </div>
 

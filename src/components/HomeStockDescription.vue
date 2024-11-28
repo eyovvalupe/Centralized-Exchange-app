@@ -20,7 +20,7 @@
           <span
             >{{ item.ratio > 0 ? "+" : ""
             }}{{
-              ((item.ratio || 0) * 100).toFixed(2)
+              (item.ratio || 0) 
             }}%</span
           >
         </div>

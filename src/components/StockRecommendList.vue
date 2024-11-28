@@ -3,19 +3,26 @@
   <div class="recommend_list">
     <Loading v-show="props.loading" />
     <div class="list_box" v-if="props.list.length && !props.loading">
-      <template v-for="(item, i) in props.list" :key="i">
-        <div class="list_item" @click="goInfo(item)" v-if="showLen == 0 || i < showLen">
-          <!-- <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div> -->
-          <div class="symbol">{{ item.symbol }}</div>
-          <div class="name">{{ item.name || "--" }}</div>
-          <div class="price">{{ item.price ? item.price : "--" }}</div>
-          <div class="percent" :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']">
-            {{
-              (item.ratio || 0) * 100 > 0
-                ? "+" + ((item.ratio || 0) * 100).toFixed(2)
-                : ((item.ratio || 0) * 100).toFixed(2)
-            }}%
-          </div>
+      <template  v-for="(item, i) in props.list" :key="i">
+      <div
+        class="list_item"
+        @click="goInfo(item)"
+        v-if="showLen == 0 || i < showLen"
+      >
+        <!-- <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div> -->
+        <div class="symbol">{{ item.symbol }}</div>
+        <div class="name">{{ item.name || "--" }}</div>
+        <div class="price">{{ item.price ? item.price : "--" }}</div>
+        <div
+          class="percent"
+          :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']"
+        >
+          {{
+            (item.ratio || 0)  > 0
+              ? "+" + (item.ratio || 0)
+              : (item.ratio || 0) 
+          }}%
+        </div>
 
           <div class="sparkLine">
             <SparkLine v-if="item.points" style="width: 100%; height: 0.45rem" :points="item.points"

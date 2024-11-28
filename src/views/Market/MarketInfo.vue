@@ -43,7 +43,7 @@
             {{
               item.ratio === undefined
                 ? "--"
-                : item.ratio > 0 ? "+" + (item.ratio * 100) + "%" : (item.ratio * 100).toFixed(2) + "%"
+                : item.ratio > 0 ? "+" + item.ratio + "%" : item.ratio + "%"
             }}
           </div>
         </div>
@@ -210,7 +210,7 @@
               }}{{
                 item.ratio === undefined
                   ? "--"
-                  : (item.ratio * 100) + "%"
+                  : item.ratio + "%"
               }}
             </div>
           </div>

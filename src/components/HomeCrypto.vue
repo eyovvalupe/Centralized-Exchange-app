@@ -42,9 +42,9 @@
                 <div class="text-[0.3rem] font-bold">{{ list.price }}</div>
                 <div class="text-[0.3rem]">
                   {{
-                    (list.ratio || 0) * 100 > 0
-                      ? "+" + ((list.ratio || 0) * 100).toFixed(2)
-                      : ((list.ratio || 0) * 100).toFixed(2)
+                    (list.ratio || 0)  > 0
+                      ? "+" + (list.ratio || 0)
+                      : (list.ratio || 0)
                   }}%
                 </div>
               </div>

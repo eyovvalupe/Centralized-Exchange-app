@@ -15,7 +15,7 @@
                     <div class="title" v-if="activeStockSymbol.price">{{ activeStockSymbol.price }}</div>
                     <div class="subtitle" v-if="activeStockSymbol.ratio && !isNaN(activeStockSymbol.ratio)"
                         :class="[(activeStockSymbol.ratio > 0 ? 'up' : 'down')]">{{
-                            activeStockSymbol.ratio > 0 ? '+' : '' }}{{ (activeStockSymbol.ratio * 100).toFixed(2) }}%
+                            activeStockSymbol.ratio > 0 ? '+' : '' }}{{ activeStockSymbol.ratio  }}%
                     </div>
                     <AreaChart :symbol="activeStockSymbol.symbol"
                         :color="activeStockSymbol.ratio > 0 ? '#18B762' : '#E8503A'" />
@@ -35,7 +35,7 @@
                                             item.price : '--' }}</div>
                                         <div class="tab_num" v-if="item.ratio"
                                             :class="[(item.ratio > 0 ? 'up' : 'down')]">
-                                            {{ isNaN(item.ratio) ? '--' : (item.ratio * 100).toFixed(2) }}%</div>
+                                            {{ isNaN(item.ratio) ? '--' : item.ratio }}%</div>
                                     </div>
 
                                     <div class="tab_line">

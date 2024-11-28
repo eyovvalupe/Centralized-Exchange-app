@@ -6,24 +6,9 @@
         <Switch v-model="show0" size="0.24rem" />
         <span class="tab_title_desc">{{ show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show") }}</span>
       </div>
-      <div v-for="(item, i) in wallet" :key="i" class="tab" :class="{ open_tab: switchs[i] == true }" @click="switchOpen(i, $event)">
-        <div class="tab_icon">
-          <img :src="`/static/img/crypto/${item.name}.png`" alt="img" />
-        </div>
-        <div class="name">{{ item.name }}</div>
-        <div class="amount">{{ item.amount }}</div>
-        <div class="more">
-          <img src="/static/img/common/menu.png?20241022" alt="img" />
-        </div>
-        <div class="rights">
-          <div class="right px-[0.1rem]" style="width: max-content;" @click="goTopUp(item.currency.toUpperCase())">
-            {{ $t("assets.coin_list_recharge") }}
-          </div>
-          <div class="right right--yellow px-[0.1rem]" style="width: max-content;" @click="goWithdraw(item.currency.toUpperCase())">
-            {{ $t("assets.coin_list_withdraw") }}
-          </div>
-        </div>
-      </div>
+      
+      <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" />
+    
     </div>
   </div>
 </template>
@@ -32,9 +17,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { Icon, Switch } from 'vant'
 import store from '@/store'
-import router from '@/router'
 import { _cryptoCoin } from '@/api/api'
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const emits = defineEmits(['setLoading'])
@@ -61,58 +44,20 @@ const getAssets = () => {
 }
 const show0 = ref(false) // 是否隐藏余额为0的钱包
 const coinMap = computed(() => store.state.coinMap || {})
-const showList = computed(() => {
-  const arr = [...wallet.value]
-  for (const key in coinMap.value) {
-    const target = wallet.value.find(item => item.currency == key)
-    if (target) {
-      if (!arr.find(item => item.currency == key)) {
-        arr.push(target)
-      }
-    } else {
-      arr.push({
-        currency: key,
-        name: key,
-        amount: 0,
-      })
-    }
-  }
-  if (show0.value) return arr.filter(item => item.amount)
-  return arr
-})
+
 _cryptoCoin({ dedup: false }).then(res => {
   store.commit('setCoinMap', res.data || [])
 })
 
 // 展开状态
 const switchs = ref([])
-const switchOpen = (i, e) => {
+const switchOpen = (i) => {
   switchs.value[i] = !switchs.value[i]
   switchs.value = switchs.value.map((item, index) => {
     return i == index ? item : false
   })
-  e.stopPropagation()
 }
 
-// 跳转充值
-const goTopUp = name => {
-  router.push({
-    name: 'topUpCrypto',
-    query: {
-      currency: name,
-    },
-  })
-}
-
-// 跳转提现
-const goWithdraw = name=>{
-  router.push({
-    name: 'withdraw',
-    query: {
-      currency: name,
-    },
-  })
-}
 
 const removeSwitch = () => {
   switchs.value = switchs.value.map(() => {
@@ -280,6 +225,7 @@ defineExpose({
         transition: .3s;
         .right {
           height: 100%;
+          width: 1.04rem;
           display: flex;
           flex-direction: column;
           align-items: center;

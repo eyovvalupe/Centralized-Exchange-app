@@ -8,52 +8,21 @@
           show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show")
         }}</span>
       </div>
-      <div
-        v-for="(item, i) in wallet"
-        :key="i"
-        class="tab"
-        :class="{ open_tab: switchs[i] == true }"
-        @click="switchOpen(i, $event)"
-      >
-        <div class="tab_icon">
-          <img :src="`/static/img/crypto/${item.name}.png`" alt="img" />
-        </div>
-        <div class="name">{{ item.name }}</div>
-        <div class="amount">{{ item.amount }}</div>
-        <div class="more">
-          <img src="/static/img/common/menu.png?20241022" alt="img" />
-        </div>
-        <div class="rights">
-          <div
-            class="right px-[0.1rem]"
-            style="width: max-content"
-            @click="goTopUp(item.currency.toUpperCase())"
-          >
-            {{ $t("assets.coin_list_recharge") }}
-          </div>
-          <div
-            class="right right--yellow px-[0.1rem]"
-            style="width: max-content"
-            @click="goWithdraw(item.currency.toUpperCase())"
-          >
-            {{ $t("assets.coin_list_withdraw") }}
-          </div>
-        </div>
-      </div>
+      <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import { Icon, Switch } from "vant";
-import store from "@/store";
-import router from "@/router";
-import { _cryptoCoin } from "@/api/api";
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { Icon, Switch } from 'vant'
+import store from '@/store'
+import { _cryptoCoin } from '@/api/api'
 
-const emits = defineEmits(["setLoading"]);
-const token = computed(() => store.state.token || "");
-const hidden = ref(false);
+import CurrencyItem from './components/CurrencyItem.vue'
+const emits = defineEmits(['setLoading'])
+const token = computed(() => store.state.token || '')
+const hidden = ref(false)
 
 // 刷新现金钱包
 const assets = computed(() => store.state.assets || {});
@@ -72,61 +41,22 @@ const getAssets = () => {
     emits("setLoading", false);
   });
   // store.dispatch('updateOrderHint')
-};
-const show0 = ref(false); // 是否隐藏余额为0的钱包
-const coinMap = computed(() => store.state.coinMap || {});
-const showList = computed(() => {
-  const arr = [...wallet.value];
-  for (const key in coinMap.value) {
-    const target = wallet.value.find((item) => item.currency == key);
-    if (target) {
-      if (!arr.find((item) => item.currency == key)) {
-        arr.push(target);
-      }
-    } else {
-      arr.push({
-        currency: key,
-        name: key,
-        amount: 0,
-      });
-    }
-  }
-  if (show0.value) return arr.filter((item) => item.amount);
-  return arr;
-});
-_cryptoCoin({ dedup: false }).then((res) => {
-  store.commit("setCoinMap", res.data || []);
-});
+}
+const show0 = ref(false) // 是否隐藏余额为0的钱包
+
+_cryptoCoin({ dedup: false }).then(res => {
+  store.commit('setCoinMap', res.data || [])
+})
 
 // 展开状态
-const switchs = ref([]);
-const switchOpen = (i, e) => {
-  switchs.value[i] = !switchs.value[i];
+const switchs = ref([])
+const switchOpen = (i) => {
+  switchs.value[i] = !switchs.value[i]
   switchs.value = switchs.value.map((item, index) => {
-    return i == index ? item : false;
-  });
-  e.stopPropagation();
-};
+    return i == index ? item : false
+  })
+}
 
-// 跳转充值
-const goTopUp = (name) => {
-  router.push({
-    name: "topUpCrypto",
-    query: {
-      currency: name,
-    },
-  });
-};
-
-// 跳转提现
-const goWithdraw = (name) => {
-  router.push({
-    name: "withdraw",
-    query: {
-      currency: name,
-    },
-  });
-};
 
 const removeSwitch = () => {
   switchs.value = switchs.value.map(() => {
@@ -238,98 +168,7 @@ defineExpose({
   .tabs {
     position: relative;
     padding: 0 0.32rem;
-    .tab {
-      padding: 0 0.32rem;
-      overflow: hidden;
-      height: 1.04rem;
-      margin-top: 0.12rem;
-      border-radius: 0.32rem;
-      background: #f5f7fc;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      .name {
-        font-size: 0.3rem;
-      }
-      &:active {
-        background-color: rgba(237, 237, 237, 0.87);
-      }
-
-      .tab_icon {
-        width: 0.52rem;
-        height: 0.52rem;
-        margin-right: 0.16rem;
-        background-color: #fff;
-        border-radius: 50%;
-        box-sizing: border-box;
-        padding: 0.1rem;
-      }
-
-      .more {
-        width: 0.3rem;
-        height: 0.3rem;
-      }
-
-      .amount {
-        flex: 1;
-        text-align: right;
-        padding: 0 0.2rem;
-        font-size: 0.32rem;
-        font-weight: 600;
-        transition: 0.3s;
-      }
-
-      .rights {
-        display: flex;
-        height: 100%;
-        position: absolute;
-        right: -100%;
-        top: 0;
-        transition: 0.3s;
-        .right {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          font-size: 0.3rem;
-          font-weight: 400;
-          text-align: center;
-          color: #fff;
-          background-color: #014cfa;
-        }
-        .right--yellow {
-          background-color: #ffaf2a;
-        }
-        .right--green {
-          background-color: #00af70;
-        }
-        .right--red {
-          background-color: #e8503a;
-        }
-        .right:first-child {
-          border-radius: 0.32rem 0rem 0rem 0.32rem;
-        }
-        .right:last-child {
-          border-radius: 0rem 0.32rem 0.32rem 0rem;
-        }
-      }
-    }
-
-    .open_tab {
-      .name {
-        display: none;
-      }
-      .amount {
-        text-align: left;
-        padding: 0px;
-      }
-      .rights {
-        right: 0;
-      }
-    }
+    
   }
 }
 </style>

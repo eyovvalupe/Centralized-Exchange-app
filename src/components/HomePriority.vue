@@ -38,7 +38,7 @@
               </div>
               <div class="text-[0.22rem]">
                 {{ item.ratio > 0 ? "+" : ""
-                }}{{ ((item.ratio || 0) * 100).toFixed(2) }}%
+                }}{{ (item.ratio || 0) }}%
               </div>
             </div>
             <SparkLine

@@ -445,7 +445,7 @@ const submit = (s) => {
       account_id: currAccount.value.id,
       safeword: s,
       token: sessionToken.value,
-    };
+    }
   }
   _withdraw(withdrawParams.value)
     .then((res) => {
@@ -469,6 +469,7 @@ const submit = (s) => {
 const fee = ref(0);
 const getFee = () => {
   if (!form.value.amount) return;
+
   loading.value = true;
   _withdrawFee({
     currency: form.value.from,
@@ -483,7 +484,6 @@ const getFee = () => {
       loading.value = false;
     });
 };
-
 // 钱包
 const wallet = computed(() => {
   // 可选钱包列表
@@ -577,7 +577,7 @@ const clickItem = (item) => {
   Object.keys(route.query).map((k) => {
     _query[k] = route.query[k];
   });
-  _query.from = item.name;
+  _query.currency = item.name;
   router.replace({
     path: route.path,
     query: _query,
@@ -688,12 +688,6 @@ watch(
   }
 );
 
-watch(
-  () => form.value.amount,
-  (val) => {
-    changeAmount();
-  }
-);
 
 watch(
   () => tabActive.value,
