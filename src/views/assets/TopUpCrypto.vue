@@ -7,7 +7,7 @@
           <div class="top-record-icon">
             <img src="/static/img/assets/record.png" />
           </div>
-          <span>
+          <span class="max-w-[1.2rem]">
             {{ $t("topUpCrypto.rechargeRecord") }}
           </span>
         </div>

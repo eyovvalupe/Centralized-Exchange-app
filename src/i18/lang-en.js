@@ -273,7 +273,7 @@ export default {
   },
   topUpCrypto: {
     recharge: "Deposit Funds",
-    rechargeRecord: "Deposit History",
+    rechargeRecord: "History",
     cryptocurrency: "Cryptos",
     bankCard: "Bank Cards",
     currency: "Currency Type",
