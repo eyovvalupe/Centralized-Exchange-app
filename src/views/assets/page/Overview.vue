@@ -5,7 +5,7 @@
     <OverviewCard>
       <div class="p-[0.7rem]">
         <div class="top">
-          <div class="title">{{ $t("总资产") }} <span>(USDT)</span></div>
+          <div class="title">{{ $t("assets.header_total") }} <span>(USDT)</span></div>
           <div class="eyes" @click="hidden = !hidden">
             <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
             <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
@@ -20,7 +20,7 @@
         </div>
         <div class="navs">
           <div class="nav">
-            <div class="nav_label">{{ $t("现金账户") }}</div>
+            <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
               {{
                 hidden
@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="nav">
-            <div class="nav_label">{{ $t("持仓金额") }}</div>
+            <div class="nav_label">{{ $t("assets.info_order") }}</div>
             <div class="num">
               {{ hidden ? "********" : assets.ordervalue || "0" }}
             </div>
@@ -53,7 +53,7 @@
         <div class="tab_icon">
           <CashIcon />
         </div>
-        <div class="name">{{ $t("现金账户") }}</div>
+        <div class="name">{{ $t("assets.over_view_cash") }}</div>
         <div class="amount">
           {{ parseFloat(assets.money).toLocaleString() || "0" }}
         </div>
@@ -71,7 +71,7 @@
         <div class="tab_icon">
           <StockIcon />
         </div>
-        <div class="name">{{ $t("股票") }}</div>
+        <div class="name">{{ $t("assets.over_view_stock") }}</div>
         <div class="amount">
           {{
             parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
@@ -91,7 +91,7 @@
         <div class="tab_icon">
           <ContractIcon />
         </div>
-        <div class="name">{{ $t("合约") }}</div>
+        <div class="name">{{ $t("assets.over_view_contract") }}</div>
         <div class="amount">
           {{
             parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
@@ -111,7 +111,7 @@
         <div class="tab_icon">
           <ForeignCashIcon />
         </div>
-        <div class="name">{{ $t("外汇") }}</div>
+        <div class="name">{{ $t("assets.over_view_forex") }}</div>
         <div class="amount">
           {{
             parseFloat(assets && assets.forex ? assets.forex : 0).toLocaleString()
@@ -131,7 +131,7 @@
         <div class="tab_icon">
           <TraditionIcon />
         </div>
-        <div class="name">{{ $t("大宗商品") }}</div>
+        <div class="name">{{ $t("assets.over_view_trade") }}</div>
         <div class="amount">
           {{
             parseFloat(assets && assets.forex ? assets.forex : 0).toLocaleString()
@@ -139,14 +139,6 @@
         </div>
         <div class="more">
           <NextIcon />
-        </div>
-        <div class="rights">
-          <div class="right" @click="jump('topUp', true)">
-            {{ $t("充值") }}
-          </div>
-          <div class="right right--yellow" @click="jump('withdraw', true)">
-            {{ $t("提现") }}
-          </div>
         </div>
       </div>
     </div>

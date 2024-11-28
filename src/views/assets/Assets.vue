@@ -4,7 +4,7 @@
     <!-- 头部 -->
     <HeaderTabs
       v-model:active="activeTab"
-      :tabs="[$t('总资产'), $t('账户'), $t('订单中心')]"
+      :tabs="[$t('assets.header_total'), $t('assets.header_wallet'), $t('assets.header_order')]"
       @change="changeActiveTab(activeTab, true)"
     />
 
@@ -54,7 +54,9 @@ import HeaderTabs from "@/components/HeaderTabs.vue";
 import Wallet from "./page/Wallet.vue";
 import OrderCenter from "./page/OrderCenter.vue";
 import { _cryptoCoin } from "@/api/api";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 // import HintBlock from "@/components/HintBlock.vue"
 
 const route = useRoute();

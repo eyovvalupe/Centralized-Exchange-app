@@ -133,6 +133,7 @@ onMounted(()=>{
                 position: relative;
                 z-index: 1;
                 transition: .3s;
+                font-size: 0.3rem;
             }
             &::after{
                 content: '';

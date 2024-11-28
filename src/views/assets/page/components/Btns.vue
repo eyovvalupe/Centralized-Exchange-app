@@ -64,13 +64,6 @@ const jump = (name, check = false, query) => {
 const hintNum = computed(() => store.state.hintNum || 0);
 
 const showAS = ref(false);
-const actions = computed(() => {
-  return [
-    { name: t("充值记录"), value: "0" },
-    { name: t("提现记录"), value: "1" },
-    { name: t("划转记录"), value: "2" },
-  ];
-});
 
 const onSelect = (item) => {
   showAS.value = false;

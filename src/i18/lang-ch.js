@@ -244,6 +244,17 @@ export default {
     withdraw: "提現",
     transfer: "劃轉",
     financialRecords: "資金記錄",
+    header_total: "總資產",
+    header_wallet: "帳戶",
+    header_order: "訂單中心",
+    info_cash: "現金帳戶",
+    info_order: "持倉金額",
+    over_view_cash: "現金帳戶",
+    over_view_stock: "股票",
+    over_view_contract: "合約",
+    over_view_forex: "外匯",
+    over_view_trade: "大宗商品",
+
   },
   topUpCrypto: {
     recharge: "充值",
