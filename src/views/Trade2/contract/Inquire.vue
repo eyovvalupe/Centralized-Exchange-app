@@ -57,7 +57,12 @@ import { _futuresList } from "@/api/api"
 import UnLogin from "@/components/UnLogin.vue"
 import OrderInfo from '../components/OrderInfo.vue'
 import Decimal from 'decimal.js';
-
+const props = defineProps({
+  scrollDom: {
+    type: String,
+    default: '.trade_body'
+  }
+})
 
 const loginfinish = () => {
     setTimeout(() => {
@@ -166,14 +171,14 @@ onMounted(() => {
     setTimeout(() => {
         try {
             moreDom = document.querySelector('.loading_more')
-            document.querySelector('.trade_body').addEventListener('scroll', scrolHandle)
+            document.querySelector(props.scrollDom).addEventListener('scroll', scrolHandle)
         } catch {
         }
     }, 500)
 })
 onUnmounted(() => {
     try {
-        document.querySelector('.trade_body').removeEventListener('scroll', scrolHandle)
+        document.querySelector(props.scrollDom).removeEventListener('scroll', scrolHandle)
     } catch { }
 })
 

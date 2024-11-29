@@ -17,19 +17,19 @@
       </div>
 
       <div class="tab" v-if="activeTab == 1">
-        <StockOrderList />
+        <StockOrderList  />
       </div>
 
       <div class="tab" v-if="activeTab == 2">
-        <CryptoOrderList />
+        <CryptoOrderList  />
       </div>
 
       <div class="tab" v-if="activeTab == 3">
-        <AIOrderList />
+        <AIOrderList  />
       </div>
 
       <div class="tab" v-if="activeTab == 4">
-        <IPOStock ref="IPOStockRef" :from="'assets'" />
+        <IPOStock ref="IPOStockRef" scrollDom="#assets_order_center_body" :from="'assets'" />
       </div>
     </div>
   </div>

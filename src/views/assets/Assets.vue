@@ -30,9 +30,9 @@
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="assets_body" v-if="loadedTab.indexOf(2) > -1">
+        <div class="assets_body" id="assets_order_center_body" ref="orderCenterRef">
           <!-- 记录弹窗 -->
-          <OrderCenter />
+          <OrderCenter v-if="loadedTab.indexOf(2) > -1" />
         </div>
       </SwipeItem>
     </Swipe>
@@ -87,6 +87,13 @@ const swipeChange = (val) => {
   changeActiveTab(val);
 };
 
+const orderCenterRef = ref(null)
+const scrollData = useScroll(orderCenterRef, {
+  throttle: 200,
+  onScroll: ()=>{},
+})
+provide('scrollData', scrollData)
+
 const jumpToWallet = (val) => {
   store.commit("setCurrSelectedWallet", val);
   changeActiveTab(1, true);
@@ -117,6 +124,10 @@ const onRefresh = () => {
       break;
   }
 };
+
+const onScroll = ()=>{
+
+}
 
 onMounted(() => {
   // 下拉刷新状态监听

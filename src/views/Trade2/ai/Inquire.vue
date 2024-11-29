@@ -43,7 +43,12 @@ import AiInfo from "../components/AiInfo.vue"
 import UnLogin from "@/components/UnLogin.vue"
 import { formatNumber } from 'vant/lib/utils';
 
-
+const props = defineProps({
+  scrollDom: {
+    type: String,
+    default: '.page'
+  }
+})
 const loginfinish = () => {
     setTimeout(() => {
         init()
@@ -117,14 +122,14 @@ onMounted(() => {
     setTimeout(() => {
         try {
             moreDom = document.querySelector('.loading_more')
-            document.querySelector('.page').addEventListener('scroll', scrolHandle)
+            document.querySelector(props.scrollDom).addEventListener('scroll', scrolHandle)
         } catch {
         }
     }, 500)
 })
 onUnmounted(() => {
     try {
-        document.querySelector('.page').removeEventListener('scroll', scrolHandle)
+        document.querySelector(props.scrollDom).removeEventListener('scroll', scrolHandle)
     } catch { }
 })
 init()
