@@ -16,7 +16,15 @@
             <span>{{ t("trade.stock_opening_take") }}</span>
           </div>
           <div class="item" style="justify-content: center">
-            <span>{{ stopMap[form1.stop_profit_type] || "--" }}</span>
+            <span>{{
+              form1.stop_profit_type == "price"
+                ? t("trade.stock_opening_stop_price")
+                : form1.stop_profit_type == "amount"
+                ? t("trade.stock_opening_stop_amount")
+                : form1.stop_profit_type == "ratio"
+                ? t("trade.stock_opening_stop_ratio")
+                : "--"
+            }}</span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
             </div>
@@ -44,7 +52,15 @@
             <span>{{ t("trade.stock_opening_stop") }}</span>
           </div>
           <div class="item" style="justify-content: center">
-            <span>{{ stopMap[form1.stop_loss_type] || "--" }}</span>
+            <span>{{
+              form1.stop_profit_type == "price"
+                ? t("trade.stock_opening_stop_price")
+                : form1.stop_profit_type == "amount"
+                ? t("trade.stock_opening_stop_amount")
+                : form1.stop_profit_type == "ratio"
+                ? t("trade.stock_opening_stop_ratio")
+                : "--"
+            }}</span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
             </div>
@@ -68,7 +84,11 @@
 
       <!-- 简单模式 -->
       <FormItem
-        :title="t('trade.stock_opening_stop')"
+        :title="
+          activeType == 1
+            ? t('trade.stock_opening_take')
+            : t('trade.stock_opening_stop')
+        "
         class="mb-[0.4rem]"
         v-model="form1.stop_loss_price"
         input-type="number"
@@ -96,11 +116,13 @@
             <span>{{ t("trade.stock_opening_price") }}</span>
           </div>
           <div class="item" style="justify-content: center">
-            <span>{{
-              priceMode == 1
-                ? t("trade.stock_opening_price_market")
-                : t("trade.stock_opening_price_limit")
-            }}</span>
+            <span>
+              {{
+                priceMode == 1
+                  ? t("trade.stock_opening_price_market")
+                  : t("trade.stock_opening_price_limit")
+              }}
+            </span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
             </div>
@@ -111,9 +133,9 @@
             <span>&nbsp;</span>
           </div>
           <FormItem custom disabled v-if="priceMode == 1">
-            <span style="color: #a4acb9">{{
-              t("trade.stock_opening_price_latest")
-            }}</span>
+            <span style="color: #a4acb9">
+              {{ t("trade.stock_opening_price_latest") }}</span
+            >
           </FormItem>
 
           <FormItem
@@ -207,8 +229,8 @@
         </div>
         <div class="item justify-between">
           <span v-if="!levers.length">--</span>
-          <span class="flex text-center" v-else
-            >{{
+          <span class="flex text-center" v-else>
+            {{
               form1.leverType == "cross"
                 ? t("trade.stock_opening_position_mode_cross")
                 : t("trade.stock_opening_position_mode_isolated") || "--"
@@ -331,7 +353,16 @@
                 : t("trade.stock_open_short")
             }}
           </div>
-          <div class="tag">{{ modeMap[params.lever_type] }}</div>
+          <!-- <div class="tag">{{ modeMap[params.lever_type] }}</div> -->
+          <div class="tag">
+            {{
+              params.lever_type == "cross"
+                ? t("trade.stock_opening_position_mode_cross")
+                : params.lever_type == "isolated"
+                ? t("trade.stock_opening_position_mode_isolated")
+                : "--"
+            }}
+          </div>
           <div class="lever">{{ params.lever || 1 }}X</div>
         </div>
       </div>
@@ -486,7 +517,7 @@
     v-model:show="showJumpTypeDialog"
     :actions="jumpModeList"
     @select="onSelectJumpModeType"
-    title="划转/兑换/充值"
+    :title="t('trade.stock_opening_show_jump_type')"
   >
   </ActionSheet>
 
@@ -1140,7 +1171,7 @@ if (route.query.symbol) {
 const openTypeDialog = () => {
   if (!levers.value.length) {
     if (!currStock.value.symbol) {
-      showToast("请选择股票");
+      showToast(t('trade.stock_opening_err_stock'));
     }
     return;
   }

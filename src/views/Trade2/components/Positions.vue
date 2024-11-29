@@ -5,7 +5,7 @@
       <div class="td td-5">{{ t("trade.stock_position_stock") }}</div>
       <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
       <div class="td td-4">{{ t("trade.stock_position_cost") }}</div>
-      <div class="td td-4">{{ t("trade.stock_position_profit") }}</div>
+      <div class="td td-4" style="text-align: end !important;">{{ t("trade.stock_position_profit") }}</div>
     </div>
     <NoData v-if="!positionsList.length && !loading" />
 

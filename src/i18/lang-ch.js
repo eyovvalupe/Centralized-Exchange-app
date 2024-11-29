@@ -444,8 +444,15 @@ export default {
     stock_opening_price_tip: "滿足價格才能成交",
     stock_opening_price_label: "市價",
     stock_opening_stock: "股票",
+    contract_opening_contract: "合約",
+
     stock_opening_amount_mode: "保證金模式",
     stock_opening_amount_limit_mode: "限價模式",
+    stock_opening_show_jump_type: "劃轉/兌換/儲值",
+
+    contract_opening_amount_title: "張數",
+    contract_opening_order_value: "訂單金額",
+
     stock_opening_amount_title: "數量(股)",
     stock_opening_no_balance: "帳戶餘額不足",
     stock_opening_enough_balance: "餘額",
@@ -453,6 +460,8 @@ export default {
     stock_opening_token_register: "註冊",
     stock_opening_confirm_title: "開倉確認",
     stock_opening_amount: "開倉數量",
+    contract_opening_amount: "開倉張數",
+
     stock_opening_no: "無",
     stock_opening_pay: "支付",
     stock_opening_upfront: "保證金",
@@ -474,25 +483,35 @@ export default {
     stock_opening_stop_amount: "金額",
     stock_opening_stop_ratio: "百分比",
     stock_opening_err_stock: "請選擇股票",
+    contract_opening_err_contract: "請選擇合約",
+    contract_opening_err_amount: "請輸入張數",
+
     stock_opening_err_min_balance: "最小交易量",
     stock_opening_err_price: "請輸入價格",
     stock_opening_err_take_price: "請輸入止盈價格",
     stock_opening_err_stop_price: "請輸入停損價格",
     stock_opening_err_limit: "請輸入限價",
     stock_opening_success: "開倉成功",
-    
+
     stock_position_stock: "股票/狀態",
     stock_position_open: "開倉/可售",
     stock_position_cost: "現價/成本",
+    contract_position_cost: "現價/買價",
+
     stock_position_profit: "盈虧/盈虧比",
     stock_position_close: "平倉",
+    stock_position_close_order: "平倉",
     stock_position_amount: "數量",
     stock_position_ongoing_amount: "持倉數量",
+    contract_position_ongoing_amount: "持倉戰術",
+
     stock_position_all: "全部",
     stock_position_btn: "確定",
     stock_position_update: "更新訂單",
     stock_position_add_deposit: "增加保證金",
     stock_position_no_close_amount: "請輸入平倉數量",
+    contract_position_no_close_amount: "請輸入平倉張數",
+
     stock_position_success: "操作成功",
     stock_position_no_deposit: "請輸入保證金",
     stock_position_cancel_title: "撤銷單",
