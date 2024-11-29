@@ -34,7 +34,7 @@
                 ? t("trade.stock_position_status_fail")
                 : item.status == "cancel"
                 ? t("trade.stock_position_status_cancel")
-                : ""
+                : "--"
             }}
           </div>
         </div>
@@ -45,7 +45,9 @@
           {{
             item.offset == "long"
               ? t("trade.stock_position_offset_long")
-              : t("trade.stock_position_offset_short")
+              : item.offset == "short"
+              ? t("trade.stock_position_offset_short")
+              : "--"
           }}
         </div>
         <div class="amount">{{ item.unsold_volume || "--" }}</div>
@@ -711,8 +713,8 @@ const cancel = (item) => {
   showConfirmDialog({
     title: t("trade.stock_position_cancel_title"),
     message: t("trade.stock_position_cancel_con"),
-    confirmButtonText: t('trade.stock_position_confirm_btn'),
-    cancelButtonText: t('trade.stock_position_cancel_btn')
+    confirmButtonText: t("trade.stock_position_confirm_btn"),
+    cancelButtonText: t("trade.stock_position_cancel_btn"),
   })
     .then(() => {
       showLoadingToast({

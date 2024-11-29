@@ -513,6 +513,7 @@ export default {
     stock_opening_err_stop_price: "请输入止损价格",
     stock_opening_err_limit: "请输入限价",
     stock_opening_success: "开仓成功",
+    
     stock_position_stock: "股票/状态",
     stock_position_open: "开仓/可售",
     stock_position_cost: "现价/成本",

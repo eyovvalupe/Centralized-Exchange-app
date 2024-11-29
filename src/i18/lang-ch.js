@@ -480,6 +480,7 @@ export default {
     stock_opening_err_stop_price: "請輸入停損價格",
     stock_opening_err_limit: "請輸入限價",
     stock_opening_success: "開倉成功",
+    
     stock_position_stock: "股票/狀態",
     stock_position_open: "開倉/可售",
     stock_position_cost: "現價/成本",
