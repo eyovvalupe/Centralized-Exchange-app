@@ -560,5 +560,7 @@ export default {
     order_info_stop_loss_amount: "止损金额",
     order_info_stop_loss_ratio: "止损百分比",
     order_info_value: "订单价值",
+    order_info_copy: "已复制",
+
   },
 };

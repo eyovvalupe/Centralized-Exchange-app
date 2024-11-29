@@ -509,5 +509,7 @@ export default {
     stock_position_stop_price: "价格",
     stock_position_stop_amount: "金额",
     stock_position_stop_ratio: "百分比",
+    order_info_copy: "已復製",
+
   },
 };

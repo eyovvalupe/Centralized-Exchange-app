@@ -358,7 +358,7 @@ const priceTypeMap = ref({
 //  复制
 const copy = (text) => {
   _copyTxt(text);
-  showToast("已复制");
+  showToast(t('trade.order_info_copy'));
 };
 </script>
 

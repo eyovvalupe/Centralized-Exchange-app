@@ -564,5 +564,7 @@ export default {
     order_info_stop_loss_amount: "Stop Loss Amount",
     order_info_stop_loss_ratio: "Stop Loss Percentage",
     order_info_value: "Order Value",
+    order_info_copy: "Copied",
+
   },
 };
