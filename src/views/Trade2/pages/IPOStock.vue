@@ -233,7 +233,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   try {
-    document.querySelector('.page').removeEventListener('scroll', scrollHandler)
+    document.querySelector(props.scrollDom).removeEventListener('scroll', scrollHandler)
   } catch { }
 })
 

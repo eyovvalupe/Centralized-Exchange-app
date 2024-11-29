@@ -18,7 +18,7 @@
       <Positions />
     </div>
     <div class="tab" v-if="activeTab == 1">
-      <Inquire ref="InquireRef" />
+      <Inquire ref="InquireRef" scrollDom="#assets_order_center_body" />
     </div>
   </div>
 </template>
@@ -39,6 +39,7 @@ const changeActiveTab = (val) => {
     }, 0);
   }
 };
+
 </script>
 <style lang="less">
 .stock_order_list {

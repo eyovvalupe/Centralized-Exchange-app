@@ -108,7 +108,7 @@ import { _c2cOrderInfo, _c2cOrderList } from "@/api/api";
 import LoadingMore from "@/components/LoadingMore.vue";
 import router from "@/router";
 import { useBuyCoinState } from "./state";
-import { computed } from "vue";
+import { computed, provide } from "vue";
 
 const props = defineProps({
   from: {
@@ -126,6 +126,7 @@ const statusEnum = {
 };
 const { active, subs } = useBuyCoinState();
 const scrollData = inject("scrollData");
+
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const {
   c2cList: c2cLasttime,
