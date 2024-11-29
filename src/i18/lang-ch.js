@@ -286,6 +286,13 @@ export default {
     safety_trade_cancel: "取消",
     safety_trade_confirm: "確認",
     safety_trade_no_password: "請輸入密碼",
+    order_title_buy: "買幣",
+    order_title_buy: "股票",
+    order_title_buy: "合約",
+    order_title_buy: "交易機器人",
+    order_title_buy: "IPO",
+    order_current_position: "目前持倉",
+    order_history: "歷史查詢",
   },
   topUpCrypto: {
     recharge: "儲值",

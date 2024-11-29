@@ -289,6 +289,13 @@ export default {
     safety_trade_cancel: "Cancel",
     safety_trade_confirm: "Confirm",
     safety_trade_no_password: "Please enter your password",
+    order_title_buy: "Buy",
+    order_title_stock: "Stock",
+    order_title_contract: "Contract",
+    order_title_bot: "Bot",
+    order_title_ipo: "IPO",
+    order_current_position: "Positions",
+    order_history: "History",
   },
   topUpCrypto: {
     recharge: "Deposit Funds",

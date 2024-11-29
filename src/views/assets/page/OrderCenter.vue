@@ -7,9 +7,18 @@
         @touchmove.stop=""
         @touchend.stop=""
       >
-
-        <HeaderTabs type="card" v-model:active="activeTab" :tabs="[$t('买币'), $t('股票'), $t('合约'),$t('交易机器人'),$t('IPO')]" @change="changeActiveTab(activeTab)" />
-
+        <HeaderTabs
+          type="card"
+          v-model:active="activeTab"
+          :tabs="[
+            t('assets.order_title_buy'),
+            t('assets.order_title_stock'),
+            t('assets.order_title_contract'),
+            t('assets.order_title_bot'),
+            t('assets.order_title_ipo'),
+          ]"
+          @change="changeActiveTab(activeTab)"
+        />
       </div>
 
       <div class="tab" v-if="activeTab == 0">
@@ -43,7 +52,9 @@ import CryptoOrderList from "./components/CryptoOrderList.vue";
 import IPOStock from "@/views/Trade2/pages/IPOStock.vue";
 import AIOrderList from "./components/AIOrderList.vue";
 import List from "@/views/Market/buyCoin/List.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const activeTab = ref(0);
 const IPOStockRef = ref();
 const changeActiveTab = (val) => {

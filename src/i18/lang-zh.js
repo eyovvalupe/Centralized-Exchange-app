@@ -314,7 +314,14 @@ export default {
     safety_trade_placeholder: "请输入交易密码",
     safety_trade_cancel: "取消",
     safety_trade_confirm: "确认",
-    safety_trade_no_password: "请输入密码"
+    safety_trade_no_password: "请输入密码",
+    order_title_buy: "买币",
+    order_title_buy: "股票",
+    order_title_buy: "合约",
+    order_title_buy: "交易机器人",
+    order_title_buy: "IPO",
+    order_current_position: "当前持仓",
+    order_history: "历史查询",
   },
   withdraw: {
     withdraw: "提现",

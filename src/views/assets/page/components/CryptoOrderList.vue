@@ -5,13 +5,13 @@
         class="crypto_order_tab mr-[0.6rem]"
         :class="activeTab == 0 ? 'actived' : ''"
         @click="changeActiveTab(0)"
-        >当前持仓</span
+        >{{ t('assets.order_current_position') }}</span
       >
       <span
         class="crypto_order_tab"
         :class="activeTab == 1 ? 'actived' : ''"
         @click="changeActiveTab(1)"
-        >历史查询</span
+        >{{ t('assets.order_history') }}</span
       >
     </div>
     <div class="tab" v-if="activeTab == 0">
@@ -26,7 +26,9 @@
 import Inquire from "@/views/Trade2/contract/Inquire.vue";
 import Positions from "@/views/Trade2/contract/Positions.vue";
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const InquireRef = ref();
 const activeTab = ref(0);
 const changeActiveTab = (val) => {
