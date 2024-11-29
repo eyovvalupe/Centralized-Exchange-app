@@ -1,476 +1,593 @@
 <template>
-    <div>
-        <Top title="股票订单" :backFunc="backFunc" v-if="type == 'stock'" />
-        <Top title="合约订单" :backFunc="backFunc" v-else-if="type == 'contract'" />
+  <div>
+    <Top
+      :title="t('trade.order_info_title_stock')"
+      :backFunc="backFunc"
+      v-if="type == 'stock'"
+    />
+    <Top
+      :title="t('trade.order_info_title_contract')"
+      :backFunc="backFunc"
+      v-else-if="type == 'contract'"
+    />
 
-        <div class="scroller">
-            <div class="stock-info">
-                <div class="stock-info__head">
-                    <div class="stock-info__hl">
-                        <span class="stock-info__symbol" v-if="type == 'contract'">{{ currStock.name || '--' }}</span>
-                        <span class="stock-info__symbol" v-else>{{ currStock.symbol || '--' }}</span>
-                        <span class="stock-info__status">{{ statusMap[currStock.status] || '--' }}</span>
-                    </div>
-                    <div class="stock-info__trend" @click="openStockModel(currStock)">
-                        <img src="/static/img/trade/blue-stock.png" />
-                    </div>
-                </div>
-                <div class="stock-info__order_no">
-                    <span>{{ currStock.order_no || '--' }}</span>
-                    <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
-                        <img src="/static/img/trade/copy.png" alt="copy">
-                    </div>
-                </div>
+    <div class="scroller">
+      <div class="stock-info">
+        <div class="stock-info__head">
+          <div class="stock-info__hl">
+            <span class="stock-info__symbol" v-if="type == 'contract'">{{
+              currStock.name || "--"
+            }}</span>
+            <span class="stock-info__symbol" v-else>{{
+              currStock.symbol || "--"
+            }}</span>
+            <span class="stock-info__status">
+              <!-- {{ statusMap[currStock.status] || "--" }} -->
+                {{ 
+                currStock.status == 'none' ? t('trade.stock_position_status_none') :
+                currStock.status == 'lock' ? t('trade.stock_position_status_lock') :
+                currStock.status == 'open' ? t('trade.stock_position_status_open') :
+                currStock.status == 'done' ? t('trade.stock_position_status_done') :
+                currStock.status == 'fail' ? t('trade.stock_position_status_fail') :
+                currStock.status == 'cancel' ? t('trade.stock_position_status_cancel') :
+                '--'
+                }}
+            </span>
+          </div>
+          <div class="stock-info__trend" @click="openStockModel(currStock)">
+            <img src="/static/img/trade/blue-stock.png" />
+          </div>
+        </div>
+        <div class="stock-info__order_no">
+          <span>{{ currStock.order_no || "--" }}</span>
+          <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
+            <img src="/static/img/trade/copy.png" alt="copy" />
+          </div>
+        </div>
+      </div>
+      <div class="info_boxs">
+        <div class="info_box" v-if="!finalStatus">
+          <div>
+            <!-- 可售{{
+              (type == "stock" && "股票") ||
+              (type == "contract" && "张数") ||
+              ""
+            }} -->
+            {{
+              type == "stock"
+                ? t("trade.order_info_available_stock")
+                : type == "contract"
+                ? t("trade.order_info_available_contract")
+                : ""
+            }}
+          </div>
+          <div class="amount">{{ currStock.unsold_volume || "--" }}</div>
+        </div>
+        <div class="info_box">
+          <div>{{ t("trade.order_info_profit") }}</div>
+          <div
+            class="amount"
+            :class="
+              !currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
+            "
+          >
+            <div>{{ currStock.profit || "--" }}</div>
+          </div>
+        </div>
+        <div class="info_box">
+          <div>{{ t("trade.order_info_ratio") }}</div>
+          <div
+            class="amount"
+            :class="
+              !currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
+            "
+          >
+            <div style="font-size: 0.32rem">
+              {{ getRatio(currStock.ratio) }}
             </div>
-            <div class="info_boxs">
-                <div class="info_box" v-if="!finalStatus">
-                    <div>可售{{ type == 'stock' && '股票' || type == 'contract' && '张数' || '' }}</div>
-                    <div class="amount">{{ currStock.unsold_volume || '--' }}</div>
-                </div>
-                <div class="info_box">
-                    <div>盈亏</div>
-                    <div class="amount" :class="!currStock.profit ? '' : (currStock.profit > 0 ? 'up' : 'down')">
-                        <div>{{ currStock.profit || '--' }}</div>
-                    </div>
-                </div>
-                <div class="info_box">
-                    <div>盈亏比</div>
-                    <div class="amount" :class="!currStock.profit ? '' : (currStock.profit > 0 ? 'up' : 'down')">
-                        <div style="font-size: 0.32rem;">{{ getRatio(currStock.ratio) }}</div>
-                    </div>
-                </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="order_info_box">
+        <div class="info_item">
+          <div class="name">{{ t("trade.stock_open") }}</div>
+          <div class="val_box">
+            <div class="tag" :class="'tag_' + currStock.offset">
+              <!-- {{ offsetMap[currStock.offset] || "--" }} -->
+                {{ 
+                currStock.offset == 'long' ? t('trade.stock_position_offset_long') :
+                currStock.offset == 'short' ? t('trade.stock_position_offset_short') :
+                '--'
+                }}
             </div>
-
-            <div class="order_info_box">
-
-                <div class="info_item">
-                    <div class="name">开仓</div>
-                    <div class="val_box">
-                        <div class="tag" :class="'tag_' + currStock.offset">{{ offsetMap[currStock.offset] || '--' }}
-                        </div>
-                        <div class="tag">{{ leverTypeap[currStock.lever_type] || '--' }}</div>
-                        <div class="text">{{ currStock.lever || '1' }}X</div>
-                    </div>
-                </div>
-                <div class="info_item">
-                    <div class="name">价格</div>
-                    <div class="val_box">
-                        <div class="tag">{{ priceTypeMap[currStock.price_type] || '--' }}</div>
-                        <div class="text">{{ currStock.price || '--' }}</div>
-                    </div>
-                </div>
-                <div class="info_item">
-                    <div class="name">开仓{{ type == 'contract' ? '张数' : '数量' }}</div>
-                    <div class="val_box">
-                        <div class="text">{{ currStock.open_volume || '--' }}</div>
-                    </div>
-                </div>
-                <div class="info_item">
-                    <div class="name">手续费</div>
-                    <div class="val_box">
-                        <div class="text">{{ currStock.fee || '0' }}</div>
-                    </div>
-                </div>
-                <div class="info_item">
-                    <div class="name">止盈/止损</div>
-                    <div>
-                        <div class="val_box" style="margin-bottom:0.1rem" v-if="currStock.stop_profit">
-                            <div class="tag green_tag">止盈({{ stopMap[currStock.stop_profit_type] }})</div>
-                            <div class="text">{{ currStock.stop_profit_price }}{{ currStock.stop_profit_type == 'ratio'
-                                ? '%' :
-                                '' }}</div>
-                        </div>
-                        <div class="val_box" v-if="currStock.stop_loss">
-                            <div class="tag  red_tag">止损({{ stopMap[currStock.stop_loss_type] }})</div>
-                            <div class="text">{{ currStock.stop_loss_price }}{{ currStock.stop_loss_type == 'ratio' ?
-                                '%' : '' }}
-                            </div>
-                        </div>
-                        <div class="val_box" v-if="!currStock.stop_profit && !currStock.stop_loss">
-                            <div class="tag">无</div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="info_item" v-if="!finalStatus">
-                    <div class="name">订单价值</div>
-                    <div class="val_box">
-                        <div class="text">{{ currStock.order_value || '--' }}</div>
-                    </div>
-                </div>
-                <div class="info_item" v-if="!finalStatus">
-                    <div class="name">保证金</div>
-                    <div class="val_box">
-                        <div class="text">{{ currStock.margin || '0' }}</div>
-                    </div>
-                </div>
-                <!-- <div class="info_item">
+            <div class="tag">
+              <!-- {{ leverTypeap[currStock.lever_type] || "--" }} -->
+                {{ 
+                currStock.lever_type == 'cross' ? t('trade.stock_opening_position_mode_cross') :
+                currStock.lever_type == 'isolated' ? t('trade.stock_opening_position_mode_isolated') :
+                '--'
+                }}
+            </div>
+            <div class="text">{{ currStock.lever || "1" }}X</div>
+          </div>
+        </div>
+        <div class="info_item">
+          <div class="name">{{ t("trade.stock_opening_price") }}</div>
+          <div class="val_box">
+            <div class="tag">
+              <!-- {{ priceTypeMap[currStock.price_type] || "--" }} -->
+                {{ 
+                currStock.price_type == 'market' ? t('trade.stock_market_price') :
+                currStock.price_type == 'limit' ? t('trade.stock_limit_price') :
+                '--'
+                }}
+            </div>
+            <div class="text">{{ currStock.price || "--" }}</div>
+          </div>
+        </div>
+        <div class="info_item">
+          <!-- <div class="name">开仓{{ type == "contract" ? "张数" : "数量" }}</div> -->
+          <div class="name">
+            {{
+              type == "contract"
+                ? t("trade.order_info_open_qty_contract")
+                : t("trade.order_info_open_qty_other")
+            }}
+          </div>
+          <div class="val_box">
+            <div class="text">{{ currStock.open_volume || "--" }}</div>
+          </div>
+        </div>
+        <div class="info_item">
+          <div class="name">{{ t("trade.stock_opening_fee") }}</div>
+          <div class="val_box">
+            <div class="text">{{ currStock.fee || "0" }}</div>
+          </div>
+        </div>
+        <div class="info_item">
+          <div class="name">{{ t("trade.stock_take_stop") }}</div>
+          <div>
+            <div
+              class="val_box"
+              style="margin-bottom: 0.1rem"
+              v-if="currStock.stop_profit"
+            >
+              <div class="tag green_tag">
+                <!-- 止盈({{ stopMap[currStock.stop_profit_type] }}) -->
+                {{
+                  currStock.stop_profit_type == "price"
+                    ? t("trade.order_info_stop_profit_price")
+                    : currStock.stop_profit_type == "amount"
+                    ? t("trade.order_info_stop_profit_amount")
+                    : currStock.stop_profit_type == "ratio"
+                    ? t("trade.order_info_stop_profit_ratio")
+                    : ""
+                }}
+              </div>
+              <div class="text">
+                {{ currStock.stop_profit_price
+                }}{{ currStock.stop_profit_type == "ratio" ? "%" : "" }}
+              </div>
+            </div>
+            <div class="val_box" v-if="currStock.stop_loss">
+              <div class="tag red_tag">
+                <!-- 止损({{ stopMap[currStock.stop_loss_type] }}) -->
+                {{
+                  currStock.stop_loss_type == "price"
+                    ? t("trade.order_info_stop_loss_price")
+                    : currStock.stop_loss_type == "amount"
+                    ? t("trade.order_info_stop_loss_amount")
+                    : currStock.stop_loss_type == "ratio"
+                    ? t("trade.order_info_stop_loss_ratio")
+                    : ""
+                }}
+              </div>
+              <div class="text">
+                {{ currStock.stop_loss_price
+                }}{{ currStock.stop_loss_type == "ratio" ? "%" : "" }}
+              </div>
+            </div>
+            <div
+              class="val_box"
+              v-if="!currStock.stop_profit && !currStock.stop_loss"
+            >
+              <div class="tag">{{ t("trade.stock_opening_no") }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="info_item" v-if="!finalStatus">
+          <div class="name">{{ t("trade.order_info_value") }}</div>
+          <div class="val_box">
+            <div class="text">{{ currStock.order_value || "--" }}</div>
+          </div>
+        </div>
+        <div class="info_item" v-if="!finalStatus">
+          <div class="name">{{ t("trade.stock_opening_upfront") }}</div>
+          <div class="val_box">
+            <div class="text">{{ currStock.margin || "0" }}</div>
+          </div>
+        </div>
+        <!-- <div class="info_item">
                     <div class="name">持仓利息</div>
                     <div class="val_box">
                         <div class="text">0</div>
                     </div>
                 </div> -->
-            </div>
-
-        </div>
-
-        <div class="btns">
-
-            <div class="btn btn2" @click="emit('update', currStock)"
-                v-if="['none', 'lock', 'open'].includes(currStock.status)">
-                <div class="btn_icon">
-                    <img src="/static/img/trade/update.png" alt="img">
-                </div>
-                <div>更新</div>
-            </div>
-            <div class="btn btn2 disabled_btn" v-else>
-                <div class="btn_icon">
-                    <img src="/static/img/trade/update_disabled.png" alt="img">
-                </div>
-                <div>更新</div>
-            </div>
-            <div class="btn btn3" @click="emit('sell', currStock)" v-if="['open'].includes(currStock.status)">
-                <div class="btn_icon">
-                    <img src="/static/img/trade/close.png" alt="img">
-                </div>
-                <div>平仓</div>
-            </div>
-            <div class="btn btn3 disabled_btn" v-else>
-                <div class="btn_icon">
-                    <img src="/static/img/trade/close_disabled.png" alt="img">
-                </div>
-                <div>平仓</div>
-            </div>
-            <div class="btn btn4" @click="emit('cancel', currStock)" v-if="currStock.status == 'none'">
-                <div class="btn_icon">
-                    <img src="/static/img/trade/cancel.png" alt="img">
-                </div>
-                <div>撤单</div>
-            </div>
-            <div class="btn btn4 disabled_btn" v-else>
-                <div class="btn_icon">
-                    <img src="/static/img/trade/cancel_disabled.png" alt="img">
-                </div>
-                <div>撤单</div>
-            </div>
-        </div>
-
-        <!-- 行情弹窗 -->
-        <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
-            <StockPopup style="height:90vh" v-if="showStockModel" />
-        </Popup>
+      </div>
     </div>
+
+    <div class="btns">
+      <div
+        class="btn btn2"
+        @click="emit('update', currStock)"
+        v-if="['none', 'lock', 'open'].includes(currStock.status)"
+      >
+        <div class="btn_icon">
+          <img src="/static/img/trade/update.png" alt="img" />
+        </div>
+        <div>{{ t("trade.order_info_update") }}</div>
+      </div>
+      <div class="btn btn2 disabled_btn" v-else>
+        <div class="btn_icon">
+          <img src="/static/img/trade/update_disabled.png" alt="img" />
+        </div>
+        <div>{{ t("trade.order_info_update") }}</div>
+      </div>
+      <div
+        class="btn btn3"
+        @click="emit('sell', currStock)"
+        v-if="['open'].includes(currStock.status)"
+      >
+        <div class="btn_icon">
+          <img src="/static/img/trade/close.png" alt="img" />
+        </div>
+        <div>{{ t("trade.stock_position_close") }}</div>
+      </div>
+      <div class="btn btn3 disabled_btn" v-else>
+        <div class="btn_icon">
+          <img src="/static/img/trade/close_disabled.png" alt="img" />
+        </div>
+        <div>{{ t("trade.stock_position_close") }}</div>
+      </div>
+      <div
+        class="btn btn4"
+        @click="emit('cancel', currStock)"
+        v-if="currStock.status == 'none'"
+      >
+        <div class="btn_icon">
+          <img src="/static/img/trade/cancel.png" alt="img" />
+        </div>
+        <div>{{ t("trade.order_info_cancel") }}</div>
+      </div>
+      <div class="btn btn4 disabled_btn" v-else>
+        <div class="btn_icon">
+          <img src="/static/img/trade/cancel_disabled.png" alt="img" />
+        </div>
+        <div>{{ t("trade.order_info_cancel") }}</div>
+      </div>
+    </div>
+
+    <!-- 行情弹窗 -->
+    <Popup
+      teleport="body"
+      v-model:show="showStockModel"
+      position="bottom"
+      round
+      closeable
+    >
+      <StockPopup style="height: 90vh" v-if="showStockModel" />
+    </Popup>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { _copyTxt } from "@/utils/index"
-import { showToast, Popup } from 'vant';
+import { ref, computed } from "vue";
+import { _copyTxt } from "@/utils/index";
+import { showToast, Popup } from "vant";
 import store from "@/store";
-import Top from "@/components/Top.vue"
-import Decimal from 'decimal.js';
-import StockPopup from "../../trade/StockPopup.vue"
+import Top from "@/components/Top.vue";
+import Decimal from "decimal.js";
+import StockPopup from "../../trade/StockPopup.vue";
+import { useI18n } from "vue-i18n";
 
-const emit = defineEmits(['update', 'sell', 'cancel', 'back'])
+const { t } = useI18n();
+const emit = defineEmits(["update", "sell", "cancel", "back"]);
 const props = defineProps({
-    type: {
-        type: String,
-        default: 'stock' //stock 股票 contract 合约
+  type: {
+    type: String,
+    default: "stock", //stock 股票 contract 合约
+  },
+  currStock: {
+    type: Object,
+    default() {
+      return {};
     },
-    currStock: {
-        type: Object,
-        default() {
-            return {}
-        }
-    }
-})
+  },
+});
 const backFunc = () => {
-    emit('back')
-}
+  emit("back");
+};
 const getRatio = (num) => {
-    if (!num) return '--'
-    return new Decimal(num) + '%'
-}
+  if (!num) return "--";
+  return new Decimal(num) + "%";
+};
 
-const showStockModel = ref(false)
+const showStockModel = ref(false);
 const openStockModel = (currStock) => {
-    store.commit('setCurrStock', currStock)
-    showStockModel.value = true
-}
-const statusMap = ref({ // 仓位状态
-    'none': '开仓',
-    'lock': '锁定',
-    'open': '持仓',
-    'done': '平仓',
-    'fail': '失败',
-    'cancel': '已取消'
-})
+  store.commit("setCurrStock", currStock);
+  showStockModel.value = true;
+};
+const statusMap = ref({
+  // 仓位状态
+  none: "开仓",
+  lock: "锁定",
+  open: "持仓",
+  done: "平仓",
+  fail: "失败",
+  cancel: "已取消",
+});
 const finalStatus = computed(() => {
-    return ['done', 'fail', 'cancel'].includes(props.currStock.status)
-})
+  return ["done", "fail", "cancel"].includes(props.currStock.status);
+});
 
-const stopMap = ref({ // 止损类型
-    'price': '价格',
-    'amount': '金额',
-    'ratio': '百分比'
-})
+const stopMap = ref({
+  // 止损类型
+  price: "价格",
+  amount: "金额",
+  ratio: "百分比",
+});
 
-const offsetMap = ref({ // 涨跌状态
-    'long': '买涨',
-    'short': '买跌'
-})
+const offsetMap = ref({
+  // 涨跌状态
+  long: "买涨",
+  short: "买跌",
+});
 
-const leverTypeap = ref({ // 仓位
-    'cross': '全仓',
-    'isolated': '逐仓'
-})
-const priceTypeMap = ref({ // 价格类型
-    'market': '市价',
-    'limit': '限价'
-})
+const leverTypeap = ref({
+  // 仓位
+  cross: "全仓",
+  isolated: "逐仓",
+});
+const priceTypeMap = ref({
+  // 价格类型
+  market: "市价",
+  limit: "限价",
+});
 
 //  复制
-const copy = text => {
-    _copyTxt(text)
-    showToast('已复制')
-}
+const copy = (text) => {
+  _copyTxt(text);
+  showToast("已复制");
+};
 </script>
 
 <style lang="less" scoped>
 .scroller {
-    height: calc(100vh - 3.2rem);
-    overflow-y: auto;
-    margin-top: 1.12rem;
+  height: calc(100vh - 3.2rem);
+  overflow-y: auto;
+  margin-top: 1.12rem;
 }
 
 .stock-info {
-    background-color: #F5F7FC;
-    border-radius: 0.32rem;
-    margin: 0.2rem 0.32rem 0 0.32rem;
-    padding: 0.2rem 0.32rem 0.6rem 0.32rem;
+  background-color: #f5f7fc;
+  border-radius: 0.32rem;
+  margin: 0.2rem 0.32rem 0 0.32rem;
+  padding: 0.2rem 0.32rem 0.6rem 0.32rem;
 
-    &__head {
-        display: flex;
-        height: 0.4rem;
-        justify-content: space-between;
+  &__head {
+    display: flex;
+    height: 0.4rem;
+    justify-content: space-between;
+  }
+
+  &__hl {
+    display: flex;
+    align-items: center;
+  }
+
+  &__symbol {
+    font-size: 0.3rem;
+    font-weight: 600;
+  }
+
+  &__status {
+    border: 1px solid #7e99d6;
+    color: #7e99d6;
+    padding: 0.04rem 0.08rem;
+    height: 0.3rem;
+    line-height: 100%;
+    font-size: 0.22rem;
+    margin-left: 0.08rem;
+    border-radius: 0.6rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+
+  &__trend {
+    width: 0.4rem;
+    height: 0.4rem;
+
+    img {
+      width: 100%;
+      height: 100%;
     }
+  }
 
-    &__hl {
-        display: flex;
-        align-items: center;
+  &__order_no {
+    display: flex;
+    align-items: center;
+    color: #8f92a1;
+
+    span {
+      font-size: 0.28rem;
     }
+  }
 
-    &__symbol {
-        font-size: 0.3rem;
-        font-weight: 600;
+  &__copy_icon {
+    width: 0.24rem;
+    height: 0.24rem;
+    margin-left: 0.12rem;
+
+    img {
+      width: 100%;
+      height: 100%;
     }
-
-    &__status {
-        border: 1px solid #7E99D6;
-        color: #7E99D6;
-        padding: 0.04rem 0.08rem;
-        height: 0.3rem;
-        line-height: 100%;
-        font-size: 0.22rem;
-        margin-left: 0.08rem;
-        border-radius: 0.6rem;
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-    }
-
-    &__trend {
-        width: 0.4rem;
-        height: 0.4rem;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-    }
-
-    &__order_no {
-        display: flex;
-        align-items: center;
-        color: #8F92A1;
-
-        span {
-            font-size: 0.28rem;
-        }
-    }
-
-    &__copy_icon {
-        width: 0.24rem;
-        height: 0.24rem;
-        margin-left: 0.12rem;
-
-        img {
-            width: 100%;
-            height: 100%;
-        }
-    }
-
+  }
 }
 
-
 .info_boxs {
+  display: flex;
+  align-items: stretch;
+  padding: 0.3rem 0;
+  position: relative;
+  border: 1px solid #eff3f8;
+  border-radius: 0.32rem;
+  background-color: #fff;
+  margin: -0.5rem 0.32rem 0 0.32rem;
+  z-index: 1;
+
+  .info_box {
+    flex: 1;
     display: flex;
-    align-items: stretch;
-    padding: 0.3rem 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #8f92a1;
+    font-size: 0.28rem;
+    line-height: 0.44rem;
     position: relative;
-    border: 1px solid #EFF3F8;
-    border-radius: 0.32rem;
-    background-color: #fff;
-    margin: -0.5rem 0.32rem 0 0.32rem;
-    z-index: 1;
 
-    .info_box {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        color: #8F92A1;
-        font-size: 0.28rem;
-        line-height: 0.44rem;
-        position: relative;
-
-        .amount {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            line-height: 0.44rem;
-            margin-top: 0.12rem;
-            font-weight: 600;
-            color: #014CFA;
-            font-size: 0.36rem;
-        }
+    .amount {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 0.44rem;
+      margin-top: 0.12rem;
+      font-weight: 600;
+      color: #014cfa;
+      font-size: 0.36rem;
     }
+  }
 
-    .info_box+.info_box::after {
-        content: '';
-        width: 1px;
-        height: 0.9rem;
-        background-color: #EFF3F8;
-        position: absolute;
-        left: 0;
-        top: 50%;
-        margin-top: -0.45rem;
-    }
-
+  .info_box + .info_box::after {
+    content: "";
+    width: 1px;
+    height: 0.9rem;
+    background-color: #eff3f8;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -0.45rem;
+  }
 }
 
 .order_info_box {
-    padding: 0.16rem 0.64rem 0.32rem 0.64rem;
+  padding: 0.16rem 0.64rem 0.32rem 0.64rem;
 
-    .title {
-        text-align: center;
-        font-size: 0.28rem;
-        color: #121826;
-        font-weight: bold;
+  .title {
+    text-align: center;
+    font-size: 0.28rem;
+    color: #121826;
+    font-weight: bold;
+  }
+
+  .info_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.32rem 0 0.18rem 0;
+    border-bottom: 1px solid #f5f5f5;
+
+    .name {
+      color: #8f92a1;
+      font-size: 0.28rem;
+      font-weight: 400;
     }
 
+    .val_box {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 0.28rem;
+      color: #121826;
 
-    .info_item {
+      .tag {
+        color: #014cfa;
+        font-size: 0.24rem;
+        background-color: rgba(1, 76, 250, 0.08);
+        height: 0.44rem;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: 0.32rem 0 0.18rem 0;
-        border-bottom: 1px solid #F5F5F5;
+        justify-content: center;
+        padding: 0 0.24rem;
+        border-radius: 0.28rem;
+        margin-right: 0.1rem;
+      }
 
-        .name {
-            color: #8F92A1;
-            font-size: 0.28rem;
-            font-weight: 400;
-        }
+      .red_tag,
+      .tag_long {
+        color: #18b762;
+        background-color: rgba(24, 183, 98, 0.08);
+      }
 
-        .val_box {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            font-size: 0.28rem;
-            color: #121826;
+      .green_tag,
+      .tag_short {
+        color: #e8503a;
+        background-color: rgba(232, 80, 58, 0.08);
+      }
 
-
-            .tag {
-                color: #014CFA;
-                font-size: 0.24rem;
-                background-color: rgba(1, 76, 250, 0.08);
-                height: 0.44rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0 0.24rem;
-                border-radius: 0.28rem;
-                margin-right: 0.1rem;
-            }
-
-            .red_tag,
-            .tag_long {
-                color: #18B762;
-                background-color: rgba(24, 183, 98, 0.08);
-            }
-
-            .green_tag,
-            .tag_short {
-
-                color: #E8503A;
-                background-color: rgba(232, 80, 58, 0.08);
-            }
-
-            .text {
-                min-width: 0.5rem;
-                text-align: right;
-                font-weight: bold;
-            }
-        }
+      .text {
+        min-width: 0.5rem;
+        text-align: right;
+        font-weight: bold;
+      }
     }
-
-
+  }
 }
 
 .btns {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding-top: 0.32rem;
 
+  .btn {
+    width: 2.1532rem;
+    height: 1.4rem;
     display: flex;
-    align-content: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    padding-top: 0.32rem;
+    background-color: #014cfa;
+    color: #fff;
+    font-size: 0.32rem;
+    font-weight: 400;
+    line-height: 100%;
+    border-radius: 0.32rem;
+    margin: 0 0.1rem;
 
-    .btn {
-        width: 2.1532rem;
-        height: 1.4rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background-color: #014CFA;
-        color: #fff;
-        font-size: 0.32rem;
-        font-weight: 400;
-        line-height: 100%;
-        border-radius: 0.32rem;
-        margin: 0 0.1rem;
-
-        .btn_icon {
-            width: 0.4rem;
-            height: 0.4rem;
-            margin-bottom: 0.16rem;
-        }
+    .btn_icon {
+      width: 0.4rem;
+      height: 0.4rem;
+      margin-bottom: 0.16rem;
     }
+  }
 
-    .btn3 {
-        background-color: #7E99D6;
-    }
+  .btn3 {
+    background-color: #7e99d6;
+  }
 
-    .btn4 {
-        background-color: #B2BBD1;
-    }
+  .btn4 {
+    background-color: #b2bbd1;
+  }
 
-    .disabled_btn {
-        background-color: #EFF3F8;
-        color: #D0D8E2;
-    }
+  .disabled_btn {
+    background-color: #eff3f8;
+    color: #d0d8e2;
+  }
 }
 </style>

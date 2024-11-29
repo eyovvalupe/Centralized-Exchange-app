@@ -1,4 +1,12 @@
 export default {
+  common: {
+    stock: "股票",
+    crypto: "合約",
+    AI: "交易機器人",
+    IPO: "IPO",
+    closed: "已收盤",
+    no_data: "暫無數據",
+  },
   login: {
     login: "登錄",
     email: "郵箱",
@@ -56,7 +64,7 @@ export default {
     code_con1: "我們已將驗證碼發送至您的",
     code_con2: "請輸入6位數代碼",
     code_jump: "跳過驗證",
-    code_again: '再次發送',
+    code_again: "再次發送",
     code_jump_title: "跳過驗證將繼續註冊",
     code_jump_confirm: "確定",
     success_sign_up: "註冊成功",
@@ -68,12 +76,12 @@ export default {
     login_pw_length_error: "密碼最小8個字符",
     no_trade_pw_error: "請輸入交易密碼",
     no_agree_error: "請先同意隱私權政策和使用者條款",
-    network_error: "網路異常，請重試"
+    network_error: "網路異常，請重試",
   },
   password_level: {
     weak: "弱",
     normal: "強",
-    strong: "優"
+    strong: "優",
   },
   code_input: {
     btn_text1: "繼續",
@@ -111,7 +119,8 @@ export default {
     first_basic_info: "基本信息",
     first_upload_card: "證件上傳",
     first_title: "驗證您的身份",
-    first_description: "根據金融法規，我們需要確保您的詳細信息與您的政府簽發的身份證件完全匹配",
+    first_description:
+      "根據金融法規，我們需要確保您的詳細信息與您的政府簽發的身份證件完全匹配",
     first_legal_name: "法定姓名",
     first_card_id: "證件號碼",
     first_birthday: "出生日期",
@@ -157,7 +166,7 @@ export default {
     google_input_title: "谷歌驗證碼",
     google_input_con: "請輸入6位數代碼",
     google_input_btn_cancel: "取消",
-    google_input_btn_confirm: "確認"
+    google_input_btn_confirm: "確認",
   },
   service: {
     page_title: "網路客服",
@@ -166,7 +175,7 @@ export default {
     message_title: "客服為您服務",
   },
   language: {
-    page_title: "語言選擇"
+    page_title: "語言選擇",
   },
   safety: {
     page_title: "安全",
@@ -178,7 +187,7 @@ export default {
     no_google_dialog_title: "谷歌驗證器",
     no_google_dialog_con: "你還未綁定谷歌驗證器，是否去綁定",
     success_title: "操作成功",
-    success_btn: "關閉"
+    success_btn: "關閉",
   },
   change_login_pw: {
     page_title: "修改登入密碼",
@@ -189,7 +198,7 @@ export default {
     confirm_pw: "確認新密碼",
     confirm_pw_placeholder: "請再次輸入新密碼",
     btn: "修改",
-    no_match_noti: "兩次密碼不一致"
+    no_match_noti: "兩次密碼不一致",
   },
   change_trade_pw: {
     page_title: "修改交易密碼",
@@ -200,7 +209,7 @@ export default {
     confirm_pw: "確認新密碼",
     confirm_pw_placeholder: "請再次輸入新密碼",
     btn: "修改",
-    no_match_noti: "兩次密碼不一致"
+    no_match_noti: "兩次密碼不一致",
   },
   account: {
     page_title: "收款賬戶",
@@ -231,10 +240,10 @@ export default {
     add_subtitle_bank_name: "銀行名稱",
     add_bank_name_placeholder: "請輸入銀行名稱",
     add_subtitle_card_number: "卡號",
-    add_bank_address_placeholder: "請輸入銀行卡卡號"
+    add_bank_address_placeholder: "請輸入銀行卡卡號",
   },
   success_toast: {
-    message: "添加成功"
+    message: "添加成功",
   },
   form: {
     all: "全部",
@@ -276,7 +285,7 @@ export default {
     safety_trade_placeholder: "請輸入交易密碼",
     safety_trade_cancel: "取消",
     safety_trade_confirm: "確認",
-    safety_trade_no_password: "請輸入密碼"
+    safety_trade_no_password: "請輸入密碼",
   },
   topUpCrypto: {
     recharge: "儲值",
@@ -365,7 +374,6 @@ export default {
     info_recharge_order: "訂單編號",
     info_recharge_date: "儲值時間",
     copy: "已複製",
-
   },
   transfer: {
     transferRecord: "劃轉記錄",
@@ -385,7 +393,7 @@ export default {
     transfer_map_stock: "股票帳戶",
     transfer_map_futures: "合約帳戶",
     transfer_map_forex: "外匯帳戶",
-    transfer_map_trade: "大宗商品帳戶"
+    transfer_map_trade: "大宗商品帳戶",
   },
   recordList: {
     financialRecords: "資金記錄",
@@ -472,5 +480,34 @@ export default {
     stock_opening_err_stop_price: "請輸入停損價格",
     stock_opening_err_limit: "請輸入限價",
     stock_opening_success: "開倉成功",
+    stock_position_stock: "股票/狀態",
+    stock_position_open: "開倉/可售",
+    stock_position_cost: "現價/成本",
+    stock_position_profit: "盈虧/盈虧比",
+    stock_position_close: "平仓",
+    stock_position_amount: "数量",
+    stock_position_ongoing_amount: "持仓数量",
+    stock_position_all: "全部",
+    stock_position_btn: "确定",
+    stock_position_update: "更新订单",
+    stock_position_add_deposit: "增加保证金",
+    stock_position_no_close_amount: "请输入平仓数量",
+    stock_position_success: "操作成功",
+    stock_position_no_deposit: "请输入保证金",
+    stock_position_cancel_title: "撤单",
+    stock_position_cancel_con: "确认撤单吗？",
+    stock_position_cancel_btn: "取消",
+    stock_position_confirm_btn: "確認",
+    stock_position_status_none: "开仓",
+    stock_position_status_lock: "锁定",
+    stock_position_status_open: "持仓",
+    stock_position_status_done: "平仓",
+    stock_position_status_fail: "失败",
+    stock_position_status_cancel: "已取消",
+    stock_position_offset_long: "买涨",
+    stock_position_offset_short: "买跌",
+    stock_position_stop_price: "价格",
+    stock_position_stop_amount: "金额",
+    stock_position_stop_ratio: "百分比",
   },
 };
