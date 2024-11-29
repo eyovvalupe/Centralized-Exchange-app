@@ -109,7 +109,7 @@
               @keyup="goSearch(navActiveTab)"
               type="text"
               class="ipt"
-              placeholder="搜索"
+              :placeholder="t('trade.left_search')"
             />
           </div>
         </div>
@@ -122,7 +122,7 @@
           animated
           shrink
         >
-          <Tab :title="'自选'" name="option">
+          <Tab :title="t('trade.left_mine')" name="option">
             <OptionCategory class="option-category" />
             <div class="lists" style="height: calc(100vh - 3.3rem)">
               <StockTable
@@ -134,7 +134,7 @@
               />
             </div>
           </Tab>
-          <Tab :title="'股票'" name="stock">
+          <Tab :title="t('trade.left_stock')" name="stock">
             <div class="lists">
               <!-- 搜索列表 -->
               <StockTable
@@ -146,7 +146,7 @@
               />
             </div>
           </Tab>
-          <Tab :title="'合约'" name="contract">
+          <Tab :title="t('trade.left_contract')" name="contract">
             <div class="lists">
               <StockTable
                 :showSparkLine="false"
@@ -157,7 +157,7 @@
               />
             </div>
           </Tab>
-          <Tab :title="'交易机器人'" name="ai">
+          <Tab :title="t('trade.left_bot')" name="ai">
             <div class="lists">
               <StockTable
                 :showSparkLine="false"
@@ -168,7 +168,7 @@
               />
             </div>
           </Tab>
-          <Tab :title="'外汇'" name="out">
+          <Tab :title="t('trade.left_forex')" name="out">
             <div class="lists">
               <StockTable
                 :showSparkLine="false"

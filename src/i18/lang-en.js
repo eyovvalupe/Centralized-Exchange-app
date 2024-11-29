@@ -471,6 +471,15 @@ export default {
     stock_market_price: "Market",
     stock_limit_price: "Limit",
     stock_take_stop: "Take / Stop",
+
+    left_search: "Search",
+    left_mine: "Self-Selected",
+    left_stock: "Stock",
+    left_contract: "Contract",
+    left_bot: "AI Bot",
+    left_forex: "Forex",
+    left_all: "All",
+
     stock_opening_take: "Take Profit",
     stock_opening_stop: "Stop Loss",
     stock_opening_price: "Price",
@@ -481,23 +490,16 @@ export default {
     stock_opening_price_tip: "Filled when price met",
     stock_opening_price_label: "Price",
     stock_opening_stock: "Stock",
-    contract_opening_contract: "Contract",
-
     stock_opening_amount_mode: "Profit",
     stock_opening_amount_limit_mode: "Limit",
     stock_opening_show_jump_type: "Transfer/Exchange/Deposit",
     stock_opening_amount_title: "Qty (Stock)",
-    contract_opening_amount_title: "Quantity",
-
     stock_opening_no_balance: "Insufficient balance",
     stock_opening_enough_balance: "Balance",
     stock_opening_token_login: "Login",
     stock_opening_token_register: "Register",
     stock_opening_confirm_title: "Open Position Confirmation",
     stock_opening_amount: "Qty",
-    contract_opening_amount: "Qty",
-    contract_opening_order_value: "Order Value",
-
     stock_opening_no: "None",
     stock_opening_pay: "Pay",
     stock_opening_upfront: "Profit",
@@ -524,30 +526,21 @@ export default {
     stock_opening_err_take_price: "Enter take profit price",
     stock_opening_err_stop_price: "Enter stop loss price",
     stock_opening_err_limit: "Enter limit price",
-
-    contract_opening_err_contract: "Select contract",
-    contract_opening_err_amount: "Enter the amount",
-
+    
     stock_opening_success: "Open success",
     stock_position_stock: "Stock/Status",
     stock_position_open: "Open/Available",
     stock_position_cost: "Price/Cost",
-    contract_position_cost: "Price/Cost",
-
     stock_position_profit: "Profit/Ratio",
     stock_position_close: "Close",
     stock_position_close_order: "Close Order",
     stock_position_amount: "Quantity",
     stock_position_ongoing_amount: "Position Quantity",
-    contract_position_ongoing_amount: "Position Quantity",
-
     stock_position_all: "All",
     stock_position_btn: "Confirm",
     stock_position_update: "Update Order",
     stock_position_add_deposit: "Add Margin",
     stock_position_no_close_amount: "Enter Close Position Quantity",
-    contract_position_no_close_amount: "Enter Close Position Quantity",
-    
     stock_position_success: "Operation Successful",
     stock_position_no_deposit: "Enter Margin",
     stock_position_cancel_title: "Cancel Order",
@@ -565,10 +558,9 @@ export default {
     stock_position_stop_price: "Price",
     stock_position_stop_amount: "Amount",
     stock_position_stop_ratio: "Percentage",
-
     stock_position_unlogin_title: "Not logged in yet?",
     stock_position_unlogin_con: "Login now",
-
+    
     order_info_title_stock: "Stock Order",
     order_info_title_contract: "Contract Order",
     order_info_available_stock: "Available Stocks for Sale",
@@ -587,6 +579,15 @@ export default {
     order_info_stop_loss_ratio: "Stop Loss Percentage",
     order_info_value: "Order Value",
     order_info_copy: "Copied",
-
+    
+    contract_position_no_close_amount: "Enter Close Position Quantity",
+    contract_position_ongoing_amount: "Position Quantity",
+    contract_position_cost: "Price/Cost",
+    contract_opening_err_contract: "Select contract",
+    contract_opening_err_amount: "Enter the amount",
+    contract_opening_amount: "Qty",
+    contract_opening_order_value: "Order Value",
+    contract_opening_amount_title: "Quantity",
+    contract_opening_contract: "Contract",
   },
 };

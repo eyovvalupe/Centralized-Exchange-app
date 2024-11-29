@@ -467,6 +467,15 @@ export default {
     stock_market_price: "市价",
     stock_limit_price: "限价",
     stock_take_stop: "止盈/止损",
+
+    left_search: "搜索",
+    left_mine: "自选",
+    left_stock: "股票",
+    left_contract: "合约",
+    left_bot: "交易机器人",
+    left_forex: "外汇",
+    left_all: "全部",
+
     stock_opening_take: "止盈",
     stock_opening_stop: "止损",
     stock_opening_price: "价格",
@@ -481,11 +490,7 @@ export default {
     stock_opening_amount_mode: "保证金模式",
     stock_opening_amount_limit_mode: "限价模式",
     stock_opening_show_jump_type: "划转/兑换/充值",
-
     stock_opening_amount_title: "数量(股)",
-    contract_opening_amount_title: "张数",
-    contract_opening_order_value: "订单金额",
-
     stock_opening_no_balance: "账户余额不足",
     stock_opening_enough_balance: "余额",
     stock_opening_token_login: "登录",
@@ -514,35 +519,26 @@ export default {
     stock_opening_stop_amount: "金额",
     stock_opening_stop_ratio: "百分比",
     stock_opening_err_stock: "请选择股票",
-
-    contract_opening_err_contract: "请选择合约",
-    contract_opening_err_amount: "请输入张数",
-
     stock_opening_err_min_balance: "最小交易量",
     stock_opening_err_price: "请输入价格",
     stock_opening_err_take_price: "请输入止盈价格",
     stock_opening_err_stop_price: "请输入止损价格",
     stock_opening_err_limit: "请输入限价",
     stock_opening_success: "开仓成功",
-
+    
     stock_position_stock: "股票/状态",
     stock_position_open: "开仓/可售",
     stock_position_cost: "现价/成本",
-    contract_position_cost: "现价/买价",
     stock_position_profit: "盈亏/盈亏比",
     stock_position_close: "平仓",
     stock_position_close_order: "平仓",
     stock_position_amount: "数量",
     stock_position_ongoing_amount: "持仓数量",
-    contract_position_ongoing_amount: "持仓张数",
-
     stock_position_all: "全部",
     stock_position_btn: "确定",
     stock_position_update: "更新订单",
     stock_position_add_deposit: "增加保证金",
     stock_position_no_close_amount: "请输入平仓数量",
-    contract_position_no_close_amount: "请输入平仓张数",
-
     stock_position_success: "操作成功",
     stock_position_no_deposit: "请输入保证金",
     stock_position_cancel_title: "撤单",
@@ -560,10 +556,9 @@ export default {
     stock_position_stop_price: "价格",
     stock_position_stop_amount: "金额",
     stock_position_stop_ratio: "百分比",
-
     stock_position_unlogin_title: "还未登录账号？",
     stock_position_unlogin_con: "马上登录",
-
+    
     order_info_title_stock: "股票订单",
     order_info_title_contract: "合约订单",
     order_info_available_stock: "可售股票",
@@ -582,6 +577,13 @@ export default {
     order_info_stop_loss_ratio: "止损百分比",
     order_info_value: "订单价值",
     order_info_copy: "已复制",
-
+    
+    contract_position_no_close_amount: "请输入平仓张数",
+    contract_position_ongoing_amount: "持仓张数",
+    contract_position_cost: "现价/买价",
+    contract_opening_amount_title: "张数",
+    contract_opening_order_value: "订单金额",
+    contract_opening_err_contract: "请选择合约",
+    contract_opening_err_amount: "请输入张数",
   },
 };
