@@ -9,17 +9,17 @@
         </div> -->
         <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated
             :color="'#014CFA'" shrink @change="onChange">
-            <Tab title="开仓" name="0">
+            <Tab :title="t('trade.stock_open')" name="0">
                 <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
                     <Opening @showNavDialog="showNavDialog" @success="onChange('1')" ref="OpeningRef" />
                 </div>
             </Tab>
-            <Tab title="持仓" name="1">
+            <Tab :title="t('trade.stock_position')" name="1">
                 <div class="stock_tab-body" v-if="loadTab.indexOf('1') > -1">
                     <Positions />
                 </div>
             </Tab>
-            <Tab title="查询" name="2">
+            <Tab :title="t('trade.stock_search')" name="2">
                 <div class="stock_tab-body" v-if="loadTab.indexOf('2') > -1">
                     <Inquire ref="InquireRef" />
                 </div>
@@ -40,8 +40,9 @@ import Opening from "../components/Opening.vue"
 import Positions from "../components/Positions.vue"
 import Inquire from "../components/Inquire.vue"
 import DateArea from "@/components/DateArea.vue"
+import { useI18n } from "vue-i18n";
 
-
+const {t} = useI18n();
 const emits = defineEmits(['showNavDialog'])
 const showNavDialog = () => {
     emits('showNavDialog', 'stock')
