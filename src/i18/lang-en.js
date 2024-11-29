@@ -1,4 +1,12 @@
 export default {
+  common: {
+    stock: "Stock",
+    crypto: "Crypto",
+    AI: "AI AI Bot",
+    IPO: "IPO",
+    closed: "Closed",
+    no_data: "No Data",
+  },
   login: {
     login: "Sign In",
     email: "Email",
@@ -419,14 +427,6 @@ export default {
     failure: "Failed",
     unknown: "Pending",
   },
-  common: {
-    stock: "Stock",
-    crypto: "Crypto",
-    AI: "AI AI Bot",
-    IPO: "IPO",
-    closed: "Closed",
-    no_data: "No Data",
-  },
   home: {
     login: "Log In",
     loginDesc: "Log in to view your assets",
@@ -546,6 +546,9 @@ export default {
     stock_position_stop_price: "Price",
     stock_position_stop_amount: "Amount",
     stock_position_stop_ratio: "Percentage",
+
+    stock_position_unlogin_title: "Not logged in yet?",
+    stock_position_unlogin_con: "Login now",
 
     order_info_title_stock: "Stock Order",
     order_info_title_contract: "Contract Order",

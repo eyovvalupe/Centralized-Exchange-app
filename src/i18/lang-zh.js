@@ -1,4 +1,12 @@
 export default {
+  common: {
+    stock: "股票",
+    crypto: "合约",
+    AI: "交易机器人",
+    IPO: "IPO",
+    closed: "已收盘",
+    no_data: "暂无数据",
+  },
   login: {
     login: "登录",
     email: "邮箱",
@@ -236,14 +244,6 @@ export default {
   },
   success_toast: {
     message: "添加成功"
-  },
-  common: {
-    stock: "股票",
-    crypto: "合约",
-    AI: "交易机器人",
-    IPO: "IPO",
-    closed: "已收盘",
-    no_data: "暂无数据",
   },
   home: {
     login: "登录",
@@ -542,6 +542,9 @@ export default {
     stock_position_stop_price: "价格",
     stock_position_stop_amount: "金额",
     stock_position_stop_ratio: "百分比",
+
+    stock_position_unlogin_title: "还未登录账号？",
+    stock_position_unlogin_con: "马上登录",
 
     order_info_title_stock: "股票订单",
     order_info_title_contract: "合约订单",
