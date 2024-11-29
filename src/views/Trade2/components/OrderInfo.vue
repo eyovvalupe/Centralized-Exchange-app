@@ -47,7 +47,7 @@
       </div>
       <div class="info_boxs">
         <div class="info_box" v-if="!finalStatus">
-          <div>
+          <div class="text-center">
             <!-- 可售{{
               (type == "stock" && "股票") ||
               (type == "contract" && "张数") ||
