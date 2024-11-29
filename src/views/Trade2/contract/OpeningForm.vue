@@ -135,8 +135,7 @@
                     btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum"
                     tip-align="right" :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
                     <template #title-right>
-                        <span style="color:#014CFA" @click="openConfirmBox(1)" v-if="maxStockNum < 1">账户余额不足</span>
-                        <span style="color:#014CFA;font-size: 12px;" v-else @click="openConfirmBox(2)"><span
+                        <span v-if="stockCurrency" style="color:#014CFA;font-size: 12px;" @click="openConfirmBox"><span
                                 style="color:#666D80;">余额</span> {{
                                     stockWalletAmount }} {{ stockCurrency }}</span>
                     </template>
@@ -298,6 +297,8 @@
 
     </Popup>
 
+    <!-- 账户余额弹窗 -->
+    <AmountPopup ref="AmountPopupRef" :name="'合约账户'" :amount="stockWalletAmount" :currency="stockCurrency" />
 </template>
 
 <script setup>
@@ -313,6 +314,7 @@ import SafePassword from "@/components/SafePassword.vue"
 import StockTable from "@/components/StockTable.vue"
 import SlideContainer from "@/components/SlideContainer.vue"
 import FormItem from "@/components/Form/FormItem.vue"
+import AmountPopup from "../AmountPopup.vue"
 
 const showPassword = ref(false)
 const safeRef = ref()
@@ -472,34 +474,9 @@ const maxStockNum = computed(() => { // 最大可买 可卖
 
 
 
-const openConfirmBox = (type) => { // type 1-余额不足 2-余额展示
-    const title = type == 1 ? '账户余额不足' : '账户余额'
-    const content = type == 1 ? "<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">合约账户余额 <span style=\"font-weight:600;color:#014CFA;\">" + stockWalletAmount.value + "</span> " + stockCurrency.value + "</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>"
-        : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
-        <div style="color:#061023;font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">合约账户余额</div>
-        <div style="display:flex;align-items:center;justify-content:center;">
-            <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${stockWalletAmount.value}</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${stockCurrency.value}</span>
-        </div>
-        `
-    showConfirmDialog({
-        closeOnClickOverlay: true,
-        className: "van-custom-confirm-dialog",
-        title: title,
-        message: content,
-        allowHtml: true,
-        confirmButtonText: "去划转",
-        cancelButtonText: "去充值",
-        confirmButtonColor: "#014CFA",
-        cancelButtonColor: "#014CFA"
-    }).then(() => {
-        router.push({
-            name: 'transfer'
-        })
-    }).catch(() => {
-        router.push({
-            name: 'topUpCrypto'
-        })
-    })
+const AmountPopupRef = ref()
+const openConfirmBox = () => {
+    AmountPopupRef.value && AmountPopupRef.value.open()
 }
 
 

@@ -67,9 +67,7 @@
                     :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0" @change="changePercent"
                     @btnClick="onSliderChange(100)">
                     <template #title-right>
-                        <span style="color:#014CFA;font-size: 12px;" @click="openConfirmBox(1)"
-                            v-if="usdt.amount <= 0">账户余额不足</span>
-                        <span style="color:#014CFA;font-size: 12px;" v-else @click="openConfirmBox(2)"><span
+                        <span v-if="token" style="color:#014CFA;font-size: 12px;" @click="openConfirmBox"><span
                                 style="color:#666D80;">余额</span> {{
                                     usdt.amount }} USDT</span>
                     </template>
@@ -164,7 +162,8 @@
         </Popup>
     </div>
 
-
+    <!-- 账户余额弹窗 -->
+    <AmountPopup ref="AmountPopupRef" :name="'现金账户'" :amount="usdt.amount" :currency="'USDT'" />
 </template>
 
 <script setup>
@@ -184,6 +183,7 @@ import FormItem from '@/components/Form/FormItem.vue'
 import eventBus from "@/utils/eventBus"
 import SlideContainer from "@/components/SlideContainer.vue"
 import Top from "@/components/Top.vue"
+import AmountPopup from "../AmountPopup.vue"
 
 const props = defineProps({
     mode: {
@@ -399,36 +399,9 @@ const openStockModel = () => {
     showStockModel.value = true
 }
 
-
-const openConfirmBox = (type) => { // type 1-余额不足 2-余额展示
-    const title = type == 1 ? '账户余额不足' : '账户余额'
-    const content = type == 1 ?
-        "<div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;\">现金账户余额 <span style=\"font-weight:600;color:#014CFA;\">" + usdt.value.amount + "</span> USDT</div><div style=\"color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;\">请及时充值或划转</div>"
-        : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
-        <div style="color:#061023;font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">现金账户余额</div>
-        <div style="display:flex;align-items:center;justify-content:center;">
-            <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${usdt.value.amount}</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">USDT</span>
-        </div>
-    </div>`
-    showConfirmDialog({
-        closeOnClickOverlay: true,
-        className: "van-custom-confirm-dialog",
-        title: title,
-        message: content,
-        allowHtml: true,
-        confirmButtonText: "去划转",
-        cancelButtonText: "去充值",
-        confirmButtonColor: "#014CFA",
-        cancelButtonColor: "#014CFA"
-    }).then(() => {
-        router.push({
-            name: 'transfer'
-        })
-    }).catch(() => {
-        router.push({
-            name: 'topUpCrypto'
-        })
-    })
+const AmountPopupRef = ref()
+const openConfirmBox = () => {
+    AmountPopupRef.value && AmountPopupRef.value.open()
 }
 
 
