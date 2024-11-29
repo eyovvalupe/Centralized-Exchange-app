@@ -58,7 +58,7 @@ export const _dateUnitMap = {
 };
 
 export const _langMap = [
-  { name: "中文简体", icon: "china_icon", val: "zh" },
-  { name: "中文繁體", icon: "china_icon", val: "ch" },
-  { name: "English", icon: "us_icon", val: "en" },
+  { name: "中文简体", icon: "china_icon", val: "zh", show: true },
+  { name: "中文繁體", icon: "china_icon", val: "ch", show: true },
+  { name: "English", icon: "us_icon", val: "en", show: true },
 ];

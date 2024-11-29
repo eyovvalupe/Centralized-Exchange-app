@@ -5,18 +5,19 @@
 
     <CheckboxGroup v-model="checked" class="lang_box" :max="2">
       <div
-        v-for="(item, i) in filteredLangList"
+        v-for="(item, i) in langList"
         :key="i"
-        class="lang_item"
         @click="clickItem(item)"
       >
-        <div style="width: 0.57rem; height: 0.57rem" class="mr-[0.1rem]">
-          <div :class="item.icon"></div>
-        </div>
-        <div class="name">{{ item.name }}</div>
-        <div :class="checked.val == item.val ? 'check' : 'uncheck'">
-          <!-- <Checkbox checked-color="#014CFA" :name="item.val" /> -->
-          <div :class="checked.val == item.val ? 'inner' : ''"></div>
+        <div class="lang_item" v-if="item.show">
+          <div style="width: 0.57rem; height: 0.57rem" class="mr-[0.1rem]">
+            <div :class="item.icon"></div>
+          </div>
+          <div class="name">{{ item.name }}</div>
+          <div :class="checked.val == item.val ? 'check' : 'uncheck'">
+            <!-- <Checkbox checked-color="#014CFA" :name="item.val" /> -->
+            <div :class="checked.val == item.val ? 'inner' : ''"></div>
+          </div>
         </div>
       </div>
     </CheckboxGroup>
@@ -49,12 +50,14 @@ const envLangList = ref(
 );
 const checked = ref(JSON.parse(localStorage.getItem("language")) || "");
 const langList = ref(_langMap);
-const filteredLangList = ref(langList.value.filter(item => envLangList.value.includes(item.val)))
+const filteredLangList = ref(
+  langList.value.filter((item) => envLangList.value.includes(item.val))
+);
 const clickItem = (item) => {
-  localStorage.setItem('language', JSON.stringify(item))
-  store.commit("setLanguage", item)
+  localStorage.setItem("language", JSON.stringify(item));
+  store.commit("setLanguage", item);
   checked.value = [item.val];
-  locale.value = item.val
+  locale.value = item.val;
   router.back();
 };
 </script>
