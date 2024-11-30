@@ -484,7 +484,7 @@ export default {
     stock_take_stop: "Take / Stop",
 
     left_search: "Search",
-    left_mine: "Self-Selected",
+    left_mine: "Chosen",
     left_stock: "Stock",
     left_contract: "Contract",
     left_bot: "AI Bot",
@@ -660,7 +660,16 @@ export default {
     ipo_detail_item7: "Min Buy Qty",
     ipo_detail_item8: "VIP Access",
     ipo_detail_item9: "VIP Yield",
+    ipo_detail_item10: "Buy Qty",
     ipo_detail_btn: "Purchase Now",
 
+    ipo_lottery_title1: "All",
+    ipo_lottery_title2: "Pending",
+    ipo_lottery_title3: "Won",
+    ipo_lottery_title4: "Lost",
+    ipo_lottery_title5: "Lock",
+    ipo_lottery_title6: "Win",
+    ipo_lottery_amount: "Number of Wins",
+    ipo_lottery_detail: "Lottery Details",
   },
 };

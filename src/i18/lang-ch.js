@@ -624,7 +624,16 @@ export default {
     ipo_detail_item7: "最低認購數量",
     ipo_detail_item8: "VIP認購",
     ipo_detail_item9: "VIP利息",
+    ipo_detail_item10: "認購數量",
     ipo_detail_btn: "我要認購",
 
+    ipo_lottery_title1: "全部",
+    ipo_lottery_title2: "待中簽",
+    ipo_lottery_title3: "已中簽",
+    ipo_lottery_title4: "未中簽",
+    ipo_lottery_title5: "鎖定",
+    ipo_lottery_title6: "中簽",
+    ipo_lottery_amount: "中簽數量",
+    ipo_lottery_detail: "中簽詳情",
   },
 };
