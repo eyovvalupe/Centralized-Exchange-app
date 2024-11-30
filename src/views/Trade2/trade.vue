@@ -14,66 +14,39 @@
           <img src="/static/img/trade/open.png" alt="img" />
         </div>
         <div class="tab_body">
-          <div
-            class="tab"
-            :class="{ active_tab: activeTab == 0 }"
-            @click="changeActiveTab(0, true)"
-          >
+          <div class="tab" :class="{ active_tab: activeTab == 0 }" @click="changeActiveTab(0, true)">
             <span class="tab-name">{{ t('trade.header_stock') }}</span>
           </div>
-          <div
-            class="tab"
-            :class="{ active_tab: activeTab == 1 }"
-            @click="changeActiveTab(1, true)"
-          >
+          <div class="tab" :class="{ active_tab: activeTab == 1 }" @click="changeActiveTab(1, true)">
             <span class="tab-name">{{ t('trade.header_contract') }}</span>
           </div>
-          <div
-            class="tab"
-            :class="{ active_tab: activeTab == 2 }"
-            @click="changeActiveTab(2, true)"
-          >
+          <div class="tab" :class="{ active_tab: activeTab == 2 }" @click="changeActiveTab(2, true)">
             <span class="tab-name">{{ t('trade.header_aibot') }}</span>
           </div>
-          <div
-            class="tab"
-            :class="{ active_tab: activeTab == 3 }"
-            @click="changeActiveTab(3, true)"
-          >
+          <div class="tab" :class="{ active_tab: activeTab == 3 }" @click="changeActiveTab(3, true)">
             <span class="tab-name">{{ t('trade.header_ipo') }}</span>
+          </div>
+          <div class="tab" :class="{ active_tab: activeTab == 4 }" @click="changeActiveTab(4, true)">
+            <span class="tab-name">外汇</span>
+          </div>
+          <div class="tab" :class="{ active_tab: activeTab == 5 }" @click="changeActiveTab(5, true)">
+            <span class="tab-name">大宗商品</span>
           </div>
         </div>
       </div>
     </div>
-    <Swipe
-      :autoplay="0"
-      v-if="showSwipe"
-      :initial-swipe="initialSwipe"
-      :show-indicators="false"
-      ref="swipe"
-      @change="swipeChange"
-    >
+    <Swipe :autoplay="0" v-if="showSwipe" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe"
+      @change="swipeChange">
       <SwipeItem>
-        <div
-          class="trade_body"
-          ref="stockTradeBody"
-          v-if="loadedTab.includes(0)"
-          @scroll="tradeBodyScroll('stockTradeBody')"
-        >
+        <div class="trade_body" ref="stockTradeBody" v-if="loadedTab.includes(0)"
+          @scroll="tradeBodyScroll('stockTradeBody')">
           <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div
-          class="trade_body"
-          ref="contractTradeBody"
-          v-if="loadedTab.includes(1)"
-          @scroll="tradeBodyScroll('contractTradeBody')"
-        >
-          <ContractBlock
-            @showNavDialog="showNavDialogFunc"
-            ref="ContractBlockRef"
-          />
+        <div class="trade_body" ref="contractTradeBody" v-if="loadedTab.includes(1)"
+          @scroll="tradeBodyScroll('contractTradeBody')">
+          <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" />
         </div>
       </SwipeItem>
       <SwipeItem>
@@ -86,17 +59,23 @@
           <IpoBlock ref="IpoBlockRef" />
         </div>
       </SwipeItem>
+      <SwipeItem>
+        <div class="trade_body" v-if="loadedTab.includes(4)">
+          <ForeignBlock @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef" />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div class="trade_body" v-if="loadedTab.includes(5)">
+          <CommoditiesBlock @showNavDialog="showNavDialogFunc" ref="CommoditiesBlockRef" />
+        </div>
+      </SwipeItem>
     </Swipe>
+
 
     <!-- </PullRefresh> -->
 
     <!-- 自选列表 -->
-    <Popup
-      round
-      v-model:show="showNavDialog"
-      position="left"
-      :style="{ width: '85%', height: '100%' }"
-    >
+    <Popup round v-model:show="showNavDialog" position="left" :style="{ width: '85%', height: '100%' }">
       <div class="trade_option_list">
         <!-- 搜索 -->
         <div class="search_box_wrap">
@@ -104,79 +83,43 @@
             <div class="search_icon">
               <img src="/static/img/common/search.png" alt="🔍" />
             </div>
-            <input
-              v-model.trim="searchStr"
-              @keyup="goSearch(navActiveTab)"
-              type="text"
-              class="ipt"
-              :placeholder="t('trade.left_search')"
-            />
+            <input v-model.trim="searchStr" @keyup="goSearch(navActiveTab)" type="text" class="ipt"
+              :placeholder="t('trade.left_search')" />
           </div>
         </div>
         <!-- 切换 -->
-        <Tabs
-          @change="changeTab"
-          class="van-tabs--sub"
-          :lazy-render="false"
-          v-model:active="navActiveTab"
-          animated
-          shrink
-        >
+        <Tabs @change="changeTab" class="van-tabs--sub" :lazy-render="false" v-model:active="navActiveTab" animated
+          shrink>
           <Tab :title="t('trade.left_mine')" name="option">
             <OptionCategory class="option-category" />
             <div class="lists" style="height: calc(100vh - 3.3rem)">
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="optionLoading"
-                :key="'option'"
-                :list="watchList"
-              />
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="optionLoading" :key="'option'"
+                :list="watchList" />
             </div>
           </Tab>
           <Tab :title="t('trade.left_stock')" name="stock">
             <div class="lists">
               <!-- 搜索列表 -->
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="searchLoading"
-                :key="'search'"
-                :list="marketSearchList"
-              />
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                :list="marketSearchList" />
             </div>
           </Tab>
           <Tab :title="t('trade.left_contract')" name="contract">
             <div class="lists">
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClickContract"
-                :loading="searchLoading"
-                :key="'search'"
-                :list="futuresSearchList"
-              />
+              <StockTable :showSparkLine="false" :handleClick="handleClickContract" :loading="searchLoading"
+                :key="'search'" :list="futuresSearchList" />
             </div>
           </Tab>
           <Tab :title="t('trade.left_bot')" name="ai">
             <div class="lists">
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="searchLoading"
-                :key="'search'"
-                :list="aiquantSearchList"
-              />
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                :list="aiquantSearchList" />
             </div>
           </Tab>
           <Tab :title="t('trade.left_forex')" name="out">
             <div class="lists">
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="searchLoading"
-                :key="'search'"
-                :list="forexSearchList"
-              />
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                :list="forexSearchList" />
             </div>
           </Tab>
         </Tabs>
@@ -184,12 +127,7 @@
     </Popup>
 
     <!-- 持仓价值 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      v-model:show="showPrice"
-      position="top"
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPrice" position="top">
       <div class="trade-popup_price">
         <div class="popup-title">交易</div>
         <div class="total-value">总持仓价值</div>
@@ -225,10 +163,11 @@ import IpoBlock from "./pages/IpoBlock.vue";
 import StockBlock from "./pages/StockBlock.vue";
 import AiBlock from "./pages/AiBlock.vue";
 import ContractBlock from "./pages/ContractBlock.vue";
+import ForeignBlock from "./pages/ForeignBlock.vue"
+import CommoditiesBlock from "./pages/CommoditiesBlock.vue"
 import store from "@/store";
 import StockTable from "@/components/StockTable.vue";
 import { _search, _watchlist } from "@/api/api";
-import NoData from "@/components/NoData.vue";
 import { useRoute } from "vue-router";
 import OptionCategory from "@/components/OptionCategory.vue";
 import eventBus from "@/utils/eventBus";
@@ -237,6 +176,8 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const AiBlockRef = ref();
 const IpoBlockRef = ref();
+const ForeignBlockRef = ref()
+const CommoditiesBlockRef = ref()
 
 const route = useRoute();
 const openTab = ref(false);
@@ -512,7 +453,7 @@ const tradeBodyScroll = (refName) => {
     if (
       contractTradeBody.value.scrollTop + 10 >
       contractTradeBody.value.scrollHeight -
-        contractTradeBody.value.offsetHeight
+      contractTradeBody.value.offsetHeight
     ) {
       eventBus.emit("contractTradeBodyScrollToBottom");
     }
@@ -565,6 +506,7 @@ const tradeBodyScroll = (refName) => {
       align-items: center;
       flex-wrap: wrap;
       position: relative;
+      overflow-x: auto;
       // padding: 0 0.4rem;
 
       .tab {

@@ -1,15 +1,6 @@
 <template>
   <div>
-    <Top
-      :title="t('trade.order_info_title_stock')"
-      :backFunc="backFunc"
-      v-if="type == 'stock'"
-    />
-    <Top
-      :title="t('trade.order_info_title_contract')"
-      :backFunc="backFunc"
-      v-else-if="type == 'contract'"
-    />
+    <Top :title="title" :backFunc="backFunc" />
 
     <div class="scroller">
       <div class="stock-info">
@@ -23,15 +14,15 @@
             }}</span>
             <span class="stock-info__status">
               <!-- {{ statusMap[currStock.status] || "--" }} -->
-                {{ 
+              {{
                 currStock.status == 'none' ? t('trade.stock_position_status_none') :
-                currStock.status == 'lock' ? t('trade.stock_position_status_lock') :
-                currStock.status == 'open' ? t('trade.stock_position_status_open') :
-                currStock.status == 'done' ? t('trade.stock_position_status_done') :
-                currStock.status == 'fail' ? t('trade.stock_position_status_fail') :
-                currStock.status == 'cancel' ? t('trade.stock_position_status_cancel') :
-                '--'
-                }}
+                  currStock.status == 'lock' ? t('trade.stock_position_status_lock') :
+                    currStock.status == 'open' ? t('trade.stock_position_status_open') :
+                      currStock.status == 'done' ? t('trade.stock_position_status_done') :
+                        currStock.status == 'fail' ? t('trade.stock_position_status_fail') :
+                          currStock.status == 'cancel' ? t('trade.stock_position_status_cancel') :
+                            '--'
+              }}
             </span>
           </div>
           <div class="stock-info__trend" @click="openStockModel(currStock)">
@@ -57,31 +48,23 @@
               type == "stock"
                 ? t("trade.order_info_available_stock")
                 : type == "contract"
-                ? t("trade.order_info_available_contract")
-                : ""
+                  ? t("trade.order_info_available_contract")
+                  : ""
             }}
           </div>
           <div class="amount">{{ currStock.unsold_volume || "--" }}</div>
         </div>
         <div class="info_box">
           <div>{{ t("trade.order_info_profit") }}</div>
-          <div
-            class="amount"
-            :class="
-              !currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
-            "
-          >
+          <div class="amount" :class="!currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
+            ">
             <div>{{ currStock.profit || "--" }}</div>
           </div>
         </div>
         <div class="info_box">
           <div>{{ t("trade.order_info_ratio") }}</div>
-          <div
-            class="amount"
-            :class="
-              !currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
-            "
-          >
+          <div class="amount" :class="!currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
+            ">
             <div style="font-size: 0.32rem">
               {{ getRatio(currStock.ratio) }}
             </div>
@@ -95,19 +78,19 @@
           <div class="val_box">
             <div class="tag" :class="'tag_' + currStock.offset">
               <!-- {{ offsetMap[currStock.offset] || "--" }} -->
-                {{ 
+              {{
                 currStock.offset == 'long' ? t('trade.stock_position_offset_long') :
-                currStock.offset == 'short' ? t('trade.stock_position_offset_short') :
-                '--'
-                }}
+                  currStock.offset == 'short' ? t('trade.stock_position_offset_short') :
+                    '--'
+              }}
             </div>
             <div class="tag">
               <!-- {{ leverTypeap[currStock.lever_type] || "--" }} -->
-                {{ 
+              {{
                 currStock.lever_type == 'cross' ? t('trade.stock_opening_position_mode_cross') :
-                currStock.lever_type == 'isolated' ? t('trade.stock_opening_position_mode_isolated') :
-                '--'
-                }}
+                  currStock.lever_type == 'isolated' ? t('trade.stock_opening_position_mode_isolated') :
+                    '--'
+              }}
             </div>
             <div class="text">{{ currStock.lever || "1" }}X</div>
           </div>
@@ -117,11 +100,11 @@
           <div class="val_box">
             <div class="tag">
               <!-- {{ priceTypeMap[currStock.price_type] || "--" }} -->
-                {{ 
+              {{
                 currStock.price_type == 'market' ? t('trade.stock_market_price') :
-                currStock.price_type == 'limit' ? t('trade.stock_limit_price') :
-                '--'
-                }}
+                  currStock.price_type == 'limit' ? t('trade.stock_limit_price') :
+                    '--'
+              }}
             </div>
             <div class="text">{{ currStock.price || "--" }}</div>
           </div>
@@ -148,21 +131,17 @@
         <div class="info_item">
           <div class="name">{{ t("trade.stock_take_stop") }}</div>
           <div>
-            <div
-              class="val_box"
-              style="margin-bottom: 0.1rem"
-              v-if="currStock.stop_profit"
-            >
+            <div class="val_box" style="margin-bottom: 0.1rem" v-if="currStock.stop_profit">
               <div class="tag green_tag">
                 <!-- 止盈({{ stopMap[currStock.stop_profit_type] }}) -->
                 {{
                   currStock.stop_profit_type == "price"
                     ? t("trade.order_info_stop_profit_price")
                     : currStock.stop_profit_type == "amount"
-                    ? t("trade.order_info_stop_profit_amount")
-                    : currStock.stop_profit_type == "ratio"
-                    ? t("trade.order_info_stop_profit_ratio")
-                    : ""
+                      ? t("trade.order_info_stop_profit_amount")
+                      : currStock.stop_profit_type == "ratio"
+                        ? t("trade.order_info_stop_profit_ratio")
+                        : ""
                 }}
               </div>
               <div class="text">
@@ -177,10 +156,10 @@
                   currStock.stop_loss_type == "price"
                     ? t("trade.order_info_stop_loss_price")
                     : currStock.stop_loss_type == "amount"
-                    ? t("trade.order_info_stop_loss_amount")
-                    : currStock.stop_loss_type == "ratio"
-                    ? t("trade.order_info_stop_loss_ratio")
-                    : ""
+                      ? t("trade.order_info_stop_loss_amount")
+                      : currStock.stop_loss_type == "ratio"
+                        ? t("trade.order_info_stop_loss_ratio")
+                        : ""
                 }}
               </div>
               <div class="text">
@@ -188,10 +167,7 @@
                 }}{{ currStock.stop_loss_type == "ratio" ? "%" : "" }}
               </div>
             </div>
-            <div
-              class="val_box"
-              v-if="!currStock.stop_profit && !currStock.stop_loss"
-            >
+            <div class="val_box" v-if="!currStock.stop_profit && !currStock.stop_loss">
               <div class="tag">{{ t("trade.stock_opening_no") }}</div>
             </div>
           </div>
@@ -218,11 +194,8 @@
     </div>
 
     <div class="btns">
-      <div
-        class="btn btn2"
-        @click="emit('update', currStock)"
-        v-if="['none', 'lock', 'open'].includes(currStock.status)"
-      >
+      <div class="btn btn2" @click="emit('update', currStock)"
+        v-if="['none', 'lock', 'open'].includes(currStock.status)">
         <div class="btn_icon">
           <img src="/static/img/trade/update.png" alt="img" />
         </div>
@@ -234,11 +207,7 @@
         </div>
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
-      <div
-        class="btn btn3"
-        @click="emit('sell', currStock)"
-        v-if="['open'].includes(currStock.status)"
-      >
+      <div class="btn btn3" @click="emit('sell', currStock)" v-if="['open'].includes(currStock.status)">
         <div class="btn_icon">
           <img src="/static/img/trade/close.png" alt="img" />
         </div>
@@ -250,11 +219,7 @@
         </div>
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
-      <div
-        class="btn btn4"
-        @click="emit('cancel', currStock)"
-        v-if="currStock.status == 'none'"
-      >
+      <div class="btn btn4" @click="emit('cancel', currStock)" v-if="currStock.status == 'none'">
         <div class="btn_icon">
           <img src="/static/img/trade/cancel.png" alt="img" />
         </div>
@@ -269,13 +234,7 @@
     </div>
 
     <!-- 行情弹窗 -->
-    <Popup
-      teleport="body"
-      v-model:show="showStockModel"
-      position="bottom"
-      round
-      closeable
-    >
+    <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
       <StockPopup style="height: 90vh" v-if="showStockModel" />
     </Popup>
   </div>
@@ -296,7 +255,7 @@ const emit = defineEmits(["update", "sell", "cancel", "back"]);
 const props = defineProps({
   type: {
     type: String,
-    default: "stock", //stock 股票 contract 合约
+    default: "stock", //stock 股票  contract 合约  foreign 外汇   commodities 大宗交易
   },
   currStock: {
     type: Object,
@@ -305,6 +264,13 @@ const props = defineProps({
     },
   },
 });
+const title = computed(() => {
+  if (props.type == 'stock') return t('trade.order_info_title_stock')
+  if (props.type == 'contract') return t('trade.order_info_title_contract')
+  if (props.type == 'foreign') return '外汇订单'
+  if (props.type == 'commodities') return '大宗交易订单'
+  return '订单'
+})
 const backFunc = () => {
   emit("back");
 };
@@ -473,7 +439,7 @@ const copy = (text) => {
     }
   }
 
-  .info_box + .info_box::after {
+  .info_box+.info_box::after {
     content: "";
     width: 1px;
     height: 0.9rem;

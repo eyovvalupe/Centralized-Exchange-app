@@ -636,4 +636,22 @@ export default {
     ipo_lottery_amount: "中簽數量",
     ipo_lottery_detail: "中簽詳情",
   },
+  inviteFriends:{
+    invite:'推薦朋友',
+    reward:"我的獎勵",
+    banner_title:"推薦朋友可獲得",
+    banner_desc:"快邀請朋友一起賺錢吧",
+    qrcode_title:'邀請二維碼',
+    save_img:"保存圖片",
+    img_name:"我的二維碼",
+    invite_code:"邀請代碼",
+    copy:"複製",
+    copy_success:"複製成功",
+    url_title:"邀請鏈接",
+    copy_url:"複製鏈接",
+    performance_title:"推薦業績",
+    details:"推薦明細",
+    user:"用戶",
+    performance:"業績"
+  }
 };

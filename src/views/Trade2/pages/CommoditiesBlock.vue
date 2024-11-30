@@ -1,14 +1,8 @@
-<!-- 股票 -->
+<!-- 大宗商品 -->
 <template>
     <div class="stock_block">
-        <!-- 日期 -->
-        <!-- <div class="date_box" v-show="active == 2" @click="openDate">
-            <div class="date_icon">
-                <img src="/static/img/trade/time.png" alt="img">
-            </div>
-        </div> -->
-        <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated
-            :color="'#014CFA'" shrink @change="onChange">
+        <Tabs v-if="!pageLoading" type="cd_card" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
+            shrink @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">
                 <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
                     <Opening @showNavDialog="showNavDialog" @success="onChange('1')" ref="OpeningRef" />
@@ -27,19 +21,15 @@
         </Tabs>
         <div style="height:50vh" v-else></div>
 
-
-        <!-- 日期选择 -->
-        <DateArea @submit="submitDate" ref="dateAreaRef" />
     </div>
 </template>
 
 <script setup>
 import { Tab, Tabs } from "vant";
 import { ref, onMounted } from "vue"
-import Opening from "../components/Opening.vue"
-import Positions from "../components/Positions.vue"
-import Inquire from "../components/Inquire.vue"
-import DateArea from "@/components/DateArea.vue"
+import Opening from "../commodities/Opening.vue"
+import Positions from "../commodities/Positions.vue"
+import Inquire from "../commodities/Inquire.vue"
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -62,11 +52,7 @@ const onChange = async (val) => {
         }, 0)
     }
 };
-const submitDate = times => {
-    setTimeout(() => {
-        InquireRef.value && InquireRef.value.init(times)
-    }, 0)
-}
+
 
 const pageLoading = ref(true)
 const OpeningRef = ref()
@@ -95,42 +81,38 @@ defineExpose({
     handleMounted
 })
 
-// 日期选择
-const dateAreaRef = ref()
-const openDate = () => {
-    dateAreaRef.value && dateAreaRef.value.open()
-}
 </script>
 
 <style lang="less" scoped>
 .stock_block {
     position: relative;
-    padding: 0.24rem 0 0.32rem 0;
+    padding: 0 0 0.32rem 0;
 
-    :deep(.van-tabs__nav) {
+    :deep(.van-tabs__nav--cd_card) {
+        width: calc(100% - 0.64rem);
         margin: 0 0.32rem;
-    }
+        height: 0.92rem;
+        background-color: #014CFA;
+        border-radius: 0.32rem;
 
-    .tabs {
+        .van-tab--cd_card {
+            flex: 1;
+            color: #fff;
 
-        :deep(.van-tabs__wrap) {
-            background: #EFF3F8;
-            margin: 0 .32rem;
-            border-radius: .32rem;
-            height: 0.8rem;
+            &.van-tab--active {
+                padding: 0.06rem;
 
-            .van-tabs__nav {
-                padding-left: 0.32rem;
-                position: relative;
-                display: flex;
-                justify-content: space-between;
-
-                .van-tab {
-                    width: 33%;
+                .van-tab__text {
+                    width: 100%;
+                    height: 100%;
+                    background-color: #fff;
+                    color: #014CFA;
+                    border-radius: 0.32rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
-
             }
-
         }
     }
 }

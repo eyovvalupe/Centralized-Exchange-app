@@ -67,7 +67,31 @@ const pageKeys = {
         'marketStockHongkongDataList',
         'marketStockMalaysiaDataList'
     ],
-    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList']
+    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList']
+}
+
+
+const setCurr = (keyName, state, data) => {
+    if (!data.symbol) { // 只更新部分数据
+        for (let key in data) {
+            if (data[key] === null) delete data[key]
+        }
+        state[keyName] = {
+            ...state[keyName],
+            ...data
+        }
+        return
+    }
+    state[keyName] = Object.assign({}, state[keyName], data);
+    // 当前股票有更新，则同步到列表里去
+    setTimeout(() => {
+        (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+            const index = state[ck].findIndex(item => item.symbol == data.symbol)
+            if (index >= 0) {
+                state[ck][index] = Object.assign({}, state[ck][index], data);
+            }
+        })
+    }, 300)
 }
 
 export default {
@@ -107,6 +131,12 @@ export default {
         marketAiHisList: [], // ai量化历史收益率列表
         marketAi24List: [], // ai量化24小时收益率列表
         marketAiGridList: [], // ai量化最大网格(杠杆)列表
+
+        currForeign: {}, // 当前外汇数据
+        marketForeignList: [], // 外汇默认列表
+
+        currCommodities: {}, // 当前大宗交易
+        marketCommoditiesList: [], // 大宗交易默认列表
 
 
         marketCountryStockList: [], //选择的区域股票列表
@@ -307,6 +337,12 @@ export default {
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
         },
+        setMarketForeignList(state, data) {
+            state.marketForeignList = data || [];
+        },
+        setMarketCommoditiesList(state, data) {
+            state.marketCommoditiesList = data || [];
+        },
         setMarketWatchKeysByPage(state) {
             const data = []
             const page = router.currentRoute.value && router.currentRoute.value.name ? router.currentRoute.value.name : ''
@@ -364,70 +400,19 @@ export default {
             state.marketAiGridList = data || [];
         },
         setCurrStock(state, data) {
-            if (!data.symbol) { // 只更新部分数据
-                for (let key in data) {
-                    if (data[key] === null) delete data[key]
-                }
-                state.currStock = {
-                    ...state.currStock,
-                    ...data
-                }
-                return
-            }
-            state.currStock = data;
-            // 当前股票有更新，则同步到列表里去
-            setTimeout(() => {
-                (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                    const index = state[ck].findIndex(item => item.symbol == data.symbol)
-                    if (index >= 0) {
-                        state[ck][index] = data
-                    }
-                })
-            }, 300)
+            setCurr('currStock', state, data)
         },
         setCurrConstract(state, data) {
-            if (!data.symbol) { // 只更新部分数据
-                for (let key in data) {
-                    if (data[key] === null) delete data[key]
-                }
-                state.currConstact = {
-                    ...state.currConstact,
-                    ...data
-                }
-                return
-            }
-            state.currConstact = Object.assign({}, state.currConstact, data);
-            // 当前股票有更新，则同步到列表里去
-            setTimeout(() => {
-                (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                    const index = state[ck].findIndex(item => item.symbol == data.symbol)
-                    if (index >= 0) {
-                        state[ck][index] = Object.assign({}, state[ck][index], data);
-                    }
-                })
-            }, 300)
+            setCurr('currConstact', state, data)
         },
         setCurrAi(state, data) {
-            if (!data.symbol) { // 只更新部分数据
-                for (let key in data) {
-                    if (data[key] === null) delete data[key]
-                }
-                state.currAi = {
-                    ...state.currAi,
-                    ...data
-                }
-                return
-            }
-            state.currAi = Object.assign({}, state.currAi, data);
-            // 当前股票有更新，则同步到列表里去
-            setTimeout(() => {
-                (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                    const index = state[ck].findIndex(item => item.symbol == data.symbol)
-                    if (index >= 0) {
-                        state[ck][index] = Object.assign({}, state[ck][index], data);
-                    }
-                })
-            }, 300)
+            setCurr('currAi', state, data)
+        },
+        setCurrForeign(state, data) {
+            setCurr('currForeign', state, data)
+        },
+        setCurrCommodities(state, data) {
+            setCurr('currCommodities', state, data)
         },
     },
     actions: {
