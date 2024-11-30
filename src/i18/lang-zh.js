@@ -6,6 +6,10 @@ export default {
     IPO: "IPO",
     closed: "已收盘",
     no_data: "暂无数据",
+    day: "天",
+    hour: "时",
+    min: "分",
+    no_more: "没有更多了",
   },
   login: {
     login: "登录",
@@ -617,6 +621,20 @@ export default {
     ai_opening_min_invest_amount: "最小投资额",
     ai_opening_trade_password: "请输入交易密码",
     ai_opening_success: "开仓成功",
+    ai_opening_pop_title: "账户余额",
+    ai_opening_pop_recharge: "去充值",
+    ai_opening_pop_transfer: "去划转",
+    ai_opening_perform_time: "运行时间",
+    ai_opening_historical_profit_rate: "历史收益率",
+    ai_opening_24_profit_rate: "24小时收益率",
 
+    ai_position_title: "订单详情",
+    ai_position_profit: "盈利",
+    ai_position_timer: "倒计时",
+    ai_position_end_trade: "交易结束",
+    ai_position_order_id: "订单号",
+
+    ipo_title: "订单",
+    
   },
 };

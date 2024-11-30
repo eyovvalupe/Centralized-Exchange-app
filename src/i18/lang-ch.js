@@ -6,6 +6,10 @@ export default {
     IPO: "IPO",
     closed: "已收盤",
     no_data: "暫無數據",
+    day: "天",
+    hour: "時",
+    min: "分",
+    no_more: "没有更多了",
   },
   login: {
     login: "登錄",
@@ -585,6 +589,17 @@ export default {
     ai_opening_min_invest_amount: "最小投資額",
     ai_opening_trade_password: "請輸入交易密碼",
     ai_opening_success: "開倉成功",
+    ai_opening_pop_title: "帳戶餘額",
+    ai_opening_pop_recharge: "去充值",
+    ai_opening_pop_transfer: "去劃轉",
+    ai_opening_perform_time: "運行時間",
+    ai_opening_historical_profit_rate: "歷史收益率",
+    ai_opening_24_profit_rate: "24小時收益率",
 
+    ai_position_title: "訂單詳情",
+    ai_position_profit: "獲利",
+    ai_position_timer: "倒計時",
+    ai_position_end_trade: "交易結束",
+    ai_position_order_id: "訂單號",
   },
 };
