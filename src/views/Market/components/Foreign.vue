@@ -1,20 +1,11 @@
 <!-- 外汇 -->
 <template>
     <div class="page_foreign">
-        <!-- 搜索 -->
-        <div class="search_block item">
-            <div class="search_icon">
-                <img src="/static/img/common/search.png" alt="🔍">
-            </div>
-            <input type="text" placeholder="搜索" class="ipt">
-        </div>
-
-        <div class="line"></div>
 
         <div class="list">
             <div class="item" v-for="i in 20" :key="i">
 
-                <div class="left">
+                <div class="left" style="color:#061023">
                     <div><span>-94</span> <span class="down">-0.15%</span></div>
                     <div class="name">AUDCHF</div>
                     <div><span>09</span> <span>44:57</span></div>
@@ -42,41 +33,20 @@
 
 <style lang="less" scoped>
 .page_foreign {
-    padding-bottom: 2rem;
+    padding: 0.3rem 0.3rem 2rem 0.3rem;
 
-    .search_block {
-        background-color: #F4F5F7;
-        height: 0.8rem;
-        border-radius: 0.2rem;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 0 0.32rem;
-        font-size: 0.28rem;
-        color: #9EA3AE;
-        margin: 0 0.32rem 0.32rem 0.32rem;
-
-        .search_icon {
-            width: 0.4rem;
-            height: 0.4rem;
-            margin-right: 0.2rem;
-        }
-    }
-
-    .line {
-        border-bottom: 1px solid #E8E8E8;
-    }
 
     .list {
         padding: 0 0.32rem;
-        font-size: 0.24rem;
-        line-height: 0.36rem;
+        font-size: 0.22rem;
+        line-height: 1;
+        color: #8F92A1;
 
         .item {
             display: flex;
-            align-items: stretch;
-            padding: 0.12rem 0;
-            border-bottom: 1px solid #EAEAEA;
+            align-items: center;
+            border-bottom: 1px solid #EFF3F8;
+            height: 1.32rem;
 
             .left {
                 flex: 1;
@@ -86,26 +56,26 @@
                     font-size: 0.32rem;
                     font-weight: bold;
                     color: #000;
-                    line-height: 0.5rem;
+                    margin: 0.08rem 0;
                 }
             }
 
             .right {
                 flex: 1;
                 text-align: right;
-
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
                 justify-content: flex-end;
-                color: #8F92A1;
+                font-size: 0.24rem;
+                line-height: 0.3rem;
 
                 .amount {
                     color: #014CFA;
                     vertical-align: baseline;
 
                     .big {
-                        font-size: 0.38rem;
+                        font-size: 0.32rem;
                         margin: 0 0 0 0.04rem;
                     }
 
