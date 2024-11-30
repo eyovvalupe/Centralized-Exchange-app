@@ -593,4 +593,22 @@ export default {
     contract_opening_err_contract: "请选择合约",
     contract_opening_err_amount: "请输入张数",
   },
+  inviteFriends:{
+    invite:'推荐朋友',
+    reward:"我的奖励",
+    banner_title:"推荐朋友可获得",
+    banner_desc:"快邀请朋友一起赚钱吧",
+    qrcode_title:'邀请二维码',
+    save_img:"保存图片",
+    img_name:"我的二维码",
+    invite_code:"邀请代码",
+    copy:"复制",
+    copy_success:"复制成功",
+    url_title:"邀请链接",
+    copy_url:"复制链接",
+    performance_title:"推荐业绩",
+    details:"推荐明细",
+    user:"用户",
+    performance:"业绩"
+  }
 };

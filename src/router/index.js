@@ -594,6 +594,15 @@ const routes = [
     },
   },
   {
+    path:'/inviteFriends',
+    name: 'inviteFriends',
+    component: () => import('../views/User/InviteFriends.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
     // 找不到路由时
     path: '/:pathMatch(.*)*',
     redirect: '/',
