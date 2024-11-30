@@ -560,5 +560,8 @@ export default {
     contract_opening_amount_title: "張數",
     contract_opening_order_value: "訂單金額",
     contract_opening_contract: "合約",
+
+    ai_opening_order: "訂單",
+
   },
 };

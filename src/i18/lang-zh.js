@@ -592,5 +592,7 @@ export default {
     contract_opening_order_value: "订单金额",
     contract_opening_err_contract: "请选择合约",
     contract_opening_err_amount: "请输入张数",
+
+    ai_opening_order: "订单",
   },
 };

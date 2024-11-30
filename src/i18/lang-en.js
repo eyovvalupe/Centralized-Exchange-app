@@ -596,5 +596,8 @@ export default {
     contract_opening_order_value: "Order Value",
     contract_opening_amount_title: "Quantity",
     contract_opening_contract: "Contract",
+
+    ai_opening_order: "Orders",
+
   },
 };
