@@ -11,201 +11,23 @@
         >
       </div>
     </div>
-    <Loaidng
-      v-if="
-        !marketSrockRecommendList.length &&
-        !marketContractRecommendList.length &&
-        recommendLoading
-      "
-      :loading="recommendLoading"
-      :type="'spinner'"
-    />
+   
     <div class="recommend_block">
       <div
         class="item_block"
-        v-if="
-          marketSrockRecommendList.length || marketContractRecommendList.length
-        "
       >
-        <HomeStockRecommendList
-          :loading="recommendLoading"
-          :newState="newState"
-          :flag="flag"
-          @addWatchList="addOptional"
-          :stockList="marketSrockRecommendList"
-          :contractList="marketContractRecommendList"
-        />
+        <HomeStockRecommendList />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import Loaidng from "@/components/Loaidng.vue";
 import HomeStockRecommendList from "@/components/HomeStockRecommendList.vue";
-import router from "@/router";
 import store from "@/store";
-import { computed, onMounted, ref, watch } from "vue";
-import { _watchlist, _watchlistDefault, _add } from "@/api/api";
-import {
-  showLoadingToast,
-  closeToast,
-  showToast,
-  Tabs,
-  Tab,
-  Button,
-} from "vant";
-
-const watchList = computed(() => store.state.marketWatchList || []);
-const loading = ref(true);
-const totalList = ref([]);
-const token = computed(() => store.state.token || "");
-const subs = () => {
-
-  store.commit("setMarketWatchKeysByPage")
-  // 订阅 ws
-  store.dispatch("subList", {});
-};
-
-const more = ()=>{
-  router.push('/market')
-}
-const getWatchList = () => {
-  // 获取订阅列表
-  loading.value = true;
-  _watchlist()
-    .then((res) => {
-      if (res.code == 200) {
-        if (watchList.value.length) {
-          // 有历史数据就更新
-          const rs = res.data.map((item) => {
-            const target = watchList.value.find((a) => a.symbol == item.symbol);
-            if (target) {
-              Object.assign(target, item);
-              item = target;
-            }
-            return item;
-          });
-          store.commit("setMarketWatchList", rs || []);
-        } else {
-          // 没有就直接提交
-          store.commit("setMarketWatchList", res.data || []);
-        }
-
-        if (!res.data.length) {
-          // 还没有添加自选
-          setTimeout(() => {
-            openRecommendList();
-          }, 500);
-        } else {
-          // 有数据就订阅
-          // setTimeout(() => {
-          subs();
-          // }, 1000);
-        }
-      }
-    })
-    .finally(() => {
-      loading.value = false;
-    });
-};
-const init = () => {
-  if (token.value) {
-    getWatchList();
-  } else {
-    loading.value = false;
-    // 打开推荐列表
-    openRecommendList();
-  }
-};
-
-// 推荐列表
-const marketSrockRecommendList = computed(
-  () => store.state.marketSrockRecommendList || []
-);
-const marketContractRecommendList = computed(
-  () => store.state.marketContractRecommendList || []
-);
-const recommendLoading = ref(false);
-const openRecommendList = () => {
-  recommendLoading.value = true;
-  _watchlistDefault()
-    .then((res) => {
-      if (res.code == 200) {
-        // 股票
-        if (res.data?.stock) {
-          const newarr = res.data.stock.map((item) => {
-            const target = marketSrockRecommendList.value.find(
-              (a) => a.symbol == item.symbol
-            );
-            return target || item;
-          });
-          const arr = newarr.map((item) => {
-            return { ...item, type: "stock" };
-          });
-          store.commit("setMarketSrockRecommendList", arr || []);
-          
-        }
-
-        // 合约
-        if (res.data?.crypto) {
-          const newarr2 = res.data.crypto.map((item) => {
-            const target = marketContractRecommendList.value.find(
-              (a) => a.symbol == item.symbol
-            );
-            return target || item;
-          });
-          const arr2 = newarr2.map((item) => {
-            return { ...item, type: "crypto" };
-          });
-          store.commit("setMarketContractRecommendList", arr2 || []);
-          
-        }
-
-        subs()
-      }
-    })
-    .finally(() => {
-      recommendLoading.value = false;
-    });
-};
-// 推荐股票选择
-const stockList = ref([]);
-const contractList = ref([]);
-
-// 添加自选
-const addLoading = ref(false);
-const addOptional = (item) => {
-  if (!token.value) return store.commit("setIsLoginOpen", true);
-  if (addLoading.value) return;
-  addLoading.value = true;
-  _add({
-    symbol: [item.sysmbol],
-  })
-    .then((res) => {
-      if (res.code == 200) {
-        showToast("添加成功");
-        init();
-      }
-    })
-    .finally(() => {
-      addLoading.value = false;
-    });
-};
-
-onMounted(() => {
-  init();
-});
 
 store.commit("setCheckState", true);
-const newState = ref(true);
-const flag = ref(null);
 
-const jump = (name) => {
-  router.push({
-    name,
-  });
-};
 </script>
 
 <style lang="less" scoped>

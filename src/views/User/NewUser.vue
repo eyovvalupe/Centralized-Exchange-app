@@ -163,6 +163,7 @@
         <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.google_verification") }}</div>
       </div>
       <div
+        @click="jump('inviteFriends',true)"
         class="text-center flex flex-col items-center justify-center relative"
       >
         <div

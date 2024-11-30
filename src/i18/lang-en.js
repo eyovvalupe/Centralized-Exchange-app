@@ -597,4 +597,22 @@ export default {
     contract_opening_amount_title: "Quantity",
     contract_opening_contract: "Contract",
   },
+  inviteFriends:{
+    invite:'Invite',
+    reward:"My reward",
+    banner_title:"Recommended friends can obtain",
+    banner_desc:"Invite friends to earn money together",
+    qrcode_title:'Invite QR code',
+    save_img:"Save image",
+    img_name:"My QR code",
+    invite_code:"Invite code",
+    copy:"Copy",
+    copy_success:"Copy success",
+    url_title:"Invite link",
+    copy_url:"Copy link",
+    performance_title:"Recommended performance",
+    details:"Recommended details",
+    user:"User",
+    performance:"Performance"
+  }
 };

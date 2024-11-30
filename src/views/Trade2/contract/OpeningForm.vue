@@ -784,7 +784,7 @@ const maxStockNum = computed(() => {
 
 const openConfirmBox = (type) => {
   // type 1-余额不足 2-余额展示
-  type == 1
+  const title = type == 1
     ? t("trade.stock_opening_no_balance")
     : t("trade.stock_opening_enough_balance");
   const content =
@@ -806,7 +806,7 @@ const openConfirmBox = (type) => {
             <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${
               stockWalletAmount.value
             }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${
-          paramCurrency.value
+          stockCurrency.value
         }</span>
         </div>
     </div>`;

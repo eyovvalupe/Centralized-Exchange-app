@@ -57,7 +57,7 @@
   .header_container {
     margin: 0.3rem 0;
     .header_text {
-      width: 2.24rem;
+      min-width: 2.24rem;
       height: 0.5rem;
       border-radius: 0.25rem;
       border-width: 1px;
@@ -79,7 +79,9 @@
       .header_noti_text {
         display: flex;
         flex-direction: row;
-        width: 0.76rem;
+        min-width: 0.76rem;
+        margin-left: 0.1rem;
+        padding: 0 0.1rem;
         height: 0.5rem;
         border-radius: 0.25rem;
         background-color: #014cfa;
