@@ -2,7 +2,7 @@
   <div class="ipo-detail-box">
     <div class="ipo-detail-header">
       <Icon name="arrow-left" class="arrow-left" @click="goTotrade" />
-      <span>IPO 详情</span>
+      <span>{{ t('trade.ipo_detail') }}</span>
     </div>
 
     <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
@@ -81,7 +81,9 @@ import { Icon, Loading } from "vant";
 import { useRouter, useRoute } from "vue-router";
 import { _ipoGet } from "@/api/api";
 import store from "@/store";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const data = ref({});
@@ -92,12 +94,12 @@ const id = computed(() => {
   return store.state.ipoId;
 });
 
-const ipoDetail = computed(()=>{
-    return store.state.ipoDetail
-  })
+const ipoDetail = computed(() => {
+  return store.state.ipoDetail;
+});
 
 const goTotrade = () => {
-  emit('closeOpenDetail')
+  emit("closeOpenDetail");
   // if (route.query.type === "market") {
   //   router.push({ name: "market" });
   // } else if (route.query.type === "winning") {

@@ -12,7 +12,7 @@
     <Tab :title="'IPO'" class="optional">
       <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" />
     </Tab>
-    <Tab :title="'订单'">
+    <Tab :title="t('trade.ipo_title')">
       <IPOStock v-if="ipoActive == 1" ref="IPOStockRef" />
     </Tab>
   </Tabs>
@@ -23,7 +23,9 @@ import IPO from "../../Market/components/IPO.vue";
 import IPOStock from "./IPOStock.vue";
 import { Tab, Tabs } from "vant";
 import { ref, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const IPOStockRef = ref();
 const IPORef = ref();
 

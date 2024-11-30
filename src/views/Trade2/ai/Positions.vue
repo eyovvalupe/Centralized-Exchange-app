@@ -39,7 +39,6 @@ const openInfo = item => {
     infoRef.value && infoRef.value.open(item)
 }
 
-
 const formatEndtime = (endtime)=>{
     let time = formatSec2(endtime)
     let html = ''
