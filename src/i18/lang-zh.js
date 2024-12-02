@@ -260,6 +260,13 @@ export default {
     hotSale: "热卖",
     marketRecommend: "市场推荐",
     selfSelectedRecommend: "自选推荐",
+    notification: "通知公告内容测试测试测试...",
+    optional: "自选",
+    homepage: "首页",
+    market: "市场",
+    trade: "交易",
+    assets: "资产",
+    user: "用户",
   },
   market: {
     stock: {

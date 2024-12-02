@@ -48,7 +48,7 @@
       <div class="flex items-center gap-2">
         <div class="custom-lock-small-icon"></div>
         <div class="text-[0.28rem] text-[#061023]">
-          通知公告内容测试测试测试...
+          {{ $t('home.notification') }}
         </div>
       </div>
       <div class="text-[0.24rem] text-[#7B7B7B]">

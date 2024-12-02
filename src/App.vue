@@ -40,10 +40,7 @@ import store from "@/store/index";
 import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
 import SuccessToast from "./views/User/Account/SuccessToast.vue";
-import { useI18n } from "vue-i18n";
 
-const { locale } = useI18n();
-console.log("==========>", locale.value)
 const showSuccessToast = computed(() => store.state.showSuccessToast);
 
 const BottomTabBar = defineAsyncComponent(() =>

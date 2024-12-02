@@ -2,7 +2,7 @@ export default {
   common: {
     stock: "Stock",
     crypto: "Crypto",
-    AI: "AI AI Bot",
+    AI: "AI Bot",
     IPO: "IPO",
     closed: "Closed",
     no_data: "No Data",
@@ -442,13 +442,21 @@ export default {
     login: "Log In",
     loginDesc: "Log in to view your assets",
     totalAssets: "Total Assets",
-    fastTrading: "Fast Trading",
+    fastTrading: "Fast Trade",
     recharge: "Deposit",
     today: "Today",
     index: "Index",
     hotSale: "Hot Sale",
     marketRecommend: "Market",
-    selfSelectedRecommend: "Your Picks",
+    selfSelectedRecommend: "Custom Picks",
+    notification: "Notice Announcement Content ...",
+    optional: "Pick",
+    homepage: "HOME",
+    market: "MARKET",
+    trade: "TRADE",
+    assets: "ASSETS",
+    user: "USER",
+
   },
   market: {
     stock: {
