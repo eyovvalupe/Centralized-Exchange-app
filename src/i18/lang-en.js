@@ -474,6 +474,7 @@ export default {
     header_ipo: "IPO",
     header_forex: "Forex",
     header_block: "Commidity",
+    
     stock_open: "Open",
     stock_position: "Position",
     stock_search: "Search",

@@ -437,6 +437,7 @@ export default {
     header_ipo: "IPO",
     header_forex: "外匯",
     header_block: "大宗商品",
+    
     stock_open: "開倉",
     stock_position: "持倉",
     stock_search: "查詢",
