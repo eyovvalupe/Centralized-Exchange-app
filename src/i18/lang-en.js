@@ -821,5 +821,9 @@ export default {
     market_ai_title2: "Historical High ROI",
     market_ai_title3: "24h High ROI",
     market_ai_title4: "High Leverage",
+    market_search_title: "Search",
+    market_search_history: "History",
+    market_search_recommend: "Trending",
+    market_search_des: "20K+ Searches",
   },
 };

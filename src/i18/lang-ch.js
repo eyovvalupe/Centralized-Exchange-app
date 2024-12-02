@@ -785,5 +785,9 @@ export default {
     market_ai_title2: "歷史高報酬率",
     market_ai_title3: "24小時高報酬率",
     market_ai_title4: "高槓桿",
+    market_search_title: "搜尋",
+    market_search_history: "搜尋紀錄",
+    market_search_recommend: "熱搜推薦",
+    market_search_des: "超2萬人搜尋",
   }
 };

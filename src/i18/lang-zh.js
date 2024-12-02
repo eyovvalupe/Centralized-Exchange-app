@@ -815,6 +815,10 @@ export default {
     market_ai_title2: "历史高收益率",
     market_ai_title3: "24小时高收益率",
     market_ai_title4: "高杠杆",
+    market_search_title: "搜索",
+    market_search_history: "搜索历史",
+    market_search_recommend: "热搜推荐",
+    market_search_des: "超2万人搜索",
 
   }
 };

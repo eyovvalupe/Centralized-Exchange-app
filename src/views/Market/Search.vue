@@ -1,7 +1,7 @@
 <!-- 搜索页 -->
 <template>
   <div class="page page_search">
-    <Top :title="'搜索'" :searchText="search" />
+    <Top :title="t('market.market_search_title')" :searchText="search" />
     <!-- 搜索框 -->
     <div class="search_box">
       <div class="icon">
@@ -11,7 +11,7 @@
         ref="iptRef"
         @keydown="keydown"
         @keydown.enter="keydownEnter"
-        placeholder="搜索"
+        :placeholder="t('market.market_search_title')"
         type="text"
         enterkeyhint="search"
         v-model.trim="search"
@@ -28,7 +28,9 @@
     <!-- 结果列表 -->
     <div v-show="marketSearchTextList.length > 0 && !search.length > 0">
       <div class="flex justify-between items-center mb-4">
-        <div class="text-[0.32rem]">搜索历史</div>
+        <div class="text-[0.32rem]">
+          {{ t("market.market_search_history") }}
+        </div>
         <div class="w-[0.4rem] h-[0.4rem]" @click="clearSearchHistory">
           <div class="clearIcon"></div>
         </div>
@@ -49,7 +51,9 @@
       class="flex justify-between items-center mb-4"
       v-show="!search.length > 0"
     >
-      <div class="text-[0.32rem]">热搜推荐</div>
+      <div class="text-[0.32rem]">
+        {{ t("market.market_search_recommend") }}
+      </div>
       <div class="w-[0.4rem] h-[0.4rem]" @click="resetData">
         <!-- <img
           v-if="!marketSearchTextList.length > 0"
@@ -76,14 +80,23 @@
             <div
               :class="`${
                 marketStyle[item.type]
-              } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] w-[0.6rem] h-[0.3rem] `"
+              } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
             >
-              {{ market[item.type] }}
+              <!-- {{ market[item.type] }} -->
+              {{
+                item.type == "stock"
+                  ? t("market.market_optional_stock")
+                  : item.type == "crypto"
+                  ? t("market.market_optional_contract")
+                  : item.type == "forex"
+                  ? t("market.market_optional_forex")
+                  : "--"
+              }}
             </div>
           </div>
 
           <!-- 给了定值，需要用后端数据该代码 -->
-          <div class="text">超2万人搜索</div>
+          <div class="text">{{ t("market.market_search_des") }}</div>
         </div>
         <div @click.stop="collect(item)">
           <div :class="item.watchlist == 1 ? 'star' : 'unstar'"></div>
@@ -111,7 +124,9 @@ import { _add, _del } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import eventBus from "@/utils/eventBus";
 import Iconfonts from "@/components/Iconfonts.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const market = {
   stock: "股票",
   crypto: "合约",
