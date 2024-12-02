@@ -81,7 +81,7 @@ import { SwipeCell, Popup } from "vant";
 import store from "@/store";
 import NoData from "@/components/NoData.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
-import { _stocksList } from "@/api/api";
+import { _blocktradeList } from "@/api/api";
 import UnLogin from "@/components/UnLogin.vue";
 import Decimal from "decimal.js";
 import OrderInfo from "../components/OrderInfo.vue";
@@ -160,7 +160,7 @@ const getList = () => {
     page: page.value,
   };
   loading.value = true;
-  _stocksList(params)
+  _blocktradeList(params)
     .then((res) => {
       if (page.value == 1) {
         store.commit("setInquireList", res.data || []);

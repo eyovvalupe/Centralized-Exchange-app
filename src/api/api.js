@@ -606,5 +606,22 @@ export const _c2cRead = (data = {}) => {
     custom: { auth: true, toast: false, retry: true },
   });
 };
-
+// 大宗交易参数
+export const _blocktradePara = (data = {}) => {
+  return http.post(`/roles/v1/blocktrade/para`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
+// 大宗交易订单列表
+export const _blocktradeList = (data = {}) => {
+  return http.post(`/roles/v1/blocktrade/q/list`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 大宗交易订单平仓
+export const _blocktradeSell = (data = {}) => {
+  return http.post(`/roles/v1/blocktrade/m/sell`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
 export const memberInfo = () => { }
