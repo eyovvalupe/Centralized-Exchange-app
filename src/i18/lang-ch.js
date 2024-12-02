@@ -435,6 +435,8 @@ export default {
     header_contract: "合約",
     header_aibot: "交易機器人",
     header_ipo: "IPO",
+    header_forex: "外匯",
+    header_block: "大宗商品",
     stock_open: "開倉",
     stock_position: "持倉",
     stock_search: "查詢",
@@ -635,6 +637,10 @@ export default {
     ipo_lottery_title6: "中簽",
     ipo_lottery_amount: "中簽數量",
     ipo_lottery_detail: "中簽詳情",
+
+    forex_opening_title: "外匯",
+    forex_position_title: "外匯/狀態",
+
   },
   inviteFriends:{
     invite:'推薦朋友',

@@ -468,6 +468,8 @@ export default {
     header_contract: "合约",
     header_aibot: "交易机器人",
     header_ipo: "IPO",
+    header_forex: "外汇",
+    header_block: "大宗商品",
     stock_open: "开仓",
     stock_position: "持仓",
     stock_search: "查询",
@@ -668,6 +670,8 @@ export default {
     ipo_lottery_amount: "中签数量",
     ipo_lottery_detail: "中签详情",
 
+    forex_opening_title: "外汇",
+    forex_position_title: "外汇/状态",
   },
   inviteFriends:{
     invite:'推荐朋友',

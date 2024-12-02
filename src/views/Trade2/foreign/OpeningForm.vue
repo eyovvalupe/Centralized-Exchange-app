@@ -154,7 +154,7 @@
 
     <!-- 股票 -->
     <div class="subtitle">
-      <span @click="showNavDialog">外汇</span>
+      <span @click="showNavDialog">{{ t('trade.forex_opening_title') }}</span>
       <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem" color="#034cfa" />
       <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
         <img src="/static/img/trade/blue-stock.png" />
@@ -238,7 +238,7 @@
     </div>
     <div class="stock_submit_box">
       <div class="item">
-        <div class="item_name">外汇</div>
+        <div class="item_name">{{ t('trade.forex_opening_title') }}</div>
         <div class="item_val">
           <div style="line-height: 0.36rem">
             <div style="text-align: right; font-size: 0.3rem">

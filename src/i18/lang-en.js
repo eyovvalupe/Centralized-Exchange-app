@@ -472,6 +472,8 @@ export default {
     header_contract: "Contract",
     header_aibot: "AI Bot",
     header_ipo: "IPO",
+    header_forex: "Forex",
+    header_block: "Commidity",
     stock_open: "Open",
     stock_position: "Position",
     stock_search: "Search",
@@ -671,6 +673,10 @@ export default {
     ipo_lottery_title6: "Win",
     ipo_lottery_amount: "Number of Wins",
     ipo_lottery_detail: "Lottery Details",
+
+    forex_opening_title: "Forex",
+    forex_position_title: "Forex/Status",
+
   },
   inviteFriends:{
     invite:'Invite',
