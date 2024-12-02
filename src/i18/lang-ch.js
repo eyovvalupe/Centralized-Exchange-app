@@ -291,10 +291,10 @@ export default {
     safety_trade_confirm: "確認",
     safety_trade_no_password: "請輸入密碼",
     order_title_buy: "買幣",
-    order_title_buy: "股票",
-    order_title_buy: "合約",
-    order_title_buy: "交易機器人",
-    order_title_buy: "IPO",
+    order_title_stock: "股票",
+    order_title_contract: "合約",
+    order_title_bot: "交易機器人",
+    order_title_ipo: "IPO",
     order_current_position: "目前持倉",
     order_history: "歷史查詢",
   },
@@ -437,7 +437,7 @@ export default {
     header_ipo: "IPO",
     header_forex: "外匯",
     header_block: "大宗商品",
-    
+
     stock_open: "開倉",
     stock_position: "持倉",
     stock_search: "查詢",
