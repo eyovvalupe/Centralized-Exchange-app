@@ -16,15 +16,15 @@
             <span>{{ t("trade.stock_opening_take") }}</span>
           </div>
           <div class="item" style="justify-content: center">
-            <span>{{
-              form1.stop_profit_type == "price"
-                ? t("trade.stock_opening_stop_price")
-                : form1.stop_profit_type == "amount"
-                  ? t("trade.stock_opening_stop_amount")
-                  : form1.stop_profit_type == "ratio"
-                    ? t("trade.stock_opening_stop_ratio")
-                    : "--"
-            }}</span>
+            <span>
+              <!-- {{ stopMap[form1.stop_profit_type] || "--" }} -->
+              {{
+                form1.stop_profit_type == 'price' ? t('trade.stock_opening_stop_price') :
+                  form1.stop_profit_type == 'amount' ? t('trade.stock_opening_stop_amount') :
+                    form1.stop_profit_type == 'ratio' ? t('trade.stock_opening_stop_ratio') :
+                      '--'
+              }}
+            </span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
             </div>
@@ -48,13 +48,10 @@
           </div>
           <div class="item" style="justify-content: center">
             <span>{{
-              form1.stop_profit_type == "price"
-                ? t("trade.stock_opening_stop_price")
-                : form1.stop_profit_type == "amount"
-                  ? t("trade.stock_opening_stop_amount")
-                  : form1.stop_profit_type == "ratio"
-                    ? t("trade.stock_opening_stop_ratio")
-                    : "--"
+              form1.stop_profit_type == 'price' ? t('trade.stock_opening_stop_price') :
+                form1.stop_profit_type == 'amount' ? t('trade.stock_opening_stop_amount') :
+                  form1.stop_profit_type == 'ratio' ? t('trade.stock_opening_stop_ratio') :
+                    '--'
             }}</span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
@@ -74,22 +71,23 @@
 
       <!-- 简单模式 -->
       <FormItem :title="activeType == 1
-          ? t('trade.stock_opening_take')
-          : t('trade.stock_opening_stop')
-        " class="mb-[0.4rem]" v-model="form1.stop_loss_price" input-type="number" :percent-tags="props.activeType == 1
-            ? [
-              { label: '-20%', value: 20 },
-              { label: '-15%', value: 15 },
-              { label: '-10%', value: 10 },
-            ]
-            : [
-              { label: '+20%', value: 20 },
-              { label: '+15%', value: 15 },
-              { label: '+10%', value: 10 },
-            ]
+        ? t('trade.stock_opening_take')
+        : t('trade.stock_opening_stop')
+        " class="mb-[0.4rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
+          ? [
+            { label: '-20%', value: 20 },
+            { label: '-15%', value: 15 },
+            { label: '-10%', value: 10 },
+          ]
+          : [
+            { label: '+20%', value: 20 },
+            { label: '+15%', value: 15 },
+            { label: '+10%', value: 10 },
+          ]
           " @percentTagClick="setPriceStop" v-if="mode == 1" />
 
       <!-- 价格 -->
+
       <div class="item_box">
         <div class="item_box_left" @click="showPriceTypeDialog = true">
           <div class="subtitle">
@@ -113,19 +111,20 @@
             <span>&nbsp;</span>
           </div>
           <FormItem custom disabled v-if="priceMode == 1">
-            <span style="color: #a4acb9">
-              {{ t("trade.stock_opening_price_latest") }}</span>
+            <span style="color: #a4acb9">{{
+              t("trade.stock_opening_price_latest")
+            }}</span>
           </FormItem>
 
           <FormItem v-model="form1.price" input-type="number" :percent-tags="props.activeType == 1
-              ? [
-                { label: '-3%', value: 3 },
-                { label: '-1%', value: 1 },
-              ]
-              : [
-                { label: '+3%', value: 3 },
-                { label: '+1%', value: 1 },
-              ]
+            ? [
+              { label: '-3%', value: 3 },
+              { label: '-1%', value: 1 },
+            ]
+            : [
+              { label: '+3%', value: 3 },
+              { label: '+1%', value: 1 },
+            ]
             " v-else @percentTagClick="percentTagClick">
           </FormItem>
         </div>
@@ -136,25 +135,28 @@
     </template>
 
     <!-- 价格 -->
+
     <FormItem class="mb-[0.4rem]" input-type="number" :title="t('trade.stock_opening_price_title')"
       :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
-          ? [
-            { label: '-3%', value: 3 },
-            { label: '-2%', value: 2 },
-            { label: '-1%', value: 1 },
-            { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-          ]
-          : [
-            { label: '+3%', value: 3 },
-            { label: '+2%', value: 2 },
-            { label: '+1%', value: 1 },
-            { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-          ]
+        ? [
+          { label: '-3%', value: 3 },
+          { label: '-2%', value: 2 },
+          { label: '-1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
+        : [
+          { label: '+3%', value: 3 },
+          { label: '+2%', value: 2 },
+          { label: '+1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
 
-    <!-- 股票 -->
+    <!-- 合约 -->
     <div class="subtitle">
-      <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
+      <span @click="showNavDialog">{{
+        t("trade.contract_opening_contract")
+      }}</span>
       <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem" color="#034cfa" />
       <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
         <img src="/static/img/trade/blue-stock.png" />
@@ -165,8 +167,9 @@
       <div class="item">
         <div class="info">
           <div style="flex: 1">
-            <div class="info-symbol">{{ currStock.symbol }}</div>
-            <div class="info-name">{{ currStock.name }}</div>
+            <div class="info-symbol" v-show="currStock.name">
+              {{ currStock.name }}
+            </div>
           </div>
           <div class="more_icon">
             <img src="/static/img/trade/down.png" alt="↓" />
@@ -175,11 +178,11 @@
       </div>
     </div>
 
-    <!-- 数量 -->
+    <!-- 张数 -->
     <div class="item_box">
       <div class="item_box_left" @click="openTypeDialog">
         <div class="subtitle">
-          <span>{{ t("trade.stock_opening_amount_mode") }}</span>
+          <span>大宗商品</span>
         </div>
         <div class="item justify-between">
           <span v-if="!levers.length">--</span>
@@ -197,23 +200,22 @@
       </div>
 
       <div class="item_box_right">
-        <FormItem :title="t('trade.stock_opening_amount_title')" :max="maxStockNum" v-model="form1.volume"
-          :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent"
-          tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
+        <FormItem :title="'数量'" @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1"
+          btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
+          :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
           <template #title-right>
-            <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox(1)" v-if="maxStockNum <= 0">{{
+            <span style="color: #014cfa" @click="openConfirmBox(1)" v-if="maxStockNum < 1">{{
               t("trade.stock_opening_no_balance") }}</span>
             <span style="color: #014cfa; font-size: 12px" v-else @click="openConfirmBox(2)"><span
                 style="color: #666d80">{{
                   t("trade.stock_opening_enough_balance")
                 }}</span>
-              {{ stockWalletAmount }} {{ paramCurrency }}</span>
+              {{ stockWalletAmount }} {{ stockCurrency }}</span>
           </template>
         </FormItem>
       </div>
     </div>
 
-    <div style="height: 0.07rem"></div>
     <!-- 拖动 -->
     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
@@ -226,7 +228,7 @@
       }}</Button>
 
     <Button size="large" color="#014cfa" class="submit" round v-if="!token" style="margin-bottom: 0.34rem"
-      @click="goLogin">{{ t("trade.stock_opening_token_login") }}</Button>
+      @click="store.commit('setIsLoginOpen', true)">{{ t("trade.stock_opening_token_login") }}</Button>
     <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999" @click="jump('register')">{{
       t("trade.stock_opening_token_register") }}</Button>
   </div>
@@ -238,15 +240,13 @@
     </div>
     <div class="stock_submit_box">
       <div class="item">
-        <div class="item_name">{{ t("trade.stock_opening_stock") }}</div>
+        <div class="item_name">{{ t("trade.contract_opening_contract") }}</div>
         <div class="item_val">
           <div style="line-height: 0.36rem">
             <div style="text-align: right; font-size: 0.3rem">
-              {{ currStock.symbol }}
-            </div>
-            <div style="color: #9ea3ae; font-size: 0.24rem">
               {{ currStock.name }}
             </div>
+            <!-- <div style="color: #9EA3AE;font-size: 0.24rem;">{{ currStock.name }}</div> -->
           </div>
         </div>
       </div>
@@ -260,7 +260,6 @@
                 : t("trade.stock_open_short")
             }}
           </div>
-          <!-- <div class="tag">{{ modeMap[params.lever_type] }}</div> -->
           <div class="tag">
             {{
               params.lever_type == "cross"
@@ -287,7 +286,7 @@
         </div>
       </div>
       <div class="item">
-        <div class="item_name">{{ t("trade.stock_opening_amount") }}</div>
+        <div class="item_name">{{ t("trade.contract_opening_amount") }}</div>
         <div class="item_val">{{ params.volume }}</div>
       </div>
       <div class="item">
@@ -307,6 +306,15 @@
         </div>
       </div>
 
+      <div class="item">
+        <div class="item_name">
+          {{ t("trade.contract_opening_order_value") }}
+        </div>
+        <div class="item_val">
+          {{ orderAmount }}
+        </div>
+      </div>
+
       <div class="money_box">
         <div class="amount">
           {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
@@ -319,12 +327,13 @@
 
       <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div>
       <div class="item pass_ipt">
-        <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
-          :type="showPassword ? 'text' : 'password'" class="ipt" />
+        <input style="width: 100%; height: 100%" v-model="safePass"
+          :placeholder="t('trade.stock_opening_trade_pw_placeholder')" :type="showPassword ? 'text' : 'password'"
+          class="ipt" />
         <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
         <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
       </div>
-      <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="#014cfa" round>{{
+      <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit" color="#014cfa" round>{{
         t("trade.stock_open") }}</Button>
     </div>
   </Popup>
@@ -345,9 +354,7 @@
   </ActionSheet>
 
   <!-- 仓位模式选择 -->
-  <!-- <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
-        title="保证金模式">
-    </ActionSheet> -->
+
   <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom"
     teleport="body">
     <div class="van-popup-custom-title">
@@ -384,13 +391,14 @@
         <div class="search_icon">
           <img src="/static/img/common/search.png" alt="🔍" />
         </div>
-        <input v-model.trim="searchDialogStr" @keyup="goDialogSearch('stock')" type="text" class="ipt"
+        <input v-model.trim="searchDialogStr" @keyup="goDialogSearch(_market)" type="text" class="ipt"
           :placeholder="t('trade.stock_opening_search')" />
       </div>
 
       <div class="lists">
         <!-- 搜索列表 -->
-        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'" :list="marketSearchList" />
+        <StockTable theme="classic" market-type="crypto" :handleClick="handleClick" :loading="searchLoading"
+          :key="'search'" :list="marketSearchList" />
       </div>
     </div>
   </Popup>
@@ -402,13 +410,13 @@ import {
   Slider,
   Button,
   showToast,
+  showConfirmDialog,
   Popup,
   ActionSheet,
   Picker,
-  showConfirmDialog,
 } from "vant";
-import { ref, computed, watch, nextTick } from "vue";
-import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
+import { ref, computed, onMounted } from "vue";
+import { _search, _basic, _blocktradePara, _blocktradeSell } from "@/api/api";
 import store from "@/store";
 import Decimal from "decimal.js";
 import { useRoute } from "vue-router";
@@ -418,20 +426,12 @@ import SafePassword from "@/components/SafePassword.vue";
 import StockTable from "@/components/StockTable.vue";
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
-import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const goLogin = () => {
-  store.commit("setIsLoginOpen", true);
-  // eventBus.on('loginSuccess', () => {
-  //     eventBus.off('loginSuccess')
-  // })
-};
-
 const showPassword = ref(false);
-
 const safeRef = ref();
+const _market = "futures"; //合约
 
 //搜索
 const marketSearchList = computed(() => store.state.marketSearchList || []);
@@ -439,18 +439,21 @@ const showSearchDialog = ref();
 const searchDialogStr = ref("");
 const openSearchDialog = () => {
   showSearchDialog.value = true;
-  goDialogSearch("stock");
+  goDialogSearch(_market);
 };
 
 store.commit("setMarketSearch", {
   search: "",
-  market: "stock",
-  futuresSearchList: [],
+  market: _market,
+  list: [],
 });
+let searchTimeout = null;
+const searchLoading = ref(false);
+
 const goDialogSearch = (market) => {
   if (searchTimeout) clearTimeout(searchTimeout);
-  let s = searchDialogStr.value;
   searchLoading.value = true;
+  let s = searchDialogStr.value;
   searchTimeout = setTimeout(() => {
     _search({
       market: market || "",
@@ -475,7 +478,7 @@ const goDialogSearch = (market) => {
       .finally(() => {
         searchLoading.value = false;
       });
-  }, 500);
+  }, 100);
 };
 
 const emits = defineEmits(["showNavDialog", "success"]);
@@ -506,9 +509,11 @@ const modeMap = ref({
 // 市价-类型
 const showTypeDialog = ref(false);
 const onSelectForm1Type = (item) => {
-  showTypeDialog.value = false;
+  // showTypeDialog.value = false
   form1.value.leverType = item.selectedValues[0];
   form1.value.lever = item.selectedValues[1];
+  form1.value.volume = "";
+  sliderValue.value = 0;
 };
 
 // 限价模式
@@ -577,21 +582,29 @@ const modeList = computed(() => {
   return list;
 });
 
-const wallet = computed(() => store.state.wallet || []);
+const elseWallet = computed(() => store.state.elseWallet || []);
 const stockWalletAmount = computed(() => {
-  // 钱包余额
-  const target = wallet.value.find(
-    (item) => item.currency == paramCurrency.value
-  );
+  // 股票账户余额
+  const target = elseWallet.value.find((item) => item.account == "futures");
   if (target) return target.amount;
   return 0;
 });
 
+const stockCurrency = computed(() => {
+  // 股票账户余额
+  const target = elseWallet.value.find((item) => item.account == "futures");
+  if (target) return target.currency;
+  return "";
+});
+
 const maxStockNum = computed(() => {
   // 最大可买 可卖
+  if (!levers.value.length) {
+    return "--";
+  }
   if (currStock.value.price) {
     const max = new Decimal(stockWalletAmount.value)
-      .div(form1.value.price || currStock.value.price)
+      .div(amountper.value)
       .mul(form1.value.lever)
       .floor();
     const rs = max - max.mod(step.value);
@@ -602,10 +615,9 @@ const maxStockNum = computed(() => {
 
 const openConfirmBox = (type) => {
   // type 1-余额不足 2-余额展示
-  const title =
-    type == 1
-      ? t("trade.stock_opening_no_balance")
-      : t("trade.stock_opening_enough_balance");
+  const title = type == 1
+    ? t("trade.stock_opening_no_balance")
+    : t("trade.stock_opening_enough_balance");
   const content =
     type == 1
       ? `<div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
@@ -613,7 +625,7 @@ const openConfirmBox = (type) => {
       )} <span style="font-weight:600;color:#014CFA;">` +
       stockWalletAmount.value +
       "</span> " +
-      paramCurrency.value +
+      stockCurrency.value +
       `</div><div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
         "trade.stock_account_notification"
       )}</div>`
@@ -623,7 +635,7 @@ const openConfirmBox = (type) => {
       )}</div>
         <div style="display:flex;align-items:center;justify-content:center;">
             <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${stockWalletAmount.value
-      }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${paramCurrency.value
+      }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${stockCurrency.value
       }</span>
         </div>
     </div>`;
@@ -655,6 +667,7 @@ const setNowPrice = () => {
   // 设置为当前价格
   form1.value.price = currStock.value.price || "";
 };
+
 const setPricePercent = (i) => {
   // 设置浮动价格
   if (props.activeType == 1) {
@@ -673,9 +686,6 @@ const setPricePercent = (i) => {
 };
 
 const percentTagClick = (percent) => {
-  if (!currStock.value.symbol) {
-    return;
-  }
   if (percent.value == 0) {
     setNowPrice();
   } else {
@@ -701,19 +711,20 @@ const form1 = ref({
 // 止盈止损参数
 const mode = ref(1); // 1-简单模式  2-复杂模式
 const priceMode = ref(1); // 1-市价 2-限价
-const setPriceStop = (i) => {
+const setPriceStop = (p) => {
   // 设置止损价格
   if (!currStock.value.price) return;
+  const i = p.value;
   if (props.activeType == 1) {
     // 买涨
     form1.value.stop_loss_price = new Decimal(currStock.value.price)
-      .mul(100 - i.value)
+      .mul(100 - i)
       .div(100)
       .toNumber();
   } else {
     // 买跌
     form1.value.stop_loss_price = new Decimal(currStock.value.price)
-      .mul(100 + i.value)
+      .mul(100 + i)
       .div(100)
       .toNumber();
   }
@@ -800,35 +811,29 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  if (!currStock.value.symbol)
-    return showToast(t("trade.stock_opening_err_stock"));
+  if (!currStock.value.symbol) return showToast(t("trade.contract_opening_err_contract"));
   if (!form1.value.volume || form1.value.volume < min.value)
-    return showToast(
-      `${t("trade.stock_opening_err_min_balance")}：${min.value}`
-    );
+    return showToast(t('trade.contract_opening_err_amount'));
   // 限价校验
   if (props.activeTab == 1) {
-    if (!form1.value.price)
-      return showToast(t("trade.stock_opening_err_price"));
+    if (!form1.value.price) return showToast(t("trade.stock_opening_err_price"));
   }
   // 止盈止损校验
   if (props.activeTab == 2) {
     if (mode.value == 1) {
       // 简单模式
-      if (!form1.value.stop_loss_price)
-        return showToast(t("trade.stock_opening_err_stop_price"));
+      if (!form1.value.stop_loss_price) return showToast(t("trade.stock_opening_err_stop_price"));
     } else {
       // 复杂模式
-      if (!form1.value.stop_profit_price)
-        return showToast(t("trade.stock_opening_err_take_price"));
-      if (!form1.value.stop_loss_price)
-        return showToast(t("trade.stock_opening_err_stop_price"));
+      if (!form1.value.stop_profit_price) return showToast(t("trade.stock_opening_err_take_price"));
+      if (!form1.value.stop_loss_price) return showToast(t("trade.stock_opening_err_stop_price"));
     }
     if (priceMode.value == 2 && !form1.value.price) {
       // 限价
       return showToast(t("trade.stock_opening_err_limit"));
     }
   }
+  getSessionToken();
   // 打开确认弹窗
   params.value = {
     symbol: currStock.value.symbol,
@@ -837,6 +842,7 @@ const submit1 = () => {
     lever_type: form1.value.leverType,
     lever: form1.value.lever,
     price_type: form1.value.price_type,
+
     price: form1.value.price_type == "market" ? "" : form1.value.price || "",
     stop_profit_type: form1.value.stop_profit_type,
     stop_profit_price: form1.value.stop_profit_price,
@@ -857,15 +863,14 @@ const submit1 = () => {
 
   safePass.value = "";
   showModel.value = true;
-  getSessionToken();
 };
 
 // 全部
 const putAll = () => {
   onSliderChange(100);
 };
+// 市价-拖动
 const sliderValue = ref(0);
-
 const onSliderChange = (newValue) => {
   sliderValue.value = newValue;
   if (maxStockNum.value == "--") return (sliderValue.value = 0);
@@ -878,10 +883,14 @@ const onSliderChange = (newValue) => {
 };
 
 const changePercent = () => {
-  if (maxStockNum.value == "--" || !form1.value.volume)
+  if (
+    maxStockNum.value == "--" ||
+    !form1.value.volume ||
+    form1.value.volume == 0
+  ) {
+    form1.value.volume = "";
     return (sliderValue.value = 0);
-  let v = new Decimal(form1.value.volume);
-  form1.value.volume = v.sub(v.mod(step.value));
+  }
   let p = new Decimal(form1.value.volume)
     .div(maxStockNum.value)
     .mul(100)
@@ -891,25 +900,24 @@ const changePercent = () => {
   sliderValue.value = Number(p);
 };
 
-// 市价-搜索
-const searchLoading = ref(false);
-
-let searchTimeout = null;
+const volumeFocus = () => {
+  if (!currStock.value.symbol) return showToast(t('trade.contract_opening_err_contract'));
+};
 
 // 下单限制的参数
-const min = ref(0); // 最小购买
+const min = ref(1); // 最小购买
 const step = ref(1); // 步长
 const openFee = ref(0); // 开仓手续费
 const closeFee = ref(0); // 平仓手续费
-const flowerFee = ref(0); // 印花税
+const interest = ref(0); // 持仓费
+const amountper = ref(1); // 每张金额
 const configLoading = ref(false);
 const levers = ref([]); // 杠杆
-const paramCurrency = ref(""); // 交易使用的货币
+
 const getParam = () => {
-  configLoading.value = true;
   levers.value = [];
-  paramHandle();
-  _stocksPara({
+  configLoading.value = true;
+  _blocktradePara({
     symbol: currStock.value.symbol,
   })
     .then((res) => {
@@ -922,32 +930,17 @@ const getParam = () => {
     });
 };
 const paramHandle = (data) => {
-  if (data) {
-    sessionStorage.setItem("open_param", JSON.stringify(data));
-  } else {
-    try {
-      data = JSON.parse(sessionStorage.getItem("open_param") || "{}");
-    } catch {
-      data = {};
-    }
-  }
-  if (data.volume) {
-    const arr = data.volume.split(",");
-    min.value = arr[0] || 0;
-    step.value = arr[1] || 1;
-    configLoading.value = false;
-  }
-  if (data.fee) {
-    const arr2 = data.fee.split(",");
-    openFee.value = arr2[0] || 0;
-    closeFee.value = arr2[1] || 0;
-    flowerFee.value = arr2[2] || 0;
-  }
-  if (data.currency) {
-    paramCurrency.value = data.currency || "";
-  }
+  configLoading.value = false;
+  interest.value = data.interest || 0;
+  amountper.value = data.amountper || 1;
   form1.value.volume = "";
+  form1.value.stop_loss_price = "";
+  form1.value.price = "";
   sliderValue.value = 0;
+  if (data.fee) {
+    openFee.value = data.fee || 0;
+    closeFee.value = data.fee || 0;
+  }
   if (data.lever) {
     levers.value = data.lever.split(",");
     if (levers.value[0]) {
@@ -960,12 +953,14 @@ const initParam = () => {
   if (currStock.value.symbol) {
     getParam();
   } else {
-    min.value = 0;
+    form1.value.stop_loss_price = "";
+    form1.value.price = "";
+    min.value = 1;
     step.value = 1;
     openFee.value = 0;
     closeFee.value = 0;
-    flowerFee.value = 0;
-    configLoading.value = false;
+    interest.value = 0;
+    amountper.value = 1;
     levers.value = [];
   }
 };
@@ -980,7 +975,7 @@ const handleClick = (item) => {
         ...currStock.value,
         ...r.data,
       };
-      sessionStorage.setItem("currStock", JSON.stringify(currStock.value));
+      sessionStorage.setItem("currConstract", JSON.stringify(currStock.value));
     }
   });
 };
@@ -992,7 +987,9 @@ if (route.query.symbol) {
   });
 } else {
   try {
-    currStock.value = JSON.parse(sessionStorage.getItem("currStock") || "{}");
+    currStock.value = JSON.parse(
+      sessionStorage.getItem("currConstract") || "{}"
+    );
   } catch {
     currStock.value = {};
   }
@@ -1002,7 +999,7 @@ if (route.query.symbol) {
 const openTypeDialog = () => {
   if (!levers.value.length) {
     if (!currStock.value.symbol) {
-      showToast(t('trade.stock_opening_err_stock'));
+      showToast(t('trade.contract_opening_err_contract'));
     }
     return;
   }
@@ -1017,11 +1014,17 @@ const payAmount = computed(() => {
   // 需要支付
   return new Decimal(payOrigin.value).add(payFee.value);
 });
+
+const orderAmount = computed(() => {
+  // 订单金额
+  if (!params.value.volume || !amountper.value) return 0;
+  return new Decimal(amountper.value).mul(params.value.volume);
+});
 const payOrigin = computed(() => {
   // 保证金
-  if (!params.value.volume || !currStock.value.price) return 0;
+  if (!params.value.volume || !amountper.value || !params.value.lever) return 0;
   return new Decimal(params.value.volume)
-    .mul(currStock.value.price)
+    .mul(amountper.value)
     .div(form1.value.lever);
 });
 const payFee = computed(() => {
@@ -1031,7 +1034,7 @@ const payFee = computed(() => {
 const submitLoading = ref(false);
 const submitFormDialog = () => {
   if (!safePass.value) {
-    return showToast(t("trade.stock_opening_trade_pw_placeholder"));
+    return showToast(t('trade.stock_opening_trade_pw_placeholder'));
   }
   submitForm(safePass.value);
   //showModel.value = false
@@ -1040,7 +1043,7 @@ const submitFormDialog = () => {
 const submitForm = (s) => {
   if (submitLoading.value) return;
   submitLoading.value = true;
-  _stocksBuy({
+  _blocktradeSell({
     ...params.value,
     token: sessionToken.value,
     safeword: s,
@@ -1050,9 +1053,11 @@ const submitForm = (s) => {
         showModel.value = false;
         store.dispatch("updateWallet");
         showToast(t("trade.stock_opening_success"));
-        emits("success");
         form1.value.volume = "";
         sliderValue.value = 0;
+        setTimeout(() => {
+          emits("success");
+        }, 1500);
       }
     })
     .finally(() => {
@@ -1084,13 +1089,9 @@ const jump = (name) => {
   });
 };
 
-// 选择某个股票
-const choose = (item) => {
-  handleClick(item);
-};
-
 defineExpose({
-  choose,
+  // 选择某个股票
+  choose: handleClick,
 });
 </script>
 
@@ -1130,7 +1131,7 @@ defineExpose({
 }
 
 .form {
-  padding: 0.40rem 0.32rem 0.32rem;
+  padding: 0.48rem 0.32rem 0.32rem;
   position: relative;
 
   .subtitle {
@@ -1167,6 +1168,7 @@ defineExpose({
       border-radius: 0.32rem;
       border: 1px solid #d0d8e2;
       padding: 0 0.24rem;
+      transition: 0.3s;
 
       .info {
         font-size: 0.28rem;
@@ -1237,7 +1239,21 @@ defineExpose({
     }
 
     .disabled_item {
-      background-color: #f5f5f5;
+      background-color: #d0d8e2;
+    }
+
+    .item_focus {
+      height: 1.12rem;
+      border: 1px solid #034cfa;
+
+      .ipt_tip {
+        font-size: 0.2rem;
+        transform: translateY(-0.36rem);
+      }
+    }
+
+    .item_focus2 {
+      border: 1px solid #034cfa;
     }
 
     .item_box_left {
@@ -1274,7 +1290,7 @@ defineExpose({
   }
 
   .submit {
-    margin-top: 0.8rem;
+    margin-top: 0.4rem;
   }
 }
 
@@ -1326,6 +1342,7 @@ defineExpose({
       .lever {
         min-width: 0.7rem;
         text-align: right;
+        padding-left: 0.12rem;
       }
     }
   }
