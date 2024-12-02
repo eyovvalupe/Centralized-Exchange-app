@@ -2,8 +2,8 @@ import http from "./request";
 import axios from "axios";
 import { BASE_ADDRESS } from "@/config"
 
-const baseURL = process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS
-// const baseURL = BASE_ADDRESS
+// const baseURL = process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS
+const baseURL = BASE_ADDRESS
 // 上传文件
 // export const _upload = (file, successFunc, errorFunc, finishFunc) => {
 //   const form = new FormData()
