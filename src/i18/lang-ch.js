@@ -781,6 +781,9 @@ export default {
     market_stock_chase_long_sort: "漲幅榜",
     market_stock_chase_short_sort: "跌幅榜",
     market_stock_hot: "熱門股",
-
+    market_ai_title1: "預設",
+    market_ai_title2: "歷史高報酬率",
+    market_ai_title3: "24小時高報酬率",
+    market_ai_title4: "高槓桿",
   }
 };

@@ -810,7 +810,11 @@ export default {
     market_stock_chase_todays_effect: "做涨停今表现",
     market_stock_chase_long_sort: "涨幅榜",
     market_stock_chase_short_sort: "跌幅榜",
-    market_stock_hot: "热门股"
+    market_stock_hot: "热门股",
+    market_ai_title1: "默认",
+    market_ai_title2: "历史高收益率",
+    market_ai_title3: "24小时高收益率",
+    market_ai_title4: "高杠杆",
 
   }
 };

@@ -817,6 +817,9 @@ export default {
     market_stock_chase_long_sort: "Top Gainers",
     market_stock_chase_short_sort: "Top Losers",
     market_stock_hot: "Hot Stocks",
-
+    market_ai_title1: "Default",
+    market_ai_title2: "Historical High ROI",
+    market_ai_title3: "24h High ROI",
+    market_ai_title4: "High Leverage",
   },
 };
