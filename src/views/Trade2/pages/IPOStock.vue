@@ -175,7 +175,9 @@ import { _orderList, _orderGet } from "@/api/api";
 import { Popup, Tabs, Tab } from "vant";
 import router from "@/router";
 import UnLogin from "@/components/UnLogin.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const ipoActive = ref("");
 const loginfinish = () => {};
 const ipoOnChange = () => {

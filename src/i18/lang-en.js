@@ -659,7 +659,7 @@ export default {
     ipo_detail_item6: "Launch Price",
     ipo_detail_item7: "Min Buy Qty",
     ipo_detail_item8: "VIP Access",
-    ipo_detail_item9: "VIP Yield",
+    ipo_detail_item9: "VIP Interest",
     ipo_detail_item10: "Buy Qty",
     ipo_detail_btn: "Purchase Now",
 
