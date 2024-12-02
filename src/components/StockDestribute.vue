@@ -2,11 +2,16 @@
 <template>
   <div class="total_box">
     <div class="total_title flex flex-row justify-between items-center">
-      <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">{{ $t("market.stock.riseAndFall")
-        }}</span>
+      <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">{{
+        t('market.market_stock_description_title')
+      }}</span>
       <div>
-        <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]">{{ $t("market.stock.up") }}：{{ up }}</span>
-        <span class="text-[0.28rem] text-[#e8503a]">{{ $t("market.stock.down") }}：{{ down }}</span>
+        <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]"
+          >{{ t('market.market_stock_description_des1') }}：{{ up }}</span
+        >
+        <span class="text-[0.28rem] text-[#e8503a]"
+          >{{ t('market.market_stock_description_des2') }}：{{ down }}</span
+        >
       </div>
     </div>
     <div class="table_box justify-center" v-if="overviewLoading && !count">
@@ -15,17 +20,39 @@
     <div class="table_box justify-end" v-if="!overviewLoading || count">
       <div class="table_list">
         <div class="table_item" v-for="(key, i) in keySoft" :key="key">
-          <div class="table_item_num" :class="[i == 5 ? 'item_center' : i < 5 ? 'item_green' : 'item_red']">
+          <div
+            class="table_item_num"
+            :class="[
+              i == 5 ? 'item_center' : i < 5 ? 'item_green' : 'item_red',
+            ]"
+          >
             {{ overview[key] }}
           </div>
-          <div class="table_item_bar" :style="{
-            height: getHeight(key) + 'rem',
-            borderTopLeftRadius: `${getHeight(key) > 0.48 ? 0.24 : getHeight(key) > 0.15 ? getHeight(key) : 0.15}rem`,
-            borderTopRightRadius: `${getHeight(key) > 0.48 ? 0.24 : getHeight(key) > 0.15 ? getHeight(key) : 0.15}rem`,
-            backgroundColor: bgColors[i],
-          }"></div>
-          <div class="table_item_name flex flex-row justify-center align-items-center"
-            :class="{ item_green: i == 0, item_red: i == 10 }">
+          <div
+            class="table_item_bar"
+            :style="{
+              height: getHeight(key) + 'rem',
+              borderTopLeftRadius: `${
+                getHeight(key) > 0.48
+                  ? 0.24
+                  : getHeight(key) > 0.15
+                  ? getHeight(key)
+                  : 0.15
+              }rem`,
+              borderTopRightRadius: `${
+                getHeight(key) > 0.48
+                  ? 0.24
+                  : getHeight(key) > 0.15
+                  ? getHeight(key)
+                  : 0.15
+              }rem`,
+              backgroundColor: bgColors[i],
+            }"
+          ></div>
+          <div
+            class="table_item_name flex flex-row justify-center align-items-center"
+            :class="{ item_green: i == 0, item_red: i == 10 }"
+          >
             {{ overviewTitleMap[key] }}
           </div>
         </div>
@@ -46,7 +73,9 @@ import { _marketOverview } from "@/api/api";
 import store from "@/store";
 import Loading from "@/components/Loaidng.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const loading = ref(false);
 const finish = ref(false);
 const page = ref(0);
@@ -96,24 +125,26 @@ const overview = ref({
   "-5": 0,
 });
 try {
-  const d = JSON.parse(sessionStorage.getItem("overview_data_" + store.state.marketCurrent) || "{}");
+  const d = JSON.parse(
+    sessionStorage.getItem("overview_data_" + store.state.marketCurrent) || "{}"
+  );
   count.value = d.count || 0;
   for (let key in overview.value) {
     overview.value[key] = d[key] || 0;
   }
-} catch { }
+} catch {}
 const overviewTitleMap = ref({
-  5: "涨停",
+  5: t('market.market_stock_description_long_end'),
   4: ">7%",
   3: "7~5％",
   2: "5~2％",
   1: "2~0％",
-  0: "平",
+  0: t('market.market_stock_description_center'),
   "-1": "0~2％",
   "-2": "2~5％",
   "-3": "5~7％",
   "-4": "7％<",
-  "-5": "跌停",
+  "-5": t('market.market_stock_description_short_end'),
 });
 // 获取柱状图高度
 const getHeight = (key) => {
@@ -121,17 +152,17 @@ const getHeight = (key) => {
   for (let k in overview.value) {
     if (overview.value[k] > max) max = overview.value[k];
   }
-  if (max == 0) return 0
+  if (max == 0) return 0;
   return (overview.value[key] * 3) / max; // 最高的3rem
 };
 const overviewLoading = ref(false);
 const getOverviewData = () => {
   if (!store.state.marketCurrent) {
-    return
+    return;
   }
-  const market = store.state.marketCurrent
+  const market = store.state.marketCurrent;
   if (sessionStorage.getItem("overview_data_" + market)) {
-    const d = JSON.parse(sessionStorage.getItem("overview_data_" + market))
+    const d = JSON.parse(sessionStorage.getItem("overview_data_" + market));
     count.value = d.count || 0;
     for (let key in overview.value) {
       overview.value[key] = d[key] || 0;
@@ -139,18 +170,21 @@ const getOverviewData = () => {
     setTimeout(() => {
       getUpNum();
       getDownNum();
-    }, 0)
+    }, 0);
   } else {
     overviewLoading.value = true;
   }
 
   _marketOverview({
-    market: market
+    market: market,
   })
     .then((res) => {
       if (!res.data) return;
-      sessionStorage.setItem("overview_data_" + market, JSON.stringify(res.data));
-      if (market != store.state.marketCurrent) return
+      sessionStorage.setItem(
+        "overview_data_" + market,
+        JSON.stringify(res.data)
+      );
+      if (market != store.state.marketCurrent) return;
       count.value = res.data.count || 0;
       for (let key in overview.value) {
         overview.value[key] = res.data[key] || 0;
@@ -158,7 +192,7 @@ const getOverviewData = () => {
       setTimeout(() => {
         getUpNum();
         getDownNum();
-      }, 0)
+      }, 0);
     })
     .finally(() => {
       overviewLoading.value = false;
@@ -169,30 +203,31 @@ const initData = () => {
   getOverviewData();
 };
 
-watch(() => store.state.marketCurrent, () => {
-  initData()
-})
+watch(
+  () => store.state.marketCurrent,
+  () => {
+    initData();
+  }
+);
 onMounted(() => {
-  initData()
-})
+  initData();
+});
 
 const getUpNum = () => {
   up.value = 0;
-  const arr = [1, 2, 3, 4, 5]
-  arr.forEach(i => {
-    up.value = up.value + overview.value[i]
-  })
-}
+  const arr = [1, 2, 3, 4, 5];
+  arr.forEach((i) => {
+    up.value = up.value + overview.value[i];
+  });
+};
 
 const getDownNum = () => {
   down.value = 0;
-  const arr = ['-1', '-2', '-3', '-4', '-5']
-  arr.forEach(i => {
-    down.value = down.value + overview.value[i]
-  })
-
-}
-
+  const arr = ["-1", "-2", "-3", "-4", "-5"];
+  arr.forEach((i) => {
+    down.value = down.value + overview.value[i];
+  });
+};
 </script>
 
 <style lang="less" scoped>
@@ -250,7 +285,7 @@ const getDownNum = () => {
       }
 
       .item_center {
-        color: #7e99d6
+        color: #7e99d6;
       }
 
       .item_green {

@@ -787,5 +787,30 @@ export default {
     market_buy_chat_con1: "您已经成功下单",
     market_buy_chat_con2: "请耐心等候商家付款",
 
+    market_stock_country_us: "美股",
+    market_stock_country_japan: "日本",
+    market_stock_country_india: "印度",
+    market_stock_country_korea: "韩国",
+    market_stock_country_germany: "德国",
+    market_stock_country_uk: "英国",
+    market_stock_country_singapore: "新加坡",
+    market_stock_country_hongkong: "香港",
+    market_stock_country_malaysia: "马来西亚",
+    market_stock_updatetime: "更新时间",
+    market_stock_description_title: "涨跌分布",
+    market_stock_description_des1: "上涨",
+    market_stock_description_des2: "下跌",
+    market_stock_description_long_end: "涨停",
+    market_stock_description_center: "平",
+    market_stock_description_long_end: "跌停",
+    market_stock_chase_movement: "涨停追击",
+    market_stock_chase_earning_effect: "赚钱效应",
+    market_stock_chase_strong: "强",
+    market_stock_chase_movement_percentage: "涨跌停对比",
+    market_stock_chase_todays_effect: "做涨停今表现",
+    market_stock_chase_long_sort: "涨幅榜",
+    market_stock_chase_short_sort: "跌幅榜",
+    market_stock_hot: "热门股"
+
   }
 };
