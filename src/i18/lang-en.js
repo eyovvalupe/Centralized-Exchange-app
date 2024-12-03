@@ -481,7 +481,7 @@ export default {
     header_aibot: "AI Bot",
     header_ipo: "IPO",
     header_forex: "Forex",
-    header_block: "Commidity",
+    header_block: "Commodity",
 
     stock_open: "Open",
     stock_position: "Position",
