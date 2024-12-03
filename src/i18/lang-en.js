@@ -6,7 +6,7 @@ export default {
     IPO: "IPO",
     closed: "Closed",
     no_data: "No Data",
-    day: "Days",
+    day: "days",
     hour: "h",
     min: "m",
     no_more: "No more",
@@ -646,7 +646,7 @@ export default {
     ai_position_title: "Trade Detail",
     ai_position_profit: "Profit",
     ai_position_timer: "Countdown",
-    ai_position_end_trade: "is Valid for Trade",
+    ai_position_end_trade: "Completed",
     ai_position_order_id: "Order No",
 
     ipo_title: "Orders",
