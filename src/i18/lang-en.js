@@ -779,7 +779,7 @@ export default {
     market_buy_list_wait_confirm1: "Waiting Confirm",
     market_buy_list_complete: "Done",
     market_buy_list_cancel: "Canceled",
-    market_buy_list_contact: "Contact Seller",
+    market_buy_list_contact: "Trade Provider",
     market_buy_list_wait_buyer_confirm: "Waiting for Payment",
     market_buy_list_wait_buyer_con: "Transfer to the seller's bank account",
     market_buy_list_wait_con: "Payment made, waiting for seller's confirmation",
@@ -797,6 +797,8 @@ export default {
     market_buy_list_paid_success: "Payment Successful",
     market_buy_list_pass_success: "Release Successful",
     market_buy_list_cancel_success: "Cancellation Successful",
+    market_buy_list_pre_pay: "Est Payment",
+    market_buy_list_firt_select: "Choose to add payment first",
     
     market_buy_chat_con1: "Order placed successfully",
     market_buy_chat_con2: "Wait for seller's payment",

@@ -773,6 +773,8 @@ export default {
     market_buy_list_paid_success: "付款成功",
     market_buy_list_pass_success: "放行成功",
     market_buy_list_cancel_success: "取消成功",
+    market_buy_list_pre_pay: "預計支付",
+    market_buy_list_firt_select: "請選擇先新增收款帳戶",
 
     market_buy_chat_con1: "您已經成功下單",
     market_buy_chat_con2: "請耐心等候商家付款",

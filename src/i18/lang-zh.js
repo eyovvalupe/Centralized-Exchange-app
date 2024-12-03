@@ -354,9 +354,6 @@ export default {
     accountSelection: "加密货币账户选择",
     bankSelection: "银行卡账户选择",
   },
-  form: {
-    all: "全部",
-  },
   topUpCrypto: {
     recharge: "充值",
     rechargeRecord: "充值记录",
@@ -790,7 +787,8 @@ export default {
     market_buy_list_paid_success: "付款成功",
     market_buy_list_pass_success: "放行成功",
     market_buy_list_cancel_success: "取消成功",
-
+    market_buy_list_pre_pay: "预计支付",
+    market_buy_list_firt_select: "请选择先添加收款账户",
     market_buy_chat_con1: "您已经成功下单",
     market_buy_chat_con2: "请耐心等候商家付款",
 
