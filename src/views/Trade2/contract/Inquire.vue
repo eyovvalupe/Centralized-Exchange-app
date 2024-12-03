@@ -5,21 +5,13 @@
       <div class="td td-5">{{ t("trade.contract_opening_contract") }}</div>
       <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
       <div class="td td-4">{{ t("trade.contract_position_cost") }}</div>
-      <div
-        class="td td-4"
-        style="text-align: end !important; margin-right: 0.2rem !important"
-      >
+      <div class="td td-4" style="text-align: end !important; margin-right: 0.2rem !important">
         {{ t("trade.order_info_profit") }}
       </div>
     </div>
     <NoData v-if="!loading && !contractInquireList.length" />
 
-    <SwipeCell
-      ref="items"
-      v-for="(item, i) in contractInquireList"
-      :key="i"
-      disabled
-    >
+    <SwipeCell ref="items" v-for="(item, i) in contractInquireList" :key="i" disabled>
       <div class="tr" @click="OpeningForm(item)">
         <div class="td td-5">
           <div class="name">{{ item.name }}</div>
@@ -31,16 +23,16 @@
                 item.status == "none"
                   ? t("trade.stock_position_status_none")
                   : item.status == "lock"
-                  ? t("trade.stock_position_status_lock")
-                  : item.status == "open"
-                  ? t("trade.stock_position_status_open")
-                  : item.status == "done"
-                  ? t("trade.stock_position_status_done")
-                  : item.status == "fail"
-                  ? t("trade.stock_position_status_fail")
-                  : item.status == "cancel"
-                  ? t("trade.stock_position_status_cancel")
-                  : "--"
+                    ? t("trade.stock_position_status_lock")
+                    : item.status == "open"
+                      ? t("trade.stock_position_status_open")
+                      : item.status == "done"
+                        ? t("trade.stock_position_status_done")
+                        : item.status == "fail"
+                          ? t("trade.stock_position_status_fail")
+                          : item.status == "cancel"
+                            ? t("trade.stock_position_status_cancel")
+                            : "--"
               }}
             </div>
           </div>
@@ -52,8 +44,8 @@
               item.offset == "long"
                 ? t("trade.stock_position_offset_long")
                 : item.offset == "short"
-                ? t("trade.stock_position_offset_short")
-                : "--"
+                  ? t("trade.stock_position_offset_short")
+                  : "--"
             }}
           </div>
           <div class="amount">{{ item.unsold_volume || "--" }}</div>
@@ -63,40 +55,21 @@
           <div class="price">{{ item.open_price || "--" }}</div>
         </div>
         <div class="td td-4">
-          <div
-            class="num"
-            :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'"
-          >
+          <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
             {{ item.profit || "--" }}
           </div>
-          <div
-            class="num"
-            :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'"
-          >
+          <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
             {{ getRatio(item.ratio) }}
           </div>
         </div>
       </div>
     </SwipeCell>
-    <LoadingMore
-      :loading="loading"
-      :finish="finish"
-      v-if="(finish && contractInquireList.length) || !finish"
-    />
+    <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || !finish" />
   </div>
 
   <!-- 订单详情 -->
-  <Popup
-    v-model:show="showInfo"
-    position="right"
-    style="width: 100%; height: 100%"
-    teleport="body"
-  >
-    <OrderInfo
-      type="contract"
-      :curr-stock="currStock"
-      @back="showInfo = false"
-    />
+  <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
+    <OrderInfo type="contract" :curr-stock="currStock" @back="showInfo = false" />
   </Popup>
 
   <UnLogin @loginfinish="loginfinish" v-show="!token" />
@@ -113,6 +86,13 @@ import UnLogin from "@/components/UnLogin.vue";
 import OrderInfo from "../components/OrderInfo.vue";
 import Decimal from "decimal.js";
 import { useI18n } from "vue-i18n";
+
+const props = defineProps({
+  type: {
+    type: String,
+    default: ''
+  }
+})
 
 const { t } = useI18n();
 const loginfinish = () => {
@@ -230,7 +210,7 @@ onMounted(() => {
       document
         .querySelector(".trade_body")
         .addEventListener("scroll", scrolHandle);
-    } catch {}
+    } catch { }
   }, 500);
 });
 onUnmounted(() => {
@@ -238,7 +218,7 @@ onUnmounted(() => {
     document
       .querySelector(".trade_body")
       .removeEventListener("scroll", scrolHandle);
-  } catch {}
+  } catch { }
 });
 
 defineExpose({

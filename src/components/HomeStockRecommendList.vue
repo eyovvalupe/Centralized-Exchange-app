@@ -5,15 +5,12 @@
       <Loading :loading="true" />
     </div>
     <Carousel v-bind="config" v-else v-model="currentSlide">
-      <Slide v-for="list in slideList" :key="slide">
+      <Slide v-for="(list, i) in slideList" :key="i">
         <div class="carousel__item" v-for="(item, index) in list" :key="index">
-          <div
-            class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-[#F5F7FC] relative"
-            @click="goInfo(item)"
-          >
+          <div class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-[#F5F7FC] relative"
+            @click="goInfo(item)">
             <div
-              class="font-medium text-[0.3rem] text-[#061023] font-medium mb-[0.15rem] flex justify-between items-center"
-            >
+              class="font-medium text-[0.3rem] text-[#061023] font-medium mb-[0.15rem] flex justify-between items-center">
               {{ item.symbol }}
             </div>
             <div class="flex justify-between text-[#18B762] mb-[0.24rem]">
@@ -29,18 +26,11 @@
               </div>
             </div>
             <div class="flex justify-between item-center">
-              <SparkLine
-                v-if="item.points"
-                :points="item.points"
-                :ratio="item.ratio"
-                :style="'width: 100%; height: 0.5rem'"
-                :xtimes="1.2"
-              />
+              <SparkLine v-if="item.points" :points="item.points" :ratio="item.ratio"
+                :style="'width: 100%; height: 0.5rem'" :xtimes="1.2" />
               <div
                 class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] items-center justify-center flex"
-                style="width: 1.5rem; height: 0.48rem"
-                @click.stop="collect(item)"
-              >
+                style="width: 1.5rem; height: 0.48rem" @click.stop="collect(item)">
                 <span class="text-[0.22rem]">+{{ t('home.optional') }}</span>
               </div>
             </div>
@@ -48,18 +38,11 @@
         </div>
       </Slide>
     </Carousel>
-    <div
-      class="carousel_pagination absolute flex gap-[0.05rem] transition-all right-0 mr-[0.32rem] mt-[0.4rem]"
-    >
-      <div
-        v-for="(item, index) in slideList"
-        :key="index"
-        @click="() => (currentSlide = index)"
-        class="h-[0.06rem] w-[0.12rem] rounded-[0.2rem] transition-all"
-        :class="[
+    <div class="carousel_pagination absolute flex gap-[0.05rem] transition-all right-0 mr-[0.32rem] mt-[0.4rem]">
+      <div v-for="(item, index) in slideList" :key="index" @click="() => (currentSlide = index)"
+        class="h-[0.06rem] w-[0.12rem] rounded-[0.2rem] transition-all" :class="[
           currentSlide == index ? 'bg-[#014CFA]' : 'bg-[#014CFA] opacity-20',
-        ]"
-      ></div>
+        ]"></div>
     </div>
   </div>
 </template>
@@ -266,6 +249,7 @@ onMounted(() => {
   top: -0.8rem;
   left: calc(50% - 0.13rem);
 }
+
 .loading_box {
   min-height: 2rem;
   display: flex;
