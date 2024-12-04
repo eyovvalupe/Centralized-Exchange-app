@@ -12,7 +12,7 @@
       <div class="func_box" @click="jump('search')">
         <div class="custom-search-icon"></div>
       </div>
-      <div class="func_box">
+      <div class="func_box" @click="jump('notification')">
         <div class="custom-lock-icon"></div>
       </div>
     </div>

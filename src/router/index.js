@@ -194,6 +194,16 @@ const routes = [
     },
   },
   {
+    // 通知
+    path: '/notification',
+    name: 'notification',
+    component: () => import('../views/Notification/Index.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
     // 市场详情
     path: '/market_info',
     name: 'market_info',
