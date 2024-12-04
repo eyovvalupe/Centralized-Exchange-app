@@ -5,7 +5,7 @@
     <div class="funcs relative">
       <div class="user_box">
         <div class="user_default_avatar">
-          <img src="/static/img/user/avatar2.png"/>
+          <img src="/static/img/user/avatar2.png" />
         </div>
       </div>
       <div style="flex: 1"></div>
@@ -17,38 +17,63 @@
       </div>
     </div>
     <div class="top_box relative overflow-hidden">
-        <Carousel :autoplay="5000" style="height:2.4rem;border-radius: 0.32rem;overflow: hidden;" :wrap-around="true" :mouseDrag="true" v-model="currentSlide">
-          <Slide v-for="(slide, index) in slides" :key="index" style="height:2.4rem;">
-            <img :src="slide" class="w-full h-full !object-cover" alt="img" />
-          </Slide>
-        </Carousel>
+      <Carousel
+        :autoplay="5000"
+        style="height: 2.4rem; border-radius: 0.32rem; overflow: hidden"
+        :wrap-around="true"
+        :mouseDrag="true"
+        v-model="currentSlide"
+      >
+        <Slide
+          v-for="(slide, index) in slides"
+          :key="index"
+          style="height: 2.4rem"
+        >
+          <img :src="slide" class="w-full h-full !object-cover" alt="img" />
+        </Slide>
+      </Carousel>
 
-      <div class="absolute flex gap-[0.05rem] transition-all bottom-[0.08rem]  left-0 ml-[3.6rem]">
-        <div @click="() => (currentSlide = 0)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
-          currentSlide == 0
-            ? 'h-[0.16rem] bg-[#014CFA]'
-            : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
-        ]"></div>
-        <div @click="() => (currentSlide = 1)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
-          currentSlide == 1
-            ? 'h-[0.16rem] bg-[#014CFA]'
-            : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
-        ]"></div>
-        <div @click="() => (currentSlide = 2)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
-          currentSlide == 2
-            ? 'h-[0.16rem] bg-[#014CFA]'
-            : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
-        ]"></div>
+      <div
+        class="absolute flex gap-[0.05rem] transition-all bottom-[0.08rem] left-0 ml-[3.6rem]"
+      >
+        <div
+          @click="() => (currentSlide = 0)"
+          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
+          :class="[
+            currentSlide == 0
+              ? 'h-[0.16rem] bg-[#014CFA]'
+              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+          ]"
+        ></div>
+        <div
+          @click="() => (currentSlide = 1)"
+          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
+          :class="[
+            currentSlide == 1
+              ? 'h-[0.16rem] bg-[#014CFA]'
+              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+          ]"
+        ></div>
+        <div
+          @click="() => (currentSlide = 2)"
+          class="w-[0.06rem] rounded-t-[0.32rem] transition-all"
+          :class="[
+            currentSlide == 2
+              ? 'h-[0.16rem] bg-[#014CFA]'
+              : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+          ]"
+        ></div>
       </div>
-     
+
       <div class="pl-[0.285rem] mt-[1.25rem]"></div>
     </div>
     <div
-      class="h-[1.24rem] bg-[#F5F7FC]  rounded-b-[0.32rem] pt-[0.32rem] -mt-[0.32rem] px-[0.32rem] mx-[0.32rem] flex items-center justify-between relative">
+      class="h-[1.24rem] bg-[#F5F7FC] rounded-b-[0.32rem] pt-[0.32rem] -mt-[0.32rem] px-[0.32rem] mx-[0.32rem] flex items-center justify-between relative"
+    >
       <div class="flex items-center gap-2">
         <div class="custom-lock-small-icon"></div>
         <div class="text-[0.28rem] text-[#061023]">
-          {{ $t('home.notification') }}
+          {{ $t("home.notification") }}
         </div>
       </div>
       <div class="text-[0.24rem] text-[#7B7B7B]">
@@ -59,19 +84,31 @@
       <!--//////////////////////////////////-->
       <div
         class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
-        v-show="!token">
+        v-show="!token"
+      >
         <div
           class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
-          @click="store.commit('setIsLoginOpen', true)">
-          {{ $t('home.login') }}
+          @click="store.commit('setIsLoginOpen', true)"
+        >
+          {{ $t("home.login") }}
         </div>
-        <div class="text-[0.24rem] text-[#8F92A1]">{{ $t('home.loginDesc') }}</div>
+        <div class="text-[0.24rem] text-[#8F92A1]">
+          {{ $t("home.loginDesc") }}
+        </div>
       </div>
-      <div class="bg-[#F5F7FC] mb-[0.32rem] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] border-[1px] border-[#EFF3F8] py-[0.28rem] z-10">
+      <div
+        class="bg-[#F5F7FC] mb-[0.32rem] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] border-[1px] border-[#EFF3F8] py-[0.28rem] z-10"
+      >
         <div class="flex justify-between mb-[0.14rem] items-center">
           <div class="flex items-center gap-1">
-            <div class="text-[0.26rem] text-[#333333]">{{$t("home.totalAssets")}}(USDT)</div>
-            <div class="assets" v-if="!token" @click="store.commit('setIsLoginOpen', true)">
+            <div class="text-[0.26rem] text-[#333333]">
+              {{ $t("home.totalAssets") }}(USDT)
+            </div>
+            <div
+              class="assets"
+              v-if="!token"
+              @click="store.commit('setIsLoginOpen', true)"
+            >
               <!-- <div class="assets_login">登录</div>
           <div>查看资产</div> -->
               <div class="assets_icon">
@@ -80,20 +117,32 @@
             </div>
             <div class="assets" v-if="token">
               <div class="assets_icon" @click="openEye = !openEye">
-                <Iconfonts v-show="!openEye" :name="'icon-biyan'" :size="0.32" :color="'#333'" />
-                <Iconfonts v-show="openEye" :name="'icon-zhengyan'" :size="0.32" :color="'#333'" />
+                <Iconfonts
+                  v-show="!openEye"
+                  :name="'icon-biyan'"
+                  :size="0.32"
+                  :color="'#333'"
+                />
+                <Iconfonts
+                  v-show="openEye"
+                  :name="'icon-zhengyan'"
+                  :size="0.32"
+                  :color="'#333'"
+                />
               </div>
             </div>
           </div>
           <div class="flex items-center gap-2">
             <div
               class="px-[0.2rem] h-[0.52rem] border-[#014CFA] text-[#014CFA] text-[0.24rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
-              @click="showAS = true">
+              @click="showAS = true"
+            >
               {{ $t("home.fastTrading") }}
             </div>
             <div
               class="px-[0.2rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[0.24rem] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
-              @click="jump('topUp', true)">
+              @click="jump('topUp', true)"
+            >
               {{ $t("home.recharge") }}
             </div>
           </div>
@@ -102,30 +151,48 @@
           {{ openEye ? assets.total : "*******" }}
         </div>
       </div>
-      
+
       <HomeToday />
       <HomePriority />
-
     </div>
     <HomeWatchList />
-    
-    <div class="font-bold text-[0.32rem] m-[0.32rem]">{{$t("home.marketRecommend")}}</div>
+
+    <div class="font-bold text-[0.32rem] m-[0.32rem]">
+      {{ $t("home.marketRecommend") }}
+    </div>
     <!-- <Banner v-if="activated" class="home_banner" /> -->
 
     <!-- Tabs -->
-    <Tabs @change="tabChange" v-if="!pageLoading && activated" type="card" class="tabs" v-model:active="activeTab"
-      animated shrink>
+    <Tabs
+      @change="tabChange"
+      v-if="!pageLoading && activated"
+      type="card"
+      class="tabs"
+      v-model:active="activeTab"
+      animated
+      shrink
+    >
       <Tab :title="$t('common.stock')">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div class="pt-[0.12rem]">
-          <StockItem :item="item" v-for="(item, i) in marketStockCurrentList" :key="'s_' + i" page="home" />
+          <StockItem
+            :item="item"
+            v-for="(item, i) in marketStockCurrentList"
+            :key="'s_' + i"
+            page="home"
+          />
         </div>
         <NoData v-if="!commendLoading && !marketStockCurrentList.length" />
       </Tab>
       <Tab :title="$t('common.crypto')">
         <Loaidng v-if="commendLoading" :loading="commendLoading" />
         <div class="pt-[0.32rem]">
-          <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" />
+          <StockItem
+            :item="item"
+            v-for="(item, i) in contractList"
+            :key="'c_' + i"
+            marketType="crypto"
+          />
         </div>
         <NoData v-if="!commendLoading && !contractList.length" />
       </Tab>
@@ -142,17 +209,60 @@
     </Tabs>
 
     <!-- 类型选择弹窗 -->
-    <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')"></ActionSheet>
+    <ActionSheet
+      v-model:show="showAS"
+      :actions="actions"
+      @select="onSelect"
+      :title="$t('home.fastTrading')"
+    ></ActionSheet>
+    <Dialog
+      v-model:show="existNotifi"
+      show-cancel-button
+      :cancelButtonText="'取消'"
+      :confirm-button-text="'查看全部'"
+    >
+      <div
+        class="w-full h-[9.36rem] bg-[#fff] rounded-[0.32rem] mt-[0.36rem] mb-[0.32rem] p-[0.32rem]"
+      >
+        <div
+          class="w-full text-[0.32rem] text-[#061023] leading-[0.52rem] mb-[0.32rem] text-center px-[0.1rem] font-semibold"
+        >
+          消息标题测试消息标题测试消息标题测试标题测试标题测试标题测试标题测试标题测试标题测试
+        </div>
+        <div
+          class="w-full text-center text-[0.28rem] text-[#8f92a1] mb-[0.32rem]"
+        >
+          2024/11/26 13:00:02
+        </div>
+        <div class="w-full text-[0.28rem] leading-[0.48rem] text-[#061023] mb-[0.32rem]">
+          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+        </div>
+        <div class="rounded-[0.32rem] overflow-hidden mb-[0.32rem]">
+          <img src="static/img/noti/noti-3.webp" />
+        </div>
+        <div class="w-full text-[0.28rem] leading-[0.48rem] text-[#061023] mb-[0.32rem]">
+          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+        </div>
+      </div>
+    </Dialog>
   </div>
 </template>
 
 <script setup>
 import StockItem from "@/components/StockItem.vue";
-import { onDeactivated, ref, computed, onActivated, onMounted, nextTick, watch } from "vue";
+import {
+  onDeactivated,
+  ref,
+  computed,
+  onActivated,
+  onMounted,
+  nextTick,
+  watch,
+} from "vue";
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
-import { Tab, Tabs, ActionSheet } from "vant";
+import { Tab, Tabs, ActionSheet, Dialog } from "vant";
 import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import Iconfonts from "@/components/Iconfonts.vue";
 import router from "@/router";
@@ -169,7 +279,7 @@ import Ai from "../Market/components/Ai.vue";
 import { Translation } from "vue-i18n";
 import HomeWatchList from "@/components/HomeWatchList.vue";
 import HomeCrypto from "@/components/HomeCrypto.vue";
-import HomeToday from '@/components/HomeToday.vue';
+import HomeToday from "@/components/HomeToday.vue";
 import { formatDate } from "@/utils/formatDate";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -181,9 +291,9 @@ const currentSlide = ref(0);
 const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
 
-
 // 打开添加类型选择弹窗
 const showAS = ref(false);
+const existNotifi = ref(true);
 const actions = [
   { name: t("common.stock"), value: "0" },
   { name: t("common.crypto"), value: "-1" },
@@ -227,23 +337,23 @@ const ipoRef = ref();
 const ipoDataList = computed(() => store.state.ipoDataList || []);
 const tabChange = (val) => {
   if (val == 2 && !ipoDataList.value.length) {
-    nextTick(()=>{
+    nextTick(() => {
       ipoRef.value && ipoRef.value.init();
-    })
+    });
   }
 };
 
 const subs = (arr) => {
-  store.commit("setMarketWatchKeysByPage")
+  store.commit("setMarketWatchKeysByPage");
   store.dispatch("subList", {});
 };
 
 const activated = ref(false);
 onActivated(() => {
-  store.commit("setMarketWatchKeys",[])
-  
+  store.commit("setMarketWatchKeys", []);
+
   activated.value = true;
-  subs()
+  subs();
 });
 onDeactivated(() => {
   activated.value = false;
@@ -261,17 +371,20 @@ const commendLoading = ref(false);
 
 const contractList = computed(() => store.state.contractList || []);
 
-const marketStockCurrentList =  computed(() => store.getters.getMarketStockCurrentList || []);
+const marketStockCurrentList = computed(
+  () => store.getters.getMarketStockCurrentList || []
+);
 
 const getRecommendData = () => {
   commendLoading.value = true;
-    _futures().then((res) => {
+  _futures()
+    .then((res) => {
       if (res.code == 200) {
         const rs = res.data.map((item) => {
           const target = contractList.value.find(
             (a) => a.symbol == item.symbol
           );
-          item.type = 'crypto'
+          item.type = "crypto";
           if (target) {
             Object.assign(target, item);
             item = target;
@@ -280,10 +393,10 @@ const getRecommendData = () => {
         });
         store.commit("setContractList", rs || []);
 
-        subs()
-
+        subs();
       }
-    }).finally(() => {
+    })
+    .finally(() => {
       commendLoading.value = false;
     });
 };
@@ -297,7 +410,6 @@ const jump = (name, needToken) => {
     name,
   });
 };
-
 </script>
 
 <style lang="less" scoped>
@@ -305,6 +417,42 @@ const jump = (name, needToken) => {
   padding: 0 0 1.9rem 0;
   height: 100%;
   overflow-y: auto;
+
+  :deep(.van-popup.van-popup--center.van-dialog) {
+    background: none;
+    box-shadow: none;
+  }
+
+  :deep(.van-button) {
+    border-radius: 0.32rem;
+  }
+
+  :deep(.van-hairline--top:after) {
+    border-top-width: 0;
+  }
+
+  :deep(.van-button::after) {
+    content: none;
+  }
+
+  :deep(
+      button.van-button.van-button--default.van-button--large.van-dialog__cancel
+    ) {
+    background-color: white;
+    margin-right: 0.16rem;
+  }
+
+  :deep(
+      button.van-button.van-button--default.van-button--large.van-dialog__confirm
+    ) {
+    background-color: #014cfa;
+    color: white;
+    margin-left: 0.16rem;
+  }
+
+  :deep(.van-button__content::after) {
+    content: none !important;
+  }
 
   :deep(.van-action-sheet__content) {
     padding: 0.2rem 0 1.38rem 0;
@@ -315,7 +463,7 @@ const jump = (name, needToken) => {
     }
   }
 
-  :deep(.page_ai .list){
+  :deep(.page_ai .list) {
     padding-top: 0.12rem;
   }
   .top_box {
@@ -391,11 +539,11 @@ const jump = (name, needToken) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      
+
       .user_default_avatar {
         width: 0.8rem;
         height: 0.8rem;
-        img{
+        img {
           width: 100%;
           height: 100%;
         }
@@ -415,7 +563,7 @@ const jump = (name, needToken) => {
       border-width: 0.02rem;
     }
   }
-  
+
   .home_ad {
     height: 2.8rem;
     width: 100%;

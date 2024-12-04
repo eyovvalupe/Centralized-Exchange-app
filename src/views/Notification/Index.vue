@@ -2,14 +2,13 @@
 <template>
   <div class="notification_page">
     <div class="w-full h-[0.88rem] flex justify-center items-center">
-      <div class="absolute left-[0.32rem] top-[0.26rem]" @click="jump">
+      <div class="absolute left-[0.32rem] top-[0.26rem]" @click="back">
         <Icon :name="'arrow-left'" size="0.4rem" />
       </div>
       <span class="text-[0.36rem]">消息中心</span>
     </div>
     <div class="pt-[0.16rem]">
       <Tabs
-        v-if="!pageLoading"
         type="oval-card"
         v-model:active="active"
         :swipeable="false"
@@ -30,7 +29,12 @@
                 <div
                   class="text-[0.28rem] text-[#8f92a1] mb-[0.36rem] leading-[0.48rem]"
                 >
-                  摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内容内...
+                  <TextEllipsis
+                    rows="2"
+                    :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
+                    expand-text="more"
+                    collapse-text="less"
+                  />
                 </div>
                 <div
                   class="w-full flex justify-between mb-[0.32rem]"
@@ -53,6 +57,7 @@
               <div
                 class="px-[0.48rem] h-[0.74rem] border-[#014cfa] border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-[#014cfa]"
                 style="width: max-content"
+                @click="jump('notification_detail')"
               >
                 查看全部
               </div>
@@ -71,7 +76,12 @@
                 <div
                   class="text-[0.28rem] text-[#8f92a1] mb-[0.36rem] leading-[0.48rem]"
                 >
-                  摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内容内...
+                  <TextEllipsis
+                    rows="2"
+                    :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
+                    expand-text="more"
+                    collapse-text="less"
+                  />
                 </div>
                 <div
                   class="w-full flex justify-between mb-[0.32rem]"
@@ -94,6 +104,7 @@
               <div
                 class="px-[0.48rem] h-[0.74rem] border-[#014cfa] border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-[#014cfa]"
                 style="width: max-content"
+                @click="jump('notification_detail')"
               >
                 查看全部
               </div>
@@ -112,7 +123,12 @@
                 <div
                   class="text-[0.28rem] text-[#8f92a1] mb-[0.36rem] leading-[0.48rem]"
                 >
-                  摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内容内...
+                  <TextEllipsis
+                    rows="2"
+                    :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
+                    expand-text="more"
+                    collapse-text="less"
+                  />
                 </div>
                 <div
                   class="w-full flex justify-between mb-[0.32rem]"
@@ -181,7 +197,7 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, Icon } from "vant";
+import { Tab, Tabs, Icon, TextEllipsis } from "vant";
 import { ref, onMounted, nextTick } from "vue";
 import eventBus from "@/utils/eventBus";
 import { useRoute } from "vue-router";
@@ -202,8 +218,14 @@ const onChange = async (val) => {
   }
 };
 
-const jump = () => {
+const back = () => {
   router.back();
+};
+
+const jump = (url) => {
+  router.push({
+    name: url,
+  });
 };
 
 onMounted(() => {

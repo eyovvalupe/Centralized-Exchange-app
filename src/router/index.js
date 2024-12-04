@@ -204,6 +204,16 @@ const routes = [
     },
   },
   {
+    // 通知详情
+    path: '/notification_detail',
+    name: 'notification_detail',
+    component: () => import('../views/Notification/Detail.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
     // 市场详情
     path: '/market_info',
     name: 'market_info',
