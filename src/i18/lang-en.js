@@ -706,7 +706,7 @@ export default {
   },
   market: {
     market_header_optional: "Optional",
-    market_header_buy: "Buycoin",
+    market_header_buy: "Buy",
     market_header_stock: "Stock",
     market_header_contract: "Contract",
     market_header_ai: "AI Bot",
