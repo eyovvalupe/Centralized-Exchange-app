@@ -215,36 +215,7 @@
       @select="onSelect"
       :title="$t('home.fastTrading')"
     ></ActionSheet>
-    <Dialog
-      v-model:show="existNotifi"
-      show-cancel-button
-      :cancelButtonText="'取消'"
-      :confirm-button-text="'查看全部'"
-    >
-      <div
-        class="w-full h-[9.36rem] bg-[#fff] rounded-[0.32rem] mt-[0.36rem] mb-[0.32rem] p-[0.32rem]"
-      >
-        <div
-          class="w-full text-[0.32rem] text-[#061023] leading-[0.52rem] mb-[0.32rem] text-center px-[0.1rem] font-semibold"
-        >
-          消息标题测试消息标题测试消息标题测试标题测试标题测试标题测试标题测试标题测试标题测试
-        </div>
-        <div
-          class="w-full text-center text-[0.28rem] text-[#8f92a1] mb-[0.32rem]"
-        >
-          2024/11/26 13:00:02
-        </div>
-        <div class="w-full text-[0.28rem] leading-[0.48rem] text-[#061023] mb-[0.32rem]">
-          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-        </div>
-        <div class="rounded-[0.32rem] overflow-hidden mb-[0.32rem]">
-          <img src="static/img/noti/noti-3.webp" />
-        </div>
-        <div class="w-full text-[0.28rem] leading-[0.48rem] text-[#061023] mb-[0.32rem]">
-          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-        </div>
-      </div>
-    </Dialog>
+    <NotifiModal />
   </div>
 </template>
 
@@ -262,26 +233,22 @@ import {
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
 import store from "@/store";
-import { Tab, Tabs, ActionSheet, Dialog } from "vant";
+import { Tab, Tabs, ActionSheet } from "vant";
 import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import Iconfonts from "@/components/Iconfonts.vue";
 import router from "@/router";
 import IPO from "../Market/components/IPO.vue";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
-import StockTable from "@/components/StockTable.vue";
-import StockSortList from "@/components/StockSortList.vue";
-import HomeCountry from "@/components/HomeCountry.vue";
 import HomePriority from "@/components/HomePriority.vue";
 import "vue3-carousel/dist/carousel.css";
-import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+import { Carousel, Slide } from "vue3-carousel";
 import Ai from "../Market/components/Ai.vue";
-import { Translation } from "vue-i18n";
 import HomeWatchList from "@/components/HomeWatchList.vue";
-import HomeCrypto from "@/components/HomeCrypto.vue";
 import HomeToday from "@/components/HomeToday.vue";
 import { formatDate } from "@/utils/formatDate";
 import { useI18n } from "vue-i18n";
+import NotifiModal from "../Notification/NotifiModal.vue";
 const { t } = useI18n();
 const openEye = ref(false);
 
@@ -293,7 +260,6 @@ const token = computed(() => store.state.token || "");
 
 // 打开添加类型选择弹窗
 const showAS = ref(false);
-const existNotifi = ref(true);
 const actions = [
   { name: t("common.stock"), value: "0" },
   { name: t("common.crypto"), value: "-1" },
