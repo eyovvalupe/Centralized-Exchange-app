@@ -382,7 +382,11 @@ const next = () => {
         closeToast()
       }, 1500);
     });
-  } else step.value = 2
+  } else {
+    step.value = 2
+    loading.value = false;
+    closeToast()
+  }
 }
 
 const submit = async () => {

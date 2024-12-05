@@ -220,6 +220,7 @@
           <div style="flex: 1">
             <div class="info-symbol" v-show="currStock.name">
               {{ currStock.name }}
+              {{ console.log("current stock =======>", currStock) }}
             </div>
           </div>
           <div class="more_icon">
@@ -768,7 +769,7 @@ const modeList = computed(() => {
 const elseWallet = computed(() => store.state.elseWallet || []);
 const stockWalletAmount = computed(() => {
   // 股票账户余额
-  const target = elseWallet.value.find((item) => item.account == "futures");
+  const target = elseWallet.value.find((item) => item.account == "futures" && item.name == 'USDT');
   if (target) return target.amount;
   return 0;
 });
