@@ -113,22 +113,22 @@ const check = () => {
     //     open()
     // }
     // return val
-    if (userInfo.value.role != 'user') {
-        setTimeout(() => {
-            showConfirmDialog({
-                title: '账号升级',
-                message:
-                    '模拟账号不能进行该操作，去升级？',
-            })
-                .then(() => {
-                    router.push({ name: 'kyc' })
-                })
-                .catch(() => {
-                    router.back()
-                });
-        }, 400)
-        return false
-    }
+    // if (userInfo.value.role != 'user') {
+    //     setTimeout(() => {
+    //         showConfirmDialog({
+    //             title: '账号升级',
+    //             message:
+    //                 '模拟账号不能进行该操作，去升级？',
+    //         })
+    //             .then(() => {
+    //                 router.push({ name: 'kyc' })
+    //             })
+    //             .catch(() => {
+    //                 router.back()
+    //             });
+    //     }, 400)
+    //     return false
+    // }
     if (!userInfo.value.googlebind) {
         console.error('弹窗')
         setTimeout(() => {

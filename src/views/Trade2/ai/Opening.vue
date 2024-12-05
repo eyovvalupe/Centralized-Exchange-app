@@ -37,7 +37,7 @@
 
         <!-- 时间 -->
         <div class="item_content" v-if="times.length">
-          <div class="subtitle">{{ t('trade.ai_opening_time_zone') }}</div>
+          <div class="subtitle">{{ t("trade.ai_opening_time_zone") }}</div>
           <!-- <div class="item item_box disabled_item item_time" @click="showTime=true;">
                         <span>{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</span>
                         
@@ -65,14 +65,16 @@
           :title="t('trade.ai_opening_network_amount')"
           btn-show-mode="focus"
           :max="maxgrid"
-          :tip="maxgrid > 0 ? t('trade.ai_opening_bigest_network') + maxgrid : ''"
+          :tip="
+            maxgrid > 0 ? t('trade.ai_opening_bigest_network') + maxgrid : ''
+          "
           @change="changeGrid"
         >
         </FormItem>
 
         <!-- 利润 -->
         <div class="item_content">
-          <div class="subtitle">{{ t('trade.ai_opening_every_profit') }}</div>
+          <div class="subtitle">{{ t("trade.ai_opening_every_profit") }}</div>
           <div class="item item_box disabled_item">
             {{ getPercent() }}
           </div>
@@ -95,7 +97,9 @@
               v-if="token"
               style="color: #014cfa; font-size: 12px"
               @click="openConfirmBox"
-              ><span style="color: #666d80">{{ t('trade.ai_opening_balance') }}</span>
+              ><span style="color: #666d80">{{
+                t("trade.ai_opening_balance")
+              }}</span>
               {{ usdt.amount }} USDT</span
             >
           </template>
@@ -107,7 +111,7 @@
       </div>
 
       <!-- 按钮 -->
-      <div class="btns" v-if="!token">
+      <!-- <div class="btns" v-if="!token">
         <Button size="large" color="#014cfa" class="btn" round @click="goLogin"
           >{{ t('trade.ai_opening_login') }}</Button
         >
@@ -120,6 +124,30 @@
           @click="jump('register')"
           >{{ t('trade.ai_opening_register') }}</Button
         >
+      </div> -->
+      <div class="px-[0.36rem]" v-if="!token">
+        <div class="flex justify-between mb-[0.32rem]">
+          <div
+            class="w-[2.91rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+            @click="store.commit('setIsLoginOpen', true)"
+          >
+            {{ t("trade.stock_opening_token_login") }}
+          </div>
+          <div
+            class="w-[2.91rem] h-[1.12rem] bg-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#fff] text-[0.36rem]"
+            @click="jump('register')"
+          >
+            {{ t("trade.stock_opening_token_register") }}
+          </div>
+        </div>
+        <div
+          class="w-full h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+          @click="
+            () => router.push({ name: 'register', query: { guest: 'guest' } })
+          "
+        >
+          {{ t("trade.contract_create_guest_btn") }}
+        </div>
       </div>
       <div class="btns" v-else>
         <Button
@@ -130,7 +158,9 @@
           class="btn"
           :color="tab == 1 ? '#18b762' : '#e8503a'"
           round
-          >{{ tab == 1 ? t('trade.stock_open_long') : t('trade.stock_open_short') }}</Button
+          >{{
+            tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
+          }}</Button
         >
       </div>
     </div>
@@ -143,16 +173,18 @@
       round
       closeable
     >
-      <div class="van-popup-custom-title">{{ t('trade.ai_opening_confirm_order') }}</div>
+      <div class="van-popup-custom-title">
+        {{ t("trade.ai_opening_confirm_order") }}
+      </div>
       <div class="stock_submit_box">
         <div class="item">
-          <div class="item_name">{{t('trade.ai_opening_product_type')}}</div>
+          <div class="item_name">{{ t("trade.ai_opening_product_type") }}</div>
           <div class="item_val">
             <div class="item_val_text">{{ form1.name }}</div>
           </div>
         </div>
         <div class="item">
-          <div class="item_name">{{ t('trade.ai_opening_time_zone') }}</div>
+          <div class="item_name">{{ t("trade.ai_opening_time_zone") }}</div>
           <div class="item_val">
             <div class="item_val_text">
               {{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}
@@ -160,20 +192,24 @@
           </div>
         </div>
         <div class="item">
-          <div class="item_name">{{ t('trade.ai_opening_network_amount') }}</div>
+          <div class="item_name">
+            {{ t("trade.ai_opening_network_amount") }}
+          </div>
           <div class="item_val">
             <div class="item_val_text">{{ form1.grid }}</div>
           </div>
         </div>
         <div class="item">
-          <div class="item_name">{{ t('trade.ai_opening_invest_amount') }}</div>
+          <div class="item_name">{{ t("trade.ai_opening_invest_amount") }}</div>
           <div class="item_val">
             <div class="item_val_text">{{ form1.volume }}</div>
             <div class="item_val_unit">USDT</div>
           </div>
         </div>
         <div class="item">
-          <div class="item_name">{{ t('trade.ai_opening_predict_profit') }}</div>
+          <div class="item_name">
+            {{ t("trade.ai_opening_predict_profit") }}
+          </div>
           <div class="item_val">
             <div class="item_val_text">{{ getRange() }}</div>
             <div class="item_val_unit">USDT</div>
@@ -195,7 +231,7 @@
           class="submit"
           color="#014cfa"
           round
-          >{{ t('trade.ai_opening_confirm_btn') }}</Button
+          >{{ t("trade.ai_opening_confirm_btn") }}</Button
         >
       </div>
     </Popup>
@@ -229,7 +265,9 @@
       position="bottom"
     >
       <div class="trade_ai_list">
-        <div class="trade_ai_list_title">{{ t('trade.ai_opening_ai_quantifi_list') }}</div>
+        <div class="trade_ai_list_title">
+          {{ t("trade.ai_opening_ai_quantifi_list") }}
+        </div>
         <div class="list">
           <AiItem
             @click.stop="chooseItem(item)"
@@ -378,20 +416,20 @@ const changePercent = () => {
 const error1 = ref(false);
 const error2 = ref(false);
 const checkForm = () => {
-  if (!form1.value.symbol) return showToast(t('trade.ai_opening_no_product'));
+  if (!form1.value.symbol) return showToast(t("trade.ai_opening_no_product"));
   if (!form1.value.grid) {
     error1.value = true;
-    showToast(t('trade.ai_opening_no_net'));
+    showToast(t("trade.ai_opening_no_net"));
     return;
   }
   if (!form1.value.volume || form1.value.volume < 0) {
     error2.value = true;
-    showToast(t('trade.ai_opening_no_invest_amount'));
+    showToast(t("trade.ai_opening_no_invest_amount"));
     return;
   }
   if (form1.value.volume < minamount.value) {
     error2.value = true;
-    showToast(`${t('trade.ai_opening_min_invest_amount')}: ` + minamount.value);
+    showToast(`${t("trade.ai_opening_min_invest_amount")}: ` + minamount.value);
     return;
   }
   getSessionToken();
@@ -402,7 +440,7 @@ const submitLoading = ref(false);
 const submitForm = (s) => {
   if (submitLoading.value) return;
   if (!s) {
-    return showToast(t('trade.ai_opening_trade_password'));
+    return showToast(t("trade.ai_opening_trade_password"));
   }
   submitLoading.value = true;
   _aibuy({
@@ -419,7 +457,7 @@ const submitForm = (s) => {
       if (res && res.code == 200) {
         showModel.value = false;
         store.dispatch("updateWallet");
-        showToast(t('trade.ai_opening_success'));
+        showToast(t("trade.ai_opening_success"));
         setTimeout(() => {
           openInfo(res.data);
         }, 500);

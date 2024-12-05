@@ -20,10 +20,10 @@
               form1.stop_profit_type == "price"
                 ? t("trade.stock_opening_stop_price")
                 : form1.stop_profit_type == "amount"
-                  ? t("trade.stock_opening_stop_amount")
-                  : form1.stop_profit_type == "ratio"
-                    ? t("trade.stock_opening_stop_ratio")
-                    : "--"
+                ? t("trade.stock_opening_stop_amount")
+                : form1.stop_profit_type == "ratio"
+                ? t("trade.stock_opening_stop_ratio")
+                : "--"
             }}</span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
@@ -35,7 +35,12 @@
             <span>&nbsp;</span>
           </div>
           <div class="item">
-            <input @input="inputStop(1)" v-model="form1.stop_profit_price" type="number" class="ipt" />
+            <input
+              @input="inputStop(1)"
+              v-model="form1.stop_profit_price"
+              type="number"
+              class="ipt"
+            />
             <span v-if="form1.stop_profit_type == 'ratio'">%</span>
           </div>
         </div>
@@ -51,10 +56,10 @@
               form1.stop_profit_type == "price"
                 ? t("trade.stock_opening_stop_price")
                 : form1.stop_profit_type == "amount"
-                  ? t("trade.stock_opening_stop_amount")
-                  : form1.stop_profit_type == "ratio"
-                    ? t("trade.stock_opening_stop_ratio")
-                    : "--"
+                ? t("trade.stock_opening_stop_amount")
+                : form1.stop_profit_type == "ratio"
+                ? t("trade.stock_opening_stop_ratio")
+                : "--"
             }}</span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
@@ -66,28 +71,43 @@
             <span>&nbsp;</span>
           </div>
           <div class="item">
-            <input @input="inputStop(2)" v-model="form1.stop_loss_price" type="number" class="ipt" />
+            <input
+              @input="inputStop(2)"
+              v-model="form1.stop_loss_price"
+              type="number"
+              class="ipt"
+            />
             <span v-if="form1.stop_loss_type == 'ratio'">%</span>
           </div>
         </div>
       </div>
 
       <!-- 简单模式 -->
-      <FormItem :title="activeType == 1
-          ? t('trade.stock_opening_take')
-          : t('trade.stock_opening_stop')
-        " class="mb-[0.4rem]" v-model="form1.stop_loss_price" input-type="number" :percent-tags="props.activeType == 1
+      <FormItem
+        :title="
+          activeType == 1
+            ? t('trade.stock_opening_take')
+            : t('trade.stock_opening_stop')
+        "
+        class="mb-[0.4rem]"
+        v-model="form1.stop_loss_price"
+        input-type="number"
+        :percent-tags="
+          props.activeType == 1
             ? [
-              { label: '-20%', value: 20 },
-              { label: '-15%', value: 15 },
-              { label: '-10%', value: 10 },
-            ]
+                { label: '-20%', value: 20 },
+                { label: '-15%', value: 15 },
+                { label: '-10%', value: 10 },
+              ]
             : [
-              { label: '+20%', value: 20 },
-              { label: '+15%', value: 15 },
-              { label: '+10%', value: 10 },
-            ]
-          " @percentTagClick="setPriceStop" v-if="mode == 1" />
+                { label: '+20%', value: 20 },
+                { label: '+15%', value: 15 },
+                { label: '+10%', value: 10 },
+              ]
+        "
+        @percentTagClick="setPriceStop"
+        v-if="mode == 1"
+      />
 
       <!-- 价格 -->
       <div class="item_box">
@@ -114,19 +134,27 @@
           </div>
           <FormItem custom disabled v-if="priceMode == 1">
             <span style="color: #a4acb9">
-              {{ t("trade.stock_opening_price_latest") }}</span>
+              {{ t("trade.stock_opening_price_latest") }}</span
+            >
           </FormItem>
 
-          <FormItem v-model="form1.price" input-type="number" :percent-tags="props.activeType == 1
-              ? [
-                { label: '-3%', value: 3 },
-                { label: '-1%', value: 1 },
-              ]
-              : [
-                { label: '+3%', value: 3 },
-                { label: '+1%', value: 1 },
-              ]
-            " v-else @percentTagClick="percentTagClick">
+          <FormItem
+            v-model="form1.price"
+            input-type="number"
+            :percent-tags="
+              props.activeType == 1
+                ? [
+                    { label: '-3%', value: 3 },
+                    { label: '-1%', value: 1 },
+                  ]
+                : [
+                    { label: '+3%', value: 3 },
+                    { label: '+1%', value: 1 },
+                  ]
+            "
+            v-else
+            @percentTagClick="percentTagClick"
+          >
           </FormItem>
         </div>
 
@@ -136,27 +164,45 @@
     </template>
 
     <!-- 价格 -->
-    <FormItem class="mb-[0.4rem]" input-type="number" :title="t('trade.stock_opening_price_title')"
-      :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
+    <FormItem
+      class="mb-[0.4rem]"
+      input-type="number"
+      :title="t('trade.stock_opening_price_title')"
+      :tip="t('trade.stock_opening_price_tip')"
+      v-model="form1.price"
+      :percent-tags="
+        props.activeType == 1
           ? [
-            { label: '-3%', value: 3 },
-            { label: '-2%', value: 2 },
-            { label: '-1%', value: 1 },
-            { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-          ]
+              { label: '-3%', value: 3 },
+              { label: '-2%', value: 2 },
+              { label: '-1%', value: 1 },
+              { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+            ]
           : [
-            { label: '+3%', value: 3 },
-            { label: '+2%', value: 2 },
-            { label: '+1%', value: 1 },
-            { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-          ]
-        " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
+              { label: '+3%', value: 3 },
+              { label: '+2%', value: 2 },
+              { label: '+1%', value: 1 },
+              { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+            ]
+      "
+      @percentTagClick="percentTagClick"
+      v-if="props.activeTab == 1"
+    />
 
     <!-- 股票 -->
     <div class="subtitle">
       <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
-      <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem" color="#034cfa" />
-      <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
+      <Loading
+        v-show="searchLoading"
+        type="spinner"
+        style="width: 0.28rem; height: 0.28rem"
+        color="#034cfa"
+      />
+      <div
+        class="stock_icon"
+        v-show="!searchLoading && currStock.symbol"
+        @click="openStockModel"
+      >
         <img src="/static/img/trade/blue-stock.png" />
       </div>
     </div>
@@ -189,7 +235,8 @@
                 ? t("trade.stock_opening_position_mode_cross")
                 : t("trade.stock_opening_position_mode_isolated") || "--"
             }}
-            {{ form1.lever }}X</span>
+            {{ form1.lever }}X</span
+          >
           <div class="more_icon">
             <img src="/static/img/trade/down.png" alt="↓" />
           </div>
@@ -197,17 +244,34 @@
       </div>
 
       <div class="item_box_right">
-        <FormItem :title="t('trade.stock_opening_amount_title')" :max="maxStockNum" v-model="form1.volume"
-          :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent"
-          tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
+        <FormItem
+          :title="t('trade.stock_opening_amount_title')"
+          :max="maxStockNum"
+          v-model="form1.volume"
+          :show-btn="maxStockNum >= 1"
+          btn-show-mode="focus"
+          @btnClick="putAll"
+          @change="changePercent"
+          tip-align="right"
+          :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''"
+          input-type="number"
+        >
           <template #title-right>
-            <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox(1)" v-if="maxStockNum <= 0">{{
-              t("trade.stock_opening_no_balance") }}</span>
-            <span style="color: #014cfa; font-size: 12px" v-else @click="openConfirmBox(2)"><span
-                style="color: #666d80">{{
-                  t("trade.stock_opening_enough_balance")
-                }}</span>
-              {{ stockWalletAmount }} {{ paramCurrency }}</span>
+            <span
+              style="color: #014cfa; font-size: 12px"
+              @click="openConfirmBox(1)"
+              v-if="maxStockNum <= 0"
+              >{{ t("trade.stock_opening_no_balance") }}</span
+            >
+            <span
+              style="color: #014cfa; font-size: 12px"
+              v-else
+              @click="openConfirmBox(2)"
+              ><span style="color: #666d80">{{
+                t("trade.stock_opening_enough_balance")
+              }}</span>
+              {{ stockWalletAmount }} {{ paramCurrency }}</span
+            >
           </template>
         </FormItem>
       </div>
@@ -218,21 +282,59 @@
     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
     <!-- 按钮 -->
-    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
-      :color="activeType == 1 ? '#18b762' : '#e8503a'" round>{{
+    <Button
+      v-if="token"
+      :loading="configLoading || submitLoading"
+      size="large"
+      @click="submit1"
+      class="submit"
+      :color="activeType == 1 ? '#18b762' : '#e8503a'"
+      round
+      >{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
-      }}</Button>
+      }}</Button
+    >
 
-    <Button size="large" color="#014cfa" class="submit" round v-if="!token" style="margin-bottom: 0.34rem"
+    <!-- <Button size="large" color="#014cfa" class="submit" round v-if="!token" style="margin-bottom: 0.34rem"
       @click="goLogin">{{ t("trade.stock_opening_token_login") }}</Button>
     <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999" @click="jump('register')">{{
-      t("trade.stock_opening_token_register") }}</Button>
+      t("trade.stock_opening_token_register") }}</Button> -->
+    <div v-if="!token">
+      <div class="flex justify-between mb-[0.32rem]">
+        <div
+          class="w-[3.22rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+          @click="store.commit('setIsLoginOpen', true)"
+        >
+          {{ t("trade.stock_opening_token_login") }}
+        </div>
+        <div
+          class="w-[3.22rem] h-[1.12rem] bg-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#fff] text-[0.36rem]"
+          @click="jump('register')"
+        >
+          {{ t("trade.stock_opening_token_register") }}
+        </div>
+      </div>
+      <div
+        class="w-full h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+        @click="
+          () => router.push({ name: 'register', query: { guest: 'guest' } })
+        "
+      >
+        {{ t("trade.contract_create_guest_btn") }}
+      </div>
+    </div>
   </div>
 
   <!-- 开仓确认弹窗 -->
-  <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
+  <Popup
+    teleport="body"
+    v-model:show="showModel"
+    position="bottom"
+    round
+    closeable
+  >
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_confirm_title") }}
     </div>
@@ -266,8 +368,8 @@
               params.lever_type == "cross"
                 ? t("trade.stock_opening_position_mode_cross")
                 : params.lever_type == "isolated"
-                  ? t("trade.stock_opening_position_mode_isolated")
-                  : "--"
+                ? t("trade.stock_opening_position_mode_isolated")
+                : "--"
             }}
           </div>
           <div class="lever">{{ params.lever || 1 }}X</div>
@@ -319,62 +421,126 @@
 
       <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div>
       <div class="item pass_ipt">
-        <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
-          :type="showPassword ? 'text' : 'password'" class="ipt" />
-        <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
-        <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
+        <input
+          v-model="safePass"
+          :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
+          :type="showPassword ? 'text' : 'password'"
+          class="ipt"
+        />
+        <img
+          v-if="!showPassword"
+          src="/static/img/user/eye-off.png"
+          @click="showPassword = true"
+          alt="off"
+        />
+        <img
+          v-else
+          src="/static/img/user/eye-open.png"
+          alt="open"
+          @click="showPassword = false"
+        />
       </div>
-      <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="#014cfa" round>{{
-        t("trade.stock_open") }}</Button>
+      <Button
+        :loading="submitLoading"
+        @click="submitFormDialog"
+        size="large"
+        color="#014cfa"
+        round
+        >{{ t("trade.stock_open") }}</Button
+      >
     </div>
   </Popup>
 
   <!-- 股票行情弹窗 -->
-  <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
+  <Popup
+    teleport="body"
+    v-model:show="showStockModel"
+    position="bottom"
+    round
+    closeable
+  >
     <StockPopup style="height: 90vh" v-if="showStockModel" />
   </Popup>
 
   <!-- 止盈类型选择 -->
-  <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
-    :title="t('trade.stock_opening_take')">
+  <ActionSheet
+    teleport="body"
+    v-model:show="showUpModelDialog"
+    @select="onSelectUpMode"
+    :actions="upModeList"
+    :title="t('trade.stock_opening_take')"
+  >
   </ActionSheet>
 
   <!-- 止损类型选择 -->
-  <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode" :actions="downModeList"
-    :title="t('trade.stock_opening_stop')">
+  <ActionSheet
+    teleport="body"
+    v-model:show="showDownModelDialog"
+    @select="onSelectDownMode"
+    :actions="downModeList"
+    :title="t('trade.stock_opening_stop')"
+  >
   </ActionSheet>
 
   <!-- 仓位模式选择 -->
   <!-- <ActionSheet teleport="body" v-model:show="showTypeDialog" :actions="modeList" @select="onSelectForm1Type"
         title="保证金模式">
     </ActionSheet> -->
-  <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom"
-    teleport="body">
+  <Popup
+    class="van-popup-custom--bottom"
+    closeable
+    v-model:show="showTypeDialog"
+    round
+    position="bottom"
+    teleport="body"
+  >
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_amount_mode") }}
     </div>
     <div class="van-popup-custom__top-rbtn" @click="showTypeDialog = false">
       {{ t("trade.stock_opening_confirm") }}
     </div>
-    <Picker :show-toolbar="false" :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
-      @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
+    <Picker
+      :show-toolbar="false"
+      :swipe-duration="200"
+      :columns="columns"
+      @confirm="showTypeDialog = false"
+      @cancel="showTypeDialog = false"
+      @change="onSelectForm1Type"
+    />
   </Popup>
 
   <!-- 限价模式选择 -->
-  <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
-    @select="onSelectForm1PriceType" :title="t('trade.stock_opening_amount_limit_mode')">
+  <ActionSheet
+    teleport="body"
+    v-model:show="showPriceTypeDialog"
+    :actions="priceModeList"
+    @select="onSelectForm1PriceType"
+    :title="t('trade.stock_opening_amount_limit_mode')"
+  >
   </ActionSheet>
 
   <!-- 跳转选择 -->
-  <ActionSheet teleport="body" v-model:show="showJumpTypeDialog" :actions="jumpModeList" @select="onSelectJumpModeType"
-    :title="t('trade.stock_opening_show_jump_type')">
+  <ActionSheet
+    teleport="body"
+    v-model:show="showJumpTypeDialog"
+    :actions="jumpModeList"
+    @select="onSelectJumpModeType"
+    :title="t('trade.stock_opening_show_jump_type')"
+  >
   </ActionSheet>
 
   <!-- 开仓-安全密码弹窗 -->
   <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 
   <!-- 搜索列表 -->
-  <Popup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
+  <Popup
+    round
+    v-model:show="showSearchDialog"
+    position="bottom"
+    closeable
+    teleport="body"
+  >
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_search") }}
     </div>
@@ -384,13 +550,23 @@
         <div class="search_icon">
           <img src="/static/img/common/search.png" alt="🔍" />
         </div>
-        <input v-model.trim="searchDialogStr" @keyup="goDialogSearch('stock')" type="text" class="ipt"
-          :placeholder="t('trade.stock_opening_search')" />
+        <input
+          v-model.trim="searchDialogStr"
+          @keyup="goDialogSearch('stock')"
+          type="text"
+          class="ipt"
+          :placeholder="t('trade.stock_opening_search')"
+        />
       </div>
 
       <div class="lists">
         <!-- 搜索列表 -->
-        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'" :list="marketSearchList" />
+        <StockTable
+          :handleClick="handleClick"
+          :loading="searchLoading"
+          :key="'search'"
+          :list="marketSearchList"
+        />
       </div>
     </div>
   </Popup>
@@ -609,22 +785,24 @@ const openConfirmBox = (type) => {
   const content =
     type == 1
       ? `<div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
-        "trade.stock_account_balance"
-      )} <span style="font-weight:600;color:#014CFA;">` +
-      stockWalletAmount.value +
-      "</span> " +
-      paramCurrency.value +
-      `</div><div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
-        "trade.stock_account_notification"
-      )}</div>`
+          "trade.stock_account_balance"
+        )} <span style="font-weight:600;color:#014CFA;">` +
+        stockWalletAmount.value +
+        "</span> " +
+        paramCurrency.value +
+        `</div><div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
+          "trade.stock_account_notification"
+        )}</div>`
       : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
         <div style="color:#061023;font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">${t(
-        "trade.stock_account_balance"
-      )}</div>
+          "trade.stock_account_balance"
+        )}</div>
         <div style="display:flex;align-items:center;justify-content:center;">
-            <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${stockWalletAmount.value
-      }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${paramCurrency.value
-      }</span>
+            <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${
+              stockWalletAmount.value
+            }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${
+          paramCurrency.value
+        }</span>
         </div>
     </div>`;
   showConfirmDialog({
@@ -1002,7 +1180,7 @@ if (route.query.symbol) {
 const openTypeDialog = () => {
   if (!levers.value.length) {
     if (!currStock.value.symbol) {
-      showToast(t('trade.stock_opening_err_stock'));
+      showToast(t("trade.stock_opening_err_stock"));
     }
     return;
   }

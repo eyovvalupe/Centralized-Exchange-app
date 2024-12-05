@@ -227,6 +227,7 @@ const assets = computed(() => store.state.assets || {});
 const wallet = computed(() => store.state.wallet || []); // 钱包
 const elseWallet = computed(() => store.state.elseWallet || []); // 其他账户钱包
 const elseCoinMap = computed(() => store.state.elseCoinMap || {}); // 其他账户的币种
+const userInfo = computed(() => store.state.userInfo)
 
 // 表单
 const loading = ref(false);
@@ -374,7 +375,7 @@ const balance = computed(() => {
 const safeRef = ref();
 const errStatus = ref(false);
 const openSafePass = () => {
-  if (AccountCheckRef.value.check()) {
+  if (userInfo.value.role =='guest' || userInfo.value.role != 'guest' && AccountCheckRef.value.check()) {
     if (!form.value.amount || form.value.amount <= 0) {
       errStatus.value = true;
       return showToast(t('transfer.no_amount'));
@@ -388,7 +389,8 @@ const openSafePass = () => {
     ) {
       return showToast(t('transfer.account_same'));
     }
-    safeRef.value.open();
+    if(userInfo.value.role == 'user') safeRef.value.open();
+    if(userInfo.value.role == 'guest') submit('000000');
   }
 };
 const submit = (s) => {
@@ -409,6 +411,7 @@ const submit = (s) => {
       if (res.code == 200) {
         showToast(t('transfer.success'));
         form.value.amount = "";
+        store.dispatch("updateAssets");
         store.dispatch("updateWallet"); // 更新资产
         setTimeout(() => {
           router.back();

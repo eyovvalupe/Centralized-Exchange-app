@@ -306,24 +306,6 @@
     >
 
     <div v-if="!token">
-      <!-- <Button
-        size="large"
-        class="_submit"
-        round
-        v-if="!token"
-        style="margin-bottom: 0.34rem; color:#014cfa; background-color: #f5f7fc; border: 0.02rem solid #014cfa;"
-        @click="store.commit('setIsLoginOpen', true)"
-        >{{ t("trade.stock_opening_token_login") }}</Button
-      >
-      <Button
-        size="large"
-        round
-        v-if="!token"
-        style="color: #fff; background-color: #014cfa;"
-        class="_submit"
-        @click="jump('register')"
-        >{{ t("trade.stock_opening_token_register") }}</Button
-      > -->
       <div class="flex justify-between mb-[0.32rem]">
         <div
           class="w-[2.91rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
@@ -640,6 +622,7 @@ const _market = "futures"; //合约
 
 //搜索
 const marketSearchList = computed(() => store.state.marketSearchList || []);
+const userInfo = computed(() => store.state.userInfo)
 const showSearchDialog = ref();
 const searchDialogStr = ref("");
 const openSearchDialog = () => {
@@ -1070,7 +1053,8 @@ const submit1 = () => {
   }
 
   safePass.value = "";
-  showModel.value = true;
+  if (userInfo.value.role == 'user') showModel.value = true;
+  if (userInfo.value.role == 'guest') submitForm('000000');
 };
 
 // 全部
