@@ -44,7 +44,7 @@
     <div class="w-full flex justify-between relative top-[-0.4rem]">
       <div
         class="w-[3.23rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-[#014cfa]"
-        @click="() => router.push({name: 'transfer'})"
+        @click="() => router.replace({name: 'transfer'})"
         >
         {{ t('trade.stock_opening_btn_transfer') }}
       </div>

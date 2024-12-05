@@ -167,7 +167,6 @@
     >
       <div class="van-popup-custom__top-rbtn" @click="onConfirm">{{ $t("transfer.confirm") }}</div>
       <div class="van-popup-custom-title">{{ $t("transfer.confirm_con") }}</div>
-
       <Picker
         :swipe-duration="200"
         :show-toolbar="false"
@@ -228,6 +227,7 @@ const wallet = computed(() => store.state.wallet || []); // 钱包
 const elseWallet = computed(() => store.state.elseWallet || []); // 其他账户钱包
 const elseCoinMap = computed(() => store.state.elseCoinMap || {}); // 其他账户的币种
 const userInfo = computed(() => store.state.userInfo)
+console.log("=========> ", elseWallet.value)
 
 // 表单
 const loading = ref(false);
@@ -300,34 +300,54 @@ const columns = computed(() => {
       });
     } else {
       // 其他账户
-      const target = elseWallet.value.find((a) => a.account == item.key);
-      if (target) {
-        item.currencys = [
-          {
-            key: target.currency,
-            value: target.name,
-            currency: target.currency,
-            name: target.name,
+      // const target = elseWallet.value.map((a) => a.account == item.key);
+      item.currencys = elseWallet.value.reduce((acc, cur) => {
+        if (cur.account == item.key) {
+          acc.push({
+            key: cur.currency,
+            value: cur.name,
+            currency: cur.currency,
+            name: cur.name,
             className:
               clickKey.value == "from"
-                ? form.value.fromCurrency.currency == target.currency
+                ? form.value.fromCurrency.currency == cur.currency
                   ? "action-sheet-active"
                   : ""
-                : form.value.toCurrency.currency == target.currency
+                : form.value.toCurrency.currency == cur.currency
                 ? "action-sheet-active"
                 : "",
-          },
-        ];
-      } else {
-        item.currencys = [
-          {
-            key: "",
-            value: "",
-            currency: "",
-            name: "",
-          },
-        ];
-      }
+          })
+        }
+        return acc;
+      }, [])
+      // console.log('target list =========> ', item.currencys)
+      // if (target) {
+      //   item.currencys = [
+      //     {
+            // key: target.currency,
+            // value: target.name,
+            // currency: target.currency,
+            // name: target.name,
+            // className:
+            //   clickKey.value == "from"
+            //     ? form.value.fromCurrency.currency == target.currency
+            //       ? "action-sheet-active"
+            //       : ""
+            //     : form.value.toCurrency.currency == target.currency
+            //     ? "action-sheet-active"
+            //     : "",
+      //     },
+      //   ];
+      // } else {
+      //   item.currencys = [
+      //     {
+      //       key: "",
+      //       value: "",
+      //       currency: "",
+      //       name: "",
+      //     },
+      //   ];
+      // }
     }
     return item;
   });
