@@ -80,7 +80,14 @@ export default {
     login_pw_length_error: "密码最小8个字符",
     no_trade_pw_error: "请输入交易密码",
     no_agree_error: "请先同意隐私政策和用户条款",
-    network_error: "网络异常，请重试"
+    network_error: "网络异常，请重试",
+    guest_account: "模拟账户",
+    already_get_virtual: "已入账模拟金",
+    user_already_exist: "此用户已注册",
+    enter_graphic_number: "请填写图形验证码",
+    not_clear: "看不清？换一张",
+    enter_verify_code: "输入验证码",
+    verify_code_error: "获取验证码异常，请手动刷新",
   },
   password_level: {
     weak: "弱",
@@ -115,8 +122,8 @@ export default {
     already_set_google: "谷歌验证器已绑定",
     not_set_google_yet: "谷歌验证器未绑定",
     message_box_con: "您当前确定要退出吗",
-    message_box_confirm: "取消",
-    message_box_cancel: "确认",
+    message_box_confirm: "确认",
+    message_box_cancel: "取消",
   },
   kyc: {
     page_title: "身份认证",
@@ -532,6 +539,7 @@ export default {
     stock_account_notification: "请及时充值或划转",
     stock_opening_btn_transfer: "去划转",
     stock_opening_btn_recharge: "去充值",
+    stock_opening_btn_trade: "去交易",
     stock_opening_stop_price: "价格",
     stock_opening_stop_amount: "金额",
     stock_opening_stop_ratio: "百分比",
@@ -602,6 +610,7 @@ export default {
     contract_opening_order_value: "订单金额",
     contract_opening_err_contract: "请选择合约",
     contract_opening_err_amount: "请输入张数",
+    contract_create_guest_btn: "一键注册模拟账号",
 
     ai_opening_order: "订单",
     ai_opening_trade: "交易",

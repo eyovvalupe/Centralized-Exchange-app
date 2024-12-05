@@ -101,6 +101,14 @@ export default {
     no_trade_pw_error: "請輸入交易密碼",
     no_agree_error: "請先同意隱私權政策和使用者條款",
     network_error: "網路異常，請重試",
+    guest_account: "模擬帳戶",
+    already_get_virtual: "已入帳模擬金",
+    user_already_exist: "此用戶已註冊",
+    enter_graphic_number: "請填寫圖形驗證碼",
+    not_clear: "看不清，換一張",
+    enter_verify_code: "輸入驗證碼",
+    verify_code_error: "獲取驗證碼異常，請手動刷新",
+
   },
   password_level: {
     weak: "弱",
@@ -135,8 +143,8 @@ export default {
     already_set_google: "谷歌驗證器已綁定",
     not_set_google_yet: "谷歌驗證器未綁定",
     message_box_con: "您當前確定要退出嗎",
-    message_box_confirm: "取消",
-    message_box_cancel: "確認",
+    message_box_confirm: "確認",
+    message_box_cancel: "取消",
   },
   kyc: {
     page_title: "身份認證",
@@ -514,6 +522,8 @@ export default {
     stock_account_notification: "請及時儲值或劃轉",
     stock_opening_btn_transfer: "去劃轉",
     stock_opening_btn_recharge: "去儲值",
+    stock_opening_btn_trade: "去交易",
+
     stock_opening_stop_price: "價格",
     stock_opening_stop_amount: "金額",
     stock_opening_stop_ratio: "百分比",
@@ -587,6 +597,8 @@ export default {
     contract_opening_amount_title: "張數",
     contract_opening_order_value: "訂單金額",
     contract_opening_contract: "合約",
+    contract_create_guest_btn: "一鍵註冊模擬帳號",
+
 
     ai_opening_order: "訂單",
     ai_opening_trade: "交易",

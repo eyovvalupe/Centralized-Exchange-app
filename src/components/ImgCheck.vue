@@ -14,7 +14,9 @@
 
     <div class="security_description">
       <div class="title">{{ $t("register.security") }}</div>
-      <div class="check_title text-center">{{ $t("register.security_con") }}</div>
+      <div class="check_title text-center">
+        {{ $t("register.security_con") }}
+      </div>
     </div>
     <div class="check_pic">
       <img
@@ -47,20 +49,26 @@
       class="status_text status_success"
       v-else-if="sliderStatus == 'success'"
     >
-      <span class="check_result">{{ $t("register.security_result_success") }}</span>
+      <span class="check_result">{{
+        $t("register.security_result_success")
+      }}</span>
     </div>
     <div class="status_text status_error" v-else-if="sliderStatus == 'error'">
-      <span class="check_result">{{ $t("register.security_result_failed") }}</span>
+      <span class="check_result">{{
+        $t("register.security_result_failed")
+      }}</span>
     </div>
     <div class="status_text" v-else>
-      <span class="check_result">{{ $t("register.security_result_pending") }}</span>
+      <span class="check_result">{{
+        $t("register.security_result_pending")
+      }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
 import { Slider, showLoadingToast, closeToast, Icon } from "vant";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
 
@@ -69,6 +77,12 @@ const { t } = useI18n();
 const show = ref(false);
 const loading = ref(false);
 const emits = defineEmits(["success", "goBack"]);
+const props = defineProps({
+  loadingRegister: {
+    type: Boolean,
+    default: false,
+  },
+});
 // 跳转多语言
 const goLang = () => {
   //   emits("closeDialog");
@@ -95,7 +109,6 @@ const open = () => {
 const slider = ref(0);
 const sliderStatus = ref("default");
 const changeSlider = (val) => {
-  loading.value = true;
   showLoadingToast({
     duration: 0,
     loadingType: "spinner",
@@ -106,10 +119,11 @@ const changeSlider = (val) => {
   ) {
     // 成功
     sliderStatus.value = "success";
+    loading.value = true;
     setTimeout(() => {
       show.value = false;
       emits("success");
-    }, 1000);
+    }, 2000);
   } else {
     // 失败
     sliderStatus.value = "error";

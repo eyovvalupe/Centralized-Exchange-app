@@ -3,7 +3,7 @@
   <div class="page page-register">
     <!-- 图片验证 -->
     <template v-if="step == 1">
-      <ImgCheck @success="step = 2" @goBack="goBack" />
+      <ImgCheck @success="next" @goBack="goBack" :loadingRegister="loading"/>
     </template>
 
     <template v-else-if="step == 2">
@@ -264,7 +264,7 @@ import router from "@/router";
 import { useRoute, useRouter } from "vue-router";
 import PasswordLevel from "@/components/PasswordLevel.vue";
 import store from "@/store";
-import { _register } from "@/api/api";
+import { _register, _guestRegister } from "@/api/api";
 import VerifCode from "@/components/VerifCode.vue";
 import ImgCheck from "@/components/ImgCheck.vue";
 import { areaCode, validateEmail } from "@/utils/index";
@@ -336,6 +336,55 @@ const errorTip = ref({
   error3: false,
 });
 const loading = ref(false);
+
+const next = () => {
+  if (loading.value) return;
+  loading.value = true
+  showLoadingToast({
+    duration: 0,
+    loadingType: "spinner",
+  });
+  if (guest.value == 'guest') {
+    _guestRegister({
+      verifcode: verifcode.value,
+      token: sessionToken.value
+    })
+    .then((res) => {
+      if (res.code == 200) {
+        console.log(res.data)
+        setTimeout(() => {
+          store.dispatch("reset");
+          setTimeout(() => {
+            store.commit("setToken", res.data.auth);
+            store.commit("setUserInfo", res.data);
+          }, 100);
+          setTimeout(() => {
+            // store.dispatch("updateUserInfo");
+            store.dispatch("updateAssets");
+            store.dispatch("updateWallet");
+            registerSuccessNext()
+          }, 300);
+        }, 1000);
+      } else showToast(res.message)
+    })
+    .catch((err) => {
+      if (err.code == '1001') {
+        setTimeout(() => {
+          verifCodeRef.value.open();
+        }, 1000);
+      }
+    })
+    .finally(() => {
+      getSessionToken();
+      setTimeout(() => {
+        verifcode.value = "";
+        loading.value = false;
+        closeToast()
+      }, 1500);
+    });
+  } else step.value = 2
+}
+
 const submit = async () => {
   if (!checked.value) return showToast(t('register.no_agree_error'));
   if (activeTab.value == 0) {
@@ -417,9 +466,9 @@ const submit = async () => {
           verifCodeRef.value.open();
         }, 1000);
       } else if (err.code == "400") {
-        if (err.message == "User already exist") showToast("此用户已注册");
+        if (err.message == "User already exist") showToast(t('register.user_already_exist'));
       } else {
-        showToast(err.message || "网络异常");
+        showToast(err.message || t('login.network_error'));
       }
     })
     .finally(() => {
@@ -428,7 +477,7 @@ const submit = async () => {
         verifcode.value = "";
         loading.value = false;
         closeToast();
-      }, 2500);
+      }, 1500);
     });
 };
 
@@ -447,7 +496,8 @@ const registerSuccessNext = () => {
 // 通过验证码提交
 const submitCode = (code) => {
   verifcode.value = code;
-  submit();
+  if (guest.value == 'guest') next()
+  else submit();
 };
 
 const sessionToken = computed(() => store.state.sessionToken || "");

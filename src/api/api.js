@@ -228,7 +228,12 @@ export const _register = (data = {}) => {
     custom: { auth: false, toast: false, retry: false },
   });
 };
-
+// 模拟注册
+export const _guestRegister = (data = {}) => {
+  return http.post(`/anon/v1/user/guest/register`, data, {
+    custom: { auth: false, toast: false, retry: false },
+  });
+};
 // 新闻列表
 export const _news = (data = {}) => {
   return http.post(`/anon/v1/market/news`, data, {

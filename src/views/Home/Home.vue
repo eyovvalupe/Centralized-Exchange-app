@@ -387,6 +387,7 @@ const jump = (name, needToken) => {
   :deep(.van-popup.van-popup--center.van-dialog) {
     background: none;
     box-shadow: none;
+    width: 6.22rem;
   }
 
   :deep(.van-button) {

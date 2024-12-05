@@ -10,7 +10,7 @@
     </div>
     <div class="w-full h-[14.5rem]" style="overflow-y: auto;">
       <div class="w-full flex justify-center mb-[0.32rem]">
-        <span class="w-[6.02rem] text-[0.4rem] text-center font-semibold">
+        <span class="w-[6.02rem] text-[0.4rem] leading-[0.6rem] text-center font-semibold">
           消息标题测试消息标题测试消息标题测试...
         </span>
       </div>
