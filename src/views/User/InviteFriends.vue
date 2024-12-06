@@ -203,9 +203,7 @@ const url = ref(`${MOBILE_INVITE_URL}?invitCode=${userInfo.value.uid}`);
 const swipeChange = (val) => {
   activeTab.value = val;
 };
-onMounted(() => {
-    console.log("device =======》", navigator.userAgent)
-})
+
 </script>
 
 <style lang="less" scoped>

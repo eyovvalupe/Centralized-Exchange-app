@@ -382,14 +382,19 @@ const jump = (name, needToken) => {
   });
 };
 
+function isBrowser() {
+  return typeof window !== "undefined" && typeof window.document != "undefined";
+}
+
 const userAgent = navigator.userAgent;
 function detectEnvironment(code) {
   const isMobile =
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
       userAgent
     );
-  const isDesktop = !isMobile;
-  const redirectUrl = isMobile
+  const redirectUrl = !isBrowser()
+    ? "download-url"
+    : isMobile
     ? MOBILE_INVITE_URL + `register?invitCode=${code}`
     : DESKTOP_INVITE_URL + `register?invitCode=${code}`;
 
@@ -401,13 +406,12 @@ function detectEnvironment(code) {
 //   if (Object.keys(route.query).length) detectEnvironment(route.query.invitCode);
 // });
 
-const openPage = ref(false)
+const openPage = ref(false);
 
 onMounted(() => {
-  console.log("did mount ========> ", route.query);
-  if (Object.keys(route.query).length) detectEnvironment(route.query.invitCode)
+  if (Object.keys(route.query).length) detectEnvironment(route.query.invitCode);
   setTimeout(() => {
-    openPage.value = true
+    openPage.value = true;
   }, 500);
 });
 </script>
