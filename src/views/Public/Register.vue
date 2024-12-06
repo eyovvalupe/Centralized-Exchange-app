@@ -1,6 +1,6 @@
 <!-- 注册页 -->
 <template>
-  <div class="page page-register">
+  <div class="page page-register" v-if="openPage">
     <!-- 图片验证 -->
     <template v-if="step == 1">
       <ImgCheck @success="next" @goBack="goBack" :loadingRegister="loading" />
@@ -570,35 +570,22 @@ const scrollCountryCode = () => {
   scrollRef.value.scrollTop = scrollRef.value.scrollTop + 100;
 };
 
-// function handleRedirect() {
-//   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-//   const redirectUrl = isMobile ? MOBILE_INVITE_URL : DESKTOP_INVITE_URL;
-//   window.location.href = redirectUrl;
-// }
-
-// function detectEnvironment() {
-//   const userAgent = navigator.userAgent;
-  
-//   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
-//   const isDesktop = !isMobile;
-
-//   if (isMobile) {
-//     console.log("手机浏览器");
-//     return "mobile_browser";
-//   } else if (isDesktop) {
-//     console.log("电脑浏览器");
-//     return "desktop_browser";
-//   } else {
-//     console.log("手机APP");
-//     return "unknown";
-//   }
-// }
+const openPage = ref(false)
 
 onMounted(() => {
-  if (route.query) {
+  if (Object.keys(route.query).length && route.query.invitCode) {
     form.value.invateCode = route.query.invitCode;
-    next();
+    setTimeout(() => {
+      openPage.value = true;
+      next();
+    }, 500);
   }
+  else if (Object.keys(route.query).length && !route.query.invitCode) {
+    router.replace({name: 'home'})
+    setTimeout(() => {
+      openPage.value = true;
+    }, 500);
+  } else openPage.value = true;
 });
 </script>
 
