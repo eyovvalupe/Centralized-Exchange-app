@@ -13,21 +13,21 @@
             <div class="item_name flex items-center gap-1">
               {{ item.name }}
             </div>
-            <div class="item_type" :class="['item_type--'+item.type]" v-if="typeMap[item.type]">
+            <div class="item_type" :class="['item_type--'+item.type]" v-if="activeTab == 0 && typeMap[item.type]">
               {{ typeMap[item.type] }}
             </div>
           </div>
           <div class="td2 spark_line_box">
-            <SparkLine v-if="item.points" :style="'width: 100%; height: 0.54rem;'" :points="item.points"
+            <SparkLine v-if="getRealtime(item.symbol,'points')" :style="'width: 100%; height: 0.54rem;'" :points="getRealtime(item.symbol,'points')"
             :polylineStrokeWidth="2"
-              :ratio="item.ratio" />
+              :ratio="getRealtime(item.symbol,'ratio')" />
           </div>
           <div class="td2 td_r">
-            <div class="item_num" :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'">{{ item.price || '--' }}</div>
+            <div class="item_num" :class="getRealtime(item.symbol,'ratio') === 0 ? '' : getRealtime(item.symbol,'ratio') > 0 ? 'up' : 'down'">{{ getRealtime(item.symbol,'price') || '--' }}</div>
             <div
               class="item_info_box">
-                <div class="item_percent" :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up_bg' : 'down_bg'">
-                  {{ item.ratio > 0 ? "+" : "" }}{{ (item.ratio || 0) }}%
+                <div class="item_percent" :class="getRealtime(item.symbol,'ratio') === 0 ? '' : getRealtime(item.symbol,'ratio') > 0 ? 'up_bg' : 'down_bg'">
+                  {{ getRealtime(item.symbol,'ratio') > 0 ? "+" : "" }}{{ (getRealtime(item.symbol,'ratio') || 0) }}%
                 </div>
               </div>
           </div>
@@ -48,8 +48,16 @@ import Loaidng from "@/components/Loaidng.vue";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 
 const contractList = computed(() => store.state.contractList || []);
-
 const activeTab = ref(0)
+
+const getRealtime = (symbol,k)=>{
+  for(let i=0;i<store.state.realtimeData.length;i++){
+    if(store.state.realtimeData[i].symbol == symbol){
+      return store.state.realtimeData[i][k]
+    }
+  }
+  return ''
+}
 
 const typeMap = ref({
   crypto:'合约',
@@ -73,6 +81,7 @@ const getList = (clear=false) => {
         if (target) return target;
         return item;
       });
+      
       store.commit("setContractList", list || []);
       setTimeout(() => {
         store.dispatch("subList", {
@@ -123,7 +132,7 @@ const goInfo = (item) => {
         font-size: 0.32rem;
         color: #061023;
         line-height: 0.32rem;
-        font-weight: 600;
+        font-weight: 400;
       }
 
       .item_info {

@@ -177,7 +177,8 @@ export default {
 
         graphColorGradient: false,
         marketActiveTab: 0,
-        currDeleteId: ''
+        currDeleteId: '',
+        realtimeData:[]
 
     },
 
@@ -414,6 +415,22 @@ export default {
         setCurrCommodities(state, data) {
             setCurr('currCommodities', state, data)
         },
+        setRealtimeItemData(state,data){
+            let has = false
+            for(let i=0;i<state.realtimeData.length;i++){
+                if(state.realtimeData[i].symbol == data.symbol){
+                    has = true
+                    Object.keys(data).map(k=>{
+                        state.realtimeData[i][k] = data[k]
+                    })
+                    break;
+                }
+            }
+            if(!has){
+                console.log(data.symbol)
+                state.realtimeData.push(data)
+            }
+        }
     },
     actions: {
         /*
@@ -443,6 +460,11 @@ export default {
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {
                     if (res.code == 200) {
+                        if(res.data && res.data.length){
+                            res.data.map(_item=>{
+                                commit("setRealtimeItemData",_item)
+                            })
+                        }
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
@@ -489,13 +511,20 @@ export default {
                 socket && socket.emit('snapshot', keys.join(',')) // 快照数据
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
-
+                        let points = ''
+                        if(res.data){
+                            points = _getSnapshotLine(res.data)
+                            commit('setRealtimeItemData',{
+                                symbol:res.symbol,
+                                points
+                            })
+                        }
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const target = state[ck].find(item => item.symbol == res.symbol)
                             if (target) {
 
-                                target.points = _getSnapshotLine(res.data)
+                                target.points = points
                             }
                         })
                     }
