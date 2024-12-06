@@ -160,7 +160,7 @@ const activeTab = ref(0);
 const initialSwipe = ref(activeTab.value);
 const inviteCode = computed(() => store.state.userInfo.uid);
 const moneyTextArr = ref([1, 0, 0, 0, 0]);
-QRCode.toDataURL("ex1.0").then((url) => {
+QRCode.toDataURL(`${INVITE_URL}?invitcode=${userInfo.value.uid}`).then((url) => {
   codeUrl.value = url;
 });
 
