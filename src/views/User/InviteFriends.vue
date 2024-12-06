@@ -125,14 +125,14 @@
 <script setup>
 import { Swipe, SwipeItem, showToast } from "vant";
 import HeaderTabs from "@/components/HeaderTabs.vue";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { _copyTxt } from "@/utils/index";
 import { useI18n } from "vue-i18n";
 import router from "@/router";
 import QRCode from "qrcode";
 import MoneyText from "@/components/MoneyText.vue";
 import store from "@/store";
-import { INVITE_URL } from "@/config";
+import { MOBILE_INVITE_URL } from "@/config";
 
 const { t, locale } = useI18n();
 
@@ -160,7 +160,7 @@ const activeTab = ref(0);
 const initialSwipe = ref(activeTab.value);
 const inviteCode = computed(() => store.state.userInfo.uid);
 const moneyTextArr = ref([1, 0, 0, 0, 0]);
-QRCode.toDataURL(`${INVITE_URL}?invitcode=${userInfo.value.uid}`).then((url) => {
+QRCode.toDataURL(`${MOBILE_INVITE_URL}?invitcode=${userInfo.value.uid}`).then((url) => {
   codeUrl.value = url;
 });
 
@@ -199,10 +199,13 @@ const list = ref([
     amount: 2000,
   },
 ]);
-const url = ref(`${INVITE_URL}?invitCode=${userInfo.value.uid}`);
+const url = ref(`${MOBILE_INVITE_URL}?invitCode=${userInfo.value.uid}`);
 const swipeChange = (val) => {
   activeTab.value = val;
 };
+onMounted(() => {
+    console.log("device =======》", navigator.userAgent)
+})
 </script>
 
 <style lang="less" scoped>

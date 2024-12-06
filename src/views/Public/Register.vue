@@ -3,7 +3,7 @@
   <div class="page page-register">
     <!-- 图片验证 -->
     <template v-if="step == 1">
-      <ImgCheck @success="next" @goBack="goBack" :loadingRegister="loading"/>
+      <ImgCheck @success="next" @goBack="goBack" :loadingRegister="loading" />
     </template>
 
     <template v-else-if="step == 2">
@@ -28,12 +28,18 @@
 
       <!-- 标题 -->
       <div class="title_box">
-        <div class="title">{{ guest ? t('register.create_guest_account') : t('register.create_user_account') }}</div>
+        <div class="title">
+          {{
+            guest
+              ? t("register.create_guest_account")
+              : t("register.create_user_account")
+          }}
+        </div>
         <div class="login_title">
           {{ $t("register.has_account") }}
-          <span class="tologin" @click="router.push({ name: 'login' })"
-            >{{ $t("register.go_login") }}</span
-          >
+          <span class="tologin" @click="router.push({ name: 'login' })">{{
+            $t("register.go_login")
+          }}</span>
         </div>
       </div>
 
@@ -50,7 +56,9 @@
           <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.username" placeholder="您的用户名"
             type="text" class="item_input">
         </div> -->
-        <div class="form_title" v-show="activeTab == 0">{{ $t("register.email") }}</div>
+        <div class="form_title" v-show="activeTab == 0">
+          {{ $t("register.email") }}
+        </div>
         <div
           class="form_item margin_item"
           v-show="activeTab == 0"
@@ -71,7 +79,9 @@
             @click="form.email = null"
           ></div>
         </div>
-        <div class="form_title" v-show="activeTab == 1">{{ $t("register.phone_number") }}</div>
+        <div class="form_title" v-show="activeTab == 1">
+          {{ $t("register.phone_number") }}
+        </div>
         <div
           class="form_item margin_item"
           v-show="activeTab == 1"
@@ -108,7 +118,10 @@
             :type="showPass ? 'text' : 'password'"
             class="item_input"
           />
-          <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass = !showPass">
+          <div
+            class="absolute top-[0.4rem] right-[0.32rem]"
+            @click="showPass = !showPass"
+          >
             <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
           </div>
         </div>
@@ -130,7 +143,10 @@
             :type="showPass2 ? 'text' : 'password'"
             class="item_input"
           />
-          <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass2 = !showPass2">
+          <div
+            class="absolute top-[0.4rem] right-[0.32rem]"
+            @click="showPass2 = !showPass2"
+          >
             <div :class="showPass2 ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
           </div>
         </div>
@@ -153,7 +169,10 @@
           class="mr-[0.2rem]"
           @click="checked = !checked"
         ></div>
-        {{ $t("register.agree_con1") }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3") }}<span>{{ $t("register.agree_con4") }}</span>
+        {{ $t("register.agree_con1")
+        }}<span>{{ $t("register.agree_con2") }}</span
+        >{{ $t("register.agree_con3")
+        }}<span>{{ $t("register.agree_con4") }}</span>
       </label>
 
       <!-- 按钮 -->
@@ -259,7 +278,7 @@ import {
   Tabs,
   Popup,
 } from "vant";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onBeforeMount } from "vue";
 import router from "@/router";
 import { useRoute, useRouter } from "vue-router";
 import PasswordLevel from "@/components/PasswordLevel.vue";
@@ -272,10 +291,11 @@ import NoData from "@/components/NoData.vue";
 import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
 import HKFlagIcon from "./Icons/HKFlagIcon.vue";
 import { useI18n } from "vue-i18n";
+import { DESKTOP_INVITE_URL, MOBILE_INVITE_URL } from "@/config";
 
 // 区号控制
-const step = ref(1)
-const {t} = useI18n()
+const step = ref(1);
+const { t } = useI18n();
 const activeTab = ref(0);
 const defaultCode = "+244";
 const showDialog = ref(false);
@@ -339,62 +359,62 @@ const loading = ref(false);
 
 const next = () => {
   if (loading.value) return;
-  loading.value = true
+  loading.value = true;
   showLoadingToast({
     duration: 0,
     loadingType: "spinner",
   });
-  if (guest.value == 'guest') {
+  if (guest.value == "guest") {
     _guestRegister({
       verifcode: verifcode.value,
-      token: sessionToken.value
+      token: sessionToken.value,
     })
-    .then((res) => {
-      if (res.code == 200) {
-        console.log(res.data)
-        setTimeout(() => {
-          store.dispatch("reset");
+      .then((res) => {
+        if (res.code == 200) {
+          console.log(res.data);
           setTimeout(() => {
-            store.commit("setToken", res.data.auth);
-            store.commit("setUserInfo", res.data);
-          }, 100);
+            store.dispatch("reset");
+            setTimeout(() => {
+              store.commit("setToken", res.data.auth);
+              store.commit("setUserInfo", res.data);
+            }, 100);
+            setTimeout(() => {
+              // store.dispatch("updateUserInfo");
+              store.dispatch("updateAssets");
+              store.dispatch("updateWallet");
+              registerSuccessNext();
+            }, 300);
+          }, 1000);
+        } else showToast(res.message);
+      })
+      .catch((err) => {
+        if (err.code == "1001") {
           setTimeout(() => {
-            // store.dispatch("updateUserInfo");
-            store.dispatch("updateAssets");
-            store.dispatch("updateWallet");
-            registerSuccessNext()
-          }, 300);
-        }, 1000);
-      } else showToast(res.message)
-    })
-    .catch((err) => {
-      if (err.code == '1001') {
+            verifCodeRef.value.open();
+          }, 1000);
+        }
+      })
+      .finally(() => {
+        getSessionToken();
         setTimeout(() => {
-          verifCodeRef.value.open();
-        }, 1000);
-      }
-    })
-    .finally(() => {
-      getSessionToken();
-      setTimeout(() => {
-        verifcode.value = "";
-        loading.value = false;
-        closeToast()
-      }, 1500);
-    });
+          verifcode.value = "";
+          loading.value = false;
+          closeToast();
+        }, 1500);
+      });
   } else {
-    step.value = 2
+    step.value = 2;
     loading.value = false;
-    closeToast()
+    closeToast();
   }
-}
+};
 
 const submit = async () => {
-  if (!checked.value) return showToast(t('register.no_agree_error'));
+  if (!checked.value) return showToast(t("register.no_agree_error"));
   if (activeTab.value == 0) {
     if (!form.value.email || !validateEmail(form.value.email)) {
       errorTip.value.error1 = true;
-      showToast(t('register.no_email_error'));
+      showToast(t("register.no_email_error"));
       return;
     }
     form.value.username = form.value.email;
@@ -402,27 +422,27 @@ const submit = async () => {
   if (activeTab.value == 1) {
     if (!form.value.phone) {
       errorTip.value.error1 = true;
-      showToast(t('register.no_phone_error'));
+      showToast(t("register.no_phone_error"));
       return;
     }
     form.value.username = form.value.area + form.value.phone;
   }
   if (!form.value.password) {
     errorTip.value.error2 = true;
-    return showToast(t('register.no_login_pw_error'));
+    return showToast(t("register.no_login_pw_error"));
   }
   if (form.value.password.length < 8) {
     errorTip.value.error2 = true;
-    return showToast(t('register.login_pw_length_error'));
+    return showToast(t("register.login_pw_length_error"));
   }
   if (!form.value.safeword) {
     errorTip.value.error3 = true;
-    return showToast(t('register.no_trade_pw_error'));
+    return showToast(t("register.no_trade_pw_error"));
   }
   sessionStorage.setItem("registerForm", JSON.stringify(form.value));
   if (!sessionToken.value) {
     const rs = await store.dispatch("updateSessionToken");
-    if (!rs) return showToast(t('register.network_error'));
+    if (!rs) return showToast(t("register.network_error"));
   }
   if (loading.value) return;
   loading.value = true;
@@ -470,9 +490,10 @@ const submit = async () => {
           verifCodeRef.value.open();
         }, 1000);
       } else if (err.code == "400") {
-        if (err.message == "User already exist") showToast(t('register.user_already_exist'));
+        if (err.message == "User already exist")
+          showToast(t("register.user_already_exist"));
       } else {
-        showToast(err.message || t('login.network_error'));
+        showToast(err.message || t("login.network_error"));
       }
     })
     .finally(() => {
@@ -500,7 +521,7 @@ const registerSuccessNext = () => {
 // 通过验证码提交
 const submitCode = (code) => {
   verifcode.value = code;
-  if (guest.value == 'guest') next()
+  if (guest.value == "guest") next();
   else submit();
 };
 
@@ -548,6 +569,37 @@ const goChat = () => {
 const scrollCountryCode = () => {
   scrollRef.value.scrollTop = scrollRef.value.scrollTop + 100;
 };
+
+// function handleRedirect() {
+//   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+//   const redirectUrl = isMobile ? MOBILE_INVITE_URL : DESKTOP_INVITE_URL;
+//   window.location.href = redirectUrl;
+// }
+
+// function detectEnvironment() {
+//   const userAgent = navigator.userAgent;
+  
+//   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+//   const isDesktop = !isMobile;
+
+//   if (isMobile) {
+//     console.log("手机浏览器");
+//     return "mobile_browser";
+//   } else if (isDesktop) {
+//     console.log("电脑浏览器");
+//     return "desktop_browser";
+//   } else {
+//     console.log("手机APP");
+//     return "unknown";
+//   }
+// }
+
+onMounted(() => {
+  if (route.query) {
+    form.value.invateCode = route.query.invitCode;
+    next();
+  }
+});
 </script>
 
 <style lang="less" scoped>

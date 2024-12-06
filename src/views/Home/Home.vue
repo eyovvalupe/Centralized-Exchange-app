@@ -1,6 +1,6 @@
 <!-- 首页 -->
 <template>
-  <div class="page_home">
+  <div class="page_home" v-if="openPage">
     <!-- 顶部 -->
     <div class="funcs relative">
       <div class="user_box">
@@ -229,6 +229,7 @@ import {
   onMounted,
   nextTick,
   watch,
+  onBeforeMount,
 } from "vue";
 import Banner from "./components/Banner.vue";
 import { useSocket } from "@/utils/ws";
@@ -249,6 +250,10 @@ import HomeToday from "@/components/HomeToday.vue";
 import { formatDate } from "@/utils/formatDate";
 import { useI18n } from "vue-i18n";
 import NotifiModal from "../Notification/NotifiModal.vue";
+import { useRoute } from "vue-router";
+import { DESKTOP_INVITE_URL, MOBILE_INVITE_URL } from "@/config";
+
+const route = useRoute();
 const { t } = useI18n();
 const openEye = ref(false);
 
@@ -376,6 +381,35 @@ const jump = (name, needToken) => {
     name,
   });
 };
+
+const userAgent = navigator.userAgent;
+function detectEnvironment(code) {
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      userAgent
+    );
+  const isDesktop = !isMobile;
+  const redirectUrl = isMobile
+    ? MOBILE_INVITE_URL + `register?invitCode=${code}`
+    : DESKTOP_INVITE_URL + `register?invitCode=${code}`;
+
+  window.location.href = redirectUrl;
+}
+
+// onBeforeMount(() => {
+//   console.log("before mount ====> ", route.query);
+//   if (Object.keys(route.query).length) detectEnvironment(route.query.invitCode);
+// });
+
+const openPage = ref(false)
+
+onMounted(() => {
+  console.log("did mount ========> ", route.query);
+  if (Object.keys(route.query).length) detectEnvironment(route.query.invitCode)
+  setTimeout(() => {
+    openPage.value = true
+  }, 500);
+});
 </script>
 
 <style lang="less" scoped>
