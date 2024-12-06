@@ -2,67 +2,29 @@
 <template>
   <div class="opening">
     <div class="type_tabs">
-      <div
-        @click="activeType = 1"
-        class="type_tab"
-        :class="{ active_type_tab: activeType == 1 }"
-      >
+      <div @click="activeType = 1" class="type_tab" :class="{ active_type_tab: activeType == 1 }">
         {{ t("trade.stock_open_long_tab") }}
       </div>
-      <div
-        @click="activeType = 2"
-        class="type_tab"
-        :class="{ active_type_tab: activeType == 2 }"
-      >
+      <div @click="activeType = 2" class="type_tab" :class="{ active_type_tab: activeType == 2 }">
         {{ t("trade.stock_open_short_tab") }}
       </div>
     </div>
 
     <!-- Tabs -->
     <div class="open_tab_box">
-      <Tabs
-        key="form"
-        v-if="!pageLoading"
-        class="van-tabs--oval-sub"
-        @change="(e) => (activeTab = e)"
-        v-model="activeTab"
-        :swipeable="false"
-        animated
-        :color="'#014CFA'"
-        shrink
-      >
+      <Tabs key="form" v-if="!pageLoading" class="van-tabs--oval-sub" @change="(e) => (activeTab = e)"
+        v-model="activeTab" :swipeable="false" animated :color="'#014CFA'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
-          <OpeningForm
-            @showNavDialog="showNavDialog"
-            v-if="activeTab == 0"
-            ref="OpeningForm0Ref"
-            :key="0"
-            :activeTab="activeTab"
-            :activeType="activeType"
-            @success="emits('success')"
-          />
+          <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0"
+            :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
         </Tab>
         <Tab :title="t('trade.stock_limit_price')" name="1">
-          <OpeningForm
-            @showNavDialog="showNavDialog"
-            v-if="activeTab == 1"
-            ref="OpeningForm1Ref"
-            :key="1"
-            :activeTab="activeTab"
-            :activeType="activeType"
-            @success="emits('success')"
-          />
+          <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1"
+            :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
         </Tab>
         <Tab :title="t('trade.stock_take_stop')" name="2">
-          <OpeningForm
-            @showNavDialog="showNavDialog"
-            v-if="activeTab == 2"
-            ref="OpeningForm2Ref"
-            :key="2"
-            :activeTab="activeTab"
-            :activeType="activeType"
-            @success="emits('success')"
-          />
+          <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2"
+            :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
         </Tab>
       </Tabs>
 
@@ -78,6 +40,13 @@ import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
+
+const props = defineProps({
+  type: {
+    type: String,
+    default: ''
+  }
+})
 
 const { t } = useI18n();
 const emits = defineEmits(["showNavDialog", "success"]);
@@ -130,6 +99,7 @@ defineExpose({
     display: flex;
     align-items: center;
     z-index: 99;
+
     .type_tab {
       flex: 1;
       height: 100%;

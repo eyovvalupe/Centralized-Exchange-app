@@ -4,7 +4,7 @@
     <div class="recommend_block">
       <div class="item_block" v-if="marketVolumeList.length">
         <div class="item_block_title flex justify-between">
-          <div>{{ $t("market.stock.hot") }}</div>
+          <div>{{ t('market.market_stock_hot') }}</div>
           <div class="re_render" @click.stop="update"></div>
         </div>
         <StockRecommendList
@@ -18,35 +18,37 @@
 </template>
 
 <script setup>
-
 // import StockTable from "@/components/StockTable.vue";
 import StockRecommendList from "@/components/StockRecommendList.vue";
 import store from "@/store";
 import { computed, ref, watch } from "vue";
 import { _sort } from "@/api/api";
-const recommendLoading = ref(false)
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+const recommendLoading = ref(false);
 
 const marketVolumeList = computed(() => store.state.marketVolumeList || []); // 活跃列表
 
 const subs = () => {
   // 订阅ws
-  store.commit("setMarketWatchKeysByPage")
+  store.commit("setMarketWatchKeysByPage");
   store.dispatch("subList", {});
 };
 
 const getData = (list, key, query, listKey) => {
   if (!store.state.marketCurrent) return;
-  const market = store.state.marketCurrent
-  let arr = []
+  const market = store.state.marketCurrent;
+  let arr = [];
   _sort({
     orderby: query,
     page: 1,
-    market:market
+    market: market,
   })
     .then((res) => {
       if (res.code == 200) {
-        if(store.state.marketCurrent != market){
-          return
+        if (store.state.marketCurrent != market) {
+          return;
         }
         res.data = res.data.map((item) => {
           item.ratio = undefined; // 弃用接口里的该字段
@@ -71,7 +73,7 @@ const getData = (list, key, query, listKey) => {
       }
     })
     .finally(() => {
-        recommendLoading.value = false;
+      recommendLoading.value = false;
     });
 };
 const update = () => {
@@ -82,20 +84,18 @@ const update = () => {
     "volume",
     "marketVolumeList"
   );
-}
-watch(()=>store.state.marketCurrent,()=>{
-  update()
-})
+};
+watch(
+  () => store.state.marketCurrent,
+  () => {
+    update();
+  }
+);
 
-if(!marketVolumeList.value.length){
+if (!marketVolumeList.value.length) {
   recommendLoading.value = true;
 }
-getData(
-  marketVolumeList,
-  "setMarketVolumeList",
-  "volume",
-  "marketVolumeList"
-);
+getData(marketVolumeList, "setMarketVolumeList", "volume", "marketVolumeList");
 </script>
 
 <style lang="less" scoped>

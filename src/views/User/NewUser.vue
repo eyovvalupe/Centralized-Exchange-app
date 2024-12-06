@@ -257,6 +257,9 @@ const loginout = () => {
     showConfirmDialog({
       title: t("user_page.logout"),
       message: t("user_page.message_box_con"),
+      cancelButtonText: t('user_page.message_box_cancel'),
+      confirmButtonText: t('user_page.message_box_confirm'),
+
       confirmButtonColor: "#014CFA",
       cancelButtonColor: "#323233",
     })

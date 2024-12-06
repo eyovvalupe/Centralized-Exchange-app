@@ -5,7 +5,7 @@
       <div class="notice_msg">
         <div class="time">{{ messageList[0]?.time }}</div>
         <div class="content">
-          {{ $t("您已经成功下单") }}，{{ $t("请耐心等候商家付款") }}
+          {{ t('market.market_buy_chat_con1') }}，{{ t('market.market_buy_chat_con2') }}
         </div>
       </div>
       <div v-for="item in messageList">
@@ -161,14 +161,15 @@ import DialogCIcon from "./components/DialogCIcon.vue";
 import UserAvatar from "@/components/Chat/UserAvatar.vue";
 import serviceC2C from "@/store/serviceC2C";
 import { serviceChat } from "@/utils/serviceChat";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps({
   currItem: {
     type: Object,
     default: () => {},
   },
 });
-const { t } = useI18n();
 const listRef = ref();
 const { y } = useScroll(listRef, {
   throttle: 200,
@@ -432,10 +433,13 @@ onBeforeUnmount(() => {
         }
 
         .op_text_content {
-          display: inline-block;
+          display: flex;
+          align-items: center;
           // padding: 0.3rem 0.24rem;
           max-width: 4rem;
           padding: 0.2rem 0.4rem;
+          height: 1rem;
+
           line-height: 0.4rem;
           background-color: #f6f8fe;
           color: #333;
@@ -510,7 +514,8 @@ onBeforeUnmount(() => {
       }
 
       .my_text {
-        display: inline-block;
+        display: flex;
+        align-items: center;
         padding: 0.2rem 0.4rem;
         line-height: 0.4rem;
         background-color: #3d65f9;
@@ -518,6 +523,7 @@ onBeforeUnmount(() => {
         text-align: left;
         max-width: 4rem;
         border-radius: 0.12rem;
+        height: 1rem;
         // border-top-left-radius: 0.24rem;
         // border-bottom-left-radius: 0.24rem;
         // border-bottom-right-radius: 0.24rem;
@@ -543,7 +549,8 @@ onBeforeUnmount(() => {
       .content {
         // width: 5.22rem;
         // height: 0.6rem;
-        border-radius: 1rem;
+        border-radius: 0.32rem;
+        padding: 0.2rem;
         background: var(--F5F7FC, #f5f7fc);
         color: var(--666D80, #666d80);
         text-align: center;

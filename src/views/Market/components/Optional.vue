@@ -19,9 +19,9 @@
         plain
         type="primary"
         hairline=""
-        class="addBtn"
+        class="addBtn px-[0.1rem]"
         @click="jump('search')"
-        >添加自选</Button
+        >{{ t('market.market_optional_add') }}</Button
       >
     </div>
   </div>
@@ -33,7 +33,7 @@
       <div class="no_data_icon">
         <img src="/static/img/common/no_data.png" alt="暂无数据" />
       </div>
-      <p class="text">你还没有添加自选哦</p>
+      <p class="text">{{ t('market.market_optional_no_optional') }}</p>
       <Button
         round
         icon="plus"
@@ -42,7 +42,7 @@
         hairline=""
         class="addBtn"
         @click="jump('search')"
-        >添加自选</Button
+        >{{ t('market.market_optional_add') }}</Button
       >
     </div>
     <Teleport to=".page_market">
@@ -59,7 +59,7 @@
           :loading="addLoading"
           @click="addOptional"
         >
-          一键添加自选(<i class="tag">{{
+          {{ t('market.market_optional_add_all') }}(<i class="tag">{{
             stockList.length + contractList.length
           }}</i
           >)
@@ -88,7 +88,7 @@
     <div class="recommend_block">
       <div class="item_block" v-if="marketSrockRecommendList.length">
         <div class="item_block_title flex justify-between">
-          <div>推荐股票</div>
+          <div>{{ t('market.market_optional_recommend_stock') }}</div>
           <div @click="changeAllCheckState">
             <div
               :class="allCheckState ? 'checked_icon_blue' : 'unchecked_icon'"
@@ -109,7 +109,7 @@
 
       <div class="item_block" v-if="marketContractRecommendList.length">
         <div class="item_block_title">
-          <span>推荐加密代币</span>
+          <span>{{ t('market.market_optional_recommend_crypto') }}</span>
         </div>
         <StockRecommend
           :key="'recommend'"
@@ -147,6 +147,9 @@ import {
   Button,
 } from "vant";
 import { useSocket } from "@/utils/ws";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const { startSocket } = useSocket();
 
 const active = ref(0);
@@ -292,7 +295,7 @@ const addOptional = () => {
   })
     .then((res) => {
       if (res.code == 200) {
-        showToast("添加成功");
+        showToast(t('market.market_optional_add_success'));
         init();
       }
     })
@@ -320,7 +323,7 @@ const remove = (item) => {
     .then((res) => {
       if (res.code == 200) {
         setTimeout(() => {
-          showToast("移除成功");
+          showToast(t('market.market_optioanl_del_success'));
         }, 300);
         const i = watchList.value.findIndex((a) => a.symbol == item.symbol);
         if (i >= 0) {
@@ -394,12 +397,16 @@ const jump = (name) => {
   color: #014cfa;
   border-color: #014cfa;
   // border-width: 10px;
-  width: 1.82rem;
+  // width: 1.82rem;
   height: 0.68rem;
   font-size: 0.28rem;
   font-weight: 400;
   line-height: 0.28rem;
-  padding: 0;
+  padding: 0 0.2rem 0 0.1rem;
+
+  :deep('span.van-button__text') {
+    margin-left: 0 !important;
+  }
 }
 
 .recommend_block {
@@ -450,7 +457,6 @@ const jump = (name) => {
   .one_click_to_favorite {
     background-color: #014cfa;
     color: #ffffff;
-    
   }
 }
 

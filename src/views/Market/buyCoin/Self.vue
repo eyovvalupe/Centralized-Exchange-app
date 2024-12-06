@@ -3,15 +3,28 @@
   <div class="buycoin_self">
     <!-- 一层容器 tab -->
     <div class="tabs-buy">
-      <div class="tab" :class="{ active_tab: offset == 'buy' }" @click="changeTab('buy')">{{ $t('买入') }}</div>
-      <div class="tab" :class="{ active_tab: offset == 'sell' }" @click="changeTab('sell')">{{ $t('卖出') }}</div>
+      <div
+        class="tab"
+        :class="{ active_tab: offset == 'buy' }"
+        @click="changeTab('buy')"
+      >
+        {{ t('market.market_buy_fast_buy') }}
+      </div>
+      <div
+        class="tab"
+        :class="{ active_tab: offset == 'sell' }"
+        @click="changeTab('sell')"
+      >
+        {{ t('market.market_buy_fast_sell') }}
+      </div>
     </div>
     <!-- 二层容器 -->
     <div class="tabs mb-4">
       <div>
         <div
           class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
-          @click="showDialog = true">
+          @click="showDialog = true"
+        >
           <span class="mr-[0.2rem]">{{ currCurrency.name }}</span>
           <div class="sizi-16 mr-1">
             <img src="/static/img/assets/more.png" alt="img" />
@@ -24,9 +37,22 @@
       </div>
 
       <div class="w-full overflow-hidden">
-        <Tabs @touchstart.stop @touchmove.stop @touchup.stop :active="currCrypto.name" class="encryption w-full"
-          line-height="0.06rem" line-width="0.32rem" @click-tab="cryptoChange">
-          <Tab v-for="(item, index) in dryptoWallet" :key="item.name + index" :title="item.name" :name="item.name" />
+        <Tabs
+          @touchstart.stop
+          @touchmove.stop
+          @touchup.stop
+          :active="currCrypto.name"
+          class="encryption w-full"
+          line-height="0.06rem"
+          line-width="0.32rem"
+          @click-tab="cryptoChange"
+        >
+          <Tab
+            v-for="(item, index) in dryptoWallet"
+            :key="item.name + index"
+            :title="item.name"
+            :name="item.name"
+          />
         </Tabs>
       </div>
     </div>
@@ -41,13 +67,13 @@
           <div class="top_content">
             <div class="name">{{ item.merchant }}</div>
             <div class="info">
-              <span>{{ $t('成交量') }} {{ item.volume || '0' }}</span>
+              <span>{{ t('market.market_buy_optional_deal') }} {{ item.volume || "0" }}</span>
               <span>|</span>
-              <span>{{ $t('成交率') }} {{ item.volumerate || '0' }}%</span>
+              <span>{{ t('market.market_buy_optional_rate') }} {{ item.volumerate || "0" }}%</span>
               <template v-if="item.avetime">
                 <span>|</span>
                 <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
-                <span>{{ item.avetime }}{{ $t('分钟') }}</span>
+                <span>{{ item.avetime }}{{ t('market.market_buy_optional_duaration') }}</span>
               </template>
             </div>
           </div>
@@ -58,34 +84,72 @@
               {{ item.price }}
               <span class="text-12 font-normal">{{ currCurrency.name }}</span>
             </div>
-            <div class="text-14 text-[#8F92A1]">订单限额&nbsp;{{ item.limitmin || '0' }}-{{ item.limitmax || '0' }}</div>
+            <div class="text-14 text-[#8F92A1]">
+              {{ t('market.market_buy_optional_order_limit') }}&nbsp;{{ item.limitmin || "0" }}-{{
+                item.limitmax || "0"
+              }}
+            </div>
           </div>
-          <div v-if="token" class="btn" @click="goBuy(item)">{{ offset == 'buy' ? t('购买') : t('出售') }}</div>
+          <div v-if="token" class="btn" @click="goBuy(item)">
+            {{ offset == "buy" ? t('market.market_buy_optional_buy') : t('market.market_buy_optional_sell') }}
+          </div>
         </div>
       </div>
       <NoData v-if="!loading && !list.length" />
-      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_buss" :loading="loading"
-        :finish="finish" />
+      <LoadingMore
+        v-if="(finish && list.length) || !finish"
+        class-n="buycoin_buss"
+        :loading="loading"
+        :finish="finish"
+      />
     </div>
   </div>
 
   <!-- 表单提交 -->
-  <Popup v-model:show="showFormDialog" teleport="body" round position="bottom" closeable>
+  <Popup
+    v-model:show="showFormDialog"
+    teleport="body"
+    round
+    position="bottom"
+    closeable
+  >
     <div class="buycoin_form_dialog">
-      <div class="title">{{ offset == 'buy' ? t('买入') : t('卖出') }}{{ currCrypto.name }}</div>
+      <div class="title">
+        {{ offset == "buy" ? t('market.market_buy_fast_buy') : t('market.market_buy_fast_sell') }}{{ currCrypto.name }}
+      </div>
 
       <div class="form">
         <div class="item form_item" :class="{ focus_item: amountFocus }">
-          <div v-show="offset == 'sell'" v-if="!(!amountFocus && amount !== '')" class="tip_text">≤ {{ maxAmount }} {{
-            offset == 'sell' ? currCrypto.name : currCurrency.name }}</div>
-          <input v-model="amount" type="number" class="ipt" @blur="amountFocus = false" @focus="amountFocus = true" />
-          <div class="all" @click="amount = currWallet.amount">{{ $t('全部') }}</div>
+          <div
+            v-show="offset == 'sell'"
+            v-if="!(!amountFocus && amount !== '')"
+            class="tip_text"
+          >
+            ≤ {{ maxAmount }}
+            {{ offset == "sell" ? currCrypto.name : currCurrency.name }}
+          </div>
+          <input
+            v-model="amount"
+            type="number"
+            class="ipt"
+            @blur="amountFocus = false"
+            @focus="amountFocus = true"
+          />
+          <div class="all" @click="amount = currWallet.amount">
+            {{ t('form.all') }}
+          </div>
         </div>
-        <div class="tip">{{ $t('订单限额') }}：{{ currItem.limitmin }}-{{ currItem.limitmax }} {{ offset == 'sell' ?
-          currCrypto.name : currCurrency.name }}</div>
-        <div v-if="offset == 'sell'" class="tip">{{ $t('预计收到') }}：{{ showAmount }} {{ currCurrency.name }}</div>
+        <div class="tip">
+          {{ t('market.market_buy_optional_order_limit') }}：{{ currItem.limitmin }}-{{ currItem.limitmax }}
+          {{ offset == "sell" ? currCrypto.name : currCurrency.name }}
+        </div>
+        <div v-if="offset == 'sell'" class="tip">
+          {{ t('market.market_buy_optional_estreceive') }}：{{ showAmount }} {{ currCurrency.name }}
+        </div>
 
-        <div class="btn" @click="preSubmit">{{ $t('确认') }}{{ offset == 'buy' ? t('买入') : t('卖出') }}</div>
+        <div class="btn" @click="preSubmit">
+          {{ t('market.market_buy_optional_confirm') }}{{ offset == "buy" ? t('market.market_buy_fast_buy') : t('market.market_buy_fast_sell') }}
+        </div>
       </div>
     </div>
   </Popup>
@@ -93,26 +157,41 @@
   <!-- 订单弹窗 -->
   <!-- <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
     <div class="buycoin_orderinfo_dialog">
-      <div class="orderinfo_dialog_title">{{ $t('订单详情') }}</div>
+      <div class="orderinfo_dialog_title">{{ t('订单详情') }}</div>
       <OrderInfo />
     </div>
   </Popup> -->
 
   <!-- 法币币种 -->
-  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-    position="bottom" teleport="body">
+  <Popup
+    v-model:show="showDialog"
+    :safe-area-inset-top="true"
+    :safe-area-inset-bottom="true"
+    class="self_van_popup"
+    position="bottom"
+    teleport="body"
+  >
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
-      <div class="title">{{ $t('币种选择') }}</div>
-      <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
-        :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
+      <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
+      <div
+        v-for="(item, i) in fiatWallet"
+        :key="i"
+        class="swap_dialog_item"
+        :class="{ swap_dialog_item_active: currCurrency.name == item.name }"
+        @click="clickItem(item)"
+      >
         <div class="icon">
           <img :src="handleUrl(item.name)" alt="currency" />
         </div>
         <span>{{ item.name.toUpperCase() }}</span>
-        <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />
+        <Icon
+          v-if="currCurrency.name == item.name"
+          class="check_icon"
+          name="success"
+        />
       </div>
     </div>
   </Popup>
@@ -122,7 +201,7 @@
       <div class="close_icon" @click="showDialog2 = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
-      <div class="title">{{ $t('币种选择') }}</div>
+      <div class="title">{{ t('币种选择') }}</div>
       <div v-for="(item, i) in dryptoWallet" :key="i" class="swap_dialog_item" :class="{ swap_dialog_item_active: currCrypto.name == item.name }" @click="clickCrypto(item)">
         <div class="icon">
           <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency" />
@@ -134,30 +213,59 @@
   </Popup> -->
 
   <!-- 账户选择弹窗 -->
-  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
-    class="self_van_popup" position="bottom" teleport="body">
+  <Popup
+    v-model:show="showAccountDialog"
+    :safe-area-inset-top="true"
+    :safe-area-inset-bottom="true"
+    class="self_van_popup"
+    position="bottom"
+    teleport="body"
+  >
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
       </div>
-      <div class="title">{{ $t('账户选择') }}</div>
+      <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
       <div class="list">
         <div class="add_item" @click="goAddAccount">
           <Icon style="font-size: 0.48rem" name="add-o" />
-          <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">{{ $t('添加收款账户') }}</span>
+          <span
+            style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem"
+            >{{ t('market.market_buy_fast_account_add') }}</span
+          >
         </div>
-        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }"
-          class="dialog_account_item" @click="clickAccountItem(item)">
+        <div
+          v-for="(item, i) in bankList"
+          :key="i"
+          :class="{ dialog_account_item_active: currAccount.id == item.id }"
+          class="dialog_account_item"
+          @click="clickAccountItem(item)"
+        >
           <div class="card_icon">
-            <img v-if="item.bankName" src="/static/img/user/card_type_b.png" alt="img" />
+            <img
+              v-if="item.bankName"
+              src="/static/img/user/card_type_b.png"
+              alt="img"
+            />
             <img v-else src="/static/img/user/card_type_c.png" alt="img" />
           </div>
           <div class="card">
-            <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
-            <div class="name">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }}</div>
+            <div class="code">
+              {{ _hiddenAccount(item.bankCardNumber || item.address) }}
+            </div>
+            <div class="name">
+              {{
+                item.symbol
+                  ? `${item.symbol}-${item.network}`
+                  : `${item.bankName}`
+              }}
+            </div>
           </div>
-          <div v-if="currAccount.id == item.id" class="checked"
-            style="background-image: url('/static/img/user/check_bg.png')">
+          <div
+            v-if="currAccount.id == item.id"
+            class="checked"
+            style="background-image: url('/static/img/user/check_bg.png')"
+          >
             <img src="/static/img/common/ok.png" alt="img" />
           </div>
         </div>
@@ -170,256 +278,289 @@
 </template>
 
 <script setup>
-import { Popup, Icon, showToast, showConfirmDialog, Tabs, Tab } from 'vant'
-import Decimal from 'decimal.js'
-import NoData from '@/components/NoData.vue'
-import LoadingMore from '@/components/LoadingMore.vue'
-import { _adList, _buysell } from '@/api/api'
-import store, { useMapState } from '@/store'
-import router from '@/router'
-import { _hiddenAccount } from '@/utils/index'
-import SafePassword from '@/components/SafePassword.vue'
-import IconSvg from '@/components/IconSvg.vue'
-import { useBuyCoinState } from './state'
+import { Popup, Icon, showToast, showConfirmDialog, Tabs, Tab } from "vant";
+import Decimal from "decimal.js";
+import NoData from "@/components/NoData.vue";
+import LoadingMore from "@/components/LoadingMore.vue";
+import { _adList, _buysell } from "@/api/api";
+import store, { useMapState } from "@/store";
+import router from "@/router";
+import { _hiddenAccount } from "@/utils/index";
+import SafePassword from "@/components/SafePassword.vue";
+import IconSvg from "@/components/IconSvg.vue";
+import { useBuyCoinState } from "./state";
+import { useI18n } from "vue-i18n";
 
-const { userInfo, token, deWeightCurrencyList: currencyList, accountList, sessionToken } = useMapState(['userInfo', 'token', 'deWeightCurrencyList', 'accountList', 'sessionToken'])
-const buycoinScrollTop1 = useSessionStorage('buycoinScrollTop1')
-const { active, handleUrl } = useBuyCoinState()
-const scrollData = inject('scrollData')
-const { t } = useI18n()
-const safeRef = ref()
-const showDialog = ref(false)
-const showDialog2 = ref(false)
-const wallet = computed(() => (token.value ? store.state.wallet : currencyList.value)) // 所有钱包
-const fiatWallet = computed(() => currencyList.value.filter(item => item.type == 'fiat')) // 法币钱包
-const dryptoWallet = computed(() => currencyList.value.filter(item => item.type == 'crypto')) // 加密钱包
-const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
+const { t } = useI18n();
+const {
+  userInfo,
+  token,
+  deWeightCurrencyList: currencyList,
+  accountList,
+  sessionToken,
+} = useMapState([
+  "userInfo",
+  "token",
+  "deWeightCurrencyList",
+  "accountList",
+  "sessionToken",
+]);
+const buycoinScrollTop1 = useSessionStorage("buycoinScrollTop1");
+const { active, handleUrl } = useBuyCoinState();
+const scrollData = inject("scrollData");
+const safeRef = ref();
+const showDialog = ref(false);
+const showDialog2 = ref(false);
+const wallet = computed(() =>
+  token.value ? store.state.wallet : currencyList.value
+); // 所有钱包
+const fiatWallet = computed(() =>
+  currencyList.value.filter((item) => item.type == "fiat")
+); // 法币钱包
+const dryptoWallet = computed(() =>
+  currencyList.value.filter((item) => item.type == "crypto")
+); // 加密钱包
+const bankList = computed(() =>
+  accountList.value.filter((item) => item.channel == "bank")
+); // 银行账号列表
 
 const currWallet = computed(() => {
-  if (offset.value == 'buy') {
-    return wallet.value.find(item => item.name == currCurrency.value.name)
+  if (offset.value == "buy") {
+    return wallet.value.find((item) => item.name == currCurrency.value.name);
   }
-  return wallet.value.find(item => item.name == currCrypto.value.name)
-})
+  return wallet.value.find((item) => item.name == currCrypto.value.name);
+});
 
 // 表单
-const offset = ref(sessionStorage.getItem('buycoin_offset') || 'buy')
-const currCurrency = ref({}) // 计价货币
-if (fiatWallet.value[0]) currCurrency.value = fiatWallet.value[0]
-const currCrypto = ref({}) // 加密货币
+const offset = ref(sessionStorage.getItem("buycoin_offset") || "buy");
+const currCurrency = ref({}); // 计价货币
+if (fiatWallet.value[0]) currCurrency.value = fiatWallet.value[0];
+const currCrypto = ref({}); // 加密货币
 
 // 表单弹窗
-const showFormDialog = ref(false)
-const currItem = ref({})
-const amountFocus = ref(false)
-const amount = ref('')
+const showFormDialog = ref(false);
+const currItem = ref({});
+const amountFocus = ref(false);
+const amount = ref("");
 
 // 列表
-const loading = ref(false)
-const finish = ref(false)
-const list = ref([])
+const loading = ref(false);
+const finish = ref(false);
+const list = ref([]);
 // 账户选择
-const showAccountDialog = ref(false)
-const currAccount = ref({})
+const showAccountDialog = ref(false);
+const currAccount = ref({});
 // 监听
 try {
-  list.value = JSON.parse(sessionStorage.getItem('deal_list') || '[]')
-  currCrypto.value = JSON.parse(sessionStorage.getItem('buycoin_currCrypto') || '{}')
-} catch { }
+  list.value = JSON.parse(sessionStorage.getItem("deal_list") || "[]");
+  currCrypto.value = JSON.parse(
+    sessionStorage.getItem("buycoin_currCrypto") || "{}"
+  );
+} catch {}
 if (dryptoWallet.value[0] && !currCrypto.value.name) {
-  const target = dryptoWallet.value.find(item => item.name == 'USDT')
-  currCrypto.value = target || dryptoWallet.value[0]
+  const target = dryptoWallet.value.find((item) => item.name == "USDT");
+  currCrypto.value = target || dryptoWallet.value[0];
 }
 
-const clickItem = item => {
-  currCurrency.value = item
-  showDialog.value = false
-  list.value = []
-  init()
-}
-const clickCrypto = item => {
-  currCrypto.value = item
-  showDialog2.value = false
-  list.value = []
-  init()
-}
-const changeTab = name => {
-  offset.value = name
-  sessionStorage.setItem('buycoin_offset', name)
-  list.value = []
-  init()
-}
+const clickItem = (item) => {
+  currCurrency.value = item;
+  showDialog.value = false;
+  list.value = [];
+  init();
+};
+const clickCrypto = (item) => {
+  currCrypto.value = item;
+  showDialog2.value = false;
+  list.value = [];
+  init();
+};
+const changeTab = (name) => {
+  offset.value = name;
+  sessionStorage.setItem("buycoin_offset", name);
+  list.value = [];
+  init();
+};
 const maxAmount = computed(() => {
-  if (!currWallet.value.amount || !currItem.value.price) return 0
-  if (offset.value == 'buy') {
-    return new Decimal(currWallet.value.amount).div(currItem.value.price)
+  if (!currWallet.value.amount || !currItem.value.price) return 0;
+  if (offset.value == "buy") {
+    return new Decimal(currWallet.value.amount).div(currItem.value.price);
   }
-  return currWallet.value.amount
-})
+  return currWallet.value.amount;
+});
 const showAmount = computed(() => {
-  if (!amount.value || amount.value <= 0) return '--'
-  if (offset.value == 'buy') {
-    return new Decimal(amount.value).div(currItem.value.price)
+  if (!amount.value || amount.value <= 0) return "--";
+  if (offset.value == "buy") {
+    return new Decimal(amount.value).div(currItem.value.price);
   }
-  return new Decimal(amount.value).mul(currItem.value.price)
-})
-const goBuy = item => {
+  return new Decimal(amount.value).mul(currItem.value.price);
+});
+const goBuy = (item) => {
   router.push({
-    name: 'deal',
+    name: "deal",
     query: {
       ...item,
       offset: offset.value,
       currCrypto: currCrypto.value.name,
       currWallet: currCurrency.value.name,
     },
-  })
-  if (offset.value) return
-  amount.value = ''
-  currItem.value = item
-  showFormDialog.value = true
-}
+  });
+  if (offset.value) return;
+  amount.value = "";
+  currItem.value = item;
+  showFormDialog.value = true;
+};
 
 // 提交表单
 const preSubmit = () => {
-  if (!amount.value || amount.value < currItem.value.limitmin || amount.value > currItem.value.limitmax) return showToast(`限额：${currItem.value.limitmin}-${currItem.value.limitmax}`)
-  showFormDialog.value = false
+  if (
+    !amount.value ||
+    amount.value < currItem.value.limitmin ||
+    amount.value > currItem.value.limitmax
+  )
+    return showToast(
+      `${t('market.market_buy_optional_limit_val')}：${currItem.value.limitmin}-${currItem.value.limitmax}`
+    );
+  showFormDialog.value = false;
   setTimeout(() => {
-    if (offset.value == 'buy') {
-      safeRef.value.open()
+    if (offset.value == "buy") {
+      safeRef.value.open();
     } else {
-      showAccountDialog.value = true
+      showAccountDialog.value = true;
     }
-  }, 0)
-}
-const submitSell = s => {
-  if (loading.value) return
-  store.dispatch('updateSessionToken').then(st => {
+  }, 0);
+};
+const submitSell = (s) => {
+  if (loading.value) return;
+  store.dispatch("updateSessionToken").then((st) => {
     if (st) {
       const params = {
         ad_id: currItem.value.id,
         volume: amount.value,
-        account_id: offset.value == 'buy' ? null : currAccount.value.id,
+        account_id: offset.value == "buy" ? null : currAccount.value.id,
         token: sessionToken.value,
         safeword: s,
-      }
-      loading.value = true
+      };
+      loading.value = true;
       _buysell(params)
-        .then(res => {
+        .then((res) => {
           if (res.code == 200) {
-            showToast(t('下单成功'))
+            showToast(t('market.market_buy_fast_success'));
           }
         })
         .finally(() => {
-          loading.value = false
-        })
+          loading.value = false;
+        });
     } else {
       setTimeout(() => {
-        submitSell(s)
-      }, 1000)
+        submitSell(s);
+      }, 1000);
     }
-  })
+  });
+};
 
-}
-
-const page = ref(0)
+const page = ref(0);
 const getData = () => {
-  if (loading.value || finish.value) return
-  loading.value = true
-  page.value += 1
+  if (loading.value || finish.value) return;
+  loading.value = true;
+  page.value += 1;
   const req = {
     offset: offset.value,
     crypto: currCrypto.value.currency,
     currency: currCurrency.value.currency,
-  }
+  };
   _adList({
     page: page.value,
     ...req,
   })
-    .then(res => {
-      if (req.offset != offset.value || req.crypto != currCrypto.value.currency || req.currency != currCurrency.value.currency) return
-      loading.value = false
+    .then((res) => {
+      if (
+        req.offset != offset.value ||
+        req.crypto != currCrypto.value.currency ||
+        req.currency != currCurrency.value.currency
+      )
+        return;
+      loading.value = false;
       if (page.value == 1) {
-        list.value = res.data || []
+        list.value = res.data || [];
       } else {
-        list.value.push(...(res.data || []))
+        list.value.push(...(res.data || []));
       }
       if (!res.data?.length) {
-        finish.value = true
+        finish.value = true;
       }
       setTimeout(() => {
-        sessionStorage.setItem('deal_list', JSON.stringify(list.value))
-      }, 100)
+        sessionStorage.setItem("deal_list", JSON.stringify(list.value));
+      }, 100);
     })
     .catch(() => {
-      loading.value = false
-    })
-}
+      loading.value = false;
+    });
+};
 const init = () => {
-  page.value = 0
-  loading.value = false
-  finish.value = false
+  page.value = 0;
+  loading.value = false;
+  finish.value = false;
   setTimeout(() => {
-    getData()
-  }, 0)
-}
+    getData();
+  }, 0);
+};
 
-const scrollHandle = bottom => {
-  if (active.value !== '1') return
+const scrollHandle = (bottom) => {
+  if (active.value !== "1") return;
   // 加载更多
-  if (bottom) getData()
-}
-watch(() => scrollData.arrivedState.bottom, scrollHandle)
+  if (bottom) getData();
+};
+watch(() => scrollData.arrivedState.bottom, scrollHandle);
 
 onActivated(() => {
   setTimeout(() => {
-    if (active.value !== '1') return
+    if (active.value !== "1") return;
     nextTick(() => {
-      const page2 = document.querySelector('.page')
-      page2.scrollTop = buycoinScrollTop1.value
-    })
-  }, 500)
-})
+      const page2 = document.querySelector(".page");
+      page2.scrollTop = buycoinScrollTop1.value;
+    });
+  }, 500);
+});
 onMounted(() => {
-  init()
-})
+  init();
+});
 
-const clickAccountItem = item => {
-  currAccount.value = item
-  showAccountDialog.value = false
-  safeRef.value.open()
-}
+const clickAccountItem = (item) => {
+  currAccount.value = item;
+  showAccountDialog.value = false;
+  safeRef.value.open();
+};
 // 跳转添加
 const goAddAccount = () => {
   // google检测
   if (!userInfo.value.googlebind) {
     return showConfirmDialog({
-      title: t('谷歌验证器'),
-      message: t('你还未绑定谷歌验证器，是否去绑定?'),
+      title: t('safety.bind_google_auth'),
+      message: t("safety.no_google_dialog_con?"),
     }).then(() => {
-      jump('google')
-    })
+      jump("google");
+    });
   }
   router.push({
-    name: 'account',
-  })
-}
-
+    name: "account",
+  });
+};
 
 // 跳转
-const jump = name => {
+const jump = (name) => {
   router.push({
     name,
-  })
-}
+  });
+};
 function cryptoChange({ name: item }) {
-  const result = dryptoWallet.value.find(i => i.name == item)
-  sessionStorage.setItem('buycoin_currCrypto', JSON.stringify(result))
-  clickCrypto(result)
+  const result = dryptoWallet.value.find((i) => i.name == item);
+  sessionStorage.setItem("buycoin_currCrypto", JSON.stringify(result));
+  clickCrypto(result);
 }
 
 defineExpose({
   init,
-})
+});
 </script>
 
 <style lang="less" scoped>
@@ -850,7 +991,7 @@ defineExpose({
       align-items: center;
       justify-content: center;
 
-      >img {
+      > img {
         width: 0.64rem !important;
         height: 0.64rem !important;
       }
@@ -884,7 +1025,7 @@ defineExpose({
       width: 0.46rem;
       height: 0.42rem;
 
-      >img {
+      > img {
         width: 0.18rem !important;
         height: 0.12rem !important;
         position: absolute;

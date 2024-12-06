@@ -13,6 +13,16 @@ const routes = [
       pageType: 'tab',
     },
   },
+  // {
+  //   // 邀请好友
+  //   path: '/invite',
+  //   name: 'invite',
+  //   component: () => import('../views/Public/Register.vue'),
+  //   meta: {
+  //     keepAlive: true,
+  //     pageType: 'tab',
+  //   },
+  // },
   {
     // 用户
     path: '/user',
@@ -188,6 +198,26 @@ const routes = [
     path: '/search',
     name: 'search',
     component: () => import('../views/Market/Search.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
+    // 通知
+    path: '/notification',
+    name: 'notification',
+    component: () => import('../views/Notification/Index.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
+    // 通知详情
+    path: '/notification_detail',
+    name: 'notification_detail',
+    component: () => import('../views/Notification/Detail.vue'),
     meta: {
       keepAlive: false,
       pageType: 'child',

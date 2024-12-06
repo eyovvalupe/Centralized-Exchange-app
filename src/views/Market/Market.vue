@@ -2,16 +2,39 @@
 <template>
   <div v-if="activatedIncludes && !pageLoading" class="page page_market">
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
-    <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
+    <Subscription
+      v-else-if="detail == '2'"
+      @close-open-detail="closeOpenDetail"
+    />
     <div
       class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border"
-      @click="jump('search')">
+      @click="jump('search')"
+    >
       <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
     </div>
-    <div class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white" />
-    <HeaderTabs v-model:active="active" class="w-[6.28rem]"
-      :tabs="[$t('自选'), $t('买币'), $t('股票'), $t('合约'), $t('交易机器人'), '外汇']" @change="e => changeTab(e, true)" />
-    <Swipe ref="swipe" :autoplay="0" :initial-swipe="marketActiveTab" :show-indicators="false" @change="changeTab">
+    <div
+      class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white"
+    />
+    <HeaderTabs
+      v-model:active="active"
+      class="w-[6.28rem]"
+      :tabs="[
+        $t('market.market_header_optional'),
+        $t('market.market_header_buy'),
+        $t('market.market_header_stock'),
+        $t('market.market_header_contract'),
+        $t('market.market_header_ai'),
+        $t('market.market_header_forex'),
+      ]"
+      @change="(e) => changeTab(e, true)"
+    />
+    <Swipe
+      ref="swipe"
+      :autoplay="0"
+      :initial-swipe="marketActiveTab"
+      :show-indicators="false"
+      @change="changeTab"
+    >
       <SwipeItem>
         <div v-if="active === 0 && activated" class="assets_body">
           <!-- 自选 -->
@@ -19,7 +42,11 @@
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div v-if="loadedTab.includes(1)" ref="marketPageRef" class="assets_body">
+        <div
+          v-if="loadedTab.includes(1)"
+          ref="marketPageRef"
+          class="assets_body"
+        >
           <!-- 买币 -->
           <buyCoin ref="BuyCoinRef" />
         </div>
@@ -55,76 +82,81 @@
 </template>
 
 <script setup>
-import { Swipe, SwipeItem } from 'vant'
-import { ref, onDeactivated, computed, onActivated } from 'vue'
-import { useSessionStorage } from '@vueuse/core'
-import router from '@/router'
-import Optional from './components/Optional.vue'
-import Stock from './components/Stock.vue'
+import { Swipe, SwipeItem } from "vant";
+import { ref, onDeactivated, computed, onActivated } from "vue";
+import { useSessionStorage } from "@vueuse/core";
+import router from "@/router";
+import Optional from "./components/Optional.vue";
+import Stock from "./components/Stock.vue";
 // import Financial from './components/Financial.vue'
-import Foreign from './components/Foreign.vue'
+import Foreign from "./components/Foreign.vue";
 // import IPO from './components/IPO.vue'
-import store, { useMapState } from '@/store'
-import IPODetail from '@/views/trade/IPODetail.vue'
-import Subscription from '@/views/trade/Subscription.vue'
+import store, { useMapState } from "@/store";
+import IPODetail from "@/views/trade/IPODetail.vue";
+import Subscription from "@/views/trade/Subscription.vue";
 // import NoData from '@/components/NoData.vue'
-import Constract from './components/Constract.vue'
+import Constract from "./components/Constract.vue";
 // import Ai from './components/Ai.vue'
-import buyCoin from './buyCoin/index.vue'
-import AiBlockList from '../Trade2/pages/AiBlockList.vue'
-import Iconfonts from '@/components/Iconfonts.vue'
-import { useBuyCoinState } from './buyCoin/state'
-import HeaderTabs from '@/components/HeaderTabs.vue'
+import buyCoin from "./buyCoin/index.vue";
+import AiBlockList from "../Trade2/pages/AiBlockList.vue";
+import Iconfonts from "@/components/Iconfonts.vue";
+import { useBuyCoinState } from "./buyCoin/state";
+import HeaderTabs from "@/components/HeaderTabs.vue";
 
-const { setScrollData, cancelSubs, active: activeTwo, onChange } = useBuyCoinState()
-const { bottomTabBarValue } = useMapState(['bottomTabBarValue'])
-const market_active = useSessionStorage('market_active', 0)
-const marketPageRef = ref()
+const {
+  setScrollData,
+  cancelSubs,
+  active: activeTwo,
+  onChange,
+} = useBuyCoinState();
+const { bottomTabBarValue } = useMapState(["bottomTabBarValue"]);
+const market_active = useSessionStorage("market_active", 0);
+const marketPageRef = ref();
 const scrollData = useScroll(marketPageRef, {
   throttle: 200,
   onScroll: scrollHandler,
-})
+});
 const marketActiveTab = computed(() => store.state.marketActiveTab || 0);
 
-const openTab = ref(false)
+const openTab = ref(false);
 
-const active = ref(market_active.value)
-const initialSwipe = active.value
-const OptionalRef = ref()
-const BuyCoinRef = ref()
+const active = ref(market_active.value);
+const initialSwipe = active.value;
+const OptionalRef = ref();
+const BuyCoinRef = ref();
 // const StockRef = ref()
 // const IPORef = ref()
 // const reloading = ref(false)
-const detail = ref(null)
-const swipe = ref(null)
+const detail = ref(null);
+const swipe = ref(null);
 // const detailTransition = ref('slide-right')
-const loadedTab = ref([active.value])
-provide('scrollData', scrollData)
-setScrollData(scrollData)
+const loadedTab = ref([active.value]);
+provide("scrollData", scrollData);
+setScrollData(scrollData);
 const changeTab = (key, slideSwipe = false) => {
   store.commit("setMarketActiveTab", key);
-  active.value = key
-  market_active.value = key
-  openTab.value = false
+  active.value = key;
+  market_active.value = key;
+  openTab.value = false;
   if (!loadedTab.value.includes(key)) {
-    loadedTab.value.push(key)
+    loadedTab.value.push(key);
   } else {
     if (key == 1) {
       setTimeout(() => {
-        BuyCoinRef.value && BuyCoinRef.value.handleMounted()
-      }, 300)
+        BuyCoinRef.value && BuyCoinRef.value.handleMounted();
+      }, 300);
     }
   }
-  if (slideSwipe && swipe.value) swipe.value.swipeTo(key)
+  if (slideSwipe && swipe.value) swipe.value.swipeTo(key);
 
   setTimeout(() => {
     switch (key) {
       case 0:
-        OptionalRef.value && OptionalRef.value.init()
-        break
+        OptionalRef.value && OptionalRef.value.init();
+        break;
       case 1:
-        onChange(activeTwo.value)
-        break
+        onChange(activeTwo.value);
+        break;
       // case 'stock':
       //   // StockRef.value && StockRef.value.init()
       //   break
@@ -132,63 +164,67 @@ const changeTab = (key, slideSwipe = false) => {
       //   IPORef.value && IPORef.value.init()
       //   break
       default:
-        cancelSubs()
-        break
+        cancelSubs();
+        break;
     }
-  }, 100)
-}
+  }, 100);
+};
 
-const activated = ref(false)
+const activated = ref(false);
 const activatedIncludes = computed(() => {
   // 需要缓存的页面
-  return [0, 2, 3, 4, 5].includes(active.value) ? activated.value : true
-})
+  return [0, 2, 3, 4, 5].includes(active.value) ? activated.value : true;
+});
 function scrollHandler() {
   if (openTab.value) {
-    openTab.value = false
+    openTab.value = false;
   }
 }
 // 跳转
-const jump = name => {
+const jump = (name) => {
   router.push({
     name,
-  })
-}
+  });
+};
 watch(
   () => store.state.bottomTabBarValue,
-  newValue => {
-    if (newValue === 'market' && active.value == 1) {
-      onChange(activeTwo.value)
+  (newValue) => {
+    if (newValue === "market" && active.value == 1) {
+      onChange(activeTwo.value);
     }
   }
-)
+);
 onActivated(() => {
-  activated.value = true
+  activated.value = true;
   setTimeout(() => {
     if (active.value == 0) {
-      OptionalRef.value && OptionalRef.value.init()
+      OptionalRef.value && OptionalRef.value.init();
     }
-  }, 100)
-})
+  }, 100);
+});
 onDeactivated(() => {
   setTimeout(() => {
-    activated.value = false
-  }, 100)
+    activated.value = false;
+  }, 100);
   // 取消订阅
-  if (bottomTabBarValue.value !== 'market') {
-    cancelSubs()
+  if (bottomTabBarValue.value !== "market") {
+    cancelSubs();
   }
-})
+});
 // 预加载页面
-const pageLoading = computed(() => store.state.pageLoading)
-store.commit('setPageLoading', true)
-Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Search.vue'), import('@/views/Market/IpoSubscription.vue')]).finally(() => {
-  store.commit('setPageLoading', false)
+const pageLoading = computed(() => store.state.pageLoading);
+store.commit("setPageLoading", true);
+Promise.all([
+  import("@/views/Market/MarketInfo.vue"),
+  import("@/views/Market/Search.vue"),
+  import("@/views/Market/IpoSubscription.vue"),
+]).finally(() => {
+  store.commit("setPageLoading", false);
 
   setTimeout(() => {
-    changeTab(active.value)
-  }, 0)
-})
+    changeTab(active.value);
+  }, 0);
+});
 </script>
 
 <style lang="less" scoped>
@@ -220,7 +256,7 @@ Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Sea
     align-items: center;
     transition: all ease 0.3s;
 
-    >span {
+    > span {
       margin-left: 0.08rem;
     }
 
@@ -374,7 +410,7 @@ Promise.all([import('@/views/Market/MarketInfo.vue'), import('@/views/Market/Sea
       }
 
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         width: 0.6rem;
         height: 0.2rem;

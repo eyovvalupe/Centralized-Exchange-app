@@ -1,52 +1,105 @@
 <!-- 底部导航 -->
 <template>
   <div class="max-width bottom_nav">
-    <div v-for="(item, i) in navs" :key="i" class="bottom_nav_item" :class="[checkActive(item) ? 'bottom_nav_active' : '']" @touchstart="handleClick(item, $event)" @click="handleClick(item)">
+    <div
+      v-for="(item, i) in navs"
+      :key="i"
+      class="bottom_nav_item"
+      :class="[checkActive(item) ? 'bottom_nav_active' : '']"
+      @touchstart="handleClick(item, $event)"
+      @click="handleClick(item)"
+    >
       <div class="bottom_nav_icon">
         <iconpark-icon v-if="!checkActive(item)" :name="item.icon" />
         <iconpark-icon v-if="checkActive(item)" :name="item.icon2" />
       </div>
 
-      <div class="bottom_nav_name">{{ item.name }}</div>
+      <div class="bottom_nav_name">
+        <!-- {{ item.name }} -->
+        {{
+          item.route == "home"
+            ? t("home.homepage")
+            : item.route == "market"
+            ? t("home.market")
+            : item.route == "trade"
+            ? t("home.trade")
+            : item.route == "assets"
+            ? t("home.assets")
+            : item.route == "user"
+            ? t("home.user")
+            : '--'
+        }}
+      </div>
 
       <!-- c2c角标 -->
-      <div v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0" class="nav_num">{{ store.state.c2cUnreadTotal }}</div>
+      <div
+        v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0"
+        class="nav_num"
+      >
+        {{ store.state.c2cUnreadTotal }}
+      </div>
       <!-- 角标 -->
-      <div v-if="item.route == 'user' && storeChat.state.messageNum > 0" class="nav_num">{{ storeChat.state.messageNum }}</div>
+      <div
+        v-if="item.route == 'user' && storeChat.state.messageNum > 0"
+        class="nav_num"
+      >
+        {{ storeChat.state.messageNum }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
-import router from '@/router'
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import router from "@/router";
 // import { _playVoice } from "@/utils/voice"
-import eventBus from '@/utils/eventBus'
+import eventBus from "@/utils/eventBus";
 
-import store from '@/store'
-import storeChat from '@/store/chat'
+import store from "@/store";
+import storeChat from "@/store/chat";
+import { useI18n } from "vue-i18n";
 
-const route = useRoute()
-const activeRoute = computed(() => route.name)
-const token = computed(() => store.state.token)
+const { t } = useI18n();
+const route = useRoute();
+const activeRoute = computed(() => route.name);
+const token = computed(() => store.state.token);
 
 const navs = ref([
-  { name: '首页', route: 'home', icon: 'shouye1', icon2: 'shouye2' },
-  { name: '市场', route: 'market', children: ['market_info', 'financial_info', 'trading_rules'], icon: 'shichang1', icon2: 'shichang2' },
-  { name: '交易', route: 'trade', icon: 'jiaoyi1', icon2: 'jiaoyi2' },
-  { name: '资产', route: 'assets', children: ['transfer'], icon: 'zichan1', icon2: 'zichan2', needLogin: true },
-  { name: '用户', route: 'user', children: ['account'], icon: 'yonghu1', icon2: 'yonghu2' },
-])
+  { name: "首页", route: "home", icon: "shouye1", icon2: "shouye2" },
+  {
+    name: "市场",
+    route: "market",
+    children: ["market_info", "financial_info", "trading_rules"],
+    icon: "shichang1",
+    icon2: "shichang2",
+  },
+  { name: "交易", route: "trade", icon: "jiaoyi1", icon2: "jiaoyi2" },
+  {
+    name: "资产",
+    route: "assets",
+    children: ["transfer"],
+    icon: "zichan1",
+    icon2: "zichan2",
+    needLogin: true,
+  },
+  {
+    name: "用户",
+    route: "user",
+    children: ["account"],
+    icon: "yonghu1",
+    icon2: "yonghu2",
+  },
+]);
 
-const touchLoading = ref(false)
+const touchLoading = ref(false);
 const handleClick = (item, e) => {
-  if (!item.route) return
-  if (touchLoading.value) return
-  touchLoading.value = true
+  if (!item.route) return;
+  if (touchLoading.value) return;
+  touchLoading.value = true;
   setTimeout(() => {
-    touchLoading.value = false
-  }, 300)
+    touchLoading.value = false;
+  }, 300);
   // _playVoice()
   if (item.needLogin && !token.value) {
     // return router.push({
@@ -55,33 +108,37 @@ const handleClick = (item, e) => {
     //         reurl: route.name
     //     }
     // })
-    eventBus.on('loginSuccess', () => {
+    eventBus.on("loginSuccess", () => {
       // 登录成功后继续跳转
       router.push({
         name: item.route,
-      })
-    })
-    eventBus.on('loginFail', () => {
+      });
+    });
+    eventBus.on("loginFail", () => {
       // 关闭弹窗后移除监听
-      eventBus.off('loginSuccess')
-      eventBus.off('loginFail')
-    })
-    store.commit('setIsLoginOpen', true)
-    return
+      eventBus.off("loginSuccess");
+      eventBus.off("loginFail");
+    });
+    store.commit("setIsLoginOpen", true);
+    return;
   }
-  store.commit('setBottomTabBarValue', item.route)
+  store.commit("setBottomTabBarValue", item.route);
   router.push({
     name: item.route,
-  })
-  if (item.route == 'assets') {
-    store.dispatch('updateAssets')
+  });
+  if (item.route == "assets") {
+    store.dispatch("updateAssets");
   }
-}
+};
 
-const checkActive = item => {
-  if (activeRoute.value == item.route || (item.children && item.children.includes(activeRoute.value))) return true
-  return false
-}
+const checkActive = (item) => {
+  if (
+    activeRoute.value == item.route ||
+    (item.children && item.children.includes(activeRoute.value))
+  )
+    return true;
+  return false;
+};
 </script>
 
 <style scoped lang="less">

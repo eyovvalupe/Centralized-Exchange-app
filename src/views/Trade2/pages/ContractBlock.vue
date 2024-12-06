@@ -1,33 +1,21 @@
 <!-- 合约 -->
 <template>
   <div class="stock_block">
-    <Tabs
-      v-if="!pageLoading"
-      type="oval-card"
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      :color="'#014CFA'"
-      shrink
-      @change="onChange"
-    >
+    <Tabs v-if="!pageLoading" type="oval-card" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
+      shrink @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
-          <Opening
-            @showNavDialog="showNavDialog"
-            @success="openSuccess"
-            ref="OpeningRef"
-          />
+          <Opening :type="'constract'" @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
         </div>
       </Tab>
       <Tab :title="t('trade.stock_position')" name="1">
         <div class="stock_tab-body" v-if="loadTab.indexOf('1') > -1">
-          <Positions />
+          <Positions :type="'constract'" />
         </div>
       </Tab>
       <Tab :title="t('trade.stock_search')" name="2">
         <div class="stock_tab-body" v-if="loadTab.indexOf('2') > -1">
-          <Inquire ref="InquireRef" />
+          <Inquire :type="'constract'" ref="InquireRef" />
         </div>
       </Tab>
     </Tabs>

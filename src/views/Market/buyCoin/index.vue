@@ -1,20 +1,30 @@
 <!-- 买币 -->
 <template>
   <div class="page-buycoin">
-    <Tabs v-if="!pageLoading" v-model:active="active" class="tabs" :swipeable="false" animated color="#014CFA" shrink
-      @change="e => onChange(e)">
-      <Tab :title="$t('快捷区')" name="0">
+    <Tabs
+      v-if="!pageLoading"
+      v-model:active="active"
+      class="tabs"
+      :swipeable="false"
+      animated
+      color="#014CFA"
+      shrink
+      @change="(e) => onChange(e)"
+    >
+      <Tab :title="t('market.market_buy_title1')" name="0">
         <Faster />
       </Tab>
-      <Tab :title="$t('自选区')" name="1">
+      <Tab :title="t('market.market_buy_title2')" name="1">
         <Self ref="selfRef" />
       </Tab>
-      <Tab :title="$t('我的订单')" name="2">
+      <Tab :title="t('market.market_buy_title3')" name="2">
         <List ref="listRef" />
         <template #title>
           <div class="tab_item">
-            <span>{{ $t('我的订单') }}</span>
-            <div v-if="store.state.c2cUnreadTotal > 0" class="nav_num">{{ store.state.c2cUnreadTotal }}</div>
+            <span>{{ t("market.market_buy_title3") }}</span>
+            <div v-if="store.state.c2cUnreadTotal > 0" class="nav_num">
+              {{ store.state.c2cUnreadTotal }}
+            </div>
           </div>
         </template>
       </Tab>
@@ -23,28 +33,31 @@
 </template>
 
 <script>
-export default { name: 'Buycoin' }
+export default { name: "Buycoin" };
 </script>
 
 <script setup>
 /* eslint-disable */
-import { Tab, Tabs } from 'vant'
-import { ref, onMounted, onUnmounted, defineExpose } from 'vue'
-import { useSocket } from '@/utils/ws'
-import Faster from './Faster.vue'
-import List from './List.vue'
-import Self from './Self.vue'
-import store from '@/store'
-import { useBuyCoinState } from './state'
-/* eslint-enable */
-const scrollData = inject('scrollData')
-const positionValue = ref('relative')
-// 订阅
-const buycoinScrollTop1 = useSessionStorage('buycoinScrollTop1')
-const buycoinScrollTop2 = useSessionStorage('buycoinScrollTop2')
-const { active, selfRef, listRef, onChange } = useBuyCoinState()
+import { Tab, Tabs } from "vant";
+import { ref, onMounted, onUnmounted, defineExpose } from "vue";
+import { useSocket } from "@/utils/ws";
+import Faster from "./Faster.vue";
+import List from "./List.vue";
+import Self from "./Self.vue";
+import store from "@/store";
+import { useBuyCoinState } from "./state";
+import { useI18n } from "vue-i18n";
 
-const pageLoading = ref(true)
+const { t } = useI18n();
+/* eslint-enable */
+const scrollData = inject("scrollData");
+const positionValue = ref("relative");
+// 订阅
+const buycoinScrollTop1 = useSessionStorage("buycoinScrollTop1");
+const buycoinScrollTop2 = useSessionStorage("buycoinScrollTop2");
+const { active, selfRef, listRef, onChange } = useBuyCoinState();
+
+const pageLoading = ref(true);
 
 watch(
   () => scrollData.y.value,
@@ -52,42 +65,42 @@ watch(
     if (val > 100) {
       if (val > oldVal) {
         // 向下滚动
-        positionValue.value = 'relative'
+        positionValue.value = "relative";
       } else {
         // 向上滚动
-        positionValue.value = 'sticky'
+        positionValue.value = "sticky";
       }
     } else {
-      positionValue.value = 'relative'
+      positionValue.value = "relative";
     }
     switch (active.value) {
-      case '1':
-        buycoinScrollTop1.value = val
-        break
-      case '2':
-        buycoinScrollTop2.value = val
-        break
+      case "1":
+        buycoinScrollTop1.value = val;
+        break;
+      case "2":
+        buycoinScrollTop2.value = val;
+        break;
     }
   }
-)
+);
 
 const handleMounted = () => {
-  console.error('onMounted')
+  console.error("onMounted");
   setTimeout(() => {
-    pageLoading.value = false
-  }, 300)
-}
+    pageLoading.value = false;
+  }, 300);
+};
 onMounted(() => {
-  handleMounted()
-})
+  handleMounted();
+});
 onUnmounted(() => {
-  buycoinScrollTop1.value = null
-  buycoinScrollTop2.value = null
-})
+  buycoinScrollTop1.value = null;
+  buycoinScrollTop2.value = null;
+});
 
 defineExpose({
-  handleMounted
-})
+  handleMounted,
+});
 </script>
 
 <style lang="less" scoped>
@@ -112,7 +125,7 @@ defineExpose({
         padding: 0;
       }
 
-      >.van-tabs__nav {
+      > .van-tabs__nav {
         border-radius: 0.32rem;
         background: #eff3f8 !important;
         position: relative;

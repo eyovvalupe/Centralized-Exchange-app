@@ -2,8 +2,8 @@ import http from "./request";
 import axios from "axios";
 import { BASE_ADDRESS } from "@/config"
 
-const baseURL = process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS
-// const baseURL = BASE_ADDRESS
+// const baseURL = process.env.NODE_ENV === 'development' ? "/api" : BASE_ADDRESS
+const baseURL = BASE_ADDRESS
 // 上传文件
 // export const _upload = (file, successFunc, errorFunc, finishFunc) => {
 //   const form = new FormData()
@@ -228,7 +228,12 @@ export const _register = (data = {}) => {
     custom: { auth: false, toast: false, retry: false },
   });
 };
-
+// 模拟注册
+export const _guestRegister = (data = {}) => {
+  return http.post(`/anon/v1/user/guest/register`, data, {
+    custom: { auth: false, toast: false, retry: false },
+  });
+};
 // 新闻列表
 export const _news = (data = {}) => {
   return http.post(`/anon/v1/market/news`, data, {
@@ -606,5 +611,22 @@ export const _c2cRead = (data = {}) => {
     custom: { auth: true, toast: false, retry: true },
   });
 };
-
+// 大宗交易参数
+export const _blocktradePara = (data = {}) => {
+  return http.post(`/roles/v1/blocktrade/para`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
+// 大宗交易订单列表
+export const _blocktradeList = (data = {}) => {
+  return http.post(`/roles/v1/blocktrade/q/list`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 大宗交易订单平仓
+export const _blocktradeSell = (data = {}) => {
+  return http.post(`/roles/v1/blocktrade/m/sell`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
 export const memberInfo = () => { }

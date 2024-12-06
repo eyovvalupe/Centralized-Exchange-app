@@ -3,22 +3,43 @@
   <div class="page_fasters">
     <div class="form">
       <div class="tabs">
-        <div class="tab" :class="{ active_tab: form1.offset == 'buy' }" @click="changeTab('buy')">{{ $t('买入') }}</div>
-        <div class="tab" :class="{ active_tab: form1.offset == 'sell' }" @click="changeTab('sell')">{{ $t('卖出') }}</div>
+        <div
+          class="tab"
+          :class="{ active_tab: form1.offset == 'buy' }"
+          @click="changeTab('buy')"
+        >
+          {{ t('market.market_buy_fast_buy') }}
+        </div>
+        <div
+          class="tab"
+          :class="{ active_tab: form1.offset == 'sell' }"
+          @click="changeTab('sell')"
+        >
+          {{ t(('market.market_buy_fast_sell')) }}
+        </div>
       </div>
 
       <!-- 售出 -->
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>{{ form1.offset == 'buy' ? t('收到') : t('卖出') }}</span>
+            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell') }}</span>
             <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
-            <span v-if="form1.offset == 'sell' && token" v-show="form1.volume === '' || priceFocus" class="ipt_tip">≤ {{
-              currWallet.amount || '--' }}</span>
-            <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false"
-              @blur="priceFocus = false" />
+            <span
+              v-if="form1.offset == 'sell' && token"
+              v-show="form1.volume === '' || priceFocus"
+              class="ipt_tip"
+              >≤ {{ currWallet.amount || "--" }}</span
+            >
+            <input
+              v-model="form1.volume"
+              type="number"
+              class="ipt"
+              @focus="priceFocus = false"
+              @blur="priceFocus = false"
+            />
           </div>
         </div>
 
@@ -29,13 +50,21 @@
             <!-- <span class="link">划转</span> -->
           </div>
           <div v-if="!token" class="subtitle">&nbsp;</div>
-          <div class="item justify-between" :class="{ item_focus: priceFocus }"
-            style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
+          <div
+            class="item justify-between"
+            :class="{ item_focus: priceFocus }"
+            style="border: 1px solid #d0d8e2 !important"
+            @click="openDialog(1)"
+          >
             <div class="flex items-center">
               <div v-if="currOut.name" class="icon">
-                <img class="rounded-50" :src="`/static/img/crypto/${currOut.name}.png`" alt="currency" />
+                <img
+                  class="rounded-50"
+                  :src="`/static/img/crypto/${currOut.name}.png`"
+                  alt="currency"
+                />
               </div>
-              <span>{{ currOut.name || '--' }}</span>
+              <span>{{ currOut.name || "--" }}</span>
             </div>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
@@ -48,7 +77,7 @@
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>{{ form1.offset == 'buy' ? t('支付') : t('收到') }}</span>
+            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive') }}</span>
           </div>
           <div class="item">
             {{ getMoney }}
@@ -56,13 +85,21 @@
         </div>
         <div class="item_box_right">
           <div class="subtitle"><span>&nbsp;</span></div>
-          <div class="item justify-between" :class="{ item_focus: priceFocus }"
-            style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
+          <div
+            class="item justify-between"
+            :class="{ item_focus: priceFocus }"
+            style="border: 1px solid #d0d8e2 !important"
+            @click="openDialog(2)"
+          >
             <div class="flex items-center">
               <div v-if="currIn.name" class="icon">
-                <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
+                <img
+                  class="rounded-50"
+                  :src="handleUrl(currIn.name)"
+                  alt="currency"
+                />
               </div>
-              <span>{{ currIn.name || '--' }}</span>
+              <span>{{ currIn.name || "--" }}</span>
             </div>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
@@ -70,12 +107,20 @@
           </div>
         </div>
       </div>
-      <div v-if="rate && token" class="tip">{{ $t('预计价格') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈ {{ rate || '--'
-        }}&nbsp;{{ currIn.name }}</div>
+      <div v-if="rate && token" class="tip">
+        {{ t('market.market_buy_fast_estprice') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈
+        {{ rate || "--" }}&nbsp;{{ currIn.name }}
+      </div>
 
-      <Button size="large" class="submit" round :loading="loading"
-        :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == 'sell' ? t('卖出') :
-          t('买入') }}</Button>
+      <Button
+        size="large"
+        class="submit"
+        round
+        :loading="loading"
+        :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'"
+        @click="sell"
+        >{{ form1.offset == "sell" ? t('market.market_buy_fast_sell') : t('market.market_buy_fast_buy') }}</Button
+      >
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
       <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
@@ -83,8 +128,14 @@
   </div>
 
   <!-- 售出币种 -->
-  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-    position="bottom" teleport="body">
+  <Popup
+    v-model:show="showDialog"
+    :safe-area-inset-top="true"
+    :safe-area-inset-bottom="true"
+    class="self_van_popup"
+    position="bottom"
+    teleport="body"
+  >
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
         <img src="/static/img/common/close.png" alt="x" />
@@ -93,226 +144,263 @@
         <div class="icon">
           <img src="/static/img/common/search.png" alt="🔍" />
         </div>
-        <input ref="iptRef" v-model.trim="searchValue" :placeholder="$t('输入币种')" type="text" enterkeyhint="search"
-          class="search" />
+        <input
+          ref="iptRef"
+          v-model.trim="searchValue"
+          :placeholder="t('market.market_buy_fast_search_input')"
+          type="text"
+          enterkeyhint="search"
+          class="search"
+        />
       </div>
-      <div class="title">{{ $t('币种选择') }}</div>
-      <div v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet" :key="i" class="swap_dialog_item"
-        :class="{ swap_dialog_item_active: showDialogType == 1 ? currOut.name == item.name : currIn.name == item.name }"
-        @click="clickItem(item)">
+      <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
+      <div
+        v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet"
+        :key="i"
+        class="swap_dialog_item"
+        :class="{
+          swap_dialog_item_active:
+            showDialogType == 1
+              ? currOut.name == item.name
+              : currIn.name == item.name,
+        }"
+        @click="clickItem(item)"
+      >
         <div class="icon">
           <img class="rounded-50" :src="handleUrl(item.name)" alt="currency" />
         </div>
         <span>{{ item.name }}</span>
-        <Icon v-if="showDialogType == 1 ? currOut.name == item.name : currIn.name == item.name" class="check_icon"
-          name="success" />
+        <Icon
+          v-if="
+            showDialogType == 1
+              ? currOut.name == item.name
+              : currIn.name == item.name
+          "
+          class="check_icon"
+          name="success"
+        />
       </div>
     </div>
   </Popup>
 
-  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
-    @on-add-collection="clickAccountItem" />
+  <AccountSelectionPopUp
+    v-model:show="showAccountDialog"
+    :bank="form1"
+    currency-type="bank"
+    @on-add-collection="clickAccountItem"
+  />
 
   <!-- 安全密码弹窗 -->
   <SafePassword ref="safeRef" @submit="submitSell" />
 </template>
 
 <script setup>
-import { ref, computed, onBeforeUnmount, onMounted } from 'vue'
-import { Button, Popup, Icon, showToast, showConfirmDialog } from 'vant'
-import Decimal from 'decimal.js'
-import store, { useMapState } from '@/store'
+import { ref, computed, onBeforeUnmount, onMounted } from "vue";
+import { Button, Popup, Icon, showToast, showConfirmDialog } from "vant";
+import Decimal from "decimal.js";
+import store, { useMapState } from "@/store";
 // import router from '@/router'
-import { _swapRate, _orderFast } from '@/api/api'
+import { _swapRate, _orderFast } from "@/api/api";
 // import { _hiddenAccount } from '@/utils/index'
-import SafePassword from '@/components/SafePassword.vue'
-import eventBus from '@/utils/eventBus'
-import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
-import { useBuyCoinState } from './state'
-import router from '@/router'
+import SafePassword from "@/components/SafePassword.vue";
+import eventBus from "@/utils/eventBus";
+import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
+import { useBuyCoinState } from "./state";
+import router from "@/router";
+import { useI18n } from "vue-i18n";
 
-
-const { handleUrl, active } = useBuyCoinState()
-const safeRef = ref()
-const { sessionToken, token, deWeightCurrencyList: currencyList } = useMapState(['sessionToken', 'token', 'deWeightCurrencyList'])
-const wallet = computed(() => store.state.wallet) // 所有钱包
+const { t } = useI18n();
+const { handleUrl, active } = useBuyCoinState();
+const safeRef = ref();
+const {
+  sessionToken,
+  token,
+  deWeightCurrencyList: currencyList,
+} = useMapState(["sessionToken", "token", "deWeightCurrencyList"]);
+const wallet = computed(() => store.state.wallet); // 所有钱包
 const currWallet = computed(() => {
-  let target = wallet.value.find(item => item.currency == currOut.value.currency)
-  return target || {}
-})
-const { t } = useI18n()
-const searchValue = ref('')
+  let target = wallet.value.find(
+    (item) => item.currency == currOut.value.currency
+  );
+  return target || {};
+});
+const searchValue = ref("");
 // 售出
-const loading = ref(false)
-const priceFocus = ref(false)
+const loading = ref(false);
+const priceFocus = ref(false);
 const form1 = ref({
-  offset: 'buy',
-  volume: '',
-  crypto: '',
-  currency: '',
-  account_id: '',
-})
-const currOut = ref({}) // 当前售出钱包
-const currIn = ref({}) // 当前收到钱包
+  offset: "buy",
+  volume: "",
+  crypto: "",
+  currency: "",
+  account_id: "",
+});
+const currOut = ref({}); // 当前售出钱包
+const currIn = ref({}); // 当前收到钱包
 
 // 币种弹窗
-const showDialog = ref(false)
-const showDialogType = ref(1) // 1-售出 2-收到
+const showDialog = ref(false);
+const showDialogType = ref(1); // 1-售出 2-收到
 
 //  获取汇率
-const rateLoading = ref(false)
-const rate = ref('')
+const rateLoading = ref(false);
+const rate = ref("");
 // 账户选择
-const showAccountDialog = ref(false)
+const showAccountDialog = ref(false);
 
-const filterSearchValue = data => {
-  return data.filter(item => item.name.toLowerCase().includes(searchValue.value.toLowerCase()))
-}
+const filterSearchValue = (data) => {
+  return data.filter((item) =>
+    item.name.toLowerCase().includes(searchValue.value.toLowerCase())
+  );
+};
 const inWallet = computed(() => {
   // 收到钱包
-  let data
+  let data;
   // if (form1.value.offset == 'buy') {
   //   data = wallet.value.filter(item => item.type == 'crypto')
   //   // 模糊查询
   // } else {
   // eslint-disable-next-line prefer-const
-  data = currencyList.value.filter(item => item.type == 'fiat')
+  data = currencyList.value.filter((item) => item.type == "fiat");
   // }
   // 模糊查询
-  return filterSearchValue(data)
-})
+  return filterSearchValue(data);
+});
 // 购买按钮触发
 const sell = () => {
-  if (!token.value) return store.commit('setIsLoginOpen', true)
-  if (!form1.value.volume || form1.value.volume <= 0) return showToast(t('请输入金额'))
-  if (form1.value.offset == 'sell') {
+  if (!token.value) return store.commit("setIsLoginOpen", true);
+  if (!form1.value.volume || form1.value.volume <= 0)
+    return showToast(t('market.market_buy_fast_no_amount'));
+  if (form1.value.offset == "sell") {
     if (form1.value.volume > (currWallet.value.amount || 0)) {
       showConfirmDialog({
-        title: '提示',
-        message: '钱包余额不足，请充值或划转账户',
-        cancelButtonText: '去充值',
-        confirmButtonText: '去划转',
-        cancelButtonColor: 'var(--main-color)',
-        confirmButtonColor: 'var(--main-color)',
+        title: t('market.market_buy_fast_noti_title'),
+        message: t('market.market_buy_fast_noti_con'),
+        cancelButtonText: t('market.market_buy_fast_noti_cancel'),
+        confirmButtonText: t('market.market_buy_fast_noti_confirm'),
+        cancelButtonColor: "var(--main-color)",
+        confirmButtonColor: "var(--main-color)",
         closeOnClickOverlay: !0,
       })
         .then(() => {
-          router.push({ name: 'transfer' })
+          router.push({ name: "transfer" });
         })
         .catch(() => {
-          router.push({ name: 'topUpCrypto' })
-        })
-      return
+          router.push({ name: "topUpCrypto" });
+        });
+      return;
     }
-    showAccountDialog.value = true
+    showAccountDialog.value = true;
   } else {
-    safeRef.value.open()
+    safeRef.value.open();
   }
-}
-const submitSell = s => {
-  loading.value = true
-  store.dispatch('updateSessionToken').then(st => {
+};
+const submitSell = (s) => {
+  loading.value = true;
+  store.dispatch("updateSessionToken").then((st) => {
     if (st) {
       const params = {
         offset: form1.value.offset,
-        account_id: form1.value.offset == 'sell' ? form1.value.account_id : null,
+        account_id:
+          form1.value.offset == "sell" ? form1.value.account_id : null,
         volume: form1.value.volume,
         crypto: currOut.value.currency,
         currency: currIn.value.currency,
         token: sessionToken.value,
         safeword: s,
-      }
+      };
       _orderFast(params)
         .then(({ data: { order_no } }) => {
-          showToast(t('下单成功'))
-          form1.value.volume = ''
+          showToast(t('market.market_buy_fast_success'));
+          form1.value.volume = "";
           setTimeout(() => {
             router.push({
-              name: 'orderDetails',
+              name: "orderDetails",
               query: { order_no },
-            })
-          }, 300)
-        }).finally(() => {
-          loading.value = false
+            });
+          }, 300);
         })
+        .finally(() => {
+          loading.value = false;
+        });
     } else {
       setTimeout(() => {
-        submitSell(s)
-      }, 1000)
+        submitSell(s);
+      }, 1000);
     }
-  })
-}
+  });
+};
 
 const getMoney = computed(() => {
-  if (!form1.value.volume || !rate.value) return '--'
-  return new Decimal(form1.value.volume).mul(rate.value) || '--'
-})
+  if (!form1.value.volume || !rate.value) return "--";
+  return new Decimal(form1.value.volume).mul(rate.value) || "--";
+});
 const outWallet = computed(() => {
   // 售出钱包
-  let data
+  let data;
   // if (form1.value.offset == 'buy') {
   // data = wallet.value.filter(item => item.type == 'fiat')
   // console.log('currencyList.value', currencyList.value)
   // data = currencyList.value.filter(item => item.type == 'fiat')
   // } else {
   // eslint-disable-next-line prefer-const
-  data = currencyList.value.filter(item => item.type == 'crypto')
+  data = currencyList.value.filter((item) => item.type == "crypto");
   // }
-  return filterSearchValue(data)
-})
-const openDialog = type => {
-  showDialogType.value = type
-  showDialog.value = true
-}
-const clickItem = item => {
+  return filterSearchValue(data);
+});
+const openDialog = (type) => {
+  showDialogType.value = type;
+  showDialog.value = true;
+};
+const clickItem = (item) => {
   if (showDialogType.value == 1) {
-    currOut.value = item
+    currOut.value = item;
   } else {
-    currIn.value = item
+    currIn.value = item;
   }
-  showDialog.value = false
+  showDialog.value = false;
 
   setTimeout(() => {
-    getRate()
-  }, 100)
-}
+    getRate();
+  }, 100);
+};
 
 // 切换方向
-const changeTab = val => {
-  form1.value.offset = val
+const changeTab = (val) => {
+  form1.value.offset = val;
   // 切换币种
   // const obj = currOut.value
   // currOut.value = currIn.value
   // currIn.value = obj
   setTimeout(() => {
-    getRate()
-  }, 100)
-}
+    getRate();
+  }, 100);
+};
 
 const getRate = () => {
-  rateLoading.value = true
-  rate.value = ''
+  rateLoading.value = true;
+  rate.value = "";
   _swapRate({
     from: currOut.value.currency,
     to: currIn.value.currency,
     amount: 0,
   })
-    .then(res => {
+    .then((res) => {
       if (res.data.exchange_rate) {
-        rate.value = res.data.exchange_rate
+        rate.value = res.data.exchange_rate;
       }
     })
     .finally(() => {
-      rateLoading.value = false
-    })
-}
+      rateLoading.value = false;
+    });
+};
 
-const clickAccountItem = item => {
-  form1.value.account_id = item.id
-  form1.value.id = item.id
-  showAccountDialog.value = false
-  safeRef.value.open()
-}
+const clickAccountItem = (item) => {
+  form1.value.account_id = item.id;
+  form1.value.id = item.id;
+  showAccountDialog.value = false;
+  safeRef.value.open();
+};
 // 跳转添加
 // const goAddAccount = () => {
 //   // google检测
@@ -329,15 +417,13 @@ const clickAccountItem = item => {
 //   })
 // }
 
-
-
 const onInit = () => {
-  getRate()
-}
+  getRate();
+};
 
-if (outWallet.value[0]) currOut.value = outWallet.value[0]
-if (inWallet.value[0]) currIn.value = inWallet.value[0]
-onInit()
+if (outWallet.value[0]) currOut.value = outWallet.value[0];
+if (inWallet.value[0]) currIn.value = inWallet.value[0];
+onInit();
 </script>
 
 <style lang="less" scoped>
@@ -707,7 +793,7 @@ onInit()
       align-items: center;
       justify-content: center;
 
-      >img {
+      > img {
         width: 0.64rem !important;
         height: 0.64rem !important;
       }
@@ -741,7 +827,7 @@ onInit()
       width: 0.46rem;
       height: 0.42rem;
 
-      >img {
+      > img {
         width: 0.18rem !important;
         height: 0.12rem !important;
         position: absolute;

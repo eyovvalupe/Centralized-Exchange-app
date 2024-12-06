@@ -167,7 +167,6 @@
     >
       <div class="van-popup-custom__top-rbtn" @click="onConfirm">{{ $t("transfer.confirm") }}</div>
       <div class="van-popup-custom-title">{{ $t("transfer.confirm_con") }}</div>
-
       <Picker
         :swipe-duration="200"
         :show-toolbar="false"
@@ -227,6 +226,8 @@ const assets = computed(() => store.state.assets || {});
 const wallet = computed(() => store.state.wallet || []); // 钱包
 const elseWallet = computed(() => store.state.elseWallet || []); // 其他账户钱包
 const elseCoinMap = computed(() => store.state.elseCoinMap || {}); // 其他账户的币种
+const userInfo = computed(() => store.state.userInfo)
+console.log("=========> ", elseWallet.value)
 
 // 表单
 const loading = ref(false);
@@ -299,34 +300,54 @@ const columns = computed(() => {
       });
     } else {
       // 其他账户
-      const target = elseWallet.value.find((a) => a.account == item.key);
-      if (target) {
-        item.currencys = [
-          {
-            key: target.currency,
-            value: target.name,
-            currency: target.currency,
-            name: target.name,
+      // const target = elseWallet.value.map((a) => a.account == item.key);
+      item.currencys = elseWallet.value.reduce((acc, cur) => {
+        if (cur.account == item.key) {
+          acc.push({
+            key: cur.currency,
+            value: cur.name,
+            currency: cur.currency,
+            name: cur.name,
             className:
               clickKey.value == "from"
-                ? form.value.fromCurrency.currency == target.currency
+                ? form.value.fromCurrency.currency == cur.currency
                   ? "action-sheet-active"
                   : ""
-                : form.value.toCurrency.currency == target.currency
+                : form.value.toCurrency.currency == cur.currency
                 ? "action-sheet-active"
                 : "",
-          },
-        ];
-      } else {
-        item.currencys = [
-          {
-            key: "",
-            value: "",
-            currency: "",
-            name: "",
-          },
-        ];
-      }
+          })
+        }
+        return acc;
+      }, [])
+      // console.log('target list =========> ', item.currencys)
+      // if (target) {
+      //   item.currencys = [
+      //     {
+            // key: target.currency,
+            // value: target.name,
+            // currency: target.currency,
+            // name: target.name,
+            // className:
+            //   clickKey.value == "from"
+            //     ? form.value.fromCurrency.currency == target.currency
+            //       ? "action-sheet-active"
+            //       : ""
+            //     : form.value.toCurrency.currency == target.currency
+            //     ? "action-sheet-active"
+            //     : "",
+      //     },
+      //   ];
+      // } else {
+      //   item.currencys = [
+      //     {
+      //       key: "",
+      //       value: "",
+      //       currency: "",
+      //       name: "",
+      //     },
+      //   ];
+      // }
     }
     return item;
   });
@@ -374,7 +395,7 @@ const balance = computed(() => {
 const safeRef = ref();
 const errStatus = ref(false);
 const openSafePass = () => {
-  if (AccountCheckRef.value.check()) {
+  if (userInfo.value.role =='guest' || userInfo.value.role != 'guest' && AccountCheckRef.value.check()) {
     if (!form.value.amount || form.value.amount <= 0) {
       errStatus.value = true;
       return showToast(t('transfer.no_amount'));
@@ -388,7 +409,8 @@ const openSafePass = () => {
     ) {
       return showToast(t('transfer.account_same'));
     }
-    safeRef.value.open();
+    if(userInfo.value.role == 'user') safeRef.value.open();
+    if(userInfo.value.role == 'guest') submit('000000');
   }
 };
 const submit = (s) => {
@@ -409,6 +431,7 @@ const submit = (s) => {
       if (res.code == 200) {
         showToast(t('transfer.success'));
         form.value.amount = "";
+        store.dispatch("updateAssets");
         store.dispatch("updateWallet"); // 更新资产
         setTimeout(() => {
           router.back();

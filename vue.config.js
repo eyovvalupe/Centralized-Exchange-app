@@ -48,7 +48,8 @@ module.exports = defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://146.70.86.141:8000',
+        // target: 'http://146.70.86.141:8000',
+        target: 'https://api.sungame.shop',
         changeOrigin: true,
         logLevel: 'debug',
         pathRewrite: { '^/api': '' },

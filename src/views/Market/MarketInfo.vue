@@ -1,6 +1,9 @@
 <!-- 市场详情 -->
 <template>
-  <div class="page page_marketinfo" :class="{ innerpage_marketinfo: props.innerPage }">
+  <div
+    class="page page_marketinfo"
+    :class="{ innerpage_marketinfo: props.innerPage }"
+  >
     <!-- 头部 -->
     <div class="max-width info_header">
       <div class="top">
@@ -17,24 +20,37 @@
         </div>
         <!-- 详情 -->
         <div class="title_shadow"></div>
-        <div v-if="!props.innerPage" class="search star" @click="addCollect"
-          :style="{ opacity: loading ? '0.5' : '1' }">
-          <div :class="item.watchlist == 1 ? 'check_star_icon' : 'uncheck_star_icon'
-            "></div>
+        <div
+          v-if="!props.innerPage"
+          class="search star"
+          @click="addCollect"
+          :style="{ opacity: loading ? '0.5' : '1' }"
+        >
+          <div
+            :class="
+              item.watchlist == 1 ? 'check_star_icon' : 'uncheck_star_icon'
+            "
+          ></div>
         </div>
         <!-- <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
                     <Icon name="enlarge" />
                 </div> -->
       </div>
       <div class="header-price">
-        <h1 class="info" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+        <h1
+          class="info"
+          :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
+        >
           <template v-if="item.price || item.close">
             {{ item.price || item.close }}
           </template>
           <span v-else>--</span>
         </h1>
-        <div style="display: flex; align-items: center; margin-left: 0.2rem" class="ratio"
-          :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+        <div
+          style="display: flex; align-items: center; margin-left: 0.2rem"
+          class="ratio"
+          :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
+        >
           <div class="ratio_price" v-if="item.price * (item.ratio || 0)">
             {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
             {{ item.price * (item.ratio || 0) }}
@@ -43,7 +59,9 @@
             {{
               item.ratio === undefined
                 ? "--"
-                : item.ratio > 0 ? "+" + item.ratio + "%" : item.ratio + "%"
+                : item.ratio > 0
+                ? "+" + item.ratio + "%"
+                : item.ratio + "%"
             }}
           </div>
         </div>
@@ -64,31 +82,63 @@
       <!-- 图表 -->
       <div class="chart_box">
         <div class="tabs">
-          <div class="tab" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
+          <div
+            class="tab"
+            :class="{ active_tab: timeType == 'Time' }"
+            @click="changeType('Time')"
+          >
             Time
           </div>
-          <div class="tab" @click="showPicker = true" :class="{ active_tab: minList.includes(timeType) }">
+          <div
+            class="tab"
+            @click="showPicker = true"
+            :class="{ active_tab: minList.includes(timeType) }"
+          >
             {{ currMin }}
             <Icon style="transform: rotate(90deg)" name="play" />
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
+          <div
+            class="tab"
+            :class="{ active_tab: timeType == '1h' }"
+            @click="changeType('1h')"
+          >
             1h
           </div>
-          <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '4h' }"
-            @click="changeType('4h')">
+          <div
+            class="tab"
+            v-if="!['stocks', 'forex'].includes(periodType)"
+            :class="{ active_tab: timeType == '4h' }"
+            @click="changeType('4h')"
+          >
             4h
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1D' }" @click="changeType('1D')">
+          <div
+            class="tab"
+            :class="{ active_tab: timeType == '1D' }"
+            @click="changeType('1D')"
+          >
             1D
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1W' }" @click="changeType('1W')">
+          <div
+            class="tab"
+            :class="{ active_tab: timeType == '1W' }"
+            @click="changeType('1W')"
+          >
             1W
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1M' }" @click="changeType('1M')">
+          <div
+            class="tab"
+            :class="{ active_tab: timeType == '1M' }"
+            @click="changeType('1M')"
+          >
             1M
           </div>
-          <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '1Y' }"
-            @click="changeType('1Y')">
+          <div
+            class="tab"
+            v-if="!['stocks', 'forex'].includes(periodType)"
+            :class="{ active_tab: timeType == '1Y' }"
+            @click="changeType('1Y')"
+          >
             1Y
           </div>
           <!-- <div style="flex:1"></div> -->
@@ -100,13 +150,26 @@
                         <img v-if="item.watchlist == 1" src="/static/img/market/star.png" alt="⭐">
                     </div> -->
         </div>
-        <div class="chart_container" :class="{ fullscreen_container: fullWindow }">
+        <div
+          class="chart_container"
+          :class="{ fullscreen_container: fullWindow }"
+        >
           <!-- 时区 -->
           <div v-if="showDate" class="chart_time">{{ showDate }}</div>
           <!-- 分时图 -->
-          <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
+          <AreaChart
+            ref="AreaChartRef"
+            v-if="timeType == 'Time'"
+            :showY="true"
+            :symbol="item.symbol"
+          />
           <!-- K线图 -->
-          <KlineChart ref="KlineChartRef" v-if="timeType != 'Time'" :symbol="item.symbol" :period="timeType" />
+          <KlineChart
+            ref="KlineChartRef"
+            v-if="timeType != 'Time'"
+            :symbol="item.symbol"
+            :period="timeType"
+          />
           <!-- 全屏关闭按钮 -->
           <div class="full_close" v-if="fullWindow" @click="fullScreen(false)">
             <Icon name="cross" />
@@ -117,7 +180,9 @@
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
       <div class="market_bottom_symbol">
-        <div class="symbol">{{ route.query.type == 'stock' ? item.symbol : item.name || "--" }}</div>
+        <div class="symbol">
+          {{ route.query.type == "stock" ? item.symbol : item.name || "--" }}
+        </div>
         <div class="time_type">{{ timeType }}</div>
       </div>
 
@@ -130,44 +195,69 @@
           <!-- <div class="bottom_btn_icon">
                             <img src="/static/img/market/data_icon.png" alt="img">
                         </div> -->
-          <span>数据</span>
+          <span>{{ t("market.market_marketinfo_data") }}</span>
         </div>
-        <div class="bottom_btn" @click="goBuy(true)" style="background-color: #00af70">
+        <div
+          class="bottom_btn"
+          @click="goBuy(true)"
+          style="background-color: #00af70"
+        >
           <!-- <div class="bottom_btn_icon">
                             <img src="/static/img/market/data_icon.png" alt="img">
                         </div> -->
-          <span>买涨</span>
+          <span>{{ t("market.market_marketinfo_long") }}</span>
         </div>
-        <div class="bottom_btn" @click="goBuy(false)" style="background-color: #e8503a">
+        <div
+          class="bottom_btn"
+          @click="goBuy(false)"
+          style="background-color: #e8503a"
+        >
           <!-- <div class="bottom_btn_icon">
                             <img src="/static/img/market/data_icon.png" alt="img">
                         </div> -->
-          <span>买跌</span>
+          <span>{{ t("market.market_marketinfo_short") }}</span>
         </div>
       </div>
     </div>
     <!-- 时间选择弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round position="bottom">
+    <Popup
+      :safe-area-inset-top="true"
+      :safe-area-inset-bottom="true"
+      v-model:show="showPicker"
+      round
+      position="bottom"
+    >
       <div class="times_list">
-        <div v-for="item in minList" :key="item" @click="chooseTime(item)" class="item"
-          :class="{ active_item: currMin == item }">
+        <div
+          v-for="item in minList"
+          :key="item"
+          @click="chooseTime(item)"
+          class="item"
+          :class="{ active_item: currMin == item }"
+        >
           {{ item }}
         </div>
       </div>
     </Popup>
     <!-- 交易弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBuy" round position="bottom"
-      closeable>
+    <Popup
+      :safe-area-inset-top="true"
+      :safe-area-inset-bottom="true"
+      v-model:show="showBuy"
+      round
+      position="bottom"
+      closeable
+    >
       <div class="buy_popup">
-        <div class="buy_name">交易</div>
+        <div class="buy_name">{{ t('market.market_marketinfo_trade') }}</div>
         <div class="buy_popup_btn" @click="goBuy(true)">
-          <span>买涨</span>
+          <span>{{ t('market.market_marketinfo_long') }}</span>
           <div class="btn_icon">
             <img src="/static/img/market/market.png" alt="img" />
           </div>
         </div>
         <div class="buy_popup_btn buy_popup_btn2" @click="goBuy(false)">
-          <span>买跌</span>
+          <span>{{ t('market.market_marketinfo_short') }}</span>
           <div class="btn_icon">
             <img src="/static/img/market/market.png" alt="img" />
           </div>
@@ -176,92 +266,125 @@
     </Popup>
 
     <!-- 数据弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo" round position="bottom"
-      closeable>
+    <Popup
+      :safe-area-inset-top="true"
+      :safe-area-inset-bottom="true"
+      v-model:show="showInfo"
+      round
+      position="bottom"
+      closeable
+    >
       <div class="info_popup">
-        <div class="info_name">数据</div>
+        <div class="info_name">{{ t("market.market_marketinfo_data") }}</div>
         <div class="info_price">
-          <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+          <div
+            class="info_num"
+            :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
+          >
             <template v-if="item.price || item.close">
               {{ item.price || item.close }}
             </template>
             <span v-else>--</span>
           </div>
-          <div style="display: flex; align-items: center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
-            <div v-if="Number(item.price * (item.ratio || 0))" :class="[
-              updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
-            ]">
+          <div
+            style="display: flex; align-items: center"
+            :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
+          >
+            <div
+              v-if="Number(item.price * (item.ratio || 0))"
+              :class="[
+                updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
+              ]"
+            >
               {{ updown === 0 ? "" : updown > 0 ? "+" : ""
               }}{{ item.price * (item.ratio || 0) }}
             </div>
-            <div v-if="item.ratio" style="margin-left: 0.15rem" :class="[
-              updown === 0
-                ? ''
-                : updown > 0
+            <div
+              v-if="item.ratio"
+              style="margin-left: 0.15rem"
+              :class="[
+                updown === 0
+                  ? ''
+                  : updown > 0
                   ? 'percentage_up'
                   : 'percentage_down',
-            ]">
+              ]"
+            >
               {{
                 updown === 0 || item.ratio === undefined
                   ? ""
                   : updown > 0
-                    ? "+"
-                    : ""
-              }}{{
-                item.ratio === undefined
-                  ? "--"
-                  : item.ratio + "%"
-              }}
+                  ? "+"
+                  : ""
+              }}{{ item.ratio === undefined ? "--" : item.ratio + "%" }}
             </div>
           </div>
         </div>
         <div class="info_items">
-          <div class="info_item" style="
+          <div
+            class="info_item"
+            style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            ">
-            <div class="name">开</div>
+            "
+          >
+            <div class="name">{{ t("market.market_marketinfo_open") }}</div>
             <div class="info_item__value">{{ item.open }}</div>
           </div>
-          <div class="info_item" style="
+          <div
+            class="info_item"
+            style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            ">
-            <div class="name">高</div>
+            "
+          >
+            <div class="name">{{ t("market.market_marketinfo_high") }}</div>
             <div class="info_item__value">{{ item.high }}</div>
           </div>
-          <div class="info_item" style="
+          <div
+            class="info_item"
+            style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            ">
-            <div class="name">量</div>
+            "
+          >
+            <div class="name">{{ t("market.market_marketinfo_amount") }}</div>
             <div class="info_item__value">{{ _formatNumber(item.volume) }}</div>
           </div>
-          <div class="info_item" style="
+          <div
+            class="info_item"
+            style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            ">
-            <div class="name">收</div>
+            "
+          >
+            <div class="name">{{ t("market.market_marketinfo_close") }}</div>
             <div class="info_item__value">{{ item.close }}</div>
           </div>
-          <div class="info_item" style="
+          <div
+            class="info_item"
+            style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            ">
-            <div class="name">低</div>
+            "
+          >
+            <div class="name">{{ t("market.market_marketinfo_low") }}</div>
             <div class="info_item__value">{{ item.low }}</div>
           </div>
-          <div class="info_item" style="
+          <div
+            class="info_item"
+            style="
               background-image: url('/static/img/common/price_bg.png');
               background-repeat: no-repeat;
               background-position: center bottom;
-            ">
-            <div class="name">额</div>
+            "
+          >
+            <div class="name">{{ t("market.market_marketinfo_value") }}</div>
             <div class="info_item__value">{{ _formatNumber(item.amount) }}</div>
           </div>
         </div>
@@ -281,7 +404,9 @@ import KlineChart from "@/components/KlineCharts/KlineChart.vue";
 import { _formatNumber } from "@/utils/index";
 import { _basic, _profile, _add, _del } from "@/api/api";
 import { formatTimestamp } from "@/utils/time";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const route = useRoute();
 const token = computed(() => store.state.token);
 
@@ -317,7 +442,7 @@ const addCollect = () => {
             default:
               store.commit("setCurrStock", { watchlist: 1 });
           }
-          showToast("添加成功");
+          showToast(t('market.market_optional_add_success'));
         }
       })
       .finally(() => {
@@ -336,7 +461,7 @@ const addCollect = () => {
             default:
               store.commit("setCurrStock", { watchlist: 0 });
           }
-          showToast("移除成功");
+          showToast(t('market.market_optioanl_del_success'));
         }
       })
       .finally(() => {

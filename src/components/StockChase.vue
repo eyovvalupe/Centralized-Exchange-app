@@ -2,28 +2,39 @@
   <div class="market_stock_chase">
     <div class="header_container flex flex-row justify-between items-center">
       <div class="text-[0.32rem] items-center font-semibold">
-        <span>{{ $t("market.stock.limitUpPursuit") }}</span>
+        <span>{{ t("market.market_stock_chase_movement") }}</span>
       </div>
       <div class="header_text flex items-center text-[0.28rem]">
-        <div class="header_eff_text"><span>{{ $t("market.stock.profitMakingEffect") }}</span></div>
-        <div class="header_noti_text"><span>{{ $t("market.stock.strong") }}</span></div>
+        <div class="header_eff_text">
+          <span>{{ t("market.market_stock_chase_earning_effect") }}</span>
+        </div>
+        <div class="header_noti_text">
+          <span>{{ t("market.market_stock_chase_strong") }}</span>
+        </div>
       </div>
     </div>
     <div class="graph_container">
-      <div class="chase_container">
-        <div class="chase_text">
-          <span class="text-[#666D80] mr-[0.16rem]" >{{ $t("market.stock.contrast") }}</span>
-          <span style="color: #18b762; margin-right: 0.05rem">356</span>
-          <span style="margin-right: 0.05rem">:</span>
-          <span style="color: #e8503a">117</span>
+      <div class="chase_container relative">
+        <div class="chase_text flex text-center" style="width: 3.014rem !important;">
+          <span class="text-[#666D80] mr-[0.16rem]">{{
+            t("market.market_stock_chase_movement_percentage")
+          }}</span>
+          <div class="flex">
+            <span style="color: #18b762; margin-right: 0.05rem">356</span>
+            <span style="margin-right: 0.05rem">:</span>
+            <span style="color: #e8503a">117</span>
+          </div>
         </div>
         <div class="chase_graph">
           <img src="static/img/market/chase.svg" alt="chase" />
         </div>
       </div>
-      <div class="chase_status">
-        <div class="chase_state_text">
-          <span class="text-[#666D80] mr-[0.16rem]" >{{ $t("market.stock.performance") }}</span>
+      <div class="chase_status relative">
+        <div class="chase_state_text flex text-center justify-betwen" style="width: 3.12rem !important;">
+          <span
+            class="text-[#666D80] mr-[0.16rem] ovreflow-hidden"
+            >{{ t("market.market_stock_chase_todays_effect") }}</span
+          >
           <span style="color: #18b762">99.26%</span>
         </div>
         <div class="chase_graph">
@@ -35,8 +46,8 @@
 </template>
 
 <script setup>
-
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 </script>
 <style>
 .market_stock_chase {
@@ -103,9 +114,10 @@
 
     .chase_graph {
       /* background-color: red; */
+      position: absolute;
+      bottom: -0.3rem;
       width: 3.12rem;
       height: 2rem;
-      margin-top: 0.36rem;
     }
   }
 }

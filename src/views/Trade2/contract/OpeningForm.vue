@@ -18,12 +18,15 @@
           <div class="item" style="justify-content: center">
             <span>
               <!-- {{ stopMap[form1.stop_profit_type] || "--" }} -->
-                {{ 
-                form1.stop_profit_type == 'price' ? t('trade.stock_opening_stop_price') :
-                form1.stop_profit_type == 'amount' ? t('trade.stock_opening_stop_amount') :
-                form1.stop_profit_type == 'ratio' ? t('trade.stock_opening_stop_ratio') :
-                '--'
-                }}
+              {{
+                form1.stop_profit_type == "price"
+                  ? t("trade.stock_opening_stop_price")
+                  : form1.stop_profit_type == "amount"
+                  ? t("trade.stock_opening_stop_amount")
+                  : form1.stop_profit_type == "ratio"
+                  ? t("trade.stock_opening_stop_ratio")
+                  : "--"
+              }}
             </span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
@@ -52,12 +55,15 @@
             <span>{{ t("trade.stock_opening_stop") }}</span>
           </div>
           <div class="item" style="justify-content: center">
-            <span>{{ 
-                form1.stop_profit_type == 'price' ? t('trade.stock_opening_stop_price') :
-                form1.stop_profit_type == 'amount' ? t('trade.stock_opening_stop_amount') :
-                form1.stop_profit_type == 'ratio' ? t('trade.stock_opening_stop_ratio') :
-                '--'
-                }}</span>
+            <span>{{
+              form1.stop_profit_type == "price"
+                ? t("trade.stock_opening_stop_price")
+                : form1.stop_profit_type == "amount"
+                ? t("trade.stock_opening_stop_amount")
+                : form1.stop_profit_type == "ratio"
+                ? t("trade.stock_opening_stop_ratio")
+                : "--"
+            }}</span>
             <div class="more_icon">
               <img src="/static/img/trade/down.png" alt="↓" />
             </div>
@@ -214,6 +220,7 @@
           <div style="flex: 1">
             <div class="info-symbol" v-show="currStock.name">
               {{ currStock.name }}
+              {{ console.log("current stock =======>", currStock) }}
             </div>
           </div>
           <div class="more_icon">
@@ -299,25 +306,28 @@
       }}</Button
     >
 
-    <Button
-      size="large"
-      color="#014cfa"
-      class="submit"
-      round
-      v-if="!token"
-      style="margin-bottom: 0.34rem"
-      @click="store.commit('setIsLoginOpen', true)"
-      >{{ t("trade.stock_opening_token_login") }}</Button
-    >
-    <Button
-      size="large"
-      color="#f2f2f2"
-      round
-      v-if="!token"
-      style="color: #999999"
-      @click="jump('register')"
-      >{{ t("trade.stock_opening_token_register") }}</Button
-    >
+    <div v-if="!token">
+      <div class="flex justify-between mb-[0.32rem]">
+        <div
+          class="w-[2.91rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+          @click="store.commit('setIsLoginOpen', true)"
+          >
+          {{ t("trade.stock_opening_token_login") }}
+        </div>
+        <div
+          class="w-[2.91rem] h-[1.12rem] bg-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#fff] text-[0.36rem]"
+          @click="jump('register')"
+          >
+          {{ t("trade.stock_opening_token_register") }}
+        </div>
+      </div>
+      <div
+          class="w-full h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+          @click="() => router.push({name: 'register', query: {guest: 'guest'}})"
+          >
+          {{ t('trade.contract_create_guest_btn') }}
+        </div>
+    </div>
   </div>
 
   <!-- 开仓确认弹窗 -->
@@ -597,6 +607,15 @@ import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
 
+const props = defineProps({
+  activeTab: null, // 0-市价 1-限价 2-止盈止损
+  activeType: null,
+  type: {
+    type: String,
+    default: "",
+  },
+});
+
 const { t } = useI18n();
 const showPassword = ref(false);
 const safeRef = ref();
@@ -604,6 +623,7 @@ const _market = "futures"; //合约
 
 //搜索
 const marketSearchList = computed(() => store.state.marketSearchList || []);
+const userInfo = computed(() => store.state.userInfo)
 const showSearchDialog = ref();
 const searchDialogStr = ref("");
 const openSearchDialog = () => {
@@ -663,11 +683,6 @@ const jumpModeList = ref([
 const onSelectJumpModeType = (item) => {
   jump(item.value);
 };
-
-const props = defineProps({
-  activeTab: null, // 0-市价 1-限价 2-止盈止损
-  activeType: null,
-});
 
 // 仓位类型
 const modeMap = ref({
@@ -754,7 +769,7 @@ const modeList = computed(() => {
 const elseWallet = computed(() => store.state.elseWallet || []);
 const stockWalletAmount = computed(() => {
   // 股票账户余额
-  const target = elseWallet.value.find((item) => item.account == "futures");
+  const target = elseWallet.value.find((item) => item.account == "futures" && item.name == 'USDT');
   if (target) return target.amount;
   return 0;
 });
@@ -784,14 +799,15 @@ const maxStockNum = computed(() => {
 
 const openConfirmBox = (type) => {
   // type 1-余额不足 2-余额展示
-  const title = type == 1
-    ? t("trade.stock_opening_no_balance")
-    : t("trade.stock_opening_enough_balance");
+  const title =
+    type == 1
+      ? t("trade.stock_opening_no_balance")
+      : t("trade.stock_opening_enough_balance");
   const content =
     type == 1
       ? `<div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
           "trade.stock_account_balance"
-        )} <span style="font-weight:600;color:#014CFA;">`+
+        )} <span style="font-weight:600;color:#014CFA;">` +
         stockWalletAmount.value +
         "</span> " +
         stockCurrency.value +
@@ -982,22 +998,27 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  if (!currStock.value.symbol) return showToast(t("trade.contract_opening_err_contract"));
+  if (!currStock.value.symbol)
+    return showToast(t("trade.contract_opening_err_contract"));
   if (!form1.value.volume || form1.value.volume < min.value)
-    return showToast(t('trade.contract_opening_err_amount'));
+    return showToast(t("trade.contract_opening_err_amount"));
   // 限价校验
   if (props.activeTab == 1) {
-    if (!form1.value.price) return showToast(t("trade.stock_opening_err_price"));
+    if (!form1.value.price)
+      return showToast(t("trade.stock_opening_err_price"));
   }
   // 止盈止损校验
   if (props.activeTab == 2) {
     if (mode.value == 1) {
       // 简单模式
-      if (!form1.value.stop_loss_price) return showToast(t("trade.stock_opening_err_stop_price"));
+      if (!form1.value.stop_loss_price)
+        return showToast(t("trade.stock_opening_err_stop_price"));
     } else {
       // 复杂模式
-      if (!form1.value.stop_profit_price) return showToast(t("trade.stock_opening_err_take_price"));
-      if (!form1.value.stop_loss_price) return showToast(t("trade.stock_opening_err_stop_price"));
+      if (!form1.value.stop_profit_price)
+        return showToast(t("trade.stock_opening_err_take_price"));
+      if (!form1.value.stop_loss_price)
+        return showToast(t("trade.stock_opening_err_stop_price"));
     }
     if (priceMode.value == 2 && !form1.value.price) {
       // 限价
@@ -1033,7 +1054,8 @@ const submit1 = () => {
   }
 
   safePass.value = "";
-  showModel.value = true;
+  if (userInfo.value.role == 'user') showModel.value = true;
+  if (userInfo.value.role == 'guest') submitForm('000000');
 };
 
 // 全部
@@ -1072,7 +1094,8 @@ const changePercent = () => {
 };
 
 const volumeFocus = () => {
-  if (!currStock.value.symbol) return showToast(t('trade.contract_opening_err_contract'));
+  if (!currStock.value.symbol)
+    return showToast(t("trade.contract_opening_err_contract"));
 };
 
 // 下单限制的参数
@@ -1084,6 +1107,7 @@ const interest = ref(0); // 持仓费
 const closingline = ref(100); // 强平线
 const amountper = ref(1); // 每张金额
 const configLoading = ref(false);
+const paramCurrency = ref(""); // 交易使用的货币
 const levers = ref([]); // 杠杆
 
 const getParam = () => {
@@ -1113,6 +1137,9 @@ const paramHandle = (data) => {
   if (data.fee) {
     openFee.value = data.fee || 0;
     closeFee.value = data.fee || 0;
+  }
+  if (data.currency) {
+    paramCurrency.value = data.currency || "";
   }
   if (data.lever) {
     levers.value = data.lever.split(",");
@@ -1173,7 +1200,7 @@ if (route.query.symbol) {
 const openTypeDialog = () => {
   if (!levers.value.length) {
     if (!currStock.value.symbol) {
-      showToast(t('trade.contract_opening_err_contract'));
+      showToast(t("trade.contract_opening_err_contract"));
     }
     return;
   }
@@ -1208,7 +1235,7 @@ const payFee = computed(() => {
 const submitLoading = ref(false);
 const submitFormDialog = () => {
   if (!safePass.value) {
-    return showToast(t('trade.stock_opening_trade_pw_placeholder'));
+    return showToast(t("trade.stock_opening_trade_pw_placeholder"));
   }
   submitForm(safePass.value);
   //showModel.value = false

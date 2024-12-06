@@ -27,10 +27,10 @@
             <span class="tab-name">{{ t('trade.header_ipo') }}</span>
           </div>
           <div class="tab" :class="{ active_tab: activeTab == 4 }" @click="changeActiveTab(4, true)">
-            <span class="tab-name">外汇</span>
+            <span class="tab-name">{{ t('trade.header_forex') }}</span>
           </div>
           <div class="tab" :class="{ active_tab: activeTab == 5 }" @click="changeActiveTab(5, true)">
-            <span class="tab-name">大宗商品</span>
+            <span class="tab-name">{{ t('trade.header_block') }}</span>
           </div>
         </div>
       </div>

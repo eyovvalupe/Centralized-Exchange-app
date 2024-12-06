@@ -45,7 +45,6 @@ import router from "@/router";
 import Decimal from "decimal.js";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
-import { Tab, Tabs } from "vant";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 
 const contractList = computed(() => store.state.contractList || []);

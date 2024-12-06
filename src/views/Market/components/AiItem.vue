@@ -13,19 +13,34 @@
             </div>
             <span>{{ props.item.numpeople || "--" }}</span>
           </div>
-          <div class="tip_text">{{ t('trade.ai_opening_bigest_network') }} {{ props.item.maxgrid }}</div>
+          <div class="tip_text">
+            {{ t("trade.ai_opening_bigest_network") }} {{ props.item.maxgrid }}
+          </div>
         </div>
       </div>
       <div>
-        <div class="time_title">{{ t('trade.ai_opening_perform_time') }}</div>
-        <div class="time_desc">{{ formatSec(props.item.runtime) }}</div>
+        <div class="time_title">{{ t("trade.ai_opening_perform_time") }}</div>
+        <div class="time_desc">
+          {{
+            formatSec(props.item.runtime)[0] +
+            t("common.day") +
+            " " +
+            formatSec(props.item.runtime)[1] +
+            t("common.hour") +
+            " " +
+            formatSec(props.item.runtime)[2] +
+            t("common.min")
+          }}
+        </div>
       </div>
     </div>
 
     <div class="cont">
       <div class="income">
         <div>
-          <div class="income_label">{{ t('trade.order_info_profit') }}(USDT)</div>
+          <div class="income_label">
+            {{ t("trade.order_info_profit") }}(USDT)
+          </div>
           <div
             class="income_amount"
             :class="[props.item.income > 0 ? 'up' : 'down']"
@@ -48,29 +63,33 @@
 
       <div class="table">
         <div class="td">
-          <div class="td_title">{{ t('trade.ai_opening_historical_profit_rate') }}</div>
+          <div class="td_title">
+            {{ t("trade.ai_opening_historical_profit_rate") }}
+          </div>
           <div class="td_val">{{ props.item.ratereturn }}</div>
         </div>
         <div class="td">
-          <div class="td_title">{{ t('trade.ai_opening_24_profit_rate') }}</div>
+          <div class="td_title">{{ t("trade.ai_opening_24_profit_rate") }}</div>
           <div class="td_val">{{ props.item.ratereturn24h }}</div>
         </div>
         <div class="td">
-          <div class="td_title">{{ t('trade.ai_opening_min_invest_amount') }}</div>
+          <div class="td_title">
+            {{ t("trade.ai_opening_min_invest_amount") }}
+          </div>
           <div class="td_val">{{ props.item.minamount }}</div>
         </div>
       </div>
     </div>
 
     <div class="btns" v-if="props.page != 'home'">
-      <div class="btn" @click="goTrade">{{ t('trade.ai_opening_trade') }}</div>
+      <div class="btn" @click="goTrade">{{ t("trade.ai_opening_trade") }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
 import router from "@/router";
-import { formatSec } from "@/utils/time";
+// import { formatSec } from "@/utils/time";
 import SparkLine from "@/components/SparkLine.vue";
 import store from "@/store";
 import { useRoute } from "vue-router";
@@ -104,6 +123,16 @@ const goTrade = () => {
   if (route.name == "trade") {
     emits("clickItems", props.item);
   }
+};
+
+const formatSec = (seconds, t) => {
+  if (seconds < 0) return "--";
+  const days = Math.floor(seconds / (24 * 3600));
+  seconds %= 24 * 3600;
+  const hours = Math.floor(seconds / 3600);
+  seconds %= 3600;
+  const minutes = Math.floor(seconds / 60);
+  return [days, hours, minutes];
 };
 </script>
 

@@ -39,7 +39,18 @@
             class="text-14"
             :style="{ color: statusEnum[item.status].color }"
           >
-            {{ statusEnum[item.status].name }}
+            <!-- {{ statusEnum[item.status].name }} -->
+            {{
+              item.status == "waitpayment"
+                ? t("market.market_buy_list_wait_pay")
+                : item.status == "waitconfirm"
+                ? t("market.market_buy_list_wait_confirm")
+                : item.status == "done"
+                ? t("market.market_buy_list_complete")
+                : item.status == "cancel"
+                ? t("market.market_buy_list_cancel")
+                : '--'
+            }}
           </div>
         </div>
         <!-- 交易信息展示 -->
@@ -48,9 +59,11 @@
           <div class="text-12">
             <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
               <!-- 根据交易类型显示“购入”或“售出” -->
-              {{ item.offset == "buy" ? t("购入") : t("售出") }}&nbsp;{{
-                item.crypto
-              }}&nbsp;
+              {{
+                item.offset == "buy"
+                  ? t("market.market_buy_list_buy")
+                  : t("market.market_buy_list_sell")
+              }}&nbsp;{{ item.crypto }}&nbsp;
               <!-- 加密货币图标 -->
               <img
                 class="!h-4 !w-4 rounded-50"
@@ -60,11 +73,15 @@
             </div>
             <!-- 价格信息 -->
             <div class="mb-[0.12rem] text-[#666D80]">
-              {{ $t("价格") }}&nbsp;{{ item.price }}&nbsp;{{ item.currency }}
+              {{ $t("market.market_buy_list_price") }}&nbsp;{{
+                item.price
+              }}&nbsp;{{ item.currency }}
             </div>
             <!-- 数量信息 -->
             <div class="text-[#666D80]">
-              {{ $t("数量") }}&nbsp;{{ item.volume }}&nbsp;{{ item.crypto }}
+              {{ $t("market.market_buy_list_amount") }}&nbsp;{{
+                item.volume
+              }}&nbsp;{{ item.crypto }}
             </div>
           </div>
 
@@ -80,7 +97,7 @@
         </div>
       </div>
 
-      <NoData v-if="!loading && !list.length" />
+      <NoData v-if="!loading && !list.length && token" />
       <LoadingMore
         v-if="(finish && list.length) || !finish"
         class-n="buycoin_self"
@@ -109,7 +126,9 @@ import LoadingMore from "@/components/LoadingMore.vue";
 import router from "@/router";
 import { useBuyCoinState } from "./state";
 import { computed, provide } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const props = defineProps({
   from: {
     type: String,
@@ -117,7 +136,6 @@ const props = defineProps({
   },
 });
 
-const { t } = useI18n();
 const statusEnum = {
   waitpayment: { name: t("等待付款"), color: "var(--main-color)" },
   waitconfirm: { name: t("等待确认"), color: "var(--main-color)" },
