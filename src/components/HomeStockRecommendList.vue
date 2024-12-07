@@ -15,18 +15,18 @@
             </div>
             <div class="flex justify-between text-[#18B762] mb-[0.24rem]">
               <div class="text-[0.28rem] font-medium">
-                {{ item.price }}
+                {{ getRealtime(item.symbol,'price') }}
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  (item.ratio || 0) > 0
-                    ? "+" + (item.ratio || 0)
-                    : item.ratio || 0
+                  getRealtime(item.symbol,'ratio',0) > 0
+                    ? "+" + getRealtime(item.symbol,'ratio',0)
+                    : getRealtime(item.symbol,'ratio',0)
                 }}%
               </div>
             </div>
             <div class="flex justify-between item-center">
-              <SparkLine v-if="item.points" :points="item.points" :ratio="item.ratio"
+              <SparkLine v-if="getRealtime(item.symbol,'points')" :points="getRealtime(item.symbol,'points')" :ratio="item.ratio"
                 :style="'width: 100%; height: 0.5rem'" :xtimes="1.2" />
               <div
                 class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] items-center justify-center flex"
@@ -34,7 +34,7 @@
                 <span class="text-[0.22rem]">+{{ t('home.optional') }}</span>
               </div>
             </div>
-          </div>
+          </div> 
         </div>
       </Slide>
     </Carousel>
@@ -80,6 +80,15 @@ const config = {
     },
   },
 };
+
+const getRealtime = (symbol,k,_default='')=>{
+  for(let i=0;i<store.state.realtimeData.length;i++){
+    if(store.state.realtimeData[i].symbol == symbol){
+      return store.state.realtimeData[i][k] || _default
+    }
+  }
+  return _default
+}
 
 const token = computed(() => store.state.token || "");
 

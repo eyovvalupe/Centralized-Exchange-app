@@ -24,7 +24,6 @@
         $t('market.market_header_stock'),
         $t('market.market_header_contract'),
         $t('market.market_header_ai'),
-        $t('market.market_header_forex'),
       ]"
       @change="(e) => changeTab(e, true)"
     />

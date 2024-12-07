@@ -166,7 +166,8 @@ onMounted(()=>{
 
     }
 }
-.header_tabs--card{
+.header_tabs--card,
+.header_tabs--small-card{
     height: 0.8rem;
     .tabs{
         .tab_body{
@@ -190,6 +191,21 @@ onMounted(()=>{
             }
             &::after{
                 display: none;
+            }
+        }
+    }
+}
+.header_tabs--small-card{
+    height: 0.7rem;
+    .tabs{
+        .tab{
+            height: 0.7rem;
+            font-size: 0.3rem;
+            padding: 0 0.26rem;
+        }
+        .active_tab{
+            .tab-name{
+                font-size: 0.3rem;
             }
         }
     }

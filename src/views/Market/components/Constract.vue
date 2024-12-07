@@ -1,71 +1,43 @@
 <!-- 合约 -->
 <template>
   <div class="page page-constract">
-    <!-- <div class="tr th">
-            <div class="td td_left">名称/交易量</div>
-            <div class="td">价格</div>
-            <div class="td td_right">24小时涨跌</div>
-        </div> -->
+    
     <div class="coinbuy_content">
+      <HeaderTabs v-model:active="activeTab" type="small-card" :tabs="['全部','加密货币','外汇','大宗商品']" @change="getList(true)" />
+      
       <Loaidng :loading="loading" v-if="loading && !contractList.length" />
       <NoData v-if="!loading && !contractList.length" />
-      <div
-        class="tr flex-col bg-[#F5F7FC] rounded-[0.32rem]"
-        v-for="(item, i) in contractList"
-        :key="i"
-        @click="goInfo(item)"
-      >
-        <div class="stock_item_crypto">
+      <div class="tr rounded-[0.32rem]" v-for="(item, i) in contractList" :key="i"
+        @click="goInfo(item)">
           <div class="td5">
-            <div class="item_name flex items-center gap-1">
-              {{ item.name }}
-              <div
-                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] border-[#0A54F9]"
-              >
-                <span class="item_lever">{{ item.lever }}X</span>
+            <div class="flex items-center">
+              <div class="item_name flex items-center gap-1">
+                {{ item.name }}
+              </div>
+              <div class="item_type" :class="['item_type--'+item.type]" v-if="activeTab == 0 && typeMap[item.type]">
+                {{ typeMap[item.type] }}
               </div>
             </div>
+            <div class="item_lever" v-if="item.lever">
+              <span v-for="(tag,i) in getLever(item.lever)" v-show="i < 4" :key="tag">
+                {{tag}}X
+              </span>
+            </div>
           </div>
-          <div class="td2 ml-[2rem]">
-            <SparkLine
-              v-if="item.points"
-              :style="'width: 100%; height: 0.54rem;'"
-              :points="item.points"
-              :ratio="item.ratio"
-            />
+          <div class="td2 spark_line_box">
+            <SparkLine v-if="getRealtime(item.symbol,'points')" :style="'width: 100%; height: 0.54rem;'" :points="getRealtime(item.symbol,'points')"
+            :polylineStrokeWidth="2"
+              :ratio="getRealtime(item.symbol,'ratio')" />
           </div>
-        </div>
-        <div
-          class="flex items-center justify-between text-[0.32rem] font-bold w-[100%] pt-[0.15rem] pb-[0.15rem] w-[7.14rem]"
-        >
-          <div class="item_new_price text-center w-1/3">
-            <span
-              :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
-              >{{ item.price || "--" }}</span
-            ><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal"
-              >{{ t('market.market_optional_crypto_price') }}</span
-            >
+          <div class="td2 td_r">
+            <div class="item_num" :class="getRealtime(item.symbol,'ratio') === 0 ? '' : getRealtime(item.symbol,'ratio') > 0 ? 'up' : 'down'">{{ getRealtime(item.symbol,'price') || '--' }}</div>
+            <div
+              class="item_info_box">
+                <div class="item_percent" :class="getRealtime(item.symbol,'ratio') === 0 ? '' : getRealtime(item.symbol,'ratio') > 0 ? 'up_bg' : 'down_bg'">
+                  {{ getRealtime(item.symbol,'ratio') > 0 ? "+" : "" }}{{ (getRealtime(item.symbol,'ratio') || 0) }}%
+                </div>
+              </div>
           </div>
-          <div
-            class="item_loss_price text-center border-x-[#eff3f8] border-x-2 w-1/3"
-          >
-            <span
-              :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
-              >{{ item.change || "--" }}</span
-            ><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">{{ t('market.market_optional_short') }}</span>
-          </div>
-          <div class="item_loss_percentage text-center w-1/3">
-            <span
-              :class="item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down'"
-              >{{ item.ratio > 0 ? "+" : "" }}{{ item.ratio || 0 }}%</span
-            ><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal"
-              >{{ t('market.market_optioanl_ratio') }}</span
-            >
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -80,21 +52,43 @@ import router from "@/router";
 import Decimal from "decimal.js";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
-import { useI18n } from "vue-i18n";
+import HeaderTabs from "@/components/HeaderTabs.vue";
 
-const { t } = useI18n();
 const contractList = computed(() => store.state.contractList || []);
+const activeTab = ref(0)
 
+const getRealtime = (symbol,k)=>{
+  for(let i=0;i<store.state.realtimeData.length;i++){
+    if(store.state.realtimeData[i].symbol == symbol){
+      return store.state.realtimeData[i][k]
+    }
+  }
+  return ''
+}
+
+const typeMap = ref({
+  crypto:'合约',
+  forex:'外汇',
+  blocktrade:'大宗商品'
+})
+
+const types = ['','crypto','forex','blocktrade']
 const loading = ref(false);
-const getList = () => {
+const getList = (clear=false) => {
+  if(clear){
+    store.commit("setContractList", []);
+  }
   loading.value = true;
-  _futures()
+  _futures({
+    type:types[activeTab.value]
+  })
     .then((res) => {
       const list = res.data.map((item) => {
         const target = contractList.value.find((a) => a.symbol == item.symbol);
         if (target) return target;
         return item;
       });
+      
       store.commit("setContractList", list || []);
       setTimeout(() => {
         store.dispatch("subList", {
@@ -110,10 +104,13 @@ const getList = () => {
 
 getList();
 
-const getUpDown = (item) => {
-  if (!item.price || !item.ratio) return 0;
-  return new Decimal(item.price).mul(item.ratio).toNumber();
-};
+const getLever = (lever)=>{
+  const arr = lever.split(',') || []
+  arr.sort(function(a, b) {
+    return b - a;
+  });
+  return arr
+}
 
 // 去详情
 const goInfo = (item) => {
@@ -130,31 +127,16 @@ const goInfo = (item) => {
 
 <style lang="less" scoped>
 .page-constract {
-  .stock_item_crypto {
+  padding: 0.2rem 0;
+  .tr {
     display: flex;
     align-items: center;
+    height: 1.36rem;
+    padding: 0 0.32rem;
     position: relative;
-    height: 0.54rem;
-    margin-bottom: 0.21rem;
-
-    ::after {
-      content: "";
-      width: 6.86rem;
-      position: absolute;
-      top: 0.7rem;
-      left: -0.25rem;
-      height: 1px;
-      background-color: #eff3f8;
-    }
-
-    .item_new_price,
-    .item_loss_price,
-    .item_loss_percentage {
-      font-size: 0.32rem;
-      font-weight: 600;
-      line-height: 0.3rem;
-    }
-
+    margin-top: 0.2rem;
+    border: 1px solid #EFF3F8;
+    
     .td5 {
       flex: 5;
       flex-shrink: 0;
@@ -163,18 +145,13 @@ const goInfo = (item) => {
       .item_name {
         font-size: 0.32rem;
         color: #061023;
-        line-height: 0.432rem;
+        line-height: 0.32rem;
         font-weight: 600;
-
-        .item_lever {
-          font-size: 0.24rem;
-          line-height: 0.22rem;
-        }
       }
 
       .item_info {
-        font-size: 0.28rem;
-        line-height: 0.36rem;
+        font-size: 0.24rem;
+        line-height: 0.332rem;
         color: #8f92a1;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -225,62 +202,60 @@ const goInfo = (item) => {
       padding-right: 0.4rem;
       padding-left: 0.2rem;
     }
-  }
-
-  .tr {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.2rem;
-    padding: 0.15rem 0.25rem;
-
-    .td {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      color: #9ea3ae;
-      font-size: 0.28rem;
-
-      .amount {
-        color: #333;
-        font-weight: bold;
-        font-size: 0.32rem;
-        font-weight: bold;
-      }
-
-      .x {
-        color: #014cfa;
-        background-color: #eef3fe;
-        border-radius: 0.04rem;
-        padding: 0.04rem 0.08rem;
-        margin-right: 0.16rem;
-      }
-
-      .percent {
-        padding: 0.08rem 0.2rem;
-        border-radius: 0.08rem;
-        color: #fff;
+    .item_percent {
+        text-align: center;
+        width: 1rem;
+        height: 0.4rem;
+        line-height: 0.4rem;
         font-size: 0.24rem;
-      }
-    }
-
-    .td_left {
-      flex: 1.5;
-      align-items: flex-start;
-    }
-
-    .td_right {
-      align-items: flex-end;
+        display: inline-block;
+        font-weight: 600;
+        color: #fff;
+        border-radius: 0.12rem;
     }
   }
 
   .coinbuy_content {
     padding: 0 0.32rem;
   }
-
-  .th {
-    padding: 0.24rem 0.32rem;
+  .item_lever{
+    display: flex;
+    align-items: center;
+    margin-top: 0.2rem;
   }
+  .item_lever span{
+    height: 0.32rem;
+    padding: 0 0.08rem;
+    border:1px solid #014CFA;
+    border-radius: 0.24rem;
+    font-size: 0.22rem;
+    color:#014CFA;
+    margin-right: 0.08rem;
+    display: flex;
+    align-items: center;
+  }
+  .item_type{
+    height: 0.3rem;
+    border-radius: 0.08rem;
+    color:#FFAF2A;
+    font-size: 0.22rem;
+    background: rgba(255, 175, 42, 0.10);
+    display: inline-block;
+    align-items: center;
+    padding: 0 0.08rem;
+    line-height: 0.3rem;
+    margin-left: 0.1rem;
+  }
+  .item_type--forex{
+    color:#18B762;
+    background: rgba(24, 183, 98, 0.10);
+  }
+
+  .item_type--blocktrade{
+    color:#6C6CEA;
+    background: rgba(108, 108, 234, 0.10);
+  }
+  
+  
 }
 </style>
