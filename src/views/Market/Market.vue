@@ -13,7 +13,7 @@
       <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
     </div>
     <div
-      class="absolute right-15 top-[0.25rem] z-10 h-[0.5rem] w-[1rem] bg-gradient-to-r from-transparent to-white"
+      class="absolute right-13 top-[0.2rem] z-10 h-[0.68rem] w-[0.6rem] bg-gradient-to-r from-transparent to-white"
     />
     <HeaderTabs
       v-model:active="active"
@@ -51,28 +51,28 @@
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div v-if="active === 2" class="assets_body">
+        <div v-if="loadedTab.includes(2)" class="assets_body">
           <!-- 股票 -->
           <Stock />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div v-if="active === 3" class="assets_body">
+        <div v-if="loadedTab.includes(3)" class="assets_body">
           <!-- 合约 -->
           <Constract />
         </div>
       </SwipeItem>
 
       <SwipeItem>
-        <div v-if="active === 4" class="assets_body">
+        <div v-if="loadedTab.includes(4)" class="assets_body">
           <AiBlockList />
         </div>
       </SwipeItem>
-      <SwipeItem>
-        <div v-if="active === 5" class="assets_body">
+      <!-- <SwipeItem>
+        <div v-if="loadedTab.includes(5)" class="assets_body">
           <Foreign />
         </div>
-      </SwipeItem>
+      </SwipeItem> -->
     </Swipe>
 
     <!-- </PullRefresh> -->
@@ -109,18 +109,16 @@ const {
   onChange,
 } = useBuyCoinState();
 const { bottomTabBarValue } = useMapState(["bottomTabBarValue"]);
-const market_active = useSessionStorage("market_active", 0);
 const marketPageRef = ref();
 const scrollData = useScroll(marketPageRef, {
   throttle: 200,
   onScroll: scrollHandler,
 });
-const marketActiveTab = computed(() => store.state.marketActiveTab || 0);
+const marketActiveTab = ref(store.state.marketActiveTab || 0);
 
 const openTab = ref(false);
 
-const active = ref(market_active.value);
-const initialSwipe = active.value;
+const active = ref(marketActiveTab.value);
 const OptionalRef = ref();
 const BuyCoinRef = ref();
 // const StockRef = ref()
@@ -135,7 +133,6 @@ setScrollData(scrollData);
 const changeTab = (key, slideSwipe = false) => {
   store.commit("setMarketActiveTab", key);
   active.value = key;
-  market_active.value = key;
   openTab.value = false;
   if (!loadedTab.value.includes(key)) {
     loadedTab.value.push(key);

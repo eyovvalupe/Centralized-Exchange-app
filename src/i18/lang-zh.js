@@ -816,7 +816,7 @@ export default {
     market_stock_description_des2: "下跌",
     market_stock_description_long_end: "涨停",
     market_stock_description_center: "平",
-    market_stock_description_long_end: "跌停",
+    market_stock_description_short_end: "跌停",
     market_stock_chase_movement: "涨停追击",
     market_stock_chase_earning_effect: "赚钱效应",
     market_stock_chase_strong: "强",

@@ -51,10 +51,10 @@
         <!-- 图表 -->
         <div class="canvas">
           <SparkLine
-            v-if="item.points"
-            :polyline-stroke-width="3"
-            :points="props.item.points"
-            :ratio="props.item.ratio"
+            v-if="getRealtime(item.symbol,'points')"
+            :polyline-stroke-width="2"
+            :points="getRealtime(item.symbol,'points')"
+            :ratio="getRealtime(item.symbol,'ratio')"
             :xtimes="2"
             :ytimes="2"
           />
@@ -98,6 +98,14 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const emits = defineEmits("click");
 
+const getRealtime = (symbol,k)=>{
+  for(let i=0;i<store.state.realtimeData.length;i++){
+    if(store.state.realtimeData[i].symbol == symbol){
+      return store.state.realtimeData[i][k]
+    }
+  }
+  return ''
+}
 const route = useRoute();
 const props = defineProps({
   item: {

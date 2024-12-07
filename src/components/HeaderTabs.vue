@@ -32,6 +32,7 @@ const props = defineProps({
     }
 })
 const tabScroller = ref(null)
+let timer = null
 const animateScrollLeft = (el,x,n,s=5)=>{
     n -= s
     if(n < x){
@@ -39,7 +40,7 @@ const animateScrollLeft = (el,x,n,s=5)=>{
         el.scrollTo(n,0)
     }else{
         el.scrollTo(n,0)
-        setTimeout(()=>{
+        timer = setTimeout(()=>{
             animateScrollLeft(el,x,n)
         },15)
     }
@@ -51,15 +52,16 @@ const animateScrollRight = (el,x,n,s=5)=>{
         el.scrollTo(n,0)
     }else{
         el.scrollTo(n,0)
-        setTimeout(()=>{
+        timer = setTimeout(()=>{
             animateScrollRight(el,x,n)
         },15)
     }
 }
 const animateScroll = (el,x,s=5)=>{
-    
+    if(timer !== null){
+        clearTimeout(timer)
+    }
     if(el.scrollLeft > x){
-        
         animateScrollLeft(el,x,el.scrollLeft,s)
     }else{
         animateScrollRight(el,x,el.scrollLeft,s)
