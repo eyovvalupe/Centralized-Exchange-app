@@ -580,7 +580,10 @@ onMounted(() => {
       next();
     }, 500);
   }
-  else if (Object.keys(route.query).length && !route.query.invitCode) {
+  else if (Object.keys(route.query).length && route.query.guest) {
+    step.value = 1;
+    openPage.value = true
+  } else if (Object.keys(route.query).length && !route.query.invitCode) {
     router.replace({name: 'home'})
     setTimeout(() => {
       openPage.value = true;
