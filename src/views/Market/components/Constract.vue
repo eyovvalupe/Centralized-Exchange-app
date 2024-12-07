@@ -10,11 +10,18 @@
       <div class="tr rounded-[0.32rem]" v-for="(item, i) in contractList" :key="i"
         @click="goInfo(item)">
           <div class="td5">
-            <div class="item_name flex items-center gap-1">
-              {{ item.name }}
+            <div class="flex items-center">
+              <div class="item_name flex items-center gap-1">
+                {{ item.name }}
+              </div>
+              <div class="item_type" :class="['item_type--'+item.type]" v-if="activeTab == 0 && typeMap[item.type]">
+                {{ typeMap[item.type] }}
+              </div>
             </div>
-            <div class="item_type" :class="['item_type--'+item.type]" v-if="activeTab == 0 && typeMap[item.type]">
-              {{ typeMap[item.type] }}
+            <div class="item_lever" v-if="item.lever">
+              <span v-for="(tag,i) in getLever(item.lever)" v-show="i < 4" :key="tag">
+                {{tag}}X
+              </span>
             </div>
           </div>
           <div class="td2 spark_line_box">
@@ -97,6 +104,13 @@ const getList = (clear=false) => {
 
 getList();
 
+const getLever = (lever)=>{
+  const arr = lever.split(',') || []
+  arr.sort(function(a, b) {
+    return b - a;
+  });
+  return arr
+}
 
 // 去详情
 const goInfo = (item) => {
@@ -132,7 +146,7 @@ const goInfo = (item) => {
         font-size: 0.32rem;
         color: #061023;
         line-height: 0.32rem;
-        font-weight: 400;
+        font-weight: 600;
       }
 
       .item_info {
@@ -204,7 +218,22 @@ const goInfo = (item) => {
   .coinbuy_content {
     padding: 0 0.32rem;
   }
-
+  .item_lever{
+    display: flex;
+    align-items: center;
+    margin-top: 0.2rem;
+  }
+  .item_lever span{
+    height: 0.32rem;
+    padding: 0 0.08rem;
+    border:1px solid #014CFA;
+    border-radius: 0.24rem;
+    font-size: 0.22rem;
+    color:#014CFA;
+    margin-right: 0.08rem;
+    display: flex;
+    align-items: center;
+  }
   .item_type{
     height: 0.3rem;
     border-radius: 0.08rem;
@@ -214,8 +243,8 @@ const goInfo = (item) => {
     display: inline-block;
     align-items: center;
     padding: 0 0.08rem;
-    margin-top: 0.14rem;
     line-height: 0.3rem;
+    margin-left: 0.1rem;
   }
   .item_type--forex{
     color:#18B762;
