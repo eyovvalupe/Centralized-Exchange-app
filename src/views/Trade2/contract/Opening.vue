@@ -13,7 +13,7 @@
     <!-- Tabs -->
     <div class="open_tab_box">
       <Tabs key="form" v-if="!pageLoading" class="van-tabs--oval-sub" @change="(e) => (activeTab = e)"
-        v-model="activeTab" :swipeable="false" animated :color="'#014CFA'" shrink>
+        v-model="activeTab" :swipeable="false" :color="'#014CFA'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0"
             :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />

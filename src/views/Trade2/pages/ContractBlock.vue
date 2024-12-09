@@ -1,7 +1,7 @@
 <!-- 合约 -->
 <template>
   <div class="stock_block">
-    <Tabs v-if="!pageLoading" type="oval-card" v-model:active="active" :swipeable="false" animated :color="'#014CFA'"
+    <Tabs v-if="!pageLoading" type="oval-card" v-model:active="active" :swipeable="false" :color="'#014CFA'"
       shrink @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">

@@ -27,7 +27,6 @@
         @change="(e) => (activeTab = e)"
         v-model="activeTab"
         :swipeable="false"
-        animated
         :color="'#014CFA'"
         shrink
       >

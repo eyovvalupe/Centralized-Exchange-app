@@ -7,7 +7,7 @@
                 <img src="/static/img/trade/time.png" alt="img">
             </div>
         </div> -->
-        <Tabs v-if="!pageLoading" type="custom-card" v-model:active="active" :swipeable="false" animated
+        <Tabs type="custom-card" v-model:active="active" :swipeable="false" animated
             :color="'#014CFA'" shrink @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">
                 <div class="stock_tab-body" v-if="loadTab.indexOf('0') > -1">
@@ -25,8 +25,6 @@
                 </div>
             </Tab>
         </Tabs>
-        <div style="height:50vh" v-else></div>
-
 
         <!-- 日期选择 -->
         <DateArea @submit="submitDate" ref="dateAreaRef" />
@@ -68,7 +66,6 @@ const submitDate = times => {
     }, 0)
 }
 
-const pageLoading = ref(true)
 const OpeningRef = ref()
 
 // 选择某个股票
@@ -76,17 +73,13 @@ const choose = item => {
     active.value = '0'
     OpeningRef.value && OpeningRef.value.choose(item)
 }
-
 const handleMounted = () => {
+    loadTab.value = []
     setTimeout(() => {
-        pageLoading.value = false
-        setTimeout(() => {
-            onChange(active.value)
-        }, 300)
+        onChange(active.value)
     }, 300)
 }
 onMounted(() => {
-    pageLoading.value = false
     onChange(active.value)
 })
 

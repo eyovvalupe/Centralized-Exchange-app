@@ -35,41 +35,49 @@
         </div>
       </div>
     </div>
-    <Swipe :autoplay="0" v-if="initialSwipe > -1" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe"
-      @change="swipeChange">
-      <SwipeItem>
+    <Swiper
+      style="width:100%;overflow:hidden;"
+        v-if="initialSwipe > -1" 
+        :show-indicators="false"
+        :loop="false"
+        :initial-slide="initialSwipe"
+        :speed="500"
+        @swiper="setTradeSwiper"
+        @slideChange="swipeChange"
+    >
+      <SwiperSlide>
         <div class="trade_body" ref="stockTradeBody"
           @scroll="tradeBodyScroll('stockTradeBody')">
-          <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" v-if="loadedTab.includes(0)" />
+          <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" v-if="start && loadedTab.includes(0)" />
         </div>
-      </SwipeItem>
-      <SwipeItem>
+      </SwiperSlide>
+      <SwiperSlide>
         <div class="trade_body" ref="contractTradeBody" 
           @scroll="tradeBodyScroll('contractTradeBody')">
-          <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
+          <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="start && loadedTab.includes(1)" />
         </div>
-      </SwipeItem>
-      <SwipeItem>
+      </SwiperSlide>
+      <SwiperSlide>
         <div class="trade_body">
-          <AiBlock @showNavDialog="showNavDialogFunc" ref="AiBlockRef" v-if="loadedTab.includes(2)" />
+          <AiBlock @showNavDialog="showNavDialogFunc" ref="AiBlockRef" v-if="start && loadedTab.includes(2)" />
         </div>
-      </SwipeItem>
-      <SwipeItem>
+      </SwiperSlide>
+      <SwiperSlide>
         <div class="trade_body" >
-          <IpoBlock ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
+          <IpoBlock ref="IpoBlockRef" v-if="start && loadedTab.includes(3)" />
         </div>
-      </SwipeItem>
-      <SwipeItem>
+      </SwiperSlide>
+      <SwiperSlide>
         <div class="trade_body">
-          <ForeignBlock @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef" v-if="loadedTab.includes(4)" />
+          <ForeignBlock @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef" v-if="start && loadedTab.includes(4)" />
         </div>
-      </SwipeItem>
-      <SwipeItem>
+      </SwiperSlide>
+      <SwiperSlide>
         <div class="trade_body">
-          <CommoditiesBlock @showNavDialog="showNavDialogFunc" ref="CommoditiesBlockRef" v-if="loadedTab.includes(5)" />
+          <CommoditiesBlock @showNavDialog="showNavDialogFunc" ref="CommoditiesBlockRef" v-if="start && loadedTab.includes(5)" />
         </div>
-      </SwipeItem>
-    </Swipe>
+      </SwiperSlide>
+    </Swiper>
 
 
     <!-- </PullRefresh> -->
@@ -148,7 +156,9 @@
 </template>
 
 <script setup>
-import { PullRefresh, Popup, Tabs, Tab, Swipe, SwipeItem } from "vant";
+import "swiper/css"
+import { Swiper,SwiperSlide } from "swiper/vue"
+import { PullRefresh, Popup, Tabs, Tab } from "vant";
 import {
   ref,
   watch,
@@ -197,7 +207,14 @@ const onRefresh = () => {
 const activeTab = ref(0);
 const initialSwipe = ref(-1);
 const loadedTab = ref([activeTab.value]);
-const swipe = ref(null);
+let swipe = null
+const start = ref(false)
+const setTradeSwiper = (_swiper)=>{
+  swipe = _swiper
+  setTimeout(()=>{
+    start.value = true
+  },300)
+}
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
   if (loadedTab.value.indexOf(val) == -1) {
@@ -219,8 +236,8 @@ const changeActiveTab = (val, slideSwipe = false) => {
     }
   }
   localStorage.tradeActiveTab = val;
-  if (slideSwipe && swipe.value) {
-    swipe.value.swipeTo(val);
+  if (slideSwipe && swipe) {
+    swipe.slideTo(val);
   }
 };
 
@@ -245,9 +262,9 @@ const reDir = () => {
   });
 };
 
-const swipeChange = (val) => {
-  if (activeTab.value !== val) {
-    changeActiveTab(val);
+const swipeChange = (e) => {
+  if (activeTab.value !== e.realIndex) {
+    changeActiveTab(e.realIndex);
   }
 };
 
