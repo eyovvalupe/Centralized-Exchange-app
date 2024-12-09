@@ -162,6 +162,8 @@
             <div class="item_box_right">
               <div class="subtitle">
                 <span>{{ t('trade.stock_opening_stop') }}</span>
+
+
               </div>
               <div class="item">
                 <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
@@ -183,6 +185,9 @@
             :title="t('trade.stock_position_add_deposit')" btn-show-mode="focus"
             :tip="stockWalletAmount > 0 ? '≤ ' + stockWalletAmount : ''" :show-btn="stockWalletAmount > 0"
             @change="changeAmount" @btnClick="onSliderChange(100)">
+            <template #title-right>
+              <div>余额 {{ stockWalletAmount }} {{ currStock.currency }}</div>
+            </template>
           </FormItem>
 
           <div style="height: 0.47rem"></div>
@@ -257,6 +262,10 @@ const props = defineProps({
   type: {
     type: String,
     default: ''
+  },
+  mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
+    type: String,
+    default: 'constract'
   }
 })
 
@@ -272,7 +281,7 @@ const contractPositionsList = computed(() => store.state.contractPositionsList);
 const elseWallet = computed(() => store.state.elseWallet || []);
 const stockWalletAmount = computed(() => {
   // 合约账户余额
-  const target = elseWallet.value.find((item) => item.account == "futures");
+  const target = elseWallet.value.find((item) => item.account == "futures" && item.currency == currStock.value.currency);
   if (target) return target.amount;
   return 0;
 });

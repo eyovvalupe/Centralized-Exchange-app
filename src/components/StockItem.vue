@@ -1,53 +1,32 @@
 <!-- 股票单个元素 -->
 <template>
-  <div
-    ref="root"
-    style="width: 100%"
-    :class="props.marketType != 'crypto' ? '' : 'mb-[0.2rem] pr-[0.32rem]'"
-  >
-    <SwipeCell
-      :class="
-        (props.marketType != 'crypto'
-          ? 'stock_item_box'
-          : 'stock_item_box_crypto') + `${' stock_item_' + updownStatus}`
-      "
-      @touchstart.stop=""
-      @touchmove.stop=""
-      @touchend.stop=""
-    >
-      <div
-        class="stock_item_bg"
-        :class="
-          props.marketType == 'crypto'
-            ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
-            : ''
-        "
-        @click="goInfo(props.item.type)"
-      >
-        <div
-          :class="
-            props.marketType != 'crypto' ? 'stock_item' : 'stock_item_crypto'
-          "
-        >
+  <div ref="root" style="width: 100%" :class="props.marketType != 'crypto' ? '' : 'mb-[0.2rem] pr-[0.32rem]'">
+    <SwipeCell :class="(props.marketType != 'crypto'
+      ? 'stock_item_box'
+      : 'stock_item_box_crypto') + `${' stock_item_' + updownStatus}`
+      " @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
+      <div class="stock_item_bg" :class="props.marketType == 'crypto'
+        ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
+        : ''
+        " @click="goInfo(props.item.type)">
+        <div :class="props.marketType != 'crypto' ? 'stock_item' : 'stock_item_crypto'
+          ">
           <div class="td5" v-show="props.marketType != 'crypto'">
             <div class="item_name flex items-center gap-1">
               <span v-if="item.type == 'crypto'">{{ props.item.name }}</span>
               <span v-else>{{ props.item.symbol }}</span>
-              <div
-                v-show="props.page != 'home'"
-                :class="`${
-                  marketStyle[props.item.type]
-                } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
-              >
+              <div v-show="props.page != 'home'"
+                :class="`${marketStyle[props.item.type]
+                  } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
                 <!-- {{ market[props.item.type] }} -->
                 {{
                   item.type == "stock"
                     ? t("market.market_optional_stock")
                     : item.type == "crypto"
-                    ? t("market.market_optional_contract")
-                    : item.type == "forex"
-                    ? t("market.market_optional_forex")
-                    : "--"
+                      ? t("market.market_optional_contract")
+                      : item.type == "forex"
+                        ? t("market.market_optional_forex")
+                        : "--"
                 }}
               </div>
             </div>
@@ -56,62 +35,40 @@
             </div>
             <div
               class="text-[#0A54F9] text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
-              v-show="props.item.type == 'crypto'"
-            >
+              v-show="props.item.type == 'crypto'">
               {{ props.item.lever }}X
             </div>
           </div>
           <div class="td5" v-show="marketType == 'crypto'">
             <div class="item_name flex items-center gap-1">
               {{ props.item.name }}
-              <div
-                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9]"
-              >
+              <div v-if="!isNaN(Number(props.item.lever))"
+                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9]">
                 {{ props.item.lever }}X
               </div>
             </div>
           </div>
-          <div
-            :class="
-              props.marketType != 'crypto'
-                ? 'td2 spark_line_box'
-                : 'td2 ml-[2rem]'
-            "
-          >
-            <SparkLine
-              v-if="props.item.points && showSparkLine"
-              :style="
-                props.marketType != 'cryto'
-                  ? 'width: 100%; height: 0.6rem;'
-                  : 'width: 100%; height: 0.54rem;'
-              "
-              :points="props.item.points"
-              :ratio="props.item.ratio"
-            />
+          <div :class="props.marketType != 'crypto'
+            ? 'td2 spark_line_box'
+            : 'td2 ml-[2rem]'
+            ">
+            <SparkLine v-if="props.item.points && showSparkLine" :style="props.marketType != 'cryto'
+              ? 'width: 100%; height: 0.6rem;'
+              : 'width: 100%; height: 0.54rem;'
+              " :points="props.item.points" :ratio="props.item.ratio" />
           </div>
           <div class="td2 td_r" v-show="props.marketType != 'crypto'">
-            <div
-              class="item_num"
-              :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
-            >
+            <div class="item_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
               {{ props.item.price ? props.item.price : "--" }}
             </div>
-            <div
-              class="item_info_box"
-              @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)"
-            >
-              <div
-                v-if="props.item.ratio !== undefined"
-                class="item_percent"
-                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']"
-              >
-                <span v-if="mode == 1"
-                  >{{
-                    (props.item.ratio || 0) > 0
-                      ? "+" + (props.item.ratio || 0)
-                      : props.item.ratio || 0
-                  }}%</span
-                >
+            <div class="item_info_box" @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)">
+              <div v-if="props.item.ratio !== undefined" class="item_percent"
+                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']">
+                <span v-if="mode == 1">{{
+                  (props.item.ratio || 0) > 0
+                    ? "+" + (props.item.ratio || 0)
+                    : props.item.ratio || 0
+                }}%</span>
                 <span v-else-if="mode == 2">{{
                   props.item.price || 0 > 0
                     ? "+" + (props.item.price || 0).toFixed(2)
@@ -124,15 +81,12 @@
         </div>
 
         <!-- 为了显示自选给了常数，需要更改为后端数据 -->
-        <div
-          class="flex items-center justify-between text-[0.32rem] font-bold w-[100%]"
-          v-show="props.marketType == 'crypto'"
-        >
+        <div class="flex items-center justify-between text-[0.32rem] font-bold w-[100%]"
+          v-show="props.marketType == 'crypto'">
           <div class="text-center w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
               item.price || "--"
-            }}</span
-            ><br />
+            }}</span><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal">{{
               t("market.market_optional_crypto_price")
             }}</span>
@@ -140,16 +94,14 @@
           <div class="text-center border-x-[#eff3f8] border-x-2 w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
               item.change || "--"
-            }}</span
-            ><br />
+            }}</span><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal">{{
               t("market.market_optional_short")
             }}</span>
           </div>
           <div class="text-center w-1/3">
-            <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'"
-              >{{ item.ratio > 0 ? "+" : "" }}{{ item.ratio || 0 }}%</span
-            ><br />
+            <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{ item.ratio > 0 ? "+" : "" }}{{ item.ratio
+              || 0 }}%</span><br />
             <span class="text-[0.22rem] text-[#8F92A1] font-normal">{{
               t("market.market_optioanl_ratio")
             }}</span>
@@ -158,14 +110,10 @@
       </div>
 
       <template #right v-if="props.deleteItem">
-        <div
-          :class="
-            props.marketType != 'crypto'
-              ? 'delete_content'
-              : 'delete_content_crypto ml-[1px]'
-          "
-          @click="removeStock(item)"
-        >
+        <div :class="props.marketType != 'crypto'
+          ? 'delete_content'
+          : 'delete_content_crypto ml-[1px]'
+          " @click="removeStock(item)">
           <div class="delete_icon">
             <!-- <img src="/static/img/assets/delete.svg" alt="🚮" /> -->
           </div>
@@ -199,7 +147,7 @@ const emits = defineEmits(["remove"]);
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
   scrollBox: {
     // 滚动的父级

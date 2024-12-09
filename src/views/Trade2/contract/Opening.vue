@@ -15,16 +15,16 @@
       <Tabs key="form" v-if="!pageLoading" class="van-tabs--oval-sub" @change="(e) => (activeTab = e)"
         v-model="activeTab" :swipeable="false" :color="'#014CFA'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
-          <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0"
-            :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
+          <OpeningForm :mode="props.mode" @showNavDialog="showNavDialog" v-if="activeTab == 0" ref="OpeningForm0Ref"
+            :key="0" :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
         </Tab>
         <Tab :title="t('trade.stock_limit_price')" name="1">
-          <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1"
-            :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
+          <OpeningForm :mode="props.mode" @showNavDialog="showNavDialog" v-if="activeTab == 1" ref="OpeningForm1Ref"
+            :key="1" :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
         </Tab>
         <Tab :title="t('trade.stock_take_stop')" name="2">
-          <OpeningForm @showNavDialog="showNavDialog" v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2"
-            :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
+          <OpeningForm :mode="props.mode" @showNavDialog="showNavDialog" v-if="activeTab == 2" ref="OpeningForm2Ref"
+            :key="2" :activeTab="activeTab" :activeType="activeType" @success="emits('success')" />
         </Tab>
       </Tabs>
 
@@ -45,6 +45,10 @@ const props = defineProps({
   type: {
     type: String,
     default: ''
+  },
+  mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
+    type: String,
+    default: 'constract'
   }
 })
 

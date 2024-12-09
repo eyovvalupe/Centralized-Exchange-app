@@ -67,7 +67,7 @@ const pageKeys = {
         'marketStockHongkongDataList',
         'marketStockMalaysiaDataList'
     ],
-    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList']
+    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList']
 }
 
 
@@ -100,6 +100,7 @@ export default {
         checkStockList: [],
         checkCryptoList: [],
         marketType: "all",
+
         currStock: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
         marketSearchTextList: [],
@@ -178,7 +179,7 @@ export default {
         graphColorGradient: false,
         marketActiveTab: 0,
         currDeleteId: '',
-        realtimeData:[]
+        realtimeData: []
 
     },
 
@@ -415,18 +416,18 @@ export default {
         setCurrCommodities(state, data) {
             setCurr('currCommodities', state, data)
         },
-        setRealtimeItemData(state,data){
+        setRealtimeItemData(state, data) {
             let has = false
-            for(let i=0;i<state.realtimeData.length;i++){
-                if(state.realtimeData[i].symbol == data.symbol){
+            for (let i = 0; i < state.realtimeData.length; i++) {
+                if (state.realtimeData[i].symbol == data.symbol) {
                     has = true
-                    Object.keys(data).map(k=>{
+                    Object.keys(data).map(k => {
                         state.realtimeData[i][k] = data[k]
                     })
                     break;
                 }
             }
-            if(!has){
+            if (!has) {
                 console.log(data.symbol)
                 state.realtimeData.push(data)
             }
@@ -460,9 +461,9 @@ export default {
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {
                     if (res.code == 200) {
-                        if(res.data && res.data.length){
-                            res.data.map(_item=>{
-                                commit("setRealtimeItemData",_item)
+                        if (res.data && res.data.length) {
+                            res.data.map(_item => {
+                                commit("setRealtimeItemData", _item)
                             })
                         }
                         // 根据不同页面，同步页面内模块的数据
@@ -512,10 +513,10 @@ export default {
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
                         let points = ''
-                        if(res.data){
+                        if (res.data) {
                             points = _getSnapshotLine(res.data)
-                            commit('setRealtimeItemData',{
-                                symbol:res.symbol,
+                            commit('setRealtimeItemData', {
+                                symbol: res.symbol,
                                 points
                             })
                         }

@@ -35,26 +35,17 @@
         </div>
       </div>
     </div>
-    <Swiper
-      style="width:100%;overflow:hidden;"
-        v-if="initialSwipe > -1" 
-        :show-indicators="false"
-        :loop="false"
-        :initial-slide="initialSwipe"
-        :speed="500"
-        @swiper="setTradeSwiper"
-        @slideChange="swipeChange"
-    >
+    <Swiper style="width:100%;overflow:hidden;" v-if="initialSwipe > -1" :show-indicators="false" :loop="false"
+      :initial-slide="initialSwipe" :speed="500" @swiper="setTradeSwiper" @slideChange="swipeChange">
       <SwiperSlide>
-        <div class="trade_body" ref="stockTradeBody"
-          @scroll="tradeBodyScroll('stockTradeBody')">
+        <div class="trade_body" ref="stockTradeBody" @scroll="tradeBodyScroll('stockTradeBody')">
           <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" v-if="start && loadedTab.includes(0)" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div class="trade_body" ref="contractTradeBody" 
-          @scroll="tradeBodyScroll('contractTradeBody')">
-          <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="start && loadedTab.includes(1)" />
+        <div class="trade_body" ref="contractTradeBody" @scroll="tradeBodyScroll('contractTradeBody')">
+          <ContractBlock :key="'constract'" :mode="'constract'" @showNavDialog="showNavDialogFunc"
+            ref="ContractBlockRef" v-if="start && loadedTab.includes(1)" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
@@ -63,18 +54,20 @@
         </div>
       </SwiperSlide>
       <SwiperSlide>
-        <div class="trade_body" >
+        <div class="trade_body">
           <IpoBlock ref="IpoBlockRef" v-if="start && loadedTab.includes(3)" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div class="trade_body">
-          <ForeignBlock @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef" v-if="start && loadedTab.includes(4)" />
+          <ContractBlock :key="'foreign'" :mode="'foreign'" @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef"
+            v-if="start && loadedTab.includes(4)" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div class="trade_body">
-          <CommoditiesBlock @showNavDialog="showNavDialogFunc" ref="CommoditiesBlockRef" v-if="start && loadedTab.includes(5)" />
+          <ContractBlock :key="'commodities'" :mode="'commodities'" @showNavDialog="showNavDialogFunc"
+            ref="CommoditiesBlockRef" v-if="start && loadedTab.includes(5)" />
         </div>
       </SwiperSlide>
     </Swiper>
@@ -157,7 +150,7 @@
 
 <script setup>
 import "swiper/css"
-import { Swiper,SwiperSlide } from "swiper/vue"
+import { Swiper, SwiperSlide } from "swiper/vue"
 import { PullRefresh, Popup, Tabs, Tab } from "vant";
 import {
   ref,
@@ -173,8 +166,6 @@ import IpoBlock from "./pages/IpoBlock.vue";
 import StockBlock from "./pages/StockBlock.vue";
 import AiBlock from "./pages/AiBlock.vue";
 import ContractBlock from "./pages/ContractBlock.vue";
-import ForeignBlock from "./pages/ForeignBlock.vue"
-import CommoditiesBlock from "./pages/CommoditiesBlock.vue"
 import store from "@/store";
 import StockTable from "@/components/StockTable.vue";
 import { _search, _watchlist } from "@/api/api";
@@ -209,11 +200,11 @@ const initialSwipe = ref(-1);
 const loadedTab = ref([activeTab.value]);
 let swipe = null
 const start = ref(false)
-const setTradeSwiper = (_swiper)=>{
+const setTradeSwiper = (_swiper) => {
   swipe = _swiper
-  setTimeout(()=>{
+  setTimeout(() => {
     start.value = true
-  },300)
+  }, 300)
 }
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
@@ -251,10 +242,10 @@ const reDir = () => {
     activeTab.value = 2;
   } else if (localStorage.tradeActiveTab > 0) {
     activeTab.value = Number(localStorage.tradeActiveTab);
-  }else{
+  } else {
     activeTab.value = 0
   }
-  if(initialSwipe.value == -1){
+  if (initialSwipe.value == -1) {
     initialSwipe.value = activeTab.value;
   }
   nextTick(() => {
