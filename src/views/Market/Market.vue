@@ -32,6 +32,7 @@
       :loop="false"
       :initial-slide="marketActiveTab"
       :speed="500"
+      :autoHeight="true"
       @swiper="setSwiper"
       @slideChange="swipeChange"
     >

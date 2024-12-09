@@ -5,7 +5,6 @@
     @change="ipoOnChange"
     v-model:active="ipoActive"
     :swipeable="false"
-    animated
     type="oval-card"
     shrink
   >
