@@ -484,12 +484,12 @@ export default {
     },
   },
   trade: {
-    header_stock: "Stock",
-    header_contract: "Future",
+    header_stock: "Stocks",
+    header_contract: "Futures",
     header_aibot: "Trading Bot",
-    header_ipo: "IPO",
+    header_ipo: "IPOs",
     header_forex: "Forex",
-    header_block: "Commodity",
+    header_block: "Blocks",
 
     stock_open: "Open",
     stock_position: "Position",
