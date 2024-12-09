@@ -91,8 +91,13 @@ const props = defineProps({
   type: {
     type: String,
     default: ''
+  },
+  mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
+    type: String,
+    default: 'constract'
   }
 })
+
 
 const { t } = useI18n();
 const loginfinish = () => {

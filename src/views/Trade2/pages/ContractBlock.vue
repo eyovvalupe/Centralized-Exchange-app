@@ -20,7 +20,7 @@
     >
           <SwiperSlide>
             <div class="stock_tab-body">
-              <Opening :type="'constract'" v-if="loadTab.indexOf('0') > -1" @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
+              <Opening :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1" @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
             </div>
           </SwiperSlide>
           <SwiperSlide>
@@ -48,6 +48,13 @@ import Positions from "../contract/Positions.vue";
 import Inquire from "../contract/Inquire.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
+
+const props = defineProps({
+  mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
+    type: String,
+    default: 'constract'
+  }
+})
 
 const { t } = useI18n();
 const emits = defineEmits(["showNavDialog"]);

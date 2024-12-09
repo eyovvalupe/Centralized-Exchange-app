@@ -55,7 +55,7 @@
       <SwiperSlide>
         <div class="trade_body" ref="contractTradeBody" 
           @scroll="tradeBodyScroll('contractTradeBody')">
-          <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
+          <ContractBlock :key="'constract'" :mode="'constract'" @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
@@ -70,12 +70,14 @@
       </SwiperSlide>
       <SwiperSlide>
         <div class="trade_body">
-          <ForeignBlock @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef" v-if="loadedTab.includes(4)" />
+          <ContractBlock :key="'foreign'" :mode="'foreign'" @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef"
+            v-if="loadedTab.includes(4)" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div class="trade_body">
-          <CommoditiesBlock @showNavDialog="showNavDialogFunc" ref="CommoditiesBlockRef" v-if="loadedTab.includes(5)" />
+          <ContractBlock :key="'commodities'" :mode="'commodities'" @showNavDialog="showNavDialogFunc"
+            ref="CommoditiesBlockRef" v-if="loadedTab.includes(5)" />
         </div>
       </SwiperSlide>
     </Swiper>
@@ -158,7 +160,7 @@
 
 <script setup>
 import "swiper/css"
-import { Swiper,SwiperSlide } from "swiper/vue"
+import { Swiper, SwiperSlide } from "swiper/vue"
 import { PullRefresh, Popup, Tabs, Tab } from "vant";
 import {
   ref,
@@ -174,8 +176,6 @@ import IpoBlock from "./pages/IpoBlock.vue";
 import StockBlock from "./pages/StockBlock.vue";
 import AiBlock from "./pages/AiBlock.vue";
 import ContractBlock from "./pages/ContractBlock.vue";
-import ForeignBlock from "./pages/ForeignBlock.vue"
-import CommoditiesBlock from "./pages/CommoditiesBlock.vue"
 import store from "@/store";
 import StockTable from "@/components/StockTable.vue";
 import { _search, _watchlist } from "@/api/api";
@@ -248,10 +248,10 @@ const reDir = () => {
     activeTab.value = 2;
   } else if (localStorage.tradeActiveTab > 0) {
     activeTab.value = Number(localStorage.tradeActiveTab);
-  }else{
+  } else {
     activeTab.value = 0
   }
-  if(initialSwipe.value == -1){
+  if (initialSwipe.value == -1) {
     initialSwipe.value = activeTab.value;
   }
   nextTick(() => {
