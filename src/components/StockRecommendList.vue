@@ -12,21 +12,21 @@
         <!-- <div :class="item.watchlist == 1 ? 'star_icon' : 'unstar_icon'" @click.stop="collect(item)"></div> -->
         <div class="symbol">{{ item.symbol }}</div>
         <div class="name">{{ item.name || "--" }}</div>
-        <div class="price">{{ item.price ? item.price : "--" }}</div>
+        <div class="price">{{ getRealtime(item.symbol,'price') }}</div>
         <div
           class="percent"
-          :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']"
+          :class="[getRealtime(item.symbol,'ratio',0) >= 0 ? 'up' : 'down']"
         >
           {{
-            (item.ratio || 0)  > 0
-              ? "+" + (item.ratio || 0)
-              : (item.ratio || 0) 
+            getRealtime(item.symbol,'ratio',0)  > 0
+              ? "+" + getRealtime(item.symbol,'ratio',0)
+              : getRealtime(item.symbol,'ratio',0)
           }}%
         </div>
 
           <div class="sparkLine">
-            <SparkLine v-if="item.points" style="width: 100%; height: 0.45rem" :points="item.points"
-              :ratio="item.ratio" />
+            <SparkLine v-if="getRealtime(item.symbol,'points')" style="width: 100%; height: 0.45rem" :points="getRealtime(item.symbol,'points')"
+              :ratio="getRealtime(item.symbol,'ratio',0)" />
           </div>
         </div>
       </template>
@@ -44,7 +44,14 @@ import router from "@/router";
 import { _add, _del } from "@/api/api";
 import eventBus from "@/utils/eventBus";
 
-
+const getRealtime = (symbol,k,_default='')=>{
+  for(let i=0;i<store.state.realtimeData.length;i++){
+    if(store.state.realtimeData[i].symbol == symbol){
+      return store.state.realtimeData[i][k] || _default
+    }
+  }
+  return _default
+}
 const emits = defineEmits(["change"]);
 const token = computed(() => store.state.token || "");
 
@@ -71,11 +78,6 @@ const props = defineProps({
     default: 0
   }
 });
-
-const updown = (item) => {
-  if (item.ratio === undefined) return 0;
-  return item.ratio > 0 ? 1 : -1;
-};
 
 const loading = ref(false);
 const disabled = computed(

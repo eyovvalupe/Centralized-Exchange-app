@@ -19,21 +19,22 @@
               </div>
             </div>
             <div class="item_lever" v-if="item.lever">
-              <span v-for="(tag,i) in getLever(item.lever)" v-show="i < 4" :key="tag">
+              <span v-for="(tag,i) in getLever(item.lever)" v-show="i < 1" :key="tag">
                 {{tag}}X
               </span>
             </div>
           </div>
           <div class="td2 spark_line_box">
-            <SparkLine v-if="getRealtime(item.symbol,'points')" :style="'width: 100%; height: 0.54rem;'" :points="getRealtime(item.symbol,'points')"
-            :polylineStrokeWidth="2"
+            <SparkLine v-if="getRealtime(item.symbol,'points')" :style="'width: 100%; height: 0.54rem;'"
+              :points="getRealtime(item.symbol,'points')"
+              :polylineStrokeWidth="2"
               :ratio="getRealtime(item.symbol,'ratio')" />
           </div>
           <div class="td2 td_r">
-            <div class="item_num" :class="getRealtime(item.symbol,'ratio') === 0 ? '' : getRealtime(item.symbol,'ratio') > 0 ? 'up' : 'down'">{{ getRealtime(item.symbol,'price') || '--' }}</div>
+            <div class="item_num" :class="getRealtime(item.symbol,'ratio') >= 0 ? 'up' : 'down'">{{ getRealtime(item.symbol,'price') || '--' }}</div>
             <div
               class="item_info_box">
-                <div class="item_percent" :class="getRealtime(item.symbol,'ratio') === 0 ? '' : getRealtime(item.symbol,'ratio') > 0 ? 'up_bg' : 'down_bg'">
+                <div class="item_percent" :class="getRealtime(item.symbol,'ratio') >= 0 ? 'up_bg' : 'down_bg'">
                   {{ getRealtime(item.symbol,'ratio') > 0 ? "+" : "" }}{{ (getRealtime(item.symbol,'ratio') || 0) }}%
                 </div>
               </div>

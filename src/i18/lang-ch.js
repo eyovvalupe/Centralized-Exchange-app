@@ -806,7 +806,7 @@ export default {
     market_stock_description_des2: "下跌",
     market_stock_description_long_end: "漲停",
     market_stock_description_center: "平",
-    market_stock_description_long_end: "跌停",
+    market_stock_description_short_end: "跌停",
     market_stock_chase_movement: "漲停追擊",
     market_stock_chase_earning_effect: "賺錢效應",
     market_stock_chase_strong: "強",

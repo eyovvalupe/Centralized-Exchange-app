@@ -51,7 +51,7 @@ const props = defineProps({
 })
 
 const color = computed(() => {
-    if (props.ratio > 0) {
+    if (props.ratio >= 0) {
         return '#55C860'
     } else if (props.ratio < 0) {
         return '#FD4938'
@@ -74,7 +74,7 @@ const shadowPoints = computed(() => {
 })
 
 const stopStartColor = computed(() => {
-    if (props.ratio > 0) {
+    if (props.ratio >= 0) {
         return 'rgba(57, 179, 98, 0.15)'
     } else if (props.ratio < 0) {
         return 'rgba(253, 73, 56, 0.15)'
@@ -83,7 +83,7 @@ const stopStartColor = computed(() => {
     }
 })
 const stopEndColor = computed(() => {
-    if (props.ratio > 0) {
+    if (props.ratio >= 0) {
         return 'rgba(57, 179, 98, 0)'
     } else if (props.ratio < 0) {
         return 'rgba(253, 73, 56, 0)'
