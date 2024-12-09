@@ -35,38 +35,38 @@
         </div>
       </div>
     </div>
-    <Swipe :autoplay="0" v-if="showSwipe" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe"
+    <Swipe :autoplay="0" v-if="initialSwipe > -1" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe"
       @change="swipeChange">
       <SwipeItem>
-        <div class="trade_body" ref="stockTradeBody" v-if="loadedTab.includes(0)"
+        <div class="trade_body" ref="stockTradeBody"
           @scroll="tradeBodyScroll('stockTradeBody')">
-          <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" />
+          <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" v-if="loadedTab.includes(0)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="trade_body" ref="contractTradeBody" v-if="loadedTab.includes(1)"
+        <div class="trade_body" ref="contractTradeBody" 
           @scroll="tradeBodyScroll('contractTradeBody')">
-          <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" />
+          <ContractBlock @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="trade_body" v-if="loadedTab.includes(2)">
-          <AiBlock @showNavDialog="showNavDialogFunc" ref="AiBlockRef" />
+        <div class="trade_body">
+          <AiBlock @showNavDialog="showNavDialogFunc" ref="AiBlockRef" v-if="loadedTab.includes(2)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="trade_body" v-if="loadedTab.includes(3)">
-          <IpoBlock ref="IpoBlockRef" />
+        <div class="trade_body" >
+          <IpoBlock ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="trade_body" v-if="loadedTab.includes(4)">
-          <ForeignBlock @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef" />
+        <div class="trade_body">
+          <ForeignBlock @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef" v-if="loadedTab.includes(4)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="trade_body" v-if="loadedTab.includes(5)">
-          <CommoditiesBlock @showNavDialog="showNavDialogFunc" ref="CommoditiesBlockRef" />
+        <div class="trade_body">
+          <CommoditiesBlock @showNavDialog="showNavDialogFunc" ref="CommoditiesBlockRef" v-if="loadedTab.includes(5)" />
         </div>
       </SwipeItem>
     </Swipe>
@@ -195,8 +195,7 @@ const onRefresh = () => {
 
 // 一级导航
 const activeTab = ref(0);
-const showSwipe = ref(false);
-const initialSwipe = ref(activeTab.value);
+const initialSwipe = ref(-1);
 const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
 const changeActiveTab = (val, slideSwipe = false) => {
@@ -235,10 +234,12 @@ const reDir = () => {
     activeTab.value = 2;
   } else if (localStorage.tradeActiveTab > 0) {
     activeTab.value = Number(localStorage.tradeActiveTab);
+  }else{
+    activeTab.value = 0
   }
-  initialSwipe.value = activeTab.value;
-  showSwipe.value = true;
-  loadedTab.value = [activeTab.value];
+  if(initialSwipe.value == -1){
+    initialSwipe.value = activeTab.value;
+  }
   nextTick(() => {
     changeActiveTab(activeTab.value, prevActiveTabVal != activeTab.value);
   });

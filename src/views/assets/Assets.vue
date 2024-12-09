@@ -16,17 +16,18 @@
       @change="swipeChange"
     >
       <SwipeItem>
-        <div class="assets_body pb-[0.32rem]" v-if="loadedTab.indexOf(0) > -1">
+        <div class="assets_body pb-[0.32rem]" >
           <Overview
             ref="overviewRef"
+            v-if="loadedTab.indexOf(0) > -1"
             @jumpToWallet="(val) => jumpToWallet(val)"
             @setLoading="(val) => (loading = val)"
           />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="assets_body" v-if="loadedTab.indexOf(1) > -1">
-          <Wallet ref="cashRef" @setLoading="(val) => (loading = val)" />
+        <div class="assets_body">
+          <Wallet ref="cashRef" v-if="loadedTab.indexOf(1) > -1" @setLoading="(val) => (loading = val)" />
         </div>
       </SwipeItem>
       <SwipeItem>

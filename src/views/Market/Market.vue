@@ -35,42 +35,42 @@
       @change="changeTab"
     >
       <SwipeItem>
-        <div v-if="active === 0 && activated" class="assets_body">
+        <div class="assets_body">
           <!-- 自选 -->
-          <Optional ref="OptionalRef" />
+          <Optional ref="OptionalRef" v-if="active === 0 && activated" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div
-          v-if="loadedTab.includes(1)"
+          
           ref="marketPageRef"
           class="assets_body"
         >
           <!-- 买币 -->
-          <buyCoin ref="BuyCoinRef" />
+          <buyCoin ref="BuyCoinRef" v-if="loadedTab.includes(1)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div v-if="loadedTab.includes(2)" class="assets_body">
+        <div class="assets_body">
           <!-- 股票 -->
-          <Stock />
+          <Stock v-if="loadedTab.includes(2)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div v-if="loadedTab.includes(3)" class="assets_body">
+        <div class="assets_body">
           <!-- 合约 -->
-          <Constract />
+          <Constract v-if="loadedTab.includes(3)" />
         </div>
       </SwipeItem>
 
       <SwipeItem>
-        <div v-if="loadedTab.includes(4)" class="assets_body">
-          <AiBlockList />
+        <div class="assets_body">
+          <AiBlockList v-if="loadedTab.includes(4)" />
         </div>
       </SwipeItem>
       <!-- <SwipeItem>
-        <div v-if="loadedTab.includes(5)" class="assets_body">
-          <Foreign />
+        <div class="assets_body">
+          <Foreign v-if="loadedTab.includes(5)" />
         </div>
       </SwipeItem> -->
     </Swipe>
