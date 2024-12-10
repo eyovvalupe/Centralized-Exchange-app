@@ -35,6 +35,7 @@
         </div>
       </div>
     </div>
+    
     <Swiper
         style="width:100%;overflow:hidden;"
         v-if="initialSwipe > -1" 
@@ -170,6 +171,7 @@ import {
   onDeactivated,
   onMounted,
   nextTick,
+  onBeforeUnmount,
 } from "vue";
 
 import IpoBlock from "./pages/IpoBlock.vue";
@@ -211,7 +213,9 @@ const loadedTab = ref([activeTab.value]);
 let swipe = null
 const setTradeSwiper = (_swiper)=>{
   swipe = _swiper
+  
 }
+
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
   if (loadedTab.value.indexOf(val) == -1) {
@@ -461,6 +465,17 @@ onActivated(() => {
 onDeactivated(() => {
   pageActive.value = false;
 });
+const windowResize = ()=>{
+  swipe && swipe.update()
+}
+
+onMounted(()=>{
+  window.addEventListener('resize',windowResize)
+})
+
+onBeforeUnmount(()=>{
+  window.removeEventListener('resize',windowResize)
+})
 
 const tradeBodyScroll = (refName) => {
   if (refName == "stockTradeBody") {

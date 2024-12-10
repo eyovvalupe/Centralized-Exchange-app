@@ -204,6 +204,18 @@ const swipeChange = (e) => {
   changeTab(e.realIndex);
 };
 
+const windowResize = ()=>{
+  swipe && swipe.update()
+}
+
+onMounted(()=>{
+  window.addEventListener('resize',windowResize)
+})
+
+onBeforeUnmount(()=>{
+  window.removeEventListener('resize',windowResize)
+})
+
 onActivated(() => {
   activated.value = true;
   setTimeout(() => {
@@ -235,6 +247,8 @@ Promise.all([
     changeTab(active.value);
   }, 0);
 });
+
+
 </script>
 
 <style lang="less" scoped>
