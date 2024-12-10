@@ -211,8 +211,6 @@ onBeforeUnmount(()=>{
 })
 
 onActivated(() => {
-  marketActiveTab.value = store.state.marketActiveTab || 0
-  active.value = marketActiveTab.value
   changeTab(active.value);
 });
 onDeactivated(() => {
