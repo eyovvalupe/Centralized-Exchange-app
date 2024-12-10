@@ -6,7 +6,7 @@
     <!-- <div class="title">交易</div> -->
     <!-- 头部 -->
 
-    <HeaderTabs :tabs="[t('trade.header_stock'),t('trade.header_contract'),t('trade.header_aibot'),t('trade.header_ipo'),t('trade.header_forex'),t('trade.header_block')]" v-model:active="activeTab">
+    <HeaderTabs :tabs="[t('trade.header_stock'),t('trade.header_contract'),t('trade.header_aibot'),t('trade.header_ipo'),t('trade.header_forex'),t('trade.header_block')]" v-model:active="activeTab" @change="changeActiveTab(activeTab,true)">
         <template #before>
           <div class="tab_icon" @click="showNavDialog = true">
             <img src="/static/img/trade/open.png" alt="img" />

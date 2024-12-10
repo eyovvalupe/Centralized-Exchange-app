@@ -1,6 +1,6 @@
 <!-- 市场 -->
 <template>
-  <div v-if="activatedIncludes && !pageLoading" class="page page_market">
+  <div class="page page_market">
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
     <Subscription
       v-else-if="detail == '2'"
@@ -39,7 +39,7 @@
       <SwiperSlide>
         <div class="assets_body">
           <!-- 自选 -->
-          <Optional ref="OptionalRef" v-if="active === 0 && activated" />
+          <Optional ref="OptionalRef" v-if="loadedTab.includes(0)" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
@@ -152,7 +152,6 @@ const changeTab = (key, slideSwipe = false) => {
     }
   }
   if (slideSwipe && swipe) swipe.slideTo(key);
-  console.log(666)
   setTimeout(() => {
     switch (key) {
       case 0:
@@ -174,11 +173,6 @@ const changeTab = (key, slideSwipe = false) => {
   }, 100);
 };
 
-const activated = ref(false);
-const activatedIncludes = computed(() => {
-  // 需要缓存的页面
-  return [0, 2, 3, 4, 5].includes(active.value) ? activated.value : true;
-});
 function scrollHandler() {
   if (openTab.value) {
     openTab.value = false;
@@ -217,36 +211,24 @@ onBeforeUnmount(()=>{
 })
 
 onActivated(() => {
-  activated.value = true;
-  setTimeout(() => {
-    if (active.value == 0) {
-      OptionalRef.value && OptionalRef.value.init();
-    }
-  }, 100);
+  marketActiveTab.value = store.state.marketActiveTab || 0
+  active.value = marketActiveTab.value
+  changeTab(active.value);
 });
 onDeactivated(() => {
-  setTimeout(() => {
-    activated.value = false;
-  }, 100);
+  loadedTab.value = [1] //只留下买币，其他销毁缓存
   // 取消订阅
   if (bottomTabBarValue.value !== "market") {
     cancelSubs();
   }
 });
+
 // 预加载页面
-const pageLoading = computed(() => store.state.pageLoading);
-store.commit("setPageLoading", true);
 Promise.all([
   import("@/views/Market/MarketInfo.vue"),
   import("@/views/Market/Search.vue"),
   import("@/views/Market/IpoSubscription.vue"),
-]).finally(() => {
-  store.commit("setPageLoading", false);
-
-  setTimeout(() => {
-    changeTab(active.value);
-  }, 0);
-});
+])
 
 
 </script>
