@@ -5,37 +5,16 @@
 
     <!-- <div class="title">交易</div> -->
     <!-- 头部 -->
-    <div class="trade_header">
-      <!-- <div class="menu" @click="showNavDialog = true">
-                    <img src="/static/img/trade/open.png" alt="menu" />
-                </div> -->
-      <div class="tabs" :class="[openTab ? 'open_tabs' : 'close_tabs']">
-        <div class="tab_icon my_icon2" @click="showNavDialog = true">
-          <img src="/static/img/trade/open.png" alt="img" />
-        </div>
-        <div class="tab_body">
-          <div class="tab" :class="{ active_tab: activeTab == 0 }" @click="changeActiveTab(0, true)">
-            <span class="tab-name">{{ t('trade.header_stock') }}</span>
+
+    <HeaderTabs :tabs="[t('trade.header_stock'),t('trade.header_contract'),t('trade.header_aibot'),t('trade.header_ipo'),t('trade.header_forex'),t('trade.header_block')]" v-model:active="activeTab">
+        <template #before>
+          <div class="tab_icon" @click="showNavDialog = true">
+            <img src="/static/img/trade/open.png" alt="img" />
           </div>
-          <div class="tab" :class="{ active_tab: activeTab == 1 }" @click="changeActiveTab(1, true)">
-            <span class="tab-name">{{ t('trade.header_contract') }}</span>
-          </div>
-          <div class="tab" :class="{ active_tab: activeTab == 2 }" @click="changeActiveTab(2, true)">
-            <span class="tab-name">{{ t('trade.header_aibot') }}</span>
-          </div>
-          <div class="tab" :class="{ active_tab: activeTab == 3 }" @click="changeActiveTab(3, true)">
-            <span class="tab-name">{{ t('trade.header_ipo') }}</span>
-          </div>
-          <div class="tab" :class="{ active_tab: activeTab == 4 }" @click="changeActiveTab(4, true)">
-            <span class="tab-name">{{ t('trade.header_forex') }}</span>
-          </div>
-          <div class="tab" :class="{ active_tab: activeTab == 5 }" @click="changeActiveTab(5, true)">
-            <span class="tab-name">{{ t('trade.header_block') }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+        </template>  
+        
+    </HeaderTabs>
+   
     <Swiper
         style="width:100%;overflow:hidden;"
         v-if="initialSwipe > -1" 
@@ -173,7 +152,7 @@ import {
   nextTick,
   onBeforeUnmount,
 } from "vue";
-
+import HeaderTabs from "@/components/HeaderTabs.vue";
 import IpoBlock from "./pages/IpoBlock.vue";
 import StockBlock from "./pages/StockBlock.vue";
 import AiBlock from "./pages/AiBlock.vue";
@@ -518,158 +497,11 @@ const tradeBodyScroll = (refName) => {
     position: relative;
   }
 
-  .trade_header {
-    height: 1.12rem;
-    padding: 0 0 0 0.24rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    // .menu {
-    //     width: 0.4rem;
-    //     height: 0.4rem;
-    // }
-
-    .tabs {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      position: relative;
-      overflow-x: auto;
-      // padding: 0 0.4rem;
-
-      .tab {
-        font-size: 0.28rem;
-        color: #666d80;
-        padding: 0 0.22rem;
-        height: 0.66rem;
-        line-height: 0;
-        border-radius: 0.48rem;
-        display: flex;
-        padding-bottom: 0.06rem;
-        align-items: center;
-        cursor: pointer;
-        white-space: nowrap;
-        position: relative;
-
-        .mytab_title_icon {
-          width: 0.32rem;
-          height: 0.32rem;
-          line-height: 1;
-          position: relative;
-          top: -0.02rem;
-        }
-
-        .tab_icon {
-          width: 0.32rem;
-          height: 0.32rem;
-        }
-
-        .tab-name {
-          position: relative;
-          z-index: 1;
-          transition: 0.3s;
-        }
-
-        &::after {
-          content: "";
-          width: 0.6rem;
-          height: 0.2rem;
-          background-color: #014cfa;
-          position: absolute;
-          bottom: 0;
-          left: 50%;
-          margin-left: -0.3rem;
-          border-radius: 0.6rem;
-          transition: 0.3s;
-          opacity: 0;
-          transform: scale(0);
-        }
-      }
-
-      .active_tab {
-        color: #061023;
-        font-weight: 700;
-        opacity: 1;
-
-        .tab-name {
-          font-size: 0.56rem;
-        }
-
-        &::after {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      .tab_icon {
-        width: 0.48rem;
-        height: 0.48rem;
-      }
-
-      .my_icon {
-        position: absolute;
-        top: 0.1rem;
-        right: 0;
-        padding-right: 0 !important;
-      }
-
-      .my_icon2 {
-        position: absolute;
-        top: 0.1rem;
-        left: 0;
-        transition: all ease 0.3s;
-      }
-    }
-
-    .open_tabs {
-      height: 1.6rem;
-      padding-top: 0.2rem;
-      padding-bottom: 0.2rem;
-      padding-right: 0.4rem;
-      padding-left: 0.6rem;
-
-      .my_icon2 {
-        top: 0.3rem;
-      }
-
-      .tab_body {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-    }
-
-    .close_tabs {
-      padding-right: 0;
-      padding-left: 0.4rem;
-
-      .tab_body {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        margin: 0 0.2rem;
-      }
-    }
-
-    .value {
-      display: flex;
-      align-items: center;
-      color: #0953fa;
-      font-size: 0.24rem;
-      font-weight: 400;
-
-      .value_icon {
-        width: 0.52rem;
-        height: 0.52rem;
-      }
-    }
+  .tab_icon {
+    min-width: 0.48rem;
+    height: 0.48rem;
+    margin: 0 0.24rem;
   }
-
   .trade_body {
     overflow-y: auto;
     height: calc(100vh - 2.52rem);

@@ -109,7 +109,6 @@ onMounted(()=>{
         align-items: center;
         position: relative;
         overflow-x: auto;
-        transition: .3s;
         .tab_body {
             flex: 1;
             display: flex;
