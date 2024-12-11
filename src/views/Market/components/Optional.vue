@@ -12,6 +12,7 @@
       :list="watchList"
       :marketType="marketType"
     />
+    {{ console.log("watch list ===========> ", watchList) }}
     <div class="addBtn_container">
       <Button
         round
