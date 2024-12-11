@@ -9,13 +9,13 @@
         }}</span>
       </div>
       <!-- <CurrencyItem v-for="(item, i) in showList" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
-      <CurrencyList />
+      <CurrencyList @click="(val) => click(val)" :list="showList"/>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, defineEmits } from "vue";
 import { Icon, Switch } from "vant";
 import store from "@/store";
 import CurrencyItem from './components/CurrencyItem.vue'
@@ -24,7 +24,7 @@ import { useI18n } from "vue-i18n";
 import CurrencyList from "./components/CurrencyList.vue";
 
 const { t } = useI18n();
-const emits = defineEmits(["setLoading"]);
+const emits = defineEmits(["setLoading", "click"]);
 const token = computed(() => store.state.token || "");
 
 
@@ -91,6 +91,10 @@ onUnmounted(() => {
     document.querySelector(".page").removeEventListener("click", removeSwitch);
   } catch {}
 });
+
+const click = (val) => {
+  emits('click', val)
+}
 
 const refresh = () => {
   getAssets();

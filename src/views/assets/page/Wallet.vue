@@ -36,7 +36,7 @@
           <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" :balance="assets.money" />
         </div>
         <Btns />
-        <Cash />
+        <Cash @click="(val) => click(val)" />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 1">
@@ -145,7 +145,7 @@ import StockWallet from "./components/StockWallet.vue";
 import ContractWallet from "./components/ContractWallet.vue";
 import ForexWallet from "./components/ForexWallet.vue";
 import TradeWallet from "./components/TradeWallet.vue";
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, computed, watch, defineEmits } from "vue";
 import DefaultWallet from "./components/DefaultWallet.vue";
 import Btns from "./components/Btns.vue";
 import Cash from "./Cash.vue";
@@ -156,6 +156,8 @@ import CryptoWallet from "./CryptoWallet.vue";
 import ForexMyWallet from "./ForexWallet.vue";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import { useI18n } from "vue-i18n";
+
+const emits = defineEmits(['click'])
 
 const { t } = useI18n();
 const activeTab = ref(store.state.currSelectedWallet);
@@ -184,6 +186,10 @@ const getAssets = () => {
 const refresh = () => {
   getAssets();
 };
+
+const click = (val) => {
+  emits('click', val)
+}
 
 defineExpose({
   refresh,

@@ -27,7 +27,7 @@
       </SwipeItem>
       <SwipeItem>
         <div class="assets_body">
-          <Wallet ref="cashRef" v-if="loadedTab.indexOf(1) > -1" @setLoading="(val) => (loading = val)" />
+          <Wallet ref="cashRef" v-if="loadedTab.indexOf(1) > -1" @setLoading="(val) => (loading = val)" @click="(val) => handle = true"/>
         </div>
       </SwipeItem>
       <SwipeItem>
@@ -76,7 +76,7 @@
 
 <script setup>
 import { Tab, Tabs, PullRefresh, Swipe, SwipeItem, Popup } from "vant";
-import { ref, onMounted, computed, onActivated } from "vue";
+import { ref, onMounted, computed, onActivated, defineEmits } from "vue";
 import { useRoute } from "vue-router";
 import Overview from "./page/Overview.vue";
 import RecordList from "@/components/RecordList.vue";
@@ -94,7 +94,7 @@ import TransferColorIcon from "./page/icons/TransferColorIcon.vue";
 import TransferOutColorIcon from "./page/icons/TransferOutColorIcon.vue";
 
 const { t } = useI18n();
-const handle = ref(true)
+const handle = ref(false)
 // import HintBlock from "@/components/HintBlock.vue"
 
 const route = useRoute();
