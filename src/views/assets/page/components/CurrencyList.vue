@@ -1,22 +1,46 @@
 <template>
-    <div class="currency_list">
-        <div class="w-[6.86rem] h-[2.36rem] rounded-[0.32rem] bg-[#f5f7fc] border-[0.02rem] border-[#eff3f8] overflow-hidden relative">
-            <div class="w-[6.86rem] h-[1.4rem] rounded-t-[0.32rem] bg-[#fff] absolute bottom-[0]">
+  <div class="currency_list">
+    <div
+      class="w-[6.86rem] h-[2.36rem] rounded-[0.32rem] bg-[#f5f7fc] border-[0.02rem] border-[#eff3f8] overflow-hidden relative mb-[0.2rem]"
+    >
+      <div
+        class="w-[6.86rem] h-[1.4rem] rounded-t-[0.32rem] bg-[#fff] absolute bottom-[0] flex items-center"
+      >
+        <div class="w-full h-[0.8rem] relative flex">
+          <div class="w-1/2 h-full flex flex-col items-center justify-between">
+            <div class="text-[0.28rem] text-[#666d80]">{{ t("可用") }}</div>
+            <div class="text-[0.32rem] text-[#061023] font-semibold">
+              {{ 8000 }}
             </div>
-            <div class="w-full ml-[0.32rem] mt-[0.32rem] flex items-center">
-                <div class="w-[26px] h-[26px] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]">
-                    <div class="usdt_icon"></div>
-                </div>
-                <div class="text-[15px] text-[#061023]">USDT</div>
+          </div>
+          <div class="w-1/2 h-full flex flex-col items-center justify-between">
+            <div class="text-[0.28rem] text-[#666d80]">{{ t("可用") }}</div>
+            <div class="text-[0.32rem] text-[#061023] font-semibold">
+              {{ 8000 }}
             </div>
+          </div>
         </div>
+      </div>
+      <div class="w-full ml-[16px] mt-[16px] flex items-center">
+        <div
+          class="w-[26px] h-[26px] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]"
+        >
+          <div class="usdt_icon"></div>
+        </div>
+        <div class="text-[15px] text-[#061023]">USDT</div>
+      </div>
     </div>
+    
+  </div>
 </template>
 <script setup>
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 </script>
 <style lang="less">
 .currency_list {
-    .usdt_icon {
+  .usdt_icon {
     width: 20px;
     height: 20px;
     background-image: url('data:image/svg+xml;utf8,<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(%23clip0_553_6578)"><path d="M47.957 23.9919C47.957 37.1812 37.2657 47.8725 24.0764 47.8725C10.8876 47.8725 0.195801 37.1812 0.195801 23.9919C0.195801 10.8029 10.8876 0.111328 24.0764 0.111328C37.2657 0.111328 47.957 10.8029 47.957 23.9919Z" fill="%231BA27A"/><path d="M35.2843 12.1523H12.6718V17.6114H21.2485V25.6353H26.7076V17.6114H35.2843V12.1523Z" fill="white"/><path d="M24.0298 26.4902C16.9349 26.4902 11.1828 25.3673 11.1828 23.982C11.1828 22.5969 16.9346 21.4738 24.0298 21.4738C31.1247 21.4738 36.8766 22.5969 36.8766 23.982C36.8766 25.3673 31.1247 26.4902 24.0298 26.4902ZM38.4549 24.4002C38.4549 22.6139 31.9966 21.166 24.0298 21.166C16.0632 21.166 9.60449 22.6139 9.60449 24.4002C9.60449 25.9732 14.6125 27.2837 21.2487 27.5741V39.0927H26.7073V27.5787C33.3946 27.2974 38.4549 25.9813 38.4549 24.4002Z" fill="white"/></g><defs><clipPath id="clip0_553_6578"><rect width="48" height="48" fill="white"/></clipPath></defs></svg>');
