@@ -101,7 +101,7 @@
           <NextIcon />
         </div>
       </div>
-      <div
+      <!-- <div
         ref="tab4"
         :key="4"
         class="tab"
@@ -120,8 +120,8 @@
         <div class="more">
           <NextIcon />
         </div>
-      </div>
-      <div
+      </div> -->
+      <!-- <div
         ref="tab5"
         :key="5"
         class="tab"
@@ -140,7 +140,7 @@
         <div class="more">
           <NextIcon />
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- 类型选择弹窗 -->
