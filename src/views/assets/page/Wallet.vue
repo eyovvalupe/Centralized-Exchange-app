@@ -26,15 +26,15 @@
             t('assets.wallet_header_cash'),
             t('assets.wallet_header_stock'),
             t('assets.wallet_header_contract'),
-            t('assets.wallet_header_forex'),
-            t('assets.wallet_header_trade'),
           ]"
           @change="changeActiveTab(activeTab)"
         />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 0">
-        <DefaultWallet :name="t('assets.wallet_header_cash')" :type="t('assets.wallet_cash_value')" :balance="assets.money" />
+        <div class="mb-[0.8rem]">
+          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" :balance="assets.money" />
+        </div>
         <Btns />
         <Cash />
       </div>
@@ -121,15 +121,14 @@
         <CryptoWallet />
       </div>
 
-      <div class="tab" v-if="currSelectedWallet == 3">
+      <!-- <div class="tab" v-if="currSelectedWallet == 3">
         <DefaultWallet :name="t('assets.wallet_header_forex')" :type="t('assets.wallet_forex_value')" :balance="assets.forex" />
         <Btns />
         <ForexMyWallet />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 4">
-        <!-- <DefaultWallet :name="'大宗商品'" :balance="10000" /> -->
-      </div>
+      </div> -->
     </div>
 
     <!-- <div>
@@ -204,6 +203,10 @@ const jump = (name, check = false, query) => {
     query,
   });
 };
+onMounted(() => {
+  store.dispatch('updateAssets');
+  store.dispatch('updateWallet');
+})
 </script>
 <style lang="less">
 .wallet_container {

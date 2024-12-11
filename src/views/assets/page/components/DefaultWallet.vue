@@ -1,19 +1,19 @@
 <template>
   <div
-    class="relative w-[6.86rem] h-[2.42rem] pt-[0.16rem] pl-[0.24rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]"
+    class="relative w-[6.86rem] h-[3.04rem] pt-[0.16rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]"
   >
-    <DefaultWalletBtn />
+    <!-- <DefaultWalletBtn /> -->
     <DefaultWalletInfoContainer />
-    <DefaultImg />
-    <span class="text-[0.32rem] text-[#fff]">{{ name }}</span>
+    <!-- <DefaultImg /> -->
+    <!-- <span class="text-[0.32rem] text-[#fff]">{{ name }}</span> -->
     <div
-      class="flex flex-col px-[0.1rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]"
+      class="flex flex-col px-[0.4rem] h-[1.16rem] z-[3] mt-[0.64rem] ml-[0.12rem] mb-[0.4rem]"
     >
       <div class="flex">
         <span
           class="text-[0.3rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
           style="width: max-content"
-          >{{ type }}</span
+          >{{ name }}</span
         ><span
           class="flex items-end text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
           style="width: max-content"
@@ -27,8 +27,46 @@
         </div>
       </div>
       <span class="text-[0.52rem] text-[#061023] font-semibold">{{
-        showInfo ? balance.toLocaleString() : "********"
+        showInfo
+          ? type == "cash"
+            ? parseFloat(assets.money).toLocaleString()
+            : type == "futures"
+            ? parseFloat(assets.futures).toLocaleString()
+            : type == "stock"
+            ? parseFloat(assets.stock).toLocaleString()
+            : "--"
+          : "********"
       }}</span>
+    </div>
+    <div class="flex w-full px-[0.28rem] justify-between">
+      <div
+        class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] flex flex-col justify-between items-center py-[0.2rem]"
+        style="box-shadow: 0px 4px 20px 0px #0610231a"
+      >
+        <div class="text-[0.28rem] text-[#666d80]">{{ t("可用金额") }}</div>
+        <div class="text-[0.3rem] text-[#061023] font-semibold">
+          {{
+            showInfo
+              ? type == "cash"
+                ? assets.money
+                : type == "futures"
+                ? assets.futures
+                : type == "stock"
+                ? assets.stock
+                : "--"
+              : "********"
+          }}
+        </div>
+      </div>
+      <div
+        class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] flex flex-col justify-between items-center py-[0.2rem]"
+        style="box-shadow: 0px 4px 20px 0px #0610231a"
+      >
+        <div class="text-[0.28rem] text-[#666d80]">{{ t("冻结金额") }}</div>
+        <div class="text-[0.3rem] text-[#061023] font-semibold">
+          {{ showInfo ? 0 : "********" }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -41,8 +79,11 @@ import ShowEye from "./ShowEye.vue";
 import StockImg from "./StockWalletInfo/StockImg.vue";
 import StockWalletBtn from "./StockWalletInfo/StockWalletBtn.vue";
 import StockWalletInfoContainer from "./StockWalletInfo/StockWalletInfoContainer.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import store from "@/store";
 
+const { t } = useI18n();
 const props = defineProps({
   name: {
     type: String,
@@ -57,6 +98,13 @@ const props = defineProps({
     default: "",
   },
 });
+
+const assets = computed(() => store.state.assets || {});
+console.log("assets ==========> ", assets.value);
+const wallet = computed(() => store.state.wallet || []);
+console.log("cash wallet ===========> ", wallet.value);
+const elseWalletMap = computed(() => store.state.elseWalletMap || []);
+console.log("else wallet map ========> ", elseWalletMap.value);
 
 const showInfo = ref(false);
 
