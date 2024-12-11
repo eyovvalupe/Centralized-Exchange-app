@@ -768,7 +768,7 @@ export default {
     market_buy_fast_noti_confirm: "Transfer",
     market_buy_fast_success: "Order Successful",
     market_buy_fast_account_title: "Account Selection",
-    market_buy_fast_account_crypto: "Cryptos",
+    market_buy_fast_account_crypto: "Crypto",
     market_buy_fast_account_bank: "Bank Cards",
     market_buy_fast_account_add: "Add Payment Account",
     market_buy_optional_deal: "Volume",

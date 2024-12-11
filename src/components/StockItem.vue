@@ -15,7 +15,7 @@
             <div class="item_name flex items-center gap-1">
               <span v-if="item.type == 'crypto'">{{ props.item.name }}</span>
               <span v-else>{{ props.item.symbol }}</span>
-              <div v-show="props.page != 'home'"
+              <div v-if="props.page != 'home' && props.marketType == 'all'"
                 :class="`${marketStyle[props.item.type]
                   } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
                 <!-- {{ market[props.item.type] }} -->
@@ -42,17 +42,17 @@
           <div class="td5" v-show="marketType == 'crypto'">
             <div class="item_name flex items-center gap-1">
               {{ props.item.name }}
-              <div v-if="!isNaN(Number(props.item.lever))"
-                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9]">
+              <div v-if="props.item.lever"
+                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9] px-[0.1rem] pt-[0.05rem]">
                 {{ props.item.lever }}X
               </div>
             </div>
           </div>
           <div :class="props.marketType != 'crypto'
             ? 'td2 spark_line_box'
-            : 'td2 ml-[2rem]'
+            : 'td2 ml-[1.2rem]'
             ">
-            <SparkLine v-if="props.item.points && showSparkLine" :style="props.marketType != 'cryto'
+            <SparkLine v-if="props.item.points && showSparkLine" :style="props.marketType != 'crypto'
               ? 'width: 100%; height: 0.6rem;'
               : 'width: 100%; height: 0.54rem;'
               " :points="props.item.points" :ratio="props.item.ratio" />
@@ -339,9 +339,10 @@ const removeStock = (item) => {
   }
 
   .td5 {
-    flex: 5;
+    // flex: 5;
     flex-shrink: 0;
-    overflow: hidden;
+    width: 3.6rem;
+    // overflow: hidden;
 
     .item_name {
       font-size: 0.32rem;
@@ -424,9 +425,10 @@ const removeStock = (item) => {
   }
 
   .td5 {
-    flex: 5;
+    // flex: 5;
     flex-shrink: 0;
-    overflow: hidden;
+    width: 3.6rem;
+    // overflow: hidden;
 
     .item_name {
       font-size: 0.32rem;
