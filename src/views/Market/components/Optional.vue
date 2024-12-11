@@ -49,7 +49,7 @@
     <Teleport to=".page_market">
       <div
         class="one_click_to_favorite_container"
-        v-show="stockList.length + contractList.length > 0"
+        v-show="stockList.length + contractList.length > 0 && showFavoriteBtn"
       >
         <Button
           round
@@ -152,6 +152,10 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const { startSocket } = useSocket();
+
+const props = defineProps({
+  showFavoriteBtn:Boolean
+})
 
 const active = ref(0);
 

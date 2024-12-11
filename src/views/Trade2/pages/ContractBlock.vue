@@ -4,43 +4,28 @@
     <Tabs type="oval-card" v-model:active="active" :swipeable="false" :color="'#014CFA'"
       shrink @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
+          <div class="stock_tab-body">
+            <Opening :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1" @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
+          </div>
       </Tab>
       <Tab :title="t('trade.stock_position')" name="1">
+          <div class="stock_tab-body">
+            <Positions :type="'constract'" v-if="loadTab.indexOf('1') > -1" />
+          </div>
       </Tab>
       <Tab :title="t('trade.stock_search')" name="2">
+          <div class="stock_tab-body">
+            <Inquire :type="'constract'" v-if="loadTab.indexOf('2') > -1" ref="InquireRef" />
+          </div>
       </Tab>
     </Tabs>
-    <Swiper
-        :initialSlide="initialSlide"
-        :allowTouchMove="false"
-        :autoHeight="true"
-        class="w-full overflow-hidden"
-        @swiper="setSwiper"
-        @slideChange="swipeChange"    
-    >
-          <SwiperSlide>
-            <div class="stock_tab-body">
-              <Opening :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1" @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div class="stock_tab-body">
-              <Positions :type="'constract'" v-if="loadTab.indexOf('1') > -1" />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div class="stock_tab-body">
-              <Inquire :type="'constract'" v-if="loadTab.indexOf('2') > -1" ref="InquireRef" />
-            </div>
-          </SwiperSlide>
-      </Swiper>
+    
 
   </div>
 </template>
 
 <script setup>
-import "swiper/css"
-import { Swiper,SwiperSlide } from "swiper/vue"
+
 import { Tab, Tabs } from "vant";
 import { ref, onMounted, nextTick } from "vue";
 import Opening from "../contract/Opening.vue";
@@ -62,14 +47,9 @@ const showNavDialog = () => {
   emits("showNavDialog", "contract");
 };
 
-let swipe = null
-const setSwiper = (_swiper)=>{
-    swipe = _swiper
-}
 
 const loadTab = ref([]);
 const active = ref(sessionStorage.getItem("trade_contract_tab") || "0");
-const initialSlide = ref(active.value)
 const InquireRef = ref();
 const onChange = async (val) => {
   active.value = val;
@@ -77,9 +57,7 @@ const onChange = async (val) => {
     loadTab.value.push(val);
   }
   sessionStorage.setItem("trade_contract_tab", val);
-  if(swipe){
-      swipe.slideTo(val)
-  }
+
   if (val == 2) {
     nextTick(() => {
       InquireRef.value && InquireRef.value.init();

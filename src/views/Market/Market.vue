@@ -27,22 +27,22 @@
       ]"
       @change="(e) => changeTab(e, true)"
     />
-    <Swiper
+
+    <Swipe
+      :autoplay="0"
+      :initial-swipe="marketActiveTab"
       :show-indicators="false"
-      :loop="false"
-      :initial-slide="marketActiveTab"
-      :speed="500"
-      :autoHeight="true"
-      @swiper="setSwiper"
-      @slideChange="swipeChange"
+      ref="swipe"
+      @change="swipeChange"
+
     >
-      <SwiperSlide>
+      <SwipeItem>
         <div class="assets_body">
           <!-- 自选 -->
-          <Optional ref="OptionalRef" v-if="loadedTab.includes(0)" />
+          <Optional ref="OptionalRef" :showFavoriteBtn="active == 0" v-if="loadedTab.includes(0)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div
           
           ref="marketPageRef"
@@ -51,31 +51,31 @@
           <!-- 买币 -->
           <buyCoin ref="BuyCoinRef" v-if="loadedTab.includes(1)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div class="assets_body">
           <!-- 股票 -->
           <Stock v-if="loadedTab.includes(2)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div class="assets_body">
           <!-- 合约 -->
           <Constract v-if="loadedTab.includes(3)" />
         </div>
-      </SwiperSlide>
+      </SwipeItem>
 
-      <SwiperSlide>
+      <SwipeItem>
         <div class="assets_body">
           <AiBlockList v-if="loadedTab.includes(4)" />
         </div>
-      </SwiperSlide>
-      <!-- <SwiperSlide>
+      </SwipeItem>
+      <!-- <SwipeItem>
         <div class="assets_body">
           <Foreign v-if="loadedTab.includes(5)" />
         </div>
-      </SwiperSlide> -->
-    </Swiper>
+      </SwipeItem> -->
+    </Swipe>
 
     <!-- </PullRefresh> -->
     <!-- </transition> -->
@@ -84,9 +84,9 @@
 
 <script setup>
 import { ref, onDeactivated, computed, onActivated } from "vue";
-import { useSessionStorage } from "@vueuse/core";
-import "swiper/css"
-import { Swiper,SwiperSlide } from "swiper/vue"
+
+import { Swipe, SwipeItem } from 'vant';
+
 import router from "@/router";
 import Optional from "./components/Optional.vue";
 import Stock from "./components/Stock.vue";
@@ -128,11 +128,7 @@ const BuyCoinRef = ref();
 // const IPORef = ref()
 // const reloading = ref(false)
 const detail = ref(null);
-let swipe = null
-
-const setSwiper = (_swiper)=>{
-  swipe = _swiper
-}
+const swipe = ref(null)
 
 // const detailTransition = ref('slide-right')
 const loadedTab = ref([active.value]);
@@ -151,7 +147,7 @@ const changeTab = (key, slideSwipe = false) => {
       }, 300);
     }
   }
-  if (slideSwipe && swipe) swipe.slideTo(key);
+  if (slideSwipe && swipe.value) swipe.value.swipeTo(key);
   setTimeout(() => {
     switch (key) {
       case 0:
@@ -194,8 +190,8 @@ watch(
 );
 
 
-const swipeChange = (e) => {
-  changeTab(e.realIndex);
+const swipeChange = (index) => {
+  changeTab(index);
 };
 
 const windowResize = ()=>{

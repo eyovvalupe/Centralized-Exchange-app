@@ -6,7 +6,6 @@
       type="round-card"
       v-model:active="active"
       :swipeable="false"
-      animated
       :color="'#014CFA'"
       shrink
       @change="onChange"
