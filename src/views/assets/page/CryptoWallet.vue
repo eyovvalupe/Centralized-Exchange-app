@@ -1,15 +1,16 @@
 <!-- 现金账户 -->
 <template>
-  <div class="page_assets_cash">
+  <div class="page_assets_future">
     <div class="tabs">
       <div class="tab_title">
-        <Switch v-model="show0" size="0.24rem" />
+        <Switch v-model="show0" size="0.2rem" />
         <span class="tab_title_desc text-[0.24rem]">{{
           show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show")
         }}</span>
       </div>
 
-      <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" />
+      <!-- <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
+      <CurrencyList @click="(val) => click(val)" :list="wallet"/>
 
     </div>
   </div>
@@ -22,8 +23,9 @@ import store from '@/store'
 import router from '@/router'
 import { _cryptoCoin } from '@/api/api'
 import CurrencyItem from './components/CurrencyItem.vue'
+import CurrencyList from './components/CurrencyList.vue'
 
-const emits = defineEmits(["setLoading"]);
+const emits = defineEmits(["setLoading", 'click']);
 const token = computed(() => store.state.token || "");
 
 // 刷新现金钱包
@@ -43,7 +45,7 @@ const getAssets = () => {
   });
   // store.dispatch('updateOrderHint')
 }
-const show0 = ref(false) // 是否隐藏余额为0的钱包
+const show0 = ref(true) // 是否隐藏余额为0的钱包
 
 _cryptoCoin({ dedup: false }).then(res => {
   store.commit('setCoinMap', res.data || [])
@@ -64,6 +66,10 @@ const removeSwitch = () => {
   });
 };
 
+const click = (val) => {
+  emits('click', val)
+}
+
 onMounted(() => {
   getAssets();
   document.querySelector(".page").addEventListener("click", removeSwitch);
@@ -83,10 +89,9 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-.page_assets_cash {
+.page_assets_future {
   padding: 0.32rem 0;
   position: relative;
-  top: -0.8rem;
   .top {
     font-size: 0.28rem;
     font-weight: 400;
@@ -160,6 +165,8 @@ defineExpose({
     height: 0.52rem;
     display: flex;
     align-items: center;
+    margin-bottom: 0.28rem;
+
     &_desc {
       color: #8f92a1;
       font-size: 0.24rem;

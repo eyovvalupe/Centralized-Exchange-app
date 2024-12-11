@@ -82,8 +82,8 @@
 <script setup>
 const props = defineProps({
     size: {
-        type: Number,
-        default: 20
+        type: String,
+        default: '0.4rem'
     }
 })
 </script>

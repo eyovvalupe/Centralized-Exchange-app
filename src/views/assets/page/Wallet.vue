@@ -33,14 +33,14 @@
 
       <div class="tab" v-if="currSelectedWallet == 0">
         <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" :balance="assets.money" />
+          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash"/>
         </div>
         <Btns />
         <Cash @click="(val) => click(val)" />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 1">
-        <OtherWallet
+        <!-- <OtherWallet
           :name="t('assets.wallet_header_stock')"
           :type="t('assets.wallet_stock_balance')"
           :balance="assets.stock"
@@ -75,12 +75,16 @@
                 : "********"
             }}</span>
           </div>
+        </div> -->
+        <div class="mb-[0.8rem]">
+          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="stock"/>
         </div>
-        <StockMyWallet />
+        <Btns />
+        <StockMyWallet @click="(val) => click(val)" />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 2">
-        <OtherWallet
+        <!-- <OtherWallet
           :name="t('assets.wallet_header_contract')"
           :type="t('assets.wallet_contract_balance')"
           :balance="assets.futures"
@@ -117,8 +121,12 @@
                 : "********"
             }}</span>
           </div>
+        </div> -->
+        <div class="mb-[0.8rem]">
+          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="futures"/>
         </div>
-        <CryptoWallet />
+        <Btns />
+        <CryptoWallet @click="(val) => click(val)" />
       </div>
 
       <!-- <div class="tab" v-if="currSelectedWallet == 3">

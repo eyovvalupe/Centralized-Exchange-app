@@ -225,9 +225,9 @@ const blurInput = () => {
 const assets = computed(() => store.state.assets || {});
 const wallet = computed(() => store.state.wallet || []); // 钱包
 const elseWallet = computed(() => store.state.elseWallet || []); // 其他账户钱包
+const elseWalletMap = computed(() => store.state.elseWalletMap || []); // 其他账户钱包
 const elseCoinMap = computed(() => store.state.elseCoinMap || {}); // 其他账户的币种
 const userInfo = computed(() => store.state.userInfo)
-console.log("=========> ", elseWallet.value)
 
 // 表单
 const loading = ref(false);
@@ -251,7 +251,7 @@ if (wallet.value[0]) {
 const t1 = elseWallet.value.find((item) => item.account == form.value.to);
 if (t1) {
   form.value.toCurrency = t1;
-}
+} else form.value.toCurrency = wallet.value[0];
 setTimeout(() => {
   getRate();
 }, 0);
@@ -478,7 +478,6 @@ getSessionToken();
 const rate = ref(0);
 const rateLoading = ref(false);
 const getRate = () => {
-  console.log(666);
   // 获取汇率
   rateLoading.value = true;
   if (formType.value == "swap") {

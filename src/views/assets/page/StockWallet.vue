@@ -1,13 +1,14 @@
 <!-- 现金账户 -->
 <template>
-  <div class="page_assets_cash">
+  <div class="page_assets_stock">
     <div class="tabs">
       <div class="tab_title">
-        <Switch v-model="show0" size="0.24rem" />
+        <Switch v-model="show0" size="0.2rem" />
         <span class="tab_title_desc">{{ show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show") }}</span>
       </div>
       
-      <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" />
+      <!-- <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
+      <CurrencyList @click="(val) => click(val)" :list="wallet"/>
     
     </div>
   </div>
@@ -18,9 +19,10 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { Icon, Switch } from 'vant'
 import store from '@/store'
 import { _cryptoCoin } from '@/api/api'
+import CurrencyList from './components/CurrencyList.vue';
 
 const { t } = useI18n();
-const emits = defineEmits(['setLoading'])
+const emits = defineEmits(['setLoading', 'click'])
 const token = computed(() => store.state.token || '')
 const hidden = ref(false)
 
@@ -28,6 +30,7 @@ const hidden = ref(false)
 const assets = computed(() => store.state.assets || {})
 const wallet1 = computed(() => store.state.wallet || []) // 钱包
 const elseWalletMap = computed(() => store.state.elseWalletMap || [])
+const elseWallet = computed(() => store.state.elseWallet || [])
 const wallet = computed(() => {
   if (show0.value) return elseWalletMap.value['stock'].filter(item => item.amount)
   return elseWalletMap.value['stock']
@@ -42,7 +45,7 @@ const getAssets = () => {
   })
   // store.dispatch('updateOrderHint')
 }
-const show0 = ref(false) // 是否隐藏余额为0的钱包
+const show0 = ref(true) // 是否隐藏余额为0的钱包
 const coinMap = computed(() => store.state.coinMap || {})
 
 _cryptoCoin({ dedup: false }).then(res => {
@@ -65,6 +68,10 @@ const removeSwitch = () => {
   })
 }
 
+const click = (val) => {
+  emits('click', val)
+}
+
 onMounted(() => {
   getAssets()
   document.querySelector('.page').addEventListener('click', removeSwitch)
@@ -85,10 +92,9 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-.page_assets_cash {
+.page_assets_stock {
   padding: 0.32rem 0;
   position: relative;
-  top: -0.8rem;
   .top {
     font-size: 0.28rem;
     font-weight: 400;
@@ -163,6 +169,8 @@ defineExpose({
     height: 0.52rem;
     display: flex;
     align-items: center;
+    margin-bottom: 0.28rem;
+
     &_desc{
       color:#8F92A1;
       font-size: 0.24rem;

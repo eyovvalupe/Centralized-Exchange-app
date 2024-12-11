@@ -3,7 +3,7 @@
   <div class="page_assets_cash">
     <div class="tabs">
       <div class="tab_title">
-        <Switch v-model="show0" size="0.24rem" />
+        <Switch v-model="show0" size="0.2rem" />
         <span class="tab_title_desc text-[0.24rem]">{{
           show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show")
         }}</span>

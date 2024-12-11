@@ -43,7 +43,7 @@
         class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] flex flex-col justify-between items-center py-[0.2rem]"
         style="box-shadow: 0px 4px 20px 0px #0610231a"
       >
-        <div class="text-[0.28rem] text-[#666d80]">{{ t("可用金额") }}</div>
+        <div class="text-[0.28rem] text-[#666d80]">{{ t('assets.wallet_available') }}</div>
         <div class="text-[0.3rem] text-[#061023] font-semibold">
           {{
             showInfo
@@ -62,7 +62,7 @@
         class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] flex flex-col justify-between items-center py-[0.2rem]"
         style="box-shadow: 0px 4px 20px 0px #0610231a"
       >
-        <div class="text-[0.28rem] text-[#666d80]">{{ t("冻结金额") }}</div>
+        <div class="text-[0.28rem] text-[#666d80]">{{ t('assets.wallet_blocked') }}</div>
         <div class="text-[0.3rem] text-[#061023] font-semibold">
           {{ showInfo ? 0 : "********" }}
         </div>
@@ -100,11 +100,6 @@ const props = defineProps({
 });
 
 const assets = computed(() => store.state.assets || {});
-console.log("assets ==========> ", assets.value);
-const wallet = computed(() => store.state.wallet || []);
-console.log("cash wallet ===========> ", wallet.value);
-const elseWalletMap = computed(() => store.state.elseWalletMap || []);
-console.log("else wallet map ========> ", elseWalletMap.value);
 
 const showInfo = ref(false);
 
