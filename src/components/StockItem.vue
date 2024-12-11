@@ -4,7 +4,7 @@
     <SwipeCell :class="(props.marketType != 'crypto'
       ? 'stock_item_box'
       : 'stock_item_box_crypto') + `${' stock_item_' + updownStatus}`
-      " @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
+      " @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg" :class="props.marketType == 'crypto'
         ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
         : ''
