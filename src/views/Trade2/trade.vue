@@ -436,17 +436,7 @@ onActivated(() => {
 onDeactivated(() => {
   pageActive.value = false;
 });
-const windowResize = ()=>{
-  swipe && swipe.update()
-}
 
-onMounted(()=>{
-  window.addEventListener('resize',windowResize)
-})
-
-onBeforeUnmount(()=>{
-  window.removeEventListener('resize',windowResize)
-})
 
 const tradeBodyScroll = (refName) => {
   if (refName == "stockTradeBody") {
