@@ -194,17 +194,6 @@ const swipeChange = (index) => {
   changeTab(index);
 };
 
-const windowResize = ()=>{
-  swipe && swipe.update()
-}
-
-onMounted(()=>{
-  window.addEventListener('resize',windowResize)
-})
-
-onBeforeUnmount(()=>{
-  window.removeEventListener('resize',windowResize)
-})
 
 onActivated(() => {
   changeTab(active.value);
