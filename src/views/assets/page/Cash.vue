@@ -8,8 +8,8 @@
           show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show")
         }}</span>
       </div>
-      <CurrencyItem v-for="(item, i) in showList" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" />
-      
+      <!-- <CurrencyItem v-for="(item, i) in showList" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
+      <CurrencyList />
     </div>
   </div>
 </template>
@@ -21,6 +21,7 @@ import store from "@/store";
 import CurrencyItem from './components/CurrencyItem.vue'
 import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
+import CurrencyList from "./components/CurrencyList.vue";
 
 const { t } = useI18n();
 const emits = defineEmits(["setLoading"]);
@@ -38,7 +39,7 @@ const getAssets = () => {
   });
   // store.dispatch('updateOrderHint')
 };
-const show0 = ref(false); // 是否隐藏余额为0的钱包
+const show0 = ref(true); // 是否隐藏余额为0的钱包
 const coinMap = computed(() => store.state.coinMap || {});
 const showList = computed(() => {
   const arr = [...wallet.value];
@@ -175,6 +176,8 @@ defineExpose({
     height: 0.52rem;
     display: flex;
     align-items: center;
+    margin-bottom: 0.28rem;
+
     &_desc {
       color: #8f92a1;
       font-size: 0.24rem;
