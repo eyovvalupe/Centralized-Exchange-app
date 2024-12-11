@@ -10,36 +10,22 @@
         <Tabs type="custom-card" v-model:active="active" :swipeable="false"
             :color="'#014CFA'" shrink @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">
-            </Tab>
-            <Tab :title="t('trade.stock_position')" name="1">
-            </Tab>
-            <Tab :title="t('trade.stock_search')" name="2">
-            </Tab>
-        </Tabs>
-
-        <Swiper
-            :initialSlide="initialSlide"
-            :allowTouchMove="false"
-            :autoHeight="true"
-            class="w-full overflow-hidden"
-            @swiper="setSwiper"
-        >
-            <SwiperSlide>
                 <div class="stock_tab-body">
                     <Opening @showNavDialog="showNavDialog" @success="onChange('1')" ref="OpeningRef" v-if="loadTab.indexOf('0') > -1" />
                 </div>
-            </SwiperSlide>
-            <SwiperSlide>
+            </Tab>
+            <Tab :title="t('trade.stock_position')" name="1">
                 <div class="stock_tab-body">
                     <Positions v-if="loadTab.indexOf('1') > -1" />
                 </div>
-            </SwiperSlide>
-            <SwiperSlide>
+            </Tab>
+            <Tab :title="t('trade.stock_search')" name="2">
                 <div class="stock_tab-body">
                     <Inquire ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
                 </div>
-            </SwiperSlide>
-        </Swiper>
+            </Tab>
+        </Tabs>
+
 
         <!-- 日期选择 -->
         <DateArea @submit="submitDate" ref="dateAreaRef" />
@@ -47,9 +33,8 @@
 </template>
 
 <script setup>
-import "swiper/css"
-import { Swiper,SwiperSlide } from "swiper/vue"
-import { Tab, Tabs } from "vant";
+
+import {  Tab, Tabs } from "vant";
 import { ref, onMounted } from "vue"
 import Opening from "../components/Opening.vue"
 import Positions from "../components/Positions.vue"
@@ -64,13 +49,8 @@ const showNavDialog = () => {
 }
 const loadTab = ref([])
 const active = ref(sessionStorage.getItem('trade_stock_tab') || '0')
-const initialSlide = active.value
 
 const InquireRef = ref()
-let swipe = null
-const setSwiper = (_swiper)=>{
-    swipe = _swiper
-}
 
 const onChange = async (val) => {
     if (loadTab.value.indexOf(val) == -1) {
@@ -78,9 +58,7 @@ const onChange = async (val) => {
     }
     active.value = val;
     sessionStorage.setItem('trade_stock_tab', val)
-    if(swipe){
-        swipe.slideTo(val)
-    }
+   
     if (val == 2) {
         setTimeout(() => {
             InquireRef.value && InquireRef.value.init()

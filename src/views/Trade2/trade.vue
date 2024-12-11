@@ -15,52 +15,48 @@
         
     </HeaderTabs>
    
-    <Swiper
-        style="width:100%;overflow:hidden;"
-        v-if="initialSwipe > -1" 
+    <Swipe
+        :autoplay="0"
+        :initial-swipe="initialSwipe"
         :show-indicators="false"
-        :autoHeight="true"
-        :loop="false"
-        :initial-slide="initialSwipe"
-        :speed="500"
-        @swiper="setTradeSwiper"
-        @slideChange="swipeChange"
+        ref="swipe"    
+        @change="swipeChange"
     >
-      <SwiperSlide>
+      <SwipeItem>
         <div class="trade_body" ref="stockTradeBody"
           @scroll="tradeBodyScroll('stockTradeBody')">
           <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" v-if="loadedTab.includes(0)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div class="trade_body" ref="contractTradeBody" 
           @scroll="tradeBodyScroll('contractTradeBody')">
           <ContractBlock :key="'constract'" :mode="'constract'" @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div class="trade_body">
           <AiBlock @showNavDialog="showNavDialogFunc" ref="AiBlockRef" v-if="loadedTab.includes(2)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div class="trade_body" >
           <IpoBlock ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div class="trade_body">
           <ContractBlock :key="'foreign'" :mode="'foreign'" @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef"
             v-if="loadedTab.includes(4)" />
         </div>
-      </SwiperSlide>
-      <SwiperSlide>
+      </SwipeItem>
+      <SwipeItem>
         <div class="trade_body">
           <ContractBlock :key="'commodities'" :mode="'commodities'" @showNavDialog="showNavDialogFunc"
             ref="CommoditiesBlockRef" v-if="loadedTab.includes(5)" />
         </div>
-      </SwiperSlide>
-    </Swiper>
+      </SwipeItem>
+    </Swipe>
 
 
     <!-- </PullRefresh> -->
@@ -139,8 +135,8 @@
 </template>
 
 <script setup>
-import "swiper/css"
-import { Swiper, SwiperSlide } from "swiper/vue"
+
+import { Swipe, SwipeItem } from 'vant';
 import { PullRefresh, Popup, Tabs, Tab } from "vant";
 import {
   ref,
@@ -189,11 +185,7 @@ const onRefresh = () => {
 const activeTab = ref(0);
 const initialSwipe = ref(-1);
 const loadedTab = ref([activeTab.value]);
-let swipe = null
-const setTradeSwiper = (_swiper)=>{
-  swipe = _swiper
-  
-}
+const swipe = ref(null)
 
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
@@ -216,8 +208,8 @@ const changeActiveTab = (val, slideSwipe = false) => {
     }
   }
   localStorage.tradeActiveTab = val;
-  if (slideSwipe && swipe) {
-    swipe.slideTo(val);
+  if (slideSwipe && swipe.value) {
+    swipe.value.swipeTo(val);
   }
 };
 
@@ -242,9 +234,9 @@ const reDir = () => {
   });
 };
 
-const swipeChange = (e) => {
-  if (activeTab.value !== e.realIndex) {
-    changeActiveTab(e.realIndex);
+const swipeChange = (index) => {
+  if (activeTab.value !== index) {
+    changeActiveTab(index);
   }
 };
 
