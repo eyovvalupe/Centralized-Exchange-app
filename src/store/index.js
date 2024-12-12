@@ -164,16 +164,17 @@ const store = createStore({
   plugins: [
     createPersistedState({
       key: "sunx",
+      paths: ['token', 'userInfo'],
       storage: window.localStorage,
-      reducer: (state) => {
-        const {
-          currSelectedWallet,
-          isSentCodeError,
-          language,
-          ...stateWithoutThese
-        } = state;
-        return stateWithoutThese;
-      },
+      // reducer: (state) => {
+      //   const {
+      //     currSelectedWallet,
+      //     isSentCodeError,
+      //     language,
+      //     ...stateWithoutThese
+      //   } = state;
+      //   return stateWithoutThese;
+      // },
     }),
   ],
 });
