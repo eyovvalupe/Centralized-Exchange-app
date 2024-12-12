@@ -81,6 +81,10 @@ const setCurr = (keyName, state, data) => {
             ...data
         }
         return
+    } else {
+        if (data.symbol != state[keyName].symbol) {
+            state[keyName].trade = false
+        }
     }
     state[keyName] = Object.assign({}, state[keyName], data);
     // 当前股票有更新，则同步到列表里去

@@ -134,9 +134,9 @@
       </div>
 
       <div class="item_box_right">
-        <FormItem :title="t('trade.contract_opening_amount_title')" @focus="volumeFocus" v-model="form1.volume"
-          :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent"
-          :max="maxStockNum" tip-align="right" :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
+        <FormItem :title="'数量(张)'" @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1"
+          btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
+          :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
           <template #title-right>
             <span style="color: #014cfa" @click="openConfirmBox(1)" v-if="maxStockNum < 1">{{
               t("trade.stock_opening_no_balance") }}</span>
@@ -154,12 +154,13 @@
     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
     <!-- 按钮 -->
-    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
-      :color="activeType == 1 ? '#18b762' : '#e8503a'" round>{{
+    <Button v-if="token" :disabled="!currStock.trade" :loading="configLoading || submitLoading" size="large"
+      @click="submit1" class="submit" :color="!currStock.trade ? '#ccc' : (activeType == 1 ? '#18b762' : '#e8503a')"
+      round>{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
-      }}</Button>
+      }} </Button>
 
     <div v-if="!token">
       <div class="flex justify-between mb-[0.32rem]">
@@ -430,8 +431,10 @@ const goDialogSearch = (market) => {
   if (searchTimeout) clearTimeout(searchTimeout);
   searchLoading.value = true;
   let s = searchDialogStr.value;
+  console.error(s)
   searchTimeout = setTimeout(() => {
     _futures({
+      name: s,
       type: searchMap[props.mode] || "",
     })
       .then((res) => {

@@ -3,11 +3,11 @@
   <div ref="root" style="width: 100%" :class="props.marketType != 'crypto' ? '' : 'mb-[0.2rem] pr-[0.32rem]'">
     <SwipeCell :class="(props.marketType != 'crypto'
       ? 'stock_item_box'
-      : 'stock_item_box_crypto') + `${' stock_item_' + updownStatus}`
+      : 'stock_item_box_crypto')
       " @touchstart.start="" @touchmove.stop="" @touchend.stop="">
-      <div class="stock_item_bg" :class="props.marketType == 'crypto'
+      <div class="stock_item_bg" :class="[props.marketType == 'crypto'
         ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
-        : ''
+        : '', `${' stock_item_' + updownStatus}`]
         " @click="goInfo(props.item.type)">
         <div :class="props.marketType != 'crypto' ? 'stock_item' : 'stock_item_crypto'
           ">
@@ -35,8 +35,7 @@
             </div>
             <div
               class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
-              style="width: max-content;"
-              v-show="props.item.type == 'crypto'">
+              style="width: max-content;" v-show="props.item.type == 'crypto'">
               {{ props.item.lever }}X
             </div>
           </div>
