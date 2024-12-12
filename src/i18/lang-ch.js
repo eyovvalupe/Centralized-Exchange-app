@@ -720,7 +720,7 @@ export default {
     market_optional_short: "漲跌",
     market_optioanl_ratio: "漲跌比",
     market_optional_stock: "股票",
-    market_optional_contract: "合約",
+    market_optional_contract: "加密貨幣",
     market_optional_forex: "外匯",
 
     market_marketinfo_data: "數據",

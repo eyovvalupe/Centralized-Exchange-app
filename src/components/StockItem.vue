@@ -15,7 +15,7 @@
             <div class="item_name flex items-center gap-1">
               <span v-if="item.type == 'crypto'">{{ props.item.name }}</span>
               <span v-else>{{ props.item.symbol }}</span>
-              <div v-if="props.page != 'home' && props.marketType == 'all'"
+              <div v-if="props.page != 'home'"
                 :class="`${marketStyle[props.item.type]
                   } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
                 <!-- {{ market[props.item.type] }} -->
@@ -34,7 +34,8 @@
               {{ props.item.name || "--" }}
             </div>
             <div
-              class="text-[#0A54F9] text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
+              class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
+              style="width: max-content;"
               v-show="props.item.type == 'crypto'">
               {{ props.item.lever }}X
             </div>
@@ -139,9 +140,10 @@ const market = {
   forex: "外汇",
 };
 const marketStyle = {
-  stock: "text-[#014CFA] bg-[rgba(1,76,250,0.1)] ",
-  crypto: "text-[#FFAF2A] bg-[rgba(255,175,42,0.1)] ",
-  forex: "text-[#18B762] bg-[rgba(24,183,98,0.1)] ",
+  stock: "text-[#014CFA] bg-[#014cfa1a] ",
+  crypto: "text-[#0099d1] bg-[#0099d11a] ",
+  forex: "text-[#18B762] bg-[#18b7621a] ",
+  blocktrade: "text-[#6c6cea] bg-[#6c6cea1a] ",
 };
 const emits = defineEmits(["remove"]);
 const props = defineProps({

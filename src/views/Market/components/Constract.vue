@@ -53,7 +53,8 @@
                 </div>
               </div>
           </div> -->
-        <StockItem :marketType="'crypto'" :item="item" />
+        <StockItem :item="item" />
+        {{ console.log("==========> ", item) }}
       </div>
     </div>
   </div>

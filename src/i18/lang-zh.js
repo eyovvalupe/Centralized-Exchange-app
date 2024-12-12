@@ -732,7 +732,7 @@ export default {
     market_optional_short: "涨跌",
     market_optioanl_ratio: "涨跌比",
     market_optional_stock: "股票",
-    market_optional_contract: "合约",
+    market_optional_contract: "加密货币",
     market_optional_forex: "外汇",
 
     market_marketinfo_data: "数据",

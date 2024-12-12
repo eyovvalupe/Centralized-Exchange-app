@@ -103,7 +103,6 @@
           <div style="flex: 1">
             <div class="info-symbol" v-show="currStock.name">
               {{ currStock.name }}
-              {{ console.log("current stock =======>", currStock) }}
             </div>
           </div>
           <div class="more_icon">

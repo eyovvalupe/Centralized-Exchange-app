@@ -743,7 +743,7 @@ export default {
     market_optional_short: "Price Change",
     market_optioanl_ratio: "Long/Short",
     market_optional_stock: "STOCK",
-    market_optional_contract: "FUTURE",
+    market_optional_contract: "CRYPTO",
     market_optional_forex: "FOREX",
 
     market_marketinfo_data: "Data",
