@@ -175,9 +175,9 @@
       </div>
     </div>
 
-    <!-- 数量 -->
+    <!-- 保证金模式 -->
     <div class="item_box">
-      <div class="item_box_left" @click="openTypeDialog">
+      <div class="item_box_right" @click="openTypeDialog">
         <div class="subtitle">
           <span>{{ t("trade.stock_opening_amount_mode") }}</span>
         </div>
@@ -195,6 +195,10 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- 数量 -->
+    <div class="item_box">
 
       <div class="item_box_right">
         <FormItem :title="t('trade.stock_opening_amount_title')" :max="maxStockNum" v-model="form1.volume"

@@ -112,9 +112,9 @@
       </div>
     </div>
 
-    <!-- 张数 -->
+    <!-- 保证金模式 -->
     <div class="item_box">
-      <div class="item_box_left" @click="openTypeDialog">
+      <div class="item_box_right" @click="openTypeDialog">
         <div class="subtitle">
           <span>{{ t("trade.stock_opening_amount_mode") }}</span>
         </div>
@@ -132,12 +132,16 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- 张数 -->
+    <div class="item_box">
 
       <div class="item_box_right">
         <FormItem :title="'数量(张)'" @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1"
           btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
           :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
-          <template #title-icon>
+          <template #title-icon v-if="amountper && paramCurrency">
             <div style="width: 0.2rem;height:0.2rem;margin-left:0.06rem"
               @click="() => showToast(`1张 = ${amountper} ${paramCurrency}`)">
               <img src="/static/img/trade/warning.svg" alt="">

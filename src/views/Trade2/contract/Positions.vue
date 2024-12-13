@@ -10,6 +10,7 @@
       </div>
     </div>
     <NoData v-if="!contractPositionsList.length && !loading" />
+    <Loaidng size="0.32rem" :loading="loading" v-if="!contractPositionsList.length && loading" />
 
     <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
       <div class="td td-5">
@@ -257,6 +258,7 @@ import SlideContainer from "@/components/SlideContainer.vue";
 import OrderInfo from "../components/OrderInfo.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
+import Loaidng from "@/components/Loaidng.vue"
 
 const props = defineProps({
   type: {
