@@ -183,9 +183,7 @@ const loadedTab = ref([activeTab.value]);
 const swipeRef = ref()
 
 const changeActiveTab = (val, slideSwipe = false) => {
-  console.error('1.', val, slideSwipe)
   activeTab.value = val;
-  console.error('loadedTab.value', loadedTab.value)
   if (loadedTab.value.indexOf(val) == -1) {
     loadedTab.value.push(val);
   } else {
@@ -205,10 +203,10 @@ const changeActiveTab = (val, slideSwipe = false) => {
     }
   }
   localStorage.setItem('tradeActiveTab', val)
-  console.error('slideSwipe', slideSwipe, swipeRef.value)
   if (slideSwipe && swipeRef.value) {
     swipeRef.value.swipeTo(val);
   }
+  swipeResize
 };
 
 const reDir = () => {
@@ -426,11 +424,18 @@ const goSearch = (market) => {
   }, 500);
 };
 
+const swipeResize = () => {
+  setTimeout(() => {
+    swipeRef.value && swipeRef.value.resize()
+  }, 300)
+}
+
 const pageActive = ref(true);
 onActivated(() => {
   reDir();
   pageActive.value = true;
   getOptionList();
+  swipeResize()
 });
 onDeactivated(() => {
   pageActive.value = false;
