@@ -2,81 +2,48 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs
-      v-model:active="activeTab"
-      :tabs="[
-        t('assets.header_total'),
-        t('assets.header_wallet'),
-        t('assets.header_order'),
-      ]"
-      @change="changeActiveTab(activeTab, true)"
-    />
+    <HeaderTabs v-model:active="activeTab" :tabs="[
+      t('assets.header_total'),
+      t('assets.header_wallet'),
+      t('assets.header_order'),
+    ]" @change="changeActiveTab(activeTab, true)" />
 
-    <Swipe
-      :autoplay="0"
-      :initial-swipe="initialSwipe"
-      :show-indicators="false"
-      ref="swipe"
-      @change="swipeChange"
-    >
+    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
       <SwipeItem>
         <div class="assets_body pb-[0.32rem]">
-          <Overview
-            ref="overviewRef"
-            v-if="loadedTab.indexOf(0) > -1"
-            @jumpToWallet="(val) => jumpToWallet(val)"
-            @setLoading="(val) => (loading = val)"
-          />
+          <Overview ref="overviewRef" v-if="loadedTab.indexOf(0) > -1" @jumpToWallet="(val) => jumpToWallet(val)"
+            @setLoading="(val) => (loading = val)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="assets_body">
-          <Wallet
-            ref="cashRef"
-            v-if="loadedTab.indexOf(1) > -1"
-            @setLoading="(val) => (loading = val)"
-            @click="(val) => click(val)"
-          />
+          <Wallet ref="cashRef" v-if="loadedTab.indexOf(1) > -1" @setLoading="(val) => (loading = val)"
+            @click="(val) => click(val)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div
-          class="assets_body"
-          id="assets_order_center_body"
-          ref="orderCenterRef"
-        >
+        <div class="assets_body" id="assets_order_center_body" ref="orderCenterRef">
           <!-- 记录弹窗 -->
           <OrderCenter v-if="loadedTab.indexOf(2) > -1" />
         </div>
       </SwipeItem>
     </Swipe>
-    <Popup
-      v-model:show="handle"
-      position="bottom"
-      :style="{
-        height: '5.46rem',
-        borderTopRightRadius: '0.36rem',
-        borderTopLeftRadius: '0.36rem',
-      }"
-    >
+    <Popup v-model:show="handle" position="bottom" :style="{
+      height: '5.46rem',
+      borderTopRightRadius: '0.36rem',
+      borderTopLeftRadius: '0.36rem',
+    }">
       <div v-if="Object.keys(selectedItem).length" class="w-full relative">
-        <div
-          class="absolute top-[0.1rem] right-[0.3rem]"
-          @click="() => (handle = false)"
-        >
+        <div class="absolute top-[0.1rem] right-[0.3rem]" @click="() => (handle = false)">
           <CancelIcon />
         </div>
         <div
-          class="w-full flex justify-center pt-[0.5rem] text-[0.32rem] text-[#121826] leading-[0.44rem] mb-[0.48rem]"
-        >
+          class="w-full flex justify-center pt-[0.5rem] text-[0.32rem] text-[#121826] leading-[0.44rem] mb-[0.48rem]">
           {{ t('assets.wallet_handle_title') }}
         </div>
         <div class="w-full flex items-center flex-col mb-[0.4rem]">
           <div class="mb-[0.16rem]">
-            <div
-              v-if="!fiat.includes(selectedItem.name)"
-              :class="`${selectedItem.name}_icon`"
-            ></div>
+            <div v-if="!fiat.includes(selectedItem.name)" :class="`${selectedItem.name}_icon`"></div>
             <div v-else>
               <IndiaIcon v-if="selectedItem.name == 'INR'" :size="'0.64rem'" />
               <USIcon v-if="selectedItem.name == 'USD'" :size="'0.64rem'" />
@@ -87,69 +54,57 @@
           </div>
         </div>
         <div class="w-full flex px-[0.32rem] justify-between">
-          <div
-            v-if="selectedItem.account == 'money'"
+          <div v-if="selectedItem.account == 'money'"
             class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-[#014cfa1a] flex flex-col items-center pt-[0.16rem]"
-            @click="
-              () => {
+            @click="() => {
                 router.push({
                   name: 'topUpCrypto',
                   query: { currency: selectedItem.name },
                 });
                 handle = false;
               }
-            "
-          >
+              ">
             <DepositColorIcon class="mb-[0.16rem]" />
             <div class="text-[#014cfa] text-[0.32rem]">{{ t('assets.coin_list_recharge') }}</div>
           </div>
-          <div
-            v-if="selectedItem.account == 'money'"
+          <div v-if="selectedItem.account == 'money'"
             class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-[#fa75001a] flex flex-col items-center pt-[0.16rem]"
-            @click="
-              () => {
+            @click="() => {
                 router.push({
                   name: 'withdraw',
                   query: { currency: selectedItem.name },
                 });
                 handle = false;
               }
-            "
-          >
+              ">
             <WithdrawColorIcon class="mb-[0.16rem]" />
             <div class="text-[#fa7500] text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
           </div>
-          <div
-            class="h-[1.565rem] rounded-[0.32rem] bg-[#00af701a] flex flex-col items-center pt-[0.16rem]"
-            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'"
-            @click="
-              () => {
+          <div class="h-[1.565rem] rounded-[0.32rem] bg-[#00af701a] flex flex-col items-center pt-[0.16rem]"
+            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
                 router.push({
                   name: 'transfer',
                   query: { to: selectedItem.account },
                 });
                 handle = false;
               }
-            "
-          >
+              ">
             <TransferColorIcon class="mb-[0.16rem]" />
-            <div class="text-[#00af70] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') : t('transfer.in') }}</div>
+            <div class="text-[#00af70] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') :
+              t('transfer.in') }}</div>
           </div>
-          <div
-            class="h-[1.565rem] rounded-[0.32rem] bg-[#e8503a1a] flex flex-col items-center pt-[0.16rem]"
-            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'"
-            @click="
-              () => {
+          <div class="h-[1.565rem] rounded-[0.32rem] bg-[#e8503a1a] flex flex-col items-center pt-[0.16rem]"
+            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
                 router.push({
                   name: 'transfer',
                   query: { from: selectedItem.account },
                 });
                 handle = false;
               }
-            "
-          >
+              ">
             <TransferOutColorIcon class="mb-[0.16rem]" />
-            <div class="text-[#e8503a] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.out_sim') : t('transfer.out') }}</div>
+            <div class="text-[#e8503a] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.out_sim') :
+              t('transfer.out') }}</div>
           </div>
         </div>
       </div>
@@ -192,8 +147,9 @@ const currSelectedWallet = computed(() => store.state.currSelectedWallet || -1);
 
 const RecordListRef = ref();
 const activeTab = ref(0);
-if (localStorage.assetsActiveTab > 0) {
-  activeTab.value = Number(localStorage.assetsActiveTab);
+const assetsActiveTab = localStorage.getItem('assetsActiveTab')
+if (assetsActiveTab > 0) {
+  activeTab.value = Number(assetsActiveTab);
 }
 const initialSwipe = ref(activeTab.value);
 const loadedTab = ref([activeTab.value]);
@@ -203,7 +159,7 @@ const changeActiveTab = (val, slideSwipe = false) => {
   if (loadedTab.value.indexOf(val) == -1) {
     loadedTab.value.push(val);
   }
-  localStorage.assetsActiveTab = val;
+  localStorage.setItem('assetsActiveTab', val)
   if (slideSwipe && swipe.value) {
     swipe.value.swipeTo(val);
   }
@@ -217,7 +173,7 @@ const swipeChange = (val) => {
 const orderCenterRef = ref(null);
 const scrollData = useScroll(orderCenterRef, {
   throttle: 200,
-  onScroll: () => {},
+  onScroll: () => { },
 });
 provide("scrollData", scrollData);
 
@@ -318,6 +274,7 @@ getCoinMap();
     overflow-y: auto;
     height: calc(100vh - 2.52rem);
   }
+
   .USDT_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -325,6 +282,7 @@ getCoinMap();
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .DASH_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -332,6 +290,7 @@ getCoinMap();
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .BCH_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -339,6 +298,7 @@ getCoinMap();
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .ETH_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -346,6 +306,7 @@ getCoinMap();
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .TRX_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -353,6 +314,7 @@ getCoinMap();
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .BTC_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -360,6 +322,7 @@ getCoinMap();
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .LTC_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -367,6 +330,7 @@ getCoinMap();
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .DOGE_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -374,6 +338,7 @@ getCoinMap();
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .ETC_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -381,6 +346,7 @@ getCoinMap();
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .RVN_icon {
     width: 0.64rem;
     height: 0.63rem;
@@ -388,6 +354,7 @@ getCoinMap();
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .ARB_icon {
     width: 0.64rem;
     height: 0.63rem;

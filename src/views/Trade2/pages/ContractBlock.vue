@@ -13,7 +13,7 @@
           <Positions :type="'constract'" v-if="loadTab.indexOf('1') > -1" />
         </div>
       </Tab>
-      <Tab :title="'订单历史'" name="2">
+      <Tab :title="'历史订单'" name="2">
         <div class="stock_tab-body">
           <Inquire :type="'constract'" v-if="loadTab.indexOf('2') > -1" ref="InquireRef" />
         </div>
