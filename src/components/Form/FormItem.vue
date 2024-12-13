@@ -2,97 +2,51 @@
   <div class="form-item" :class="{ 'form-item--large': size == 'large' }">
     <div class="form-item-title" v-if="title">
       <span>{{ title }}</span>
+      <div style="flex: 1;display: flex;align-items: center;justify-content: flex-start;">
+        <slot name="title-icon" />
+      </div>
       <span class="form-item-title__right">
         <slot name="title-right" />
       </span>
     </div>
     <div class="form-item-box">
-      <div
-        class="item"
-        :class="{
-          disabled_item: disabled,
-          item_focus: inputFocus && tip,
-          item_focus2: inputFocus && !tip,
-        }"
-        :style="{ background }"
-      >
-        <span
-          class="ipt_tip"
-          :class="{ 'ipt_tip--right': tipAlign == 'right' }"
-          v-if="tip"
-          v-show="inputFocus"
-          >{{ tip }}</span
-        >
+      <div class="item" :class="{
+        disabled_item: disabled,
+        item_focus: inputFocus && tip,
+        item_focus2: inputFocus && !tip,
+      }" :style="{ background }">
+        <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip" v-show="inputFocus">{{ tip
+          }}</span>
 
         <slot v-if="custom" />
-        <input
-          :disabled="disabled"
-          type="number"
-          v-else
-          v-model="inputVal"
-          @focus="
-            inputFocus = true;
-            emit('focus');
-          "
-          @blur="
-            inputFocus = false;
-            inputBlur();
-          "
-          :type="inputType == 'digit' ? 'number' : inputType"
-          @keydown="validateKeydown"
-          class="ipt"
-          @input="onInput"
-          :placeholder="placeholder"
-        />
+        <input :disabled="disabled" type="number" v-else v-model="inputVal" @focus="
+          inputFocus = true;
+        emit('focus');
+        " @blur="
+          inputFocus = false;
+        inputBlur();
+        " :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
+          :placeholder="placeholder" />
 
         <span class="pwd_icon" v-if="inputType == 'password'">
-          <img
-            v-if="!showPassword"
-            src="/static/img/user/eye-off.png"
-            @click="showPassword = true"
-            alt="off"
-          />
-          <img
-            v-else
-            src="/static/img/user/eye-open.png"
-            alt="open"
-            @click="showPassword = false"
-          />
+          <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
+          <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
         </span>
 
         <Transition name="opacity">
-          <div
-            class="flex items-center"
-            v-show="inputFocus"
-            v-if="percentTags && percentTags.length"
-          >
-            <span
-              class="percent_tag"
-              v-for="(percent, i) in percentTags"
-              :key="i"
-              @click="percentTagClick(percent)"
-              >{{ percent.label }}</span
-            >
+          <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
+            <span class="percent_tag" v-for="(percent, i) in percentTags" :key="i" @click="percentTagClick(percent)">{{
+              percent.label }}</span>
           </div>
         </Transition>
 
-        <span
-          class="put_all put_all_place"
-          v-if="
-            showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
-          "
-          >{{ btnPlaceholder }}</span
-        >
-        <span
-          @click="emit('btnClick')"
-          v-if="showBtn && btnShowMode == 'focus'"
-          :style="{
-            opacity: inputFocus ? '1' : '0',
-            visibility: inputFocus ? '' : 'hidden',
-          }"
-          class="put_all"
-          >{{ btnText ? btnText : t('trade.stock_position_all') }}</span
-        >
+        <span class="put_all put_all_place" v-if="
+          showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
+        ">{{ btnPlaceholder }}</span>
+        <span @click="emit('btnClick')" v-if="showBtn && btnShowMode == 'focus'" :style="{
+          opacity: inputFocus ? '1' : '0',
+          visibility: inputFocus ? '' : 'hidden',
+        }" class="put_all">{{ btnText ? btnText : t('trade.stock_position_all') }}</span>
         <span @click="emit('btnClick')" v-else-if="showBtn" class="put_all">{{
           btnText ? btnText : t('trade.stock_position_all')
         }}</span>
@@ -227,6 +181,7 @@ const percentTagClick = (percent) => {
     border: 1px solid #d0d8e2;
     padding: 0 0.24rem;
     transition: 0.3s;
+
     .ipt_tip {
       color: #b7b7b7;
       font-size: 0.24rem;
@@ -234,10 +189,12 @@ const percentTagClick = (percent) => {
       left: 0.24rem;
       transition: all ease 0.3s;
     }
+
     .ipt_tip--right {
       right: 0.24rem;
       left: inherit;
     }
+
     .ipt {
       flex: 1;
       height: 100%;
@@ -262,6 +219,7 @@ const percentTagClick = (percent) => {
       transform: translateY(-0.36rem);
     }
   }
+
   .item_focus2 {
     border: 1px solid #034cfa;
   }
@@ -278,6 +236,7 @@ const percentTagClick = (percent) => {
     line-height: 0.4rem;
     display: block;
   }
+
   .put_all {
     color: #014cfa;
     position: absolute;
@@ -286,9 +245,11 @@ const percentTagClick = (percent) => {
     z-index: 9;
     transition: all ease 0.3s;
   }
+
   .put_all_place {
     color: #061023;
   }
+
   .pwd_icon {
     width: 0.4rem;
     height: 0.4rem;
@@ -310,16 +271,19 @@ const percentTagClick = (percent) => {
   margin-top: 0.4rem;
   margin-bottom: 0.12rem;
   justify-content: space-between;
+
   &__right {
     text-align: right;
     font-size: 0.28rem;
     color: #666d80;
   }
 }
+
 .form-item--large {
   .item {
     height: 1.12rem;
   }
+
   .item_focus {
     height: 1.32rem;
   }

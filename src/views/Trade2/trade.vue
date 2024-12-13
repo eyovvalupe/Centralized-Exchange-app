@@ -7,7 +7,7 @@
     <!-- 头部 -->
 
     <HeaderTabs
-      :tabs="[t('trade.header_stock'), t('trade.header_contract'), t('trade.header_aibot'), t('trade.header_ipo'), t('trade.header_forex'), t('trade.header_block')]"
+      :tabs="[t('trade.header_stock'), t('trade.header_contract'), t('trade.header_aibot'), t('trade.header_ipo')]"
       v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="tab_icon" @click="showNavDialog = true">
@@ -39,7 +39,7 @@
           <IpoBlock ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
         </div>
       </SwipeItem>
-      <SwipeItem>
+      <!-- <SwipeItem>
         <div class="trade_body">
           <ContractBlock :key="'foreign'" :mode="'foreign'" @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef"
             v-if="loadedTab.includes(4)" />
@@ -50,7 +50,7 @@
           <ContractBlock :key="'commodities'" :mode="'commodities'" @showNavDialog="showNavDialogFunc"
             ref="CommoditiesBlockRef" v-if="loadedTab.includes(5)" />
         </div>
-      </SwipeItem>
+      </SwipeItem> -->
     </Swipe>
 
 
