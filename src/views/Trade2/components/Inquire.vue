@@ -23,16 +23,16 @@
                 item.status == "none"
                   ? t("trade.stock_position_status_none")
                   : item.status == "lock"
-                  ? t("trade.stock_position_status_lock")
-                  : item.status == "open"
-                  ? t("trade.stock_position_status_open")
-                  : item.status == "done"
-                  ? t("trade.stock_position_status_done")
-                  : item.status == "fail"
-                  ? t("trade.stock_position_status_fail")
-                  : item.status == "cancel"
-                  ? t("trade.stock_position_status_cancel")
-                  : "--"
+                    ? t("trade.stock_position_status_lock")
+                    : item.status == "open"
+                      ? t("trade.stock_position_status_open")
+                      : item.status == "done"
+                        ? t("trade.stock_position_status_done")
+                        : item.status == "fail"
+                          ? t("trade.stock_position_status_fail")
+                          : item.status == "cancel"
+                            ? t("trade.stock_position_status_cancel")
+                            : "--"
               }}
             </div>
           </div>
@@ -44,8 +44,8 @@
               item.offset == "long"
                 ? t("trade.stock_position_offset_long")
                 : item.offset == "short"
-                ? t("trade.stock_position_offset_short")
-                : "--"
+                  ? t("trade.stock_position_offset_short")
+                  : "--"
             }}
           </div>
           <div class="amount">{{ item.unsold_volume || "--" }}</div>
@@ -55,37 +55,23 @@
           <div class="price">{{ item.open_price || "--" }}</div>
         </div>
         <div class="td td-4">
-          <div
-            class="num"
-            :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'"
-          >
+          <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
             {{ item.profit || "--" }}
           </div>
-          <div
-            class="num"
-            :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'"
-          >
+          <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
             {{ getRatio(item.ratio) }}
           </div>
         </div>
       </div>
     </SwipeCell>
-    <LoadingMore
-      :loading="loading"
-      :finish="finish"
-      v-if="(finish && inquireList.length) || !finish"
-    />
+    <div style="height:0.56rem"></div>
+    <LoadingMore :loading="loading" :finish="finish" v-if="(finish && inquireList.length) || !finish" />
   </div>
 
   <UnLogin @loginfinish="loginfinish" v-show="!token" />
 
   <!-- 订单详情 -->
-  <Popup
-    v-model:show="showInfo"
-    position="right"
-    style="width: 100%; height: 100%"
-    teleport="body"
-  >
+  <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
     <OrderInfo :curr-stock="currStock" @back="showInfo = false" />
   </Popup>
 </template>
@@ -217,7 +203,7 @@ onMounted(() => {
       document
         .querySelector(".trade_body")
         .addEventListener("scroll", scrolHandle);
-    } catch {}
+    } catch { }
   }, 500);
 });
 onUnmounted(() => {
@@ -225,7 +211,7 @@ onUnmounted(() => {
     document
       .querySelector(".trade_body")
       .removeEventListener("scroll", scrolHandle);
-  } catch {}
+  } catch { }
 });
 
 defineExpose({

@@ -86,6 +86,13 @@ export const _profile = (data = {}) => {
   });
 };
 
+// 股票搜索
+export const _stock = (data = {}) => {
+  return http.post(`/anon/v1/item/stock `, data, {
+    custom: { auth: false, toast: true, retry: true },
+  });
+};
+
 // 获取 K 线历史数据
 export const _kline = (data = {}) => {
   return http.get(`/anon/v1/ticker/kline?symbol=${data.symbol}&period=${data.period}&page=${data.page}`, data, {

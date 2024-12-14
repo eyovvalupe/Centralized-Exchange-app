@@ -112,9 +112,9 @@
       </div>
     </div>
 
-    <!-- 张数 -->
+    <!-- 保证金模式 -->
     <div class="item_box">
-      <div class="item_box_left" @click="openTypeDialog">
+      <div class="item_box_right" @click="openTypeDialog">
         <div class="subtitle">
           <span>{{ t("trade.stock_opening_amount_mode") }}</span>
         </div>
@@ -132,18 +132,23 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- 张数 -->
+    <div class="item_box">
 
       <div class="item_box_right">
         <FormItem :title="'数量(张)'" @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1"
           btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
           :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
-          <template #title-right>
-            <span style="color: #014cfa" @click="openConfirmBox(1)" v-if="maxStockNum < 1">{{
-              t("trade.stock_opening_no_balance") }}</span>
-            <span style="color: #014cfa; font-size: 12px" v-else @click="openConfirmBox(2)"><span
-                style="color: #666d80">{{
-                  t("trade.stock_opening_enough_balance")
-                }}</span>
+          <template #title-icon v-if="amountper && paramCurrency">
+            <div style="width: 0.2rem;height:0.2rem;margin-left:0.06rem"
+              @click="() => showToast(`1张 = ${amountper} ${paramCurrency}`)">
+              <img src="/static/img/trade/warning.svg" alt="">
+            </div>
+          </template>
+          <template #title-right v-if="token">
+            <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">可用</span>
               {{ stockWalletAmount }} {{ paramCurrency }}</span>
           </template>
         </FormItem>
@@ -154,9 +159,8 @@
     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
     <!-- 按钮 -->
-    <Button v-if="token" :disabled="!currStock.trade" :loading="configLoading || submitLoading" size="large"
-      @click="submit1" class="submit" :color="!currStock.trade ? '#ccc' : (activeType == 1 ? '#18b762' : '#e8503a')"
-      round>{{
+    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
+      :color="(activeType == 1 ? '#18b762' : '#e8503a')" round>{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
@@ -341,7 +345,7 @@
         <div class="search_icon">
           <img src="/static/img/common/search.png" alt="🔍" />
         </div>
-        <input v-model.trim="searchDialogStr" @keyup="goDialogSearch" type="text" class="ipt"
+        <input v-model.trim="searchDialogStr" @keyup="goDialogSearch" type="text" class="ipt" style="width:100%"
           :placeholder="t('trade.stock_opening_search')" />
       </div>
 
@@ -351,6 +355,47 @@
           :key="'search'" :list="marketSearchList" />
       </div>
     </div>
+  </Popup>
+
+  <!-- 余额提示 -->
+  <Popup round v-model:show="showAmountDialog" closeable teleport="body">
+    <div style="width: 6.4rem">
+
+      <!-- 标题 -->
+      <div
+        style="text-align: center;font-size: 0.32rem;height:1rem;display: flex;align-items: center;justify-content: center;border:1px solid #EFF3F8;">
+        可用余额</div>
+
+      <!-- 内容 -->
+      <div
+        style="display:flex;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;line-height:0.4rem;margin-top:0.32rem;overflow:hidden;position:relative;margin:0.32rem 0.4rem;">
+        <div
+          style="color:#061023;font-size:0.28rem;font-weight:400;padding:0 0.32rem;height:1.4rem;background-color:#fff;display:flex;align-items:center;justify-content:center;">
+          合约账户</div>
+        <div style="display:flex;align-items:center;justify-content:center;flex-direction: column;flex:1">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.08rem">
+            <div v-if="paramCurrency" style="width:0.32rem;height:0.32rem;display:flex;position:relative;top:-0.02rem">
+              <img :src="`/static/img/crypto/${paramCurrency.toUpperCase()}.png`" />
+            </div>
+
+            <span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">{{ paramCurrency }}</span>
+          </div>
+          <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">{{ stockWalletAmount }}</b>
+        </div>
+      </div>
+
+      <!--  按钮 -->
+      <div
+        style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.4rem;font-size: 0.28rem;margin: 0.64rem 0 0.4rem 0">
+        <div @click="router.push({ name: 'transfer' })"
+          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;border: 1px solid #014CFA;color: #014CFA">
+          去划转</div>
+        <div @click="router.push({ name: 'topUpCrypto' })"
+          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: #014CFA;color: #fff;">
+          去充值</div>
+      </div>
+    </div>
+
   </Popup>
 </template>
 
@@ -388,6 +433,10 @@ const props = defineProps({
   mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
     type: String,
     default: 'constract'
+  },
+  tradeType: {
+    type: [String, Number],
+    default: ''
   }
 });
 const searchMap = {
@@ -604,7 +653,7 @@ const maxStockNum = computed(() => {
     return "--";
   }
   if (currStock.value.price) {
-    const max = new Decimal(stockWalletAmount.value)
+    const max = new Decimal(stockWalletAmount.value).mul(1 - (openFee.value || 0))
       .div(amountper.value)
       .mul(form1.value.lever)
       .floor();
@@ -614,54 +663,9 @@ const maxStockNum = computed(() => {
   return "--";
 });
 
-const openConfirmBox = (type) => {
-  // type 1-余额不足 2-余额展示
-  const title =
-    type == 1
-      ? t("trade.stock_opening_no_balance")
-      : t("trade.stock_opening_enough_balance");
-  const content =
-    type == 1
-      ? `<div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
-        "trade.stock_account_balance"
-      )} <span style="font-weight:600;color:#014CFA;">` +
-      stockWalletAmount.value +
-      "</span> " +
-      paramCurrency.value +
-      `</div><div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
-        "trade.stock_account_notification"
-      )}</div>`
-      : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
-        <div style="color:#061023;font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">${t(
-        "trade.stock_account_balance"
-      )}</div>
-        <div style="display:flex;align-items:center;justify-content:center;">
-            <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${stockWalletAmount.value
-      }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${paramCurrency.value
-      }</span>
-        </div>
-    </div>`;
-  showConfirmDialog({
-    closeOnClickOverlay: true,
-    className: "van-custom-confirm-dialog",
-    title: title,
-    message: content,
-    allowHtml: true,
-    confirmButtonText: t("trade.stock_opening_btn_transfer"),
-    cancelButtonText: t("trade.stock_opening_btn_recharge"),
-    confirmButtonColor: "#014CFA",
-    cancelButtonColor: "#014CFA",
-  })
-    .then(() => {
-      router.push({
-        name: "transfer",
-      });
-    })
-    .catch(() => {
-      router.push({
-        name: "topUpCrypto",
-      });
-    });
+const showAmountDialog = ref(false)
+const openConfirmBox = () => {
+  showAmountDialog.value = true
 };
 
 // 限价
@@ -827,6 +831,7 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
+  if (!currStock.value.trade) return showToast('已闭市,不可交易')
   if (!currStock.value.symbol)
     return showToast(t("trade.contract_opening_err_contract"));
   if (!form1.value.volume || form1.value.volume < min.value)
@@ -998,13 +1003,16 @@ const initParam = () => {
 const setCurrStockFunc = (item) => {
   switch (props.mode) {
     case 'constract':
+      sessionStorage.setItem("currConstract", JSON.stringify(item));
       store.commit("setCurrConstract", item);
       break
     case 'foreign':
       store.commit("setCurrForeign", item);
+      sessionStorage.setItem("currForeign", JSON.stringify(item));
       break
     case 'commodities':
       store.commit("setCurrCommodities", item);
+      sessionStorage.setItem("currCommodities", JSON.stringify(item));
       break
   }
 
@@ -1025,13 +1033,36 @@ const handleClick = (item) => {
 };
 
 // url参数处理
-if (route.query.symbol) {
-  handleClick({
-    symbol: route.query.symbol,
-  });
-} else {
-  initParam();
+if (props.tradeType == 2) { // 合约
+  if (route.query.symbol) {
+    handleClick({
+      symbol: route.query.symbol,
+    });
+  } else {
+    let obj = {}
+    try {
+      switch (props.mode) {
+        case 'constract':
+          obj = JSON.parse(sessionStorage.getItem("currConstract") || "{}");
+          break
+        case 'foreign':
+          obj = JSON.parse(sessionStorage.getItem("currForeign") || "{}");
+          break
+        case 'commodities':
+          obj = JSON.parse(sessionStorage.getItem("currCommodities") || "{}");
+          break
+      }
+    } catch {
+      obj = {};
+    }
+    if (obj.symbol) {
+      handleClick(obj)
+    } else {
+      initParam();
+    }
+  }
 }
+
 
 const openTypeDialog = () => {
   if (!levers.value.length) {

@@ -40,111 +40,21 @@
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 1">
-        <!-- <OtherWallet
-          :name="t('assets.wallet_header_stock')"
-          :type="t('assets.wallet_stock_balance')"
-          :balance="assets.stock"
-          @toggleShow="(val) => toggleShow(val)"
-        />
-        <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
-          <div
-            class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] flex flex-col items-center"
-            style="box-shadow: 0px 4px 20px 0px #0610231a"
-          >
-            <span
-              class="text-[0.28rem] text-[#666d80]"
-              :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >{{ t('assets.wallet_stock_value') }}</span
-            >
-            <span class="text-[0.3rem] text-[#061023] font-semibold">{{
-              showData ? parseFloat(assets.stock).toLocaleString() : "********"
-            }}</span>
-          </div>
-          <div
-            class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] flex flex-col items-center"
-            style="box-shadow: 0px 4px 20px 0px #0610231a"
-          >
-            <span
-              class="text-[0.28rem] text-[#666d80]"
-              :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >{{ t('assets.wallet_order_value') }}</span
-            >
-            <span class="text-[0.3rem] text-[#061023] font-semibold">{{
-              showData
-                ? parseFloat(assets.order_value).toLocaleString()
-                : "********"
-            }}</span>
-          </div>
-        </div> -->
         <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="stock"/>
+          <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock"/>
         </div>
         <Btns />
         <StockMyWallet @click="(val) => click(val)" />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 2">
-        <!-- <OtherWallet
-          :name="t('assets.wallet_header_contract')"
-          :type="t('assets.wallet_contract_balance')"
-          :balance="assets.futures"
-          @toggleShow="(val) => toggleShow(val)"
-        />
-        <div class="flex justify-between px-[0.28rem] relative top-[-1rem]">
-          <div
-            class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] flex flex-col items-center"
-            style="box-shadow: 0px 4px 20px 0px #0610231a"
-          >
-            <span
-              class="text-[0.28rem] text-[#666d80]"
-              :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >{{ t('assets.wallet_contract_value') }}</span
-            >
-            <span class="text-[0.3rem] text-[#061023] font-semibold">{{
-              showData
-                ? parseFloat(assets.futures).toLocaleString()
-                : "********"
-            }}</span>
-          </div>
-          <div
-            class="w-[2.98rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] pt-[0.2rem] flex flex-col items-center"
-            style="box-shadow: 0px 4px 20px 0px #0610231a"
-          >
-            <span
-              class="text-[0.28rem] text-[#666d80]"
-              :class="showData ? 'pb-[0.16rem]' : 'pb-[0.2rem]'"
-              >{{ t('assets.wallet_order_value') }}</span
-            >
-            <span class="text-[0.3rem] text-[#061023] font-semibold">{{
-              showData
-                ? parseFloat(assets.order_value).toLocaleString()
-                : "********"
-            }}</span>
-          </div>
-        </div> -->
         <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="futures"/>
+          <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures"/>
         </div>
         <Btns />
         <CryptoWallet @click="(val) => click(val)" />
       </div>
-
-      <!-- <div class="tab" v-if="currSelectedWallet == 3">
-        <DefaultWallet :name="t('assets.wallet_header_forex')" :type="t('assets.wallet_forex_value')" :balance="assets.forex" />
-        <Btns />
-        <ForexMyWallet />
-      </div>
-
-      <div class="tab" v-if="currSelectedWallet == 4">
-      </div> -->
     </div>
-
-    <!-- <div>
-      <Contract />
-      <AI />
-      <IPO />
-      <Stock />
-    </div> -->
   </div>
 </template>
 <script setup>

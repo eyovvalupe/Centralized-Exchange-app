@@ -1,24 +1,12 @@
 <!-- ai -->
 <template>
   <div class="ai-block">
-    <Tabs
-      v-if="!pageLoading"
-      type="round-card"
-      v-model:active="active"
-      :swipeable="false"
-      :color="'#014CFA'"
-      shrink
-      @change="onChange"
-    >
+    <Tabs v-if="!pageLoading" type="round-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
+      @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
-          <Opening
-            @showNavDialog="showNavDialog"
-            mode="page"
-            ref="OpeningRef"
-            @back="showModel = false"
-            @success="onChange('1')"
-          />
+          <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" mode="page" ref="OpeningRef"
+            @back="showModel = false" />
           <!-- <Ai @clickItems="clickItem"></Ai> -->
         </div>
       </Tab>
@@ -34,17 +22,8 @@
     <div style="height: 50vh" v-else></div>
 
     <!-- 下单弹窗 -->
-    <Popup
-      teleport="body"
-      v-model:show="showModel"
-      position="right"
-      style="width: 100%; height: 100%"
-    >
-      <Opening
-        @showNavDialog="showNavDialog"
-        ref="OpeningRef"
-        @back="showModel = false"
-      />
+    <Popup teleport="body" v-model:show="showModel" position="right" style="width: 100%; height: 100%">
+      <Opening @showNavDialog="showNavDialog" ref="OpeningRef" @back="showModel = false" />
     </Popup>
   </div>
 </template>
@@ -64,6 +43,13 @@ const route = useRoute();
 
 const OpeningRef = ref();
 const showModel = ref(false);
+
+const props = defineProps({
+  activeTab: {
+    type: [String, Number],
+    default: ''
+  }
+})
 
 watch(
   () => route.query.symbol,
@@ -112,6 +98,7 @@ defineExpose({
 
   .ai-block-content {
     width: calc(100% - 1px);
+
     .ai-block-title {
       padding: 0 0.32rem;
       font-weight: 600;

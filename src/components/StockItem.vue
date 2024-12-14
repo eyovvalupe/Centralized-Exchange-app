@@ -1,17 +1,11 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" style="width: 100%" :class="props.marketType != 'crypto' ? '' : 'mb-[0.2rem] pr-[0.32rem]'">
-    <SwipeCell :class="(props.marketType != 'crypto'
-      ? 'stock_item_box'
-      : 'stock_item_box_crypto')
-      " @touchstart.start="" @touchmove.stop="" @touchend.stop="">
-      <div class="stock_item_bg" :class="[props.marketType == 'crypto'
-        ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden '
-        : '', `${' stock_item_' + updownStatus}`]
+  <div ref="root" style="width: 100%">
+    <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
+      <div class="stock_item_bg" :class="[`${' stock_item_' + updownStatus}`]
         " @click="goInfo(props.item.type)">
-        <div :class="props.marketType != 'crypto' ? 'stock_item' : 'stock_item_crypto'
-          ">
-          <div class="td5" v-show="props.marketType != 'crypto'">
+        <div :class="['stock_item']">
+          <div class="td5">
             <div class="item_name flex items-center gap-1">
               <span v-if="item.type == 'crypto'">{{ props.item.name }}</span>
               <span v-else>{{ props.item.symbol }}</span>
@@ -39,25 +33,11 @@
               {{ props.item.lever }}X
             </div>
           </div>
-          <div class="td5" v-show="marketType == 'crypto'">
-            <div class="item_name flex items-center gap-1">
-              {{ props.item.name }}
-              <div v-if="props.item.lever"
-                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9] px-[0.1rem] pt-[0.05rem]">
-                {{ props.item.lever }}X
-              </div>
-            </div>
+          <div :class="['td2 spark_line_box']">
+            <SparkLine v-if="props.item.points && showSparkLine" :style="['width: 100%; height: 0.6rem;']"
+              :points="props.item.points" :ratio="props.item.ratio" />
           </div>
-          <div :class="props.marketType != 'crypto'
-            ? 'td2 spark_line_box'
-            : 'td2 ml-[1.2rem]'
-            ">
-            <SparkLine v-if="props.item.points && showSparkLine" :style="props.marketType != 'crypto'
-              ? 'width: 100%; height: 0.6rem;'
-              : 'width: 100%; height: 0.54rem;'
-              " :points="props.item.points" :ratio="props.item.ratio" />
-          </div>
-          <div class="td2 td_r" v-show="props.marketType != 'crypto'">
+          <div class="td2 td_r">
             <div class="item_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
               {{ props.item.price ? props.item.price : "--" }}
             </div>
@@ -79,43 +59,11 @@
             </div>
           </div>
         </div>
-
-        <!-- 为了显示自选给了常数，需要更改为后端数据 -->
-        <div class="flex items-center justify-between text-[0.32rem] font-bold w-[100%]"
-          v-show="props.marketType == 'crypto'">
-          <div class="text-center w-1/3">
-            <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
-              item.price || "--"
-            }}</span><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">{{
-              t("market.market_optional_crypto_price")
-            }}</span>
-          </div>
-          <div class="text-center border-x-[#eff3f8] border-x-2 w-1/3">
-            <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
-              item.change || "--"
-            }}</span><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">{{
-              t("market.market_optional_short")
-            }}</span>
-          </div>
-          <div class="text-center w-1/3">
-            <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{ item.ratio > 0 ? "+" : "" }}{{ item.ratio
-              || 0 }}%</span><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">{{
-              t("market.market_optioanl_ratio")
-            }}</span>
-          </div>
-        </div>
       </div>
 
       <template #right v-if="props.deleteItem">
-        <div :class="props.marketType != 'crypto'
-          ? 'delete_content'
-          : 'delete_content_crypto ml-[1px]'
-          " @click="removeStock(item)">
+        <div :class="['delete_content']" @click="removeStock(item)">
           <div class="delete_icon">
-            <!-- <img src="/static/img/assets/delete.svg" alt="🚮" /> -->
           </div>
         </div>
       </template>
@@ -290,33 +238,6 @@ const removeStock = (item) => {
   }
 }
 
-.stock_item_box_crypto {
-  width: 100%;
-  overflow: hidden;
-  padding-left: 0.32rem;
-
-  .delete_content {
-    width: 0.78rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #d0d8e2;
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
-  }
-
-  .delete_content_crypto {
-    width: 0.78rem;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #d0d8e2;
-    border-radius: 0.32rem;
-    // margin-left: -0.32rem;
-  }
-}
 
 .active_symbol {
   background-color: #f2f3f7;

@@ -1,22 +1,12 @@
 <!-- ai量化交易 -->
 <template>
   <div class="trade_ai" :class="['trade_ai--' + mode]">
-    <Top
-      :title="t('trade.ai_opening_trade')"
-      :backFunc="backFunc"
-      v-if="mode == 'popup'"
-    />
+    <Top :title="t('trade.ai_opening_trade')" :backFunc="backFunc" v-if="mode == 'popup'" />
 
     <div style="height: 1.12rem" v-if="mode == 'popup'"></div>
     <div class="tabs-container">
       <!-- 涨跌 -->
-      <Tabs
-        type="line-card"
-        v-model:active="tab"
-        :swipeable="false"
-        animated
-        :color="'#014CFA'"
-      >
+      <Tabs type="line-card" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
         <Tab :title="t('trade.ai_opening_long')" :name="1"> </Tab>
         <Tab :title="t('trade.ai_opening_short')" :name="2"> </Tab>
       </Tabs>
@@ -43,71 +33,55 @@
                         
                     </div> -->
           <div class="time_list">
-            <div
-              class="time"
-              @click="currTime = obj"
-              :class="{
-                curr_time:
-                  currTime.time == obj.time && currTime.unit == obj.unit,
-              }"
-              v-for="(obj, i) in times"
-              :key="i"
-            >
+            <div class="time" @click="currTime = obj" :class="{
+              curr_time:
+                currTime.time == obj.time && currTime.unit == obj.unit,
+            }" v-for="(obj, i) in times" :key="i">
               <span>{{ obj.time }}{{ _dateUnitMap[obj.unit] }}</span>
             </div>
           </div>
         </div>
         <!-- 数量 -->
+        <FormItem :rightContent="true" input-type="number" v-model="form1.grid"
+          :title="t('trade.ai_opening_network_amount')" btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
 
-        <FormItem
-          input-type="number"
-          v-model="form1.grid"
-          :title="t('trade.ai_opening_network_amount')"
-          btn-show-mode="focus"
-          :max="maxgrid"
-          :tip="
-            maxgrid > 0 ? t('trade.ai_opening_bigest_network') + maxgrid : ''
-          "
-          @change="changeGrid"
-        >
+          <template #title-right>
+            <span>{{ maxgrid > 0 ? '≤' + maxgrid : '' }}</span>
+          </template>
+
+          <template #right-content-title>
+            <div class="subtitle">利润率</div>
+          </template>
+
+          <template #right-content-item>
+            <div class="item item_box disabled_item">
+              {{ getPercent() }}
+            </div>
+          </template>
+
         </FormItem>
-
-        <!-- 利润 -->
-        <div class="item_content">
-          <div class="subtitle">{{ t("trade.ai_opening_every_profit") }}</div>
-          <div class="item item_box disabled_item">
-            {{ getPercent() }}
-          </div>
-        </div>
+        <div style="height: 0.47rem"></div>
+        <!-- 拖动 -->
+        <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
 
         <!-- 投资额 -->
 
-        <FormItem
-          input-type="number"
-          v-model="form1.volume"
-          :title="t('trade.ai_opening_invest_amount')"
-          btn-show-mode="focus"
-          :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''"
-          :show-btn="usdt.amount > 0"
-          @change="changePercent"
-          @btnClick="onSliderChange(100)"
-        >
+        <FormItem input-type="number" v-model="form1.volume" :title="t('trade.ai_opening_invest_amount')"
+          btn-show-mode="focus" :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0"
+          @change="changePercent" @btnClick="onSliderChange(100)">
           <template #title-right>
-            <span
-              v-if="token"
-              style="color: #014cfa; font-size: 12px"
-              @click="openConfirmBox"
-              ><span style="color: #666d80">{{
-                t("trade.ai_opening_balance")
-              }}</span>
-              {{ usdt.amount }} USDT</span
-            >
+            <span v-if="token" style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span
+                style="color: #666d80">{{
+                  t("trade.ai_opening_balance")
+                }}</span>
+              {{ usdt.amount }} USDT</span>
           </template>
         </FormItem>
 
         <div style="height: 0.47rem"></div>
         <!-- 拖动 -->
         <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+        <div style="height: 0.28rem"></div>
       </div>
 
       <!-- 按钮 -->
@@ -129,50 +103,32 @@
         <div class="flex justify-between mb-[0.32rem]">
           <div
             class="w-[2.91rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
-            @click="store.commit('setIsLoginOpen', true)"
-          >
+            @click="store.commit('setIsLoginOpen', true)">
             {{ t("trade.stock_opening_token_login") }}
           </div>
           <div
             class="w-[2.91rem] h-[1.12rem] bg-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#fff] text-[0.36rem]"
-            @click="jump('register')"
-          >
+            @click="jump('register')">
             {{ t("trade.stock_opening_token_register") }}
           </div>
         </div>
         <div
           class="w-full h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
-          @click="
-            () => router.push({ name: 'register', query: { guest: 'guest' } })
-          "
-        >
+          @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+            ">
           {{ t("trade.contract_create_guest_btn") }}
         </div>
       </div>
       <div class="btns" v-else>
-        <Button
-          :loading="loading || submitLoading"
-          @click="checkForm"
-          v-if="token"
-          size="large"
-          class="btn"
-          :color="tab == 1 ? '#18b762' : '#e8503a'"
-          round
-          >{{
+        <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn"
+          :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
             tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
-          }}</Button
-        >
+          }}</Button>
       </div>
     </div>
 
     <!-- 开仓确认弹窗 -->
-    <Popup
-      teleport="body"
-      v-model:show="showModel"
-      position="bottom"
-      round
-      closeable
-    >
+    <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
       <div class="van-popup-custom-title">
         {{ t("trade.ai_opening_confirm_order") }}
       </div>
@@ -216,77 +172,41 @@
           </div>
         </div>
 
-        <FormItem
-          v-model="form1.safeword"
-          size="large"
-          input-type="password"
-          :title="t('trade.stock_opening_trade_pw')"
-        >
+        <FormItem v-model="form1.safeword" size="large" input-type="password"
+          :title="t('trade.stock_opening_trade_pw')">
         </FormItem>
 
-        <Button
-          :loading="submitLoading"
-          @click="submitForm(form1.safeword)"
-          size="large"
-          class="submit"
-          color="#014cfa"
-          round
-          >{{ t("trade.ai_opening_confirm_btn") }}</Button
-        >
+        <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit" color="#014cfa"
+          round>{{ t("trade.ai_opening_confirm_btn") }}</Button>
       </div>
     </Popup>
 
     <!-- ai订单详情 -->
     <AiInfo ref="infoRef" />
     <!-- 开仓-安全密码弹窗 -->
-    <SafePassword
-      @submit="submitForm"
-      ref="safeRef"
-      :key="'open'"
-    ></SafePassword>
+    <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 
     <!-- 股票行情弹窗 -->
-    <Popup
-      teleport="body"
-      v-model:show="showStockModel"
-      position="bottom"
-      round
-      closeable
-    >
+    <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
       <StockPopup type="ai" style="height: 90vh" v-if="showStockModel" />
     </Popup>
 
     <!-- ai列表 -->
-    <Popup
-      teleport="body"
-      v-model:show="showBottom"
-      round
-      closeable
-      position="bottom"
-    >
+    <Popup teleport="body" v-model:show="showBottom" round closeable position="bottom">
       <div class="trade_ai_list">
         <div class="trade_ai_list_title">
           {{ t("trade.ai_opening_ai_quantifi_list") }}
         </div>
         <div class="list">
-          <AiItem
-            @click.stop="chooseItem(item)"
-            v-for="(item, i) in marketAiList"
-            :key="i"
-            :item="item"
-          />
+          <AiItem @click.stop="chooseItem(item)" v-for="(item, i) in marketAiList" :key="i" :item="item" />
         </div>
       </div>
     </Popup>
   </div>
 
   <!-- 账户余额弹窗 -->
-  <AmountPopup
-    ref="AmountPopupRef"
-    :name="t('trade.ai_opening_cash_wallet')"
-    :amount="usdt.amount"
-    :currency="'USDT'"
-  />
+  <AmountPopup ref="AmountPopupRef" :name="t('trade.ai_opening_cash_wallet')" :amount="usdt.amount"
+    :currency="'USDT'" />
 </template>
 
 <script setup>
@@ -323,6 +243,10 @@ const props = defineProps({
     type: String,
     default: "page",
   },
+  tradeType: {
+    type: [String, Number],
+    default: ''
+  }
 });
 
 const goLogin = () => {
@@ -366,12 +290,32 @@ const showModel = ref(false);
 // 表单
 
 const form1 = ref({
-  name: route.query.name || "",
-  symbol: route.query.symbol || "",
+  name: "",
+  symbol: "",
   grid: "1",
   volume: "",
   safeword: "",
 });
+
+if (props.tradeType == 3) { // 机器人
+  form1.value.name = route.query.name || ""
+  form1.value.symbol = route.query.symbol || ""
+}
+
+// 缓存
+let obj = {}
+try {
+  obj = JSON.parse(sessionStorage.getItem('currAi') || '{}')
+} catch {
+  obj = {}
+}
+if (obj.symbol) {
+  form1.value.name = obj.name;
+  form1.value.symbol = obj.symbol;
+  store.commit("setCurrAi", obj);
+}
+
+
 const changeGrid = () => {
   setTimeout(() => {
     form1.value.grid = parseInt(form1.value.grid);
@@ -381,6 +325,8 @@ const changeGrid = () => {
     if (form1.value.grid <= 1) {
       form1.value.grid = 1;
     }
+
+    changePercent2()
   }, 0);
 };
 
@@ -482,15 +428,40 @@ const maxgrid = ref(0); // 最大网格
 const currTime = ref({}); // 当前时间选项
 const getPercent = () => {
   // 获取利润展示文案
-  if (!currTime.value.rangereturn) return "--";
+  if (!currTime.value.rangereturn || !form1.value.grid) return "--";
   const rangereturn = currTime.value.rangereturn;
   let rs = "--";
   try {
     const arr = rangereturn.split(" - ");
-    rs = `${arr[0]}% - ${arr[1]}%`;
-  } catch {}
+    rs = `${new Decimal(arr[0]).mul(form1.value.grid)}% - ${new Decimal(arr[1]).mul(form1.value.grid)}%`;
+  } catch { }
 
   return rs;
+};
+// 拖动
+const sliderValue2 = ref(0);
+const onSliderChange2 = (newValue) => {
+  sliderValue2.value = newValue;
+  if (maxgrid.value == "--") return (sliderValue2.value = 0);
+  let v = new Decimal(maxgrid.value).mul(newValue).div(100);
+  v = v.sub(v.mod(1));
+  form1.value.grid = v.toNumber();
+  setTimeout(() => {
+    changePercent2();
+  }, 0);
+};
+const changePercent2 = () => {
+  if (maxgrid.value == "--" || !form1.value.grid)
+    return (sliderValue2.value = 0);
+  let v = new Decimal(form1.value.grid);
+  form1.value.grid = v.sub(v.mod(1));
+  let p = new Decimal(form1.value.grid)
+    .div(maxgrid.value)
+    .mul(100)
+    .toNumber();
+  if (p < 0) p = 0;
+  if (p > 100) p = 100;
+  sliderValue2.value = Number(p);
 };
 const getRange = () => {
   // 获取预计盈亏
@@ -503,7 +474,7 @@ const getRange = () => {
     const start = new Decimal(form1.value.volume).mul(Number(arr[0])).div(100);
     const end = new Decimal(form1.value.volume).mul(Number(arr[1])).div(100);
     rs = `${start} - ${end}`;
-  } catch {}
+  } catch { }
 
   return rs;
 };
@@ -563,6 +534,7 @@ const chooseItem = (item) => {
   store.commit("setCurrAi", item);
   showBottom.value = false;
   getParams();
+  sessionStorage.setItem('currAi', JSON.stringify(item))
 };
 _aiquant({
   orderby: "",

@@ -10,7 +10,7 @@
       </div>
 
       <!-- <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
-      <CurrencyList @click="(val) => click(val)" :list="wallet"/>
+      <CurrencyList @click="(val) => click(val)" :list="wallet" :type="'contract'"/>
 
     </div>
   </div>

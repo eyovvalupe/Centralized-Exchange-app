@@ -59,34 +59,16 @@
         <div class="form_title" v-show="activeTab == 0">
           {{ $t("register.email") }}
         </div>
-        <div
-          class="form_item margin_item"
-          v-show="activeTab == 0"
-          :class="{ err_ipt: errorTip.error1 }"
-        >
-          <input
-            maxlength="30"
-            @blur="errorTip.error1 = false"
-            v-model.trim="form.email"
-            :placeholder="t('register.pw_placeholder1')"
-            type="text"
-            class="item_input"
-            :class="{ err_ipt1: errorTip.error1 }"
-          />
-          <div
-            class="form_item_clear"
-            v-show="form.email"
-            @click="form.email = null"
-          ></div>
+        <div class="form_item margin_item" v-show="activeTab == 0" :class="{ err_ipt: errorTip.error1 }">
+          <input maxlength="30" @blur="errorTip.error1 = false" v-model.trim="form.email"
+            :placeholder="t('register.pw_placeholder1')" type="text" class="item_input"
+            :class="{ err_ipt1: errorTip.error1 }" />
+          <div class="form_item_clear" v-show="form.email" @click="form.email = null"></div>
         </div>
         <div class="form_title" v-show="activeTab == 1">
           {{ $t("register.phone_number") }}
         </div>
-        <div
-          class="form_item margin_item"
-          v-show="activeTab == 1"
-          :class="{ err_ipt: errorTip.error1 }"
-        >
+        <div class="form_item margin_item" v-show="activeTab == 1" :class="{ err_ipt: errorTip.error1 }">
           <div class="code" @click="(showDialog = true), (searchStr = '')">
             <span class="flag_icon">
               <img src="/static/img/common/flag_hongkong.svg" alt="" />
@@ -96,169 +78,88 @@
               <img src="/static/img/assets/more.png" alt="img" />
             </div>
           </div>
-          <input
-            maxlength="20"
-            @blur="errorTip.error1 = false"
-            v-model.trim="form.phone"
-            :placeholder="t('register.pw_placeholder2')"
-            type="text"
-            class="item_input"
-          />
+          <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.phone"
+            :placeholder="t('register.pw_placeholder2')" type="text" class="item_input" />
         </div>
         <div class="form_title">{{ $t("register.login_password") }}</div>
-        <div
-          class="form_item margin_item relative"
-          :class="{ err_ipt: errorTip.error2 }"
-        >
-          <input
-            maxlength="20"
-            @blur="errorTip.error2 = false"
-            v-model.trim="form.password"
-            :placeholder="t('register.pw_placeholder3')"
-            :type="showPass ? 'text' : 'password'"
-            class="item_input"
-          />
-          <div
-            class="absolute top-[0.4rem] right-[0.32rem]"
-            @click="showPass = !showPass"
-          >
+        <div class="form_item margin_item relative" :class="{ err_ipt: errorTip.error2 }">
+          <input maxlength="20" @blur="errorTip.error2 = false" v-model.trim="form.password"
+            :placeholder="t('register.pw_placeholder3')" :type="showPass ? 'text' : 'password'" class="item_input" />
+          <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass = !showPass">
             <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
           </div>
         </div>
         <!-- 密码等级 -->
-        <PasswordLevel
-          style="position: relative; top: -0.32rem; left: 0.32rem"
-          :password="form.password"
-        />
+        <PasswordLevel style="position: relative; top: -0.32rem; left: 0.32rem" :password="form.password" />
         <div class="form_title">{{ $t("register.trade_password") }}</div>
-        <div
-          class="form_item margin_item relative"
-          :class="{ err_ipt: errorTip.error3 }"
-        >
-          <input
-            maxlength="20"
-            @blur="errorTip.error3 = false"
-            v-model.trim="form.safeword"
-            :placeholder="t('register.pw_placeholder5')"
-            :type="showPass2 ? 'text' : 'password'"
-            class="item_input"
-          />
-          <div
-            class="absolute top-[0.4rem] right-[0.32rem]"
-            @click="showPass2 = !showPass2"
-          >
+        <div class="form_item margin_item relative" :class="{ err_ipt: errorTip.error3 }">
+          <input maxlength="20" @blur="errorTip.error3 = false" v-model.trim="form.safeword"
+            :placeholder="t('register.pw_placeholder5')" :type="showPass2 ? 'text' : 'password'" class="item_input" />
+          <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass2 = !showPass2">
             <div :class="showPass2 ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
           </div>
         </div>
         <div class="form_title">{{ $t("register.invite_code") }}</div>
         <div class="form_item margin_item">
-          <input
-            maxlength="20"
-            v-model.trim="form.invateCode"
-            :placeholder="t('register.pw_placeholder6')"
-            type="text"
-            class="item_input"
-          />
+          <input maxlength="20" v-model.trim="form.invateCode" :placeholder="t('register.pw_placeholder6')" type="text"
+            class="item_input" />
         </div>
       </div>
 
       <!-- 协议 -->
       <label class="register_doc">
-        <div
-          :class="checked ? 'checked_icon_blue' : 'unchecked_icon'"
-          class="mr-[0.2rem]"
-          @click="checked = !checked"
-        ></div>
+        <div :class="checked ? 'checked_icon_blue' : 'unchecked_icon'" class="mr-[0.2rem]" @click="checked = !checked">
+        </div>
         {{ $t("register.agree_con1")
-        }}<span>{{ $t("register.agree_con2") }}</span
-        >{{ $t("register.agree_con3")
+        }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3")
         }}<span>{{ $t("register.agree_con4") }}</span>
       </label>
 
       <!-- 按钮 -->
       <div class="submit_box">
-        <Button
-          @click="submit"
-          :loading="loading"
-          round
-          color="#014CFA"
-          class="submit"
-          type="primary"
-          >{{ $t("register.next") }}</Button
-        >
+        <Button @click="submit" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+          $t("register.next") }}</Button>
       </div>
     </template>
 
     <template v-else>
-      <RegisterCodeCheck
-        :type="activeTab == 0 ? 'email' : 'phone'"
-        :value="activeTab == 0 ? form.email : form.phone"
-        @success="registerSuccessNext"
-      />
+      <RegisterCodeCheck :type="activeTab == 0 ? 'email' : 'phone'" :value="activeTab == 0 ? form.email : form.phone"
+        @success="registerSuccessNext" />
     </template>
 
     <!-- 验证码 -->
-    <VerifCode
-      :type="activeTab == 0 ? 'email' : 'phone'"
-      :value="form.username"
-      @submit="submitCode"
-      to="body"
-      ref="verifCodeRef"
-    />
+    <VerifCode :type="activeTab == 0 ? 'email' : 'phone'" :value="form.username" @submit="submitCode" to="body"
+      ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      class="self_van_popup"
-      v-model:show="showDialog"
-      position="bottom"
-      teleport="body"
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
+      position="bottom" teleport="body">
       <div class="register_accounr_dialog">
-        <div
-          class="close-svg-iconB absolute right-0 mr-[0.32rem]"
-          @click="showDialog = false"
-        ></div>
+        <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="showDialog = false"></div>
         <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
           {{ $t("register.country_number") }}
         </div>
         <div class="item search_box">
           <!-- <Icon class="search" name="search" size="0.48rem" /> -->
           <div class="search-svg-icon"></div>
-          <input
-            v-model.trim="searchStr"
-            class="ipt"
-            type="text"
-            :placeholder="t('register.pw_placeholder4')"
-          />
-          <div
-            v-if="searchStr.length"
-            @click="searchStr = ''"
-            class="close-svg-icon"
-          ></div>
+          <input v-model.trim="searchStr" class="ipt" type="text" :placeholder="t('register.pw_placeholder4')" />
+          <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon"></div>
         </div>
         <div ref="scrollRef" style="height: 60vh; overflow-y: auto">
-          <van-list>
-            <van-cell v-for="item in showAreas">
-              <div
-                @click="clickItem(item)"
+          <List>
+            <Cell v-for="item in showAreas">
+              <div @click="clickItem(item)"
                 class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-[#eff3f8]"
-                :class="{ transfer_dialog_item_active: form.area == item.code }"
-              >
+                :class="{ transfer_dialog_item_active: form.area == item.code }">
                 <div class="flex h-[1.08rem] items-center">
                   <HKFlagIcon class="mr-[0.2rem]" />
                   <span>{{ item.cn }}</span>
                   <span>({{ item.code }})</span>
                 </div>
-                <Icon
-                  v-if="form.area == item.code"
-                  class="cross"
-                  name="success"
-                />
+                <Icon v-if="form.area == item.code" class="cross" name="success" />
               </div>
-            </van-cell>
-          </van-list>
+            </Cell>
+          </List>
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
@@ -277,6 +178,8 @@ import {
   Tab,
   Tabs,
   Popup,
+  List,
+  Cell,
 } from "vant";
 import { ref, computed, onMounted, onBeforeMount } from "vue";
 import router from "@/router";
@@ -584,7 +487,7 @@ onMounted(() => {
     step.value = 1;
     openPage.value = true
   } else if (Object.keys(route.query).length && !route.query.invitCode) {
-    router.replace({name: 'home'})
+    router.replace({ name: 'home' })
     setTimeout(() => {
       openPage.value = true;
     }, 500);
@@ -777,6 +680,7 @@ onMounted(() => {
       background-repeat: no-repeat;
       background-position: center;
     }
+
     .eye-show-icon {
       width: 0.4rem;
       height: 0.26rem;
@@ -890,6 +794,7 @@ onMounted(() => {
       border-radius: 0.11rem;
       background-repeat: no-repeat;
     }
+
     .unchecked_icon {
       width: 0.48rem;
       height: 0.48rem;
@@ -902,7 +807,7 @@ onMounted(() => {
       margin-right: 0.24rem;
     }
 
-    > span {
+    >span {
       color: #014cfa;
     }
   }
@@ -914,6 +819,7 @@ onMounted(() => {
       font-size: 0.36rem;
       line-height: 0.36rem;
     }
+
     .submit {
       width: 100%;
       height: 1.12rem;
@@ -934,7 +840,7 @@ onMounted(() => {
       margin-right: 0.2rem;
     }
 
-    > span {
+    >span {
       color: #1a59f6;
       font-weight: 600;
     }

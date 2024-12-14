@@ -1,28 +1,29 @@
 <template>
   <div class="form-item" :class="{ 'form-item--large': size == 'large' }">
     <div class="form-item-title" v-if="title">
-      <span>{{ title }}</span>
-      <span class="form-item-title__right">
-        <slot name="title-right" />
-      </span>
+      <div class="form-item-title_content">
+        <span>{{ title }}</span>
+        <div style="flex: 1;display: flex;align-items: center;justify-content: flex-start;">
+          <slot name="title-icon" />
+        </div>
+        <span class="form-item-title__right">
+          <slot name="title-right" />
+        </span>
+      </div>
+
+      <div class="right_content right_title" v-if="props.rightContent">
+        <slot name="right-content-title" />
+      </div>
     </div>
     <div class="form-item-box">
-      <div
-        class="item"
-        :class="{
+      <div style="flex: 1;display: flex">
+        <div class="item" :class="{
           disabled_item: disabled,
           item_focus: inputFocus && tip,
           item_focus2: inputFocus && !tip,
-        }"
-        :style="{ background }"
-      >
-        <span
-          class="ipt_tip"
-          :class="{ 'ipt_tip--right': tipAlign == 'right' }"
-          v-if="tip"
-          v-show="inputFocus"
-          >{{ tip }}</span
-        >
+        }" :style="{ background }">
+          <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip" v-show="inputFocus">{{ tip
+            }}</span>
 
         <slot v-if="custom" />
         <input
@@ -31,76 +32,48 @@
           v-model="inputVal"
           @focus="
             inputFocus = true;
-            emit('focus');
-          "
-          @blur="
+          emit('focus');
+          " @blur="
             inputFocus = false;
-            inputBlur();
-          "
-          :type="inputType == 'digit' ? 'number' : inputType"
-          @keydown="validateKeydown"
-          class="ipt"
-          @input="onInput"
-          :placeholder="placeholder"
-        />
+          inputBlur();
+          " :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
+            :placeholder="placeholder" />
 
-        <span class="pwd_icon" v-if="inputType == 'password'">
-          <img
-            v-if="!showPassword"
-            src="/static/img/user/eye-off.png"
-            @click="showPassword = true"
-            alt="off"
-          />
-          <img
-            v-else
-            src="/static/img/user/eye-open.png"
-            alt="open"
-            @click="showPassword = false"
-          />
-        </span>
+          <span class="pwd_icon" v-if="inputType == 'password'">
+            <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
+            <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
+          </span>
 
-        <Transition name="opacity">
-          <div
-            class="flex items-center"
-            v-show="inputFocus"
-            v-if="percentTags && percentTags.length"
-          >
-            <span
-              class="percent_tag"
-              v-for="(percent, i) in percentTags"
-              :key="i"
-              @click="percentTagClick(percent)"
-              >{{ percent.label }}</span
-            >
-          </div>
-        </Transition>
+          <Transition name="opacity">
+            <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
+              <span class="percent_tag" v-for="(percent, i) in percentTags" :key="i"
+                @click="percentTagClick(percent)">{{
+                  percent.label }}</span>
+            </div>
+          </Transition>
 
-        <span
-          class="put_all put_all_place"
-          v-if="
+          <span class="put_all put_all_place" v-if="
             showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
-          "
-          >{{ btnPlaceholder }}</span
-        >
-        <span
-          @click="emit('btnClick')"
-          v-if="showBtn && btnShowMode == 'focus'"
-          :style="{
+          ">{{ btnPlaceholder }}</span>
+          <span @click="emit('btnClick')" v-if="showBtn && btnShowMode == 'focus'" :style="{
             opacity: inputFocus ? '1' : '0',
             visibility: inputFocus ? '' : 'hidden',
-          }"
-          class="put_all"
-          >{{ btnText ? btnText : t('trade.stock_position_all') }}</span
-        >
-        <span @click="emit('btnClick')" v-else-if="showBtn" class="put_all">{{
-          btnText ? btnText : t('trade.stock_position_all')
-        }}</span>
+          }" class="put_all">{{ btnText ? btnText : t('trade.stock_position_all') }}</span>
+          <span @click="emit('btnClick')" v-else-if="showBtn" class="put_all">{{
+            btnText ? btnText : t('trade.stock_position_all')
+          }}</span>
+        </div>
+      </div>
+
+      <div class="right_content right_item" v-if="props.rightContent">
+        <slot name="right-content-item" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import Decimal from "decimal.js";
 import { nextTick, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -116,8 +89,12 @@ const emit = defineEmits([
   "blur",
 ]);
 const props = defineProps({
+  rightContent: {
+    type: Boolean,
+    default: false
+  },
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Decimal],
     default: "",
   },
   size: {
@@ -215,10 +192,20 @@ const percentTagClick = (percent) => {
 </script>
 
 <style lang="less" scoped>
+.right_content {
+  flex: 1.5;
+  flex-shrink: 0;
+  margin-left: 0.24rem;
+}
+
 .form-item-box {
+  display: flex;
+
   .item {
+    flex: 1;
     display: flex;
     align-items: center;
+    box-sizing: border-box;
     justify-content: space-between;
     position: relative;
     height: 0.92rem;
@@ -226,6 +213,8 @@ const percentTagClick = (percent) => {
     border: 1px solid #d0d8e2;
     padding: 0 0.24rem;
     transition: 0.3s;
+    flex-shrink: 0;
+
     .ipt_tip {
       color: #b7b7b7;
       font-size: 0.24rem;
@@ -233,10 +222,12 @@ const percentTagClick = (percent) => {
       left: 0.24rem;
       transition: all ease 0.3s;
     }
+
     .ipt_tip--right {
       right: 0.24rem;
       left: inherit;
     }
+
     .ipt {
       flex: 1;
       height: 100%;
@@ -247,6 +238,8 @@ const percentTagClick = (percent) => {
       width: 100%;
     }
   }
+
+
 
   .disabled_item {
     background-color: #F5F7FC;
@@ -261,6 +254,7 @@ const percentTagClick = (percent) => {
       transform: translateY(-0.36rem);
     }
   }
+
   .item_focus2 {
     border: 1px solid #034cfa;
   }
@@ -277,6 +271,7 @@ const percentTagClick = (percent) => {
     line-height: 0.4rem;
     display: block;
   }
+
   .put_all {
     color: #014cfa;
     position: absolute;
@@ -285,9 +280,11 @@ const percentTagClick = (percent) => {
     z-index: 9;
     transition: all ease 0.3s;
   }
+
   .put_all_place {
     color: #061023;
   }
+
   .pwd_icon {
     width: 0.4rem;
     height: 0.4rem;
@@ -309,16 +306,27 @@ const percentTagClick = (percent) => {
   margin-top: 0.4rem;
   margin-bottom: 0.12rem;
   justify-content: space-between;
+
+  .form-item-title_content {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+
   &__right {
     text-align: right;
     font-size: 0.28rem;
     color: #666d80;
   }
 }
+
 .form-item--large {
   .item {
     height: 1.12rem;
   }
+
   .item_focus {
     height: 1.32rem;
   }
