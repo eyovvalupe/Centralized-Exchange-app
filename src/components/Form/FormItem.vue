@@ -56,6 +56,7 @@
 </template>
 
 <script setup>
+import Decimal from "decimal.js";
 import { nextTick, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -72,7 +73,7 @@ const emit = defineEmits([
 ]);
 const props = defineProps({
   modelValue: {
-    type: [String, Number],
+    type: [String, Number, Decimal],
     default: "",
   },
   size: {

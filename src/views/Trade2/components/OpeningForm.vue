@@ -641,7 +641,7 @@ const stockWalletAmount = computed(() => {
 const maxStockNum = computed(() => {
   // 最大可买 可卖
   if (currStock.value.price) {
-    const max = new Decimal(stockWalletAmount.value)
+    const max = new Decimal(stockWalletAmount.value).mul(1 - (openFee.value || 0))
       .div(form1.value.price || currStock.value.price)
       .mul(form1.value.lever)
       .floor();

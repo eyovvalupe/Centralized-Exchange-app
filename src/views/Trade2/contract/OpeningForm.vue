@@ -649,7 +649,7 @@ const maxStockNum = computed(() => {
     return "--";
   }
   if (currStock.value.price) {
-    const max = new Decimal(stockWalletAmount.value)
+    const max = new Decimal(stockWalletAmount.value).mul(1 - (openFee.value || 0))
       .div(amountper.value)
       .mul(form1.value.lever)
       .floor();
