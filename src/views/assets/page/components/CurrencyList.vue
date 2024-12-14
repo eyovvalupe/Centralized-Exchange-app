@@ -40,7 +40,7 @@
         <div class="text-[15px] text-[#061023]">{{ item.name }}</div>
       </div>
     </div>
-    <div v-else class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-[#f5f7fc] mb-[0.12rem] justify-between">
+    <div v-else class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-[#f5f7fc] mb-[0.12rem] justify-between" @click="click(item)">
       <div class="w-full ml-[0.32rem] flex items-center">
         <div
           class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]"
