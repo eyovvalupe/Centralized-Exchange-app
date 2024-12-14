@@ -30,19 +30,10 @@
         <div class="form_item_user" v-show="form.email">
           <div class="envelope-icon"></div>
         </div>
-        <input
-          @change="changeAccount"
-          v-model.trim="form.email"
-          :placeholder="t('login.pw_placeholder1')"
-          type="text"
-          class="item_input"
-        />
+        <input @change="changeAccount" v-model.trim="form.email" :placeholder="t('login.pw_placeholder1')" type="text"
+          class="item_input" />
         <Loading v-if="accountLoading" :size="'0.32rem'" type="spinner" />
-        <div
-          class="form_item_clear"
-          v-show="form.email"
-          @click="form.email = null"
-        >
+        <div class="form_item_clear" v-show="form.email" @click="form.email = null">
           <div class="cross-icon"></div>
         </div>
       </div>
@@ -59,13 +50,8 @@
           <span>{{ form.area }}</span>
           <div class="more-svg-icon"></div>
         </div>
-        <input
-          maxlength="20"
-          v-model.trim="form.phone"
-          type="text"
-          :placeholder="t('login.pw_placeholder2')"
-          class="item_input"
-        />
+        <input maxlength="20" v-model.trim="form.phone" type="text" :placeholder="t('login.pw_placeholder2')"
+          class="item_input" />
       </div>
       <div class="form_title">{{ $t("login.password") }}</div>
       <div class="form_item">
@@ -75,13 +61,8 @@
         </div>
 
         <!-- 密码输入框，使用 v-if/v-else 优化 -->
-        <input
-          maxlength="20"
-          :type="showPass ? 'text' : 'password'"
-          v-model.trim="form.password"
-          :placeholder="t('login.pw_placeholder3')"
-          class="item_input"
-        />
+        <input maxlength="20" :type="showPass ? 'text' : 'password'" v-model.trim="form.password"
+          :placeholder="t('login.pw_placeholder3')" class="item_input" />
 
         <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
@@ -95,15 +76,8 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button
-        :loading="loading"
-        :disabled="disabled"
-        round
-        color="#014CFA"
-        class="submit"
-        type="primary"
-        >{{ $t("login.login") }}</Button
-      >
+      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">{{
+        $t("login.login") }}</Button>
     </div>
 
     <!-- 去注册 -->
@@ -125,21 +99,12 @@
         </div>
         <div class="item search_box">
           <div class="search-svg-icon"></div>
-          <input
-            v-model.trim="searchStr"
-            class="ipt"
-            type="text"
-            :placeholder="t('login.pw_placeholder4')"
-          />
-          <div
-            v-if="searchStr.length"
-            @click="searchStr = ''"
-            class="close-svg-icon"
-          ></div>
+          <input v-model.trim="searchStr" class="ipt" type="text" :placeholder="t('login.pw_placeholder4')" />
+          <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon"></div>
         </div>
         <div style="height: 60vh; overflow-y: auto">
-          <van-list>
-            <van-cell v-for="item in showAreas">
+          <List>
+            <Cell v-for="item in showAreas">
               <div @click="clickItem(item)"
                 class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-[#eff3f8]"
                 :class="{ transfer_dialog_item_active: form.area == item.code }">
@@ -150,8 +115,8 @@
                 </div>
                 <Icon v-if="form.area == item.code" class="cross" name="success" />
               </div>
-            </van-cell>
-          </van-list>
+            </Cell>
+          </List>
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
@@ -168,6 +133,8 @@ import {
   Popup,
   Tabs,
   Tab,
+  List,
+  Cell,
 } from "vant";
 import { ref, computed, onMounted } from "vue";
 import router from "@/router";

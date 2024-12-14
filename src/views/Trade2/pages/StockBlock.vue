@@ -7,11 +7,12 @@
                 <img src="/static/img/trade/time.png" alt="img">
             </div>
         </div> -->
-        <Tabs type="custom-card" v-model:active="active" :swipeable="false"
-            :color="'#014CFA'" shrink @change="onChange">
+        <Tabs type="custom-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
+            @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">
                 <div class="stock_tab-body">
-                    <Opening @showNavDialog="showNavDialog" @success="onChange('1')" ref="OpeningRef" v-if="loadTab.indexOf('0') > -1" />
+                    <Opening @showNavDialog="showNavDialog" @success="onChange('1')" ref="OpeningRef"
+                        v-if="loadTab.indexOf('0') > -1" />
                 </div>
             </Tab>
             <Tab :title="t('trade.stock_position')" name="1">
@@ -19,7 +20,7 @@
                     <Positions v-if="loadTab.indexOf('1') > -1" />
                 </div>
             </Tab>
-            <Tab :title="t('trade.stock_search')" name="2">
+            <Tab :title="'历史订单'" name="2">
                 <div class="stock_tab-body">
                     <Inquire ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
                 </div>
@@ -34,7 +35,7 @@
 
 <script setup>
 
-import {  Tab, Tabs } from "vant";
+import { Tab, Tabs } from "vant";
 import { ref, onMounted } from "vue"
 import Opening from "../components/Opening.vue"
 import Positions from "../components/Positions.vue"
@@ -58,7 +59,7 @@ const onChange = async (val) => {
     }
     active.value = val;
     sessionStorage.setItem('trade_stock_tab', val)
-   
+
     if (val == 2) {
         setTimeout(() => {
             InquireRef.value && InquireRef.value.init()

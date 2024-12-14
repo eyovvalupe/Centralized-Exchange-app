@@ -81,17 +81,21 @@ const setCurr = (keyName, state, data) => {
             ...data
         }
         return
+    } else {
+        if (data.symbol != state[keyName].symbol) {
+            state[keyName].trade = false
+        }
     }
     state[keyName] = Object.assign({}, state[keyName], data);
     // 当前股票有更新，则同步到列表里去
-    setTimeout(() => {
-        (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-            const index = state[ck].findIndex(item => item.symbol == data.symbol)
-            if (index >= 0) {
-                state[ck][index] = Object.assign({}, state[ck][index], data);
-            }
-        })
-    }, 300)
+    // setTimeout(() => {
+    //     (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+    //         const index = state[ck].findIndex(item => item.symbol == data.symbol)
+    //         if (index >= 0) {
+    //             state[ck][index] = Object.assign({}, state[ck][index], data);
+    //         }
+    //     })
+    // }, 300)
 }
 
 export default {
@@ -428,7 +432,7 @@ export default {
                 }
             }
             if (!has) {
-                console.log(data.symbol)
+                // console.log(data.symbol)
                 state.realtimeData.push(data)
             }
         }

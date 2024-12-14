@@ -10,13 +10,9 @@
       </div>
     </div>
     <NoData v-if="!positionsList.length && !loading" />
+    <Loaidng size="0.32rem" :loading="loading" v-if="!positionsList.length && loading" />
 
-    <div
-      class="tr"
-      @click="OpeningForm(item)"
-      v-for="(item, i) in positionsList"
-      :key="i"
-    >
+    <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
       <div class="td td-5">
         <div class="name van-omit1">{{ item.symbol }}</div>
         <div class="lever">
@@ -27,16 +23,16 @@
               item.status == "none"
                 ? t("trade.stock_position_status_none")
                 : item.status == "lock"
-                ? t("trade.stock_position_status_lock")
-                : item.status == "open"
-                ? t("trade.stock_position_status_open")
-                : item.status == "done"
-                ? t("trade.stock_position_status_done")
-                : item.status == "fail"
-                ? t("trade.stock_position_status_fail")
-                : item.status == "cancel"
-                ? t("trade.stock_position_status_cancel")
-                : "--"
+                  ? t("trade.stock_position_status_lock")
+                  : item.status == "open"
+                    ? t("trade.stock_position_status_open")
+                    : item.status == "done"
+                      ? t("trade.stock_position_status_done")
+                      : item.status == "fail"
+                        ? t("trade.stock_position_status_fail")
+                        : item.status == "cancel"
+                          ? t("trade.stock_position_status_cancel")
+                          : "--"
             }}
           </div>
         </div>
@@ -48,8 +44,8 @@
             item.offset == "long"
               ? t("trade.stock_position_offset_long")
               : item.offset == "short"
-              ? t("trade.stock_position_offset_short")
-              : "--"
+                ? t("trade.stock_position_offset_short")
+                : "--"
           }}
         </div>
         <div class="amount">{{ item.unsold_volume || "--" }}</div>
@@ -59,45 +55,22 @@
         <div class="price">{{ item.open_price || "--" }}</div>
       </div>
       <div class="td td-4">
-        <div
-          class="num"
-          :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'"
-        >
+        <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
           {{ item.profit || "--" }}
         </div>
-        <div
-          class="num"
-          :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'"
-        >
+        <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
           {{ getRatio(item.ratio) }}
         </div>
       </div>
     </div>
 
     <!-- 订单详情 -->
-    <Popup
-      v-model:show="showInfo"
-      position="right"
-      style="width: 100%; height: 100%"
-      teleport="body"
-    >
-      <OrderInfo
-        :curr-stock="currStock"
-        @update="update"
-        @sell="sell"
-        @cancel="cancel"
-        @back="showInfo = false"
-      />
+    <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
+      <OrderInfo :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel" @back="showInfo = false" />
     </Popup>
 
     <!-- 平仓 -->
-    <Popup
-      v-model:show="showSell"
-      position="bottom"
-      round
-      closeable
-      teleport="body"
-    >
+    <Popup v-model:show="showSell" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ t("trade.stock_position_close") }}
       </div>
@@ -105,33 +78,20 @@
         <div class="form">
           <div class="subtitle">
             <span>{{ t("trade.stock_position_amount") }}</span>
-            <span class="subtitle-tip"
-              >{{ t("trade.stock_position_ongoing_amount") }}
-              {{ currStock.unsold_volume }}</span
-            >
+            <span class="subtitle-tip">{{ t("trade.stock_position_ongoing_amount") }}
+              {{ currStock.unsold_volume }}</span>
           </div>
           <div class="item">
-            <input
-              @focus="amountFocus = true"
-              @blur="amountFocus = false"
-              v-model="sellForm.volume"
-              @input="changeValue"
-              type="number"
-              class="ipt"
-            />
-            <span
-              :style="{
-                opacity: amountFocus ? '1' : '0',
-                visibility: amountFocus ? '' : 'hidden',
-              }"
-              style="
+            <input @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
+              @input="changeValue" type="number" class="ipt" />
+            <span :style="{
+              opacity: amountFocus ? '1' : '0',
+              visibility: amountFocus ? '' : 'hidden',
+            }" style="
                 color: #014cfa;
                 word-break: keep-all;
                 transition: all ease 0.3s;
-              "
-              @click="onSliderChange(100)"
-              >{{ t("trade.stock_position_all") }}</span
-            >
+              " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
           </div>
           <div style="height: 0.47rem"></div>
 
@@ -163,15 +123,8 @@
                         <input v-model="sellForm.safeword" type="password" class="ipt">
                     </div> -->
 
-          <Button
-            class="submit"
-            @click="goSellDialog"
-            round
-            :loading="sellLoading"
-            type="primary"
-            size="large"
-            color="#014CFA"
-          >
+          <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
+            color="#014CFA">
             {{ t("trade.stock_position_btn") }}
           </Button>
         </div>
@@ -179,13 +132,7 @@
     </Popup>
 
     <!-- 更新 -->
-    <Popup
-      v-model:show="showUpdate"
-      position="bottom"
-      round
-      closeable
-      teleport="body"
-    >
+    <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ t("trade.stock_position_update") }}
       </div>
@@ -224,30 +171,19 @@
                             </div>
                         </div> -->
             <div class="item_box_right">
-              <FormItem
-                input-type="number"
-                :title="t('trade.stock_opening_stop')"
-                :min="0"
-                :max="
-                  updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
-                "
-                size="large"
-                v-model="updateForm.stop_loss_price"
-                :percent-tags="
-                  currStock.offset == 'long'
+              <FormItem input-type="number" :title="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
+                " size="large" v-model="updateForm.stop_loss_price" :percent-tags="currStock.offset == 'long'
                     ? [
-                        { label: '-20%', value: 20 },
-                        { label: '-15%', value: 15 },
-                        { label: '-10%', value: 10 },
-                      ]
+                      { label: '-20%', value: 20 },
+                      { label: '-15%', value: 15 },
+                      { label: '-10%', value: 10 },
+                    ]
                     : [
-                        { label: '+20%', value: 20 },
-                        { label: '+15%', value: 15 },
-                        { label: '+10%', value: 10 },
-                      ]
-                "
-                @percentTagClick="setPriceStop"
-              />
+                      { label: '+20%', value: 20 },
+                      { label: '+15%', value: 15 },
+                      { label: '+10%', value: 10 },
+                    ]
+                  " @percentTagClick="setPriceStop" />
             </div>
           </div>
           <div class="subtitle">
@@ -255,27 +191,16 @@
             <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
           </div>
           <div class="item">
-            <input
-              @focus="amountFocus = true"
-              @blur="amountFocus = false"
-              @input="changeAmount"
-              v-model="updateForm.amount"
-              type="number"
-              class="ipt"
-            />
-            <span
-              :style="{
-                opacity: amountFocus ? '1' : '0',
-                visibility: amountFocus ? '' : 'hidden',
-              }"
-              style="
+            <input @focus="amountFocus = true" @blur="amountFocus = false" @input="changeAmount"
+              v-model="updateForm.amount" type="number" class="ipt" />
+            <span :style="{
+              opacity: amountFocus ? '1' : '0',
+              visibility: amountFocus ? '' : 'hidden',
+            }" style="
                 color: #014cfa;
                 word-break: keep-all;
                 transition: all ease 0.3s;
-              "
-              @click="onSliderChange(100)"
-              >{{ t("trade.stock_position_all") }}</span
-            >
+              " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
           </div>
           <div style="height: 0.47rem"></div>
           <!-- 拖动 -->
@@ -286,15 +211,8 @@
                         <input v-model="updateForm.safeword" type="password" class="ipt">
                     </div> -->
 
-          <Button
-            @click="goUpdateDialog"
-            class="submit"
-            round
-            size="large"
-            :loading="updateLoading"
-            type="primary"
-            color="#014CFA"
-          >
+          <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
+            color="#014CFA">
             {{ t("trade.stock_position_btn") }}
           </Button>
         </div>
@@ -302,23 +220,13 @@
     </Popup>
 
     <!-- 止盈类型选择 -->
-    <ActionSheet
-      teleport="body"
-      v-model:show="showUpModelDialog"
-      @select="onSelectUpMode"
-      :actions="upModeList"
-      :title="t('trade.stock_opening_take')"
-    >
+    <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
+      :title="t('trade.stock_opening_take')">
     </ActionSheet>
 
     <!-- 止损类型选择 -->
-    <ActionSheet
-      teleport="body"
-      v-model:show="showDownModelDialog"
-      @select="onSelectDownMode"
-      :actions="downModeList"
-      :title="t('trade.stock_opening_stop')"
-    >
+    <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode" :actions="downModeList"
+      :title="t('trade.stock_opening_stop')">
     </ActionSheet>
   </div>
 
@@ -354,9 +262,10 @@ import SlideContainer from "@/components/SlideContainer.vue";
 import OrderInfo from "./OrderInfo.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
+import Loaidng from "@/components/Loaidng.vue"
 
 const { t } = useI18n();
-const loginfinish = () => {};
+const loginfinish = () => { };
 
 const safeRef = ref();
 const safeRef2 = ref();
@@ -740,7 +649,7 @@ const cancel = (item) => {
           closeToast();
         });
     })
-    .catch(() => {});
+    .catch(() => { });
 };
 
 // sessionToken

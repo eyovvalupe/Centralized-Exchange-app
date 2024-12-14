@@ -6,32 +6,27 @@
     <!-- <div class="title">交易</div> -->
     <!-- 头部 -->
 
-    <HeaderTabs :tabs="[t('trade.header_stock'),t('trade.header_contract'),t('trade.header_aibot'),t('trade.header_ipo'),t('trade.header_forex'),t('trade.header_block')]" v-model:active="activeTab" @change="changeActiveTab(activeTab,true)">
-        <template #before>
-          <div class="tab_icon" @click="showNavDialog = true">
-            <img src="/static/img/trade/open.png" alt="img" />
-          </div>
-        </template>  
-        
+    <HeaderTabs
+      :tabs="[t('trade.header_stock'), t('trade.header_contract'), t('trade.header_aibot'), t('trade.header_ipo')]"
+      v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
+      <template #before>
+        <div class="tab_icon" @click="showNavDialog = true">
+          <img src="/static/img/trade/open.png" alt="img" />
+        </div>
+      </template>
+
     </HeaderTabs>
-   
-    <Swipe
-        :autoplay="0"
-        :initial-swipe="initialSwipe"
-        :show-indicators="false"
-        ref="swipe"    
-        @change="swipeChange"
-    >
+
+    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipeRef" @change="swipeChange">
       <SwipeItem>
-        <div class="trade_body" ref="stockTradeBody"
-          @scroll="tradeBodyScroll('stockTradeBody')">
+        <div class="trade_body" ref="stockTradeBody" @scroll="tradeBodyScroll('stockTradeBody')">
           <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" v-if="loadedTab.includes(0)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="trade_body" ref="contractTradeBody" 
-          @scroll="tradeBodyScroll('contractTradeBody')">
-          <ContractBlock :key="'constract'" :mode="'constract'" @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
+        <div class="trade_body" ref="contractTradeBody" @scroll="tradeBodyScroll('contractTradeBody')">
+          <ContractBlock :key="'constract'" :mode="'constract'" @showNavDialog="showNavDialogFunc"
+            ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
         </div>
       </SwipeItem>
       <SwipeItem>
@@ -40,11 +35,11 @@
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="trade_body" >
+        <div class="trade_body">
           <IpoBlock ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
         </div>
       </SwipeItem>
-      <SwipeItem>
+      <!-- <SwipeItem>
         <div class="trade_body">
           <ContractBlock :key="'foreign'" :mode="'foreign'" @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef"
             v-if="loadedTab.includes(4)" />
@@ -55,7 +50,7 @@
           <ContractBlock :key="'commodities'" :mode="'commodities'" @showNavDialog="showNavDialogFunc"
             ref="CommoditiesBlockRef" v-if="loadedTab.includes(5)" />
         </div>
-      </SwipeItem>
+      </SwipeItem> -->
     </Swipe>
 
 
@@ -185,7 +180,7 @@ const onRefresh = () => {
 const activeTab = ref(0);
 const initialSwipe = ref(-1);
 const loadedTab = ref([activeTab.value]);
-const swipe = ref(null)
+const swipeRef = ref()
 
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
@@ -207,22 +202,24 @@ const changeActiveTab = (val, slideSwipe = false) => {
         break;
     }
   }
-  localStorage.tradeActiveTab = val;
-  if (slideSwipe && swipe.value) {
-    swipe.value.swipeTo(val);
+  localStorage.setItem('tradeActiveTab', val)
+  if (slideSwipe && swipeRef.value) {
+    swipeRef.value.swipeTo(val);
   }
+  swipeResize
 };
 
 const reDir = () => {
   let prevActiveTabVal = activeTab.value;
+  const tradeActiveTab = localStorage.getItem('tradeActiveTab')
   if (route.query.to == "stock") {
     activeTab.value = 0;
   } else if (route.query.to == "constract") {
     activeTab.value = 1;
   } else if (route.query.to == "ai") {
     activeTab.value = 2;
-  } else if (localStorage.tradeActiveTab > 0) {
-    activeTab.value = Number(localStorage.tradeActiveTab);
+  } else if (tradeActiveTab > 0) {
+    activeTab.value = Number(tradeActiveTab);
   } else {
     activeTab.value = 0
   }
@@ -427,11 +424,18 @@ const goSearch = (market) => {
   }, 500);
 };
 
+const swipeResize = () => {
+  setTimeout(() => {
+    swipeRef.value && swipeRef.value.resize()
+  }, 300)
+}
+
 const pageActive = ref(true);
 onActivated(() => {
   reDir();
   pageActive.value = true;
   getOptionList();
+  swipeResize()
 });
 onDeactivated(() => {
   pageActive.value = false;
@@ -484,6 +488,7 @@ const tradeBodyScroll = (refName) => {
     height: 0.48rem;
     margin: 0 0.24rem;
   }
+
   .trade_body {
     overflow-y: auto;
     height: calc(100vh - 2.52rem);
