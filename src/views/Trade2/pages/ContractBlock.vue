@@ -4,7 +4,7 @@
     <Tabs type="oval-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body">
-          <Opening :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1"
+          <Opening :tradeType="props.activeTab" :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1"
             @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
         </div>
       </Tab>
@@ -38,6 +38,10 @@ const props = defineProps({
   mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
     type: String,
     default: 'constract'
+  },
+  activeTab: {
+    type: [String, Number],
+    default: ''
   }
 })
 

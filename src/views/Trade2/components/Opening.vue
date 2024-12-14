@@ -4,64 +4,27 @@
     <!-- Tabs -->
     <div class="open_tab_box">
       <div class="type_tabs">
-        <div
-          @click="activeType = 1"
-          class="type_tab"
-          :class="{ active_type_tab: activeType == 1 }"
-        >
+        <div @click="activeType = 1" class="type_tab" :class="{ active_type_tab: activeType == 1 }">
           <span class="type_tab_text">{{ t('trade.stock_open_long_tab') }}</span>
         </div>
-        <div
-          @click="activeType = 2"
-          class="type_tab"
-          :class="{ active_type_tab: activeType == 2 }"
-        >
+        <div @click="activeType = 2" class="type_tab" :class="{ active_type_tab: activeType == 2 }">
           <span class="type_tab_text">{{ t('trade.stock_open_short_tab') }}</span>
         </div>
       </div>
 
-      <Tabs
-        key="form"
-        v-if="!pageLoading"
-        class="van-tabs--sub"
-        @change="(e) => (activeTab = e)"
-        v-model="activeTab"
-        :swipeable="false"
-        :color="'#014CFA'"
-        shrink
-      >
+      <Tabs key="form" v-if="!pageLoading" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab"
+        :swipeable="false" :color="'#014CFA'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
-          <OpeningForm
-            @showNavDialog="showNavDialog"
-            @success="onSuccess"
-            v-if="activeTab == 0"
-            ref="OpeningForm0Ref"
-            :key="0"
-            :activeTab="activeTab"
-            :activeType="activeType"
-          />
+          <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+            v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" />
         </Tab>
         <Tab :title="t('trade.stock_limit_price')" name="1">
-          <OpeningForm
-            @showNavDialog="showNavDialog"
-            @success="onSuccess"
-            v-if="activeTab == 1"
-            ref="OpeningForm1Ref"
-            :key="1"
-            :activeTab="activeTab"
-            :activeType="activeType"
-          />
+          <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+            v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" />
         </Tab>
         <Tab :title="t('trade.stock_take_stop')" name="2">
-          <OpeningForm
-            @showNavDialog="showNavDialog"
-            @success="onSuccess"
-            v-if="activeTab == 2"
-            ref="OpeningForm2Ref"
-            :key="2"
-            :activeTab="activeTab"
-            :activeType="activeType"
-          />
+          <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+            v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" />
         </Tab>
       </Tabs>
 
@@ -77,6 +40,13 @@ import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
+
+const props = defineProps({
+  tradeType: {
+    type: [String, Number],
+    default: ''
+  }
+})
 
 const { t } = useI18n();
 const emits = defineEmits(["showNavDialog", "success"]);
@@ -130,6 +100,7 @@ defineExpose({
     .van-tabs--sub {
       width: 100%;
     }
+
     .type_tabs {
       position: absolute;
       left: 0.32rem;
@@ -140,6 +111,7 @@ defineExpose({
       z-index: 99;
       border: 1px solid #d0d8e2;
       border-radius: 0.6rem;
+
       .type_tab {
         flex: 1;
         height: 100%;
@@ -158,6 +130,7 @@ defineExpose({
       .active_type_tab {
         color: #fff;
         position: relative;
+
         &::after {
           content: "";
           width: calc(100% + 1px);
@@ -169,9 +142,11 @@ defineExpose({
           border-radius: 0.6rem;
         }
       }
+
       .type_tab:first-child.active_type_tab {
         left: -1px;
       }
+
       .type_tab:last-child.active_type_tab {
         right: -1px;
       }

@@ -1,6 +1,6 @@
 <!-- 交易 -->
 <template>
-  <div class="page page_trade">
+  <div class="page page_trade" v-if="pageActive">
     <!-- <PullRefresh :disabled="disabled" class="refresh_box" v-model="loading" @refresh="onRefresh"> -->
 
     <!-- <div class="title">交易</div> -->
@@ -20,23 +20,25 @@
     <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipeRef" @change="swipeChange">
       <SwipeItem>
         <div class="trade_body" ref="stockTradeBody" @scroll="tradeBodyScroll('stockTradeBody')">
-          <StockBlock @showNavDialog="showNavDialogFunc" ref="StockBlockRef" v-if="loadedTab.includes(0)" />
+          <StockBlock :activeTab="Number(activeTab + 1)" @showNavDialog="showNavDialogFunc" ref="StockBlockRef"
+            v-if="loadedTab.includes(0)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="trade_body" ref="contractTradeBody" @scroll="tradeBodyScroll('contractTradeBody')">
-          <ContractBlock :key="'constract'" :mode="'constract'" @showNavDialog="showNavDialogFunc"
-            ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
+          <ContractBlock :activeTab="Number(activeTab + 1)" :key="'constract'" :mode="'constract'"
+            @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="trade_body">
-          <AiBlock @showNavDialog="showNavDialogFunc" ref="AiBlockRef" v-if="loadedTab.includes(2)" />
+          <AiBlock :activeTab="Number(activeTab + 1)" @showNavDialog="showNavDialogFunc" ref="AiBlockRef"
+            v-if="loadedTab.includes(2)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="trade_body">
-          <IpoBlock ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
+          <IpoBlock :activeTab="Number(activeTab + 1)" ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
         </div>
       </SwipeItem>
       <!-- <SwipeItem>
@@ -155,6 +157,7 @@ import { useRoute } from "vue-router";
 import OptionCategory from "@/components/OptionCategory.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
+import router from "@/router"
 
 const { t } = useI18n();
 const AiBlockRef = ref();
@@ -182,31 +185,39 @@ const initialSwipe = ref(-1);
 const loadedTab = ref([activeTab.value]);
 const swipeRef = ref()
 
-const changeActiveTab = (val, slideSwipe = false) => {
+const changeActiveTab = (val, slideSwipe = false, init = false) => {
   activeTab.value = val;
+  if (!init) {
+    router.replace({
+      name: 'trade',
+      query: {}
+    })
+  }
   if (loadedTab.value.indexOf(val) == -1) {
     loadedTab.value.push(val);
   } else {
-    switch (val) {
-      case 0:
-        StockBlockRef.value.handleMounted();
-        break;
-      case 1:
-        ContractBlockRef.value.handleMounted();
-        break;
-      case 2:
-        AiBlockRef.value.handleMounted();
-        break;
-      case 3:
-        // IpoBlockRef.value.handleMounted()
-        break;
-    }
+    setTimeout(() => {
+      switch (val) {
+        case 0:
+          StockBlockRef.value.handleMounted();
+          break;
+        case 1:
+          ContractBlockRef.value.handleMounted();
+          break;
+        case 2:
+          AiBlockRef.value.handleMounted();
+          break;
+        case 3:
+          // IpoBlockRef.value.handleMounted()
+          break;
+      }
+    })
   }
   localStorage.setItem('tradeActiveTab', val)
   if (slideSwipe && swipeRef.value) {
     swipeRef.value.swipeTo(val);
   }
-  swipeResize
+  swipeResize()
 };
 
 const reDir = () => {
@@ -223,12 +234,15 @@ const reDir = () => {
   } else {
     activeTab.value = 0
   }
-  if (initialSwipe.value == -1) {
-    initialSwipe.value = activeTab.value;
-  }
-  nextTick(() => {
-    changeActiveTab(activeTab.value, prevActiveTabVal != activeTab.value);
-  });
+
+  console.error('activeTab.valu', activeTab.value)
+  initialSwipe.value = activeTab.value;
+  // if (initialSwipe.value == -1) {
+  //   initialSwipe.value = activeTab.value;
+  // }
+  setTimeout(() => {
+    changeActiveTab(activeTab.value, prevActiveTabVal != activeTab.value, true);
+  }, 300)
 };
 
 const swipeChange = (index) => {
@@ -430,10 +444,10 @@ const swipeResize = () => {
   }, 300)
 }
 
-const pageActive = ref(true);
+const pageActive = ref(false);
 onActivated(() => {
-  reDir();
   pageActive.value = true;
+  reDir();
   getOptionList();
   swipeResize()
 });

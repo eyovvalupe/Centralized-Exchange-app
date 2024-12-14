@@ -42,19 +42,24 @@
           </div>
         </div>
         <!-- 数量 -->
+        <FormItem :rightContent="true" input-type="number" v-model="form1.grid"
+          :title="t('trade.ai_opening_network_amount')" btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
 
-        <FormItem input-type="number" v-model="form1.grid" :title="t('trade.ai_opening_network_amount')"
-          btn-show-mode="focus" :max="maxgrid" :tip="maxgrid > 0 ? t('trade.ai_opening_bigest_network') + maxgrid : ''
-            " @change="changeGrid">
+          <template #title-right>
+            <span>{{ maxgrid > 0 ? '≤' + maxgrid : '' }}</span>
+          </template>
+
+          <template #right-content-title>
+            <div class="subtitle">利润率</div>
+          </template>
+
+          <template #right-content-item>
+            <div class="item item_box disabled_item">
+              {{ getPercent() }}
+            </div>
+          </template>
+
         </FormItem>
-
-        <!-- 利润 -->
-        <div class="item_content">
-          <div class="subtitle">利润率</div>
-          <div class="item item_box disabled_item">
-            {{ getPercent() }}
-          </div>
-        </div>
         <div style="height: 0.47rem"></div>
         <!-- 拖动 -->
         <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
@@ -76,6 +81,7 @@
         <div style="height: 0.47rem"></div>
         <!-- 拖动 -->
         <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+        <div style="height: 0.28rem"></div>
       </div>
 
       <!-- 按钮 -->
@@ -237,6 +243,10 @@ const props = defineProps({
     type: String,
     default: "page",
   },
+  tradeType: {
+    type: [String, Number],
+    default: ''
+  }
 });
 
 const goLogin = () => {
@@ -280,12 +290,32 @@ const showModel = ref(false);
 // 表单
 
 const form1 = ref({
-  name: route.query.name || "",
-  symbol: route.query.symbol || "",
+  name: "",
+  symbol: "",
   grid: "1",
   volume: "",
   safeword: "",
 });
+
+if (props.tradeType == 3) { // 机器人
+  form1.value.name = route.query.name || ""
+  form1.value.symbol = route.query.symbol || ""
+}
+
+// 缓存
+let obj = {}
+try {
+  obj = JSON.parse(sessionStorage.getItem('currAi') || '{}')
+} catch {
+  obj = {}
+}
+if (obj.symbol) {
+  form1.value.name = obj.name;
+  form1.value.symbol = obj.symbol;
+  store.commit("setCurrAi", obj);
+}
+
+
 const changeGrid = () => {
   setTimeout(() => {
     form1.value.grid = parseInt(form1.value.grid);
@@ -504,6 +534,7 @@ const chooseItem = (item) => {
   store.commit("setCurrAi", item);
   showBottom.value = false;
   getParams();
+  sessionStorage.setItem('currAi', JSON.stringify(item))
 };
 _aiquant({
   orderby: "",

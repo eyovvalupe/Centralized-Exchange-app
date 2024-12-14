@@ -11,8 +11,8 @@
             @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">
                 <div class="stock_tab-body">
-                    <Opening @showNavDialog="showNavDialog" @success="onChange('1')" ref="OpeningRef"
-                        v-if="loadTab.indexOf('0') > -1" />
+                    <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" @success="onChange('1')"
+                        ref="OpeningRef" v-if="loadTab.indexOf('0') > -1" />
                 </div>
             </Tab>
             <Tab :title="t('trade.stock_position')" name="1">
@@ -42,6 +42,13 @@ import Positions from "../components/Positions.vue"
 import Inquire from "../components/Inquire.vue"
 import DateArea from "@/components/DateArea.vue"
 import { useI18n } from "vue-i18n";
+
+const props = defineProps({
+    activeTab: {
+        type: [String, Number],
+        default: ''
+    }
+})
 
 const { t } = useI18n();
 const emits = defineEmits(['showNavDialog'])

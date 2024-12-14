@@ -5,7 +5,8 @@
       @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
-          <Opening @showNavDialog="showNavDialog" mode="page" ref="OpeningRef" @back="showModel = false" />
+          <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" mode="page" ref="OpeningRef"
+            @back="showModel = false" />
           <!-- <Ai @clickItems="clickItem"></Ai> -->
         </div>
       </Tab>
@@ -42,6 +43,13 @@ const route = useRoute();
 
 const OpeningRef = ref();
 const showModel = ref(false);
+
+const props = defineProps({
+  activeTab: {
+    type: [String, Number],
+    default: ''
+  }
+})
 
 watch(
   () => route.query.symbol,

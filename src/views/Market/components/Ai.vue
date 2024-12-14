@@ -1,82 +1,16 @@
 <!-- AI量化 -->
 <template>
   <div class="page_ai">
-    <Tabs
-      class="van-tabs--sub"
-      v-if="!pageLoading && props.page != 'home'"
-      @change="changeTab"
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      shrink
-    >
-      <Tab :title="t('market.market_ai_title1')">
-        <div class="list">
-          <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
-          <AiItem
-            @clickItems="clickItem"
-            v-for="(item, i) in marketAiList"
-            :key="i"
-            :item="item"
-          />
-          <NoData v-if="!loading && marketAiList.length == 0" />
-        </div>
-      </Tab>
-      <Tab :title="t('market.market_ai_title2')">
-        <div class="list">
-          <Loaidng
-            :loading="loading"
-            v-if="!marketAiHisList.length && loading"
-          />
-          <AiItem
-            @clickItems="clickItem"
-            v-for="(item, i) in marketAiHisList"
-            :key="i"
-            :item="item"
-          />
-          <NoData v-if="!loading && marketAiHisList.length == 0" />
-        </div>
-      </Tab>
-      <Tab :title="t('market.market_ai_title3')">
-        <div class="list">
-          <Loaidng
-            :loading="loading"
-            v-if="!marketAi24List.length && loading"
-          />
-          <AiItem
-            @clickItems="clickItem"
-            v-for="(item, i) in marketAi24List"
-            :key="i"
-            :item="item"
-          />
-          <NoData v-if="!loading && marketAi24List.length == 0" />
-        </div>
-      </Tab>
-      <Tab :title="t('market.market_ai_title4')">
-        <div class="list">
-          <Loaidng
-            :loading="loading"
-            v-if="!marketAiGridList.length && loading"
-          />
-          <AiItem
-            @clickItems="clickItem"
-            v-for="(item, i) in marketAiGridList"
-            :key="i"
-            :item="item"
-          />
-          <NoData v-if="!loading && marketAiGridList.length == 0" />
-        </div>
-      </Tab>
-    </Tabs>
+
+    <div class="list">
+      <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
+      <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiList" :key="i" :item="item" />
+      <NoData v-if="!loading && marketAiList.length == 0" />
+    </div>
+
     <div class="list" v-if="!pageLoading && props.page == 'home'">
       <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
-      <AiItem
-        @clickItems="clickItem"
-        v-for="(item, i) in marketAiList"
-        :key="i"
-        :item="item"
-        :page="props.page"
-      />
+      <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiList" :key="i" :item="item" :page="props.page" />
       <NoData v-if="!loading && marketAiList.length == 0" />
     </div>
   </div>
@@ -199,7 +133,7 @@ onMounted(() => {
 <style lang="less" scoped>
 .page_ai {
   .list {
-    padding: 0.2rem 0;
+    padding: 0 0 0.2rem 0;
   }
 }
 </style>

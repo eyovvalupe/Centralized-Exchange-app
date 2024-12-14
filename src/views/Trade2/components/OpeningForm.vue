@@ -472,6 +472,15 @@ import FormItem from "@/components/Form/FormItem.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
 
+const props = defineProps({
+  activeTab: null, // 0-市价 1-限价 2-止盈止损
+  activeType: null,
+  tradeType: {
+    type: [String, Number],
+    default: ''
+  }
+});
+
 const { t } = useI18n();
 const goLogin = () => {
   store.commit("setIsLoginOpen", true);
@@ -543,10 +552,7 @@ const onSelectJumpModeType = (item) => {
   jump(item.value);
 };
 
-const props = defineProps({
-  activeTab: null, // 0-市价 1-限价 2-止盈止损
-  activeType: null,
-});
+
 
 // 仓位类型
 const modeMap = ref({
@@ -993,18 +999,21 @@ const handleClick = (item) => {
 };
 
 // url参数处理
-if (route.query.symbol) {
-  handleClick({
-    symbol: route.query.symbol,
-  });
-} else {
-  try {
-    currStock.value = JSON.parse(sessionStorage.getItem("currStock") || "{}");
-  } catch {
-    currStock.value = {};
+if (props.tradeType == 1) { // 股票页
+  if (route.query.symbol) {
+    handleClick({
+      symbol: route.query.symbol,
+    });
+  } else {
+    try {
+      currStock.value = JSON.parse(sessionStorage.getItem("currStock") || "{}");
+    } catch {
+      currStock.value = {};
+    }
+    initParam();
   }
-  initParam();
 }
+
 
 const openTypeDialog = () => {
   if (!levers.value.length) {

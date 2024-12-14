@@ -433,6 +433,10 @@ const props = defineProps({
   mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
     type: String,
     default: 'constract'
+  },
+  tradeType: {
+    type: [String, Number],
+    default: ''
   }
 });
 const searchMap = {
@@ -999,13 +1003,16 @@ const initParam = () => {
 const setCurrStockFunc = (item) => {
   switch (props.mode) {
     case 'constract':
+      sessionStorage.setItem("currConstract", JSON.stringify(item));
       store.commit("setCurrConstract", item);
       break
     case 'foreign':
       store.commit("setCurrForeign", item);
+      sessionStorage.setItem("currForeign", JSON.stringify(item));
       break
     case 'commodities':
       store.commit("setCurrCommodities", item);
+      sessionStorage.setItem("currCommodities", JSON.stringify(item));
       break
   }
 
@@ -1026,13 +1033,36 @@ const handleClick = (item) => {
 };
 
 // url参数处理
-if (route.query.symbol) {
-  handleClick({
-    symbol: route.query.symbol,
-  });
-} else {
-  initParam();
+if (props.tradeType == 2) { // 合约
+  if (route.query.symbol) {
+    handleClick({
+      symbol: route.query.symbol,
+    });
+  } else {
+    let obj = {}
+    try {
+      switch (props.mode) {
+        case 'constract':
+          obj = JSON.parse(sessionStorage.getItem("currConstract") || "{}");
+          break
+        case 'foreign':
+          obj = JSON.parse(sessionStorage.getItem("currForeign") || "{}");
+          break
+        case 'commodities':
+          obj = JSON.parse(sessionStorage.getItem("currCommodities") || "{}");
+          break
+      }
+    } catch {
+      obj = {};
+    }
+    if (obj.symbol) {
+      handleClick(obj)
+    } else {
+      initParam();
+    }
+  }
 }
+
 
 const openTypeDialog = () => {
   if (!levers.value.length) {
