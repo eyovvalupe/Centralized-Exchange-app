@@ -1,6 +1,7 @@
 <template>
   <div v-if="list.length" v-for="(item, i) in list" class="currency_list">
     <div
+    v-if="type == 'cash'"
       class="w-[6.86rem] h-[2.36rem] rounded-[0.32rem] bg-[#f5f7fc] border-[0.02rem] border-[#eff3f8] overflow-hidden relative mb-[0.2rem]"
       @click="click(item)"
     >
@@ -39,6 +40,25 @@
         <div class="text-[15px] text-[#061023]">{{ item.name }}</div>
       </div>
     </div>
+    <div v-else class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-[#f5f7fc] mb-[0.12rem] justify-between">
+      <div class="w-full ml-[0.32rem] flex items-center">
+        <div
+          class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]"
+        >
+          <div v-if="!fiat.includes(item.name)" :class="`${item.name}_icon`"></div>
+          <div v-else>
+            <div v-if="item.name == 'INR'">
+                <IndiaIcon />
+            </div>
+            <div v-if="item.name == 'USD'">
+                <USIcon />
+            </div>
+          </div>
+        </div>
+        <div class="text-[15px] text-[#061023]">{{ item.name }}</div>
+      </div>
+      <div class="mr-[0.32rem] text-[0.32rem] font-semibold">{{ item.amount }}</div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -54,6 +74,10 @@ const props = defineProps({
     type: Array,
     default: [],
   },
+  type: {
+    type: String,
+    default: ''
+  }
 });
 const { t } = useI18n();
 
