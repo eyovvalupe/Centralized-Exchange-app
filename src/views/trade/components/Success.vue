@@ -1,49 +1,76 @@
 <!-- 认购成功 -->
 <template>
+    <Top/>
     <div class="page page_success">
         <div class="icon">
             <img src="/static/img/user/success.png" alt="√">
         </div>
         <div class="title">认购成功</div>
-
-        <Button @click="gotrade" round color="#014CFA" class="submit" type="primary">完成</Button>
+        <div class="tips">恭喜认购完成，请耐心等待中签信息</div>
+        <div class="btn flex justify-center items-center w-[100%]">
+            <Button @click="router.push('/trade?to=ipo')" round class="next" >继续认购</Button>
+            <Button @click="router.push('/trade?to=ipo&active=1')" round color="#FFF;" class="info" type="primary">订单详情</Button>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { Button } from 'vant'
 import { useRouter, useRoute } from 'vue-router';
+import Top from '@/components/Top.vue';
 
 const router = useRouter();
-const gotrade = () => {
-    // router.push({ name: 'trade', query: { type: 'ipodetail' } });
-    router.back()
-}
+
 </script>
 
 <style lang="less" scoped>
 .page_success {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
     text-align: center;
-    padding: 0 0.32rem;
-
+    padding-top: 1.12rem;
     .icon {
-        width: 2.8rem;
-        height: 2.8rem;
+        width: 100%;
+        height: 4rem;
+        margin: 1.24rem auto 0rem;
     }
 
     .title {
-        margin: 1.12rem 0 1.68rem 0;
+        margin: -0.6rem 0 0.3rem 0;
         color: #000;
+        font-size: 0.4rem;
+        font-style: normal;
+        font-weight: 600;
         font-size: 0.32rem;
         line-height: 0.56rem;
     }
-
-    .submit {
-        width: 100%;
+    .tips{
+        font-size: 0.28rem;
+        font-style: normal;
+        color: #061023;
+        margin-bottom: 0.78rem;
+    }
+    .btn{
+        .next{
+            width: 3.27rem;
+            height: 1.12rem;
+            color: #014CFA;
+            padding: 0.16rem;
+            border-radius: 1.3rem;
+            border: 1px solid #014CFA !important;
+            margin-right: 0.15rem;
+            font-size: 0.3rem;
+            padding: 0rem;
+        }
+        .info{
+            width: 3.27rem;
+            height: 1.12rem;
+            color: #FFFFFF;
+            padding: 0.16rem;
+            border-radius: 1.3rem;
+            background: #014CFA;
+            margin-left: 0.15rem;
+            font-size: 0.3rem;
+            padding: 0rem;
+        }
     }
 }
 </style>

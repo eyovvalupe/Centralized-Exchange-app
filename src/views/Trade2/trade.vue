@@ -58,7 +58,6 @@
       </SwipeItem>
     </Swipe>
 
-
     <!-- </PullRefresh> -->
 
     <!-- 自选列表 -->
@@ -221,6 +220,8 @@ const reDir = () => {
     activeTab.value = 1;
   } else if (route.query.to == "ai") {
     activeTab.value = 2;
+  } else if (route.query.to == "ipo") {
+    activeTab.value = 3;
   } else if (localStorage.tradeActiveTab > 0) {
     activeTab.value = Number(localStorage.tradeActiveTab);
   } else {

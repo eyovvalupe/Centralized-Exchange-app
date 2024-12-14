@@ -234,9 +234,8 @@ const copy = text => {
                 height: 100%;
             }
         }
-
     }
-
+    
     .status_box{
         display: flex;
         justify-content: center;

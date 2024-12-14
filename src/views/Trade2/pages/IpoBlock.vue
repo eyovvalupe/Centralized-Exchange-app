@@ -21,14 +21,15 @@
 import IPO from "../../Market/components/IPO.vue";
 import IPOStock from "./IPOStock.vue";
 import { Tab, Tabs } from "vant";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
-
+import { useRoute } from "vue-router";
 const { t } = useI18n();
 const IPOStockRef = ref();
 const IPORef = ref();
+const route = useRoute()
 
-const ipoActive = ref(0);
+const ipoActive = ref(route.query.active ? Number(route.query.active) : 0);
 const ipoOnChange = (val) => {
   ipoActive.value = val;
   setTimeout(() => {
@@ -42,6 +43,12 @@ const ipoOnChange = (val) => {
     }
   }, 500);
 };
+
+watch(()=>route.query.active,(val)=>{
+  if(val != ipoActive.value){
+    ipoOnChange(Number(val))
+  }
+})
 
 onMounted(() => {
   ipoOnChange(ipoActive.value);

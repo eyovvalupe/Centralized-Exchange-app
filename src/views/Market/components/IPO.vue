@@ -16,7 +16,6 @@
       <Tab :title="t('trade.ipo_title_going')" :name="'issuing'"></Tab>
       <Tab :title="t('trade.ipo_title_finish')" :name="'done'"></Tab>
       <Tab :title="t('trade.ipo_title_market')" :name="'listed'"></Tab>
-
     </Tabs>
 
     <!-- <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'#014CFA'"
@@ -33,8 +32,8 @@
       >
         <div class="item_box">
           <div class="name_box">
-            <div class="name">{{ item.company_name }}</div>
-            <img v-if="item.lever > 1" src="/static/img/trade/level.png" />
+            <div class="name truncate">{{ item.company_name }}</div>
+            <span class="lever_icon" v-if="item.lever > 1">配资</span>
           </div>
           <div class="pre_times" v-if="item.status == 'none' && item._timedown">
             <div class="pre_time">{{ item._timedown[0] }}</div>
@@ -389,34 +388,41 @@ function countdown(endTime) {
       background: #f5f7fc;
       margin-top: 0.2rem;
 
-      .name {
-        color: #061023;
-        font-size: 0.32rem;
-        font-weight: 600;
-        line-height: 0.36rem;
-        color: #0d0d12;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        height: 0.36rem;
-        white-space: wrap;
-        word-break: keep-all;
-        margin-bottom: 0.14rem;
-        max-width: 80%;
-      }
+      
       .name_box {
+        padding-right: 0.96rem;
         display: flex;
-        img {
-          width: 0.34rem !important;
-          height: 0.34rem !important;
-          margin-left: 0.08rem;
+        align-items: center;
+        margin-bottom: 0.14rem;
+        .name {
+          color: #061023;
+          font-size: 0.32rem;
+          font-weight: 600;
+          line-height: 0.36rem;
+          color: #0d0d12;
+         
+        }
+        .lever_icon{
+          min-width: 0.6rem;
+          height: 0.32rem;
+          padding: 0rem 0.08rem;
+          font-size: 0.22rem;
+          color:#014CFA;
+          position: relative;
+          top:0.01rem;
+          justify-content: center;
+          align-items: center;
+          border-radius: 0.08rem;
+          line-height: 0.32rem;
+          font-weight: 400;
+          margin-left: 0.1rem;
+          background: rgba(1, 76, 250, 0.10);
         }
       }
       .item_box {
         padding: 0.26rem 0.32rem 0.16rem 0.32rem;
         position: relative;
       }
-
       .pre_times {
         display: flex;
         align-items: center;
@@ -424,18 +430,19 @@ function countdown(endTime) {
           height: 0.48rem;
           min-width: 0.48rem;
           display: flex;
+          padding: 0 0.06rem;
           align-items: center;
           text-align: center;
           justify-content: center;
-          color: #ffaf2a;
-          border: 1px solid #ffaf2a;
+          color: #FA7500;
+          border: 1px solid #FA7500;
           border-radius: 0.12rem;
           font-size: 0.28rem;
           font-weight: 600;
           box-sizing: border-box;
         }
         span {
-          color: #ffaf2a;
+          color: #FA7500;
           margin: 0 0.1rem;
           font-size: 0.28rem;
         }
@@ -458,7 +465,7 @@ function countdown(endTime) {
       }
 
       .status_pre {
-        background-color: #ffaf2a;
+        background-color: #FA7500;
         color: #fff;
       }
 

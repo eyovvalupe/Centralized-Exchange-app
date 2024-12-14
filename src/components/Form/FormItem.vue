@@ -27,7 +27,6 @@
         <slot v-if="custom" />
         <input
           :disabled="disabled"
-          type="number"
           v-else
           v-model="inputVal"
           @focus="
@@ -165,7 +164,7 @@ const props = defineProps({
   },
 });
 const inputFocus = ref(false);
-const inputVal = ref(props.value);
+const inputVal = ref(props.modelValue);
 
 watch(
   () => props.modelValue,
@@ -250,7 +249,7 @@ const percentTagClick = (percent) => {
   }
 
   .disabled_item {
-    background-color: #d0d8e2;
+    background-color: #F5F7FC;
   }
 
   .item_focus {
