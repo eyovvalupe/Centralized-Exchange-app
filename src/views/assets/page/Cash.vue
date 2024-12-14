@@ -9,7 +9,7 @@
         }}</span>
       </div>
       <!-- <CurrencyItem v-for="(item, i) in showList" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
-      <CurrencyList @click="(val) => click(val)" :list="showList"/>
+      <CurrencyList @click="(val) => click(val)" :list="showList" :type="'cash'"/>
     </div>
   </div>
 </template>
