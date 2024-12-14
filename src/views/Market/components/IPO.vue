@@ -12,9 +12,9 @@
       @change="init(true)"
     >
       <Tab :title="t('trade.ipo_title_all')" :name="''"></Tab>
-      <Tab :title="t('trade.ipo_title_pre')" :name="'none'"></Tab>
+      <!-- <Tab :title="t('trade.ipo_title_pre')" :name="'none'"></Tab> -->
       <Tab :title="t('trade.ipo_title_going')" :name="'issuing'"></Tab>
-      <Tab :title="t('trade.ipo_title_finish')" :name="'done'"></Tab>
+      <!-- <Tab :title="t('trade.ipo_title_finish')" :name="'done'"></Tab> -->
       <Tab :title="t('trade.ipo_title_market')" :name="'listed'"></Tab>
     </Tabs>
 
@@ -66,7 +66,7 @@
         >
           <div class="info_cell">
             <span class="info_name">{{ t('trade.ipo_detail_price') }}</span>
-            <span class="info_price">${{ item.issue_price_max }}</span>
+            <span class="info_price">{{ item.issue_price_max }} {{ item.currency }}</span>
           </div>
           <div class="info_cell" v-if="item.lever > 1">
             <span class="info_name">{{ t('trade.ipo_detail_lever') }}</span>
@@ -87,6 +87,11 @@
               >{{ item.issue_start_date }} - {{ item.issue_end_date }}</span
             >
           </div>
+          <div class="info_cell">
+            <span class="info_name">{{ t('trade.ipo_detail_item11') }}</span>
+            <span class="info_price">{{ marketMap[item.market] || '--' }}</span>
+          </div>
+          
         </div>
         <div
           class="control_box"
@@ -223,6 +228,18 @@ const leverOption = [
 const loading = ref(false);
 const finish = ref(false);
 const page = ref(0);
+
+const marketMap = ref({
+  us:"美国",
+  japan:"日本",
+  india:"印度",
+  korea:"韩国",
+  germany:"德国",
+  uk:"英国",
+  singapore:"新加坡",
+  hongkong:"香港",
+  malaysia:'马来西亚'
+})
 
 // 初始化
 const init = (reset) => {

@@ -24,8 +24,8 @@
       >
         <div class="item_box">
           <div class="name_box">
-            <div class="name">{{ item.company_name }}</div>
-            <img v-if="item.lever > 1" src="/static/img/trade/level.png" />
+            <div class="name truncate">{{ item.company_name }}</div>
+            <span class="lever_icon" v-if="item.lever > 1">配资</span>
           </div>
 
           <div class="item_winning">
@@ -56,11 +56,7 @@
         </div>
         <div class="item_info">
           <div class="info_cell">
-            <span class="info_name">{{ t("trade.ipo_detail_item2") }}</span>
-            <span class="info_val">{{ item.issue_price || "--" }}</span>
-          </div>
-          <div class="info_cell">
-            <span class="info_name">{{ t("trade.ipo_detail_item10") }}</span>
+            <span class="info_name">{{ t("trade.ipo_detail_item13") }}</span>
             <span class="info_val"
               >{{ item.volume || "--"
               }}<span class="info_lever" v-if="item.lever > 1"
@@ -68,18 +64,21 @@
               ></span
             >
           </div>
-          <div class="info_cell" v-if="item.listing_date">
+          <div class="info_cell">
+            <span class="info_name">{{ t("trade.ipo_detail_item12") }}</span>
+            <span class="info_val">{{ item.amount || "--" }} {{item.currency}}</span>
+          </div>
+          
+          <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_item5") }}</span>
             <span class="info_val">{{ item.listing_date || "--" }}</span>
           </div>
-          <div class="info_cell" v-if="item.listed_price">
+          <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_item6") }}</span>
             <span class="info_val">{{ item.listed_price || "--" }}</span>
           </div>
-          <div class="info_cell">
-            <span class="info_name">{{ t("trade.ipo_detail_date") }}</span>
-            <span class="info_val">{{ item.created || "--" }}</span>
-          </div>
+       
+          
         </div>
       </div>
 
@@ -252,6 +251,7 @@ const getData = () => {
     });
 };
 
+
 // 滚动监听
 let loadingMore = "";
 const totalHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -351,23 +351,27 @@ function countdown(endTime) {
         font-weight: 600;
         line-height: 0.36rem;
         color: #0d0d12;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
         height: 0.36rem;
-        white-space: wrap;
-        word-break: keep-all;
-        margin-bottom: 0.14rem;
-        max-width: 80%;
+        
+        
       }
 
       .name_box {
+        margin-bottom: 0.14rem;
+        max-width: 80%;
         display: flex;
-
-        img {
-          width: 0.34rem !important;
-          height: 0.34rem !important;
-          margin-left: 0.08rem;
+        align-items: center;
+        .lever_icon{
+            min-width: 0.6rem;
+            height: 0.32rem;
+            font-size: 0.22rem;
+            color:#014CFA;
+            border-radius: 0.08rem;
+            text-align: center;
+            line-height: 0.32rem;
+            font-weight: 400;
+            margin-left: 0.1rem;
+            background: rgba(1, 76, 250, 0.10);
         }
       }
 

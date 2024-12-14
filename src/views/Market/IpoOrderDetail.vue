@@ -48,8 +48,7 @@
             <div class="main_item">
                 <div class="item_box">
                     <div class="name_box">
-                        <div class="name">{{ currDetail.company_name }}</div>
-                        <img  v-if="currDetail.lever > 1" src="/static/img/trade/level.png"/>
+                        <div class="name">{{ currDetail.company_name }} <span class="lever_icon" v-if="currDetail.lever > 1">配资</span> </div>
                     </div>
                     <div class="item_order_no">
                         <span>订单号 {{ currDetail.order_no || '--' }}</span>
@@ -76,13 +75,13 @@
                     </div>
                     <div class="split-line"></div>
                     <div class="info_box ">
-                        <div>冻结金额</div>
+                        <div>冻结金额({{ currDetail.currency }})</div>
                         <div class="amount blue">
                             {{ '--' }}
                         </div>
                     </div>
                     <div class="info_box info_box--line">
-                        <div>认购金额</div>
+                        <div>认购金额({{ currDetail.currency }})</div>
                         <div class="amount">
                             {{ currDetail.issue_price || '--' }}
                         </div>
@@ -93,8 +92,16 @@
 
             <div class="detail_item_list">
                 <div class="detail_item">
-                    <div>利息</div>
-                    <div class="val">{{ currDetail.fee || '--' }} <span>USDT</span></div>
+                    <div>订单数量</div>
+                    <div class="val">{{ currDetail.volume || '--' }}</div>
+                </div>
+                <div class="detail_item">
+                    <div>手续费</div>
+                    <div class="val">{{ currDetail.fee }} <span>{{ currDetail.currency }}</span></div>
+                </div>
+                <div class="detail_item">
+                    <div>认购杠杆</div>
+                    <div class="val">{{ currDetail.lever ? currDetail.lever + 'X' : '--' }}</div>
                 </div>
                 <div class="detail_item">
                     <div>上市日期</div>
@@ -102,25 +109,19 @@
                 </div>
                 <div class="detail_item">
                     <div>上市价格</div>
-                    <div class="val">{{ currDetail.listing_price || '--' }}</div>
+                    <div class="val">{{ currDetail.listing_price || '--' }} <span>{{ currDetail.currency }}</span></div>
                 </div>
                 
                 <div class="detail_item">
                     <div>认购价格</div>
-                    <div class="val">{{ currDetail.issue_price || '--' }}</div>
+                    <div class="val">{{ currDetail.issue_price || '--' }} <span>{{ currDetail.currency }}</span></div>
                 </div>
+                
                 <div class="detail_item">
-                    <div>认购杠杆</div>
-                    <div class="val">{{ currDetail.lever ? currDetail.lever + 'X' : '--' }}</div>
-                </div>
-                <div class="detail_item">
-                    <div>认购开始日期</div>
-                    <div class="val">{{ currDetail.created || '--' }}</div>
-                </div>
-                <div class="detail_item">
-                    <div>认购结束日期</div>
+                    <div>认购日期</div>
                     <div class="val">{{ '--' }}</div>
                 </div>
+                
                 <div class="detail_item">
                     <div>订单时间</div>
                     <div class="val">{{ currDetail.created }}</div>
@@ -141,7 +142,7 @@ import Top from "@/components/Top.vue"
 import { useRoute } from "vue-router"
 import { _orderGet } from "@/api/api";
 import { _copyTxt } from "@/utils/index"
-import { Loading } from "vant"
+import { Loading,showToast } from "vant"
 const route = useRoute()
 const currDetail = ref({})
 
@@ -193,21 +194,20 @@ const copy = text => {
             font-weight: 600;
             line-height: 0.36rem; 
             color: #0D0D12;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            height: 0.36rem; 
-            white-space: wrap;
-            word-break: keep-all;
             margin-bottom: 0.14rem;
-            max-width: 80%;
         }
         .name_box{
-            display: flex;
-            img{
-                width: 0.34rem !important;
-                height: 0.34rem !important;
-                margin-left: 0.08rem;
+            .lever_icon{
+                display: inline-block;
+                height: 0.32rem;
+                padding: 0rem 0.08rem;
+                font-size: 0.22rem;
+                color:#014CFA;
+                border-radius: 0.08rem;
+                line-height: 0.32rem;
+                font-weight: 400;
+                margin-left: 0.1rem;
+                background: rgba(1, 76, 250, 0.10);
             }
         }
         .item_box {
@@ -235,7 +235,7 @@ const copy = text => {
             }
         }
     }
-    
+
     .status_box{
         display: flex;
         justify-content: center;

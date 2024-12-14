@@ -2,6 +2,7 @@
 <template>
     <div class="page page_ipo_subs">
         <HeaderTabs v-model:active="activeTab" :tabs="['普通','配资']"
+            v-if="currIpo.lever > 1"
             @change="changeTab">
             <template #before>
                 <div class="back" @click="back()">
@@ -12,6 +13,10 @@
                 </div>
             </template>
         </HeaderTabs>
+        <div v-else>
+            <Top title="IPO认购"></Top>
+            <div class="h-[1.12rem]"></div>
+        </div>
        
         <div class="ipo_info" @click="ipoDetail">
             <div class="ipo_info_lt">
@@ -24,7 +29,6 @@
         </div>
 
         <div class="form">
-
             <FormItem
                 title="认购数量"
                 v-model="form.volume"
@@ -168,7 +172,7 @@ import FormItem from "@/components/Form/FormItem.vue";
 import Decimal from 'decimal.js';
 import router from '@/router'
 import { useI18n } from "vue-i18n";
-
+import Top from "@/components/Top.vue"
 
 const params = ref({})
 
