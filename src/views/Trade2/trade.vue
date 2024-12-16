@@ -105,7 +105,7 @@
             :key="marketItem.market"
           >
             <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" 
-          :list="marketStockData[marketItem.market] || []" />
+          :list="marketSearchList" v-if="marketItem.market == navActiveTab" />
 
         </Tab>
 
@@ -318,7 +318,7 @@ const {
   marketList,
   watchList,
   searchLoading,
-  marketStockData,
+  marketSearchList,
   futuresSearchList,
   forexSearchList,
   blocktardeSearchList,

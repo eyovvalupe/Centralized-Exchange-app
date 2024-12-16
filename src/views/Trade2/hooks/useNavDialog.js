@@ -57,20 +57,12 @@ export const useNavDialog = (activeTab)=>{
     };
 
     const changeTab = (val) => {
+        if(activeTab.value == 0){
+            store.commit("setMarketSearchList",[])
+        }
         goSearch(val);
     };
-    
-    const marketStockData = ref({
-          us: [],
-          india: [],
-          japan: [],
-          korea: [],
-          germany: [],
-          uk: [],
-          singapore: [],
-          hongkong: [],
-          malaysia: []
-      });
+
     
     // 自选列表
     const optionLoading = ref(false);
@@ -121,33 +113,38 @@ export const useNavDialog = (activeTab)=>{
         let s = searchStr.value;
 
         if(activeTab.value == 0){
+            searchLoading.value = true;
             //查股票
             searchTimeout = setTimeout(() => {
-                searchLoading.value = true;
+                
                 _stock({
                     name:s,
                     market:type
                 }).then(res=>{
-                    let arr = (res.data || []).map(item => {
-                        const target = marketSearchList.value.find(a => a.symbol == item.symbol)
-                        if (target) return {
-                            ...target,
-                            ...item
-                        }
-                        return item
-                    })
-                    marketStockData[type] = arr
-                    store.commit('setMarketSearchList',marketStockData[type])
-                    store.dispatch("subList", {
-                        commitKey: "setMarketSearchList",
-                        listKey: "marketSearchList",
-                    });
+                    if (searchStr.value == s) {
+                        let arr = (res.data || []).map(item => {
+                            const target = marketSearchList.value.find(a => a.symbol == item.symbol)
+                            if (target) return {
+                                ...target,
+                                ...item
+                            }
+                            return item
+                        })
+                        store.commit('setMarketSearchList',arr)
+                        store.dispatch("subList", {
+                            commitKey: "setMarketSearchList",
+                            listKey: "marketSearchList",
+                        });
+                    }
+                }).finally(()=>{
+                    searchLoading.value = false
                 })
-            }, 500);
+            }, s ? 500 : 0);
         }else if(activeTab.value == 1){
+            searchLoading.value = true;
             //查合约
             searchTimeout = setTimeout(() => {
-                searchLoading.value = true;
+                
                 _futures({
                     name: s,
                     type
@@ -197,7 +194,7 @@ export const useNavDialog = (activeTab)=>{
                 .finally(() => {
                     searchLoading.value = false;
                 });
-            }, 500);
+            }, s ? 500 : 0);
         }
 
         
@@ -206,7 +203,6 @@ export const useNavDialog = (activeTab)=>{
     return {
         marketList,
         watchList,
-        marketStockData,
         marketSearchList,
         futuresSearchList,
         forexSearchList,
