@@ -36,7 +36,7 @@
               }}
             </span>
             <div class="more_icon">
-              <img src="/static/img/trade/down.png" alt="↓" />
+              <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@
       }}</span>
       <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem" color="#034cfa" />
       <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
-        <img src="/static/img/trade/blue-stock.png" />
+        <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" />
       </div>
     </div>
     <!-- 搜索 -->
@@ -106,7 +106,7 @@
             </div>
           </div>
           <div class="more_icon">
-            <img src="/static/img/trade/down.png" alt="↓" />
+            <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
           </div>
         </div>
       </div>
@@ -128,7 +128,7 @@
             }}
             {{ form1.lever }}X</span>
           <div class="more_icon">
-            <img src="/static/img/trade/down.png" alt="↓" />
+            <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
           </div>
         </div>
       </div>
@@ -144,7 +144,7 @@
           <template #title-icon v-if="amountper && paramCurrency">
             <div style="width: 0.2rem;height:0.2rem;margin-left:0.06rem"
               @click="() => showToast(`1张 = ${amountper} ${paramCurrency}`)">
-              <img src="/static/img/trade/warning.svg" alt="">
+              <img :src="getStaticImgUrl('/static/img/trade/warning.svg')" alt="">
             </div>
           </template>
           <template #title-right v-if="token">
@@ -284,8 +284,9 @@
         <input style="width: 100%; height: 100%" v-model="safePass"
           :placeholder="t('trade.stock_opening_trade_pw_placeholder')" :type="showPassword ? 'text' : 'password'"
           class="ipt" />
-        <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
-        <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
+        <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/user/eye-off.png')" @click="showPassword = true"
+          alt="off" />
+        <img v-else :src="getStaticImgUrl('/static/img/user/eye-open.png')" alt="open" @click="showPassword = false" />
       </div>
       <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit" color="#014cfa" round>{{
         t("trade.stock_open") }}</Button>
@@ -343,7 +344,7 @@
       <!-- 搜索 -->
       <div class="item search_box">
         <div class="search_icon">
-          <img src="/static/img/common/search.png" alt="🔍" />
+          <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
         </div>
         <input v-model.trim="searchDialogStr" @keyup="goDialogSearch" type="text" class="ipt" style="width:100%"
           :placeholder="t('trade.stock_opening_search')" />
@@ -375,7 +376,7 @@
         <div style="display:flex;align-items:center;justify-content:center;flex-direction: column;flex:1">
           <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.08rem">
             <div v-if="paramCurrency" style="width:0.32rem;height:0.32rem;display:flex;position:relative;top:-0.02rem">
-              <img :src="`/static/img/crypto/${paramCurrency.toUpperCase()}.png`" />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${paramCurrency.toUpperCase()}.png`)" />
             </div>
 
             <span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">{{ paramCurrency }}</span>
@@ -400,6 +401,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import {
   Loading,
   Slider,

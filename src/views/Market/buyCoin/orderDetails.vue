@@ -12,7 +12,9 @@
           class="absolute right-[40px] top-[3px] flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           {{ form.unread > 99 ? '+99' : form.unread }}
         </div> -->
-        <div class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[#e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center"></div>
+        <div
+          class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[#e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center">
+        </div>
       </div>
     </div>
     <template v-if="tabsValue !== 'contactTheMerchant'">
@@ -69,7 +71,7 @@
                 <div class="flex items-center justify-center text-sm text-[#061023]"
                   @click="copy(form.bank_card_number)">
                   {{ form.bank_card_number }}
-                  <img class="ml-1 !size-[0.2rem]" src="/static/img/trade/copy.png" alt="" />
+                  <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
                 </div>
               </div>
             </div>
@@ -83,7 +85,8 @@
             </div>
           </template>
           <div v-else class="flex flex-col items-center justify-center">
-            <img class="mb-[0.2rem] !h-18 !w-[1.8rem]" src="/static/img/market/waitFor.svg" alt="" />
+            <img class="mb-[0.2rem] !h-18 !w-[1.8rem]" :src="getStaticImgUrl('/static/img/market/waitFor.svg')"
+              alt="" />
             <div class="text-xs text-[#8f92a1]">{{ $t('请等待商家提供银行卡') }}</div>
           </div>
         </div>
@@ -95,7 +98,7 @@
           class="flex h-[0.68rem] items-center justify-between border border-transparent border-b-[#EFF3F8] px-4 text-sm leading-34 text-[#666666]">
           <div class="flex items-center" @click="copy(form.order_no)">
             {{ form.order_no }}
-            <img class="ml-1 !size-[0.2rem]" src="/static/img/trade/copy.png" alt="" />
+            <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
           </div>
           <div class="text-12 text-[#8f92a1]">{{ form.date }}</div>
         </div>
@@ -140,6 +143,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { reactive, ref } from 'vue'
 import { closeToast, showLoadingToast, showToast } from 'vant'
 import Top from '@/components/Top.vue'

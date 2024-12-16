@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img src="/static/img/assets/record.png" />
+            <img :src="getStaticImgUrl('/static/img/assets/record.png')" />
           </div>
           <span class="max-w-[1.2rem]">
             {{ $t("topUpCrypto.rechargeRecord") }}
@@ -14,12 +14,7 @@
       </template>
     </Top>
 
-    <Tabs
-      type="custom-card"
-      v-model:active="tabActive"
-      :swipeable="false"
-      shrink
-    >
+    <Tabs type="custom-card" v-model:active="tabActive" :swipeable="false" shrink>
       <Tab :title="$t('topUpCrypto.cryptocurrency')" name="cryptocurrency">
         <div class="form">
           <div class="subtitle">
@@ -30,16 +25,13 @@
             <div class="select_item border_item" @click="showDialog = true">
               <div class="currency">
                 <div class="currency_icon" v-if="form.currency">
-                  <img
-                    :src="`/static/img/crypto/${form.currency.toUpperCase()}.png`"
-                    alt="currency"
-                    class="rounded-full"
-                  />
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.png`)" alt="currency"
+                    class="rounded-full" />
                 </div>
                 <span>{{ form.currency || "" }}</span>
               </div>
               <div class="more">
-                <img src="/static/img/assets/more.png" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
               </div>
             </div>
           </div>
@@ -52,48 +44,22 @@
                 <span>{{ form.network || "" }}</span>
               </div>
               <div class="more">
-                <img src="/static/img/assets/more.png" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
               </div>
             </div>
           </div>
-          <!-- <div class="recommend_list">
-                        <div @click="clickItem(item)" class="recommend_item"
-                            :class="{ 'recommend_active': form.currency == item }" v-for="item in recommendList" :key="item">
-                            <div class="recommend_icon"><img :src="`/static/img/crypto/${item.toUpperCase()}.png`"
-                                    alt="currency">
-                            </div>
-                            <span>{{ item }}</span>
-                        </div>
-                    </div> -->
 
           <div class="subtitle">
             <span style="flex: none">{{
               $t("topUpCrypto.rechargeAmount")
             }}</span>
-            <!-- <span class="subtitle_right" @click="goTransing" v-if="form.currency != 'USDT'">
-                            <span style="color: #014CFA;">{{ targetAmount }}</span>
-                            {{ topUpMode
-                                == 1 ?
-                                'USDT' : form.currency.toUpperCase() }}
-
-                        </span>
-                        <div style="width:0.44rem;height:0.44rem;margin-left: 0.1rem;" @click="goTransing"
-                            :class="[transing ? 'transing_icon' : 'transing_stop']" v-if="form.currency != 'USDT'">
-                            <img src="/static/img/assets/recharge_trans.png" alt="img">
-                        </div> -->
           </div>
           <div class="item border_item" :class="{ err_ipt: errStatus }">
             <div class="item_content">
-              <input
-                class="ipt"
-                @blur="
-                  errStatus = false;
-                  form.amount <= 0 ? (form.amount = '') : '';
-                "
-                type="number"
-                v-model="form.amount"
-                :placeholder="$t('topUpCrypto.inputPlaceholder')"
-              />
+              <input class="ipt" @blur="
+                errStatus = false;
+              form.amount <= 0 ? (form.amount = '') : '';
+              " type="number" v-model="form.amount" :placeholder="$t('topUpCrypto.inputPlaceholder')" />
             </div>
             <div>{{ topUpMode == 1 ? form.currency : "USDT" }}</div>
           </div>
@@ -105,27 +71,14 @@
                         <Loading v-show="rateLoading" type="spinner" size="12px" />
                     </div> -->
         </div>
-        <Button
-          @click="goTopUp"
-          :loading="loading"
-          round
-          color="#014CFA"
-          class="submit"
-          type="primary"
-          >{{ $t("topUpCrypto.confirm") }}</Button
-        >
+        <Button @click="goTopUp" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+          $t("topUpCrypto.confirm") }}</Button>
       </Tab>
       <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard"> </Tab>
     </Tabs>
 
     <!-- 币种选择弹窗 -->
-    <Popup
-      v-model:show="showDialog"
-      position="bottom"
-      round
-      closeable
-      teleport="body"
-    >
+    <Popup v-model:show="showDialog" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ $t("topUpCrypto.currencySelection") }}
       </div>
@@ -134,38 +87,25 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img src="/static/img/common/search.png" alt="🔍" />
+            <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
           </div>
-          <input
-            v-model.trim="searchDialogStr"
-            type="text"
-            class="ipt"
-            :placeholder="$t('topUpCrypto.searchPlaceholder')"
-          />
+          <input v-model.trim="searchDialogStr" type="text" class="ipt"
+            :placeholder="$t('topUpCrypto.searchPlaceholder')" />
         </div>
         <div class="lists">
-          <div
-            @click="clickItem(keyStr)"
-            class="swap_dialog_item"
-            :class="{ swap_dialog_item_active: form.currency == keyStr }"
-            v-for="(val, keyStr) in networkMapList"
-            :key="keyStr"
-            v-show="
-              !searchDialogStr ||
+          <div @click="clickItem(keyStr)" class="swap_dialog_item"
+            :class="{ swap_dialog_item_active: form.currency == keyStr }" v-for="(val, keyStr) in networkMapList"
+            :key="keyStr" v-show="!searchDialogStr ||
               keyStr.toUpperCase().indexOf(searchDialogStr) > -1
-            "
-          >
+              ">
             <div class="icon">
-              <img
-                :src="`/static/img/crypto/${keyStr.toUpperCase()}.png`"
-                alt="currency"
-                class="rounded-full"
-              />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${keyStr.toUpperCase()}.png`)" alt="currency"
+                class="rounded-full" />
             </div>
             <span>{{ keyStr.toUpperCase() }}</span>
 
             <div v-if="form.currency == keyStr" class="check_icon">
-              <img src="/static/img/assets/success.svg" />
+              <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
             </div>
           </div>
         </div>
@@ -173,28 +113,17 @@
     </Popup>
 
     <!-- 网路选择弹窗 -->
-    <Popup
-      round
-      closeable
-      v-model:show="showNetDialog"
-      position="bottom"
-      teleport="body"
-    >
+    <Popup round closeable v-model:show="showNetDialog" position="bottom" teleport="body">
       <div class="van-popup-custom-title">
         {{ $t("topUpCrypto.networkSelection") }}
       </div>
       <div class="topup_accounr_dialog network_accounr_dialog">
-        <div
-          @click="clickNetItem(item.network)"
-          class="swap_dialog_item"
-          :class="{ swap_dialog_item_active: form.network == item.network }"
-          v-for="(item, i) in currNetwork"
-          :key="i"
-        >
+        <div @click="clickNetItem(item.network)" class="swap_dialog_item"
+          :class="{ swap_dialog_item_active: form.network == item.network }" v-for="(item, i) in currNetwork" :key="i">
           <span>{{ item.network }}</span>
 
           <div v-if="form.network == item.network" class="check_icon">
-            <img src="/static/img/assets/success.svg" />
+            <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
           </div>
         </div>
       </div>
@@ -212,6 +141,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import router from "@/router";
 import { ref, computed, onBeforeUnmount, onMounted } from "vue";
@@ -435,6 +365,7 @@ onBeforeUnmount(() => {
 .page_topup_crypto {
   padding: 1.32rem 0.32rem 1.44rem 0.32rem;
   position: relative;
+
   :deep(.top) {
     z-index: 10;
   }
@@ -450,6 +381,7 @@ onBeforeUnmount(() => {
     justify-content: center;
     color: #0953fa;
     font-size: 0.28rem;
+
     .top-record-icon {
       width: 0.3rem;
       height: 0.3rem;
@@ -574,7 +506,8 @@ onBeforeUnmount(() => {
       line-height: 0.36rem;
       margin-top: 0.4rem;
       margin-bottom: 0.12rem;
-      > span {
+
+      >span {
         flex: 1;
       }
 
@@ -603,6 +536,7 @@ onBeforeUnmount(() => {
     margin-top: 0.8rem;
   }
 }
+
 .network_accounr_dialog {
   padding-top: 0.2rem;
   padding-bottom: 0.32rem;
@@ -615,6 +549,7 @@ onBeforeUnmount(() => {
     margin-top: 0.2rem;
     padding-bottom: 0.32rem;
   }
+
   .search_box {
     height: 0.8rem;
     padding: 0 0.32rem;
@@ -634,10 +569,12 @@ onBeforeUnmount(() => {
       height: 100%;
       font-weight: 400;
     }
+
     .ipt::placeholder {
       color: #a4acb9;
     }
   }
+
   .swap_dialog_item {
     height: 1.04rem;
     display: flex;
@@ -647,18 +584,22 @@ onBeforeUnmount(() => {
     position: relative;
     font-size: 0.3rem;
     margin: 0 0.32rem;
+
     .icon {
       width: 0.64rem;
       height: 0.64rem;
       margin-right: 0.2rem;
     }
   }
+
   .swap_dialog_item:last-child {
     border-bottom: 0px;
   }
+
   .swap_dialog_item_active {
     color: #014cfa;
     font-weight: 600;
+
     .check_icon {
       position: absolute;
       right: 0.24rem;

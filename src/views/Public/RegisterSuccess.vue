@@ -9,7 +9,7 @@
 
       <div class="flex flex-row">
         <div class="server_icon" @click="goChat">
-          <div class="chat_icon"><img src="/static/img/user/server.svg" /></div>
+          <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
         </div>
 
         <div class="language_icon_container" @click="goLang">
@@ -18,28 +18,20 @@
       </div>
     </div>
     <div class="icon">
-      <img src="/static/img/user/success.svg" alt="√" />
+      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("register.success_sign_up") }}</div>
 
-    <Button
-      round
-      color="#014CFA"
-      class="submit"
-      type="primary"
-      @click="next"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"
-      >{{ $t("register.success_btn") }}</Button
-    >
+    <Button round color="#014CFA" class="submit" type="primary" @click="next"
+      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">{{ $t("register.success_btn") }}</Button>
     <div @click="back">
-      <span style="color: #014cfa; font-size: 0.32rem; line-height: 0.448rem"
-        >{{ $t('register.success_finish') }}</span
-      >
+      <span style="color: #014cfa; font-size: 0.32rem; line-height: 0.448rem">{{ $t('register.success_finish') }}</span>
     </div>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Button, Icon } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -171,6 +163,7 @@ const goChat = () => {
     width: 100%;
     margin-bottom: 0.6rem;
   }
+
   .close-svg-iconB {
     width: 0.42rem;
     height: 0.4rem;

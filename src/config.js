@@ -1,4 +1,16 @@
 
+
+/* 版本 
+ *  颜色_日期_字母 
+ *  wb  白底蓝色
+ */
+export const VERSION = 'wb_1216_a'
+
+
+/* 首页模板 */
+export const HOME_MODE = 1
+
+
 /* 开发环境 */
 // export const BASE_SOCKET = 'ws://54.169.182.60:9093'; // ws地址
 // export const BASE_ADDRESS = 'http://146.70.86.141:8000'; // 请求地址 62.112.10.184:8302

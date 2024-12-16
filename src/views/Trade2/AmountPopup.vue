@@ -1,11 +1,5 @@
 <template>
-  <Popup
-    teleport="body"
-    v-model:show="showModel"
-    position="center"
-    round
-    closeable
-  >
+  <Popup teleport="body" v-model:show="showModel" position="center" round closeable>
     <div class="amount_popup">
       <div class="amount_popup_title">{{ t('trade.ai_opening_pop_title') }}</div>
       <div class="amount_popup_content">
@@ -13,7 +7,7 @@
         <div class="right">
           <div class="currency">
             <div class="currency_icon">
-              <img :src="`/static/img/crypto/${props.currency}.png`" alt="" />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${props.currency}.png`)" alt="" />
             </div>
             <div>{{ props.currency }}</div>
           </div>
@@ -29,6 +23,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Popup } from "vant";
 import { ref } from "vue";
 import router from "@/router";

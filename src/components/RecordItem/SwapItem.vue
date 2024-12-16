@@ -5,7 +5,8 @@
         <div class="item_title">
             <div class="item_label">
                 <div class="currency_icon" v-if="item.from">
-                    <img :src="`/static/img/crypto/${item.from.toUpperCase()}.png`" :alt="item.from.toUpperCase()">
+                    <img :src="getStaticImgUrl(`/static/img/crypto/${item.from.toUpperCase()}.png`)"
+                        :alt="item.from.toUpperCase()">
                 </div>
                 <div class="item_name">
                     <span v-if="item.from">{{ item.from.toUpperCase() }}</span>
@@ -15,12 +16,13 @@
 
 
             <div class="icon_box">
-                <img src="/static/img/account/to.png" alt="to">
+                <img :src="getStaticImgUrl('/static/img/account/to.png')" alt="to">
             </div>
 
             <div class="item_label">
                 <div class="currency_icon" v-if="item.to">
-                    <img :src="`/static/img/crypto/${item.to.toUpperCase()}.png`" :alt="item.from.toUpperCase()">
+                    <img :src="getStaticImgUrl(`/static/img/crypto/${item.to.toUpperCase()}.png`)"
+                        :alt="item.from.toUpperCase()">
                 </div>
                 <div class="item_name">
                     <span v-if="item.to">{{ item.to.toUpperCase() }}</span>
@@ -33,6 +35,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { _accountMap } from "@/utils/dataMap"
 const props = defineProps({
     item: {

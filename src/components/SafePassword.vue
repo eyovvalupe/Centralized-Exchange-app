@@ -1,22 +1,10 @@
 <!-- 输入安全密码 -->
 <template>
-  <Popup
-    v-model:show="show"
-    :safe-area-inset-top="true"
-    :close-on-click-overlay="false"
-    :safe-area-inset-bottom="true"
-    class="self_van_popup"
-    round=""
-    position="bottom"
-    teleport="body"
-    :close-on-popstate="true"
-    :closeable="props.closeable"
-  >
+  <Popup v-model:show="show" :safe-area-inset-top="true" :close-on-click-overlay="false" :safe-area-inset-bottom="true"
+    class="self_van_popup" round="" position="bottom" teleport="body" :close-on-popstate="true"
+    :closeable="props.closeable">
     <!--  :class="{ 'typing_dialog': showKeyboard }" -->
-    <div
-      class="safepassword_dialog"
-      :class="{ safepassword_dialog_uncloseabled: !props.closeable }"
-    >
+    <div class="safepassword_dialog" :class="{ safepassword_dialog_uncloseabled: !props.closeable }">
       <slot name="top" />
       <div class="main_title">{{ $t("assets.safety_trade_pw") }}</div>
       <div class="title">{{ $t("assets.safety_trade_pw") }}</div>
@@ -24,19 +12,9 @@
       <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
       <div class="show_pass">
-        <input
-          ref="iptDom"
-          v-model="val"
-          :type="passwordInputType"
-          :class="{ err_ipt: errStatus }"
-          :placeholder="$t('assets.safety_trade_placeholder')"
-          class="pass_ipt"
-          enterkeyhint="done"
-          @blur="errStatus = false"
-          @keydown.enter="submit"
-        />
-        <!-- <img v-if="!showPassword" src="../assets/password_hide.png" @click="passwordVisibility" /> -->
-        <!-- <img v-else src="/static/img/user/eye-open.png" alt="open" @click="passwordVisibility" /> -->
+        <input ref="iptDom" v-model="val" :type="passwordInputType" :class="{ err_ipt: errStatus }"
+          :placeholder="$t('assets.safety_trade_placeholder')" class="pass_ipt" enterkeyhint="done"
+          @blur="errStatus = false" @keydown.enter="submit" />
         <div class="show_hidden_icon">
           <ShowEye v-if="showPassword" @click="passwordVisibility" />
           <HiddenEye v-else @click="passwordVisibility" />
@@ -47,15 +25,8 @@
         <Button round color="white" class="btn" @click="close">
           <span style="color: #666d80">{{ $t("assets.safety_trade_cancel") }}</span>
         </Button>
-        <Button
-          :loading="loading"
-          round
-          color="#014CFA"
-          class="btn"
-          type="primary"
-          @click="submit"
-          >{{ $t("assets.safety_trade_confirm") }}</Button
-        >
+        <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">{{
+          $t("assets.safety_trade_confirm") }}</Button>
       </div>
     </div>
   </Popup>
@@ -157,6 +128,7 @@ defineExpose({
     justify-content: space-between;
     margin-top: 0.6rem;
     margin-left: -0.32rem;
+
     .btn {
       height: 0.96rem;
       border-radius: 0.96rem;
@@ -199,6 +171,7 @@ defineExpose({
 
   .show_pass {
     position: relative;
+
     .show_hidden_icon {
       content: "";
       display: block;

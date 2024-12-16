@@ -2,22 +2,17 @@
 <template>
   <div class="page page_success">
     <div class="icon">
-      <img src="/static/img/user/success.png" alt="√" />
+      <img :src="getStaticImgUrl('/static/img/user/success.png')" alt="√" />
     </div>
     <div class="title">{{ $t("safety.success_title") }}</div>
 
-    <Button
-      @click="router.back()"
-      round
-      color="#014CFA"
-      class="submit"
-      type="primary"
-      >{{ $t("safety.success_btn") }}</Button
-    >
+    <Button @click="router.back()" round color="#014CFA" class="submit" type="primary">{{ $t("safety.success_btn")
+      }}</Button>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Button } from "vant";
 import router from "@/router";
 import { useI18n } from "vue-i18n";

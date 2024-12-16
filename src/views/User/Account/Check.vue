@@ -11,14 +11,14 @@
                             <span>去绑定</span>
                             <div class="btn">
                                 <div class="btn_icon">
-                                    <img src="/static/img/user/right.png" alt="→">
+                                    <img :src="getStaticImgUrl('/static/img/user/right.png')" alt="→">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="right">
-                        <img src="/static/img/user/google-1.png" alt="google">
-                        <img class="status_icon" src="/static/img/user/no.png" alt="no">
+                        <img :src="getStaticImgUrl('/static/img/user/google-1.png')" alt="google">
+                        <img class="status_icon" :src="getStaticImgUrl('/static/img/user/no.png')" alt="no">
                     </div>
                 </div>
                 <div v-if="userInfo.kycl2 != 2" class=" way" @click="router.push({ name: 'kyc' })">
@@ -28,14 +28,14 @@
                             <span>去绑定</span>
                             <div class="btn">
                                 <div class="btn_icon">
-                                    <img src="/static/img/user/right.png" alt="→">
+                                    <img :src="getStaticImgUrl('/static/img/user/right.png')" alt="→">
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="right">
-                        <img src="/static/img/user/iden-1.png" alt="iden">
-                        <img class="status_icon" src="/static/img/user/no.png" alt="no">
+                        <img :src="getStaticImgUrl('/static/img/user/iden-1.png')" alt="iden">
+                        <img class="status_icon" :src="getStaticImgUrl('/static/img/user/no.png')" alt="no">
                     </div>
                 </div>
 
@@ -44,8 +44,8 @@
                         <div class="title">谷歌验证器已绑定 </div>
                     </div>
                     <div class="right">
-                        <img src="/static/img/user/google-2.png" alt="google">
-                        <img class="status_icon" src="/static/img/user/ok.png" alt="no">
+                        <img :src="getStaticImgUrl('/static/img/user/google-2.png')" alt="google">
+                        <img class="status_icon" :src="getStaticImgUrl('/static/img/user/ok.png')" alt="no">
                     </div>
                 </div>
                 <div v-if="userInfo.kycl2 == 2" class=" way active_way">
@@ -53,14 +53,14 @@
                         <div class="title">已通过实名认证 </div>
                     </div>
                     <div class="right">
-                        <img src="/static/img/user/iden-2.png" alt="google">
-                        <img class="status_icon" src="/static/img/user/ok.png" alt="no">
+                        <img :src="getStaticImgUrl('/static/img/user/iden-2.png')" alt="google">
+                        <img class="status_icon" :src="getStaticImgUrl('/static/img/user/ok.png')" alt="no">
                     </div>
                 </div>
             </div>
             <div style="flex:1"></div>
             <div class="server_icon">
-                <img src="/static/img/common/server.png" alt="server">
+                <img :src="getStaticImgUrl('/static/img/common/server.png')" alt="server">
             </div>
             <div class="server">if you have questions contact <br /><span>customer service</span></div>
             <Button @click="router.back()" round color="#F2F2F2" class="submit" type="primary">
@@ -71,6 +71,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from '@/components/Top.vue';
 import { Button } from "vant"
 import router from '@/router';

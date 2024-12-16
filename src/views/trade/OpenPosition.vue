@@ -71,7 +71,7 @@
               <div class="small-select" @click="allModeSelect">
                 <div class="abs-con">
                   <span style="margin-left: 0.2rem">{{ selectedModeObj.text }}</span>
-                  <img src="/static/img/trade/down.png" class="down-img" />
+                  <img :src="getStaticImgUrl('/static/img/trade/down.png')" class="down-img" />
                 </div>
               </div>
 
@@ -86,7 +86,7 @@
               <div class="small-select" @click="allModeSelect">
                 <div class="abs-con" style="width: 95%;">
                   <span style="margin-left: 0.2rem">{{ selectedModeObj2.text }}</span>
-                  <img src="/static/img/trade/down.png" class="down-img" />
+                  <img :src="getStaticImgUrl('/static/img/trade/down.png')" class="down-img" />
                 </div>
               </div>
 
@@ -120,6 +120,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, onMounted, watch, nextTick, defineExpose } from "vue";
 import { Tab, Tabs, Field, CellGroup, Slider, Button, Loading, Popup, showToast } from "vant";
 import { _search, _basic, _walletBalance, _commToken } from "@/api/api";
@@ -137,22 +138,22 @@ const token = computed(() => store.state.token);
 const router = useRouter();
 
 const backgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/light-blue.svg)`,
+  backgroundImage: `url(${getStaticImgUrl('/static/img/trade/light-blue.svg')})`,
   color: "#034cfa",
 }));
 
 const activeBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/left-blue.svg)`,
+  backgroundImage: `url(${getStaticImgUrl('/static/img/trade/left-blue.svg')})`,
   color: "white",
 }));
 
 const activeBlueBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/blue.svg)`,
+  backgroundImage: `url(${getStaticImgUrl('/static/img/trade/blue.svg')})`,
   color: "white",
 }));
 
 const blueBackgroundImageStyle = computed(() => ({
-  backgroundImage: `url(/static/img/trade/right-white.svg)`,
+  backgroundImage: `url(${getStaticImgUrl('/static/img/trade/right-white.svg')})`,
   color: "#034cfa",
 }));
 const currentSymbol = computed(() => {

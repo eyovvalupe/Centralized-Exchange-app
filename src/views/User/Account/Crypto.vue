@@ -6,7 +6,7 @@
         <div class="subtitle">币种</div>
         <div class="item" @click="showCrypto = true">
           <div class="item_icon">
-            <img :src="`/static/img/crypto/${form.currency}.png`" alt="usdt" />
+            <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.png`)" alt="usdt" />
           </div>
           <div class="ipt">{{ form.currency }}</div>
           <Icon style="transform: rotate(90deg)" name="play" />
@@ -22,50 +22,22 @@
       <div style="float: left;">
         <div class="subtitle">地址</div>
         <div class="item">
-          <input
-            type="text"
-            v-model.trim="form.address"
-            class="ipt"
-            maxlength="50"
-            placeholder="请输入对应币种地址"
-          />
+          <input type="text" v-model.trim="form.address" class="ipt" maxlength="50" placeholder="请输入对应币种地址" />
         </div>
       </div>
     </div>
     <div class="btn_container">
-      <Button
-        :disabled="!form.address"
-        class="submit"
-        type="primary"
-        round
-        color="#014CFA"
-        @click="next"
-        >保存</Button
-      >
+      <Button :disabled="!form.address" class="submit" type="primary" round color="#014CFA" @click="next">保存</Button>
     </div>
 
     <!-- 币种 -->
-    <Popup
-      :safe-area-inset-top="false"
-      :safe-area-inset-bottom="true"
-      round
-      v-model:show="showCrypto"
-      position="bottom"
-      class="popup_container"
-    >
+    <Popup :safe-area-inset-top="false" :safe-area-inset-bottom="true" round v-model:show="showCrypto" position="bottom"
+      class="popup_container">
       <div class="bottoms">
-        <div
-          @click="chooseCurrency(item)"
-          class="bottom"
-          :class="{ active_bottom: form.currency == item }"
-          v-for="item in currencyMapList"
-          :key="item"
-        >
+        <div @click="chooseCurrency(item)" class="bottom" :class="{ active_bottom: form.currency == item }"
+          v-for="item in currencyMapList" :key="item">
           <div class="bottom_icon">
-            <img
-              :src="`/static/img/crypto/${item.toUpperCase()}.png`"
-              alt="usdt"
-            />
+            <img :src="getStaticImgUrl(`/static/img/crypto/${item.toUpperCase()}.png`)" alt="usdt" />
           </div>
           <span>{{ item }}</span>
         </div>
@@ -74,22 +46,11 @@
     </Popup>
 
     <!-- 网络 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      round
-      v-model:show="showNet"
-      position="bottom"
-      class="popup_container"
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" round v-model:show="showNet" position="bottom"
+      class="popup_container">
       <div class="bottoms">
-        <div
-          @click="chooseNet(item)"
-          class="bottom"
-          :class="{ active_bottom: form.network == item }"
-          v-for="item in currNetwork"
-          :key="item"
-        >
+        <div @click="chooseNet(item)" class="bottom" :class="{ active_bottom: form.network == item }"
+          v-for="item in currNetwork" :key="item">
           <span>{{ item.network }}</span>
         </div>
         <Icon @click="showNet = false" class="close" name="cross" />
@@ -102,6 +63,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Button, Icon, Popup, showToast } from "vant";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import Top from "@/components/Top.vue";
@@ -272,6 +234,7 @@ getSessionToken();
       :deep(.van-popup--bottom.van-popup--round) {
         width: 6.86rem;
       }
+
       .close {
         position: absolute;
         font-size: 0.4rem;

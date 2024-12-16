@@ -7,8 +7,8 @@
         <div class="top">
           <div class="title">{{ $t("assets.header_total") }} <span>(USDT)</span></div>
           <div class="eyes" @click="hidden = !hidden">
-            <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
-            <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
+            <img :src="getStaticImgUrl('/static/img/assets/eye_o.svg')" v-show="!hidden" />
+            <img :src="getStaticImgUrl('/static/img/assets/closed_eye.svg')" v-show="hidden" />
           </div>
         </div>
         <div class="money">
@@ -44,12 +44,7 @@
 
     <!-- 列表 -->
     <div class="tabs">
-      <div
-        ref="tab1"
-        :key="1"
-        class="tab"
-        @click="jumpToWallet(0)"
-      >
+      <div ref="tab1" :key="1" class="tab" @click="jumpToWallet(0)">
         <div class="tab_icon">
           <CashIcon />
         </div>
@@ -61,13 +56,7 @@
           <NextIcon />
         </div>
       </div>
-      <div
-        ref="tab2"
-        :key="2"
-        class="tab"
-        :class="{ open_tab: rightSwitch2 == true }"
-        @click="jumpToWallet(1)"
-      >
+      <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet(1)">
         <div class="tab_icon">
           <StockIcon />
         </div>
@@ -81,13 +70,7 @@
           <NextIcon />
         </div>
       </div>
-      <div
-        ref="tab3"
-        :key="3"
-        class="tab"
-        :class="{ open_tab: rightSwitch3 == true }"
-        @click="jumpToWallet(2)"
-      >
+      <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet(2)">
         <div class="tab_icon">
           <ContractIcon />
         </div>
@@ -144,17 +127,12 @@
     </div>
 
     <!-- 类型选择弹窗 -->
-    <ActionSheet
-      v-model:show="showAS"
-      teleport="body"
-      :actions="actions"
-      :title="$t('记录列表')"
-      @select="onSelect"
-    />
+    <ActionSheet v-model:show="showAS" teleport="body" :actions="actions" :title="$t('记录列表')" @select="onSelect" />
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Icon, ActionSheet } from "vant";
 import { ref, computed, onMounted } from "vue";
 import { useClickAway } from "@vant/use";
@@ -258,6 +236,7 @@ const jump = (name, check = false, query) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .top {
     font-size: 0.28rem;
     font-weight: 400;
@@ -265,10 +244,12 @@ const jump = (name, check = false, query) => {
     height: 0.32rem;
     align-items: center;
     line-height: 0.32rem;
+
     .title {
       color: #fff;
       margin-right: 0.12rem;
       font-size: 0.3rem;
+
       span {
         font-size: 0.24rem;
       }
@@ -307,6 +288,7 @@ const jump = (name, check = false, query) => {
       // backdrop-filter: blur(50px);
       border-radius: 0.32rem;
     }
+
     .nav_label {
       color: #fff;
       font-size: 0.28rem;
@@ -327,6 +309,7 @@ const jump = (name, check = false, query) => {
     position: relative;
     width: 100%;
     padding: 0 0.32rem;
+
     .tab {
       padding: 0 0.32rem;
       overflow: hidden;
@@ -342,6 +325,7 @@ const jump = (name, check = false, query) => {
       .name {
         font-size: 0.3rem;
       }
+
       &:active {
         background-color: rgba(237, 237, 237, 0.87);
       }
@@ -383,6 +367,7 @@ const jump = (name, check = false, query) => {
         right: -100%;
         top: 0;
         transition: 0.3s;
+
         .right {
           height: 100%;
           width: 1.04rem;
@@ -396,23 +381,29 @@ const jump = (name, check = false, query) => {
           color: #fff;
           background-color: #014cfa;
         }
+
         .right--yellow {
           background-color: #ffaf2a;
         }
+
         .right--green {
           background-color: #00af70;
         }
+
         .right--red {
           background-color: #e8503a;
         }
+
         .right:first-child {
           border-radius: 0.32rem 0rem 0rem 0.32rem;
         }
+
         .right:last-child {
           border-radius: 0rem 0.32rem 0.32rem 0rem;
         }
       }
     }
+
     .tab:first-child {
       margin-top: 0px;
     }
@@ -421,10 +412,12 @@ const jump = (name, check = false, query) => {
       .name {
         display: none;
       }
+
       .amount {
         text-align: left;
         padding: 0px;
       }
+
       .rights {
         right: 0;
       }

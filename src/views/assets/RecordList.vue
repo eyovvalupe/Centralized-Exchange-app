@@ -10,122 +10,68 @@
           <TransferItem :item="item" />
         </div>
       </template>
-      <LoadingMore
-        class="active_more"
-        :loading="loading"
-        :finish="finish"
-        v-if="((finish && list.length) || !finish) && active == 3"
-      />
+      <LoadingMore class="active_more" :loading="loading" :finish="finish"
+        v-if="((finish && list.length) || !finish) && active == 3" />
     </div>
 
-    <Tabs
-      type="oval-card"
-      v-else
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      shrink
-      @change="init()"
-    >
+    <Tabs type="oval-card" v-else v-model:active="active" :swipeable="false" animated shrink @change="init()">
       <Tab :title="t('recordList.rechargeRecord')" name="0">
         <div class="w-full justify-center" v-if="active == 0">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
-            <div
-              class="date"
-              @click="dateClick(getDate(item.date), openDates)"
-              v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)"
-            >
+            <div class="date" @click="dateClick(getDate(item.date), openDates)"
+              v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
               {{ getDate(item.date) }}
-              <span
-                class="date_more"
-                :class="{
-                  date_more_up: !openDates.includes(getDate(item.date)),
-                }"
-                ><img src="/static/img/assets/more.png" alt="more"
-              /></span>
+              <span class="date_more" :class="{
+                date_more_up: !openDates.includes(getDate(item.date)),
+              }"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" /></span>
             </div>
             <transition name="opacity">
-              <RechargeItem
-                :item="item"
-                v-show="!openDates.includes(getDate(item.date))"
-              />
+              <RechargeItem :item="item" v-show="!openDates.includes(getDate(item.date))" />
             </transition>
           </div>
-          <LoadingMore
-            class="active_more"
-            :loading="loading"
-            :finish="finish"
-            v-if="((finish && list.length) || !finish) && active == 0"
-          />
+          <LoadingMore class="active_more" :loading="loading" :finish="finish"
+            v-if="((finish && list.length) || !finish) && active == 0" />
         </div>
       </Tab>
       <Tab :title="t('recordList.withdrawalRecord')" name="1">
         <div v-if="active == 1">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
-            <div
-              class="date"
-              @click="dateClick(getDate(item.date), withdrawOpenDates)"
-              v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)"
-            >
+            <div class="date" @click="dateClick(getDate(item.date), withdrawOpenDates)"
+              v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
               {{ getDate(item.date) }}
-              <span
-                class="date_more"
-                :class="{
-                  date_more_up: !withdrawOpenDates.includes(getDate(item.date)),
-                }"
-                ><img src="/static/img/assets/more.png" alt="more"
-              /></span>
+              <span class="date_more" :class="{
+                date_more_up: !withdrawOpenDates.includes(getDate(item.date)),
+              }"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" /></span>
             </div>
             <transition name="opacity">
-              <WithdrawItem
-                :item="item"
-                v-show="!withdrawOpenDates.includes(getDate(item.date))"
-              />
+              <WithdrawItem :item="item" v-show="!withdrawOpenDates.includes(getDate(item.date))" />
             </transition>
           </div>
-          <LoadingMore
-            class="active_more"
-            :loading="loading"
-            :finish="finish"
-            v-if="((finish && list.length) || !finish) && active == 1"
-          />
+          <LoadingMore class="active_more" :loading="loading" :finish="finish"
+            v-if="((finish && list.length) || !finish) && active == 1" />
         </div>
       </Tab>
       <Tab :title="t('recordList.transfer')" name="2">
         <div v-if="active == 2">
           <NoData v-if="!loading && !list.length" />
           <div v-for="(item, i) in list" :key="i" class="list_0_item">
-            <div
-              class="date"
-              @click="dateClick(getDate(item.created), transferOpenDates)"
-              v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)"
-            >
+            <div class="date" @click="dateClick(getDate(item.created), transferOpenDates)"
+              v-if="i == 0 || getDate(item.date) != getDate(list[i - 1].date)">
               {{ getDate(item.created) }}
-              <span
-                class="date_more"
-                :class="{
-                  date_more_up: !transferOpenDates.includes(
-                    getDate(item.created)
-                  ),
-                }"
-                ><img src="/static/img/assets/more.png" alt="more"
-              /></span>
+              <span class="date_more" :class="{
+                date_more_up: !transferOpenDates.includes(
+                  getDate(item.created)
+                ),
+              }"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" /></span>
             </div>
             <transition name="opacity">
-              <TransferItem
-                :item="item"
-                v-show="!transferOpenDates.includes(getDate(item.created))"
-              />
+              <TransferItem :item="item" v-show="!transferOpenDates.includes(getDate(item.created))" />
             </transition>
           </div>
-          <LoadingMore
-            class="active_more"
-            :loading="loading"
-            :finish="finish"
-            v-if="((finish && list.length) || !finish) && active == 2"
-          />
+          <LoadingMore class="active_more" :loading="loading" :finish="finish"
+            v-if="((finish && list.length) || !finish) && active == 2" />
         </div>
       </Tab>
     </Tabs>
@@ -133,6 +79,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import { Tab, Tabs } from "vant";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
@@ -195,7 +142,7 @@ const getData = () => {
       list.value = JSON.parse(
         sessionStorage.getItem("popup_record_" + active.value) || "[]"
       );
-    } catch {}
+    } catch { }
   }
   const saveActive = active.value;
   reqs[active.value]({
@@ -278,12 +225,14 @@ const getDate = (str) => {
 <style lang="less" scoped>
 .page_record_list {
   padding: 1.12rem 0.32rem 0.32rem 0.32rem;
+
   :deep(.list_0_item) {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 }
+
 .date {
   height: 0.32rem;
   padding: 0.1rem 0;
@@ -292,14 +241,17 @@ const getDate = (str) => {
   align-items: center;
   justify-content: center;
 }
+
 .date_more {
   width: 0.32rem;
   height: 0.32rem;
   margin-left: 0.06rem;
+
   img {
     transition: 0.3s;
   }
 }
+
 .date_more_up img {
   transform: rotate(-180deg);
 }

@@ -10,7 +10,8 @@
                 <div class="item_box" v-if="item.from">
                     <div class="top">
                         <div class="currency_icon">
-                            <img :src="`/static/img/crypto/${item.from.toUpperCase()}.png`" alt="currency">
+                            <img :src="getStaticImgUrl(`/static/img/crypto/${item.from.toUpperCase()}.png`)"
+                                alt="currency">
                         </div>
                         <span>{{ item.from.toUpperCase() }}</span>
                     </div>
@@ -20,7 +21,8 @@
                 <div class="item_box">
                     <div class="top" style="justify-content: flex-end;">
                         <div class="currency_icon">
-                            <img :src="`/static/img/crypto/${item.to.toUpperCase()}.png`" alt="currency">
+                            <img :src="getStaticImgUrl(`/static/img/crypto/${item.to.toUpperCase()}.png`)"
+                                alt="currency">
                         </div>
                         <span>{{ item.to.toUpperCase() }}</span>
                     </div>
@@ -33,6 +35,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from '@/components/Top.vue';
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"

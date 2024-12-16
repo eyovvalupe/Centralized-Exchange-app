@@ -4,7 +4,7 @@
         teleport="body" v-model:show="showBottom" position="bottom" style="background-color: rgba(0,0,0,0)">
         <div class="record_list_popup" @click.stop="() => { }">
             <div class="close_icon" @click="close">
-                <img src="/static/img/common/close.png" alt="img">
+                <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="img">
             </div>
             <Tabs @change="init" shrink v-model:active="active" :lazy-render="true" animated type="card"
                 class="rsl_tabs">
@@ -68,6 +68,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Popup, Tab, Tabs } from 'vant';
 import { ref, computed } from "vue"
 import { _depositList, _withdrawList, _transferLog, _converterLog } from "@/api/api"

@@ -7,20 +7,12 @@
       <div class="icon">
         <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
       </div>
-      <input
-        ref="iptRef"
-        @keydown="keydown"
-        @keydown.enter="keydownEnter"
-        :placeholder="t('market.market_search_title')"
-        type="text"
-        enterkeyhint="search"
-        v-model.trim="search"
-        class="search"
-      />
+      <input ref="iptRef" @keydown="keydown" @keydown.enter="keydownEnter"
+        :placeholder="t('market.market_search_title')" type="text" enterkeyhint="search" v-model.trim="search"
+        class="search" />
 
       <div class="type_select" @click="closeSearch" v-show="search.length > 0">
         <div class="type_icon">
-          <!-- <img src="/static/img/market/close.svg" alt="img" /> -->
           <div class="closeIcon"></div>
         </div>
       </div>
@@ -36,61 +28,40 @@
         </div>
       </div>
       <div class="flex gap-[0.2rem] mb-4 flex-wrap">
-        <div
-          class="text-[0.28rem] h-[0.6rem] px-[0.16rem] bg-[#F5F7FC] rounded-[0.32rem] items-center flex"
-          v-for="(item, i) in marketSearchTextList"
-          :key="i"
-          @click="handleHistory(item)"
-        >
+        <div class="text-[0.28rem] h-[0.6rem] px-[0.16rem] bg-[#F5F7FC] rounded-[0.32rem] items-center flex"
+          v-for="(item, i) in marketSearchTextList" :key="i" @click="handleHistory(item)">
           {{ item }}
         </div>
       </div>
     </div>
 
-    <div
-      class="flex justify-between items-center mb-4"
-      v-show="!search.length > 0"
-    >
+    <div class="flex justify-between items-center mb-4" v-show="!search.length > 0">
       <div class="text-[0.32rem]">
         {{ t("market.market_search_recommend") }}
       </div>
       <div class="w-[0.4rem] h-[0.4rem]" @click="resetData">
-        <!-- <img
-          v-if="!marketSearchTextList.length > 0"
-          src="/static/img/market/vector.svg"
-        />
-        <img v-else src="/static/img/market/vector_b.svg" /> -->
-        <div
-          :class="!marketSearchTextList.length > 0 ? 'vector_b' : 'vector'"
-        ></div>
+        <div :class="!marketSearchTextList.length > 0 ? 'vector_b' : 'vector'"></div>
       </div>
     </div>
     <div class="list">
       <Loading v-show="!searchList.length && loading" />
       <NoData v-if="!searchList.length && !loading" />
-      <div
-        class="item"
-        v-for="(item, i) in searchList"
-        :key="i"
-        @click="goItem(item)"
-      >
+      <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
         <div class="info">
           <div class="title flex items-center gap-1">
             {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
             <div
-              :class="`${
-                marketStyle[item.type]
-              } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
-            >
+              :class="`${marketStyle[item.type]
+                } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
               <!-- {{ market[item.type] }} -->
               {{
                 item.type == "stock"
                   ? t("market.market_optional_stock")
                   : item.type == "crypto"
-                  ? t("market.market_optional_contract")
-                  : item.type == "forex"
-                  ? t("market.market_optional_forex")
-                  : "--"
+                    ? t("market.market_optional_contract")
+                    : item.type == "forex"
+                      ? t("market.market_optional_forex")
+                      : "--"
               }}
             </div>
           </div>
@@ -358,6 +329,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       font-weight: 400;
     }
   }
+
   /* Star_light */
 
   .list {
@@ -398,6 +370,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
         background-size: contain;
         background-repeat: no-repeat;
       }
+
       .unstar {
         width: 0.4rem;
         height: 0.36rem;
@@ -407,12 +380,14 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       }
     }
   }
+
   .vector_b {
     width: 0.4rem;
     height: 0.4rem;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3.46257 2.43262C5.21556 0.91688 7.5007 0 10 0C15.5228 0 20 4.47715 20 10C20 12.1361 19.3302 14.1158 18.1892 15.7406L15 10H18C18 5.58172 14.4183 2 10 2C7.84982 2 5.89777 2.84827 4.46023 4.22842L3.46257 2.43262ZM16.5374 17.5674C14.7844 19.0831 12.4993 20 10 20C4.47715 20 0 15.5228 0 10C0 7.86386 0.66979 5.88416 1.8108 4.25944L5 10H2C2 14.4183 5.58172 18 10 18C12.1502 18 14.1022 17.1517 15.5398 15.7716L16.5374 17.5674Z" fill="%23014CFA"/></svg>');
     background-size: cover;
   }
+
   .vector {
     width: 0.4rem;
     height: 0.4rem;
@@ -420,6 +395,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .clearIcon {
     width: 0.4rem;
     height: 0.4rem;
@@ -427,6 +403,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .closeIcon {
     width: 0.32rem;
     height: 0.32rem;

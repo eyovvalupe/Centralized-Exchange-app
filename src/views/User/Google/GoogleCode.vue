@@ -4,35 +4,28 @@
     <!-- 返回和语言 -->
     <Top :title="t('google_auth.page_title')">
       <template #right>
-        <div
-          @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
-        >
+        <div @click="jump('chat')"
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img src="/static/img/user/serverB.svg" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
         </div>
       </template>
     </Top>
     <div class="icon">
-      <img src="/static/img/user/success.svg" alt="√" />
+      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("google_auth.google_result_title") }}</div>
     <div class="description">{{ $t("google_auth.google_result_con") }}</div>
 
-    <Button
-      round
-      color="#014CFA"
-      class="submit"
-      type="primary"
-      @click="goBack"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"
-      >{{ $t("google_auth.google_result_btn") }}</Button
-    >
+    <Button round color="#014CFA" class="submit" type="primary" @click="goBack"
+      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">{{ $t("google_auth.google_result_btn")
+      }}</Button>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Button, Icon } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -154,6 +147,7 @@ const jump = (name, query) => {
   .submit {
     width: 4.5rem;
   }
+
   .close-svg-iconB {
     width: 0.42rem;
     height: 0.4rem;

@@ -2,17 +2,9 @@
 <template>
   <div class="withdraw_item" @click="goInfo" v-if="item.account">
     <div class="icon_box">
-      <!-- <img
-        v-if="item.account && item.account.symbol"
-        :src="`/static/img/crypto/${item.account.symbol}.png`"
-        alt="img"
-      /> -->
       <div :class="`${item.currency.toLocaleLowerCase()}_icon`"></div>
-      <img
-        v-if="item.account && item.account.bank_name"
-        src="/static/img/user/card_type_b.png"
-        alt="img"
-      />
+      <img v-if="item.account && item.account.bank_name" :src="getStaticImgUrl('/static/img/user/card_type_b.png')"
+        alt="img" />
     </div>
     <div class="content">
       <div class="address">
@@ -38,10 +30,10 @@
           item.status == "review"
             ? $t("withdrawStatusMap.review")
             : item.status == "success"
-            ? $t("withdrawStatusMap.success")
-            : item.status == "failure"
-            ? $t("withdrawStatusMap.failure")
-            : $t("withdrawStatusMap.unknown")
+              ? $t("withdrawStatusMap.success")
+              : item.status == "failure"
+                ? $t("withdrawStatusMap.failure")
+                : $t("withdrawStatusMap.unknown")
         }}
       </div>
     </div>
@@ -49,6 +41,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import { _withdrawStatusMap } from "@/utils/dataMap";
 import { useI18n } from "vue-i18n";
@@ -57,7 +50,7 @@ const { t } = useI18n();
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 
@@ -108,6 +101,7 @@ const formatDate = (date) => {
   border: 1px solid #d0d8e2;
   border-radius: 0.32rem;
   margin-top: 0.2rem;
+
   .icon_box {
     width: 0.8rem;
     height: 0.8rem;
@@ -147,6 +141,7 @@ const formatDate = (date) => {
     height: 100%;
     text-align: right;
     line-height: 0.3rem;
+
     .amount {
       font-size: 0.3rem;
       color: #000000;
@@ -167,6 +162,7 @@ const formatDate = (date) => {
       color: #8f92a1;
     }
   }
+
   .usdt_icon {
     width: 40px;
     height: 40px;
@@ -174,6 +170,7 @@ const formatDate = (date) => {
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .dash_icon {
     width: 40px;
     height: 40px;
@@ -181,6 +178,7 @@ const formatDate = (date) => {
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .bch_icon {
     width: 40px;
     height: 40px;
@@ -188,6 +186,7 @@ const formatDate = (date) => {
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .eth_icon {
     width: 40px;
     height: 40px;
@@ -195,6 +194,7 @@ const formatDate = (date) => {
     background-size: contain;
     background-repeat: no-repeat;
   }
+
   .trx_icon {
     width: 40px;
     height: 40px;
@@ -202,6 +202,7 @@ const formatDate = (date) => {
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .btc_icon {
     width: 40px;
     height: 40px;
@@ -209,6 +210,7 @@ const formatDate = (date) => {
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .ltc_icon {
     width: 40px;
     height: 40px;
@@ -216,6 +218,7 @@ const formatDate = (date) => {
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .doge_icon {
     width: 40px;
     height: 40px;
@@ -223,6 +226,7 @@ const formatDate = (date) => {
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .etc_icon {
     width: 40px;
     height: 40px;
@@ -230,6 +234,7 @@ const formatDate = (date) => {
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .rvn_icon {
     width: 40px;
     height: 40px;
@@ -237,6 +242,7 @@ const formatDate = (date) => {
     background-size: cover;
     background-repeat: no-repeat;
   }
+
   .arb_icon {
     width: 40px;
     height: 40px;

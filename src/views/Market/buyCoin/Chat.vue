@@ -18,32 +18,20 @@
           <div class="flex justify-end w-full items-top mt-[0.4rem]">
             <!-- 我的文本 -->
 
-            <div
-              v-if="item.type == 'text'"
-              :id="`a${item.msgid}`"
-              class="my_text_box"
-            >
+            <div v-if="item.type == 'text'" :id="`a${item.msgid}`" class="my_text_box">
               <div class="my_text break-all">{{ item.content }}</div>
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
 
             <!-- 我的富文本 -->
-            <div
-              v-if="item.type == 'html'"
-              :id="`a${item.msgid}`"
-              class="my_text_box"
-            >
+            <div v-if="item.type == 'html'" :id="`a${item.msgid}`" class="my_text_box">
               <div class="van-popover__arrow" />
               <div class="my_text" v-html="item.content" />
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
 
             <!-- 我的图片 -->
-            <div
-              v-if="item.type == 'img'"
-              :id="`a${item.msgid}`"
-              class="my_pic_box"
-            >
+            <div v-if="item.type == 'img'" :id="`a${item.msgid}`" class="my_pic_box">
               <img class="my_pic" :src="item.content" alt="img" />
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
@@ -52,11 +40,7 @@
         </div>
         <div v-else>
           <!-- 对方文本 -->
-          <div
-            v-if="item.type == 'text'"
-            :id="`a${item.msgid}`"
-            class="op_text_box"
-          >
+          <div v-if="item.type == 'text'" :id="`a${item.msgid}`" class="op_text_box">
             <div class="mr-[0.2rem]">
               <DialogCIcon />
             </div>
@@ -68,11 +52,7 @@
           </div>
 
           <!-- 对方富文本 -->
-          <div
-            v-if="item.type == 'html'"
-            :id="`a${item.msgid}`"
-            class="op_text_box"
-          >
+          <div v-if="item.type == 'html'" :id="`a${item.msgid}`" class="op_text_box">
             <!-- <div class="avatar">
               {{
                 props.currItem.merchant_name
@@ -91,11 +71,7 @@
           </div>
 
           <!-- 对方图片 -->
-          <div
-            v-if="item.type == 'img'"
-            :id="`a${item.msgid}`"
-            class="op_pic_box"
-          >
+          <div v-if="item.type == 'img'" :id="`a${item.msgid}`" class="op_pic_box">
             <!-- <div class="avatar">
               {{
                 props.currItem.merchant_name
@@ -114,29 +90,15 @@
         </div>
       </div>
     </div>
-    <div
-      class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white"
-    >
+    <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white">
       <div class="h-[0.02rem] w-full bg-[#EAEEF3]" />
       <div class="box px-4">
         <div class="box_icon">
-          <!-- <img src="/static/img/chat/file.png" alt="img" /> -->
           <IconSvg name="chatFile" class="text-30 text-my" />
-          <input
-            id="fileInput"
-            class="file"
-            type="file"
-            accept="image/*"
-            @change="uploadImg"
-          />
+          <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
         </div>
         <div class="item">
-          <input
-            v-model="text"
-            type="text"
-            class="ipt"
-            placeholder="请输入..."
-          />
+          <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
         </div>
         <div class="box_icon" @click="sendText">
           <IconSvg name="chatSend" class="text-30 text-my" />
@@ -167,7 +129,7 @@ const { t } = useI18n();
 const props = defineProps({
   currItem: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 const listRef = ref();

@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img src="/static/img/assets/record.png" />
+            <img :src="getStaticImgUrl('/static/img/assets/record.png')" />
           </div>
           <span>
             {{ $t("withdraw.withdrawRecord") }}
@@ -14,12 +14,7 @@
       </template>
     </Top>
 
-    <Tabs
-      type="custom-card"
-      v-model:active="tabActive"
-      :swipeable="false"
-      shrink
-    >
+    <Tabs type="custom-card" v-model:active="tabActive" :swipeable="false" shrink>
       <Tab :title="$t('withdraw.cryptocurrency')" name="cryptocurrency">
         <!-- 表单 -->
         <div class="form" v-if="currAccount">
@@ -27,15 +22,12 @@
             <div class="select_item" @click="showDialog = true">
               <div class="currency" v-if="form.from">
                 <div class="currency_icon">
-                  <img
-                    :src="`/static/img/crypto/${form.from.toUpperCase()}.png`"
-                    alt="currency"
-                  />
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.png`)" alt="currency" />
                 </div>
                 <span>{{ form.from.toUpperCase() }}</span>
               </div>
               <div class="more">
-                <img src="/static/img/assets/more.png" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
               </div>
             </div>
           </FormItem>
@@ -45,22 +37,13 @@
                 <span>{{ form.network }}</span>
               </div>
               <div class="more">
-                <img src="/static/img/assets/more.png" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
               </div>
             </div>
           </FormItem>
-          <FormItem
-            input-type="number"
-            v-model="form.amount"
-            show-btn
-            :btn-text="$t('form.all')"
-            :title="$t('withdraw.withdrawalAmount')"
-            @change="changeAmount"
-            @btnClick="maxIpt"
-          >
-            <template #title-right
-              >{{ $t("withdraw.withdrawable") }}：{{ balance }}</template
-            >
+          <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')"
+            :title="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
+            <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ balance }}</template>
           </FormItem>
 
           <div class="tip">
@@ -71,17 +54,11 @@
           <!-- 提款方式 -->
           <div class="subtitle">{{ $t("withdraw.receiptAccount") }}</div>
           <div class="account_box">
-            <div
-              class="card_box"
-              v-if="showAccount.length && tabActive == 'cryptocurrency'"
-              @click="showAccountDialog = true"
-            >
+            <div class="card_box" v-if="showAccount.length && tabActive == 'cryptocurrency'"
+              @click="showAccountDialog = true">
               <div class="card_icon">
-                <img
-                  v-if="currAccount.symbol"
-                  :src="`/static/img/crypto/${currAccount.symbol.toUpperCase()}.png`"
-                  alt="currency"
-                />
+                <img v-if="currAccount.symbol"
+                  :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.png`)" alt="currency" />
               </div>
               <div class="card">
                 <div class="code">
@@ -108,31 +85,14 @@
           </div>
         </div>
 
-        <Button
-          @click="openSafePass"
-          :loading="loading"
-          round
-          color="#014CFA"
-          class="submit"
-          type="primary"
-          >{{ $t("withdraw.confirm") }}</Button
-        >
+        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+          $t("withdraw.confirm") }}</Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
         <div class="form">
-          <FormItem
-            input-type="number"
-            v-model="form.amount"
-            show-btn
-            :btn-text="$t('form.all')"
-            :min="0"
-            :title="$t('withdraw.withdrawalAmount')"
-            @change="changeAmount"
-            @btnClick="maxIpt"
-          >
-            <template #title-right
-              >{{ $t("withdraw.withdrawable") }}：{{ totalAmount }}</template
-            >
+          <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" :min="0"
+            :title="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
+            <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ totalAmount }}</template>
           </FormItem>
           <div class="tip">
             <span>{{ $t("withdraw.serviceFee") + ":" }}</span>
@@ -141,13 +101,10 @@
 
           <div class="subtitle">{{ $t("withdraw.receiptAccount") }}</div>
           <div class="account_box">
-            <div
-              class="card_box"
-              v-if="showBankAccount.length && tabActive == 'bankCard'"
-              @click="showAccountDialog = true"
-            >
+            <div class="card_box" v-if="showBankAccount.length && tabActive == 'bankCard'"
+              @click="showAccountDialog = true">
               <div class="card_icon">
-                <img src="/static/img/user/card_type_b.png" alt="img" />
+                <img :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
               </div>
               <div class="card">
                 <div class="code">
@@ -173,26 +130,13 @@
             </div>
           </div>
         </div>
-        <Button
-          @click="openSafePass"
-          :loading="loading"
-          round
-          color="#014CFA"
-          class="submit"
-          type="primary"
-          >{{ $t("withdraw.confirm") }}</Button
-        >
+        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+          $t("withdraw.confirm") }}</Button>
       </Tab>
     </Tabs>
 
     <!-- 账户种类选择弹窗 -->
-    <Popup
-      v-model:show="showDialog"
-      position="bottom"
-      round
-      closeable
-      teleport="body"
-    >
+    <Popup v-model:show="showDialog" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ $t("withdraw.currencySelection") }}
       </div>
@@ -201,46 +145,28 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img src="/static/img/common/search.png" alt="🔍" />
+            <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
           </div>
-          <input
-            v-model.trim="searchDialogStr"
-            type="text"
-            class="ipt"
-            :placeholder="$t('withdraw.searchPlaceholder')"
-            @input="searchList"
-          />
+          <input v-model.trim="searchDialogStr" type="text" class="ipt" :placeholder="$t('withdraw.searchPlaceholder')"
+            @input="searchList" />
         </div>
         <div class="lists">
-          <div
-            @click="clickItem(item)"
-            class="swap_dialog_item"
+          <div @click="clickItem(item)" class="swap_dialog_item"
             :class="{ swap_dialog_item_active: form.from == item.name }"
-            v-for="(item, i) in searchDialogStr ? searchResult : wallet"
-            :key="i"
-          >
+            v-for="(item, i) in searchDialogStr ? searchResult : wallet" :key="i">
             <div class="icon">
-              <img
-                :src="`/static/img/crypto/${item.name.toUpperCase()}.png`"
-                alt="currency"
-              />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${item.name.toUpperCase()}.png`)" alt="currency" />
             </div>
             <span>{{ item.name.toUpperCase() }}</span>
             <div v-if="form.from == item.name" class="check_icon">
-              <img src="/static/img/assets/success.svg" />
+              <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
             </div>
           </div>
         </div>
       </div>
     </Popup>
 
-    <Popup
-      v-model:show="showNetworkDialog"
-      position="bottom"
-      round
-      closeable
-      teleport="body"
-    >
+    <Popup v-model:show="showNetworkDialog" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ $t("withdraw.networkSelection") }}
       </div>
@@ -249,28 +175,18 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img src="/static/img/common/search.png" alt="🔍" />
+            <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
           </div>
-          <input
-            v-model.trim="searchDialogStr"
-            type="text"
-            class="ipt"
-            :placeholder="$t('withdraw.searchPlaceholder')"
-          />
+          <input v-model.trim="searchDialogStr" type="text" class="ipt"
+            :placeholder="$t('withdraw.searchPlaceholder')" />
         </div>
         <div class="lists">
-          <div
-            class="swap_dialog_item"
-            :class="{ swap_dialog_item_active: form.from == item.name }"
-            v-if="Object.keys(currencyMapList).length"
-            v-for="(item, i) in currencyMapList[form.from]"
-            @click="clickNetworkItem(item)"
-            :key="i"
-            style="justify-content: space-between"
-          >
+          <div class="swap_dialog_item" :class="{ swap_dialog_item_active: form.from == item.name }"
+            v-if="Object.keys(currencyMapList).length" v-for="(item, i) in currencyMapList[form.from]"
+            @click="clickNetworkItem(item)" :key="i" style="justify-content: space-between">
             <span>{{ item }}</span>
             <div v-if="form.network == item" class="check_icon">
-              <img src="/static/img/assets/success.svg" />
+              <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
             </div>
           </div>
         </div>
@@ -278,13 +194,7 @@
     </Popup>
 
     <!-- 账户选择弹窗 -->
-    <Popup
-      v-model:show="showAccountDialog"
-      position="bottom"
-      round
-      closeable
-      teleport="body"
-    >
+    <Popup v-model:show="showAccountDialog" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{
           tabActive == "cryptocurrency"
@@ -301,30 +211,17 @@
               {{ $t("withdraw.addPaymentMethod") }}
             </div>
           </div>
-          <div
-            class="card_box"
-            v-for="(item, i) in tabActive == 'cryptocurrency'
-              ? showAccount
-              : showBankAccount"
-            @click="clickAccountItem(item)"
-            :class="{
+          <div class="card_box" v-for="(item, i) in tabActive == 'cryptocurrency'
+            ? showAccount
+            : showBankAccount" @click="clickAccountItem(item)" :class="{
               card_box_active:
                 (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
                 (tabActive == 'bankCard' && currBankAccount.id == item.id),
-            }"
-            :key="i"
-          >
+            }" :key="i">
             <div class="card_icon">
-              <img
-                v-if="tabActive == 'bankCard'"
-                src="/static/img/user/card_type_b.png"
-                alt="img"
-              />
-              <img
-                v-else
-                :src="`/static/img/crypto/${item.symbol}.png`"
-                alt="currency"
-              />
+              <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/user/card_type_b.png')"
+                alt="img" />
+              <img v-else :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.png`)" alt="currency" />
             </div>
             <div class="card">
               <div class="code">
@@ -334,15 +231,11 @@
                 {{ item.symbol ? item.symbol.toUpperCase() : item.bankName }}
               </div>
             </div>
-            <div
-              v-if="
-                (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
-                (tabActive == 'bankCard' && currBankAccount.id == item.id)
-              "
-              class="checked"
-              style="background-image: url('/static/img/user/check_bg.png')"
-            >
-              <img src="/static/img/common/ok.png" alt="img" />
+            <div v-if="
+              (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
+              (tabActive == 'bankCard' && currBankAccount.id == item.id)
+            " class="checked" :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/user/check_bg.png')}`) }">
+              <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
             </div>
           </div>
         </div>
@@ -361,6 +254,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import { ref, computed, onMounted, watch } from "vue";
 import store from "@/store";
@@ -701,6 +595,7 @@ watch(
 .page_withdraw {
   padding: 1.32rem 0.32rem 1.44rem 0.32rem;
   position: relative;
+
   :deep(.top) {
     z-index: 10;
   }
@@ -715,6 +610,7 @@ watch(
     justify-content: center;
     color: #0953fa;
     font-size: 0.28rem;
+
     .top-record-icon {
       width: 0.3rem;
       height: 0.3rem;
@@ -735,6 +631,7 @@ watch(
       font-size: 0.28rem;
       line-height: 0.36rem;
       margin-top: 0.24rem;
+
       .num {
         margin-left: 0.08rem;
       }
@@ -751,12 +648,14 @@ watch(
       margin-bottom: 0.12rem;
       justify-content: space-between;
     }
+
     .select_item {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 100%;
+
       .currency {
         display: flex;
         align-items: center;
@@ -767,6 +666,7 @@ watch(
           width: 0.48rem;
           height: 0.48rem;
           margin-right: 0.16rem;
+
           img {
             border-radius: 50%;
           }
@@ -789,6 +689,7 @@ watch(
   flex-direction: column;
   padding: 0.24rem 0 0.2rem 0;
 }
+
 .add_account_text {
   color: #014cfa;
   text-align: center;
@@ -812,6 +713,7 @@ watch(
     width: 0.96rem;
     height: 0.96rem;
     margin-right: 0.18rem;
+
     img {
       border-radius: 50%;
     }
@@ -821,10 +723,12 @@ watch(
     flex: 1;
     margin-right: 0.32rem;
     line-height: 0.44rem;
+
     .code {
       font-size: 0.32rem;
       font-weight: 600;
     }
+
     .name {
       font-size: 0.28rem;
       color: #666d80;
@@ -850,7 +754,7 @@ watch(
     width: 0.48rem;
     height: 0.41rem;
 
-    > img {
+    >img {
       width: 0.17rem !important;
       height: 0.14rem !important;
       position: absolute;
@@ -867,9 +771,11 @@ watch(
     margin-top: 0.2rem;
     padding-bottom: 0.32rem;
   }
+
   .card_lists {
     padding: 0.2rem 0.32rem 0.32rem 0.32rem;
   }
+
   .search_box {
     height: 0.8rem;
     padding: 0 0.32rem;
@@ -891,10 +797,12 @@ watch(
       font-weight: 400;
       color: #061023 !important;
     }
+
     .ipt::placeholder {
       color: #a4acb9;
     }
   }
+
   .swap_dialog_item {
     height: 1.04rem;
     display: flex;
@@ -913,12 +821,15 @@ watch(
       border-radius: 50%;
     }
   }
+
   .swap_dialog_item:last-child {
     border-bottom: 0px;
   }
+
   .swap_dialog_item_active {
     color: #014cfa;
     font-weight: 600;
+
     .check_icon {
       position: absolute;
       right: 0.24rem;
@@ -929,9 +840,11 @@ watch(
       margin-top: -0.24rem;
     }
   }
+
   .card_box {
     margin-top: 0.22rem;
   }
+
   .building_icon {
     width: 0.72rem;
     height: 0.72rem;

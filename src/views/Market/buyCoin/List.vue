@@ -1,55 +1,38 @@
 <!-- 订单列表 -->
 <template>
-  <div
-    v-if="token"
-    class="buycoin_list"
-    :style="
-      props.from == 'orderCenter'
-        ? 'width: 100%; padding: 0'
-        : 'width: 7.5rem; padding: 0.08rem 0.32rem;'
-    "
-  >
+  <div v-if="token" class="buycoin_list" :style="props.from == 'orderCenter'
+      ? 'width: 100%; padding: 0'
+      : 'width: 7.5rem; padding: 0.08rem 0.32rem;'
+    ">
     <div class="list">
       <!-- 当前订单 -->
-      <div
-        v-for="(item, i) in showList"
-        :key="i"
+      <div v-for="(item, i) in showList" :key="i"
         class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]"
-        @click="openOrderInfo(item)"
-      >
+        @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
-        <div
-          v-if="unreadMessage[item.order_no] > 0"
-          class="w-[0.24rem] h-[0.24rem] top-[0] right-[0] rounded-[0.12rem] bg-[#e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center absolute"
-        >
+        <div v-if="unreadMessage[item.order_no] > 0"
+          class="w-[0.24rem] h-[0.24rem] top-[0] right-[0] rounded-[0.12rem] bg-[#e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center absolute">
           {{ unreadMessage[item.order_no] }}
         </div>
-        <div
-          v-if="c2cUnread[item.order_no]"
-          class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white"
-        >
+        <div v-if="c2cUnread[item.order_no]"
+          class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
           <!-- {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }} -->
         </div>
-        <div
-          class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]"
-        >
+        <div class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]">
           <!-- order_no 订单号 -->
           <div class="text-14 text-[#666]">{{ item.order_no }}</div>
-          <div
-            class="text-14"
-            :style="{ color: statusEnum[item.status].color }"
-          >
+          <div class="text-14" :style="{ color: statusEnum[item.status].color }">
             <!-- {{ statusEnum[item.status].name }} -->
             {{
               item.status == "waitpayment"
                 ? t("market.market_buy_list_wait_pay")
                 : item.status == "waitconfirm"
-                ? t("market.market_buy_list_wait_confirm")
-                : item.status == "done"
-                ? t("market.market_buy_list_complete")
-                : item.status == "cancel"
-                ? t("market.market_buy_list_cancel")
-                : '--'
+                  ? t("market.market_buy_list_wait_confirm")
+                  : item.status == "done"
+                    ? t("market.market_buy_list_complete")
+                    : item.status == "cancel"
+                      ? t("market.market_buy_list_cancel")
+                      : '--'
             }}
           </div>
         </div>
@@ -65,11 +48,8 @@
                   : t("market.market_buy_list_sell")
               }}&nbsp;{{ item.crypto }}&nbsp;
               <!-- 加密货币图标 -->
-              <img
-                class="!h-4 !w-4 rounded-50"
-                :src="`/static/img/crypto/${item.crypto.toUpperCase()}.png`"
-                alt="currency"
-              />
+              <img class="!h-4 !w-4 rounded-50"
+                :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.png`)" alt="currency" />
             </div>
             <!-- 价格信息 -->
             <div class="mb-[0.12rem] text-[#666D80]">
@@ -98,12 +78,8 @@
       </div>
 
       <NoData v-if="!loading && !list.length && token" />
-      <LoadingMore
-        v-if="(finish && list.length) || !finish"
-        class-n="buycoin_self"
-        :loading="loading"
-        :finish="finish"
-      />
+      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_self" :loading="loading"
+        :finish="finish" />
     </div>
   </div>
   <UnLogin v-show="!token" @loginfinish="loginfinish" />
@@ -118,6 +94,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import store, { useMapState } from "@/store";
 import NoData from "@/components/NoData.vue";
 import UnLogin from "@/components/UnLogin.vue";

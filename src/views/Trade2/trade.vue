@@ -11,7 +11,7 @@
       v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="tab_icon" @click="showNavDialogFunc()">
-          <img src="/static/img/trade/open.png" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/open.png')" alt="img" />
         </div>
       </template>
     </HeaderTabs>
@@ -63,7 +63,7 @@
         <div class="search_box_wrap">
           <div class="item search_box">
             <div class="search_icon">
-              <img src="/static/img/common/search.png" alt="🔍" />
+              <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
             </div>
             <input v-model.trim="searchStr" @keyup="goSearch(navActiveTab)" type="text" class="ipt"
               :placeholder="t('trade.left_search')" />
@@ -172,7 +172,7 @@
 </template>
 
 <script setup>
-
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Swipe, SwipeItem } from 'vant';
 import { PullRefresh, Popup, Tabs, Tab } from "vant";
 import {

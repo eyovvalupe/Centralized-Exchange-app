@@ -4,7 +4,7 @@
     <Top :title="$t('recharging.recharge')">
       <template #right>
         <div class="top-record" @click="() => router.push({ name: 'chat' })">
-          <span><img src="/static/img/user/server.png" alt="img" /></span>
+          <span><img :src="getStaticImgUrl('/static/img/user/server.png')" alt="img" /></span>
         </div>
       </template>
     </Top>
@@ -31,22 +31,19 @@
           <div class="qrcode" ref="qrcodeRef" v-show="!loading"></div>
 
           <!-- 已过期  -->
-          <div
-            v-if="s == 0 && !loading"
-            style="
+          <div v-if="s == 0 && !loading" style="
               width: 100%;
               height: 100%;
               position: absolute;
               top: 0;
               left: 0;
               z-index: 1;
-            "
-          >
-            <img src="/static/img/assets/Expired.png" alt="Expired" />
+            ">
+            <img :src="getStaticImgUrl('/static/img/assets/Expired.png')" alt="Expired" />
           </div>
           <div class="timeout_box" v-if="s == 0 && !loading">
             <div class="warning_icon">
-              <img src="/static/img/common/warning.png" alt="img" />
+              <img :src="getStaticImgUrl('/static/img/common/warning.png')" alt="img" />
             </div>
             <div>{{ $t("recharging.QRcodeExpired") }}</div>
           </div>
@@ -67,49 +64,24 @@
       </div>
 
       <div class="btns">
-        <Button
-          v-if="orderStatus == 'success'"
-          @click="jumpWithQuery('rechargeInfo')"
-          :loading="loading"
-          round
-          color="#18B762"
-          style="width: 100%"
-          class="submit"
-          type="info"
-          ><span style="color: #fff">{{
+        <Button v-if="orderStatus == 'success'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
+          color="#18B762" style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
             $t("recharging.success")
-          }}</span></Button
-        >
-        <Button
-          v-else-if="orderStatus == 'failure'"
-          @click="jumpWithQuery('rechargeInfo')"
-          :loading="loading"
-          round
-          color="#E8503A"
-          style="width: 100%"
-          class="submit"
-          type="info"
-          ><span style="color: #fff">{{ $t("recharging.fail") }}</span></Button
-        >
-        <Button
-          v-else
-          @click="jumpWithQuery('rechargeInfo')"
-          :loading="loading"
-          round
-          color="#014CFA"
-          style="width: 100%"
-          class="submit"
-          type="info"
-          ><span style="color: #fff">{{
+          }}</span></Button>
+        <Button v-else-if="orderStatus == 'failure'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
+          color="#E8503A" style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
+            $t("recharging.fail") }}</span></Button>
+        <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="#014CFA"
+          style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
             $t("recharging.finish")
-          }}</span></Button
-        >
+          }}</span></Button>
       </div>
     </template>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import { useRoute } from "vue-router";
 import { ref, computed } from "vue";
@@ -289,15 +261,15 @@ const copyPrice = () => {
   padding: 1.12rem 0.32rem 0.32rem 0.32rem;
 
   position: relative;
+
   :deep(.top) {
     background: none;
-    background-image: linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 1)
-    );
+    background-image: linear-gradient(to top,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 1));
     backdrop-filter: blur(3px);
   }
+
   .top-record {
     width: 0.72rem;
     height: 0.72rem;
@@ -307,6 +279,7 @@ const copyPrice = () => {
     display: flex;
     align-items: center;
     justify-content: center;
+
     span {
       display: block;
       width: 0.432rem;
@@ -324,6 +297,7 @@ const copyPrice = () => {
     flex-direction: column;
     box-shadow: 0px 0.08rem 0.8rem 0 rgba(1, 76, 250, 0.2);
     padding: 0.32rem;
+
     .amount {
       color: #014cfa;
       text-align: center;
@@ -331,6 +305,7 @@ const copyPrice = () => {
       font-weight: 600;
       line-height: 0.36rem;
       margin-top: 0.3rem;
+
       span {
         font-size: 0.32rem;
         font-weight: 400;
@@ -340,6 +315,7 @@ const copyPrice = () => {
 
     .time_box {
       padding-top: 0.06rem;
+
       .time_label {
         color: #666d80;
         text-align: center;
@@ -351,11 +327,13 @@ const copyPrice = () => {
         margin-top: 0.2rem;
         margin-bottom: 0.1rem;
       }
+
       .network-tag {
         display: flex;
         justify-content: center;
         align-content: center;
         padding-top: 0.26rem;
+
         span {
           height: 0.6rem;
           padding: 0 0.28rem;
@@ -406,6 +384,7 @@ const copyPrice = () => {
         left: 0;
         background-color: rgba(255, 255, 255, 0.8);
         backdrop-filter: blur(3px);
+
         .warning_icon {
           width: 1rem;
           height: 1rem;
@@ -426,6 +405,7 @@ const copyPrice = () => {
       line-height: 0.36rem;
       margin-top: 0.32rem;
     }
+
     .address_val {
       color: #000;
       font-size: 0.3rem;
@@ -434,6 +414,7 @@ const copyPrice = () => {
       margin-top: 0.22rem;
       text-align: center;
     }
+
     .address_copy_btn {
       width: 1.28rem;
       margin: 0 auto;
@@ -466,6 +447,7 @@ const copyPrice = () => {
     justify-content: space-between;
     margin-top: 0.6rem;
     padding-bottom: 0.28rem;
+
     .submit {
       width: 100%;
       height: 1.12rem;

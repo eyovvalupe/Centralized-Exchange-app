@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img src="/static/img/assets/record.png" />
+            <img :src="getStaticImgUrl('/static/img/assets/record.png')" />
           </div>
           <span>
             {{ $t("transfer.transferRecord") }}
@@ -22,15 +22,11 @@
         </div>
         <div
           class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
-          @click="openDialog('from')"
-        >
+          @click="openDialog('from')">
           <div class="flex items-center">
             <div class="account_item">
               <div class="account_item_icon">
-                <img
-                  :src="`/static/img/crypto/${form.from.toUpperCase()}.png`"
-                  alt="icon"
-                />
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.png`)" alt="icon" />
               </div>
               <div class="item_content">
                 <span>{{ _accountMap[form.from] }}</span>
@@ -39,10 +35,8 @@
 
             <div class="account_item">
               <div class="account_item_icon">
-                <img
-                  :src="`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.png`"
-                  alt="img"
-                />
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.png`)"
+                  alt="img" />
               </div>
               <div class="item_content">
                 <span class="monty_span">{{
@@ -54,41 +48,25 @@
           <ArrowIcon />
         </div>
 
-        <FormItem
-          background="#fff"
-          v-model="form.amount"
-          btn-show-mode="focus"
-          @btnClick="maxIpt"
-          show-btn
-          :btn-placeholder="form.fromCurrency.name"
-          :placeholder="t('transfer.out_amount')"
-          :inputType="'number'"
-          @update:modelValue="changeAmount('from')"
-        />
+        <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
+          :btn-placeholder="form.fromCurrency.name" :placeholder="t('transfer.out_amount')" :inputType="'number'"
+          @update:modelValue="changeAmount('from')" />
       </div>
 
       <div class="form_box" :class="{ form_box_active: clickKey == 'to' }">
         <div class="mb-[0.32rem]">
           <span class="text-[0.28rem] text-[#666d80]">{{ $t("transfer.in") }}</span>
         </div>
-        <div
-          class="trans_icon"
-          @click="transAccount"
-          :class="[transing ? 'transing_icon' : 'transing_stop']"
-        >
-          <img src="/static/img/assets/recharge_trans.png" alt="img" />
+        <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
+          <img :rc="getStaticImgUrl('/static/img/assets/recharge_trans.png')" alt="img" />
         </div>
         <div
           class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
-          @click="openDialog('to')"
-        >
+          @click="openDialog('to')">
           <div class="flex items-center">
             <div class="account_item">
               <div class="account_item_icon">
-                <img
-                  :src="`/static/img/crypto/${form.to.toUpperCase()}.png`"
-                  alt="icon"
-                />
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.png`)" alt="icon" />
               </div>
               <div class="item_content">
                 <span>{{ _accountMap[form.to] }}</span>
@@ -97,10 +75,7 @@
 
             <div class="account_item">
               <div class="account_item_icon">
-                <img
-                  :src="`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`"
-                  alt="img"
-                />
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`)" alt="img" />
               </div>
               <div class="item_content">
                 <span class="monty_span">{{ form.toCurrency.name || "" }}</span>
@@ -109,17 +84,9 @@
           </div>
           <ArrowIcon />
         </div>
-        <FormItem
-          background="#fff"
-          v-model="toAmount"
-          btn-show-mode="focus"
-          @btnClick="maxIpt"
-          show-btn
-          :btn-placeholder="form.toCurrency.name"
-          :placeholder="t('transfer.in_amount')"
-          :inputType="'number'"
-          @update:modelValue="changeAmount('to')"
-        />
+        <FormItem background="#fff" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
+          :btn-placeholder="form.toCurrency.name" :placeholder="t('transfer.in_amount')" :inputType="'number'"
+          @update:modelValue="changeAmount('to')" />
         <!-- <div>
             <span v-show="formType == 'transfer'">自动换算</span>
             <span
@@ -140,15 +107,8 @@
       </div>
     </div>
 
-    <Button
-      @click="openSafePass"
-      :loading="loading"
-      round
-      color="#014CFA"
-      class="submit"
-      type="primary"
-      >{{ $t("transfer.btn") }}</Button
-    >
+    <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+      $t("transfer.btn") }}</Button>
 
     <!-- 充提记录 -->
     <RecordList ref="RecordListRef" />
@@ -157,31 +117,16 @@
     <SafePassword @submit="submit" ref="safeRef" />
 
     <!-- 账户和币种 -->
-    <Popup
-      class="van-popup-custom--bottom"
-      v-model:show="showPicker"
-      closeable
-      round
-      position="bottom"
-      @closed="clickKey = ''"
-    >
+    <Popup class="van-popup-custom--bottom" v-model:show="showPicker" closeable round position="bottom"
+      @closed="clickKey = ''">
       <div class="van-popup-custom__top-rbtn" @click="onConfirm">{{ $t("transfer.confirm") }}</div>
       <div class="van-popup-custom-title">{{ $t("transfer.confirm_con") }}</div>
-      <Picker
-        :swipe-duration="200"
-        :show-toolbar="false"
-        :columns="columns"
-        :columns-field-names="customFieldName"
-        @cancel="hideDialog"
-        @change="onChange"
-      >
+      <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
+        @cancel="hideDialog" @change="onChange">
         <template #option="option">
           <div class="picker-item">
             <span class="picker-item__icon">
-              <img
-                :src="`/static/img/crypto/${option.key.toUpperCase()}.png`"
-                alt="icon"
-              />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${option.key.toUpperCase()}.png`)" alt="icon" />
             </span>
             <span class="picker-item__text">
               {{ option.value }}
@@ -196,6 +141,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import { Button, Popup, showToast, Picker, Row, Col } from "vant";
 import { ref, computed } from "vue";
@@ -278,8 +224,8 @@ const columns = computed(() => {
           ? "action-sheet-active"
           : ""
         : form.value.to == item.key
-        ? "action-sheet-active"
-        : "";
+          ? "action-sheet-active"
+          : "";
     if (item.key == "money") {
       // 现金账户
       item.currencys = wallet.value.map((w) => {
@@ -294,8 +240,8 @@ const columns = computed(() => {
                 ? "action-sheet-active"
                 : ""
               : form.value.toCurrency.currency == w.currency
-              ? "action-sheet-active"
-              : "",
+                ? "action-sheet-active"
+                : "",
         };
       });
     } else {
@@ -314,8 +260,8 @@ const columns = computed(() => {
                   ? "action-sheet-active"
                   : ""
                 : form.value.toCurrency.currency == cur.currency
-                ? "action-sheet-active"
-                : "",
+                  ? "action-sheet-active"
+                  : "",
           })
         }
         return acc;
@@ -324,18 +270,18 @@ const columns = computed(() => {
       // if (target) {
       //   item.currencys = [
       //     {
-            // key: target.currency,
-            // value: target.name,
-            // currency: target.currency,
-            // name: target.name,
-            // className:
-            //   clickKey.value == "from"
-            //     ? form.value.fromCurrency.currency == target.currency
-            //       ? "action-sheet-active"
-            //       : ""
-            //     : form.value.toCurrency.currency == target.currency
-            //     ? "action-sheet-active"
-            //     : "",
+      // key: target.currency,
+      // value: target.name,
+      // currency: target.currency,
+      // name: target.name,
+      // className:
+      //   clickKey.value == "from"
+      //     ? form.value.fromCurrency.currency == target.currency
+      //       ? "action-sheet-active"
+      //       : ""
+      //     : form.value.toCurrency.currency == target.currency
+      //     ? "action-sheet-active"
+      //     : "",
       //     },
       //   ];
       // } else {
@@ -395,7 +341,7 @@ const balance = computed(() => {
 const safeRef = ref();
 const errStatus = ref(false);
 const openSafePass = () => {
-  if (userInfo.value.role =='guest' || userInfo.value.role != 'guest' && AccountCheckRef.value.check()) {
+  if (userInfo.value.role == 'guest' || userInfo.value.role != 'guest' && AccountCheckRef.value.check()) {
     if (!form.value.amount || form.value.amount <= 0) {
       errStatus.value = true;
       return showToast(t('transfer.no_amount'));
@@ -409,8 +355,8 @@ const openSafePass = () => {
     ) {
       return showToast(t('transfer.account_same'));
     }
-    if(userInfo.value.role == 'user') safeRef.value.open();
-    if(userInfo.value.role == 'guest') submit('000000');
+    if (userInfo.value.role == 'user') safeRef.value.open();
+    if (userInfo.value.role == 'guest') submit('000000');
   }
 };
 const submit = (s) => {
@@ -546,6 +492,7 @@ const changeAmount = (val) => {
     justify-content: center;
     color: #0953fa;
     font-size: 0.28rem;
+
     .top-record-icon {
       width: 0.3rem;
       height: 0.3rem;
@@ -565,6 +512,7 @@ const changeAmount = (val) => {
         height: 1.12rem;
       }
     }
+
     .form_text {
       color: #666d80;
       margin-right: 0.32rem;
@@ -581,16 +529,19 @@ const changeAmount = (val) => {
     .account_item {
       display: flex;
       align-items: center;
+
       .account_item_icon {
         width: 0.48rem;
         height: 0.48rem;
         margin-right: 0.16rem;
+
         img {
           border-radius: 50%;
         }
       }
     }
-    .account_item + .account_item {
+
+    .account_item+.account_item {
       margin-left: 0.4rem;
     }
 
@@ -647,10 +598,12 @@ const changeAmount = (val) => {
     align-items: center;
     justify-content: flex-start;
     padding-left: 0.6rem;
+
     &__icon {
       width: 0.48rem;
       height: 0.48rem;
       margin-right: 0.16rem;
+
       img {
         border-radius: 50%;
       }

@@ -1,23 +1,14 @@
 <template>
   <router-view v-slot="{ Component }">
     <div v-show="pageLoading" class="full_page_loading">
-      <!-- <img src="/static/img/logo.png" alt="logo"> -->
       <Loading :size="44" color="#014cfa" />
     </div>
     <div v-show="!pageLoading" class="app_scroll">
       <transition :name="transitionName">
-        <component
-          :is="Component"
-          v-if="!$route.meta.keepAlive"
-          :key="$route.name"
-        />
+        <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name" />
       </transition>
       <keep-alive>
-        <component
-          :is="Component"
-          v-if="$route.meta.keepAlive"
-          :key="$route.name"
-        />
+        <component :is="Component" v-if="$route.meta.keepAlive" :key="$route.name" />
       </keep-alive>
     </div>
   </router-view>

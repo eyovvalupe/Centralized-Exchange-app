@@ -1,12 +1,6 @@
 <!-- ai量化-订单详情 -->
 <template>
-  <Popup
-    teleport="body"
-    lazy-render
-    v-model:show="showModel"
-    position="right"
-    style="width: 100%; height: 100%"
-  >
+  <Popup teleport="body" lazy-render v-model:show="showModel" position="right" style="width: 100%; height: 100%">
     <Top :title="t('trade.ai_position_title')" :backFunc="backFunc" />
 
     <div class="loading-wrap" v-if="loading">
@@ -15,12 +9,8 @@
     <div class="ai_order_info" v-show="!loading">
       <!-- 盈利 -->
       <div class="win" v-if="currItem.status == 'close'">
-        <img
-          src="/static/img/trade/profit_bg.png"
-          class="win_bg"
-          v-if="currItem.profit >= 0"
-        />
-        <img src="/static/img/trade/loss_bg.png" class="win_bg" v-else />
+        <img :src="getStaticImgUrl('/static/img/trade/profit_bg.png')" class="win_bg" v-if="currItem.profit >= 0" />
+        <img :src="getStaticImgUrl('/static/img/trade/loss_bg.png')" class="win_bg" v-else />
         <div class="win-animate-bg" v-if="!loading"></div>
         <div class="win_name">{{ t('trade.ai_position_profit') }}</div>
         <div class="amount" :class="[currItem.profit < 0 ? 'down' : 'up']">
@@ -36,17 +26,8 @@
             <div class="time">{{ formatSec2(t, currItem.endtime) }}</div>
             <div class="text">{{ t('trade.ai_position_timer') }}</div>
           </div>
-          <Circle
-            v-if="currItem.status == 'open'"
-            start-position="bottom"
-            stroke-linecap="round"
-            stroke-width="142"
-            layer-color="#F5F7FC"
-            :color="gradientColor"
-            size="182"
-            :rate="100"
-            :current-rate="100 - rate"
-          />
+          <Circle v-if="currItem.status == 'open'" start-position="bottom" stroke-linecap="round" stroke-width="142"
+            layer-color="#F5F7FC" :color="gradientColor" size="182" :rate="100" :current-rate="100 - rate" />
         </div>
 
         <div class="time_bg">
@@ -61,10 +42,10 @@
 
       <div class="win-animate" @click="showWin = false" v-show="showWin">
         <div class="win-animate-gold">
-          <img src="/static/img/trade/gold.png" @load="goldLoad = true" />
+          <img :src="getStaticImgUrl('/static/img/trade/gold.png')" @load="goldLoad = true" />
         </div>
         <div class="win-animate-text" v-if="goldLoad">
-          <img src="/static/img/trade/wintext.png" />
+          <img :src="getStaticImgUrl('/static/img/trade/wintext.png')" />
           <div class="win-animate-amount">
             {{ animateProfit }}
           </div>
@@ -75,7 +56,7 @@
         <div class="stock-info__order_no">
           <span>{{ t('trade.ai_position_order_id') }} {{ currItem.order_no || "--" }}</span>
           <div class="stock-info__copy_icon" @click="copy(currItem.order_no)">
-            <img src="/static/img/trade/copy.png" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="copy" />
           </div>
         </div>
       </div>
@@ -109,6 +90,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Button, Popup, Circle, showToast, Loading } from "vant";
 import { _copyTxt } from "@/utils/index";
 import { ref, computed, onBeforeUnmount } from "vue";
@@ -243,7 +225,7 @@ const getRange = () => {
       .div(100);
     const end = new Decimal(currItem.value.amount).mul(Number(arr[1])).div(100);
     rs = `${start} - ${end}`;
-  } catch {}
+  } catch { }
 
   return rs;
 };

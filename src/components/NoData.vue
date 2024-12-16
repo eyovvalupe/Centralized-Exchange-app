@@ -2,13 +2,14 @@
 <template>
   <div class="no_data">
     <div class="nodata_icon">
-      <img src="/static/img/common/no_data.png" alt="nothing" />
+      <img :src="getStaticImgUrl('/static/img/common/no_data.png')" alt="nothing" />
     </div>
     <div class="nodata_text">{{ props.tip ? props.tip : t('common.no_data') }}</div>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -35,10 +36,12 @@ const props = defineProps({
   .nodata_icon {
     width: 2.28rem;
     height: auto;
+
     img {
       width: 100%;
     }
   }
+
   .nodata_text {
     font-size: 0.28rem;
     margin-top: 0.46rem;

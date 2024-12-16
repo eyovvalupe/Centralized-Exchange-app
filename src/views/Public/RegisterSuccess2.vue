@@ -10,21 +10,15 @@
       </div> -->
     <Top :title="t('register.guest_account')"> </Top>
     <div class="icon">
-      <img src="/static/img/user/success.svg" alt="√" />
+      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("register.success_sign_up") }}</div>
-    <div
-      class="text-[0.24rem] leading-[0.34rem] text-[#8f92a1] relative top-[-1rem]"
-    >
+    <div class="text-[0.24rem] leading-[0.34rem] text-[#8f92a1] relative top-[-1rem]">
       {{ t('register.already_get_virtual') }}
     </div>
-    <div
-      class="text-[0.36rem] leading-[0.54rem] text-[#014cfa] relative top-[-0.9rem]"
-    >
+    <div class="text-[0.36rem] leading-[0.54rem] text-[#014cfa] relative top-[-0.9rem]">
       {{ userInfo.amount ? userInfo.amount : 0 }}&nbsp;<span
-        class="text-[0.24rem] text-[#061023] leading-[0.34rem]"
-        >USDT</span
-      >
+        class="text-[0.24rem] text-[#061023] leading-[0.34rem]">USDT</span>
     </div>
 
     <!-- <Button
@@ -44,14 +38,12 @@
     <div class="w-full flex justify-between relative top-[-0.4rem]">
       <div
         class="w-[3.23rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-[#014cfa]"
-        @click="() => router.replace({name: 'transfer'})"
-        >
+        @click="() => router.replace({ name: 'transfer' })">
         {{ t('trade.stock_opening_btn_transfer') }}
       </div>
       <div
         class="w-[3.23rem] h-[1.12rem] bg-[#014cfa] rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-[#fff]"
-        @click="() => router.back()"
-      >
+        @click="() => router.back()">
         {{ t('trade.stock_opening_btn_trade') }}
       </div>
     </div>
@@ -59,6 +51,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Button, Icon } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -194,6 +187,7 @@ const goChat = () => {
     width: 100%;
     margin-bottom: 0.6rem;
   }
+
   .close-svg-iconB {
     width: 0.42rem;
     height: 0.4rem;

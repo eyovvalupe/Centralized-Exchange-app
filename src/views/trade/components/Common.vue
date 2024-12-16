@@ -3,8 +3,8 @@
     <div class="stock-box" style="margin: 0 0px 0.1rem;">
       <span class="grop-title">股票</span>
       <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
-      <!-- <img src="/static/img/trade/white-stock.png" class="stock-img" v-if="!loading && stockCo.length === 0" /> -->
-      <img src="/static/img/trade/blue-stock.png" class="stock-img" v-if="stockCo.length > 0" @click="openPopup" />
+      <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" class="stock-img" v-if="stockCo.length > 0"
+        @click="openPopup" />
     </div>
     <div class="animate-input num-input symbol-name"
       :class="{ hasval: !!value || stockCo.length > 0, inputFocus: isFocused === 4 || value }">
@@ -21,24 +21,6 @@
         </div>
       </div>
     </div>
-    <!-- <Field v-model="value" :class="[
-      'num-input',
-      'stock-input-text',
-      { enlarged: enlarged },
-      { 'focusinput': isFocused === 4 }
-    ]" style="margin-bottom: 0.2rem;margin-top: 0.05rem;" @input="handleInput" @focus="handleFocus(4)"
-      @blur="handleBlur(4)" placeholder="股票代码">
-      <template #button v-if="stockCo.length > 0">
-        <div class="co-text">
-          <div>
-            {{ stockCo[0].symbol }}
-          </div>
-          <div style="color: #9ea3ae">
-            {{ stockCo[0].name }}
-          </div>
-        </div>
-      </template>
-</Field>-->
     <div class="flex flex-between" style="margin: .4rem 0 .1rem 0;">
       <div class="grop-title link-text">全仓 VS 逐仓</div>
       <div class="right-input flex flex-between">
@@ -56,7 +38,7 @@
       <div class="small-select" @click="allSelect">
         <div class="abs-con">
           <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
-          <img src="/static/img/trade/down.png" class="down-img" />
+          <img :src="getStaticImgUrl('/static/img/trade/down.png')" class="down-img" />
         </div>
       </div>
 
@@ -112,6 +94,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, onMounted, watch, nextTick, defineExpose, onUpdated, onBeforeUnmount, onDeactivated, reactive } from "vue";
 import { Tab, Tabs, Field, CellGroup, Slider, Button, Loading, Popup, showToast } from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";

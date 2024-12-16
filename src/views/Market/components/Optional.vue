@@ -2,126 +2,65 @@
 <template>
   <div v-if="watchList.length" :loading="loading">
     <OptionCategory />
-    <StockTable
-      style="margin-top: 0.1rem"
-      v-if="watchList.length"
-      :loading="loading"
-      @remove="remove"
-      :deleteItem="!!token"
-      class="market_optional"
-      :list="watchList"
-      :marketType="marketType"
-    />
+    <StockTable style="margin-top: 0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
+      :deleteItem="!!token" class="market_optional" :list="watchList" :marketType="marketType" />
     {{ console.log("watch list ===========> ", watchList) }}
     <div class="addBtn_container">
-      <Button
-        round
-        icon="plus"
-        plain
-        type="primary"
-        hairline=""
-        class="addBtn px-[0.1rem]"
-        @click="jump('search')"
-        >{{ t('market.market_optional_add') }}</Button
-      >
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn px-[0.1rem]" @click="jump('search')">{{
+        t('market.market_optional_add') }}</Button>
     </div>
   </div>
-  <div
-    v-else-if="!watchList.length && !loading"
-    style="position: relative; margin-bottom: 1rem"
-  >
+  <div v-else-if="!watchList.length && !loading" style="position: relative; margin-bottom: 1rem">
     <div class="no_self_selection_block">
       <div class="no_data_icon">
-        <img src="/static/img/common/no_data.png" alt="暂无数据" />
+        <img :src="getStaticImgUrl('/static/img/common/no_data.png')" alt="暂无数据" />
       </div>
       <p class="text">{{ t('market.market_optional_no_optional') }}</p>
-      <Button
-        round
-        icon="plus"
-        plain
-        type="primary"
-        hairline=""
-        class="addBtn"
-        @click="jump('search')"
-        >{{ t('market.market_optional_add') }}</Button
-      >
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')">{{
+        t('market.market_optional_add') }}</Button>
     </div>
     <Teleport to=".page_market">
-      <div
-        class="one_click_to_favorite_container"
-        v-show="stockList.length + contractList.length > 0 && showFavoriteBtn"
-      >
-        <Button
-          round
-          block
-          type="primary"
-          size="large"
-          class="one_click_to_favorite"
-          :loading="addLoading"
-          @click="addOptional"
-        >
+      <div class="one_click_to_favorite_container"
+        v-show="stockList.length + contractList.length > 0 && showFavoriteBtn">
+        <Button round block type="primary" size="large" class="one_click_to_favorite" :loading="addLoading"
+          @click="addOptional">
           {{ t('market.market_optional_add_all') }}(<i class="tag">{{
             stockList.length + contractList.length
-          }}</i
-          >)
+          }}</i>)
         </Button>
       </div>
     </Teleport>
 
-    <Loaidng
-      v-if="
-        !marketSrockRecommendList.length &&
-        !marketContractRecommendList.length &&
-        recommendLoading
-      "
-      :loading="recommendLoading"
-      :type="'spinner'"
-    />
-    <NoData
-      v-if="
-        !marketSrockRecommendList.length &&
-        !marketContractRecommendList.length &&
-        !loading &&
-        !recommendLoading
-      "
-    />
+    <Loaidng v-if="
+      !marketSrockRecommendList.length &&
+      !marketContractRecommendList.length &&
+      recommendLoading
+    " :loading="recommendLoading" :type="'spinner'" />
+    <NoData v-if="
+      !marketSrockRecommendList.length &&
+      !marketContractRecommendList.length &&
+      !loading &&
+      !recommendLoading
+    " />
 
     <div class="recommend_block">
       <div class="item_block" v-if="marketSrockRecommendList.length">
         <div class="item_block_title flex justify-between">
           <div>{{ t('market.market_optional_recommend_stock') }}</div>
           <div @click="changeAllCheckState">
-            <div
-              :class="allCheckState ? 'checked_icon_blue' : 'unchecked_icon'"
-            ></div>
+            <div :class="allCheckState ? 'checked_icon_blue' : 'unchecked_icon'"></div>
           </div>
         </div>
-        <StockRecommend
-          :key="'stock'"
-          :keyStr="'stock'"
-          :loading="recommendLoading"
-          :newState="newState"
-          :flag="flag"
-          @change="changeStockList"
-          @init="init"
-          :list="marketSrockRecommendList"
-        />
+        <StockRecommend :key="'stock'" :keyStr="'stock'" :loading="recommendLoading" :newState="newState" :flag="flag"
+          @change="changeStockList" @init="init" :list="marketSrockRecommendList" />
       </div>
 
       <div class="item_block" v-if="marketContractRecommendList.length">
         <div class="item_block_title">
           <span>{{ t('market.market_optional_recommend_crypto') }}</span>
         </div>
-        <StockRecommend
-          :key="'recommend'"
-          :keyStr="'recommend'"
-          :loading="recommendLoading"
-          :newState="newState"
-          :flag="flag"
-          @change="changeContractList"
-          @init="init"
-          :list="marketContractRecommendList"
-        />
+        <StockRecommend :key="'recommend'" :keyStr="'recommend'" :loading="recommendLoading" :newState="newState"
+          :flag="flag" @change="changeContractList" @init="init" :list="marketContractRecommendList" />
       </div>
     </div>
   </div>
@@ -130,6 +69,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Loaidng from "@/components/Loaidng.vue";
 import NoData from "@/components/NoData.vue";
 import StockTable from "@/components/StockTable.vue";
@@ -154,7 +94,7 @@ const { t } = useI18n();
 const { startSocket } = useSocket();
 
 const props = defineProps({
-  showFavoriteBtn:Boolean
+  showFavoriteBtn: Boolean
 })
 
 const active = ref(0);
@@ -435,6 +375,7 @@ const jump = (name) => {
         background-size: contain;
         background-repeat: no-repeat;
       }
+
       .unchecked_icon {
         width: 0.4rem;
         height: 0.4rem;
@@ -459,6 +400,7 @@ const jump = (name) => {
   width: 100%;
   padding: 0 0.271rem;
   transition: all linear 3s;
+
   .one_click_to_favorite {
     background-color: #014cfa;
     color: #ffffff;

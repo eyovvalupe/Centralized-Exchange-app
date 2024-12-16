@@ -1,4 +1,10 @@
 // 常用工具类
+import { VERSION } from "@/config"
+
+// 获取图片地址  后边拼接版本信息
+export const getStaticImgUrl = (url) => {
+  return url + '?v=' + VERSION
+}
 
 // 根据值来获取最大小数位数
 export const _maxTail = num => {

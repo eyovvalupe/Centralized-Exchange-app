@@ -19,21 +19,16 @@
     </div>
     <div v-if="currSelectedWallet != -1">
       <div @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
-        <HeaderTabs
-          type="card"
-          v-model:active="activeTab"
-          :tabs="[
-            t('assets.wallet_header_cash'),
-            t('assets.wallet_header_stock'),
-            t('assets.wallet_header_contract'),
-          ]"
-          @change="changeActiveTab(activeTab)"
-        />
+        <HeaderTabs type="card" v-model:active="activeTab" :tabs="[
+          t('assets.wallet_header_cash'),
+          t('assets.wallet_header_stock'),
+          t('assets.wallet_header_contract'),
+        ]" @change="changeActiveTab(activeTab)" />
       </div>
 
       <div class="tab" v-if="currSelectedWallet == 0">
         <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash"/>
+          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" />
         </div>
         <Btns />
         <Cash @click="(val) => click(val)" />
@@ -41,7 +36,7 @@
 
       <div class="tab" v-if="currSelectedWallet == 1">
         <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock"/>
+          <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock" />
         </div>
         <Btns />
         <StockMyWallet @click="(val) => click(val)" />
@@ -49,7 +44,7 @@
 
       <div class="tab" v-if="currSelectedWallet == 2">
         <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures"/>
+          <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
         </div>
         <Btns />
         <CryptoWallet @click="(val) => click(val)" />
@@ -63,7 +58,7 @@ import StockWallet from "./components/StockWallet.vue";
 import ContractWallet from "./components/ContractWallet.vue";
 import ForexWallet from "./components/ForexWallet.vue";
 import TradeWallet from "./components/TradeWallet.vue";
-import { ref, onMounted, computed, watch, defineEmits } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import DefaultWallet from "./components/DefaultWallet.vue";
 import Btns from "./components/Btns.vue";
 import Cash from "./Cash.vue";
@@ -83,7 +78,7 @@ const changeActiveTab = (val) => {
   showData.value = false;
   activeTab.value = val;
   store.commit("setCurrSelectedWallet", val);
-  store.dispatch("updateWallet",val);
+  store.dispatch("updateWallet", val);
   store.dispatch("updateAssets");
 };
 // 刷新总资产

@@ -9,7 +9,7 @@
 
       <div class="flex flex-row">
         <div class="server_icon" @click="goChat">
-          <div class="chat_icon"><img src="/static/img/user/server.svg" /></div>
+          <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
         </div>
 
         <div class="language_icon_container" @click="goLang">
@@ -18,23 +18,17 @@
       </div>
     </div>
     <div class="icon">
-      <img src="/static/img/user/success.svg" alt="√" />
+      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">密码重置成功</div>
 
-    <Button
-      round
-      color="#014CFA"
-      class="submit"
-      type="primary"
-      @click="next"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"
-      >返回登录</Button
-    >
+    <Button round color="#014CFA" class="submit" type="primary" @click="next"
+      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">返回登录</Button>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Button, Icon } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -165,6 +159,7 @@ const goChat = () => {
     position: relative;
     top: -0.5rem;
   }
+
   .close-svg-iconB {
     width: 0.42rem;
     height: 0.4rem;
