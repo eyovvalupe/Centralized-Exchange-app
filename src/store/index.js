@@ -176,6 +176,12 @@ const store = createStore({
       //   return stateWithoutThese;
       // },
     }),
+    createPersistedState({
+      key: "realtime",
+      paths: ['realtimeData'],
+      storage: window.sessionStorage,
+      
+    }),
   ],
 });
 export const useMapState = (arr) => {
