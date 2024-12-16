@@ -1,3 +1,8 @@
+/* 首页模板 */
+export const HOME_MODE = 1
+
+
+
 
 /* 开发环境 */
 // export const BASE_SOCKET = 'ws://54.169.182.60:9093'; // ws地址

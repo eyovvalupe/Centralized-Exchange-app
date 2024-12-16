@@ -57,12 +57,12 @@
           <div v-if="selectedItem.account == 'money'"
             class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-[#014cfa1a] flex flex-col items-center pt-[0.16rem]"
             @click="() => {
-                router.push({
-                  name: 'topUpCrypto',
-                  query: { currency: selectedItem.name },
-                });
-                handle = false;
-              }
+              router.push({
+                name: 'topUpCrypto',
+                query: { currency: selectedItem.name },
+              });
+              handle = false;
+            }
               ">
             <DepositColorIcon class="mb-[0.16rem]" />
             <div class="text-[#014cfa] text-[0.32rem]">{{ t('assets.coin_list_recharge') }}</div>
@@ -70,24 +70,24 @@
           <div v-if="selectedItem.account == 'money'"
             class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-[#fa75001a] flex flex-col items-center pt-[0.16rem]"
             @click="() => {
-                router.push({
-                  name: 'withdraw',
-                  query: { currency: selectedItem.name },
-                });
-                handle = false;
-              }
+              router.push({
+                name: 'withdraw',
+                query: { currency: selectedItem.name },
+              });
+              handle = false;
+            }
               ">
             <WithdrawColorIcon class="mb-[0.16rem]" />
             <div class="text-[#fa7500] text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
           </div>
           <div class="h-[1.565rem] rounded-[0.32rem] bg-[#00af701a] flex flex-col items-center pt-[0.16rem]"
             :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
-                router.push({
-                  name: 'transfer',
-                  query: { to: selectedItem.account },
-                });
-                handle = false;
-              }
+              router.push({
+                name: 'transfer',
+                query: { to: selectedItem.account },
+              });
+              handle = false;
+            }
               ">
             <TransferColorIcon class="mb-[0.16rem]" />
             <div class="text-[#00af70] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') :
@@ -95,12 +95,12 @@
           </div>
           <div class="h-[1.565rem] rounded-[0.32rem] bg-[#e8503a1a] flex flex-col items-center pt-[0.16rem]"
             :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
-                router.push({
-                  name: 'transfer',
-                  query: { from: selectedItem.account },
-                });
-                handle = false;
-              }
+              router.push({
+                name: 'transfer',
+                query: { from: selectedItem.account },
+              });
+              handle = false;
+            }
               ">
             <TransferOutColorIcon class="mb-[0.16rem]" />
             <div class="text-[#e8503a] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.out_sim') :
@@ -116,7 +116,7 @@
 
 <script setup>
 import { Tab, Tabs, PullRefresh, Swipe, SwipeItem, Popup } from "vant";
-import { ref, onMounted, computed, onActivated, defineEmits } from "vue";
+import { ref, onMounted, computed, onActivated } from "vue";
 import { useRoute } from "vue-router";
 import Overview from "./page/Overview.vue";
 import RecordList from "@/components/RecordList.vue";

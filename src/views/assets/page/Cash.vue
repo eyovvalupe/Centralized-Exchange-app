@@ -9,13 +9,13 @@
         }}</span>
       </div>
       <!-- <CurrencyItem v-for="(item, i) in showList" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
-      <CurrencyList @click="(val) => click(val)" :list="showList" :type="'cash'"/>
+      <CurrencyList @click="(val) => click(val)" :list="showList" :type="'cash'" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, defineEmits } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { Icon, Switch } from "vant";
 import store from "@/store";
 import CurrencyItem from './components/CurrencyItem.vue'
@@ -89,7 +89,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document.querySelector(".page").removeEventListener("click", removeSwitch);
-  } catch {}
+  } catch { }
 });
 
 const click = (val) => {
@@ -107,6 +107,7 @@ defineExpose({
 <style lang="less" scoped>
 .page_assets_cash {
   padding: 0.32rem 0;
+
   .top {
     font-size: 0.28rem;
     font-weight: 400;
@@ -114,10 +115,12 @@ defineExpose({
     align-items: center;
     height: 0.32rem;
     line-height: 0.32rem;
+
     .title {
       color: #fff;
       margin-right: 0.12rem;
       font-size: 0.3rem;
+
       span {
         font-size: 0.24rem;
       }
@@ -149,11 +152,13 @@ defineExpose({
     background-color: #fff;
     border-radius: 0.32rem;
     margin-top: 0.34rem;
+
     .line {
       width: 1px;
       height: 0.76rem;
       background-color: #eff3f8;
     }
+
     .nav {
       flex: 1;
       display: flex;
@@ -161,6 +166,7 @@ defineExpose({
       align-items: center;
       flex-direction: column;
     }
+
     .nav_label {
       color: #8f92a1;
       font-size: 0.28rem;
@@ -192,6 +198,7 @@ defineExpose({
   .tabs {
     position: relative;
     padding: 0 0.32rem;
+
     .tab {
       padding: 0 0.32rem;
       overflow: hidden;
@@ -207,6 +214,7 @@ defineExpose({
       .name {
         font-size: 0.3rem;
       }
+
       &:active {
         background-color: rgba(237, 237, 237, 0.87);
       }
@@ -242,6 +250,7 @@ defineExpose({
         right: -100%;
         top: 0;
         transition: 0.3s;
+
         .right {
           height: 100%;
           width: 1.04rem;
@@ -255,18 +264,23 @@ defineExpose({
           color: #fff;
           background-color: #014cfa;
         }
+
         .right--yellow {
           background-color: #ffaf2a;
         }
+
         .right--green {
           background-color: #00af70;
         }
+
         .right--red {
           background-color: #e8503a;
         }
+
         .right:first-child {
           border-radius: 0.32rem 0rem 0rem 0.32rem;
         }
+
         .right:last-child {
           border-radius: 0rem 0.32rem 0.32rem 0rem;
         }
@@ -277,10 +291,12 @@ defineExpose({
       .name {
         display: none;
       }
+
       .amount {
         text-align: left;
         padding: 0px;
       }
+
       .rights {
         right: 0;
       }

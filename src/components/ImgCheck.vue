@@ -19,22 +19,12 @@
       </div>
     </div>
     <div class="check_pic">
-      <img
-        class="check_img"
-        :style="{ transform: `rotate(${slider * 3.6 - initialRotate}deg)` }"
-        :src="`/static/img/common/check${initialImg}.webp`"
-        alt="img"
-      />
+      <img class="check_img" :style="{ transform: `rotate(${slider * 3.6 - initialRotate}deg)` }"
+        :src="`/static/img/common/check${initialImg}.webp`" alt="img" />
     </div>
     <div class="slider_box" style="width: 100%">
-      <Slider
-        @change="changeSlider"
-        @drag-start="activeVal = 0"
-        v-model="slider"
-        bar-height="0.9rem"
-        button-size="0.9rem"
-        :active-color="colorMap[sliderStatus]"
-      />
+      <Slider @change="changeSlider" @drag-start="activeVal = 0" v-model="slider" bar-height="0.9rem"
+        button-size="0.9rem" :active-color="colorMap[sliderStatus]" />
     </div>
     <span>&nbsp;</span>
 
@@ -45,10 +35,7 @@
         <img src="/static/img/common/check_error.png" alt="img" />
       </div>
     </div>
-    <div
-      class="status_text status_success"
-      v-else-if="sliderStatus == 'success'"
-    >
+    <div class="status_text status_success" v-else-if="sliderStatus == 'success'">
       <span class="check_result">{{
         $t("register.security_result_success")
       }}</span>
@@ -242,9 +229,12 @@ onMounted(() => {
       :deep(.van-slider__button) {
         box-shadow: 0 0.08rem 0.2rem 0 #014cfa33;
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="-10 -10 36 36"><path d="M12.1716 6.9999L6.8076 1.63589L8.2218 0.22168L16 7.9999L8.2218 15.778L6.8076 14.3638L12.1716 8.9999H0V6.9999H12.1716Z" fill="%23014CFA"/></svg>');
-        background-size: contain; /* Scale the background image */
-        background-repeat: no-repeat; /* Prevent repetition */
-        background-position: center; /* Center the background */
+        background-size: contain;
+        /* Scale the background image */
+        background-repeat: no-repeat;
+        /* Prevent repetition */
+        background-position: center;
+        /* Center the background */
       }
     }
   }
@@ -292,7 +282,6 @@ onMounted(() => {
       width: 1.2rem;
       height: 1.2rem;
       border: none;
-      // background-image: url('@/assets/slider.png');
       background-size: 100% 100%;
     }
   }

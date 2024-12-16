@@ -1,17 +1,10 @@
 <template>
   <div class="msg-input">
-    <span class="icon-left"
-      ><img :src="sendImg_icon" />
+    <span class="icon-left"><img :src="'/static/sendImg.png'" />
       <input type="file" id="fileInput" @change="uploadImg" accept="image/*" />
     </span>
-    <textarea
-      class="textarea"
-      v-model="message"
-      ref="sendInput"
-      :placeholder="t('service.input_message')"
-    ></textarea>
-    <span class="icon-right" @click="sendMessage('text', message)"
-      ><img :src="send_icon" />
+    <textarea class="textarea" v-model="message" ref="sendInput" :placeholder="t('service.input_message')"></textarea>
+    <span class="icon-right" @click="sendMessage('text', message)"><img :src="'/static/send.png'" />
     </span>
   </div>
 </template>
@@ -25,8 +18,6 @@ import { _fetchWithTimeout } from "@/api/upload";
 import { randomFileName, _compressImg } from "@/utils";
 import storeUser from "@/store";
 import storeChat from "@/store/chat";
-import send_icon from "@/assets/send.png";
-import sendImg_icon from "@/assets/sendImg.png";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
