@@ -96,14 +96,14 @@
                     <div class="info_box">
                         <div>{{ $t("trade.ipo_detail_item10") }}</div>
                         <div class="amount">
-                        {{form.volume / lever}}
+                        {{form.volume}}
                         </div>
                     </div>
                 
                     <div class="info_box info_box--line">
-                        <div>{{ $t("trade.ipo_detail_item12") }}({{currIpo.currency}})</div>
+                        <div>{{ $t("trade.ipo_detail_item14") }}({{currIpo.currency}})</div>
                         <div class="amount">
-                            {{ loanNum || "--" }}
+                            {{ freezeNum || "--" }}
                         </div>
                     </div>
                 </div>
@@ -116,14 +116,14 @@
                         <div class="item_val_text">{{ lever }}X</div>
                     </div>
                 </div>
-                <div class="item">
+                <!-- <div class="item">
                     <div class="item_name">{{ $t("trade.ipo_detail_item13") }}</div>
                     <div class="item_val">
                         <div class="item_val_text">
                             {{ form.volume }}
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
                 <div class="item">
                     <div class="item_name">{{ $t("trade.ipo_detail_item9") }}</div>
@@ -316,22 +316,26 @@ const max = computed(() => {
 // 冻结金额
 const freezeNum = computed(() => {
     if (!form.value.volume) return 0
-    return new Decimal(form.value.volume).div(lever.value).mul(currIpo.value.issue_price_max || 0)
+    const val = new Decimal(form.value.volume).div(lever.value).mul(currIpo.value.issue_price_max || 0).toFixed(3).toString()
+    return val.substring(0,val.length-1)
 })
 //订单金额
 const loanNum = computed(() => {
     if (!form.value.volume) return 0
-    return new Decimal(form.value.volume).mul(currIpo.value.issue_price_max || 0)
+    const val = new Decimal(form.value.volume).mul(currIpo.value.issue_price_max || 0).toFixed(3).toString()
+    return val.substring(0,val.length-1)
 })
 //手续费
 const feeNum = computed(() => {
     if (!form.value.volume) return 0
-    return new Decimal(loanNum.value).sub(freezeNum.value).mul(params.value.fee || 0)
+    const val = new Decimal(loanNum.value).sub(freezeNum.value).mul(params.value.fee || 0).toFixed(3).toString()
+    return val.substring(0,val.length-1)
 })
 
 const all = computed(() => {
   // 实际支付金额
-  return new Decimal(freezeNum.value).add(feeNum.value);
+  const val = new Decimal(freezeNum.value).add(feeNum.value).toFixed(3).toString();
+  return val.substring(0,val.length-1)
 });
 
 

@@ -694,6 +694,7 @@ export default {
     ipo_detail_item11: "Market affiliation",
     ipo_detail_item12: "Order amount",
     ipo_detail_item13: "Order quantity",
+    ipo_detail_item14: "Lock amount",
     ipo_detail_btn: "Purchase Now",
     ipo_account_balance: "IPO Balance",
 

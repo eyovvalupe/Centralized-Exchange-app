@@ -56,7 +56,7 @@
         </div>
         <div class="item_info">
           <div class="info_cell">
-            <span class="info_name">{{ t("trade.ipo_detail_item13") }}</span>
+            <span class="info_name">{{ t("trade.ipo_detail_item10") }}</span>
             <span class="info_val"
               >{{ item.volume || "--"
               }}<span class="info_lever" v-if="item.lever > 1"
@@ -65,7 +65,7 @@
             >
           </div>
           <div class="info_cell">
-            <span class="info_name">{{ t("trade.ipo_detail_item12") }}</span>
+            <span class="info_name">{{ t("trade.ipo_detail_item14") }}</span>
             <span class="info_val">{{ item.amount || "--" }} {{item.currency}}</span>
           </div>
           

@@ -91,10 +91,10 @@
             </div>
 
             <div class="detail_item_list">
-                <div class="detail_item">
+                <!-- <div class="detail_item">
                     <div>订单数量</div>
                     <div class="val">{{ currDetail.volume || '--' }}</div>
-                </div>
+                </div> -->
                 <div class="detail_item">
                     <div>手续费</div>
                     <div class="val">{{ currDetail.fee }} <span>{{ currDetail.currency }}</span></div>

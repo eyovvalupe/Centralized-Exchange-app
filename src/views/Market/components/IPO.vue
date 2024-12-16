@@ -142,7 +142,7 @@
           </div>
           <div class="detail_item">
             <div>{{ t('trade.ipo_detail_item1') }}</div>
-            <div class="val">--</div>
+            <div class="val">{{ currDetail.symbol || '--'}}</div>
           </div>
           <div class="detail_item">
             <div>{{ t('trade.ipo_detail_item2') }}</div>
