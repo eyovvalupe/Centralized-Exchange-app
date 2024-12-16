@@ -10,11 +10,10 @@
       :tabs="[t('trade.header_stock'), t('trade.header_contract'), t('trade.header_aibot'), t('trade.header_ipo')]"
       v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <template #before>
-        <div class="tab_icon" @click="showNavDialog = true">
+        <div class="tab_icon" @click="showNavDialogFunc()">
           <img src="/static/img/trade/open.png" alt="img" />
         </div>
       </template>
-
     </HeaderTabs>
 
     <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipeRef" @change="swipeChange">
@@ -70,41 +69,83 @@
               :placeholder="t('trade.left_search')" />
           </div>
         </div>
-        <!-- 切换 -->
         <Tabs @change="changeTab" class="van-tabs--sub" :lazy-render="false" v-model:active="navActiveTab" animated
-          shrink>
+        shrink  v-if="activeTab == 0">
           <Tab :title="t('trade.left_mine')" name="option">
-            <OptionCategory class="option-category" />
-            <div class="lists" style="height: calc(100vh - 3.3rem)">
+            <div class="lists">
               <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="optionLoading" :key="'option'"
                 :list="watchList" />
             </div>
           </Tab>
-          <Tab :title="t('trade.left_stock')" name="stock">
+          <Tab
+            style="min-width: 2rem"
+            :title="
+              marketItem.market == 'us'
+                ? t('market.market_stock_country_us')
+                : marketItem.market == 'japan'
+                ? t('market.market_stock_country_japan')
+                : marketItem.market == 'india'
+                ? t('market.market_stock_country_india')
+                : marketItem.market == 'korea'
+                ? t('market.market_stock_country_korea')
+                : marketItem.market == 'germany'
+                ? t('market.market_stock_country_germany')
+                : marketItem.market == 'uk'
+                ? t('market.market_stock_country_uk')
+                : marketItem.market == 'singapore'
+                ? t('market.market_stock_country_singapore')
+                : marketItem.market == 'hongkong'
+                ? t('market.market_stock_country_hongkong')
+                : marketItem.market == 'malaysia'
+                ? t('market.market_stock_country_malaysia')
+                : ''
+            "
+            :name="marketItem.market"
+            v-for="marketItem in marketList"
+            :key="marketItem.market"
+          >
+            <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" 
+          :list="marketStockData[marketItem.market] || []" />
+
+        </Tab>
+
+        </Tabs>
+        <!-- 切换 -->
+        <Tabs @change="changeTab" class="van-tabs--sub" :lazy-render="false" v-model:active="navActiveTab" animated
+          shrink v-else>
+          <Tab :title="t('trade.left_mine')" name="option">
             <div class="lists">
-              <!-- 搜索列表 -->
-              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
-                :list="marketSearchList" />
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="optionLoading" :key="'option'"
+                :list="watchList" />
             </div>
           </Tab>
-          <Tab :title="t('trade.left_contract')" name="contract">
+        
+          <Tab :title="t('market.market_optional_contract')" name="crypto" v-if="activeTab == 1">
             <div class="lists">
               <StockTable :showSparkLine="false" :handleClick="handleClickContract" :loading="searchLoading"
                 :key="'search'" :list="futuresSearchList" />
             </div>
           </Tab>
-          <Tab :title="t('trade.left_bot')" name="ai">
-            <div class="lists">
-              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
-                :list="aiquantSearchList" />
-            </div>
-          </Tab>
-          <Tab :title="t('trade.left_forex')" name="out">
+          <Tab :title="t('trade.left_forex')" name="forex" v-if="activeTab == 1">
             <div class="lists">
               <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
                 :list="forexSearchList" />
             </div>
           </Tab>
+          <Tab :title="t('trade.header_block')" name="blocktarde" v-if="activeTab == 1">
+            <div class="lists">
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                :list="blocktardeSearchList" />
+            </div>
+          </Tab>
+          
+          <Tab :title="t('trade.left_bot')" name="ai" v-if="activeTab == 2">
+            <div class="lists">
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+                :list="aiquantSearchList" />
+            </div>
+          </Tab>
+          
         </Tabs>
       </div>
     </Popup>
@@ -151,11 +192,13 @@ import AiBlock from "./pages/AiBlock.vue";
 import ContractBlock from "./pages/ContractBlock.vue";
 import store from "@/store";
 import StockTable from "@/components/StockTable.vue";
-import { _search, _watchlist } from "@/api/api";
 import { useRoute } from "vue-router";
 import OptionCategory from "@/components/OptionCategory.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
+
+import { useNavDialog } from './hooks/useNavDialog';
+
 import router from "@/router"
 
 const { t } = useI18n();
@@ -166,10 +209,10 @@ const CommoditiesBlockRef = ref()
 
 const route = useRoute();
 const openTab = ref(false);
-const token = computed(() => store.state.token);
 
 const stockTradeBody = ref(null);
 const contractTradeBody = ref(null);
+
 
 // 下拉刷新
 const disabled = ref(false);
@@ -230,17 +273,23 @@ const reDir = () => {
     activeTab.value = 2;
   } else if (route.query.to == "ipo") {
     activeTab.value = 3;
-  } else if (localStorage.tradeActiveTab > 0) {
-    activeTab.value = Number(localStorage.tradeActiveTab);
+  } else if (tradeActiveTab > 0) {
+    activeTab.value = Number(tradeActiveTab);
   } else {
     activeTab.value = 0
+    
+  }
+  const map = {
+    0:'stocks',
+    1:'crypto',
+    2:'ai',
+    3:'ipo' 
   }
 
-  console.error('activeTab.valu', activeTab.value)
+  store.commit("setMarketType",map[activeTab.value] || '')
+  console.log('activeTab', activeTab.value)
   initialSwipe.value = activeTab.value;
-  // if (initialSwipe.value == -1) {
-  //   initialSwipe.value = activeTab.value;
-  // }
+
   setTimeout(() => {
     changeActiveTab(activeTab.value, prevActiveTabVal != activeTab.value, true);
   }, 300)
@@ -263,73 +312,25 @@ watch([activeTab], (newActive, oldActive) => {
 
 // 持仓价值
 const showPrice = ref(false);
-// 左侧列表弹窗
-const showNavDialog = ref(false);
-const navActiveTab = ref("option");
-const showNavDialogFunc = (val) => {
-  navActiveTab.value = val || "option";
-  showNavDialog.value = true;
-  setTimeout(() => {
-    goSearch();
-  }, 300);
-};
 
-const marketType = computed(() => store.getters.getMarketType);
-const watchList = computed(() => {
-  const marketWatchList = store.state.marketWatchList || [];
-
-  const watchListResult = [];
-  marketWatchList.map((item) => {
-    if (
-      (marketType.value == "all" || item.type == marketType.value) &&
-      (!searchStr.value ||
-        (item.symbol && item.symbol.indexOf(searchStr.value) > -1))
-    ) {
-      watchListResult.push(item);
-    }
-  });
-  return watchListResult;
-});
-const marketSearchList = computed(() => store.state.marketSearchList || []);
-const futuresSearchList = computed(() => store.state.futuresSearchList || []);
-const aiquantSearchList = computed(() => store.state.aiquantSearchList || []);
-const forexSearchList = computed(() => store.state.forexSearchList || []);
-
-// 自选列表
-const optionLoading = ref(false);
-const getOptionList = () => {
-  if (!token.value) return;
-  optionLoading.value = true;
-  _watchlist()
-    .then((res) => {
-      if (res.code == 200) {
-        if (watchList.value.length) {
-          // 有历史数据就更新
-          const rs = res.data.map((item) => {
-            const target = watchList.value.find((a) => a.symbol == item.symbol);
-            if (target) {
-              Object.assign(target, item);
-              item = target;
-            }
-            return item;
-          });
-          store.commit("setMarketWatchList", rs || []);
-        } else {
-          // 没有就直接提交
-          store.commit("setMarketWatchList", res.data || []);
-        }
-        setTimeout(() => {
-          store.dispatch("subList", {
-            commitKey: "setMarketWatchList",
-            listKey: "marketWatchList",
-          });
-        }, 100);
-      }
-    })
-    .finally(() => {
-      optionLoading.value = false;
-    });
-};
+//左側窗口
+const {
+  marketList,
+  watchList,
+  searchLoading,
+  marketStockData,
+  futuresSearchList,
+  forexSearchList,
+  blocktardeSearchList,
+  aiquantSearchList,
+  showNavDialog,
+  navActiveTab,
+  searchStr,
+  optionLoading,
+  goSearch,
+  showNavDialogFunc,
+  changeTab
+} = useNavDialog(activeTab)
 
 // 选择股票
 const StockBlockRef = ref();
@@ -349,95 +350,6 @@ const handleClickContract = (item) => {
   ContractBlockRef.value && ContractBlockRef.value.choose(item);
 };
 
-const changeTab = (val) => {
-  goSearch(val);
-};
-
-// 搜索列表
-const searchStr = ref("");
-let searchTimeout = null;
-const searchLoading = ref(false);
-const goSearch = (market) => {
-  if (searchTimeout) clearTimeout(searchTimeout);
-  let s = searchStr.value;
-  // if (!s) {
-  //     store.commit('setMarketSearch', {
-  //         search: '',
-  //         market: '',
-  //         list: []
-  //     })
-  //     searchLoading.value = false
-  // }
-  searchTimeout = setTimeout(() => {
-    searchLoading.value = true;
-    _search({
-      market: market || "",
-      symbol: s,
-      page: 1,
-    })
-      .then((res) => {
-        if (searchStr.value == s) {
-          switch (market) {
-            case "stock": // 股票
-              store.commit("setMarketSearch", {
-                search: s,
-                market: market,
-                list: res.data || [],
-              });
-              setTimeout(() => {
-                store.dispatch("subList", {
-                  commitKey: "setMarketSearchList",
-                  listKey: "marketSearchList",
-                });
-              }, 100);
-              break;
-            case "futures": // 合约
-              store.commit("setMarketSearch", {
-                search: s,
-                market: market,
-                futuresSearchList: res.data || [],
-              });
-              setTimeout(() => {
-                store.dispatch("subList", {
-                  commitKey: "setFuturesSearchList",
-                  listKey: "futuresSearchList",
-                });
-              }, 100);
-              break;
-            case "aiquant": // ai
-              store.commit("setMarketSearch", {
-                search: s,
-                market: market,
-                aiquantSearchList: res.data || [],
-              });
-              setTimeout(() => {
-                store.dispatch("subList", {
-                  commitKey: "setAiquantSearchList",
-                  listKey: "aiquantSearchList",
-                });
-              }, 100);
-              break;
-            case "forex": // 外汇
-              store.commit("setMarketSearch", {
-                search: s,
-                market: market,
-                forexSearchList: res.data || [],
-              });
-              setTimeout(() => {
-                store.dispatch("subList", {
-                  commitKey: "setForexSearchList",
-                  listKey: "forexSearchList",
-                });
-              }, 100);
-              break;
-          }
-        }
-      })
-      .finally(() => {
-        searchLoading.value = false;
-      });
-  }, 500);
-};
 
 const swipeResize = () => {
   setTimeout(() => {
@@ -445,11 +357,12 @@ const swipeResize = () => {
   }, 300)
 }
 
+
+
 const pageActive = ref(false);
 onActivated(() => {
   pageActive.value = true;
   reDir();
-  getOptionList();
   swipeResize()
 });
 onDeactivated(() => {

@@ -7,11 +7,11 @@
         <div :class="['stock_item']">
           <div class="td5">
             <div class="item_name flex items-center gap-1">
-              <span v-if="item.type == 'crypto'">{{ props.item.name }}</span>
-              <span v-else>{{ props.item.symbol }}</span>
+              <span class="truncate" v-if="item.type == 'crypto'">{{ props.item.name }}</span>
+              <span class="truncate" v-else>{{ props.item.symbol }}</span>
               <div v-if="props.page != 'home'"
                 :class="`${marketStyle[props.item.type]
-                  } font-normal text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
+                  } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
                 <!-- {{ market[props.item.type] }} -->
                 {{
                   item.type == "stock"
@@ -33,8 +33,9 @@
               {{ props.item.lever }}X
             </div>
           </div>
-          <div :class="['td2 spark_line_box']">
-            <SparkLine v-if="props.item.points && showSparkLine" :style="['width: 100%; height: 0.6rem;']"
+          <div :class="['td2 spark_line_box']" v-if="showSparkLine">
+            <SparkLine :style="['width: 100%; height: 0.6rem;']"
+              v-if="props.item.points"
               :points="props.item.points" :ratio="props.item.ratio" />
           </div>
           <div class="td2 td_r">
