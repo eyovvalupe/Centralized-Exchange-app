@@ -432,7 +432,6 @@ export default {
                 }
             }
             if (!has) {
-                // console.log(data.symbol)
                 state.realtimeData.push(data)
             }
         }
@@ -455,6 +454,23 @@ export default {
             if (allKeys) {
                 proxyKeys = allKeys
             }
+
+            //先从已获取过的实时数据里拿数据
+            (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                const arr = state[ck].map(item => { 
+                    const target = state.realtimeData.find(a => a.symbol == item.symbol)
+                    if (target) {
+                        return {
+                            ...item,
+                            ...target,
+                            name: item.name || target.name
+                        }
+                    }
+                    return item
+                })
+                state[ck] = arr
+            })
+
             const socket = startSocket(() => {
                 const keys = Array.from(new Set([
                     ...proxyKeys,
