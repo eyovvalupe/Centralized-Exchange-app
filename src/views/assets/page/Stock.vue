@@ -6,8 +6,8 @@
             <div class="top">
                 <div class="title">股票资产({{ currency }})</div>
                 <div class="eyes" @click="hidden = !hidden">
-                    <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
-                    <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
+                    <img :src="getStaticImgUrl('/static/img/assets/eye_o.svg')" v-show="!hidden" />
+                    <img :src="getStaticImgUrl('/static/img/assets/closed_eye.svg')" v-show="hidden" />
                 </div>
             </div>
             <div class="money">
@@ -37,6 +37,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed } from "vue"
 import router from "@/router"
 import store from "@/store"
@@ -48,12 +49,12 @@ import OverviewCard from './components/OverviewCard'
 const hidden = ref(false)
 const assets = computed(() => store.state.assets || {})
 console.log(assets)
-const currency = computed(() => (store.state.accountCurrencyMap.stock || '') )
+const currency = computed(() => (store.state.accountCurrencyMap.stock || ''))
 
 const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == currency) || {}) // 主钱包
 
-const stockAmount = computed(()=> {
-    if(assets.stock && assets.stock_value){
+const stockAmount = computed(() => {
+    if (assets.stock && assets.stock_value) {
         new Decimal(assets.stock).add(assets.stock_value)
     }
     return '--'
@@ -96,6 +97,7 @@ getConfig()
 <style lang="less" scoped>
 .page_assets_stock {
     padding-top: 0.32rem;
+
     .top {
         font-size: 0.28rem;
         font-weight: 400;
@@ -103,19 +105,21 @@ getConfig()
         height: 0.32rem;
         align-items: center;
         line-height: 0.32rem;
+
         .title {
-        color: #fff;
-        margin-right: 0.12rem;
-        font-size: 0.3rem;
-        span{
-            font-size: 0.24rem;
-        }
+            color: #fff;
+            margin-right: 0.12rem;
+            font-size: 0.3rem;
+
+            span {
+                font-size: 0.24rem;
+            }
         }
 
         .eyes {
-        width: 0.32rem;
-        height: 0.32rem;
-        color: #fff;
+            width: 0.32rem;
+            height: 0.32rem;
+            color: #fff;
         }
     }
 
@@ -125,7 +129,7 @@ getConfig()
         font-size: 0.52rem;
         font-style: normal;
         font-weight: 600;
-        line-height: 0.6rem; 
+        line-height: 0.6rem;
         margin-top: 0.26rem;
     }
 
@@ -137,19 +141,22 @@ getConfig()
         background-color: #fff;
         border-radius: 0.32rem;
         margin-top: 0.34rem;
+
         .line {
-        width: 1px;
-        height: 0.76rem;
-        background-color: #EFF3F8;
+            width: 1px;
+            height: 0.76rem;
+            background-color: #EFF3F8;
         }
-        .nav{
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+
+        .nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
-        .nav_label{
+
+        .nav_label {
             color: #8F92A1;
             font-size: 0.28rem;
             line-height: 100%;
@@ -159,11 +166,12 @@ getConfig()
             color: #061023;
             font-size: 0.3rem;
             font-weight: 600;
-            line-height: 0.3rem; 
+            line-height: 0.3rem;
             margin-top: 0.2rem;
 
         }
     }
+
     .subtitle {
         line-height: 0.32rem;
         color: #061023;
@@ -172,7 +180,7 @@ getConfig()
         margin: 0.5rem 0.32rem 0 0.32rem;
     }
 
-    :deep(.positions){
+    :deep(.positions) {
         padding-bottom: 0px;
     }
 }

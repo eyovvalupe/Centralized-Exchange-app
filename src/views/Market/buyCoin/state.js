@@ -2,6 +2,7 @@ import { createGlobalState, useSessionStorage } from '@vueuse/core'
 import { nextTick, ref } from 'vue'
 import { useSocket } from '@/utils/ws'
 import store from '@/store'
+import { getStaticImgUrl } from "@/utils/index.js"
 
 const fiatEnum = {
   INR: 'FIAT_INR',
@@ -52,7 +53,7 @@ export const useBuyCoinState = createGlobalState(() => {
   }
   function handleUrl(params) {
     const result = fiatEnum[params.toUpperCase()] || params.toUpperCase()
-    return `/static/img/crypto/${result}.png`
+    return getStaticImgUrl(`/static/img/crypto/${result}.png`)
   }
   const setScrollData = params => (scrollData = params)
 

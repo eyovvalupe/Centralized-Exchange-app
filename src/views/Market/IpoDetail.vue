@@ -1,24 +1,18 @@
 <template>
   <div class="ipo_detail">
     <Top :title="t('trade.ipo_detail')"></Top>
-   
+
     <div class="scroller">
       <div class="main_item">
         <div class="item_box">
           <div class="name_box">
             <div class="name">
               {{ currDetail.company_name }}
-              <span
-                class="lever_icon"
-                v-if="currDetail.lever > 1"
-                src="/static/img/trade/level.png"
-              >配资</span>
+              <span class="lever_icon" v-if="currDetail.lever > 1"
+                :src="getStaticImgUrl('/static/img/trade/level.png')">配资</span>
             </div>
           </div>
-          <div
-            class="pre_times"
-            v-if="currDetail.status == 'none' && currDetail._timedown"
-          >
+          <div class="pre_times" v-if="currDetail.status == 'none' && currDetail._timedown">
             <div class="pre_time">{{ currDetail._timedown[0] }}</div>
             <span>:</span>
             <div class="pre_time">{{ currDetail._timedown[1] }}</div>
@@ -35,17 +29,11 @@
             {{ t("trade.ipo_title_pre") }}
           </div>
           <!-- 已结束 -->
-          <div
-            class="status_ing status_ed"
-            v-if="currDetail.status == 'listed'"
-          >
+          <div class="status_ing status_ed" v-if="currDetail.status == 'listed'">
             {{ t("trade.ipo_title_market") }}
           </div>
           <!-- 已结束 -->
-          <div
-            class="status_ing status_done"
-            v-if="currDetail.status == 'done'"
-          >
+          <div class="status_ing status_done" v-if="currDetail.status == 'done'">
             {{ t("trade.ipo_title_finish") }}
           </div>
         </div>
@@ -86,7 +74,7 @@
           <div>{{ t("trade.ipo_detail_item5") }}</div>
           <div class="val">{{ currDetail.listing_date || "--" }}</div>
         </div>
-        
+
         <div class="detail_item">
           <div>{{ t("trade.ipo_detail_item6") }}</div>
           <div class="val">{{ currDetail.listing_price || "--" }}</div>
@@ -97,21 +85,15 @@
         </div>
       </div>
       <div v-if="currDetail.status == 'issuing'" style="height: 1.68rem"></div>
-      <Button
-        v-if="currDetail.status == 'issuing'"
-        @click="goBuy(currDetail)"
-        round
-        size="large"
-        color="#014CFA"
-        class="submit"
-        type="primary">
-        {{ t("trade.ipo_detail_btn") }}</Button
-      >
+      <Button v-if="currDetail.status == 'issuing'" @click="goBuy(currDetail)" round size="large" color="#014CFA"
+        class="submit" type="primary">
+        {{ t("trade.ipo_detail_btn") }}</Button>
     </div>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { _ipoGet } from "@/api/api";
 import Top from "@/components/Top.vue";
 import { Button } from "vant";
@@ -142,15 +124,15 @@ function countdown(endTime) {
 }
 
 const marketMap = ref({
-  us:"美国",
-  japan:"日本",
-  india:"印度",
-  korea:"韩国",
-  germany:"德国",
-  uk:"英国",
-  singapore:"新加坡",
-  hongkong:"香港",
-  malaysia:'马来西亚'
+  us: "美国",
+  japan: "日本",
+  india: "印度",
+  korea: "韩国",
+  germany: "德国",
+  uk: "英国",
+  singapore: "新加坡",
+  hongkong: "香港",
+  malaysia: '马来西亚'
 })
 
 // 去购买
@@ -172,9 +154,9 @@ const openDetail = () => {
     id: route.query.id,
   }).then((res) => {
     if (res.data) {
-      res.data.listing_date = res.data.listing_date ? res.data.listing_date.replace(/\-/g,'/') : ''
-      res.data.issue_start_date = res.data.issue_start_date ? res.data.issue_start_date.replace(/\-/g,'/') : ''
-      res.data.issue_end_date = res.data.issue_end_date ? res.data.issue_end_date.replace(/\-/g,'/') : ''
+      res.data.listing_date = res.data.listing_date ? res.data.listing_date.replace(/\-/g, '/') : ''
+      res.data.issue_start_date = res.data.issue_start_date ? res.data.issue_start_date.replace(/\-/g, '/') : ''
+      res.data.issue_end_date = res.data.issue_end_date ? res.data.issue_end_date.replace(/\-/g, '/') : ''
       currDetail.value = {
         _timedown: countdown(res.data.listing_date),
         ...currDetail.value,
@@ -196,12 +178,14 @@ onBeforeUnmount(() => {
 <style lang="less" scoped>
 .ipo_detail {
   padding-top: 1.12rem;
+
   .scroller {
     height: calc(100vh - 1.12rem);
     overflow-y: auto;
     box-sizing: border-box;
     padding: 0.28rem 0.32rem 0 0.32rem;
   }
+
   .main_item {
     border-radius: 0.32rem;
     border: 1px solid #eff3f8;
@@ -215,15 +199,17 @@ onBeforeUnmount(() => {
       color: #0d0d12;
       max-width: 80%;
     }
+
     .name_box {
       display: flex;
       margin-bottom: 0.14rem;
-      .lever_icon{
+
+      .lever_icon {
         display: inline-block;
         height: 0.32rem;
         padding: 0rem 0.08rem;
         font-size: 0.22rem;
-        color:#014CFA;
+        color: #014CFA;
         border-radius: 0.08rem;
         line-height: 0.32rem;
         font-weight: 400;
@@ -231,6 +217,7 @@ onBeforeUnmount(() => {
         background: rgba(1, 76, 250, 0.10);
       }
     }
+
     .item_box {
       padding: 0.26rem 0.32rem 0.16rem 0.32rem;
       position: relative;
@@ -239,6 +226,7 @@ onBeforeUnmount(() => {
     .pre_times {
       display: flex;
       align-items: center;
+
       .pre_time {
         height: 0.48rem;
         min-width: 0.48rem;
@@ -254,6 +242,7 @@ onBeforeUnmount(() => {
         font-weight: 600;
         box-sizing: border-box;
       }
+
       span {
         color: #FA7500;
         margin: 0 0.1rem;
@@ -310,11 +299,13 @@ onBeforeUnmount(() => {
     width: calc(100% + 2px);
     left: -1px;
     z-index: 1;
+
     &::after {
       content: "";
       display: block;
       clear: both;
     }
+
     .info_box {
       width: 50%;
       float: left;
@@ -326,6 +317,7 @@ onBeforeUnmount(() => {
       font-size: 0.28rem;
       line-height: 0.3rem;
       position: relative;
+
       .amount {
         flex: 1;
         display: flex;
@@ -334,15 +326,17 @@ onBeforeUnmount(() => {
         font-weight: 600;
         color: #061023;
         font-size: 0.3rem;
-        span{
+
+        span {
           font-size: 0.24rem;
           font-weight: 400;
           position: relative;
-          top:0.03rem;
+          top: 0.03rem;
           margin-left: 0.06rem;
         }
       }
     }
+
     .info_box--line::after {
       content: "";
       width: 1px;
@@ -354,9 +348,11 @@ onBeforeUnmount(() => {
       margin-top: -0.45rem;
     }
   }
+
   .detail_item_list {
     padding: 0.08rem 0.32rem 0 0.32rem;
   }
+
   .detail_item {
     display: flex;
     align-items: center;
@@ -379,6 +375,7 @@ onBeforeUnmount(() => {
       font-size: 0.3rem;
     }
   }
+
   .detail_item:last-child {
     border-bottom: 0px;
   }

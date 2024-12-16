@@ -3,18 +3,10 @@
   <div class="buycoin_self">
     <!-- 一层容器 tab -->
     <div class="tabs-buy">
-      <div
-        class="tab"
-        :class="{ active_tab: offset == 'buy' }"
-        @click="changeTab('buy')"
-      >
+      <div class="tab" :class="{ active_tab: offset == 'buy' }" @click="changeTab('buy')">
         {{ t('market.market_buy_fast_buy') }}
       </div>
-      <div
-        class="tab"
-        :class="{ active_tab: offset == 'sell' }"
-        @click="changeTab('sell')"
-      >
+      <div class="tab" :class="{ active_tab: offset == 'sell' }" @click="changeTab('sell')">
         {{ t('market.market_buy_fast_sell') }}
       </div>
     </div>
@@ -23,36 +15,22 @@
       <div>
         <div
           class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
-          @click="showDialog = true"
-        >
+          @click="showDialog = true">
           <span class="mr-[0.2rem]">{{ currCurrency.name }}</span>
           <div class="sizi-16 mr-1">
-            <img src="/static/img/assets/more.png" alt="img" />
+            <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
           </div>
 
           <div class="sizi-16">
-            <img src="/static/img/market/trans.png" alt="img" />
+            <img :src="getStaticImgUrl('/static/img/market/trans.png')" alt="img" />
           </div>
         </div>
       </div>
 
       <div class="w-full overflow-hidden">
-        <Tabs
-          @touchstart.stop
-          @touchmove.stop
-          @touchup.stop
-          :active="currCrypto.name"
-          class="encryption w-full"
-          line-height="0.06rem"
-          line-width="0.32rem"
-          @click-tab="cryptoChange"
-        >
-          <Tab
-            v-for="(item, index) in dryptoWallet"
-            :key="item.name + index"
-            :title="item.name"
-            :name="item.name"
-          />
+        <Tabs @touchstart.stop @touchmove.stop @touchup.stop :active="currCrypto.name" class="encryption w-full"
+          line-height="0.06rem" line-width="0.32rem" @click-tab="cryptoChange">
+          <Tab v-for="(item, index) in dryptoWallet" :key="item.name + index" :title="item.name" :name="item.name" />
         </Tabs>
       </div>
     </div>
@@ -96,23 +74,13 @@
         </div>
       </div>
       <NoData v-if="!loading && !list.length" />
-      <LoadingMore
-        v-if="(finish && list.length) || !finish"
-        class-n="buycoin_buss"
-        :loading="loading"
-        :finish="finish"
-      />
+      <LoadingMore v-if="(finish && list.length) || !finish" class-n="buycoin_buss" :loading="loading"
+        :finish="finish" />
     </div>
   </div>
 
   <!-- 表单提交 -->
-  <Popup
-    v-model:show="showFormDialog"
-    teleport="body"
-    round
-    position="bottom"
-    closeable
-  >
+  <Popup v-model:show="showFormDialog" teleport="body" round position="bottom" closeable>
     <div class="buycoin_form_dialog">
       <div class="title">
         {{ offset == "buy" ? t('market.market_buy_fast_buy') : t('market.market_buy_fast_sell') }}{{ currCrypto.name }}
@@ -120,21 +88,11 @@
 
       <div class="form">
         <div class="item form_item" :class="{ focus_item: amountFocus }">
-          <div
-            v-show="offset == 'sell'"
-            v-if="!(!amountFocus && amount !== '')"
-            class="tip_text"
-          >
+          <div v-show="offset == 'sell'" v-if="!(!amountFocus && amount !== '')" class="tip_text">
             ≤ {{ maxAmount }}
             {{ offset == "sell" ? currCrypto.name : currCurrency.name }}
           </div>
-          <input
-            v-model="amount"
-            type="number"
-            class="ipt"
-            @blur="amountFocus = false"
-            @focus="amountFocus = true"
-          />
+          <input v-model="amount" type="number" class="ipt" @blur="amountFocus = false" @focus="amountFocus = true" />
           <div class="all" @click="amount = currWallet.amount">
             {{ t('form.all') }}
           </div>
@@ -148,7 +106,8 @@
         </div>
 
         <div class="btn" @click="preSubmit">
-          {{ t('market.market_buy_optional_confirm') }}{{ offset == "buy" ? t('market.market_buy_fast_buy') : t('market.market_buy_fast_sell') }}
+          {{ t('market.market_buy_optional_confirm') }}{{ offset == "buy" ? t('market.market_buy_fast_buy') :
+            t('market.market_buy_fast_sell') }}
         </div>
       </div>
     </div>
@@ -163,91 +122,44 @@
   </Popup> -->
 
   <!-- 法币币种 -->
-  <Popup
-    v-model:show="showDialog"
-    :safe-area-inset-top="true"
-    :safe-area-inset-bottom="true"
-    class="self_van_popup"
-    position="bottom"
-    teleport="body"
-  >
+  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+    position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
-        <img src="/static/img/common/close.png" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
       </div>
       <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
-      <div
-        v-for="(item, i) in fiatWallet"
-        :key="i"
-        class="swap_dialog_item"
-        :class="{ swap_dialog_item_active: currCurrency.name == item.name }"
-        @click="clickItem(item)"
-      >
+      <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
+        :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
         <div class="icon">
           <img :src="handleUrl(item.name)" alt="currency" />
         </div>
         <span>{{ item.name.toUpperCase() }}</span>
-        <Icon
-          v-if="currCurrency.name == item.name"
-          class="check_icon"
-          name="success"
-        />
+        <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />
       </div>
     </div>
   </Popup>
-  <!-- 加密币种 -->
-  <!-- <Popup v-model:show="showDialog2" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" position="bottom" teleport="body">
-    <div class="withdraw_accounr_dialog">
-      <div class="close_icon" @click="showDialog2 = false">
-        <img src="/static/img/common/close.png" alt="x" />
-      </div>
-      <div class="title">{{ t('币种选择') }}</div>
-      <div v-for="(item, i) in dryptoWallet" :key="i" class="swap_dialog_item" :class="{ swap_dialog_item_active: currCrypto.name == item.name }" @click="clickCrypto(item)">
-        <div class="icon">
-          <img :src="`/static/img/crypto/${item.name.toUpperCase()}.png`" alt="currency" />
-        </div>
-        <span>{{ item.name.toUpperCase() }}</span>
-        <Icon v-if="currCrypto.name == item.name" class="check_icon" name="success" />
-      </div>
-    </div>
-  </Popup> -->
 
   <!-- 账户选择弹窗 -->
-  <Popup
-    v-model:show="showAccountDialog"
-    :safe-area-inset-top="true"
-    :safe-area-inset-bottom="true"
-    class="self_van_popup"
-    position="bottom"
-    teleport="body"
-  >
+  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+    class="self_van_popup" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
-        <img src="/static/img/common/close.png" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
       </div>
       <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
       <div class="list">
         <div class="add_item" @click="goAddAccount">
           <Icon style="font-size: 0.48rem" name="add-o" />
-          <span
-            style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem"
-            >{{ t('market.market_buy_fast_account_add') }}</span
-          >
+          <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">{{
+            t('market.market_buy_fast_account_add')
+          }}</span>
         </div>
-        <div
-          v-for="(item, i) in bankList"
-          :key="i"
-          :class="{ dialog_account_item_active: currAccount.id == item.id }"
-          class="dialog_account_item"
-          @click="clickAccountItem(item)"
-        >
+        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }"
+          class="dialog_account_item" @click="clickAccountItem(item)">
           <div class="card_icon">
-            <img
-              v-if="item.bankName"
-              src="/static/img/user/card_type_b.png"
-              alt="img"
-            />
-            <img v-else src="/static/img/user/card_type_c.png" alt="img" />
+            <img v-if="item.bankName" :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
+            <img v-else :src="getStaticImgUrl('/static/img/user/card_type_c.png')" alt="img" />
           </div>
           <div class="card">
             <div class="code">
@@ -261,12 +173,9 @@
               }}
             </div>
           </div>
-          <div
-            v-if="currAccount.id == item.id"
-            class="checked"
-            style="background-image: url('/static/img/user/check_bg.png')"
-          >
-            <img src="/static/img/common/ok.png" alt="img" />
+          <div v-if="currAccount.id == item.id" class="checked"
+            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/user/check_bg.png')}`) }">
+            <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
           </div>
         </div>
       </div>
@@ -278,6 +187,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Popup, Icon, showToast, showConfirmDialog, Tabs, Tab } from "vant";
 import Decimal from "decimal.js";
 import NoData from "@/components/NoData.vue";
@@ -356,7 +266,7 @@ try {
   currCrypto.value = JSON.parse(
     sessionStorage.getItem("buycoin_currCrypto") || "{}"
   );
-} catch {}
+} catch { }
 if (dryptoWallet.value[0] && !currCrypto.value.name) {
   const target = dryptoWallet.value.find((item) => item.name == "USDT");
   currCrypto.value = target || dryptoWallet.value[0];
@@ -991,7 +901,7 @@ defineExpose({
       align-items: center;
       justify-content: center;
 
-      > img {
+      >img {
         width: 0.64rem !important;
         height: 0.64rem !important;
       }
@@ -1025,7 +935,7 @@ defineExpose({
       width: 0.46rem;
       height: 0.42rem;
 
-      > img {
+      >img {
         width: 0.18rem !important;
         height: 0.12rem !important;
         position: absolute;

@@ -2,11 +2,6 @@
 <template>
     <div class="stock_block">
         <!-- 日期 -->
-        <!-- <div class="date_box" v-show="active == 2" @click="openDate">
-            <div class="date_icon">
-                <img src="/static/img/trade/time.png" alt="img">
-            </div>
-        </div> -->
         <Tabs type="custom-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
             @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">

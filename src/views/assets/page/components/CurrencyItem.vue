@@ -1,38 +1,23 @@
 <template>
-  <div
-    class="tab"
-    :class="{ open_tab: switchs[i] == true }"
-    @click="switchOpen(i, $event)"
-  >
+  <div class="tab" :class="{ open_tab: switchs[i] == true }" @click="switchOpen(i, $event)">
     <div class="tab_icon">
-      <img
-        :src="`/static/img/crypto/${item.name}.png`"
-        class="rounded-full"
-        alt="img"
-      />
+      <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" class="rounded-full" alt="img" />
     </div>
     <div class="name">{{ item.name }}</div>
     <div class="amount">{{ item.amount }}</div>
     <div class="more">
-      <img src="/static/img/common/menu.png?20241022" alt="img" />
+      <img :src="getStaticImgUrl('/static/img/common/menu.png')" alt="img" />
     </div>
     <div class="rights">
-      <div
-        class="right px-[0.1rem]"
-        @click="goTopUp(item.currency.toUpperCase())"
-        v-if="item.type == 'crypto'"
-      >
+      <div class="right px-[0.1rem]" @click="goTopUp(item.currency.toUpperCase())" v-if="item.type == 'crypto'">
         {{ t('assets.recharge') }}
       </div>
       <div class="right right--disabled px-[0.1rem]" v-else>
         {{ t('assets.recharge') }}
       </div>
-      <div
-        class="right right--yellow px-[0.1rem]"
-        @click="goWithdraw(item.currency.toUpperCase())"
-        v-if="item.type == 'crypto'"
-      >
-      {{ t('assets.withdraw') }}
+      <div class="right right--yellow px-[0.1rem]" @click="goWithdraw(item.currency.toUpperCase())"
+        v-if="item.type == 'crypto'">
+        {{ t('assets.withdraw') }}
       </div>
       <div class="right right--yellow right--disabled px-[0.1rem]" v-else>
         {{ t('assets.withdraw') }}
@@ -41,6 +26,7 @@
   </div>
 </template>
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import { useI18n } from "vue-i18n";
 
@@ -49,7 +35,7 @@ const props = defineProps({
   i: Number,
   item: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
   switchs: {
     type: Array,
@@ -100,6 +86,7 @@ const goWithdraw = (name) => {
   .name {
     font-size: 0.3rem;
   }
+
   &:active {
     background-color: rgba(237, 237, 237, 0.87);
   }
@@ -135,6 +122,7 @@ const goWithdraw = (name) => {
     right: -100%;
     top: 0;
     transition: 0.3s;
+
     .right {
       height: 100%;
       min-width: 1.04rem;
@@ -149,24 +137,31 @@ const goWithdraw = (name) => {
       color: #fff;
       background-color: #014cfa;
     }
+
     .right--yellow {
       background-color: #ffaf2a;
     }
+
     .right--green {
       background-color: #00af70;
     }
+
     .right--red {
       background-color: #e8503a;
     }
+
     .right--disabled {
       background-color: #9cb9ff;
     }
+
     .right--disabled.right--yellow {
       background-color: #ebcc9a;
     }
+
     .right:first-child {
       border-radius: 0.32rem 0rem 0rem 0.32rem;
     }
+
     .right:last-child {
       border-radius: 0rem 0.32rem 0.32rem 0rem;
     }
@@ -177,10 +172,12 @@ const goWithdraw = (name) => {
   .name {
     display: none;
   }
+
   .amount {
     text-align: left;
     padding: 0px;
   }
+
   .rights {
     right: 0;
   }

@@ -1,21 +1,16 @@
 <!-- 买币-订单详情 -->
 <template>
   <div class="page-detail">
-    <Top
-      :title="
-        currItem.status == 'waitpayment'
-          ? t('market.market_buy_list_wait_pay1')
-          : currItem.status == 'waitconfirm'
+    <Top :title="currItem.status == 'waitpayment'
+        ? t('market.market_buy_list_wait_pay1')
+        : currItem.status == 'waitconfirm'
           ? t('market.market_buy_list_wait_confirm1')
           : currItem.status == 'done'
-          ? t('market.market_buy_list_trade_sccess')
-          : currItem.status == 'cancel'
-          ? t('market.market_buy_list_trade_sccess')
-          : ''
-      "
-      class="!z-20"
-      :back-func="goBack"
-    />
+            ? t('market.market_buy_list_trade_sccess')
+            : currItem.status == 'cancel'
+              ? t('market.market_buy_list_trade_sccess')
+              : ''
+      " class="!z-20" :back-func="goBack" />
     <!-- Tabs -->
     <div class="tabs">
       <div @click="active = 1" class="tab" :class="{ tab_active: active == 1 }">
@@ -25,8 +20,8 @@
             currItem.offset == "buy"
               ? t("market.market_buy_fast_buy")
               : currItem.offset == "sell"
-              ? t("market.market_buy_fast_sell")
-              : "--"
+                ? t("market.market_buy_fast_sell")
+                : "--"
           }}
         </span>
       </div>
@@ -34,8 +29,7 @@
         <span style="position: relative; top: 0.1rem">
           {{ t("market.market_buy_list_contact") }}
           <div
-            class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center"
-          >
+            class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center">
             {{ unreadMessage[currItem.order_no] }}
           </div>
           <!-- <div class="hint" v-if="c2cUnread[currItem.order_no] || currItem.unread">{{
@@ -50,10 +44,7 @@
         <!-- 状态 -->
         <div class="status">
           <!-- 等待买家付款 -->
-          <div
-            v-if="currItem.status == 'waitpayment' && currItem.offset == 'buy'"
-            class="status_wait"
-          >
+          <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'buy'" class="status_wait">
             <div style="display: flex; align-items: center">
               <div class="amount">
                 {{ t("market.market_buy_list_wait_buyer_confirm") }}
@@ -63,10 +54,7 @@
             <div>{{ t("market.market_buy_list_wait_buyer_con") }}</div>
           </div>
           <!-- 等待商家付款 -->
-          <div
-            v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'"
-            class="status_wait"
-          >
+          <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="status_wait">
             <div style="display: flex; align-items: center">
               <div class="amount">
                 {{ t("market.market_buy_list_wait_buyer_confirm") }}
@@ -76,20 +64,14 @@
             <div>{{ t("market.market_buy_list_wait_buyer_confirm") }}</div>
           </div>
           <!-- 等待确认 -->
-          <div
-            v-if="currItem.status == 'waitconfirm' && currItem.offset == 'buy'"
-            class="status_wait"
-          >
+          <div v-if="currItem.status == 'waitconfirm' && currItem.offset == 'buy'" class="status_wait">
             <div style="display: flex; align-items: center">
               <div class="amount">等待确认</div>
               <div class="time">{{ formatSec2(currItem.endtime) }}</div>
             </div>
             <div>已付款，等待商家确认资金是否到账</div>
           </div>
-          <div
-            v-if="currItem.status == 'waitconfirm' && currItem.offset == 'sell'"
-            class="status_wait"
-          >
+          <div v-if="currItem.status == 'waitconfirm' && currItem.offset == 'sell'" class="status_wait">
             <div style="display: flex; align-items: center">
               <div class="amount">
                 {{ t("market.market_buy_list_wait_confirm") }}
@@ -100,10 +82,7 @@
           </div>
 
           <!-- 已完成 -->
-          <div
-            v-if="currItem.status == 'done'"
-            class="finish_status success_status"
-          >
+          <div v-if="currItem.status == 'done'" class="finish_status success_status">
             <div>{{ t("market.market_buy_list_complete") }}</div>
           </div>
           <!-- 已取消 -->
@@ -114,13 +93,11 @@
         <!-- 卖家 -->
         <div class="detail_content">
           <div class="seller">
-            <div
-              style="
+            <div style="
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-              "
-            >
+              ">
               <div class="avatar">
                 {{
                   currItem.merchant_name
@@ -130,14 +107,12 @@
               </div>
               <div class="title">{{ currItem.merchant_name }}</div>
             </div>
-            <div
-              style="
+            <div style="
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 margin-top: 0.06rem;
-              "
-            >
+              ">
               <div class="avatar" style="opacity: 0"></div>
               <div class="info">
                 {{ t("market.market_buy_optional_deal") }}
@@ -151,21 +126,16 @@
               <div class="line"></div>
               <div class="info">
                 <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
-                <span
-                  >{{ currItem.merchant_avetime
-                  }}{{ t("market.market_buy_optional_duaration") }}</span
-                >
+                <span>{{ currItem.merchant_avetime
+                  }}{{ t("market.market_buy_optional_duaration") }}</span>
               </div>
             </div>
           </div>
 
           <!-- 银行卡 -->
-          <div
-            class="bank_none"
-            v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'"
-          >
+          <div class="bank_none" v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'">
             <div class="img">
-              <img src="/static/img/market/waitFor.svg" alt="" />
+              <img :src="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
             </div>
             <div class="name">
               {{ t("market.market_buy_list_wait_buyer_bank") }}
@@ -185,7 +155,7 @@
               <div class="td td2">
                 <span>{{ currItem.bank_card_number }}</span>
                 <div class="copy">
-                  <img src="/static/img/trade/copy.png" alt="" />
+                  <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
                 </div>
               </div>
             </div>
@@ -204,7 +174,7 @@
         <div class="top" @click="copy(currItem.order_no)">
           <div class="order_no">{{ currItem.order_no }}</div>
           <div class="copy_icon">
-            <img src="/static/img/trade/copy.png" alt="" />
+            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
           </div>
           <div style="flex: 1"></div>
           <div>{{ currItem.date }}</div>
@@ -238,37 +208,21 @@
       </div>
 
       <!-- 按钮 -->
-      <div
-        class="max-width btns"
-        v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)"
-      >
-        <div
-          v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'"
-          class="btn"
-          style="margin-right: 0.32rem"
-          @click="cancelOrder"
-        >
+      <div class="max-width btns" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
+        <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn"
+          style="margin-right: 0.32rem" @click="cancelOrder">
           {{ t("market.market_buy_list_cancel_order") }}
         </div>
-        <div
-          v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'"
-          class="btn active_btn"
-          :style="{ backgroundColor: '#ddd' }"
-        >
+        <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn"
+          :style="{ backgroundColor: '#ddd' }">
           {{ t("market.market_buy_list_wait_confirm") }}
         </div>
-        <div
-          v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'"
-          class="btn active_btn"
-          @click="confirmOrder"
-        >
+        <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn active_btn"
+          @click="confirmOrder">
           {{ t("market.market_buy_list_paid") }}
         </div>
-        <div
-          v-if="currItem.offset == 'sell' && currItem.status == 'waitconfirm'"
-          class="btn active_btn"
-          @click="confirmOrder"
-        >
+        <div v-if="currItem.offset == 'sell' && currItem.status == 'waitconfirm'" class="btn active_btn"
+          @click="confirmOrder">
           {{ t("market.market_buy_list_received") }}
         </div>
       </div>
@@ -283,6 +237,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import router from "@/router";
 import { _c2cOrderInfo, _c2cOrderStatus } from "@/api/api";

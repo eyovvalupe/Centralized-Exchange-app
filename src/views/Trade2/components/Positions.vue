@@ -138,51 +138,20 @@
       </div>
       <div class="order_sell_box">
         <div class="form">
-          <!-- <div class="item_box">
-                        <div class="item_box_left" @click="showUpModelDialog = true">
-                            <div class="subtitle"><span>止盈</span></div>
-                            <div class="item" style="justify-content: center;">
-                                <span>{{ stopMap[updateForm.stop_profit_type] || '--' }}</span>
-                                <div class="more_icon">
-                                    <img src="/static/img/trade/down.png" alt="↓">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item_box_right">
-                            <div class="subtitle">
-                                <span>&nbsp;</span>
-                            </div>
-                            <div class="item">
-                                <input @input="inputStop(1)" v-model="updateForm.stop_profit_price" type="number"
-                                    class="ipt">
-                                <span v-if="updateForm.stop_profit_type == 'ratio'">%</span>
-                            </div>
-                        </div>
-                    </div> -->
           <div class="item_box">
-            <!-- 止损 -->
-            <!-- <div class="item_box_left" @click="showDownModelDialog = true">
-                            <div class="subtitle"><span>止损</span></div>
-                            <div class="item" style="justify-content: center;">
-                                <span>{{ stopMap[updateForm.stop_loss_type] || '--' }}</span>
-                                <div class="more_icon">
-                                    <img src="/static/img/trade/down.png" alt="↓">
-                                </div>
-                            </div>
-                        </div> -->
             <div class="item_box_right">
               <FormItem input-type="number" :title="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
                 " size="large" v-model="updateForm.stop_loss_price" :percent-tags="currStock.offset == 'long'
-                    ? [
-                      { label: '-20%', value: 20 },
-                      { label: '-15%', value: 15 },
-                      { label: '-10%', value: 10 },
-                    ]
-                    : [
-                      { label: '+20%', value: 20 },
-                      { label: '+15%', value: 15 },
-                      { label: '+10%', value: 10 },
-                    ]
+                  ? [
+                    { label: '-20%', value: 20 },
+                    { label: '-15%', value: 15 },
+                    { label: '-10%', value: 10 },
+                  ]
+                  : [
+                    { label: '+20%', value: 20 },
+                    { label: '+15%', value: 15 },
+                    { label: '+10%', value: 10 },
+                  ]
                   " @percentTagClick="setPriceStop" />
             </div>
           </div>

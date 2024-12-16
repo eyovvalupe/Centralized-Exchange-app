@@ -3,9 +3,10 @@
     <div class="page_ai_position">
         <NoData v-if="!loading && !aiPositionsList.length" />
         <div class="list">
-            <div class="item" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)" v-show="item.endtime > 0">
+            <div class="item" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)"
+                v-show="item.endtime > 0">
                 <div class="ai_icon">
-                    <img src="/static/img/trade/ai.png" alt="ai">
+                    <img :src="getStaticImgUrl('/static/img/trade/ai.png')" alt="ai">
                 </div>
                 <div class="mid">
                     <div class="name">{{ item.name }}</div>
@@ -24,6 +25,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { useSocket } from "@/utils/ws";
 import { onMounted, onUnmounted, computed, ref } from "vue"
 import store from '@/store';
@@ -39,14 +41,14 @@ const openInfo = item => {
     infoRef.value && infoRef.value.open(item)
 }
 
-const formatEndtime = (endtime)=>{
+const formatEndtime = (endtime) => {
     let time = formatSec2(endtime)
     let html = ''
-    time.split(":").map((t,i)=>{
-        if(i > 0){
+    time.split(":").map((t, i) => {
+        if (i > 0) {
             html += '<span class="split">:</span>'
         }
-        html += '<span class="num">'+t+'</span>'
+        html += '<span class="num">' + t + '</span>'
     })
     return html
 }
@@ -71,9 +73,9 @@ const subs = () => {
             store.commit('setAiPositionsList', (res.data || []))
             loading.value = false
         })
-        setTimeout(()=>{
+        setTimeout(() => {
             loading.value = false
-        },1500)
+        }, 1500)
     });
 }
 // 取消订阅
@@ -95,10 +97,10 @@ onUnmounted(() => {
     cancelSubs()
 })
 
-watch(()=>store.state.token,()=>{
-    if(store.state.token){
+watch(() => store.state.token, () => {
+    if (store.state.token) {
         subs()
-    }else{
+    } else {
         cancelSubs()
     }
 })
@@ -116,6 +118,7 @@ watch(()=>store.state.token,()=>{
         border-bottom: 1px solid #EFF3F8;
         line-height: 100%;
         padding: 0.32rem 0;
+
         .ai_icon {
             width: 0.8rem;
             height: 0.8rem;
@@ -124,9 +127,10 @@ watch(()=>store.state.token,()=>{
             justify-content: center;
             border-radius: 0.24rem;
             background-color: rgba(1, 76, 250, 0.10);
-            img{
+
+            img {
                 width: 0.53rem !important;
-                height:0.53rem !important;
+                height: 0.53rem !important;
             }
         }
 
@@ -134,14 +138,15 @@ watch(()=>store.state.token,()=>{
             flex: 1;
             margin: 0 0.2rem 0 0.18rem;
             overflow: hidden;
+
             .name {
                 font-size: 0.3rem;
                 color: #061023;
                 font-weight: bold;
             }
 
-            .grid{
-                color:#8F92A1;
+            .grid {
+                color: #8F92A1;
                 font-weight: 400;
                 font-size: 0.25rem;
                 margin-top: 0.18rem;
@@ -150,40 +155,44 @@ watch(()=>store.state.token,()=>{
 
         .right {
             text-align: right;
+
             .amount {
                 font-size: 0.32rem;
                 font-weight: 600;
             }
 
-            .endtime{
+            .endtime {
                 display: flex;
                 align-items: center;
                 height: 0.6rem;
-                 line-height: 0.58rem;
-                :deep(.num){
+                line-height: 0.58rem;
+
+                :deep(.num) {
                     width: 0.6rem;
                     height: 0.6rem;
                     text-align: center;
-                    color:#E8503A;
+                    color: #E8503A;
                     font-weight: 600;
                     font-size: 0.32rem;
                     border: 1px solid #E8503A;
                     background-color: rgba(232, 80, 58, 0.10);
                     box-sizing: border-box;
                     border-radius: 0.12rem;
-                   
+
                 }
-                :deep(.split){
+
+                :deep(.split) {
                     font-size: 0.32rem;
                     font-weight: 600;
                     width: 0.3rem;
-                    color:#E8503A;
+                    color: #E8503A;
                     text-align: center;
                 }
             }
         }
     }
-    .item:last-child{
+
+    .item:last-child {
         border-bottom: 0px;
     }
 }

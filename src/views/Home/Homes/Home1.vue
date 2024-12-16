@@ -6,7 +6,7 @@
         <div class="funcs relative">
             <div class="user_box">
                 <div class="user_default_avatar">
-                    <img src="/static/img/user/avatar2.png" />
+                    <img :src="getStaticImgUrl('/static/img/user/avatar2.png')" />
                 </div>
             </div>
             <div style="flex: 1"></div>
@@ -153,6 +153,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import StockItem from "@/components/StockItem.vue";
 import {
     onDeactivated,

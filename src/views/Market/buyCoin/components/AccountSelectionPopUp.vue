@@ -4,7 +4,7 @@
     class="AccountSelectionPopUp" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
-        <img src="/static/img/common/close.png" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
       </div>
       <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
       <div class="list">
@@ -33,15 +33,16 @@
           class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
           <div class="card_icon">
             <img v-if="tabsValue === 'crypto'" class="rounded-50"
-              :src="`/static/img/crypto/${item.symbol?.toUpperCase()}.png`" alt="currency" />
-            <img v-else class="!size-[0.68rem]" src="/static/img/user/card_type_b.png" alt="img" />
+              :src="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.png`)" alt="currency" />
+            <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
             <div class="name">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }}</div>
           </div>
-          <div v-if="bank.id == item.id" class="checked" style="background-image: url('/static/img/user/check_bg.png')">
-            <img src="/static/img/common/ok.png" alt="img" />
+          <div v-if="bank.id == item.id" class="checked"
+            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/user/check_bg.png')}`) }">
+            <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
           </div>
         </div>
       </div>
@@ -50,6 +51,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { closeToast, Popup, showConfirmDialog, showLoadingToast } from 'vant'
 import router from '@/router'
 import store, { useMapState } from '@/store'
@@ -57,7 +59,7 @@ import { _hiddenAccount } from '@/utils/index'
 import { onMounted, computed } from "vue"
 import { useI18n } from 'vue-i18n'
 
-const {t} = useI18n()
+const { t } = useI18n()
 const props = defineProps({
   show: Boolean,
   bank: {

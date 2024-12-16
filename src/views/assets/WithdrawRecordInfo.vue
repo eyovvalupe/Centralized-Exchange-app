@@ -4,7 +4,7 @@
     <Top :title="$t('withdrawInfo.title')">
       <template #right>
         <div class="top-record" @click="goChat">
-          <span><img src="/static/img/user/server.png" alt="img" /></span>
+          <span><img :src="getStaticImgUrl('/static/img/user/server.png')" alt="img" /></span>
         </div>
       </template>
     </Top>
@@ -12,7 +12,7 @@
     <div class="top_info">
       <div class="status" v-if="orderData.status == 'success'">
         <div class="status_icon">
-          <img src="/static/img/assets/status_success.png?241024" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_success.png')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.successful") }}</div>
         <div class="status_desc">
@@ -23,7 +23,7 @@
       </div>
       <div class="status" v-else-if="orderData.status == 'failure'">
         <div class="status_icon">
-          <img src="/static/img/assets/status_error.png?241024" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_error.png')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.Failed") }}</div>
         <div class="status_desc">{{ $t("withdrawInfo.failurePrompt") }}</div>
@@ -31,7 +31,7 @@
       <div class="status" v-else>
         <div class="status_icon">
           <LoadEffect class="status_loading" color="#fff" />
-          <img src="/static/img/assets/status_wait.png" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_wait.png')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.processing") }}</div>
         <div class="status_desc">{{ $t("withdrawInfo.processingTip") }}</div>
@@ -74,7 +74,7 @@
         <div class="value">
           <div class="value_text van-omit1">{{ orderData.order_no }}</div>
           <div class="copy_icon" @click="copy(orderData.order_no)">
-            <img src="/static/img/trade/copy.png" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="copy" />
           </div>
         </div>
       </div>
@@ -87,6 +87,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import { ref } from "vue";
 import { _withdrawGet } from "@/api/api";
@@ -148,6 +149,7 @@ const goChat = () => {
 <style lang="less" scoped>
 .withdraw_record_info {
   padding: 1.12rem 0.32rem 0.32rem 0.32rem;
+
   .top-record {
     width: 0.72rem;
     height: 0.72rem;
@@ -157,12 +159,14 @@ const goChat = () => {
     display: flex;
     align-items: center;
     justify-content: center;
+
     span {
       display: block;
       width: 0.432rem;
       height: 0.432rem;
     }
   }
+
   .top_info {
     padding-top: 0.52rem;
 
@@ -176,6 +180,7 @@ const goChat = () => {
         height: 1.2rem;
         position: relative;
       }
+
       .status_loading {
         position: absolute;
         left: 0;
@@ -184,12 +189,14 @@ const goChat = () => {
         left: -0.4rem;
         top: -0.4rem;
       }
+
       .status_name {
         font-size: 0.3rem;
         line-height: 140%;
         color: #061023;
         margin-top: 0.32rem;
       }
+
       .status_desc {
         color: #666d80;
         text-align: center;
@@ -202,6 +209,7 @@ const goChat = () => {
 
   .bottom_info {
     padding: 0.22rem 0.32rem;
+
     .bottom_item {
       padding: 0.32rem 0 0.2rem 0;
       border-bottom: 1px solid #f5f7fc;
@@ -211,6 +219,7 @@ const goChat = () => {
       color: #8f92a1;
       line-height: 0.44rem;
       font-weight: 400;
+
       .value {
         font-size: 0.3rem;
         color: #061023;
@@ -221,11 +230,13 @@ const goChat = () => {
         overflow: hidden;
         margin-left: 0.32rem;
       }
+
       .value_text {
         display: block;
         flex: 1;
         text-align: right;
       }
+
       .value_currency {
         font-size: 0.24rem;
         margin-left: 0.12rem;
@@ -233,6 +244,7 @@ const goChat = () => {
         position: relative;
         top: 0.02rem;
       }
+
       .copy_icon {
         width: 0.24rem;
         height: 0.24rem;

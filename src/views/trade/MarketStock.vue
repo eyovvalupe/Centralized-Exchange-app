@@ -16,7 +16,7 @@
         </div>
 
         <div class="date-box" v-if="active === '2'" @click="goToDate">
-          <img src="/static/img/trade/time.png" alt="" class="date-img" />
+          <img :src="getStaticImgUrl('/static/img/trade/time.png')" alt="" class="date-img" />
           <span>日期</span>
         </div>
       </div>
@@ -75,20 +75,20 @@
                 <div v-if="currentNum === i.order_no && buttonShow">
                   <div class="button-style" style="width: 4rem">
                     <div style="background: #f7931f" @click="showDetailPopup(i)">
-                      <img src="/static/img/trade/detail.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/detail.png')" alt="" />
                       订单详情
                     </div>
                     <div style="background-color: #627eea" @click="updateDetailPopup(i)"
                       v-if="i.status === 'none' || i.status === 'lock' || i.status === 'open'">
-                      <img src="/static/img/trade/update.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/update.png')" alt="" />
                       更新
                     </div>
                     <div style="background-color: #f2f2f2;color: #999999;" v-else>
-                      <img src="/static/img/trade/no-update.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/no-update.png')" alt="" />
                       更新
                     </div>
                     <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
-                      <img src="/static/img/trade/close.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/close.png')" alt="" />
                       平仓
                     </div>
                   </div>
@@ -109,7 +109,7 @@
 
         <!-- 未登录 -->
         <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
-          <img src="/static/img/trade/no-data.png" class="no-data-img">
+          <img :src="getStaticImgUrl('/static/img/trade/no-data.png')" class="no-data-img">
           <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="goLogin">马上登录</span>
           </p>
         </div>
@@ -170,20 +170,20 @@
                 <div v-if="currentNum === i.order_no && buttonShow">
                   <div class="button-style" style="width: 4rem">
                     <div style="background: #f7931f" @click="showDetailPopup(i)">
-                      <img src="/static/img/trade/detail.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/detail.png')" alt="" />
                       订单详情
                     </div>
                     <div style="background-color: #627eea" @click="updateDetailPopup(i)"
                       v-if="i.status === 'none' || i.status === 'lock' || i.status === 'open'">
-                      <img src="/static/img/trade/update.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/update.png')" alt="" />
                       更新
                     </div>
                     <div style="background-color: #f2f2f2;color: #999999;" v-else>
-                      <img src="/static/img/trade/no-update.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/no-update.png')" alt="" />
                       更新
                     </div>
                     <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
-                      <img src="/static/img/trade/close.png" alt="" />
+                      <img :src="getStaticImgUrl('/static/img/trade/close.png')" alt="" />
                       平仓
                     </div>
                   </div>
@@ -202,7 +202,7 @@
 
         <!-- 未登录 -->
         <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
-          <img src="/static/img/trade/no-data.png" class="no-data-img">
+          <img :src="getStaticImgUrl('/static/img/trade/no-data.png')" class="no-data-img">
           <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;"
               @click="jump('login')">马上登录</span>
           </p>
@@ -218,6 +218,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, watch, nextTick } from "vue";
 import {
   Tab,

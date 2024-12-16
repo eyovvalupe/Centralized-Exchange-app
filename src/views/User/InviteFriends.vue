@@ -1,57 +1,30 @@
 <!-- 推荐好友 -->
 <template>
   <div class="page">
-    <HeaderTabs
-      v-model:active="activeTab"
-      :tabs="[$t('inviteFriends.invite'), $t('inviteFriends.reward')]"
-      @change="changeActiveTab(activeTab, true)"
-    >
+    <HeaderTabs v-model:active="activeTab" :tabs="[$t('inviteFriends.invite'), $t('inviteFriends.reward')]"
+      @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="back" @click="back()">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="20"
-            viewBox="0 0 12 20"
-            fill="none"
-          >
-            <path
-              d="M10.4 2L2 10.4L10.4 18.8"
-              stroke="#161616"
-              stroke-width="2.1"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="20" viewBox="0 0 12 20" fill="none">
+            <path d="M10.4 2L2 10.4L10.4 18.8" stroke="#161616" stroke-width="2.1" stroke-linecap="round"
+              stroke-linejoin="round" />
           </svg>
         </div>
       </template>
     </HeaderTabs>
-    <Swipe
-      :autoplay="0"
-      :initial-swipe="initialSwipe"
-      :show-indicators="false"
-      ref="swipe"
-      @change="swipeChange"
-    >
+    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
       <SwipeItem>
         <div class="scroll-box">
           <div class="px-[0.32rem] pt-[0.26rem] pb-[0.64rem]">
             <div class="invite_banner" :class="['invite_banner--' + locale]">
-              <img
-                class="invite_banner_img"
-                src="/static/img/invite/banner2.png"
-              />
+              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/invite/banner2.png')" />
               <div class="invite_banner_titbox">
                 <div class="invite_banner_tit">
                   {{ $t("inviteFriends.banner_title") }}
                 </div>
                 <div class="invite_banner_amount mt-[0.04rem]">
                   <MoneyText text="$" />
-                  <MoneyText
-                    v-for="(text, i) in moneyTextArr"
-                    :key="i"
-                    :text="text"
-                  />
+                  <MoneyText v-for="(text, i) in moneyTextArr" :key="i" :text="text" />
                 </div>
                 <div class="invite_banner_desc">
                   {{ $t("inviteFriends.banner_desc") }}
@@ -99,10 +72,7 @@
                 </div>
                 <div class="achievement_amount">20000</div>
               </div>
-              <img
-                class="achievement_bg"
-                src="/static/img/invite/achievement.png"
-              />
+              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/invite/achievement.png')" />
             </div>
             <div class="invite-title">{{ $t("inviteFriends.details") }}</div>
             <div class="record-tit">
@@ -123,6 +93,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Swipe, SwipeItem, showToast } from "vant";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import { computed, onMounted, ref } from "vue";
@@ -210,15 +181,18 @@ const swipeChange = (val) => {
 .page :deep(.header_tabs) {
   position: relative;
 }
+
 .page :deep(.header_tabs .tab_body) {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .scroll-box {
   height: calc(100vh - 1.12rem);
   overflow-y: auto;
 }
+
 .back {
   width: 1.12rem;
   height: 1.12rem;
@@ -230,37 +204,45 @@ const swipeChange = (val) => {
   top: 0;
   z-index: 1;
 }
+
 .invite_banner {
   position: relative;
   height: 2.64rem;
   border-radius: 0.32rem;
   background: linear-gradient(185deg, #6794fb 7.28%, #014cfa 95.61%);
+
   &_img {
     width: 100%;
     display: block;
     height: 100%;
   }
 }
+
 .invite_banner_titbox {
   position: absolute;
   left: 0.4rem;
   top: 0.38rem;
 }
+
 .invite_banner_tit {
   color: #fff;
   font-size: 0.4rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 0.52rem; /* 160% */
+  line-height: 0.52rem;
+  /* 160% */
   padding-bottom: 0.12rem;
   width: 4.2rem;
 }
+
 .invite_banner--en .invite_banner_titbox {
   top: 0.2rem;
 }
+
 .invite_banner--en .invite_banner_desc {
   font-size: 0.24rem;
 }
+
 .invite_banner_amount {
   color: #ffaf2a;
   font-family: "Lilita One";
@@ -271,6 +253,7 @@ const swipeChange = (val) => {
   display: flex;
   align-items: center;
 }
+
 .invite_banner_desc {
   color: #fff;
   font-size: 0.28rem;
@@ -279,6 +262,7 @@ const swipeChange = (val) => {
   line-height: 0.28rem;
   margin-top: 0.26rem;
 }
+
 .invite_title {
   color: #000;
   font-size: 0.28rem;
@@ -288,18 +272,21 @@ const swipeChange = (val) => {
   margin-bottom: 0.2rem;
   margin-top: 0.4rem;
 }
+
 .invite_qrcode {
   border-radius: 0.3rem;
   border: 1px solid #eff3f8;
   width: 2.7rem;
   height: 2.7rem;
   box-sizing: border-box;
+
   img {
     width: 100%;
     height: 100%;
     border-radius: 0.3rem;
   }
 }
+
 .input-box {
   border-radius: 0.32rem;
   border: 1px solid #d0d8e2;
@@ -309,6 +296,7 @@ const swipeChange = (val) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   input {
     width: 100%;
     border: 0px;
@@ -319,6 +307,7 @@ const swipeChange = (val) => {
     line-height: 0.4rem;
     padding: 0 0.32rem;
   }
+
   .copy {
     padding: 0 0.32rem;
     min-width: 1.28rem;
@@ -329,6 +318,7 @@ const swipeChange = (val) => {
     border-radius: 0.32rem;
   }
 }
+
 .btn {
   width: 2.7rem;
   height: 0.7rem;
@@ -341,22 +331,26 @@ const swipeChange = (val) => {
   font-size: 0.3rem;
   border-radius: 1.5rem;
 }
+
 .achievement {
   border-radius: 0.32rem;
   background-image: linear-gradient(185deg, #6794fb 7.28%, #014cfa 95.61%);
   height: 2.2rem;
   position: relative;
 }
+
 .achievement_cont {
   display: flex;
   flex-direction: column;
   padding: 0.5rem 0 0 0.5rem;
 }
+
 .achievement_text {
   color: #fff;
   font-size: 0.28rem;
   font-weight: 500;
 }
+
 .achievement_amount {
   color: #fff;
   font-family: "PingFang SC";
@@ -366,6 +360,7 @@ const swipeChange = (val) => {
   line-height: 0.6rem;
   margin-top: 0.26rem;
 }
+
 .achievement_bg {
   width: 100%;
   height: 100%;
@@ -384,6 +379,7 @@ const swipeChange = (val) => {
   align-items: center;
   justify-content: center;
 }
+
 .record-tit {
   line-height: 0.4rem;
   display: flex;
@@ -391,6 +387,7 @@ const swipeChange = (val) => {
   font-size: 0.28rem;
   color: #666d80;
 }
+
 .record-list {
   padding: 0.1rem 0;
 }

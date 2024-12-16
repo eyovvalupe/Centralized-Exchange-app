@@ -2,10 +2,7 @@
 <template>
   <div class="recgarge_item" @click="goInfo">
     <div class="icon_box" v-if="item.currency">
-      <img
-        :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`"
-        alt="currency"
-      />
+      <img :src="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.png`)" alt="currency" />
     </div>
     <div class="content">
       <div class="item_title">{{ item.currency }}</div>
@@ -19,10 +16,10 @@
           item.status == "review"
             ? $t("topUpStatusMap.review")
             : item.status == "success"
-            ? $t("topUpStatusMap.success")
-            : item.status == "failure"
-            ? $t("topUpStatusMap.failure")
-            : $t("topUpStatusMap.unknown")
+              ? $t("topUpStatusMap.success")
+              : item.status == "failure"
+                ? $t("topUpStatusMap.failure")
+                : $t("topUpStatusMap.unknown")
         }}
       </div>
     </div>
@@ -30,6 +27,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import { _topUpStatusMap } from "@/utils/dataMap";
 import { useI18n } from "vue-i18n";
@@ -38,7 +36,7 @@ const { t } = useI18n();
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 
@@ -91,6 +89,7 @@ const formatDate = (date) => {
   border: 0.02rem solid #d0d8e2;
   border-radius: 0.32rem;
   margin-top: 0.2rem;
+
   .icon_box {
     width: 0.84rem;
     height: 0.84rem;
@@ -129,6 +128,7 @@ const formatDate = (date) => {
     height: 100%;
     text-align: right;
     line-height: 0.3rem;
+
     .amount {
       font-size: 0.3rem;
       color: #000000;

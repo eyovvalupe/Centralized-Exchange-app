@@ -3,13 +3,8 @@
   <div class="page page_user">
     <!-- 标题 -->
     <!-- <div class="title">用户</div> -->
-    <div
-      class="flex items-center justify-between h-[0.98rem] mt-[0.28rem] mb-[0.2rem]"
-    >
-      <div
-        v-if="token"
-        class="flex items-center justify-center -ml-[0.08rem] gap-[0.16rem]"
-      >
+    <div class="flex items-center justify-between h-[0.98rem] mt-[0.28rem] mb-[0.2rem]">
+      <div v-if="token" class="flex items-center justify-center -ml-[0.08rem] gap-[0.16rem]">
         <div class="default-avatar"></div>
         <div>
           <div class="text-[#061023] text-[0.32rem] mb-[0.1rem]">
@@ -20,33 +15,24 @@
           </div>
         </div>
       </div>
-      <div
-        v-else
-        class="flex items-center -ml-[0.08rem] gap-[0.16rem]"
-        @click="store.commit('setIsLoginOpen', true)"
-      >
+      <div v-else class="flex items-center -ml-[0.08rem] gap-[0.16rem]" @click="store.commit('setIsLoginOpen', true)">
         <div class="default-avatar"></div>
         <div class="text-[0.32rem]">{{ $t("user_page.login_out") }}</div>
       </div>
       <div class="flex items-center justify-center gap-[0.16rem]">
-        <div
-          @click="jump('chat', false)"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
-        >
+        <div @click="jump('chat', false)"
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img src="/static/img/user/serverB.svg" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
         </div>
         <div
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
-        >
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
           <div class="setting-icon"></div>
         </div>
       </div>
     </div>
-    <div
-      class="flex items-center bg-[#F5F7FC] rounded-[0.32rem] w-full h-[1.22rem] mb-[0.2rem]"
-    >
+    <div class="flex items-center bg-[#F5F7FC] rounded-[0.32rem] w-full h-[1.22rem] mb-[0.2rem]">
       <div class="w-1/3 text-center">
         <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
           0
@@ -68,13 +54,7 @@
     </div>
     <div class="rounded-[0.32rem] h-[1.6rem] overflow-hidden">
       <!-- @click=" token ? jump('register', false, { guest: 1 }) : jump('kyc') -->
-      <Carousel
-        :autoplay="3000"
-        :wrap-around="true"
-        :mouseDrag="true"
-        v-model="currentSlide"
-        class="relative"
-      >
+      <Carousel :autoplay="3000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide" class="relative">
         <Slide v-for="(slide, index) in slides" :key="index">
           <img :src="slide" class="w-full rounded-[0.36rem]" alt="img" />
           <div class="absolute left-0 ml-[0.32rem]">
@@ -86,95 +66,62 @@
         </Slide>
       </Carousel>
       <div class="flex gap-[0.05rem] justify-center relative -mt-[0.2rem]">
-        <div
-          class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white"
-          :class="[currentSlide == 0 ? '' : 'opacity-50']"
-        ></div>
-        <div
-          class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white"
-          :class="[currentSlide == 1 ? '' : 'opacity-50']"
-        ></div>
+        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white" :class="[currentSlide == 0 ? '' : 'opacity-50']">
+        </div>
+        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white" :class="[currentSlide == 1 ? '' : 'opacity-50']">
+        </div>
       </div>
     </div>
-    <div
-      class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.18rem]"
-    >
-      <div
-        @click="jump('account', true)"
-        class="text-center flex flex-col items-center justify-center relative"
-      >
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
-        ></div>
-        <div
-          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]"
-        >
-          <img class="" src="/static/img/user/payment.svg" />
+    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.18rem]">
+      <div @click="jump('account', true)" class="text-center flex flex-col items-center justify-center relative">
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
+          <img class="" :src="getStaticImgUrl('/static/img/user/payment.svg')" />
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.receive_payment") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+          $t("user_page.receive_payment") }}</div>
       </div>
-      <div
-        @click="jump('kyc', true)"
-        class="text-center flex flex-col items-center justify-center relative"
-      >
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
-        ></div>
-        <div
-          class="absolute w-[0.55rem] h-[0.6rem] opacity-100 top-0 mt-[0.1rem]"
-        >
-          <img class="" src="/static/img/user/id_card.svg" />
+      <div @click="jump('kyc', true)" class="text-center flex flex-col items-center justify-center relative">
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="absolute w-[0.55rem] h-[0.6rem] opacity-100 top-0 mt-[0.1rem]">
+          <img class="" :src="getStaticImgUrl('/static/img/user/id_card.svg')" />
         </div>
-        <div
-          v-if="token"
+        <div v-if="token"
           class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-[#E8503A]'
               : `${userInfo.kycl2 == 1 ? 'bg-[#014CFA]' : 'bg-[#18B762]'}`,
-          ]"
-        >
+          ]">
           <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
-          <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified") }}</span>
+          <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified")
+            }}</span>
           <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.verify_identity") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+          $t("user_page.verify_identity") }}</div>
       </div>
-      <div
-        @click="jump('googleCode', true)"
-        class="text-center flex flex-col items-center justify-center relative"
-      >
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
-        ></div>
-        <div
-          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]"
-        >
-          <img class="" src="/static/img/user/google.svg" />
+      <div @click="jump('googleCode', true)" class="text-center flex flex-col items-center justify-center relative">
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
+          <img class="" :src="getStaticImgUrl('/static/img/user/google.svg')" />
         </div>
-        <div
-          v-if="token"
+        <div v-if="token"
           class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
-          :class="[userInfo.googlebind == 0 ? 'bg-[#E8503A]' : 'bg-[#18B762]']"
-        >
+          :class="[userInfo.googlebind == 0 ? 'bg-[#E8503A]' : 'bg-[#18B762]']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.google_verification") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+          $t("user_page.google_verification") }}</div>
       </div>
-      <div
-        @click="jump('inviteFriends',true)"
-        class="text-center flex flex-col items-center justify-center relative"
-      >
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"
-        ></div>
-        <div
-          class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]"
-        >
-          <img class="" src="/static/img/user/friend.svg" />
+      <div @click="jump('inviteFriends', true)" class="text-center flex flex-col items-center justify-center relative">
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
+          <img class="" :src="getStaticImgUrl('/static/img/user/friend.svg')" />
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{ $t("user_page.recommend_friend") }}</div>
+        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+          $t("user_page.recommend_friend") }}</div>
       </div>
     </div>
 
@@ -186,9 +133,7 @@
         </div>
         <div class="lang">
           <div style="width: 0.57rem; height: 0.57rem; padding: 0.01rem;" class="mr-[0.1rem]">
-            <div
-            :class="Object.keys(language).length ? language.icon : defaultLang.icon"
-          ></div>
+            <div :class="Object.keys(language).length ? language.icon : defaultLang.icon"></div>
           </div>
           <span class="font-1">{{ Object.keys(language).length ? language.name : defaultLang.name }}</span>
         </div>
@@ -200,12 +145,8 @@
           <div class="title">{{ $t("user_page.security") }}</div>
         </div>
         <div v-if="token" class="gg">
-          <span v-if="!userInfo.googlebind" style="color: #ff3b30"
-            >{{ $t("user_page.not_set_google_yet") }}</span
-          >
-          <span v-if="userInfo.googlebind" style="color: #18b762"
-            >{{ $t("user_page.already_set_google") }}</span
-          >
+          <span v-if="!userInfo.googlebind" style="color: #ff3b30">{{ $t("user_page.not_set_google_yet") }}</span>
+          <span v-if="userInfo.googlebind" style="color: #18b762">{{ $t("user_page.already_set_google") }}</span>
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
@@ -224,6 +165,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, watch, ref } from "vue";
 import { Icon, showConfirmDialog } from "vant";
 import router from "@/router";
@@ -241,7 +183,7 @@ const messageNum = computed(() => storeChat.state.messageNum);
 const token = computed(() => store.state.token);
 const userInfo = computed(() => store.state.userInfo || {});
 const language = computed(() => store.state.language || {});
-const slides = ["/static/img/user/userid.webp", "/static/img/user/userid.webp"];
+const slides = [getStaticImgUrl("/static/img/user/userid.webp"), getStaticImgUrl("/static/img/user/userid.webp")];
 const currentSlide = ref(0);
 // const getFirstCharacter = (username) => {
 //   return username ? username.charAt(0) : "-";
@@ -273,7 +215,7 @@ const loginout = () => {
           // })
         }, 200);
       })
-      .catch(() => {});
+      .catch(() => { });
   }
 };
 
@@ -353,6 +295,7 @@ if (token.value) {
 
   .navs {
     margin-bottom: 0.8rem;
+
     .nav {
       display: flex;
       align-items: center;
@@ -364,6 +307,7 @@ if (token.value) {
       border-radius: 0.32rem;
       padding-inline: 0.32rem;
       margin-bottom: 0.2rem;
+
       .icon {
         margin-right: 0.16rem;
         width: 0.64rem;
@@ -373,7 +317,7 @@ if (token.value) {
         align-items: center;
         justify-content: center;
 
-        > img {
+        >img {
           width: 0.48rem !important;
           height: 0.48rem !important;
         }
@@ -431,6 +375,7 @@ if (token.value) {
     }
   }
 }
+
 .default-avatar {
   width: 0.98rem;
   height: 0.98rem;
@@ -438,6 +383,7 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .setting-icon {
   width: 0.48rem;
   height: 0.48rem;
@@ -445,6 +391,7 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .payment-icon {
   width: 24px;
   height: 24px;
@@ -452,6 +399,7 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .language-icon {
   width: 0.48rem;
   height: 0.48rem;
@@ -459,6 +407,7 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .verify-icon {
   width: 0.48rem;
   height: 0.48rem;
@@ -466,6 +415,7 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .info-icon {
   width: 0.48rem;
   height: 0.48rem;
@@ -473,6 +423,7 @@ if (token.value) {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .googole_icon {
   background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"%3E%3Cg clip-path="url(%23clip0_802_7212)"%3E%3Cpath d="M4.38491 2.72595C8.96626 -1.03643 15.6085 -0.88893 20.0184 3.07394L16.17 6.64683C15.1672 5.86632 13.9655 5.383 12.7015 5.25187C11.4376 5.12075 10.1622 5.34708 9.02057 5.90511C7.87893 6.46315 6.91686 7.33047 6.24388 8.40836C5.5709 9.48625 5.21403 10.7314 5.21388 12.0022C5.21114 13.6169 5.78451 15.1796 6.8309 16.4094C7.87729 17.6392 9.32807 18.4554 10.9224 18.7113C12.5167 18.9671 14.15 18.6458 15.5287 17.8052C16.9073 16.9645 17.9408 15.6596 18.4435 14.1251H12.0922V9.22025H23.6718C25.0442 14.9866 21.9993 20.8924 16.5045 23.1193C11.0102 25.3452 4.7134 23.2253 1.68449 18.129C-1.34441 13.0326 -0.196945 6.48833 4.38491 2.72595ZM12.1997 20.2884C12.0545 20.2885 11.9107 20.3171 11.7767 20.3727C11.6426 20.4283 11.5207 20.5098 11.4181 20.6125C11.3155 20.7152 11.2341 20.8371 11.1786 20.9713C11.1232 21.1054 11.0946 21.2492 11.0947 21.3944C11.0948 21.5395 11.1234 21.6833 11.179 21.8174C11.2346 21.9515 11.3161 22.0733 11.4188 22.1759C11.5215 22.2785 11.6434 22.3599 11.7776 22.4154C11.9117 22.4709 12.0555 22.4994 12.2007 22.4993C12.4938 22.4993 12.775 22.3829 12.9823 22.1755C13.1897 21.9682 13.3061 21.687 13.3061 21.3939C13.3061 21.1007 13.1897 20.8195 12.9823 20.6122C12.775 20.4049 12.4938 20.2884 12.2007 20.2884H12.1997ZM5.77636 17.5985C5.48324 17.5985 5.20213 17.7149 4.99486 17.9222C4.78759 18.1295 4.67115 18.4106 4.67115 18.7037C4.67115 18.9968 4.78759 19.2779 4.99486 19.4852C5.20213 19.6925 5.48324 19.8089 5.77636 19.8089C6.06949 19.8089 6.3506 19.6925 6.55787 19.4852C6.76514 19.2779 6.88158 18.9968 6.88158 18.7037C6.88158 18.4106 6.76514 18.1295 6.55787 17.9222C6.3506 17.7149 6.06949 17.5985 5.77636 17.5985ZM18.6795 17.5985C18.3863 17.5985 18.1052 17.7149 17.8979 17.9222C17.6907 18.1295 17.5742 18.4106 17.5742 18.7037C17.5742 18.9968 17.6907 19.2779 17.8979 19.4852C18.1052 19.6925 18.3863 19.8089 18.6795 19.8089C18.9726 19.8089 19.2537 19.6925 19.461 19.4852C19.6682 19.2779 19.7847 18.9968 19.7847 18.7037C19.7847 18.4106 19.6682 18.1295 19.461 17.9222C19.2537 17.7149 18.9726 17.5985 18.6795 17.5985ZM3.10495 11.1317C2.95981 11.1317 2.8161 11.1603 2.68202 11.2159C2.54794 11.2715 2.42612 11.3529 2.32352 11.4556C2.22091 11.5582 2.13953 11.6801 2.08402 11.8142C2.02851 11.9483 1.99995 12.092 1.99998 12.2371C2.00002 12.3823 2.02864 12.526 2.08421 12.6601C2.13978 12.7942 2.22122 12.916 2.32387 13.0186C2.42652 13.1212 2.54838 13.2026 2.68248 13.2581C2.81659 13.3136 2.96031 13.3421 3.10545 13.3421C3.39857 13.3421 3.67969 13.2257 3.88695 13.0184C4.09422 12.8111 4.21066 12.53 4.21066 12.2369C4.21066 11.9438 4.09422 11.6627 3.88695 11.4554C3.67969 11.2481 3.39857 11.1317 3.10545 11.1317H3.10495ZM21.3944 11.1317C21.1012 11.1317 20.8201 11.2481 20.6129 11.4554C20.4056 11.6627 20.2891 11.9438 20.2891 12.2369C20.2891 12.53 20.4056 12.8111 20.6129 13.0184C20.8201 13.2257 21.1012 13.3421 21.3944 13.3421C21.6875 13.3421 21.9686 13.2257 22.1759 13.0184C22.3831 12.8111 22.4996 12.53 22.4996 12.2369C22.4996 11.9438 22.3831 11.6627 22.1759 11.4554C21.9686 11.2481 21.6875 11.1317 21.3944 11.1317ZM5.77586 7.91115C5.48314 7.91115 5.20157 8.02751 4.9938 8.23502C4.78603 8.44253 4.66954 8.72466 4.66954 9.0178C4.66954 9.31094 4.78603 9.59207 4.9938 9.79958C5.20157 10.0071 5.48314 10.1235 5.77586 10.1235C6.06858 10.1235 6.35014 10.0071 6.55791 9.79958C6.76568 9.59207 6.88218 9.31094 6.88218 9.0178C6.88218 8.72466 6.76568 8.44253 6.55791 8.23502C6.35014 8.02751 6.06858 7.91115 5.77586 7.91115ZM18.6794 7.91115C18.3867 7.91115 18.1051 8.02751 17.8974 8.23502C17.6897 8.44253 17.5732 8.72466 17.5732 9.0178C17.5732 9.31094 17.6897 9.59207 17.8974 9.79958C18.1051 10.0071 18.3867 10.1235 18.6794 10.1235C18.972 10.1235 19.2537 10.0071 19.461 9.79958C19.6683 9.59207 19.7848 9.31094 19.7848 9.0178C19.7848 8.72466 19.6683 8.44253 19.461 8.23502C19.2537 8.02751 18.972 7.91115 18.6794 7.91115Z" fill="black"/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id="clip0_802_7212"%3E%3Crect width="24" height="24"/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E');
   background-size: contain;
@@ -480,6 +431,7 @@ if (token.value) {
   width: 100px;
   height: 100px;
 }
+
 .china_icon {
   width: 0.52rem;
   height: 0.52rem;

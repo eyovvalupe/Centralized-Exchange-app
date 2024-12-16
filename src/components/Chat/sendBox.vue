@@ -1,15 +1,16 @@
 <template>
   <div class="msg-input">
-    <span class="icon-left"><img :src="'/static/sendImg.png'" />
+    <span class="icon-left"><img :src="getStaticImgUrl('/static/sendImg.png')" />
       <input type="file" id="fileInput" @change="uploadImg" accept="image/*" />
     </span>
     <textarea class="textarea" v-model="message" ref="sendInput" :placeholder="t('service.input_message')"></textarea>
-    <span class="icon-right" @click="sendMessage('text', message)"><img :src="'/static/send.png'" />
+    <span class="icon-right" @click="sendMessage('text', message)"><img :src="getStaticImgUrl('/static/send.png')" />
     </span>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, ref } from "vue";
 import { serviceChat } from "@/utils/serviceChat";
 import { showToast } from "vant";

@@ -5,7 +5,7 @@
             <template #right>
                 <div class="top-record" @click="goRecord">
                     <div class="top-record-icon">
-                        <img src="/static/img/user/withdraw_record_icon.png" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/user/withdraw_record_icon.png')" alt="img">
                     </div>
                     <!-- <span>
                         记录
@@ -21,12 +21,13 @@
                 <div class="item account_item" @click="openDialog('from')">
                     <div class="currency" v-if="form.from">
                         <div class="currency_icon">
-                            <img :src="`/static/img/crypto/${form.from.toUpperCase()}.png`" alt="currency">
+                            <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.png`)"
+                                alt="currency">
                         </div>
                         <span>{{ form.fromName }}</span>
                     </div>
                     <div class="more">
-                        <img src="/static/img/assets/more.png" alt="more">
+                        <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more">
                     </div>
                 </div>
                 <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
@@ -42,7 +43,7 @@
             <div class="trans">
                 <div class="line"></div>
                 <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-                    <img src="/static/img/assets/transfer.png" alt="img">
+                    <img :src="getStaticImgUrl('/static/img/assets/transfer.png')" alt="img">
                 </div>
                 <div class="line" style="flex:12"></div>
             </div>
@@ -52,12 +53,13 @@
                 <div class="item account_item" @click="openDialog('to')">
                     <div class="currency">
                         <div class="currency_icon">
-                            <img :src="`/static/img/crypto/${form.to.toUpperCase()}.png`" alt="currency">
+                            <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.png`)"
+                                alt="currency">
                         </div>
                         <span>{{ form.toName }}</span>
                     </div>
                     <div class="more">
-                        <img src="/static/img/assets/more.png" alt="more">
+                        <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more">
                     </div>
                 </div>
                 <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }"
@@ -90,13 +92,14 @@
             v-model:show="showDialog" position="bottom" teleport="body">
             <div class="swap_accounr_dialog">
                 <div class="close_icon" @click="showDialog = false">
-                    <img src="/static/img/common/close.png" alt="x">
+                    <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x">
                 </div>
                 <div @click="clickItem(item)" class="swap_dialog_item"
                     :class="{ 'swap_dialog_item_active': (clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency)) }"
                     v-for="(item, i) in wallet" :key="i">
                     <div class="icon">
-                        <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
+                        <img :src="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.png`)"
+                            alt="currency">
                     </div>
                     <span>{{ item.name }}</span>
 
@@ -113,25 +116,6 @@
                     style="position: absolute;width:100%;font-size: 0.32rem;text-align: center;pointer-events: none;top:0.32rem">
                     兑换确认</div>
             </template>
-            <!-- <template #top>
-                <div class="swap_comfirm_box">
-                    <div class="comfirm_title">兑换确认</div>
-                    <div class="confirm_box">
-                        <div class="confirm_box_item">
-                            <div>支付</div>
-                            <div class="num">{{ form.amount }}{{ form.from.toUpperCase() }}</div>
-                        </div>
-                        <div class="confirm_icon">
-                            <img src="/static/img/assets/transfer.png" alt="img">
-                        </div>
-                        <div class="confirm_box_item">
-                            <div>收到</div>
-                            <div class="num">{{ form.toAmount || '--' }}{{ form.to.toUpperCase() }}</div>
-                        </div>
-                    </div>
-                    <div class="comfirn_tip">实际到账以实时汇率为准</div>
-                </div>
-            </template> -->
         </SafePassword>
 
         <!-- 充提记录 -->
@@ -140,6 +124,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue"
 import { Button, Popup, Icon, showToast } from "vant"
 import { ref, computed, onBeforeUnmount } from "vue"

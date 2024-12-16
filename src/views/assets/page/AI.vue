@@ -6,8 +6,8 @@
             <div class="top">
                 <div class="title">盈利资金({{ currency }})</div>
                 <div class="eyes" @click="hidden = !hidden">
-                    <img src="/static/img/assets/eye_o.svg" v-show="!hidden" />
-                    <img src="/static/img/assets/closed_eye.svg" v-show="hidden" />
+                    <img :src="getStaticImgUrl('/static/img/assets/eye_o.svg')" v-show="!hidden" />
+                    <img :src="getStaticImgUrl('/static/img/assets/closed_eye.svg')" v-show="hidden" />
                 </div>
             </div>
             <div class="money">
@@ -24,15 +24,16 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed } from "vue"
 import store from "@/store"
 import OverviewCard from './components/OverviewCard'
 import Positions from "../../Trade2/ai/Positions.vue"
-const currency = computed(() => (store.state.accountCurrencyMap.aiquant || '') )
+const currency = computed(() => (store.state.accountCurrencyMap.aiquant || ''))
 const hidden = ref(false)
 
 const assets = computed(() => store.state.assets || {})
-const profitableFunds = computed(()=>{
+const profitableFunds = computed(() => {
     return "0.00"
 })
 </script>
@@ -40,6 +41,7 @@ const profitableFunds = computed(()=>{
 <style lang="less" scoped>
 .page_assets_contract {
     padding-top: 0.32rem;
+
     .top {
         font-size: 0.28rem;
         font-weight: 400;
@@ -47,19 +49,21 @@ const profitableFunds = computed(()=>{
         height: 0.32rem;
         align-items: center;
         line-height: 0.32rem;
+
         .title {
-        color: #fff;
-        margin-right: 0.12rem;
-        font-size: 0.3rem;
-        span{
-            font-size: 0.24rem;
-        }
+            color: #fff;
+            margin-right: 0.12rem;
+            font-size: 0.3rem;
+
+            span {
+                font-size: 0.24rem;
+            }
         }
 
         .eyes {
-        width: 0.32rem;
-        height: 0.32rem;
-        color: #fff;
+            width: 0.32rem;
+            height: 0.32rem;
+            color: #fff;
         }
     }
 
@@ -69,10 +73,10 @@ const profitableFunds = computed(()=>{
         font-size: 0.52rem;
         font-style: normal;
         font-weight: 600;
-        line-height: 0.6rem; 
+        line-height: 0.6rem;
         margin-top: 0.26rem;
     }
-    
+
     .navs {
         display: flex;
         align-items: center;
@@ -82,7 +86,8 @@ const profitableFunds = computed(()=>{
         border-radius: 0.32rem;
         margin-top: 0.32rem;
         padding: 0 0.32rem;
-        .nav_label{
+
+        .nav_label {
             color: #8F92A1;
             font-size: 0.28rem;
             line-height: 100%;
@@ -92,19 +97,20 @@ const profitableFunds = computed(()=>{
             color: #061023;
             font-size: 0.3rem;
             font-weight: 600;
-            line-height: 0.3rem; 
+            line-height: 0.3rem;
 
         }
-  }
+    }
 
-  .subtitle {
+    .subtitle {
         line-height: 0.32rem;
         color: #061023;
         font-weight: 600;
         font-size: 0.32rem;
         margin: 0.5rem 0.32rem 0 0.32rem;
     }
-    :deep(.page_ai_position){
+
+    :deep(.page_ai_position) {
         padding: 0 0.32rem;
     }
 

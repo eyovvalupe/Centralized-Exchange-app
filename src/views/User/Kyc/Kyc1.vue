@@ -4,68 +4,41 @@
     <Top :title="t('kyc.page_title')">
       <!-- 从注册来的 -->
       <template #right v-if="from == 'register'">
-        <span
-          @click="nextStep"
-          style="color: #014cfa; font-weight: 400; font-size: 0.28rem"
-          >跳过</span
-        >
+        <span @click="nextStep" style="color: #014cfa; font-weight: 400; font-size: 0.28rem">跳过</span>
       </template>
       <!-- 提交过认证信息 -->
       <template #right v-if="kycInfo.name">
         <div class="kyc_status">
-          <!-- <div class="icon">
-                          <img class="status_icon" src="/static/img/user/record.png" alt="⚪">
-                      </div> -->
           <span class="status" v-if="kycInfo.status == 'review'">审核中</span>
-          <span class="status status_pass" v-if="kycInfo.status == 'success'"
-            >审核通过</span
-          >
-          <span class="status status_fail" v-if="kycInfo.status == 'failure'"
-            >审核失败</span
-          >
+          <span class="status status_pass" v-if="kycInfo.status == 'success'">审核通过</span>
+          <span class="status status_fail" v-if="kycInfo.status == 'failure'">审核失败</span>
         </div>
       </template>
       <template #right v-else>
-        <div
-          @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
-        >
+        <div @click="jump('chat')"
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img src="/static/img/user/serverB.svg" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
         </div>
       </template>
     </Top>
     <!-- 查看模式头部 -->
-    <Tabs
-      @change="nextStep"
-      class="tabs"
-      v-if="checkMode"
-      style="width: 100%"
-      :lazy-render="false"
-      v-model:active="activeTab"
-      sticky
-      animated
-      shrink
-    >
+    <Tabs @change="nextStep" class="tabs" v-if="checkMode" style="width: 100%" :lazy-render="false"
+      v-model:active="activeTab" sticky animated shrink>
       <Tab :title="'身份信息'"></Tab>
       <Tab :title="'照片'"></Tab>
     </Tabs>
     <!-- 表单模式头部 -->
     <div class="steps" v-if="!checkMode">
-      <div
-        class="bg-[#D9E4FF] w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center"
-      >
-        <div
-          class="bg-[#014CFA] w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center"
-        >
+      <div class="bg-[#D9E4FF] w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
+        <div class="bg-[#014CFA] w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center">
           <div class="bg-[#D9E4FF] w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
         </div>
       </div>
       <div class="w-[3.04rem] h-[0.16rem] bg-[#F5F7FC]"></div>
       <div
-        class="bg-[#F5F7FC] w-[0.56rem] h-[0.56rem] rounded-[50%] text-[0.32rem] font-bold text-[#8F92A1] flex items-center justify-center"
-      >
+        class="bg-[#F5F7FC] w-[0.56rem] h-[0.56rem] rounded-[50%] text-[0.32rem] font-bold text-[#8F92A1] flex items-center justify-center">
         2
       </div>
     </div>
@@ -80,91 +53,47 @@
 
     <!-- 表单 -->
     <div class="subtitle">{{ $t("kyc.first_legal_name") }}</div>
-    <div
-      class="item"
-      :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
-    >
-      <input
-        :disabled="checkMode"
-        v-model.trim="form.name"
-        class="ipt"
-        type="text"
-        :placeholder="t('kyc.first_legal_name')"
-        maxlength="20"
-      />
+    <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }">
+      <input :disabled="checkMode" v-model.trim="form.name" class="ipt" type="text"
+        :placeholder="t('kyc.first_legal_name')" maxlength="20" />
     </div>
     <div class="subtitle">{{ $t("kyc.first_card_id") }}</div>
-    <div
-      class="item"
-      :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
-    >
-      <input
-        :disabled="checkMode"
-        v-model.trim="form.idnum"
-        class="ipt"
-        type="text"
-        :placeholder="t('kyc.first_card_id')"
-        maxlength="20"
-      />
+    <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }">
+      <input :disabled="checkMode" v-model.trim="form.idnum" class="ipt" type="text"
+        :placeholder="t('kyc.first_card_id')" maxlength="20" />
     </div>
     <div class="subtitle">{{ $t('kyc.first_birthday') }}</div>
-    <div
-      class="item justify-between"
-      :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
-      @click="checkMode ? (showBottom = false) : (showBottom = true)"
-    >
+    <div class="item justify-between" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
+      @click="checkMode ? (showBottom = false) : (showBottom = true)">
       <div :class="form.birthday ? 'text-[#061023]' : 'text-[#A4ACB9]'">
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}
       </div>
       <div class="calendar-icon"></div>
     </div>
 
-    <Button
-      v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'"
-      @click="submit"
-      :loading="loading"
-      :disabled="disabled"
-      round
-      :color="'#014CFA'"
-      class="submit"
-      type="primary"
-      >{{ $t("kyc.first_btn") }}</Button
-    >
+    <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" @click="submit" :loading="loading"
+      :disabled="disabled" round :color="'#014CFA'" class="submit" type="primary">{{ $t("kyc.first_btn") }}</Button>
     <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="#014CFA" class="submit"
               type="primary" @click="next">继续</Button> -->
 
     <!-- 日期选择 -->
-    <Popup
-      style="border-top-left-radius: 0.32rem; border-top-right-radius: 0.32rem"
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      v-model:show="showBottom"
-      position="bottom"
-      class="date_picker"
-    >
+    <Popup style="border-top-left-radius: 0.32rem; border-top-right-radius: 0.32rem" :safe-area-inset-top="true"
+      :safe-area-inset-bottom="true" v-model:show="showBottom" position="bottom" class="date_picker">
       <div class="flex justify-between items-center mx-[0.32rem] mt-[0.24rem]">
         <div @click="cancelDate" class="close-icon"></div>
-        <div
-          @click="confirmDate"
-          class="w-[1.2rem] h-[0.6rem] rounded-[0.32rem] bg-[#014CFA] text-white text-[0.3rem] flex items-center justify-center font-medium"
-        >
+        <div @click="confirmDate"
+          class="w-[1.2rem] h-[0.6rem] rounded-[0.32rem] bg-[#014CFA] text-white text-[0.3rem] flex items-center justify-center font-medium">
           {{ $t("kyc.first_confirm") }}
         </div>
       </div>
-      <DatePicker
-        @cancel="cancelDate"
-        @confirm="confirmDate"
-        v-model="currentDate"
-        :title="t('kyc.first_birthday')"
-        :min-date="minDate"
-        :max-date="maxDate"
-        class="date_picker"
-      />
+      <DatePicker @cancel="cancelDate" @confirm="confirmDate" v-model="currentDate" :title="t('kyc.first_birthday')"
+        :min-date="minDate" :max-date="maxDate" class="date_picker" />
     </Popup>
   </div>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import { Button, Popup, DatePicker, Tabs, Tab } from "vant";
 import { ref, computed } from "vue";
@@ -179,7 +108,7 @@ const activeTab = ref(0);
 const props = defineProps({
   kycInfo: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 const route = useRoute();
@@ -261,6 +190,7 @@ const nextStep = () => {
       .van-picker__cancel {
         display: none;
       }
+
       .van-picker__confirm {
         display: none;
       }
@@ -373,6 +303,7 @@ const nextStep = () => {
     }
   }
 }
+
 .calendar-icon {
   width: 0.32rem;
   height: 0.32rem;
@@ -380,6 +311,7 @@ const nextStep = () => {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .close-icon {
   width: 0.4rem;
   height: 0.4rem;

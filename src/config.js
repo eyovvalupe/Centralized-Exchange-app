@@ -1,7 +1,14 @@
+
+
+/* 版本 
+ *  颜色_日期_字母 
+ *  wb  白底蓝色
+ */
+export const VERSION = 'wb_1216_a'
+
+
 /* 首页模板 */
 export const HOME_MODE = 1
-
-
 
 
 /* 开发环境 */

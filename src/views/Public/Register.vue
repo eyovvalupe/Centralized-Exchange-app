@@ -16,7 +16,7 @@
         <div class="flex flex-row">
           <div class="server_icon" @click="goChat">
             <div class="chat_icon">
-              <img src="/static/img/user/server.svg" />
+              <img :src="getStaticImgUrl('/static/img/user/server.svg')" />
             </div>
           </div>
 
@@ -71,11 +71,11 @@
         <div class="form_item margin_item" v-show="activeTab == 1" :class="{ err_ipt: errorTip.error1 }">
           <div class="code" @click="(showDialog = true), (searchStr = '')">
             <span class="flag_icon">
-              <img src="/static/img/common/flag_hongkong.svg" alt="" />
+              <img :src="getStaticImgUrl('/static/img/common/flag_hongkong.svg')" alt="" />
             </span>
             <span>{{ form.area }}</span>
             <div class="more_icon">
-              <img src="/static/img/assets/more.png" alt="img" />
+              <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
             </div>
           </div>
           <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.phone"
@@ -168,6 +168,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import {
   Icon,
   Button,

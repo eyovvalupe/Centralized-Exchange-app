@@ -3,12 +3,10 @@
   <div class="page page-auth_status">
     <Top :title="t('kyc.page_title')">
       <template #right>
-        <div
-          @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center"
-        >
+        <div @click="jump('chat')"
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img src="/static/img/user/serverB.svg" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
         </div>
       </template>
@@ -45,9 +43,7 @@
           {{ kycInfo.remarks || "--" }}
         </div>
       </template>
-      <div
-        class="bg-[#EFF3F8] rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]"
-      >
+      <div class="bg-[#EFF3F8] rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
         <div class="px-[0.32rem] mb-[0.3rem]">
           <div class="text-[0.36rem] mb-[0.32rem] leading-[0.5rem]">
             {{ props.kycInfo ? props.kycInfo.name : "--" }}
@@ -66,48 +62,27 @@
           </div>
         </div>
         <div
-          class="w-full bg-white rounded-[0.32rem] border-[0.02rem] border-[#EFF3F8] h-[4.32rem] flex flex-wrap justify-between p-[0.32rem]"
-        >
+          class="w-full bg-white rounded-[0.32rem] border-[0.02rem] border-[#EFF3F8] h-[4.32rem] flex flex-wrap justify-between p-[0.32rem]">
           <div
-            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]"
-          >
-            <img
-              :src="kycInfo.idimg_1"
-              style="object-fit: fill !important"
-              alt="img"
-            />
+            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]">
+            <img :src="kycInfo.idimg_1" style="object-fit: fill !important" alt="img" />
           </div>
           <div
-            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]"
-          >
-            <img
-              :src="kycInfo.idimg_2"
-              style="object-fit: fill !important"
-              alt="img"
-            />
+            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]">
+            <img :src="kycInfo.idimg_2" style="object-fit: fill !important" alt="img" />
           </div>
-          <div
-            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem]"
-          >
-            <img
-              :src="kycInfo.idimg_3"
-              style="object-fit: fill !important"
-              alt="img"
-            />
+          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem]">
+            <img :src="kycInfo.idimg_3" style="object-fit: fill !important" alt="img" />
           </div>
         </div>
       </div>
       <div class="w-full" v-if="kycInfo.status == 'failure'">
-        <div
-          @click="nextStep"
-          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] bg-[#014CFA] text-white text-[0.36rem]"
-        >
+        <div @click="nextStep"
+          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] bg-[#014CFA] text-white text-[0.36rem]">
           {{ $t("kyc.status_reverify") }}
         </div>
-        <div
-          @click="jump('chat')"
-          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] text-[#014CFA] bg-white text-[0.36rem]"
-        >
+        <div @click="jump('chat')"
+          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] text-[#014CFA] bg-white text-[0.36rem]">
           {{ $t("kyc.status_service") }}
         </div>
       </div>
@@ -116,6 +91,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
@@ -124,7 +100,7 @@ const { t } = useI18n();
 const props = defineProps({
   kycInfo: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
 });
 const emits = defineEmits(["next"]);
@@ -205,6 +181,7 @@ const goInfo = () => {
     }
   }
 }
+
 .review_icon {
   width: 1.2rem;
   height: 1.2rem;
@@ -212,6 +189,7 @@ const goInfo = () => {
   background-size: contain;
   background-repeat: no-repeat;
 }
+
 .success_icon {
   width: 1.2rem;
   height: 1.2rem;

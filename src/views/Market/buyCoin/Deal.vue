@@ -17,7 +17,8 @@
           {{ info.price }}
           <span class="text-12 font-normal">{{ info.currWallet }}</span>
         </div>
-        <div class="text-14 text-[#8F92A1]">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{ info.limitmax }}</div>
+        <div class="text-14 text-[#8F92A1]">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
+          info.limitmax }}</div>
       </div>
 
       <div class="mb-[0.12rem] text-14">{{ t('market.market_buy_list_amount') }}</div>
@@ -27,7 +28,8 @@
       </div>
       <div class="tip">{{ t('market.market_buy_list_pre_pay') }} {{ showAmount }} {{ info.currWallet }}</div>
 
-      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{ t('market.market_buy_fast_buy')
+      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{
+        t('market.market_buy_fast_buy')
         }}</Button>
     </div>
 
@@ -42,7 +44,8 @@
           {{ info.merchant }}
         </div>
         <div class="info_item">{{ info.price }} {{ info.currWallet }}</div>
-        <div class="text-14 text-[#8F92A1]">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{ info.limitmax }}</div>
+        <div class="text-14 text-[#8F92A1]">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
+          info.limitmax }}</div>
       </div>
       <!-- 二层容器 -->
       <div style="margin-bottom: 0.12rem; display: flex; align-items: center; justify-content: space-between">
@@ -60,8 +63,8 @@
       <div v-if="bankList.length" class="card_box" @click="showAccountDialog = true">
         <div class="card_icon">
           <img v-if="bank.symbol" id="img" class="rounded-50"
-            :src="`/static/img/crypto/${bank.symbol.toUpperCase()}.png`" alt="currency" />
-          <img v-else class="!size-[0.68rem]" src="/static/img/user/card_type_b.png" alt="img" />
+            :src="getStaticImgUrl(`/static/img/crypto/${bank.symbol.toUpperCase()}.png`)" alt="currency" />
+          <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
         </div>
         <div class="card">
           <div class="code">{{ _hiddenAccount(bank.bankCardNumber || bank.address) }}</div>
@@ -87,6 +90,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { Button, showToast } from 'vant'

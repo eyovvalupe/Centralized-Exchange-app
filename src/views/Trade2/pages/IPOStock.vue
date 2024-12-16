@@ -1,27 +1,15 @@
 <!-- 中签 -->
 <template>
   <div v-if="token" class="page_ipo_stock">
-    <Tabs
-      type="custom-card"
-      v-model:active="ipoActive"
-      :swipeable="false"
-      @change="ipoOnChange"
-      :color="'#014CFA'"
-      shrink
-      v-if="props.from != 'assets'"
-    >
+    <Tabs type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange" :color="'#014CFA'"
+      shrink v-if="props.from != 'assets'">
       <Tab :title="t('trade.ipo_lottery_title1')" name=""> </Tab>
       <Tab :title="t('trade.ipo_lottery_title2')" name="lock"> </Tab>
       <Tab :title="t('trade.ipo_lottery_title3')" name="success"> </Tab>
       <Tab :title="t('trade.ipo_lottery_title4')" name="failure"> </Tab>
     </Tabs>
     <div class="list">
-      <div
-        class="item"
-        v-for="(item, i) in ipoStockList"
-        :key="i"
-        @click="ipoOrderDetail(item)"
-      >
+      <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="ipoOrderDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -34,41 +22,24 @@
             }}</strong>
           </div>
 
-          <div
-            class="status_box"
-            v-if="item.status == 'success'"
-            style="
-              background-image: url(/static/img/trade/ipo_status_success.png);
-            "
-          ></div>
-          <div
-            class="status_box"
-            v-else-if="item.status == 'failure'"
-            style="
-              background-image: url(/static/img/trade/ipo_status_failure.png);
-            "
-          ></div>
-          <div
-            class="status_box"
-            v-else
-            style="background-image: url(/static/img/trade/ipo_status_lock.png)"
-          ></div>
+          <div class="status_box" v-if="item.status == 'success'"
+            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_success.png')}`) }"></div>
+          <div class="status_box" v-else-if="item.status == 'failure'"
+            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_failure.png')}`) }"></div>
+          <div class="status_box" v-else
+            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_lock.png')}`) }"></div>
         </div>
         <div class="item_info">
           <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_item10") }}</span>
-            <span class="info_val"
-              >{{ item.volume || "--"
-              }}<span class="info_lever" v-if="item.lever > 1"
-                >{{ item.lever }}X</span
-              ></span
-            >
+            <span class="info_val">{{ item.volume || "--"
+              }}<span class="info_lever" v-if="item.lever > 1">{{ item.lever }}X</span></span>
           </div>
           <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_item14") }}</span>
-            <span class="info_val">{{ item.amount || "--" }} {{item.currency}}</span>
+            <span class="info_val">{{ item.amount || "--" }} {{ item.currency }}</span>
           </div>
-          
+
           <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_item5") }}</span>
             <span class="info_val">{{ item.listing_date || "--" }}</span>
@@ -77,30 +48,20 @@
             <span class="info_name">{{ t("trade.ipo_detail_item6") }}</span>
             <span class="info_val">{{ item.listed_price || "--" }}</span>
           </div>
-       
-          
+
+
         </div>
       </div>
 
-      <LoadingMore
-        style="margin-top: 0.8rem"
-        v-if="!(finish && ipoStockList.length == 0)"
-        :loading="loading"
-        :finish="finish"
-      />
+      <LoadingMore style="margin-top: 0.8rem" v-if="!(finish && ipoStockList.length == 0)" :loading="loading"
+        :finish="finish" />
       <NoData v-if="finish && ipoStockList.length == 0" />
     </div>
 
     <!-- 详情弹窗 -->
     <teleport to="body">
-      <Popup
-        style="background-color: rgba(0, 0, 0, 0)"
-        :safe-area-inset-top="true"
-        :safe-area-inset-bottom="true"
-        v-model:show="showPopupInfo"
-        position="bottom"
-        closeable
-      >
+      <Popup style="background-color: rgba(0, 0, 0, 0)" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+        v-model:show="showPopupInfo" position="bottom" closeable>
         <div class="ipo_stock_detail">
           <div class="detail_title">{{ t("trade.ipo_lottery_detail") }}</div>
 
@@ -112,10 +73,10 @@
                 currDetail.status == "lock"
                   ? t("trade.ipo_lottery_title5")
                   : currDetail.status == "success"
-                  ? t("trade.ipo_lottery_title6")
-                  : currDetail.status == "failure"
-                  ? t("trade.ipo_lottery_title4")
-                  : "--"
+                    ? t("trade.ipo_lottery_title6")
+                    : currDetail.status == "failure"
+                      ? t("trade.ipo_lottery_title4")
+                      : "--"
               }}
             </div>
           </div>
@@ -166,6 +127,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import LoadingMore from "@/components/LoadingMore.vue";
 import NoData from "@/components/NoData.vue";
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
@@ -178,7 +140,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const ipoActive = ref("");
-const loginfinish = () => {};
+const loginfinish = () => { };
 const ipoOnChange = () => {
   init(true);
 };
@@ -271,7 +233,7 @@ const handleMounted = () => {
       document
         .querySelector(props.scrollDom)
         .addEventListener("scroll", scrollHandler);
-    } catch {}
+    } catch { }
   }, 500);
 };
 // 倒计时
@@ -283,7 +245,7 @@ onBeforeUnmount(() => {
     document
       .querySelector(props.scrollDom)
       .removeEventListener("scroll", scrollHandler);
-  } catch {}
+  } catch { }
 });
 
 defineExpose({
@@ -352,8 +314,8 @@ function countdown(endTime) {
         line-height: 0.36rem;
         color: #0d0d12;
         height: 0.36rem;
-        
-        
+
+
       }
 
       .name_box {
@@ -361,17 +323,18 @@ function countdown(endTime) {
         max-width: 80%;
         display: flex;
         align-items: center;
-        .lever_icon{
-            min-width: 0.6rem;
-            height: 0.32rem;
-            font-size: 0.22rem;
-            color:#014CFA;
-            border-radius: 0.08rem;
-            text-align: center;
-            line-height: 0.32rem;
-            font-weight: 400;
-            margin-left: 0.1rem;
-            background: rgba(1, 76, 250, 0.10);
+
+        .lever_icon {
+          min-width: 0.6rem;
+          height: 0.32rem;
+          font-size: 0.22rem;
+          color: #014CFA;
+          border-radius: 0.08rem;
+          text-align: center;
+          line-height: 0.32rem;
+          font-weight: 400;
+          margin-left: 0.1rem;
+          background: rgba(1, 76, 250, 0.10);
         }
       }
 
@@ -476,7 +439,7 @@ function countdown(endTime) {
           padding: 0.24rem 0.32rem;
         }
 
-        .info_cell + .info_cell {
+        .info_cell+.info_cell {
           border-top: 1px dashed #eff3f8;
         }
 

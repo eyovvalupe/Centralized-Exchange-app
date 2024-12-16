@@ -6,6 +6,7 @@ import assets from "./assets";
 import market from "./market";
 import trade from "./trade";
 import serviceC2C from "./serviceC2C";
+import { getStaticImgUrl } from "@/utils/index.js"
 
 const store = createStore({
   state: {
@@ -22,7 +23,7 @@ const store = createStore({
     i18Data: {
       name: "中文简体",
       locale: "zh",
-      icon: "/static/img/common/cn.png",
+      icon: getStaticImgUrl("/static/img/common/cn.png"),
     },
     language: {},
     bottomTabBarValue: "",
@@ -180,7 +181,7 @@ const store = createStore({
       key: "realtime",
       paths: ['realtimeData'],
       storage: window.sessionStorage,
-      
+
     }),
   ],
 });

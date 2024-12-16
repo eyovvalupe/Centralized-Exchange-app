@@ -9,7 +9,7 @@
         <div class="tip">
           <div class="tip_member">
             <div class="tip_icon">
-              <img src="/static/img/common/member.png" alt="icon" />
+              <img :src="getStaticImgUrl('/static/img/common/member.png')" alt="icon" />
             </div>
             <span>{{ props.item.numpeople || "--" }}</span>
           </div>
@@ -80,6 +80,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 // import { formatSec } from "@/utils/time";
 import SparkLine from "@/components/SparkLine.vue";

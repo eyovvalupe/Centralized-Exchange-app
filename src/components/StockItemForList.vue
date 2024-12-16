@@ -49,22 +49,14 @@
             <div class="item_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
               {{ props.item.price ? props.item.price : "--" }}
             </div>
-            <div
-              class="item_info_box"
-              @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)"
-            >
-              <div
-                v-if="props.item.ratio !== undefined"
-                class="item_percent"
-                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']"
-              >
-                <span v-if="mode == 1"
-                  >{{
-                    (props.item.ratio || 0) > 0
-                      ? "+" + (props.item.ratio || 0)
-                      : (props.item.ratio || 0)
-                  }}%</span
-                >
+            <div class="item_info_box" @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)">
+              <div v-if="props.item.ratio !== undefined" class="item_percent"
+                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']">
+                <span v-if="mode == 1">{{
+                  (props.item.ratio || 0) > 0
+                    ? "+" + (props.item.ratio || 0)
+                    : (props.item.ratio || 0)
+                }}%</span>
                 <span v-else-if="mode == 2">{{
                   props.item.price || 0 > 0
                     ? "+" + (props.item.price || 0)
@@ -92,13 +84,9 @@
             <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌</span>
           </div>
           <div class="text-center w-1/3">
-            <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'"
-              >{{ item.ratio > 0 ? "+" : ""
-              }}{{ (item.ratio || 0) }}%</span
-            ><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal"
-              >涨跌比</span
-            >
+            <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{ item.ratio > 0 ? "+" : ""
+              }}{{ (item.ratio || 0) }}%</span><br />
+            <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌比</span>
           </div>
         </div>
       </div>
@@ -109,7 +97,6 @@
           : 'delete_content_crypto ml-[1px]'
           " @click="removeStock(item)">
           <div class="delete_icon">
-            <!-- <img src="/static/img/assets/delete.svg" alt="🚮" /> -->
           </div>
         </div>
       </template>
