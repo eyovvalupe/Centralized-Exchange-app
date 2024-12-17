@@ -11,7 +11,7 @@
         </div>
       </div>
 
-      <!-- 售出 -->
+      <!-- 收到 -->
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <!-- 收到 -->
+      <!-- 支付 -->
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
@@ -125,11 +125,11 @@
     </div>
   </Popup>
 
+  <BuyCoinConfirm ref="safeRef" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
+
   <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
     @on-add-collection="clickAccountItem" />
 
-  <!-- 安全密码弹窗 -->
-  <SafePassword ref="safeRef" @submit="submitSell" />
 </template>
 
 <script setup>
@@ -143,6 +143,7 @@ import { _swapRate, _orderFast } from "@/api/api";
 // import { _hiddenAccount } from '@/utils/index'
 import SafePassword from "@/components/SafePassword.vue";
 import eventBus from "@/utils/eventBus";
+import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
 import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import { useBuyCoinState } from "./state";
 import router from "@/router";
@@ -252,6 +253,7 @@ const submitSell = (s) => {
         .then(({ data: { order_no } }) => {
           showToast(t('market.market_buy_fast_success'));
           form1.value.volume = "";
+          safeRef.value.close();
           setTimeout(() => {
             router.push({
               name: "orderDetails",
@@ -272,7 +274,7 @@ const submitSell = (s) => {
 
 const getMoney = computed(() => {
   if (!form1.value.volume || !rate.value) return "--";
-  return new Decimal(form1.value.volume).mul(rate.value) || "--";
+  return new Decimal(form1.value.volume).mul(rate.value).toNumber();
 });
 const outWallet = computed(() => {
   // 售出钱包
