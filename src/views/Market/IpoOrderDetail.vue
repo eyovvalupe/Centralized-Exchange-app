@@ -59,7 +59,7 @@
                 <div class="item_box">
                     <div class="name_box">
                         <div class="name">{{ currDetail.company_name }} <span class="lever_icon"
-                                v-if="currDetail.lever > 1">配资</span> </div>
+                                v-if="currDetail.lever > 1">{{ t('trade.ipo_leveraged_trading') }}</span> </div>
                     </div>
                     <div class="item_order_no">
                         <span>订单号 {{ currDetail.order_no || '--' }}</span>

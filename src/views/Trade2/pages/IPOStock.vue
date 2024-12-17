@@ -13,7 +13,7 @@
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
-            <span class="lever_icon" v-if="item.lever > 1">配资</span>
+            <span class="lever_icon" v-if="item.lever > 1">{{ t('trade.ipo_leveraged_trading') }}</span>
           </div>
 
           <div class="item_winning">

@@ -619,6 +619,8 @@ export default {
     contract_opening_err_contract: "请选择合约",
     contract_opening_err_amount: "请输入张数",
     contract_create_guest_btn: "一键注册模拟账号",
+    contract_lots_amount: "数量(张)",
+    contract_one_lot: "张",
 
     ai_opening_order: "订单",
     ai_opening_trade: "交易",
@@ -650,6 +652,7 @@ export default {
     ai_opening_perform_time: "运行时间",
     ai_opening_historical_profit_rate: "历史收益率",
     ai_opening_24_profit_rate: "24小时收益率",
+    ai_opening_profit_margin: "利润率",
 
     ai_position_title: "订单详情",
     ai_position_profit: "盈利",
@@ -695,9 +698,16 @@ export default {
     ipo_lottery_title6: "中签",
     ipo_lottery_amount: "中签数量",
     ipo_lottery_detail: "中签详情",
+    ipo_leveraged_trading: "配资",
+    ipo_sub_ordinary: "普通",
+    ipo_sub_leveraged: "配资",
+    ipo_sub_buy_code: "认购码",
+    ipo_sub_buy_no_amount: "请输入认购数量",
+    ipo_sub_buy_no_code: "请输入认购码",
 
     forex_opening_title: "外汇",
     forex_position_title: "外汇/状态",
+    trade_order_history: "历史订单"
   },
   inviteFriends:{
     invite:'推荐朋友',
@@ -814,7 +824,7 @@ export default {
     market_buy_chat_con1: "您已经成功下单",
     market_buy_chat_con2: "请耐心等候商家付款",
 
-    market_stock_country_us: "美股",
+    market_stock_country_us: "美国",
     market_stock_country_japan: "日本",
     market_stock_country_india: "印度",
     market_stock_country_korea: "韩国",
@@ -823,6 +833,15 @@ export default {
     market_stock_country_singapore: "新加坡",
     market_stock_country_hongkong: "香港",
     market_stock_country_malaysia: "马来西亚",
+    market_stock_country_us_long: "美国",
+    market_stock_country_japan_long: "日本",
+    market_stock_country_india_long: "印度",
+    market_stock_country_korea_long: "韩国",
+    market_stock_country_germany_long: "德国",
+    market_stock_country_uk_long: "英国",
+    market_stock_country_singapore_long: "新加坡",
+    market_stock_country_hongkong_long: "香港",
+    market_stock_country_malaysia_long: "马来西亚",
     market_stock_updatetime: "更新时间",
     market_stock_description_title: "涨跌分布",
     market_stock_description_des1: "上涨",
