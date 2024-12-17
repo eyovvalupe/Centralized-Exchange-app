@@ -170,7 +170,7 @@
       </div>
 
       <!-- 订单 -->
-      <div class="order">
+      <div class="order pb-[0.24rem]">
         <div class="top" @click="copy(currItem.order_no)">
           <div class="order_no">{{ currItem.order_no }}</div>
           <div class="copy_icon">
@@ -179,33 +179,46 @@
           <div style="flex: 1"></div>
           <div>{{ currItem.date }}</div>
         </div>
-        <div class="info_block">
-          <div class="info">
-            <div class="amount">{{ currItem.totalprice }}</div>
-            <div>
-              {{ t("market.market_buy_list_wait_total") }}({{
-                currItem.currency
-              }})
+        <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
+            支<br/>付
+          </div>
+          <div class="info_block flex-1">
+            <div class="info">
+              <div class="amount">{{ currItem.totalprice }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_total") }}({{
+                  currItem.currency
+                }})
+              </div>
+            </div>
+            <div class="info">
+              <div class="amount">{{ currItem.price }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_price") }}({{
+                  currItem.currency
+                }})
+              </div>
             </div>
           </div>
-          <div class="info">
-            <div class="amount">{{ currItem.price }}</div>
-            <div>
-              {{ t("market.market_buy_list_wait_price") }}({{
-                currItem.currency
-              }})
-            </div>
+        </div>
+        <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#014CFA] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
+            收<br/>到
           </div>
-          <div class="info">
-            <div class="amount">{{ currItem.volume }}</div>
-            <div>
-              {{ t("market.market_buy_list_wait_amount") }}({{
-                currItem.crypto
-              }})
+          <div class="info_block flex-1">
+            <div class="info">
+              <div class="amount">{{ currItem.volume }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_amount") }}({{
+                  currItem.crypto
+                }})
+              </div>
             </div>
           </div>
         </div>
       </div>
+
 
       <!-- 按钮 -->
       <div class="max-width btns" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
@@ -487,7 +500,7 @@ getSessionToken();
 
         .amount {
           color: #000;
-          font-size: 0.3rem;
+          font-size: 0.32rem;
           font-weight: 600;
         }
 
@@ -634,7 +647,6 @@ getSessionToken();
     background-color: #f5f7fc;
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-
     .top {
       display: flex;
       align-items: center;
@@ -652,18 +664,17 @@ getSessionToken();
       }
 
       .copy_icon {
-        width: 0.32rem;
-        height: 0.32rem;
+        width: 0.24rem;
+        height: 0.24rem;
         cursor: pointer;
-        margin-left: 0.04rem;
+        margin-left: 0.1rem;
       }
     }
 
     .info_block {
       display: flex;
       align-items: stretch;
-      padding: 0.36rem 0.32rem 0.46rem 0.32rem;
-      margin-top: 0.2rem;
+      padding: 0.28rem 0.32rem 0.32rem 0.32rem;
 
       .info {
         flex: 1;
