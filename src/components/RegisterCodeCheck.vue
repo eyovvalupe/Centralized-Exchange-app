@@ -130,6 +130,7 @@ const close = () => {
     message: "",
     width: "6.23rem",
     confirmButtonText: t('register.code_jump_confirm'),
+    cancelButtonText: t('user_page.message_box_cancel'),
     confirmButtonColor: "#014cfa",
   })
     .then(() => {

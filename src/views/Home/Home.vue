@@ -5,11 +5,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { shallowRef } from 'vue'
 import { HOME_MODE } from "@/config.js"
 import Loaidng from "@/components/Loaidng.vue"
 
-const homePage = ref(null)
+const homePage = shallowRef(null)
 if (HOME_MODE == 1) { // 首页模板1
   import("@/views/Home/Homes/Home1.vue").then((module) => {
     homePage.value = module.default
