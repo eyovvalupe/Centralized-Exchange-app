@@ -204,7 +204,7 @@
         </div>
         <div class="info_items">
           <div class="info_item"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/common/price_bg.png')}`) }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -212,7 +212,7 @@
             <div class="info_item__value">{{ item.open }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/common/price_bg.png')}`) }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -220,7 +220,7 @@
             <div class="info_item__value">{{ item.high }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/common/price_bg.png')}`) }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -228,7 +228,7 @@
             <div class="info_item__value">{{ _formatNumber(item.volume) }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/common/price_bg.png')}`) }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -236,7 +236,7 @@
             <div class="info_item__value">{{ item.close }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/common/price_bg.png')}`) }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -244,7 +244,7 @@
             <div class="info_item__value">{{ item.low }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/common/price_bg.png')}`) }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">

@@ -23,11 +23,11 @@
           </div>
 
           <div class="status_box" v-if="item.status == 'success'"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_success.png')}`) }"></div>
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_success.png')})` }"></div>
           <div class="status_box" v-else-if="item.status == 'failure'"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_failure.png')}`) }"></div>
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_failure.png')})` }"></div>
           <div class="status_box" v-else
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_lock.png')}`) }"></div>
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_lock.png')})` }"></div>
         </div>
         <div class="item_info">
           <div class="info_cell">

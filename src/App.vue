@@ -161,7 +161,7 @@ watch(
 @import "./style/var.less";
 @import "./style/vant.less";
 @import "./style/index.less";
-@import "./style/theme/blackblue.less";
+// @import "./style/theme/blackblue.less";
 
 .slide-left-enter-active,
 .slide-left-leave-active,
