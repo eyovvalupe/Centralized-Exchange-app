@@ -1,7 +1,7 @@
 import { ref,computed } from 'vue'
 
 import store from "@/store";
-import { _search, _watchlist,_futures,_stock } from "@/api/api";
+import { _search, _watchlist,_futures,_stock,_aiquant } from "@/api/api";
 import { getMarket } from "@/utils/stock";
 
 export const useNavDialog = (activeTab)=>{
@@ -22,17 +22,14 @@ export const useNavDialog = (activeTab)=>{
     getMarketList()
 
     const marketType = computed(() => store.getters.getMarketType);
+    const searchStr = ref("");
 
     const watchList = computed(() => {
         const marketWatchList = store.state.marketWatchList || [];
 
         const watchListResult = [];
         marketWatchList.map((item) => {
-            if (
-            (marketType.value == "all" || item.type == marketType.value) &&
-            (!searchStr.value ||
-                (item.symbol && item.symbol.indexOf(searchStr.value) > -1))
-            ) {
+            if (!searchStr.value || (item.symbol && item.symbol.indexOf(searchStr.value) > -1) ) {
             watchListResult.push(item);
             }
         });
@@ -40,68 +37,87 @@ export const useNavDialog = (activeTab)=>{
     });
 
     const marketSearchList = computed(() => store.state.marketSearchList || []);
-
-    const futuresSearchList = computed(() => store.state.contractList || []);
+    const futuresSearchList = computed(() => store.state.futuresSearchList || [])
     const forexSearchList = computed(() => store.state.marketForeignList || []);
     const blocktardeSearchList = computed(() => store.state.marketCommoditiesList || []);
-    const aiquantSearchList = computed(() => store.state.aiquantSearchList || []);
+    const aiquantSearchList = computed(() => {
+        const aiSearchList = [];
+        const _aiquantSearchList = store.state.aiquantSearchList || []
+        _aiquantSearchList.map(item=>{
+            if(!searchStr.value || (item.symbol && item.symbol.indexOf(searchStr.value) > -1)){
+                aiSearchList.push(item)
+            }
+        })
+        return aiSearchList
+        
+    });
     
 
     // 左侧列表弹窗
     const showNavDialog = ref(false);
+    const stockActiveTab = ref("all");
     const navActiveTab = ref("option");
     const showNavDialogFunc = (val='') => {
-        navActiveTab.value = val || "option";
+        if(!val){
+            if(activeTab.value == 0){
+                navActiveTab.value = 'stock'
+            }else if(activeTab.value == 1){
+                navActiveTab.value = 'contract'
+            }else if(activeTab.value == 2){
+                navActiveTab.value = 'ai'
+            }else{
+                navActiveTab.value = "option"
+            }
+        }else{
+            navActiveTab.value = val;
+        }
+        
         showNavDialog.value = true;
         goSearch(navActiveTab.value);
     };
 
-    const changeTab = (val) => {
-        if(activeTab.value == 0){
-            store.commit("setMarketSearchList",[])
-        }
-        goSearch(val);
-    };
-
-    
     // 自选列表
+    let optionSearchTimeout = null
     const optionLoading = ref(false);
     const getOptionList = () => {
         if (!token.value) return;
         optionLoading.value = true;
-        _watchlist()
-            .then((res) => {
-            if (res.code == 200) {
-                if (watchList.value.length) {
-                    // 有历史数据就更新
-                    const rs = res.data.map((item) => {
-                        const target = watchList.value.find((a) => a.symbol == item.symbol);
-                        if (target) {
-                            Object.assign(target, item);
-                            item = target;
-                        }
-                        return item;
-                    });
-                    store.commit("setMarketWatchList", rs || []);
-                } else {
-                    // 没有就直接提交
-                    store.commit("setMarketWatchList", res.data || []);
+        if (optionSearchTimeout) clearTimeout(optionSearchTimeout);
+        optionSearchTimeout = setTimeout(()=>{
+            _watchlist()
+                .then((res) => {
+                if (res.code == 200) {
+                    if (watchList.value.length) {
+                        // 有历史数据就更新
+                        const rs = res.data.map((item) => {
+                            const target = watchList.value.find((a) => a.symbol == item.symbol);
+                            if (target) {
+                                Object.assign(target, item);
+                                item = target;
+                            }
+                            return item;
+                        });
+                        store.commit("setMarketWatchList", rs || []);
+                    } else {
+                        // 没有就直接提交
+                        store.commit("setMarketWatchList", res.data || []);
+                    }
+                    setTimeout(() => {
+                        store.dispatch("subList", {
+                            commitKey: "setMarketWatchList",
+                            listKey: "marketWatchList",
+                        });
+                    }, 100);
                 }
-                setTimeout(() => {
-                    store.dispatch("subList", {
-                        commitKey: "setMarketWatchList",
-                        listKey: "marketWatchList",
-                    });
-                }, 100);
-            }
-        })
-        .finally(() => {
-            optionLoading.value = false;
-        });
+            })
+            .finally(() => {
+                optionLoading.value = false;
+            });
+        },500)
     };
     
     // 搜索列表
-    const searchStr = ref("");
+
     let searchTimeout = null;
     const searchLoading = ref(false);
     const goSearch = (type) => {
@@ -112,14 +128,15 @@ export const useNavDialog = (activeTab)=>{
         if (searchTimeout) clearTimeout(searchTimeout);
         let s = searchStr.value;
 
-        if(activeTab.value == 0){
+        if(type == 'stock'){
+            store.commit("setMarketSearchList",[])
             searchLoading.value = true;
             //查股票
             searchTimeout = setTimeout(() => {
                 
                 _stock({
                     name:s,
-                    market:type
+                    market:stockActiveTab.value != 'all' ? stockActiveTab.value : ''
                 }).then(res=>{
                     if (searchStr.value == s) {
                         let arr = (res.data || []).map(item => {
@@ -140,54 +157,62 @@ export const useNavDialog = (activeTab)=>{
                     searchLoading.value = false
                 })
             }, s ? 500 : 0);
-        }else if(activeTab.value == 1){
+        }else if(type == 'contract'){
             searchLoading.value = true;
+            store.commit("setFuturesSearchList",[])
             //查合约
             searchTimeout = setTimeout(() => {
                 
                 _futures({
                     name: s,
-                    type
+                    type:''
                 })
                 .then((res) => {
                     if (searchStr.value == s) {
-                        let arr = res.data || []
-                        switch (type) {
-                            case 'crypto':
-                            store.commit("setContractList", arr);
-                            break
-                            case 'foreign':
-                            store.commit("setMarketForeignList", arr);
-                            break
-                            case 'commodities':
-                            store.commit("setMarketCommoditiesList", arr);
-                            break
-                        }
-        
-                        setTimeout(() => {
-                            switch (type) {
-                            case 'crypto':
-                                store.dispatch("subList", {
-                                commitKey: "setContractList",
-                                listKey: "contractList",
-                                });
-                                break
-                            case 'foreign':
-                                store.dispatch("subList", {
-                                commitKey: "setMarketForeignList",
-                                listKey: "marketForeignList",
-                                });
-                                break
-                            case 'commodities':
-                                store.dispatch("subList", {
-                                commitKey: "setMarketCommoditiesList",
-                                listKey: "marketCommoditiesList",
-                                });
-                                break
+
+                        let arr = (res.data || []).map(item => {
+                            const target = futuresSearchList.value.find(a => a.symbol == item.symbol)
+                            if (target) return {
+                                ...target,
+                                ...item
                             }
-        
-                        }, 100);
+                            return item
+                        })
+                        store.commit('setFuturesSearchList',arr)
+                        store.dispatch("subList", {
+                            commitKey: "setFuturesSearchList",
+                            listKey: "futuresSearchList",
+                        });
     
+                    }
+                })
+                .finally(() => {
+                    searchLoading.value = false;
+                });
+            }, s ? 500 : 0);
+        }else if(type == 'ai') { 
+            searchLoading.value = true;
+            //查合约
+            searchTimeout = setTimeout(() => {
+                
+                _aiquant({
+                    
+                })
+                .then((res) => {
+                    if (searchStr.value == s) {
+                        let arr = (res.data || []).map(item => {
+                            const target = aiquantSearchList.value.find(a => a.symbol == item.symbol)
+                            if (target) return {
+                                ...target,
+                                ...item
+                            }
+                            return item
+                        })
+                        store.commit('setAiquantSearchList',arr)
+                        store.dispatch("subList", {
+                            commitKey: "setAiquantSearchList",
+                            listKey: "aiquantSearchList",
+                        });
     
                     }
                 })
@@ -196,9 +221,13 @@ export const useNavDialog = (activeTab)=>{
                 });
             }, s ? 500 : 0);
         }
-
-        
     }
+
+    const changeTab = (val) => {
+        goSearch(val);
+    };
+  
+    
 
     return {
         marketList,
@@ -209,6 +238,7 @@ export const useNavDialog = (activeTab)=>{
         blocktardeSearchList,
         aiquantSearchList,
         showNavDialog,
+        stockActiveTab,
         navActiveTab,
         searchLoading,
         searchStr,

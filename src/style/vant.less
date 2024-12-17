@@ -591,6 +591,51 @@
     }
 }
 
+.van-tabs--oval-sub-small {
+    >.van-tabs__wrap {
+        height: 0.64rem !important;
+
+        .van-tabs__nav {
+            padding-bottom: 0px;
+            box-sizing: border-box;
+            padding-left: 0px;
+            padding-right: 0px;
+            background: none;
+
+            .van-tab__text {
+                font-size: 0.24rem;
+                color: #8F92A1;
+            }
+
+            .van-tab {
+                padding: 0 0.24rem;
+                border: 1px solid #D0D8E2;
+                margin-right: 0.12rem;
+                border-radius: 0.5rem;
+                height: 0.64rem;
+                box-sizing: border-box;
+            }
+
+            .van-tab--active {
+                background-color: #014CFA;
+                border-color: #014CFA;
+
+                .van-tab__text {
+                    color: #fff;
+                    font-weight: 400;
+                }
+            }
+
+
+
+            .van-tabs__line {
+                display: none;
+            }
+        }
+    }
+}
+
+
 .van-overlay {
     backdrop-filter: blur(4px);
 }

@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="mr">
-          <SparkLine v-if="item.points" :polyline-stroke-width="3" :points="item.points" :ratio="item.ratio" :xtimes="2"
+          <SparkLine v-if="item.points" :polyline-stroke-width="2" :points="item.points" :ratio="item.ratio" :xtimes="2"
             :ytimes="2" />
         </div>
       </div>
@@ -167,13 +167,15 @@ const formatSec = (seconds, t) => {
           display: flex;
           align-items: center;
           margin-right: 0.24rem;
-          padding: 0.08rem;
+          padding:0 0.08rem;
+          height: 0.36rem;
           border-radius: 0.04rem;
           background: rgba(248, 154, 41, 0.08);
           color: #f89a29;
           font-size: 0.2rem;
           font-weight: 400;
-
+          display: flex;
+          align-items: center;
           .pp-icon {
             width: 0.2rem;
             height: 0.2rem;
@@ -242,8 +244,9 @@ const formatSec = (seconds, t) => {
     }
 
     .mr {
-      width: 2rem;
-      height: 0.6rem;
+      width: 2.5rem;
+      height: 1rem;
+      margin-top:-0.06rem;
     }
   }
 

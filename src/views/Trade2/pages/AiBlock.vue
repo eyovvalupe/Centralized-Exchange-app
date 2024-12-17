@@ -1,36 +1,30 @@
 <!-- ai -->
 <template>
   <div class="ai-block">
-    <Tabs v-if="!pageLoading" type="round-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
+    <Tabs type="round-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
       @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
           <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" mode="page" ref="OpeningRef"
-            @back="showModel = false" />
-          <!-- <Ai @clickItems="clickItem"></Ai> -->
+            @back="showModel = false"  v-if="loadTab.indexOf('0') > -1" />
         </div>
       </Tab>
       <Tab :title="t('trade.stock_position')" name="1">
         <div class="ai-block-content">
-          <Positions />
+          <Positions  v-if="loadTab.indexOf('1') > -1" />
         </div>
       </Tab>
       <Tab :title="t('trade.ai_opening_order')" name="2">
-        <Inquire ref="InquireRef" />
+        <Inquire ref="InquireRef"  v-if="loadTab.indexOf('2') > -1" />
       </Tab>
     </Tabs>
-    <div style="height: 50vh" v-else></div>
 
-    <!-- 下单弹窗 -->
-    <Popup teleport="body" v-model:show="showModel" position="right" style="width: 100%; height: 100%">
-      <Opening @showNavDialog="showNavDialog" ref="OpeningRef" @back="showModel = false" />
-    </Popup>
   </div>
 </template>
 
 <script setup>
-import { Tab, Tabs, Popup } from "vant";
-import { ref, onMounted, computed, defineExpose, watch } from "vue";
+import { Tab, Tabs } from "vant";
+import { ref, onMounted, computed, defineExpose, watch, nextTick } from "vue";
 import Opening from "../ai/Opening.vue";
 import Positions from "../ai/Positions.vue";
 import Inquire from "../ai/Inquire.vue";
@@ -42,7 +36,7 @@ const { t } = useI18n();
 const route = useRoute();
 
 const OpeningRef = ref();
-const showModel = ref(false);
+const showModel = ref(true);
 
 const props = defineProps({
   activeTab: {
@@ -65,9 +59,13 @@ const showNavDialog = () => {
   emits("showNavDialog", "ai");
 };
 
+const loadTab = ref([]);
 const active = ref(sessionStorage.getItem("trade_ai_tab") || "0");
 const InquireRef = ref();
 const onChange = async (val) => {
+  if (loadTab.value.indexOf(val) == -1) {
+      loadTab.value.push(val)
+  }
   active.value = val;
   sessionStorage.setItem("trade_ai_tab", val);
 
@@ -76,19 +74,31 @@ const onChange = async (val) => {
   }
 };
 
-const pageLoading = ref(true);
+// 选择某个合约
+const choose = (item) => {
+  if(active.value == '0'){
+    OpeningRef.value && OpeningRef.value.choose(item);
+  }else{
+    onChange('0')
+    nextTick(()=>{
+      OpeningRef.value && OpeningRef.value.choose(item);
+    })
+  }
+};
+
+onChange(active.value)
+
 const handleMounted = () => {
-  active.value = "0";
+  loadTab.value = []
   setTimeout(() => {
-    pageLoading.value = false;
+    onChange(active.value)
   }, 300);
 };
-onMounted(() => {
-  handleMounted();
-});
+
 
 defineExpose({
   handleMounted,
+  choose
 });
 </script>
 

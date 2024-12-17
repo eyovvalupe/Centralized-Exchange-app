@@ -31,7 +31,7 @@
 <script setup>
 
 import { Tab, Tabs } from "vant";
-import { ref, onMounted } from "vue"
+import { ref, onMounted, nextTick } from "vue"
 import Opening from "../components/Opening.vue"
 import Positions from "../components/Positions.vue"
 import Inquire from "../components/Inquire.vue"
@@ -80,18 +80,24 @@ const OpeningRef = ref()
 
 // 选择某个股票
 const choose = item => {
-    active.value = '0'
-    OpeningRef.value && OpeningRef.value.choose(item)
+    if(active.value != '0'){
+        onChange('0')
+        nextTick(()=>{
+            OpeningRef.value && OpeningRef.value.choose(item)
+        })
+    }else{
+        OpeningRef.value && OpeningRef.value.choose(item)
+    }
 }
+
+onChange(active.value)
 const handleMounted = () => {
     loadTab.value = []
     setTimeout(() => {
         onChange(active.value)
     }, 300)
 }
-onMounted(() => {
-    onChange(active.value)
-})
+
 
 defineExpose({
     choose,

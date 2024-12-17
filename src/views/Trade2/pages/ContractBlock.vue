@@ -73,14 +73,21 @@ const OpeningRef = ref();
 
 // 选择某个合约
 const choose = (item) => {
-  active.value = 0;
-  OpeningRef.value && OpeningRef.value.choose(item);
+  if(active.value == '0'){
+    OpeningRef.value && OpeningRef.value.choose(item);
+  }else{
+    onChange("0");
+    nextTick(()=>{
+      OpeningRef.value && OpeningRef.value.choose(item);
+    })
+  }
 };
 const openSuccess = () => {
   //开仓成功，切换到持仓
-  // active.value = '1'
   onChange("1");
 };
+
+onChange(active.value)
 
 const handleMounted = () => {
   loadTab.value = []
@@ -89,7 +96,6 @@ const handleMounted = () => {
   }, 300);
 };
 onMounted(() => {
-  onChange(active.value);
 
   eventBus.on("contractTradeBodyScrollToBottom", () => {
     if (active.value == "2") {
