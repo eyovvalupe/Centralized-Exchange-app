@@ -23,7 +23,7 @@
                   {{ $t("inviteFriends.banner_title") }}
                 </div>
                 <div class="invite_banner_amount mt-[0.04rem]">
-                  <MoneyText text="$" />
+                  <MoneyText :text="'$'" />
                   <MoneyText v-for="(text, i) in moneyTextArr" :key="i" :text="text" />
                 </div>
                 <div class="invite_banner_desc">
@@ -80,7 +80,7 @@
               <span>{{ $t("inviteFriends.performance") }}</span>
             </div>
             <div class="record-list">
-              <div class="record-item" v-for="(item, i) in list" :key="index">
+              <div class="record-item" v-for="(item, i) in list" :key="i">
                 <span>{{ item.email }}</span>
                 <strong>{{ item.amount }}</strong>
               </div>
