@@ -1,0 +1,336 @@
+@bgColor: #09152D; // 背景色
+@shadowBg: rgba(255, 255, 255, 0.20); // 半透明背景
+@popupBg: #17233B; // 弹窗背景
+@superBg: rgba(255, 255, 255, 0.06); // 超透明背景
+@superBorder: rgba(255, 255, 255, 0.1); // 超透明边框
+@inputBg: rgba(255, 255, 255, 0.10); // 输入背景
+
+@color: #fff; // 文字颜色
+@subColor: #666d80;
+@primary: #2168F6; // 主色
+@border: #293748; // 边框色
+@darkBorder: #293748; // 深色边框
+@placeholder: rgba(255, 255, 255, 0.50); // placeholder
+@errorColor: #C33E3F; // 错误颜色
+@success: #4CBD6F; // 成功颜色
+
+
+
+#app {
+    background-color: @bgColor;
+
+
+
+
+    // 公共
+    .page {
+        background-color: @bgColor;
+        color: @color;
+
+        .top {
+            background-color: @bgColor;
+            color: @color;
+        }
+    }
+
+    input {
+
+        &:focus {
+            color: @primary !important;
+        }
+    }
+
+    .item {
+        &:has(.ipt:focus) {
+            border: 1px solid @primary !important;
+        }
+
+        .ipt::placeholder {
+            color: @placeholder;
+        }
+    }
+
+    // 底部
+    .bottom_nav {
+        background-color: @bgColor;
+        border-color: @darkBorder;
+    }
+
+
+    // 登录注册找回
+    .login_dialog,
+    .page-register,
+    .page-fogot,
+    .page-login,
+    .page_register_success {
+        background-color: @bgColor;
+
+        .van-slider {
+            background-color: @shadowBg;
+        }
+
+        .check_result {
+            color: @placeholder;
+        }
+
+        .check_pic {
+            background-color: @shadowBg;
+        }
+
+        .title {
+            color: @color;
+        }
+
+        .tologin {
+            color: @primary;
+        }
+
+        .top_icon_container {
+            background-color: @bgColor;
+        }
+
+        .title_box {
+            .login_title {
+                color: @placeholder;
+            }
+
+            .title {
+                color: @color;
+            }
+        }
+
+        .form {
+            .form_title {
+                color: @color;
+            }
+
+            .form_item {
+                border-color: @border;
+
+                .item_input {
+                    color: @color;
+                }
+
+                .code {
+                    color: @color;
+                }
+            }
+        }
+
+        .fogot {
+            color: @primary;
+        }
+
+        .go_register {
+            color: @placeholder;
+
+            span {
+                color: @primary;
+            }
+        }
+
+        .info {
+            .flex {
+                &:nth-child(1) {
+                    color: @placeholder;
+                }
+            }
+        }
+
+        .jump {
+            color: @primary;
+        }
+
+        .timer_container {
+            background-color: @superBorder;
+            color: @primary;
+        }
+
+        .password-input {
+            .relative {
+                >input {
+                    background-color: @superBorder;
+                    color: @primary;
+                    border-color: @superBorder !important;
+
+                    &:focus {
+                        border-color: @primary !important;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    // 密码等级
+    .password_level {
+        color: @errorColor;
+
+        .levels {
+            .level {
+                background-color: @shadowBg;
+            }
+        }
+    }
+
+    .password_level_1,
+    .password_level_2 {
+        color: @errorColor;
+
+        .levels {
+            .level_active {
+                background-color: @errorColor;
+            }
+        }
+    }
+
+    .password_level_3 {
+        color: @primary;
+
+        .levels {
+            .level_active {
+                background-color: @primary;
+            }
+        }
+    }
+
+    .password_level_4 {
+        color: @success;
+
+        .levels {
+            .level_active {
+                background-color: @success;
+            }
+        }
+    }
+
+}
+
+body {
+
+    // vant
+    .van-button {
+        background-color: @primary !important;
+    }
+
+    .van-tabs__nav {
+        background-color: @bgColor;
+    }
+
+    .van-tab--card {
+        color: @subColor;
+        border-color: @border;
+    }
+
+    .van-tab--card.van-tab--active {
+        background-color: @bgColor !important;
+        color: @primary;
+        border-color: @primary;
+    }
+
+    .van-popup {
+        background-color: @popupBg;
+    }
+
+    .van-password-input__cursor {
+        background: @primary;
+    }
+
+    .van-dialog {
+        box-shadow: none;
+        background-color: @popupBg !important;
+
+        .van-dialog__header {
+            background-color: @popupBg !important;
+            color: @color !important;
+        }
+
+        .van-dialog__footer {
+            .van-button {
+                background-color: rgba(0, 0, 0, 0) !important;
+                color: @placeholder;
+            }
+
+            .van-dialog__confirm {
+                color: @primary !important;
+            }
+
+
+
+            [class*=van-hairline]:after {
+                border-color: @superBorder !important;
+            }
+        }
+
+        .van-hairline--top {
+            &::after {
+                border-color: @superBorder !important;
+            }
+        }
+    }
+
+    // 谷歌验证码
+    .google_dialog {
+        background-color: @popupBg !important;
+        color: @color;
+    }
+
+    .code_ipt {
+        .van-password-input__item {
+            background-color: @superBg !important;
+            border-color: @superBorder !important;
+            color: @primary !important;
+        }
+
+        .van-password-input__item:has(.van-password-input__cursor) {
+            border-color: @primary !important;
+        }
+    }
+
+
+    // 注册弹窗
+    .register_accounr_dialog {
+        background-color: @popupBg !important;
+
+        .search_box {
+            background-color: @inputBg;
+            border-color: @inputBg !important;
+
+            .ipt {
+                color: @color !important;
+            }
+        }
+
+        .van-cell {
+            background-color: @popupBg;
+
+            &::after {
+                border-bottom-color: @border !important;
+            }
+
+            .van-cell__value {
+                >div {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+
+
+
+
+    // 一些颜色变量重置
+    .text-\[\#121826\] {
+        color: @color;
+    }
+
+    .text-\[\#666D80\] {
+        color: @color;
+    }
+
+    .border-\[\#D0D8E2\] {
+        border-color: @placeholder;
+    }
+
+}

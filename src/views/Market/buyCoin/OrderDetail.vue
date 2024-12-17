@@ -26,10 +26,10 @@
         </span>
       </div>
       <div @click="active = 2" class="tab" :class="{ tab_active: active == 2 }">
-        <span style="position: relative; top: 0.1rem">
+        <span class="relative flex items-center">
           {{ t("market.market_buy_list_contact") }}
           <div
-            class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center">
+          class="hint" v-if="unreadMessage[currItem.order_no] > 0">
             {{ unreadMessage[currItem.order_no] }}
           </div>
           <!-- <div class="hint" v-if="c2cUnread[currItem.order_no] || currItem.unread">{{
@@ -83,11 +83,13 @@
 
           <!-- 已完成 -->
           <div v-if="currItem.status == 'done'" class="finish_status success_status">
-            <div>{{ t("market.market_buy_list_complete") }}</div>
+            <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.png')" alt="img" /></div>
+            <div class="ml-[0.2rem]">{{ t("market.market_buy_list_complete") }}</div>
           </div>
           <!-- 已取消 -->
           <div v-if="currItem.status == 'cancel'" class="finish_status">
-            <div>{{ t("market.market_buy_list_cancel") }}</div>
+            <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.png')" alt="img" /></div>
+            <div class="ml-[0.2rem]">{{ t("market.market_buy_list_cancel") }}</div>
           </div>
         </div>
         <!-- 卖家 -->
@@ -170,7 +172,7 @@
       </div>
 
       <!-- 订单 -->
-      <div class="order">
+      <div class="order pb-[0.24rem]" v-if="currItem.order_no">
         <div class="top" @click="copy(currItem.order_no)">
           <div class="order_no">{{ currItem.order_no }}</div>
           <div class="copy_icon">
@@ -179,33 +181,82 @@
           <div style="flex: 1"></div>
           <div>{{ currItem.date }}</div>
         </div>
-        <div class="info_block">
-          <div class="info">
-            <div class="amount">{{ currItem.totalprice }}</div>
-            <div>
-              {{ t("market.market_buy_list_wait_total") }}({{
-                currItem.currency
-              }})
+        <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-if="currItem.offset == 'buy'">
+            支<br/>付
+          </div>
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#E8503A] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-else>
+            卖<br/>出
+          </div>
+          
+          <div class="info_block flex-1"  v-if="currItem.offset == 'buy'">
+            <div class="info">
+              <div class="amount">{{ currItem.totalprice }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_total") }}({{
+                  currItem.currency
+                }})
+              </div>
+            </div>
+            <div class="info">
+              <div class="amount">{{ currItem.price }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_price") }}({{
+                  currItem.currency
+                }})
+              </div>
             </div>
           </div>
-          <div class="info">
-            <div class="amount">{{ currItem.price }}</div>
-            <div>
-              {{ t("market.market_buy_list_wait_price") }}({{
-                currItem.currency
-              }})
+
+          <div class="info_block flex-1" v-else>
+            <div class="info">
+              <div class="amount">{{ currItem.volume }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_amount") }}({{
+                  currItem.crypto
+                }})
+              </div>
+            </div>
+            <div class="info">
+              <div class="amount">{{ currItem.price }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_price") }}({{
+                  currItem.currency
+                }})
+              </div>
             </div>
           </div>
-          <div class="info">
-            <div class="amount">{{ currItem.volume }}</div>
-            <div>
-              {{ t("market.market_buy_list_wait_amount") }}({{
-                currItem.crypto
-              }})
+
+        </div>
+        <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#014CFA] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
+            收<br/>到
+          </div>
+          <div class="info_block flex-1" v-if="currItem.offset == 'buy'">
+            <div class="info">
+              <div class="amount">{{ currItem.volume }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_amount") }}({{
+                  currItem.crypto
+                }})
+              </div>
             </div>
           </div>
+          <div class="info_block flex-1" v-else>
+            <div class="info">
+              <div class="amount">{{ currItem.totalprice }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_total") }}({{
+                  currItem.currency
+                }})
+              </div>
+            </div>
+            
+          </div>
+
         </div>
       </div>
+
 
       <!-- 按钮 -->
       <div class="max-width btns" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
@@ -443,21 +494,19 @@ getSessionToken();
       position: relative;
 
       .hint {
-        min-width: 0.24rem;
-        height: 0.24rem;
+        min-width: 0.26rem;
+        height: 0.26rem;
         background-color: #e8503a;
-        padding: 0.06rem;
+        padding: 0 0.06rem;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
         color: #fff;
-        font-size: 0.16rem;
+        font-size: 0.18rem;
         font-weight: 400;
-        border-radius: 0.12rem;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform: translateX(100%) translateY(-100%);
+        border-radius: 0.13rem;
+        margin-left: 0.04rem;
       }
     }
 
@@ -489,7 +538,7 @@ getSessionToken();
 
         .amount {
           color: #000;
-          font-size: 0.3rem;
+          font-size: 0.32rem;
           font-weight: 600;
         }
 
@@ -636,7 +685,6 @@ getSessionToken();
     background-color: #f5f7fc;
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-
     .top {
       display: flex;
       align-items: center;
@@ -654,18 +702,17 @@ getSessionToken();
       }
 
       .copy_icon {
-        width: 0.32rem;
-        height: 0.32rem;
+        width: 0.24rem;
+        height: 0.24rem;
         cursor: pointer;
-        margin-left: 0.04rem;
+        margin-left: 0.1rem;
       }
     }
 
     .info_block {
       display: flex;
       align-items: stretch;
-      padding: 0.36rem 0.32rem 0.46rem 0.32rem;
-      margin-top: 0.2rem;
+      padding: 0.28rem 0.32rem 0.32rem 0.32rem;
 
       .info {
         flex: 1;

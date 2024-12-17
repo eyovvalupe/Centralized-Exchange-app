@@ -331,7 +331,7 @@
   <ActionSheet teleport="body" v-model:show="showJumpTypeDialog" :actions="jumpModeList" @select="onSelectJumpModeType"
     :title="t('trade.stock_opening_show_jump_type')">
   </ActionSheet>
-
+  
   <!-- 开仓-安全密码弹窗 -->
   <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 

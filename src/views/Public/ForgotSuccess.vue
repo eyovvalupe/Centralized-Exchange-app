@@ -146,7 +146,7 @@ const goChat = () => {
 
   .title {
     position: relative;
-    top: -1.4rem;
+    top: -1.2rem;
     color: #333333;
     font-weight: 400;
     font-size: 0.3rem;

@@ -20,7 +20,7 @@
                       ? t("market.market_optional_contract")
                       : item.type == "forex"
                         ? t("market.market_optional_forex")
-                        : "--"
+                        : ""
                 }}
               </div>
             </div>

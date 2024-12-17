@@ -12,7 +12,7 @@
         </div>
       </div>
 
-      <Tabs key="form" v-if="!pageLoading" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab"
+      <Tabs key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab"
         :swipeable="false" :color="'#014CFA'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
@@ -27,8 +27,6 @@
             v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" />
         </Tab>
       </Tabs>
-
-      <div style="height: 50vh" v-else></div>
     </div>
   </div>
 </template>
@@ -65,12 +63,7 @@ if (route.query.symbol) {
   activeType.value = route.query.type || 1;
 }
 const activeTab = ref(0); // 0-市价 1-限价 2-止盈止损
-const pageLoading = ref(true);
-onMounted(() => {
-  setTimeout(() => {
-    pageLoading.value = false;
-  }, 300);
-});
+
 
 // 选择某个股票
 const choose = (item) => {

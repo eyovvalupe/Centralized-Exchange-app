@@ -11,17 +11,20 @@
         </div>
       </div>
 
-      <!-- 售出 -->
+      <!-- 收到 -->
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
             <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
               }}</span>
-            <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
+            <span v-if="form1.offset == 'sell'">
+              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">可用</span>
+              {{ currWallet.amount }} {{ currOut.name }}</span>
+              <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
+            </span>
+
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
-            <span v-if="form1.offset == 'sell' && token" v-show="form1.volume === '' || priceFocus" class="ipt_tip">≤ {{
-              currWallet.amount || "--" }}</span>
             <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false"
               @blur="priceFocus = false" />
           </div>
@@ -50,7 +53,7 @@
         </div>
       </div>
 
-      <!-- 收到 -->
+      <!-- 支付 -->
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
@@ -78,12 +81,12 @@
         </div>
       </div>
       <div v-if="rate && token" class="tip">
-        {{ t('market.market_buy_fast_estprice') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈
+        1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
 
       <Button size="large" class="submit" round :loading="loading"
-        :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == "sell" ?
+        :color="form1.offset == 'sell' ? '#E8503A' : '#014CFA'" @click="sell">{{ form1.offset == "sell" ?
           t('market.market_buy_fast_sell') : t('market.market_buy_fast_buy') }}</Button>
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
@@ -125,11 +128,52 @@
     </div>
   </Popup>
 
+  <BuyCoinConfirm ref="safeRef" :offset="offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
+
   <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
     @on-add-collection="clickAccountItem" />
 
-  <!-- 安全密码弹窗 -->
-  <SafePassword ref="safeRef" @submit="submitSell" />
+    <!-- 余额提示 -->
+  <Popup round v-model:show="showAmountDialog" closeable teleport="body">
+    <div style="width: 6.4rem">
+
+      <!-- 标题 -->
+      <div
+        style="text-align: center;font-size: 0.32rem;height:1rem;display: flex;align-items: center;justify-content: center;border:1px solid #EFF3F8;">
+        可用余额</div>
+
+      <!-- 内容 -->
+      <div
+        style="display:flex;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;line-height:0.4rem;margin-top:0.32rem;overflow:hidden;position:relative;margin:0.32rem 0.4rem;">
+        <div
+          style="color:#061023;font-size:0.28rem;font-weight:400;padding:0 0.32rem;height:1.4rem;background-color:#fff;display:flex;align-items:center;justify-content:center;">
+          现金账户</div>
+        <div style="display:flex;align-items:center;justify-content:center;flex-direction: column;flex:1">
+          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.08rem">
+            <div v-if="currOut.name" style="width:0.32rem;height:0.32rem;display:flex;position:relative;top:-0.02rem">
+              <img :src="getStaticImgUrl(`/static/img/crypto/${currOut.name.toUpperCase()}.png`)" />
+            </div>
+
+            <span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">{{ currOut.name }}</span>
+          </div>
+          <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">{{ currWallet.amount }}</b>
+        </div>
+      </div>
+
+      <!--  按钮 -->
+      <div
+        style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.4rem;font-size: 0.28rem;margin: 0.64rem 0 0.4rem 0">
+        <div @click="router.push({ name: 'transfer' })"
+          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;border: 1px solid #014CFA;color: #014CFA">
+          去划转</div>
+        <div @click="router.push({ name: 'topUpCrypto' })"
+          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: #014CFA;color: #fff;">
+          去充值</div>
+      </div>
+    </div>
+
+  </Popup>
+
 </template>
 
 <script setup>
@@ -143,6 +187,7 @@ import { _swapRate, _orderFast } from "@/api/api";
 // import { _hiddenAccount } from '@/utils/index'
 import SafePassword from "@/components/SafePassword.vue";
 import eventBus from "@/utils/eventBus";
+import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
 import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import { useBuyCoinState } from "./state";
 import router from "@/router";
@@ -252,6 +297,7 @@ const submitSell = (s) => {
         .then(({ data: { order_no } }) => {
           showToast(t('market.market_buy_fast_success'));
           form1.value.volume = "";
+          safeRef.value.close();
           setTimeout(() => {
             router.push({
               name: "orderDetails",
@@ -272,7 +318,7 @@ const submitSell = (s) => {
 
 const getMoney = computed(() => {
   if (!form1.value.volume || !rate.value) return "--";
-  return new Decimal(form1.value.volume).mul(rate.value) || "--";
+  return new Decimal(form1.value.volume).mul(rate.value).toNumber();
 });
 const outWallet = computed(() => {
   // 售出钱包
@@ -302,6 +348,11 @@ const clickItem = (item) => {
   setTimeout(() => {
     getRate();
   }, 100);
+};
+
+const showAmountDialog = ref(false)
+const openConfirmBox = () => {
+  showAmountDialog.value = true
 };
 
 // 切换方向
