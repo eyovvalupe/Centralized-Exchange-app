@@ -10,7 +10,7 @@
 
       <div class="flex flex-row">
         <div class="server_icon" @click="goChat">
-          <div class="chat_icon"><img src="/static/img/user/server.svg" /></div>
+          <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
         </div>
 
         <div class="language_icon_container" @click="goLang">
@@ -23,19 +23,12 @@
     </div>
     <div class="info flex flex-col">
       <div class="flex">
-        <span
-        style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem"
-        >{{$t("register.code_con1") }}</span
-      >
-      <span
-        style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem"
-        >{{ props.type == "email" ? t('register.email') : t('register.phone') }}</span
-      >
+        <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem">{{ $t("register.code_con1") }}</span>
+        <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem">{{ props.type == "email" ?
+          t('register.email') : t('register.phone') }}</span>
       </div>
       <div class="flex flex-row justify-between mb-[0.6rem]">
-        <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400"
-          >{{ $t('register.code_con2') }}</span
-        >
+        <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400">{{ $t('register.code_con2') }}</span>
         <div class="timer_container" @click="send">
           {{ s ? s + "s" : t('register.code_again') }}
         </div>
@@ -50,6 +43,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import {
   Icon,
   PasswordInput,
@@ -144,7 +138,7 @@ const close = () => {
       s.value = 0;
       timeInterval && clearInterval(timeInterval);
     })
-    .catch(() => {});
+    .catch(() => { });
 };
 
 let timeInterval = null;
@@ -286,6 +280,7 @@ onMounted(() => {
     height: 1.2rem;
     box-sizing: border-box;
     border-radius: 0.32rem;
+
     &:has(.van-password-input__cursor) {
       border: 0.02rem solid #014cfa;
     }
@@ -298,6 +293,7 @@ onMounted(() => {
   padding: 0.4rem 0;
   cursor: pointer;
 }
+
 .button_container {
   width: 6.86rem;
   height: 1.12rem;
@@ -310,6 +306,7 @@ onMounted(() => {
   color: white;
   margin-bottom: 0.6rem;
 }
+
 .timer_container {
   width: 1.56rem;
   height: 0.6rem;

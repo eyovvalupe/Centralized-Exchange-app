@@ -19,7 +19,7 @@
         <span>{{ currItem.date || '--' }}</span>
         <span style="margin-left: 0.1rem">{{ currItem.order_no }}</span>
         <div class="copy_icon" @click="copy(currItem.order_no)">
-          <img src="/static/img/common/copy_default.png" alt="copy" />
+          <img :src="getStaticImgUrl('/static/img/common/copy_default.png')" alt="copy" />
         </div>
       </div>
 
@@ -54,14 +54,15 @@
       <div v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)" class="bank">
         <div class="bank_title">
           <div class="bank_icon">
-            <img src="/static/img/user/card_type_b.png" alt="img" />
+            <img :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
           </div>
           <div>银行卡</div>
         </div>
 
-        <div v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'" style="display: flex; flex-direction: column; align-items: center; justify-content: center">
+        <div v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'"
+          style="display: flex; flex-direction: column; align-items: center; justify-content: center">
           <div style="width: 1rem; height: 1rem; margin-bottom: 0.2rem">
-            <img src="/static/img/chat/wait.png" alt="img" />
+            <img :src="getStaticImgUrl('/static/img/chat/wait.png')" alt="img" />
           </div>
           <div>等待商家提供银行卡</div>
         </div>
@@ -122,9 +123,13 @@
 
       <!-- 按钮 -->
       <div v-if="currItem.status == 'waitpayment'" class="btns">
-        <div v-if="currItem.offset == 'buy'" class="btn" :style="{ backgroundColor: loading ? '#ddd' : '', color: loading ? '#fff' : '' }" style="margin-right: 0.64rem" @click="cancelOrder">取消订单</div>
-        <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn" :style="{ backgroundColor: '#ddd' }">等待确认</div>
-        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? '#ddd' : '' }" @click="confirmOrder">{{ currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
+        <div v-if="currItem.offset == 'buy'" class="btn"
+          :style="{ backgroundColor: loading ? '#ddd' : '', color: loading ? '#fff' : '' }"
+          style="margin-right: 0.64rem" @click="cancelOrder">取消订单</div>
+        <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn"
+          :style="{ backgroundColor: '#ddd' }">等待确认</div>
+        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? '#ddd' : '' }" @click="confirmOrder">{{
+          currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
       </div>
     </template>
 
@@ -137,6 +142,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { showToast, showConfirmDialog } from 'vant'
 import Chat from './Chat.vue'
 import { _c2cOrderInfo, _c2cOrderStatus } from '@/api/api'
@@ -194,7 +200,7 @@ const confirmOrder = () => {
       action.value = currItem.value.offset == 'buy' ? 'payment' : 'confirm'
       safeRef.value.open()
     })
-    .catch(() => {})
+    .catch(() => { })
     .finally(() => (moreDialog.value = false))
 }
 
@@ -210,7 +216,7 @@ const cancelOrder = () => {
       action.value = 'cancel'
       safeRef.value.open()
     })
-    .catch(() => {})
+    .catch(() => { })
     .finally(() => (moreDialog.value = false))
 }
 

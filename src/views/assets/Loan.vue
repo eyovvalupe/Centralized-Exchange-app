@@ -11,7 +11,7 @@
             <div class="item2">
                 <div class="border_item account_box" style="background-color: #f5f5f5">
                     <div class="item_icon">
-                        <img src="/static/img/assets/cash_icon.svg" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/assets/cash_icon.svg')" alt="img">
                     </div>
                     <span>现金账户</span>
                 </div>
@@ -46,10 +46,10 @@
             <div class="item2">
                 <div class="border_item account_box" @click="showDialog = true" style="padding-right:0.24rem">
                     <div class="item_icon">
-                        <img src="/static/img/assets/stock_icon.svg" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/assets/stock_icon.svg')" alt="img">
                     </div>
                     <span>股票账户</span>
-                    <div class="more_icon"><img src="/static/img/assets/more.png" alt="img"></div>
+                    <div class="more_icon"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img"></div>
                 </div>
                 <div class="border_item ipt_box" style="background-color: #f5f5f5">
                     <div class="ipt">
@@ -89,23 +89,12 @@
             v-model:show="showDialog" position="bottom" teleport="body">
             <div class="swap_accounr_dialog">
                 <div class="close_icon" @click="showDialog = false">
-                    <img src="/static/img/common/close.png" alt="x">
+                    <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x">
                 </div>
                 <div @click="showDialog = false" class="swap_dialog_item swap_dialog_item_active">
                     <span>股票账户</span>
                     <Icon class="check_icon" name="success" />
                 </div>
-                <!-- <div @click="clickItem(item)" class="swap_dialog_item"
-                    :class="{ 'swap_dialog_item_active': (clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency)) }"
-                    v-for="(item, i) in wallet" :key="i">
-                    <div class="icon">
-                        <img :src="`/static/img/crypto/${item.currency.toUpperCase()}.png`" alt="currency">
-                    </div>
-                    <span>{{ item.currency.toUpperCase() }}</span>
-
-                    <Icon v-if="(clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency))"
-                        class="check_icon" name="success" />
-                </div> -->
             </div>
         </Popup>
 
@@ -116,7 +105,7 @@
                     <div class="loan_comfirm_title">
                         <span>借款确认</span>
                         <div class="close_icon" @click="closeSafeRef">
-                            <img src="/static/img/common/close.png" alt="x">
+                            <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x">
                         </div>
                     </div>
                     <div class="loan_confirm_item">
@@ -165,6 +154,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue"
 import { _loanPara, _loanRate, _loan } from "@/api/api"
 import { ref, computed, onMounted, onBeforeUnmount } from "vue"

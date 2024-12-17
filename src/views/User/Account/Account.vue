@@ -2,23 +2,13 @@
 <template>
   <div class="page page_account">
     <Top :title="t('account.page_title')" />
-    <Tabs
-      type="card"
-      class="tab_content tabs"
-      v-if="!pageLoading"
-      @change="changeTab"
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      shrink
-    >
+    <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
+      :swipeable="false" animated shrink>
       <Tab :title="t('account.crypto')" name="0">
         <div class="tab_data">
           <div class="no_data" v-if="cryptoList.length == 0">
-            <img src="/static/img/user/noData.svg" />
-            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]"
-              >{{ $t("account.no_data") }}</span
-            >
+            <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
+            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">{{ $t("account.no_data") }}</span>
           </div>
           <div class="list" v-else>
             <CryptoList :list="cryptoList" />
@@ -28,10 +18,8 @@
       <Tab :title="t('account.bank')" name="1">
         <div class="tab_data">
           <div class="no_data" v-if="bankList.length == 0">
-            <img src="/static/img/user/noData.svg" />
-            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]"
-              >{{ $t("account.no_data") }}</span
-            >
+            <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
+            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">{{ $t("account.no_data") }}</span>
           </div>
           <div class="list" v-else>
             <BankList :list="bankList" />
@@ -46,6 +34,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Tabs, Tab, Icon, ActionSheet, showConfirmDialog } from "vant";
 import store from "@/store";
 import { computed, ref, onMounted } from "vue";
@@ -224,17 +213,20 @@ const goBack = () => {
 .van-dialog {
   padding-top: 0.8rem;
 }
+
 .van-dialog__header {
   padding: 0;
   font-size: 0.32rem;
   line-height: 0.44rem;
   margin-bottom: 0.2rem;
 }
+
 .van-dialog__message {
   font-size: 0.28rem;
   line-height: 0.44rem;
   color: #333333;
 }
+
 .van-dialog__cancel {
   .van-button__content {
     font-size: 0.32rem;
@@ -242,6 +234,7 @@ const goBack = () => {
     color: #8f92a1;
   }
 }
+
 .van-dialog__confirm {
   .van-button__content {
     font-size: 0.32rem;

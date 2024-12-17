@@ -1,22 +1,5 @@
 <template>
   <div class="flex mt-[0.32rem] justify-between mb-[0.32rem]" v-if="recomendedCryptoList.length">
-    <!-- <div
-      class="rounded-[0.32rem] w-[3.33rem] h-[3.48rem] bg-gradient-to-b from-[#98b0eb] border-[0.02rem] border-[#EFF3F8] via-[#F5F7FC] to-[#F5F7FC] p-[0.32rem] relative"
-    >
-      <div class="w-1/2 absolute bottom-0 right-0">
-        <img src="/static/img/home/hand.svg" img="img" />
-      </div>
-      <div class="font-bold text-[0.32rem] mb-[0.32rem]">邀请朋友注册</div>
-      <div class="text-[0.28rem] text-[#666D80] mb-[0.32rem]">各得最高</div>
-      <div class="text-[0.28rem] text-[#666D80] mb-[0.64rem]">
-        1000 USDT 奖励
-      </div>
-      <div
-        class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] text-[0.28rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
-      >
-        去邀请
-      </div>
-    </div> -->
     <div class=" w-full h-[3.48rem] relative">
       <div class="flex items-center justify-between py-[0.24rem]">
         <div class="flex items-center gap-1">
@@ -42,7 +25,7 @@
                 <div class="text-[0.3rem] font-bold">{{ list.price }}</div>
                 <div class="text-[0.3rem]">
                   {{
-                    (list.ratio || 0)  > 0
+                    (list.ratio || 0) > 0
                       ? "+" + (list.ratio || 0)
                       : (list.ratio || 0)
                   }}%

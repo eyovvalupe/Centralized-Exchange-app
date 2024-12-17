@@ -14,7 +14,7 @@
     <div class="subscription-m-box" :class="textSelect === '普通申购' ? 'add' : ''">
       <div class="vip-subscription" @click="vipSubscription">
         <span>{{ textSelect }}</span>
-        <img src="/static/img/trade/down.png" class="subscription-down-img">
+        <img :src="getStaticImgUrl('/static/img/trade/down.png')" class="subscription-down-img">
       </div>
       <Field class="vip-input" v-model="vipVal" :disabled="textSelect === '普通申购'" input-align="right"
         :placeholder="placeholderText" />
@@ -93,6 +93,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, onMounted } from "vue";
 import { Tab, Tabs, Field, Slider, Button, Loading, showToast, Icon, PasswordInput, NumberKeyboard, Popup } from "vant";
 import { useRouter, useRoute } from "vue-router";

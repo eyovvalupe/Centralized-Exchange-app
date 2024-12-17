@@ -670,6 +670,7 @@ export default {
     ipo_detail_item11: "所屬市場",
     ipo_detail_item12: "訂單金額",
     ipo_detail_item13: "訂單數量",
+    ipo_detail_item14: "鎖定金額",
     ipo_detail_btn: "我要認購",
     ipo_account_balance: "IPO帳戶餘額",
 

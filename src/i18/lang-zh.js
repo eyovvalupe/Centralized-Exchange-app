@@ -683,6 +683,7 @@ export default {
     ipo_detail_item11: "所属市场",
     ipo_detail_item12: "订单金额",
     ipo_detail_item13: "订单数量",
+    ipo_detail_item14: "锁定金额",
     ipo_detail_btn: "我要认购",
     ipo_account_balance: "IPO账户余额",
 

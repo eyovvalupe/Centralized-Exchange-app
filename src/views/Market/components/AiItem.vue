@@ -7,7 +7,7 @@
         <div class="info">
           <div class="pp">
             <div class="pp-icon">
-              <img src="/static/img/market/pp.svg" alt="^" />
+              <img :src="getStaticImgUrl('/static/img/market/pp.svg')" alt="^" />
             </div>
             <span>{{ item.numpeople || "--" }}</span>
           </div>
@@ -73,6 +73,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 // import { formatSec } from "@/utils/time";
 import SparkLine from "@/components/SparkLine.vue";

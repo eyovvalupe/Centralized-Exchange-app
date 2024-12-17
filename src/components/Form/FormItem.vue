@@ -25,12 +25,8 @@
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip" v-show="inputFocus">{{ tip
             }}</span>
 
-        <slot v-if="custom" />
-        <input
-          :disabled="disabled"
-          v-else
-          v-model="inputVal"
-          @focus="
+          <slot v-if="custom" />
+          <input :disabled="disabled" v-else v-model="inputVal" @focus="
             inputFocus = true;
           emit('focus');
           " @blur="
@@ -40,8 +36,10 @@
             :placeholder="placeholder" />
 
           <span class="pwd_icon" v-if="inputType == 'password'">
-            <img v-if="!showPassword" src="/static/img/user/eye-off.png" @click="showPassword = true" alt="off" />
-            <img v-else src="/static/img/user/eye-open.png" alt="open" @click="showPassword = false" />
+            <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/user/eye-off.png')"
+              @click="showPassword = true" alt="off" />
+            <img v-else :src="getStaticImgUrl('/static/img/user/eye-open.png')" alt="open"
+              @click="showPassword = false" />
           </span>
 
           <Transition name="opacity">
@@ -73,6 +71,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Decimal from "decimal.js";
 import { nextTick, watch } from "vue";
 import { useI18n } from "vue-i18n";

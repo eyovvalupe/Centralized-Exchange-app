@@ -16,7 +16,7 @@
           <div class="subtitle">
             {{ t("trade.ai_opening_product_type") }}
             <div class="stock_icon" v-if="form1.name" @click="openStockModel">
-              <img src="/static/img/trade/blue-stock.png" alt="icon" />
+              <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" alt="icon" />
             </div>
           </div>
 
@@ -210,6 +210,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, onBeforeUnmount } from "vue";
 import {
   Slider,

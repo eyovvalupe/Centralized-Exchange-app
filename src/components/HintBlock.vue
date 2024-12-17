@@ -3,7 +3,7 @@
     <Teleport to="body">
         <div class="wait_order" @click="jump">
             <div class="wo_icon">
-                <img src="/static/img/user/card_type_c.png" alt="img">
+                <img :src="getStaticImgUrl('/static/img/user/card_type_c.png')" alt="img">
             </div>
             <div class="wo_content">
                 <div class="name">USDT TRC20</div>
@@ -14,13 +14,14 @@
                 <div class="status">失败</div>
             </div>
             <div class="wo_more">
-                <img src="/static/img/assets/more_icon.svg" alt=">">
+                <img :src="getStaticImgUrl('/static/img/assets/more_icon.svg')" alt=">">
             </div>
         </div>
     </Teleport>
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router"
 
 const jump = () => {

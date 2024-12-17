@@ -3,18 +3,10 @@
   <div class="page_fasters">
     <div class="form">
       <div class="tabs">
-        <div
-          class="tab"
-          :class="{ active_tab: form1.offset == 'buy' }"
-          @click="changeTab('buy')"
-        >
+        <div class="tab" :class="{ active_tab: form1.offset == 'buy' }" @click="changeTab('buy')">
           {{ t('market.market_buy_fast_buy') }}
         </div>
-        <div
-          class="tab"
-          :class="{ active_tab: form1.offset == 'sell' }"
-          @click="changeTab('sell')"
-        >
+        <div class="tab" :class="{ active_tab: form1.offset == 'sell' }" @click="changeTab('sell')">
           {{ t(('market.market_buy_fast_sell')) }}
         </div>
       </div>
@@ -23,23 +15,15 @@
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell') }}</span>
+            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
+              }}</span>
             <!-- <span v-if="form1.offset == 'sell' && token">最大可用 {{ currOut.amount }}</span> -->
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
-            <span
-              v-if="form1.offset == 'sell' && token"
-              v-show="form1.volume === '' || priceFocus"
-              class="ipt_tip"
-              >≤ {{ currWallet.amount || "--" }}</span
-            >
-            <input
-              v-model="form1.volume"
-              type="number"
-              class="ipt"
-              @focus="priceFocus = false"
-              @blur="priceFocus = false"
-            />
+            <span v-if="form1.offset == 'sell' && token" v-show="form1.volume === '' || priceFocus" class="ipt_tip">≤ {{
+              currWallet.amount || "--" }}</span>
+            <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false"
+              @blur="priceFocus = false" />
           </div>
         </div>
 
@@ -50,24 +34,17 @@
             <!-- <span class="link">划转</span> -->
           </div>
           <div v-if="!token" class="subtitle">&nbsp;</div>
-          <div
-            class="item justify-between"
-            :class="{ item_focus: priceFocus }"
-            style="border: 1px solid #d0d8e2 !important"
-            @click="openDialog(1)"
-          >
+          <div class="item justify-between" :class="{ item_focus: priceFocus }"
+            style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
             <div class="flex items-center">
               <div v-if="currOut.name" class="icon">
-                <img
-                  class="rounded-50"
-                  :src="`/static/img/crypto/${currOut.name}.png`"
-                  alt="currency"
-                />
+                <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.png`)"
+                  alt="currency" />
               </div>
               <span>{{ currOut.name || "--" }}</span>
             </div>
             <div class="more_icon">
-              <img src="/static/img/trade/down.png" alt="↓" />
+              <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
             </div>
           </div>
         </div>
@@ -77,7 +54,8 @@
       <div class="item_box">
         <div class="item_box_left">
           <div class="subtitle">
-            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive') }}</span>
+            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
+              }}</span>
           </div>
           <div class="item">
             {{ getMoney }}
@@ -85,24 +63,16 @@
         </div>
         <div class="item_box_right">
           <div class="subtitle"><span>&nbsp;</span></div>
-          <div
-            class="item justify-between"
-            :class="{ item_focus: priceFocus }"
-            style="border: 1px solid #d0d8e2 !important"
-            @click="openDialog(2)"
-          >
+          <div class="item justify-between" :class="{ item_focus: priceFocus }"
+            style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
             <div class="flex items-center">
               <div v-if="currIn.name" class="icon">
-                <img
-                  class="rounded-50"
-                  :src="handleUrl(currIn.name)"
-                  alt="currency"
-                />
+                <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
               </div>
               <span>{{ currIn.name || "--" }}</span>
             </div>
             <div class="more_icon">
-              <img src="/static/img/trade/down.png" alt="↓" />
+              <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
             </div>
           </div>
         </div>
@@ -112,15 +82,9 @@
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
 
-      <Button
-        size="large"
-        class="submit"
-        round
-        :loading="loading"
-        :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'"
-        @click="sell"
-        >{{ form1.offset == "sell" ? t('market.market_buy_fast_sell') : t('market.market_buy_fast_buy') }}</Button
-      >
+      <Button size="large" class="submit" round :loading="loading"
+        :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == "sell" ?
+          t('market.market_buy_fast_sell') : t('market.market_buy_fast_buy') }}</Button>
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
       <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
@@ -128,73 +92,48 @@
   </div>
 
   <!-- 售出币种 -->
-  <Popup
-    v-model:show="showDialog"
-    :safe-area-inset-top="true"
-    :safe-area-inset-bottom="true"
-    class="self_van_popup"
-    position="bottom"
-    teleport="body"
-  >
+  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+    position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
-        <img src="/static/img/common/close.png" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
       </div>
       <div class="search_box">
         <div class="icon">
-          <img src="/static/img/common/search.png" alt="🔍" />
+          <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
         </div>
-        <input
-          ref="iptRef"
-          v-model.trim="searchValue"
-          :placeholder="t('market.market_buy_fast_search_input')"
-          type="text"
-          enterkeyhint="search"
-          class="search"
-        />
+        <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
+          type="text" enterkeyhint="search" class="search" />
       </div>
       <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
-      <div
-        v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet"
-        :key="i"
-        class="swap_dialog_item"
-        :class="{
-          swap_dialog_item_active:
-            showDialogType == 1
-              ? currOut.name == item.name
-              : currIn.name == item.name,
-        }"
-        @click="clickItem(item)"
-      >
+      <div v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet" :key="i" class="swap_dialog_item" :class="{
+        swap_dialog_item_active:
+          showDialogType == 1
+            ? currOut.name == item.name
+            : currIn.name == item.name,
+      }" @click="clickItem(item)">
         <div class="icon">
           <img class="rounded-50" :src="handleUrl(item.name)" alt="currency" />
         </div>
         <span>{{ item.name }}</span>
-        <Icon
-          v-if="
-            showDialogType == 1
-              ? currOut.name == item.name
-              : currIn.name == item.name
-          "
-          class="check_icon"
-          name="success"
-        />
+        <Icon v-if="
+          showDialogType == 1
+            ? currOut.name == item.name
+            : currIn.name == item.name
+        " class="check_icon" name="success" />
       </div>
     </div>
   </Popup>
 
-  <AccountSelectionPopUp
-    v-model:show="showAccountDialog"
-    :bank="form1"
-    currency-type="bank"
-    @on-add-collection="clickAccountItem"
-  />
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
+    @on-add-collection="clickAccountItem" />
 
   <!-- 安全密码弹窗 -->
   <SafePassword ref="safeRef" @submit="submitSell" />
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, onBeforeUnmount, onMounted } from "vue";
 import { Button, Popup, Icon, showToast, showConfirmDialog } from "vant";
 import Decimal from "decimal.js";
@@ -793,7 +732,7 @@ onInit();
       align-items: center;
       justify-content: center;
 
-      > img {
+      >img {
         width: 0.64rem !important;
         height: 0.64rem !important;
       }
@@ -827,7 +766,7 @@ onInit();
       width: 0.46rem;
       height: 0.42rem;
 
-      > img {
+      >img {
         width: 0.18rem !important;
         height: 0.12rem !important;
         position: absolute;

@@ -49,7 +49,7 @@
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 </script>
-<style>
+<style lang="less" scoped>
 .market_stock_chase {
   height: 5rem;
   box-shadow: 0 0.1rem 0.8rem 0 #014cfa33;

@@ -45,7 +45,7 @@
         searchStr = '';
         ">
           <span class="flag_icon">
-            <img src="/static/img/common/flag_hongkong.svg" alt="" />
+            <img :src="getStaticImgUrl('/static/img/common/flag_hongkong.svg')" alt="" />
           </span>
           <span>{{ form.area }}</span>
           <div class="more-svg-icon"></div>
@@ -125,6 +125,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import {
   Icon,
   Button,

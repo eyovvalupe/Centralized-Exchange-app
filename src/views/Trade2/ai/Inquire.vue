@@ -6,7 +6,7 @@
         <div class="list">
             <div class="item" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">
                 <div class="ai_icon">
-                    <img src="/static/img/trade/ai.png" alt="ai">
+                    <img :src="getStaticImgUrl('/static/img/trade/ai.png')" alt="ai">
                 </div>
                 <div class="mid">
                     <div class="name">{{ item.name }}</div>
@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import store from "@/store"
 import NoData from '@/components/NoData.vue';
@@ -44,10 +45,10 @@ import UnLogin from "@/components/UnLogin.vue"
 import { formatNumber } from 'vant/lib/utils';
 
 const props = defineProps({
-  scrollDom: {
-    type: String,
-    default: '.page'
-  }
+    scrollDom: {
+        type: String,
+        default: '.page'
+    }
 })
 const loginfinish = () => {
     setTimeout(() => {
