@@ -130,7 +130,7 @@ const codeUrl = ref("");
 const activeTab = ref(0);
 const initialSwipe = ref(activeTab.value);
 const inviteCode = computed(() => store.state.userInfo.uid);
-const moneyTextArr = ref([1, 0, 0, 0, 0]);
+const moneyTextArr = ref(['1', '0', '0', '0', '0']);
 QRCode.toDataURL(`${MOBILE_INVITE_URL}?invitcode=${userInfo.value.uid}`).then((url) => {
   codeUrl.value = url;
 });
