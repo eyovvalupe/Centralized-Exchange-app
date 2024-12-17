@@ -26,10 +26,10 @@
         </span>
       </div>
       <div @click="active = 2" class="tab" :class="{ tab_active: active == 2 }">
-        <span style="position: relative; top: 0.1rem">
+        <span class="relative flex items-center">
           {{ t("market.market_buy_list_contact") }}
           <div
-            class="w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center">
+          class="hint" v-if="unreadMessage[currItem.order_no] > 0">
             {{ unreadMessage[currItem.order_no] }}
           </div>
           <!-- <div class="hint" v-if="c2cUnread[currItem.order_no] || currItem.unread">{{
@@ -443,21 +443,19 @@ getSessionToken();
       position: relative;
 
       .hint {
-        min-width: 0.24rem;
-        height: 0.24rem;
+        min-width: 0.26rem;
+        height: 0.26rem;
         background-color: #e8503a;
-        padding: 0.06rem;
+        padding: 0 0.06rem;
         display: flex;
         align-items: center;
         justify-content: center;
+        box-sizing: border-box;
         color: #fff;
-        font-size: 0.16rem;
+        font-size: 0.18rem;
         font-weight: 400;
-        border-radius: 0.12rem;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform: translateX(100%) translateY(-100%);
+        border-radius: 0.13rem;
+        margin-left: 0.04rem;
       }
     }
 
