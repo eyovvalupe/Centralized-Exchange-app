@@ -11,10 +11,10 @@ export const _accountMap = {
   forex: t("accountMap.foreignExchangeAccount"),
 };
 export const _accountMapList = [
-  { key: "money", value: "现金账户" },
-  { key: "stock", value: "股票账户" },
-  { key: "futures", value: "合约账户" },
-  { key: "forex", value: "外汇账户" },
+  { key: "money", value: t('assets.wallet_header_cash') },
+  { key: "stock", value: t('assets.wallet_header_stock') },
+  { key: "futures", value: t('market.market_buy_fast_account_crypto') },
+  { key: "forex", value: t('assets.wallet_header_forex') },
 ];
 
 // 借贷状态
