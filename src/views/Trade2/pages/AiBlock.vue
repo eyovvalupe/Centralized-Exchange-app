@@ -21,15 +21,11 @@
     </Tabs>
     <div style="height: 50vh" v-else></div>
 
-    <!-- 下单弹窗 -->
-    <Popup teleport="body" v-model:show="showModel" position="right" style="width: 100%; height: 100%">
-      <Opening @showNavDialog="showNavDialog" ref="OpeningRef" @back="showModel = false" />
-    </Popup>
   </div>
 </template>
 
 <script setup>
-import { Tab, Tabs, Popup } from "vant";
+import { Tab, Tabs } from "vant";
 import { ref, onMounted, computed, defineExpose, watch } from "vue";
 import Opening from "../ai/Opening.vue";
 import Positions from "../ai/Positions.vue";
@@ -42,7 +38,7 @@ const { t } = useI18n();
 const route = useRoute();
 
 const OpeningRef = ref();
-const showModel = ref(false);
+const showModel = ref(true);
 
 const props = defineProps({
   activeTab: {
@@ -76,6 +72,14 @@ const onChange = async (val) => {
   }
 };
 
+// 选择某个合约
+const choose = (item) => {
+  active.value = '0';
+  setTimeout(()=>{
+    OpeningRef.value && OpeningRef.value.choose(item);
+  },300)
+};
+
 const pageLoading = ref(true);
 const handleMounted = () => {
   active.value = "0";
@@ -89,6 +93,7 @@ onMounted(() => {
 
 defineExpose({
   handleMounted,
+  choose
 });
 </script>
 
