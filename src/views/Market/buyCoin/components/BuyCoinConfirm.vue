@@ -6,17 +6,30 @@
 
     <div class="px-[0.32rem] pt-[0.52rem]">
       <div class="flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
-        <div class="text-[0.32rem] font-bold text-[#061023]">你将支付</div>
-        <div class="flex items-center">
-          <strong class="text-[#014CFA] text-[0.48rem]">{{ money }}</strong>
-          <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
-        </div>
+        <template v-if="offset == 'sell'">
+          <div class="text-[0.32rem] font-bold text-[#061023]">你将支付</div>
+          <div class="flex items-center">
+            <strong class="text-[#014CFA] text-[0.48rem]">{{ money }}</strong>
+            <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
+          </div>
+        </template>
+        <template v-else>
+          <div class="text-[0.32rem] font-bold text-[#061023]">你将卖出</div>
+          <div class="flex items-center">
+            <strong class="text-[#014CFA] text-[0.48rem]">{{ volume }}</strong>
+            <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
+          </div>
+        </template>
       </div>
       <div class="mt-[0.2rem] flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
         <div class="text-[0.32rem] font-bold text-[#061023]">你将收到</div>
-        <div class="flex items-center">
+        <div class="flex items-center" v-if="offset == 'sell'">
           <strong class="text-[#014CFA] text-[0.48rem]">{{ volume }}</strong>
           <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
+        </div>
+        <div class="flex items-center" v-else>
+          <strong class="text-[#014CFA] text-[0.48rem]">{{ money }}</strong>
+          <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
         </div>
       </div>
 
@@ -44,6 +57,7 @@ defineProps({
   money:[String,Number],
   currency:String,
   payCurrency:String,
+  offset:String,
   loading:Boolean
 })
 

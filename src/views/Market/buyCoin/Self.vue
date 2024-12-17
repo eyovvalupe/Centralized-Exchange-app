@@ -174,7 +174,7 @@
             </div>
           </div>
           <div v-if="currAccount.id == item.id" class="checked"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/user/check_bg.png')}`) }">
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.png')})` }">
             <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
           </div>
         </div>

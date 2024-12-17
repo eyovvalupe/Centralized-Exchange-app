@@ -78,12 +78,12 @@
         </div>
       </div>
       <div v-if="rate && token" class="tip">
-        {{ t('market.market_buy_fast_estprice') }}&nbsp;&nbsp;1&nbsp;{{ currOut.name }} ≈
+        1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
 
       <Button size="large" class="submit" round :loading="loading"
-        :color="form1.offset == 'sell' ? '#014CFA' : '#014CFA'" @click="sell">{{ form1.offset == "sell" ?
+        :color="form1.offset == 'sell' ? '#E8503A' : '#014CFA'" @click="sell">{{ form1.offset == "sell" ?
           t('market.market_buy_fast_sell') : t('market.market_buy_fast_buy') }}</Button>
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
@@ -125,7 +125,7 @@
     </div>
   </Popup>
 
-  <BuyCoinConfirm ref="safeRef" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
+  <BuyCoinConfirm ref="safeRef" :offset="offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
 
   <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
     @on-add-collection="clickAccountItem" />
