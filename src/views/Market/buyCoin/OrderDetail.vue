@@ -172,7 +172,7 @@
       </div>
 
       <!-- 订单 -->
-      <div class="order pb-[0.24rem]">
+      <div class="order pb-[0.24rem]" v-if="currItem.order_no">
         <div class="top" @click="copy(currItem.order_no)">
           <div class="order_no">{{ currItem.order_no }}</div>
           <div class="copy_icon">
@@ -182,10 +182,14 @@
           <div>{{ currItem.date }}</div>
         </div>
         <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
-          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-if="currItem.offset == 'buy'">
             支<br/>付
           </div>
-          <div class="info_block flex-1">
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#E8503A] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-else>
+            卖<br/>出
+          </div>
+          
+          <div class="info_block flex-1"  v-if="currItem.offset == 'buy'">
             <div class="info">
               <div class="amount">{{ currItem.totalprice }}</div>
               <div class="text-[#666D80]">
@@ -203,12 +207,32 @@
               </div>
             </div>
           </div>
+
+          <div class="info_block flex-1" v-else>
+            <div class="info">
+              <div class="amount">{{ currItem.volume }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_amount") }}({{
+                  currItem.crypto
+                }})
+              </div>
+            </div>
+            <div class="info">
+              <div class="amount">{{ currItem.price }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_price") }}({{
+                  currItem.currency
+                }})
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
           <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#014CFA] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
             收<br/>到
           </div>
-          <div class="info_block flex-1">
+          <div class="info_block flex-1" v-if="currItem.offset == 'buy'">
             <div class="info">
               <div class="amount">{{ currItem.volume }}</div>
               <div class="text-[#666D80]">
@@ -218,6 +242,18 @@
               </div>
             </div>
           </div>
+          <div class="info_block flex-1" v-else>
+            <div class="info">
+              <div class="amount">{{ currItem.totalprice }}</div>
+              <div class="text-[#666D80]">
+                {{ t("market.market_buy_list_wait_total") }}({{
+                  currItem.currency
+                }})
+              </div>
+            </div>
+            
+          </div>
+
         </div>
       </div>
 
