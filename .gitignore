@@ -2,7 +2,7 @@
 node_modules
 /dist
 /h5
-
+h5.zip
 
 # local env files
 .env.local
