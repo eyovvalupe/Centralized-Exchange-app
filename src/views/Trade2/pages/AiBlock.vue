@@ -1,32 +1,30 @@
 <!-- ai -->
 <template>
   <div class="ai-block">
-    <Tabs v-if="!pageLoading" type="round-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
+    <Tabs type="round-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
       @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
           <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" mode="page" ref="OpeningRef"
-            @back="showModel = false" />
-          <!-- <Ai @clickItems="clickItem"></Ai> -->
+            @back="showModel = false"  v-if="loadTab.indexOf('0') > -1" />
         </div>
       </Tab>
       <Tab :title="t('trade.stock_position')" name="1">
         <div class="ai-block-content">
-          <Positions />
+          <Positions  v-if="loadTab.indexOf('1') > -1" />
         </div>
       </Tab>
       <Tab :title="t('trade.ai_opening_order')" name="2">
-        <Inquire ref="InquireRef" />
+        <Inquire ref="InquireRef"  v-if="loadTab.indexOf('2') > -1" />
       </Tab>
     </Tabs>
-    <div style="height: 50vh" v-else></div>
 
   </div>
 </template>
 
 <script setup>
 import { Tab, Tabs } from "vant";
-import { ref, onMounted, computed, defineExpose, watch } from "vue";
+import { ref, onMounted, computed, defineExpose, watch, nextTick } from "vue";
 import Opening from "../ai/Opening.vue";
 import Positions from "../ai/Positions.vue";
 import Inquire from "../ai/Inquire.vue";
@@ -61,9 +59,13 @@ const showNavDialog = () => {
   emits("showNavDialog", "ai");
 };
 
+const loadTab = ref([]);
 const active = ref(sessionStorage.getItem("trade_ai_tab") || "0");
 const InquireRef = ref();
 const onChange = async (val) => {
+  if (loadTab.value.indexOf(val) == -1) {
+      loadTab.value.push(val)
+  }
   active.value = val;
   sessionStorage.setItem("trade_ai_tab", val);
 
@@ -74,22 +76,25 @@ const onChange = async (val) => {
 
 // 选择某个合约
 const choose = (item) => {
-  active.value = '0';
-  setTimeout(()=>{
+  if(active.value == '0'){
     OpeningRef.value && OpeningRef.value.choose(item);
-  },300)
+  }else{
+    onChange('0')
+    nextTick(()=>{
+      OpeningRef.value && OpeningRef.value.choose(item);
+    })
+  }
 };
 
-const pageLoading = ref(true);
+onChange(active.value)
+
 const handleMounted = () => {
-  active.value = "0";
+  loadTab.value = []
   setTimeout(() => {
-    pageLoading.value = false;
+    onChange(active.value)
   }, 300);
 };
-onMounted(() => {
-  handleMounted();
-});
+
 
 defineExpose({
   handleMounted,

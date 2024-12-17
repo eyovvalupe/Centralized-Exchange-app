@@ -563,6 +563,7 @@ const init = () => {
 
 defineExpose({
   init,
+  choose:chooseItem
 });
 </script>
 

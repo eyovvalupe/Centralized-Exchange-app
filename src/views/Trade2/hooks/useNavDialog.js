@@ -58,13 +58,15 @@ export const useNavDialog = (activeTab)=>{
     const stockActiveTab = ref("all");
     const navActiveTab = ref("option");
     const showNavDialogFunc = (val='') => {
-        if(!val && navActiveTab.value != "option"){
+        if(!val){
             if(activeTab.value == 0){
                 navActiveTab.value = 'stock'
             }else if(activeTab.value == 1){
                 navActiveTab.value = 'contract'
             }else if(activeTab.value == 2){
                 navActiveTab.value = 'ai'
+            }else{
+                navActiveTab.value = "option"
             }
         }else{
             navActiveTab.value = val;

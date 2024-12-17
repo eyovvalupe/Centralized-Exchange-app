@@ -208,7 +208,7 @@
             <div class="lists">
               <StockTable
                 :showSparkLine="false"
-                :handleClick="handleClick"
+                :handleClick="handleClickAi"
                 :loading="searchLoading"
                 :list="aiquantSearchList"
               />
@@ -295,7 +295,7 @@ const onRefresh = () => {
 // 一级导航
 const activeTab = ref(0);
 const initialSwipe = ref(-1);
-const loadedTab = ref([activeTab.value]);
+const loadedTab = ref([]);
 const swipeRef = ref();
 
 const changeActiveTab = (val, slideSwipe = false, init = false) => {
@@ -398,27 +398,54 @@ const {
 
 // 选择股票
 const StockBlockRef = ref();
-const handleClick = (item) => {
+const handleClickStock = (item) => {
   showNavDialog.value = false;
-  if (item.type == "crypto") {
-    ContractBlockRef.value && ContractBlockRef.value.choose(item);
-  } else {
-    StockBlockRef.value && StockBlockRef.value.choose(item);
+  if(activeTab.value != 0){
+    changeActiveTab(0,true) 
   }
-};
+  setTimeout(()=>{
+    StockBlockRef.value && StockBlockRef.value.choose(item);
+  },600)
+  
+}
 
 // 选择合约
 const ContractBlockRef = ref();
 const handleClickContract = (item) => {
   showNavDialog.value = false;
-  ContractBlockRef.value && ContractBlockRef.value.choose(item);
-};
+  if(activeTab.value != 1){
+    changeActiveTab(1,true)
+    
+  }
+  setTimeout(()=>{
+    ContractBlockRef.value && ContractBlockRef.value.choose(item);
+  },600)
+}
+
+const handleClickAi = (item) => {
+  showNavDialog.value = false;
+  if(activeTab.value != 2){
+    changeActiveTab(2,true)
+  }
+  setTimeout(()=>{
+    AiBlockRef.value && AiBlockRef.value.choose(item);
+  },600)
+}
+
+const handleClick = (item) => {
+  if (item.type == "crypto" || item.type == "forex" || item.type == "blocktrade") {
+    handleClickContract(item)
+  } else {
+    handleClickStock(item)
+  }
+}
+
 
 const swipeResize = () => {
   setTimeout(() => {
     swipeRef.value && swipeRef.value.resize();
   }, 300);
-};
+}
 
 const pageActive = ref(false);
 onActivated(() => {
