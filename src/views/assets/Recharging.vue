@@ -93,7 +93,9 @@ import store from "@/store";
 import router from "@/router";
 import Decimal from "decimal.js";
 import CountDown from "@/components/CountDown.vue";
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const route = useRoute();
 
 // sessionToken
@@ -248,11 +250,11 @@ const getRate = () => {
 // 复制
 const copy = () => {
   _copyTxt(address.value);
-  showToast("已复制");
+  showToast(t('recharging.copied'));
 };
 const copyPrice = () => {
   _copyTxt(form.value.amount);
-  showToast("已复制");
+  showToast(t('recharging.copied'));
 };
 </script>
 

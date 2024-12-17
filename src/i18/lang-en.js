@@ -391,7 +391,7 @@ export default {
     info_recharge_address: "Deposit Address",
     info_recharge_order: "Order ID",
     info_recharge_date: "Deposit Date",
-    copy: "Copied",
+    copied: "Copied Successfully",
   },
   withdrawInfo: {
     title: "Withdrawal Details",

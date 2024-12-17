@@ -101,7 +101,7 @@ const route = useRoute();
 //  复制
 const copy = (text) => {
   _copyTxt(text);
-  showToast("已复制");
+  showToast(t('recharging.copied'));
 };
 
 const loading = ref(false);
