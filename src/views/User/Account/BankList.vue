@@ -52,6 +52,8 @@ const confirm = (id) => {
   showConfirmDialog({
     title: t('account.delete_dialog_title'),
     message: t('account.delete_dialog_con'),
+    confirmButtonText: t('google_auth.google_input_btn_confirm'),
+    cancelButtonText: t('google_auth.google_input_btn_cancel')
   })
     .then(() => next())
     .catch(() => {});
