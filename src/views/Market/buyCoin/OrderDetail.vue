@@ -83,11 +83,13 @@
 
           <!-- 已完成 -->
           <div v-if="currItem.status == 'done'" class="finish_status success_status">
-            <div>{{ t("market.market_buy_list_complete") }}</div>
+            <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.png')" alt="img" /></div>
+            <div class="ml-[0.2rem]">{{ t("market.market_buy_list_complete") }}</div>
           </div>
           <!-- 已取消 -->
           <div v-if="currItem.status == 'cancel'" class="finish_status">
-            <div>{{ t("market.market_buy_list_cancel") }}</div>
+            <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.png')" alt="img" /></div>
+            <div class="ml-[0.2rem]">{{ t("market.market_buy_list_cancel") }}</div>
           </div>
         </div>
         <!-- 卖家 -->
