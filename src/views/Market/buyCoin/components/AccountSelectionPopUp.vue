@@ -260,7 +260,6 @@ const clickAccountItem = val => {
     // background-color: #f6f7fa;
     border: 1px solid #d0d8e2;
     padding: 0 0.4rem 0 0.36rem;
-    overflow: hidden;
 
     .card_icon {
       background-color: #f5f7fc;
@@ -299,8 +298,8 @@ const clickAccountItem = val => {
 
     .checked {
       position: absolute;
-      top: -0.04rem;
-      right: -0.04rem;
+      top: -0.02rem;
+      right: -0.02rem;
       background-size: 100% 100%;
       width: 0.46rem;
       height: 0.42rem;

@@ -18,7 +18,7 @@
             <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
               }}</span>
             <span v-if="form1.offset == 'sell'">
-              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">可用</span>
+              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{t('assets.wallet_available_sim')}}</span>
               {{ currWallet.amount }} {{ currOut.name }}</span>
               <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
             </span>
@@ -128,7 +128,7 @@
     </div>
   </Popup>
 
-  <BuyCoinConfirm ref="safeRef" :offset="offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
+  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :currentAccount="currentAccount" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
 
   <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
     @on-add-collection="clickAccountItem" />
@@ -385,7 +385,10 @@ const getRate = () => {
     });
 };
 
+const currentAccount = ref({})
+
 const clickAccountItem = (item) => {
+  currentAccount.value = item
   form1.value.account_id = item.id;
   form1.value.id = item.id;
   showAccountDialog.value = false;
