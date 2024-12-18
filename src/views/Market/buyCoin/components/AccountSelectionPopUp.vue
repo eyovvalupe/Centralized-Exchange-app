@@ -9,7 +9,7 @@
       <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
       <div class="list">
         <!-- 二层容器 -->
-        <div class="mb-5 flex text-16 text-[#666D80]">
+        <div class="mb-5 flex text-16 text-[#666D80]"  v-if="currencyType.includes('crypto') && currencyType.includes('bank')">
           <div v-if="currencyType.includes('crypto')"
             class="mr-[0.12rem] w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36"
             :class="{ 'border-none border-transparent bg-my text-white': tabsValue === 'crypto' }"
@@ -23,7 +23,7 @@
           </div>
         </div>
         <!-- 三层容器 -->
-        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my"
+        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-[#F5F7FC] text-my"
           @click="goAddAccount">
           <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
           <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
@@ -38,7 +38,7 @@
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
-            <div class="name">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }}</div>
+            <div class="text-[#666D80]">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }} <span v-if="item.accountName">| {{ item.accountName }}</span></div>
           </div>
           <div v-if="bank.id == item.id" class="checked"
             :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/user/check_bg.png')}`) }">
@@ -251,7 +251,7 @@ const clickAccountItem = val => {
   }
 
   .dialog_account_item {
-    border-radius: 0.12rem;
+    border-radius: 0.3rem;
     height: 1.44rem;
     display: flex;
     align-items: center;
