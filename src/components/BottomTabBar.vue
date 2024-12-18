@@ -1,17 +1,12 @@
 <!-- 底部导航 -->
 <template>
   <div class="max-width bottom_nav">
-    <div
-      v-for="(item, i) in navs"
-      :key="i"
-      class="bottom_nav_item"
-      :class="[checkActive(item) ? 'bottom_nav_active' : '']"
-      @touchstart="handleClick(item, $event)"
-      @click="handleClick(item)"
-    >
+    <div v-for="(item, i) in navs" :key="i" class="bottom_nav_item"
+      :class="[checkActive(item) ? 'bottom_nav_active' : '']" @touchstart="handleClick(item, $event)"
+      @click="handleClick(item)">
       <div class="bottom_nav_icon">
-        <iconpark-icon v-if="!checkActive(item)" :name="item.icon" />
-        <iconpark-icon v-if="checkActive(item)" :name="item.icon2" />
+        <img v-if="!checkActive(item)" :src="getStaticImgUrl(item.icon)" alt="">
+        <img v-if="checkActive(item)" :src="getStaticImgUrl(item.icon2)" alt="">
       </div>
 
       <div class="bottom_nav_name">
@@ -20,29 +15,23 @@
           item.route == "home"
             ? t("home.homepage")
             : item.route == "market"
-            ? t("home.market")
-            : item.route == "trade"
-            ? t("home.trade")
-            : item.route == "assets"
-            ? t("home.assets")
-            : item.route == "user"
-            ? t("home.user")
-            : '--'
+              ? t("home.market")
+              : item.route == "trade"
+                ? t("home.trade")
+                : item.route == "assets"
+                  ? t("home.assets")
+                  : item.route == "user"
+                    ? t("home.user")
+                    : '--'
         }}
       </div>
 
       <!-- c2c角标 -->
-      <div
-        v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0"
-        class="nav_num"
-      >
+      <div v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0" class="nav_num">
         {{ store.state.c2cUnreadTotal }}
       </div>
       <!-- 角标 -->
-      <div
-        v-if="item.route == 'user' && storeChat.state.messageNum > 0"
-        class="nav_num"
-      >
+      <div v-if="item.route == 'user' && storeChat.state.messageNum > 0" class="nav_num">
         {{ storeChat.state.messageNum }}
       </div>
     </div>
@@ -50,6 +39,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
@@ -66,29 +56,29 @@ const activeRoute = computed(() => route.name);
 const token = computed(() => store.state.token);
 
 const navs = ref([
-  { name: "首页", route: "home", icon: "shouye1", icon2: "shouye2" },
+  { name: "首页", route: "home", icon: "/static/img/bottom/shouye1.svg", icon2: "/static/img/bottom/shouye2.svg" },
   {
     name: "市场",
     route: "market",
     children: ["market_info", "financial_info", "trading_rules"],
-    icon: "shichang1",
-    icon2: "shichang2",
+    icon: "/static/img/bottom/shichang1.svg",
+    icon2: "/static/img/bottom/shichang2.svg",
   },
-  { name: "交易", route: "trade", icon: "jiaoyi1", icon2: "jiaoyi2" },
+  { name: "交易", route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
   {
     name: "资产",
     route: "assets",
     children: ["transfer"],
-    icon: "zichan1",
-    icon2: "zichan2",
+    icon: "/static/img/bottom/zichan1.svg",
+    icon2: "/static/img/bottom/zichan2.svg",
     needLogin: true,
   },
   {
     name: "用户",
     route: "user",
     children: ["account"],
-    icon: "yonghu1",
-    icon2: "yonghu2",
+    icon: "/static/img/bottom/yonghu1.svg",
+    icon2: "/static/img/bottom/yonghu2.svg",
   },
 ]);
 
