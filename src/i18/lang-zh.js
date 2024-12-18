@@ -792,8 +792,8 @@ export default {
     market_buy_optional_limit_val: "限额",
     market_buy_optional_confirm: "确认",
 
-    market_buy_list_buy: "购入",
-    market_buy_list_sell: "售出",
+    market_buy_list_buy: "买入",
+    market_buy_list_sell: "卖出",
     market_buy_list_price: "价格",
     market_buy_list_amount: "数量",
     market_buy_list_wait_pay: "等待付款",
