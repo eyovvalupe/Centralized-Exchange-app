@@ -130,8 +130,6 @@
 
   <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :currentAccount="currentAccount" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
 
-  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
-    @on-add-collection="clickAccountItem" />
 
   <!-- 余额提示 -->
    <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')" :amount="currWallet.amount" />
@@ -148,7 +146,6 @@ import { _swapRate, _orderFast } from "@/api/api";
 import AmountDialog from "@/components/AmountDialog.vue";
 import eventBus from "@/utils/eventBus";
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
-import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import { useBuyCoinState } from "./state";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
@@ -189,8 +186,6 @@ const showDialogType = ref(1); // 1-售出 2-收到
 //  获取汇率
 const rateLoading = ref(false);
 const rate = ref("");
-// 账户选择
-const showAccountDialog = ref(false);
 
 const filterSearchValue = (data) => {
   return data.filter((item) =>
@@ -234,24 +229,24 @@ const sell = () => {
         });
       return;
     }
-    showAccountDialog.value = true;
+    safeRef.value.open();
   } else {
     safeRef.value.open();
   }
 };
-const submitSell = (s) => {
+const submitSell = (obj) => {
   loading.value = true;
   store.dispatch("updateSessionToken").then((st) => {
     if (st) {
       const params = {
         offset: form1.value.offset,
         account_id:
-          form1.value.offset == "sell" ? form1.value.account_id : null,
+          form1.value.offset == "sell" ? obj.account_id : null,
         volume: form1.value.volume,
         crypto: currOut.value.currency,
         currency: currIn.value.currency,
         token: sessionToken.value,
-        safeword: s,
+        safeword: obj.safeword,
       };
       _orderFast(params)
         .then(({ data: { order_no } }) => {
@@ -347,13 +342,7 @@ const getRate = () => {
 
 const currentAccount = ref({})
 
-const clickAccountItem = (item) => {
-  currentAccount.value = item
-  form1.value.account_id = item.id;
-  form1.value.id = item.id;
-  showAccountDialog.value = false;
-  safeRef.value.open();
-};
+
 // 跳转添加
 // const goAddAccount = () => {
 //   // google检测
