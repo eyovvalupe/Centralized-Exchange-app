@@ -66,10 +66,10 @@
           <!-- 等待确认 -->
           <div v-if="currItem.status == 'waitconfirm' && currItem.offset == 'buy'" class="status_wait">
             <div style="display: flex; align-items: center">
-              <div class="amount">等待确认</div>
+              <div class="amount">{{ t('market.market_buy_list_wait_confirm') }}</div>
               <div class="time">{{ formatSec2(currItem.endtime) }}</div>
             </div>
-            <div>已付款，等待商家确认资金是否到账</div>
+            <div>{{ t('market.market_buy_list_wait_con') }}</div>
           </div>
           <div v-if="currItem.status == 'waitconfirm' && currItem.offset == 'sell'" class="status_wait">
             <div style="display: flex; align-items: center">
@@ -182,11 +182,14 @@
           <div>{{ currItem.date }}</div>
         </div>
         <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
-          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-if="currItem.offset == 'buy'">
+          <!-- <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-if="currItem.offset == 'buy'">
             支<br/>付
+          </div> -->
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-if="currItem.offset == 'buy'" style="writing-mode: vertical-lr; text-orientation: upright;">
+            {{ t('market.market_buy_fast_pay') }}
           </div>
-          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#E8503A] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-else>
-            卖<br/>出
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#E8503A] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-else style="writing-mode: vertical-rl; text-orientation: upright;">
+            {{ t('market.market_buy_fast_sell') }}
           </div>
           
           <div class="info_block flex-1"  v-if="currItem.offset == 'buy'">
@@ -229,8 +232,8 @@
 
         </div>
         <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
-          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#014CFA] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
-            收<br/>到
+          <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#014CFA] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" style="writing-mode: vertical-rl; text-orientation: upright;">
+            {{ t('market.market_buy_fast_receive_sim') }}
           </div>
           <div class="info_block flex-1" v-if="currItem.offset == 'buy'">
             <div class="info">

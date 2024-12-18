@@ -30,9 +30,9 @@
             </div>
           </div>
           <div class="nav">
-            <div class="nav_label">{{ $t("assets.info_order") }}</div>
+            <div class="nav_label">{{ $t("assets.wallet_order_value") }}</div>
             <div class="num">
-              {{ hidden ? "********" : assets.ordervalue || "0" }}
+              {{ hidden ? "********" : assets.order_value || "0" }}
             </div>
           </div>
         </div>

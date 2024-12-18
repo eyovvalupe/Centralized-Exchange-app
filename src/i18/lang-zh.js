@@ -767,6 +767,7 @@ export default {
     market_buy_fast_buy: "买入",
     market_buy_fast_sell: "卖出",
     market_buy_fast_receive: "收到",
+    market_buy_fast_receive_sim: "收到",
     market_buy_fast_pay: "支付",
     market_buy_fast_estprice: "预计价格",
     market_buy_fast_search_title: "币种选择",
@@ -865,6 +866,21 @@ export default {
     market_search_history: "搜索历史",
     market_search_recommend: "热搜推荐",
     market_search_des: "超2万人搜索",
+
+    market_buy_confirm_coin: "订单确认",
+    market_buy_will_pay: "你将支付",
+    market_buy_will_sell: "你将卖出",
+    market_buy_will_receive: "你将收到",
+
+    market_faster_available: "可用余额",
+    market_already_done: "已完成",
+    market_already_cancel: "已取消",
+
+    market_order_details_wait: "等待",
+    market_order_details_for_buyer: "买家付款",
+    market_order_details_for_seller: "卖家确认",
+    market_order_details_con1: "请根据总价",
+    market_order_details_con2: "向商家提供的银行卡转账",
 
   }
 };

@@ -1,20 +1,20 @@
 <template>
   <Popup round v-model:show="orderConfirmDialog" position="bottom" closeable teleport="body">
     <div class="van-popup-custom-title">
-      订单确认
+      {{ t('market.market_buy_confirm_coin') }}
     </div>
 
     <div class="px-[0.32rem] pt-[0.52rem]">
       <div class="flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
         <template v-if="offset == 'sell'">
-          <div class="text-[0.32rem] font-bold text-[#061023]">你将支付</div>
+          <div class="text-[0.32rem] font-bold text-[#061023]">{{ t('market.market_buy_will_pay') }}</div>
           <div class="flex items-center">
             <strong class="text-[#014CFA] text-[0.48rem]">{{ money }}</strong>
             <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
           </div>
         </template>
         <template v-else>
-          <div class="text-[0.32rem] font-bold text-[#061023]">你将卖出</div>
+          <div class="text-[0.32rem] font-bold text-[#061023]">{{ t('market.market_buy_will_sell') }}</div>
           <div class="flex items-center">
             <strong class="text-[#014CFA] text-[0.48rem]">{{ volume }}</strong>
             <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
@@ -22,7 +22,7 @@
         </template>
       </div>
       <div class="mt-[0.2rem] flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
-        <div class="text-[0.32rem] font-bold text-[#061023]">你将收到</div>
+        <div class="text-[0.32rem] font-bold text-[#061023]">{{ t('market.market_buy_will_receive') }}</div>
         <div class="flex items-center" v-if="offset == 'sell'">
           <strong class="text-[#014CFA] text-[0.48rem]">{{ volume }}</strong>
           <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
@@ -33,9 +33,9 @@
         </div>
       </div>
 
-      <FormItem size="large" title="交易密码" input-type="password" v-model="safeword" />
+      <FormItem size="large" :title="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
       <div class="pt-[0.6rem] pb-[0.32rem]">
-        <Button size="large" round :loading="loading" @click="submit" color="#014CFA">确认</Button>
+        <Button size="large" round :loading="loading" @click="submit" color="#014CFA">{{ t('trade.stock_opening_confirm') }}</Button>
       </div>
     </div>
     

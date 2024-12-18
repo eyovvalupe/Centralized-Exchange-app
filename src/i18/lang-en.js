@@ -12,7 +12,7 @@ export default {
     no_more: "No more",
   },
   login: {
-    login: "Sign In",
+    login: "Log In",
     email: "Email",
     phone: "Phone",
     phone_number: "Phone Number",
@@ -88,7 +88,6 @@ export default {
     not_clear: "Not clear, change to another",
     enter_verify_code: "Enter verify code",
     verify_code_error: "Errors in getting verify code, please do manually",
-
   },
   password_level: {
     weak: "Weak",
@@ -100,7 +99,7 @@ export default {
     btn_text2: "Bind",
   },
   user_page: {
-    login_out: "Sign In / Out",
+    login_out: "Log In / Out",
     recommended_user: "Suggested Users",
     social_user: "Social Users",
     recommend_bonus: "Referral Bonus",
@@ -119,7 +118,7 @@ export default {
     set_language: "Language",
     security: "Security",
     about: "About",
-    logout: "Log Out",
+    logout: "Log out",
     already_set_google: "Google Auth Linked",
     not_set_google_yet: "Google Auth Unlinked",
     message_box_con: "Are you sure you want to log out?",
@@ -271,29 +270,29 @@ export default {
     transfer: "Transfer",
     financialRecords: "History",
     header_total: "Overview",
-    header_wallet: "Wallet",
+    header_wallet: "Wallets",
     header_order: "Orders",
     info_cash: "Spot",
     info_order: "Order Value",
     over_view_cash: "Spot",
     over_view_stock: "Stock",
-    over_view_contract: "Future",
+    over_view_contract: "Futures",
     over_view_forex: "Forex",
     over_view_trade: "Block Trade",
     wallet_header_cash: "Spot",
     wallet_header_stock: "Stock",
-    wallet_header_contract: "Future",
+    wallet_header_contract: "Futures",
     wallet_header_forex: "Forex",
     wallet_header_trade: "Block Trade",
     wallet_cash_balance: "Spot Balance",
     wallet_stock_balance: "Stock Balance",
-    wallet_contract_balance: "Future Balance",
+    wallet_contract_balance: "Futures Balance",
     wallet_forex_balance: "Forex Balance",
     wallet_cash_value: "Spot Wallet",
-    wallet_stock_value: "Stock Value",
-    wallet_contract_value: "Future Value",
+    wallet_stock_value: "Available",
+    wallet_contract_value: "Available",
     wallet_forex_value: "Forex Account",
-    wallet_order_value: "Order Value",
+    wallet_order_value: "Position",
     wallet_available: "Available",
     wallet_blocked: "Blocked",
     wallet_available_sim: "Available",
@@ -310,7 +309,7 @@ export default {
     safety_trade_no_password: "Please enter your password",
     order_title_buy: "Buy",
     order_title_stock: "Stock",
-    order_title_contract: "Future",
+    order_title_contract: "Futures",
     order_title_bot: "Bot",
     order_title_ipo: "IPO",
     order_current_position: "Positions",
@@ -427,7 +426,7 @@ export default {
     success: "Transfer successful",
     transfer_map_money: "Spot",
     transfer_map_stock: "Stock",
-    transfer_map_futures: "Future",
+    transfer_map_futures: "Futures",
     transfer_map_forex: "Forex",
     transfer_map_trade: "Block Trade",
   },
@@ -473,7 +472,6 @@ export default {
     trade: "Trade",
     assets: "Wallets",
     user: "User",
-
   },
   market: {
     stock: {
@@ -603,14 +601,14 @@ export default {
     stock_position_unlogin_con: "Login now",
 
     order_info_title_stock: "Stock Order",
-    order_info_title_contract: "Future Order",
+    order_info_title_contract: "s Order",
     order_info_available_stock: "Available Stocks for Sale",
     order_info_available_contract: "Available Futures",
     order_info_profit: "Profit",
     order_info_ratio: "Ratio",
     order_info_update: "Update",
     order_info_cancel: "Cancel ",
-    order_info_open_qty_contract: "Open Future Quantity",
+    order_info_open_qty_contract: "Open Futures Quantity",
     order_info_open_qty_other: "Open Position Quantity",
     order_info_stop_profit_price: "Take Profit Price",
     order_info_stop_profit_amount: "Take Profit Amount",
@@ -624,7 +622,7 @@ export default {
     contract_position_no_close_amount: "Enter Close Position Quantity",
     contract_position_ongoing_amount: "Position Quantity",
     contract_position_cost: "Price/Cost",
-    contract_opening_err_contract: "Select Future",
+    contract_opening_err_contract: "Select Futures",
     contract_opening_err_amount: "Enter the amount",
     contract_opening_amount: "Qty",
     contract_opening_order_value: "Order Value",
@@ -719,8 +717,7 @@ export default {
 
     forex_opening_title: "Forex",
     forex_position_title: "Forex/Status",
-    trade_order_history: "History"
-
+    trade_order_history: "History",
   },
   inviteFriends: {
     invite: "Invite",
@@ -743,8 +740,8 @@ export default {
   market: {
     market_header_optional: "Favorites",
     market_header_buy: "Buy",
-    market_header_stock: "Stock",
-    market_header_contract: "Future",
+    market_header_stock: "Stocks",
+    market_header_contract: "Futures",
     market_header_ai: "Bots",
     market_header_forex: "Forex",
 
@@ -780,6 +777,7 @@ export default {
     market_buy_fast_buy: "Buy",
     market_buy_fast_sell: "Sell",
     market_buy_fast_receive: "Receive",
+    market_buy_fast_receive_sim: "Recv",
     market_buy_fast_pay: "Pay",
     market_buy_fast_estprice: "Estimated Price",
     market_buy_fast_search_title: "Currency Selection",
@@ -835,7 +833,7 @@ export default {
     market_buy_list_cancel_success: "Cancellation Successful",
     market_buy_list_pre_pay: "Est Payment",
     market_buy_list_firt_select: "Choose to add payment first",
-    
+
     market_buy_chat_con1: "Order placed successfully",
     market_buy_chat_con2: "Wait for seller's payment",
 
@@ -880,5 +878,21 @@ export default {
     market_search_history: "History",
     market_search_recommend: "Trending",
     market_search_des: "20K+ Searches",
+
+    market_buy_confirm_coin: "Order Confirmation",
+    market_buy_will_pay: "You will pay",
+    market_buy_will_sell: "You will sell",
+    market_buy_will_receive: "You will receive",
+
+    market_faster_available: "Available Balance",
+    market_already_done: "Done",
+    market_already_cancel: "Canceled",
+
+    market_order_details_wait: "Wait",
+    market_order_details_for_buyer: "Buyer pays",
+    market_order_details_for_seller: "Seller confirms",
+    market_order_details_con1: "Please base on the total price",
+    market_order_details_con2:
+      "Transfer to the bank card provided by the merchant",
   },
 };

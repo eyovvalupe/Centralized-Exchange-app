@@ -29,7 +29,6 @@ export default {
     trade: "交易",
     assets: "資產",
     user: "用户",
-
   },
   login: {
     login: "登錄",
@@ -108,7 +107,6 @@ export default {
     not_clear: "看不清，換一張",
     enter_verify_code: "輸入驗證碼",
     verify_code_error: "獲取驗證碼異常，請手動刷新",
-
   },
   password_level: {
     weak: "弱",
@@ -541,11 +539,11 @@ export default {
     stock_opening_err_stop_price: "請輸入停損價格",
     stock_opening_err_limit: "請輸入限價",
     stock_opening_success: "開倉成功",
-    
+
     stock_position_stock: "股票/狀態",
     stock_position_open: "開倉/可售",
     stock_position_cost: "現價/成本",
-    
+
     stock_position_profit: "盈虧/盈虧比",
     stock_position_close: "平倉",
     stock_position_close_order: "平倉",
@@ -575,7 +573,7 @@ export default {
     stock_position_stop_ratio: "百分比",
     stock_position_unlogin_title: "還未登入帳號？",
     stock_position_unlogin_con: "馬上登入",
-    
+
     order_info_title_stock: "股票訂單",
     order_info_title_contract: "合約訂單",
     order_info_available_stock: "可售股票",
@@ -594,7 +592,7 @@ export default {
     order_info_stop_loss_ratio: "停損百分比",
     order_info_value: "訂單價值",
     order_info_copy: "已復製",
-    
+
     contract_position_no_close_amount: "請輸入平倉張數",
     contract_position_ongoing_amount: "持倉戰術",
     contract_position_cost: "現價/買價",
@@ -693,26 +691,25 @@ export default {
 
     forex_opening_title: "外匯",
     forex_position_title: "外匯/狀態",
-    trade_order_history: "曆史訂單"
-
+    trade_order_history: "曆史訂單",
   },
-  inviteFriends:{
-    invite:'推薦朋友',
-    reward:"我的獎勵",
-    banner_title:"推薦朋友可獲得",
-    banner_desc:"快邀請朋友一起賺錢吧",
-    qrcode_title:'邀請二維碼',
-    save_img:"保存圖片",
-    img_name:"我的二維碼",
-    invite_code:"邀請代碼",
-    copy:"複製",
-    copy_success:"複製成功",
-    url_title:"邀請鏈接",
-    copy_url:"複製鏈接",
-    performance_title:"推薦業績",
-    details:"推薦明細",
-    user:"用戶",
-    performance:"業績"
+  inviteFriends: {
+    invite: "推薦朋友",
+    reward: "我的獎勵",
+    banner_title: "推薦朋友可獲得",
+    banner_desc: "快邀請朋友一起賺錢吧",
+    qrcode_title: "邀請二維碼",
+    save_img: "保存圖片",
+    img_name: "我的二維碼",
+    invite_code: "邀請代碼",
+    copy: "複製",
+    copy_success: "複製成功",
+    url_title: "邀請鏈接",
+    copy_url: "複製鏈接",
+    performance_title: "推薦業績",
+    details: "推薦明細",
+    user: "用戶",
+    performance: "業績",
   },
   market: {
     market_header_optional: "自選",
@@ -754,6 +751,7 @@ export default {
     market_buy_fast_buy: "買入",
     market_buy_fast_sell: "賣出",
     market_buy_fast_receive: "收到",
+    market_buy_fast_receive_sim: "收到",
     market_buy_fast_pay: "支付",
     market_buy_fast_estprice: "預計價格",
     market_buy_fast_search_title: "幣種選擇",
@@ -853,5 +851,20 @@ export default {
     market_search_history: "搜尋紀錄",
     market_search_recommend: "熱搜推薦",
     market_search_des: "超2萬人搜尋",
-  }
+
+    market_buy_confirm_coin: "訂單確認",
+    market_buy_will_pay: "你將支付",
+    market_buy_will_sell: "你將賣出",
+    market_buy_will_receive: "你將收到",
+
+    market_faster_available: "可用餘額",
+    market_already_done: "已完成",
+    market_already_cancel: "已取消",
+
+    market_order_details_wait: "等待",
+    market_order_details_for_buyer: "買家付款",
+    market_order_details_for_seller: "賣家確認",
+    market_order_details_con1: "請依總價",
+    market_order_details_con2: "向商家提供的銀行卡轉帳",
+  },
 };
