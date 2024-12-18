@@ -42,11 +42,11 @@
           <div class="text-12">
             <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
               <!-- 根据交易类型显示“购入”或“售出” -->
-              {{
+              <span :class="{'text-[#E8503A]': item.offset == 'sell'}">{{
                 item.offset == "buy"
                   ? t("market.market_buy_list_buy")
                   : t("market.market_buy_list_sell")
-              }}&nbsp;{{ item.crypto }}&nbsp;
+              }}</span>&nbsp;{{ item.crypto }}&nbsp;
               <!-- 加密货币图标 -->
               <img class="!h-4 !w-4 rounded-50"
                 :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.png`)" alt="currency" />

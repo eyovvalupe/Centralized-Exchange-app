@@ -583,7 +583,6 @@ defineExpose({
       color: #666;
       background-color: #f5f7fc;
       border-radius: 0.32rem;
-      border-bottom: 1px solid #e8e8e8;
       margin-bottom: 0.2rem;
 
       .top {

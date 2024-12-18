@@ -128,51 +128,11 @@
     </div>
   </Popup>
 
-  <BuyCoinConfirm ref="safeRef" :offset="offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
+  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :currentAccount="currentAccount" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
 
-  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
-    @on-add-collection="clickAccountItem" />
 
-    <!-- 余额提示 -->
-  <Popup round v-model:show="showAmountDialog" closeable teleport="body">
-    <div style="width: 6.4rem">
-
-      <!-- 标题 -->
-      <div
-        style="text-align: center;font-size: 0.32rem;height:1rem;display: flex;align-items: center;justify-content: center;border:1px solid #EFF3F8;">
-        {{ t('market.market_faster_available') }}</div>
-
-      <!-- 内容 -->
-      <div
-        style="display:flex;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;line-height:0.4rem;margin-top:0.32rem;overflow:hidden;position:relative;margin:0.32rem 0.4rem;">
-        <div
-          style="color:#061023;font-size:0.28rem;font-weight:400;padding:0 0.32rem;height:1.4rem;background-color:#fff;display:flex;align-items:center;justify-content:center;">
-          {{ t('trade.ai_opening_cash_wallet') }}</div>
-        <div style="display:flex;align-items:center;justify-content:center;flex-direction: column;flex:1">
-          <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.08rem">
-            <div v-if="currOut.name" style="width:0.32rem;height:0.32rem;display:flex;position:relative;top:-0.02rem">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${currOut.name.toUpperCase()}.png`)" />
-            </div>
-
-            <span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">{{ currOut.name }}</span>
-          </div>
-          <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">{{ currWallet.amount }}</b>
-        </div>
-      </div>
-
-      <!--  按钮 -->
-      <div
-        style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.4rem;font-size: 0.28rem;margin: 0.64rem 0 0.4rem 0">
-        <div @click="router.push({ name: 'transfer' })"
-          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;border: 1px solid #014CFA;color: #014CFA">
-          {{ t('market.market_buy_fast_noti_confirm') }}</div>
-        <div @click="router.push({ name: 'topUpCrypto' })"
-          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: #014CFA;color: #fff;">
-          {{ t('market.market_buy_fast_noti_cancel') }}</div>
-      </div>
-    </div>
-
-  </Popup>
+  <!-- 余额提示 -->
+   <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')" :amount="currWallet.amount" />
 
 </template>
 
@@ -182,13 +142,10 @@ import { ref, computed, onBeforeUnmount, onMounted } from "vue";
 import { Button, Popup, Icon, showToast, showConfirmDialog } from "vant";
 import Decimal from "decimal.js";
 import store, { useMapState } from "@/store";
-// import router from '@/router'
 import { _swapRate, _orderFast } from "@/api/api";
-// import { _hiddenAccount } from '@/utils/index'
-import SafePassword from "@/components/SafePassword.vue";
+import AmountDialog from "@/components/AmountDialog.vue";
 import eventBus from "@/utils/eventBus";
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
-import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import { useBuyCoinState } from "./state";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
@@ -229,8 +186,6 @@ const showDialogType = ref(1); // 1-售出 2-收到
 //  获取汇率
 const rateLoading = ref(false);
 const rate = ref("");
-// 账户选择
-const showAccountDialog = ref(false);
 
 const filterSearchValue = (data) => {
   return data.filter((item) =>
@@ -274,24 +229,24 @@ const sell = () => {
         });
       return;
     }
-    showAccountDialog.value = true;
+    safeRef.value.open();
   } else {
     safeRef.value.open();
   }
 };
-const submitSell = (s) => {
+const submitSell = (obj) => {
   loading.value = true;
   store.dispatch("updateSessionToken").then((st) => {
     if (st) {
       const params = {
         offset: form1.value.offset,
         account_id:
-          form1.value.offset == "sell" ? form1.value.account_id : null,
+          form1.value.offset == "sell" ? obj.account_id : null,
         volume: form1.value.volume,
         crypto: currOut.value.currency,
         currency: currIn.value.currency,
         token: sessionToken.value,
-        safeword: s,
+        safeword: obj.safeword,
       };
       _orderFast(params)
         .then(({ data: { order_no } }) => {
@@ -385,12 +340,9 @@ const getRate = () => {
     });
 };
 
-const clickAccountItem = (item) => {
-  form1.value.account_id = item.id;
-  form1.value.id = item.id;
-  showAccountDialog.value = false;
-  safeRef.value.open();
-};
+const currentAccount = ref({})
+
+
 // 跳转添加
 // const goAddAccount = () => {
 //   // google检测

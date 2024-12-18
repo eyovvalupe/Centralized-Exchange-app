@@ -23,7 +23,7 @@
 
       <div class="mb-[0.12rem] text-14">{{ t('market.market_buy_list_amount') }}</div>
       <div class="item form_item">
-        <input v-model="amount" type="number" class="ipt" />
+        <input v-model="amount" type="number" @blur="amountBlur" class="ipt" />
         <span>{{ info.currCrypto }}</span>
       </div>
       <div class="tip">{{ t('market.market_buy_list_pre_pay') }} {{ showAmount }} {{ info.currWallet }}</div>
@@ -52,8 +52,8 @@
         <span>{{ t('market.market_buy_list_amount') }}</span>
       </div>
       <div class="item form_item">
-        <input v-model="amount" type="number" :placeholder="`≤${currWallet.amount}`" class="ipt" />
-        <div class="all" @click="amount = currWallet.amount">{{ t('trade.stock_position_all') }}</div>
+        <input v-model="amount" type="number" @blur="amountBlur" :placeholder="`≤${currWallet.amount}`" class="ipt" />
+        <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div>
       </div>
       <!-- 三层容器 -->
       <div class="tip">{{ t('market.market_buy_optional_estreceive') }} {{ showAmount }} {{ info.currWallet }}</div>
@@ -68,7 +68,7 @@
         </div>
         <div class="card">
           <div class="code">{{ _hiddenAccount(bank.bankCardNumber || bank.address) }}</div>
-          <div class="name">{{ bank.bankName || bank.symbol }}</div>
+          <div class="text-[#666D80]">{{ bank.bankName || bank.symbol }}</div>
         </div>
 
         <div class="text-12 text-my" @click="goAddAccount">{{ t('withdraw.change') }}</div>
@@ -78,7 +78,7 @@
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
         <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
       </div>
-      <Button size="large" style="margin-top: 0.8rem" class="btn" round :loading="loading" color="var(--main-color)"
+      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)"
         @click="goSubmit">{{ t('market.market_buy_fast_sell') }}</Button>
     </div>
     <!-- 安全密码弹窗 -->
@@ -129,6 +129,18 @@ const currWallet = computed(() => {
   return wallet.value.find(item => item.name == info.value.currCrypto) || {}
 })
 
+const amountBlur = ()=>{
+  if(isNaN(amount.value) || amount.value <= 0){
+    amount.value = ''
+    return
+  }
+  if(amount.value < info.value.limitmin){
+    amount.value = info.value.limitmin
+  }else if(amount.value > info.value.limitmax){
+    amount.value = info.value.limitmax
+  }
+}
+
 // 账户
 const showAccountDialog = ref(false)
 const bank = ref(bankList.value[0] || {})
@@ -145,6 +157,7 @@ const goSubmit = () => {
     if (amount.value > cueeWallet.amount) return showToast(t('transfer.no_enough_balance'))
     if (!bank.value.id) return showToast(t('market.market_buy_list_firt_select'))
   }
+  getSessionToken()
   // 打开密码
   safeRef.value.open()
 }
@@ -180,7 +193,7 @@ const submitSell = s => {
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }
-getSessionToken()
+
 </script>
 
 <style lang="less" scoped>
@@ -191,18 +204,14 @@ getSessionToken()
     padding: 0 0.32rem 0.32rem 0.32rem;
 
     .card_box {
-      border-radius: 0.12rem;
+      border-radius: 0.3rem;
       height: 1.44rem;
       display: flex;
       align-items: center;
-      // justify-content: space-between;
       position: relative;
-      // background-color: #f6f7fa;
       border: 1px solid #d0d8e2;
       padding: 0 0.4rem 0 0.36rem;
       overflow: hidden;
-      margin-bottom: 0.36rem;
-      border-width: 1px;
 
       .card_icon {
         background-color: #f5f7fc;
@@ -308,8 +317,7 @@ getSessionToken()
     }
 
     .btn {
-      height: 0.96rem;
-      color: #fff;
+      margin-top: 0.9rem;
     }
   }
 }

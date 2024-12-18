@@ -2,40 +2,25 @@
 <template>
   <div class="page page_market">
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
-    <Subscription
-      v-else-if="detail == '2'"
-      @close-open-detail="closeOpenDetail"
-    />
+    <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
     <div
       class="boder-[#D0D8E2] absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border"
-      @click="jump('search')"
-    >
-      <Iconfonts name="icon-sousuo" :size="0.32" color="#666D80" />
+      @click="jump('search')">
+      <div style="width: 0.32rem;height: 0.32rem;">
+        <img :src="getStaticImgUrl('/static/img/home/search_icon.svg')" alt="">
+      </div>
     </div>
     <div
-      class="absolute right-13 top-[0.2rem] z-10 h-[0.68rem] w-[0.6rem] bg-gradient-to-r from-transparent to-white"
-    />
-    <HeaderTabs
-      v-model:active="active"
-      class="w-[6.28rem]"
-      :tabs="[
-        $t('market.market_header_optional'),
-        $t('market.market_header_buy'),
-        $t('market.market_header_stock'),
-        $t('market.market_header_contract'),
-        $t('market.market_header_ai'),
-      ]"
-      @change="(e) => changeTab(e, true)"
-    />
+      class="absolute right-13 top-[0.2rem] z-10 h-[0.68rem] w-[0.6rem] bg-gradient-to-r from-transparent to-white" />
+    <HeaderTabs v-model:active="active" class="w-[6.28rem]" :tabs="[
+      $t('market.market_header_optional'),
+      $t('market.market_header_buy'),
+      $t('market.market_header_stock'),
+      $t('market.market_header_contract'),
+      $t('market.market_header_ai'),
+    ]" @change="(e) => changeTab(e, true)" />
 
-    <Swipe
-      :autoplay="0"
-      :initial-swipe="marketActiveTab"
-      :show-indicators="false"
-      ref="swipe"
-      @change="swipeChange"
-
-    >
+    <Swipe :autoplay="0" :initial-swipe="marketActiveTab" :show-indicators="false" ref="swipe" @change="swipeChange">
       <SwipeItem>
         <div class="assets_body">
           <!-- 自选 -->
@@ -43,11 +28,7 @@
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div
-          
-          ref="marketPageRef"
-          class="assets_body"
-        >
+        <div ref="marketPageRef" class="assets_body">
           <!-- 买币 -->
           <buyCoin ref="BuyCoinRef" v-if="loadedTab.includes(1)" />
         </div>
@@ -86,7 +67,7 @@
 import { ref, onDeactivated, computed, onActivated } from "vue";
 
 import { Swipe, SwipeItem } from 'vant';
-
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import Optional from "./components/Optional.vue";
 import Stock from "./components/Stock.vue";
@@ -101,7 +82,6 @@ import Constract from "./components/Constract.vue";
 // import Ai from './components/Ai.vue'
 import buyCoin from "./buyCoin/index.vue";
 import AiBlockList from "../Trade2/pages/AiBlockList.vue";
-import Iconfonts from "@/components/Iconfonts.vue";
 import { useBuyCoinState } from "./buyCoin/state";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 
@@ -245,7 +225,7 @@ Promise.all([
     align-items: center;
     transition: all ease 0.3s;
 
-    > span {
+    >span {
       margin-left: 0.08rem;
     }
 
