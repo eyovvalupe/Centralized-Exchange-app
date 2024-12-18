@@ -23,7 +23,7 @@
 
       <div class="mb-[0.12rem] text-14">{{ t('market.market_buy_list_amount') }}</div>
       <div class="item form_item">
-        <input v-model="amount" type="number" class="ipt" />
+        <input v-model="amount" type="number" @blur="amountBlur" class="ipt" />
         <span>{{ info.currCrypto }}</span>
       </div>
       <div class="tip">{{ t('market.market_buy_list_pre_pay') }} {{ showAmount }} {{ info.currWallet }}</div>
@@ -129,6 +129,18 @@ const currWallet = computed(() => {
   return wallet.value.find(item => item.name == info.value.currCrypto) || {}
 })
 
+const amountBlur = ()=>{
+  if(isNaN(amount.value) || amount.value <= 0){
+    amount.value = ''
+    return
+  }
+  if(amount.value < info.value.limitmin){
+    amount.value = info.value.limitmin
+  }else if(amount.value > info.value.limitmax){
+    amount.value = info.value.limitmax
+  }
+}
+
 // 账户
 const showAccountDialog = ref(false)
 const bank = ref(bankList.value[0] || {})
@@ -145,6 +157,7 @@ const goSubmit = () => {
     if (amount.value > cueeWallet.amount) return showToast(t('transfer.no_enough_balance'))
     if (!bank.value.id) return showToast(t('market.market_buy_list_firt_select'))
   }
+  getSessionToken()
   // 打开密码
   safeRef.value.open()
 }
@@ -180,7 +193,7 @@ const submitSell = s => {
 const getSessionToken = () => {
   store.dispatch('updateSessionToken')
 }
-getSessionToken()
+
 </script>
 
 <style lang="less" scoped>

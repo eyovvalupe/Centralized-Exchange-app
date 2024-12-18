@@ -786,7 +786,7 @@ export default {
     market_buy_optional_rate: "成交率",
     market_buy_optional_duaration: "分钟",
     market_buy_optional_order_limit: "订单限额",
-    market_buy_optional_buy: "购买",
+    market_buy_optional_buy: "买入",
     market_buy_optional_sell: "出售",
     market_buy_optional_estreceive: "预计收到",
     market_buy_optional_limit_val: "限额",
