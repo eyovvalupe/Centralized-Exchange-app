@@ -138,17 +138,17 @@
     <div class="item_box">
 
       <div class="item_box_right">
-        <FormItem :title="'数量(张)'" @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1"
+        <FormItem :title="t('trade.contract_lots_amount')" @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1"
           btn-show-mode="focus" @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
           :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
           <template #title-icon v-if="amountper && paramCurrency">
             <div style="width: 0.2rem;height:0.2rem;margin-left:0.06rem"
-              @click="() => showToast(`1张 = ${amountper} ${paramCurrency}`)">
+              @click="() => showToast(`1${t('trade.contract_one_lot')} = ${amountper} ${paramCurrency}`)">
               <img :src="getStaticImgUrl('/static/img/trade/warning.svg')" alt="">
             </div>
           </template>
           <template #title-right v-if="token">
-            <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">可用</span>
+            <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
               {{ stockWalletAmount }} {{ paramCurrency }}</span>
           </template>
         </FormItem>
@@ -390,10 +390,10 @@
         style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.4rem;font-size: 0.28rem;margin: 0.64rem 0 0.4rem 0">
         <div @click="router.push({ name: 'transfer' })"
           style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;border: 1px solid #014CFA;color: #014CFA">
-          去划转</div>
+          {{ t('trade.ai_opening_pop_transfer') }}</div>
         <div @click="router.push({ name: 'topUpCrypto' })"
           style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: #014CFA;color: #fff;">
-          去充值</div>
+          {{ t('trade.ai_opening_pop_recharge') }}</div>
       </div>
     </div>
 

@@ -2,41 +2,25 @@
   <div class="btns">
     <div class="btn-item" @click="jump('topUpCrypto', true)">
       <div class="btn-item__icon">
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[rgba(255,255,255,0.2)] flex items-center justify-center"
-        >
-          <div class="up_icon"></div>
-        </div>
+        <DepositIcon/>
       </div>
       <div class="btn-item__name">{{ $t("assets.recharge") }}</div>
     </div>
     <div class="btn-item" @click="jump('withdraw', true)">
       <div class="btn-item__icon">
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[rgba(255,255,255,0.2)] flex items-center justify-center"
-        >
-          <div class="withdraw_icon"></div>
-        </div>
+        <WithdrawIcon />
       </div>
       <div class="btn-item__name">{{ $t("assets.withdraw") }}</div>
     </div>
     <div class="btn-item" @click="jump('transfer')">
       <div class="btn-item__icon">
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[rgba(255,255,255,0.2)] flex items-center justify-center"
-        >
-          <div class="exchange_icon"></div>
-        </div>
+        <TransferIcon />
       </div>
       <div class="btn-item__name">{{ $t("assets.transfer") }}</div>
     </div>
     <div class="btn-item" @click="jump('recordList', true)">
       <div class="btn-item__icon">
-        <div
-          class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[rgba(255,255,255,0.2)] flex items-center justify-center"
-        >
-          <div class="history_icon"></div>
-        </div>
+        <RecordListIcon />
       </div>
       <div class="btn-item__name">{{ $t("assets.financialRecords") }}</div>
     </div>
@@ -53,6 +37,10 @@
 import { useI18n } from "vue-i18n";
 import { ActionSheet } from "vant";
 import router from "@/router";
+import DepositIcon from "../icons/DepositIcon.vue";
+import WithdrawIcon from "../icons/WithdrawIcon.vue";
+import TransferIcon from "../icons/TransferIcon.vue";
+import RecordListIcon from "../icons/RecordListIcon.vue";
 const { t } = useI18n();
 const jump = (name, check = false, query) => {
   router.push({

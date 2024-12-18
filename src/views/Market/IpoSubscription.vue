@@ -1,7 +1,7 @@
 <!-- IPO认购 -->
 <template>
     <div class="page page_ipo_subs">
-        <HeaderTabs v-model:active="activeTab" :tabs="['普通','配资']"
+        <HeaderTabs v-model:active="activeTab" :tabs="[t('trade.ipo_sub_ordinary'),t('trade.ipo_sub_leveraged')]"
             v-if="currIpo.lever > 1"
             @change="changeTab">
             <template #before>
@@ -20,9 +20,9 @@
        
         <div class="ipo_info" @click="ipoDetail">
             <div class="ipo_info_lt">
-                <div class="ipo_info_name">{{ currIpo.company_name }}<span v-if="currIpo.lever > 1" class="lever_icon">配资</span> </div>
+                <div class="ipo_info_name">{{ currIpo.company_name }}<span v-if="currIpo.lever > 1" class="lever_icon">{{ t('trade.ipo_leveraged_trading') }}</span> </div>
                 <div class="ipo_info_price">
-                    认购价格 <span>{{ currIpo.issue_price_max }} {{ currIpo.currency }}</span>
+                    {{ t('trade.ipo_detail_price') }} <span>{{ currIpo.issue_price_max }} {{ currIpo.currency }}</span>
                 </div>
             </div>
             <Icon class="ipo_info_arrow" name="arrow" size="0.4rem" color="#666D80" />
@@ -30,7 +30,7 @@
 
         <div class="form">
             <FormItem
-                title="认购数量"
+                :title="t('trade.ipo_detail_item10')"
                 v-model="form.volume"
                 btn-show-mode="focus"
                 @btnClick="onSliderChange(100)"
@@ -41,7 +41,7 @@
             >
                 <template #title-right>
                     <div class="flex items-center">
-                        <span>可用金额</span> <Loading size="0.3rem" color="#014CFA" class="mx-[0.2rem]" v-if="!mainWallet.currency" /> <span v-else @click="openConfirmBox()" class="text-[#014CFA]">{{mainWallet.amount}} {{ mainWallet.currency }}</span>
+                        <span>{{ t('assets.wallet_available') }}&nbsp;</span> <Loading size="0.3rem" color="#014CFA" class="mx-[0.2rem]" v-if="!mainWallet.currency" /> <span v-else @click="openConfirmBox()" class="text-[#014CFA]">{{mainWallet.amount}} {{ mainWallet.currency }}</span>
                         <Icon class="ml-[0.1rem]" name="arrow" size="0.26rem" color="#666D80" />
                     </div>
                 </template>
@@ -54,16 +54,16 @@
 
             <div class="flex" v-if="activeTab == 1">
                 <div class="flex-1">
-                    <FormItem title="认购杠杆" disabled :modelValue="currIpo.lever+'X'"></FormItem>
+                    <FormItem :title="t('trade.ipo_detail_lever')" disabled :modelValue="currIpo.lever+'X'"></FormItem>
                 </div>
                 <div class="flex-2 ml-[0.2rem]">
-                    <FormItem title="认购码" v-model="form.keyword"></FormItem>
+                    <FormItem :title="t('trade.ipo_sub_buy_code')" v-model="form.keyword"></FormItem>
                 </div>
             </div>
             
         </div>
         <Button @click="openSafe" :loading="loading" round size="large" color="#014CFA" class="submit"
-            type="primary">认购</Button>
+            type="primary">{{ t('trade.ipo_opening_btn') }}</Button>
 
         
         <!-- 订单确认弹窗 -->
@@ -75,7 +75,7 @@
             closeable
         >
             <div class="van-popup-custom-title">
-                订单确认
+                {{ t('trade.ai_opening_confirm_order') }}
             </div>
 
             <div class="main_item">
@@ -86,7 +86,7 @@
                         <span
                             class="lever_icon"
                             v-if="currIpo.lever > 1"
-                        >配资</span>
+                        >{{ t('trade.ipo_leveraged_trading') }}</span>
                         </div>
                     </div>
                
@@ -134,7 +134,7 @@
                 </div>
                 
                 <div class="money_box">
-                    支付 <strong>{{all}}</strong> <span>{{ currIpo.currency }}</span>
+                    {{ t('trade.market_buy_fast_pay') }} <strong>{{all}}</strong> <span>{{ currIpo.currency }}</span>
                 </div>
 
                 <FormItem
@@ -244,11 +244,11 @@ const errStatus2 = ref(false)
 const openSafe = () => {
     if (!form.value.volume || form.value.volume <= 0) {
         errStatus.value = true
-        return showToast('请输入认购数量')
+        return showToast(t('trade.ipo_sub_buy_no_amount'))
     }
     if (activeTab.value == 1 && !form.value.keyword) {
         errStatus2.value = true
-        return showToast('请输入认购码')
+        return showToast(t('trade.ipo_sub_buy_no_code'))
     }
     showModel.value = true
     getSessionToken()

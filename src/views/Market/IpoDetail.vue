@@ -9,7 +9,7 @@
             <div class="name">
               {{ currDetail.company_name }}
               <span class="lever_icon" v-if="currDetail.lever > 1"
-                :src="getStaticImgUrl('/static/img/trade/level.png')">配资</span>
+                :src="getStaticImgUrl('/static/img/trade/level.png')">{{ t('trade.ipo_leveraged_trading') }}</span>
             </div>
           </div>
           <div class="pre_times" v-if="currDetail.status == 'none' && currDetail._timedown">
@@ -124,16 +124,16 @@ function countdown(endTime) {
 }
 
 const marketMap = ref({
-  us: "美国",
-  japan: "日本",
-  india: "印度",
-  korea: "韩国",
-  germany: "德国",
-  uk: "英国",
-  singapore: "新加坡",
-  hongkong: "香港",
-  malaysia: '马来西亚'
-})
+  us: t('market.market_stock_country_us_long'),
+  japan: t('market.market_stock_country_japan_long'),
+  india: t('market.market_stock_country_india_long'),
+  korea: t('market.market_stock_country_korea_long'),
+  germany: t('market.market_stock_country_germany_long'),
+  uk: t('market.market_stock_country_uk_long'),
+  singapore: t('market.market_stock_country_singapore_long'),
+  hongkong: t('market.market_stock_country_hongkong_long'),
+  malaysia: t('market.market_stock_country_malaysia_long'),
+});
 
 // 去购买
 const goBuy = (_query) => {

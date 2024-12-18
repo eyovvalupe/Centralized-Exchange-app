@@ -13,7 +13,7 @@
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
-            <span class="lever_icon" v-if="item.lever > 1">配资</span>
+            <span class="lever_icon" v-if="item.lever > 1">{{ t('trade.ipo_leveraged_trading') }}</span>
           </div>
 
           <div class="item_winning">
@@ -23,11 +23,11 @@
           </div>
 
           <div class="status_box" v-if="item.status == 'success'"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_success.png')}`) }"></div>
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_success.png')})` }"></div>
           <div class="status_box" v-else-if="item.status == 'failure'"
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_failure.png')}`) }"></div>
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_failure.png')})` }"></div>
           <div class="status_box" v-else
-            :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/trade/ipo_status_lock.png')}`) }"></div>
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_lock.png')})` }"></div>
         </div>
         <div class="item_info">
           <div class="info_cell">

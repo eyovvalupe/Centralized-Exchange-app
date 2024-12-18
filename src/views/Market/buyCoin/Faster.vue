@@ -140,14 +140,14 @@
       <!-- 标题 -->
       <div
         style="text-align: center;font-size: 0.32rem;height:1rem;display: flex;align-items: center;justify-content: center;border:1px solid #EFF3F8;">
-        可用余额</div>
+        {{ t('market.market_faster_available') }}</div>
 
       <!-- 内容 -->
       <div
         style="display:flex;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;line-height:0.4rem;margin-top:0.32rem;overflow:hidden;position:relative;margin:0.32rem 0.4rem;">
         <div
           style="color:#061023;font-size:0.28rem;font-weight:400;padding:0 0.32rem;height:1.4rem;background-color:#fff;display:flex;align-items:center;justify-content:center;">
-          现金账户</div>
+          {{ t('trade.ai_opening_cash_wallet') }}</div>
         <div style="display:flex;align-items:center;justify-content:center;flex-direction: column;flex:1">
           <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.08rem">
             <div v-if="currOut.name" style="width:0.32rem;height:0.32rem;display:flex;position:relative;top:-0.02rem">
@@ -165,10 +165,10 @@
         style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.4rem;font-size: 0.28rem;margin: 0.64rem 0 0.4rem 0">
         <div @click="router.push({ name: 'transfer' })"
           style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;border: 1px solid #014CFA;color: #014CFA">
-          去划转</div>
+          {{ t('market.market_buy_fast_noti_confirm') }}</div>
         <div @click="router.push({ name: 'topUpCrypto' })"
           style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: #014CFA;color: #fff;">
-          去充值</div>
+          {{ t('market.market_buy_fast_noti_cancel') }}</div>
       </div>
     </div>
 

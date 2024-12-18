@@ -234,7 +234,7 @@
             <div v-if="
               (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
               (tabActive == 'bankCard' && currBankAccount.id == item.id)
-            " class="checked" :style="{ backgroundImage: url(`${getStaticImgUrl('/static/img/user/check_bg.png')}`) }">
+            " class="checked" :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.png')})` }">
               <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
             </div>
           </div>

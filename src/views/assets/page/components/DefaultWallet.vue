@@ -62,7 +62,7 @@
         class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-[#fff] flex flex-col justify-between items-center py-[0.2rem]"
         style="box-shadow: 0px 4px 20px 0px #0610231a"
       >
-        <div class="text-[0.28rem] text-[#666d80]">{{ type == 'cash' ? t('assets.wallet_blocked') : t('assets.info_order') }}</div>
+        <div class="text-[0.28rem] text-[#666d80]">{{ type == 'cash' ? t('assets.wallet_blocked') : t('assets.wallet_order_value') }}</div>
         <div class="text-[0.3rem] text-[#061023] font-semibold">
           {{ showInfo ? type == 'cash' ? '0' : assets.order_value : "********" }}
         </div>

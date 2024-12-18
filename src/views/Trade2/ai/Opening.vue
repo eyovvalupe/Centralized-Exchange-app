@@ -50,7 +50,7 @@
           </template>
 
           <template #right-content-title>
-            <div class="subtitle">利润率</div>
+            <div class="subtitle">{{ t('trade.ai_opening_profit_margin') }}</div>
           </template>
 
           <template #right-content-item>
