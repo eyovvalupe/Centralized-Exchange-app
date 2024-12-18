@@ -80,13 +80,13 @@
                             <!-- <div class="assets_login">登录</div>
             <div>查看资产</div> -->
                             <div class="assets_icon">
-                                <Iconfonts :name="'icon-biyan'" :size="0.32" :color="'#333'" />
+                                <img :src="getStaticImgUrl('/static/img/home/close_eye.svg')" alt=" ">
                             </div>
                         </div>
                         <div class="assets" v-if="token">
                             <div class="assets_icon" @click="openEye = !openEye">
-                                <Iconfonts v-show="!openEye" :name="'icon-biyan'" :size="0.32" :color="'#333'" />
-                                <Iconfonts v-show="openEye" :name="'icon-zhengyan'" :size="0.32" :color="'#333'" />
+                                <img v-show="!openEye" :src="getStaticImgUrl('/static/img/home/close_eye.svg')" alt=" ">
+                                <img v-show="openEye" :src="getStaticImgUrl('/static/img/home/open_eye.svg')" alt=" ">
                             </div>
                         </div>
                     </div>
@@ -170,7 +170,6 @@ import { useSocket } from "@/utils/ws";
 import store from "@/store";
 import { Tab, Tabs, ActionSheet } from "vant";
 import { _sort, _watchlistDefault, _futures } from "@/api/api";
-import Iconfonts from "@/components/Iconfonts.vue";
 import router from "@/router";
 import IPO from "@/views/Market/components/IPO.vue";
 import NoData from "@/components/NoData.vue";

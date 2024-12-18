@@ -4,8 +4,10 @@
     <Top :title="t('market.market_search_title')" :searchText="search" />
     <!-- 搜索框 -->
     <div class="search_box">
-      <div class="icon">
-        <Iconfonts :name="'icon-sousuo'" :size="0.32" :color="'#666D80'" />
+      <div class="icon" style="display: flex;align-items: center;justify-content: center;">
+        <div style="width: 0.32rem;height: 0.32rem;">
+          <img :src="getStaticImgUrl('/static/img/home/search_icon.svg')" alt="">
+        </div>
       </div>
       <input ref="iptRef" @keydown="keydown" @keydown.enter="keydownEnter"
         :placeholder="t('market.market_search_title')" type="text" enterkeyhint="search" v-model.trim="search"
@@ -94,7 +96,7 @@ import router from "@/router";
 import { _add, _del } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import eventBus from "@/utils/eventBus";
-import Iconfonts from "@/components/Iconfonts.vue";
+import { getStaticImgUrl } from "@/utils/index.js"
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
