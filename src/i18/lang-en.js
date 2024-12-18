@@ -470,7 +470,7 @@ export default {
     homepage: "Home",
     market: "Markets",
     trade: "Trade",
-    assets: "AsBsets",
+    assets: "Assets",
     user: "User",
   },
   market: {
