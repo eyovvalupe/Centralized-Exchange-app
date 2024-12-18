@@ -1,7 +1,7 @@
 <!-- 快捷区 -->
 <template>
   <div class="page_fasters">
-    <div class="form">
+    <div class="form relative">
       <div class="tabs">
         <div class="tab" :class="{ active_tab: form1.offset == 'buy' }" @click="changeTab('buy')">
           {{ t('market.market_buy_fast_buy') }}
@@ -18,7 +18,7 @@
             <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
               }}</span>
             <span v-if="form1.offset == 'sell'">
-              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{t('assets.wallet_available_sim')}}</span>
+              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
               {{ currWallet.amount }} {{ currOut.name }}</span>
               <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
             </span>
@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div v-if="rate && token" class="tip">
+      <div v-if="rate && token" class="tip absolute">
         1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
@@ -130,8 +130,6 @@
 
   <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :currentAccount="currentAccount" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
 
-  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="form1" currency-type="bank"
-    @on-add-collection="clickAccountItem" />
 
   <!-- 余额提示 -->
    <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')" :amount="currWallet.amount" />
@@ -148,7 +146,6 @@ import { _swapRate, _orderFast } from "@/api/api";
 import AmountDialog from "@/components/AmountDialog.vue";
 import eventBus from "@/utils/eventBus";
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
-import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import { useBuyCoinState } from "./state";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
@@ -189,8 +186,6 @@ const showDialogType = ref(1); // 1-售出 2-收到
 //  获取汇率
 const rateLoading = ref(false);
 const rate = ref("");
-// 账户选择
-const showAccountDialog = ref(false);
 
 const filterSearchValue = (data) => {
   return data.filter((item) =>
@@ -234,24 +229,24 @@ const sell = () => {
         });
       return;
     }
-    showAccountDialog.value = true;
+    safeRef.value.open();
   } else {
     safeRef.value.open();
   }
 };
-const submitSell = (s) => {
+const submitSell = (obj) => {
   loading.value = true;
   store.dispatch("updateSessionToken").then((st) => {
     if (st) {
       const params = {
         offset: form1.value.offset,
         account_id:
-          form1.value.offset == "sell" ? form1.value.account_id : null,
+          form1.value.offset == "sell" ? obj.account_id : null,
         volume: form1.value.volume,
         crypto: currOut.value.currency,
         currency: currIn.value.currency,
         token: sessionToken.value,
-        safeword: s,
+        safeword: obj.safeword,
       };
       _orderFast(params)
         .then(({ data: { order_no } }) => {
@@ -347,13 +342,7 @@ const getRate = () => {
 
 const currentAccount = ref({})
 
-const clickAccountItem = (item) => {
-  currentAccount.value = item
-  form1.value.account_id = item.id;
-  form1.value.id = item.id;
-  showAccountDialog.value = false;
-  safeRef.value.open();
-};
+
 // 跳转添加
 // const goAddAccount = () => {
 //   // google检测
@@ -558,7 +547,7 @@ onInit();
   }
 
   .submit {
-    margin-top: 0.8rem;
+    margin-top: 1.12rem;
   }
 }
 </style>

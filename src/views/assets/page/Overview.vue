@@ -5,7 +5,7 @@
     <OverviewCard>
       <div class="p-[0.7rem]">
         <div class="top">
-          <div class="title">{{ $t("assets.header_total") }} <span>(USDT)</span></div>
+          <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
           <div class="eyes" @click="hidden = !hidden">
             <img :src="getStaticImgUrl('/static/img/assets/eye_o.svg')" v-show="!hidden" />
             <img :src="getStaticImgUrl('/static/img/assets/closed_eye.svg')" v-show="hidden" />

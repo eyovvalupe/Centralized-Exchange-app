@@ -33,8 +33,13 @@
         </div>
       </div>
       <div class="mt-[0.2rem] pt-[0.4rem] px-[0.32rem] border-solid border-[1px]  box-border rounded-[0.32rem]" v-if="offset == 'sell'">
-        <div class="text-[0.32rem] font-bold text-[#061023]">收款账户</div>
-        <div  class="dialog_account_item py-[0.32rem]">
+        <div class="flex items-center justify-between">
+          <div class="text-[0.32rem] font-bold text-[#061023]">
+            收款账户
+          </div>
+          <span class="text-[#1A59F6]" @click="showAccountDialog=true;" v-if="currentAccount.channel">{{ t('withdraw.change') }}</span>
+        </div>
+        <div  class="dialog_account_item py-[0.32rem]" v-if="currentAccount.channel">
           <div class="card_icon">
             <img v-if="currentAccount.channel === 'crypto'" class="rounded-50"
               :src="getStaticImgUrl(`/static/img/crypto/${currentAccount.symbol?.toUpperCase()}.png`)" alt="currency" />
@@ -46,8 +51,14 @@
           </div>
           
         </div>
+        <div class="dialog_account_item pt-[0.2rem] pb-[0.12rem]"  v-else>
+          <div class="flex h-18 w-full flex-col items-center justify-center text-my"
+          @click="showAccountDialog=true;">
+            <div class="mb-1 size-6 rounded-50 flex items-center justify-center border-[0.03rem] border-my text-20 leading-none">+</div>
+            <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
+          </div>
+        </div>
       </div>
-
 
       <FormItem size="large" :title="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
       <div class="pt-[0.6rem] pb-[0.32rem]">
@@ -56,6 +67,10 @@
     </div>
     
   </Popup>
+
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="currentAccount" currency-type="bank"
+  @on-add-collection="clickAccountItem" />
+  
 </template>
 
 <script setup>
@@ -66,6 +81,8 @@ import FormItem from '@/components/Form/FormItem.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js"
 import { _hiddenAccount } from '@/utils/index'
+import AccountSelectionPopUp from "./AccountSelectionPopUp.vue";
+
 const { t } = useI18n();
 const orderConfirmDialog = ref(false)
 const safeword = ref('')
@@ -76,24 +93,33 @@ defineProps({
   currency:String,
   payCurrency:String,
   offset:String,
-  loading:Boolean,
-  currentAccount:{
-    type:Object,
-    default(){
-      return {}
-    }
-  }
+  loading:Boolean
 })
 
-const emit = defineEmits(['submit'])
+const currentAccount = ref({})
+
+const emit = defineEmits(['submit',''])
 
 const submit = ()=>{
+  if(!currentAccount.value.id){
+    return showToast("请选择收款账户");
+  }
   if(!safeword.value){
     return showToast(t("assets.safety_trade_no_password"));
   }
-  emit("submit",safeword.value)
-  
+  emit("submit",{
+    account_id:currentAccount.value.id,
+    safeword:safeword.value
+  })
+
 }
+
+const showAccountDialog = ref(false)
+const clickAccountItem = (item) => {
+  currentAccount.value = item
+  showAccountDialog.value = false
+  
+};
 
 const open = ()=>{
   safeword.value = ''

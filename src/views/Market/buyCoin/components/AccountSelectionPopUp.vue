@@ -48,6 +48,7 @@
       </div>
     </div>
   </Popup>
+
 </template>
 
 <script setup>
@@ -58,6 +59,7 @@ import store, { useMapState } from '@/store'
 import { _hiddenAccount } from '@/utils/index'
 import { onMounted, computed } from "vue"
 import { useI18n } from 'vue-i18n'
+
 
 const { t } = useI18n()
 const props = defineProps({
