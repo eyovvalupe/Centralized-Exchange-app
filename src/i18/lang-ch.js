@@ -771,7 +771,7 @@ export default {
     market_buy_optional_duaration: "分鐘",
     market_buy_optional_order_limit: "訂單限額",
     market_buy_optional_buy: "買入",
-    market_buy_optional_sell: "出售",
+    market_buy_optional_sell: "賣出",
     market_buy_optional_estreceive: "預計收到",
     market_buy_optional_limit_val: "限額",
     market_buy_optional_confirm: "確認",

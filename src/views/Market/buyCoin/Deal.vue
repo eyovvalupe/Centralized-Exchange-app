@@ -52,8 +52,8 @@
         <span>{{ t('market.market_buy_list_amount') }}</span>
       </div>
       <div class="item form_item">
-        <input v-model="amount" type="number" :placeholder="`≤${currWallet.amount}`" class="ipt" />
-        <div class="all" @click="amount = currWallet.amount">{{ t('trade.stock_position_all') }}</div>
+        <input v-model="amount" type="number" @blur="amountBlur" :placeholder="`≤${currWallet.amount}`" class="ipt" />
+        <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div>
       </div>
       <!-- 三层容器 -->
       <div class="tip">{{ t('market.market_buy_optional_estreceive') }} {{ showAmount }} {{ info.currWallet }}</div>
@@ -68,7 +68,7 @@
         </div>
         <div class="card">
           <div class="code">{{ _hiddenAccount(bank.bankCardNumber || bank.address) }}</div>
-          <div class="name">{{ bank.bankName || bank.symbol }}</div>
+          <div class="text-[#666D80]">{{ bank.bankName || bank.symbol }}</div>
         </div>
 
         <div class="text-12 text-my" @click="goAddAccount">{{ t('withdraw.change') }}</div>
@@ -78,7 +78,7 @@
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
         <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
       </div>
-      <Button size="large" style="margin-top: 0.8rem" class="btn" round :loading="loading" color="var(--main-color)"
+      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)"
         @click="goSubmit">{{ t('market.market_buy_fast_sell') }}</Button>
     </div>
     <!-- 安全密码弹窗 -->
@@ -204,18 +204,14 @@ const getSessionToken = () => {
     padding: 0 0.32rem 0.32rem 0.32rem;
 
     .card_box {
-      border-radius: 0.12rem;
+      border-radius: 0.3rem;
       height: 1.44rem;
       display: flex;
       align-items: center;
-      // justify-content: space-between;
       position: relative;
-      // background-color: #f6f7fa;
       border: 1px solid #d0d8e2;
       padding: 0 0.4rem 0 0.36rem;
       overflow: hidden;
-      margin-bottom: 0.36rem;
-      border-width: 1px;
 
       .card_icon {
         background-color: #f5f7fc;
@@ -321,8 +317,7 @@ const getSessionToken = () => {
     }
 
     .btn {
-      height: 0.96rem;
-      color: #fff;
+      margin-top: 0.9rem;
     }
   }
 }
