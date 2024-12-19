@@ -5,50 +5,44 @@
         <span class="text-[0.32rem] text-[#061023] font-semibold">{{
           $t("common.closed")
         }}</span>
-        <span class="text-[0.24rem] text-[#8F92A1]"
-          >{{ props.data.closets }}
+        <span class="text-[0.24rem] text-[#8F92A1]">{{ props.data.closets }}
           {{
             props.data.region == "us"
               ? t("market.market_stock_country_us")
               : props.data.region == "japan"
-              ? t("market.market_stock_country_japan")
-              : props.data.region == "india"
-              ? t("market.market_stock_country_india")
-              : props.data.region == "korea"
-              ? t("market.market_stock_country_korea")
-              : props.data.region == "germany"
-              ? t("market.market_stock_country_germany")
-              : props.data.region == "uk"
-              ? t("market.market_stock_country_uk")
-              : props.data.region == "singapore"
-              ? t("market.market_stock_country_singapore")
-              : props.data.region == "hongkong"
-              ? t("market.market_stock_country_hongkong")
-              : props.data.region == "malaysia"
-              ? t("market.market_stock_country_malaysia")
-              : ""
-          }}</span
-        >
+                ? t("market.market_stock_country_japan")
+                : props.data.region == "india"
+                  ? t("market.market_stock_country_india")
+                  : props.data.region == "korea"
+                    ? t("market.market_stock_country_korea")
+                    : props.data.region == "germany"
+                      ? t("market.market_stock_country_germany")
+                      : props.data.region == "uk"
+                        ? t("market.market_stock_country_uk")
+                        : props.data.region == "singapore"
+                          ? t("market.market_stock_country_singapore")
+                          : props.data.region == "hongkong"
+                            ? t("market.market_stock_country_hongkong")
+                            : props.data.region == "malaysia"
+                              ? t("market.market_stock_country_malaysia")
+                              : ""
+          }}</span>
       </div>
       <div class="flex flex-row items-center">
         <div>
-          <span class="text-[0.24rem] text-[#8F92A1]"
-            >{{ t('market.market_stock_updatetime') }}：{{
-              props.data.currentts
-            }}</span
-          >
+          <span class="text-[0.24rem] text-[#8F92A1]">{{ t('market.market_stock_updatetime') }}：{{
+            props.data.currentts
+          }}</span>
         </div>
-        <div class="re_render" @click="update"></div>
+        <div class="re_render" @click="update">
+          <img :src="getStaticImgUrl('/static/icons/refresh.svg')" alt="">
+        </div>
       </div>
     </div>
     <div class="flex flex-row justify-between">
-      <div
-        v-for="(item, i) in list"
-        :key="i"
-        :class="item.ratio > 0 ? 'up_price' : 'down_price'"
+      <div v-for="(item, i) in list" :key="i" :class="item.ratio > 0 ? 'up_price' : 'down_price'"
         class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.15rem] pr-[0.15rem]"
-        @click="goInfo(item)"
-      >
+        @click="goInfo(item)">
         <span class="text-[0.28rem] text-[#061023]">{{
           item["symbol"].length > 8
             ? item["symbol"].substring(0, 8) + "..."
@@ -69,6 +63,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import store from "@/store";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
@@ -127,7 +122,6 @@ const goInfo = (item) => {
     width: 0.24rem;
     height: 0.24rem;
     margin-left: 0.12rem;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><path d="M11.25 4.87489V2.24989L10.3939 3.10601C9.91589 2.38181 9.26575 1.78747 8.50169 1.37622C7.73762 0.96496 6.88347 0.74963 6.01576 0.749512C3.11626 0.749512 0.765381 3.10001 0.765381 5.99989C0.765381 8.89976 3.11626 11.2503 6.01576 11.2503C7.06067 11.2505 8.08189 10.9389 8.94873 10.3554C9.81558 9.77198 10.4886 8.94315 10.8818 7.97501C10.9267 7.86447 10.9258 7.74061 10.8794 7.63069C10.833 7.52077 10.7448 7.43379 10.6343 7.38889C10.5795 7.36665 10.5209 7.35542 10.4619 7.35582C10.4028 7.35623 10.3444 7.36826 10.2899 7.39125C10.18 7.43766 10.093 7.52584 10.0481 7.63639C9.72223 8.43857 9.16445 9.1253 8.44613 9.60874C7.72781 10.0922 6.88161 10.3504 6.01576 10.3503C3.61313 10.3503 1.66538 8.40251 1.66538 5.99989C1.66538 3.59726 3.61313 1.64951 6.01576 1.64951C7.56788 1.64951 8.96813 2.47076 9.74251 3.75701L8.62501 4.87489H11.25Z" fill="%23014CFA"/></svg>');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

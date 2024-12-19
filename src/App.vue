@@ -112,11 +112,29 @@ watch(
 );
 
 onMounted(() => {
-  // 处理 .van-tab--active::after 引入背景图的问题
+
+  // 这里处理vant样式里引入图片的问题
+
   const style = document.createElement('style');
   style.innerHTML = `
       .van-tabs--line-card>.van-tabs__wrap  .van-tab--active::after {
         background-image: url(${getStaticImgUrl('/static/assets/ai-sub.svg')});
+      }
+
+      .slider_box .van-slider .van-slider__button {
+        background-image: url(${getStaticImgUrl('/static/icons/right.svg')});
+      }
+
+      .action-sheet-active ::after {
+         background-image: url(${getStaticImgUrl('/static/icons/check.png')});
+      }
+
+      .register_accounr_dialog .search-svg-icon {
+        background-image: url(${getStaticImgUrl('/static/icons/search2.png')});
+      }
+
+      .page_bank .icon_ok {
+        background-image: url(${getStaticImgUrl('/static/icons/success.png')});
       }
     `;
   document.head.appendChild(style);

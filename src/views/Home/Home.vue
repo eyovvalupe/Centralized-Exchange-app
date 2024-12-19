@@ -1,6 +1,8 @@
 <!-- 首页 -->
 <template>
-  <Loaidng v-if="!homePage" :loading="!homePage" />
+  <div v-if="!homePage" style="border-top: 1px solid rgba(0,0,0,0)">
+    <Loaidng :loading="!homePage" />
+  </div>
   <homePage v-else />
 </template>
 
@@ -12,6 +14,11 @@ import Loaidng from "@/components/Loaidng.vue"
 const homePage = shallowRef(null)
 if (HOME_MODE == 1) { // 首页模板1
   import("@/views/Home/Homes/Home1.vue").then((module) => {
+    homePage.value = module.default
+  })
+}
+if (HOME_MODE == 2) { // 首页模板2
+  import("@/views/Home/Homes/Home2.vue").then((module) => {
     homePage.value = module.default
   })
 }
