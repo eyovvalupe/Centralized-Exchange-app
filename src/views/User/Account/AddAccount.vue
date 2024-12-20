@@ -119,6 +119,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Tabs, Tab, Icon, Button, Popup, showToast } from "vant";
 import store from "@/store";
 import { computed, ref, onMounted } from "vue";

@@ -41,6 +41,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import {
   PasswordInput,

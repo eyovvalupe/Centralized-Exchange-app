@@ -59,6 +59,7 @@
   </div>
 </template>
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { useI18n } from "vue-i18n";
 import { fiat } from "@/utils/dataMap";
 import IndiaIcon from "../icons/IndiaIcon.vue";
