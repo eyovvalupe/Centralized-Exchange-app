@@ -11,74 +11,79 @@
         </div>
       </div>
 
-      <!-- 收到 -->
-      <div class="item_box">
-        <div class="item_box_left">
-          <div class="subtitle">
-            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
-              }}</span>
-            <span v-if="form1.offset == 'sell'">
-              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
-              {{ currWallet.amount }} {{ currOut.name }}</span>
-              <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
-            </span>
+      <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center z-10 bg-white bg-opacity-30" v-if="!rate">
+        <Loading color="var(--van-primary-color)" />
+      </div>
+      <div class="flex" :class="[form1.offset == 'buy' ? 'flex-col' : 'flex-col-reverse']">
+        <!-- 支付 -->
+        <div class="item_box">
+          <div class="item_box_left">
+            <div class="subtitle">
+              <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
+                }}</span>
+            </div>
+            <div class="item">
+              <input v-model="money" :disabled="!rate" @input="moneyInput" @blur="moneyBlur" type="number" class="ipt" />
+            </div>
           </div>
-          <div class="item" :class="{ item_focus: priceFocus }">
-            <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false"
-              @blur="priceFocus = false" />
+          <div class="item_box_right">
+            <div class="subtitle"><span>&nbsp;</span></div>
+            <div class="item justify-between"
+              style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
+              <div class="flex items-center">
+                <div v-if="currIn.name" class="icon">
+                  <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
+                </div>
+                <span>{{ currIn.name || "--" }}</span>
+              </div>
+              <div class="more_icon">
+                <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="item_box_right">
-          <div v-if="token" class="subtitle">
-            <!--  @click="jump('transfer')" -->
-            <span>&nbsp;</span>
-            <!-- <span class="link">划转</span> -->
-          </div>
-          <div v-if="!token" class="subtitle">&nbsp;</div>
-          <div class="item justify-between" :class="{ item_focus: priceFocus }"
-            style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
-            <div class="flex items-center">
-              <div v-if="currOut.name" class="icon">
-                <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.png`)"
-                  alt="currency" />
-              </div>
-              <span>{{ currOut.name || "--" }}</span>
+        <!-- 收到 -->
+        <div class="item_box">
+          <div class="item_box_left">
+            <div class="subtitle">
+              <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
+                }}</span>
+              <span v-if="form1.offset == 'sell'">
+                <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
+                {{ currWallet.amount }} {{ currOut.name }}</span>
+                <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
+              </span>
             </div>
-            <div class="more_icon">
-              <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
+            <div class="item">
+              <input v-model="form1.volume" :disabled="!rate" type="number" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
+            </div>
+          </div>
+
+          <div class="item_box_right">
+            <div v-if="token" class="subtitle">
+              <!--  @click="jump('transfer')" -->
+              <span>&nbsp;</span>
+              <!-- <span class="link">划转</span> -->
+            </div>
+            <div v-if="!token" class="subtitle">&nbsp;</div>
+            <div class="item justify-between" 
+              style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
+              <div class="flex items-center">
+                <div v-if="currOut.name" class="icon">
+                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.png`)"
+                    alt="currency" />
+                </div>
+                <span>{{ currOut.name || "--" }}</span>
+              </div>
+              <div class="more_icon">
+                <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- 支付 -->
-      <div class="item_box">
-        <div class="item_box_left">
-          <div class="subtitle">
-            <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
-              }}</span>
-          </div>
-          <div class="item">
-            {{ getMoney }}
-          </div>
-        </div>
-        <div class="item_box_right">
-          <div class="subtitle"><span>&nbsp;</span></div>
-          <div class="item justify-between" :class="{ item_focus: priceFocus }"
-            style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
-            <div class="flex items-center">
-              <div v-if="currIn.name" class="icon">
-                <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
-              </div>
-              <span>{{ currIn.name || "--" }}</span>
-            </div>
-            <div class="more_icon">
-              <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div v-if="rate && token" class="tip absolute">
         1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
@@ -127,7 +132,7 @@
     </div>
   </Popup>
 
-  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
+  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="money" @submit="submitSell" />
 
 
   <!-- 余额提示 -->
@@ -138,7 +143,7 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, onBeforeUnmount, onMounted } from "vue";
-import { Button, Popup, Icon, showToast, showConfirmDialog } from "vant";
+import { Button, Popup, Icon, showToast, showConfirmDialog,Loading } from "vant";
 import Decimal from "decimal.js";
 import store, { useMapState } from "@/store";
 import { _swapRate, _orderFast } from "@/api/api";
@@ -167,7 +172,7 @@ const currWallet = computed(() => {
 const searchValue = ref("");
 // 售出
 const loading = ref(false);
-const priceFocus = ref(false);
+const money = ref("")
 const form1 = ref({
   offset: "buy",
   volume: "",
@@ -270,10 +275,6 @@ const submitSell = (obj) => {
   });
 };
 
-const getMoney = computed(() => {
-  if (!form1.value.volume || !rate.value) return "--";
-  return new Decimal(form1.value.volume).mul(rate.value).toNumber();
-});
 const outWallet = computed(() => {
   // 售出钱包
   let data;
@@ -299,10 +300,56 @@ const clickItem = (item) => {
   }
   showDialog.value = false;
 
-  setTimeout(() => {
-    getRate();
+  setTimeout(async () => {
+    await getRate();
+    if (showDialogType.value == 1) {
+      volumeInput()
+    }else{
+      moneyInput()
+    }
   }, 100);
 };
+
+const moneyInput = ()=>{
+  if(isNaN(money.value) || money.value <= 0){
+    form1.value.volume = ''
+    return
+  }
+  const val = new Decimal(money.value).div(rate.value).toNumber().toFixed(currOut.value.tpp + 1)
+  form1.value.volume = val.substring(0,val.length-1)
+}
+
+const moneyBlur = ()=>{
+  if(isNaN(money.value) || money.value <= 0){
+    money.value = ''
+    return
+  }
+  const val = new Decimal(money.value).toFixed(3)
+  money.value = val.substring(0,val.length-1)
+  const val2 = new Decimal(money.value).div(rate.value).toFixed(currOut.value.tpp + 1)
+  form1.value.volume = val2.substring(0,val2.length-1)
+}
+
+const volumeBlur = ()=>{
+  if(isNaN(form1.value.volume) || form1.value.volume <= 0){
+    form1.value.volume = ''
+    return
+  }
+  if(form1.value.offset == 'sell' && form1.value.volume > currWallet.value.amount){
+    form1.value.volume = currWallet.value.amount
+  }
+}
+
+const volumeInput = ()=>{
+  if(isNaN(form1.value.volume) || form1.value.volume <= 0){
+    money.value = ''
+    return
+  }
+
+  const val = new Decimal(form1.value.volume).mul(rate.value).toFixed(3);
+  money.value = val.substring(0,val.length-1)
+}
+
 
 const showAmountDialog = ref(false)
 const openConfirmBox = () => {
@@ -324,7 +371,7 @@ const changeTab = (val) => {
 const getRate = () => {
   rateLoading.value = true;
   rate.value = "";
-  _swapRate({
+  return _swapRate({
     from: currOut.value.currency,
     to: currIn.value.currency,
     amount: 0,
@@ -388,7 +435,7 @@ watch(()=>currencyList,()=>{
       align-items: center;
       justify-content: space-between;
       line-height: 0.68rem;
-      margin: 20px 0;
+      margin-top:0.4rem;
       border: 0.5px solid #d0d8e2;
       width: 47%;
       border-radius: 0.68rem;
