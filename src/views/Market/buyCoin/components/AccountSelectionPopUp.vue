@@ -118,9 +118,16 @@ const goAddAccount = () => {
       })
     })
   }
-  router.push({
-    name: 'account',
+
+  showConfirmDialog({
+    title:"提示",
+    message:"即将跳转到添加收款账号，将中断当前业务，是否继续？"
+  }).then(()=>{
+    router.push({
+      name: 'account',
+    })
   })
+  
 }
 const clickAccountItem = val => {
   emit('onAddCollection', val)
