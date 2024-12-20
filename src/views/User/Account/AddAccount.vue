@@ -15,15 +15,8 @@
                   </div>
                   <div class="item" @click="showCrypto = true">
                     <div class="item_icon">
-                      <div style="width: 0.48rem;height:0.48rem"
-                        v-if="form.currency != 'INR' || form.currency != 'USD'">
+                      <div style="width: 0.48rem;height:0.48rem">
                         <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.png`)" alt="">
-                      </div>
-                      <div v-if="form.currency == 'INR'">
-                        <INRSmallIcon />
-                      </div>
-                      <div v-if="form.currency == 'USD'">
-                        <USDSmallIcon />
                       </div>
                     </div>
                     <div class="ipt">{{ form.currency }}</div>
@@ -72,11 +65,15 @@
       class="popup_container">
       <div class="">
         <div class="absolute top-[0.2rem] right-[0.3rem]">
-          <CrossIcon @click="closeCrypto" />
+          <div style="width: 0.42rem;height: 0.4rem;">
+            <img :src="getStaticImgUrl(`/static/icons/close.svg`)" alt="">
+          </div>
         </div>
         <div class="w-full px-[0.32rem]">
           <div class="w-full h-[0.8rem] mt-[0.7rem] rounded-[1rem] bg-[#f4f5f7] flex items-center px-[0.2rem]">
-            <SearchIcon />
+            <div style="width: 0.48rem;height: 0.48rem;">
+              <img :src="getStaticImgUrl(`/static/icons/search2.svg`)" alt="">
+            </div>
             <input v-model="searchRef" type="text" class="flex-1 h-[0.6rem] px-[0.2rem] color-[#061023] text-[0.3rem]"
               @input="searchItem" />
           </div>
@@ -87,18 +84,14 @@
             v-for="item in searchRef ? searchResult : currencyMapList" :key="item">
             <div class="flex w-full justify-between">
               <div class="flex items-center">
-                <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]" v-if="item != 'INR' && item != 'USD'">
+                <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
                   <img :src="getStaticImgUrl(`/static/img/crypto/${item}.png`)" alt="">
-                </div>
-                <div v-if="item == 'INR'" class="mr-[0.2rem]">
-                  <INRIcon />
-                </div>
-                <div v-if="item == 'USD'" class="mr-[0.2rem]">
-                  <USDIcon />
                 </div>
                 <span class="text-[0.3rem]">{{ item }}</span>
               </div>
-              <CheckIcon v-if="form.currency == item" />
+              <div v-if="form.currency == item" style="width: 0.48rem;height: 0.48rem;">
+                <img :src="getStaticImgUrl(`/static/icons/check.svg`)" alt="">
+              </div>
             </div>
           </div>
         </div>
@@ -130,14 +123,7 @@ import { _userinfo, _addAccount, _cryptoCoin } from "@/api/api";
 import Bank from "./Bank.vue";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import Top from "@/components/Top.vue";
-import CrossIcon from "./components/Icons/CrossIcon.vue";
 import { useI18n } from "vue-i18n";
-import CheckIcon from "./components/Icons/CheckIcon.vue";
-import SearchIcon from "./components/Icons/SearchIcon.vue";
-import INRIcon from "./components/Icons/INRIcon.vue";
-import USDIcon from "./components/Icons/USDIcon.vue";
-import INRSmallIcon from "./components/Icons/INRSmallIcon.vue";
-import USDSmallIcon from "./components/Icons/USDSmallIcon.vue";
 
 const { t } = useI18n();
 const route = useRoute();

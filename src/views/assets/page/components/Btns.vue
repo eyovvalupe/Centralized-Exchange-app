@@ -2,25 +2,25 @@
   <div class="btns">
     <div class="btn-item" @click="jump('topUpCrypto', true)">
       <div class="btn-item__icon">
-        <DepositIcon />
+        <img :src="getStaticImgUrl(`/static/icons/deposit.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.recharge") }}</div>
     </div>
     <div class="btn-item" @click="jump('withdraw', true)">
       <div class="btn-item__icon">
-        <WithdrawIcon />
+        <img :src="getStaticImgUrl(`/static/icons/withdraw.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.withdraw") }}</div>
     </div>
     <div class="btn-item" @click="jump('transfer')">
       <div class="btn-item__icon">
-        <TransferIcon />
+        <img :src="getStaticImgUrl(`/static/icons/trans.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.transfer") }}</div>
     </div>
     <div class="btn-item" @click="jump('recordList', true)">
       <div class="btn-item__icon">
-        <RecordListIcon />
+        <img :src="getStaticImgUrl(`/static/icons/record.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.financialRecords") }}</div>
     </div>
@@ -34,13 +34,10 @@
   /> -->
 </template>
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { useI18n } from "vue-i18n";
 import { ActionSheet } from "vant";
 import router from "@/router";
-import DepositIcon from "../icons/DepositIcon.vue";
-import WithdrawIcon from "../icons/WithdrawIcon.vue";
-import TransferIcon from "../icons/TransferIcon.vue";
-import RecordListIcon from "../icons/RecordListIcon.vue";
 const { t } = useI18n();
 const jump = (name, check = false, query) => {
   router.push({
