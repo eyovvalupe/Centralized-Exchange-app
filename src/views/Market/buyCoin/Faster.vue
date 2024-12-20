@@ -22,7 +22,6 @@
               {{ currWallet.amount }} {{ currOut.name }}</span>
               <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
             </span>
-
           </div>
           <div class="item" :class="{ item_focus: priceFocus }">
             <input v-model="form1.volume" type="number" class="ipt" @focus="priceFocus = false"
@@ -128,7 +127,7 @@
     </div>
   </Popup>
 
-  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :currentAccount="currentAccount" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
+  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="getMoney" @submit="submitSell" />
 
 
   <!-- 余额提示 -->
@@ -340,8 +339,6 @@ const getRate = () => {
     });
 };
 
-const currentAccount = ref({})
-
 
 // 跳转添加
 // const goAddAccount = () => {
@@ -359,13 +356,23 @@ const currentAccount = ref({})
 //   })
 // }
 
-const onInit = () => {
-  getRate();
-};
+const onInit = ()=>{
+  if(!currOut.value.currency){
+    currOut.value = outWallet.value[0] || {}
+  }
+  if(!currIn.value.currency){
+    currIn.value = inWallet.value[0] || {}
+  }
+  if (currOut.value.currency && currIn.value.currency) {
+    getRate();
+  }
+}
+onInit()
 
-if (outWallet.value[0]) currOut.value = outWallet.value[0];
-if (inWallet.value[0]) currIn.value = inWallet.value[0];
-onInit();
+watch(()=>currencyList,()=>{
+  onInit()
+})
+
 </script>
 
 <style lang="less" scoped>
