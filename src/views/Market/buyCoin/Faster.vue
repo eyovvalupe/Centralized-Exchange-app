@@ -56,7 +56,10 @@
               </span>
             </div>
             <div class="item">
-              <input v-model="form1.volume" :disabled="!rate" type="number" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
+              <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
+              <span class="text-[#014cfa] text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell'">{{
+               t('trade.stock_position_all')
+              }}</span>
             </div>
           </div>
 
@@ -84,7 +87,7 @@
         </div>
       </div>
       
-      <div v-if="rate && token" class="tip absolute">
+      <div v-if="rate" class="tip absolute">
         1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
@@ -159,9 +162,8 @@ const { handleUrl, active } = useBuyCoinState();
 const safeRef = ref();
 const {
   sessionToken,
-  token,
-  deWeightCurrencyList: currencyList,
-} = useMapState(["sessionToken", "token", "deWeightCurrencyList"]);
+  token
+} = useMapState(["sessionToken", "token"]);
 const wallet = computed(() => store.state.wallet); // 所有钱包
 const currWallet = computed(() => {
   let target = wallet.value.find(
@@ -204,7 +206,7 @@ const inWallet = computed(() => {
   //   // 模糊查询
   // } else {
   // eslint-disable-next-line prefer-const
-  data = currencyList.value.filter((item) => item.type == "fiat");
+  data = store.state.deWeightCurrencyList.filter((item) => item.type == "fiat");
   // }
   // 模糊查询
   return filterSearchValue(data);
@@ -280,11 +282,11 @@ const outWallet = computed(() => {
   let data;
   // if (form1.value.offset == 'buy') {
   // data = wallet.value.filter(item => item.type == 'fiat')
-  // console.log('currencyList.value', currencyList.value)
-  // data = currencyList.value.filter(item => item.type == 'fiat')
+  // console.log('store.state.deWeightCurrencyList', store.state.deWeightCurrencyList)
+  // data = store.state.deWeightCurrencyList.filter(item => item.type == 'fiat')
   // } else {
   // eslint-disable-next-line prefer-const
-  data = currencyList.value.filter((item) => item.type == "crypto");
+  data = store.state.deWeightCurrencyList.filter((item) => item.type == "crypto");
   // }
   return filterSearchValue(data);
 });
@@ -329,8 +331,9 @@ const moneyBlur = ()=>{
   const val2 = new Decimal(money.value).div(rate.value).toFixed(currOut.value.tpp + 1)
   form1.value.volume = val2.substring(0,val2.length-1)
 }
-
+const volumeIsFocus = ref(false)
 const volumeBlur = ()=>{
+  volumeIsFocus.value = false
   if(isNaN(form1.value.volume) || form1.value.volume <= 0){
     form1.value.volume = ''
     return
@@ -349,7 +352,10 @@ const volumeInput = ()=>{
   const val = new Decimal(form1.value.volume).mul(rate.value).toFixed(3);
   money.value = val.substring(0,val.length-1)
 }
-
+const putAll = ()=>{
+  form1.value.volume = currWallet.value.amount;
+  volumeInput()
+}
 
 const showAmountDialog = ref(false)
 const openConfirmBox = () => {
@@ -359,13 +365,9 @@ const openConfirmBox = () => {
 // 切换方向
 const changeTab = (val) => {
   form1.value.offset = val;
-  // 切换币种
-  // const obj = currOut.value
-  // currOut.value = currIn.value
-  // currIn.value = obj
-  setTimeout(() => {
-    getRate();
-  }, 100);
+  money.value = ''
+  form1.value.volume = ''
+  
 };
 
 const getRate = () => {
@@ -416,7 +418,7 @@ const onInit = ()=>{
 }
 onInit()
 
-watch(()=>currencyList,()=>{
+watch(()=>store.state.deWeightCurrencyList,()=>{
   onInit()
 })
 
