@@ -261,7 +261,6 @@ const subs = (arr) => {
 const activated = ref(false);
 onActivated(() => {
     store.commit("setMarketWatchKeys", []);
-
     activated.value = true;
     subs();
 });
@@ -348,6 +347,9 @@ function detectEnvironment(code) {
 const openPage = ref(false);
 
 onMounted(() => {
+    store.commit("setMarketWatchKeys", []);
+    activated.value = true;
+    subs();
     if (Object.keys(route.query).length) detectEnvironment(route.query.invitCode);
     setTimeout(() => {
         openPage.value = true;

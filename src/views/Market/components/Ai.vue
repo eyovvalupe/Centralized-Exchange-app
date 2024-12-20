@@ -2,7 +2,7 @@
 <template>
   <div class="page_ai">
 
-    <div class="list">
+    <div class="list" v-if="!pageLoading && props.page != 'home'">
       <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
       <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiList" :key="i" :item="item" />
       <NoData v-if="!loading && marketAiList.length == 0" />
