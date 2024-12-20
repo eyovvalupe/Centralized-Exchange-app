@@ -1,6 +1,6 @@
 <template>
   <div class="wallet_container">
-    <div class="flex flex-col items-center" v-if="currSelectedWallet != -1">
+    <div class="flex flex-col items-center" v-if="currSelectedWallet == -1">
       <div @click="changeActiveTab(0)">
         <CashWallet :amount="assets.money" />
       </div>
