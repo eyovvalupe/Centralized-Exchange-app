@@ -58,9 +58,9 @@ export const _dateUnitMap = {
 };
 
 export const _langMap = [
-  { name: "中文简体", icon: "china_icon", val: "zh", show: true },
-  { name: "中文繁體", icon: "china_icon", val: "ch", show: true },
-  { name: "English", icon: "us_icon", val: "en", show: true },
+  { name: "中文简体", icon: "zh", val: "zh", show: true },
+  { name: "中文繁體", icon: "ch", val: "ch", show: true },
+  { name: "English", icon: "en", val: "en", show: true },
 ];
 
 export const fiat = ['INR', 'USD']

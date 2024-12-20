@@ -750,6 +750,8 @@ export default {
     market_buy_title3: "我的訂單",
     market_buy_fast_buy: "買入",
     market_buy_fast_sell: "賣出",
+    market_buy_fast_buy_btn: "買入",
+    market_buy_fast_sell_btn: "賣出",
     market_buy_fast_receive: "收到",
     market_buy_fast_receive_sim: "收到",
     market_buy_fast_pay: "支付",

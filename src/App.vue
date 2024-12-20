@@ -31,6 +31,7 @@ import store from "@/store/index";
 import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
 import SuccessToast from "./views/User/Account/SuccessToast.vue";
+import { getStaticImgUrl } from "@/utils/index.js"
 
 const showSuccessToast = computed(() => store.state.showSuccessToast);
 
@@ -98,52 +99,6 @@ setTimeout(() => {
 }, 50000);
 // 国际化启动
 // setLocale()
-const boundFunc = () => {
-  const reboundPage = [
-    "user",
-    "trade",
-    "date",
-    "ipodetail",
-    "assets",
-    "market",
-    "home",
-  ];
-  // 回弹效果
-  let startY = 0;
-  const maxMove = 200;
-  const body = document.querySelector("#app");
-  const app = document.querySelector(".app_scroll");
-  body.addEventListener(
-    "touchstart",
-    (e) => {
-      if (!reboundPage.includes(routeName.value)) return;
-      startY = e.changedTouches[0].clientY;
-    },
-    { passive: true }
-  );
-  body.addEventListener(
-    "touchmove",
-    (e) => {
-      if (!reboundPage.includes(routeName.value)) return;
-      const y =
-        e.changedTouches[0].clientY - startY <= maxMove
-          ? e.changedTouches[0].clientY - startY
-          : maxMove;
-      app.style.transition = "none";
-      app.style.transform = `translateY(${0.3 * y}px)`;
-    },
-    { passive: true }
-  );
-  body.addEventListener(
-    "touchend",
-    (e) => {
-      const y = e.changedTouches[0].clientY - startY;
-      app.style.transition = "transform .6s";
-      app.style.transform = `translateY(0px)`;
-    },
-    { passive: true }
-  );
-};
 
 const transitionName = computed(() => store.state.transitionName || "");
 watch(
@@ -155,6 +110,35 @@ watch(
   },
   { immediate: true }
 );
+
+onMounted(() => {
+
+  // 这里处理vant样式里引入图片的问题
+
+  const style = document.createElement('style');
+  style.innerHTML = `
+      .van-tabs--line-card>.van-tabs__wrap  .van-tab--active::after {
+        background-image: url(${getStaticImgUrl('/static/assets/ai-sub.svg')});
+      }
+
+      .slider_box .van-slider .van-slider__button {
+        background-image: url(${getStaticImgUrl('/static/icons/right.svg')});
+      }
+
+      .action-sheet-active ::after {
+         background-image: url(${getStaticImgUrl('/static/icons/check.png')});
+      }
+
+      .register_accounr_dialog .search-svg-icon {
+        background-image: url(${getStaticImgUrl('/static/icons/search2.png')});
+      }
+
+      .page_bank .icon_ok {
+        background-image: url(${getStaticImgUrl('/static/icons/success.png')});
+      }
+    `;
+  document.head.appendChild(style);
+})
 </script>
 
 <style lang="less">

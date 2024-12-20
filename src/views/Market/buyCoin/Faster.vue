@@ -1,7 +1,7 @@
 <!-- 快捷区 -->
 <template>
   <div class="page_fasters">
-    <div class="form">
+    <div class="form relative">
       <div class="tabs">
         <div class="tab" :class="{ active_tab: form1.offset == 'buy' }" @click="changeTab('buy')">
           {{ t('market.market_buy_fast_buy') }}
@@ -18,7 +18,7 @@
             <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
               }}</span>
             <span v-if="form1.offset == 'sell'">
-              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{t('assets.wallet_available_sim')}}</span>
+              <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
               {{ currWallet.amount }} {{ currOut.name }}</span>
               <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
             </span>
@@ -79,14 +79,14 @@
           </div>
         </div>
       </div>
-      <div v-if="rate && token" class="tip">
+      <div v-if="rate && token" class="tip absolute">
         1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
 
       <Button size="large" class="submit" round :loading="loading"
         :color="form1.offset == 'sell' ? '#E8503A' : '#014CFA'" @click="sell">{{ form1.offset == "sell" ?
-          t('market.market_buy_fast_sell') : t('market.market_buy_fast_buy') }}</Button>
+          t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</Button>
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
       <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
@@ -554,7 +554,7 @@ watch(()=>currencyList,()=>{
   }
 
   .submit {
-    margin-top: 0.8rem;
+    margin-top: 1.12rem;
   }
 }
 </style>
