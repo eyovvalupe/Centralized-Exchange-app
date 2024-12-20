@@ -39,22 +39,59 @@
                 <div class="btn" v-if="token">去交易</div>
             </div>
 
-            <!-- 资产 -->
-            <div class="assets">
-                <div class="top"
-                    :style="{ 'background-image': token ? `url('${getStaticImgUrl('/static/home2/assets_bg.svg')}')` : '' }">
-                    <div class="total">
-                        <span>总资产 (USDT)</span>
-                    </div>
-                    <div class="amount" v-if="token">{{ assets.total }}</div>
-                    <div class="login" v-if="!token" @click="store.commit('setIsLoginOpen', true)">登录</div>
-                    <div class="login_tip" v-if="!token">先登录方可查看资产</div>
+
+            <!-- 卡片 -->
+            <div class="cards" style="margin-top: 0.56rem">
+                <div class="card-1">
+                    <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
+                        <SwipeItem class="swiper-item">1</SwipeItem>
+                        <SwipeItem class="swiper-item">2</SwipeItem>
+                        <SwipeItem class="swiper-item">3</SwipeItem>
+                    </Swipe>
                 </div>
-                <div class="bottom">
-                    <div class="btn" @click="showAS = true">快速交易</div>
-                    <div class="btn" @click="jump('topUp', true)">充值</div>
+                <div class="card-right">
+                    <div class="card-2">
+                        <!-- 资产 -->
+                        <div class="assets">
+                            <div class="top"
+                                :style="{ 'background-image': token ? `url('${getStaticImgUrl('/static/home2/assets_bg.svg')}')` : '' }">
+                                <div class="total">
+                                    <span>总资产 (USDT)</span>
+                                </div>
+                                <div class="amount" v-if="token">{{ assets.total }}</div>
+                                <div class="recharge" v-if="token">充值</div>
+                                <div class="login" v-if="!token" @click="store.commit('setIsLoginOpen', true)">登录</div>
+                                <div class="login_tip" v-if="!token">先登录方可查看资产</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-4">
+                        <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
+                            <SwipeItem class="swiper-item">1</SwipeItem>
+                            <SwipeItem class="swiper-item">2</SwipeItem>
+                            <SwipeItem class="swiper-item">3</SwipeItem>
+                            <SwipeItem class="swiper-item">4</SwipeItem>
+                        </Swipe>
+                    </div>
                 </div>
             </div>
+
+            <div class="cards" style="margin: 0.32rem 0 0.8rem 0;">
+                <div class="card-3">
+                    <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
+                        <SwipeItem class="swiper-item">1</SwipeItem>
+                        <SwipeItem class="swiper-item">2</SwipeItem>
+                    </Swipe>
+                </div>
+                <div class="card-3">
+                    <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
+                        <SwipeItem class="swiper-item">1</SwipeItem>
+                        <SwipeItem class="swiper-item">2</SwipeItem>
+                        <SwipeItem class="swiper-item">3</SwipeItem>
+                    </Swipe>
+                </div>
+            </div>
+
 
 
             <!-- 市场推荐 -->
@@ -119,7 +156,7 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, ActionSheet } from "vant";
+import { Tab, Tabs, ActionSheet, Swipe, SwipeItem } from "vant";
 import { computed, onActivated, onDeactivated, ref, onMounted } from "vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
@@ -385,21 +422,104 @@ onMounted(() => {
             }
         }
 
+        .cards {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+
+            .swipers {
+                width: 100%;
+                height: 100%;
+                position: relative;
+
+                .swiper-item {
+                    color: #fff;
+                }
+
+                :deep(.van-swipe__indicators) {
+                    .van-swipe__indicator {
+                        width: 0.16rem;
+                        height: 0.08rem;
+                        border-radius: 0.04rem !important;
+                        background-color: rgba(255, 255, 255, 0.3) !important;
+                    }
+
+                    .van-swipe__indicator--active {
+                        background-color: #00F0FF !important;
+                    }
+
+                }
+
+                :deep(.van-swipe__indicators) {
+                    right: 0.2rem !important;
+                    left: auto !important;
+                    transform: translateX(0) !important;
+                }
+            }
+
+            .swipers2 {
+                :deep(.van-swipe__indicators) {
+                    top: 0.24rem !important;
+                }
+            }
+
+            .card-1 {
+                width: 3.26rem;
+                height: 5.36rem;
+                border-radius: 0.4rem;
+                border: 1px solid #222626;
+                position: relative;
+            }
+
+            .card-2 {
+                width: 3.26rem;
+                height: 2.76rem;
+                border-radius: 0.3rem;
+                border: 1px solid #222626;
+                position: relative;
+            }
+
+            .card-3 {
+                width: 3.26rem;
+                height: 3rem;
+                border-radius: 0.4rem;
+                border: 1px solid #222626;
+                background: #000;
+                position: relative;
+            }
+
+            .card-4 {
+                border-radius: 0.2rem;
+                width: 3.26rem;
+                height: 2.36rem;
+                border: 1px solid #222626;
+                position: relative;
+            }
+
+            .card-right {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: space-between;
+            }
+        }
+
         .assets {
             border-radius: 0.3rem;
             border: 1px solid #222626;
-            margin: 0.4rem 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
 
             .top {
-                background-size: 100% 100%;
+                background-size: cover;
                 background-color: rgba(255, 255, 255, 0.05);
-                height: 2.4rem;
+                height: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 border-radius: 0.3rem;
-                border: 1px solid #222626;
                 position: relative;
                 top: -1px;
                 font-weight: 400;
@@ -434,26 +554,21 @@ onMounted(() => {
                     font-size: 0.48rem;
                     line-height: 0.48rem;
                     margin-top: 0.24rem;
+                    word-break: break-all;
                 }
-            }
 
-            .bottom {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0.14rem 0;
-
-                .btn {
-                    flex: 1;
-                    height: 0.52rem;
+                .recharge {
+                    height: 0.6rem;
+                    padding: 0 0.6rem;
+                    border-radius: 0.3rem;
+                    background-color: #fff;
+                    font-size: 0.24rem;
+                    font-weight: 400;
+                    color: #000;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: #fff;
-
-                    &:nth-child(1) {
-                        border-right: 1px solid #222626;
-                    }
+                    margin-top: 0.36rem;
                 }
             }
         }
