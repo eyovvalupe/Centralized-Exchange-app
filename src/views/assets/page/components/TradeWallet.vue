@@ -1,8 +1,16 @@
 <template>
   <div class="relative overflow-hidden w-[6.86rem] h-[2.42rem] pt-[0.16rem] pl-[0.24rem] top-[-1rem]">
-    <TradeWalletBtn />
+    <div class="absolute top-[0.02rem] left-[0.01rem] z-[-1]">
+      <img :src="getStaticImgUrl(`/static/icons/wallet_bg3.svg`)" alt="" style="width: 2.38rem;height: 1.02rem;">
+    </div>
     <TradeWalletInfoContainer />
-    <TradeImg />
+    <div class="absolute top-[0] left-[0] z-[-1]" style="width: 6.86rem;height: 2.42rem;">
+      <img :src="getStaticImgUrl(`/static/icons/wallet_bg2.svg`)" alt="">
+    </div>
+
+    <div class="absolute top-[0.15rem] right-[0] z-[2]" style="width: 1.84rem;height: 2.24rem;">
+      <img :src="getStaticImgUrl(`/static/icons/wallet_bg4.svg`)" alt="">
+    </div>
     <span class="text-[0.32rem] text-[#fff]">大宗商品</span>
     <div class="flex flex-col h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]">
       <div class="flex">
@@ -19,9 +27,6 @@
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import TradeImg from "./TradeWalletInfo/TradeImg.vue";
-import TradeWalletBtn from "./TradeWalletInfo/TradeWalletBtn.vue";
-import TradeWalletInfoContainer from "./TradeWalletInfo/TradeWalletInfoContainer.vue";
 import { ref } from 'vue';
 
 const showInfo = ref(false);

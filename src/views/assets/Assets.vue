@@ -34,8 +34,9 @@
       borderTopLeftRadius: '0.36rem',
     }">
       <div v-if="Object.keys(selectedItem).length" class="w-full relative">
-        <div class="absolute top-[0.1rem] right-[0.3rem]" @click="() => (handle = false)">
-          <CancelIcon />
+        <div class="absolute top-[0.1rem] right-[0.3rem]" style="width: 0.42rem;height: 0.42rem;"
+          @click="() => (handle = false)">
+          <img :src="getStaticImgUrl(`/static/icons/close.svg`)" alt="">
         </div>
         <div
           class="w-full flex justify-center pt-[0.5rem] text-[0.32rem] text-[#121826] leading-[0.44rem] mb-[0.48rem]">
@@ -134,7 +135,6 @@ import Wallet from "./page/Wallet.vue";
 import OrderCenter from "./page/OrderCenter.vue";
 import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
-import CancelIcon from "./page/icons/CancelIcon.vue";
 import AiItem from "../Market/components/AiItem.vue";
 import { fiat } from "@/utils/dataMap";
 
