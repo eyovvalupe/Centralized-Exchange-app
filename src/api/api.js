@@ -591,7 +591,7 @@ export const _adList = (data = {}) => {
 // 自选交易
 export const _buysell = (data = {}) => {
   return http.post(`/authc/v1/c2c/order/buysell`, data, {
-    custom: { auth: true, toast: false, retry: false },
+    custom: { auth: true, toast: true, retry: false },
   });
 };
 // c2c订单详情
