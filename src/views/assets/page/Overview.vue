@@ -46,19 +46,25 @@
     <div class="tabs">
       <div ref="tab1" :key="1" class="tab" @click="jumpToWallet(0)">
         <div class="tab_icon">
-          <CashIcon />
+          <div style="width: 0.34rem;height: 0.34rem;">
+            <img :src="getStaticImgUrl(`/static/icons/cash.svg`)" alt="">
+          </div>
         </div>
         <div class="name">{{ $t("assets.over_view_cash") }}</div>
         <div class="amount">
           {{ parseFloat(assets.money).toLocaleString() || "0" }}
         </div>
         <div class="more">
-          <NextIcon />
+          <div style="width: 0.2rem;height: 0.32rem;">
+            <img :src="getStaticImgUrl(`/static/icons/right_gray.svg`)" alt="">
+          </div>
         </div>
       </div>
       <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet(1)">
         <div class="tab_icon">
-          <StockIcon />
+          <div style="width: 0.36rem;height: 0.36rem;">
+            <img :src="getStaticImgUrl(`/static/icons/overview.svg`)" alt="">
+          </div>
         </div>
         <div class="name">{{ $t("assets.over_view_stock") }}</div>
         <div class="amount">
@@ -67,12 +73,16 @@
           }}
         </div>
         <div class="more">
-          <NextIcon />
+          <div style="width: 0.2rem;height: 0.32rem;">
+            <img :src="getStaticImgUrl(`/static/icons/right_gray.svg`)" alt="">
+          </div>
         </div>
       </div>
       <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet(2)">
         <div class="tab_icon">
-          <ContractIcon />
+          <div style="width: 0.32rem;height: 0.32rem;">
+            <img :src="getStaticImgUrl(`/static/icons/constract.svg`)" alt="">
+          </div>
         </div>
         <div class="name">{{ $t("assets.over_view_contract") }}</div>
         <div class="amount">
@@ -81,49 +91,11 @@
           }}
         </div>
         <div class="more">
-          <NextIcon />
+          <div style="width: 0.2rem;height: 0.32rem;">
+            <img :src="getStaticImgUrl(`/static/icons/right_gray.svg`)" alt="">
+          </div>
         </div>
       </div>
-      <!-- <div
-        ref="tab4"
-        :key="4"
-        class="tab"
-        :class="{ open_tab: rightSwitch5 == true }"
-        @click="jumpToWallet(3)"
-      >
-        <div class="tab_icon">
-          <ForeignCashIcon />
-        </div>
-        <div class="name">{{ $t("assets.over_view_forex") }}</div>
-        <div class="amount">
-          {{
-            parseFloat(assets && assets.forex ? assets.forex : 0).toLocaleString()
-          }}
-        </div>
-        <div class="more">
-          <NextIcon />
-        </div>
-      </div> -->
-      <!-- <div
-        ref="tab5"
-        :key="5"
-        class="tab"
-        :class="{ open_tab: rightSwitch5 == true }"
-        @click="jumpToWallet(4)"
-      >
-        <div class="tab_icon">
-          <TraditionIcon />
-        </div>
-        <div class="name">{{ $t("assets.over_view_trade") }}</div>
-        <div class="amount">
-          {{
-            parseFloat(assets && assets.forex ? assets.forex : 0).toLocaleString()
-          }}
-        </div>
-        <div class="more">
-          <NextIcon />
-        </div>
-      </div> -->
     </div>
 
     <!-- 类型选择弹窗 -->
@@ -143,12 +115,6 @@ import store from "@/store";
 import router from "@/router";
 import Btns from "./components/Btns";
 import OverviewCard from "./components/OverviewCard.vue";
-import CashIcon from "./components/CashIcon.vue";
-import NextIcon from "./components/NextIcon.vue";
-import StockIcon from "./components/StockIcon.vue";
-import ContractIcon from "./components/ContractIcon.vue";
-import ForeignCashIcon from "./components/ForeignCashIcon.vue";
-import TraditionIcon from "./components/TraditionIcon.vue";
 
 const { t } = useI18n();
 const hintNum = computed(() => store.state.hintNum || 0);

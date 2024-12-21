@@ -1,7 +1,12 @@
 <template>
   <div class="relative w-[6.86rem] h-[3.04rem] pt-[0.16rem] pl-[0.24rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]">
-    <OtherWalletBtn />
-    <OtherWalletInfoContainer />
+    <div class="absolute top-[0.02rem] left-[0.01rem] z-[-1]" style="width: 2.38rem;height: 1.02rem;">
+      <img :src="getStaticImgUrl(`/static/icons/wallet_bg5.svg`)" alt="">
+    </div>
+    <div class="absolute top-[0] left-[0] z-[-1] rounded-[0.36rem]"
+      style="box-shadow: 0px 4px 20px 0px #0610231a;width: 6.86rem;height: 3.04rem;">
+      <img :src="getStaticImgUrl(`/static/icons/wallet_bg7.svg`)" alt="">
+    </div>
     <OtherImg />
     <span class="text-[0.32rem] text-[#fff]">{{ name }}</span>
     <div class="flex flex-col px-[0.1rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]">
@@ -23,8 +28,6 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import OtherImg from "./OtherWalletInfo/OtherImg.vue";
-import OtherWalletBtn from "./OtherWalletInfo/OtherWalletBtn.vue";
-import OtherWalletInfoContainer from "./OtherWalletInfo/OtherWalletInfoContainer.vue";
 import { ref, watch } from "vue";
 
 const props = defineProps({

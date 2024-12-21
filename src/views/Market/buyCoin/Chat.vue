@@ -35,7 +35,9 @@
               <img class="my_pic" :src="item.content" alt="img" />
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
-            <UserAvatar />
+            <div style="width: 0.8rem;height: 0.8rem">
+              <img :src="getStaticImgUrl(`/static/icons/avatar.svg`)" alt="">
+            </div>
           </div>
         </div>
         <div v-else>
@@ -109,6 +111,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import io from "socket.io-client";
 import { ref, computed, onMounted, onBeforeUnmount, onUpdated } from "vue";
 import { showToast } from "vant";
@@ -119,7 +122,6 @@ import { _fetchWithTimeout } from "@/api/upload";
 import storeChat from "@/store/chat";
 import { _c2cRead } from "@/api/api";
 import IconSvg from "@/components/IconSvg.vue";
-import UserAvatar from "@/components/Chat/UserAvatar.vue";
 import serviceC2C from "@/store/serviceC2C";
 import { serviceChat } from "@/utils/serviceChat";
 import { useI18n } from "vue-i18n";

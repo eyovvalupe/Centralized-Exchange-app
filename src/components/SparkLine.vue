@@ -13,7 +13,8 @@
             <polygon :points="shadowPoints"
                 :style="`fill:url(#${Number(props.ratio)}); stroke: none; opacity: 1; width:100%`">
             </polygon>
-            <polyline :points="newPoints" :style="`fill: none; stroke: ${color}; stroke-width:${polylineStrokeWidth}; width:100%`">
+            <polyline :points="newPoints"
+                :style="`fill: none; stroke: ${color}; stroke-width:${polylineStrokeWidth}; width:100%`">
             </polyline>
         </svg>
     </div>
@@ -28,9 +29,9 @@ const props = defineProps({
         type: [Number, String],
         default: ''
     },
-    polylineStrokeWidth:{
-        type:Number,
-        default:1
+    polylineStrokeWidth: {
+        type: Number,
+        default: 1
     },
     ratio: {
         type: [Number, String],
@@ -44,7 +45,7 @@ const props = defineProps({
         type: Number,
         default: 1
     },
-    height : {
+    height: {
         type: Number,
         default: 30,
     }
@@ -60,16 +61,16 @@ const color = computed(() => {
     }
 })
 const lineWidth = ref(0);
-const newPoints = computed(() => 
-    props.points ? props.points.split(' ').map((val) => { const [x,y] = val.split(','); return `${parseFloat(x)*props.xtimes},${parseFloat(y)*props.ytimes}`}).join(' ') : props.points)
+const newPoints = computed(() =>
+    props.points ? props.points.split(' ').map((val) => { const [x, y] = val.split(','); return `${parseFloat(x) * props.xtimes},${parseFloat(y) * props.ytimes}` }).join(' ') : props.points)
 const shadowPoints = computed(() => {
     // 获取 polyline 的点
     const points = newPoints.value.split(' ').map(point => point.split(','));
     // 获取 SVG 的高度
-    lineWidth.value = parseFloat(points[points.length-1][0]) - parseFloat(points[0][0]) ; 
+    lineWidth.value = parseFloat(points[points.length - 1][0]) - parseFloat(points[0][0]);
     // const svgHeight = root.value ? root.value.clientHeight : 50;
     // 构建 shadowPoints，多边形覆盖 polyline 并扩展到底部
-    const shadowPoints = points.map(p => p.join(',')).join(' ') + ` ${points[points.length - 1][0]},${props.height*props.ytimes} ${points[0][0]},${props.height*props.ytimes}`;
+    const shadowPoints = points.map(p => p.join(',')).join(' ') + ` ${points[points.length - 1][0]},${props.height * props.ytimes} ${points[0][0]},${props.height * props.ytimes}`;
     return shadowPoints;
 })
 

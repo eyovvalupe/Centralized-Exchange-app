@@ -82,7 +82,9 @@
               </div>
             </div>
           </div>
-          <ArrowIcon />
+          <div style="width: 0.2rem;height: 0.12rem">
+            <img :src="getStaticImgUrl(`/static/icons/more_icon.svg`)" alt="">
+          </div>
         </div>
         <FormItem background="#fff" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
           :btn-placeholder="form.toCurrency.name" :placeholder="t('transfer.in_amount')" :inputType="'number'"
@@ -154,7 +156,6 @@ import FormItem from "@/components/Form/FormItem.vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import Decimal from "decimal.js";
-import ArrowIcon from "./page/components/ArrowIcon.vue";
 import AccountCheck from "@/components/AccountCheck.vue";
 import { useI18n } from "vue-i18n";
 

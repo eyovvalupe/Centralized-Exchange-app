@@ -14,7 +14,9 @@
       </div>
       <div class="flex">
         <div class="mr-[0.2rem]">
-          <ServiceAvatar />
+          <div style="width: 0.8rem;height: 0.8rem;">
+            <img :src="getStaticImgUrl(`/static/icons/server.svg`)" alt="">
+          </div>
         </div>
         <div class="flex flex-col">
           <span
@@ -47,11 +49,15 @@
                 </van-image>
               </div>
               <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
-              <UserAvatar />
+              <div style="width: 0.8rem;height: 0.8rem;">
+                <img :src="getStaticImgUrl(`/static/icons/trans4.svg`)" alt="">
+              </div>
             </div>
             <div class="receive-box" v-if="item.direction === 'receive'">
               <div class="mr-[0.2rem]">
-                <ServiceAvatar />
+                <div style="width: 0.8rem;height: 0.8rem;">
+                  <img :src="getStaticImgUrl(`/static/icons/server.svg`)" alt="">
+                </div>
               </div>
               <div class="con break-all receive-text" :class="item.type" v-if="item.type !== 'img'">
                 <div class="receive_text">
@@ -74,7 +80,9 @@
       </div>
       <div class="msg-item" v-for="item in hasNewMessage" :key="item.msgid" :class="item.direction">
         <div class="mr-[0.2rem]">
-          <ServiceAvatar />
+          <div style="width: 0.8rem;height: 0.8rem;">
+            <img :src="getStaticImgUrl(`/static/icons/server.svg`)" alt="">
+          </div>
         </div>
         <div class="msg-item-con">
           <div class="con break-all receive-text" :class="item.type">
@@ -95,13 +103,12 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, onMounted, ref, watch } from "vue";
 import { Lazyload, Image as VanImage } from "vant";
 import { transferTime } from "@/utils";
 import storeChat from "@/store/chat";
 import Loaidng from "@/components/Loaidng.vue";
-import ServiceAvatar from "./ServiceAvatar.vue";
-import UserAvatar from "./UserAvatar.vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
