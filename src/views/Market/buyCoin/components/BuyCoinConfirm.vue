@@ -33,13 +33,13 @@
         </div>
       </div>
       <div class="mt-[0.2rem] pt-[0.4rem] px-[0.32rem] border-solid border-[1px]  box-border rounded-[0.32rem]" v-if="offset == 'sell'">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between h-[0.36rem]">
           <div class="text-[0.32rem] font-bold text-[#061023]">
             收款账户
           </div>
           <span class="text-[#1A59F6]" @click="showAccountDialog=true;" v-if="currentAccount.channel">{{ t('withdraw.change') }}</span>
         </div>
-        <div  class="dialog_account_item py-[0.32rem]" v-if="currentAccount.channel">
+        <div  class="dialog_account_item h-[1.5rem]" v-if="currentAccount.channel">
           <div class="card_icon">
             <img v-if="currentAccount.channel === 'crypto'" class="rounded-50"
               :src="getStaticImgUrl(`/static/img/crypto/${currentAccount.symbol?.toUpperCase()}.png`)" alt="currency" />
@@ -51,8 +51,8 @@
           </div>
           
         </div>
-        <div class="dialog_account_item pt-[0.2rem] pb-[0.12rem]"  v-else>
-          <div class="flex h-18 w-full flex-col items-center justify-center text-my"
+        <div class="dialog_account_item h-[1.5rem] "  v-else>
+          <div class="flex w-full flex-col items-center justify-center text-my"
           @click="showAccountDialog=true;">
             <div class="mb-1 size-6 rounded-50 flex items-center justify-center border-[0.03rem] border-my text-20 leading-none">+</div>
             <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
@@ -87,7 +87,7 @@ const { t } = useI18n();
 const orderConfirmDialog = ref(false)
 const safeword = ref('')
 
-defineProps({
+const props = defineProps({
   volume:[String,Number],
   money:[String,Number],
   currency:String,
@@ -101,7 +101,7 @@ const currentAccount = ref({})
 const emit = defineEmits(['submit',''])
 
 const submit = ()=>{
-  if(!currentAccount.value.id){
+  if(props.offset == 'sell' && !currentAccount.value.id){
     return showToast("请选择收款账户");
   }
   if(!safeword.value){

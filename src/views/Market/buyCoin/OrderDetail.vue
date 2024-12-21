@@ -267,7 +267,6 @@
           </div>
         </div>
 
-
         <!-- 按钮 -->
         <div class="max-width btns" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
           <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn"
@@ -359,10 +358,14 @@ const currItem = ref({
 
 // 获取详情
 const infoLoading = ref(false);
+let firstGet = true
 const getInfo = () => {
   if (infoLoading.value) return;
   if (!route.query.order_no) return;
-  infoLoading.value = true;
+  if(firstGet){
+    infoLoading.value = true;
+    firstGet = false
+  }
   _c2cOrderInfo({
     order_no: route.query.order_no,
   })
@@ -444,7 +447,7 @@ onMounted(() => {
     ) {
       getInfo();
     }
-  }, 5000);
+  }, 6000);
   countInterval = setInterval(() => {
     if (currItem.value.endtime) {
       currItem.value.endtime--;

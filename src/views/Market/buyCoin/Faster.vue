@@ -49,7 +49,7 @@
             <div class="subtitle">
               <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
                 }}</span>
-              <span v-if="form1.offset == 'sell'">
+              <span v-if="form1.offset == 'sell' && currWallet.amount > 0">
                 <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
                 {{ currWallet.amount }} {{ currOut.name }}</span>
                 <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
@@ -57,7 +57,7 @@
             </div>
             <div class="item">
               <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
-              <span class="text-[#014cfa] text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell'">{{
+              <span class="text-[#014cfa] text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
                t('trade.stock_position_all')
               }}</span>
             </div>
