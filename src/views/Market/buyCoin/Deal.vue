@@ -55,12 +55,13 @@
         <input v-model="amount" type="number" @blur="amountBlur" :placeholder="`≤${currWallet.amount}`" class="ipt" />
         <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div>
       </div>
+     
       <!-- 三层容器 -->
       <div class="tip">{{ t('market.market_buy_optional_estreceive') }} {{ showAmount }} {{ info.currWallet }}</div>
 
       <!-- 银行卡 -->
       <div class="leading-18" style="margin-bottom: 0.12rem; margin-top: 0.32rem">{{ t('assets.header_wallet') }}</div>
-      <div v-if="bankList.length" class="card_box" @click="showAccountDialog = true">
+      <div v-if="bank.id" class="card_box" @click="showAccountDialog = true">
         <div class="card_icon">
           <img v-if="bank.symbol" id="img" class="rounded-50"
             :src="getStaticImgUrl(`/static/img/crypto/${bank.symbol.toUpperCase()}.png`)" alt="currency" />
@@ -68,7 +69,7 @@
         </div>
         <div class="card">
           <div class="code">{{ _hiddenAccount(bank.bankCardNumber || bank.address) }}</div>
-          <div class="text-[#666D80]">{{ bank.bankName || bank.symbol }}</div>
+          <div class="text-[#666D80]">{{ bank.bankName || bank.symbol }} | {{ bank.accountName }}</div>
         </div>
 
         <div class="text-12 text-my" @click="goAddAccount">{{ t('withdraw.change') }}</div>
@@ -120,24 +121,25 @@ const info = ref(route.query || {})
 const amount = ref('')
 const showAmount = computed(() => {
   if (!amount.value || amount.value <= 0) return '--'
-  if (info.value.offset == 'buy') {
-    return new Decimal(amount.value).mul(info.value.price)
-  }
-  return new Decimal(amount.value).mul(info.value.price)
+  return new Decimal(amount.value).mul(info.value.price).toFixed(3).slice(0,-1)
 })
 const currWallet = computed(() => {
   return wallet.value.find(item => item.name == info.value.currCrypto) || {}
 })
+
+
+const currencyInfo = computed(() => {
+  const data = store.state.currencyList.find((item) => item.currency == info.value.currCrypto) || {};
+  return data
+});
 
 const amountBlur = ()=>{
   if(isNaN(amount.value) || amount.value <= 0){
     amount.value = ''
     return
   }
-  if(amount.value < info.value.limitmin){
-    amount.value = info.value.limitmin
-  }else if(amount.value > info.value.limitmax){
-    amount.value = info.value.limitmax
+  if(currencyInfo.value.tpp){
+    amount.value = new Decimal(amount.value).toFixed(currencyInfo.value.tpp + 1).slice(0,-1)
   }
 }
 
@@ -151,6 +153,7 @@ const clickAccountItem = item => {
 
 const goSubmit = () => {
   if (!amount.value || amount.value <= 0) return showToast(t('market.market_buy_fast_no_amount'))
+  amount.value = new Decimal(amount.value).toNumber()
   if (amount.value < info.value.limitmin || amount.value > info.value.limitmax) return showToast(`限额：${info.value.limitmin}-${info.value.limitmax}`)
   if (info.value.offset == 'sell') {
     const cueeWallet = wallet.value.find(item => item.name == info.value.currCrypto)
@@ -179,7 +182,7 @@ const submitSell = s => {
         setTimeout(() => {
           router.replace({
             name: 'orderDetails',
-            query: { order_no },
+            query: { order_no }
           })
         }, 300)
       }
