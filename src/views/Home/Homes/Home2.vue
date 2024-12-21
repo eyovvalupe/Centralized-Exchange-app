@@ -39,20 +39,111 @@
                 <div class="btn" v-if="token">去交易</div>
             </div>
 
-            <!-- 资产 -->
-            <div class="assets">
-                <div class="top"
-                    :style="{ 'background-image': token ? `url('${getStaticImgUrl('/static/home2/assets_bg.svg')}')` : '' }">
-                    <div class="total">
-                        <span>总资产 (USDT)</span>
-                    </div>
-                    <div class="amount" v-if="token">{{ assets.total }}</div>
-                    <div class="login" v-if="!token" @click="store.commit('setIsLoginOpen', true)">登录</div>
-                    <div class="login_tip" v-if="!token">先登录方可查看资产</div>
+
+            <!-- 卡片 -->
+            <div class="cards" style="margin-top: 0.56rem">
+                <div class="card-1">
+                    <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
+                        <SwipeItem class="swiper-item">1</SwipeItem>
+                        <SwipeItem class="swiper-item">2</SwipeItem>
+                        <SwipeItem class="swiper-item">3</SwipeItem>
+                    </Swipe>
                 </div>
-                <div class="bottom">
-                    <div class="btn" @click="showAS = true">快速交易</div>
-                    <div class="btn" @click="jump('topUp', true)">充值</div>
+                <div class="card-right">
+                    <div class="card-2">
+                        <!-- 资产 -->
+                        <div class="assets">
+                            <div class="top"
+                                :style="{ 'background-image': token ? `url('${getStaticImgUrl('/static/home2/assets_bg.svg')}')` : '' }">
+                                <div class="total">
+                                    <span>总资产 (USDT)</span>
+                                </div>
+                                <div class="amount" v-if="token">{{ assets.total }}</div>
+                                <div class="recharge" v-if="token">充值</div>
+                                <div class="login" v-if="!token" @click="store.commit('setIsLoginOpen', true)">登录</div>
+                                <div class="login_tip" v-if="!token">先登录方可查看资产</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-4">
+                        <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
+                            <SwipeItem class="swiper-item">1</SwipeItem>
+                            <SwipeItem class="swiper-item">2</SwipeItem>
+                            <SwipeItem class="swiper-item">3</SwipeItem>
+                            <SwipeItem class="swiper-item">4</SwipeItem>
+                        </Swipe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cards" style="margin: 0.32rem 0 0.8rem 0;">
+                <div class="card-3">
+                    <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
+                        <SwipeItem class="swiper-item">1</SwipeItem>
+                        <SwipeItem class="swiper-item">2</SwipeItem>
+                    </Swipe>
+                </div>
+                <div class="card-3">
+                    <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
+                        <SwipeItem class="swiper-item">1</SwipeItem>
+                        <SwipeItem class="swiper-item">2</SwipeItem>
+                        <SwipeItem class="swiper-item">3</SwipeItem>
+                    </Swipe>
+                </div>
+            </div>
+
+
+
+            <!-- 市场推荐 -->
+            <div class="recommend-title">
+                <div>市场推荐</div>
+                <div class="recommend-icon">
+                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="home-tabs-box">
+                <Tabs @change="tabChange" v-if="!pageLoading && activated" type="card" class="tabs"
+                    v-model:active="activeTab" animated shrink>
+                    <Tab :title="$t('common.stock')">
+                        <Loaidng v-if="commendLoading" :loading="commendLoading" />
+                        <div class="pt-[0.12rem]">
+                            <StockItem :item="item" v-for="(item, i) in marketStockCurrentList" :key="'s_' + i"
+                                page="home" />
+                        </div>
+                        <NoData v-if="!commendLoading && !marketStockCurrentList.length" />
+                    </Tab>
+                    <Tab :title="$t('common.crypto')">
+                        <Loaidng v-if="commendLoading" :loading="commendLoading" />
+                        <div class="pt-[0.32rem]">
+                            <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
+                                marketType="crypto" />
+                        </div>
+                        <NoData v-if="!commendLoading && !contractList.length" />
+                    </Tab>
+                    <Tab :title="$t('common.IPO')">
+                        <div>
+                            <IPO ref="ipoRef" :page="'home'" />
+                        </div>
+                    </Tab>
+                    <Tab :title="$t('common.AI')">
+                        <div class="mx-[0.32rem]">
+                            <Ai page="home" />
+                        </div>
+                    </Tab>
+                </Tabs>
+            </div>
+
+
+            <!-- ad -->
+            <div class="ad" :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.png')})` }">
+
+                <div class="ad-bg"></div>
+                <div class="ad-content">
+                    <div class="title">开启你的交易之旅</div>
+                    <div>创造财富之路</div>
+                    <div class="btn">去交易</div>
                 </div>
             </div>
 
@@ -65,17 +156,111 @@
 </template>
 
 <script setup>
-import { ActionSheet } from "vant";
-import { computed } from "vue";
+import { Tab, Tabs, ActionSheet, Swipe, SwipeItem } from "vant";
+import { computed, onActivated, onDeactivated, ref, onMounted } from "vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
+import NoData from "@/components/NoData.vue";
+import Loaidng from "@/components/Loaidng.vue";
+import Ai from "@/views/Market/components/Ai.vue";
+import IPO from "@/views/Market/components/IPO.vue";
+import StockItem from "@/components/StockItem.vue";
+import { _sort, _watchlistDefault, _futures } from "@/api/api";
+import { useSocket } from "@/utils/ws";
 
+const { startSocket } = useSocket();
 const { t } = useI18n();
+const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
 // 总资产
 const assets = computed(() => store.state.assets || {});
+
+
+// 预加载页面
+const pageLoading = computed(() => store.state.pageLoading);
+store.commit("setPageLoading", true);
+
+Promise.all([
+    import("@/views/Market/MarketInfo.vue"),
+    import("@/views/Market/Search.vue"),
+    import("@/views/Public/Login.vue"),
+    import("@/views/assets/TopUpCrypto.vue"),
+]).finally(() => {
+    store.commit("setPageLoading", false);
+});
+
+
+const ipoRef = ref();
+const ipoDataList = computed(() => store.state.ipoDataList || []);
+const tabChange = (val) => {
+    if (val == 2 && !ipoDataList.value.length) {
+        nextTick(() => {
+            ipoRef.value && ipoRef.value.init();
+        });
+    }
+};
+
+// 订阅
+const subs = () => {
+    store.commit("setMarketWatchKeysByPage");
+    store.dispatch("subList", {});
+};
+
+const activated = ref(false);
+onActivated(() => {
+    store.commit("setMarketWatchKeys", []);
+    activated.value = true;
+    subs();
+});
+onDeactivated(() => {
+    activated.value = false;
+    // 取消订阅
+    const socket = startSocket(() => {
+        socket && socket.emit("realtime", ""); // 价格变化
+        socket && socket.emit("snapshot", ""); // 快照数据
+        socket && socket.off("realtime");
+        socket && socket.off("snapshot");
+    });
+});
+
+// 获取推荐数据
+const commendLoading = ref(false);
+const contractList = computed(() => store.state.contractList || []);
+const marketStockCurrentList = computed(
+    () => store.getters.getMarketStockCurrentList || []
+);
+const getRecommendData = () => {
+    commendLoading.value = true;
+    _futures()
+        .then((res) => {
+            if (res.code == 200) {
+                const rs = res.data.map((item) => {
+                    const target = contractList.value.find(
+                        (a) => a.symbol == item.symbol
+                    );
+                    item.type = "crypto";
+                    if (target) {
+                        Object.assign(target, item);
+                        item = target;
+                    }
+                    return item;
+                });
+                store.commit("setContractList", rs || []);
+
+                subs();
+
+                setTimeout(() => {
+                    console.error(contractList.value)
+                })
+            }
+        })
+        .finally(() => {
+            commendLoading.value = false;
+        });
+};
+getRecommendData();
 
 
 // 打开添加类型选择弹窗
@@ -107,6 +292,12 @@ const jump = (name, needToken) => {
         name,
     });
 };
+
+onMounted(() => {
+    store.commit("setMarketWatchKeys", []);
+    activated.value = true;
+    subs();
+});
 </script>
 
 
@@ -146,7 +337,8 @@ const jump = (name, needToken) => {
     .home2-content {
         position: relative;
         z-index: 1;
-        padding-bottom: 2rem;
+        padding: 0 0.32rem 2rem 0.32rem;
+
 
         .home2-header {
             display: flex;
@@ -204,7 +396,6 @@ const jump = (name, needToken) => {
         }
 
         .btns {
-            margin: 0 0.32rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -231,21 +422,104 @@ const jump = (name, needToken) => {
             }
         }
 
+        .cards {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+
+            .swipers {
+                width: 100%;
+                height: 100%;
+                position: relative;
+
+                .swiper-item {
+                    color: #fff;
+                }
+
+                :deep(.van-swipe__indicators) {
+                    .van-swipe__indicator {
+                        width: 0.16rem;
+                        height: 0.08rem;
+                        border-radius: 0.04rem !important;
+                        background-color: rgba(255, 255, 255, 0.3) !important;
+                    }
+
+                    .van-swipe__indicator--active {
+                        background-color: #00F0FF !important;
+                    }
+
+                }
+
+                :deep(.van-swipe__indicators) {
+                    right: 0.2rem !important;
+                    left: auto !important;
+                    transform: translateX(0) !important;
+                }
+            }
+
+            .swipers2 {
+                :deep(.van-swipe__indicators) {
+                    top: 0.24rem !important;
+                }
+            }
+
+            .card-1 {
+                width: 3.26rem;
+                height: 5.36rem;
+                border-radius: 0.4rem;
+                border: 1px solid #222626;
+                position: relative;
+            }
+
+            .card-2 {
+                width: 3.26rem;
+                height: 2.76rem;
+                border-radius: 0.3rem;
+                border: 1px solid #222626;
+                position: relative;
+            }
+
+            .card-3 {
+                width: 3.26rem;
+                height: 3rem;
+                border-radius: 0.4rem;
+                border: 1px solid #222626;
+                background: #000;
+                position: relative;
+            }
+
+            .card-4 {
+                border-radius: 0.2rem;
+                width: 3.26rem;
+                height: 2.36rem;
+                border: 1px solid #222626;
+                position: relative;
+            }
+
+            .card-right {
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: space-between;
+            }
+        }
+
         .assets {
             border-radius: 0.3rem;
             border: 1px solid #222626;
-            margin: 0.4rem 0.32rem;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
 
             .top {
-                background-size: 100% 100%;
+                background-size: cover;
                 background-color: rgba(255, 255, 255, 0.05);
-                height: 2.4rem;
+                height: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 border-radius: 0.3rem;
-                border: 1px solid #222626;
                 position: relative;
                 top: -1px;
                 font-weight: 400;
@@ -280,27 +554,174 @@ const jump = (name, needToken) => {
                     font-size: 0.48rem;
                     line-height: 0.48rem;
                     margin-top: 0.24rem;
+                    word-break: break-all;
                 }
-            }
 
-            .bottom {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0.14rem 0;
-
-                .btn {
-                    flex: 1;
-                    height: 0.52rem;
+                .recharge {
+                    height: 0.6rem;
+                    padding: 0 0.6rem;
+                    border-radius: 0.3rem;
+                    background-color: #fff;
+                    font-size: 0.24rem;
+                    font-weight: 400;
+                    color: #000;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    color: #fff;
+                    margin-top: 0.36rem;
+                }
+            }
+        }
 
-                    &:nth-child(1) {
-                        border-right: 1px solid #222626;
+        .recommend-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #FFF;
+            font-size: 0.36rem;
+            font-weight: 600;
+
+            .recommend-icon {
+                width: 0.84rem;
+                height: 0.48rem;
+                border-radius: 0.3rem;
+                border: 1px solid #00F0FF;
+                padding: 0 0.22rem;
+            }
+        }
+
+        .home-tabs-box {
+            margin-top: 0.44rem;
+
+            // 这里重写元素的样式
+            :deep(.stock_item_box) {
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0);
+                }
+            }
+
+            :deep(.stock_item) {
+                border-radius: 15px;
+                border: 1px solid var(--2, #222626);
+                background: rgba(255, 255, 255, 0.06);
+                margin-bottom: 0.2rem;
+
+                &::after {
+                    display: none;
+                }
+
+                .td5 {
+                    .item_name {
+                        color: #fff;
+                    }
+
+                    .item_info {
+                        color: rgba(255, 255, 255, 0.50);
                     }
                 }
+            }
+
+            :deep(.van-tabs__nav) {
+                background-color: rgba(0, 0, 0, 0);
+            }
+
+            :deep(.van-tab--card) {
+                border-right: none;
+                color: #061023;
+                border-radius: 0.32rem;
+                margin-right: 0.1rem;
+                transition: all ease 0.2s;
+
+            }
+
+            :deep(.van-tab--card.van-tab--active) {
+                background-color: #00F0FF;
+                border-color: #00F0FF;
+                border-radius: 0.32rem;
+                color: #000;
+                font-weight: 500;
+                font-size: 0.3rem;
+            }
+
+            :deep(.van-tab--shrink) {
+                padding: 0 0.3rem;
+            }
+
+            :deep(.van-tabs__wrap) {
+                height: 0.68rem;
+            }
+
+            :deep(.van-tabs__nav--card) {
+                height: 0.68rem;
+                margin: 0;
+                border: none;
+            }
+
+            :deep(.van-tab) {
+                line-height: 0.68rem;
+                font-size: 0.3rem;
+                border: 0.02rem solid rgba(0, 0, 0, 0);
+                border-radius: 0.32rem;
+                color: rgba(255, 255, 255, 0.5);
+                background-color: rgba(255, 255, 255, 0.10);
+            }
+        }
+
+        .ad {
+            width: 100%;
+            height: 3.5rem;
+            margin-top: 0.2rem;
+            font-size: 0.32rem;
+            font-style: normal;
+            font-weight: 400;
+            color: #fff;
+            line-height: normal;
+            border-radius: 0.32rem;
+            position: relative;
+            overflow: hidden;
+
+            .ad-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, rgba(215, 100, 255, 0.20) 4.53%, rgba(0, 240, 255, 0.20) 100%);
+                filter: blur(1rem);
+            }
+
+            .ad-content {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .title {
+                font-size: 0.48rem;
+                font-weight: 600;
+                margin-bottom: 0.04rem;
+            }
+
+            .btn {
+                padding: 0 0.56rem;
+                height: 0.8rem;
+                border-radius: 1rem;
+                background-color: #00F0FF;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.3rem;
+                font-weight: 600;
+                color: #000;
+                margin-top: 0.36rem;
             }
         }
     }

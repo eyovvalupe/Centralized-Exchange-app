@@ -42,7 +42,7 @@
           <!-- 对方文本 -->
           <div v-if="item.type == 'text'" :id="`a${item.msgid}`" class="op_text_box">
             <div class="mr-[0.2rem]">
-              <DialogCIcon />
+              <div class="avatar_icon">商</div>
             </div>
 
             <div class="op_text">
@@ -61,7 +61,7 @@
               }}
             </div> -->
             <div class="mr-[0.2rem]">
-              <DialogCIcon />
+              <div class="avatar_icon">商</div>
             </div>
             <div class="op_text">
               <div class="van-popover__arrow" />
@@ -80,7 +80,7 @@
               }}
             </div> -->
             <div class="mr-[0.2rem]">
-              <DialogCIcon />
+              <div class="avatar_icon">商</div>
             </div>
             <div class="op_pic">
               <img class="op_pic_content" :src="item.content" alt="img" />
@@ -119,7 +119,6 @@ import { _fetchWithTimeout } from "@/api/upload";
 import storeChat from "@/store/chat";
 import { _c2cRead } from "@/api/api";
 import IconSvg from "@/components/IconSvg.vue";
-import DialogCIcon from "./components/DialogCIcon.vue";
 import UserAvatar from "@/components/Chat/UserAvatar.vue";
 import serviceC2C from "@/store/serviceC2C";
 import { serviceChat } from "@/utils/serviceChat";
@@ -297,6 +296,20 @@ onBeforeUnmount(() => {
   //   border-right-color: #f6f8fe;
   //   color: #f6f8fe;
   // }
+
+  .avatar_icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background-color: #2068F6;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.36rem;
+    font-weight: bold;
+  }
+
   .list {
     flex: 1;
     overflow-y: auto;
@@ -350,6 +363,7 @@ onBeforeUnmount(() => {
           color: #aeaeae;
         }
       }
+
     }
 
     .op_text_box {

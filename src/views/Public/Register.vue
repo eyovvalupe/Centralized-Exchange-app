@@ -168,7 +168,9 @@
                 class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-[#eff3f8]"
                 :class="{ transfer_dialog_item_active: form.area == item.code }">
                 <div class="flex h-[1.08rem] items-center">
-                  <HKFlagIcon class="mr-[0.2rem]" />
+                  <div style="width: 0.64rem;height: 0.64rem;">
+                    <img :src="getStaticImgUrl('/static/icons/hk.svg')" alt="">
+                  </div>
                   <span>{{ item.cn }}</span>
                   <span>({{ item.code }})</span>
                 </div>
@@ -209,7 +211,6 @@ import ImgCheck from "@/components/ImgCheck.vue";
 import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
 import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
-import HKFlagIcon from "./Icons/HKFlagIcon.vue";
 import { useI18n } from "vue-i18n";
 import { DESKTOP_INVITE_URL, MOBILE_INVITE_URL } from "@/config";
 
