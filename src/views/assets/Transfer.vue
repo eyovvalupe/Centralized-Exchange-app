@@ -58,8 +58,7 @@
           <span class="text-[0.28rem] text-[#666d80]">{{ $t("transfer.in") }}</span>
         </div>
         <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-          <!-- <img :rc="getStaticImgUrl('/static/img/assets/recharge_trans.png')" alt="img" /> -->
-           <TransferingIcon />
+          <img :rc="getStaticImgUrl('/static/icons/trans2.svg')" alt="img" />
         </div>
         <div
           class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
@@ -158,7 +157,6 @@ import Decimal from "decimal.js";
 import ArrowIcon from "./page/components/ArrowIcon.vue";
 import AccountCheck from "@/components/AccountCheck.vue";
 import { useI18n } from "vue-i18n";
-import TransferingIcon from "./page/icons/TransferingIcon.vue";
 
 const { t } = useI18n();
 const AccountCheckRef = ref();

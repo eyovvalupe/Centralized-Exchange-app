@@ -8,11 +8,9 @@
         <span class="text-[0.3rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]" style="width: max-content">{{ name
           }}</span><span class="flex items-end text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
           style="width: max-content">(USDT)</span>
-        <div @click.stop="toggleShow" v-if="showInfo">
-          <ShowEye />
-        </div>
-        <div @click.stop="toggleShow" v-if="!showInfo">
-          <HiddenEye />
+        <div @click.stop="toggleShow" style="width: 0.4rem;height: 0.4rem;">
+          <img v-if="showInfo" :src="getStaticImgUrl(`/static/icons/eye_open_white.svg`)" alt="">
+          <img v-else :src="getStaticImgUrl(`/static/icons/eye_close_white.svg`)" alt="">
         </div>
       </div>
       <span class="text-[0.52rem] text-[#061023] font-semibold">{{
@@ -60,10 +58,9 @@
   </div>
 </template>
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import DefaultWalletBtn from "./DefaultWalletInfo/DefaultWalletBtn.vue";
 import DefaultWalletInfoContainer from "./DefaultWalletInfo/DefaultWalletInfoContainer.vue";
-import HiddenEye from "./HiddenEye.vue";
-import ShowEye from "./ShowEye.vue";
 import StockImg from "./StockWalletInfo/StockImg.vue";
 import StockWalletBtn from "./StockWalletInfo/StockWalletBtn.vue";
 import StockWalletInfoContainer from "./StockWalletInfo/StockWalletInfoContainer.vue";

@@ -13,7 +13,7 @@
     </div>
     <div class="item_box flex justify-between">
       <div class="icon_to">
-        <ChangeIcon />
+        <img :src="getStaticImgUrl(`/static/icons/trans5.svg`)" alt="">
       </div>
       <div class="flex items-center">
         <span class="item_icon"><img :src="getStaticImgUrl(`/static/img/crypto/${item.account_to.toUpperCase()}.png`)"
@@ -31,7 +31,6 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import { _accountMap } from "@/utils/dataMap";
-import ChangeIcon from "@/views/assets/page/icons/ChangeIcon.vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();

@@ -15,9 +15,9 @@
         <input ref="iptDom" v-model="val" :type="passwordInputType" :class="{ err_ipt: errStatus }"
           :placeholder="$t('assets.safety_trade_placeholder')" class="pass_ipt" enterkeyhint="done"
           @blur="errStatus = false" @keydown.enter="submit" />
-        <div class="show_hidden_icon">
-          <ShowEye v-if="showPassword" @click="passwordVisibility" />
-          <HiddenEye v-else @click="passwordVisibility" />
+        <div class="show_hidden_icon" @click="passwordVisibility">
+          <img v-if="showPassword" :src="getStaticImgUrl(`/static/icons/eye_open_white.svg`)" alt="">
+          <img v-else :src="getStaticImgUrl(`/static/icons/eye_close_white.svg`)" alt="">
         </div>
       </div>
 
@@ -33,8 +33,7 @@
 </template>
 
 <script setup>
-import HiddenEye from "@/views/assets/page/components/HiddenEye.vue";
-import ShowEye from "@/views/assets/page/components/ShowEye.vue";
+import { getStaticImgUrl } from "@/utils/index.js"
 import { Popup, Button, showToast } from "vant";
 import { ref, computed } from "vue";
 

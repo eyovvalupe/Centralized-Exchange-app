@@ -21,16 +21,8 @@
       </div>
       <div class="w-full ml-[16px] mt-[16px] flex items-center">
         <div class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]">
-          <div v-if="!fiat.includes(item.name)" style="width:0.4rem;height: 0.39rem;">
+          <div style="width:0.4rem;height: 0.39rem;">
             <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" alt="">
-          </div>
-          <div v-else>
-            <div v-if="item.name == 'INR'">
-              <IndiaIcon />
-            </div>
-            <div v-if="item.name == 'USD'">
-              <USIcon />
-            </div>
           </div>
         </div>
         <div class="text-[15px] text-[#061023]">{{ item.name }}</div>
@@ -40,16 +32,8 @@
       @click="click(item)">
       <div class="w-full ml-[0.32rem] flex items-center">
         <div class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]">
-          <div v-if="!fiat.includes(item.name)" style="width:0.4rem;height: 0.39rem;">
+          <div style="width:0.4rem;height: 0.39rem;">
             <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" alt="">
-          </div>
-          <div v-else>
-            <div v-if="item.name == 'INR'">
-              <IndiaIcon />
-            </div>
-            <div v-if="item.name == 'USD'">
-              <USIcon />
-            </div>
           </div>
         </div>
         <div class="text-[15px] text-[#061023]">{{ item.name }}</div>
@@ -62,8 +46,6 @@
 import { getStaticImgUrl } from "@/utils/index.js"
 import { useI18n } from "vue-i18n";
 import { fiat } from "@/utils/dataMap";
-import IndiaIcon from "../icons/IndiaIcon.vue";
-import USIcon from "../icons/USIcon.vue";
 
 const emits = defineEmits(["click"]);
 const props = defineProps({

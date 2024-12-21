@@ -1,29 +1,17 @@
 <template>
-  <div
-    class="relative w-[6.86rem] h-[3.04rem] pt-[0.16rem] pl-[0.24rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]"
-  >
+  <div class="relative w-[6.86rem] h-[3.04rem] pt-[0.16rem] pl-[0.24rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]">
     <OtherWalletBtn />
     <OtherWalletInfoContainer />
     <OtherImg />
     <span class="text-[0.32rem] text-[#fff]">{{ name }}</span>
-    <div
-      class="flex flex-col px-[0.1rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]"
-    >
+    <div class="flex flex-col px-[0.1rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]">
       <div class="flex">
-        <span
-          class="text-[0.3rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
-          style="width: max-content"
-          >{{ type }}</span
-        ><span
-          class="flex items-end text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
-          style="width: max-content"
-          >(USDT)</span
-        >
-        <div @click.stop="toggleShow" v-if="showInfo">
-          <ShowEye />
-        </div>
-        <div @click.stop="toggleShow" v-if="!showInfo">
-          <HiddenEye />
+        <span class="text-[0.3rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]" style="width: max-content">{{ type
+          }}</span><span class="flex items-end text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
+          style="width: max-content">(USDT)</span>
+        <div @click.stop="toggleShow" style="width: 0.4rem;height: 0.4rem;">
+          <img v-if="showInfo" :src="getStaticImgUrl(`/static/icons/eye_open_white.svg`)" alt="">
+          <img v-else :src="getStaticImgUrl(`/static/icons/eye_close_white.svg`)" alt="">
         </div>
       </div>
       <span class="text-[0.52rem] text-[#061023] font-semibold">{{
@@ -33,11 +21,10 @@
   </div>
 </template>
 <script setup>
-import HiddenEye from "./HiddenEye.vue";
+import { getStaticImgUrl } from "@/utils/index.js"
 import OtherImg from "./OtherWalletInfo/OtherImg.vue";
 import OtherWalletBtn from "./OtherWalletInfo/OtherWalletBtn.vue";
 import OtherWalletInfoContainer from "./OtherWalletInfo/OtherWalletInfoContainer.vue";
-import ShowEye from "./ShowEye.vue";
 import { ref, watch } from "vue";
 
 const props = defineProps({

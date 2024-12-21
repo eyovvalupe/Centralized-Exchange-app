@@ -43,12 +43,8 @@
         </div>
         <div class="w-full flex items-center flex-col mb-[0.4rem]">
           <div class="mb-[0.16rem]">
-            <div v-if="!fiat.includes(selectedItem.name)" style="width: 0.64rem;height: 0.63rem">
+            <div style="width: 0.64rem;height: 0.63rem">
               <img :src="getStaticImgUrl(`/static/img/crypto/${selectedItem.name}.png`)" alt="">
-            </div>
-            <div v-else>
-              <IndiaIcon v-if="selectedItem.name == 'INR'" :size="'0.64rem'" />
-              <USIcon v-if="selectedItem.name == 'USD'" :size="'0.64rem'" />
             </div>
           </div>
           <div class="text-[0.3rem] text-[#061023]">
@@ -66,7 +62,9 @@
               handle = false;
             }
               ">
-            <DepositColorIcon class="mb-[0.16rem]" />
+            <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
+              <img :src="getStaticImgUrl(`/static/icons/deposit_color.svg`)" alt="">
+            </div>
             <div class="text-[#014cfa] text-[0.32rem]">{{ t('assets.coin_list_recharge') }}</div>
           </div>
           <div v-if="selectedItem.account == 'money'"
@@ -79,7 +77,9 @@
               handle = false;
             }
               ">
-            <WithdrawColorIcon class="mb-[0.16rem]" />
+            <div class="mb-[0.16rem]" style="width:0.8rem;height:0.8rem">
+              <img :src="getStaticImgUrl(`/static/icons/withdraw_color.svg`)" alt="">
+            </div>
             <div class="text-[#fa7500] text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
           </div>
           <div class="h-[1.565rem] rounded-[0.32rem] bg-[#00af701a] flex flex-col items-center pt-[0.16rem]"
@@ -91,7 +91,9 @@
               handle = false;
             }
               ">
-            <TransferColorIcon class="mb-[0.16rem]" />
+            <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
+              <img :src="getStaticImgUrl(`/static/icons/trans4.svg`)" alt="">
+            </div>
             <div class="text-[#00af70] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') :
               t('transfer.in') }}</div>
           </div>
@@ -104,7 +106,9 @@
               handle = false;
             }
               ">
-            <TransferOutColorIcon class="mb-[0.16rem]" />
+            <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
+              <img :src="getStaticImgUrl(`/static/icons/share.svg`)" alt="">
+            </div>
             <div class="text-[#e8503a] text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.out_sim') :
               t('transfer.out') }}</div>
           </div>
@@ -131,14 +135,8 @@ import OrderCenter from "./page/OrderCenter.vue";
 import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
 import CancelIcon from "./page/icons/CancelIcon.vue";
-import DepositColorIcon from "./page/icons/DepositColorIcon.vue";
-import WithdrawColorIcon from "./page/icons/WithdrawColorIcon.vue";
-import TransferColorIcon from "./page/icons/TransferColorIcon.vue";
-import TransferOutColorIcon from "./page/icons/TransferOutColorIcon.vue";
 import AiItem from "../Market/components/AiItem.vue";
 import { fiat } from "@/utils/dataMap";
-import IndiaIcon from "./page/icons/IndiaIcon.vue";
-import USIcon from "./page/icons/USIcon.vue";
 
 const { t } = useI18n();
 const handle = ref(false);
