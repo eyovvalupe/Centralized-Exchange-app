@@ -10,20 +10,7 @@
       </div>
 
       <div class="bottom_nav_name">
-        <!-- {{ item.name }} -->
-        {{
-          item.route == "home"
-            ? t("home.homepage")
-            : item.route == "market"
-              ? t("home.market")
-              : item.route == "trade"
-                ? t("home.trade")
-                : item.route == "assets"
-                  ? t("home.assets")
-                  : item.route == "user"
-                    ? t("home.user")
-                    : '--'
-        }}
+        {{ item.name }}
       </div>
 
       <!-- c2c角标 -->
@@ -56,17 +43,17 @@ const activeRoute = computed(() => route.name);
 const token = computed(() => store.state.token);
 
 const navs = ref([
-  { name: "首页", route: "home", icon: "/static/img/bottom/shouye1.svg", icon2: "/static/img/bottom/shouye2.svg" },
+  { name: t("home.homepage"), route: "home", icon: "/static/img/bottom/shouye1.svg", icon2: "/static/img/bottom/shouye2.svg" },
   {
-    name: "市场",
+    name: t("home.market"),
     route: "market",
     children: ["market_info", "financial_info", "trading_rules"],
     icon: "/static/img/bottom/shichang1.svg",
     icon2: "/static/img/bottom/shichang2.svg",
   },
-  { name: "交易", route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
+  { name: t("home.trade"), route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
   {
-    name: "资产",
+    name: t("home.assets"),
     route: "assets",
     children: ["transfer"],
     icon: "/static/img/bottom/zichan1.svg",
@@ -74,7 +61,7 @@ const navs = ref([
     needLogin: true,
   },
   {
-    name: "用户",
+    name: t("home.user"),
     route: "user",
     children: ["account"],
     icon: "/static/img/bottom/yonghu1.svg",

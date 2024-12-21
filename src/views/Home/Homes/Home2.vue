@@ -42,11 +42,18 @@
 
             <!-- 卡片 -->
             <div class="cards" style="margin-top: 0.56rem">
+                <!-- banner -->
                 <div class="card-1">
                     <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
-                        <SwipeItem class="swiper-item">1</SwipeItem>
-                        <SwipeItem class="swiper-item">2</SwipeItem>
-                        <SwipeItem class="swiper-item">3</SwipeItem>
+                        <SwipeItem class="swiper-item">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
+                        </SwipeItem>
+                        <SwipeItem class="swiper-item">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
+                        </SwipeItem>
+                        <SwipeItem class="swiper-item">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
+                        </SwipeItem>
                     </Swipe>
                 </div>
                 <div class="card-right">
@@ -67,10 +74,17 @@
                     </div>
                     <div class="card-4">
                         <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
-                            <SwipeItem class="swiper-item">1</SwipeItem>
-                            <SwipeItem class="swiper-item">2</SwipeItem>
-                            <SwipeItem class="swiper-item">3</SwipeItem>
-                            <SwipeItem class="swiper-item">4</SwipeItem>
+                            <SwipeItem class="swiper-item" v-for="i in 3" :key="i">
+                                <div class="notice-item">
+                                    <div class="notice-icon">
+                                        <img :src="getStaticImgUrl('/static/home2/notice.svg')" alt="">
+                                    </div>
+                                    <div class="notice-con">
+                                        <div class="notice-info">阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿</div>
+                                        <div class="notice-more">详情&gt;&gt;</div>
+                                    </div>
+                                </div>
+                            </SwipeItem>
                         </Swipe>
                     </div>
                 </div>
@@ -79,15 +93,44 @@
             <div class="cards" style="margin: 0.32rem 0 0.8rem 0;">
                 <div class="card-3">
                     <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
-                        <SwipeItem class="swiper-item">1</SwipeItem>
-                        <SwipeItem class="swiper-item">2</SwipeItem>
+                        <SwipeItem class="swiper-item" v-for="(item, i) in marketSrockRecommendList" :key="i">
+                            <div class="stock-item">
+                                <div class="stock-symbol">{{ item.symbol }}</div>
+                                <div class="stock-name">{{ item.name || `&nbsp;` }}</div>
+                                <div class="stock-price">
+                                    <b> {{ item.price ? item.price : "--" }}</b>
+                                    <span>{{ (item.ratio || 0) > 0
+                                        ? "+" + (item.ratio || 0)
+                                        : item.ratio || 0
+                                        }}% </span>
+                                </div>
+                                <div class="stock-spark">
+                                    <SparkLine style="transform: scaleX(2.3) scaleY(1.8);transform-origin: 0 0;"
+                                        v-if="item.points" :points="item.points" :ratio="item.ratio" />
+                                </div>
+                            </div>
+                        </SwipeItem>
                     </Swipe>
                 </div>
                 <div class="card-3">
                     <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
-                        <SwipeItem class="swiper-item">1</SwipeItem>
-                        <SwipeItem class="swiper-item">2</SwipeItem>
-                        <SwipeItem class="swiper-item">3</SwipeItem>
+                        <SwipeItem class="swiper-item" v-for="(item, i) in marketContractRecommendList" :key="i">
+                            <div class="stock-item">
+                                <div class="stock-symbol">{{ item.symbol }}</div>
+                                <div class="stock-name">{{ item.name || `&nbsp;` }}</div>
+                                <div class="stock-price">
+                                    <b> {{ item.price ? item.price : "--" }}</b>
+                                    <span>{{ (item.ratio || 0) > 0
+                                        ? "+" + (item.ratio || 0)
+                                        : item.ratio || 0
+                                        }}% </span>
+                                </div>
+                                <div class="stock-spark">
+                                    <SparkLine style="transform: scaleX(2.3) scaleY(1.8);transform-origin: 0 0;"
+                                        v-if="item.points" :points="item.points" :ratio="item.ratio" />
+                                </div>
+                            </div>
+                        </SwipeItem>
                     </Swipe>
                 </div>
             </div>
@@ -169,6 +212,7 @@ import IPO from "@/views/Market/components/IPO.vue";
 import StockItem from "@/components/StockItem.vue";
 import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import { useSocket } from "@/utils/ws";
+import SparkLine from "@/components/SparkLine.vue";
 
 const { startSocket } = useSocket();
 const { t } = useI18n();
@@ -262,6 +306,55 @@ const getRecommendData = () => {
 };
 getRecommendData();
 
+
+// 热门数据
+const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
+const marketContractRecommendList = computed(() => store.state.marketContractRecommendList || [])
+const recommendLoading = ref(false);
+const openRecommendList = () => {
+    if (!marketSrockRecommendList.value.length || !marketContractRecommendList.value.length) {
+        recommendLoading.value = true;
+    }
+    _watchlistDefault()
+        .then((res) => {
+            if (res.code == 200) {
+                // 股票
+                if (res.data?.stock) {
+                    const newarr = res.data.stock.map((item) => {
+                        const target = store.state.marketSrockRecommendList.find(
+                            (a) => a.symbol == item.symbol
+                        );
+                        return target || item;
+                    });
+                    const arr = newarr.map((item) => {
+                        return { ...item, type: "stock" };
+                    });
+                    store.commit("setMarketSrockRecommendList", arr || []);
+                }
+
+                // 合约
+                if (res.data?.crypto) {
+                    const newarr2 = res.data.crypto.map((item) => {
+                        const target = store.state.marketContractRecommendList.find(
+                            (a) => a.symbol == item.symbol
+                        );
+                        return target || item;
+                    });
+                    const arr2 = newarr2.map((item) => {
+                        return { ...item, type: "crypto" };
+                    });
+                    store.commit("setMarketContractRecommendList", arr2 || []);
+                }
+                subs();
+            }
+        })
+        .finally(() => {
+            recommendLoading.value = false;
+        });
+};
+setTimeout(() => {
+    openRecommendList()
+}, 1000)
 
 // 打开添加类型选择弹窗
 const showAS = ref(false);
@@ -434,6 +527,88 @@ onMounted(() => {
 
                 .swiper-item {
                     color: #fff;
+                    overflow: hidden;
+                    border-radius: 0.32rem;
+
+                    .notice-item {
+                        display: flex;
+                        align-items: flex-start;
+                        padding: 0.2rem;
+
+                        .notice-icon {
+                            width: 0.32rem;
+                            height: 0.32rem;
+                            margin-right: 0.16rem;
+                            position: relative;
+                            top: 0.04rem;
+                        }
+
+                        .notice-con {
+                            flex: 1;
+
+                            .notice-info {
+                                color: #fff;
+                                font-size: 0.28rem;
+                                font-weight: 400;
+                                line-height: 0.4rem;
+                                display: -webkit-box;
+                                -webkit-box-orient: vertical;
+                                -webkit-line-clamp: 3;
+                                /* 显示的行数，超出部分会省略 */
+                                overflow: hidden;
+                            }
+
+                            .notice-more {
+                                font-size: 0.24rem;
+                                color: #00F0FF;
+                                font-weight: 400;
+                                margin-top: 0.24rem;
+                                line-height: 0.32rem;
+                            }
+                        }
+                    }
+
+                    .stock-item {
+                        padding-top: 0.32rem;
+                        overflow: hidden;
+                        border-radius: 0.32rem;
+
+                        .stock-symbol {
+                            color: #FFF;
+                            font-size: 0.32rem;
+                            font-weight: 600;
+                            line-height: 0.32rem;
+                            margin-bottom: 0.16rem;
+                            padding-left: 0.24rem;
+                        }
+
+                        .stock-name {
+                            color: rgba(255, 255, 255, 0.70);
+                            font-size: 0.24rem;
+                            font-weight: 400;
+                            line-height: 0.24rem;
+                            padding-left: 0.24rem;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;
+                        }
+
+                        .stock-price {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            margin-top: 0.24rem;
+                            padding: 0 0.24rem;
+                        }
+
+                        .stock-spark {
+                            width: 100%;
+                            height: 1.12rem;
+                            position: relative;
+                            top: 0.04rem;
+                            margin-top: 0.24rem;
+                        }
+                    }
                 }
 
                 :deep(.van-swipe__indicators) {

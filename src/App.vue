@@ -32,12 +32,18 @@ import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
 import SuccessToast from "./views/User/Account/SuccessToast.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
+import { BOTTOMBAR_MODE } from "@/config.js"
 
 const showSuccessToast = computed(() => store.state.showSuccessToast);
 
-const BottomTabBar = defineAsyncComponent(() =>
-  import("@/components/BottomTabBar.vue")
-);
+const BottomTabBar = ref(null);
+if (BOTTOMBAR_MODE == 1) {
+  BottomTabBar.value = defineAsyncComponent(() => import("@/components/BottomTabBar.vue"))
+}
+if (BOTTOMBAR_MODE == 2) {
+  BottomTabBar.value = defineAsyncComponent(() => import("@/components/BottomTabBar2.vue"))
+}
+console.error('????', BottomTabBar.value)
 // console.error("---storage---");
 // console.error(store.state)
 

@@ -9,7 +9,8 @@ export const VERSION = 'wb_1216_a'
 
 /* 首页模板 */
 export const HOME_MODE = 1
-
+/* 底部导航模板 */
+export const BOTTOMBAR_MODE = 1
 
 /* 开发环境 */
 // export const BASE_SOCKET = 'ws://54.169.182.60:9093'; // ws地址
