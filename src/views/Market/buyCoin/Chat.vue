@@ -32,7 +32,7 @@
 
             <!-- 我的图片 -->
             <div v-if="item.type == 'img'" :id="`a${item.msgid}`" class="my_pic_box">
-              <img class="my_pic" :src="item.content" alt="img" />
+              <img class="my_pic" @click="preview(item.content)" :src="item.content" alt="img" />
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
             <div style="width: 0.8rem;height: 0.8rem">
@@ -114,7 +114,7 @@
 import { getStaticImgUrl } from "@/utils/index.js"
 import io from "socket.io-client";
 import { ref, computed, onMounted, onBeforeUnmount, onUpdated } from "vue";
-import { showToast } from "vant";
+import { showToast,showImagePreview } from "vant";
 import { CHAT_WEBSOCKET, UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config";
 import store from "@/store";
 import { randomFileName, _compressImg } from "@/utils";
@@ -178,6 +178,9 @@ const sendMessage = (url) => {
     scrollToBottom();
   }
 };
+const preview = (src)=>{
+  showImagePreview([src])
+}
 const uploadImg = (event) => {
   const file = event.target.files[0];
   const fileName = randomFileName(file.name);
@@ -236,7 +239,6 @@ const scrollToBottom = () => {
   //     pause();
   //   }
   // }, 20);
-  console.log(listRef.value.scrollTop);
   listRef.value.scrollTop = listRef.value.scrollHeight + 100;
 };
 
