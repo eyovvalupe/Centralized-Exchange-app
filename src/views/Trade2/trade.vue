@@ -186,6 +186,7 @@
                 :handleClick="handleClick"
                 :loading="searchLoading"
                 :list="searchStr ? searchResultList : marketSearchList"
+                :page="'trade'"
               />
             </div>
           </Tab>
@@ -197,6 +198,7 @@
                 :handleClick="handleClickContract"
                 :loading="searchLoading"
                 :list="searchStr ? searchResultList : futuresSearchList"
+                :page="'trade'"
               />
             </div>
           </Tab>
@@ -347,7 +349,6 @@ const reDir = () => {
     activeTab.value = 0;
   }
 
-  console.log("activeTab", activeTab.value);
   initialSwipe.value = activeTab.value;
 
   setTimeout(() => {

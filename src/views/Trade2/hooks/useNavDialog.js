@@ -258,6 +258,7 @@ export const useNavDialog = (activeTab) => {
                 const target = marketSearchList.value.find(
                   (a) => a.symbol == item.symbol
                 );
+                item.type = 'stock'
                 if (target)
                   return {
                     ...target,
