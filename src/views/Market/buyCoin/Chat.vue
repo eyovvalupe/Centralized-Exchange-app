@@ -91,6 +91,7 @@
           </div>
         </div>
       </div>
+      <div class="van-safe-area-bottom min-h-[2rem]"></div>
     </div>
     <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white">
       <div class="h-[0.02rem] w-full bg-[#EAEEF3]" />
@@ -287,11 +288,9 @@ onBeforeUnmount(() => {
 
 <style lang="less" scoped>
 .buycoin-chat {
-  padding: 0.2rem 0;
-  display: flex;
-  flex-direction: column;
   position: relative;
-
+  height: 100%;
+  box-sizing: border-box;
   // overflow: hidden;
   // .van-popover__arrow {
   //   top: 0.32rem;
@@ -315,11 +314,11 @@ onBeforeUnmount(() => {
   }
 
   .list {
-    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    // background-color: red;
-    max-height: 13rem;
+    
+    position: relative;
+    height: 100%;
 
     .op_pic_box {
       display: flex;
