@@ -42,7 +42,7 @@
           <div class="text-12">
             <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
               <!-- 根据交易类型显示“购入”或“售出” -->
-              <span :class="{'text-[#E8503A]': item.offset == 'sell'}">{{
+              <span :class="[item.offset == 'sell' ? 'text-[#E8503A]' : 'text-[#18B762]']">{{
                 item.offset == "buy"
                   ? t("market.market_buy_list_buy")
                   : t("market.market_buy_list_sell")
