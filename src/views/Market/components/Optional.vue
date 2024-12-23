@@ -4,7 +4,6 @@
     <OptionCategory />
     <StockTable style="margin-top: 0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
       :deleteItem="!!token" class="market_optional" :list="watchList" :marketType="marketType" />
-    {{ console.log("watch list ===========> ", watchList) }}
     <div class="addBtn_container">
       <Button round icon="plus" plain type="primary" hairline="" class="addBtn px-[0.1rem]" @click="jump('search')">{{
         t('market.market_optional_add') }}</Button>

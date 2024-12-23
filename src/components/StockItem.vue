@@ -15,7 +15,7 @@
         <div :class="['stock_item']">
           <div class="td5">
             <div class="item_name flex items-center gap-1">
-              <span class="truncate" v-if="item.type == 'crypto'">{{
+              <span class="truncate" v-if="item.type != 'stock'">{{
                 props.item.name
               }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>
@@ -38,12 +38,11 @@
                 }}
               </div>
             </div>
-            {{ console.log(props.item) }}
-            <div class="item_info" v-show="props.item.type == 'stock'">
+            <div class="item_info" v-show="props.item.type == 'stock' || item.type == undefined">
               {{ props.item.name || "--" }}
             </div>
             <div
-              v-if="props.page != 'trade'"
+              v-if="props.page != 'trade' && props.page != 'home'"
               class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
               style="width: max-content"
               v-show="props.item.type != 'stock'"

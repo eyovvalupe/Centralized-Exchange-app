@@ -119,7 +119,7 @@ const goTrade = () => {
     },
   });
   if (route.name == "trade") {
-    // emits("clickItems", props.item);
+    emits("clickItems", props.item);
   }
 };
 

@@ -76,7 +76,6 @@ const getList = () => {
   })
     .then((res) => {
       const list = res.data || [];
-      console.log("ai===============> ", list);
       switch (by) {
         case "ratereturn":
           store.commit("setMarketAiHisList", list);

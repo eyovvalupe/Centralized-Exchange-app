@@ -205,12 +205,13 @@
 
           <Tab :title="t('trade.left_bot')" name="ai">
             <div class="lists">
-              <StockTable
+              <!-- <StockTable
                 :showSparkLine="false"
                 :handleClick="handleClickAi"
                 :loading="searchLoading"
                 :list="aiquantSearchList"
-              />
+              /> -->
+              <Ai @clickItems="(item) => handleClickAi(item)" v-if="!searchLoading" :page="'trade'"/>
             </div>
           </Tab>
         </Tabs>
@@ -268,9 +269,8 @@ import { useRoute } from "vue-router";
 import OptionCategory from "@/components/OptionCategory.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
-
 import { useNavDialog } from "./hooks/useNavDialog";
-
+import Ai from "../Market/components/Ai.vue";
 import router from "@/router";
 
 const { t } = useI18n();
