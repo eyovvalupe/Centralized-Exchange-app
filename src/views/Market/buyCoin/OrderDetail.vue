@@ -32,7 +32,7 @@
             }}
           </span>
         </div>
-        <div @click="active = 2" class="tab" :class="{ tab_active: active == 2 }">
+        <div @click="active = 2;changeWindowHeight()" class="tab" :class="{ tab_active: active == 2 }">
           <span class="relative flex items-center">
             {{ t("market.market_buy_list_contact") }}
             <div
@@ -44,7 +44,6 @@
           </span>
         </div>
       </div>
-
       <template v-if="active == 1">
         <!-- 详情 -->
         <div class="detail_box">
@@ -286,10 +285,14 @@
             {{ t("market.market_buy_list_received") }}
           </div>
         </div>
+
+        <div class="h-[0.32rem]"></div>
       </template>
 
       <!-- 聊天 -->
-      <Chat v-else :curr-item="currItem" class="size-full" />
+      <div ref="chatRef" class=" relative" :style="{height:chatHeight+'px'}" v-else>
+        <Chat :curr-item="currItem" />
+      </div>
 
     </template>
 
@@ -304,7 +307,7 @@ import Top from "@/components/Top.vue";
 import router from "@/router";
 import { _c2cOrderInfo, _c2cOrderStatus } from "@/api/api";
 import { useRoute } from "vue-router";
-import { ref, computed, onBeforeUnmount, onMounted } from "vue";
+import { ref, computed, onBeforeUnmount, onMounted, nextTick } from "vue";
 import store from "@/store";
 import { formatSec2 } from "@/utils/time";
 import IconSvg from "@/components/IconSvg.vue";
@@ -321,7 +324,6 @@ const c2cUnread = computed(() => store.state.c2cUnread || {});
 const unreadMessage = computed(() => store.state.unreadMessage);
 const active = ref(1); // 1-详情 2-聊天
 const safeRef = ref();
-
 const offsetEnum = {
   buy: "买入",
   sell: "卖出",
@@ -355,6 +357,16 @@ const currItem = ref({
   merchant_avetime: "", // 商户-平均时效
   unread: 0, // 对话未读消息数
 });
+const chatRef = ref(null)
+const chatHeight = ref(0)
+
+const changeWindowHeight = ()=>{
+  nextTick(()=>{
+    if(chatRef.value){
+      chatHeight.value = window.innerHeight - chatRef.value.offsetTop
+    }
+  })
+}
 
 // 获取详情
 const infoLoading = ref(false);
@@ -372,6 +384,7 @@ const getInfo = () => {
     .then((res) => {
       console.error("--订单详情", res.data);
       Object.assign(currItem.value, res.data);
+      
     })
     .finally(() => {
       setTimeout(() => {
@@ -459,10 +472,12 @@ onMounted(() => {
       }
     }
   }, 1000);
+  window.addEventListener('resize',changeWindowHeight)
 });
 onBeforeUnmount(() => {
   if (interval) clearInterval(interval);
   if (countInterval) clearInterval(countInterval);
+  window.removeEventListener('resize',changeWindowHeight)
 });
 
 const goBack = () => {
@@ -485,8 +500,7 @@ getSessionToken();
 
 <style lang="less" scoped>
 .page-detail {
-  padding: 1.44rem 0.32rem 1.6rem 0.32rem;
-
+  padding: 1.44rem 0.32rem 0 0.32rem;
   .tabs {
     height: 0.8rem;
     border-radius: 1.3rem;
@@ -494,7 +508,6 @@ getSessionToken();
     display: flex;
     overflow: hidden;
     margin-bottom: 0.4rem;
-
     .tab {
       flex: 1;
       height: 100%;
