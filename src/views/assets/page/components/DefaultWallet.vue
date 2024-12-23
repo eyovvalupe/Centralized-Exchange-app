@@ -1,6 +1,5 @@
 <template>
   <div class="relative w-[6.86rem] h-[3.04rem] pt-[0.16rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]">
-    <!-- <DefaultWalletBtn /> -->
     <DefaultWalletInfoContainer />
     <!-- <span class="text-[0.32rem] text-[#fff]">{{ name }}</span> -->
     <div class="flex flex-col px-[0.4rem] h-[1.16rem] z-[3] mt-[0.64rem] ml-[0.12rem] mb-[0.4rem]">
@@ -59,11 +58,7 @@
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import DefaultWalletBtn from "./DefaultWalletInfo/DefaultWalletBtn.vue";
 import DefaultWalletInfoContainer from "./DefaultWalletInfo/DefaultWalletInfoContainer.vue";
-import StockImg from "./StockWalletInfo/StockImg.vue";
-import StockWalletBtn from "./StockWalletInfo/StockWalletBtn.vue";
-import StockWalletInfoContainer from "./StockWalletInfo/StockWalletInfoContainer.vue";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import store from "@/store";
