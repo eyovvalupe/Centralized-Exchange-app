@@ -275,6 +275,7 @@ const contractList = computed(() => store.state.contractList || []);
 const marketStockCurrentList = computed(
     () => store.getters.getMarketStockCurrentList || []
 );
+console.log(marketStockCurrentList)
 const getRecommendData = () => {
     commendLoading.value = true;
     _futures()

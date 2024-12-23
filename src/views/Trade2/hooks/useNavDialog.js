@@ -253,25 +253,25 @@ export const useNavDialog = (activeTab) => {
           market: stockActiveTab.value != "all" ? stockActiveTab.value : "",
         })
           .then((res) => {
-            if (searchStr.value == s) {
-              let arr = (res.data || []).map((item) => {
-                const target = marketSearchList.value.find(
-                  (a) => a.symbol == item.symbol
-                );
-                item.type = 'stock'
-                if (target)
-                  return {
-                    ...target,
-                    ...item,
-                  };
-                return item;
-              });
-              store.commit("setMarketSearchList", arr);
-              store.dispatch("subList", {
-                commitKey: "setMarketSearchList",
-                listKey: "marketSearchList",
-              });
-            }
+            console.log('stock list ======> ', res.data)
+            let arr = (res.data || []).map((item) => {
+              const target = marketSearchList.value.find(
+                (a) => a.symbol == item.symbol
+              );
+              item.type = "stock";
+              if (target)
+                return {
+                  ...target,
+                  ...item,
+                };
+              return item;
+            });
+            console.log(arr)
+            store.commit("setMarketSearchList", arr);
+            store.dispatch("subList", {
+              commitKey: "setMarketSearchList",
+              listKey: "marketSearchList",
+            });
           })
           .finally(() => {
             searchLoading.value = false;

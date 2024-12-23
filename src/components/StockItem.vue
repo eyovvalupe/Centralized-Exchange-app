@@ -15,7 +15,7 @@
         <div :class="['stock_item']">
           <div class="td5">
             <div class="item_name flex items-center gap-1">
-              <span class="truncate" v-if="item.type != 'stock'">{{
+              <span class="truncate" v-if="item.type == 'crypto' || item.type == 'forex' || item.type == 'blocktrade'">{{
                 props.item.name
               }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>

@@ -204,7 +204,7 @@
           </Tab>
 
           <Tab :title="t('trade.left_bot')" name="ai">
-            <div class="lists">
+            <div class="lists px-[0.32rem]">
               <!-- <StockTable
                 :showSparkLine="false"
                 :handleClick="handleClickAi"

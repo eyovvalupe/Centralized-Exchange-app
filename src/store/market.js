@@ -500,6 +500,8 @@ export default {
                                 return item
                             })
                             state[ck] = arr
+                            console.log(ck)
+                            console.log(arr)
                         })
 
                         // 同步到当前 股票
