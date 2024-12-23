@@ -1,105 +1,72 @@
 <!-- 股票单个元素 -->
 <template>
   <div ref="root" style="width: 100%">
-    <SwipeCell
-      :class="['stock_item_box']"
-      @touchstart.start=""
-      @touchmove.stop=""
-      @touchend.stop=""
-    >
-      <div
-        class="stock_item_bg"
-        :class="[`${' stock_item_' + updownStatus}`]"
-        @click="goInfo(props.item.type)"
-      >
+    <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
+      <div class="stock_item_bg" :class="[`${' stock_item_' + updownStatus}`]" @click="goInfo(props.item.type)">
         <div :class="['stock_item']">
           <div class="td5">
             <div class="item_name flex items-center gap-1">
-              <span class="truncate" v-if="item.type == 'crypto' || item.type == 'forex' || item.type == 'blocktrade'">{{
-                props.item.name
-              }}</span>
+              <span class="truncate"
+                v-if="item.type == 'crypto' || item.type == 'forex' || item.type == 'blocktrade'">{{
+                  props.item.name
+                }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>
-              <div
-                v-if="props.page != 'home' && props.page != 'trade'"
-                :class="`${
-                  marketStyle[props.item.type]
-                } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
-              >
+              <div v-if="props.page != 'home' && props.page != 'trade'"
+                :class="`${marketStyle[props.item.type]
+                  } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
                 {{
                   item.type == "stock"
                     ? t("market.market_optional_stock")
                     : item.type == "crypto"
-                    ? t("market.market_optional_contract")
-                    : item.type == "forex"
-                    ? t("market.market_optional_forex")
-                    : item.type == "blocktrade"
-                    ? t("market.market_optional_blocktrade")
-                    : ""
+                      ? t("market.market_optional_contract")
+                      : item.type == "forex"
+                        ? t("market.market_optional_forex")
+                        : item.type == "blocktrade"
+                          ? t("market.market_optional_blocktrade")
+                          : ""
                 }}
               </div>
             </div>
             <div class="item_info" v-show="props.item.type == 'stock' || item.type == undefined">
               {{ props.item.name || "--" }}
             </div>
-            <div
-              v-if="props.page != 'trade' && props.page != 'home'"
+            <div v-if="props.page != 'trade' && props.page != 'home'"
               class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
-              style="width: max-content"
-              v-show="props.item.type != 'stock'"
-            >
+              style="width: max-content" v-show="props.item.type != 'stock'">
               {{ props.item.lever }}X
             </div>
-            <div
-              v-if="props.page == 'trade' && item.type != 'stock'"
-              style="width: max-content"
-              :class="`${
-                marketStyle[props.item.type]
-              } font-normal whitespace-nowrap mt-[0.1rem] text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
-            >
+            <div v-if="props.page == 'trade' && item.type != 'stock'" style="width: max-content"
+              :class="`${marketStyle[props.item.type]
+                } font-normal whitespace-nowrap mt-[0.1rem] text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
               {{
                 item.type == "stock"
                   ? t("market.market_optional_stock")
                   : item.type == "crypto"
-                  ? t("market.market_optional_contract")
-                  : item.type == "forex"
-                  ? t("market.market_optional_forex")
-                  : item.type == "blocktrade"
-                  ? t("market.market_optional_blocktrade")
-                  : ""
+                    ? t("market.market_optional_contract")
+                    : item.type == "forex"
+                      ? t("market.market_optional_forex")
+                      : item.type == "blocktrade"
+                        ? t("market.market_optional_blocktrade")
+                        : ""
               }}
             </div>
           </div>
           <div :class="['td2 spark_line_box']" v-if="showSparkLine">
-            <SparkLine
-              :style="['width: 100%; height: 0.6rem;']"
-              v-if="props.item.points"
-              :points="props.item.points"
-              :ratio="props.item.ratio"
-            />
+            <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
+              :ratio="props.item.ratio" />
           </div>
           <div class="td2 td_r">
-            <div
-              class="item_num"
-              :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
-            >
+            <div class="item_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
               {{ props.item.price ? props.item.price : "--" }}
             </div>
-            <div
-              class="item_info_box"
-              @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)"
-            >
-              <div
-                v-if="props.item.ratio !== undefined"
-                class="item_percent"
-                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']"
-              >
-                <span v-if="mode == 1"
-                  >{{
-                    (props.item.ratio || 0) > 0
-                      ? "+" + (props.item.ratio || 0)
-                      : props.item.ratio || 0
-                  }}%</span
-                >
+            <div class="item_info_box" @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)">
+              <div v-if="props.item.ratio !== undefined" class="item_percent"
+                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']">
+                <span v-if="mode == 1">{{
+                  (props.item.ratio || 0) > 0
+                    ? "+" + (props.item.ratio || 0)
+                    : props.item.ratio || 0
+                }}%</span>
                 <span v-else-if="mode == 2">{{
                   props.item.price || 0 > 0
                     ? "+" + (props.item.price || 0).toFixed(2)
@@ -149,7 +116,7 @@ const emits = defineEmits(["remove"]);
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
   scrollBox: {
     // 滚动的父级
@@ -208,6 +175,7 @@ watch(price, (newVal, oldVal) => {
 });
 
 const goInfo = (type) => {
+  console.error('type', type, props.item.symbol)
   if (props.handleClick) return props.handleClick(props.item);
   if (type == "stock") {
     store.commit("setCurrStock", props.item);

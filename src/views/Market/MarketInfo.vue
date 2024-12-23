@@ -19,10 +19,9 @@
         <div class="title_shadow"></div>
         <div v-if="!props.innerPage" class="search star" @click="addCollect"
           :style="{ opacity: loading ? '0.5' : '1' }">
-          <div style="width: 0.8rem;height: 0.8rem;">
+          <div style="width: 0.4rem;height: 0.4rem;">
             <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/icons/star.svg')" alt="">
             <img v-else :src="getStaticImgUrl('/static/icons/unstar.svg')" alt="">
-
           </div>
         </div>
         <!-- <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
@@ -499,6 +498,16 @@ const showInfo = ref(false);
         flex: 1;
       }
 
+      .star {
+        width: 0.7rem;
+        height: 0.7rem;
+        border-radius: 50%;
+        border: 1px solid #CFCFCF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
       .title {
         pointer-events: none;
         position: absolute;
@@ -523,12 +532,6 @@ const showInfo = ref(false);
         }
       }
 
-      .search {
-        width: 0.85rem;
-        height: 0.85rem;
-        padding: 0.025rem;
-
-      }
     }
 
     .header-price {
