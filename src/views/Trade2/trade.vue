@@ -105,7 +105,7 @@
       <div class="trade_option_list">
         <!-- 搜索 -->
         <div class="search_box_wrap">
-          <div class="item search_box">
+          <div class="item search_box relative">
             <div class="search_icon">
               <img
                 :src="getStaticImgUrl('/static/img/common/search.png')"
@@ -118,7 +118,10 @@
               type="text"
               class="ipt"
               :placeholder="t('trade.left_search')"
+              :onfocus="() => isFocused = true"
+              :onblur="() => isFocused = false"
             />
+            
           </div>
         </div>
         <!-- 切换 -->
@@ -137,7 +140,7 @@
                 :handleClick="handleClick"
                 :loading="optionLoading"
                 :key="'option'"
-                :list="searchStr ? searchResultList : watchList"
+                :list="isFocused ? searchResultList : watchList"
               />
             </div>
           </Tab>
@@ -185,8 +188,9 @@
                 :showSparkLine="false"
                 :handleClick="handleClick"
                 :loading="searchLoading"
-                :list="searchStr ? searchResultList : marketSearchList"
+                :list="(isFocused || searchStr) ? searchResultList : marketSearchList"
                 :page="'trade'"
+                :type="'stock'"
               />
             </div>
           </Tab>
@@ -197,8 +201,9 @@
                 :showSparkLine="false"
                 :handleClick="handleClickContract"
                 :loading="searchLoading"
-                :list="searchStr ? searchResultList : futuresSearchList"
+                :list="(isFocused || searchStr) ? searchResultList : futuresSearchList"
                 :page="'trade'"
+                :type="'future'"
               />
             </div>
           </Tab>
@@ -206,14 +211,14 @@
           <Tab :title="t('trade.left_bot')" name="ai">
             <div class="lists" :class="searchStr ? '' : 'px-[0.32rem]'">
               <StockTable
-                v-if="searchStr"
+                v-if="(isFocused || searchStr)"
                 :showSparkLine="false"
                 :handleClick="handleClickAi"
                 :loading="searchLoading"
                 :list="searchResultList"
               />
               <Ai
-                v-if="!searchStr"
+                v-if="!(isFocused || searchStr)"
                 @clickItems="(item) => handleClickAi(item)"
                 :page="'trade'"
                 :list="aiquantSearchList"
@@ -285,7 +290,7 @@ const AiBlockRef = ref();
 const IpoBlockRef = ref();
 const ForeignBlockRef = ref();
 const CommoditiesBlockRef = ref();
-
+const isFocused = ref(false)
 const route = useRoute();
 
 const stockTradeBody = ref(null);

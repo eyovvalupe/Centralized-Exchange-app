@@ -336,7 +336,7 @@ export const useNavDialog = (activeTab) => {
   };
 
   const searchItem = () => {
-    searchResultList.value = totalList.value.length
+    searchResultList.value = searchStr.value && totalList.value.length
       ? totalList.value.filter(
           (item) =>
             item.name.includes(searchStr.value) ||

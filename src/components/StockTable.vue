@@ -2,7 +2,20 @@
 <template>
   <div class="stock_table">
     <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
-    <div class="tr" v-for="(item, i) in props.list" :key="i" v-show="props.marketType == 'all' || props.marketType == item.type">
+    <div
+      v-if="list.length"
+      v-for="(item, i) in props.list"
+      class="tr"
+      :class="
+        page == 'trade' &&
+        ((type == 'stock' && item.symbol == currStockItem.symbol) ||
+          (type == 'future' && item.name == currConstractItem.name))
+          ? 'current_item_effect'
+          : ''
+      "
+      :key="i"
+      v-show="props.marketType == 'all' || props.marketType == item.type"
+    >
       <StockItem
         :marketType="props.marketType"
         :theme="theme"
@@ -24,6 +37,18 @@
 import Loading from "./Loaidng.vue";
 import StockItem from "./StockItem.vue";
 import NoData from "./NoData.vue";
+import { ref } from "vue";
+
+const currStockItem = ref(
+  sessionStorage.getItem("currStock")
+    ? JSON.parse(sessionStorage.getItem("currStock"))
+    : props.list[0]
+);
+const currConstractItem = ref(
+  sessionStorage.getItem("currConstract")
+    ? JSON.parse(sessionStorage.getItem("currConstract"))
+    : props.list[0]
+);
 
 const emits = defineEmits(["remove"]);
 const props = defineProps({
@@ -63,16 +88,15 @@ const props = defineProps({
     type: Function,
     default: null,
   },
-  showSparkLine:{
-    type:Boolean,
-    default:true
+  showSparkLine: {
+    type: Boolean,
+    default: true,
   },
-  page : {
+  page: {
     type: String,
     default: "",
   },
 });
-
 
 const remove = (item) => {
   emits("remove", item);
@@ -83,6 +107,11 @@ const remove = (item) => {
 .stock_table {
   padding: 0;
   width: 100%;
+
+  .current_item_effect {
+    // background-color: #fff;
+    box-shadow: 0px 4px 10px 0px rgba(6, 16, 35, 0.1);
+  }
 
   .tr {
     display: flex;
