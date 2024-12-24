@@ -70,7 +70,7 @@ const props = defineProps({
   page : {
     type: String,
     default: "",
-  }
+  },
 });
 
 

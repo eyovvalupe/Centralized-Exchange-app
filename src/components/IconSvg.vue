@@ -1,5 +1,6 @@
 <template>
-  <!-- 
+  <div>
+    <!-- 
     @description: 
       所有 fill 属性要去掉
       需要保留viewBox属性(一键替换复制到剪贴板的js联系@jznzbw)
@@ -8,13 +9,14 @@
 
       希望大家共同维护本文件
    -->
-  <!-- eslint-disable max-len 示范 -->
-  <!-- 时钟 -->
-  <img v-if="name === 'clock'" :src="getStaticImgUrl(`/static/icons/clock.svg`)" alt="">
-  <!-- 聊天文件 -->
-  <img v-else-if="name === 'chatFile'" :src="getStaticImgUrl(`/static/icons/clock.svg`)" alt="">
-  <!-- 聊天发送 -->
-  <img v-else-if="name === 'chatSend'" :src="getStaticImgUrl(`/static/icons/send.svg`)" alt="">
+    <!-- eslint-disable max-len 示范 -->
+    <!-- 时钟 -->
+    <img v-if="name === 'clock'" :src="getStaticImgUrl(`/static/icons/clock.svg`)" alt="">
+    <!-- 聊天文件 -->
+    <img v-else-if="name === 'chatFile'" :src="getStaticImgUrl(`/static/icons/link.svg`)" alt="">
+    <!-- 聊天发送 -->
+    <img v-else-if="name === 'chatSend'" :src="getStaticImgUrl(`/static/icons/send.svg`)" alt="">
+  </div>
 </template>
 
 <script setup>

@@ -8,6 +8,10 @@ import trade from "./trade";
 import serviceC2C from "./serviceC2C";
 import { getStaticImgUrl } from "@/utils/index.js"
 
+// 这几个数据需要缓存 但不缓存其中的 points 字段
+const onlySaveSymbols = ['currStock', 'currConstact', 'currAi', 'currForeign', 'currCommodities']
+const onlySaveSymbolsList = ['realtimeData']
+
 const store = createStore({
   state: {
     fullscreen: false, // 是否是全屏状态
@@ -165,23 +169,23 @@ const store = createStore({
   plugins: [
     createPersistedState({
       key: "sunx",
-      paths: ['token', 'userInfo'],
+      paths: ['token', 'userInfo', ...onlySaveSymbols, ...onlySaveSymbolsList],
       storage: window.localStorage,
-      // reducer: (state) => {
-      //   const {
-      //     currSelectedWallet,
-      //     isSentCodeError,
-      //     language,
-      //     ...stateWithoutThese
-      //   } = state;
-      //   return stateWithoutThese;
-      // },
-    }),
-    createPersistedState({
-      key: "realtime",
-      paths: ['realtimeData'],
-      storage: window.sessionStorage,
+      setState: (path, state) => {
+        onlySaveSymbols.forEach(key => { // 这几个数据只缓存symbol字段
+          if (state[key]) {
+            delete state[key].points
+          }
+        })
+        onlySaveSymbolsList.forEach(key => {
+          if (state[key] && state[key].length) {
 
+          } state[key].map(item => {
+            delete item.points
+          })
+        })
+        window.localStorage.setItem(path, JSON.stringify(state));
+      }
     }),
   ],
 });
@@ -194,3 +198,15 @@ export const useMapState = (arr) => {
   return result;
 };
 export default store;
+
+
+function stateTransfer(state) {
+  console.error('????state', state)
+  onlySaveSymbols.forEach(key => { // 这几个数据只缓存symbol字段
+    if (state[key]) {
+      state[key] = { symbol: state[key].symbol };
+    }
+  })
+
+  return state;
+}

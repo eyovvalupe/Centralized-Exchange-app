@@ -64,7 +64,6 @@
             </div>
         </div>
         <div class="relative mt-[0.24rem] mx-[0.32rem]">
-            <!--//////////////////////////////////-->
             <div class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
                 v-show="!token">
                 <div class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
@@ -281,7 +280,11 @@ const commendLoading = ref(false);
 const contractList = computed(() => store.state.contractList || []);
 
 const marketStockCurrentList = computed(
-    () => store.getters.getMarketStockCurrentList || []
+    () => {
+        return store.getters.getMarketStockCurrentList.map(item => {
+            return {...item, type: 'stock'}
+        })
+    }
 );
 
 const getRecommendData = () => {

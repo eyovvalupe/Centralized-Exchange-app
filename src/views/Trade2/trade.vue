@@ -114,14 +114,13 @@
             </div>
             <input
               v-model.trim="searchStr"
-              @keyup="goSearch(navActiveTab)"
+              @keyup="searchItem()"
               type="text"
               class="ipt"
               :placeholder="t('trade.left_search')"
             />
           </div>
         </div>
-
         <!-- 切换 -->
         <Tabs
           @change="changeTab"
@@ -138,7 +137,7 @@
                 :handleClick="handleClick"
                 :loading="optionLoading"
                 :key="'option'"
-                :list="watchList"
+                :list="searchStr ? searchResultList : watchList"
               />
             </div>
           </Tab>
@@ -152,9 +151,7 @@
                 v-model:active="stockActiveTab"
                 shrink
               >
-                <Tab :title="t('trade.left_all')" name="all">
-                  
-                </Tab>
+                <Tab :title="t('trade.left_all')" name="all"> </Tab>
                 <Tab
                   style="min-width: 2rem"
                   :title="
@@ -188,7 +185,8 @@
                 :showSparkLine="false"
                 :handleClick="handleClick"
                 :loading="searchLoading"
-                :list="marketSearchList"
+                :list="searchStr ? searchResultList : marketSearchList"
+                :page="'trade'"
               />
             </div>
           </Tab>
@@ -199,18 +197,27 @@
                 :showSparkLine="false"
                 :handleClick="handleClickContract"
                 :loading="searchLoading"
-                :list="futuresSearchList"
+                :list="searchStr ? searchResultList : futuresSearchList"
+                :page="'trade'"
               />
             </div>
           </Tab>
 
           <Tab :title="t('trade.left_bot')" name="ai">
-            <div class="lists">
+            <div class="lists" :class="searchStr ? '' : 'px-[0.32rem]'">
               <StockTable
+                v-if="searchStr"
                 :showSparkLine="false"
                 :handleClick="handleClickAi"
                 :loading="searchLoading"
+                :list="searchResultList"
+              />
+              <Ai
+                v-if="!searchStr"
+                @clickItems="(item) => handleClickAi(item)"
+                :page="'trade'"
                 :list="aiquantSearchList"
+                :propsLoading="searchLoading"
               />
             </div>
           </Tab>
@@ -269,9 +276,8 @@ import { useRoute } from "vue-router";
 import OptionCategory from "@/components/OptionCategory.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
-
 import { useNavDialog } from "./hooks/useNavDialog";
-
+import Ai from "../Market/components/Ai.vue";
 import router from "@/router";
 
 const { t } = useI18n();
@@ -350,7 +356,6 @@ const reDir = () => {
     activeTab.value = 0;
   }
 
-  console.log("activeTab", activeTab.value);
   initialSwipe.value = activeTab.value;
 
   setTimeout(() => {
@@ -391,61 +396,65 @@ const {
   stockActiveTab,
   searchStr,
   optionLoading,
+  searchResultList,
+  totalList,
+  searchItem,
   goSearch,
   showNavDialogFunc,
-  changeTab
+  changeTab,
 } = useNavDialog(activeTab);
 
 // 选择股票
 const StockBlockRef = ref();
 const handleClickStock = (item) => {
   showNavDialog.value = false;
-  if(activeTab.value != 0){
-    changeActiveTab(0,true) 
+  if (activeTab.value != 0) {
+    changeActiveTab(0, true);
   }
-  setTimeout(()=>{
+  setTimeout(() => {
     StockBlockRef.value && StockBlockRef.value.choose(item);
-  },600)
-  
-}
+  }, 600);
+};
 
 // 选择合约
 const ContractBlockRef = ref();
 const handleClickContract = (item) => {
   showNavDialog.value = false;
-  if(activeTab.value != 1){
-    changeActiveTab(1,true)
-    
+  if (activeTab.value != 1) {
+    changeActiveTab(1, true);
   }
-  setTimeout(()=>{
+  setTimeout(() => {
     ContractBlockRef.value && ContractBlockRef.value.choose(item);
-  },600)
-}
+  }, 600);
+};
 
 const handleClickAi = (item) => {
   showNavDialog.value = false;
-  if(activeTab.value != 2){
-    changeActiveTab(2,true)
+  if (activeTab.value != 2) {
+    changeActiveTab(2, true);
   }
-  setTimeout(()=>{
+  setTimeout(() => {
     AiBlockRef.value && AiBlockRef.value.choose(item);
-  },600)
-}
+  }, 600);
+};
 
 const handleClick = (item) => {
-  if (item.type == "crypto" || item.type == "forex" || item.type == "blocktrade") {
-    handleClickContract(item)
+  if (
+    item.type == "crypto" ||
+    item.type == "forex" ||
+    item.type == "blocktrade"
+  ) {
+    handleClickContract(item);
   } else {
-    handleClickStock(item)
+    handleClickStock(item);
   }
-}
-
+};
 
 const swipeResize = () => {
   setTimeout(() => {
     swipeRef.value && swipeRef.value.resize();
   }, 300);
-}
+};
 
 const pageActive = ref(false);
 onActivated(() => {

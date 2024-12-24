@@ -749,6 +749,7 @@ export default {
     market_optional_stock: "股票",
     market_optional_contract: "加密货币",
     market_optional_forex: "外汇",
+    market_optional_blocktrade: "大宗商品",
 
     market_marketinfo_data: "数据",
     market_marketinfo_trade: "交易",

@@ -93,6 +93,7 @@ const getData = (list, key, query, listKey) => {
               ratio: target.ratio,
             };
           }
+          item.type = 'stock'
           return item;
         });
         arr.push(...rs);

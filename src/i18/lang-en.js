@@ -759,6 +759,7 @@ export default {
     market_optional_stock: "STOCK",
     market_optional_contract: "CRYPTO",
     market_optional_forex: "FOREX",
+    market_optional_blocktrade: "BLOCKTRADE",
 
     market_marketinfo_data: "Data",
     market_marketinfo_trade: "Trade",

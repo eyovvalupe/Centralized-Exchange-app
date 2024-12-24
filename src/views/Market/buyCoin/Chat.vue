@@ -97,14 +97,18 @@
       <div class="h-[0.02rem] w-full bg-[#EAEEF3]" />
       <div class="box px-4">
         <div class="box_icon">
-          <IconSvg name="chatFile" class="text-30 text-my" />
+          <div style="width:0.6rem;height:0.6rem" class="text-my">
+            <IconSvg name="chatFile" />
+          </div>
           <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
         </div>
         <div class="item">
           <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
         </div>
         <div class="box_icon" @click="sendText">
-          <IconSvg name="chatSend" class="text-30 text-my" />
+          <div style="width:0.6rem;height:0.6rem" class="text-my">
+            <IconSvg name="chatSend" />
+          </div>
         </div>
       </div>
     </div>
@@ -115,7 +119,7 @@
 import { getStaticImgUrl } from "@/utils/index.js"
 import io from "socket.io-client";
 import { ref, computed, onMounted, onBeforeUnmount, onUpdated } from "vue";
-import { showToast,showImagePreview } from "vant";
+import { showToast, showImagePreview } from "vant";
 import { CHAT_WEBSOCKET, UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config";
 import store from "@/store";
 import { randomFileName, _compressImg } from "@/utils";
@@ -179,7 +183,7 @@ const sendMessage = (url) => {
     scrollToBottom();
   }
 };
-const preview = (src)=>{
+const preview = (src) => {
   showImagePreview([src])
 }
 const uploadImg = (event) => {
@@ -316,7 +320,7 @@ onBeforeUnmount(() => {
   .list {
     overflow-y: auto;
     overflow-x: hidden;
-    
+
     position: relative;
     height: 100%;
 

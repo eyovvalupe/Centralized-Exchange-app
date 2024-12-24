@@ -2,22 +2,22 @@
 <template>
   <div class="page-detail">
     <Top :title="currItem.status == 'waitpayment'
-        ? t('market.market_buy_list_wait_pay1')
-        : currItem.status == 'waitconfirm'
-          ? t('market.market_buy_list_wait_confirm1')
-          : currItem.status == 'done'
+      ? t('market.market_buy_list_wait_pay1')
+      : currItem.status == 'waitconfirm'
+        ? t('market.market_buy_list_wait_confirm1')
+        : currItem.status == 'done'
+          ? t('market.market_buy_list_trade_sccess')
+          : currItem.status == 'cancel'
             ? t('market.market_buy_list_trade_sccess')
-            : currItem.status == 'cancel'
-              ? t('market.market_buy_list_trade_sccess')
-              : ''
+            : ''
       " class="!z-20" :back-func="goBack" />
-    
+
     <div v-if="infoLoading" class="loading_box">
       <Loading color="var(--van-primary-color)" size="0.8rem" :loading="true" />
     </div>
 
     <template v-else>
-    
+
       <!-- Tabs -->
       <div class="tabs">
         <div @click="active = 1" class="tab" :class="{ tab_active: active == 1 }">
@@ -32,11 +32,10 @@
             }}
           </span>
         </div>
-        <div @click="active = 2;changeWindowHeight()" class="tab" :class="{ tab_active: active == 2 }">
+        <div @click="active = 2; changeWindowHeight()" class="tab" :class="{ tab_active: active == 2 }">
           <span class="relative flex items-center">
             {{ t("market.market_buy_list_contact") }}
-            <div
-            class="hint" v-if="unreadMessage[currItem.order_no] > 0">
+            <div class="hint" v-if="unreadMessage[currItem.order_no] > 0">
               {{ unreadMessage[currItem.order_no] }}
             </div>
             <!-- <div class="hint" v-if="c2cUnread[currItem.order_no] || currItem.unread">{{
@@ -89,12 +88,14 @@
 
             <!-- 已完成 -->
             <div v-if="currItem.status == 'done'" class="finish_status success_status">
-              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.png')" alt="img" /></div>
+              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.png')"
+                  alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_complete") }}</div>
             </div>
             <!-- 已取消 -->
             <div v-if="currItem.status == 'cancel'" class="finish_status">
-              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.png')" alt="img" /></div>
+              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.png')"
+                  alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_cancel") }}</div>
             </div>
           </div>
@@ -133,7 +134,9 @@
                 </div>
                 <div class="line"></div>
                 <div class="info">
-                  <IconSvg name="clock" class="!size-[0.25rem] mr-1" />
+                  <div class=" mr-1" style="width: 0.25rem;height: 0.25rem;">
+                    <IconSvg name="clock" />
+                  </div>
                   <span>{{ currItem.merchant_avetime
                     }}{{ t("market.market_buy_optional_duaration") }}</span>
                 </div>
@@ -191,14 +194,18 @@
             <!-- <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-if="currItem.offset == 'buy'">
               支<br/>付
             </div> -->
-            <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-if="currItem.offset == 'buy'" style="writing-mode: vertical-lr; text-orientation: upright;">
+            <div
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#18B762] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
+              v-if="currItem.offset == 'buy'" style="writing-mode: vertical-lr; text-orientation: upright;">
               {{ t('market.market_buy_fast_pay') }}
             </div>
-            <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#E8503A] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" v-else style="writing-mode: vertical-rl; text-orientation: upright;">
+            <div
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#E8503A] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
+              v-else style="writing-mode: vertical-rl; text-orientation: upright;">
               {{ t('market.market_buy_fast_sell') }}
             </div>
-            
-            <div class="info_block flex-1"  v-if="currItem.offset == 'buy'">
+
+            <div class="info_block flex-1" v-if="currItem.offset == 'buy'">
               <div class="info">
                 <div class="amount">{{ currItem.totalprice }}</div>
                 <div class="text-[#666D80]">
@@ -238,7 +245,9 @@
 
           </div>
           <div class="flex items-center bg-[#fff] rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
-            <div class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#014CFA] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]" style="writing-mode: vertical-rl; text-orientation: upright;">
+            <div
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-[#014CFA] text-[#fff] flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
+              style="writing-mode: vertical-rl; text-orientation: upright;">
               {{ t('market.market_buy_fast_receive_sim') }}
             </div>
             <div class="info_block flex-1" v-if="currItem.offset == 'buy'">
@@ -260,7 +269,7 @@
                   }})
                 </div>
               </div>
-              
+
             </div>
 
           </div>
@@ -290,7 +299,7 @@
       </template>
 
       <!-- 聊天 -->
-      <div ref="chatRef" class=" relative" :style="{height:chatHeight+'px'}" v-else>
+      <div ref="chatRef" class=" relative" :style="{ height: chatHeight + 'px' }" v-else>
         <Chat :curr-item="currItem" />
       </div>
 
@@ -312,7 +321,7 @@ import store from "@/store";
 import { formatSec2 } from "@/utils/time";
 import IconSvg from "@/components/IconSvg.vue";
 import { _copyTxt } from "@/utils";
-import { closeToast, showLoadingToast, showToast,Loading } from "vant";
+import { closeToast, showLoadingToast, showToast, Loading } from "vant";
 import SafePassword from "@/components/SafePassword.vue";
 import Chat from "./Chat.vue";
 import { useI18n } from "vue-i18n";
@@ -360,9 +369,9 @@ const currItem = ref({
 const chatRef = ref(null)
 const chatHeight = ref(0)
 
-const changeWindowHeight = ()=>{
-  nextTick(()=>{
-    if(chatRef.value){
+const changeWindowHeight = () => {
+  nextTick(() => {
+    if (chatRef.value) {
       chatHeight.value = window.innerHeight - chatRef.value.offsetTop
     }
   })
@@ -374,7 +383,7 @@ let firstGet = true
 const getInfo = () => {
   if (infoLoading.value) return;
   if (!route.query.order_no) return;
-  if(firstGet){
+  if (firstGet) {
     infoLoading.value = true;
     firstGet = false
   }
@@ -384,7 +393,7 @@ const getInfo = () => {
     .then((res) => {
       console.error("--订单详情", res.data);
       Object.assign(currItem.value, res.data);
-      
+
     })
     .finally(() => {
       setTimeout(() => {
@@ -472,12 +481,12 @@ onMounted(() => {
       }
     }
   }, 1000);
-  window.addEventListener('resize',changeWindowHeight)
+  window.addEventListener('resize', changeWindowHeight)
 });
 onBeforeUnmount(() => {
   if (interval) clearInterval(interval);
   if (countInterval) clearInterval(countInterval);
-  window.removeEventListener('resize',changeWindowHeight)
+  window.removeEventListener('resize', changeWindowHeight)
 });
 
 const goBack = () => {
@@ -501,6 +510,7 @@ getSessionToken();
 <style lang="less" scoped>
 .page-detail {
   padding: 1.44rem 0.32rem 0 0.32rem;
+
   .tabs {
     height: 0.8rem;
     border-radius: 1.3rem;
@@ -508,6 +518,7 @@ getSessionToken();
     display: flex;
     overflow: hidden;
     margin-bottom: 0.4rem;
+
     .tab {
       flex: 1;
       height: 100%;
@@ -713,6 +724,7 @@ getSessionToken();
     background-color: #f5f7fc;
     border-radius: 0.32rem;
     margin-top: 0.2rem;
+
     .top {
       display: flex;
       align-items: center;
@@ -798,6 +810,7 @@ getSessionToken();
     }
   }
 }
+
 .loading_box {
   min-height: 60vh;
   display: flex;
