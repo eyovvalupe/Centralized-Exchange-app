@@ -1,7 +1,8 @@
 <template>
   <div class="list_page" v-for="item in props.list">
     <div class="list_delete_icon" @click="confirm(item.id)">
-      <div class="delete_icon">
+      <Loading :size="18" v-if="loading && currDeleteId == item.id" color="#fff" />
+      <div class="delete_icon" v-else>
         <img :src="getStaticImgUrl('/static/icons/delete.svg')" alt="">
       </div>
     </div>
@@ -25,7 +26,7 @@
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { showToast, showConfirmDialog } from "vant";
+import { showToast, showConfirmDialog,Loading } from "vant";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { ref } from "vue";
 import { _delAccount, _listAccount } from "@/api/api";
@@ -150,10 +151,7 @@ getSessionToken();
 
     .delete_icon {
       width: 0.3rem;
-      height: 0.25rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      height: 0.3rem;
     }
   }
 }
