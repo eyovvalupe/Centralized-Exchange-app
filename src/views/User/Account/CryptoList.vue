@@ -7,11 +7,11 @@
     </div>
     <div class="list_detail">
       <div class="mr-[0.2rem]" style="width: 0.96rem;height: 0.96rem;">
-        <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.png`)" alt="">
+        <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.png`)" class=" rounded-full" alt="">
       </div>
       <div class="flex flex-col">
         <div class="flex flex-row items-center">
-          <span class="text-[0.32rem] text-[#121212] font-semibold mr-[0.2rem]">**** **** **** {{ item.address.slice(-4)
+          <span class="text-[0.32rem] text-[#121212] font-semibold mr-[0.12rem]">**** **** **** {{ item.address.slice(-4)
             }}</span>
           <div class="copy_icon" @click="copyToClipboard(item.address)">
             <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
