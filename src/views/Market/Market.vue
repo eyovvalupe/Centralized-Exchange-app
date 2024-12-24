@@ -213,6 +213,7 @@ Promise.all([
   .assets_body {
     overflow-y: auto;
     height: calc(100vh - 2.52rem);
+    padding-bottom: 1rem
   }
 
   :deep(.van-sticky) {

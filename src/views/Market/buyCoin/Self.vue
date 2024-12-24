@@ -50,7 +50,9 @@
               <span>{{ t('market.market_buy_optional_rate') }} {{ item.volumerate || "0" }}%</span>
               <template v-if="item.avetime">
                 <span>|</span>
-                <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
+                <div class=" mr-1" style="width: 0.25rem;height: 0.25rem;">
+                  <IconSvg name="clock" />
+                </div>
                 <span>{{ item.avetime }}{{ t('market.market_buy_optional_duaration') }}</span>
               </template>
             </div>
