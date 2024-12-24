@@ -19,10 +19,10 @@
           </div>
         </div>
       </div>
-      <div class="w-full ml-[16px] mt-[16px] flex items-center">
+      <div class="px-[0.32rem] mt-[0.28rem] h-[0.52rem] flex items-center">
         <div class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]">
-          <div style="width:0.4rem;height: 0.39rem;">
-            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" alt="">
+          <div class="size-[0.4rem]">
+            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" class=" rounded-full" alt="">
           </div>
         </div>
         <div class="text-[15px] text-[#061023]">{{ item.name }}</div>
@@ -30,9 +30,9 @@
     </div>
     <div v-else class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-[#f5f7fc] mb-[0.12rem] justify-between"
       @click="click(item)">
-      <div class="w-full ml-[0.32rem] flex items-center">
+      <div class="ml-[0.32rem] flex items-center">
         <div class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]">
-          <div style="width:0.4rem;height: 0.39rem;">
+          <div class="size-[0.4rem]">
             <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" alt="">
           </div>
         </div>

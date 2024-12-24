@@ -275,6 +275,7 @@
           </div>
         </div>
 
+        <div class="h-[1.36rem]"></div>
         <!-- 按钮 -->
         <div class="max-width btns" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
           <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn"
@@ -613,6 +614,8 @@ getSessionToken();
       position: relative;
       bottom: -1px;
       background-color: #fff;
+      width: calc(100% + 2px);
+      left:-1px;
 
       .bank {
         background-color: #f5f7fc;
@@ -793,6 +796,7 @@ getSessionToken();
       height: 100%;
       height: 0.96rem;
       border-radius: 1.26rem;
+      background-color: #fff;
       border: 1px solid #d0d8e2;
       display: flex;
       align-items: center;
@@ -806,6 +810,7 @@ getSessionToken();
 
     .active_btn {
       background-color: #014cfa;
+      border-color: #014cfa;
       color: #fff;
     }
   }
