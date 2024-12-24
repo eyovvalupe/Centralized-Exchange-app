@@ -1303,6 +1303,8 @@ const setCurrStockFunc = (item) => {
       sessionStorage.setItem("currCommodities", JSON.stringify(item));
       break;
   }
+  sessionStorage.setItem("currConstract", JSON.stringify(item))
+  store.commit('setCurrConstractItem', item)
 };
 
 const handleClick = (item) => {

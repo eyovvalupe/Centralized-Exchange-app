@@ -1275,6 +1275,7 @@ const handleClick = (item) => {
         ...r.data,
       };
       sessionStorage.setItem("currStock", JSON.stringify(currStock.value));
+      store.commit('setCurrStockItem', currStock.value)
     }
   });
 };

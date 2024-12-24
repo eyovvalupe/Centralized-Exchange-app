@@ -9,13 +9,20 @@ export default {
     inquireList: [], // 股票列表
     contractInquireList: [], // 合约历史列表
     aiInquireList: [], // ai历史列表
-
+    currStockItem: sessionStorage.getItem('currStock') ? JSON.parse(sessionStorage.getItem('currStock')) : {},
+    currConstractItem: sessionStorage.getItem('currConstract') ? JSON.parse(sessionStorage.getItem('currConstract')) : {},
     c2cList: [], // c2c订单列表
     c2cUnread: {}, // 未读消息
     c2cUnreadTotal: 0, // 总未读消息
     c2cLasttime: {}, // 列表已读时间记录   { order_no: lasttime }
   },
   mutations: {
+    setCurrStockItem(state, data) {
+      state.currStockItem = data
+    },
+    setCurrConstractItem(state, data) {
+      state.currConstractItem = data
+    },
     setPositionsList(state, data) {
       state.positionsList = data
     },

@@ -8,8 +8,7 @@
       class="tr"
       :class="
         page == 'trade' &&
-        ((type == 'stock' && item.symbol == currStockItem.symbol) ||
-          (type == 'future' && item.name == currConstractItem.name))
+        (type == 'stock' && item.symbol == currStockItem.symbol || type == 'future' && item.name == currConstractItem.name)
           ? 'current_item_effect'
           : ''
       "
@@ -37,18 +36,11 @@
 import Loading from "./Loaidng.vue";
 import StockItem from "./StockItem.vue";
 import NoData from "./NoData.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import store from "@/store";
 
-const currStockItem = ref(
-  sessionStorage.getItem("currStock")
-    ? JSON.parse(sessionStorage.getItem("currStock"))
-    : props.list[0]
-);
-const currConstractItem = ref(
-  sessionStorage.getItem("currConstract")
-    ? JSON.parse(sessionStorage.getItem("currConstract"))
-    : props.list[0]
-);
+const currStockItem = computed(() => store.state.currStockItem)
+const currConstractItem = computed(() => store.state.currConstractItem)
 
 const emits = defineEmits(["remove"]);
 const props = defineProps({

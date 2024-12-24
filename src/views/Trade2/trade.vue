@@ -118,10 +118,9 @@
               type="text"
               class="ipt"
               :placeholder="t('trade.left_search')"
-              :onfocus="() => isFocused = true"
-              :onblur="() => isFocused = false"
+              :onfocus="() => (isFocused = true)"
+              :onblur="() => (isFocused = false)"
             />
-            
           </div>
         </div>
         <!-- 切换 -->
@@ -147,6 +146,7 @@
           <Tab :title="t('trade.left_stock')" name="stock">
             <div class="lists">
               <Tabs
+                v-if="!(isFocused || searchStr)"
                 @change="changeTab('stock')"
                 type="oval-sub-small"
                 class="mt-[0.2rem]"
@@ -188,7 +188,9 @@
                 :showSparkLine="false"
                 :handleClick="handleClick"
                 :loading="searchLoading"
-                :list="(isFocused || searchStr) ? searchResultList : marketSearchList"
+                :list="
+                  isFocused || searchStr ? searchResultList : marketSearchList
+                "
                 :page="'trade'"
                 :type="'stock'"
               />
@@ -196,12 +198,41 @@
           </Tab>
 
           <Tab :title="t('market.market_header_contract')" name="contract">
+            <Tabs
+              v-if="!(isFocused || searchStr)"
+              @change="changeTab('future')"
+              type="oval-sub-small"
+              class="mt-[0.2rem]"
+              :lazy-render="false"
+              v-model:active="futureActiveTab"
+              shrink
+            >
+              <Tab :title="t('trade.left_all')" name="all"> </Tab>
+              <Tab
+                :title="t('market.market_buy_fast_account_crypto')"
+                name="crypto"
+              ></Tab>
+              <Tab :title="t('assets.over_view_forex')" name="forex"></Tab>
+              <Tab :title="t('trade.header_block')" name="blocktrade"></Tab>
+            </Tabs>
             <div class="lists">
               <StockTable
                 :showSparkLine="false"
-                :handleClick="handleClickContract"
+                :handleClick="handleClick"
                 :loading="searchLoading"
-                :list="(isFocused || searchStr) ? searchResultList : futuresSearchList"
+                :list="
+                  isFocused || searchStr
+                    ? searchResultList
+                    : futureActiveTab == 'all'
+                    ? futuresSearchList
+                    : futureActiveTab == 'crypto'
+                    ? cryptoList
+                    : futureActiveTab == 'forex'
+                    ? forexList
+                    : futureActiveTab == 'blocktrade'
+                    ? blocktradeList
+                    : []
+                "
                 :page="'trade'"
                 :type="'future'"
               />
@@ -209,13 +240,18 @@
           </Tab>
 
           <Tab :title="t('trade.left_bot')" name="ai">
-            <div class="lists" :class="searchStr ? '' : 'px-[0.32rem]'">
+            <div
+              class="lists"
+              :class="searchStr || isFocused ? '' : 'px-[0.32rem]'"
+            >
               <StockTable
-                v-if="(isFocused || searchStr)"
+                v-if="isFocused || searchStr"
                 :showSparkLine="false"
-                :handleClick="handleClickAi"
+                :handleClick="handleClick"
                 :loading="searchLoading"
                 :list="searchResultList"
+                :page="'trade'"
+                :type="''"
               />
               <Ai
                 v-if="!(isFocused || searchStr)"
@@ -290,7 +326,7 @@ const AiBlockRef = ref();
 const IpoBlockRef = ref();
 const ForeignBlockRef = ref();
 const CommoditiesBlockRef = ref();
-const isFocused = ref(false)
+const isFocused = ref(false);
 const route = useRoute();
 
 const stockTradeBody = ref(null);
@@ -393,16 +429,21 @@ const {
   searchLoading,
   marketSearchList,
   futuresSearchList,
+  cryptoList,
+  forexList,
+  blocktradeList,
   forexSearchList,
   blocktardeSearchList,
   aiquantSearchList,
   showNavDialog,
   navActiveTab,
   stockActiveTab,
+  futureActiveTab,
   searchStr,
   optionLoading,
   searchResultList,
   totalList,
+  cleanItem,
   searchItem,
   goSearch,
   showNavDialogFunc,
@@ -418,6 +459,8 @@ const handleClickStock = (item) => {
   }
   setTimeout(() => {
     StockBlockRef.value && StockBlockRef.value.choose(item);
+    searchStr.value = "";
+    isFocused.value = false;
   }, 600);
 };
 
@@ -430,6 +473,8 @@ const handleClickContract = (item) => {
   }
   setTimeout(() => {
     ContractBlockRef.value && ContractBlockRef.value.choose(item);
+    searchStr.value = "";
+    isFocused.value = false;
   }, 600);
 };
 
@@ -440,6 +485,8 @@ const handleClickAi = (item) => {
   }
   setTimeout(() => {
     AiBlockRef.value && AiBlockRef.value.choose(item);
+    searchStr.value = "";
+    isFocused.value = false;
   }, 600);
 };
 
@@ -450,9 +497,15 @@ const handleClick = (item) => {
     item.type == "blocktrade"
   ) {
     handleClickContract(item);
-  } else {
+  } else if (item.type == "stock") {
     handleClickStock(item);
+  } else {
+    handleClickAi(item);
   }
+  setTimeout(() => {
+    searchStr.value = "";
+    isFocused.value = false;
+  }, 600);
 };
 
 const swipeResize = () => {
@@ -483,6 +536,14 @@ const tradeBodyScroll = (refName) => {
     }
   }
 };
+
+watch(showNavDialog, (val) => {
+  if (!val) {
+    searchStr.value = "";
+    isFocused.value = false;
+    cleanItem();
+  }
+});
 </script>
 
 <style lang="less" scoped>

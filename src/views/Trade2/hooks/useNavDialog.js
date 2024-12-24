@@ -42,6 +42,11 @@ export const useNavDialog = (activeTab) => {
 
   const marketSearchList = computed(() => store.state.marketSearchList || []);
   const futuresSearchList = computed(() => store.state.futuresSearchList || []);
+
+  const cryptoList = computed(() => store.state.futuresSearchList.filter(item => item.type == 'crypto'))
+  const forexList = computed(() => store.state.futuresSearchList.filter(item => item.type == 'forex'))
+  const blocktradeList = computed(() => store.state.futuresSearchList.filter(item => item.type == 'blocktrade'))
+
   const forexSearchList = computed(() => store.state.marketForeignList || []);
   const blocktardeSearchList = computed(
     () => store.state.marketCommoditiesList || []
@@ -71,6 +76,7 @@ export const useNavDialog = (activeTab) => {
   // 左侧列表弹窗
   const showNavDialog = ref(false);
   const stockActiveTab = ref("all");
+  const futureActiveTab = ref('all')
   const navActiveTab = ref("option");
   const showNavDialogFunc = (val = "") => {
     if (!val) {
@@ -245,7 +251,7 @@ export const useNavDialog = (activeTab) => {
     if (searchTimeout) clearTimeout(searchTimeout);
     let s = searchStr.value;
 
-    if (type == "stock") {
+    // if (type == "stock") {
       store.commit("setMarketSearchList", []);
       searchLoading.value = true;
       searchTimeout = setTimeout(() => {
@@ -275,7 +281,7 @@ export const useNavDialog = (activeTab) => {
             searchLoading.value = false;
           });
       }, 0);
-    } else if (type == "contract") {
+    // } else if (type == "contract") {
       searchLoading.value = true;
       store.commit("setFuturesSearchList", []);
       searchTimeout = setTimeout(() => {
@@ -306,7 +312,7 @@ export const useNavDialog = (activeTab) => {
             searchLoading.value = false;
           });
       }, 0);
-    } else if (type == "ai") {
+    // } else if (type == "ai") {
       searchLoading.value = true;
       searchTimeout = setTimeout(() => {
         _aiquant({})
@@ -332,7 +338,7 @@ export const useNavDialog = (activeTab) => {
             searchLoading.value = false;
           });
       }, 0);
-    }
+    // }
   };
 
   const searchItem = () => {
@@ -347,6 +353,12 @@ export const useNavDialog = (activeTab) => {
       : [];
   };
 
+  const cleanItem = () => {
+    searchStr.value = ''
+    totalList.value = []
+    searchResultList.value = []
+  }
+
   const changeTab = (val) => {
     goSearch(val);
   };
@@ -356,17 +368,22 @@ export const useNavDialog = (activeTab) => {
     watchList,
     marketSearchList,
     futuresSearchList,
+    cryptoList,
+    forexList,
+    blocktradeList,
     forexSearchList,
     blocktardeSearchList,
     aiquantSearchList,
     showNavDialog,
     stockActiveTab,
+    futureActiveTab,
     navActiveTab,
     searchLoading,
     searchStr,
     optionLoading,
     searchResultList,
     totalList,
+    cleanItem,
     searchItem,
     goSearch,
     showNavDialogFunc,
