@@ -28,7 +28,11 @@
           <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
           <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
         </div>
-
+        
+        <div class="flex flex-col items-center h-[1.36rem] my-[0.8rem]" v-if="bankList.length == 0">
+          <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
+          <span class="mt-[0.12rem] text-[#a4acb9] text-[0.28rem]">{{ $t("account.no_data") }}</span>
+        </div>
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }"
           class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
           <div class="card_icon">
@@ -143,7 +147,7 @@ const clickAccountItem = val => {
 .withdraw_accounr_dialog {
   background-color: #fff;
   overflow: hidden;
-  padding: 1.6rem 0.32rem 0.8rem 0.32rem;
+  padding: 1.42rem 0.32rem 0.8rem 0.32rem;
   position: relative;
 
   .title {
