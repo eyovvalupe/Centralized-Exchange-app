@@ -29,7 +29,7 @@
           <div class="item_box_right">
             <div class="subtitle"><span>&nbsp;</span></div>
             <div class="item justify-between"
-              style="border: 1px solid #d0d8e2 !important" @click="openDialog(2)">
+              @click="openDialog(2)">
               <div class="flex items-center">
                 <div v-if="currIn.name" class="icon">
                   <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
@@ -71,7 +71,7 @@
             </div>
             <div v-if="!token" class="subtitle">&nbsp;</div>
             <div class="item justify-between" 
-              style="border: 1px solid #d0d8e2 !important" @click="openDialog(1)">
+              @click="openDialog(1)">
               <div class="flex items-center">
                 <div v-if="currOut.name" class="icon">
                   <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.png`)"
