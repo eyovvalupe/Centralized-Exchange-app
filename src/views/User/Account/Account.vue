@@ -13,7 +13,9 @@
           <div class="list" v-else>
             <CryptoList :list="cryptoList" />
           </div>
+         
         </div>
+        <div class="w-full  h-[1.9rem]"></div>
       </Tab>
       <Tab :title="t('account.bank')" name="1">
         <div class="tab_data">
@@ -24,9 +26,12 @@
           <div class="list" v-else>
             <BankList :list="bankList" />
           </div>
+          
         </div>
+        <div class="w-full  h-[1.9rem]"></div>
       </Tab>
     </Tabs>
+    
     <div class="add_btn" @click="goAddAccount">
       <span class="text-[white] text-[0.36rem] font-normal">{{ $t("account.add_account_btn") }}</span>
     </div>
@@ -205,7 +210,7 @@ const goBack = () => {
     align-items: center;
     border-radius: 1.6rem;
     position: absolute;
-    bottom: 0.72rem;
+    bottom: 0.52rem;
   }
 }
 </style>
