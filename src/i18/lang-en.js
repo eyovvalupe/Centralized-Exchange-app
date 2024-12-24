@@ -497,7 +497,7 @@ export default {
     header_ipo: "IPOs",
     header_forex: "Forex",
     header_block: "Blocks",
-
+    header_block_long: "Block Trades",
     stock_open: "Open",
     stock_position: "Position",
     stock_search: "Search",

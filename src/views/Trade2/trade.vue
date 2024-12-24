@@ -159,23 +159,23 @@
                   style="min-width: 2rem"
                   :title="
                     marketItem.market == 'us'
-                      ? t('market.market_stock_country_us')
+                      ? t('market.market_stock_country_us_long')
                       : marketItem.market == 'japan'
-                      ? t('market.market_stock_country_japan')
+                      ? t('market.market_stock_country_japan_long')
                       : marketItem.market == 'india'
-                      ? t('market.market_stock_country_india')
+                      ? t('market.market_stock_country_india_long')
                       : marketItem.market == 'korea'
-                      ? t('market.market_stock_country_korea')
+                      ? t('market.market_stock_country_korea_long')
                       : marketItem.market == 'germany'
-                      ? t('market.market_stock_country_germany')
+                      ? t('market.market_stock_country_germany_long')
                       : marketItem.market == 'uk'
-                      ? t('market.market_stock_country_uk')
+                      ? t('market.market_stock_country_uk_long')
                       : marketItem.market == 'singapore'
-                      ? t('market.market_stock_country_singapore')
+                      ? t('market.market_stock_country_singapore_long')
                       : marketItem.market == 'hongkong'
-                      ? t('market.market_stock_country_hongkong')
+                      ? t('market.market_stock_country_hongkong_long')
                       : marketItem.market == 'malaysia'
-                      ? t('market.market_stock_country_malaysia')
+                      ? t('market.market_stock_country_malaysia_long')
                       : ''
                   "
                   :name="marketItem.market"
@@ -208,12 +208,9 @@
               shrink
             >
               <Tab :title="t('trade.left_all')" name="all"> </Tab>
-              <Tab
-                :title="t('market.market_buy_fast_account_crypto')"
-                name="crypto"
-              ></Tab>
+              <Tab :title="t('account.crypto')" name="crypto"></Tab>
               <Tab :title="t('assets.over_view_forex')" name="forex"></Tab>
-              <Tab :title="t('trade.header_block')" name="blocktrade"></Tab>
+              <Tab :title="t('trade.header_block_long')" name="blocktrade"></Tab>
             </Tabs>
             <div class="lists">
               <StockTable

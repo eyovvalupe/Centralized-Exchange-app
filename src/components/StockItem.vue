@@ -23,7 +23,7 @@
                 v-if="props.page == 'market'"
                 :class="`${
                   marketStyle[props.item.type]
-                } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
+                } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] pt-[0.032rem]`"
               >
                 {{
                   item.type == "stock"
@@ -54,7 +54,7 @@
               style="width: max-content"
               :class="`${
                 marketStyle[props.item.type]
-              } font-normal whitespace-nowrap mt-[0.1rem] text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
+              } font-normal whitespace-nowrap mt-[0.1rem] text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] pt-[0.032rem]`"
             >
               {{
                 item.type == "stock"

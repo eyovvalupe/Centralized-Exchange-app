@@ -489,6 +489,7 @@ export default {
     header_ipo: "IPO",
     header_forex: "外汇",
     header_block: "大宗商品",
+    header_block_long: "大宗商品",
     stock_open: "开仓",
     stock_position: "持仓",
     stock_search: "查询",

@@ -68,7 +68,7 @@ export const useNavDialog = (activeTab) => {
   const aiquantSearchList = computed(() => store.state.aiquantSearchList || []);
 
   const totalList = computed(() => [
-    ...watchList.value,
+    // ...watchList.value,
     ...marketSearchList.value,
     ...futuresSearchList.value,
   ]);
