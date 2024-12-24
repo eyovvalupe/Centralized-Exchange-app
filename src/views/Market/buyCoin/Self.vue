@@ -17,11 +17,11 @@
           class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
           @click="showDialog = true">
           <span class="mr-[0.2rem]">{{ currCurrency.name }}</span>
-          <div class="sizi-16 mr-1">
+          <div class="size-16 mr-1">
             <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
           </div>
 
-          <div class="sizi-16">
+          <div class="size-16">
             <img :src="getStaticImgUrl('/static/img/market/trans.png')" alt="img" />
           </div>
         </div>
@@ -50,7 +50,7 @@
               <span>{{ t('market.market_buy_optional_rate') }} {{ item.volumerate || "0" }}%</span>
               <template v-if="item.avetime">
                 <span>|</span>
-                <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
+                <IconSvg name="clock" class="!size-[0.25rem] mr-1" />
                 <span>{{ item.avetime }}{{ t('market.market_buy_optional_duaration') }}</span>
               </template>
             </div>

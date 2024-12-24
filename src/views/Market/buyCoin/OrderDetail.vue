@@ -133,7 +133,7 @@
                 </div>
                 <div class="line"></div>
                 <div class="info">
-                  <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
+                  <IconSvg name="clock" class="!size-[0.25rem] mr-1" />
                   <span>{{ currItem.merchant_avetime
                     }}{{ t("market.market_buy_optional_duaration") }}</span>
                 </div>

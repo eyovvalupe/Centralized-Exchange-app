@@ -90,7 +90,7 @@
             >
             <template v-if="form.merchant_avetime">
               <span class="px-[0.12rem]">|</span>
-              <IconSvg name="clock" class="sizi-[0.25rem] mr-1" />
+              <IconSvg name="clock" class="!size-[0.25rem] mr-1" />
               <span
                 >{{ form.merchant_avetime
                 }}{{ $t("market.market_buy_optional_duaration") }}</span
