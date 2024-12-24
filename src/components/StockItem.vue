@@ -43,7 +43,7 @@
             </div>
             <div
               v-if="props.page == 'market'"
-              class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
+              class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9] pt-[0.025rem]"
               style="width: max-content"
               v-show="props.item.type != 'stock'"
             >
