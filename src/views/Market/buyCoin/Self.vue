@@ -17,11 +17,11 @@
           class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
           @click="showDialog = true">
           <span class="mr-[0.2rem]">{{ currCurrency.name }}</span>
-          <div class="sizi-16 mr-1">
+          <div class="size-16 mr-1">
             <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
           </div>
 
-          <div class="sizi-16">
+          <div class="size-16">
             <img :src="getStaticImgUrl('/static/img/market/trans.png')" alt="img" />
           </div>
         </div>

@@ -35,7 +35,7 @@
               <img class="my_pic" @click="preview(item.content)" :src="item.content" alt="img" />
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
-            <div style="width: 0.8rem;height: 0.8rem">
+            <div class="ml-[0.2rem]" style="width: 0.8rem;height: 0.8rem">
               <img :src="getStaticImgUrl(`/static/icons/avatar.svg`)" alt="">
             </div>
           </div>
