@@ -204,14 +204,21 @@
           </Tab>
 
           <Tab :title="t('trade.left_bot')" name="ai">
-            <div class="lists px-[0.32rem]">
-              <!-- <StockTable
+            <div class="lists" :class="searchStr ? '' : 'px-[0.32rem]'">
+              <StockTable
+                v-if="searchStr"
                 :showSparkLine="false"
                 :handleClick="handleClickAi"
                 :loading="searchLoading"
+                :list="searchResultList"
+              />
+              <Ai
+                v-if="!searchStr"
+                @clickItems="(item) => handleClickAi(item)"
+                :page="'trade'"
                 :list="aiquantSearchList"
-              /> -->
-              <Ai @clickItems="(item) => handleClickAi(item)" v-if="!searchLoading" :page="'trade'"/>
+                :propsLoading="searchLoading"
+              />
             </div>
           </Tab>
         </Tabs>
@@ -394,7 +401,7 @@ const {
   searchItem,
   goSearch,
   showNavDialogFunc,
-  changeTab
+  changeTab,
 } = useNavDialog(activeTab);
 
 // 选择股票

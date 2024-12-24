@@ -253,7 +253,6 @@ export const useNavDialog = (activeTab) => {
           market: stockActiveTab.value != "all" ? stockActiveTab.value : "",
         })
           .then((res) => {
-            console.log('stock list ======> ', res.data)
             let arr = (res.data || []).map((item) => {
               const target = marketSearchList.value.find(
                 (a) => a.symbol == item.symbol
@@ -266,7 +265,6 @@ export const useNavDialog = (activeTab) => {
                 };
               return item;
             });
-            console.log(arr)
             store.commit("setMarketSearchList", arr);
             store.dispatch("subList", {
               commitKey: "setMarketSearchList",

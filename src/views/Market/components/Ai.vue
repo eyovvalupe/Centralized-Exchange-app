@@ -2,9 +2,9 @@
 <template>
   <div class="page_ai">
 
-    <div class="list" v-if="!pageLoading && props.page != 'home'">
-      <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
-      <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiList" :key="i" :item="item" />
+    <div class="list" v-if="props.page != 'home'">
+      <Loaidng :type="'spinner'"  :loading="page == 'trade' && (propsLoading || !list.length) || page != 'trade' && loading" v-if="page == 'trade' && (propsLoading || !list.length) || page != 'trade' && (!marketAiList.length || loading)" />
+      <AiItem v-if="page == 'trade' && !propsLoading && list.length || page != 'trade' && !marketAiList.length && loading" @clickItems="clickItem" v-for="(item, i) in page == 'trade' ? list : marketAiList" :key="i" :item="item" />
       <NoData v-if="!loading && marketAiList.length == 0" />
     </div>
 
@@ -40,6 +40,14 @@ const props = defineProps({
     type: String,
     default: "market",
   },
+  list: {
+    type: Array,
+    default: []
+  },
+  propsLoading: {
+    type: Boolean,
+    default: false
+  }
 });
 
 const marketAiList = computed(() => store.state.marketAiList || []); // ai量化默认列表

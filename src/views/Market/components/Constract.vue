@@ -53,8 +53,7 @@
                 </div>
               </div>
           </div> -->
-        <StockItem :item="item" />
-        {{ console.log("==========> ", item) }}
+        <StockItem :item="item" :page="'market'"/>
       </div>
     </div>
   </div>

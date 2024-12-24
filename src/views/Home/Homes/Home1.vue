@@ -281,9 +281,12 @@ const commendLoading = ref(false);
 const contractList = computed(() => store.state.contractList || []);
 
 const marketStockCurrentList = computed(
-    () => store.getters.getMarketStockCurrentList || []
+    () => {
+        return store.getters.getMarketStockCurrentList.map(item => {
+            return {...item, type: 'stock'}
+        })
+    }
 );
-console.log(marketStockCurrentList.value)
 
 const getRecommendData = () => {
     commendLoading.value = true;

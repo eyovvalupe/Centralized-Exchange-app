@@ -14,13 +14,13 @@
       >
         <div :class="['stock_item']">
           <div class="td5">
-            <div class="item_name flex items-center gap-1">
-              <span class="truncate" v-if="item.type == 'crypto' || item.type == 'forex' || item.type == 'blocktrade'">{{
+            <div class="item_name flex items-center gap-1 mb-[0.1rem]">
+              <span class="truncate" v-if="item.type != 'stock'">{{
                 props.item.name
               }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>
               <div
-                v-if="props.page != 'home' && props.page != 'trade'"
+                v-if="props.page == 'market'"
                 :class="`${
                   marketStyle[props.item.type]
                 } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `"
@@ -38,11 +38,11 @@
                 }}
               </div>
             </div>
-            <div class="item_info" v-show="props.item.type == 'stock' || item.type == undefined">
+            <div class="item_info" v-show="props.item.type == 'stock'">
               {{ props.item.name || "--" }}
             </div>
             <div
-              v-if="props.page != 'trade' && props.page != 'home'"
+              v-if="props.page == 'market'"
               class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
               style="width: max-content"
               v-show="props.item.type != 'stock'"
@@ -50,7 +50,7 @@
               {{ props.item.lever }}X
             </div>
             <div
-              v-if="props.page == 'trade' && item.type != 'stock'"
+              v-if="props.page != 'market' && item.type != 'stock'"
               style="width: max-content"
               :class="`${
                 marketStyle[props.item.type]
