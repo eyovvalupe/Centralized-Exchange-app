@@ -796,6 +796,7 @@ getSessionToken();
       height: 100%;
       height: 0.96rem;
       border-radius: 1.26rem;
+      background-color: #fff;
       border: 1px solid #d0d8e2;
       display: flex;
       align-items: center;
