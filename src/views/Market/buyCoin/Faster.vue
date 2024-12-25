@@ -92,8 +92,7 @@
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
 
-      <Button size="large" class="submit" round :loading="loading"
-        :color="form1.offset == 'sell' ? '#E8503A' : '#014CFA'" @click="sell">{{ form1.offset == "sell" ?
+      <Button size="large" class="submit" :class="['submit--'+form1.offset]" round :loading="loading" @click="sell">{{ form1.offset == "sell" ?
           t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</Button>
 
       <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
@@ -604,6 +603,13 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
   .submit {
     margin-top: 1.12rem;
+    color:#fff;
+  }
+  .submit--sell{
+    background-color: #E8503A;
+  }
+  .submit--buy{
+    background-color: #014CFA;
   }
 }
 </style>

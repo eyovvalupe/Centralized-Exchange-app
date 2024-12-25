@@ -37,12 +37,12 @@
           </div>
         </div>
         <!-- 交易信息展示 -->
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between item-body">
           <!-- 加密货币信息 -->
           <div class="text-12">
             <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
               <!-- 根据交易类型显示“购入”或“售出” -->
-              <span :class="[item.offset == 'sell' ? 'text-[#E8503A]' : 'text-[#18B762]']">{{
+              <span :class="['offset-'+item.offset]">{{
                 item.offset == "buy"
                   ? t("market.market_buy_list_buy")
                   : t("market.market_buy_list_sell")
@@ -269,104 +269,20 @@ defineExpose({
 }
 
 .buycoin_list {
-  // width: 7.5rem;
-  // padding: 0.08rem 0.32rem;
 
   .list {
-    .item {
-      padding: 0.24rem 0.32rem;
-      border-bottom: 1px dashed #e8e8e8;
-      display: flex;
-      align-items: center;
-      line-height: 0.36rem;
-
-      .avatar {
-        width: 0.64rem;
-        height: 0.64rem;
-        margin-right: 0.4rem;
-        flex-shrink: 0;
-        position: relative;
-
-        .nav_num {
-          width: 0.28rem;
-          height: 0.28rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #ff3b30;
-          font-size: 0.2rem;
-          color: #fff;
-          font-weight: 400;
-          border-radius: 50%;
-          position: absolute;
-          top: -0.1rem;
-          right: -0.12rem;
-        }
-      }
-
-      .left {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-between;
-
-        .type {
-          margin-right: 0.32rem;
-          color: #000;
-        }
-
-        .no {
-          font-size: 0.24rem;
-          color: #999;
-          padding: 0.05rem 0;
-        }
-      }
-
-      .right {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        justify-content: space-between;
-
-        .right_top {
-          display: flex;
-          align-items: center;
-        }
-
-        .amount {
-          font-size: 0.36rem;
-          font-weight: bold;
-        }
-
-        .unit {
-          margin-left: 0.1rem;
-        }
-
-        .status {
-          margin-top: 0.24rem;
-          font-size: 0.24rem;
-          padding: 0.05rem 0.32rem;
-          background-color: #f6f6f6;
-          color: #888888;
-        }
-
-        .status_waitpayment {
-          color: #ffaf2a;
-          background-color: #fffaf2;
-        }
-
-        .status_waitconfirm {
-          color: #ffaf2a;
-          background-color: #fffaf2;
-        }
-
-        .status_done {
-          color: #30bf87;
-          background-color: #ebfeed;
-        }
-      }
+    
+    .item-body{
+      position: relative;
     }
+
+    .offset-sell{
+      color:#E8503A;
+    }
+    .offset-buy{
+      color:#18B762;
+    }
+    
   }
 }
 </style>
