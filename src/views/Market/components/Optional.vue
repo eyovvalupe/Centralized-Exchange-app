@@ -349,8 +349,10 @@ const jump = (name) => {
   font-size: 0.28rem;
   font-weight: 400;
   line-height: 0.28rem;
-  padding: 0 0.2rem 0 0.1rem;
-
+  padding: 0 0.2rem;
+  :deep(.van-button__icon){
+    font-size: 0.28rem;
+  }
   :deep('span.van-button__text') {
     margin-left: 0 !important;
   }
