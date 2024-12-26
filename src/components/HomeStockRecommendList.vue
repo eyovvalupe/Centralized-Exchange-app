@@ -25,13 +25,15 @@
                 }}%
               </div>
             </div>
-            <div class="flex justify-between item-center">
+            <div class="flex item-center">
               <SparkLine v-if="item.points" :points="item.points" :ratio="item.ratio"
                 :style="'width: 100%; height: 0.5rem'" :xtimes="1.2" />
-              <div
+              <div class="flex-1 float-right">
+                <div
                 class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] items-center justify-center flex px-[0.2rem]"
-                style="width: max-content; height: 0.48rem" @click.stop="collect(item)">
+                style="width: max-content; height: 0.48rem; float: right;" @click.stop="collect(item)">
                 <span class="text-[0.22rem]">+{{ t('home.optional') }}</span>
+              </div>
               </div>
             </div>
           </div> 
@@ -60,6 +62,7 @@ import { Carousel, Slide } from "vue3-carousel";
 
 import "vue3-carousel/dist/carousel.css";
 import { useI18n } from "vue-i18n";
+import { flat } from "vant/lib/utils";
 
 const { t } = useI18n();
 const watchlist = computed(() => store.state.marketWatchList);
