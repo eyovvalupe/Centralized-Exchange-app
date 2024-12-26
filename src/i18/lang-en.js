@@ -718,6 +718,8 @@ export default {
     forex_opening_title: "Forex",
     forex_position_title: "Forex/Status",
     trade_order_history: "History",
+    left_search_result: "Result"
+
   },
   inviteFriends: {
     invite: "Invite",

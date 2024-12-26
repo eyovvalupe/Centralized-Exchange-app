@@ -6,16 +6,12 @@
     <!-- <div class="title">交易</div> -->
     <!-- 头部 -->
 
-    <HeaderTabs
-      :tabs="[
-        t('trade.header_stock'),
-        t('trade.header_contract'),
-        t('trade.header_aibot'),
-        t('trade.header_ipo'),
-      ]"
-      v-model:active="activeTab"
-      @change="changeActiveTab(activeTab, true)"
-    >
+    <HeaderTabs :tabs="[
+      t('trade.header_stock'),
+      t('trade.header_contract'),
+      t('trade.header_aibot'),
+      t('trade.header_ipo'),
+    ]" v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="tab_icon" @click="showNavDialogFunc()">
           <img :src="getStaticImgUrl('/static/img/trade/open.png')" alt="img" />
@@ -23,60 +19,28 @@
       </template>
     </HeaderTabs>
 
-    <Swipe
-      :autoplay="0"
-      :initial-swipe="initialSwipe"
-      :show-indicators="false"
-      ref="swipeRef"
-      @change="swipeChange"
-    >
+    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipeRef" @change="swipeChange">
       <SwipeItem>
-        <div
-          class="trade_body"
-          ref="stockTradeBody"
-          @scroll="tradeBodyScroll('stockTradeBody')"
-        >
-          <StockBlock
-            :activeTab="Number(activeTab + 1)"
-            @showNavDialog="showNavDialogFunc"
-            ref="StockBlockRef"
-            v-if="loadedTab.includes(0)"
-          />
+        <div class="trade_body" ref="stockTradeBody" @scroll="tradeBodyScroll('stockTradeBody')">
+          <StockBlock :activeTab="Number(activeTab + 1)" @showNavDialog="showNavDialogFunc" ref="StockBlockRef"
+            v-if="loadedTab.includes(0)" />
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div
-          class="trade_body"
-          ref="contractTradeBody"
-          @scroll="tradeBodyScroll('contractTradeBody')"
-        >
-          <ContractBlock
-            :activeTab="Number(activeTab + 1)"
-            :key="'constract'"
-            :mode="'constract'"
-            @showNavDialog="showNavDialogFunc"
-            ref="ContractBlockRef"
-            v-if="loadedTab.includes(1)"
-          />
+        <div class="trade_body" ref="contractTradeBody" @scroll="tradeBodyScroll('contractTradeBody')">
+          <ContractBlock :activeTab="Number(activeTab + 1)" :key="'constract'" :mode="'constract'"
+            @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(1)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="trade_body">
-          <AiBlock
-            :activeTab="Number(activeTab + 1)"
-            @showNavDialog="showNavDialogFunc"
-            ref="AiBlockRef"
-            v-if="loadedTab.includes(2)"
-          />
+          <AiBlock :activeTab="Number(activeTab + 1)" @showNavDialog="showNavDialogFunc" ref="AiBlockRef"
+            v-if="loadedTab.includes(2)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="trade_body">
-          <IpoBlock
-            :activeTab="Number(activeTab + 1)"
-            ref="IpoBlockRef"
-            v-if="loadedTab.includes(3)"
-          />
+          <IpoBlock :activeTab="Number(activeTab + 1)" ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
         </div>
       </SwipeItem>
       <!-- <SwipeItem>
@@ -96,167 +60,91 @@
     <!-- </PullRefresh> -->
 
     <!-- 自选列表 -->
-    <Popup
-      round
-      v-model:show="showNavDialog"
-      position="left"
-      :style="{ width: '85%', height: '100%' }"
-    >
+    <Popup round v-model:show="showNavDialog" position="left" :style="{ width: '85%', height: '100%' }">
       <div class="trade_option_list">
         <!-- 搜索 -->
         <div class="search_box_wrap">
           <div class="item search_box relative">
             <div class="search_icon">
-              <img
-                :src="getStaticImgUrl('/static/img/common/search.png')"
-                alt="🔍"
-              />
+              <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
             </div>
-            <input
-              v-model.trim="searchStr"
-              @keyup="searchItem()"
-              type="text"
-              class="ipt"
-              :placeholder="t('trade.left_search')"
-              :onfocus="() => (isFocused = true)"
-              :onblur="() => (isFocused = false)"
-            />
+            <input v-model.trim="searchStr" @keyup="searchItem()" type="text" class="ipt"
+              :placeholder="t('trade.left_search')" :onfocus="() => (isFocused = true)"
+              :onblur="() => (isFocused = false)" />
           </div>
         </div>
+        <div v-if="isFocused || searchStr" class="ml-[0.32rem] mb-[0.2rem] text-[0.32rem]">{{ t('trade.left_search_result') }}</div>
         <!-- 切换 -->
-        <Tabs
-          @change="changeTab"
-          class="van-tabs--sub"
-          :lazy-render="false"
-          v-model:active="navActiveTab"
-          animated
-          shrink
-        >
+        <Tabs id="option_left" @change="changeTab" class="van-tabs--sub" :lazy-render="false"
+          v-model:active="navActiveTab" animated shrink>
           <Tab :title="t('trade.left_mine')" name="option">
             <div class="lists">
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="optionLoading"
-                :key="'option'"
-                :list="isFocused ? searchResultList : watchList"
-              />
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="optionLoading" :key="'option'"
+                :list="isFocused ? searchResultList : watchList" />
             </div>
           </Tab>
           <Tab :title="t('trade.left_stock')" name="stock">
             <div class="lists">
-              <Tabs
-                v-if="!(isFocused || searchStr)"
-                @change="changeTab('stock')"
-                type="oval-sub-small"
-                class="mt-[0.2rem]"
-                :lazy-render="false"
-                v-model:active="stockActiveTab"
-                shrink
-              >
+              <Tabs v-if="!(isFocused || searchStr)" @change="changeTab('stock')" type="oval-sub-small"
+                class="mt-[0.2rem]" :lazy-render="false" v-model:active="stockActiveTab" shrink>
                 <Tab :title="t('trade.left_all')" name="all"> </Tab>
-                <Tab
-                  style="min-width: 2rem"
-                  :title="
-                    marketItem.market == 'us'
-                      ? t('market.market_stock_country_us_long')
-                      : marketItem.market == 'japan'
+                <Tab style="min-width: 2rem" :title="marketItem.market == 'us'
+                    ? t('market.market_stock_country_us_long')
+                    : marketItem.market == 'japan'
                       ? t('market.market_stock_country_japan_long')
                       : marketItem.market == 'india'
-                      ? t('market.market_stock_country_india_long')
-                      : marketItem.market == 'korea'
-                      ? t('market.market_stock_country_korea_long')
-                      : marketItem.market == 'germany'
-                      ? t('market.market_stock_country_germany_long')
-                      : marketItem.market == 'uk'
-                      ? t('market.market_stock_country_uk_long')
-                      : marketItem.market == 'singapore'
-                      ? t('market.market_stock_country_singapore_long')
-                      : marketItem.market == 'hongkong'
-                      ? t('market.market_stock_country_hongkong_long')
-                      : marketItem.market == 'malaysia'
-                      ? t('market.market_stock_country_malaysia_long')
-                      : ''
-                  "
-                  :name="marketItem.market"
-                  v-for="marketItem in marketList"
-                  :key="marketItem.market"
-                >
+                        ? t('market.market_stock_country_india_long')
+                        : marketItem.market == 'korea'
+                          ? t('market.market_stock_country_korea_long')
+                          : marketItem.market == 'germany'
+                            ? t('market.market_stock_country_germany_long')
+                            : marketItem.market == 'uk'
+                              ? t('market.market_stock_country_uk_long')
+                              : marketItem.market == 'singapore'
+                                ? t('market.market_stock_country_singapore_long')
+                                : marketItem.market == 'hongkong'
+                                  ? t('market.market_stock_country_hongkong_long')
+                                  : marketItem.market == 'malaysia'
+                                    ? t('market.market_stock_country_malaysia_long')
+                                    : ''
+                  " :name="marketItem.market" v-for="marketItem in marketList" :key="marketItem.market">
                 </Tab>
               </Tabs>
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="searchLoading"
-                :list="
-                  isFocused || searchStr ? searchResultList : marketSearchList
-                "
-                :page="'trade'"
-                :type="'stock'"
-              />
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :list="isFocused || searchStr ? searchResultList : marketSearchList
+                " :page="'trade'" :type="'stock'" />
             </div>
           </Tab>
 
           <Tab :title="t('market.market_header_contract')" name="contract">
-            <Tabs
-              v-if="!(isFocused || searchStr)"
-              @change="changeTab('future')"
-              type="oval-sub-small"
-              class="mt-[0.2rem]"
-              :lazy-render="false"
-              v-model:active="futureActiveTab"
-              shrink
-            >
+            <Tabs v-if="!(isFocused || searchStr)" @change="changeTab('future')" type="oval-sub-small"
+              class="mt-[0.2rem]" :lazy-render="false" v-model:active="futureActiveTab" shrink>
               <Tab :title="t('trade.left_all')" name="all"> </Tab>
               <Tab :title="t('account.crypto')" name="crypto"></Tab>
               <Tab :title="t('assets.over_view_forex')" name="forex"></Tab>
               <Tab :title="t('trade.header_block_long')" name="blocktrade"></Tab>
             </Tabs>
             <div class="lists">
-              <StockTable
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="searchLoading"
-                :list="
-                  isFocused || searchStr
-                    ? searchResultList
-                    : futureActiveTab == 'all'
+              <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :list="isFocused || searchStr
+                  ? searchResultList
+                  : futureActiveTab == 'all'
                     ? futuresSearchList
                     : futureActiveTab == 'crypto'
-                    ? cryptoList
-                    : futureActiveTab == 'forex'
-                    ? forexList
-                    : futureActiveTab == 'blocktrade'
-                    ? blocktradeList
-                    : []
-                "
-                :page="'trade'"
-                :type="'future'"
-              />
+                      ? cryptoList
+                      : futureActiveTab == 'forex'
+                        ? forexList
+                        : futureActiveTab == 'blocktrade'
+                          ? blocktradeList
+                          : []
+                " :page="'trade'" :type="'future'" />
             </div>
           </Tab>
 
           <Tab :title="t('trade.left_bot')" name="ai">
-            <div
-              class="lists"
-              :class="searchStr || isFocused ? '' : 'px-[0.32rem]'"
-            >
-              <StockTable
-                v-if="isFocused || searchStr"
-                :showSparkLine="false"
-                :handleClick="handleClick"
-                :loading="searchLoading"
-                :list="searchResultList"
-                :page="'trade'"
-                :type="''"
-              />
-              <Ai
-                v-if="!(isFocused || searchStr)"
-                @clickItems="(item) => handleClickAi(item)"
-                :page="'trade'"
-                :list="aiquantSearchList"
-                :propsLoading="searchLoading"
-              />
+            <div class="lists" :class="searchStr || isFocused ? '' : 'px-[0.32rem]'">
+              <StockTable v-if="isFocused || searchStr" :showSparkLine="false" :handleClick="handleClick"
+                :loading="searchLoading" :list="searchResultList" :page="'trade'" :type="''" />
+              <Ai v-if="!(isFocused || searchStr)" @clickItems="(item) => handleClickAi(item)" :page="'trade'"
+                :list="aiquantSearchList" :propsLoading="searchLoading" />
             </div>
           </Tab>
         </Tabs>
@@ -264,12 +152,7 @@
     </Popup>
 
     <!-- 持仓价值 -->
-    <Popup
-      :safe-area-inset-top="true"
-      :safe-area-inset-bottom="true"
-      v-model:show="showPrice"
-      position="top"
-    >
+    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPrice" position="top">
       <div class="trade-popup_price">
         <div class="popup-title">交易</div>
         <div class="total-value">总持仓价值</div>
@@ -527,7 +410,7 @@ const tradeBodyScroll = (refName) => {
     if (
       contractTradeBody.value.scrollTop + 10 >
       contractTradeBody.value.scrollHeight -
-        contractTradeBody.value.offsetHeight
+      contractTradeBody.value.offsetHeight
     ) {
       eventBus.emit("contractTradeBodyScrollToBottom");
     }
@@ -541,6 +424,13 @@ watch(showNavDialog, (val) => {
     cleanItem();
   }
 });
+
+watch(() => (isFocused.value || searchStr.value), (val) => {
+  const tab = document.getElementById("option_left")
+  const element = tab.querySelector('.van-tabs__wrap')
+  if (val) element.style.display = "none"
+  else element.style.display = "block"
+})
 </script>
 
 <style lang="less" scoped>
