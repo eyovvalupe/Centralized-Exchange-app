@@ -708,7 +708,9 @@ export default {
 
     forex_opening_title: "外汇",
     forex_position_title: "外汇/状态",
-    trade_order_history: "历史订单"
+    trade_order_history: "历史订单",
+
+    left_search_result: "搜索结果"
   },
   inviteFriends:{
     invite:'推荐朋友',

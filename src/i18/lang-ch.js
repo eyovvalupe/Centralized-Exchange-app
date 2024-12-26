@@ -692,6 +692,8 @@ export default {
     forex_opening_title: "外匯",
     forex_position_title: "外匯/狀態",
     trade_order_history: "曆史訂單",
+    left_search_result: "搜索結果"
+
   },
   inviteFriends: {
     invite: "推薦朋友",

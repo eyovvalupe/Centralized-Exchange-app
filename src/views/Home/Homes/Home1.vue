@@ -201,6 +201,55 @@ const currentSlide = ref(0);
 const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
 
+// 热门数据
+const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
+const marketContractRecommendList = computed(() => store.state.marketContractRecommendList || [])
+const recommendLoading = ref(false);
+const openRecommendList = () => {
+    if (!marketSrockRecommendList.value.length || !marketContractRecommendList.value.length) {
+        recommendLoading.value = true;
+    }
+    _watchlistDefault()
+        .then((res) => {
+            if (res.code == 200) {
+                // 股票
+                if (res.data?.stock) {
+                    const newarr = res.data.stock.map((item) => {
+                        const target = store.state.marketSrockRecommendList.find(
+                            (a) => a.symbol == item.symbol
+                        );
+                        return target || item;
+                    });
+                    const arr = newarr.map((item) => {
+                        return { ...item, type: "stock" };
+                    });
+                    store.commit("setMarketSrockRecommendList", arr || []);
+                }
+
+                // 合约
+                if (res.data?.crypto) {
+                    const newarr2 = res.data.crypto.map((item) => {
+                        const target = store.state.marketContractRecommendList.find(
+                            (a) => a.symbol == item.symbol
+                        );
+                        return target || item;
+                    });
+                    const arr2 = newarr2.map((item) => {
+                        return { ...item, type: "crypto" };
+                    });
+                    store.commit("setMarketContractRecommendList", arr2 || []);
+                }
+                subs();
+            }
+        })
+        .finally(() => {
+            recommendLoading.value = false;
+        });
+};
+setTimeout(() => {
+    openRecommendList()
+}, 1000)
+
 // 打开添加类型选择弹窗
 const showAS = ref(false);
 const actions = [
