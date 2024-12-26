@@ -26,11 +26,11 @@
               </div>
             </div>
             <div class="flex justify-between item-center">
-              <SparkLine v-if="getRealtime(item.symbol,'points')" :points="getRealtime(item.symbol,'points')" :ratio="item.ratio"
+              <SparkLine v-if="item.points" :points="item.points" :ratio="item.ratio"
                 :style="'width: 100%; height: 0.5rem'" :xtimes="1.2" />
               <div
-                class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] items-center justify-center flex"
-                style="width: 1.5rem; height: 0.48rem" @click.stop="collect(item)">
+                class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] items-center justify-center flex px-[0.2rem]"
+                style="width: max-content; height: 0.48rem" @click.stop="collect(item)">
                 <span class="text-[0.22rem]">+{{ t('home.optional') }}</span>
               </div>
             </div>
@@ -80,7 +80,8 @@ const config = {
     },
   },
 };
-
+const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
+const marketContractRecommendList = computed(() => store.state.marketContractRecommendList || [])
 const getRealtime = (symbol,k,_default='')=>{
   for(let i=0;i<store.state.realtimeData.length;i++){
     if(store.state.realtimeData[i].symbol == symbol){
@@ -94,7 +95,7 @@ const token = computed(() => store.state.token || "");
 
 const slideList = computed(() => {
   const slides = [];
-  store.state.marketSrockRecommendList.map((item, i) => {
+  marketSrockRecommendList.value.map((item, i) => {
     if (i < 6) {
       if (
         slides.length == 0 ||
@@ -106,7 +107,7 @@ const slideList = computed(() => {
       }
     }
   });
-  store.state.marketContractRecommendList.map((item, i) => {
+  marketContractRecommendList.value.map((item, i) => {
     if (i < 6) {
       if (
         slides.length == 0 ||
@@ -147,54 +148,54 @@ const goInfo = (item) => {
   }
 };
 
-const subs = () => {
-  store.commit("setMarketWatchKeysByPage");
-  // 订阅 ws
-  store.dispatch("subList", {});
-};
+// const subs = () => {
+//   store.commit("setMarketWatchKeysByPage");
+//   // 订阅 ws
+//   store.dispatch("subList", {});
+// };
 
 const recommendLoading = ref(false);
-const openRecommendList = () => {
-  if (!slideList.value.length) {
-    recommendLoading.value = true;
-  }
-  _watchlistDefault()
-    .then((res) => {
-      if (res.code == 200) {
-        // 股票
-        if (res.data?.stock) {
-          const newarr = res.data.stock.map((item) => {
-            const target = store.state.marketSrockRecommendList.find(
-              (a) => a.symbol == item.symbol
-            );
-            return target || item;
-          });
-          const arr = newarr.map((item) => {
-            return { ...item, type: "stock" };
-          });
-          store.commit("setMarketSrockRecommendList", arr || []);
-        }
+// const openRecommendList = () => {
+//   if (!slideList.value.length) {
+//     recommendLoading.value = true;
+//   }
+//   _watchlistDefault()
+//     .then((res) => {
+//       if (res.code == 200) {
+//         // 股票
+//         if (res.data?.stock) {
+//           const newarr = res.data.stock.map((item) => {
+//             const target = store.state.marketSrockRecommendList.find(
+//               (a) => a.symbol == item.symbol
+//             );
+//             return target || item;
+//           });
+//           const arr = newarr.map((item) => {
+//             return { ...item, type: "stock" };
+//           });
+//           store.commit("setMarketSrockRecommendList", arr || []);
+//         }
 
-        // 合约
-        if (res.data?.crypto) {
-          const newarr2 = res.data.crypto.map((item) => {
-            const target = store.state.marketContractRecommendList.find(
-              (a) => a.symbol == item.symbol
-            );
-            return target || item;
-          });
-          const arr2 = newarr2.map((item) => {
-            return { ...item, type: "crypto" };
-          });
-          store.commit("setMarketContractRecommendList", arr2 || []);
-        }
-        subs();
-      }
-    })
-    .finally(() => {
-      recommendLoading.value = false;
-    });
-};
+//         // 合约
+//         if (res.data?.crypto) {
+//           const newarr2 = res.data.crypto.map((item) => {
+//             const target = store.state.marketContractRecommendList.find(
+//               (a) => a.symbol == item.symbol
+//             );
+//             return target || item;
+//           });
+//           const arr2 = newarr2.map((item) => {
+//             return { ...item, type: "crypto" };
+//           });
+//           store.commit("setMarketContractRecommendList", arr2 || []);
+//         }
+//         subs();
+//       }
+//     })
+//     .finally(() => {
+//       recommendLoading.value = false;
+//     });
+// };
 
 const collectLoading = ref(false);
 
@@ -241,9 +242,9 @@ const collect = (item) => {
   }
 };
 
-onMounted(() => {
-  openRecommendList();
-});
+// onMounted(() => {
+//   openRecommendList();
+// });
 </script>
 
 <style>
