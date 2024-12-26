@@ -142,7 +142,7 @@
         <div class="lang">
           <div style="width: 0.57rem; height: 0.57rem; padding: 0.01rem;" class="mr-[0.1rem]">
             <div style="width: 0.52rem;height: 0.52rem;">
-              <img :src="getStaticImgUrl(`/static/icons/${defaultLang.icon}.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/icons/${Object.keys(language).length ? language.icon : defaultLang.icon}.svg`)" alt="">
             </div>
           </div>
           <span class="font-1">{{ Object.keys(language).length ? language.name : defaultLang.name }}</span>
