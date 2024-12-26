@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="px-[0.32rem] mt-[0.28rem] h-[0.52rem] flex items-center">
-        <div class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]">
+        <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[13px] flex justify-center items-center mr-[0.2rem]">
           <div class="size-[0.4rem]">
             <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" class=" rounded-full" alt="">
           </div>
@@ -31,7 +31,7 @@
     <div v-else class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-[#f5f7fc] mb-[0.12rem] justify-between"
       @click="click(item)">
       <div class="ml-[0.32rem] flex items-center">
-        <div class="w-[0.52rem] h-[0.52rem] rounded-[13px] bg-[#fff] flex justify-center items-center mr-[0.2rem]">
+        <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[13px] flex justify-center items-center mr-[0.2rem]">
           <div class="size-[0.4rem]">
             <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" alt="">
           </div>
@@ -65,6 +65,8 @@ const click = (val) => {
   emits("click", val);
 };
 </script>
-<style lang="less">
-.currency_list {}
+<style lang="less" scoped>
+.crypto_icon {
+  background-color: #fff;
+}
 </style>
