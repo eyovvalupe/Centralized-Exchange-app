@@ -14,15 +14,17 @@
     <div class="tabs mb-4">
       <div>
         <div
-          class="mr-[0.28rem] flex h-[0.6rem] w-[1.64rem] items-center justify-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
+          class="mr-[0.28rem] flex justify-between h-[0.6rem] w-[1.64rem] items-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
           @click="showDialog = true">
-          <span class="mr-[0.2rem]">{{ currCurrency.name }}</span>
-          <div class="size-16 mr-1">
-            <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
-          </div>
+          <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
+          <div class="flex">
+            <div class="size-[0.32rem] mr-1">
+              <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
+            </div>
 
-          <div class="size-16">
-            <img :src="getStaticImgUrl('/static/img/market/trans.png')" alt="img" />
+            <div class="size-[0.32rem]">
+              <img :src="getStaticImgUrl('/static/img/market/trans.png')" alt="img" />
+            </div>
           </div>
         </div>
       </div>
@@ -107,7 +109,7 @@
           {{ t('market.market_buy_optional_estreceive') }}：{{ showAmount }} {{ currCurrency.name }}
         </div>
 
-        <div class="btn" @click="preSubmit">
+        <div class="btn" :class="['btn--'+offset]" @click="preSubmit">
           {{ t('market.market_buy_optional_confirm') }}{{ offset == "buy" ? t('market.market_buy_fast_buy') :
             t('market.market_buy_fast_sell') }}
         </div>

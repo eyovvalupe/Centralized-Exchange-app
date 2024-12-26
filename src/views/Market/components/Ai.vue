@@ -1,10 +1,9 @@
 <!-- AI量化 -->
 <template>
   <div class="page_ai">
-
     <div class="list" v-if="props.page != 'home'">
-      <Loaidng :type="'spinner'"  :loading="page == 'trade' && (propsLoading || !list.length) || page != 'trade' && loading" v-if="page == 'trade' && (propsLoading || !list.length) || page != 'trade' && (!marketAiList.length || loading)" />
-      <AiItem v-if="page == 'trade' && !propsLoading && list.length || page != 'trade' && !marketAiList.length && loading" @clickItems="clickItem" v-for="(item, i) in page == 'trade' ? list : marketAiList" :key="i" :item="item" />
+      <Loaidng :type="'spinner'"  :loading="page == 'trade' && (propsLoading || !list.length) || page != 'trade' && loading" v-if="(page == 'trade' && propsLoading && !list.length) || (page != 'trade' && !marketAiList.length || loading)" />
+      <AiItem v-if="(page == 'trade' && !propsLoading && list.length) || (page != 'trade' && marketAiList.length && !loading)" @clickItems="clickItem" v-for="(item, i) in page == 'trade' ? list : marketAiList" :key="i" :item="item" />
       <NoData v-if="!loading && marketAiList.length == 0" />
     </div>
 

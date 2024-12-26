@@ -28,7 +28,7 @@
       </div>
       <div class="tip">{{ t('market.market_buy_list_pre_pay') }} {{ showAmount }} {{ info.currWallet }}</div>
 
-      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{
+      <Button size="large" class="btn btn--buy" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{
         t('market.market_buy_fast_buy')
         }}</Button>
     </div>
@@ -79,7 +79,7 @@
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
         <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
       </div>
-      <Button size="large" class="btn" round :loading="loading" color="var(--main-color)"
+      <Button size="large" class="btn btn--sell" round :loading="loading" color="var(--main-color)"
         @click="goSubmit">{{ t('market.market_buy_fast_sell') }}</Button>
     </div>
     <!-- 安全密码弹窗 -->
