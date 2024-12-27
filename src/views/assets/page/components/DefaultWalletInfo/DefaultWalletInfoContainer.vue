@@ -1,6 +1,6 @@
 <template>
-  <div class="absolute top-[0] left-[0] z-[-1] rounded-[0.32rem]">
-    <div style="width:6.86rem;height:3.04rem">
+  <div class="rounded-[0.32rem] wallet_bg_box">
+    <div class="wallet_bg">
       <img :src="getStaticImgUrl('/static/icons/wallet_bg.svg')" alt="">
     </div>
   </div>
@@ -9,3 +9,16 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 </script>
+
+<style lang="css" scoped>
+.wallet_bg_box{
+  position: absolute;
+  left:0;
+  top:0;
+  z-index: -1;
+}
+.wallet_bg {
+  width:6.86rem;
+  height:3.04rem;
+}
+</style>
