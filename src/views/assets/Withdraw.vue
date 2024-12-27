@@ -77,7 +77,7 @@
               <div class="more_card">{{ $t("withdraw.change") }}</div>
             </div>
             <div v-else class="add_account" @click="showAccountDialog = true">
-              <Icon size="0.48rem" color="#014CFA" name="add-o" />
+              <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
               <div class="add_account_text">
                 {{ $t("withdraw.addPaymentMethod") }}
               </div>
@@ -85,7 +85,7 @@
           </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
           $t("withdraw.confirm") }}</Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
@@ -123,14 +123,14 @@
               <div class="more_card">{{ $t("withdraw.change") }}</div>
             </div>
             <div v-else class="add_account" @click="showAccountDialog = true">
-              <Icon size="0.48rem" color="#014CFA" name="add-o" />
+              <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
               <div class="add_account_text">
                 {{ $t("withdraw.addPaymentMethod") }}
               </div>
             </div>
           </div>
         </div>
-        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
           $t("withdraw.confirm") }}</Button>
       </Tab>
     </Tabs>
@@ -206,7 +206,7 @@
       <div class="withdraw_accounr_dialog">
         <div class="lists card_lists">
           <div class="add_account" @click="goAddAccount">
-            <Icon size="0.48rem" color="#014CFA" name="add-o" />
+            <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
             <div class="add_account_text">
               {{ $t("withdraw.addPaymentMethod") }}
             </div>
@@ -627,7 +627,7 @@ watch(
 
   .form {
     .tip {
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.28rem;
       line-height: 0.36rem;
       margin-top: 0.24rem;
@@ -641,7 +641,7 @@ watch(
       display: flex;
       align-items: center;
       font-size: 0.28rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 400;
       line-height: 0.36rem;
       margin-top: 0.4rem;
@@ -682,7 +682,7 @@ watch(
 }
 
 .add_account {
-  background-color: #f5f7fc;
+  background-color: var(--ex-bg-color2);
   border-radius: 0.32rem;
   display: flex;
   align-items: center;
@@ -691,7 +691,7 @@ watch(
 }
 
 .add_account_text {
-  color: #014cfa;
+  color: var(--ex-primary-color);
   text-align: center;
   font-size: 0.24rem;
   font-weight: 400;
@@ -705,8 +705,8 @@ watch(
   align-items: center;
   justify-content: space-between;
   position: relative;
-  border: 1px solid #d0d8e2;
-  background-color: #fff;
+  border: 1px solid var(--ex-border-color2);
+  background-color: var(--ex-bg-color);
   padding: 0.2rem 0.32rem 0.28rem 0.32rem;
 
   .card_icon {
@@ -731,19 +731,19 @@ watch(
 
     .name {
       font-size: 0.28rem;
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
   }
 
   .more_card {
-    color: #1a59f6;
+    color: var(--ex-primary-color);
     font-size: 0.24rem;
     font-weight: 400;
   }
 }
 
 .card_box_active {
-  border: 1px solid #1a59f6;
+  border: 1px solid var(--ex-primary-color);
   border-top-right-radius: 0;
 
   .checked {
@@ -782,9 +782,9 @@ watch(
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.6rem;
-    // border: 1px solid #d0d8e2;
+    // border: 1px solid var(--ex-border-color2);
 
     .search_icon {
       width: 0.48rem;
@@ -795,7 +795,7 @@ watch(
     .ipt {
       height: 100%;
       font-weight: 400;
-      color: #061023 !important;
+      color: var(--ex-text-color) !important;
     }
 
     .ipt::placeholder {
@@ -807,7 +807,7 @@ watch(
     height: 1.04rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #eff3f8;
+    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
     font-size: 0.3rem;
@@ -827,13 +827,13 @@ watch(
   }
 
   .swap_dialog_item_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-weight: 600;
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       width: 0.48rem;
       height: 0.48rem;
       top: 50%;

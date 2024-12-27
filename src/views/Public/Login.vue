@@ -89,7 +89,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">{{
+      <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit" type="primary">{{
         $t("login.login") }}</Button>
     </div>
 
@@ -396,14 +396,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
         width: 0.4rem;
         height: 0.4rem;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -443,8 +443,8 @@ onMounted(() => {
 
     :deep(.van-tab--card) {
       border-right: none;
-      color: #666d80;
-      border-bottom: 0.04rem solid #d0d8e2;
+      color: var(--ex-text-color2);
+      border-bottom: 0.04rem solid var(--ex-border-color2);
       // background-color: #f5f5f5;
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
@@ -452,14 +452,14 @@ onMounted(() => {
     }
 
     :deep(.van-tab--card.van-tab--active) {
-      background-color: white;
+      background-color: var(--ex-bg-color);
       color: #2168f6;
       font-family: "PingFang SC";
       font-size: 0.36rem;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
-      border-bottom: 0.06rem solid #014cfa;
+      border-bottom: 0.06rem solid var(--ex-primary-color);
       border-radius: 0.03rem;
     }
 
@@ -497,7 +497,7 @@ onMounted(() => {
     left: 50%;
     transform: translateX(-50%);
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back {
       color: #161616;
@@ -528,7 +528,7 @@ onMounted(() => {
       // height: 0.78rem;
       display: flex;
       align-items: center;
-      color: #061023;
+      color: var(--ex-text-color);
       text-align: center;
       font-family: "PingFang SC";
       font-size: 0.56rem;
@@ -542,7 +542,7 @@ onMounted(() => {
     padding: 0 0.32rem;
 
     .form_title {
-      color: #000;
+      color: var(--ex-text-color);
       line-height: 0.42rem;
       font-weight: 400;
       margin-bottom: 0.12rem;
@@ -551,13 +551,13 @@ onMounted(() => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 0.02rem solid #d0d8e2;
+      border: 0.02rem solid var(--ex-border-color2);
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.32rem;
 
       .code {
-        color: #061023;
+        color: var(--ex-text-color);
         display: flex;
         align-items: center;
         margin-right: 0.12rem;
@@ -571,18 +571,18 @@ onMounted(() => {
 
       .item_input {
         flex: 1;
-        color: #061023;
+        color: var(--ex-text-color);
         font-weight: 400;
         font-size: 0.3rem;
       }
 
       &:has(.item_input:focus) {
-        border: 0.02rem solid #014cfa;
+        border: 0.02rem solid var(--ex-primary-color);
       }
 
       .form_item_user {
         justify-content: center;
-        color: #014cfa;
+        color: var(--ex-primary-color);
         margin-right: 0.12rem;
         display: flex;
         justify-content: center;
@@ -627,7 +627,7 @@ onMounted(() => {
   }
 
   .fogot {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-weight: 400;
     padding-left: 0.44rem;
     margin: 0.2rem 0 1.2rem 0;
@@ -644,7 +644,7 @@ onMounted(() => {
     .submit {
       width: 100%;
       height: 1.12rem;
-      color: #fff;
+      color: var(--ex-bg-primary-text-color);
       text-align: center;
       font-family: "PingFang SC";
       font-size: 0.36rem;
@@ -659,10 +659,10 @@ onMounted(() => {
     margin: 0.6rem 0 0.4rem 0;
     text-align: center;
     font-weight: 400;
-    color: #666d80;
+    color: var(--ex-text-color2);
 
     >span {
-      color: #1a59f6;
+      color: var(--ex-primary-color);
       font-weight: 600;
     }
   }
@@ -673,7 +673,7 @@ onMounted(() => {
 .register_accounr_dialog {
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   overflow: hidden;
@@ -690,7 +690,7 @@ onMounted(() => {
 
   .search_box {
     height: 0.84rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     border-radius: 0.32rem;
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;
@@ -710,7 +710,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: start;
-    border-bottom: 0.02rem solid #f5f5f5;
+    border-bottom: 0.02rem solid var(--ex-border-color);
     gap: 0.2rem;
 
     .flag_icon {
@@ -725,14 +725,14 @@ onMounted(() => {
   }
 
   .transfer_dialog_item_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-weight: 600;
     position: relative;
 
     .check_icon {
       position: absolute;
       right: 0;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
     }
   }

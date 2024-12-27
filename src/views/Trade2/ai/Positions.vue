@@ -115,7 +115,7 @@ watch(() => store.state.token, () => {
     .item {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #EFF3F8;
+        border-bottom: 1px solid var(--ex-border-color);
         line-height: 100%;
         padding: 0.32rem 0;
 
@@ -141,12 +141,12 @@ watch(() => store.state.token, () => {
 
             .name {
                 font-size: 0.3rem;
-                color: #061023;
+                color: var(--ex-text-color);
                 font-weight: bold;
             }
 
             .grid {
-                color: #8F92A1;
+                color: var(--ex-text-color3);
                 font-weight: 400;
                 font-size: 0.25rem;
                 margin-top: 0.18rem;

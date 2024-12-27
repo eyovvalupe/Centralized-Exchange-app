@@ -79,7 +79,7 @@ defineExpose({
   .amount_popup_content {
     width: 100%;
     border-radius: 0.32rem;
-    border: 1px solid #eff3f8;
+    border: 1px solid var(--ex-border-color);
     height: 1.52rem;
     margin-bottom: 0.52rem;
     display: flex;
@@ -87,7 +87,7 @@ defineExpose({
 
     .left {
       padding: 0 0.3rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-weight: 400;
     }
@@ -98,7 +98,7 @@ defineExpose({
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       height: 100%;
 
       .currency {
@@ -116,7 +116,7 @@ defineExpose({
       }
 
       .amount {
-        color: #014cfa;
+        color: var(--ex-primary-color);
         font-size: 0.52rem;
         font-weight: 600;
         line-height: 0.32rem;
@@ -135,18 +135,18 @@ defineExpose({
       width: 2.66rem;
       height: 0.8rem;
       border-radius: 1rem;
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.32rem;
       font-weight: 400;
     }
 
     .btn2 {
-      background-color: #014cfa;
-      color: #fff;
+      background-color: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
     }
   }
 }

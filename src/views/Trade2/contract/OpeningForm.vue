@@ -209,9 +209,9 @@
           </template>
           <template #title-right v-if="token">
             <span
-              style="color: #014cfa; font-size: 12px"
+              style="color: var(--ex-primary-color); font-size: 12px"
               @click="openConfirmBox"
-              ><span style="color: #666d80">{{
+              ><span style="color: var(--ex-text-color2)">{{
                 t("assets.wallet_available_sim")
               }}</span>
               {{ stockWalletAmount }} {{ paramCurrency }}</span
@@ -391,7 +391,7 @@
         @click="submitFormDialog"
         size="large"
         class="submit"
-        color="#014cfa"
+        color="var(--ex-primary-color)"
         round
         >{{ t("trade.stock_open") }}</Button
       >
@@ -541,7 +541,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 1px solid #eff3f8;
+          border: 1px solid var(--ex-border-color);
         "
       >
         {{ t('market.market_faster_available') }}
@@ -554,8 +554,8 @@
           align-items: center;
           justify-content: center;
           text-align: center;
-          background: #f5f7fc;
-          border: 1px solid #eff3f8;
+          background: var(--ex-bg-color2);
+          border: 1px solid var(--ex-border-color);
           border-radius: 0.32rem;
           line-height: 0.4rem;
           margin-top: 0.32rem;
@@ -566,12 +566,12 @@
       >
         <div
           style="
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.28rem;
             font-weight: 400;
             padding: 0 0.32rem;
             height: 1.4rem;
-            background-color: #fff;
+            background-color: var(--ex-bg-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -619,13 +619,13 @@
               style="
                 font-size: 0.28rem;
                 margin-left: 0.12rem;
-                color: #061023;
+                color: var(--ex-text-color);
                 font-weight: 400;
               "
               >{{ paramCurrency }}</span
             >
           </div>
-          <b style="font-size: 0.4rem; color: #014cfa; font-weight: bold">{{
+          <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
             stockWalletAmount
           }}</b>
         </div>
@@ -651,14 +651,15 @@
             align-items: center;
             justify-content: center;
             border-radius: 0.64rem;
-            border: 1px solid #014cfa;
-            color: #014cfa;
+            border: 1px solid var(--ex-primary-color);
+            color: var(--ex-primary-color);
           "
         >
           {{ t("trade.ai_opening_pop_transfer") }}
         </div>
         <div
           @click="router.push({ name: 'topUpCrypto' })"
+          class="bg-primary bg-primary-text-color"
           style="
             height: 0.8rem;
             width: 48%;
@@ -666,8 +667,6 @@
             align-items: center;
             justify-content: center;
             border-radius: 0.64rem;
-            background-color: #014cfa;
-            color: #fff;
           "
         >
           {{ t("trade.ai_opening_pop_recharge") }}
@@ -1471,9 +1470,9 @@ defineExpose({
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.6rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
 
     .search_icon {
       width: 0.48rem;
@@ -1497,7 +1496,7 @@ defineExpose({
   position: relative;
 
   .subtitle {
-    color: #061023;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     margin-bottom: 0.12rem;
     line-height: 0.36rem;
@@ -1528,7 +1527,7 @@ defineExpose({
       position: relative;
       height: 0.92rem;
       border-radius: 0.32rem;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       padding: 0 0.24rem;
       transition: 0.3s;
 
@@ -1551,7 +1550,7 @@ defineExpose({
       }
 
       .info-symbol {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.3rem;
       }
 
@@ -1601,7 +1600,7 @@ defineExpose({
     }
 
     .disabled_item {
-      background-color: #d0d8e2;
+      background-color: var(--ex-border-color2);
     }
 
     .item_focus {
@@ -1646,8 +1645,8 @@ defineExpose({
     }
 
     .active_btn {
-      background: #014cfa;
-      color: #fff;
+      background: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
     }
   }
 
@@ -1664,10 +1663,10 @@ defineExpose({
     align-items: center;
     justify-content: space-between;
     padding: 0.36rem 0 0.2rem 0;
-    border-bottom: 1px solid #f5f7fc;
+    border-bottom: 1px solid var(--ex-border-color);
 
     .item_name {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       font-weight: 400;
     }
@@ -1682,7 +1681,7 @@ defineExpose({
 
       .tag {
         height: 0.44rem;
-        color: #014cfa;
+        color: var(--ex-primary-color);
         background-color: #ecf1fe;
         line-height: 0.44rem;
         padding: 0 0.3rem;
@@ -1712,7 +1711,7 @@ defineExpose({
   .subtitle {
     font-size: 0.28rem;
     margin-bottom: 0.12rem;
-    color: #000;
+    color: var(--ex-text-color);
     font-weight: 400;
     line-height: 150%;
   }
@@ -1720,7 +1719,7 @@ defineExpose({
   .pass_ipt {
     margin-bottom: 0.58rem;
     border-radius: 0.32rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
     height: 1.12rem;
     padding: 0.16rem 0.32rem;
@@ -1744,16 +1743,16 @@ defineExpose({
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.32rem;
     padding: 0.24rem 0.32rem;
 
     .amount {
-      color: #666d80;
+      color: var(--ex-text-color2);
       line-height: 0.56rem;
 
       strong {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.36rem;
         font-weight: 600;
         margin-left: 0.12rem;
@@ -1761,14 +1760,14 @@ defineExpose({
     }
 
     .fee {
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.24rem;
       font-weight: 400;
       line-height: 0.36rem;
       padding: 0.1rem 0 0 0.2rem;
 
       span {
-        color: #061023;
+        color: var(--ex-text-color);
       }
     }
   }

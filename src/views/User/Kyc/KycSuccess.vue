@@ -52,7 +52,7 @@ try {
   padding: 1.4rem 0.32rem 0.32rem 0.32rem;
 
   .subtitle {
-    color: #000;
+    color: var(--ex-text-color);
     margin-bottom: 0.24rem;
   }
 
@@ -70,7 +70,7 @@ try {
       color: #333;
 
       .val {
-        color: #000;
+        color: var(--ex-text-color);
       }
     }
   }
@@ -79,7 +79,7 @@ try {
     height: 4rem;
     width: 100%;
     margin-bottom: 0.24rem;
-    border: 1px dashed #2972f6;
+    border: 1px dashed var(--ex-primary-color);
     border-radius: 0.24rem;
     padding: 0.08rem;
 

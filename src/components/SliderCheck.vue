@@ -24,7 +24,7 @@ const showCenter = ref(false)
 const value = ref(0)
 const activeVal = ref(0)
 const colorMap = ref({
-    0: '#014CFA',
+    0: 'var(--ex-primary-color)',
     1: '#18B762',
     2: '#ee0a24'
 })
@@ -65,7 +65,7 @@ defineExpose({
     .slider_title {
         font-size: 0.28rem;
         margin-bottom: 0.48rem;
-        color: #666;
+        color: var(--ex-text-color2);
     }
 }
 </style>

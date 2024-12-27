@@ -50,9 +50,9 @@
               <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
                 }}</span>
               <span v-if="form1.offset == 'sell' && currWallet.amount > 0">
-                <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
+                <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span style="color: var(--ex-text-color2)">{{ t('assets.wallet_available_sim') }}</span>
                 {{ currWallet.amount }} {{ currOut.name }}</span>
-                <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
+                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.2rem" />
               </span>
             </div>
             <div class="item">
@@ -95,7 +95,7 @@
       <Button size="large" class="submit" :class="['submit--'+form1.offset]" round :loading="loading" @click="sell">{{ form1.offset == "sell" ?
           t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</Button>
 
-      <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
+      <!-- <Button v-if="!token" size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
       <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
     </div>
   </div>
@@ -222,8 +222,8 @@ const sell = () => {
         message: t('market.market_buy_fast_noti_con'),
         cancelButtonText: t('market.market_buy_fast_noti_cancel'),
         confirmButtonText: t('market.market_buy_fast_noti_confirm'),
-        cancelButtonColor: "var(--main-color)",
-        confirmButtonColor: "var(--main-color)",
+        cancelButtonColor: "var(--ex-primary-color)",
+        confirmButtonColor: "var(--ex-primary-color)",
         closeOnClickOverlay: !0,
       })
         .then(() => {
@@ -437,12 +437,12 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       justify-content: space-between;
       line-height: 0.68rem;
       margin-top:0.4rem;
-      border: 0.5px solid #d0d8e2;
+      border: 0.5px solid var(--ex-border-color2);
       width: 47%;
       border-radius: 0.68rem;
 
       .tab {
-        color: #666d80;
+        color: var(--ex-text-color2);
         margin: 0;
         width: 1.6rem;
         text-align: center;
@@ -452,13 +452,13 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       .active_tab {
         font-weight: bold;
         color: white;
-        background: #014cfa;
+        background: var(--ex-primary-color);
         text-align: center;
       }
     }
 
     .tip {
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.24rem;
       margin-top: 0.3rem;
     }
@@ -489,7 +489,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
         position: relative;
         height: 1rem;
         border-radius: 0.32rem;
-        border: 1px solid #d0d8e2;
+        border: 1px solid var(--ex-border-color2);
         padding: 0 0.2rem;
         font-size: 0.32rem;
 
@@ -595,8 +595,8 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       }
 
       .active_btn {
-        background: #014cfa;
-        color: #fff;
+        background: var(--ex-primary-color);
+        color: var(--ex-bg-primary-text-color);
       }
     }
   }
@@ -609,14 +609,14 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     background-color: #E8503A;
   }
   .submit--buy{
-    background-color: #014CFA;
+    background-color: var(--ex-primary-color);
   }
 }
 </style>
 
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   overflow: hidden;
@@ -637,7 +637,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     input::placeholder {
-      // color: #014cfa; /* 占位符颜色 */
+      // color: var(--ex-primary-color); /* 占位符颜色 */
       color: #9ea3ae;
       font-size: 0.3rem;
     }
@@ -658,7 +658,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     &:has(.search:focus) {
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
     }
 
     .icon {
@@ -707,10 +707,10 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     line-height: 0;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
-    color: #333333;
+    color: var(--ex-text-color);
 
     .icon {
       width: 0.6rem;
@@ -720,12 +720,12 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
   }
 
   .swap_dialog_item_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.4rem;
     }
   }
@@ -742,14 +742,14 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       display: flex;
       align-items: center;
       padding: 0 0.4rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-weight: 400;
     }
 
     .active_tab {
       background-color: #f6f8ff;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-weight: 500;
     }
   }
@@ -808,7 +808,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       margin: 0 0.2rem 0 0.36rem;
       text-align: left;
       font-size: 0.24rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 500;
       line-height: 1;
 
@@ -821,7 +821,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
   }
 
   .dialog_account_item_active {
-    border: 1px solid #1a59f6;
+    border: 1px solid var(--ex-primary-color);
 
     .checked {
       position: absolute;

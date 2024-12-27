@@ -76,7 +76,7 @@
           <MarketStock v-if="active === 0" @updateActive="updateActive" ref="marketRef" @reloading="setReloading" />
           <div class="trade-tabs" v-else-if="active === 1">
             <Tabs class="tabs" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" animated
-              :color="'#014CFA'" shrink>
+              :color="'var(--ex-primary-color)'" shrink>
               <Tab :title="'IPO'" class="optional">
                 <div style="height: 0.4rem"></div>
                 <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" @reloading="setReloading"
@@ -459,7 +459,7 @@ const closeOpenDetail = () => {
 
     .trade-recommend_tab {
       font-size: 0.28rem;
-      color: #061023;
+      color: var(--ex-text-color);
       padding: 0 0.4rem;
       height: 0.6rem;
       border-radius: 0.48rem;
@@ -469,14 +469,14 @@ const closeOpenDetail = () => {
     }
 
     .active_tab {
-      color: #014CFA;
+      color: var(--ex-primary-color);
       background-color: #F6F8FF;
     }
   }
 
   .title {
     height: 1.12rem;
-    color: #0d0d12;
+    color: var(--el-text-color);
     font-size: 0.56rem;
     font-weight: 600;
     line-height: 1.12rem;
@@ -536,7 +536,7 @@ const closeOpenDetail = () => {
         flex-shrink: 0;
         border-radius: 0.48rem;
         flex: none;
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         font-style: normal;
         font-weight: 500;
@@ -546,7 +546,7 @@ const closeOpenDetail = () => {
 
       >.van-tab--active {
         background: #f6f8ff;
-        color: #014cfa;
+        color: var(--ex-primary-color);
         text-align: center;
         font-size: 0.32rem;
         font-style: normal;
@@ -620,7 +620,7 @@ const closeOpenDetail = () => {
   padding: 0 0.32rem;
 
   .popup-title {
-    color: #0d0d12;
+    color: var(--el-text-color);
     font-size: 0.56rem;
     font-style: normal;
     font-weight: 600;
@@ -630,7 +630,7 @@ const closeOpenDetail = () => {
   }
 
   .total-value {
-    color: #061023;
+    color: var(--ex-text-color);
     text-align: center;
     font-size: 0.36rem;
     font-style: normal;
@@ -639,7 +639,7 @@ const closeOpenDetail = () => {
   }
 
   .num {
-    color: #061023;
+    color: var(--ex-text-color);
     text-align: center;
     font-size: 0.6rem;
     font-style: normal;
@@ -731,7 +731,7 @@ const closeOpenDetail = () => {
     border-radius: 0.2rem;
 
     &:has(.search:focus) {
-      border: 1px solid #014CFA;
+      border: 1px solid var(--ex-primary-color);
     }
 
     .icon {

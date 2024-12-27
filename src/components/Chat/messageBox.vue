@@ -159,7 +159,7 @@ function formatDate(date) {
       width: 0;
       height: 0;
       border-left: 0.2rem solid transparent;
-      border-right: 0.2rem solid #eff3f8;
+      border-right: 0.2rem solid var(--ex-border-color);
       border-bottom: 0.2rem solid transparent;
       border-top: 0.2rem solid transparent;
     }
@@ -209,7 +209,7 @@ function formatDate(date) {
             width: 0;
             height: 0;
             border-left: 0.2rem solid transparent;
-            border-right: 0.2rem solid #eff3f8;
+            border-right: 0.2rem solid var(--ex-border-color);
             border-bottom: 0.2rem solid transparent;
             border-top: 0.2rem solid transparent;
           }
@@ -241,7 +241,7 @@ function formatDate(date) {
         .user-icon {
           width: 0;
           height: 0;
-          border-left: 15px solid #014cfa;
+          border-left: 15px solid var(--ex-primary-color);
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
           margin-left: -9px;
@@ -252,7 +252,7 @@ function formatDate(date) {
       .time {
         font-size: 12px;
         padding: 5px 0 0 10px;
-        color: #666;
+        color: var(--ex-text-color2);
       }
 
       .receive-box {
@@ -261,7 +261,7 @@ function formatDate(date) {
         .user-icon {
           width: 0;
           height: 0;
-          border-right: 15px solid #eff3f8;
+          border-right: 15px solid var(--ex-border-color);
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
           margin-left: 7px;
@@ -286,7 +286,7 @@ function formatDate(date) {
     &.receive {
       .con {
         background: #eff3f8;
-        color: #061023;
+        color: var(--ex-text-color);
 
         &.img {
           padding: 0 !important;
@@ -304,7 +304,7 @@ function formatDate(date) {
       }
 
       .con {
-        background: #014cfa;
+        background: var(--ex-primary-color);
         color: #fff;
 
         &.img {

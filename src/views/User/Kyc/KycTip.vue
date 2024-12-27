@@ -107,7 +107,7 @@ const backFunc = () => {
     }
 
     .subtitle {
-        color: #000;
+        color: var(--ex-text-color);
         margin-bottom: 0.18rem;
     }
 

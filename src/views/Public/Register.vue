@@ -129,7 +129,7 @@
 
       <!-- 按钮 -->
       <div class="submit_box">
-        <Button @click="submit" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+        <Button @click="submit" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
           $t("register.next") }}</Button>
       </div>
     </template>
@@ -527,14 +527,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
         width: 20px;
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -586,8 +586,8 @@ onMounted(() => {
 
     :deep(.van-tab--card) {
       border-right: none;
-      color: #061023;
-      border-bottom: 0.04rem solid #d0d8e2;
+      color: var(--ex-text-color);
+      border-bottom: 0.04rem solid var(--ex-border-color2);
       // background-color: #f5f5f5;
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
@@ -595,14 +595,14 @@ onMounted(() => {
     }
 
     :deep(.van-tab--card.van-tab--active) {
-      background-color: white;
+      background-color: var(--ex-bg-color);
       color: #2168f6;
       font-family: "PingFang SC";
       font-size: 0.36rem;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
-      border-bottom: 0.06rem solid #014cfa;
+      border-bottom: 0.06rem solid var(--ex-primary-color);
     }
 
     :deep(.van-tab--shrink) {
@@ -635,7 +635,7 @@ onMounted(() => {
     justify-content: space-between;
 
     .title {
-      color: var(--, #061023);
+      color: var(--, var(--ex-text-color));
       text-align: left;
       font-family: "PingFang SC";
       font-size: 0.56rem;
@@ -657,7 +657,7 @@ onMounted(() => {
     }
 
     .tologin {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-family: "PingFang SC";
       font-size: 0.24rem;
       font-style: normal;
@@ -706,7 +706,7 @@ onMounted(() => {
     }
 
     .form_title {
-      color: #000;
+      color: var(--ex-text-color);
       line-height: 0.42rem;
       font-weight: 400;
       margin-bottom: 0.12rem;
@@ -715,7 +715,7 @@ onMounted(() => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.32rem;
@@ -732,7 +732,7 @@ onMounted(() => {
       }
 
       .code {
-        color: #666;
+        color: var(--ex-text-color2);
         display: flex;
         align-items: center;
         margin-right: 0.12rem;
@@ -752,13 +752,13 @@ onMounted(() => {
 
       .item_input {
         flex: 1;
-        color: #333333;
+        color: var(--ex-text-color);
         font-weight: 400;
         font-size: 0.3rem;
       }
 
       &:has(.item_input:focus) {
-        border: 1px solid #014cfa;
+        border: 1px solid var(--ex-primary-color);
       }
 
       .form_item_user {
@@ -802,7 +802,7 @@ onMounted(() => {
     .checked_icon_blue {
       width: 0.48rem;
       height: 0.48rem;
-      border: 0.02rem solid #d0d8e2;
+      border: 0.02rem solid var(--ex-border-color2);
       background-size: contain;
       border-radius: 0.11rem;
       background-repeat: no-repeat;
@@ -812,7 +812,7 @@ onMounted(() => {
       width: 0.48rem;
       height: 0.48rem;
       background-color: transparent;
-      border: 0.02rem solid #d0d8e2;
+      border: 0.02rem solid var(--ex-border-color2);
       border-radius: 0.11rem;
     }
 
@@ -821,7 +821,7 @@ onMounted(() => {
     }
 
     >span {
-      color: #014cfa;
+      color: var(--ex-primary-color);
     }
   }
 
@@ -854,7 +854,7 @@ onMounted(() => {
     }
 
     >span {
-      color: #1a59f6;
+      color: var(--ex-primary-color);
       font-weight: 600;
     }
   }
@@ -863,7 +863,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .register_accounr_dialog {
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   overflow: hidden;
@@ -888,7 +888,7 @@ onMounted(() => {
 
   .search_box {
     height: 0.84rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     border-radius: 0.32rem;
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;
@@ -909,7 +909,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: start;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--ex-border-color);
     gap: 10px;
 
     .flag_icon {
@@ -924,14 +924,14 @@ onMounted(() => {
   }
 
   .transfer_dialog_item_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-weight: 600;
     position: relative;
 
     .check_icon {
       position: absolute;
       right: 0;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
     }
   }

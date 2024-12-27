@@ -97,7 +97,7 @@
       <div class="h-[0.02rem] w-full bg-color3" />
       <div class="box px-4">
         <div class="box_icon">
-          <div style="width:0.6rem;height:0.6rem" class="text-my">
+          <div style="width:0.6rem;height:0.6rem" class="text-primary">
             <IconSvg name="chatFile" />
           </div>
           <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
@@ -106,7 +106,7 @@
           <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
         </div>
         <div class="box_icon" @click="sendText">
-          <div style="width:0.6rem;height:0.6rem" class="text-my">
+          <div style="width:0.6rem;height:0.6rem" class="text-primary">
             <IconSvg name="chatSend" />
           </div>
         </div>
@@ -308,8 +308,8 @@ onBeforeUnmount(() => {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
-    background-color: #2068F6;
-    color: #fff;
+    background-color: var(--ex-bg-primary);
+    color: var(--ex-bg-primary-text-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,14 +335,14 @@ onBeforeUnmount(() => {
         height: 0.64rem;
         position: relative;
         border-radius: 50%;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         margin-right: 0.2rem;
         top: 0.05rem;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
 
         .pointer {
           width: 0.16rem;
@@ -384,14 +384,14 @@ onBeforeUnmount(() => {
         height: 0.64rem;
         position: relative;
         border-radius: 50%;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         margin-right: 0.2rem;
         top: 0.05rem;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
 
         .pointer {
           width: 0.16rem;
@@ -525,7 +525,7 @@ onBeforeUnmount(() => {
 
       .time {
         font-size: 0.28rem;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         margin-bottom: 0.26rem;
       }
 
@@ -534,8 +534,8 @@ onBeforeUnmount(() => {
         // height: 0.6rem;
         border-radius: 0.32rem;
         padding: 0.2rem;
-        background: var(--F5F7FC, #f5f7fc);
-        color: var(--666D80, #666d80);
+        background: var(--F5F7FC, var(--ex-bg-color2));
+        color: var(--666D80, var(--ex-text-color2));
         text-align: center;
         font-size: 0.3rem;
         line-height: 0.6rem;
@@ -553,13 +553,13 @@ onBeforeUnmount(() => {
     padding-top: 0.2rem;
     display: flex;
     align-items: center;
-    // border-top: 1px solid #d0d8e2;
+    // border-top: 1px solid var(--ex-border-color2);
     // padding: 0 0.32rem;
 
     .item {
       height: 0.96rem;
       padding: 0 0.24rem;
-      border: 0.02rem solid #d0d8e2;
+      border: 0.02rem solid var(--ex-border-color2);
       flex: 1;
       margin: 0 0.3rem;
       border-radius: 0.32rem;

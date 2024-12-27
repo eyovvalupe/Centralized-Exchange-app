@@ -140,7 +140,7 @@ const list = ref([
 
             :deep(.van-tab--active) {
                 .stock_tab {
-                    border: 1px solid #014CFA;
+                    border: 1px solid var(--ex-primary-color);
                 }
             }
         }
@@ -156,7 +156,7 @@ const list = ref([
             .tab_title {
                 font-weight: 700;
                 font-size: 0.2rem;
-                color: #0D0D12;
+                color: var(--el-text-color);
                 line-height: 0.274rem;
                 margin-bottom: 0.06rem;
             }
@@ -169,7 +169,7 @@ const list = ref([
             }
 
             .tab_num {
-                color: #0D0D12;
+                color: var(--el-text-color);
                 font-weight: 600;
                 font-size: 0.17rem;
                 line-height: 0.25rem;
@@ -191,7 +191,7 @@ const list = ref([
             align-items: center;
             justify-content: space-between;
             font-size: 0.36rem;
-            color: #000;
+            color: var(--ex-text-color);
             line-height: 0.48rem;
             margin-bottom: 0.4rem;
 

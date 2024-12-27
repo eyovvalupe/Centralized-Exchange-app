@@ -78,14 +78,14 @@ const props = defineProps({
                 line-height: 0.48rem;
 
                 .num {
-                    color: #333333;
+                    color: var(--ex-text-color);
                 }
             }
         }
 
         .right {
             font-size: 0.36rem;
-            color: #000000;
+            color: var(--ex-text-color);
             font-weight: 700;
         }
     }

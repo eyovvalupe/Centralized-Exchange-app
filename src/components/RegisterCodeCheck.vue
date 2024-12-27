@@ -93,11 +93,11 @@ watch(val, (v) => {
       "van-password-input__item"
     )[i].style;
     if (v.length != 6 && i <= v.length) {
-      inputStyle.borderColor = "#014CFA";
-      inputStyle.color = "#014CFA";
+      inputStyle.borderColor = "var(--ex-primary-color)";
+      inputStyle.color = "var(--ex-primary-color)";
     } else {
       inputStyle.borderColor = "#D0D8E2";
-      inputStyle.color = "#666D80";
+      inputStyle.color = "var(--ex-text-color2)";
     }
   }
 });
@@ -133,7 +133,7 @@ const close = () => {
     width: "6.23rem",
     confirmButtonText: t('register.code_jump_confirm'),
     cancelButtonText: t('user_page.message_box_cancel'),
-    confirmButtonColor: "#014cfa",
+    confirmButtonColor: "var(--ex-primary-color)",
   })
     .then(() => {
       emit("success");
@@ -205,7 +205,7 @@ onMounted(() => {
         width: 20px;
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -250,14 +250,14 @@ onMounted(() => {
 .jump {
   display: flex;
   justify-content: center;
-  color: #014cfa;
+  color: var(--ex-primary-color);
   font-size: 0.32rem;
 }
 
 .title {
   padding: 0.48rem 0.32rem 0.32rem 0.32rem;
   font-weight: 600;
-  color: #0d0d12;
+  color: var(--el-text-color);
   font-size: 0.54rem;
   line-height: 0.784rem;
   width: 100%;
@@ -283,7 +283,7 @@ onMounted(() => {
     border-radius: 0.32rem;
 
     &:has(.van-password-input__cursor) {
-      border: 0.02rem solid #014cfa;
+      border: 0.02rem solid var(--ex-primary-color);
     }
   }
 }
@@ -298,7 +298,7 @@ onMounted(() => {
 .button_container {
   width: 6.86rem;
   height: 1.12rem;
-  background-color: #014cfa;
+  background-color: var(--ex-primary-color);
   border-radius: 1.3rem;
   display: flex;
   justify-content: center;
@@ -316,7 +316,7 @@ onMounted(() => {
   align-items: center;
   background-color: #d0d8e2;
   border-radius: 1rem;
-  color: #014cfa;
+  color: var(--ex-primary-color);
   font-size: 0.28rem;
   line-height: 0.372rem;
 }

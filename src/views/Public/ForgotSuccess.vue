@@ -24,7 +24,7 @@
     </div>
     <div class="title">密码重置成功</div>
 
-    <Button round color="#014CFA" class="submit" type="primary" @click="next"
+    <Button round color="var(--ex-primary-color)" class="submit" type="primary" @click="next"
       :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">返回登录</Button>
   </div>
 </template>
@@ -91,14 +91,14 @@ const goChat = () => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
         width: 20px;
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -148,7 +148,7 @@ const goChat = () => {
   .title {
     position: relative;
     top: -1.2rem;
-    color: #333333;
+    color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.3rem;
     line-height: 0.42rem;

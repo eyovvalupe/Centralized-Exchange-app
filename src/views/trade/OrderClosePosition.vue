@@ -66,7 +66,7 @@
         :gutter="16"
       />
 
-      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;" :disabled="loseValue === '' || value === ''" @click="sure">确定</Button>
+      <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;" :disabled="loseValue === '' || value === ''" @click="sure">确定</Button>
 
       <!-- 数字键盘 -->
       <NumberKeyboard
@@ -187,21 +187,21 @@
     .lose-field {
       height: 0.88rem;
       border-radius: 0.12rem;
-      border: 0.02rem solid #D0D8E2;
+      border: 0.02rem solid var(--ex-border-color2);
       .van-field__control {
           text-align: right;
       }
     }
     .account-monkey {
       text-align: right;
-      color: #8F92A1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
       line-height: 0.48rem;
       margin: 0.12rem 0;
       .account-num-monkey {
-        color: #333333;
+        color: var(--ex-text-color);
       }
     }
     .percentages {
@@ -222,7 +222,7 @@
     }
 
     .percentage {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -244,7 +244,7 @@
     .van-slider__button {
       width: 0.06rem;
       height: 0.48rem;
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
       border-radius: inherit;
       top: -0.36rem;
     }
@@ -256,7 +256,7 @@
     .risk-line {
       display: flex;
       justify-content: right;
-      color: #014CFA;
+      color: var(--ex-primary-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -327,16 +327,16 @@
     }
 
     input:focus {
-      color: #014cfa;
-      caret-color: #014cfa; /* 光标颜色 */
+      color: var(--ex-primary-color);
+      caret-color: var(--ex-primary-color); /* 光标颜色 */
     }
 
     input:focus::placeholder {
-      // color: #014cfa; /* 占位符颜色 */
+      // color: var(--ex-primary-color); /* 占位符颜色 */
     }
 
     .focusinput {
-      border-color: #014cfa !important;
+      border-color: var(--ex-primary-color) !important;
     }
     
   }

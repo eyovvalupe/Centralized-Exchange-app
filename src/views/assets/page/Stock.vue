@@ -138,7 +138,7 @@ getConfig()
         align-items: center;
         justify-content: center;
         height: 1.32rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         border-radius: 0.32rem;
         margin-top: 0.34rem;
 
@@ -157,13 +157,13 @@ getConfig()
         }
 
         .nav_label {
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             line-height: 100%;
         }
 
         .num {
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.3rem;
             font-weight: 600;
             line-height: 0.3rem;
@@ -174,7 +174,7 @@ getConfig()
 
     .subtitle {
         line-height: 0.32rem;
-        color: #061023;
+        color: var(--ex-text-color);
         font-weight: 600;
         font-size: 0.32rem;
         margin: 0.5rem 0.32rem 0 0.32rem;

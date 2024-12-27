@@ -489,12 +489,12 @@ defineExpose({
     justify-content: space-between;
     line-height: 0.68rem;
     margin: 0.4rem 0 0.2rem;
-    border: 0.5px solid #d0d8e2;
+    border: 0.5px solid var(--ex-border-color2);
     width: 47%;
     border-radius: 0.68rem;
 
     .tab {
-      color: #666d80;
+      color: var(--ex-text-color2);
       margin: 0;
       width: 1.6rem;
       text-align: center;
@@ -504,7 +504,7 @@ defineExpose({
     .active_tab {
       font-weight: bold;
       color: white;
-      background: var(--main-color);
+      background: var(--ex-primary-color);
       text-align: center;
     }
   }
@@ -529,7 +529,7 @@ defineExpose({
 
     .active_tab {
       font-weight: bold;
-      color: var(--main-text-color);
+      color: var(--ex-text-color);
     }
 
     .encryption {
@@ -538,7 +538,7 @@ defineExpose({
         padding-right: 0;
 
         .van-tabs__line {
-          background-color: var(--main-color) !important;
+          background-color: var(--ex-primary-color) !important;
         }
 
         .van-tabs__nav,
@@ -576,7 +576,7 @@ defineExpose({
     }
 
     .active_subtab {
-      color: #000;
+      color: var(--ex-text-color);
       font-weight: bold;
     }
   }
@@ -584,8 +584,8 @@ defineExpose({
   .list {
     .item {
       padding: 0.24rem 0.32rem;
-      color: #666;
-      background-color: #f5f7fc;
+      color: var(--ex-text-color2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       margin-bottom: 0.2rem;
 
@@ -597,14 +597,14 @@ defineExpose({
           width: 0.64rem;
           height: 0.64rem;
           border-radius: 50%;
-          background-color: var(--main-color);
+          background-color: var(--ex-primary-color);
           margin-right: 0.24rem;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 0.48rem;
-          color: #fff;
+          color: var(--ex-bg-primary-text-color);
           line-height: 0;
 
           .avatar_status {
@@ -624,14 +624,14 @@ defineExpose({
           .name {
             margin-bottom: 0.2rem;
             font-style: 0.32rem;
-            color: var(--main-text-color);
+            color: var(--ex-text-color);
           }
 
           .info {
             font-size: 0.24rem;
             display: flex;
             align-items: center;
-            color: #8f92a1;
+            color: var(--ex-text-color3);
 
             span {
               margin-right: 0.1rem;
@@ -654,7 +654,7 @@ defineExpose({
 
         .price {
           .amount {
-            color: var(--main-text-color);
+            color: var(--ex-text-color);
             font-weight: bold;
             font-size: 0.48rem;
             margin-bottom: 0.2rem;
@@ -665,8 +665,8 @@ defineExpose({
           width: 1.6rem;
           height: 0.72rem;
           border-radius: 0.64rem;
-          background-color: var(--main-color);
-          color: #fff;
+          background-color: var(--ex-primary-color);
+          color: var(--ex-bg-primary-text-color);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -694,7 +694,7 @@ defineExpose({
     padding: 0.32rem;
 
     .form_item {
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       height: 0.96rem;
       display: flex;
       align-items: center;
@@ -709,7 +709,7 @@ defineExpose({
       }
 
       .all {
-        color: var(--main-color);
+        color: var(--ex-primary-color);
       }
 
       .tip_text {
@@ -738,12 +738,12 @@ defineExpose({
     .btn {
       margin-top: 0.32rem;
       height: 0.96rem;
-      background-color: var(--main-color);
+      background-color: var(--ex-primary-color);
       border-radius: 0.96rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: var(--ex-bg-primary-text-color);
     }
   }
 }
@@ -763,7 +763,7 @@ defineExpose({
 </style>
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   overflow: hidden;
@@ -798,7 +798,7 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
 
@@ -810,13 +810,13 @@ defineExpose({
   }
 
   .swap_dialog_item_active {
-    color: var(--main-color);
+    color: var(--ex-primary-color);
     font-weight: 600;
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: var(--main-color);
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
     }
   }
@@ -849,14 +849,14 @@ defineExpose({
       display: flex;
       align-items: center;
       padding: 0 0.4rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-weight: 400;
     }
 
     .active_tab {
       background-color: #f6f8ff;
-      color: var(--main-color);
+      color: var(--ex-primary-color);
       font-weight: 500;
     }
   }
@@ -915,7 +915,7 @@ defineExpose({
       margin: 0 0.2rem 0 0.36rem;
       text-align: left;
       font-size: 0.24rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 500;
       line-height: 1;
 
@@ -928,7 +928,7 @@ defineExpose({
   }
 
   .dialog_account_item_active {
-    border: 1px solid #1a59f6;
+    border: 1px solid var(--ex-primary-color);
 
     .checked {
       position: absolute;

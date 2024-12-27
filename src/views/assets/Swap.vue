@@ -85,7 +85,7 @@
 
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">确定</Button>
 
         <!-- 账户选择弹窗 -->
         <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
@@ -356,7 +356,7 @@ const goRecord = () => {
         .item {
             width: 100%;
             height: 100%;
-            border: 1px solid #D0D8E2;
+            border: 1px solid var(--ex-border-color2);
             border-radius: 0.12rem;
             display: flex;
             align-items: center;
@@ -365,7 +365,7 @@ const goRecord = () => {
 
             &:has(.ipt:focus) {
                 padding-top: 0.3rem;
-                border: 1px solid #014CFA;
+                border: 1px solid var(--ex-primary-color);
             }
 
             .item_pre {
@@ -380,13 +380,13 @@ const goRecord = () => {
                 justify-content: space-between;
                 flex: 1;
                 font-size: 0.28rem;
-                color: #000;
+                color: var(--ex-text-color);
                 position: relative;
                 line-height: 0.28rem;
                 height: 100%;
 
                 .all {
-                    color: #1A59F6;
+                    color: var(--ex-primary-color);
                     position: absolute;
                     right: 0;
                 }
@@ -418,7 +418,7 @@ const goRecord = () => {
             }
 
             .btn {
-                color: #1A59F6;
+                color: var(--ex-primary-color);
                 font-size: 0.28rem;
                 margin-left: 0.4rem;
             }
@@ -507,7 +507,7 @@ const goRecord = () => {
 
         .subtitle {
             font-size: 0.28rem;
-            color: #333333;
+            color: var(--ex-text-color);
             font-weight: 400;
             line-height: 0.36rem;
             margin: 0rem 0 0.12rem 0;
@@ -524,7 +524,7 @@ const goRecord = () => {
             margin-top: 0.12rem;
 
             .num {
-                color: #333333;
+                color: var(--ex-text-color);
                 margin-left: 0.04rem;
                 font-weight: 500;
             }
@@ -537,8 +537,8 @@ const goRecord = () => {
 
             .refresh_box {
                 padding: 0 0.08rem;
-                border: 1px solid #014CFA;
-                color: #014CFA;
+                border: 1px solid var(--ex-primary-color);
+                color: var(--ex-primary-color);
                 height: 0.36rem;
                 border-radius: 0.04rem;
                 display: flex;
@@ -561,7 +561,7 @@ const goRecord = () => {
 
 <style lang="less" scoped>
 .swap_accounr_dialog {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
     overflow: hidden;
@@ -581,7 +581,7 @@ const goRecord = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--ex-border-color);
         overflow: hidden;
         position: relative;
 
@@ -593,13 +593,13 @@ const goRecord = () => {
     }
 
     .swap_dialog_item_active {
-        color: #014CFA;
+        color: var(--ex-primary-color);
         font-weight: 600;
 
         .check_icon {
             position: absolute;
             right: 0.24rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-size: 0.28rem;
         }
     }
@@ -616,7 +616,7 @@ const goRecord = () => {
         text-align: center;
         font-size: 0.32rem;
         line-height: 0.44rem;
-        color: #061023;
+        color: var(--ex-text-color);
         margin-bottom: 0.4rem;
     }
 
@@ -632,7 +632,7 @@ const goRecord = () => {
             flex: 1;
             text-align: center;
             line-height: 0.4rem;
-            color: #8F92A1;
+            color: var(--ex-text-color3);
 
             .num {
                 color: #121826;
@@ -652,7 +652,7 @@ const goRecord = () => {
     .comfirn_tip {
         text-align: right;
         font-size: 0.24rem;
-        color: #666;
+        color: var(--ex-text-color2);
         line-height: 0.4rem;
     }
 

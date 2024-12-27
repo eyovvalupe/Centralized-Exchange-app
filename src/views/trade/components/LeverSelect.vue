@@ -49,7 +49,7 @@
         height: 0.96rem;
         text-align: center;
         line-height: 0.96rem;
-        color: #333333;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
@@ -59,7 +59,7 @@
         margin-right: 0.3rem;
       }
       .selected-class {
-        color: #014cfa;
+        color: var(--ex-primary-color);
         background-color: #f4f5f7;
         position: relative;
       }

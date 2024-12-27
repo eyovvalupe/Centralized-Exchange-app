@@ -54,7 +54,7 @@
     position: fixed;
     bottom: 0;
     .date-text-box {
-      color: #000;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;

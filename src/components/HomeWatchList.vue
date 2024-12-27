@@ -6,7 +6,7 @@
         <span class="text-[0.32rem] font-semibold">{{ $t("home.selfSelectedRecommend") }}</span>
       </div>
       <div class="text_container flex flex-row text-center items-center" @click="more">
-        <span style="font-size: 0.24rem; font-weight: 400; color: #666d80">more+</span>
+        <span style="font-size: 0.24rem; font-weight: 400; color: var(--ex-text-color2)">more+</span>
       </div>
     </div>
 
@@ -37,7 +37,7 @@ store.commit("setCheckState", true);
   .text_container {
     width: 0.84rem;
     height: 0.34rem;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -77,7 +77,7 @@ store.commit("setCheckState", true);
   transition: all linear 3s;
 
   .one_click_to_favorite {
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     color: #ffffff;
   }
 }

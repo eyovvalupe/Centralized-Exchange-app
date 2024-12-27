@@ -12,8 +12,8 @@ body,
   margin: 0;
   font-size: 0.28rem;
   line-height: 0.44rem;
-  color: #061023;
-  background-color: #fff;
+  color: var(--ex-text-color);
+  background-color: var(--ex-bg-color);
   user-select: none;
   font-family: "PingFang SC", sans-serif;
 
@@ -24,15 +24,9 @@ body,
   }
 }
 
-:root {
-  --main-color: rgb(@ex-primary-color-rgb);
-  --main-text-color: rgb(@ex-text-color-rgb);
-}
-
 #app {
   max-width: 750px;
   margin: 0 auto;
-  background-color: #fff;
   line-height: 1;
 }
 
@@ -85,7 +79,7 @@ div::-webkit-scrollbar {
   min-height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -104,7 +98,7 @@ input {
   transition: all ease 0.2s;
 
   &:focus {
-    color: #014cfa !important;
+    color: var(--ex-primary-color) !important;
   }
 }
 
@@ -159,7 +153,7 @@ input[type="number"] {
 
 .item {
   &:has(.ipt:focus) {
-    border: 1px solid #014cfa !important;
+    border: 1px solid var(--ex-primary-color) !important;
   }
 
   .ipt::placeholder {

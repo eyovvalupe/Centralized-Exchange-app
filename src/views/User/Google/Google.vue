@@ -3,7 +3,7 @@
   <div class="page page_google">
     <Top :title="t('google_auth.page_title')">
       <template #right v-if="from == 'register'">
-        <span @click="confirmNext" style="color: #014cfa; font-weight: 400; font-size: 0.28rem">{{
+        <span @click="confirmNext" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">{{
           $t("google_auth.from_register_skip") }}</span>
       </template>
     </Top>
@@ -85,11 +85,11 @@ watch(val, (v) => {
       "van-password-input__item"
     )[i].style;
     if (v.length != 6 && i <= v.length) {
-      inputStyle.borderColor = "#014CFA";
-      inputStyle.color = "#014CFA";
+      inputStyle.borderColor = "var(--ex-primary-color)";
+      inputStyle.color = "var(--ex-primary-color)";
     } else {
-      inputStyle.borderColor = "#D0D8E2";
-      inputStyle.color = "#666D80";
+      inputStyle.borderColor = "var(--ex-border-color2)";
+      inputStyle.color = "var(--ex-text-color2)";
     }
   }
 });
@@ -221,7 +221,7 @@ const confirmNext = () => {
 
   .code_container {
     width: 100%;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.32rem;
     display: flex;
     align-items: center;
@@ -231,7 +231,7 @@ const confirmNext = () => {
     .code_box {
       font-size: 0.28rem;
       line-height: 0.33rem;
-      color: #000000;
+      color: var(--ex-text-color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -268,7 +268,7 @@ const confirmNext = () => {
     font-size: 0.3rem;
     line-height: 0.48rem;
     border-radius: 0.32rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     overflow: hidden;
   }
 
@@ -278,7 +278,7 @@ const confirmNext = () => {
     justify-content: space-between;
     font-weight: 400;
     font-size: 0.32rem;
-    color: #000000;
+    color: var(--ex-text-color);
     margin-bottom: 0.48rem;
 
   }
@@ -302,14 +302,14 @@ const confirmNext = () => {
 
     :deep(.van-password-input__item) {
       border: 0.02rem solid #eceff3;
-      background-color: #fff;
+      background-color: var(--ex-bg-color);
       width: 1rem;
       height: 1.2rem;
       box-sizing: border-box;
       border-radius: 0.16rem;
 
       &:has(.van-password-input__cursor) {
-        border: 0.02rem solid #014cfa;
+        border: 0.02rem solid var(--ex-primary-color);
       }
     }
   }
@@ -337,7 +337,7 @@ const confirmNext = () => {
     font-weight: 400;
     font-size: 0.28rem;
     line-height: 0.35rem;
-    color: #000000;
+    color: var(--ex-text-color);
   }
 }
 </style>

@@ -62,7 +62,7 @@ const clickLeft = () => {
   align-items: center;
   justify-content: center;
   padding: 0 0.8rem;
-  color: var(--main-text-color);
+  color: var(--ex-text-color);
   font-size: 0.36rem;
   font-weight: 500;
   text-align: center;

@@ -206,7 +206,7 @@ const swipeChange = (val) => {
   position: relative;
   height: 2.64rem;
   border-radius: 0.32rem;
-  background: linear-gradient(185deg, #6794fb 7.28%, #014cfa 95.61%);
+  background: linear-gradient(185deg, #6794fb 7.28%, var(--ex-primary-color) 95.61%);
 
   &_img {
     width: 100%;
@@ -261,7 +261,7 @@ const swipeChange = (val) => {
 }
 
 .invite_title {
-  color: #000;
+  color: var(--ex-text-color);
   font-size: 0.28rem;
   font-style: normal;
   font-weight: 400;
@@ -272,7 +272,7 @@ const swipeChange = (val) => {
 
 .invite_qrcode {
   border-radius: 0.3rem;
-  border: 1px solid #eff3f8;
+  border: 1px solid var(--ex-border-color);
   width: 2.7rem;
   height: 2.7rem;
   box-sizing: border-box;
@@ -286,7 +286,7 @@ const swipeChange = (val) => {
 
 .input-box {
   border-radius: 0.32rem;
-  border: 1px solid #d0d8e2;
+  border: 1px solid var(--ex-border-color2);
   height: 0.92rem;
   box-sizing: border-box;
   font-size: 0.3rem;
@@ -308,10 +308,10 @@ const swipeChange = (val) => {
   .copy {
     padding: 0 0.32rem;
     min-width: 1.28rem;
-    color: #fff;
+    color: var(--ex-bg-primary-text-color);
     line-height: 0.92rem;
     font-size: 0.3rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     border-radius: 0.32rem;
   }
 }
@@ -320,8 +320,8 @@ const swipeChange = (val) => {
   width: 2.7rem;
   height: 0.7rem;
   margin-top: 0.2rem;
-  background-color: #014cfa;
-  color: #fff;
+  background-color: var(--ex-primary-color);
+  color: var(--ex-bg-primary-text-color);
   justify-content: center;
   align-items: center;
   display: flex;
@@ -331,7 +331,7 @@ const swipeChange = (val) => {
 
 .achievement {
   border-radius: 0.32rem;
-  background-image: linear-gradient(185deg, #6794fb 7.28%, #014cfa 95.61%);
+  background-image: linear-gradient(185deg, #6794fb 7.28%, var(--ex-primary-color) 95.61%);
   height: 2.2rem;
   position: relative;
 }
@@ -369,7 +369,7 @@ const swipeChange = (val) => {
 .invite-title {
   font-size: 0.4rem;
   font-weight: 600;
-  color: #061023;
+  color: var(--ex-text-color);
   padding: 0.6rem 0;
   text-align: center;
   display: flex;
@@ -382,7 +382,7 @@ const swipeChange = (val) => {
   display: flex;
   justify-content: space-between;
   font-size: 0.28rem;
-  color: #666d80;
+  color: var(--ex-text-color2);
 }
 
 .record-list {
@@ -391,8 +391,8 @@ const swipeChange = (val) => {
 
 .record-item {
   border-radius: 0.32rem;
-  border: 1px solid #eff3f8;
-  background: linear-gradient(90deg, #f5f7fc 0%, #fff 100%);
+  border: 1px solid var(--ex-border-color);
+  background: linear-gradient(90deg, var(--ex-bg-color2) 0%, #fff 100%);
   display: flex;
   justify-content: space-between;
   padding: 0.32rem;

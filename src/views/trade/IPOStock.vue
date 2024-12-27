@@ -271,7 +271,7 @@ function countdown(endTime) {
         .name {
           font-size: 0.28rem;
           font-weight: 600;
-          color: #0D0D12;
+          color: var(--el-text-color);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -291,7 +291,7 @@ function countdown(endTime) {
             font-weight: 400;
 
             .info_val {
-              color: #000000;
+              color: var(--ex-text-color);
               margin-left: 0.24rem;
             }
 
@@ -382,7 +382,7 @@ function countdown(endTime) {
   border-top-right-radius: 0.36rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   padding: 0.32rem 0.32rem 0.4rem 0.32rem;
   position: relative;
 
@@ -397,13 +397,13 @@ function countdown(endTime) {
     align-items: center;
     justify-content: space-between;
     height: 1rem;
-    border-bottom: 1px solid #F5F5F5;
-    color: #8F92A1;
+    border-bottom: 1px solid var(--ex-border-color);
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;
 
     .name {
-      color: #0D0D12;
+      color: var(--el-text-color);
       font-weight: 600;
       font-size: 0.32rem;
     }

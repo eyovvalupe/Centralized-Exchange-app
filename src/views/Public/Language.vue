@@ -13,7 +13,7 @@
           </div>
           <div class="name">{{ item.name }}</div>
           <div :class="checked.val == item.val ? 'check' : 'uncheck'">
-            <!-- <Checkbox checked-color="#014CFA" :name="item.val" /> -->
+            <!-- <Checkbox checked-color="var(--ex-primary-color)" :name="item.val" /> -->
             <div :class="checked.val == item.val ? 'inner' : ''"></div>
           </div>
         </div>
@@ -71,7 +71,7 @@ const clickItem = (item) => {
     .lang_item {
       height: 1.04rem;
       overflow: hidden;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       display: flex;
       align-items: center;
@@ -87,21 +87,21 @@ const clickItem = (item) => {
       .name {
         flex: 1;
         text-align: left;
-        color: #1e1e2d;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
       }
 
       .uncheck {
         width: 0.36rem;
         height: 0.36rem;
-        border: 0.02rem solid #d0d8e2;
+        border: 0.02rem solid var(--ex-border-color2);
         border-radius: 0.36rem;
       }
 
       .check {
         width: 0.36rem;
         height: 0.36rem;
-        border: 0.02rem solid #014cfa;
+        border: 0.02rem solid var(--ex-primary-color);
         border-radius: 0.36rem;
         display: flex;
         justify-content: center;

@@ -73,7 +73,7 @@ module.exports = {
         '3xl': '0.48rem' /* 24px */,
       },
       colors: {
-        my: 'var(--main-color)',
+        my: 'var(--ex-primary-color)',
       },
     },
   },

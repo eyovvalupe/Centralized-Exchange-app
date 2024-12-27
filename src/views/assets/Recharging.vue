@@ -21,7 +21,7 @@
             {{ form.amount }}<span>{{ form.currency }}</span>
           </div>
           <div class="network-tag">
-            <span style="color: #000">${{ ratePrice }}</span>
+            <span style="color: var(--ex-text-color)">${{ ratePrice }}</span>
           </div>
         </div>
       </div>
@@ -71,7 +71,7 @@
         <Button v-else-if="orderStatus == 'failure'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
           color="#E8503A" style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
             $t("recharging.fail") }}</span></Button>
-        <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="#014CFA"
+        <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="var(--ex-primary-color)"
           style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
             $t("recharging.finish")
           }}</span></Button>
@@ -292,7 +292,7 @@ const copyPrice = () => {
   .recharge_box {
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-    background: #fff;
+    background: var(--ex-bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -301,7 +301,7 @@ const copyPrice = () => {
     padding: 0.32rem;
 
     .amount {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       text-align: center;
       font-size: 0.48rem;
       font-weight: 600;
@@ -319,7 +319,7 @@ const copyPrice = () => {
       padding-top: 0.06rem;
 
       .time_label {
-        color: #666d80;
+        color: var(--ex-text-color2);
         text-align: center;
         font-size: 0.28rem;
         line-height: 0.36rem;
@@ -340,8 +340,8 @@ const copyPrice = () => {
           height: 0.6rem;
           padding: 0 0.28rem;
           border-radius: 0.5rem;
-          background-color: #f5f7fc;
-          color: #014cfa;
+          background-color: var(--ex-bg-color2);
+          color: var(--ex-primary-color);
           font-size: 0.28rem;
           display: flex;
           align-items: center;
@@ -360,7 +360,7 @@ const copyPrice = () => {
 
     .qrcode_box {
       border: 1px solid #dfe2e4;
-      background-color: #fff;
+      background-color: var(--ex-bg-color);
       width: 3.18rem;
       height: 3.18rem;
       margin: 0 auto;
@@ -401,7 +401,7 @@ const copyPrice = () => {
     }
 
     .address_label {
-      color: #666d80;
+      color: var(--ex-text-color2);
       text-align: center;
       font-size: 0.28rem;
       line-height: 0.36rem;
@@ -409,7 +409,7 @@ const copyPrice = () => {
     }
 
     .address_val {
-      color: #000;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.36rem;
@@ -424,16 +424,16 @@ const copyPrice = () => {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.3rem;
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
       border-radius: 0.3rem;
       margin-top: 0.16rem;
     }
   }
 
   .tip {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     text-align: center;
     font-family: Inter;
     font-size: 0.24rem;

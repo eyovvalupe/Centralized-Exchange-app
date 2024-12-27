@@ -71,7 +71,7 @@
                         <Loading v-show="rateLoading" type="spinner" size="12px" />
                     </div> -->
         </div>
-        <Button @click="goTopUp" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+        <Button @click="goTopUp" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
           $t("topUpCrypto.confirm") }}</Button>
       </Tab>
       <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard"> </Tab>
@@ -372,7 +372,7 @@ onBeforeUnmount(() => {
 
   :deep(span.van-tab__text) {
     font-size: 0.32rem;
-    color: #666d80;
+    color: var(--ex-text-color2);
   }
 
   .top-record {
@@ -401,7 +401,7 @@ onBeforeUnmount(() => {
       margin-right: 0.2rem;
       border-radius: 0.3rem;
       background-color: #f0f0f2;
-      color: #333333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-weight: 400;
       display: flex;
@@ -415,8 +415,8 @@ onBeforeUnmount(() => {
     }
 
     .recommend_active {
-      background-color: #014cfa;
-      color: #fff;
+      background-color: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
     }
   }
 
@@ -435,7 +435,7 @@ onBeforeUnmount(() => {
         justify-content: space-between;
         flex: 1;
         font-size: 0.3rem;
-        color: #000;
+        color: var(--ex-text-color);
         position: relative;
         line-height: 0.36rem;
         margin-right: 0.32rem;
@@ -468,11 +468,11 @@ onBeforeUnmount(() => {
 
     .border_item {
       border-radius: 0.32rem;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       padding: 0 0.32rem;
 
       &:has(.ipt:focus) {
-        border: 1px solid #014cfa;
+        border: 1px solid var(--ex-primary-color);
       }
     }
 
@@ -501,7 +501,7 @@ onBeforeUnmount(() => {
       display: flex;
       align-items: center;
       font-size: 0.28rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 400;
       line-height: 0.36rem;
       margin-top: 0.4rem;
@@ -524,7 +524,7 @@ onBeforeUnmount(() => {
       .subtitle_right {
         text-align: right;
         font-size: 0.28rem;
-        color: #666d80;
+        color: var(--ex-text-color2);
       }
     }
   }
@@ -556,7 +556,7 @@ onBeforeUnmount(() => {
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.6rem;
 
     .search_icon {
@@ -579,7 +579,7 @@ onBeforeUnmount(() => {
     height: 1.04rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #eff3f8;
+    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
     font-size: 0.3rem;
@@ -597,13 +597,13 @@ onBeforeUnmount(() => {
   }
 
   .swap_dialog_item_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-weight: 600;
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       width: 0.48rem;
       height: 0.48rem;
       top: 50%;

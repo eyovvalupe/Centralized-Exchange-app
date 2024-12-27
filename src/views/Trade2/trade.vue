@@ -451,7 +451,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
     padding: 0 0.24rem 0 0.32rem;
     height: 1.12rem;
     font-weight: 600;
-    color: #0d0d12;
+    color: var(--el-text-color);
     line-height: 0.5rem;
     font-size: 0.5rem;
     display: flex;
@@ -494,9 +494,9 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
       height: 0.8rem;
       display: flex;
       align-items: center;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       border-radius: 0.6rem;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       position: relative;
 
       .search_icon {
@@ -526,7 +526,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
   padding: 0 0.32rem 0.64rem 0.32rem;
 
   .popup-title {
-    color: #0d0d12;
+    color: var(--el-text-color);
     font-size: 0.56rem;
     font-style: normal;
     font-weight: 600;
@@ -536,7 +536,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
   }
 
   .total-value {
-    color: #061023;
+    color: var(--ex-text-color);
     text-align: center;
     font-size: 0.36rem;
     font-style: normal;
@@ -545,7 +545,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
   }
 
   .num {
-    color: #061023;
+    color: var(--ex-text-color);
     text-align: center;
     font-size: 0.6rem;
     font-style: normal;

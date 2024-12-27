@@ -52,7 +52,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--ex-border-color);
     }
 
     .select-box {
@@ -64,17 +64,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--ex-border-color);
         // background-color: #f2f2f2;
       }
       .selected-class {
-        color: #014CFA;
+        color: var(--ex-primary-color);
         font-weight: 600;
 
         .check_icon {
             position: absolute;
             right: 0.64rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-size: 0.28rem;
         }
       }
@@ -83,7 +83,7 @@
     .checkmark {
       width: 0;
       height: 0;
-      border-top: 0.4rem solid #1a59f6;
+      border-top: 0.4rem solid var(--ex-primary-color);
       border-left: 0.4rem solid transparent;
       position: absolute;
       top: 0;

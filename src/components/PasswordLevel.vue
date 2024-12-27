@@ -103,11 +103,11 @@ const levels = computed(() => {
   }
 }
 .password_level_3 {
-  color: #014cfa;
+  color: var(--ex-primary-color);
 
   .levels {
     .level_active {
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
     }
   }
 }

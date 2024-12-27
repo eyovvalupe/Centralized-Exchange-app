@@ -31,7 +31,7 @@
     .item {
         flex: 10;
         font-size: 0.28rem;
-        color: #000;
+        color: var(--ex-text-color);
         font-weight: 400;
         line-height: 0.3rem;
         display: flex;
@@ -51,7 +51,7 @@
         .name {
             font-size: 0.28rem;
             font-weight: 500;
-            color: #061023;
+            color: var(--ex-text-color);
             line-height: 0.44rem;
             margin-bottom: 0.08rem;
         }

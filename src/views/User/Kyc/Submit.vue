@@ -18,7 +18,7 @@
     <div class="text-[0.24rem] text-color3 text-center -mt-[0.9rem] mb-[0.8rem]">
       {{ $t("kyc.final_description") }}
     </div>
-    <Button round color="#014CFA" @click="
+    <Button round color="var(--ex-primary-color)" @click="
       router.replace({
         name: 'kyc',
       })
@@ -64,7 +64,7 @@ try {
   .title {
     position: relative;
     top: -1.2rem;
-    color: #333333;
+    color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.3rem;
     line-height: 0.42rem;

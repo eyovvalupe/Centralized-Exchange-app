@@ -234,7 +234,7 @@ const getDownNum = () => {
 .total_box {
   padding: 0.4rem 0.32rem;
   position: relative;
-  background-image: linear-gradient(to bottom, #ffffff, #f5f7fc);
+  background-image: linear-gradient(to bottom, #ffffff, var(--ex-bg-color2));
   border-radius: 0.64rem;
 
   .type_box {

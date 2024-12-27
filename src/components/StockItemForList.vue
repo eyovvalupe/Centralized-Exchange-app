@@ -312,7 +312,7 @@ const removeStock = (item) => {
 
     .item_name {
       font-size: 0.32rem;
-      color: #061023;
+      color: var(--ex-text-color);
       line-height: 0.432rem;
       font-weight: 400;
     }
@@ -320,7 +320,7 @@ const removeStock = (item) => {
     .item_info {
       font-size: 0.24rem;
       line-height: 0.332rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
@@ -401,7 +401,7 @@ const removeStock = (item) => {
 
     .item_name {
       font-size: 0.32rem;
-      color: #061023;
+      color: var(--ex-text-color);
       line-height: 0.46rem;
       font-weight: 600;
       margin-bottom: 0.06rem;
@@ -410,7 +410,7 @@ const removeStock = (item) => {
     .item_info {
       font-size: 0.28rem;
       line-height: 0.36rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;

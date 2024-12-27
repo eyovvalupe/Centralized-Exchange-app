@@ -6,7 +6,7 @@
     <div style="height: 1.12rem" v-if="mode == 'popup'"></div>
     <div class="tabs-container">
       <!-- 涨跌 -->
-      <Tabs type="line-card" v-model:active="tab" :swipeable="false" animated :color="'#014CFA'">
+      <Tabs type="line-card" v-model:active="tab" :swipeable="false" animated :color="'var(--ex-primary-color)'">
         <Tab :title="t('trade.ai_opening_long')" :name="1"> </Tab>
         <Tab :title="t('trade.ai_opening_short')" :name="2"> </Tab>
       </Tabs>
@@ -70,8 +70,8 @@
           btn-show-mode="focus" :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0"
           @change="changePercent" @btnClick="onSliderChange(100)">
           <template #title-right>
-            <span v-if="token" style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span
-                style="color: #666d80">{{
+            <span v-if="token" style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
+                style="color: var(--ex-text-color2)">{{
                   t("trade.ai_opening_balance")
                 }}</span>
               {{ usdt.amount }} USDT</span>
@@ -86,7 +86,7 @@
 
       <!-- 按钮 -->
       <!-- <div class="btns" v-if="!token">
-        <Button size="large" color="#014cfa" class="btn" round @click="goLogin"
+        <Button size="large" color="var(--ex-primary-color)" class="btn" round @click="goLogin"
           >{{ t('trade.ai_opening_login') }}</Button
         >
         <Button
@@ -176,7 +176,7 @@
           :title="t('trade.stock_opening_trade_pw')">
         </FormItem>
 
-        <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit" color="#014cfa"
+        <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit" color="var(--ex-primary-color)"
           round>{{ t("trade.ai_opening_confirm_btn") }}</Button>
       </div>
     </Popup>
@@ -586,12 +586,12 @@ defineExpose({
   height: 0.6rem;
   flex-shrink: 0;
   border-radius: 1rem;
-  background: #014cfa;
+  background: var(--ex-primary-color);
   line-height: 0.6rem;
   position: absolute;
   right: 0.3rem;
   top: 0.22rem;
-  color: #fff;
+  color: var(--ex-bg-primary-text-color);
   text-align: center;
   font-size: 0.3rem;
   font-weight: 500;
@@ -614,21 +614,21 @@ defineExpose({
     span {
       border-radius: 0.7rem;
       display: block;
-      border: 1px solid #eff3f8;
+      border: 1px solid var(--ex-border-color);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.28rem;
-      color: #666d80;
+      color: var(--ex-text-color2);
       height: 0.6rem;
       box-sizing: border-box;
     }
   }
 
   .curr_time span {
-    background-color: #014cfa;
-    border-color: #014cfa;
-    color: #fff;
+    background-color: var(--ex-primary-color);
+    border-color: var(--ex-primary-color);
+    color: var(--ex-bg-primary-text-color);
   }
 
   &::after {
@@ -670,7 +670,7 @@ defineExpose({
   }
 
   .subtitle {
-    color: #061023;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     margin-bottom: 0.12rem;
     line-height: 0.36rem;
@@ -689,7 +689,7 @@ defineExpose({
   }
 
   .put_all {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     position: absolute;
     right: 0.32rem;
     font-size: 0.3rem;
@@ -729,7 +729,7 @@ defineExpose({
       justify-content: flex-end;
       margin-left: 0.32rem;
       padding: 0 0.32rem;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       border-radius: 0.12rem;
 
       .select_more {
@@ -744,7 +744,7 @@ defineExpose({
     position: relative;
     height: 0.92rem;
     border-radius: 0.32rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
   }
 
@@ -759,7 +759,7 @@ defineExpose({
   }
 
   .disabled_item {
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
   }
 
   .error_border {
@@ -775,10 +775,10 @@ defineExpose({
     align-items: center;
     justify-content: space-between;
     padding: 0.36rem 0 0.2rem 0;
-    border-bottom: 1px solid #f5f7fc;
+    border-bottom: 1px solid var(--ex-border-color);
 
     .item_name {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       font-weight: 400;
     }
@@ -810,7 +810,7 @@ defineExpose({
   .pass_ipt {
     margin-bottom: 0.4rem;
     border-radius: 0.12rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
 
     .ipt {
@@ -841,7 +841,7 @@ defineExpose({
 }
 
 .tabs-container {
-  border: 1px solid #eff3f8;
+  border: 1px solid var(--ex-border-color);
   border-radius: 0.32rem;
 }
 </style>

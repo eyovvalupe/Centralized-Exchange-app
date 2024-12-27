@@ -76,7 +76,7 @@ getInfo()
 
         .amount {
             font-size: 0.52rem;
-            color: #000000;
+            color: var(--ex-text-color);
             line-height: 0.73rem;
             margin-bottom: 0.1rem;
         }
@@ -84,7 +84,7 @@ getInfo()
         .status {
             display: flex;
             align-items: center;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-size: 0.28rem;
             line-height: 0.44rem;
             font-weight: 600;
@@ -94,7 +94,7 @@ getInfo()
                 height: 0.36rem;
                 margin-right: 0.2rem;
                 border-radius: 50%;
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
                 padding: 0.07rem;
                 line-height: 0;
                 display: flex;
@@ -107,7 +107,7 @@ getInfo()
             font-weight: 400;
             font-size: 0.24rem;
             line-height: 0.34rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             text-align: center;
             margin: 0.4rem 0 0.6rem 0;
         }
@@ -123,7 +123,7 @@ getInfo()
             height: 0.44rem;
             margin-bottom: 0.4rem;
             font-size: 0.28rem;
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-weight: 400;
 
             .value {
@@ -145,7 +145,7 @@ getInfo()
             }
 
             .status_success {
-                color: #014CFA;
+                color: var(--ex-primary-color);
                 background-color: rgba(1, 76, 250, 0.08);
             }
 

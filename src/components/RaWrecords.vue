@@ -252,7 +252,7 @@ onBeforeUnmount(() => {
 
     .van-tab--card {
         border-right: none;
-        color: #061023;
+        color: var(--ex-text-color);
         // background-color: #f5f5f5;
         // border-radius: 0.3rem;
         // margin-left: 0.1rem;
@@ -260,12 +260,12 @@ onBeforeUnmount(() => {
     }
 
     .van-tab--card.van-tab--active {
-        // background-color: #014CFA;
+        // background-color: var(--ex-primary-color);
         // color: #fff;
 
         background-color: #F6F8FF;
         border-radius: 0.3rem;
-        color: #014CFA;
+        color: var(--ex-primary-color);
         font-weight: 500
     }
 

@@ -341,8 +341,8 @@ const jump = (name) => {
 }
 
 .addBtn {
-  color: #014cfa;
-  border-color: #014cfa;
+  color: var(--ex-primary-color);
+  border-color: var(--ex-primary-color);
   // border-width: 10px;
   // width: 1.82rem;
   height: 0.68rem;
@@ -359,7 +359,7 @@ const jump = (name) => {
 }
 
 .recommend_block {
-  background-color: #f5f7fc;
+  background-color: var(--ex-bg-color2);
   padding: 0.471rem 0.272rem;
   border-radius: 0.452rem;
 
@@ -391,8 +391,8 @@ const jump = (name) => {
   transition: all linear 3s;
 
   .one_click_to_favorite {
-    background-color: #014cfa;
-    color: #ffffff;
+    background-color: var(--ex-primary-color);
+    color: var(--ex-bg-primary-text-color);
   }
 }
 

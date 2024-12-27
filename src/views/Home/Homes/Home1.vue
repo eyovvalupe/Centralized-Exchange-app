@@ -434,13 +434,13 @@ onMounted(() => {
     }
 
     :deep(button.van-button.van-button--default.van-button--large.van-dialog__cancel) {
-        background-color: white;
+        background-color: var(--ex-bg-color);
         margin-right: 0.16rem;
     }
 
     :deep(button.van-button.van-button--default.van-button--large.van-dialog__confirm) {
-        background-color: #014cfa;
-        color: white;
+        background-color: var(--ex-primary-color);
+        color: var(--ex-bg-primary-text-color);
         margin-left: 0.16rem;
     }
 
@@ -453,7 +453,7 @@ onMounted(() => {
 
         .van-action-sheet__item {
             padding: 0.32rem;
-            border-bottom: 1px solid #f5f5f5;
+            border-bottom: 1px solid var(--ex-border-color);
         }
     }
 
@@ -467,7 +467,7 @@ onMounted(() => {
         z-index: 1;
 
         .subtitle {
-            color: #333333;
+            color: var(--ex-text-color);
             font-size: 0.26rem;
             margin-bottom: 0.16rem;
         }
@@ -481,7 +481,7 @@ onMounted(() => {
             font-weight: 600;
 
             .assets_login {
-                color: #014cfa;
+                color: var(--ex-primary-color);
                 margin-right: 0.12rem;
             }
 
@@ -493,7 +493,7 @@ onMounted(() => {
             }
 
             .num {
-                color: #000;
+                color: var(--ex-text-color);
                 font-size: 0.48rem;
             }
         }
@@ -512,13 +512,13 @@ onMounted(() => {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #000000;
+                color: var(--ex-text-color);
                 font-size: 0.28rem;
             }
 
             .active_btn {
-                background-color: #014cfa;
-                color: #fff;
+                background-color: var(--ex-primary-color);
+                color: var(--ex-bg-primary-text-color);
             }
         }
     }
@@ -557,7 +557,7 @@ onMounted(() => {
             display: flex;
             align-items: center;
             justify-content: center;
-            border-color: #d0d8e2;
+            border-color: var(--ex-border-color2);
             border-width: 0.02rem;
         }
     }
@@ -586,15 +586,15 @@ onMounted(() => {
 
         :deep(.van-tab--card) {
             border-right: none;
-            color: #061023;
+            color: var(--ex-text-color);
             border-radius: 0.32rem;
             margin-right: 0.1rem;
             transition: all ease 0.2s;
         }
 
         :deep(.van-tab--card.van-tab--active) {
-            background-color: #014cfa;
-            border-color: #014cfa;
+            background-color: var(--ex-primary-color);
+            border-color: var(--ex-primary-color);
             border-radius: 0.32rem;
             color: white;
             font-weight: 500;
@@ -616,9 +616,9 @@ onMounted(() => {
         :deep(.van-tab) {
             line-height: 0.68rem;
             font-size: 0.3rem;
-            border: 0.02rem solid #d0d8e2;
+            border: 0.02rem solid var(--ex-border-color2);
             border-radius: 0.32rem;
-            color: #666d80;
+            color: var(--ex-text-color2);
         }
     }
 }

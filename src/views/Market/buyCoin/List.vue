@@ -114,10 +114,10 @@ const props = defineProps({
 });
 
 const statusEnum = {
-  waitpayment: { name: t('market.market_buy_list_wait_pay'), color: "var(--main-color)" },
-  waitconfirm: { name: t('market.market_buy_list_wait_confirm'), color: "var(--main-color)" },
+  waitpayment: { name: t('market.market_buy_list_wait_pay'), color: "var(--ex-primary-color)" },
+  waitconfirm: { name: t('market.market_buy_list_wait_confirm'), color: "var(--ex-primary-color)" },
   done: { name: t('market.market_already_done'), color: "#18B762" },
-  cancel: { name: t('market.market_already_done'), color: "#8F92A1" },
+  cancel: { name: t('market.market_already_done'), color: "var(--ex-text-color3)" },
 };
 const { active, subs } = useBuyCoinState();
 const scrollData = inject("scrollData");

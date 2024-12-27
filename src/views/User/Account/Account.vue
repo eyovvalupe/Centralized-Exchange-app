@@ -164,14 +164,14 @@ const goBack = () => {
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
   }
 
   :deep(.van-tab--card.van-tab--active) {
     width: 50%;
     border-radius: 0.3rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
 
     .van-tab__text {
       font-size: 0.32rem;
@@ -204,7 +204,7 @@ const goBack = () => {
   .add_btn {
     width: 6.86rem;
     height: 1.12rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -229,14 +229,14 @@ const goBack = () => {
 .van-dialog__message {
   font-size: 0.28rem;
   line-height: 0.44rem;
-  color: #333333;
+  color: var(--ex-text-color);
 }
 
 .van-dialog__cancel {
   .van-button__content {
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
   }
 }
 
@@ -244,7 +244,7 @@ const goBack = () => {
   .van-button__content {
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: #014cfa;
+    color: var(--ex-primary-color);
   }
 }
 </style>

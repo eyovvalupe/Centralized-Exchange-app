@@ -5,7 +5,7 @@
         <div class="list">
             <div class="item" v-for="i in 20" :key="i">
 
-                <div class="left" style="color:#061023">
+                <div class="left" style="color:var(--ex-text-color)">
                     <div><span>-94</span> <span class="down">-0.15%</span></div>
                     <div class="name">AUDCHF</div>
                     <div><span>09</span> <span>44:57</span></div>
@@ -40,12 +40,12 @@
         padding: 0 0.32rem;
         font-size: 0.22rem;
         line-height: 1;
-        color: #8F92A1;
+        color: var(--ex-text-color3);
 
         .item {
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #EFF3F8;
+            border-bottom: 1px solid var(--ex-border-color);
             height: 1.32rem;
 
             .left {
@@ -55,7 +55,7 @@
                 .name {
                     font-size: 0.32rem;
                     font-weight: bold;
-                    color: #000;
+                    color: var(--ex-text-color);
                     margin: 0.08rem 0;
                 }
             }
@@ -71,7 +71,7 @@
                 line-height: 0.3rem;
 
                 .amount {
-                    color: #014CFA;
+                    color: var(--ex-primary-color);
                     vertical-align: baseline;
 
                     .big {

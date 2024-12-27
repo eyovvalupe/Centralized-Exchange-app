@@ -23,9 +23,9 @@
 
       <div class="btns">
         <Button round color="white" class="btn" @click="close">
-          <span style="color: #666d80">{{ $t("assets.safety_trade_cancel") }}</span>
+          <span style="color: var(--ex-text-color2)">{{ $t("assets.safety_trade_cancel") }}</span>
         </Button>
-        <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">{{
+        <Button :loading="loading" round color="var(--ex-primary-color)" class="btn" type="primary" @click="submit">{{
           $t("assets.safety_trade_confirm") }}</Button>
       </div>
     </div>
@@ -141,14 +141,14 @@ defineExpose({
     }
 
     .btn.van-button--primary {
-      border-color: #014cfa !important;
+      border-color: var(--ex-primary-color) !important;
     }
   }
 
   .title {
     font-size: 0.28rem;
     line-height: 0.44rem;
-    color: #000;
+    color: var(--ex-text-color);
     margin-bottom: 0.2rem;
     margin-top: 0.4rem;
     text-align: left;
@@ -164,7 +164,7 @@ defineExpose({
     padding: 0 0.4rem;
 
     &:focus {
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
     }
   }
 
@@ -206,7 +206,7 @@ defineExpose({
       border-radius: 0.16rem;
 
       &:has(.van-password-input__cursor) {
-        border: 1px solid #014cfa;
+        border: 1px solid var(--ex-primary-color);
       }
     }
   }

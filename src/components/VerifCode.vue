@@ -7,7 +7,7 @@
     showConfirmButton
     :width="'6.22rem'"
     :confirmButtonText="t('register.code_jump_confirm')"
-    :confirmButtonColor="'#014CFA'"
+    :confirmButtonColor="'var(--ex-primary-color)'"
     :cancelButtonText="t('user_page.message_box_cancel')"
     :cancelButtonColor="'#323233'"
     overlay
@@ -123,7 +123,7 @@ defineExpose({
 
   .tip {
     line-height: 0.44rem;
-    color: #014cfa;
+    color: var(--ex-primary-color);
     text-align: center;
     font-weight: 400;
     margin-bottom: 0.08rem;

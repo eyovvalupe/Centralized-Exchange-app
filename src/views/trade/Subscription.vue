@@ -28,7 +28,7 @@
       可买数量 <span style="color: #333">{{ availableNum }}</span>
     </div>
 
-    <Slider v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa" inactive-color="#f2f2f2"
+    <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)" inactive-color="#f2f2f2"
       @change="onSliderChange" />
     <div class="percentages">
       <div v-for="percent in percentages" :key="percent" class="percentage">
@@ -71,7 +71,7 @@
 
     </div>
 
-    <Button size="large" color="#014cfa" round @click="openPositPopup()"
+    <Button size="large" color="var(--ex-primary-color)" round @click="openPositPopup()"
       :disabled="(textSelect != '普通申购' && vipVal == '') || numValue == '' || password == ''">认购</Button>
 
 
@@ -307,7 +307,7 @@ onMounted(() => {
 .subscription {
   padding: 0 0.3rem;
   padding-bottom: 0.76rem;
-  background-color: white;
+  background-color: var(--ex-bg-color);
 
   // .van-loading {
   //   left: 47%;
@@ -317,7 +317,7 @@ onMounted(() => {
     width: 100%;
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin-bottom: 0.4rem;
     background-color: #f9fafb;
     margin-top: 0.2rem;
@@ -346,8 +346,8 @@ onMounted(() => {
 
   .ipo-detail-header {
     padding: 0.3rem 0;
-    background-color: white;
-    color: #010101;
+    background-color: var(--ex-bg-color);
+    color: var(--el-text-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 400;
@@ -361,7 +361,7 @@ onMounted(() => {
     .up-botton {
       width: 1.2rem;
       height: 0.5rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       line-height: 0.5rem;
       text-align: center;
       position: relative;
@@ -413,14 +413,14 @@ onMounted(() => {
     width: 100%;
     height: 1.14rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin: 0.2rem 0;
   }
 
   .stock-input-text {
     .van-field__control {
       text-align: center;
-      caret-color: #014cfa;
+      caret-color: var(--ex-primary-color);
     }
   }
 
@@ -428,7 +428,7 @@ onMounted(() => {
     width: 100%;
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin-top: 0.2rem;
     transition: all 0.3s ease;
   }
@@ -437,7 +437,7 @@ onMounted(() => {
     width: 4.9rem;
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin-top: 0.2rem;
     background: white;
   }
@@ -464,7 +464,7 @@ onMounted(() => {
   }
 
   .marketenlarged {
-    background: #014cfa;
+    background: var(--ex-primary-color);
     color: white;
   }
 
@@ -479,11 +479,11 @@ onMounted(() => {
     height: 0.88rem;
     flex-shrink: 0;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin-right: 0.24rem;
     line-height: 0.88rem;
     position: relative;
-    color: #333333;
+    color: var(--ex-text-color);
   }
 
   .select-box {
@@ -506,7 +506,7 @@ onMounted(() => {
   }
 
   .van-dropdown-menu__title:after {
-    border-color: transparent transparent #333333 #333333;
+    border-color: transparent transparent var(--ex-text-color) var(--ex-text-color);
   }
 
   .van-dropdown-menu__title {
@@ -525,11 +525,11 @@ onMounted(() => {
     width: 100%;
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     line-height: 0.88rem;
     text-align: center;
     position: relative;
-    color: #333333;
+    color: var(--ex-text-color);
   }
 
   .down-img {
@@ -546,7 +546,7 @@ onMounted(() => {
   .position-account {
     margin: 0.1rem 0;
     text-align: right;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -559,7 +559,7 @@ onMounted(() => {
     position: relative;
 
     .position-pay {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 600;
@@ -568,7 +568,7 @@ onMounted(() => {
     }
 
     .pay-num {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       text-align: right;
       font-size: 0.36rem;
       font-style: normal;
@@ -599,7 +599,7 @@ onMounted(() => {
   .custom-button {
     width: 0.06rem;
     height: 0.48rem;
-    background: #014cfa;
+    background: var(--ex-primary-color);
   }
 
   .co-text {
@@ -630,7 +630,7 @@ onMounted(() => {
   }
 
   .percentage {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -658,7 +658,7 @@ onMounted(() => {
   .van-slider__button {
     width: 0.06rem;
     height: 0.48rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     border-radius: inherit;
     top: -0.36rem;
   }
@@ -669,17 +669,17 @@ onMounted(() => {
   }
 
   input:focus {
-    color: #014cfa;
-    caret-color: #014cfa;
+    color: var(--ex-primary-color);
+    caret-color: var(--ex-primary-color);
     /* 光标颜色 */
   }
 
   input:focus::placeholder {
-    //   color: #014cfa; /* 占位符颜色 */
+    //   color: var(--ex-primary-color); /* 占位符颜色 */
   }
 
   .focusinput {
-    border-color: #014cfa !important;
+    border-color: var(--ex-primary-color) !important;
   }
 
   .subscription-total {
@@ -720,7 +720,7 @@ onMounted(() => {
     width: 6.86rem;
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #D0D8E2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin-bottom: 0.4rem;
     padding-left: 0.4rem;
 

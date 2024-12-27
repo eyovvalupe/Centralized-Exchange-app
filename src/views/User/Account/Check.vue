@@ -124,7 +124,7 @@ const userInfo = computed(() => store.state.userInfo || {})
                         font-weight: 400;
                         font-size: 0.24rem;
                         line-height: 0.32rem;
-                        color: #014CFA;
+                        color: var(--ex-primary-color);
                         padding-left: 0.1rem;
                         display: flex;
                         align-items: center;
@@ -132,7 +132,7 @@ const userInfo = computed(() => store.state.userInfo || {})
                         .btn {
                             width: 1.02rem;
                             height: 0.44rem;
-                            background-color: #014CFA;
+                            background-color: var(--ex-primary-color);
                             border-radius: 1.02rem;
                             display: flex;
                             align-items: center;
@@ -167,7 +167,7 @@ const userInfo = computed(() => store.state.userInfo || {})
             }
 
             .active_way {
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
 
                 .left {
                     .title {
@@ -194,11 +194,11 @@ const userInfo = computed(() => store.state.userInfo || {})
             font-weight: 400;
             line-height: 0.32rem;
             margin-bottom: 0.4rem;
-            color: #333333;
+            color: var(--ex-text-color);
             text-align: center;
 
             span {
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
         }
 

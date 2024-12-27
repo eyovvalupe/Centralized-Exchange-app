@@ -45,7 +45,7 @@ const goLogin = () => {
     top: -1rem;
 
     .link {
-      color: #014cfa;
+      color: var(--ex-primary-color);
     }
   }
 }

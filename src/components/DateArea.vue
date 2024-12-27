@@ -97,7 +97,7 @@ defineExpose({
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #000;
+        color: var(--ex-text-color);
         font-size: 0.24rem;
         font-weight: 400;
         padding: 0 0.44rem;
@@ -113,7 +113,7 @@ defineExpose({
         display: flex;
         align-items: center;
         padding: 0.2rem 0.44rem 0.4rem 0.44rem;
-        color: #000;
+        color: var(--ex-text-color);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.4rem;

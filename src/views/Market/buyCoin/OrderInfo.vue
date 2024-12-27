@@ -286,7 +286,7 @@ const getSessionToken = () => {
     }
 
     .active_tab {
-      color: #000;
+      color: var(--ex-text-color);
       font-weight: bold;
     }
   }
@@ -322,7 +322,7 @@ const getSessionToken = () => {
       text-align: center;
 
       .title {
-        color: #666;
+        color: var(--ex-text-color2);
         margin-bottom: 0.24rem;
       }
 
@@ -346,17 +346,17 @@ const getSessionToken = () => {
         width: 0.52rem;
         height: 0.52rem;
         border-radius: 50%;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         margin-right: 0.32rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
         font-size: 0.36rem;
       }
 
       .title {
-        color: #000;
+        color: var(--ex-text-color);
       }
     }
 
@@ -421,7 +421,7 @@ const getSessionToken = () => {
 
       .amount {
         font-weight: bold;
-        color: #000;
+        color: var(--ex-text-color);
         margin-right: 0.2rem;
       }
 
@@ -460,15 +460,15 @@ const getSessionToken = () => {
       height: 0.88rem;
       border-radius: 0.88rem;
       background-color: #eff6ff;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .active_btn {
-      background-color: #014cfa;
-      color: #fff;
+      background-color: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
     }
   }
 }

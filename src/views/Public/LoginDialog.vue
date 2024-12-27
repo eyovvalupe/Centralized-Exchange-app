@@ -39,7 +39,7 @@ const successFunc = () => {
     top: 0;
     left: 0;
     z-index: 2000;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     width: 100%;
     height: 100%;
     transform: translateY(-100%);

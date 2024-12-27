@@ -103,7 +103,7 @@ const formatDate = (date) => {
     flex-direction: column;
 
     .item_title {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
       font-weight: 400;
       line-height: 0.3rem;
@@ -116,7 +116,7 @@ const formatDate = (date) => {
     }
 
     .time {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
       font-weight: 400;
       line-height: 0.24rem;
@@ -131,13 +131,13 @@ const formatDate = (date) => {
 
     .amount {
       font-size: 0.3rem;
-      color: #000000;
+      color: var(--ex-text-color);
       font-weight: 600;
     }
 
     .status {
       font-size: 0.28rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       margin-top: 0.14rem;
     }
 
@@ -146,7 +146,7 @@ const formatDate = (date) => {
     }
 
     .status_failure {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
     }
   }
 }

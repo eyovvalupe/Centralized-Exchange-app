@@ -85,7 +85,7 @@
         </div>
       </div>
       <div v-if="currDetail.status == 'issuing'" style="height: 1.68rem"></div>
-      <Button v-if="currDetail.status == 'issuing'" @click="goBuy(currDetail)" round size="large" color="#014CFA"
+      <Button v-if="currDetail.status == 'issuing'" @click="goBuy(currDetail)" round size="large" color="var(--ex-primary-color)"
         class="submit" type="primary">
         {{ t("trade.ipo_detail_btn") }}</Button>
     </div>
@@ -188,15 +188,15 @@ onBeforeUnmount(() => {
 
   .main_item {
     border-radius: 0.32rem;
-    border: 1px solid #eff3f8;
-    background: #f5f7fc;
+    border: 1px solid var(--ex-border-color);
+    background: var(--ex-bg-color2);
 
     .name {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-weight: 600;
       line-height: 0.36rem;
-      color: #0d0d12;
+      color: var(--el-text-color);
       max-width: 80%;
     }
 
@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
         height: 0.32rem;
         padding: 0rem 0.08rem;
         font-size: 0.22rem;
-        color: #014CFA;
+        color: var(--ex-primary-color);
         border-radius: 0.08rem;
         line-height: 0.32rem;
         font-weight: 400;
@@ -254,7 +254,7 @@ onBeforeUnmount(() => {
       height: 0.6rem;
       border-radius: 0rem 0.32rem;
       padding: 0 0.2rem;
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
       min-width: 1.1rem;
       display: flex;
       align-items: center;
@@ -292,10 +292,10 @@ onBeforeUnmount(() => {
   .info_boxs {
     padding: 0.3rem 0;
     position: relative;
-    border: 1px solid #eff3f8;
+    border: 1px solid var(--ex-border-color);
     border-bottom: 0px;
     border-radius: 0.32rem;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     width: calc(100% + 2px);
     left: -1px;
     z-index: 1;
@@ -313,7 +313,7 @@ onBeforeUnmount(() => {
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       line-height: 0.3rem;
       position: relative;
@@ -324,7 +324,7 @@ onBeforeUnmount(() => {
         line-height: 0.3rem;
         margin-top: 0.2rem;
         font-weight: 600;
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.3rem;
 
         span {
@@ -359,19 +359,19 @@ onBeforeUnmount(() => {
     justify-content: space-between;
     line-height: 0.44rem;
     padding: 0.32rem 0 0.2rem 0;
-    border-bottom: 1px solid #f5f7fc;
-    color: #8f92a1;
+    border-bottom: 1px solid var(--ex-border-color);
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;
 
     .name {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-weight: 600;
       font-size: 0.28rem;
     }
 
     .val {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
     }
   }

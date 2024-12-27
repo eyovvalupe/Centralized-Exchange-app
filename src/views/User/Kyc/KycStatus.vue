@@ -162,26 +162,26 @@ const goInfo = () => {
       line-height: 0.4rem;
 
       .reason_title {
-        color: #000;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         margin-bottom: 0.2rem;
       }
     }
 
     .btn {
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
       height: 0.96rem;
       border-radius: 0.96rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: var(--ex-bg-primary-text-color);
       width: 100%;
     }
 
     .light_btn {
       background-color: #eff6ff;
-      color: #014cfa;
+      color: var(--ex-primary-color);
     }
   }
 }

@@ -130,7 +130,7 @@ const news = ref([])
 
         .recommend_tab {
             font-size: 0.28rem;
-            color: #061023;
+            color: var(--ex-text-color);
             padding: 0 0.4rem;
             height: 0.6rem;
             border-radius: 0.48rem;
@@ -139,7 +139,7 @@ const news = ref([])
         }
 
         .active_tab {
-            color: #014CFA;
+            color: var(--ex-primary-color);
             background-color: #F6F8FF;
         }
     }
@@ -200,7 +200,7 @@ const news = ref([])
 
                 :deep(.van-tab--active) {
                     .stock_tab {
-                        border: 1px solid #014CFA;
+                        border: 1px solid var(--ex-primary-color);
                     }
                 }
             }
@@ -217,7 +217,7 @@ const news = ref([])
                 .tab_title {
                     font-weight: 700;
                     font-size: 0.24rem;
-                    color: #0D0D12;
+                    color: var(--el-text-color);
                     line-height: 0.274rem;
                     margin-bottom: 0.06rem;
                 }
@@ -230,7 +230,7 @@ const news = ref([])
                 }
 
                 .tab_num {
-                    color: #0D0D12;
+                    color: var(--el-text-color);
                     font-weight: 600;
                     font-size: 0.2rem;
                     line-height: 0.25rem;

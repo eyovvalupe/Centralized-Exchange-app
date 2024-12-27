@@ -65,7 +65,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
+      <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit" type="primary">继续</Button>
     </div>
 
     <!-- 谷歌 -->
@@ -203,14 +203,14 @@ const submitForm = (code) => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
         width: 20px;
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -258,7 +258,7 @@ const submitForm = (code) => {
     justify-content: space-between;
 
     .title {
-      color: #061023;
+      color: var(--ex-text-color);
       font-family: "PingFang SC";
       font-size: 0.56rem;
       font-style: normal;
@@ -268,7 +268,7 @@ const submitForm = (code) => {
     }
 
     .tologin {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       text-align: right;
       font-family: "PingFang SC";
       font-size: 0.32rem;
@@ -282,7 +282,7 @@ const submitForm = (code) => {
     padding: 0 0.32rem;
 
     .form_title {
-      color: #000;
+      color: var(--ex-text-color);
       line-height: 0.42rem;
       font-weight: 400;
       margin-bottom: 0.12rem;
@@ -298,20 +298,20 @@ const submitForm = (code) => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 0.02rem solid #d0d8e2;
+      border: 0.02rem solid var(--ex-border-color2);
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.32rem;
 
       .item_input {
         flex: 1;
-        color: #333333;
+        color: var(--ex-text-color);
         font-weight: 400;
         font-size: 0.28rem;
       }
 
       &:has(.item_input:focus) {
-        border: 0.02rem solid #014cfa;
+        border: 0.02rem solid var(--ex-primary-color);
       }
 
       .form_item_user {
@@ -367,7 +367,7 @@ const submitForm = (code) => {
     font-weight: 400;
 
     >span {
-      color: #1a59f6;
+      color: var(--ex-primary-color);
       font-weight: 600;
     }
   }

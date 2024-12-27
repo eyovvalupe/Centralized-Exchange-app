@@ -47,7 +47,7 @@ button {
   background-color: transparent;
   cursor: pointer;
   transition: background-color 0.3s;
-  color: #666d80;
+  color: var(--ex-text-color2);
   box-sizing: border-box;
 }
 
@@ -56,8 +56,8 @@ button:hover {
 }
 
 button.active {
-  background-color: #014cfa;
-  border-color: #014cfa;
+  background-color: var(--ex-primary-color);
+  border-color: var(--ex-primary-color);
   color: white;
 }
 </style>

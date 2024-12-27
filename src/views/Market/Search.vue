@@ -320,7 +320,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     }
 
     &:has(.search:focus) {
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
     }
 
     .icon {
@@ -362,12 +362,12 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
         overflow: hidden;
 
         .title {
-          color: #061023;
+          color: var(--ex-text-color);
           font-size: 0.32rem;
         }
 
         .text {
-          color: #8f92a1;
+          color: var(--ex-text-color3);
           font-size: 0.24rem;
           font-weight: 400;
           margin-top: 0.18rem;

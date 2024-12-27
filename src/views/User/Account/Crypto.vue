@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="btn_container">
-      <Button :disabled="!form.address" class="submit" type="primary" round color="#014CFA" @click="next">保存</Button>
+      <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)" @click="next">保存</Button>
     </div>
 
     <!-- 币种 -->
@@ -162,7 +162,7 @@ getSessionToken();
     font-weight: 400;
     font-size: 0.28rem;
     line-height: 0.36rem;
-    color: #061023;
+    color: var(--ex-text-color);
     margin-bottom: 0.15rem;
   }
 
@@ -170,7 +170,7 @@ getSessionToken();
     width: 6.86rem;
     // padding: 0 0.32rem;
     height: 0.92rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-bottom: 0.4rem;
     display: flex;
@@ -190,7 +190,7 @@ getSessionToken();
       align-items: center;
       justify-content: flex-start;
       font-weight: 600;
-      color: #061023;
+      color: var(--ex-text-color);
     }
 
     .item_icon {
@@ -200,7 +200,7 @@ getSessionToken();
     }
 
     :deep(.van-icon) {
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
   }
 
@@ -251,7 +251,7 @@ getSessionToken();
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        border-bottom: 0.02rem solid #f5f5f5;
+        border-bottom: 0.02rem solid var(--ex-border-color);
 
         &:last-child {
           border-bottom: none;

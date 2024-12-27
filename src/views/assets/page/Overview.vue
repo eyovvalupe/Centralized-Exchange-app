@@ -19,7 +19,7 @@
           }}</span>
         </div>
         <div class="navs">
-          <div class="nav">
+          <div class="nav bg-color bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
               {{
@@ -250,8 +250,6 @@ const jump = (name, check = false, query) => {
       flex-direction: column;
       width: 2.8rem;
       height: 1.12rem;
-      background: #ffffff1a;
-      // backdrop-filter: blur(50px);
       border-radius: 0.32rem;
     }
 
@@ -282,7 +280,7 @@ const jump = (name, check = false, query) => {
       height: 1.04rem;
       margin-top: 0.12rem;
       border-radius: 0.32rem;
-      background: #f5f7fc;
+      background: var(--ex-bg-color2);
       position: relative;
       display: flex;
       align-items: center;
@@ -300,7 +298,7 @@ const jump = (name, check = false, query) => {
         width: 0.52rem;
         height: 0.52rem;
         margin-right: 0.16rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         border-radius: 50%;
         box-sizing: border-box;
         padding: 0.1rem;
@@ -344,8 +342,8 @@ const jump = (name, check = false, query) => {
           font-size: 0.3rem;
           font-weight: 400;
           text-align: center;
-          color: #fff;
-          background-color: #014cfa;
+          color: var(--ex-bg-primary-text-color);
+          background-color: var(--ex-primary-color);
         }
 
         .right--yellow {

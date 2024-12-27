@@ -216,7 +216,7 @@ const loginout = () => {
       cancelButtonText: t('user_page.message_box_cancel'),
       confirmButtonText: t('user_page.message_box_confirm'),
 
-      confirmButtonColor: "#014CFA",
+      confirmButtonColor: "var(--ex-primary-color)",
       cancelButtonColor: "#323233",
     })
       .then(() => {
@@ -290,7 +290,7 @@ if (token.value) {
 
   .title {
     height: 1.12rem;
-    color: #0d0d12;
+    color: var(--el-text-color);
     font-size: 0.5rem;
     font-weight: 600;
     line-height: 1.12rem;
@@ -300,11 +300,11 @@ if (token.value) {
     width: 100%;
     height: 1.04rem;
     border-radius: 0.32rem;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666d80;
+    color: var(--ex-text-color2);
   }
 
   .navs {
@@ -314,10 +314,10 @@ if (token.value) {
       display: flex;
       align-items: center;
       height: 1.04rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
       overflow: hidden;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       padding-inline: 0.32rem;
       margin-bottom: 0.2rem;
@@ -343,7 +343,7 @@ if (token.value) {
         overflow: hidden;
 
         .title {
-          color: #1e1e2d;
+          color: var(--ex-text-color);
           font-size: 0.3rem;
           font-weight: 400;
         }
@@ -357,7 +357,7 @@ if (token.value) {
 
       .nav_more {
         margin-left: 0.12rem;
-        color: #666d80;
+        color: var(--ex-text-color2);
         font-size: 0.32rem;
       }
 
@@ -375,7 +375,7 @@ if (token.value) {
         display: flex;
         align-items: center;
         font-weight: 500;
-        color: #1e1e2d;
+        color: var(--ex-text-color);
 
         // .lang_icon {
         //   width: 0.52rem;

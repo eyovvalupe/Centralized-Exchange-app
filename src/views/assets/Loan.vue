@@ -81,7 +81,7 @@
             </div> -->
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">确定</Button>
 
 
         <!-- 账户选择弹窗 -->
@@ -420,7 +420,7 @@ onBeforeUnmount(() => {
         width: 100%;
 
         .subtitle {
-            color: #333333;
+            color: var(--ex-text-color);
             font-size: 0.28rem;
             font-weight: 400;
             margin-bottom: 0.24rem;
@@ -432,7 +432,7 @@ onBeforeUnmount(() => {
 
         .money {
             font-size: 0.6rem;
-            color: #000000;
+            color: var(--ex-text-color);
             margin-bottom: 0.4rem;
         }
 
@@ -453,7 +453,7 @@ onBeforeUnmount(() => {
                 text-align: center;
                 font-weight: 400;
                 font-size: 0.28rem;
-                color: #000000;
+                color: var(--ex-text-color);
                 transition: all ease .2s;
 
                 &:last-child {
@@ -462,8 +462,8 @@ onBeforeUnmount(() => {
             }
 
             .date_active {
-                color: #0066FF;
-                border: 1px solid #0066FF;
+                color: var(--ex-primary-color);
+                border: 1px solid var(--ex-primary-color);
                 background-color: #EEF3FF;
             }
         }
@@ -482,7 +482,7 @@ onBeforeUnmount(() => {
             .account_box {
                 width: 2.4rem;
                 margin-right: 0.2rem;
-                color: #000000;
+                color: var(--ex-text-color);
                 font-size: 0.28rem;
                 position: relative;
                 display: flex;
@@ -541,14 +541,14 @@ onBeforeUnmount(() => {
                 }
 
                 .all {
-                    color: #1A59F6;
+                    color: var(--ex-primary-color);
                     position: absolute;
                     right: 0.32rem;
                 }
             }
 
             .border_item {
-                border: 1px solid #D0D8E2;
+                border: 1px solid var(--ex-border-color2);
 
                 border-radius: 0.12rem;
                 height: 100%;
@@ -562,7 +562,7 @@ onBeforeUnmount(() => {
                 }
 
                 &:has(.ipt:focus) {
-                    border: 1px solid #014CFA;
+                    border: 1px solid var(--ex-primary-color);
                 }
             }
 
@@ -599,7 +599,7 @@ onBeforeUnmount(() => {
                 .slider_inner {
                     position: relative;
                     height: 100%;
-                    background-color: #0066FF;
+                    background-color: var(--ex-primary-color);
                     border-radius: 0.32rem;
                     transition: all ease .1s;
                     pointer-events: none;
@@ -608,8 +608,8 @@ onBeforeUnmount(() => {
                         width: 0.36rem;
                         height: 0.36rem;
                         border-radius: 50%;
-                        background-color: #fff;
-                        border: 0.1rem solid #0066FF;
+                        background-color: var(--ex-bg-color);
+                        border: 0.1rem solid var(--ex-primary-color);
                         position: absolute;
                         right: -0.09rem;
                         top: -0.09rem;
@@ -654,7 +654,7 @@ onBeforeUnmount(() => {
                 }
 
                 .slider_item_avtive {
-                    color: #1E1E2D;
+                    color: var(--ex-text-color);
                 }
             }
         }
@@ -673,7 +673,7 @@ onBeforeUnmount(() => {
     padding-bottom: 0.6rem;
 
     .loan_comfirm_title {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         text-align: center;
         margin-bottom: 0.4rem;
@@ -694,7 +694,7 @@ onBeforeUnmount(() => {
 
     .loan_confirm_amount {
         font-size: 0.64rem;
-        color: #000000;
+        color: var(--ex-text-color);
         font-weight: 700;
         margin: 0.1rem 0 0.4rem 0;
         text-align: center;
@@ -705,21 +705,21 @@ onBeforeUnmount(() => {
         align-items: center;
         justify-content: space-between;
         font-size: 0.28rem;
-        color: #8F92A1;
+        color: var(--ex-text-color3);
         height: 1rem;
         padding-top: 0.12rem;
         font-weight: 400;
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--ex-border-color);
 
         .value {
-            color: #000000;
+            color: var(--ex-text-color);
             font-weight: 500;
             display: flex;
             align-items: center;
 
             .tag {
                 height: 0.44rem;
-                color: #014CFA;
+                color: var(--ex-primary-color);
                 background-color: rgba(1, 76, 250, 0.08);
                 border-radius: 0.04rem;
                 padding: 0 0.2rem;
@@ -736,11 +736,11 @@ onBeforeUnmount(() => {
         margin-top: 0.05rem;
         margin-bottom: 0.2rem;
         text-align: right;
-        color: #8F92A1;
+        color: var(--ex-text-color3);
         font-size: 0.24rem;
 
         .value {
-            color: #000000;
+            color: var(--ex-text-color);
             margin-left: 0.2rem;
         }
     }
@@ -749,7 +749,7 @@ onBeforeUnmount(() => {
 
 <style lang="less" scoped>
 .swap_accounr_dialog {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
     overflow: hidden;
@@ -769,7 +769,7 @@ onBeforeUnmount(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--ex-border-color);
         overflow: hidden;
         position: relative;
 
@@ -781,13 +781,13 @@ onBeforeUnmount(() => {
     }
 
     .swap_dialog_item_active {
-        color: #014CFA;
+        color: var(--ex-primary-color);
         font-weight: 600;
 
         .check_icon {
             position: absolute;
             right: 0.24rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-size: 0.28rem;
         }
     }

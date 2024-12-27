@@ -137,8 +137,8 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  border: 1px solid #eff3f8;
-  background: #fff;
+  border: 1px solid var(--ex-border-color);
+  background: var(--ex-bg-color);
   margin-bottom: 0.2rem;
 
   &:hover {
@@ -153,7 +153,7 @@ const formatSec = (seconds, t) => {
 
     .tl {
       .name {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.36rem;
         font-weight: 600;
         line-height: 140%;
@@ -194,7 +194,7 @@ const formatSec = (seconds, t) => {
 
     .tr {
       .time-title {
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         text-align: right;
         font-size: 0.24rem;
         font-weight: 400;
@@ -202,7 +202,7 @@ const formatSec = (seconds, t) => {
       }
 
       .time {
-        color: #061023;
+        color: var(--ex-text-color);
         text-align: right;
         font-size: 0.28rem;
         font-weight: 400;
@@ -213,8 +213,8 @@ const formatSec = (seconds, t) => {
 
   .content {
     border-radius: 0.32rem;
-    border: 1px solid #eff3f8;
-    background: linear-gradient(180deg, #f5f7fc 0%, #fff 100%);
+    border: 1px solid var(--ex-border-color);
+    background: linear-gradient(180deg, var(--ex-bg-color2) 0%, #fff 100%);
     padding: 0.24rem;
   }
 
@@ -228,7 +228,7 @@ const formatSec = (seconds, t) => {
 
     .ml {
       .ml-title {
-        color: #666d80;
+        color: var(--ex-text-color2);
         font-size: 0.28rem;
         font-weight: 400;
         line-height: 0.28rem;
@@ -266,7 +266,7 @@ const formatSec = (seconds, t) => {
       text-align: center;
 
       .bot-title {
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         font-size: 0.22rem;
         font-weight: 400;
         line-height: 0.22rem;
@@ -274,7 +274,7 @@ const formatSec = (seconds, t) => {
       }
 
       .bot-val {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         font-weight: 600;
         line-height: 0.28rem;

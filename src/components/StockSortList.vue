@@ -214,13 +214,13 @@ onBeforeUnmount(() => {
           padding-left: 0px;
           padding-right: 0.76rem;
           font-size: 0.32rem;
-          color: #8f92a1;
+          color: var(--ex-text-color3);
         }
 
         .van-tab--active {
           font-size: 0.36rem !important;
           font-weight: 600 !important;
-          color: #014cfa !important;
+          color: var(--ex-primary-color) !important;
         }
 
         .van-tabs__line {

@@ -4,7 +4,7 @@
     <Top :title="t('kyc.page_title')">
       <!-- 从注册来的 -->
       <template #right v-if="from == 'register'">
-        <span @click="nextStep" style="color: #014cfa; font-weight: 400; font-size: 0.28rem">跳过</span>
+        <span @click="nextStep" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">跳过</span>
       </template>
       <!-- 提交过认证信息 -->
       <template #right v-if="kycInfo.name">
@@ -74,8 +74,8 @@
     </div>
 
     <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" @click="submit" :loading="loading"
-      :disabled="disabled" round :color="'#014CFA'" class="submit" type="primary">{{ $t("kyc.first_btn") }}</Button>
-    <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="#014CFA" class="submit"
+      :disabled="disabled" round :color="'var(--ex-primary-color)'" class="submit" type="primary">{{ $t("kyc.first_btn") }}</Button>
+    <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="var(--ex-primary-color)" class="submit"
               type="primary" @click="next">继续</Button> -->
 
     <!-- 日期选择 -->
@@ -209,14 +209,14 @@ const nextStep = () => {
   }
 
   .title {
-    color: #061023;
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     margin-bottom: 0.2rem;
     margin-top: 0.6rem;
   }
 
   .tip {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-weight: 400;
     font-size: 0.24rem;
     margin-bottom: 0.6rem;
@@ -225,14 +225,14 @@ const nextStep = () => {
 
   .subtitle {
     font-weight: 400;
-    color: #061023;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     margin-bottom: 0.2rem;
   }
 
   .item {
     height: 0.92rem;
-    border: 0.02px solid #d0d8e2;
+    border: 0.02px solid var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-bottom: 0.4rem;
     padding: 0 0.32rem;
@@ -244,7 +244,7 @@ const nextStep = () => {
       height: 100%;
       font-weight: 400;
       font-size: 0.3rem;
-      color: #061023;
+      color: var(--ex-text-color);
     }
   }
 

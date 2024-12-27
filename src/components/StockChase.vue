@@ -52,7 +52,7 @@ const { t } = useI18n();
 <style lang="less" scoped>
 .market_stock_chase {
   height: 5rem;
-  box-shadow: 0 0.1rem 0.8rem 0 #014cfa33;
+  box-shadow: 0 0.1rem 0.8rem 0 rgb(var(--ex-primary-color) / 0.33);
   border-radius: 0.64rem;
   position: relative;
   top: -1rem;
@@ -72,7 +72,7 @@ const { t } = useI18n();
       height: 0.5rem;
       border-radius: 0.25rem;
       border-width: 1px;
-      border-color: #014cfa;
+      border-color: var(--ex-primary-color);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -84,7 +84,7 @@ const { t } = useI18n();
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        color: #014cfa;
+        color: var(--ex-primary-color);
       }
 
       .header_noti_text {
@@ -95,7 +95,7 @@ const { t } = useI18n();
         padding: 0 0.1rem;
         height: 0.5rem;
         border-radius: 0.25rem;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         align-items: center;
         justify-content: center;
         color: white;

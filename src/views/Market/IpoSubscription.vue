@@ -23,7 +23,7 @@
                     {{ t('trade.ipo_detail_price') }} <span>{{ currIpo.issue_price_max }} {{ currIpo.currency }}</span>
                 </div>
             </div>
-            <Icon class="ipo_info_arrow" name="arrow" size="0.4rem" color="#666D80" />
+            <Icon class="ipo_info_arrow" name="arrow" size="0.4rem" color="var(--ex-text-color2)" />
         </div>
 
         <div class="form">
@@ -33,10 +33,10 @@
                 <template #title-right>
                     <div class="flex items-center">
                         <span>{{ t('assets.wallet_available') }}&nbsp;</span>
-                        <Loading size="0.3rem" color="#014CFA" class="mx-[0.2rem]" v-if="!mainWallet.currency" /> <span
+                        <Loading size="0.3rem" color="var(--ex-primary-color)" class="mx-[0.2rem]" v-if="!mainWallet.currency" /> <span
                             v-else @click="openConfirmBox()" class="text-primary">{{ mainWallet.amount }} {{
                                 mainWallet.currency }}</span>
-                        <Icon class="ml-[0.1rem]" name="arrow" size="0.26rem" color="#666D80" />
+                        <Icon class="ml-[0.1rem]" name="arrow" size="0.26rem" color="var(--ex-text-color2)" />
                     </div>
                 </template>
             </FormItem>
@@ -57,7 +57,7 @@
             </div>
 
         </div>
-        <Button @click="openSafe" :loading="loading" round size="large" color="#014CFA" class="submit" type="primary">{{
+        <Button @click="openSafe" :loading="loading" round size="large" color="var(--ex-primary-color)" class="submit" type="primary">{{
             t('trade.ipo_opening_btn') }}</Button>
 
 
@@ -128,7 +128,7 @@
                     :title="$t('trade.stock_opening_trade_pw')">
                 </FormItem>
 
-                <Button :loading="loading" @click="submit(safeword)" size="large" class="submit" color="#014cfa"
+                <Button :loading="loading" @click="submit(safeword)" size="large" class="submit" color="var(--ex-primary-color)"
                     round>{{
                         $t("trade.ipo_opening_btn") }}</Button>
             </div>
@@ -349,20 +349,20 @@ const openConfirmBox = () => {
         type == 1
             ? `<div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
                 "trade.ipo_account_balance"
-            )} <span style="font-weight:600;color:#014CFA;">` +
+            )} <span style="font-weight:600;color:var(--ex-primary-color);">` +
             mainWallet.value.amount +
             "</span> " +
             mainWallet.value.currency +
             `</div><div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
                 "trade.stock_account_notification"
             )}</div>`
-            : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#F5F7FC;border:1px solid #EFF3F8;border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
-        <div style="color:#061023;font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">${t(
+            : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--ex-bg-color2);border:1px solid var(--ex-border-color);border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
+        <div style="color:var(--ex-text-color);font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">${t(
                 "trade.ipo_account_balance"
             )}</div>
         <div style="display:flex;align-items:center;justify-content:center;">
-            <b style="font-size:0.4rem;color:#014CFA;font-weight:bold">${mainWallet.value.amount
-            }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">${mainWallet.value.currency
+            <b style="font-size:0.4rem;color:var(--ex-primary-color);font-weight:bold">${mainWallet.value.amount
+            }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:var(--ex-text-color);font-weight:400">${mainWallet.value.currency
             }</span>
         </div>
     </div>`;
@@ -374,8 +374,8 @@ const openConfirmBox = () => {
         allowHtml: true,
         confirmButtonText: t("trade.stock_opening_btn_transfer"),
         cancelButtonText: t("trade.stock_opening_btn_recharge"),
-        confirmButtonColor: "#014CFA",
-        cancelButtonColor: "#014CFA",
+        confirmButtonColor: "var(--ex-primary-color)",
+        cancelButtonColor: "var(--ex-primary-color)",
     })
         .then(() => {
             router.push({
@@ -413,8 +413,8 @@ const openConfirmBox = () => {
 
     .ipo_info {
         border-radius: 0.32rem;
-        border: 1px solid #EFF3F8;
-        background: #F5F7FC;
+        border: 1px solid var(--ex-border-color);
+        background: var(--ex-bg-color2);
         padding: 0.28rem 0.32rem;
         display: flex;
         justify-content: space-between;
@@ -429,7 +429,7 @@ const openConfirmBox = () => {
         }
 
         &_name {
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.32rem;
             font-weight: 600;
             line-height: 0.36rem;
@@ -441,7 +441,7 @@ const openConfirmBox = () => {
             height: 0.32rem;
             padding: 0rem 0.08rem;
             font-size: 0.22rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             border-radius: 0.08rem;
             line-height: 0.32rem;
             font-weight: 400;
@@ -450,7 +450,7 @@ const openConfirmBox = () => {
         }
 
         &_price {
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.3rem;
             font-weight: 400;
             line-height: 0.36rem;
@@ -462,14 +462,14 @@ const openConfirmBox = () => {
             }
 
             .blue {
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
         }
 
     }
 
     .put_all {
-        color: #014CFA;
+        color: var(--ex-primary-color);
         position: absolute;
         right: 0.32rem;
         font-size: 0.3rem;
@@ -478,7 +478,7 @@ const openConfirmBox = () => {
     }
 
     .subtitle {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         margin-bottom: 0.12rem;
         line-height: 0.36rem;
@@ -517,7 +517,7 @@ const openConfirmBox = () => {
         position: relative;
         height: 0.92rem;
         border-radius: 0.32rem;
-        border: 1px solid #d0d8e2;
+        border: 1px solid var(--ex-border-color2);
         padding: 0 0.24rem;
 
     }
@@ -533,7 +533,7 @@ const openConfirmBox = () => {
     }
 
     .disabled_item {
-        background-color: #F5F7FC;
+        background-color: var(--ex-bg-color2);
     }
 
 
@@ -549,16 +549,16 @@ const openConfirmBox = () => {
 
 .main_item {
     border-radius: 0.32rem;
-    border: 1px solid #EFF3F8;
-    background: #F5F7FC;
+    border: 1px solid var(--ex-border-color);
+    background: var(--ex-bg-color2);
     margin: 0.4rem 0.32rem 0 0.32rem;
 
     .name {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         font-weight: 600;
         line-height: 0.36rem;
-        color: #0D0D12;
+        color: var(--el-text-color);
         overflow: hidden;
         margin-bottom: 0.14rem;
 
@@ -567,7 +567,7 @@ const openConfirmBox = () => {
             height: 0.32rem;
             padding: 0rem 0.08rem;
             font-size: 0.22rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             border-radius: 0.08rem;
             line-height: 0.32rem;
             font-weight: 400;
@@ -586,10 +586,10 @@ const openConfirmBox = () => {
     .info_boxs {
         padding: 0.3rem 0;
         position: relative;
-        border: 1px solid #EFF3F8;
+        border: 1px solid var(--ex-border-color);
         border-bottom: 0px;
         border-radius: 0.32rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         width: calc(100% + 2px);
         left: -1px;
         z-index: 1;
@@ -607,7 +607,7 @@ const openConfirmBox = () => {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             line-height: 0.44rem;
             position: relative;
@@ -621,12 +621,12 @@ const openConfirmBox = () => {
                 line-height: 0.44rem;
                 margin-top: 0.12rem;
                 font-weight: 600;
-                color: #061023;
+                color: var(--ex-text-color);
                 font-size: 0.36rem;
             }
 
             .blue {
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
         }
 
@@ -651,10 +651,10 @@ const openConfirmBox = () => {
         align-items: center;
         justify-content: space-between;
         padding: 0.36rem 0 0.2rem 0;
-        border-bottom: 1px solid #f5f7fc;
+        border-bottom: 1px solid var(--ex-border-color);
 
         .item_name {
-            color: #8f92a1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             font-weight: 400;
         }
@@ -686,7 +686,7 @@ const openConfirmBox = () => {
     .pass_ipt {
         margin-bottom: 0.4rem;
         border-radius: 0.12rem;
-        border: 1px solid #d0d8e2;
+        border: 1px solid var(--ex-border-color2);
         padding: 0 0.24rem;
 
         .ipt {
@@ -695,21 +695,21 @@ const openConfirmBox = () => {
     }
 
     .money_box {
-        background-color: #F5F7FC;
+        background-color: var(--ex-bg-color2);
         border-radius: 0.32rem;
         margin-top: 0.36rem;
         min-height: 1rem;
         display: flex;
         justify-content: flex-end;
         padding: 0.24rem 0.32rem;
-        color: #666D80;
+        color: var(--ex-text-color2);
         align-items: center;
 
         strong {
             font-size: 0.36rem;
             font-weight: 600;
             font-family: "PingFang SC";
-            color: #061023;
+            color: var(--ex-text-color);
             margin: 0 0.08rem;
         }
 
@@ -717,7 +717,7 @@ const openConfirmBox = () => {
             font-size: 0.24rem;
             font-weight: 600;
             font-family: "PingFang SC";
-            color: #061023;
+            color: var(--ex-text-color);
             position: relative;
             top: 0.04rem;
         }

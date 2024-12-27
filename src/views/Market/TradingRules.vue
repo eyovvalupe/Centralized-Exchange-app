@@ -61,7 +61,7 @@ import Top from "@/components/Top.vue"
                 padding: 0.1rem;
                 line-height: 0.34rem;
                 font-size: 0.28rem;
-                color: #000;
+                color: var(--ex-text-color);
                 font-weight: 400;
                 border-right: 1px solid #CAC3C3;
             }
@@ -71,7 +71,7 @@ import Top from "@/components/Top.vue"
                 padding: 0.1rem;
                 line-height: 0.5rem;
                 font-size: 0.24rem;
-                color: #000;
+                color: var(--ex-text-color);
                 font-weight: 400;
             }
         }

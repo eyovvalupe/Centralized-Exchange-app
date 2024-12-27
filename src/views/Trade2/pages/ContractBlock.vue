@@ -1,7 +1,7 @@
 <!-- 合约 -->
 <template>
   <div class="stock_block">
-    <Tabs type="oval-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink @change="onChange">
+    <Tabs type="oval-card" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body">
           <Opening :tradeType="props.activeTab" :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1"

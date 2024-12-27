@@ -163,7 +163,7 @@ onUnmounted(() => {
         .tab {
             padding: 0 0.6rem;
             font-size: 0.28rem;
-            color: #061023;
+            color: var(--ex-text-color);
             font-weight: 400;
             height: 0.64rem;
             display: flex;
@@ -173,7 +173,7 @@ onUnmounted(() => {
 
         .active_tab {
             background-color: #F6F8FF;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-weight: 600;
         }
     }
@@ -185,7 +185,7 @@ onUnmounted(() => {
 
         :deep(.van-tab--card) {
             border-right: none;
-            color: #061023;
+            color: var(--ex-text-color);
             // background-color: #f5f5f5;
         }
 
@@ -193,7 +193,7 @@ onUnmounted(() => {
 
             background-color: #F6F8FF;
             border-radius: 0.3rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-weight: 500
         }
 
@@ -304,10 +304,10 @@ onUnmounted(() => {
                 height: 0.6rem;
                 border-radius: 0.5rem;
                 padding: 0 0.4rem;
-                color: #fff;
+                color: var(--ex-bg-primary-text-color);
                 font-weight: 500;
                 font-size: 0.24rem;
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
                 display: flex;
                 align-items: center;
             }

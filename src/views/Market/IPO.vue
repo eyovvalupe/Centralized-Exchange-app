@@ -7,7 +7,7 @@
       v-model:active="selectedOption"
       :swipeable="false"
       animated
-      :color="'#014CFA'"
+      :color="'var(--ex-primary-color)'"
       shrink
       @change="init(true)"
     >
@@ -18,7 +18,7 @@
       <Tab :title="t('trade.ipo_title_market')" :name="'listed'"></Tab>
     </Tabs>
 
-    <!-- <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'#014CFA'"
+    <!-- <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'var(--ex-primary-color)'"
             shrink @change="init(true)">
             <Tab :title="i.text" :name="i.value" v-for="(i, key) in leverOption" :key="key">
             </Tab>
@@ -410,8 +410,8 @@ function countdown(endTime) {
 
     .item {
       border-radius: 0.32rem;
-      border: 1px solid #eff3f8;
-      background: #f5f7fc;
+      border: 1px solid var(--ex-border-color);
+      background: var(--ex-bg-color2);
       margin-top: 0.2rem;
 
       .name_box {
@@ -420,11 +420,11 @@ function countdown(endTime) {
         align-items: center;
         margin-bottom: 0.14rem;
         .name {
-          color: #061023;
+          color: var(--ex-text-color);
           font-size: 0.32rem;
           font-weight: 600;
           line-height: 0.36rem;
-          color: #0d0d12;
+          color: var(--el-text-color);
           max-width: 4.5rem;
         }
         .lever_icon {
@@ -433,7 +433,7 @@ function countdown(endTime) {
           height: 0.32rem;
           padding: 0rem 0.08rem;
           font-size: 0.22rem;
-          color: #014cfa;
+          color: var(--ex-primary-color);
           position: relative;
           top: 0.01rem;
           justify-content: center;
@@ -478,7 +478,7 @@ function countdown(endTime) {
         height: 0.6rem;
         border-radius: 0rem 0.32rem;
         padding: 0 0.2rem;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         min-width: 1.1rem;
         display: flex;
         align-items: center;
@@ -507,8 +507,8 @@ function countdown(endTime) {
 
       .item_info {
         border-radius: 0.32rem;
-        border: 1px solid #eff3f8;
-        background: #fff;
+        border: 1px solid var(--ex-border-color);
+        background: var(--ex-bg-color);
         position: relative;
         left: -1px;
         width: calc(100% + 2px);
@@ -524,11 +524,11 @@ function countdown(endTime) {
         }
         .info_name {
           font-size: 0.28rem;
-          color: #8f92a1;
+          color: var(--ex-text-color3);
         }
         .info_date,
         .info_price {
-          color: #061023;
+          color: var(--ex-text-color);
           font-size: 0.28rem;
         }
       }
@@ -542,10 +542,10 @@ function countdown(endTime) {
           display: flex;
           align-items: center;
           justify-content: center;
-          background-color: #014cfa;
+          background-color: var(--ex-primary-color);
           height: 0.8rem;
           border-radius: 0.5rem;
-          color: #fff;
+          color: var(--ex-bg-primary-text-color);
           font-size: 0.3rem;
           font-weight: 600;
         }
@@ -569,7 +569,7 @@ function countdown(endTime) {
       height: 0.96rem;
       text-align: center;
       line-height: 0.96rem;
-      color: #333333;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -581,7 +581,7 @@ function countdown(endTime) {
     }
 
     .selected-class {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       background-color: #f4f5f7;
       position: relative;
     }
@@ -593,7 +593,7 @@ function countdown(endTime) {
   border-top-right-radius: 0.36rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   padding: 0.32rem 0.32rem 0.4rem 0.32rem;
   position: relative;
 
@@ -608,21 +608,21 @@ function countdown(endTime) {
     align-items: center;
     justify-content: space-between;
     height: 1rem;
-    border-bottom: 1px solid #f5f5f5;
-    color: #8f92a1;
+    border-bottom: 1px solid var(--ex-border-color);
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;
 
     .name {
-      color: #0d0d12;
+      color: var(--el-text-color);
       font-weight: 600;
       font-size: 0.32rem;
     }
 
     .status {
       height: 0.48rem;
-      background-color: #e4ecfb;
-      color: #014cfa;
+      background-color: var(--ex-bg-color6);
+      color: var(--ex-primary-color);
       font-size: 0.24rem;
       padding: 0 0.32rem;
       display: flex;

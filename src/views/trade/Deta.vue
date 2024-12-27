@@ -99,7 +99,7 @@ const clearDates = () => {
 .date-date-box {
   position: relative;
   padding: 0 0.3rem;
-  background-color: white;
+  background-color: var(--ex-bg-color);
   padding-bottom: 1.42rem;
   .arrow-left {
     position: absolute;
@@ -119,8 +119,8 @@ const clearDates = () => {
   }
   .date-header {
     padding: 0.3rem 0;
-    background-color: white;
-    color: #010101;
+    background-color: var(--ex-bg-color);
+    color: var(--el-text-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 500;
@@ -132,7 +132,7 @@ const clearDates = () => {
     border-bottom: 0.02rem solid #dddddd;
   }
   .van-calendar__header-title {
-    color: #000;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;

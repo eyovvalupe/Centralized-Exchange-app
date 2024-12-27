@@ -217,7 +217,7 @@ Promise.all([
   }
 
   :deep(.van-sticky) {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     padding-top: 0.2rem;
   }
 
@@ -250,7 +250,7 @@ Promise.all([
     padding: 0 0.24rem 0 0.32rem;
     height: 1.12rem;
     font-weight: 600;
-    color: #0d0d12;
+    color: var(--el-text-color);
     line-height: 0.5rem;
     font-size: 0.5rem;
     display: flex;
@@ -261,7 +261,7 @@ Promise.all([
   }
 
   .search_block {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border: 1px solid #eeeff1;
     height: 0.8rem;
     border-radius: 0.2rem;
@@ -347,7 +347,7 @@ Promise.all([
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #fff;
+      background-color: var(--ex-bg-color);
     }
 
     :deep(.my_icon2) {
@@ -363,7 +363,7 @@ Promise.all([
 
     :deep(.van-tab--card) {
       border-right: none;
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
 
     :deep(.van-tab--card.van-tab--active) {
@@ -373,7 +373,7 @@ Promise.all([
       font-size: 0.5rem;
       position: relative;
 
-      // border-bottom: 3px solid #014cfa;
+      // border-bottom: 3px solid var(--ex-primary-color);
       // border-width: 10px;
       .tab_item {
         z-index: 1;
@@ -384,7 +384,7 @@ Promise.all([
         position: absolute;
         width: 0.6rem;
         height: 0.2rem;
-        background-color: var(--main-color);
+        background-color: var(--ex-primary-color);
         border-radius: 0.2rem;
         position: absolute;
         bottom: 0.06rem;

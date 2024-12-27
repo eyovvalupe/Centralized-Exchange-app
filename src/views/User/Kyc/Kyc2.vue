@@ -4,7 +4,7 @@
     <Top :title="t('kyc.page_title')">
       <!-- 从注册来的 -->
       <template #right v-if="from == 'register'">
-        <span @click="nextStep" style="color: #014cfa; font-weight: 400; font-size: 0.28rem">跳过</span>
+        <span @click="nextStep" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">跳过</span>
       </template>
       <!-- 从个人中心来的 -->
       <template #right v-else>
@@ -18,7 +18,7 @@
             ">
             <img :src="getStaticImgUrl('/static/img/user/warning.png')" alt="icon" />
           </div>
-          <span style="color: #014cfa; font-weight: 400; font-size: 0.24rem">照片上传要求</span>
+          <span style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.24rem">照片上传要求</span>
         </div>
       </template>
       <!-- 提交过认证信息 -->
@@ -217,7 +217,7 @@
       </div>
     </div>
 
-    <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" :color="'#014CFA'" @click="submit"
+    <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" :color="'var(--ex-primary-color)'" @click="submit"
       :loading="loading" :disabled="disabled" round class="submit" type="primary">{{ $t("kyc.second_btn") }}</Button>
   </div>
 </template>
@@ -402,14 +402,14 @@ const afterRead = (file, { name }) => {
   }
 
   .content_title {
-    color: #061023;
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     margin-bottom: 0.2rem;
     margin-top: 0.6rem;
   }
 
   .tip {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-weight: 400;
     font-size: 0.24rem;
     margin-bottom: 0.4rem;
@@ -452,7 +452,7 @@ const afterRead = (file, { name }) => {
   }
 
   .title {
-    color: #0d0d12;
+    color: var(--el-text-color);
     font-weight: 600;
     font-size: 0.48rem;
     line-height: 0.8rem;
@@ -483,7 +483,7 @@ const afterRead = (file, { name }) => {
     font-weight: 400;
 
     span {
-      color: #1a59f6;
+      color: var(--ex-primary-color);
     }
   }
 
@@ -544,7 +544,7 @@ const afterRead = (file, { name }) => {
         z-index: 9998;
         padding: 0.14rem;
         border-radius: 50%;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
       }
     }
 
@@ -565,7 +565,7 @@ const afterRead = (file, { name }) => {
 
       .title {
         font-weight: 400;
-        color: #1a59f6;
+        color: var(--ex-primary-color);
         font-size: 0.36rem;
         line-height: 0.42rem;
         text-align: center;

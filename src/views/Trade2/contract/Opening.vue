@@ -13,7 +13,7 @@
     <!-- Tabs -->
     <div class="open_tab_box">
       <Tabs key="form" class="van-tabs--oval-sub" @change="(e) => (activeTab = e)"
-        v-model="activeTab" :swipeable="false" :color="'#014CFA'" shrink>
+        v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
             v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
@@ -94,7 +94,7 @@ defineExpose({
 
   .open_tab_box {
     border-radius: 0 0 0.32rem 0.32rem;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     padding-top: 0.32rem;
   }
 
@@ -110,7 +110,7 @@ defineExpose({
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.3rem;
     }
 
@@ -120,10 +120,10 @@ defineExpose({
     }
 
     .active_type_tab {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-weight: 600;
       position: relative;
-      background: #f5f7fc;
+      background: var(--ex-bg-color2);
       border-radius: 0.32rem 0.32rem 0 0;
     }
   }

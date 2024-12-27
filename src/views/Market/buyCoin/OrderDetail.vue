@@ -337,10 +337,10 @@ const offsetEnum = {
   sell: "卖出",
 };
 const statusEnum = {
-  waitpayment: { name: "待付款", title: "待付款", color: "var(--main-color)" },
-  waitconfirm: { name: "待确认", title: "待确认", color: "var(--main-color)" },
+  waitpayment: { name: "待付款", title: "待付款", color: "var(--ex-primary-color)" },
+  waitconfirm: { name: "待确认", title: "待确认", color: "var(--ex-primary-color)" },
   done: { name: "交易完成", title: "交易完成", color: "#18B762" },
-  cancel: { name: "交易已取消", title: "交易完成", color: "#8F92A1" },
+  cancel: { name: "交易已取消", title: "交易完成", color: "var(--ex-text-color3)" },
 };
 
 // 订单数据
@@ -513,7 +513,7 @@ getSessionToken();
   .tabs {
     height: 0.8rem;
     border-radius: 1.3rem;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     display: flex;
     overflow: hidden;
     margin-bottom: 0.4rem;
@@ -524,7 +524,7 @@ getSessionToken();
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #666d80;
+      color: var(--ex-text-color2);
       text-align: center;
       font-size: 0.3rem;
       font-weight: 400;
@@ -549,15 +549,15 @@ getSessionToken();
     }
 
     .tab_active {
-      background-color: #014cfa;
-      color: #fff;
+      background-color: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
       border-radius: 1.3rem;
     }
   }
 
   .detail_box {
-    background-color: #f5f7fc;
-    border: 1px solid #d0d8e2;
+    background-color: var(--ex-bg-color2);
+    border: 1px solid var(--ex-border-color2);
     border-radius: 0.32rem;
 
     .status {
@@ -569,13 +569,13 @@ getSessionToken();
       justify-content: center;
 
       .status_wait {
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.5rem;
 
         .amount {
-          color: #000;
+          color: var(--ex-text-color);
           font-size: 0.32rem;
           font-weight: 600;
         }
@@ -594,7 +594,7 @@ getSessionToken();
         justify-content: center;
         width: 100%;
         height: 100%;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         font-size: 0.3rem;
         font-weight: 600;
         line-height: 0.5rem;
@@ -607,16 +607,16 @@ getSessionToken();
 
     .detail_content {
       padding: 0.2rem 0 0.36rem 0;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       border-radius: 0.32rem;
       position: relative;
       bottom: -1px;
-      background-color: #fff;
+      background-color: var(--ex-bg-color);
       width: calc(100% + 2px);
       left:-1px;
 
       .bank {
-        background-color: #f5f7fc;
+        background-color: var(--ex-bg-color2);
         border-radius: 0.32rem;
         overflow: hidden;
         margin: 0.32rem 0.32rem 0 0.32rem;
@@ -637,7 +637,7 @@ getSessionToken();
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666d80;
+            color: var(--ex-text-color2);
             font-size: 0.28rem;
             font-weight: 400;
 
@@ -651,7 +651,7 @@ getSessionToken();
           .td2 {
             flex: 2;
             border-right: none;
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.28rem;
             font-weight: 400;
           }
@@ -671,7 +671,7 @@ getSessionToken();
         }
 
         .name {
-          color: #8f92a1;
+          color: var(--ex-text-color3);
           font-size: 0.24rem;
           font-weight: 400;
           margin-top: 0.2rem;
@@ -691,13 +691,13 @@ getSessionToken();
           justify-content: center;
           border-radius: 50%;
           background-color: #a7bef4;
-          color: #014cfa;
+          color: var(--ex-primary-color);
           font-size: 0.24rem;
           font-weight: 600;
         }
 
         .title {
-          color: #061023;
+          color: var(--ex-text-color);
           font-size: 0.32rem;
           font-weight: 400;
         }
@@ -706,7 +706,7 @@ getSessionToken();
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          color: #8f92a1;
+          color: var(--ex-text-color3);
           font-size: 0.24rem;
           font-weight: 400;
         }
@@ -714,7 +714,7 @@ getSessionToken();
         .line {
           width: 1px;
           height: 0.24rem;
-          background-color: #8f92a1;
+          background-color: var(--ex-text-color3);
           margin: 0 0.12rem;
         }
       }
@@ -722,7 +722,7 @@ getSessionToken();
   }
 
   .order {
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.32rem;
     margin-top: 0.2rem;
 
@@ -731,13 +731,13 @@ getSessionToken();
       align-items: center;
       justify-content: space-between;
       padding: 0.2rem 0.32rem;
-      border-bottom: 1px solid #eff3f8;
-      color: #8f92a1;
+      border-bottom: 1px solid var(--ex-border-color);
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
       font-weight: 400;
 
       .order_no {
-        color: #666;
+        color: var(--ex-text-color2);
         font-size: 0.28rem;
         font-weight: 400;
       }
@@ -761,14 +761,14 @@ getSessionToken();
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        color: #666d80;
+        color: var(--ex-text-color2);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.28rem;
 
         .amount {
           margin-bottom: 0.2rem;
-          color: #061023;
+          color: var(--ex-text-color);
           text-align: center;
           font-size: 0.32rem;
           font-weight: 600;
@@ -794,12 +794,12 @@ getSessionToken();
       height: 100%;
       height: 0.96rem;
       border-radius: 1.26rem;
-      background-color: #fff;
-      border: 1px solid #d0d8e2;
+      background-color: var(--ex-bg-color);
+      border: 1px solid var(--ex-border-color2);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #666d80;
+      color: var(--ex-text-color2);
       text-align: center;
       font-size: 16px;
       font-weight: 400;
@@ -807,9 +807,9 @@ getSessionToken();
     }
 
     .active_btn {
-      background-color: #014cfa;
-      border-color: #014cfa;
-      color: #fff;
+      background-color: var(--ex-primary-color);
+      border-color: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
     }
   }
 }

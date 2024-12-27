@@ -40,7 +40,7 @@ const props = defineProps({
     .tab_title {
         font-weight: 700;
         font-size: 0.24rem;
-        color: #0D0D12;
+        color: var(--el-text-color);
         line-height: 0.274rem;
         margin-bottom: 0.06rem;
     }
@@ -53,7 +53,7 @@ const props = defineProps({
     }
 
     .tab_num {
-        color: #0D0D12;
+        color: var(--el-text-color);
         font-weight: 600;
         font-size: 0.2rem;
         line-height: 0.25rem;

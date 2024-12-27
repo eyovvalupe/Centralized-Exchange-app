@@ -2,7 +2,7 @@
    <!-- 拖动 -->
     <div>
         <div class="slider-container">
-            <Slider v-model="sliderValue" bar-height="0.28rem" active-color="#014CFA" inactive-color="#E0E7F8"
+            <Slider v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-primary-color)" inactive-color="#E0E7F8"
                 @change="onSliderChange">
                 <template #button>
                     <div class="slider-custom-num">
@@ -55,7 +55,7 @@ const onSliderChange = (newValue) => {
     line-height: 100%;
     :deep(.slider-custom-num) {
         position: relative;
-        background: #014CFA;
+        background: var(--ex-primary-color);
         color: #fff;
         display: inline-block;
         width: .4rem;
@@ -63,7 +63,7 @@ const onSliderChange = (newValue) => {
         border-radius: 50%;
         top:0.01rem;
         .number {
-            color: #014CFA;
+            color: var(--ex-primary-color);
             position: absolute;
             top: -0.28rem;
             right: 0;
@@ -83,7 +83,7 @@ const onSliderChange = (newValue) => {
     :deep(.van-slider__button) {
         width: 0.1rem;
         height: 0.48rem;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         border-radius: inherit;
         top: -0.36rem;
     }
@@ -102,7 +102,7 @@ const onSliderChange = (newValue) => {
     margin: 0 0.2rem;
     line-height: 100%;
     .percentage {
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;

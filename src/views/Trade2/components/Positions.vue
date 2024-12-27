@@ -88,7 +88,7 @@
               opacity: amountFocus ? '1' : '0',
               visibility: amountFocus ? '' : 'hidden',
             }" style="
-                color: #014cfa;
+                color: var(--ex-primary-color);
                 word-break: keep-all;
                 transition: all ease 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
@@ -124,7 +124,7 @@
                     </div> -->
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
-            color="#014CFA">
+            color="var(--ex-primary-color)">
             {{ t("trade.stock_position_btn") }}
           </Button>
         </div>
@@ -166,7 +166,7 @@
               opacity: amountFocus ? '1' : '0',
               visibility: amountFocus ? '' : 'hidden',
             }" style="
-                color: #014cfa;
+                color: var(--ex-primary-color);
                 word-break: keep-all;
                 transition: all ease 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
@@ -181,7 +181,7 @@
                     </div> -->
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
-            color="#014CFA">
+            color="var(--ex-primary-color)">
             {{ t("trade.stock_position_btn") }}
           </Button>
         </div>
@@ -635,7 +635,7 @@ getSessionToken();
 
   .tr {
     padding: 0.24rem 0;
-    border-bottom: 1px solid #eff3f8;
+    border-bottom: 1px solid var(--ex-border-color);
     display: flex;
     align-items: stretch;
   }
@@ -645,7 +645,7 @@ getSessionToken();
   }
 
   .th {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.22rem;
     padding: 0.48rem 0 0.24rem 0;
   }
@@ -663,7 +663,7 @@ getSessionToken();
 
     .name {
       font-size: 0.32rem;
-      color: #061023;
+      color: var(--ex-text-color);
       line-height: 0.32rem;
       margin-bottom: 0.18rem;
       display: block;
@@ -675,11 +675,11 @@ getSessionToken();
     }
 
     .status {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       height: 0.3rem;
       padding: 0 0.08rem;
       border-radius: 0.3rem;
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -722,17 +722,17 @@ getSessionToken();
     }
 
     .amount {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
     }
 
     .price {
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.24rem;
     }
 
     .price:first-child {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-weight: 600;
       line-height: 0.36rem;
@@ -773,7 +773,7 @@ getSessionToken();
 
   .form {
     .subtitle {
-      color: #333333;
+      color: var(--ex-text-color);
       font-weight: 400;
       font-size: 0.28rem;
       margin-bottom: 0.12rem;
@@ -784,7 +784,7 @@ getSessionToken();
     }
 
     .subtitle-tip {
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
 
     .submit {
@@ -817,7 +817,7 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;
@@ -832,7 +832,7 @@ getSessionToken();
     .tip {
       text-align: right;
       font-size: 0.24rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
 
       .num {
         color: #333;

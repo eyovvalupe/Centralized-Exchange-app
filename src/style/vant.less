@@ -2,7 +2,7 @@
 :root:root {
     --van-overlay-background: rgba(31, 41, 55, 0.50);
     --van-button-large-height: 1.12rem;
-    --van-switch-on-background: rgb(@ex-primary-color-rgb);
+    --van-switch-on-background: var(--ex-primary-color);
 
 }
 
@@ -58,7 +58,7 @@
         margin-top: 0.48rem;
         height: 0.44rem;
         line-height: 0.44rem;
-        color: #121826;
+        color: var(--ex-text-color);
         text-align: center;
         font-size: 0.32rem;
         font-weight: 500;
@@ -89,7 +89,7 @@
     height: 0.6rem;
     flex-shrink: 0;
     border-radius: 1rem;
-    background: #014CFA;
+    background: var(--ex-primary-color);
     line-height: 0.6rem;
     position: absolute;
     right: 0.3rem;
@@ -154,21 +154,21 @@
 
     .van-action-sheet__item {
         padding: 0.32rem;
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--ex-border-color);
         font-size: 0.28rem !important;
     }
 }
 
 .van-action-sheet__header {
     font-weight: 500 !important;
-    color: #121826 !important;
+    color: var(--ex-text-color) !important;
     font-size: 0.32rem !important;
     text-align: left !important;
     padding-left: 0.32rem !important;
 }
 
 .action-sheet-active {
-    color: #014CFA !important;
+    color: var(--ex-primary-color) !important;
     font-weight: 600;
     position: relative;
 
@@ -199,7 +199,7 @@
         overflow: inherit;
 
         .van-tabs__nav {
-            background: #EFF3F8;
+            background: var(--ex-bg-color3);
             height: 0.8rem;
             border-radius: 0.32rem;
             overflow: inherit;
@@ -209,7 +209,7 @@
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #8A8C95;
+            color: var(--ex-text-color3);
         }
 
         .van-tab--shrink {
@@ -228,7 +228,7 @@
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 600;
-                color: #014CFA;
+                color: var(--ex-primary-color);
 
             }
         }
@@ -255,7 +255,7 @@
 
         &::after {
             content: '';
-            background: #EFF3F8;
+            background: var(--ex-bg-color3);
             height: 0.8rem;
             border-radius: 0.32rem;
             width: 100%;
@@ -297,7 +297,7 @@
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 600;
-                color: #014CFA;
+                color: var(--ex-primary-color);
                 margin-top: 0px;
 
             }
@@ -325,19 +325,19 @@
         .van-tabs__nav {
             height: 0.92rem;
             overflow: inherit;
-            border-bottom: 1px solid #EFF3F8;
-            border-color: #EFF3F8 !important;
+            border-bottom: 1px solid var(--ex-border-color);
+            border-color: var(--ex-border-color) !important;
         }
 
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #8A8C95;
+            color: var(--ex-text-color3);
         }
 
         .van-tab__text {
             font-size: 0.32rem;
-            color: #666D80;
+            color: var(--ex-text-color2);
         }
 
         .van-tab--shrink {
@@ -354,14 +354,14 @@
             .van-tab__text {
                 font-size: 0.36rem;
                 font-weight: 500;
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
 
             &::after {
                 content: '';
                 width: 100%;
                 height: 0.08rem;
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
                 position: absolute;
                 left: 0;
                 bottom: 0;
@@ -383,18 +383,18 @@
         .van-tabs__nav {
             height: 0.82rem;
             overflow: inherit;
-            color: #8A8C95;
+            color: var(--ex-text-color3);
             background-color: #fff;
             position: relative;
             border-radius: 0.32rem 0.32rem 0 0;
-            border-bottom: 0.02rem solid #EFF3F8 !important;
+            border-bottom: 0.02rem solid var(--ex-border-color) !important;
         }
 
 
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             background-color: #fff;
 
             &::after {
@@ -414,7 +414,7 @@
 
         .van-tab__text {
             font-size: 0.32rem;
-            color: #666D80;
+            color: var(--ex-text-color2);
         }
 
         .van-tab--shrink {
@@ -430,13 +430,13 @@
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 500;
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
 
         }
 
         .van-tab+.van-tab {
-            border-left: 1px solid #EFF3F8;
+            border-left: 1px solid var(--ex-border-color);
         }
 
         .van-tab:first-child.van-tab--active {
@@ -460,7 +460,7 @@
         height: 0.6rem !important;
 
         .van-tabs__nav--line {
-            border-bottom: 1px solid #EFF3F8 !important;
+            border-bottom: 1px solid var(--ex-border-color) !important;
             padding-bottom: 0.12rem;
             box-sizing: border-box;
             padding-left: 0px;
@@ -468,12 +468,12 @@
 
             .van-tab__text {
                 font-size: 0.28rem;
-                color: #8F92A1;
+                color: var(--ex-text-color3);
             }
 
             .van-tab--active {
                 .van-tab__text {
-                    color: #121826;
+                    color: var(--ex-text-color);
                 }
             }
 
@@ -483,7 +483,7 @@
             }
 
             .van-tabs__line {
-                background-color: #014CFA !important;
+                background-color: var(--ex-primary-color) !important;
                 width: 0.36rem;
                 bottom: 0;
                 border-radius: 0.3rem;
@@ -500,11 +500,11 @@
         overflow: inherit;
 
         .van-tabs__nav {
-            background: #fff;
+            background: var(--ex-bg-color);
             height: 0.92rem;
             border-radius: 0.32rem;
             overflow: inherit;
-            border: 1px solid #EFF3F8 !important;
+            border: 1px solid var(--ex-border-color) !important;
 
         }
 
@@ -519,7 +519,7 @@
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #8A8C95;
+            color: var(--ex-text-color3);
         }
 
         .van-tab--shrink {
@@ -528,15 +528,15 @@
 
         .van-tab--active {
             border-radius: 0.32rem;
-            background: #014CFA;
-            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            background: var(--ex-primary-color);
+            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
             height: 0.92rem;
             z-index: 1;
 
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 600;
-                color: #fff;
+                color: var(--ex-bg-primary-text-color);
 
             }
         }
@@ -560,7 +560,7 @@
 
             .van-tab__text {
                 font-size: 0.28rem;
-                color: #8F92A1;
+                color: var(--ex-text-color3);
             }
 
             .van-tab {
@@ -573,8 +573,8 @@
             }
 
             .van-tab--active {
-                background-color: #014CFA;
-                border-color: #014CFA;
+                background-color: var(--ex-primary-color);
+                border-color: var(--ex-primary-color);
 
                 .van-tab__text {
                     color: #fff;
@@ -604,7 +604,7 @@
 
             .van-tab__text {
                 font-size: 0.24rem;
-                color: #8F92A1;
+                color: var(--ex-text-color3);
             }
 
             .van-tab {
@@ -617,8 +617,8 @@
             }
 
             .van-tab--active {
-                background-color: #014CFA;
-                border-color: #014CFA;
+                background-color: var(--ex-primary-color);
+                border-color: var(--ex-primary-color);
 
                 .van-tab__text {
                     color: #fff;

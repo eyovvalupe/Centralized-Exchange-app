@@ -475,7 +475,7 @@ const showInfo = ref(false);
 
   .info_header {
     width: 100%;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     padding: 0 0.205rem;
     z-index: 100;
 
@@ -522,10 +522,10 @@ const showInfo = ref(false);
         font-size: 0.24rem;
         line-height: 0.332rem;
         font-weight: 400;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
 
         .title_name {
-          color: #061023;
+          color: var(--ex-text-color);
           font-size: 0.32rem;
           line-height: 0.432rem;
           font-weight: 500;
@@ -561,7 +561,7 @@ const showInfo = ref(false);
         }
 
         .num {
-          color: #000;
+          color: var(--ex-text-color);
           margin-left: 0.1rem;
         }
       }
@@ -685,7 +685,7 @@ const showInfo = ref(false);
       align-items: center;
 
       .tab {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         font-weight: 400;
         margin-right: 0.32rem;
@@ -700,7 +700,7 @@ const showInfo = ref(false);
       .active_tab {
         // background-color: #F6F8FF;
         border-radius: 0.48rem;
-        color: #014cfa;
+        color: var(--ex-primary-color);
         font-weight: bold;
       }
 
@@ -712,8 +712,8 @@ const showInfo = ref(false);
 
       .submit_btn {
         padding: 0.12rem 0.4rem;
-        color: #fff;
-        background-color: #014cfa;
+        color: var(--ex-bg-primary-text-color);
+        background-color: var(--ex-primary-color);
         border-radius: 0.5rem;
         font-weight: 600;
         font-size: 0.26rem;
@@ -763,7 +763,7 @@ const showInfo = ref(false);
         font-weight: 400;
 
         b {
-          color: #0d0d12;
+          color: var(--el-text-color);
           font-weight: 700;
           font-size: 0.28rem;
           line-height: 0.4rem;
@@ -801,8 +801,8 @@ const showInfo = ref(false);
         }
 
         .active_tab {
-          background-color: #014cfa;
-          color: #fff;
+          background-color: var(--ex-primary-color);
+          color: var(--ex-bg-primary-text-color);
         }
       }
 
@@ -836,7 +836,6 @@ const showInfo = ref(false);
           z-index: 999;
           top: 0.24rem;
           left: 0.24rem;
-          color: #999;
           padding: 0.1rem 0.15rem;
           background: #00000080;
           border-radius: 0.15rem;
@@ -855,7 +854,7 @@ const showInfo = ref(false);
         top: 0;
         // left: 100vw;
         left: 0;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         // transform: rotate(90deg);
         // transform-origin: 0% 0%;
 
@@ -865,7 +864,7 @@ const showInfo = ref(false);
           position: absolute;
           right: 0.4rem;
           top: 0.4rem;
-          color: #000;
+          color: var(--ex-text-color);
           font-size: 0.4rem;
           z-index: 99999;
         }
@@ -899,7 +898,7 @@ const showInfo = ref(false);
     }
 
     .symbol {
-      color: #061023;
+      color: var(--ex-text-color);
       margin-bottom: 0.12rem;
     }
 
@@ -910,9 +909,9 @@ const showInfo = ref(false);
       align-items: center;
       text-align: center;
       box-sizing: border-box;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       border-radius: 20px;
-      border: 0.5px solid #d0d8e2;
+      border: 0.5px solid var(--ex-border-color2);
       font-size: 0.24rem;
     }
 
@@ -925,15 +924,15 @@ const showInfo = ref(false);
     .bottom_btn--default {
       width: 1.44rem;
       height: 0.9rem;
-      color: #061023;
+      color: var(--ex-text-color);
       border-radius: 40px;
       font-size: 0.32rem;
       margin-left: 0.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fff;
-      border: 1px solid #d0d8e2;
+      background: var(--ex-bg-color);
+      border: 1px solid var(--ex-border-color2);
     }
 
     .bottom_btn {
@@ -959,7 +958,7 @@ const showInfo = ref(false);
     padding-top: 0.4rem;
 
     .intro_title {
-      color: #000;
+      color: var(--ex-text-color);
       font-size: 0.36rem;
       font-weight: 600;
       margin-bottom: 0.2rem;
@@ -987,7 +986,7 @@ const showInfo = ref(false);
         width: 2.6rem;
         font-size: 0.2rem;
         font-weight: 500;
-        color: #000;
+        color: var(--ex-text-color);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -1031,7 +1030,7 @@ const showInfo = ref(false);
 
   .active_item {
     background-color: #f4f5f7;
-    color: #014cfa;
+    color: var(--ex-primary-color);
   }
 }
 

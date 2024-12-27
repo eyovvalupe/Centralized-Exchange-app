@@ -130,7 +130,7 @@ onMounted(() => {
 .ipo-detail-box {
   position: relative;
   padding: 0 0.3rem;
-  background-color: white;
+  background-color: var(--ex-bg-color);
   .arrow-left {
     position: absolute;
     left: 0.3rem;
@@ -144,8 +144,8 @@ onMounted(() => {
   }
   .ipo-detail-header {
     padding: 0.3rem 0;
-    background-color: white;
-    color: #010101;
+    background-color: var(--ex-bg-color);
+    color: var(--el-text-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 400;
@@ -158,15 +158,15 @@ onMounted(() => {
       justify-content: space-between;
       height: 1rem;
       line-height: 1rem;
-      border-bottom: 0.02rem solid #f5f5f5;
+      border-bottom: 0.02rem solid var(--ex-border-color);
       .ipo-title {
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
       }
       .ipo-text {
-        color: #061023;
+        color: var(--ex-text-color);
         text-align: right;
         font-size: 0.28rem;
         font-style: normal;
@@ -180,7 +180,7 @@ onMounted(() => {
     margin-top: 0.3rem;
     margin-bottom: 0.3rem;
     .h-co-title {
-      color: var(--Greyscale-900, #0d0d12);
+      color: var(--el-text-color);
       font-size: 0.32rem;
       font-style: normal;
       font-weight: 600;
@@ -189,8 +189,8 @@ onMounted(() => {
     .ipo-up-button {
       width: 1.14rem;
       height: 0.46rem;
-      background-color: #e4ecfb;
-      color: #014cfa;
+      background-color: var(--ex-bg-color6);
+      color: var(--ex-primary-color);
       text-align: center;
       font-size: 0.2rem;
       font-style: normal;

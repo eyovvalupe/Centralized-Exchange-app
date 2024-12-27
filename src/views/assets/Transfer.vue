@@ -109,7 +109,7 @@
       </div>
     </div>
 
-    <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+    <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
       $t("transfer.btn") }}</Button>
 
     <!-- 充提记录 -->
@@ -504,7 +504,7 @@ const changeAmount = (val) => {
   .form {
     .form_box {
       border-radius: 0.32rem;
-      border: 1px solid #eff3f8;
+      border: 1px solid var(--ex-border-color);
       padding: 0.42rem 0.32rem 0.4rem 0.32rem;
       margin-top: 0.52rem;
       position: relative;
@@ -515,12 +515,12 @@ const changeAmount = (val) => {
     }
 
     .form_text {
-      color: #666d80;
+      color: var(--ex-text-color2);
       margin-right: 0.32rem;
     }
 
     .form_box_active {
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
     }
 
     .err_ipt {
@@ -569,7 +569,7 @@ const changeAmount = (val) => {
       font-size: 0.24rem;
       margin-top: 0.2rem;
       line-height: 0.4rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
     }
 
     .tip {
@@ -580,7 +580,7 @@ const changeAmount = (val) => {
       margin-top: 0.12rem;
 
       .num {
-        color: #333333;
+        color: var(--ex-text-color);
         margin-left: 0.04rem;
         font-weight: 500;
       }

@@ -103,7 +103,7 @@ onUnmounted(() => {
                 justify-content: center;
                 font-size: 0.4rem;
                 line-height: 0.48rem;
-                color: #000000;
+                color: var(--ex-text-color);
                 font-weight: 700;
                 padding-top: 0.2rem;
             }

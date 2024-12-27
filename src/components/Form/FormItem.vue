@@ -241,7 +241,7 @@ const percentTagClick = (percent) => {
 
 
   .disabled_item {
-    background-color: #F5F7FC;
+    background-color: var(--ex-bg-color2);
   }
 
   .item_focus {
@@ -272,7 +272,7 @@ const percentTagClick = (percent) => {
   }
 
   .put_all {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     position: absolute;
     right: 0.32rem;
     font-size: 0.3rem;
@@ -281,7 +281,7 @@ const percentTagClick = (percent) => {
   }
 
   .put_all_place {
-    color: #061023;
+    color: var(--ex-text-color);
   }
 
   .pwd_icon {
@@ -299,7 +299,7 @@ const percentTagClick = (percent) => {
   display: flex;
   align-items: center;
   font-size: 0.28rem;
-  color: #061023;
+  color: var(--ex-text-color);
   font-weight: 400;
   line-height: 0.36rem;
   margin-top: 0.4rem;
@@ -317,7 +317,7 @@ const percentTagClick = (percent) => {
   &__right {
     text-align: right;
     font-size: 0.28rem;
-    color: #666d80;
+    color: var(--ex-text-color2);
   }
 }
 

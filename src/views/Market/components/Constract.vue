@@ -152,7 +152,7 @@ const goInfo = (item) => {
     align-items: center;
     position: relative;
     margin-top: 0.2rem;
-    border: 1px solid #eff3f8;
+    border: 1px solid var(--ex-border-color);
 
     .td5 {
       flex: 5;
@@ -161,7 +161,7 @@ const goInfo = (item) => {
 
       .item_name {
         font-size: 0.32rem;
-        color: #061023;
+        color: var(--ex-text-color);
         line-height: 0.32rem;
         font-weight: 600;
       }
@@ -169,7 +169,7 @@ const goInfo = (item) => {
       .item_info {
         font-size: 0.24rem;
         line-height: 0.332rem;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
@@ -243,10 +243,10 @@ const goInfo = (item) => {
   .item_lever span {
     height: 0.32rem;
     padding: 0 0.08rem;
-    border: 1px solid #014cfa;
+    border: 1px solid var(--ex-primary-color);
     border-radius: 0.24rem;
     font-size: 0.22rem;
-    color: #014cfa;
+    color: var(--ex-primary-color);
     margin-right: 0.08rem;
     display: flex;
     align-items: center;

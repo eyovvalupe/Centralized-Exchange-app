@@ -18,7 +18,7 @@
           class="flex justify-center items-center rounded-[1.6rem] border-[0.02rem] border-color-2 text-color2 w-[3.27rem] h-[0.97rem]">
           {{ $t("google_auth.google_input_btn_cancel") }}
         </div>
-        <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="btn" type="primary"
+        <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn" type="primary"
           @click="submit">{{ $t("google_auth.google_input_btn_confirm") }}</Button>
       </div>
     </div>
@@ -51,11 +51,11 @@ watch(val, (v) => {
       "van-password-input__item"
     )[i].style;
     if (v.length != 6 && i <= v.length) {
-      inputStyle.borderColor = "#014CFA";
-      inputStyle.color = "#014CFA";
+      inputStyle.borderColor = "var(--ex-primary-color)";
+      inputStyle.color = "var(--ex-primary-color)";
     } else {
       inputStyle.borderColor = "#D0D8E2";
-      inputStyle.color = "#666D80";
+      inputStyle.color = "var(--ex-text-color2)";
     }
   }
 });
@@ -124,7 +124,7 @@ defineExpose({
   .subtitle {
     font-size: 0.28rem;
     line-height: 0.42rem;
-    color: #666d80;
+    color: var(--ex-text-color2);
     font-weight: 400;
     margin-bottom: 0.4rem;
   }
@@ -169,7 +169,7 @@ defineExpose({
     font-size: 0.48rem;
 
     &:has(.van-password-input__cursor) {
-      border: 0.02rem solid #014cfa;
+      border: 0.02rem solid var(--ex-primary-color);
     }
   }
 }

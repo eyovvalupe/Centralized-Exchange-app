@@ -7,7 +7,7 @@
       class="tabs"
       :swipeable="false"
       animated
-      color="#014CFA"
+      color="var(--ex-primary-color)"
       shrink
       @change="(e) => onChange(e)"
     >
@@ -110,7 +110,7 @@ defineExpose({
   .tabs {
     > :deep(.van-tabs__wrap) {
       box-sizing: unset;
-      background: #fff;
+      background: var(--ex-bg-color);
       margin: 0 0.32rem;
       height: 0.8rem;
       padding: 0.2rem 0 0.12rem !important;
@@ -139,17 +139,16 @@ defineExpose({
 
         .van-tab {
           width: 33%;
-          color: #666d80;
+          color: var(--ex-text-color2);
         }
-
         .van-tab--active {
-          box-shadow: 0px -2px 5px 0px #014cfa1a;
+          box-shadow: 0px -2px 5px 0px rgb(var(--ex-text-color-rgb) / 0.1);
           background: white;
           padding: 0;
           border-radius: 0.32rem;
           height: 120%;
           transform: translateY(-10%);
-          color: #014cfa;
+          color: var(--ex-primary-color);
 
           &:first-child {
             border-end-end-radius: 0;

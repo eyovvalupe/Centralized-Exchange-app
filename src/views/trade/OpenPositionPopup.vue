@@ -121,7 +121,7 @@
 
       <Button
         size="large"
-        color="#014cfa"
+        color="var(--ex-primary-color)"
         round
         style="margin-top: 0.6rem;"
         @click="openStock"
@@ -237,21 +237,21 @@ const openStock = ()=>{
   .lose-field {
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     .van-field__control {
       text-align: right;
     }
   }
   .account-monkey {
     text-align: right;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
     line-height: 0.48rem;
     margin: 0.12rem 0;
     .account-num-monkey {
-      color: #333333;
+      color: var(--ex-text-color);
     }
   }
   .position-bottom {
@@ -259,7 +259,7 @@ const openStock = ()=>{
     margin-top: 0.8rem;
     position: relative;
     .position-pay {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 600;
@@ -267,7 +267,7 @@ const openStock = ()=>{
       vertical-align: middle;
     }
     .pay-num {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       text-align: right;
       font-size: 0.36rem;
       font-style: normal;
@@ -296,7 +296,7 @@ const openStock = ()=>{
   .risk-line {
     display: flex;
     justify-content: right;
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-size: 0.24rem;
     font-style: normal;
     font-weight: 400;
@@ -367,12 +367,12 @@ const openStock = ()=>{
   }
   .detail-box {
         display: flex;
-        border-bottom: 0.02rem solid #f5f5f5;
+        border-bottom: 0.02rem solid var(--ex-border-color);
         height: 1rem;
         width: 100%;
         .left-text {
           width: 2rem;
-          color: #8F92A1;
+          color: var(--ex-text-color3);
           text-align: left;
           font-size: 0.28rem;
           font-style: normal;
@@ -391,7 +391,7 @@ const openStock = ()=>{
           .win-lose-box {
             width: 1.16rem;
             height: 0.44rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             background-color: #ecf1fe;
             position: absolute;
             right: 0;
@@ -432,7 +432,7 @@ const openStock = ()=>{
           width: 1.16rem;
           height: 0.44rem;
           background-color: #ecf1fe;
-          color: #014cfa;
+          color: var(--ex-primary-color);
           margin: auto;
           text-align: center;
           line-height: 0.44rem;

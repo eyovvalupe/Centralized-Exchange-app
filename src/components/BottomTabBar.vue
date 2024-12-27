@@ -174,7 +174,7 @@ const checkActive = (item) => {
   }
 
   .bottom_nav_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
   }
 }
 </style>

@@ -6,9 +6,9 @@
     <div ref="stickyElement" :class="{ fixed: isFixed }" class="opentrade-sticky">
       <div class="opentrade-sticky">
         <div style="
-            background-color: white;
+            background-color: var(--ex-bg-color);
           ">
-          <Tabs class="tabs" v-model="active" :swipeable="false" animated :color="'#014CFA'" shrink @change="onChange">
+          <Tabs class="tabs" v-model="active" :swipeable="false" animated :color="'var(--ex-primary-color)'" shrink @change="onChange">
             <Tab title="开仓" name="0"> </Tab>
             <Tab title="持仓" name="1"> </Tab>
             <Tab title="查询" name="2"> </Tab>
@@ -87,7 +87,7 @@
                       <img :src="getStaticImgUrl('/static/img/trade/no-update.png')" alt="" />
                       更新
                     </div>
-                    <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
+                    <div style="background-color: var(--ex-primary-color)" @click="updateClosePositionPopup(i)">
                       <img :src="getStaticImgUrl('/static/img/trade/close.png')" alt="" />
                       平仓
                     </div>
@@ -110,7 +110,7 @@
         <!-- 未登录 -->
         <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
           <img :src="getStaticImgUrl('/static/img/trade/no-data.png')" class="no-data-img">
-          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;" @click="goLogin">马上登录</span>
+          <p class="no-data-text">还未登录账号？<span style="color: var(--ex-primary-color);cursor: pointer;" @click="goLogin">马上登录</span>
           </p>
         </div>
 
@@ -182,7 +182,7 @@
                       <img :src="getStaticImgUrl('/static/img/trade/no-update.png')" alt="" />
                       更新
                     </div>
-                    <div style="background-color: #014cfa" @click="updateClosePositionPopup(i)">
+                    <div style="background-color: var(--ex-primary-color)" @click="updateClosePositionPopup(i)">
                       <img :src="getStaticImgUrl('/static/img/trade/close.png')" alt="" />
                       平仓
                     </div>
@@ -203,7 +203,7 @@
         <!-- 未登录 -->
         <div class="no-data-box" v-show="!loading && !token" style="height: 8rem;">
           <img :src="getStaticImgUrl('/static/img/trade/no-data.png')" class="no-data-img">
-          <p class="no-data-text">还未登录账号？<span style="color: #014cfa;cursor: pointer;"
+          <p class="no-data-text">还未登录账号？<span style="color: var(--ex-primary-color);cursor: pointer;"
               @click="jump('login')">马上登录</span>
           </p>
         </div>
@@ -584,7 +584,7 @@ defineExpose({
 .opentrade {
   .opentrade-sticky {
     width: 100%;
-    background-color: white;
+    background-color: var(--ex-bg-color);
     z-index: 1000;
     // transition: all 0.1s ease;
   }
@@ -647,7 +647,7 @@ defineExpose({
   }
 
   .grid-item-hover {
-    background-color: white;
+    background-color: var(--ex-bg-color);
   }
 
   .grid-item-hover :hover {
@@ -668,7 +668,7 @@ defineExpose({
     }
 
     div {
-      color: #000;
+      color: var(--ex-text-color);
       text-align: center;
       font-family: "PingFang SC";
       font-size: 0.28rem;
@@ -702,7 +702,7 @@ defineExpose({
     }
 
     .special-color {
-      color: #014cfa;
+      color: var(--ex-primary-color);
     }
 
     .red {
@@ -897,7 +897,7 @@ defineExpose({
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: white;
+    background-color: var(--ex-bg-color);
     z-index: 1000;
   }
 }

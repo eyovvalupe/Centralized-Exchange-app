@@ -11,7 +11,7 @@
           <div class="detail-flex-title">
             可售股票
           </div>
-          <div class="detail-num" style="color: #014CFA;margin-top: 0.38rem;">
+          <div class="detail-num" style="color: var(--ex-primary-color);margin-top: 0.38rem;">
             {{ detaiList.unsold_volume }}
           </div>
         </div>
@@ -180,7 +180,7 @@
       </div>
 
       <div style="padding: 0 0.32rem;">
-        <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;"
+        <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;"
           @click="updateClosePositionPopup">平仓</Button>
         <Button size="large" color="#f2f2f2" round style="margin-bottom: 0.32rem;color: #999999;"
           @click="updateDetailPopup">订单更新</Button>
@@ -307,13 +307,13 @@ const updateDetailPopup = () => {
 
     .detail-box {
       display: flex;
-      border-bottom: 0.02rem solid #f5f5f5;
+      border-bottom: 0.02rem solid var(--ex-border-color);
       height: 1rem;
       width: 100%;
 
       .left-text {
         width: 2rem;
-        color: #8F92A1;
+        color: var(--ex-text-color3);
         text-align: left;
         font-size: 0.28rem;
         font-style: normal;
@@ -334,7 +334,7 @@ const updateDetailPopup = () => {
         .win-lose-box {
           width: 1.16rem;
           height: 0.44rem;
-          color: #014CFA;
+          color: var(--ex-primary-color);
           background-color: #ecf1fe;
           position: absolute;
           right: 0;
@@ -380,7 +380,7 @@ const updateDetailPopup = () => {
         width: 1.16rem;
         height: 0.44rem;
         background-color: #ecf1fe;
-        color: #014cfa;
+        color: var(--ex-primary-color);
         margin: auto;
         text-align: center;
         line-height: 0.44rem;
@@ -393,7 +393,7 @@ const updateDetailPopup = () => {
     display: flex;
     justify-content: right;
     margin-top: 0.6rem;
-    color: #014CFA;
+    color: var(--ex-primary-color);
     font-size: 0.24rem;
     font-style: normal;
     font-weight: 400;

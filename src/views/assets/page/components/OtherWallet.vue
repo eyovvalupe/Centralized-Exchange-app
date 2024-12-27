@@ -3,8 +3,8 @@
     <div class="absolute top-[0.02rem] left-[0.01rem] z-[-1]" style="width: 2.38rem;height: 1.02rem;">
       <img :src="getStaticImgUrl(`/static/icons/wallet_bg5.svg`)" alt="">
     </div>
-    <div class="absolute top-[0] left-[0] z-[-1] rounded-[0.36rem]"
-      style="box-shadow: 0px 4px 20px 0px #0610231a;width: 6.86rem;height: 3.04rem;">
+    <div class="absolute top-[0] left-[0] z-[-1] rounded-[0.36rem] wallet_bg"
+      style="width: 6.86rem;height: 3.04rem;">
       <img :src="getStaticImgUrl(`/static/icons/wallet_bg7.svg`)" alt="">
     </div>
     <OtherImg />
@@ -54,3 +54,9 @@ const toggleShow = () => {
   emits("toggleShow", showInfo.value);
 };
 </script>
+
+<style lang="less" scoped>
+.wallet_bg{
+  box-shadow: 0px 4px 20px 0px rgb(var(--ex-text-color-rgb) / 0.1);
+}
+</style>

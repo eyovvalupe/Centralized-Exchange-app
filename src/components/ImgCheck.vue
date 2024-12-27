@@ -80,7 +80,7 @@ const goLang = () => {
 };
 
 const colorMap = ref({
-  default: "#014CFA",
+  default: "var(--ex-primary-color)",
   success: "#18B762",
   error: "#ee0a24",
 });
@@ -168,7 +168,7 @@ onMounted(() => {
         width: 20px;
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -229,7 +229,7 @@ onMounted(() => {
       width: 5.9rem;
 
       :deep(.van-slider__button) {
-        box-shadow: 0 0.08rem 0.2rem 0 #014cfa33;
+        box-shadow: 0 0.08rem 0.2rem 0 rgb(var(--ex-primary-color) / 0.33);
         background-size: contain;
         /* Scale the background image */
         background-repeat: no-repeat;

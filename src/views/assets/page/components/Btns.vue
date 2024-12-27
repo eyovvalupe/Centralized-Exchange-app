@@ -93,7 +93,7 @@ const onSelect = (item) => {
   }
 
   &__name {
-    color: #061023;
+    color: var(--ex-text-color);
     text-align: center;
     font-size: 0.3rem;
     font-weight: 400;

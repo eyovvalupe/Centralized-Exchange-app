@@ -48,7 +48,7 @@ const handleClick = () => {
         text-overflow: ellipsis;
         white-space: nowrap;
         font-weight: 600;
-        color: #0D0D12;
+        color: var(--el-text-color);
         font-size: 0.28rem;
         line-height: 0.45rem;
         margin-bottom: 0.12rem;
@@ -60,7 +60,7 @@ const handleClick = () => {
 
         .left {
             flex: 1;
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             font-weight: 400;
             line-height: 0.34rem;
@@ -84,7 +84,7 @@ const handleClick = () => {
                 }
 
                 .tag {
-                    color: #014CFA;
+                    color: var(--ex-primary-color);
                     font-size: 0.24rem;
                     font-weight: 400;
                     height: 0.4rem;
@@ -107,7 +107,7 @@ const handleClick = () => {
 
             .start {
                 font-size: 0.28rem;
-                color: #000;
+                color: var(--ex-text-color);
                 line-height: 0.48rem;
                 font-weight: 500;
             }
