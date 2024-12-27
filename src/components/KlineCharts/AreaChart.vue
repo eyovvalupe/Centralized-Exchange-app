@@ -52,7 +52,6 @@ onMounted(() => {
         chart?.setOffsetRightDistance(props.showY ? 50 : 0) // 设置右边距
         chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
         chart?.setMaxOffsetRightDistance(props.showY ? 50 : 0) // 设置右边最大空出的边距
-
     }
     initData()
 })
@@ -174,8 +173,15 @@ const initData = async () => {
             if (num > maxTail) num = maxTail
             chart.setPriceVolumePrecision(num, 2)
             chart.applyNewData(datas.map(item => {
-                item.timestamp = item.timestamp || item.ts
-                return item
+                const data = {
+                    close: Number(item.close),
+                    high: Number(item.high),
+                    low: Number(item.low),
+                    open: Number(item.open),
+                    timestamp: item.timestamp ? Number(item.timestamp) : Number(item.ts),
+                    volume: Number(item.volume)
+                }
+                return data
             })) // 重设图表数据
             if (datas[0] && datas[0].timezone) {
                 chart.setTimezone(datas[0].timezone)
@@ -196,13 +202,21 @@ const subs = () => { // 订阅新数据
         socket && socket.on('time', res => {
             if (res.code == 200 && res.symbol == props.symbol) {
                 res.data.forEach(item => {
+                    // chart.updateData({
+                    //     ...item,
+                    //     open: item.price,
+                    //     close: item.price,
+                    //     high: item.price,
+                    //     low: item.price,
+                    //     timestamp: item.timestamp || item.ts
+                    // })
                     chart.updateData({
-                        ...item,
-                        open: item.price,
-                        close: item.price,
-                        high: item.price,
-                        low: item.price,
-                        timestamp: item.timestamp || item.ts
+                        close: Number(item.close),
+                        high: Number(item.high),
+                        low: Number(item.low),
+                        open: Number(item.open),
+                        timestamp: item.timestamp ? Number(item.timestamp) : Number(item.ts),
+                        volume: Number(item.volume)
                     })
                 })
                 chart.updateData()
