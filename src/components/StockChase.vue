@@ -16,7 +16,7 @@
     <div class="graph_container">
       <div class="chase_container relative">
         <div class="chase_text flex text-center" style="width: 3.014rem !important;">
-          <span class="text-[#666D80] mr-[0.16rem]">{{
+          <span class="text-color2 mr-[0.16rem]">{{
             t("market.market_stock_chase_movement_percentage")
           }}</span>
           <div class="flex">
@@ -32,7 +32,7 @@
       <div class="chase_status relative">
         <div class="chase_state_text flex text-center justify-betwen" style="width: 3.12rem !important;">
           <span
-            class="text-[#666D80] mr-[0.16rem] ovreflow-hidden"
+            class="text-color2 mr-[0.16rem] ovreflow-hidden"
             >{{ t("market.market_stock_chase_todays_effect") }}</span
           >
           <span style="color: #18b762">99.26%</span>

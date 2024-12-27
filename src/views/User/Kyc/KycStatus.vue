@@ -4,7 +4,7 @@
     <Top :title="t('kyc.page_title')">
       <template #right>
         <div @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
@@ -19,7 +19,7 @@
         <div class="success_icon">
           <img :src="getStaticImgUrl('/static/img/user/success2.svg')" alt="server" />
         </div>
-        <div class="text-[0.36rem] text-[#061023] mt-[0.24rem] mb-[0.4rem]">
+        <div class="text-[0.36rem] text-color mt-[0.24rem] mb-[0.4rem]">
           {{ $t("kyc.status_success") }}
         </div>
       </template>
@@ -28,10 +28,10 @@
         <div class="review_icon">
           <img :src="getStaticImgUrl('/static/icons/review.svg')" alt="">
         </div>
-        <div class="text-[0.36rem] text-[#061023] my-[0.24rem]">
+        <div class="text-[0.36rem] text-color my-[0.24rem]">
           {{ $t("kyc.status_pending") }}
         </div>
-        <div class="text-[#8F92A1] text-[0.28rem] mb-[0.4rem]">
+        <div class="text-color3 text-[0.28rem] mb-[0.4rem]">
           {{ $t("kyc.status_pending_description") }}
         </div>
       </template>
@@ -40,53 +40,53 @@
         <div class="w-[1.2rem] h-[1.2rem] rounded-[50%] overflow-hidden">
           <img src="static/img/user/failure.svg" alt="failure" />
         </div>
-        <div class="text-[0.36rem] text-[#061023] my-[0.24rem]">
+        <div class="text-[0.36rem] text-color my-[0.24rem]">
           {{ $t("kyc.status_failure") }}
         </div>
-        <div class="text-[#8F92A1] text-[0.28rem] mb-[0.4rem]">
+        <div class="text-color3 text-[0.28rem] mb-[0.4rem]">
           {{ kycInfo.remarks || "--" }}
         </div>
       </template>
-      <div class="bg-[#EFF3F8] rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
+      <div class="bg-color-3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
         <div class="px-[0.32rem] mb-[0.3rem]">
           <div class="text-[0.36rem] mb-[0.32rem] leading-[0.5rem]">
             {{ props.kycInfo ? props.kycInfo.name : "--" }}
           </div>
           <div class="text-[0.3rem] mb-[0.2rem] leading-[0.4rem]">
-            <span class="text-[#8F92A1] mr-[0.2rem]">{{
+            <span class="text-color3 mr-[0.2rem]">{{
               $t("kyc.status_card_no")
             }}</span>
-            <span class="text-[#061023]">{{ kycInfo.idnum }}</span>
+            <span class="text-color">{{ kycInfo.idnum }}</span>
           </div>
           <div class="text-[0.3rem] leading-[0.4rem]">
-            <span class="text-[#8F92A1] mr-[0.2rem]">{{
+            <span class="text-color3 mr-[0.2rem]">{{
               $t("kyc.status_birthday")
             }}</span>
-            <span class="text-[#061023]">{{ kycInfo.birthday }}</span>
+            <span class="text-color">{{ kycInfo.birthday }}</span>
           </div>
         </div>
         <div
-          class="w-full bg-white rounded-[0.32rem] border-[0.02rem] border-[#EFF3F8] h-[4.32rem] flex flex-wrap justify-between p-[0.32rem]">
+          class="w-full bg-color rounded-[0.32rem] border-[0.02rem] border-color h-[4.32rem] flex flex-wrap justify-between p-[0.32rem]">
           <div
-            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]">
+            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
             <img :src="kycInfo.idimg_1" style="object-fit: fill !important" alt="img" />
           </div>
           <div
-            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem] mb-[0.2rem]">
+            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
             <img :src="kycInfo.idimg_2" style="object-fit: fill !important" alt="img" />
           </div>
-          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-[#EFF3F8] rounded-[0.32rem]">
+          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
             <img :src="kycInfo.idimg_3" style="object-fit: fill !important" alt="img" />
           </div>
         </div>
       </div>
       <div class="w-full" v-if="kycInfo.status == 'failure'">
         <div @click="nextStep"
-          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] bg-[#014CFA] text-white text-[0.36rem]">
+          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] bg-primary text-white text-[0.36rem]">
           {{ $t("kyc.status_reverify") }}
         </div>
         <div @click="jump('chat')"
-          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] text-[#014CFA] bg-white text-[0.36rem]">
+          class="w-full h-[1.12rem] flex items-center justify-center rounded-[1rem] text-primary bg-color text-[0.36rem]">
           {{ $t("kyc.status_service") }}
         </div>
       </div>

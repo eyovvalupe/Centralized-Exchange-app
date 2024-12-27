@@ -5,7 +5,7 @@
     <Top :title="t('google_auth.page_title')">
       <template #right>
         <div @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>

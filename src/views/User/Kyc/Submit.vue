@@ -4,7 +4,7 @@
     <Top :title="t('kyc.page_title')">
       <template #right>
         <div @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
@@ -15,7 +15,7 @@
       <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("kyc.final_title") }}</div>
-    <div class="text-[0.24rem] text-[#8F92A1] text-center -mt-[0.9rem] mb-[0.8rem]">
+    <div class="text-[0.24rem] text-color3 text-center -mt-[0.9rem] mb-[0.8rem]">
       {{ $t("kyc.final_description") }}
     </div>
     <Button round color="#014CFA" @click="

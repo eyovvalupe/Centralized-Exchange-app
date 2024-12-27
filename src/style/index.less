@@ -25,8 +25,8 @@ body,
 }
 
 :root {
-  --main-color: @mainColor;
-  --main-text-color: @mainTextColor;
+  --main-color: rgb(@ex-primary-color-rgb);
+  --main-text-color: rgb(@ex-text-color-rgb);
 }
 
 #app {
@@ -72,22 +72,6 @@ div::-webkit-scrollbar {
   }
 }
 
-// 涨跌效果
-.up {
-  color: @up !important;
-}
-
-.up_bg {
-  background-color: @up !important;
-}
-
-.down_bg {
-  background-color: @down !important;
-}
-
-.down {
-  color: @down !important;
-}
 
 // 页面
 .app_scroll {

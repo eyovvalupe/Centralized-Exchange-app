@@ -12,7 +12,7 @@
       <span class="text-[0.4rem] p-[0.1rem] font-semibold">{{
         $t("google_auth.google_title")
       }}</span>
-      <span class="text-[0.24rem] p-[0.04rem] text-[#8f92a1] mb-[0.4rem]">Please back up your key in case you lose
+      <span class="text-[0.24rem] p-[0.04rem] text-color3 mb-[0.4rem]">Please back up your key in case you lose
         it</span>
     </div>
     <div class="qrcode">
@@ -33,7 +33,7 @@
     <div class="w-full h-[1rem] mb-[0.8rem]" v-if="!gg.googlesecret"></div>
     <div class="w-full relative">
       <CodeInput :loading="loading" @submit="(code) => goBind(code)" />
-      <div class="absolute top-[1.3rem] left-[0] text-[#e8503a]" v-if="isSentCodeError">
+      <div class="absolute top-[1.3rem] left-[0] text-down" v-if="isSentCodeError">
         {{ errText }}
       </div>
     </div>

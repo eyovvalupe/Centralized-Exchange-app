@@ -59,7 +59,7 @@
 
         <div class="tip">
           when your payment status will change, we all send to<br />
-          you notification <span class="text-[#014cfa]">leave your email</span>
+          you notification <span class="text-primary">leave your email</span>
         </div>
       </div>
 

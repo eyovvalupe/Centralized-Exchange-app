@@ -31,7 +31,7 @@
       </template>
       <template #right v-else>
         <div @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
@@ -47,23 +47,23 @@
 
     <!-- 表单模式头部 -->
     <div class="steps" v-if="!checkMode">
-      <div class="bg-[#D9E4FF] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
-        <div class="bg-[#014CFA] w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
+      <div class="bg-color4 w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
+        <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="check-icon">
             <img :src="getStaticImgUrl('/static/icons/right_white.svg')" alt="">
           </div>
         </div>
       </div>
-      <div class="w-[3.04rem] h-[0.16rem] bg-[#F5F7FC]"></div>
-      <div class="bg-[#D9E4FF] w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
-        <div class="bg-[#014CFA] w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center">
-          <div class="bg-[#D9E4FF] w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
+      <div class="w-[3.04rem] h-[0.16rem] bg-color2"></div>
+      <div class="bg-color4 w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
+        <div class="bg-primary w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center">
+          <div class="bg-color4 w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
         </div>
       </div>
     </div>
     <div class="steps" v-if="!checkMode">
-      <div class="text-[0.28rem] text-[#061023] mr-[2.52rem]">{{ $t("kyc.second_basic_info") }}</div>
-      <div class="text-[0.28rem] text-[#8F92A1]">{{ $t("kyc.second_upload_card") }}</div>
+      <div class="text-[0.28rem] text-color mr-[2.52rem]">{{ $t("kyc.second_basic_info") }}</div>
+      <div class="text-[0.28rem] text-color3">{{ $t("kyc.second_upload_card") }}</div>
     </div>
     <div class="content_title" v-if="!checkMode">{{ $t("kyc.second_title") }}</div>
     <div class="tip" v-if="!checkMode">{{ $t("kyc.second_description") }}</div>
@@ -76,7 +76,7 @@
           :style="{ 'background-image': `url('/static/icons/iden1.svg')` }"
           v-if="!files.front.loading && !files.front.url">
           <div class="camera_icon mb-[0.16rem]"></div>
-          <div class="text-[0.28rem] text-[#061023]">{{ $t("kyc.second_card_front") }}</div>
+          <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_front") }}</div>
         </div>
         <!-- 上传中 -->
         <div class="item_box loading" v-if="files.front.loading">
@@ -103,7 +103,7 @@
           :style="{ 'background-image': `url('/static/icons/iden2.svg')` }"
           v-if="!files.back.loading && !files.back.url">
           <div class="camera_icon mb-[0.16rem]"></div>
-          <div class="text-[0.28rem] text-[#061023]">{{ $t("kyc.second_card_back") }}</div>
+          <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_back") }}</div>
         </div>
         <!-- 上传中 -->
         <div class="item_box loading" v-if="files.back.loading">
@@ -132,7 +132,7 @@
           <div class="camera_icon mb-[0.16rem]">
             <img :src="getStaticImgUrl('/static/icons/carema.svg')" alt="">
           </div>
-          <div class="text-[0.28rem] text-[#061023]">{{ $t("kyc.second_card_hand") }}</div>
+          <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_hand") }}</div>
         </div>
         <!-- 上传中 -->
         <div class="item_box loading" v-if="files.hand.loading">
@@ -154,27 +154,27 @@
         <Uploader v-if="!checkMode && !files.hand.url" :name="'hand'" class="uploader" :after-read="afterRead" />
       </div>
     </div>
-    <div class="bg-[#F5F7FC] rounded-[0.32rem] w-full h-[2.62rem] px-[0.32rem] py-[0.24rem] mb-[0.8rem]">
-      <div class="text-[0.28rem text-[#061023] mb-[0.2rem]">{{ $t("kyc.second_upload_rule") }}</div>
-      <div class="text-[0.24rem] text-[#8F92A1] mb-[0.2rem]">
+    <div class="bg-color2 rounded-[0.32rem] w-full h-[2.62rem] px-[0.32rem] py-[0.24rem] mb-[0.8rem]">
+      <div class="text-[0.28rem text-color mb-[0.2rem]">{{ $t("kyc.second_upload_rule") }}</div>
+      <div class="text-[0.24rem] text-color3 mb-[0.2rem]">
         {{ $t("kyc.second_upload_description") }}
       </div>
       <div class="flex justify-between">
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] bg-white flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status" :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }"></div>
           </div>
           <div class="flex items-center justify-between">
             <div class="check_icon">
               <img :src="getStaticImgUrl('/static/icons/right_primary.svg')" alt="">
             </div>
-            <div class="text-[0.24rem] text-[#061023]">{{ $t("kyc.second_standard_img") }}</div>
+            <div class="text-[0.24rem] text-color">{{ $t("kyc.second_standard_img") }}</div>
           </div>
         </div>
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] relative bg-white flex items-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] relative bg-color flex items-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status absolute right-0 -mr-[0.16rem]"
               :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }"></div>
           </div>
@@ -182,12 +182,12 @@
             <div class="uncheck_icon">
               <img :src="getStaticImgUrl('/static/icons/error_red.svg')" alt="">
             </div>
-            <div class="text-[0.24rem] text-[#061023]">{{ $t("kyc.second_failed1") }}</div>
+            <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed1") }}</div>
           </div>
         </div>
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] bg-white flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status" :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }">
               <div class="bg-[rgba(255,255,255,0.4)] w-full h-full rounded-[0.08rem] backdrop-blur-[0.02rem]"></div>
             </div>
@@ -196,22 +196,22 @@
             <div class="uncheck_icon">
               <img :src="getStaticImgUrl('/static/icons/error_red.svg')" alt="">
             </div>
-            <div class="text-[0.24rem] text-[#061023]">{{ $t("kyc.second_failed2") }}</div>
+            <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed2") }}</div>
           </div>
         </div>
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] bg-white flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status flex items-center justify-center"
               :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }">
-              <div class="bg-white w-[0.68rem] h-[0.28rem] rounded-[0.2rem] blur-[0.05rem]"></div>
+              <div class="bg-color w-[0.68rem] h-[0.28rem] rounded-[0.2rem] blur-[0.05rem]"></div>
             </div>
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
               <img :src="getStaticImgUrl('/static/icons/error_red.svg')" alt="">
             </div>
-            <div class="text-[0.24rem] text-[#061023]">{{ $t("kyc.second_failed3") }}</div>
+            <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed3") }}</div>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="password-input">
     <div class="flex items-center justify-between mb-[0.32rem]" v-if="!props.from == 'register'">
-      <span class="text-[0.32rem] text-[#061023] mr-[0.2rem]">Google Verification Code</span>
+      <span class="text-[0.32rem] text-color mr-[0.2rem]">Google Verification Code</span>
       <div class="clear_icon" style="cursor: pointer" @click="clean">
         <img :src="getStaticImgUrl('/static/icons/clean.svg')" alt="">
       </div>
@@ -28,7 +28,7 @@
             borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem',
           }" ref="digitInputs" />
         <div v-if="focusIndex == index && digit == ''"
-          class="absolute w-[0.48rem] bottom-[0.24rem] left-[0.26rem] top-[1rem] h-[0.04rem] bg-[#014cfa]"></div>
+          class="absolute w-[0.48rem] bottom-[0.24rem] left-[0.26rem] top-[1rem] h-[0.04rem] bg-primary"></div>
       </div>
     </div>
     <Button :loading="props.loading" :disabled="!isAllFilled" round color="#014CFA" class="submit-button" type="primary"

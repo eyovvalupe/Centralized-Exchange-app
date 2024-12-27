@@ -109,7 +109,7 @@
         <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="showDialog = false">
           <img :src="getStaticImgUrl('/static/icons/close.svg')" alt="">
         </div>
-        <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
+        <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
           {{ $t("login.country_number") }}
         </div>
         <div class="item search_box">
@@ -125,7 +125,7 @@
           <List>
             <Cell v-for="item in showAreas">
               <div @click="clickItem(item)"
-                class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-[#eff3f8]"
+                class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-color"
                 :class="{ transfer_dialog_item_active: form.area == item.code }">
                 <div class="flex h-[1.08rem] items-center">
                   <div style="width: 0.64rem;height: 0.64rem;">

@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="flex gap-[0.2rem] mb-4 flex-wrap">
-        <div class="text-[0.28rem] h-[0.6rem] px-[0.16rem] bg-[#F5F7FC] rounded-[0.32rem] items-center flex"
+        <div class="text-[0.28rem] h-[0.6rem] px-[0.16rem] bg-color2 rounded-[0.32rem] items-center flex"
           v-for="(item, i) in marketSearchTextList" :key="i" @click="handleHistory(item)">
           {{ item }}
         </div>
@@ -116,9 +116,9 @@ const market = {
   forex: "外汇",
 };
 const marketStyle = {
-  stock: "text-[#014CFA] bg-[rgba(1,76,250,0.1)] ",
-  crypto: "text-[#FFAF2A] bg-[rgba(255,175,42,0.1)] ",
-  forex: "text-[#18B762] bg-[rgba(24,183,98,0.1)] ",
+  stock: "tag-stock",
+  crypto: "tag-crypto",
+  forex: "tag-forex",
 };
 onBeforeUnmount(() => {
   eventBus.off("loginSuccess");

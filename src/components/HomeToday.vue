@@ -1,13 +1,13 @@
 <template>
   <div
-    class="flex w-full h-[2.18rem] border-[0.02rem] border-[#EFF3F8] bg-[#F5F7FC] rounded-[0.32rem] mb-[0.32rem]"
+    class="flex w-full h-[2.18rem] border-[0.02rem] border-color bg-color2 rounded-[0.32rem] mb-[0.32rem]"
   >
     <div
-      class="flex flex-col items-center justify-center bg-white border-[0.02rem] rounded-[0.32rem] border-[#EFF3F8] w-[1.04rem]"
+      class="flex flex-col items-center justify-center bg-color border-[0.02rem] rounded-[0.32rem] border-color w-[1.04rem]"
     >
-      <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">{{$t("home.today")}}</div>
-      <div class="text-[0.28rem] text-[#061023] mb-[0.2rem]">{{$t("home.index")}}</div>
-      <div class="text[0.24rem] text-[#666D80]">{{ formatDate(new Date) }}</div>
+      <div class="text-[0.28rem] text-color mb-[0.2rem]">{{$t("home.today")}}</div>
+      <div class="text-[0.28rem] text-color mb-[0.2rem]">{{$t("home.index")}}</div>
+      <div class="text[0.24rem] text-color2">{{ formatDate(new Date) }}</div>
     </div>
     <HomeCountry />
   </div>

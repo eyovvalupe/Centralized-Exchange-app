@@ -93,8 +93,8 @@
       </div>
       <div class="van-safe-area-bottom min-h-[2rem]"></div>
     </div>
-    <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-white">
-      <div class="h-[0.02rem] w-full bg-[#EAEEF3]" />
+    <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-color">
+      <div class="h-[0.02rem] w-full bg-color3" />
       <div class="box px-4">
         <div class="box_icon">
           <div style="width:0.6rem;height:0.6rem" class="text-my">
