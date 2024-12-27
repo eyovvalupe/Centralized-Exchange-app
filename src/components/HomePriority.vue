@@ -11,7 +11,7 @@
 
       <div class="flex items-center gap-1">
         <div v-for="(arr, index) in slideArr" :key="index" :class="[
-          currentSlide == index ? 'bg-[#014CFA]' : 'bg-[#014CFA] opacity-20',
+          currentSlide == index ? 'bg-primary' : 'bg-primary opacity-20',
         ]" class="w-[0.12rem] h-[0.06rem] rounded-[0.2rem]"></div>
       </div>
     </div>
@@ -20,9 +20,9 @@
       <Slide v-for="(arr, slide) in slideArr" :key="slide">
         <div class="w-full flex ml-[-0.1rem]">
           <div v-for="(item, i) in arr" :key="i" :class="item.ratio > 0 ? 'up_price' : 'down_price'"
-            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] ml-[0.1rem] rounded-[0.32rem] bg-[#F5F7FC]"
+            class="w-[2.22rem] h-[1.48rem] p-[0.16rem] ml-[0.1rem] rounded-[0.32rem] bg-color2"
             @click="goInfo(item)">
-            <div class="font-medium text-[0.28rem] text-[#061023] mb-[0.1rem] text-center">
+            <div class="font-medium text-[0.28rem] text-color mb-[0.1rem] text-center">
               {{ item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"] }}
             </div>
             <div class="flex justify-between mb-[0.1rem]">

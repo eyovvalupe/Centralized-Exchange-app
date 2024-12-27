@@ -7,13 +7,13 @@
     <Carousel v-bind="config" v-else v-model="currentSlide">
       <Slide v-for="(list, i) in slideList" :key="i">
         <div class="carousel__item" v-for="(item, index) in list" :key="index">
-          <div class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-[#F5F7FC] relative"
+          <div class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-color2 relative"
             @click="goInfo(item)">
             <div
-              class="font-medium text-[0.3rem] text-[#061023] font-medium mb-[0.15rem] flex justify-between items-center">
+              class="font-medium text-[0.3rem] text-color font-medium mb-[0.15rem] flex justify-between items-center">
               {{ item.symbol }}
             </div>
-            <div class="flex justify-between text-[#18B762] mb-[0.24rem]">
+            <div class="flex justify-between text-up mb-[0.24rem]">
               <div class="text-[0.28rem] font-medium">
                 {{ getRealtime(item.symbol,'price') }}
               </div>
@@ -30,7 +30,7 @@
                 :style="'width: 100%; height: 0.5rem'" :xtimes="1.2" />
               <div class="flex-1 float-right">
                 <div
-                class="border-[0.02rem] rounded-[0.32rem] border-[#014CFA] text-[#014CFA] text-[0.22rem] items-center justify-center flex px-[0.2rem]"
+                class="border-[0.02rem] rounded-[0.32rem] border-primary text-primary text-[0.22rem] items-center justify-center flex px-[0.2rem]"
                 style="width: max-content; height: 0.48rem; float: right;" @click.stop="collect(item)">
                 <span class="text-[0.22rem]">+{{ t('home.optional') }}</span>
               </div>
@@ -43,7 +43,7 @@
     <div class="carousel_pagination absolute flex gap-[0.05rem] transition-all right-0 mr-[0.32rem] mt-[0.4rem]">
       <div v-for="(item, index) in slideList" :key="index" @click="() => (currentSlide = index)"
         class="h-[0.06rem] w-[0.12rem] rounded-[0.2rem] transition-all" :class="[
-          currentSlide == index ? 'bg-[#014CFA]' : 'bg-[#014CFA] opacity-20',
+          currentSlide == index ? 'bg-primary' : 'bg-primary opacity-20',
         ]"></div>
     </div>
   </div>

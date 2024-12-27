@@ -243,20 +243,20 @@
     <div v-if="!token">
       <div class="flex justify-between mb-[0.32rem]">
         <div
-          class="w-[2.91rem] h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+          class="w-[2.91rem] h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
           @click="store.commit('setIsLoginOpen', true)"
         >
           {{ t("trade.stock_opening_token_login") }}
         </div>
         <div
-          class="w-[2.91rem] h-[1.12rem] bg-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#fff] text-[0.36rem]"
+          class="w-[2.91rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center bg-primary-text-color text-[0.36rem]"
           @click="jump('register')"
         >
           {{ t("trade.stock_opening_token_register") }}
         </div>
       </div>
       <div
-        class="w-full h-[1.12rem] border-[0.02rem] border-[#014cfa] rounded-[1.6rem] flex items-center justify-center text-[#014cfa] text-[0.36rem]"
+        class="w-full h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
         @click="
           () => router.push({ name: 'register', query: { guest: 'guest' } })
         "

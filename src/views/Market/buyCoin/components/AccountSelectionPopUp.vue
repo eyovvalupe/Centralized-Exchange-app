@@ -9,21 +9,21 @@
       <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
       <div class="list">
         <!-- 二层容器 -->
-        <div class="mb-5 flex text-16 text-[#666D80]"  v-if="currencyType.includes('crypto') && currencyType.includes('bank')">
+        <div class="mb-5 flex text-16 text-color2"  v-if="currencyType.includes('crypto') && currencyType.includes('bank')">
           <div v-if="currencyType.includes('crypto')"
-            class="mr-[0.12rem] w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36"
+            class="mr-[0.12rem] w-[1.86rem] cursor-pointer rounded-3xl border border-color-2 text-center leading-36"
             :class="{ 'border-none border-transparent bg-my text-white': tabsValue === 'crypto' }"
             @click="tabsValue = 'crypto'">
             {{ t('market.market_buy_fast_account_crypto') }}
           </div>
           <div v-if="currencyType.includes('bank')"
-            class="w-[1.86rem] cursor-pointer rounded-3xl border border-[#d0d8e2] text-center leading-36"
+            class="w-[1.86rem] cursor-pointer rounded-3xl border border-color-2 text-center leading-36"
             :class="{ 'border-transparent bg-my text-white': tabsValue === 'bank' }" @click="tabsValue = 'bank'">
             {{ t('market.market_buy_fast_account_bank') }}
           </div>
         </div>
         <!-- 三层容器 -->
-        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-[#F5F7FC] text-my"
+        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-color2 text-my"
           @click="goAddAccount">
           <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
           <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
@@ -31,7 +31,7 @@
         
         <div class="flex flex-col items-center h-[1.36rem] my-[0.8rem]" v-if="bankList.length == 0">
           <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
-          <span class="mt-[0.12rem] text-[#a4acb9] text-[0.28rem]">{{ $t("account.no_data") }}</span>
+          <span class="mt-[0.12rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span>
         </div>
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }"
           class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
@@ -42,7 +42,7 @@
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
-            <div class="text-[#666D80]">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }} <span v-if="item.accountName">| {{ item.accountName }}</span></div>
+            <div class="text-color2">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }} <span v-if="item.accountName">| {{ item.accountName }}</span></div>
           </div>
           <div v-if="bank.id == item.id" class="checked"
             :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.png')})` }">

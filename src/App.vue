@@ -148,10 +148,9 @@ onMounted(() => {
 </script>
 
 <style lang="less">
-@import "./style/var.less";
+@import "./style/theme/main.less";
 @import "./style/vant.less";
 @import "./style/index.less";
-// @import "./style/theme/blackblue.less";
 
 .slide-left-enter-active,
 .slide-left-leave-active,

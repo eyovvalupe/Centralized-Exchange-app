@@ -14,7 +14,7 @@
     <div class="tabs mb-4">
       <div>
         <div
-          class="mr-[0.28rem] flex justify-between h-[0.6rem] w-[1.64rem] items-center rounded-[0.6rem] bg-[#f5f7fc] p-2 text-12"
+          class="mr-[0.28rem] flex justify-between h-[0.6rem] w-[1.64rem] items-center rounded-[0.6rem] bg-color2 p-2 text-12"
           @click="showDialog = true">
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
@@ -66,7 +66,7 @@
               {{ item.price }}
               <span class="text-12 font-normal">{{ currCurrency.name }}</span>
             </div>
-            <div class="text-14 text-[#8F92A1]">
+            <div class="text-14 text-color3">
               {{ t('market.market_buy_optional_order_limit') }}&nbsp;{{ item.limitmin || "0" }}-{{
                 item.limitmax || "0"
               }}

@@ -10,7 +10,7 @@
         </div>
         <div class=""></div>
       </div>
-      <div class="bg-[#FFF] w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.24rem]">
+      <div class="bg-color w-full h-[2.64rem] rounded-[0.32rem] text-center p-[0.24rem]">
         <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide">
           <Slide v-for="(list, index) in recomendedCryptoList" :key="index">
             <div @click="goInfo(list)" class="carousel__item p-[0.08rem]">
@@ -21,8 +21,8 @@
                 list.ratio == undefined
                   ? ''
                   : list.ratio > 0
-                    ? 'text-[#18B762]'
-                    : 'text-[#E8503A]',
+                    ? 'text-up'
+                    : 'text-down',
               ]">
                 <div class="text-[0.3rem] font-bold">{{ list.price }}</div>
                 <div class="text-[0.3rem]">
@@ -44,7 +44,7 @@
       <div class="absolute flex gap-[0.05rem] transition-all top-0 right-0 mr-[0.32rem] mt-[0.4rem]">
         <div v-for="(val, index) in recomendedCryptoList" :key="index" @click="() => (currentSlide = index)"
           class="h-[0.06rem] w-[0.12rem] rounded-[0.2rem] transition-all" :class="[
-            currentSlide == index ? 'bg-[#014CFA]' : 'bg-[#FFFFFF] opacity-50',
+            currentSlide == index ? 'bg-primary' : 'bg-color opacity-50',
           ]"></div>
       </div>
     </div>

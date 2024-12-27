@@ -34,7 +34,7 @@
                     <div class="flex items-center">
                         <span>{{ t('assets.wallet_available') }}&nbsp;</span>
                         <Loading size="0.3rem" color="#014CFA" class="mx-[0.2rem]" v-if="!mainWallet.currency" /> <span
-                            v-else @click="openConfirmBox()" class="text-[#014CFA]">{{ mainWallet.amount }} {{
+                            v-else @click="openConfirmBox()" class="text-primary">{{ mainWallet.amount }} {{
                                 mainWallet.currency }}</span>
                         <Icon class="ml-[0.1rem]" name="arrow" size="0.26rem" color="#666D80" />
                     </div>

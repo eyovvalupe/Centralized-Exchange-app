@@ -12,7 +12,7 @@
         style="overflow-x: hidden;"
         @click="goInfo(item)"
       >
-        <span class="text-[0.24rem] text-[#061023]" style="max-width: 1.98rem;">{{
+        <span class="text-[0.24rem] text-color" style="max-width: 1.98rem;">{{
           item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
         }}</span>
         <span class="stock_price">{{ item.amount }}</span>

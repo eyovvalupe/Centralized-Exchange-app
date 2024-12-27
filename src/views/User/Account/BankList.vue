@@ -15,13 +15,13 @@
       </div>
       <div class="flex flex-col">
         <div class="flex flex-row items-center">
-          <span class="text-[0.32rem] text-[#121212] font-semibold mr-[0.12rem]">**** **** **** {{
+          <span class="text-[0.32rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{
             item.bankCardNumber.slice(-4) }}</span>
           <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)">
             <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
           </div>
         </div>
-        <span class="text-[0.28rem] text-[#666d80]">{{ item.bankName }}</span>
+        <span class="text-[0.28rem] text-color2">{{ item.bankName }}</span>
       </div>
     </div>
   </div>

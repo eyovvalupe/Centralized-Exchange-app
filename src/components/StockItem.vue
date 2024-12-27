@@ -43,7 +43,7 @@
             </div>
             <div
               v-if="props.page == 'market'"
-              class="text-[#0A54F9] text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9] pt-[0.025rem]"
+              class="text-primary text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-primary pt-[0.025rem]"
               style="width: max-content"
               v-show="props.item.type != 'stock'"
             >
@@ -140,10 +140,10 @@ const market = {
   forex: "外汇",
 };
 const marketStyle = {
-  stock: "text-[#014CFA] bg-[#014cfa1a] ",
-  crypto: "text-[#0099d1] bg-[#0099d11a] ",
-  forex: "text-[#18B762] bg-[#18b7621a] ",
-  blocktrade: "text-[#6c6cea] bg-[#6c6cea1a] ",
+  stock: "tag-stock",
+  crypto: "tag-crypto",
+  forex: "tag-forex",
+  blocktrade: "tag-blocktrade",
 };
 const emits = defineEmits(["remove"]);
 const props = defineProps({

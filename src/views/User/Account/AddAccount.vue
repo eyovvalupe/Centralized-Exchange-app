@@ -70,11 +70,11 @@
           </div>
         </div>
         <div class="w-full px-[0.32rem]">
-          <div class="w-full h-[0.8rem] mt-[0.7rem] rounded-[1rem] bg-[#f4f5f7] flex items-center px-[0.2rem]">
+          <div class="w-full h-[0.8rem] mt-[0.7rem] rounded-[1rem] bg-color3 flex items-center px-[0.2rem]">
             <div style="width: 0.48rem;height: 0.48rem;">
               <img :src="getStaticImgUrl(`/static/icons/search2.svg`)" alt="">
             </div>
-            <input v-model="searchRef" type="text" class="flex-1 h-[0.6rem] px-[0.2rem] color-[#061023] text-[0.3rem]"
+            <input v-model="searchRef" type="text" class="flex-1 h-[0.6rem] px-[0.2rem] text-color text-[0.3rem]"
               @input="searchItem" />
           </div>
         </div>

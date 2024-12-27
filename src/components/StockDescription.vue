@@ -2,10 +2,10 @@
   <div class="stock_description" v-show="!loading && list.length > 0">
     <div class="flex flex-col mb-[0.4rem]">
       <div class="flex flex-row justify-between items-center mb-[0.16rem]">
-        <span class="text-[0.32rem] text-[#061023] font-semibold">{{
+        <span class="text-[0.32rem] text-color font-semibold">{{
           $t("common.closed")
         }}</span>
-        <span class="text-[0.24rem] text-[#8F92A1]">{{ props.data.closets }}
+        <span class="text-[0.24rem] text-color3">{{ props.data.closets }}
           {{
             props.data.region == "us"
               ? t("market.market_stock_country_us")
@@ -30,7 +30,7 @@
       </div>
       <div class="flex flex-row items-center">
         <div>
-          <span class="text-[0.24rem] text-[#8F92A1]">{{ t('market.market_stock_updatetime') }}：{{
+          <span class="text-[0.24rem] text-color3">{{ t('market.market_stock_updatetime') }}：{{
             props.data.currentts
           }}</span>
         </div>
@@ -43,7 +43,7 @@
       <div v-for="(item, i) in list" :key="i" :class="item.ratio > 0 ? 'up_price' : 'down_price'"
         class="flex flex-col w-[2.1532rem] justify-between h-[1.52rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] pl-[0.15rem] pr-[0.15rem]"
         @click="goInfo(item)">
-        <span class="text-[0.28rem] text-[#061023]">{{
+        <span class="text-[0.28rem] text-color">{{
           item["symbol"].length > 8
             ? item["symbol"].substring(0, 8) + "..."
             : item["symbol"]

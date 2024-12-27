@@ -6,7 +6,7 @@
       <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="close">
         <img :src="getStaticImgUrl('/static/icons/close.svg') " alt="">
       </div>
-      <div class="text-center my-[0.36rem] text-[0.32rem] text-[#121826]">
+      <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
         {{ $t("google_auth.google_input_title") }}
       </div>
       <div class="text-[0.3rem] mt-[0.34rem] mb-[0.6rem]">{{ $t("google_auth.google_input_con") }}</div>
@@ -15,7 +15,7 @@
       <input style="opacity: 0" ref="iptRef" v-model="val" maxlength="6" enterkeyhint="done" @keydown.enter="submit" />
       <div class="btns">
         <div @click="close"
-          class="flex justify-center items-center rounded-[1.6rem] border-[0.02rem] border-[#D0D8E2] text-[#666D80] w-[3.27rem] h-[0.97rem]">
+          class="flex justify-center items-center rounded-[1.6rem] border-[0.02rem] border-color-2 text-color2 w-[3.27rem] h-[0.97rem]">
           {{ $t("google_auth.google_input_btn_cancel") }}
         </div>
         <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="btn" type="primary"

@@ -17,7 +17,7 @@
           {{ info.price }}
           <span class="text-12 font-normal">{{ info.currWallet }}</span>
         </div>
-        <div class="text-14 text-[#8F92A1]">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
+        <div class="text-14 text-color3">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
           info.limitmax }}</div>
       </div>
 
@@ -44,7 +44,7 @@
           {{ info.merchant }}
         </div>
         <div class="info_item">{{ info.price }} {{ info.currWallet }}</div>
-        <div class="text-14 text-[#8F92A1]">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
+        <div class="text-14 text-color3">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
           info.limitmax }}</div>
       </div>
       <!-- 二层容器 -->
@@ -69,12 +69,12 @@
         </div>
         <div class="card">
           <div class="code">{{ _hiddenAccount(bank.bankCardNumber || bank.address) }}</div>
-          <div class="text-[#666D80]">{{ bank.bankName || bank.symbol }} | {{ bank.accountName }}</div>
+          <div class="text-color2">{{ bank.bankName || bank.symbol }} | {{ bank.accountName }}</div>
         </div>
 
         <div class="text-12 text-my" @click="goAddAccount">{{ t('withdraw.change') }}</div>
       </div>
-      <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-[#F5F7FC] text-my"
+      <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-color2 text-my"
         @click="showAccountDialog = true">
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
         <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>

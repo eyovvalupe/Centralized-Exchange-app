@@ -8,18 +8,18 @@
       <img :src="getStaticImgUrl(`/static/icons/wallet_bg7.svg`)" alt="">
     </div>
     <OtherImg />
-    <span class="text-[0.32rem] text-[#fff]">{{ name }}</span>
+    <span class="text-[0.32rem] bg-primary-text-color">{{ name }}</span>
     <div class="flex flex-col px-[0.1rem] h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]">
       <div class="flex">
-        <span class="text-[0.3rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]" style="width: max-content">{{ type
-          }}</span><span class="flex items-end text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]"
+        <span class="text-[0.3rem] text-color2 mb-[0.24rem] mr-[0.1rem]" style="width: max-content">{{ type
+          }}</span><span class="flex items-end text-[0.24rem] text-color2 mb-[0.24rem] mr-[0.1rem]"
           style="width: max-content">(USDT)</span>
         <div @click.stop="toggleShow" style="width: 0.4rem;height: 0.4rem;">
           <img v-if="showInfo" :src="getStaticImgUrl(`/static/icons/eye_open_white.svg`)" alt="">
           <img v-else :src="getStaticImgUrl(`/static/icons/eye_close_white.svg`)" alt="">
         </div>
       </div>
-      <span class="text-[0.52rem] text-[#061023] font-semibold">{{
+      <span class="text-[0.52rem] text-color font-semibold">{{
         showInfo ? balance.toLocaleString() : "********"
       }}</span>
     </div>

@@ -1,10 +1,224 @@
 // main主题 主题样式在这里重写
+// 为兼容tailwindcss 所有颜色使用 rbg 配置，全局颜色变量使用 ex- 开头
 
+@ex-up-color-rgb: 24 183 98; //#18B762
+@ex-down-color-rgb:250 100 102; //#FA6466
 
-// user
-.page_user {
-    .server {
-        background-color: red;
-    }
+@ex-primary-color-rgb:1 76 250; //#014CFA
+@ex-text-color-rgb:6 16 35; //#061023
+@ex-text-color2-rgb:106 109 128; //#6a6d80
+@ex-text-color3-rgb:143 146 161;//#8f92a1
+@ex-text-color4-rgb:164 172 185; //#a4acb9
+@ex-border-color-rgb: 239 243 248; //#EFF3F8
+@ex-border-color2-rgb: 208 216 226; //#D0D8E2
+@ex-border-error-rgb:232 80 58;//#E8503A
+@ex-bg-color-rgb:255 255 255; //#FFFFFF
+@ex-bg-color2-rgb:245 247 252; //#F5F7FC
+@ex-bg-color3-rgb:239 243 248; //#EFF3F8
+@ex-bg-color4-rgb:217 228 255;//#D9E4FF
+@ex-bg-color5-rgb:166 190 244;//#a6bef4
+
+.text-color {
+    --tw-text-opacity:1;
+    color: rgb(@ex-text-color-rgb / var(--tw-text-opacity));
+}
+.text-color2 {
+    --tw-text-opacity:1;
+    color: rgb(@ex-text-color2-rgb / var(--tw-text-opacity));
+}
+.text-color3 {
+    --tw-text-opacity:1;
+    color: rgb(@ex-text-color3-rgb / var(--tw-text-opacity));
 }
 
+.text-color4 {
+    --tw-text-opacity:1;
+    color: rgb(@ex-text-color4-rgb / var(--tw-text-opacity));
+}
+
+.text-primary {
+    --tw-text-opacity:1;
+    color: rgb(@ex-primary-color-rgb / var(--tw-text-opacity));
+}
+
+//涨跌颜色
+.text-up {
+    --tw-text-opacity:1;
+    color: rgb(@ex-up-color-rgb / var(--tw-text-opacity));
+}
+.up {
+    --tw-text-opacity:1;
+    color: rgb(@ex-up-color-rgb / var(--tw-text-opacity)) !important;
+}
+
+.bg-up {
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-up-color-rgb / var(--tw-bg-opacity));
+}
+.up_bg{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-up-color-rgb / var(--tw-bg-opacity)) !important;
+}
+
+.bg-down{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-down-color-rgb / var(--tw-bg-opacity));
+}
+.down_bg {
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-down-color-rgb / var(--tw-bg-opacity)) !important;
+}
+
+.text-down {
+    --tw-text-opacity:1;
+    color: rgb(@ex-down-color-rgb / var(--tw-text-opacity));
+}
+.down {
+    --tw-text-opacity:1;
+    color: rgb(@ex-down-color-rgb / var(--tw-text-opacity)) !important;
+}
+//
+
+.bg-primary{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-primary-color-rgb / var(--tw-bg-opacity));
+}
+.bg-primary-text-color {
+    --tw-text-opacity:1;
+    color: rgb(@ex-bg-color-rgb / var(--tw-text-opacity));
+}
+.bg-color{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-bg-color-rgb / var(--tw-bg-opacity));
+}
+.bg-color2{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-bg-color2-rgb / var(--tw-bg-opacity));
+}
+.bg-color3{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-bg-color3-rgb / var(--tw-bg-opacity));
+}
+.bg-color4{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-bg-color4-rgb / var(--tw-bg-opacity));
+}
+.bg-color5{
+    --tw-bg-opacity:1;
+    background-color: rgb(@ex-bg-color5-rgb / var(--tw-bg-opacity));
+}
+.border-primary {
+    --tw-border-opacity:1;
+    border-color: rgb(@ex-primary-color-rgb / var(--tw-border-opacity));
+}
+
+.border-color {
+    --tw-border-opacity:1;
+    border-color: rgb(@ex-border-color-rgb / var(--tw-border-opacity));
+}
+.border-b-color {
+    --tw-border-opacity:1;
+    border-bottom-color: rgb(@ex-border-color-rgb / var(--tw-border-opacity));
+}
+.border-x-color {
+    --tw-border-opacity:1;
+    border-left-color: rgb(@ex-border-color-rgb / var(--tw-border-opacity));
+    border-right-color: rgb(@ex-border-color-rgb / var(--tw-border-opacity));
+}
+.border-y-color {
+    --tw-border-opacity:1;
+    border-top-color: rgb(@ex-border-color-rgb / var(--tw-border-opacity));
+    border-bottom-color: rgb(@ex-border-color-rgb / var(--tw-border-opacity));
+}
+
+.border-color2 {
+    --tw-border-opacity:1;
+    border-color: rgb(@ex-border-color2-rgb / var(--tw-border-opacity));
+}
+
+.border-error {
+    --tw-border-opacity:1;
+    border-color: rgb(@ex-border-error-rgb / var(--tw-border-opacity));
+}
+
+//合約種類
+.tag-stock{
+    color:#014cfa;
+    background: #014cfa1a;
+}
+.tag-crypto {
+    color:#0099d1;
+    background: #0099d11a;
+}
+.tag-forex {
+    color:#18b762;
+    background: #18b7621a;
+}
+.tag-blocktrade {
+    color:#6c6cea;
+    background: #6c6cea1a;
+}
+
+//资产部分
+.bg-topup{
+    background: #014cfa1a;
+}
+
+.bg-withdraw{
+    background: #fa75001a;
+}
+.bg-transfer-in{
+    background: #00af701a;
+}
+.bg-transfer-out{
+    background: #e8503a1a;
+}
+
+.text-topup{
+    color: #014cfa;
+}
+.text-withdraw{
+    color: #fa7500;
+}
+.text-transfer-in{
+    color: #00af70;
+}
+.text-transfer-out{
+    color: #e8503a;
+}
+
+//消息
+.bg-unread-msg{
+    background-color: #e8503a;
+}
+.bg-unread-msg-text-color{
+    color:#fff;
+}
+
+//买入
+.bg-buy{
+    background-color: #18B762;
+}
+.bg-buy-text-color {
+    color:#fff;
+}
+
+//卖出
+
+.bg-sell {
+    background-color: #E8503A;
+}
+.bg-sell-text-color {
+    color:#fff;
+}
+
+
+.bg-status0{
+    background-color: #E8503A;
+}
+.bg-status1{
+    background-color: #014cfa;   
+}
+.bg-status2{
+    background-color: #18B762;
+}

@@ -9,10 +9,10 @@
           <img :src="getStaticImgUrl('/static/icons/avatar.svg')" alt="">
         </div>
         <div>
-          <div class="text-[#061023] text-[0.32rem] mb-[0.1rem]">
+          <div class="text-color text-[0.32rem] mb-[0.1rem]">
             {{ userInfo.username || "--" }}
           </div>
-          <div class="text-[#666D80] text-[0.28rem]">
+          <div class="text-color2 text-[0.28rem]">
             ID:{{ userInfo.uid || "--" }}
           </div>
         </div>
@@ -25,37 +25,37 @@
       </div>
       <div class="flex items-center justify-center gap-[0.16rem]">
         <div @click="jump('chat', false)"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
         </div>
         <div
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="setting-icon">
             <img :src="getStaticImgUrl('/static/icons/setting.svg')" alt="server" />
           </div>
         </div>
       </div>
     </div>
-    <div class="flex items-center bg-[#F5F7FC] rounded-[0.32rem] w-full h-[1.22rem] mb-[0.2rem]">
+    <div class="flex items-center bg-color2 rounded-[0.32rem] w-full h-[1.22rem] mb-[0.2rem]">
       <div class="w-1/3 text-center">
-        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
+        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
           0
         </div>
-        <div class="text-[0.24rem] text-[#8f92a1]">{{ $t("user_page.recommended_user") }}</div>
+        <div class="text-[0.24rem] text-color3">{{ $t("user_page.recommended_user") }}</div>
       </div>
       <div class="w-1/3 text-center">
-        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
+        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
           0
         </div>
-        <div class="text-[0.24rem] text-[#8f92a1]">{{ $t("user_page.social_user") }}</div>
+        <div class="text-[0.24rem] text-color3">{{ $t("user_page.social_user") }}</div>
       </div>
       <div class="w-1/3 text-center">
-        <div class="font-bold text-[#061023] text-[0.32rem] mb-[0.12rem]">
+        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
           0
         </div>
-        <div class="text-[0.24rem] text-[#8f92a1]">{{ $t("user_page.recommend_bonus") }}</div>
+        <div class="text-[0.24rem] text-color3">{{ $t("user_page.recommend_bonus") }}</div>
       </div>
     </div>
     <div class="rounded-[0.32rem] h-[1.6rem] overflow-hidden">
@@ -72,23 +72,23 @@
         </Slide>
       </Carousel>
       <div class="flex gap-[0.05rem] justify-center relative -mt-[0.2rem]">
-        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white" :class="[currentSlide == 0 ? '' : 'opacity-50']">
+        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-color" :class="[currentSlide == 0 ? '' : 'opacity-50']">
         </div>
-        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white" :class="[currentSlide == 1 ? '' : 'opacity-50']">
+        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-color" :class="[currentSlide == 1 ? '' : 'opacity-50']">
         </div>
       </div>
     </div>
     <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.18rem]">
       <div @click="jump('account', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/payment.svg')" />
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
           $t("user_page.receive_payment") }}</div>
       </div>
       <div @click="jump('kyc', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
         <div class="absolute w-[0.55rem] h-[0.6rem] opacity-100 top-0 mt-[0.1rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/id_card.svg')" />
         </div>
@@ -96,37 +96,37 @@
           class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
-              ? 'bg-[#E8503A]'
-              : `${userInfo.kycl2 == 1 ? 'bg-[#014CFA]' : 'bg-[#18B762]'}`,
+              ? 'bg-status0'
+              : `${userInfo.kycl2 == 1 ? 'bg-status1' : 'bg-status2'}`,
           ]">
           <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
           <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified")
             }}</span>
           <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
           $t("user_page.verify_identity") }}</div>
       </div>
       <div @click="jump('googleCode', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/google.svg')" />
         </div>
         <div v-if="token"
           class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
-          :class="[userInfo.googlebind == 0 ? 'bg-[#E8503A]' : 'bg-[#18B762]']">
+          :class="[userInfo.googlebind == 0 ? 'bg-status0' : 'bg-status2']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
           $t("user_page.google_verification") }}</div>
       </div>
       <div @click="jump('inviteFriends', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-[#014CFA] opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/friend.svg')" />
         </div>
-        <div class="absolute min-w-[1.4rem] text-[#061023] text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
           $t("user_page.recommend_friend") }}</div>
       </div>
     </div>

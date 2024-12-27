@@ -9,16 +9,16 @@
     <div class="absolute top-[0.05rem] right-[0] z-[-1]" style="width: 2.08rem;height: 2.36rem;">
       <img :src="getStaticImgUrl(`/static/icons/wallet_bg15.svg`)" alt="">
     </div>
-    <span class="text-[0.32rem] text-[#fff]">现金账户</span>
+    <span class="text-[0.32rem] bg-primary-text-color">现金账户</span>
     <div class="flex flex-col h-[1.16rem] z-[3] mt-[0.4rem] ml-[0.12rem]">
       <div class="flex">
-        <span class="text-[0.24rem] text-[#666d80] mb-[0.24rem] mr-[0.1rem]">现金账户(USDT)</span>
+        <span class="text-[0.24rem] text-color2 mb-[0.24rem] mr-[0.1rem]">现金账户(USDT)</span>
         <div @click.stop="toggleShow" style="width: 0.4rem;height: 0.4rem;">
           <img v-if="showInfo" :src="getStaticImgUrl(`/static/icons/eye_open_white.svg`)" alt="">
           <img v-else :src="getStaticImgUrl(`/static/icons/eye_close_white.svg`)" alt="">
         </div>
       </div>
-      <span class="text-[0.52rem] text-[#061023] font-semibold">{{ showInfo ? parseFloat(amount).toLocaleString() :
+      <span class="text-[0.52rem] text-color font-semibold">{{ showInfo ? parseFloat(amount).toLocaleString() :
         '********' }}</span>
     </div>
   </div>

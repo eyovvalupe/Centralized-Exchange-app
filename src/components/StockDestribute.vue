@@ -2,14 +2,14 @@
 <template>
   <div class="total_box">
     <div class="total_title flex flex-row justify-between items-center">
-      <span class="text-[0.32rem] font-bold leading-[0.32rem] text-[#061023]">{{
+      <span class="text-[0.32rem] font-bold leading-[0.32rem] text-color">{{
         t('market.market_stock_description_title')
       }}</span>
       <div>
-        <span class="text-[0.28rem] text-[#18B762] mr-[0.28rem]"
+        <span class="text-[0.28rem] text-up mr-[0.28rem]"
           >{{ t('market.market_stock_description_des1') }}：{{ up }}</span
         >
-        <span class="text-[0.28rem] text-[#e8503a]"
+        <span class="text-[0.28rem] text-down"
           >{{ t('market.market_stock_description_des2') }}：{{ down }}</span
         >
       </div>

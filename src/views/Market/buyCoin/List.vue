@@ -7,20 +7,20 @@
     <div class="list">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
-        class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-[#f5f7fc] px-4 py-[0.2rem]"
+        class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-color2 px-4 py-[0.2rem]"
         @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="unreadMessage[item.order_no] > 0"
-          class="w-[0.24rem] h-[0.24rem] top-[0] right-[0] rounded-[0.12rem] bg-[#e8503a] text-[0.16rem] text-[#fff] flex justify-center items-center absolute">
+          class="w-[0.24rem] h-[0.24rem] top-[0] right-[0] rounded-[0.12rem] bg-unread-msg text-[0.16rem] bg-unread-msg-text-color flex justify-center items-center absolute">
           {{ unreadMessage[item.order_no] }}
         </div>
         <div v-if="c2cUnread[item.order_no]"
-          class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-[#e8503a] text-8 text-white">
+          class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-unread-msg text-8 bg-unread-msg-text-color">
           <!-- {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }} -->
         </div>
-        <div class="mb-[0.2rem] flex items-center justify-between border-b border-[#EFF3F8] pb-[0.2rem]">
+        <div class="mb-[0.2rem] flex items-center justify-between border-b border-color pb-[0.2rem]">
           <!-- order_no 订单号 -->
-          <div class="text-14 text-[#666]">{{ item.order_no }}</div>
+          <div class="text-14 text-color2">{{ item.order_no }}</div>
           <div class="text-14" :style="{ color: statusEnum[item.status].color }">
             <!-- {{ statusEnum[item.status].name }} -->
             {{
@@ -52,13 +52,13 @@
                 :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.png`)" alt="currency" />
             </div>
             <!-- 价格信息 -->
-            <div class="mb-[0.12rem] text-[#666D80]">
+            <div class="mb-[0.12rem] text-color2">
               {{ $t("market.market_buy_list_price") }}&nbsp;{{
                 item.price
               }}&nbsp;{{ item.currency }}
             </div>
             <!-- 数量信息 -->
-            <div class="text-[#666D80]">
+            <div class="text-color2">
               {{ $t("market.market_buy_list_amount") }}&nbsp;{{
                 item.volume
               }}&nbsp;{{ item.crypto }}
@@ -70,7 +70,7 @@
             <!-- 根据交易类型显示正负号 -->
             {{ item.offset == "buy" ? "-" : "+" }}{{ item.totalprice }}
             <!-- 货币类型 -->
-            <span class="ml-2 text-12 font-normal text-[#121826]">{{
+            <span class="ml-2 text-12 font-normal text-color">{{
               item.currency
             }}</span>
           </div>

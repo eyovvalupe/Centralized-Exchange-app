@@ -32,58 +32,58 @@
             <div class="absolute flex gap-[0.05rem] transition-all bottom-[0.08rem] left-0 ml-[3.6rem]">
                 <div @click="() => (currentSlide = 0)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
                     currentSlide == 0
-                        ? 'h-[0.16rem] bg-[#014CFA]'
-                        : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+                        ? 'h-[0.16rem] bg-primary'
+                        : 'h-[0.08rem] mt-[0.08rem] bg-color opacity-50',
                 ]"></div>
                 <div @click="() => (currentSlide = 1)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
                     currentSlide == 1
-                        ? 'h-[0.16rem] bg-[#014CFA]'
-                        : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+                        ? 'h-[0.16rem] bg-primary'
+                        : 'h-[0.08rem] mt-[0.08rem] bg-color opacity-50',
                 ]"></div>
                 <div @click="() => (currentSlide = 2)" class="w-[0.06rem] rounded-t-[0.32rem] transition-all" :class="[
                     currentSlide == 2
-                        ? 'h-[0.16rem] bg-[#014CFA]'
-                        : 'h-[0.08rem] mt-[0.08rem] bg-[#FFFFFF] opacity-50',
+                        ? 'h-[0.16rem] bg-primary'
+                        : 'h-[0.08rem] mt-[0.08rem] bg-color opacity-50',
                 ]"></div>
             </div>
 
             <div class="pl-[0.285rem] mt-[1.25rem]"></div>
         </div>
         <div
-            class="h-[1.24rem] bg-[#F5F7FC] rounded-b-[0.32rem] pt-[0.32rem] -mt-[0.32rem] px-[0.32rem] mx-[0.32rem] flex items-center justify-between relative">
+            class="h-[1.24rem] bg-color2 rounded-b-[0.32rem] pt-[0.32rem] -mt-[0.32rem] px-[0.32rem] mx-[0.32rem] flex items-center justify-between relative">
             <div class="flex items-center gap-2">
                 <div class="custom-lock-small-icon">
                     <img :src="getStaticImgUrl('/static/icons/notice-active.svg')" alt="">
                 </div>
-                <div class="text-[0.28rem] text-[#061023]">
+                <div class="text-[0.28rem] text-color">
                     {{ $t("home.notification") }}
                 </div>
             </div>
-            <div class="text-[0.24rem] text-[#7B7B7B]">
+            <div class="text-[0.24rem] text-color3">
                 {{ formatDate(new Date()) }}
             </div>
         </div>
         <div class="relative mt-[0.24rem] mx-[0.32rem]">
             <div class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
                 v-show="!token">
-                <div class="w-[1.2rem] h-[0.6rem] bg-[#014CFA] border-[#014CFA] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
+                <div class="w-[1.2rem] h-[0.6rem] bg-primary border-primary bg-primary-text-color rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
                     @click="store.commit('setIsLoginOpen', true)">
                     {{ $t("home.login") }}
                 </div>
-                <div class="text-[0.24rem] text-[#8F92A1]">
+                <div class="text-[0.24rem] text-color3">
                     {{ $t("home.loginDesc") }}
                 </div>
             </div>
             <div
-                class="bg-[#F5F7FC] mb-[0.32rem] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] border-[1px] border-[#EFF3F8] py-[0.28rem] z-10">
+                class="bg-color2 mb-[0.32rem] rounded-[0.32rem] h-[1.6rem] px-[0.4rem] border-[1px] border-color py-[0.28rem] z-10">
                 <div class="flex justify-between mb-[0.14rem] items-center">
                     <div class="flex items-center gap-1">
-                        <div class="text-[0.26rem] text-[#333333]">
+                        <div class="text-[0.26rem] text-color">
                             {{ $t("home.totalAssets") }}(USDT)
                         </div>
                         <div class="assets" v-if="!token" @click="store.commit('setIsLoginOpen', true)">
                             <!-- <div class="assets_login">登录</div>
-            <div>查看资产</div> -->
+                                 <div>查看资产</div> -->
                             <div class="assets_icon">
                                 <img :src="getStaticImgUrl('/static/img/home/close_eye.svg')" alt=" ">
                             </div>
@@ -96,11 +96,11 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <div class="px-[0.2rem] h-[0.52rem] border-[#014CFA] text-[#014CFA] text-[0.24rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+                        <div class="px-[0.2rem] h-[0.52rem] border-primary text-primary text-[0.24rem] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
                             @click="showAS = true">
                             {{ $t("home.fastTrading") }}
                         </div>
-                        <div class="px-[0.2rem] h-[0.52rem] bg-[#014CFA] border-[#014CFA] text-[0.24rem] text-[#FFF] rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+                        <div class="px-[0.2rem] h-[0.52rem] bg-primary border-primary text-[0.24rem] bg-primary-text-color rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
                             @click="jump('topUp', true)">
                             {{ $t("home.recharge") }}
                         </div>

@@ -6,7 +6,7 @@
       : 'stock_item_box_crypto') + `${' stock_item_' + updownStatus}`
       ">
       <div :class="props.marketType == 'crypto'
-        ? 'bg-[#F5F7FC] rounded-[0.32rem] pb-3 overflow-hidden'
+        ? 'bg-color2 rounded-[0.32rem] pb-3 overflow-hidden'
         : ''
         " @click="goInfo(props.marketType)">
         <div :class="props.marketType != 'crypto' ? 'stock_item' : 'stock_item_crypto'
@@ -22,7 +22,7 @@
               {{ props.item.name || "--" }}
             </div>
             <div
-              class="text-[#0A54F9] text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-[#0A54F9]"
+              class="text-primary text-[0.24rem] w-[0.64rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-primary"
               v-show="props.marketType == 'crypto'">
               20X
             </div>
@@ -31,7 +31,7 @@
             <div class="item_name flex items-center gap-1">
               {{ props.item.name }}
               <div
-                class="text-[#0A54F9] border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] ml-[0.06rem] border-[#0A54F9]">
+                class="text-primary border-[1px] font-normal text-[0.2rem] flex items-center justify-center rounded-[0.16rem] w-[0.64rem] h-[0.32rem] ml-[0.06rem] border-primary">
                 20X
               </div>
             </div>
@@ -75,18 +75,18 @@
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
               item.price || "--"
             }}</span><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">最新价</span>
+            <span class="text-[0.22rem] text-color3 font-normal">最新价</span>
           </div>
-          <div class="text-center border-x-[#eff3f8] border-x-2 w-1/3">
+          <div class="text-center border-color border-x-2 w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{
               item.change || "--"
             }}</span><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌</span>
+            <span class="text-[0.22rem] text-color3 font-normal">涨跌</span>
           </div>
           <div class="text-center w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{ item.ratio > 0 ? "+" : ""
               }}{{ (item.ratio || 0) }}%</span><br />
-            <span class="text-[0.22rem] text-[#8F92A1] font-normal">涨跌比</span>
+            <span class="text-[0.22rem] text-color3 font-normal">涨跌比</span>
           </div>
         </div>
       </div>
@@ -114,16 +114,6 @@ import { SwipeCell } from "vant";
 import store from "@/store";
 import { _formatNumber } from "@/utils/index";
 
-const market = {
-  stock: "股票",
-  crypto: "合约",
-  forex: "外汇",
-};
-const marketStyle = {
-  stock: "text-[#014CFA] bg-[rgba(1,76,250,0.1)] ",
-  crypto: "text-[#FFAF2A] bg-[rgba(255,175,42,0.1)] ",
-  forex: "text-[#18B762] bg-[rgba(24,183,98,0.1)] ",
-};
 const emits = defineEmits(["remove"]);
 const props = defineProps({
   item: {

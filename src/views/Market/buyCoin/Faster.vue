@@ -11,7 +11,7 @@
         </div>
       </div>
 
-      <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center z-10 bg-white bg-opacity-30" v-if="!rate">
+      <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center z-10 bg-color bg-opacity-30" v-if="!rate">
         <Loading color="var(--van-primary-color)" />
       </div>
       <div class="flex" :class="[form1.offset == 'buy' ? 'flex-col' : 'flex-col-reverse']">
@@ -57,7 +57,7 @@
             </div>
             <div class="item">
               <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
-              <span class="text-[#014cfa] text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
+              <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
                t('trade.stock_position_all')
               }}</span>
             </div>

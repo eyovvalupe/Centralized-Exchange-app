@@ -7,37 +7,37 @@
     <div class="px-[0.32rem] pt-[0.52rem]">
       <div class="flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
         <template v-if="offset == 'buy'">
-          <div class="text-[0.32rem] font-bold text-[#061023]">{{ t('market.market_buy_will_pay') }}</div>
+          <div class="text-[0.32rem] font-bold text-color">{{ t('market.market_buy_will_pay') }}</div>
           <div class="flex items-center">
-            <strong class="text-[#014CFA] text-[0.48rem]">{{ money }}</strong>
-            <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
+            <strong class="text-primary text-[0.48rem]">{{ money }}</strong>
+            <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
           </div>
         </template>
         <template v-else>
-          <div class="text-[0.32rem] font-bold text-[#061023]">{{ t('market.market_buy_will_sell') }}</div>
+          <div class="text-[0.32rem] font-bold text-color">{{ t('market.market_buy_will_sell') }}</div>
           <div class="flex items-center">
-            <strong class="text-[#014CFA] text-[0.48rem]">{{ volume }}</strong>
-            <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
+            <strong class="text-primary text-[0.48rem]">{{ volume }}</strong>
+            <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
           </div>
         </template>
       </div>
       <div class="mt-[0.2rem] flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
-        <div class="text-[0.32rem] font-bold text-[#061023]">{{ t('market.market_buy_will_receive') }}</div>
+        <div class="text-[0.32rem] font-bold text-color">{{ t('market.market_buy_will_receive') }}</div>
         <div class="flex items-center" v-if="offset == 'buy'">
-          <strong class="text-[#014CFA] text-[0.48rem]">{{ volume }}</strong>
-          <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
+          <strong class="text-primary text-[0.48rem]">{{ volume }}</strong>
+          <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
         </div>
         <div class="flex items-center" v-else>
-          <strong class="text-[#014CFA] text-[0.48rem]">{{ money }}</strong>
-          <span class="text-[0.28rem] text-[#061023] ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
+          <strong class="text-primary text-[0.48rem]">{{ money }}</strong>
+          <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
         </div>
       </div>
       <div class="mt-[0.2rem] pt-[0.4rem] px-[0.32rem] border-solid border-[1px]  box-border rounded-[0.32rem]" v-if="offset == 'sell'">
         <div class="flex items-center justify-between h-[0.36rem]">
-          <div class="text-[0.32rem] font-bold text-[#061023]">
+          <div class="text-[0.32rem] font-bold text-color">
             收款账户
           </div>
-          <span class="text-[#1A59F6]" @click="showAccountDialog=true;" v-if="currentAccount.channel">{{ t('withdraw.change') }}</span>
+          <span class="text-primary" @click="showAccountDialog=true;" v-if="currentAccount.channel">{{ t('withdraw.change') }}</span>
         </div>
         <div  class="dialog_account_item h-[1.5rem]" v-if="currentAccount.channel">
           <div class="card_icon">
@@ -47,7 +47,7 @@
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(currentAccount.bankCardNumber || currentAccount.address) }}</div>
-            <div class="text-[#666D80]">{{ currentAccount.symbol ? `${currentAccount.symbol}-${currentAccount.network}` : `${currentAccount.bankName}` }} <span v-if="currentAccount.accountName">| {{ currentAccount.accountName }}</span></div>
+            <div class="text-color2">{{ currentAccount.symbol ? `${currentAccount.symbol}-${currentAccount.network}` : `${currentAccount.bankName}` }} <span v-if="currentAccount.accountName">| {{ currentAccount.accountName }}</span></div>
           </div>
           
         </div>

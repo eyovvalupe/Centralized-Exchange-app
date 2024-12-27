@@ -18,10 +18,10 @@
     <div class="form">
       <div class="form_box" :class="{ form_box_active: clickKey == 'from' }">
         <div class="mb-[0.32rem]">
-          <span class="text-[0.28rem] text-[#666d80]">{{ $t("transfer.out") }}</span>
+          <span class="text-[0.28rem] text-color2">{{ $t("transfer.out") }}</span>
         </div>
         <div
-          class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
+          class="flex justify-between items-center border-[0.02rem] border-color-2 w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
           @click="openDialog('from')">
           <div class="flex items-center">
             <div class="account_item">
@@ -55,13 +55,13 @@
 
       <div class="form_box" :class="{ form_box_active: clickKey == 'to' }">
         <div class="mb-[0.32rem]">
-          <span class="text-[0.28rem] text-[#666d80]">{{ $t("transfer.in") }}</span>
+          <span class="text-[0.28rem] text-color2">{{ $t("transfer.in") }}</span>
         </div>
         <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
           <img :rc="getStaticImgUrl('/static/icons/trans2.svg')" alt="img" />
         </div>
         <div
-          class="flex justify-between items-center border-[0.02rem] border-[#d0d8e2] w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
+          class="flex justify-between items-center border-[0.02rem] border-color-2 w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
           @click="openDialog('to')">
           <div class="flex items-center">
             <div class="account_item">

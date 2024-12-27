@@ -8,7 +8,7 @@
       <p class="no-message mb-[0.2rem]">{{ formatDate(new Date()) }}</p>
       <div class="w-full flex justify-center items-center">
         <p
-          class="w-[5.22rem] rounded-[1rem] text-center h-[0.6rem] mb-[0.6rem] flex justify-center items-center bg-[#f5f7fc] text-[0.3rem] text-[#666d80]">
+          class="w-[5.22rem] rounded-[1rem] text-center h-[0.6rem] mb-[0.6rem] flex justify-center items-center bg-color2 text-[0.3rem] text-color2">
           {{ $t("service.message_title") }}
         </p>
       </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="flex flex-col">
           <span
-            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-[#eff3f8] rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-[#061023]">{{
+            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-color-3 rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-color">{{
               $t("service.first_message") }}</span>
         </div>
       </div>
@@ -32,7 +32,7 @@
             !messageList[i - 1] ||
             (messageList[i - 1] &&
               messageList[i]['time'] - messageList[i - 1]['time'] > 60000)
-          " class="text-center mb-[0.2rem] text-[#8f92a1] text-[0.28rem]">
+          " class="text-center mb-[0.2rem] text-color3 text-[0.28rem]">
             {{ transferTime(item.time) }}
           </div>
 

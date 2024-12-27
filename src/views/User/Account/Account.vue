@@ -8,7 +8,7 @@
         <div class="tab_data">
           <div class="no_data" v-if="cryptoList.length == 0">
             <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
-            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">{{ $t("account.no_data") }}</span>
+            <span class="mt-[0.2rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span>
           </div>
           <div class="list" v-else>
             <CryptoList :list="cryptoList" />
@@ -21,7 +21,7 @@
         <div class="tab_data">
           <div class="no_data" v-if="bankList.length == 0">
             <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
-            <span class="mt-[0.2rem] text-[#a4acb9] text-[0.28rem]">{{ $t("account.no_data") }}</span>
+            <span class="mt-[0.2rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span>
           </div>
           <div class="list" v-else>
             <BankList :list="bankList" />

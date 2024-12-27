@@ -16,7 +16,7 @@
       </template>
       <template #right v-else>
         <div @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-[#EDF2F7] border-[0.02rem] flex items-center justify-center">
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
           </div>
@@ -31,20 +31,20 @@
     </Tabs>
     <!-- 表单模式头部 -->
     <div class="steps" v-if="!checkMode">
-      <div class="bg-[#D9E4FF] w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
-        <div class="bg-[#014CFA] w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center">
-          <div class="bg-[#D9E4FF] w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
+      <div class="bg-color4 w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
+        <div class="bg-primary w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center">
+          <div class="bg-color4 w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
         </div>
       </div>
-      <div class="w-[3.04rem] h-[0.16rem] bg-[#F5F7FC]"></div>
+      <div class="w-[3.04rem] h-[0.16rem] bg-color2"></div>
       <div
-        class="bg-[#F5F7FC] w-[0.56rem] h-[0.56rem] rounded-[50%] text-[0.32rem] font-bold text-[#8F92A1] flex items-center justify-center">
+        class="bg-color2 w-[0.56rem] h-[0.56rem] rounded-[50%] text-[0.32rem] font-bold text-color3 flex items-center justify-center">
         2
       </div>
     </div>
     <div class="steps" v-if="!checkMode">
-      <div class="text-[0.28rem] text-[#061023] mr-[2.52rem]">{{ $t("kyc.first_basic_info") }}</div>
-      <div class="text-[0.28rem] text-[#8F92A1]">{{ $t("kyc.first_upload_card") }}</div>
+      <div class="text-[0.28rem] text-color mr-[2.52rem]">{{ $t("kyc.first_basic_info") }}</div>
+      <div class="text-[0.28rem] text-color3">{{ $t("kyc.first_upload_card") }}</div>
     </div>
     <div class="title" v-if="!checkMode">{{ $t("kyc.first_title") }}</div>
     <div class="tip" v-if="!checkMode">
@@ -65,7 +65,7 @@
     <div class="subtitle">{{ $t('kyc.first_birthday') }}</div>
     <div class="item justify-between" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
       @click="checkMode ? (showBottom = false) : (showBottom = true)">
-      <div :class="form.birthday ? 'text-[#061023]' : 'text-[#A4ACB9]'">
+      <div :class="form.birthday ? 'text-color' : 'text-color4'">
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}
       </div>
       <div class="calendar-icon">
@@ -86,7 +86,7 @@
           <img :src="getStaticImgUrl('/static/icons/close.svg')" alt="">
         </div>
         <div @click="confirmDate"
-          class="w-[1.2rem] h-[0.6rem] rounded-[0.32rem] bg-[#014CFA] text-white text-[0.3rem] flex items-center justify-center font-medium">
+          class="w-[1.2rem] h-[0.6rem] rounded-[0.32rem] bg-primary text-white text-[0.3rem] flex items-center justify-center font-medium">
           {{ $t("kyc.first_confirm") }}
         </div>
       </div>

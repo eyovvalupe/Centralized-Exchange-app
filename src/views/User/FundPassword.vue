@@ -18,7 +18,7 @@
       </div>
 
       <div class="form_title">{{ $t("change_trade_pw.new_pw") }}</div>
-      <div class="form_item margin_item mb-[0.05rem]" :class="[isSame ? 'border-[#D0D8E2]' : 'border-[#E8503A]']">
+      <div class="form_item margin_item mb-[0.05rem]" :class="[isSame ? 'border-color-2' : 'border-error']">
         <input maxlength="20" v-model.trim="form.password" :placeholder="t('change_trade_pw.new_pw_placeholder')"
           :type="showPass ? 'text' : 'password'" class="item_input" @focus="isSame = true" />
         <div class="form_item_icon" @click="showPass = !showPass">
@@ -32,7 +32,7 @@
       <PasswordLevel style="position: relative; top: -0.25rem; left: 0.32rem" :password="form.password" />
 
       <div class="form_title">{{ $t("change_trade_pw.confirm_pw") }}</div>
-      <div class="form_item margin_item" :class="[isSame ? 'border-[#D0D8E2]' : 'border-[#E8503A]']">
+      <div class="form_item margin_item" :class="[isSame ? 'border-color-2' : 'border-error']">
         <input maxlength="20" v-model.trim="form.password2" :placeholder="t('change_trade_pw.confirm_pw_placeholder')"
           :type="showPass2 ? 'text' : 'password'" class="item_input" @focus="isSame = true" />
         <div class="form_item_icon" @click="showPass2 = !showPass2">

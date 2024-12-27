@@ -20,14 +20,14 @@
         <Tab :title="'系统通知'" name="0">
           <div class="noti_tab">
             <div
-              class="w-full bg-[#eff3f8] p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
+              class="w-full bg-color-3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
                 <div
-                  class="text-[0.28rem] text-[#8f92a1] mb-[0.36rem] leading-[0.48rem]"
+                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
                 >
                   <TextEllipsis
                     rows="2"
@@ -50,12 +50,12 @@
                     <img src="static/img/noti/noti-2.webp" />
                   </div>
                 </div>
-                <div class="text-[0.24rem] text-[#8f92a1] mb-[0.32rem]">
+                <div class="text-[0.24rem] text-color3 mb-[0.32rem]">
                   2024/11/26 13:00:02
                 </div>
               </div>
               <div
-                class="px-[0.48rem] h-[0.74rem] border-[#014cfa] border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-[#014cfa]"
+                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
                 style="width: max-content"
                 @click="jump('notification_detail')"
               >
@@ -67,14 +67,14 @@
               ></div>
             </div>
             <div
-              class="w-full bg-[#eff3f8] p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
+              class="w-full bg-color-3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
                 <div
-                  class="text-[0.28rem] text-[#8f92a1] mb-[0.36rem] leading-[0.48rem]"
+                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
                 >
                   <TextEllipsis
                     rows="2"
@@ -97,12 +97,12 @@
                     <img src="static/img/noti/noti-2.webp" />
                   </div>
                 </div>
-                <div class="text-[0.24rem] text-[#8f92a1] mb-[0.32rem]">
+                <div class="text-[0.24rem] text-color3 mb-[0.32rem]">
                   2024/11/26 13:00:02
                 </div>
               </div>
               <div
-                class="px-[0.48rem] h-[0.74rem] border-[#014cfa] border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-[#014cfa]"
+                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
                 style="width: max-content"
                 @click="jump('notification_detail')"
               >
@@ -114,14 +114,14 @@
               ></div>
             </div>
             <div
-              class="w-full bg-[#eff3f8] p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
+              class="w-full bg-color-3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
                 <div
-                  class="text-[0.28rem] text-[#8f92a1] mb-[0.36rem] leading-[0.48rem]"
+                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
                 >
                   <TextEllipsis
                     rows="2"
@@ -144,12 +144,12 @@
                     <img src="static/img/noti/noti-2.webp" />
                   </div>
                 </div>
-                <div class="text-[0.24rem] text-[#8f92a1] mb-[0.32rem]">
+                <div class="text-[0.24rem] text-color3 mb-[0.32rem]">
                   2024/11/26 13:00:02
                 </div>
               </div>
               <div
-                class="px-[0.48rem] h-[0.74rem] border-[#014cfa] border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-[#014cfa]"
+                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
                 style="width: max-content"
               >
                 查看全部
@@ -164,23 +164,23 @@
         <Tab :title="'活动'" name="1">
           <div class="noti_tab">
             <div
-              class="w-full h-[3.86rem] bg-[#eff3f8] p-[0.32rem] rounded-[0.4rem] flex flex-col justify-between relative"
+              class="w-full h-[3.86rem] bg-color-3 p-[0.32rem] rounded-[0.4rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
                 <div
-                  class="text-[0.28rem] text-[#8f92a1] mb-[0.36rem] leading-[0.48rem]"
+                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
                 >
                   摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内容内...
                 </div>
-                <div class="text-[0.24rem] text-[#8f92a1]">
+                <div class="text-[0.24rem] text-color3">
                   2024/11/26 13:00:02
                 </div>
               </div>
               <div
-                class="px-[0.48rem] h-[0.74rem] border-[#014cfa] border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-[#014cfa]"
+                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
                 style="width: max-content"
               >
                 查看全部

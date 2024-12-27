@@ -15,12 +15,12 @@
         </span>
       </div>
       <div
-        class="w-full text-center text-[0.28rem] text-[#8f92a1] mb-[0.32rem]"
+        class="w-full text-center text-[0.28rem] text-color3 mb-[0.32rem]"
       >
         2024/11/26 13:00:02
       </div>
       <div
-        class="w-full text-[0.32rem] text-[#061023] mb-[0.32rem] leading-[0.52rem]"
+        class="w-full text-[0.32rem] text-color mb-[0.32rem] leading-[0.52rem]"
       >
         内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
       </div>
@@ -28,12 +28,12 @@
         <img src="static/img/noti/noti-3.webp" />
       </div>
       <div
-        class="w-full text-[0.32rem] text-[#061023] mb-[0.32rem] leading-[0.52rem]"
+        class="w-full text-[0.32rem] text-color mb-[0.32rem] leading-[0.52rem]"
       >
         内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
       </div>
       <div
-        class="w-full text-[0.32rem] text-[#061023] mb-[0.32rem] leading-[0.52rem]"
+        class="w-full text-[0.32rem] text-color mb-[0.32rem] leading-[0.52rem]"
       >
         内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
       </div>
