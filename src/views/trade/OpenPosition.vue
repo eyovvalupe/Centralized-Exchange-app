@@ -71,7 +71,7 @@
               <div class="small-select" @click="allModeSelect">
                 <div class="abs-con">
                   <span style="margin-left: 0.2rem">{{ selectedModeObj.text }}</span>
-                  <img :src="getStaticImgUrl('/static/icons/more.svg')" class="down-img" />
+                  <img :src="getStaticImgUrl('/static/img/common/more.svg')" class="down-img" />
                 </div>
               </div>
 
@@ -86,7 +86,7 @@
               <div class="small-select" @click="allModeSelect">
                 <div class="abs-con" style="width: 95%;">
                   <span style="margin-left: 0.2rem">{{ selectedModeObj2.text }}</span>
-                  <img :src="getStaticImgUrl('/static/icons/more.svg')" class="down-img" />
+                  <img :src="getStaticImgUrl('/static/img/common/more.svg')" class="down-img" />
                 </div>
               </div>
 

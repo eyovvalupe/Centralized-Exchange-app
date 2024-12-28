@@ -27,7 +27,7 @@
                 <span>{{ form.from.toUpperCase() }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" />
               </div>
             </div>
           </FormItem>
@@ -37,7 +37,7 @@
                 <span>{{ form.network }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" />
               </div>
             </div>
           </FormItem>

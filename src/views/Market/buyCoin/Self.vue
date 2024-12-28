@@ -19,7 +19,7 @@
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
             <div class="size-[0.32rem] mr-1">
-              <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="img" />
+              <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="img" />
             </div>
 
             <div class="size-[0.32rem]">

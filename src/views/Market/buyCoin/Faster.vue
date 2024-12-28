@@ -37,7 +37,7 @@
                 <span>{{ currIn.name || "--" }}</span>
               </div>
               <div class="more_icon">
-                <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="↓" />
+                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
                 <span>{{ currOut.name || "--" }}</span>
               </div>
               <div class="more_icon">
-                <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="↓" />
+                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
               </div>
             </div>
           </div>

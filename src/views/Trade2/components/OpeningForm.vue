@@ -27,7 +27,7 @@
             }}</span>
             <div class="more_icon">
               <img
-                :src="getStaticImgUrl('/static/icons/more.svg')"
+                :src="getStaticImgUrl('/static/img/common/more.svg')"
                 alt="↓"
               />
             </div>
@@ -66,7 +66,7 @@
             }}</span>
             <div class="more_icon">
               <img
-                :src="getStaticImgUrl('/static/icons/more.svg')"
+                :src="getStaticImgUrl('/static/img/common/more.svg')"
                 alt="↓"
               />
             </div>
@@ -131,7 +131,7 @@
             </span>
             <div class="more_icon">
               <img
-                :src="getStaticImgUrl('/static/icons/more.svg')"
+                :src="getStaticImgUrl('/static/img/common/more.svg')"
                 alt="↓"
               />
             </div>
@@ -224,7 +224,7 @@
             <div class="info-name">{{ currStock.name }}</div>
           </div>
           <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="↓" />
+            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
           </div>
         </div>
       </div>
@@ -247,7 +247,7 @@
             {{ form1.lever }}X</span
           >
           <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="↓" />
+            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
           </div>
         </div>
       </div>

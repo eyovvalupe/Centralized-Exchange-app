@@ -22,7 +22,7 @@
             </div>
             <div class="func_box" @click="jump('notification')">
                 <div class="custom-lock-icon">
-                    <img :src="getStaticImgUrl('/static/icons/notice.svg')" alt="">
+                    <img :src="getStaticImgUrl('/static/img/common/notice.svg')" alt="">
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
             class="h-[1.24rem] bg-color2 rounded-b-[0.32rem] pt-[0.32rem] -mt-[0.32rem] px-[0.32rem] mx-[0.32rem] flex items-center justify-between relative">
             <div class="flex items-center gap-2">
                 <div class="custom-lock-small-icon">
-                    <img :src="getStaticImgUrl('/static/icons/notice-active.svg')" alt="">
+                    <img :src="getStaticImgUrl('/static/img/common/notice-active.svg')" alt="">
                 </div>
                 <div class="text-[0.28rem] text-color">
                     {{ $t("home.notification") }}

@@ -13,9 +13,11 @@
         :placeholder="t('market.market_search_title')" type="text" enterkeyhint="search" v-model.trim="search"
         class="search" />
 
-      <div class="type_select" @click="closeSearch" v-show="search.length > 0">
+        <div class="type_select" @click="closeSearch" v-show="search.length > 0">
         <div class="type_icon">
+          <div class="closeIcon">
             <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
+          </div>
         </div>
       </div>
     </div>
@@ -27,7 +29,7 @@
         </div>
         <div class="w-[0.4rem] h-[0.4rem]" @click="clearSearchHistory">
           <div class="clearIcon">
-            <img :src="getStaticImgUrl('/static/icons/clean.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/common/clean.svg')" alt="">
           </div>
         </div>
       </div>
@@ -46,7 +48,7 @@
       <div class="w-[0.4rem] h-[0.4rem]" @click="resetData">
         <div style="width: 0.4rem;height: 0.4rem;">
           <img v-if="!marketSearchTextList.length > 0" :src="getStaticImgUrl('/static/img/market/refresh_big.svg')" alt="">
-          <img v-else :src="getStaticImgUrl('/static/icons/vector.svg')" alt="">
+          <img v-else :src="getStaticImgUrl('/static/img/market/refresh_mini.svg')" alt="">
         </div>
       </div>
     </div>

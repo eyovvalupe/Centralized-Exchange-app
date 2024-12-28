@@ -14,7 +14,7 @@
     <div class="subscription-m-box" :class="textSelect === '普通申购' ? 'add' : ''">
       <div class="vip-subscription" @click="vipSubscription">
         <span>{{ textSelect }}</span>
-        <img :src="getStaticImgUrl('/static/icons/more.svg')" class="subscription-down-img">
+        <img :src="getStaticImgUrl('/static/img/common/more.svg')" class="subscription-down-img">
       </div>
       <Field class="vip-input" v-model="vipVal" :disabled="textSelect === '普通申购'" input-align="right"
         :placeholder="placeholderText" />

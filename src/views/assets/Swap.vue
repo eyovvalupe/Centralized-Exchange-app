@@ -27,7 +27,7 @@
                         <span>{{ form.fromName }}</span>
                     </div>
                     <div class="more">
-                        <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="more">
+                        <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more">
                     </div>
                 </div>
                 <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
@@ -59,7 +59,7 @@
                         <span>{{ form.toName }}</span>
                     </div>
                     <div class="more">
-                        <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="more">
+                        <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more">
                     </div>
                 </div>
                 <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }"
