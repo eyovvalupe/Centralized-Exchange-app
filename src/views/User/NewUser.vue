@@ -6,7 +6,7 @@
     <div class="flex items-center justify-between h-[0.98rem] mt-[0.28rem] mb-[0.2rem]">
       <div v-if="token" class="flex items-center justify-center -ml-[0.08rem] gap-[0.16rem]">
         <div class="default-avatar">
-          <img :src="getStaticImgUrl('/static/icons/avatar.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
         </div>
         <div>
           <div class="text-color text-[0.32rem] mb-[0.1rem]">
@@ -19,7 +19,7 @@
       </div>
       <div v-else class="flex items-center -ml-[0.08rem] gap-[0.16rem]" @click="store.commit('setIsLoginOpen', true)">
         <div class="default-avatar">
-          <img :src="getStaticImgUrl('/static/icons/avatar.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
         </div>
         <div class="text-[0.32rem]">{{ $t("user_page.login_out") }}</div>
       </div>

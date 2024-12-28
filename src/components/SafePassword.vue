@@ -16,8 +16,8 @@
           :placeholder="$t('assets.safety_trade_placeholder')" class="pass_ipt" enterkeyhint="done"
           @blur="errStatus = false" @keydown.enter="submit" />
         <div class="show_hidden_icon" @click="passwordVisibility">
-          <img v-if="showPassword" :src="getStaticImgUrl(`/static/icons/eye_open_white.svg`)" alt="">
-          <img v-else :src="getStaticImgUrl(`/static/icons/eye_close_white.svg`)" alt="">
+          <img v-if="showPassword" :src="getStaticImgUrl(`/static/img/common/open_eye.svg`)" alt="">
+          <img v-else :src="getStaticImgUrl(`/static/img/common/close_eye.svg`)" alt="">
         </div>
       </div>
 

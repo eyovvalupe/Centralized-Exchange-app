@@ -375,13 +375,13 @@
         />
         <img
           v-if="!showPassword"
-          :src="getStaticImgUrl('/static/img/user/eye-off.svg')"
+          :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
           @click="showPassword = true"
           alt="off"
         />
         <img
           v-else
-          :src="getStaticImgUrl('/static/img/user/eye-open.svg')"
+          :src="getStaticImgUrl('/static/img/common/open_eye.svg')"
           alt="open"
           @click="showPassword = false"
         />

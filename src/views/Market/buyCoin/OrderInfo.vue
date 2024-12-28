@@ -54,7 +54,7 @@
       <div v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)" class="bank">
         <div class="bank_title">
           <div class="bank_icon">
-            <img :src="getStaticImgUrl('/static/img/user/card_type_b.svg')" alt="img" />
+            <img :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
           </div>
           <div>银行卡</div>
         </div>

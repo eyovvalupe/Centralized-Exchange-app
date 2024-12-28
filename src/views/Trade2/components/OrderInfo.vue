@@ -32,7 +32,7 @@
         <div class="stock-info__order_no">
           <span>{{ currStock.order_no || "--" }}</span>
           <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
-            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
       </div>

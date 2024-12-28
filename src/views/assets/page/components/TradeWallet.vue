@@ -16,8 +16,8 @@
       <div class="flex">
         <span class="text-[0.24rem] text-color2 mb-[0.24rem] mr-[0.1rem]">大宗商品资产(USDT)</span>
         <div @click.stop="toggleShow" style="width: 0.4rem;height: 0.4rem;">
-          <img v-if="showInfo" :src="getStaticImgUrl(`/static/icons/eye_open_white.svg`)" alt="">
-          <img v-else :src="getStaticImgUrl(`/static/icons/eye_close_white.svg`)" alt="">
+          <img v-if="showInfo" :src="getStaticImgUrl(`/static/img/common/open_eye.svg`)" alt="">
+          <img v-else :src="getStaticImgUrl(`/static/img/common/close_eye.svg`)" alt="">
         </div>
       </div>
       <span class="text-[0.52rem] text-color font-semibold">{{ showInfo ? parseFloat(amount).toLocaleString() :

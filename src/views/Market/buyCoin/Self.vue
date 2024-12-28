@@ -136,7 +136,7 @@
       <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
         :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
         <div class="icon">
-          <img :src="handleUrl(item.name)" alt="currency" />
+          <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
         </div>
         <span>{{ item.name.toUpperCase() }}</span>
         <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />
@@ -162,8 +162,8 @@
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }"
           class="dialog_account_item" @click="clickAccountItem(item)">
           <div class="card_icon">
-            <img v-if="item.bankName" :src="getStaticImgUrl('/static/img/user/card_type_b.svg')" alt="img" />
-            <img v-else :src="getStaticImgUrl('/static/img/user/card_type_c.svg')" alt="img" />
+            <img v-if="item.bankName" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
+            <img v-else :src="getStaticImgUrl('/static/img/bank/card_type_c.svg')" alt="img" />
           </div>
           <div class="card">
             <div class="code">
@@ -178,7 +178,7 @@
             </div>
           </div>
           <div v-if="currAccount.id == item.id" class="checked"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.svg')})` }">
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/ok_bg.svg')})` }">
             <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
           </div>
         </div>

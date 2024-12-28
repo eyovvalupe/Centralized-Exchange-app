@@ -36,7 +36,7 @@
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
             <div class="ml-[0.2rem]" style="width: 0.8rem;height: 0.8rem">
-              <img :src="getStaticImgUrl(`/static/icons/avatar.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/img/user/avatar2.svg`)" alt="">
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
           <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
         </div>
         <div class="item">
-          <input v-model="text" type="text" class="ipt" placeholder="请输入..." />
+          <input v-model="text" type="text" class="ipt" :placeholder="t('service.input_message')" />
         </div>
         <div class="box_icon" @click="sendText">
           <div style="width:0.6rem;height:0.6rem" class="text-my">

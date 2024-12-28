@@ -56,7 +56,7 @@
         <div class="stock-info__order_no">
           <span>{{ t('trade.ai_position_order_id') }} {{ currItem.order_no || "--" }}</span>
           <div class="stock-info__copy_icon" @click="copy(currItem.order_no)">
-            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
       </div>

@@ -166,7 +166,7 @@
                 <div class="td td2">
                   <span>{{ currItem.bank_card_number }}</span>
                   <div class="copy">
-                    <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="" />
+                    <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@
           <div class="top" @click="copy(currItem.order_no)">
             <div class="order_no">{{ currItem.order_no }}</div>
             <div class="copy_icon">
-              <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="" />
+              <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
             </div>
             <div style="flex: 1"></div>
             <div>{{ currItem.date }}</div>

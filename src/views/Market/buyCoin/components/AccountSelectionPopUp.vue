@@ -38,14 +38,14 @@
           <div class="card_icon">
             <img v-if="tabsValue === 'crypto'" class="rounded-50"
               :src="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.svg`)" alt="currency" />
-            <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/user/card_type_b.svg')" alt="img" />
+            <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
             <div class="text-color2">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }} <span v-if="item.accountName">| {{ item.accountName }}</span></div>
           </div>
           <div v-if="bank.id == item.id" class="checked"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.svg')})` }">
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/ok_bg.svg')})` }">
             <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
           </div>
         </div>
@@ -309,6 +309,7 @@ const clickAccountItem = val => {
 
   .dialog_account_item_active {
     border: 1px solid #1a59f6;
+    border-top-right-radius: 0;
 
     .checked {
       position: absolute;

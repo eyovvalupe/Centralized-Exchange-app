@@ -61,7 +61,7 @@
         <div class="value">
           <div class="value_text van-omit1">{{ orderData.address }}</div>
           <div class="copy_icon" @click="copy(orderData.address)">
-            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
         <div class="value">
           <div class="value_text van-omit1">{{ orderData.order_no }}</div>
           <div class="copy_icon" @click="copy(orderData.order_no)">
-            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
       </div>

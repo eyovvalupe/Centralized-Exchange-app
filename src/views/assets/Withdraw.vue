@@ -104,7 +104,7 @@
             <div class="card_box" v-if="showBankAccount.length && tabActive == 'bankCard'"
               @click="showAccountDialog = true">
               <div class="card_icon">
-                <img :src="getStaticImgUrl('/static/img/user/card_type_b.svg')" alt="img" />
+                <img :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
               </div>
               <div class="card">
                 <div class="code">
@@ -219,7 +219,7 @@
                 (tabActive == 'bankCard' && currBankAccount.id == item.id),
             }" :key="i">
             <div class="card_icon">
-              <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/user/card_type_b.svg')"
+              <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')"
                 alt="img" />
               <img v-else :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="currency" />
             </div>
@@ -234,7 +234,7 @@
             <div v-if="
               (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
               (tabActive == 'bankCard' && currBankAccount.id == item.id)
-            " class="checked" :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.svg')})` }">
+            " class="checked" :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/ok_bg.svg')})` }">
               <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
             </div>
           </div>
