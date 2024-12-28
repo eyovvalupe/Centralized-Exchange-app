@@ -197,7 +197,7 @@ const list = ref([
 
             .rannk_more {
                 font-weight: 400;
-                color: #666666;
+                color: var(--ex-text-color2);
                 font-size: 0.28rem;
             }
         }

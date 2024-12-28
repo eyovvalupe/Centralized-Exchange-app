@@ -89,7 +89,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit" type="primary">{{
+      <Button :loading="loading" :disabled="disabled" round  class="submit" type="primary">{{
         $t("login.login") }}</Button>
     </div>
 
@@ -589,7 +589,7 @@ onMounted(() => {
         align-items: center;
         width: 0.64rem;
         height: 0.64rem;
-        background-color: #cdd4e3;
+        background-color: var(--ex-bg-color6);
         border-radius: 50%;
 
         .van-icon {

@@ -449,7 +449,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
       .active_tab {
         font-weight: bold;
-        color: white;
+        color: var(--ex-bg-primary-text-color);
         background: var(--ex-primary-color);
         text-align: center;
       }

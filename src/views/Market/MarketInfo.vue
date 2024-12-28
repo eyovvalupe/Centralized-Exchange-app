@@ -934,7 +934,7 @@ const showInfo = ref(false);
     .bottom_btn {
       width: 1.44rem;
       height: 0.9rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
       border-radius: 40px;
       font-size: 0.32rem;
       margin-left: 0.2rem;
@@ -1082,7 +1082,7 @@ const showInfo = ref(false);
     font-size: 0.32rem;
     height: 1.3rem;
     padding: 0.24rem;
-    background: #e6f9f2;
+    background: var(--ex-bg-color3);
     border-radius: 0.4rem;
 
     .info_num {

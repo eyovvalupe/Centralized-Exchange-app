@@ -184,7 +184,7 @@ const formatSec = (seconds, t) => {
         }
 
         .grid {
-          color: #8f8f8f;
+          color: var(--ex-text-color3);
           font-size: 0.24rem;
           font-weight: 400;
           line-height: 140%;

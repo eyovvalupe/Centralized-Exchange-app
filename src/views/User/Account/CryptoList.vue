@@ -40,6 +40,7 @@ const googleRef = ref();
 const confirm = (id) => {
   store.commit("setCurrDeleteId", id);
   showConfirmDialog({
+    className:'account_dialog',
     title: t('account.delete_dialog_title'),
     message: t('account.delete_dialog_con'),
     confirmButtonText: t('google_auth.google_input_btn_confirm'),

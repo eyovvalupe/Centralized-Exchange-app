@@ -83,6 +83,7 @@ const goAddAccount = async () => {
   //身份认证检测
   if (userInfo.value.kycl2 != 2) {
     return showConfirmDialog({
+      className:'account_dialog',
       title: t('account.no_kyc_title'),
       message: t('account.no_kyc_con'),
       confirmButtonText: t('account.no_kyc_confirm'),
@@ -94,6 +95,7 @@ const goAddAccount = async () => {
   // google检测
   if (userInfo.value.kycl2 == 2 && !userInfo.value.googlebind) {
     return showConfirmDialog({
+      className:'account_dialog',
       title: t('account.no_google_title'),
       message: t('account.no_google_con'),
       confirmButtonText: t('account.no_google_confirm'),
@@ -215,36 +217,37 @@ const goBack = () => {
 }
 </style>
 <style lang="less">
-.van-dialog {
+.account_dialog {
   padding-top: 0.8rem;
-}
 
-.van-dialog__header {
-  padding: 0;
-  font-size: 0.32rem;
-  line-height: 0.44rem;
-  margin-bottom: 0.2rem;
-}
 
-.van-dialog__message {
-  font-size: 0.28rem;
-  line-height: 0.44rem;
-  color: var(--ex-text-color);
-}
-
-.van-dialog__cancel {
-  .van-button__content {
+  .van-dialog__header {
+    padding: 0;
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: var(--ex-text-color3);
+    margin-bottom: 0.2rem;
   }
-}
 
-.van-dialog__confirm {
-  .van-button__content {
-    font-size: 0.32rem;
+  .van-dialog__message {
+    font-size: 0.28rem;
     line-height: 0.44rem;
-    color: var(--ex-primary-color);
+    color: var(--ex-text-color);
+  }
+
+  .van-dialog__cancel {
+    .van-button__content {
+      font-size: 0.32rem;
+      line-height: 0.44rem;
+      color: var(--ex-text-color3);
+    }
+  }
+
+  .van-dialog__confirm  {
+    .van-button__content {
+      font-size: 0.32rem;
+      line-height: 0.44rem;
+      color: var(--ex-primary-color);
+    }
   }
 }
 </style>

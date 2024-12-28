@@ -363,7 +363,7 @@ getSessionToken();
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
     }
   }
 
@@ -469,39 +469,5 @@ getSessionToken();
   }
 
 
-}
-</style>
-<style lang="less">
-.van-dialog {
-  padding-top: 0.8rem;
-}
-
-.van-dialog__header {
-  padding: 0;
-  font-size: 0.32rem;
-  line-height: 0.44rem;
-  margin-bottom: 0.2rem;
-}
-
-.van-dialog__message {
-  font-size: 0.28rem;
-  line-height: 0.44rem;
-  color: var(--ex-text-color);
-}
-
-.van-dialog__cancel {
-  .van-button__content {
-    font-size: 0.32rem;
-    line-height: 0.44rem;
-    color: var(--ex-text-color3);
-  }
-}
-
-.van-dialog__confirm {
-  .van-button__content {
-    font-size: 0.32rem;
-    line-height: 0.44rem;
-    color: var(--ex-primary-color);
-  }
 }
 </style>

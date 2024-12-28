@@ -595,7 +595,7 @@ onMounted(() => {
             background-color: var(--ex-primary-color);
             border-color: var(--ex-primary-color);
             border-radius: 0.32rem;
-            color: white;
+            color:var(--ex-bg-primary-text-color);
             font-weight: 500;
             font-size: 0.3rem;
         }

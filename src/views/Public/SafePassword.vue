@@ -189,7 +189,7 @@ const focus = () => { // 聚焦
 
         .error_text {
             font-size: 0.28rem;
-            color: #FF5757;
+            color: var(--ex-error-color);
             margin-top: 0.2rem;
         }
 

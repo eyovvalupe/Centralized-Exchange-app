@@ -507,7 +507,7 @@ onBeforeUnmount(() => {
 
       .time {
         font-size: 0.24rem;
-        color: #aeaeae;
+        color: var(--ex-text-color4);
       }
     }
 

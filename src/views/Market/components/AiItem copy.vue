@@ -206,7 +206,7 @@ const formatSec = (seconds, t) => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #8f8f8f;
+    color: var(--ex-text-color3);
     font-weight: 400;
     font-size: 0.28rem;
 
@@ -229,7 +229,7 @@ const formatSec = (seconds, t) => {
     }
 
     .tip_text {
-      color: #8f8f8f;
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
       line-height: 140%;
     }

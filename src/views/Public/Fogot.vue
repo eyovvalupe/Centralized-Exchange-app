@@ -335,7 +335,7 @@ const submitForm = (code) => {
         align-items: center;
         width: 0.32rem;
         height: 0.32rem;
-        background-color: #cdd4e3;
+        background-color: var(--ex-bg-color6);
         padding: 0.02rem;
         border-radius: 50%;
 

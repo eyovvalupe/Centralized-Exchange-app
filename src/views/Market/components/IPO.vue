@@ -633,8 +633,8 @@ function countdown(endTime) {
     }
 
     .close_status {
-      background-color: #ebebeb;
-      color: #838383;
+      background-color: var(--ex-bg-color3);
+      color: var(--ex-text-color3);
     }
 
     .val {

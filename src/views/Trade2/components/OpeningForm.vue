@@ -1581,7 +1581,7 @@ defineExpose({
       .tag {
         height: 0.44rem;
         color: var(--ex-primary-color);
-        background-color: #ecf1fe;
+        background-color: var(--ex-bg-color3);
         line-height: 0.44rem;
         padding: 0 0.3rem;
         border-radius: 0.4rem;

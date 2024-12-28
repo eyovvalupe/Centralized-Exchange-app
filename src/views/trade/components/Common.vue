@@ -769,7 +769,7 @@ defineExpose({
     .down-button {
       width: 1.32rem;
       height: 0.56rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
       line-height: 0.56rem;
       text-align: center;
       background-size: cover;
@@ -856,7 +856,7 @@ defineExpose({
 
   .marketenlarged {
     background: var(--ex-primary-color);
-    color: white;
+    color: var(--ex-bg-primary-text-color);
   }
 
   // .num-right-text {

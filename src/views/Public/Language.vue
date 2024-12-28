@@ -110,7 +110,7 @@ const clickItem = (item) => {
         .inner {
           width: 0.2rem;
           height: 0.2rem;
-          background-color: #014fca;
+          background-color: var(--ex-primary-color);
           border-radius: 0.2rem;
         }
       }

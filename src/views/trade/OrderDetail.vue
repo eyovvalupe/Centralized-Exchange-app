@@ -335,7 +335,7 @@ const updateDetailPopup = () => {
           width: 1.16rem;
           height: 0.44rem;
           color: var(--ex-primary-color);
-          background-color: #ecf1fe;
+          background-color: var(--ex-bg-color3);
           position: absolute;
           right: 0;
           line-height: 0.44rem;
