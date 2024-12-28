@@ -43,7 +43,7 @@
                     <div class="item_order_no">
                         <span>订单号 {{ currDetail.order_no || '--' }}</span>
                         <div class="item_copy_icon" @click="copy(currDetail.order_no)">
-                            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="copy">
+                            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy">
                         </div>
                     </div>
 

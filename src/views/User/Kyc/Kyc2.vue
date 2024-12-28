@@ -16,7 +16,7 @@
               top: -0.01rem;
               left: -0.04rem;
             ">
-            <img :src="getStaticImgUrl('/static/img/user/warning.png')" alt="icon" />
+            <img :src="getStaticImgUrl('/static/img/user/warning.svg')" alt="icon" />
           </div>
           <span style="color: #014cfa; font-weight: 400; font-size: 0.24rem">照片上传要求</span>
         </div>
@@ -341,7 +341,7 @@ const goTip = () => {
 // 图片处理
 const afterRead = (file, { name }) => {
   files.value[name].file = file.objectUrl;
-  let fileName = file.file.name; // 'test.png'
+  let fileName = file.file.name; // 'test.svg'
   fileName = [fileName.split(".")[0] + Date.now(), fileName.split(".")[1]].join(
     "."
   );

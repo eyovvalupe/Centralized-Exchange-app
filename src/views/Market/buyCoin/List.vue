@@ -49,7 +49,7 @@
               }}</span>&nbsp;{{ item.crypto }}&nbsp;
               <!-- 加密货币图标 -->
               <img class="!h-4 !w-4 rounded-50"
-                :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.png`)" alt="currency" />
+                :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.svg`)" alt="currency" />
             </div>
             <!-- 价格信息 -->
             <div class="mb-[0.12rem] text-color2">

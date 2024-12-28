@@ -1,7 +1,7 @@
 <!-- 底部导航 -->
 <template>
     <div class="max-width bottom_nav2"
-        :style="{ backgroundImage: `url(${getStaticImgUrl('/static/bottombar2/bg.png')})` }">
+        :style="{ backgroundImage: `url(${getStaticImgUrl('/static/bottombar2/bg.svg')})` }">
         <div class="nav_box">
             <div class="bottom_nav_item" @touchstart="handleClick(navs[0], $event)" @click="handleClick(navs[0])"
                 :class="[checkActive(navs[0]) ? 'bottom_nav_active' : '']">

@@ -27,7 +27,7 @@
             }}</span>
             <div class="more_icon">
               <img
-                :src="getStaticImgUrl('/static/img/trade/down.png')"
+                :src="getStaticImgUrl('/static/img/trade/down.svg')"
                 alt="↓"
               />
             </div>
@@ -66,7 +66,7 @@
             }}</span>
             <div class="more_icon">
               <img
-                :src="getStaticImgUrl('/static/img/trade/down.png')"
+                :src="getStaticImgUrl('/static/img/trade/down.svg')"
                 alt="↓"
               />
             </div>
@@ -131,7 +131,7 @@
             </span>
             <div class="more_icon">
               <img
-                :src="getStaticImgUrl('/static/img/trade/down.png')"
+                :src="getStaticImgUrl('/static/img/trade/down.svg')"
                 alt="↓"
               />
             </div>
@@ -212,7 +212,7 @@
         v-show="!searchLoading && currStock.symbol"
         @click="openStockModel"
       >
-        <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" />
+        <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
       </div>
     </div>
     <!-- 搜索 -->
@@ -224,7 +224,7 @@
             <div class="info-name">{{ currStock.name }}</div>
           </div>
           <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
+            <img :src="getStaticImgUrl('/static/img/trade/down.svg')" alt="↓" />
           </div>
         </div>
       </div>
@@ -247,7 +247,7 @@
             {{ form1.lever }}X</span
           >
           <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
+            <img :src="getStaticImgUrl('/static/img/trade/down.svg')" alt="↓" />
           </div>
         </div>
       </div>
@@ -430,13 +430,13 @@
         />
         <img
           v-if="!showPassword"
-          :src="getStaticImgUrl('/static/img/user/eye-off.png')"
+          :src="getStaticImgUrl('/static/img/user/eye-off.svg')"
           @click="showPassword = true"
           alt="off"
         />
         <img
           v-else
-          :src="getStaticImgUrl('/static/img/user/eye-open.png')"
+          :src="getStaticImgUrl('/static/img/user/eye-open.svg')"
           alt="open"
           @click="showPassword = false"
         />
@@ -547,7 +547,7 @@
       <div class="item search_box">
         <div class="search_icon">
           <img
-            :src="getStaticImgUrl('/static/img/common/search.png')"
+            :src="getStaticImgUrl('/static/img/common/search.svg')"
             alt="🔍"
           />
         </div>
@@ -654,7 +654,7 @@
               <img
                 :src="
                   getStaticImgUrl(
-                    `/static/img/crypto/${paramCurrency.toUpperCase()}.png`
+                    `/static/img/crypto/${paramCurrency.toUpperCase()}.svg`
                   )
                 "
               />

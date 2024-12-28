@@ -3,7 +3,7 @@
     <Teleport to="body">
         <div class="wait_order" @click="jump">
             <div class="wo_icon">
-                <img :src="getStaticImgUrl('/static/img/user/card_type_c.png')" alt="img">
+                <img :src="getStaticImgUrl('/static/img/user/card_type_c.svg')" alt="img">
             </div>
             <div class="wo_content">
                 <div class="name">USDT TRC20</div>

@@ -27,7 +27,7 @@ const store = createStore({
     i18Data: {
       name: "中文简体",
       locale: "zh",
-      icon: getStaticImgUrl("/static/img/common/cn.png"),
+      icon: getStaticImgUrl("/static/img/common/cn.svg"),
     },
     language: {},
     bottomTabBarValue: "",

@@ -2,7 +2,7 @@
 <template>
   <div class="no_data">
     <div class="nodata_icon">
-      <img :src="getStaticImgUrl('/static/img/common/no_data.png')" alt="nothing" />
+      <img :src="getStaticImgUrl('/static/img/common/no_data.svg')" alt="nothing" />
     </div>
     <div class="nodata_text">{{ props.tip ? props.tip : t('common.no_data') }}</div>
   </div>

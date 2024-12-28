@@ -2,8 +2,8 @@
 <template>
   <div class="withdraw_item" @click="goInfo" v-if="item.account">
     <div class="icon_box">
-      <img v-if="item.currency" :src="getStaticImgUrl(`/static/img/crypto/${item.currency}.png`)" alt="">
-      <img v-if="item.account && item.account.bank_name" :src="getStaticImgUrl('/static/img/user/card_type_b.png')"
+      <img v-if="item.currency" :src="getStaticImgUrl(`/static/img/crypto/${item.currency}.svg`)" alt="">
+      <img v-if="item.account && item.account.bank_name" :src="getStaticImgUrl('/static/img/user/card_type_b.svg')"
         alt="img" />
     </div>
     <div class="content">

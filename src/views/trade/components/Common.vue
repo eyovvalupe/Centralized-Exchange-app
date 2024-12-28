@@ -3,7 +3,7 @@
     <div class="stock-box" style="margin: 0 0px 0.1rem;">
       <span class="grop-title">股票</span>
       <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
-      <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" class="stock-img" v-if="stockCo.length > 0"
+      <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" class="stock-img" v-if="stockCo.length > 0"
         @click="openPopup" />
     </div>
     <div class="animate-input num-input symbol-name"
@@ -38,7 +38,7 @@
       <div class="small-select" @click="allSelect">
         <div class="abs-con">
           <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
-          <img :src="getStaticImgUrl('/static/img/trade/down.png')" class="down-img" />
+          <img :src="getStaticImgUrl('/static/img/trade/down.svg')" class="down-img" />
         </div>
       </div>
 

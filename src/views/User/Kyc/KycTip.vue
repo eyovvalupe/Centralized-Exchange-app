@@ -6,40 +6,40 @@
         <div class="boxs">
             <div class="box">
                 <div class="img_box">
-                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_1.png')" alt="img">
+                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_1.svg')" alt="img">
 
                     <div class="img_status">
-                        <img :src="getStaticImgUrl('/static/img/user/ok_icon.png')" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/user/ok_icon.svg')" alt="img">
                     </div>
                 </div>
                 <div>标准</div>
             </div>
             <div class="box">
                 <div class="img_box">
-                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_2.png')" alt="img">
+                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_2.svg')" alt="img">
 
                     <div class="img_status">
-                        <img :src="getStaticImgUrl('/static/img/user/err_icon.png')" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/user/err_icon.svg')" alt="img">
                     </div>
                 </div>
                 <div>边框缺失</div>
             </div>
             <div class="box">
                 <div class="img_box">
-                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_3.png')" alt="img">
+                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_3.svg')" alt="img">
 
                     <div class="img_status">
-                        <img :src="getStaticImgUrl('/static/img/user/err_icon.png')" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/user/err_icon.svg')" alt="img">
                     </div>
                 </div>
                 <div>照片模糊</div>
             </div>
             <div class="box">
                 <div class="img_box">
-                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_4.png')" alt="img">
+                    <img :src="getStaticImgUrl('/static/img/user/auth_tip_4.svg')" alt="img">
 
                     <div class="img_status">
-                        <img :src="getStaticImgUrl('/static/img/user/err_icon.png')" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/user/err_icon.svg')" alt="img">
                     </div>
                 </div>
                 <div>闪光强烈</div>

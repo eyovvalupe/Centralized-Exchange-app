@@ -16,7 +16,7 @@
                   <div class="item" @click="showCrypto = true">
                     <div class="item_icon">
                       <div style="width: 0.48rem;height:0.48rem">
-                        <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.png`)" alt="">
+                        <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="">
                       </div>
                     </div>
                     <div class="ipt">{{ form.currency }}</div>
@@ -85,7 +85,7 @@
             <div class="flex w-full justify-between">
               <div class="flex items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${item}.png`)" alt="">
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="">
                 </div>
                 <span class="text-[0.3rem]">{{ item }}</span>
               </div>

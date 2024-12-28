@@ -2,7 +2,7 @@
 <template>
   <div class="page page_success">
     <div class="icon">
-      <img :src="getStaticImgUrl('/static/img/user/success.png')" alt="√" />
+      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("safety.success_title") }}</div>
 

@@ -16,7 +16,7 @@
         <div style="display:flex;align-items:center;justify-content:center;flex-direction: column;flex:1">
           <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.08rem">
             <div v-if="currency" style="width:0.32rem;height:0.32rem;display:flex;position:relative;top:-0.02rem">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.png`)" />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" />
             </div>
 
             <span style="font-size:0.28rem;margin-left:0.12rem;color:#061023;font-weight:400">{{ currency }}</span>

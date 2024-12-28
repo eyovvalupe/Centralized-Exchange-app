@@ -22,7 +22,7 @@
       <div class="px-[0.32rem] mt-[0.28rem] h-[0.52rem] flex items-center">
         <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[13px] flex justify-center items-center mr-[0.2rem]">
           <div class="size-[0.4rem]">
-            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" class=" rounded-full" alt="">
+            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" class=" rounded-full" alt="">
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>
@@ -33,7 +33,7 @@
       <div class="ml-[0.32rem] flex items-center">
         <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[13px] flex justify-center items-center mr-[0.2rem]">
           <div class="size-[0.4rem]">
-            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" alt="">
+            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="">
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>

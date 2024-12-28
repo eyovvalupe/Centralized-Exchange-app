@@ -6,7 +6,7 @@
             <div class="item" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)"
                 v-show="item.endtime > 0">
                 <div class="ai_icon">
-                    <img :src="getStaticImgUrl('/static/img/trade/ai.png')" alt="ai">
+                    <img :src="getStaticImgUrl('/static/img/trade/ai.svg')" alt="ai">
                 </div>
                 <div class="mid">
                     <div class="name">{{ item.name }}</div>

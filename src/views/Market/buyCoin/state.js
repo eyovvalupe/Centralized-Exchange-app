@@ -53,7 +53,7 @@ export const useBuyCoinState = createGlobalState(() => {
   }
   function handleUrl(params) {
     const result = fiatEnum[params.toUpperCase()] || params.toUpperCase()
-    return getStaticImgUrl(`/static/img/crypto/${result}.png`)
+    return getStaticImgUrl(`/static/img/crypto/${result}.svg`)
   }
   const setScrollData = params => (scrollData = params)
 

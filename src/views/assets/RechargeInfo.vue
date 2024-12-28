@@ -4,7 +4,7 @@
     <Top :title="$t('recharging.info_title')">
       <template #right>
         <div class="top-record" @click="goChat">
-          <span><img :src="getStaticImgUrl('/static/img/user/server.png')" alt="img" /></span>
+          <span><img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="img" /></span>
         </div>
       </template>
     </Top>
@@ -12,7 +12,7 @@
     <div class="top_info">
       <div class="status" v-if="orderData.status == 'success'">
         <div class="status_icon">
-          <img :src="getStaticImgUrl('/static/img/assets/status_success.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="img" />
         </div>
         <div class="status_name">
           {{ $t("recharging.info_recharge_success") }}
@@ -25,7 +25,7 @@
       </div>
       <div class="status" v-else-if="orderData.status == 'failure'">
         <div class="status_icon">
-          <img :src="getStaticImgUrl('/static/img/assets/status_error.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_error.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("recharging.info_recharge_failure") }}</div>
         <div class="status_desc">{{ $t("recharging.info_recharge_failure_con") }}</div>
@@ -33,7 +33,7 @@
       <div class="status" v-else>
         <div class="status_icon">
           <LoadEffect class="status_loading" color="#fff" />
-          <img :src="getStaticImgUrl('/static/img/assets/status_wait.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("recharging.info_recharge_pending") }}</div>
         <div class="status_desc">{{ $t("recharging.info_recharge_pending_con") }}</div>
@@ -61,7 +61,7 @@
         <div class="value">
           <div class="value_text van-omit1">{{ orderData.address }}</div>
           <div class="copy_icon" @click="copy(orderData.address)">
-            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy" />
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
         <div class="value">
           <div class="value_text van-omit1">{{ orderData.order_no }}</div>
           <div class="copy_icon" @click="copy(orderData.order_no)">
-            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy" />
           </div>
         </div>
       </div>

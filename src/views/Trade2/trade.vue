@@ -14,7 +14,7 @@
     ]" v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="tab_icon" @click="showNavDialogFunc()">
-          <img :src="getStaticImgUrl('/static/img/trade/open.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="img" />
         </div>
       </template>
     </HeaderTabs>
@@ -66,7 +66,7 @@
         <div class="search_box_wrap">
           <div class="item search_box relative">
             <div class="search_icon">
-              <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
+              <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
             </div>
             <input v-model.trim="searchStr" @keyup="searchItem()" type="text" class="ipt"
               :placeholder="t('trade.left_search')" :onfocus="() => (isFocused = true)"

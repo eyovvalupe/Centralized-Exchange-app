@@ -4,9 +4,14 @@
     <div class="page_home" v-if="openPage">
         <!-- 顶部 -->
         <div class="funcs relative">
-            <div class="user_box">
+            <div v-if="!Object.keys(userInfo).length" class="user_box">
                 <div class="user_default_avatar">
-                    <img :src="getStaticImgUrl('/static/img/user/avatar2.png')" />
+                    <img :src="getStaticImgUrl('/static/img/user/avatar1.svg')" />
+                </div>
+            </div>
+            <div v-if="Object.keys(userInfo).length" class="user_box">
+                <div class="user_default_avatar">
+                    <img :src="getStaticImgUrl('/static/img/user/avatar2.svg')" />
                 </div>
             </div>
             <div style="flex: 1"></div>
@@ -204,6 +209,7 @@ const token = computed(() => store.state.token || "");
 // 热门数据
 const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
 const marketContractRecommendList = computed(() => store.state.marketContractRecommendList || [])
+const userInfo = computed(() => store.state.userInfo || {})
 const recommendLoading = ref(false);
 const openRecommendList = () => {
     if (!marketSrockRecommendList.value.length || !marketContractRecommendList.value.length) {
@@ -258,9 +264,9 @@ const actions = [
     { name: t("common.IPO"), value: "1" },
 ];
 const slides = [
-    "static/img/home/banner1.png",
-    "static/img/home/banner2.png",
-    "static/img/home/banner3.png",
+    "static/img/home/banner1.webp",
+    "static/img/home/banner2.webp",
+    "static/img/home/banner3.webp",
 ];
 
 const onSelect = (item) => {

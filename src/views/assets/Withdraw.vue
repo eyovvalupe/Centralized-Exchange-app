@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record.png')" />
+            <img :src="getStaticImgUrl('/static/img/assets/record.svg')" />
           </div>
           <span>
             {{ $t("withdraw.withdrawRecord") }}
@@ -22,12 +22,12 @@
             <div class="select_item" @click="showDialog = true">
               <div class="currency" v-if="form.from">
                 <div class="currency_icon">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.png`)" alt="currency" />
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="currency" />
                 </div>
                 <span>{{ form.from.toUpperCase() }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" />
               </div>
             </div>
           </FormItem>
@@ -37,7 +37,7 @@
                 <span>{{ form.network }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" />
               </div>
             </div>
           </FormItem>
@@ -58,7 +58,7 @@
               @click="showAccountDialog = true">
               <div class="card_icon">
                 <img v-if="currAccount.symbol"
-                  :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.png`)" alt="currency" />
+                  :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)" alt="currency" />
               </div>
               <div class="card">
                 <div class="code">
@@ -104,7 +104,7 @@
             <div class="card_box" v-if="showBankAccount.length && tabActive == 'bankCard'"
               @click="showAccountDialog = true">
               <div class="card_icon">
-                <img :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
+                <img :src="getStaticImgUrl('/static/img/user/card_type_b.svg')" alt="img" />
               </div>
               <div class="card">
                 <div class="code">
@@ -145,7 +145,7 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
+            <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
           </div>
           <input v-model.trim="searchDialogStr" type="text" class="ipt" :placeholder="$t('withdraw.searchPlaceholder')"
             @input="searchList" />
@@ -155,7 +155,7 @@
             :class="{ swap_dialog_item_active: form.from == item.name }"
             v-for="(item, i) in searchDialogStr ? searchResult : wallet" :key="i">
             <div class="icon">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${item.name.toUpperCase()}.png`)" alt="currency" />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${item.name.toUpperCase()}.svg`)" alt="currency" />
             </div>
             <span>{{ item.name.toUpperCase() }}</span>
             <div v-if="form.from == item.name" class="check_icon">
@@ -175,7 +175,7 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
+            <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
           </div>
           <input v-model.trim="searchDialogStr" type="text" class="ipt"
             :placeholder="$t('withdraw.searchPlaceholder')" />
@@ -219,9 +219,9 @@
                 (tabActive == 'bankCard' && currBankAccount.id == item.id),
             }" :key="i">
             <div class="card_icon">
-              <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/user/card_type_b.png')"
+              <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/user/card_type_b.svg')"
                 alt="img" />
-              <img v-else :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.png`)" alt="currency" />
+              <img v-else :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="currency" />
             </div>
             <div class="card">
               <div class="code">
@@ -234,8 +234,8 @@
             <div v-if="
               (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
               (tabActive == 'bankCard' && currBankAccount.id == item.id)
-            " class="checked" :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.png')})` }">
-              <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
+            " class="checked" :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.svg')})` }">
+              <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
             </div>
           </div>
         </div>

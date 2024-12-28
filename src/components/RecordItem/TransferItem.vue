@@ -4,7 +4,7 @@
     <div class="item_box flex justify-between">
       <div class="flex items-center">
         <span class="item_icon" v-if="item.account_from"><img
-            :src="getStaticImgUrl(`/static/img/crypto/${item.account_from.toUpperCase()}.png`)" alt="currency" /></span>
+            :src="getStaticImgUrl(`/static/img/crypto/${item.account_from.toUpperCase()}.svg`)" alt="currency" /></span>
         <span>{{
           dataMap[item.account_from] + `(${item.from})` || "未知"
         }}</span>
@@ -16,7 +16,7 @@
         <img :src="getStaticImgUrl(`/static/icons/trans5.svg`)" alt="">
       </div>
       <div class="flex items-center">
-        <span class="item_icon"><img :src="getStaticImgUrl(`/static/img/crypto/${item.account_to.toUpperCase()}.png`)"
+        <span class="item_icon"><img :src="getStaticImgUrl(`/static/img/crypto/${item.account_to.toUpperCase()}.svg`)"
             alt="currency" /></span>
         <span>{{
           dataMap[item.account_to] + `(${item.to})` || "未知"

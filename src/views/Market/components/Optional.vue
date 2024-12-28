@@ -12,7 +12,7 @@
   <div v-else-if="!watchList.length && !loading" style="position: relative; margin-bottom: 1rem">
     <div class="no_self_selection_block">
       <div class="no_data_icon">
-        <img :src="getStaticImgUrl('/static/img/common/no_data.png')" alt="暂无数据" />
+        <img :src="getStaticImgUrl('/static/img/common/no_data.svg')" alt="暂无数据" />
       </div>
       <p class="text">{{ t('market.market_optional_no_optional') }}</p>
       <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')">{{

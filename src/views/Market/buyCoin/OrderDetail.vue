@@ -88,13 +88,13 @@
 
             <!-- 已完成 -->
             <div v-if="currItem.status == 'done'" class="finish_status success_status">
-              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.png')"
+              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.svg')"
                   alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_complete") }}</div>
             </div>
             <!-- 已取消 -->
             <div v-if="currItem.status == 'cancel'" class="finish_status">
-              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.png')"
+              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.svg')"
                   alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_cancel") }}</div>
             </div>
@@ -166,7 +166,7 @@
                 <div class="td td2">
                   <span>{{ currItem.bank_card_number }}</span>
                   <div class="copy">
-                    <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
+                    <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="" />
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@
           <div class="top" @click="copy(currItem.order_no)">
             <div class="order_no">{{ currItem.order_no }}</div>
             <div class="copy_icon">
-              <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
+              <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="" />
             </div>
             <div style="flex: 1"></div>
             <div>{{ currItem.date }}</div>

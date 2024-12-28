@@ -156,13 +156,13 @@
         <div class="buy_popup_btn" @click="goBuy(true)">
           <span>{{ t('market.market_marketinfo_long') }}</span>
           <div class="btn_icon">
-            <img :src="getStaticImgUrl('/static/img/market/market.png')" alt="img" />
+            <img :src="getStaticImgUrl('/static/img/market/market.svg')" alt="img" />
           </div>
         </div>
         <div class="buy_popup_btn buy_popup_btn2" @click="goBuy(false)">
           <span>{{ t('market.market_marketinfo_short') }}</span>
           <div class="btn_icon">
-            <img :src="getStaticImgUrl('/static/img/market/market.png')" alt="img" />
+            <img :src="getStaticImgUrl('/static/img/market/market.svg')" alt="img" />
           </div>
         </div>
       </div>
@@ -206,7 +206,7 @@
         </div>
         <div class="info_items">
           <div class="info_item"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -214,7 +214,7 @@
             <div class="info_item__value">{{ item.open }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -222,7 +222,7 @@
             <div class="info_item__value">{{ item.high }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -230,7 +230,7 @@
             <div class="info_item__value">{{ _formatNumber(item.volume) }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -238,7 +238,7 @@
             <div class="info_item__value">{{ item.close }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">
@@ -246,7 +246,7 @@
             <div class="info_item__value">{{ item.low }}</div>
           </div>
           <div class="info_item"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.png')})` }" style="
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
               background-repeat: no-repeat;
               background-position: center bottom;
             ">

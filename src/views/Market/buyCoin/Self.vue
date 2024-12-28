@@ -19,11 +19,11 @@
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
             <div class="size-[0.32rem] mr-1">
-              <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
+              <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="img" />
             </div>
 
             <div class="size-[0.32rem]">
-              <img :src="getStaticImgUrl('/static/img/market/trans.png')" alt="img" />
+              <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@
     position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
       </div>
       <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
       <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
@@ -149,7 +149,7 @@
     class="self_van_popup" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
       </div>
       <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
       <div class="list">
@@ -162,8 +162,8 @@
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }"
           class="dialog_account_item" @click="clickAccountItem(item)">
           <div class="card_icon">
-            <img v-if="item.bankName" :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
-            <img v-else :src="getStaticImgUrl('/static/img/user/card_type_c.png')" alt="img" />
+            <img v-if="item.bankName" :src="getStaticImgUrl('/static/img/user/card_type_b.svg')" alt="img" />
+            <img v-else :src="getStaticImgUrl('/static/img/user/card_type_c.svg')" alt="img" />
           </div>
           <div class="card">
             <div class="code">
@@ -178,8 +178,8 @@
             </div>
           </div>
           <div v-if="currAccount.id == item.id" class="checked"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.png')})` }">
-            <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.svg')})` }">
+            <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@
     <Top />
     <div class="page page_success">
         <div class="icon">
-            <img :src="getStaticImgUrl('/static/img/user/success.png')" alt="√">
+            <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√">
         </div>
         <div class="title">认购成功</div>
         <div class="tips">恭喜认购完成，请耐心等待中签信息</div>

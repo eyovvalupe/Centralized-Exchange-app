@@ -132,15 +132,15 @@ onMounted(() => {
       }
 
       .action-sheet-active ::after {
-         background-image: url(${getStaticImgUrl('/static/icons/check.png')});
+         background-image: url(${getStaticImgUrl('/static/icons/check.svg')});
       }
 
       .register_accounr_dialog .search-svg-icon {
-        background-image: url(${getStaticImgUrl('/static/icons/search2.png')});
+        background-image: url(${getStaticImgUrl('/static/icons/search2.svg')});
       }
 
       .page_bank .icon_ok {
-        background-image: url(${getStaticImgUrl('/static/icons/success.png')});
+        background-image: url(${getStaticImgUrl('/static/icons/success.svg')});
       }
     `;
   document.head.appendChild(style);

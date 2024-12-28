@@ -24,7 +24,7 @@
               {{ getDate(item.date) }}
               <span class="date_more" :class="{
                 date_more_up: !openDates.includes(getDate(item.date)),
-              }"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" /></span>
+              }"><img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" /></span>
             </div>
             <transition name="opacity">
               <RechargeItem :item="item" v-show="!openDates.includes(getDate(item.date))" />
@@ -43,7 +43,7 @@
               {{ getDate(item.date) }}
               <span class="date_more" :class="{
                 date_more_up: !withdrawOpenDates.includes(getDate(item.date)),
-              }"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" /></span>
+              }"><img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" /></span>
             </div>
             <transition name="opacity">
               <WithdrawItem :item="item" v-show="!withdrawOpenDates.includes(getDate(item.date))" />
@@ -64,7 +64,7 @@
                 date_more_up: !transferOpenDates.includes(
                   getDate(item.created)
                 ),
-              }"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" /></span>
+              }"><img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" /></span>
             </div>
             <transition name="opacity">
               <TransferItem :item="item" v-show="!transferOpenDates.includes(getDate(item.created))" />

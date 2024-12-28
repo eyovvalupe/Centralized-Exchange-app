@@ -4,7 +4,7 @@
         <Top :title="'充值详情'">
             <template #right>
                 <div class="top-record" @click="goRecord">
-                    <img :src="getStaticImgUrl('/static/img/user/server.png')" alt="img">
+                    <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="img">
                 </div>
             </template>
         </Top>
@@ -13,7 +13,7 @@
             <div class="amount">+210 USDT</div>
             <div class="status">
                 <div class="status_icon">
-                    <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="ok">
+                    <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="ok">
                 </div>
                 <span>成功</span>
             </div>

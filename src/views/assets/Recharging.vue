@@ -4,7 +4,7 @@
     <Top :title="$t('recharging.recharge')">
       <template #right>
         <div class="top-record" @click="() => router.push({ name: 'chat' })">
-          <span><img :src="getStaticImgUrl('/static/img/user/server.png')" alt="img" /></span>
+          <span><img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="img" /></span>
         </div>
       </template>
     </Top>
@@ -39,11 +39,11 @@
               left: 0;
               z-index: 1;
             ">
-            <img :src="getStaticImgUrl('/static/img/assets/Expired.png')" alt="Expired" />
+            <img :src="getStaticImgUrl('/static/img/assets/Expired.svg')" alt="Expired" />
           </div>
           <div class="timeout_box" v-if="s == 0 && !loading">
             <div class="warning_icon">
-              <img :src="getStaticImgUrl('/static/img/common/warning.png')" alt="img" />
+              <img :src="getStaticImgUrl('/static/img/common/warning.svg')" alt="img" />
             </div>
             <div>{{ $t("recharging.QRcodeExpired") }}</div>
           </div>

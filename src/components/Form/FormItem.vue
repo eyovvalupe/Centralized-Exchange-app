@@ -36,9 +36,9 @@
             :placeholder="placeholder" />
 
           <span class="pwd_icon" v-if="inputType == 'password'">
-            <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/user/eye-off.png')"
+            <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/user/eye-off.svg')"
               @click="showPassword = true" alt="off" />
-            <img v-else :src="getStaticImgUrl('/static/img/user/eye-open.png')" alt="open"
+            <img v-else :src="getStaticImgUrl('/static/img/user/eye-open.svg')" alt="open"
               @click="showPassword = false" />
           </span>
 

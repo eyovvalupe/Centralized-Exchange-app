@@ -4,7 +4,7 @@
     class="AccountSelectionPopUp" position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showAccountDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
       </div>
       <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
       <div class="list">
@@ -37,16 +37,16 @@
           class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
           <div class="card_icon">
             <img v-if="tabsValue === 'crypto'" class="rounded-50"
-              :src="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.png`)" alt="currency" />
-            <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/user/card_type_b.png')" alt="img" />
+              :src="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.svg`)" alt="currency" />
+            <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/user/card_type_b.svg')" alt="img" />
           </div>
           <div class="card">
             <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
             <div class="text-color2">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }} <span v-if="item.accountName">| {{ item.accountName }}</span></div>
           </div>
           <div v-if="bank.id == item.id" class="checked"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.png')})` }">
-            <img :src="getStaticImgUrl('/static/img/common/ok.png')" alt="img" />
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/user/check_bg.svg')})` }">
+            <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
           </div>
         </div>
       </div>

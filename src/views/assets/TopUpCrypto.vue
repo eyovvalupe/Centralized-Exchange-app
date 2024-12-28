@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record.png')" />
+            <img :src="getStaticImgUrl('/static/img/assets/record.svg')" />
           </div>
           <span class="max-w-[1.2rem]">
             {{ $t("topUpCrypto.rechargeRecord") }}
@@ -25,13 +25,13 @@
             <div class="select_item border_item" @click="showDialog = true">
               <div class="currency">
                 <div class="currency_icon" v-if="form.currency">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.png`)" alt="currency"
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)" alt="currency"
                     class="rounded-full" />
                 </div>
                 <span>{{ form.currency || "" }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" />
               </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
                 <span>{{ form.network || "" }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" />
               </div>
             </div>
           </div>
@@ -87,7 +87,7 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
+            <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
           </div>
           <input v-model.trim="searchDialogStr" type="text" class="ipt"
             :placeholder="$t('topUpCrypto.searchPlaceholder')" />
@@ -99,7 +99,7 @@
               keyStr.toUpperCase().indexOf(searchDialogStr) > -1
               ">
             <div class="icon">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${keyStr.toUpperCase()}.png`)" alt="currency"
+              <img :src="getStaticImgUrl(`/static/img/crypto/${keyStr.toUpperCase()}.svg`)" alt="currency"
                 class="rounded-full" />
             </div>
             <span>{{ keyStr.toUpperCase() }}</span>

@@ -26,7 +26,7 @@
           <!-- 搜索框 -->
           <div class="search_box">
             <div class="icon">
-              <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍">
+              <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍">
             </div>
             <input ref="iptRef" @keydown="keydown" @keydown.enter="resetData" placeholder="搜索" type="text"
               enterkeyhint="search" v-model.trim="search" class="search">
@@ -49,7 +49,7 @@
         <div class="header">
           <!-- <div class="title">交易</div> -->
           <div style="display: flex;">
-            <img :src="getStaticImgUrl('/static/img/trade/open.png')" alt="" class="open-img" @click="openleft" />
+            <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="" class="open-img" @click="openleft" />
             <!--  tabs-->
             <div class="trade-recommend_tabs">
               <div class="trade-recommend_tab" :class="{ 'active_tab': active == 0 }" @click="onChange(0)">股票</div>
@@ -65,7 +65,7 @@
               </Tabs> -->
           </div>
           <div class="value value-line" @click="showPopup">
-            <span class="value-img"><img :src="getStaticImgUrl('/static/img/trade/value.png')" alt="" /></span>
+            <span class="value-img"><img :src="getStaticImgUrl('/static/img/trade/value.svg')" alt="" /></span>
             <span>持仓价值</span>
           </div>
         </div>

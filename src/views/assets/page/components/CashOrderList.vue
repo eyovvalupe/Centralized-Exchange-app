@@ -13,7 +13,7 @@
         <!-- #18b762 #e8503a -->
         <span class="text-[0.32rem] text-color font-semibold">&nbsp;USDT&nbsp;</span>
         <div class="USDT_icon relative top-[-0.02rem]">
-          <img :src="getStaticImgUrl(`/static/img/crypto/USDT.png`)" alt="">
+          <img :src="getStaticImgUrl(`/static/img/crypto/USDT.svg`)" alt="">
         </div>
       </div>
       <div>

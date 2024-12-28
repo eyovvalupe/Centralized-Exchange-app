@@ -94,7 +94,7 @@
                 <div class="flex items-center justify-center text-sm text-color"
                   @click="copy(form.bank_card_number)">
                   {{ form.bank_card_number }}
-                  <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
+                  <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="" />
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@
           class="flex h-[0.68rem] items-center justify-between border border-transparent border-b-color px-4 text-sm leading-34 text-color2">
           <div class="flex items-center" @click="copy(form.order_no)">
             {{ form.order_no }}
-            <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" />
+            <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="" />
           </div>
           <div class="text-12 text-color3">{{ form.date }}</div>
         </div>

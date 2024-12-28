@@ -14,7 +14,7 @@
         <div class="scroll-box">
           <div class="px-[0.32rem] pt-[0.26rem] pb-[0.64rem]">
             <div class="invite_banner" :class="['invite_banner--' + locale]">
-              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/invite/banner2.png')" />
+              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/invite/banner2.svg')" />
               <div class="invite_banner_titbox">
                 <div class="invite_banner_tit">
                   {{ $t("inviteFriends.banner_title") }}
@@ -69,7 +69,7 @@
                 </div>
                 <div class="achievement_amount">20000</div>
               </div>
-              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/invite/achievement.png')" />
+              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/invite/achievement.svg')" />
             </div>
             <div class="invite-title">{{ $t("inviteFriends.details") }}</div>
             <div class="record-tit">

@@ -49,7 +49,7 @@
                         <img :src="getStaticImgUrl('/static/img/assets/stock_icon.svg')" alt="img">
                     </div>
                     <span>股票账户</span>
-                    <div class="more_icon"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img"></div>
+                    <div class="more_icon"><img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="img"></div>
                 </div>
                 <div class="border_item ipt_box" style="background-color: #f5f5f5">
                     <div class="ipt">
@@ -89,7 +89,7 @@
             v-model:show="showDialog" position="bottom" teleport="body">
             <div class="swap_accounr_dialog">
                 <div class="close_icon" @click="showDialog = false">
-                    <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x">
+                    <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x">
                 </div>
                 <div @click="showDialog = false" class="swap_dialog_item swap_dialog_item_active">
                     <span>股票账户</span>
@@ -105,7 +105,7 @@
                     <div class="loan_comfirm_title">
                         <span>借款确认</span>
                         <div class="close_icon" @click="closeSafeRef">
-                            <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x">
+                            <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x">
                         </div>
                     </div>
                     <div class="loan_confirm_item">

@@ -37,7 +37,7 @@
           </div>
           <div class="right-text">
             <span style="vertical-align: middle;">{{ detaiList.order_no }}</span>
-            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="" class="copy-img">
+            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="" class="copy-img">
           </div>
         </div>
 

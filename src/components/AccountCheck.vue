@@ -4,7 +4,7 @@
         position="bottom" style="background-color: rgba(0,0,0,0)">
         <div class="account_check_popup">
             <div class="close_icon" @click="close">
-                <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="img">
+                <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="img">
             </div>
             <div class="account_check_popup_title">账户升级</div>
 
@@ -12,7 +12,7 @@
                 <div class="ac_title" v-if="userInfo.role == 'guest'">升级为正式账户</div>
                 <div class="fake_user" v-if="userInfo.role == 'guest'">
                     <div class="fake_icon_box">
-                        <img :src="getStaticImgUrl('/static/img/account/iden_up.png')" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/account/iden_up.svg')" alt="img">
                     </div>
                     <div>模拟账号升级</div>
                     <div class="fake_btn">立刻升级→</div>
@@ -26,14 +26,14 @@
                                 <span>去绑定</span>
                                 <div class="btn">
                                     <div class="btn_icon">
-                                        <img :src="getStaticImgUrl('/static/img/user/right.png')" alt="→">
+                                        <img :src="getStaticImgUrl('/static/img/user/right.svg')" alt="→">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="right">
-                            <img :src="getStaticImgUrl('/static/img/user/google-1.png')" alt="google">
-                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/no.png')" alt="no">
+                            <img :src="getStaticImgUrl('/static/img/user/google-1.svg')" alt="google">
+                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/no.svg')" alt="no">
                         </div>
                     </div>
                     <div v-if="userInfo.kycl2 != 2" class=" way" @click="router.push({ name: 'kyc' })">
@@ -43,14 +43,14 @@
                                 <span>去绑定</span>
                                 <div class="btn">
                                     <div class="btn_icon">
-                                        <img :src="getStaticImgUrl('/static/img/user/right.png')" alt="→">
+                                        <img :src="getStaticImgUrl('/static/img/user/right.svg')" alt="→">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="right">
-                            <img :src="getStaticImgUrl('/static/img/user/iden-1.png')" alt="iden">
-                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/no.png')" alt="no">
+                            <img :src="getStaticImgUrl('/static/img/user/iden-1.svg')" alt="iden">
+                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/no.svg')" alt="no">
                         </div>
                     </div>
 
@@ -59,8 +59,8 @@
                             <div class="title">谷歌验证器已绑定 </div>
                         </div>
                         <div class="right">
-                            <img :src="getStaticImgUrl('/static/img/user/google-2.png')" alt="google">
-                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/ok.png')" alt="no">
+                            <img :src="getStaticImgUrl('/static/img/user/google-2.svg')" alt="google">
+                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/ok.svg')" alt="no">
                         </div>
                     </div>
                     <div v-if="userInfo.kycl2 == 2" class=" way active_way">
@@ -68,8 +68,8 @@
                             <div class="title">已通过实名认证 </div>
                         </div>
                         <div class="right">
-                            <img :src="getStaticImgUrl('/static/img/user/iden-2.png')" alt="google">
-                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/ok.png')" alt="no">
+                            <img :src="getStaticImgUrl('/static/img/user/iden-2.svg')" alt="google">
+                            <img class="status_icon" :src="getStaticImgUrl('/static/img/user/ok.svg')" alt="no">
                         </div>
                     </div>
 
@@ -80,7 +80,7 @@
 
                 <div style="flex:1"></div>
                 <div class="server_icon">
-                    <img :src="getStaticImgUrl('/static/img/common/server.png')" alt="server">
+                    <img :src="getStaticImgUrl('/static/img/common/server.svg')" alt="server">
                 </div>
                 <div class="server">if you have questions contact <br /><span>customer service</span></div>
             </div>

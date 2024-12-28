@@ -8,7 +8,7 @@
     </div>
     <div class="list_detail">
       <div class="mr-[0.2rem]" style="width: 0.96rem;height: 0.96rem;">
-        <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.png`)" class=" rounded-full" alt="">
+        <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" class=" rounded-full" alt="">
       </div>
       <div class="flex flex-col">
         <div class="flex flex-row items-center">

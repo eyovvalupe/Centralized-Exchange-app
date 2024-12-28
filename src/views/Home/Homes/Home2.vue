@@ -3,7 +3,7 @@
     <div class="page-home2">
         <!-- 背景 -->
         <div class="home2-bg1">
-            <img :src="getStaticImgUrl('/static/home2/bg.png')" alt="">
+            <img :src="getStaticImgUrl('/static/home2/bg.svg')" alt="">
             <div class="bg_bottom"></div>
         </div>
         <div class="home2-bg2">
@@ -46,13 +46,13 @@
                 <div class="card-1">
                     <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
                         <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.svg')" alt="">
                         </SwipeItem>
                         <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.svg')" alt="">
                         </SwipeItem>
                         <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.svg')" alt="">
                         </SwipeItem>
                     </Swipe>
                 </div>
@@ -180,7 +180,7 @@
 
 
             <!-- ad -->
-            <div class="ad" :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.png')})` }">
+            <div class="ad" :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }">
 
                 <div class="ad-bg"></div>
                 <div class="ad-content">

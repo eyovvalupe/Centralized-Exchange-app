@@ -32,9 +32,9 @@
 
     <div class="status_text" v-if="loading" style="opacity: 0">
       <div class="status_text_icon">
-        <img :src="getStaticImgUrl('/static/img/common/check_default.png')" alt="img" />
-        <img :src="getStaticImgUrl('/static/img/common/check_success.png')" alt="img" />
-        <img :src="getStaticImgUrl('/static/img/common/check_error.png')" alt="img" />
+        <img :src="getStaticImgUrl('/static/img/common/check_default.svg')" alt="img" />
+        <img :src="getStaticImgUrl('/static/img/common/check_success.svg')" alt="img" />
+        <img :src="getStaticImgUrl('/static/img/common/check_error.svg')" alt="img" />
       </div>
     </div>
     <div class="status_text status_success" v-else-if="sliderStatus == 'success'">

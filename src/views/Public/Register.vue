@@ -79,7 +79,7 @@
             </span>
             <span>{{ form.area }}</span>
             <div class="more_icon">
-              <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img" />
+              <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="img" />
             </div>
           </div>
           <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.phone"

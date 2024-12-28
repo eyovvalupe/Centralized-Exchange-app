@@ -12,7 +12,7 @@
             {{ rechargeAmount }}
         </div>
         <div class="code-img-box">
-            <img :src="getStaticImgUrl('/static/img/assets/code.png')" alt="→" class="code-img">
+            <img :src="getStaticImgUrl('/static/img/assets/code.svg')" alt="→" class="code-img">
         </div>
         <div class="code-text">
             gutytytyrtrrtdtd

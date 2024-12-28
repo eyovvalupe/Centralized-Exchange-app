@@ -5,7 +5,7 @@
             <template #right>
                 <div class="top-record" @click="goRecord">
                     <div class="top-record-icon">
-                        <img :src="getStaticImgUrl('/static/img/user/withdraw_record_icon.png')" alt="img">
+                        <img :src="getStaticImgUrl('/static/img/user/withdraw_record_icon.svg')" alt="img">
                     </div>
                     <!-- <span>
                         记录
@@ -21,13 +21,13 @@
                 <div class="item account_item" @click="openDialog('from')">
                     <div class="currency" v-if="form.from">
                         <div class="currency_icon">
-                            <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.png`)"
+                            <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)"
                                 alt="currency">
                         </div>
                         <span>{{ form.fromName }}</span>
                     </div>
                     <div class="more">
-                        <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more">
+                        <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more">
                     </div>
                 </div>
                 <div class="item ipt_item" :class="{ 'err_ipt': errStatus }">
@@ -43,7 +43,7 @@
             <div class="trans">
                 <div class="line"></div>
                 <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-                    <img :src="getStaticImgUrl('/static/img/assets/transfer.png')" alt="img">
+                    <img :src="getStaticImgUrl('/static/img/assets/transfer.svg')" alt="img">
                 </div>
                 <div class="line" style="flex:12"></div>
             </div>
@@ -53,13 +53,13 @@
                 <div class="item account_item" @click="openDialog('to')">
                     <div class="currency">
                         <div class="currency_icon">
-                            <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.png`)"
+                            <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.svg`)"
                                 alt="currency">
                         </div>
                         <span>{{ form.toName }}</span>
                     </div>
                     <div class="more">
-                        <img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="more">
+                        <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more">
                     </div>
                 </div>
                 <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }"
@@ -92,13 +92,13 @@
             v-model:show="showDialog" position="bottom" teleport="body">
             <div class="swap_accounr_dialog">
                 <div class="close_icon" @click="showDialog = false">
-                    <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x">
+                    <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x">
                 </div>
                 <div @click="clickItem(item)" class="swap_dialog_item"
                     :class="{ 'swap_dialog_item_active': (clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency)) }"
                     v-for="(item, i) in wallet" :key="i">
                     <div class="icon">
-                        <img :src="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.png`)"
+                        <img :src="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.svg`)"
                             alt="currency">
                     </div>
                     <span>{{ item.name }}</span>

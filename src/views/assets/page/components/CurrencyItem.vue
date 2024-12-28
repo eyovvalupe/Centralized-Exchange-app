@@ -1,12 +1,12 @@
 <template>
   <div class="tab" :class="{ open_tab: switchs[i] == true }" @click="switchOpen(i, $event)">
     <div class="tab_icon">
-      <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.png`)" class="rounded-full" alt="img" />
+      <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" class="rounded-full" alt="img" />
     </div>
     <div class="name">{{ item.name }}</div>
     <div class="amount">{{ item.amount }}</div>
     <div class="more">
-      <img :src="getStaticImgUrl('/static/img/common/menu.png')" alt="img" />
+      <img :src="getStaticImgUrl('/static/img/common/menu.svg')" alt="img" />
     </div>
     <div class="rights">
       <div class="right px-[0.1rem]" @click="goTopUp(item.currency.toUpperCase())" v-if="item.type == 'crypto'">

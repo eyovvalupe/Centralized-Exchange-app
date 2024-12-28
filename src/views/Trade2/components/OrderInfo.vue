@@ -26,13 +26,13 @@
             </span>
           </div>
           <div class="stock-info__trend" @click="openStockModel(currStock)">
-            <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" />
+            <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
           </div>
         </div>
         <div class="stock-info__order_no">
           <span>{{ currStock.order_no || "--" }}</span>
           <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
-            <img :src="getStaticImgUrl('/static/img/trade/copy.png')" alt="copy" />
+            <img :src="getStaticImgUrl('/static/img/trade/copy.svg')" alt="copy" />
           </div>
         </div>
       </div>
@@ -197,37 +197,37 @@
       <div class="btn btn2" @click="emit('update', currStock)"
         v-if="['none', 'lock', 'open'].includes(currStock.status)">
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/update.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/update.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
       <div class="btn btn2 disabled_btn" v-else>
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/update_disabled.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/update_disabled.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
       <div class="btn btn3" @click="emit('sell', currStock)" v-if="['open'].includes(currStock.status)">
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/close.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/close.svg')" alt="img" />
         </div>
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
       <div class="btn btn3 disabled_btn" v-else>
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/close_disabled.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/close_disabled.svg')" alt="img" />
         </div>
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
       <div class="btn btn4" @click="emit('cancel', currStock)" v-if="currStock.status == 'none'">
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/cancel.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_cancel") }}</div>
       </div>
       <div class="btn btn4 disabled_btn" v-else>
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/cancel_disabled.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/trade/cancel_disabled.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_cancel") }}</div>
       </div>

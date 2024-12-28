@@ -37,7 +37,7 @@
                 <span>{{ currIn.name || "--" }}</span>
               </div>
               <div class="more_icon">
-                <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
+                <img :src="getStaticImgUrl('/static/img/trade/down.svg')" alt="↓" />
               </div>
             </div>
           </div>
@@ -74,13 +74,13 @@
               @click="openDialog(1)">
               <div class="flex items-center">
                 <div v-if="currOut.name" class="icon">
-                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.png`)"
+                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.svg`)"
                     alt="currency" />
                 </div>
                 <span>{{ currOut.name || "--" }}</span>
               </div>
               <div class="more_icon">
-                <img :src="getStaticImgUrl('/static/img/trade/down.png')" alt="↓" />
+                <img :src="getStaticImgUrl('/static/img/trade/down.svg')" alt="↓" />
               </div>
             </div>
           </div>
@@ -105,11 +105,11 @@
     position="bottom" teleport="body">
     <div class="withdraw_accounr_dialog">
       <div class="close_icon" @click="showDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.png')" alt="x" />
+        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
       </div>
       <div class="search_box">
         <div class="icon">
-          <img :src="getStaticImgUrl('/static/img/common/search.png')" alt="🔍" />
+          <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
         </div>
         <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
           type="text" enterkeyhint="search" class="search" />

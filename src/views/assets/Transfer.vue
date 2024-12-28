@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record.png')" />
+            <img :src="getStaticImgUrl('/static/img/assets/record.svg')" />
           </div>
           <span>
             {{ $t("transfer.transferRecord") }}
@@ -26,7 +26,7 @@
           <div class="flex items-center">
             <div class="account_item">
               <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.png`)" alt="icon" />
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="icon" />
               </div>
               <div class="item_content">
                 <span>{{ _accountMap[form.from] }}</span>
@@ -35,7 +35,7 @@
 
             <div class="account_item">
               <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.png`)"
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.svg`)"
                   alt="img" />
               </div>
               <div class="item_content">
@@ -66,7 +66,7 @@
           <div class="flex items-center">
             <div class="account_item">
               <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.png`)" alt="icon" />
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.svg`)" alt="icon" />
               </div>
               <div class="item_content">
                 <span>{{ _accountMap[form.to] }}</span>
@@ -75,7 +75,7 @@
 
             <div class="account_item">
               <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.png`)" alt="img" />
+                <img :src="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.svg`)" alt="img" />
               </div>
               <div class="item_content">
                 <span class="monty_span">{{ form.toCurrency.name || "" }}</span>
@@ -128,7 +128,7 @@
         <template #option="option">
           <div class="picker-item">
             <span class="picker-item__icon">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${option.key.toUpperCase()}.png`)" alt="icon" />
+              <img :src="getStaticImgUrl(`/static/img/crypto/${option.key.toUpperCase()}.svg`)" alt="icon" />
             </span>
             <span class="picker-item__text">
               {{ option.value }}
