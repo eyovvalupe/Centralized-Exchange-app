@@ -39,7 +39,7 @@
           :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
           <div class="ratio_price" v-if="item.price * (item.ratio || 0)">
             {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
-            {{ item.price * (item.ratio || 0) }}
+            {{ item.change ? item.change : '--' }}
           </div>
           <div class="ratio_percentage" v-if="item.ratio">
             {{
