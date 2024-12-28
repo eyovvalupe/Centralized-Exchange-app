@@ -204,7 +204,7 @@ const clickAccountItem = val => {
 
   .search_box {
     height: 0.8rem;
-    background-color: #f5f5f5;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.4rem;
     display: flex;
     align-items: center;
@@ -236,7 +236,7 @@ const clickAccountItem = val => {
     }
 
     .active_tab {
-      background-color: #f6f8ff;
+      background-color: var(--ex-bg-color2);
       color: var(--ex-primary-color);
       font-weight: 500;
     }
@@ -256,7 +256,7 @@ const clickAccountItem = val => {
 
   .add_item {
     margin-bottom: 0.36rem;
-    border: 1px dashed #ccd7fd;
+    border: 1px dashed var(--ex-border-color2);
     border-radius: 0.12rem;
     height: 1.44rem;
     display: flex;
@@ -271,7 +271,6 @@ const clickAccountItem = val => {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    // background-color: #f6f7fa;
     border: 1px solid var(--ex-border-color2);
     padding: 0 0.4rem 0 0.36rem;
 

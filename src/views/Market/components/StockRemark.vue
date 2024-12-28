@@ -103,7 +103,7 @@ const list = ref([
             top: 0.64rem;
             left: 0.3rem;
             font-size: 0.28rem;
-            color: #18B762;
+            color: var(--ex-success-color);
         }
     }
 
@@ -148,7 +148,7 @@ const list = ref([
         .stock_tab {
             width: 2.97rem;
             height: 1.90rem;
-            border: 1px solid #EAEAEA;
+            border: 1px solid var(--ex-border-color);
             border-radius: 0.08rem;
             padding: 0.17rem;
             position: relative;
@@ -162,7 +162,7 @@ const list = ref([
             }
 
             .tab_subtitle {
-                color: #818898;
+                color: var(--ex-text-color3);
                 font-weight: 400;
                 font-size: 0.17rem;
                 margin-bottom: 0.14rem;
@@ -222,10 +222,10 @@ const list = ref([
         .th {
             padding-bottom: 0.16rem;
             height: 0.64rem;
-            color: #9EA3AE;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             font-weight: 400;
-            border-bottom: 1px solid #E8E8E8;
+            border-bottom: 1px solid var(--ex-border-color);
 
             .td_r {
                 text-align: right;

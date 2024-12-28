@@ -339,7 +339,7 @@ const removeStock = (item) => {
       font-size: 0.32rem;
       font-weight: 600;
       line-height: 0.432rem;
-      color: #6c7b90;
+      color: var(--ex-text-color2);
     }
 
     .item_info_box {
@@ -355,13 +355,13 @@ const removeStock = (item) => {
         justify-content: center;
         align-items: center;
         font-weight: 600;
-        color: #fff;
+        color: var(--ex-white);
         border-radius: 0.24rem;
       }
 
       .nodata_percent {
         height: 0.48rem;
-        background-color: #6c7b90;
+        background-color: var(--ex-text-color2);
       }
     }
   }
@@ -428,7 +428,7 @@ const removeStock = (item) => {
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.3rem;
-      color: #6c7b90;
+      color: var(--ex-text-color2);
     }
 
     .item_info_box {
@@ -442,12 +442,12 @@ const removeStock = (item) => {
         font-size: 0.24rem;
         display: inline-block;
         font-weight: 600;
-        color: #fff;
+        color: var(--ex-white);
         border-radius: 0.12rem;
       }
 
       .nodata_percent {
-        background-color: #6c7b90;
+        background-color: var(--ex-text-color2);
       }
     }
   }

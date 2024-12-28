@@ -11,7 +11,7 @@
       <div
         style="display:flex;align-items:center;justify-content:center;text-align:center;background:var(--ex-bg-color2);border:1px solid var(--ex-border-color);border-radius:0.32rem;line-height:0.4rem;margin-top:0.32rem;overflow:hidden;position:relative;margin:0.32rem 0.4rem;">
         <div
-          style="color:var(--ex-text-color);font-size:0.28rem;font-weight:400;padding:0 0.32rem;height:1.4rem;background-color:#fff;display:flex;align-items:center;justify-content:center;">
+          style="color:var(--ex-text-color);font-size:0.28rem;font-weight:400;padding:0 0.32rem;height:1.4rem;background-color:var(--ex-bg-color);display:flex;align-items:center;justify-content:center;">
           {{ account }}</div>
         <div style="display:flex;align-items:center;justify-content:center;flex-direction: column;flex:1">
           <div style="display:flex;align-items:center;justify-content:center;margin-bottom:0.08rem">
@@ -32,7 +32,7 @@
           style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;border: 1px solid var(--ex-primary-color);color: var(--ex-primary-color)">
           {{ $t('market.market_buy_fast_noti_confirm') }}</div>
         <div @click="router.push({ name: 'topUpCrypto' });close();"
-          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: var(--ex-primary-color);color: #fff;">
+          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: var(--ex-primary-color);color: var(--ex-bg-primary-text-color);">
           {{ $t('market.market_buy_fast_noti_cancel') }}</div>
       </div>
     </div>

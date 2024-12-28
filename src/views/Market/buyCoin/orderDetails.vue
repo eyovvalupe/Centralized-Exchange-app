@@ -214,7 +214,7 @@ const statusEnum = {
   done: {
     name: t("market.market_buy_list_complete"),
     title: t("market.market_buy_list_complete"),
-    color: "#18B762",
+    color: "var(--ex-success-color)",
   },
   cancel: {
     name: t("market.market_buy_list_cancel"),
@@ -400,16 +400,16 @@ onInit();
     background: linear-gradient(to left,
         transparent 0%,
         transparent 50%,
-        #eff3f8 50%,
-        #eff3f8 100%);
+        var(--ex-border-color) 50%,
+        var(--ex-border-color) 100%);
     background-size: 0.36rem 0.02rem;
     background-repeat: repeat-x;
   }
 
   .disabled-btn {
-    background: #f5f7fa;
-    border-color: #f5f7fa;
-    color: #c0c4cc;
+    background: var(--ex-bg-color2);
+    border-color: var(--ex-bg-color2);
+    color: var(--ex-text-color5);
     cursor: not-allowed;
     pointer-events: none;
   }

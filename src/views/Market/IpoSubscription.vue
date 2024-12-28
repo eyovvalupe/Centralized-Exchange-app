@@ -347,13 +347,13 @@ const openConfirmBox = () => {
             : t("trade.stock_opening_enough_balance");
     const content =
         type == 1
-            ? `<div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
+            ? `<div class="text-color" style="font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
                 "trade.ipo_account_balance"
             )} <span style="font-weight:600;color:var(--ex-primary-color);">` +
             mainWallet.value.amount +
             "</span> " +
             mainWallet.value.currency +
-            `</div><div style="color:#383C42;font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
+            `</div><div class="text-color" style="font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
                 "trade.stock_account_notification"
             )}</div>`
             : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--ex-bg-color2);border:1px solid var(--ex-border-color);border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
@@ -458,7 +458,7 @@ const openConfirmBox = () => {
 
             span {
                 margin-left: 0.12rem;
-                color: #E8503A;
+                color: var(--ex-error-color);
             }
 
             .blue {

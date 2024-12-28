@@ -64,7 +64,7 @@
         align-items: center;
         justify-content: center;
         border-bottom: 1px solid var(--ex-border-color);
-        // background-color: #f2f2f2;
+        // background-color: var(--ex-bg-color2);
       }
       .selected-class {
         color: var(--ex-primary-color);

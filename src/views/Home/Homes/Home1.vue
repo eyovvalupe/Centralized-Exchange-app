@@ -477,7 +477,7 @@ onMounted(() => {
             align-items: center;
             justify-content: flex-start;
             font-size: 0.4rem;
-            color: #8d93a6;
+            color: var(--ex-text-color3);
             font-weight: 600;
 
             .assets_login {
@@ -549,7 +549,6 @@ onMounted(() => {
         }
 
         .func_box {
-            // background-color: #ededed;
             width: 0.72rem;
             height: 0.72rem;
             border-radius: 50%;

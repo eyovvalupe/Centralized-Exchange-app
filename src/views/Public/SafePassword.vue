@@ -184,7 +184,7 @@ const focus = () => { // 聚焦
         }
 
         .err_ipt {
-            border: 1px solid #E8503A;
+            border: 1px solid var(--ex-error-color);
         }
 
         .error_text {

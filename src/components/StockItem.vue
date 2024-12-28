@@ -346,7 +346,7 @@ const removeStock = (item) => {
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.3rem;
-      color: #6c7b90;
+      color: var(--ex-text-color2);
     }
 
     .item_info_box {
@@ -360,12 +360,12 @@ const removeStock = (item) => {
         font-size: 0.24rem;
         display: inline-block;
         font-weight: 600;
-        color: #fff;
+        color: var(--ex-white);
         border-radius: 0.12rem;
       }
 
       .nodata_percent {
-        background-color: #6c7b90;
+        background-color: var(--ex-text-color2);
       }
     }
   }
@@ -433,7 +433,7 @@ const removeStock = (item) => {
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.3rem;
-      color: #6c7b90;
+      color: var(--ex-text-color2);
     }
 
     .item_info_box {
@@ -447,12 +447,12 @@ const removeStock = (item) => {
         font-size: 0.24rem;
         display: inline-block;
         font-weight: 600;
-        color: #fff;
+        color: var(--ex-white);
         border-radius: 0.12rem;
       }
 
       .nodata_percent {
-        background-color: #6c7b90;
+        background-color: var(--ex-text-color2);
       }
     }
   }
@@ -468,22 +468,22 @@ const removeStock = (item) => {
 }
 
 .stock_item_bg:active {
-  background-color: #eef0f7;
+  background-color: var(--ex-bg-color3);
 }
 
 .stock_item_up {
-  background-color: rgba(24, 183, 98, 0.12);
+  background-color: rgb(var(--ex-up-color-rgb) / 0.12);
 
   .stock_item {
-    border-bottom: 1px solid rgba(24, 183, 98, 0.12);
+    border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.12);
   }
 }
 
 .stock_item_down {
-  background-color: rgba(250, 100, 102, 0.12);
+  background-color: rgb(var(--ex-down-color-rgb) / 0.12);
 
   .stock_item {
-    border-bottom: 1px solid rgba(250, 100, 102, 0.12);
+    border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.12);
   }
 }
 

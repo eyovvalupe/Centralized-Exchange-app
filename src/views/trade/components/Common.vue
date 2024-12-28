@@ -2,7 +2,7 @@
   <div class="common-open-position">
     <div class="stock-box" style="margin: 0 0px 0.1rem;">
       <span class="grop-title">股票</span>
-      <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
+      <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="var(--ex-primary-color)" />
       <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" class="stock-img" v-if="stockCo.length > 0"
         @click="openPopup" />
     </div>
@@ -16,7 +16,7 @@
         <div>
           {{ stockCo[0].symbol }}
         </div>
-        <div style="color: #9ea3ae">
+        <div style="color: var(--ex-text-color3)">
           {{ stockCo[0].name }}
         </div>
       </div>
@@ -53,7 +53,7 @@
     <div class="slider-container-box">
       <div class="slider-container">
         <Slider :min="0" :max="100" v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)"
-          inactive-color="#f2f2f2" @change="onSliderChange">
+          inactive-color="var(--ex-bg-color2)" @change="onSliderChange">
           <template #button>
             <div class="slider-custom-num">
               <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
@@ -79,15 +79,15 @@
       </div> -->
 
     <div class="m-b-5" style="height: .5rem;"></div>
-    <Button size="large" color="#e8503a" round v-if="isDownActive && token" :disabled="downdisable(active)"
+    <Button size="large" color="var(--ex-down-color)" round v-if="isDownActive && token" :disabled="downdisable(active)"
       @click="openPositPopup('down')">买跌</Button>
-    <Button size="large" color="#18b762" round v-if="isUpActive && token" :disabled="downdisable(active)"
+    <Button size="large" color="var(--ex-up-color)" round v-if="isUpActive && token" :disabled="downdisable(active)"
       @click="openPositPopup('up')">买涨 </Button>
 
 
     <Button size="large" color="var(--ex-primary-color)" round v-if="!token" style="margin-bottom: 0.34rem"
       @click="jump('login')">登陆</Button>
-    <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999"
+    <Button size="large" color="var(--ex-bg-color2)" round v-if="!token" style="color: var(--ex-text-color3)"
       @click="jump('register')">注册</Button>
 
   </div>
@@ -715,20 +715,6 @@ defineExpose({
   padding-bottom: 0.76rem;
   background-color: var(--ex-bg-color);
 
-  // .van-loading {
-  //   left: 47%;
-  //   margin-top: 2rem !important;
-  // }
-  .yuan {
-    width: 15px;
-    height: 15px;
-    background-color: #e8503a;
-    border-radius: 15px;
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: top;
-  }
-
   .slider-container-box {
     margin-top: .2rem;
     height: 1rem;
@@ -848,14 +834,14 @@ defineExpose({
   }
 
   .pricenlarged {
-    background: #f9fafb;
+    background: var(--ex-bg-color2);
   }
 
   .market-button {
     width: 1.9rem;
     height: 0.72rem;
     border-radius: 1.26rem;
-    background: #f2f2f2;
+    background: var(--ex-bg-color2);
     text-align: center;
     line-height: 0.72rem;
     color: var(--ex-text-color3);
@@ -992,7 +978,7 @@ defineExpose({
 
     .position-fee {
       margin-top: 0.1rem;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -1012,7 +998,7 @@ defineExpose({
     right: .2rem;
     top: .12rem;
     height: .68rem;
-    color: #333;
+    color: var(--ex-text-color);
     text-align: right;
     font-size: 0.28rem;
     font-style: normal;
@@ -1052,7 +1038,7 @@ defineExpose({
 
   .purchase-amount {
     margin-top: 0.2rem;
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
   }
 

@@ -58,7 +58,7 @@
             <span>&nbsp;</span>
           </div>
           <FormItem custom disabled v-if="priceMode == 1">
-            <span style="color: #a4acb9">{{
+            <span style="color: var(--ex-text-color4)">{{
               t("trade.stock_opening_price_latest")
             }}</span>
           </FormItem>
@@ -231,7 +231,7 @@
       size="large"
       @click="submit1"
       class="submit"
-      :color="activeType == 1 ? '#18b762' : '#e8503a'"
+      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'"
       round
       >{{
         activeType == 1
@@ -285,7 +285,7 @@
             <div style="text-align: right; font-size: 0.3rem">
               {{ currStock.name }}
             </div>
-            <!-- <div style="color: #9EA3AE;font-size: 0.24rem;">{{ currStock.name }}</div> -->
+            <!-- <div style="color: var(--ex-text-color3);font-size: 0.24rem;">{{ currStock.name }}</div> -->
           </div>
         </div>
       </div>
@@ -1486,7 +1486,7 @@ defineExpose({
     }
 
     .ipt::placeholder {
-      color: #a4acb9;
+      color: var(--ex-text-color4);
     }
   }
 }
@@ -1593,7 +1593,7 @@ defineExpose({
       align-items: center;
       justify-content: center;
       border-radius: 1.26rem;
-      background: #f2f2f2;
+      background: var(--ex-bg-color2);
       height: 0.72rem;
       color: var(--ex-text-color3);
       text-align: center;
@@ -1641,7 +1641,7 @@ defineExpose({
       .tag {
         height: 0.44rem;
         color: var(--ex-primary-color);
-        background-color: #ecf1fe;
+        background-color: var(--ex-bg-color3);
         line-height: 0.44rem;
         padding: 0 0.3rem;
         border-radius: 0.4rem;
@@ -1650,13 +1650,13 @@ defineExpose({
       }
 
       .red_tag {
-        background-color: #fbf1ef;
-        color: #e8503a;
+        background-color: rgb(var(--ex-down-color-rgb) / 0.08);
+        color: var(--ex-down-color);
       }
 
       .green_tag {
-        background-color: #eff9f2;
-        color: #18b762;
+        background-color: rgb(var(--ex-up-color-rgb) / 0.08);
+        color: var(--ex-up-color);
       }
 
       .lever {

@@ -497,14 +497,14 @@ const copy = (text) => {
 
       .red_tag,
       .tag_long {
-        color: #18b762;
-        background-color: rgba(24, 183, 98, 0.08);
+        color: var(--ex-up-color);
+        background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       }
 
       .green_tag,
       .tag_short {
-        color: #e8503a;
-        background-color: rgba(232, 80, 58, 0.08);
+        color: var(--ex-down-color);
+        background-color: rgb(var(--ex-down-color-rgb) / 0.08);
       }
 
       .text {

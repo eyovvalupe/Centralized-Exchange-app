@@ -326,7 +326,7 @@ defineExpose({
     }
 
     .num {
-      color: #6c7b90;
+      color: var(--ex-text-color2);
       font-weight: 600;
       font-size: 0.24rem;
       text-align: right;

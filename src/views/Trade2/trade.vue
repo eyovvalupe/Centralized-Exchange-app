@@ -511,7 +511,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
       }
 
       .ipt::placeholder {
-        color: #a4acb9;
+        color: var(--ex-text-color4);
       }
     }
   }
@@ -564,7 +564,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
     }
 
     .t-flex {
-      color: #333;
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 0.28rem;
       font-style: normal;
@@ -574,7 +574,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
     }
 
     .b-num {
-      color: #333;
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 0.32rem;
       font-style: normal;

@@ -52,7 +52,7 @@ const { t } = useI18n();
 <style lang="less" scoped>
 .market_stock_chase {
   height: 5rem;
-  box-shadow: 0 0.1rem 0.8rem 0 rgb(var(--ex-primary-color) / 0.33);
+  box-shadow: 0 0.1rem 0.8rem 0 rgb(var(--ex-primary-color-rgb) / 0.33);
   border-radius: 0.64rem;
   position: relative;
   top: -1rem;

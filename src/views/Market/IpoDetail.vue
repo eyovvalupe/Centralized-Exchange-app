@@ -235,8 +235,8 @@ onBeforeUnmount(() => {
         align-items: center;
         text-align: center;
         justify-content: center;
-        color: #FA7500;
-        border: 1px solid #FA7500;
+        color: var(--ex-warning-color);
+        border: 1px solid var(--ex-warning-color);
         border-radius: 0.12rem;
         font-size: 0.28rem;
         font-weight: 600;
@@ -244,7 +244,7 @@ onBeforeUnmount(() => {
       }
 
       span {
-        color: #FA7500;
+        color: var(--ex-warning-color);
         margin: 0 0.1rem;
         font-size: 0.28rem;
       }
@@ -260,25 +260,25 @@ onBeforeUnmount(() => {
       align-items: center;
       justify-content: center;
       font-size: 0.24rem;
-      color: #fff;
+      color: var(--ex-white);
       position: absolute;
       right: 0;
       top: 0;
     }
 
     .status_pre {
-      background-color: #FA7500;
-      color: #fff;
+      background-color: var(--ex-warning-color);
+      color: var(--ex-white);
     }
 
     .status_done {
       background-color: var(--ex-info-color);
-      color: #fff;
+      color: var(--ex-white);
     }
 
     .status_ed {
-      background-color: #18b762;
-      color: #fff;
+      background-color: var(--ex-success-color);
+      color: var(--ex-white);
     }
   }
 

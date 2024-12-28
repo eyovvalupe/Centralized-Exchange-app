@@ -28,7 +28,7 @@ const props = defineProps({
 <style lang="less" scoped>
 .recharge_item {
     width: 100%;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid var(--ex-border-color);
     flex-direction: column;
     justify-content: space-between;
     padding: 0.2rem 0 0.28rem 0;

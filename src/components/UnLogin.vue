@@ -40,7 +40,7 @@ const goLogin = () => {
 .unlogin_box {
   .unlogin {
     text-align: center;
-    color: #a5afba;
+    color: var(--ex-text-color4);
     position: relative;
     top: -1rem;
 

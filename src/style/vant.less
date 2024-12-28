@@ -11,7 +11,7 @@
     background: rgba(0, 0, 0, 0) !important;
 
     .van-loading {
-        color: #555;
+        color: var(--ex-info-color);
     }
 }
 
@@ -94,7 +94,7 @@
     position: absolute;
     right: 0.3rem;
     top: 0.22rem;
-    color: #FFF;
+    color: var(--ex-bg-primary-text-color);
     text-align: center;
     font-size: 0.3rem;
     font-weight: 500;
@@ -143,7 +143,7 @@
 // 弹窗关闭按钮
 .van-popup__close-icon {
     font-size: 0.36rem !important;
-    color: #333 !important;
+    color: var(--ex-text-color) !important;
     transform: translateX(-2px) translateY(2px);
 }
 
@@ -188,7 +188,7 @@
 }
 
 .van-dialog {
-    box-shadow: 0 0 10px #ddd;
+    box-shadow: 0 0 10px var(--ex-border-color2);
 }
 
 /*自定义选项卡样式1*/
@@ -218,8 +218,8 @@
 
         .van-tab--active {
             border-radius: 0.32rem 0.32rem 0 0;
-            background: #FFF;
-            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            background: var(--ex-bg-color);
+            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
             height: 0.92rem;
             position: relative;
             top: -0.12rem;
@@ -288,8 +288,8 @@
 
         .van-tab--active {
             border-radius: 0.32rem 0.32rem 0 0;
-            background: #FFF;
-            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            background: var(--ex-bg-color);
+            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
             height: 0.92rem;
             position: relative;
             z-index: 1;
@@ -577,7 +577,7 @@
                 border-color: var(--ex-primary-color);
 
                 .van-tab__text {
-                    color: #fff;
+                    color: var(--ex-bg-primary-text-color);
                     font-weight: 400;
                 }
             }

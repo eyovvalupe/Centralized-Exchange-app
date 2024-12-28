@@ -157,8 +157,8 @@
           <div class="title">{{ $t("user_page.security") }}</div>
         </div>
         <div v-if="token" class="gg">
-          <span v-if="!userInfo.googlebind" style="color: #ff3b30">{{ $t("user_page.not_set_google_yet") }}</span>
-          <span v-if="userInfo.googlebind" style="color: #18b762">{{ $t("user_page.already_set_google") }}</span>
+          <span v-if="!userInfo.googlebind" class="text-error">{{ $t("user_page.not_set_google_yet") }}</span>
+          <span v-if="userInfo.googlebind" class="text-success">{{ $t("user_page.already_set_google") }}</span>
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
@@ -217,7 +217,7 @@ const loginout = () => {
       confirmButtonText: t('user_page.message_box_confirm'),
 
       confirmButtonColor: "var(--ex-primary-color)",
-      cancelButtonColor: "#323233",
+      cancelButtonColor: "var(--ex-text-color2)",
     })
       .then(() => {
         _logout();
@@ -350,7 +350,7 @@ if (token.value) {
 
         .info {
           font-size: 0.24rem;
-          color: #c2c2c2;
+          color: var(--ex-text-color4);
           margin-top: 0.2rem;
         }
       }

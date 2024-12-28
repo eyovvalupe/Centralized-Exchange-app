@@ -214,7 +214,7 @@ const confirmNext = () => {
     width: 3.62rem;
     height: 3.62rem;
     margin: 0 auto 0.4rem auto;
-    border: 0.02rem solid #ddd;
+    border: 0.02rem solid var(--ex-border-color);
     border-radius: 0.3rem;
     overflow: hidden;
   }
@@ -251,7 +251,7 @@ const confirmNext = () => {
   .tip {
     font-size: 0.24rem;
     line-height: 0.28rem;
-    color: #999999;
+    color: var(--ex-text-color3);
     font-weight: 400;
     margin-bottom: 0.3rem;
     text-align: center;
@@ -331,7 +331,7 @@ const confirmNext = () => {
 
   .cautions {
     padding: 0.4rem 0.3rem;
-    background-color: #f6f6f6;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.08rem;
     margin-top: 0.4rem;
     font-weight: 400;

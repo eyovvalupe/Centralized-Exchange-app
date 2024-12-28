@@ -88,7 +88,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .google_dialog {
-  background-color: #fefefe;
+  background-color: var(--ex-bg-color);
   padding: 0.28rem 0.32rem 0.8rem 0.32rem;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;

@@ -31,7 +31,7 @@ onMounted(() => {
 
         >div {
             height: 1rem;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--ex-border-color);
             display: flex;
             align-items: center;
             justify-content: center;

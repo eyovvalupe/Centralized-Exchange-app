@@ -259,11 +259,11 @@ const percentTagClick = (percent) => {
   }
 
   .percent_tag {
-    color: #2168f6;
+    color: var(--ex-primary-color);
     margin-left: 0.08rem;
     transition: all ease 0.3s;
     border-radius: 0.3rem;
-    background: rgba(33, 104, 246, 0.1);
+    background: rgb(var(--ex-primary-color-rgb) / 0.1);
     font-size: 0.24rem;
     padding: 0 0.14rem;
     height: 0.4rem;

@@ -1,7 +1,7 @@
 <template>
   <div class="list_page" v-for="item in props.list">
     <div class="list_delete_icon" @click="confirm(item.id)">
-      <Loading :size="18" v-if="loading && currDeleteId == item.id" color="#fff" />
+      <Loading :size="18" v-if="loading && currDeleteId == item.id" color="var(--ex-white)" />
       <div class="delete_icon" v-else>
         <img :src="getStaticImgUrl('/static/icons/delete.svg')" alt="">
       </div>

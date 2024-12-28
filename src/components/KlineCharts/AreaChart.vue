@@ -71,14 +71,14 @@ const initData = async () => {
             horizontal: {
                 show: true,
                 size: 1,
-                color: '#EDEDED',
+                color: 'var(--ex-border-color)',
                 style: 'dashed',
                 dashedValue: [2, 2]
             },
             vertical: {
                 show: true,
                 size: 1,
-                color: '#EDEDED',
+                color: 'var(--ex-border-color)',
                 style: 'dashed',
                 dashedValue: [2, 2]
             }
@@ -96,7 +96,7 @@ const initData = async () => {
                 show: props.showY
             },
             area: {
-                lineColor: props.color || "#2168F6",
+                lineColor: props.color || "var(--ex-primary-color)",
                 point: {
                     show: props.showY
                 },
@@ -301,8 +301,8 @@ defineExpose({
         height: 100%;
         background-color: var(--ex-bg-color);
         z-index: 99;
-        // border-right: 1px solid #7F939E;
-        // border-bottom: 1px solid #7F939E;
+        // border-right: 1px solid var(--ex-info-color);
+        // border-bottom: 1px solid var(--ex-info-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -335,8 +335,8 @@ defineExpose({
         .item {
             width: 1rem;
             height: 2rem;
-            border-left: 1px solid #7F939E;
-            border-top: 1px solid #7F939E;
+            border-left: 1px solid var(--ex-info-color);
+            border-top: 1px solid var(--ex-info-color);
             position: relative;
         }
 

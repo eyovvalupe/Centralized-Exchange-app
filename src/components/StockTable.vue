@@ -125,10 +125,10 @@ const remove = (item) => {
   .th {
     padding: 0 0.3rem 0.16rem 0.3rem;
     height: 0.64rem;
-    color: #9ea3ae;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;
-    // border-bottom: 1px solid #E8E8E8;
+    // border-bottom: 1px solid var(--ex-border-color);
 
     .td_r {
       text-align: right;

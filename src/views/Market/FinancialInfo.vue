@@ -32,7 +32,7 @@ import FinancialItem from "@/components/FinancialItem.vue"
     .chart_box {
         width: 100%;
         height: 4.28rem;
-        border: 1px solid #ddd;
+        border: 1px solid var(--ex-border-color);
         margin: 0.48rem 0 0.3rem 0;
     }
 

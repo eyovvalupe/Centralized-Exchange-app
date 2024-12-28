@@ -127,7 +127,7 @@ defineExpose({
         content: "";
         width: 100%;
         height: 1px;
-        background-color: #3b82f6;
+        background-color: var(--ex-primary-color);
         position: absolute;
         bottom: 16px;
         left: 0;
@@ -163,7 +163,7 @@ defineExpose({
   }
 
   .active_type_tab {
-    color: #fff;
+    color: var(--ex-white);
     position: relative;
 
     &::after {

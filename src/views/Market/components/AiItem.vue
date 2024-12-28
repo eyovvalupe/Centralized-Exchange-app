@@ -214,7 +214,7 @@ const formatSec = (seconds, t) => {
   .content {
     border-radius: 0.32rem;
     border: 1px solid var(--ex-border-color);
-    background: linear-gradient(180deg, var(--ex-bg-color2) 0%, #fff 100%);
+    background: linear-gradient(180deg, var(--ex-bg-color2) 0%, var(--ex-bg-color) 100%);
     padding: 0.24rem;
   }
 
@@ -223,7 +223,7 @@ const formatSec = (seconds, t) => {
     align-items: center;
     margin-bottom: 0.24rem;
     padding-bottom: 0.24rem;
-    border-bottom: 1px dashed #eff3f8;
+    border-bottom: 1px dashed var(--ex-border-color);
     justify-content: space-between;
 
     .ml {
@@ -236,7 +236,7 @@ const formatSec = (seconds, t) => {
       }
 
       .ml-val {
-        color: #e8503a;
+        color: var(--ex-error-color);
         font-size: 0.4rem;
         font-weight: 600;
         line-height: 0.4rem;

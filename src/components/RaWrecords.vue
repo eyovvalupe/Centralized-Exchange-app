@@ -160,7 +160,7 @@ onBeforeUnmount(() => {
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
     background-color: var(--ex-bg-color);
-    box-shadow: -2px 0 5px #ddd;
+    box-shadow: -2px 0 5px var(--ex-border-color2);
     transform: translateY(0);
 
     .fix_block_header {
@@ -253,17 +253,14 @@ onBeforeUnmount(() => {
     .van-tab--card {
         border-right: none;
         color: var(--ex-text-color);
-        // background-color: #f5f5f5;
+        // background-color: var(--ex-bg-color2);
         // border-radius: 0.3rem;
         // margin-left: 0.1rem;
         // transition: all ease .2s;
     }
 
     .van-tab--card.van-tab--active {
-        // background-color: var(--ex-primary-color);
-        // color: #fff;
-
-        background-color: #F6F8FF;
+        background-color: var(--ex-bg-color2);
         border-radius: 0.3rem;
         color: var(--ex-primary-color);
         font-weight: 500
@@ -275,7 +272,7 @@ onBeforeUnmount(() => {
 
     .van-tabs__wrap {
         height: 0.8rem;
-        border-bottom: 1px solid #F6F8FF;
+        border-bottom: 1px solid var(--ex-border-color);
         padding-bottom: 0.2rem;
     }
 

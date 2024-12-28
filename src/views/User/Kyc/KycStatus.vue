@@ -148,16 +148,16 @@ const goInfo = () => {
 
     .subtitlt {
       font-size: 0.28rem;
-      color: #333;
+      color: var(--ex-text-color);
       margin-top: 0.4rem;
     }
 
     .reason {
-      background-color: #f5f8fb;
+      background-color: var(--ex-bg-color2);
       padding: 0.4rem;
       width: 100%;
       margin-top: 0.64rem;
-      color: #333;
+      color: var(--ex-text-color);
       word-break: break-all;
       line-height: 0.4rem;
 
@@ -180,7 +180,7 @@ const goInfo = () => {
     }
 
     .light_btn {
-      background-color: #eff6ff;
+      background-color: var(--ex-bg-color3);
       color: var(--ex-primary-color);
     }
   }

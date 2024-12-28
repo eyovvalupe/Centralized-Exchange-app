@@ -26,7 +26,7 @@
                 <div class="circle-box-text-p">
                     {{ text }}
                 </div>
-                <div style="color: #8d8d8d;">进度</div>
+                <div class="text-color3">进度</div>
             </div>
         </div>
 
@@ -93,7 +93,7 @@ const backFunc = () => {
 
         span {
             font-size: 0.32rem;
-            color: #8e8e93;
+            color: var(--ex-text-color3);
         }
     }
 
@@ -178,7 +178,7 @@ const backFunc = () => {
         text-align: center;
         font-size: 0.32rem;
         margin-bottom: 1rem;
-        color: #8e8e93;
+        color: var(--ex-text-color3);
     }
 
 }

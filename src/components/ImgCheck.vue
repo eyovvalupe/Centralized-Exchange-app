@@ -229,7 +229,7 @@ onMounted(() => {
       width: 5.9rem;
 
       :deep(.van-slider__button) {
-        box-shadow: 0 0.08rem 0.2rem 0 rgb(var(--ex-primary-color) / 0.33);
+        box-shadow: 0 0.08rem 0.2rem 0 rgb(var(--ex-primary-color-rgb) / 0.33);
         background-size: contain;
         /* Scale the background image */
         background-repeat: no-repeat;
@@ -244,7 +244,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--, #333);
+    color: var(--ex-text-color2);
     font-size: 0.32rem;
     font-weight: 400;
     line-height: 0.32rem;
@@ -257,11 +257,11 @@ onMounted(() => {
   }
 
   .status_success {
-    color: #008822;
+    color: var(--ex-success-color);
   }
 
   .status_error {
-    color: #ff0000;
+    color: var(--ex-error-color);
   }
 
   .check_slider {
@@ -289,13 +289,13 @@ onMounted(() => {
 
   .check_slider_success {
     :deep(.el-slider__bar) {
-      background-color: #17b763;
+      background-color: var(--ex-success-color);
     }
   }
 
   .check_slider_error {
     :deep(.el-slider__bar) {
-      background-color: #fa6466;
+      background-color: var(--ex-error-color);
     }
   }
 }

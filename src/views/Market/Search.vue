@@ -308,7 +308,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       right: 0;
       display: flex;
       align-items: center;
-      color: #253146;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
 
       .type_icon {

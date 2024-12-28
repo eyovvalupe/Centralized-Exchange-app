@@ -445,7 +445,7 @@ onMounted(() => {
       border-right: none;
       color: var(--ex-text-color2);
       border-bottom: 0.04rem solid var(--ex-border-color2);
-      // background-color: #f5f5f5;
+      // background-color: var(--ex-bg-color2);
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
       // transition: all ease .2s;
@@ -453,7 +453,7 @@ onMounted(() => {
 
     :deep(.van-tab--card.van-tab--active) {
       background-color: var(--ex-bg-color);
-      color: #2168f6;
+      color: var(--ex-primary-color);
       font-family: "PingFang SC";
       font-size: 0.36rem;
       font-style: normal;

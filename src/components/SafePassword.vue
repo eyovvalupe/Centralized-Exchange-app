@@ -106,7 +106,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .safepassword_dialog {
-  background-color: #fefefe;
+  background-color: var(--ex-bg-color);
   padding: 0.96rem 0.32rem 0.6rem 0.32rem;
 
   position: relative;

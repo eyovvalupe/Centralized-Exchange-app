@@ -462,7 +462,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     .subtitle {
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       margin-bottom: 0.15rem;
       display: flex;
@@ -505,7 +505,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
           margin-left: 0.2rem;
           font-size: 0.28rem;
           font-weight: 400;
-          color: #333;
+          color: var(--ex-text-color);
           position: absolute;
           right: 0.24rem;
           pointer-events: none;
@@ -529,7 +529,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       }
 
       .disabled_item {
-        background-color: #f5f5f5;
+        background-color: var(--ex-bg-color2);
       }
 
       .item_box_left {
@@ -549,7 +549,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
         align-items: center;
         justify-content: center;
         border-radius: 1.26rem;
-        background: #f2f2f2;
+        background: var(--ex-bg-color2);
         height: 0.72rem;
         color: var(--ex-text-color3);
         text-align: center;
@@ -568,13 +568,13 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
   .submit {
     margin-top: 1.12rem;
-    color:#fff;
+    color:var(--ex-white);
   }
   .submit--sell{
-    background-color: #E8503A;
+    background-color: var(--ex-down-color);
   }
   .submit--buy{
-    background-color: var(--ex-primary-color);
+    background-color: var(--ex-up-color);
   }
 }
 </style>
@@ -603,7 +603,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
     input::placeholder {
       // color: var(--ex-primary-color); /* 占位符颜色 */
-      color: #9ea3ae;
+      color: var(--ex-text-color3);
       font-size: 0.3rem;
     }
 
@@ -611,7 +611,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       right: 0;
       display: flex;
       align-items: center;
-      color: #253146;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
 
       .type_icon {
@@ -713,7 +713,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     .active_tab {
-      background-color: #f6f8ff;
+      background-color: var(--ex-bg-color2);
       color: var(--ex-primary-color);
       font-weight: 500;
     }

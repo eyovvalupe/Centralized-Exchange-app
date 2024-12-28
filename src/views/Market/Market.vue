@@ -262,7 +262,7 @@ Promise.all([
 
   .search_block {
     background-color: var(--ex-bg-color);
-    border: 1px solid #eeeff1;
+    border: 1px solid var(--ex-border-color);
     height: 0.8rem;
     border-radius: 0.2rem;
     display: flex;
@@ -270,7 +270,7 @@ Promise.all([
     justify-content: flex-start;
     padding: 0 0.32rem;
     font-size: 0.28rem;
-    color: #9ea3ae;
+    color: var(--ex-text-color3);
     margin: 0 0.32rem 0.12rem 0.32rem;
 
     .search_icon {
@@ -307,21 +307,6 @@ Promise.all([
         font-size: 0.3rem;
       }
 
-      .nav_num {
-        width: 0.28rem;
-        height: 0.28rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #ff3b30;
-        font-size: 0.2rem;
-        color: #fff;
-        font-weight: 400;
-        border-radius: 50%;
-        position: absolute;
-        top: -0.3rem;
-        right: -0.12rem;
-      }
     }
 
     .tab_icon {
@@ -368,7 +353,7 @@ Promise.all([
 
     :deep(.van-tab--card.van-tab--active) {
       background-color: transparent;
-      color: #08090e;
+      color: var(--ex-text-color);
       font-weight: 600;
       font-size: 0.5rem;
       position: relative;

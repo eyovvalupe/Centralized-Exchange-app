@@ -77,7 +77,7 @@ const backFunc = () => {
 
         .box {
             width: 48%;
-            background-color: #F5F8FB;
+            background-color: var(--ex-bg-color2);
             border-radius: 0.12rem;
             height: 2rem;
             margin-bottom: 0.28rem;
@@ -85,7 +85,7 @@ const backFunc = () => {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #ABABAB;
+            color: var(--ex-text-color4);
             font-size: 0.24rem;
 
             .img_box {
@@ -112,7 +112,7 @@ const backFunc = () => {
     }
 
     .info {
-        color: #ABABAB;
+        color: var(--ex-text-color4);
         line-height: 0.5rem;
     }
 }

@@ -42,10 +42,10 @@ import Top from "@/components/Top.vue"
     padding: 1.52rem 0.32rem 1.9rem 0.32rem;
 
     .table {
-        border: 1px solid #CAC3C3;
+        border: 1px solid var(--ex-border-color2);
 
         .tr {
-            border-bottom: 1px solid #CAC3C3;
+            border-bottom: 1px solid var(--ex-border-color2);
             display: flex;
             align-items: stretch;
             word-wrap: break-word;
@@ -57,13 +57,13 @@ import Top from "@/components/Top.vue"
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-color: #F3F3F3;
+                background-color: var(--ex-bg-color2);
                 padding: 0.1rem;
                 line-height: 0.34rem;
                 font-size: 0.28rem;
                 color: var(--ex-text-color);
                 font-weight: 400;
-                border-right: 1px solid #CAC3C3;
+                border-right: 1px solid var(--ex-border-color2);
             }
 
             .right {

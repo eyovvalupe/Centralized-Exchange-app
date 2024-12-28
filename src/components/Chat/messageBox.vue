@@ -312,14 +312,6 @@ function formatDate(date) {
           background: transparent !important;
         }
 
-        // &::before {
-        //   content: "";
-        //   position: absolute;
-        //   top: 0;
-        //   right: -15px;
-        //   border: 8px solid transparent;
-        //   border-left: 8px solid #449742;
-        // }
       }
     }
 
@@ -329,14 +321,7 @@ function formatDate(date) {
         text-align: left;
       }
 
-      // .con::before {
-      //   content: "";
-      //   position: absolute;
-      //   top: 15px;
-      //   left: -15px;
-      //   border: 8px solid transparent;
-      //   border-right: 8px solid #f2f2f2;
-      // }
+
     }
 
     .send-conimg {
@@ -352,7 +337,7 @@ function formatDate(date) {
 
   #hasNewMessage {
     text-align: center;
-    background: #f5f5f5;
+    background: var(--ex-bg-color2);
     padding: 10px 0;
     margin-bottom: 10px;
     color: var(--ex-text-color3);

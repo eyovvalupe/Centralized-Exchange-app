@@ -48,7 +48,7 @@
           <ArrowIcon />
         </div>
 
-        <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
+        <FormItem background="var(--ex-bg-color)" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
           :btn-placeholder="form.fromCurrency.name" :placeholder="t('transfer.out_amount')" :inputType="'number'"
           @update:modelValue="changeAmount('from')" />
       </div>
@@ -86,13 +86,13 @@
             <img :src="getStaticImgUrl(`/static/icons/more_icon.svg`)" alt="">
           </div>
         </div>
-        <FormItem background="#fff" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
+        <FormItem background="var(--ex-bg-color)" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
           :btn-placeholder="form.toCurrency.name" :placeholder="t('transfer.in_amount')" :inputType="'number'"
           @update:modelValue="changeAmount('to')" />
         <!-- <div>
             <span v-show="formType == 'transfer'">自动换算</span>
             <span
-              :style="{ color: form.amount === '' ? '#A4ACB9' : '' }"
+              :style="{ color: form.amount === '' ? 'var(--ex-text-color4)' : '' }"
               v-show="formType == 'swap'"
               >{{
                 form.amount === ""
@@ -524,7 +524,7 @@ const changeAmount = (val) => {
     }
 
     .err_ipt {
-      border: 1px solid #e8503a;
+      border: 1px solid var(--ex-error-color);
     }
 
     .account_item {

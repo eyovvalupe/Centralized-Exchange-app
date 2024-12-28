@@ -13,7 +13,7 @@
                     <div class="grid">{{ item.order_no }}</div>
                 </div>
                 <div class="right">
-                    <div class="amount" :class="[item.profit < 0 ? 'down_status' : 'up_status']">
+                    <div class="amount" :class="[item.profit < 0 ? 'text-down' : 'text-up']">
                         {{ item.profit >= 0 ? '+' : '' }}
                         {{ item.profit }}
                     </div>
@@ -201,13 +201,6 @@ defineExpose({
                 margin-top: 0.18rem;
             }
 
-            .down_status {
-                color: #E8503A;
-            }
-
-            .up_status {
-                color: #18B762;
-            }
         }
     }
 

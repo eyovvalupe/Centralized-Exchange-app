@@ -65,14 +65,14 @@
 
       <div class="btns">
         <Button v-if="orderStatus == 'success'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
-          color="#18B762" style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
+          color="var(--ex-success-color)" style="width: 100%" class="submit" type="info"><span style="color: var(--ex-white)">{{
             $t("recharging.success")
           }}</span></Button>
         <Button v-else-if="orderStatus == 'failure'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
-          color="#E8503A" style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
+          color="var(--ex-error-color)" style="width: 100%" class="submit" type="info"><span style="color: var(--ex-white)">{{
             $t("recharging.fail") }}</span></Button>
         <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="var(--ex-primary-color)"
-          style="width: 100%" class="submit" type="info"><span style="color: #fff">{{
+          style="width: 100%" class="submit" type="info"><span style="color: var(--ex-bg-primary-text-color)">{{
             $t("recharging.finish")
           }}</span></Button>
       </div>
@@ -353,13 +353,13 @@ const copyPrice = () => {
     .subtitle {
       font-weight: 400;
       font-size: 0.28rem;
-      color: #323235;
+      color: var(--ex-text-color);
       line-height: 0.44rem;
       margin-bottom: 0.4rem;
     }
 
     .qrcode_box {
-      border: 1px solid #dfe2e4;
+      border: 1px solid var(--ex-border-color2);
       background-color: var(--ex-bg-color);
       width: 3.18rem;
       height: 3.18rem;

@@ -19,10 +19,10 @@
           <div class="detail-flex-title">
             盈亏/盈亏比
           </div>
-          <div class="detail-num" style="color: #e8503a; margin-top: 0.06rem;">
+          <div class="detail-num" style="color: var(--ex-down-color); margin-top: 0.06rem;">
             {{ detaiList.profit }}
           </div>
-          <div class="detail-num" style="color: #e8503a;">
+          <div class="detail-num" style="color: var(--ex-down-color);">
             {{ detaiList.ratio }}
           </div>
         </div>
@@ -49,7 +49,7 @@
             <div>
               {{ detaiList.symbol }}
             </div>
-            <div style="color: #9ea3ae;">
+            <div style="color: var(--ex-text-color3);">
               Ador Welding Limited
             </div>
           </div>
@@ -182,7 +182,7 @@
       <div style="padding: 0 0.32rem;">
         <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;"
           @click="updateClosePositionPopup">平仓</Button>
-        <Button size="large" color="#f2f2f2" round style="margin-bottom: 0.32rem;color: #999999;"
+        <Button size="large" color="var(--ex-bg-color2)" round style="margin-bottom: 0.32rem;color: var(--ex-text-color3);"
           @click="updateDetailPopup">订单更新</Button>
       </div>
 
@@ -278,7 +278,7 @@ const updateDetailPopup = () => {
       flex: 1;
 
       .detail-flex-title {
-        color: #9EA3AE;
+        color: var(--ex-text-color3);
         text-align: center;
         font-size: 0.28rem;
         font-style: normal;
@@ -359,8 +359,8 @@ const updateDetailPopup = () => {
       .detail-red-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: #fbf1ef;
-        color: #e8503a;
+        background-color: rgb(var(--ex-down-color-rgb) / 0.1);;
+        color: var(--ex-down-color);
         margin: auto;
         text-align: center;
         line-height: 0.44rem;
@@ -369,8 +369,8 @@ const updateDetailPopup = () => {
       .detail-green-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: #eff9f2;
-        color: #18b762;
+        background-color: rgb(var(--ex-up-color-rgb) / 0.1);;
+        color: var(--ex-up-color);
         margin: auto;
         text-align: center;
         line-height: 0.44rem;
@@ -379,7 +379,7 @@ const updateDetailPopup = () => {
       .detail-blue-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: #ecf1fe;
+        background-color: var(--ex-bg-color3);
         color: var(--ex-primary-color);
         margin: auto;
         text-align: center;
@@ -424,7 +424,7 @@ const updateDetailPopup = () => {
     margin-bottom: 1.46rem;
 
     .risk-text {
-      color: #333;
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 0.24rem;
       font-style: normal;

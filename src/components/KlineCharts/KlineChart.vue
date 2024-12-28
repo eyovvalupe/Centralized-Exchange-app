@@ -5,7 +5,7 @@
 
         <!-- 加载更多数据时的loading -->
         <div class="more_loading" v-show="moreLoading">
-            <L color="#1989fa" type="spinner" />
+            <L color="var(--ex-primary-color)" type="spinner" />
         </div>
 
         <!-- 初始化时的骨架屏 -->
@@ -312,13 +312,13 @@ const setCurrData = (item) => {
         justify-content: space-around;
         top: 0;
         left: 0;
-        // border-right: 1px solid #7F939E;
-        // border-bottom: 1px solid #7F939E;
+        // border-right: 1px solid var(--ex-info-color);
+        // border-bottom: 1px solid var(--ex-info-color);
         z-index: 9;
 
         .init_item {
             width: 0.14rem;
-            background-color: #7F939E;
+            background-color: var(--ex-info-color);
             position: relative;
             animation: loading 2s ease-out infinite;
         }

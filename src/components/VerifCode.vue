@@ -9,7 +9,7 @@
     :confirmButtonText="t('register.code_jump_confirm')"
     :confirmButtonColor="'var(--ex-primary-color)'"
     :cancelButtonText="t('user_page.message_box_cancel')"
-    :cancelButtonColor="'#323233'"
+    :cancelButtonColor="'var(--ex-text-color2)'"
     overlay
     @cancel="close"
     @confirm="confirm"
@@ -132,7 +132,7 @@ defineExpose({
   .ipt_box {
     height: 0.92rem;
     border-radius: 0.32rem;
-    border: 1px solid #70747d;
+    border: 1px solid var(--ex-text-color3);
     width: 100%;
     display: flex;
     align-items: stretch;

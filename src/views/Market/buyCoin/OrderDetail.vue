@@ -281,7 +281,7 @@
             {{ t("market.market_buy_list_cancel_order") }}
           </div>
           <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn"
-            :style="{ backgroundColor: '#ddd' }">
+            :style="{ backgroundColor: 'var(--ex-bg-color4)' }">
             {{ t("market.market_buy_list_wait_confirm") }}
           </div>
           <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn active_btn"
@@ -339,7 +339,7 @@ const offsetEnum = {
 const statusEnum = {
   waitpayment: { name: "待付款", title: "待付款", color: "var(--ex-primary-color)" },
   waitconfirm: { name: "待确认", title: "待确认", color: "var(--ex-primary-color)" },
-  done: { name: "交易完成", title: "交易完成", color: "#18B762" },
+  done: { name: "交易完成", title: "交易完成", color: "var(--ex-success-color)" },
   cancel: { name: "交易已取消", title: "交易完成", color: "var(--ex-text-color3)" },
 };
 
@@ -534,13 +534,13 @@ getSessionToken();
       .hint {
         min-width: 0.26rem;
         height: 0.26rem;
-        background-color: #e8503a;
+        background-color: var(--ex-error-color);
         padding: 0 0.06rem;
         display: flex;
         align-items: center;
         justify-content: center;
         box-sizing: border-box;
-        color: #fff;
+        color: var(--ex-white);
         font-size: 0.18rem;
         font-weight: 400;
         border-radius: 0.13rem;
@@ -581,7 +581,7 @@ getSessionToken();
         }
 
         .time {
-          color: #e8503a;
+          color: var(--ex-error-color);
           font-size: 0.32rem;
           font-weight: 600;
           margin-left: 0.16rem;
@@ -601,7 +601,7 @@ getSessionToken();
       }
 
       .success_status {
-        color: #18b762;
+        color: var(--ex-success-color);
       }
     }
 
@@ -624,7 +624,7 @@ getSessionToken();
         .tr {
           display: flex;
           align-items: stretch;
-          border-bottom: 0.08rem solid #fff;
+          border-bottom: 0.08rem solid var(--ex-white);
           min-height: 0.7rem;
 
           &:nth-last-child {
@@ -633,7 +633,7 @@ getSessionToken();
 
           .td {
             flex: 1;
-            border-right: 0.08rem solid #fff;
+            border-right: 0.08rem solid var(--ex-white);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -680,7 +680,7 @@ getSessionToken();
 
       .seller {
         padding: 0 0.32rem 0.2rem 0.32rem;
-        border-bottom: 0.02rem dashed #eff3f8;
+        border-bottom: 0.02rem dashed var(--ex-border-color);
 
         .avatar {
           width: 0.48rem;

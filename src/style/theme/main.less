@@ -2,6 +2,7 @@
 // 为兼容tailwindcss 所有颜色使用 rgb 配置，全局颜色变量使用 ex- 开头
 
 :root {
+    --ex-white-rgb:255 255 255; //#FFFFFF       白色
     --ex-up-color-rgb: 24 183 98; //#18B762     上涨颜色
     --ex-down-color-rgb:250 100 102; //#FA6466  下跌颜色
     --ex-success-color-rgb:24 183 98; //#18b762 成功状态颜色
@@ -13,6 +14,7 @@
     --ex-text-color2-rgb:106 109 128; //#6a6d80 辅助文字颜色 
     --ex-text-color3-rgb:143 146 161;//#8F92A1  提示文字颜色
     --ex-text-color4-rgb:164 172 185; //#a4acb9 次要文字颜色
+    --ex-text-color5-rgb:192 196 204; //#c0c4cc 禁用颜色
     --ex-border-color-rgb: 239 243 248; //#EFF3F8 边框颜色（浅）
     --ex-border-color2-rgb: 208 216 226; //#D0D8E2 边框颜色（中）
     --ex-bg-color-rgb:255 255 255; //#FFFFFF    背景颜色
@@ -22,11 +24,12 @@
     --ex-bg-color5-rgb:166 190 244;//#a6bef4    
     --ex-bg-color6-rgb:228 236 251;//#e4ecfb
 
+    --ex-white:rgb(var(--ex-white-rgb));
     --ex-up-color:rgb(var(--ex-up-color-rgb));
     --ex-down-color:rgb(var(--ex-down-color-rgb));
     --ex-primary-color:rgb(var(--ex-primary-color-rgb));
     --ex-text-primary:rgb(var(--ex-primary-color-rgb));
-    --ex-success-color:rgb(var(var(--ex-success-color-rgb)));
+    --ex-success-color:rgb(var(--ex-success-color-rgb));
     --ex-error-color:rgb(var(--ex-error-color-rgb));
     --ex-info-color:rgb(var(--ex-info-color-rgb));
     --ex-warning-color:rgb(var(--ex-warning-color-rgb));
@@ -34,6 +37,7 @@
     --ex-text-color2:rgb(var(--ex-text-color2-rgb));
     --ex-text-color3:rgb(var(--ex-text-color3-rgb));
     --ex-text-color4:rgb(var(--ex-text-color4-rgb));
+    --ex-text-color5:rgb(var(--ex-text-color5-rgb));
     --ex-border-color:rgb(var(--ex-border-color-rgb));
     --ex-border-color2:rgb(var(--ex-border-color2-rgb));
     --ex-border-error:rgb(var(--ex-error-color-rgb));
@@ -62,6 +66,10 @@
 .text-color4 {
     --tw-text-opacity:1;
     color: rgb(var(--ex-text-color4-rgb )/ var(--tw-text-opacity));
+}
+.text-color5 {
+    --tw-text-opacity:1;
+    color: rgb(var(--ex-text-color5-rgb )/ var(--tw-text-opacity));
 }
 
 .text-primary {
@@ -211,7 +219,7 @@
 //合約種類
 .tag-stock{
     color:var(--ex-primary-color);
-    background: rgb(var(--ex-primary-color-rgb),0.1);
+    background: rgb(var(--ex-primary-color-rgb) / 0.1);
 }
 .tag-crypto {
     color:#0099d1;

@@ -76,7 +76,7 @@ const goInfo = (item)=>{
 .stock_description {
 
   .up_price {
-    background-image: linear-gradient(to bottom, #ffffff, #e4f6ed);
+    background-image: linear-gradient(to bottom, var(--ex-bg-color), rgb(var(--ex-up-color-rgb) / 0.1));
 
     .stock_price {
       font-size: 0.28rem;
@@ -93,7 +93,7 @@ const goInfo = (item)=>{
   }
 
   .down_price {
-    background-image: linear-gradient(to bottom, #ffffff, #f4e7e5);
+    background-image: linear-gradient(to bottom, var(--ex-bg-color), rgb(var(--ex-down-color-rgb) / 0.1));
 
     .stock_price {
       font-size: 0.28rem;

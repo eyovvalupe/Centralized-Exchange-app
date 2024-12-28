@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }"
-                    style="background-color: #f5f5f5">
+                    style="background-color: var(--ex-bg-color2)">
                     <div class="item_content">
                         {{ form.toAmount || '--' }}
                     </div>
@@ -331,7 +331,7 @@ const goRecord = () => {
         font-size: 0.24rem;
 
         .top-record-icon {
-            background-color: #EDEDED;
+            background-color: var(--ex-bg-color3);
             width: 0.52rem;
             height: 0.52rem;
             padding: 0.06rem;
@@ -412,7 +412,7 @@ const goRecord = () => {
 
             .ipt {
                 flex: 1;
-                color: #292929;
+                color: var(--ex-text-color);
                 font-size: 0.28rem;
                 width: 2rem;
             }
@@ -435,7 +435,7 @@ const goRecord = () => {
                     font-size: 0.2rem;
 
                     span {
-                        color: #A4ACB9;
+                        color: var(--ex-text-color4);
                     }
                 }
             }
@@ -444,7 +444,7 @@ const goRecord = () => {
                 position: absolute;
                 font-size: 0.24rem;
                 font-weight: 400;
-                color: #A4ACB9;
+                color: var(--ex-text-color4);
                 left: 0rem;
                 top: 50%;
                 transform: translateY(-50%);
@@ -460,7 +460,7 @@ const goRecord = () => {
         }
 
         .err_ipt {
-            border: 1px solid #E8503A;
+            border: 1px solid var(--ex-error-color);
         }
 
         .no_tip_ipt {

@@ -47,7 +47,7 @@ const props = defineProps({
 <style lang="less" scoped>
 .withdraw_item {
     width: 100%;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid var(--ex-border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;

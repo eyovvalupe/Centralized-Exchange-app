@@ -124,11 +124,11 @@
       <!-- 按钮 -->
       <div v-if="currItem.status == 'waitpayment'" class="btns">
         <div v-if="currItem.offset == 'buy'" class="btn"
-          :style="{ backgroundColor: loading ? '#ddd' : '', color: loading ? '#fff' : '' }"
+          :style="{ backgroundColor: loading ? 'var(--ex-bg-color4)' : '', color: loading ? 'var(--ex-white)' : '' }"
           style="margin-right: 0.64rem" @click="cancelOrder">取消订单</div>
         <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn"
-          :style="{ backgroundColor: '#ddd' }">等待确认</div>
-        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? '#ddd' : '' }" @click="confirmOrder">{{
+          :style="{ backgroundColor: 'var(--ex-bg-color4)' }">等待确认</div>
+        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? 'var(--ex-bg-color4)' : '' }" @click="confirmOrder">{{
           currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
       </div>
     </template>
@@ -269,17 +269,17 @@ const getSessionToken = () => {
 
     .tab {
       margin-right: 0.6rem;
-      color: #9ea3ae;
+      color: var(--ex-text-color3);
       position: relative;
 
       .hint {
         position: absolute;
         right: -0.2rem;
         top: -0.1rem;
-        background-color: #fd4938;
+        background-color: var(--ex-error-color);
         border-radius: 0.12rem;
         font-size: 0.24rem;
-        color: #fff;
+        color: var(--ex-white);
         line-height: 0.2rem;
         padding: 0.04rem 0.08rem;
       }
@@ -295,7 +295,7 @@ const getSessionToken = () => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #666666;
+    color: var(--ex-text-color2);
     font-size: 0.24rem;
     padding: 0.28rem 0;
 
@@ -327,7 +327,7 @@ const getSessionToken = () => {
       }
 
       .val {
-        color: #333;
+        color: var(--ex-text-color);
       }
     }
   }
@@ -362,7 +362,7 @@ const getSessionToken = () => {
 
     .remark {
       font-size: 0.24rem;
-      color: #666666;
+      color: var(--ex-text-color2);
     }
   }
 
@@ -417,7 +417,7 @@ const getSessionToken = () => {
 
     .status_wait {
       line-height: 0.56rem;
-      color: #333;
+      color: var(--ex-text-color);
 
       .amount {
         font-weight: bold;
@@ -426,7 +426,7 @@ const getSessionToken = () => {
       }
 
       .time {
-        color: #fd4938;
+        color: var(--ex-error-color);
         font-weight: bold;
         font-size: 0.32rem;
       }
@@ -439,13 +439,13 @@ const getSessionToken = () => {
       justify-content: center;
       font-size: 0.32rem;
       font-weight: bold;
-      color: #aaa !important;
-      background-color: #eee !important;
+      color:  var(--ex-text-color4) !important;
+      background-color:  var(--ex-bg-color3) !important;
       margin-top: 1rem;
     }
 
     .success_status {
-      color: #0ab27d;
+      color: var(--ex-success-color);
     }
   }
 
@@ -459,7 +459,7 @@ const getSessionToken = () => {
       flex: 1;
       height: 0.88rem;
       border-radius: 0.88rem;
-      background-color: #eff6ff;
+      background-color: var(--ex-bg-color3);
       color: var(--ex-primary-color);
       display: flex;
       align-items: center;

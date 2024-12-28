@@ -9,7 +9,7 @@
                 <span>抵押</span>
             </div>
             <div class="item2">
-                <div class="border_item account_box" style="background-color: #f5f5f5">
+                <div class="border_item account_box" style="background-color: var(--ex-bg-color2)">
                     <div class="item_icon">
                         <img :src="getStaticImgUrl('/static/img/assets/cash_icon.svg')" alt="img">
                     </div>
@@ -51,7 +51,7 @@
                     <span>股票账户</span>
                     <div class="more_icon"><img :src="getStaticImgUrl('/static/img/assets/more.png')" alt="img"></div>
                 </div>
-                <div class="border_item ipt_box" style="background-color: #f5f5f5">
+                <div class="border_item ipt_box" style="background-color: var(--ex-bg-color2)">
                     <div class="ipt">
                         <span>{{ amount || '--' }}</span>
                     </div>
@@ -405,7 +405,7 @@ onBeforeUnmount(() => {
         width: 0.64rem;
         height: 0.64rem;
         border-radius: 50%;
-        background-color: #EDEDED;
+        background-color: var(--ex-bg-color3);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -446,7 +446,7 @@ onBeforeUnmount(() => {
                 flex: 1;
                 margin-right: 0.14rem;
                 border-radius: 0.1rem;
-                background-color: #F7F7F7;
+                background-color: var(--ex-bg-color2);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -464,7 +464,7 @@ onBeforeUnmount(() => {
             .date_active {
                 color: var(--ex-primary-color);
                 border: 1px solid var(--ex-primary-color);
-                background-color: #EEF3FF;
+                background-color: var(--ex-bg-color3);
             }
         }
 
@@ -519,7 +519,7 @@ onBeforeUnmount(() => {
                         font-size: 0.2rem;
 
                         span {
-                            color: #A4ACB9;
+                            color: var(--ex-text-color4);
                         }
                     }
                 }
@@ -528,7 +528,7 @@ onBeforeUnmount(() => {
                     position: absolute;
                     font-size: 0.24rem;
                     font-weight: 400;
-                    color: #A4ACB9;
+                    color: var(--ex-text-color4);
                     left: 0.4rem;
                     top: 50%;
                     transform: translateY(-50%);
@@ -567,7 +567,7 @@ onBeforeUnmount(() => {
             }
 
             .err_ipt {
-                border: 1px solid #E8503A;
+                border: 1px solid var(--ex-error-color);
             }
         }
 
@@ -578,7 +578,7 @@ onBeforeUnmount(() => {
             font-weight: 400;
 
             .num {
-                color: #181818;
+                color: var(--ex-text-color);
                 margin-left: 0.08rem;
                 font-size: 0.28rem;
                 font-weight: 500
@@ -592,7 +592,7 @@ onBeforeUnmount(() => {
             .slider {
                 width: 100%;
                 height: 0.16rem;
-                background-color: #EEEEEE;
+                background-color: var(--ex-bg-color3);
                 border-radius: 0.32rem;
                 cursor: pointer;
 
@@ -621,7 +621,7 @@ onBeforeUnmount(() => {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                color: #A2A2A7;
+                color: var(--ex-text-color4);
                 font-weight: 400;
                 font-size: 0.28rem;
                 margin-top: 0.24rem;

@@ -401,7 +401,7 @@ function countdown(endTime) {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: #fff;
+        color: var(--ex-white);
         position: absolute;
         right: 0;
         top: 0;
@@ -409,17 +409,17 @@ function countdown(endTime) {
 
       .status_pre {
         background-color: #ffaf2a;
-        color: #fff;
+        color: var(--ex-white);
       }
 
       .status_done {
         background-color: var(--ex-info-color);
-        color: #fff;
+        color: var(--ex-white);
       }
 
       .status_ed {
-        background-color: #18b762;
-        color: #fff;
+        background-color: var(--ex-success-color);
+        color: var(--ex-white);
       }
 
       .item_info {
@@ -440,7 +440,7 @@ function countdown(endTime) {
         }
 
         .info_cell+.info_cell {
-          border-top: 1px dashed #eff3f8;
+          border-top: 1px dashed var(--ex-border-color);
         }
 
         .info_name {
@@ -519,7 +519,7 @@ function countdown(endTime) {
     .status {
       height: 0.48rem;
       background-color: #c5c5c5;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       padding: 0 0.32rem;
       display: flex;

@@ -799,7 +799,7 @@ watch(
     }
 
     .ipt::placeholder {
-      color: #a4acb9;
+      color: var(--ex-text-color4);
     }
   }
 

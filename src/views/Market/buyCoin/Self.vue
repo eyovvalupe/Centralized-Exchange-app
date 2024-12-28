@@ -155,7 +155,7 @@
       <div class="list">
         <div class="add_item" @click="goAddAccount">
           <Icon style="font-size: 0.48rem" name="add-o" />
-          <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">{{
+          <span style="margin-left: 0.2rem; color: var(--ex-text-color3); font-size: 0.24rem">{{
             t('market.market_buy_fast_account_add')
           }}</span>
         </div>
@@ -520,7 +520,7 @@ defineExpose({
     .tab {
       margin-right: 0.24rem;
       min-width: 1rem;
-      color: #9ea3ae;
+      color: var(--ex-text-color3);
       height: 100%;
       display: flex;
       align-items: center;
@@ -534,7 +534,7 @@ defineExpose({
 
     .encryption {
       > :deep(.van-tabs__wrap) {
-        border-bottom: 1px solid #f0f3f8;
+        border-bottom: 1px solid var(--ex-border-color);
         padding-right: 0;
 
         .van-tabs__line {
@@ -572,7 +572,7 @@ defineExpose({
     .subtab {
       display: inline-block;
       margin-right: 0.4rem;
-      color: #9ea3ae;
+      color: var(--ex-text-color3);
     }
 
     .active_subtab {
@@ -612,7 +612,7 @@ defineExpose({
             width: 0.13rem;
             height: 0.13rem;
             border-radius: 50%;
-            background-color: #30bf87;
+            background-color: var(--ex-success-color);
             bottom: 0.04rem;
             right: 0.04rem;
           }
@@ -714,7 +714,7 @@ defineExpose({
 
       .tip_text {
         font-size: 0.28rem;
-        color: #a4acb9;
+        color: var(--ex-text-color4);
         position: absolute;
         left: 0.24rem;
         pointer-events: none;
@@ -732,7 +732,7 @@ defineExpose({
     }
 
     .tip {
-      color: #333;
+      color: var(--ex-text-color);
     }
 
     .btn {
@@ -823,7 +823,7 @@ defineExpose({
 
   .search_box {
     height: 0.8rem;
-    background-color: #f5f5f5;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.4rem;
     display: flex;
     align-items: center;
@@ -855,7 +855,7 @@ defineExpose({
     }
 
     .active_tab {
-      background-color: #f6f8ff;
+      background-color: var(--ex-bg-color2);
       color: var(--ex-primary-color);
       font-weight: 500;
     }
@@ -875,7 +875,7 @@ defineExpose({
 
   .add_item {
     margin-bottom: 0.36rem;
-    border: 1px dashed #ccd7fd;
+    border: 1px dashed var(--ex-border-color2);
     border-radius: 0.12rem;
     height: 1.44rem;
     display: flex;
@@ -890,7 +890,7 @@ defineExpose({
     align-items: center;
     justify-content: space-between;
     position: relative;
-    background-color: #f6f7fa;
+    background-color: var(--ex-bg-color2);
     padding: 0 0.4rem 0 0.36rem;
     overflow: hidden;
     margin-bottom: 0.36rem;

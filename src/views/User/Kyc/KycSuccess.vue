@@ -58,7 +58,7 @@ try {
 
   .info_box {
     padding: 0.32rem;
-    background-color: #f5f8fb;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.08rem;
     margin-bottom: 0.48rem;
 
@@ -67,7 +67,7 @@ try {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      color: #333;
+      color: var(--ex-text-color);
 
       .val {
         color: var(--ex-text-color);

@@ -129,7 +129,7 @@ const clearDates = () => {
   }
   .van-calendar__header {
     box-shadow: inherit;
-    border-bottom: 0.02rem solid #dddddd;
+    border-bottom: 0.02rem solid var(--ex-border-color);
   }
   .van-calendar__header-title {
     color: var(--ex-text-color);

@@ -30,7 +30,7 @@ const props = defineProps({
   font-weight: 400;
   line-height: 0.4rem;
   font-size: 0.28rem;
-  color: #a4acb9;
+  color: var(--ex-text-color4);
   padding: 1rem 0;
 
   .nodata_icon {

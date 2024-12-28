@@ -51,7 +51,7 @@ const profitableFunds = computed(() => {
         line-height: 0.32rem;
 
         .title {
-            color: #fff;
+            color: var(--ex-white);
             margin-right: 0.12rem;
             font-size: 0.3rem;
 
@@ -63,12 +63,12 @@ const profitableFunds = computed(() => {
         .eyes {
             width: 0.32rem;
             height: 0.32rem;
-            color: #fff;
+            color: var(--ex-white);
         }
     }
 
     .money {
-        color: #FFF;
+        color: var(--ex-white);
         font-family: "PingFang SC";
         font-size: 0.52rem;
         font-style: normal;

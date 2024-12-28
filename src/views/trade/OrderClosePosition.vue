@@ -17,8 +17,8 @@
       <Slider
         v-model="sliderValue"
         bar-height="0.08rem"
-        active-color="#f2f2f2"
-        inactive-color="#f2f2f2"
+        active-color="var(--ex-bg-color2)"
+        inactive-color="var(--ex-bg-color2)"
         @change="onSliderChange"
       />
       <div class="percentages">
@@ -37,7 +37,7 @@
         <div>
           盈亏/盈亏比
         </div>
-        <div class="prcent-num" style="color: #e8503a;">
+        <div class="prcent-num" style="color: var(--ex-down-color);">
           -18%
         </div>
       </div>
@@ -175,7 +175,7 @@
       padding-top: 0.2rem;
     }
     .order-lose-title {
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -281,7 +281,7 @@
       justify-content: right;
       margin-top: 0.16rem;
       .risk-text {
-        color: #333;
+        color: var(--ex-text-color);
         text-align: center;
         font-size: 0.24rem;
         font-style: normal;
@@ -318,7 +318,7 @@
     }
     .close-price-num {
       text-align: right;
-      color: #E8503A;
+      color: var(--ex-error-color);
       font-size: 0.36rem;
       font-style: normal;
       font-weight: 600;

@@ -213,7 +213,7 @@ defineExpose({
 
         .fake_user {
             height: 1.5rem;
-            background-color: #F6F7FA;
+            background-color: var(--ex-bg-color2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -236,7 +236,7 @@ defineExpose({
                 align-items: center;
                 padding: 0 0.24rem;
                 border-radius: 0.4rem;
-                color: #fff;
+                color: var(--ex-bg-primary-text-color);
                 font-size: 0.24rem;
                 margin-left: 0.6rem;
             }
@@ -253,7 +253,7 @@ defineExpose({
             .way {
                 width: 100%;
                 height: 1.8rem;
-                background-color: #F2F2F2;
+                background-color: var(--ex-bg-color2);
                 box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.05);
                 border-radius: 0.16rem;
                 margin-bottom: 0.6rem;
@@ -324,7 +324,7 @@ defineExpose({
 
                 .left {
                     .title {
-                        color: #fff;
+                        color: var(--ex-bg-primary-text-color);;
                         line-height: 1;
                     }
                 }

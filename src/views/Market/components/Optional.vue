@@ -322,7 +322,7 @@ const jump = (name) => {
   align-items: center;
   margin-top: 0.579rem;
   margin-bottom: 0.362rem;
-  color: #a4acb9;
+  color: var(--ex-text-color4);
   font-size: 0.253rem;
   font-weight: 400;
   line-height: 0.253rem;
@@ -405,7 +405,7 @@ const jump = (name) => {
 
 .search_block {
   background-color: var(--ex-bg-color2);
-  // border: 1px solid #eeeff1;
+  // border: 1px solid var(--ex-border-color);
   height: 0.8rem;
   border-radius: 0.2rem;
   display: flex;
@@ -413,7 +413,7 @@ const jump = (name) => {
   justify-content: flex-start;
   padding: 0 0.32rem;
   font-size: 0.28rem;
-  color: #9ea3ae;
+  color: var(--ex-text-color3);
   margin: 0.06rem 0.32rem 0 0.32rem;
 
   .search_icon {
@@ -431,7 +431,7 @@ const jump = (name) => {
 
   :deep(.van-tabs__nav--line) {
     padding-bottom: 0;
-    border-bottom: 1px solid #3b82f6 !important;
+    border-bottom: 1px solid var(--ex-primary-color) !important;
     margin: 0 0.32rem;
   }
 

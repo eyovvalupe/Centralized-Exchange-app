@@ -60,7 +60,7 @@
   }
   
   .tab:hover {
-    background-color: #f0f0f0; /* Light hover effect */
+    background-color: var(--ex-bg-color2); /* Light hover effect */
   }
   
   .tab.active {

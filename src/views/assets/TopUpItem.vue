@@ -72,7 +72,7 @@ getInfo()
         text-align: center;
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid #F1F3F7;
+        border-bottom: 1px solid var(--ex-border-color);
 
         .amount {
             font-size: 0.52rem;
@@ -140,18 +140,18 @@ getInfo()
             }
 
             .status_review {
-                color: #F89A29;
-                background-color: rgba(248, 154, 41, 0.08);
+                color: var(--ex-warning-color);
+                background-color: rgb(var(--ex-warning-color-rgb) / 0.08);
             }
 
             .status_success {
                 color: var(--ex-primary-color);
-                background-color: rgba(1, 76, 250, 0.08);
+                background-color: rgb(var(--ex-primary-color-rgb) / 0.08);
             }
 
             .status_failed {
-                color: #FF3B30;
-                background-color: rgba(255, 59, 48, 0.08);
+                color: var(--ex-error-color);
+                background-color: rgb(var(--ex-error-color-rgb) / 0.08);
             }
         }
     }

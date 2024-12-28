@@ -723,7 +723,7 @@ getSessionToken();
     }
 
     .num {
-      color: #6c7b90;
+      color: var(--ex-text-color2);
       font-weight: 600;
       font-size: 0.24rem;
       text-align: right;
@@ -819,7 +819,7 @@ getSessionToken();
       color: var(--ex-text-color3);
 
       .num {
-        color: #333;
+        color: var(--ex-text-color);
       }
     }
 
@@ -834,7 +834,7 @@ getSessionToken();
         display: flex;
         align-items: center;
         font-size: 0.24rem;
-        color: #333;
+        color: var(--ex-text-color);
         font-weight: 400;
         padding: 0.08rem 0.1rem 0.08rem 0;
 
@@ -860,7 +860,7 @@ getSessionToken();
 }
 
 .num-tag {
-  color: #2168f6;
+  color: var(--ex-primary-color);
   margin-left: 0.08rem;
   transition: all ease 0.3s;
   border-radius: 0.3rem;

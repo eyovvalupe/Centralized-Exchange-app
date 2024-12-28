@@ -12,7 +12,7 @@
           <div>
             {{ orderList.stockCo[0].symbol }}
           </div>
-          <div style="color: #9ea3ae;">
+          <div style="color: var(--ex-text-color3);">
             {{ orderList.stockCo[0].name }}
           </div>
         </div>
@@ -225,7 +225,7 @@ const openStock = ()=>{
     padding-top: 0.2rem;
   }
   .order-lose-title {
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -284,7 +284,7 @@ const openStock = ()=>{
     }
     .position-fee {
       margin-top: 0.1rem;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -321,7 +321,7 @@ const openStock = ()=>{
     justify-content: right;
     margin-top: 0.1rem;
     .risk-text {
-      color: #333;
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 0.24rem;
       font-style: normal;
@@ -358,7 +358,7 @@ const openStock = ()=>{
   }
   .close-price-num {
     text-align: right;
-    color: #e8503a;
+    color: var(--ex-error-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 600;
@@ -392,7 +392,7 @@ const openStock = ()=>{
             width: 1.16rem;
             height: 0.44rem;
             color: var(--ex-primary-color);
-            background-color: #ecf1fe;
+            background-color: var(--ex-bg-color3);
             position: absolute;
             right: 0;
             line-height: 0.44rem;
@@ -413,8 +413,8 @@ const openStock = ()=>{
         .detail-red-box {
           width: 1.16rem;
           height: 0.44rem;
-          background-color: #fbf1ef;
-          color: #e8503a;
+          background-color: rgb(var(--ex-down-color-rgb) / 0.08);
+          color: var(--ex-down-color);
           margin: auto;
           text-align: center;
           line-height: 0.44rem;
@@ -422,8 +422,8 @@ const openStock = ()=>{
         .detail-green-box {
           width: 1.16rem;
           height: 0.44rem;
-          background-color: #eff9f2;
-          color: #18b762;
+          background-color: rgb(var(--ex-up-color-rgb) / 0.08);
+          color: var(--ex-up-color);
           margin: auto;
           text-align: center;
           line-height: 0.44rem;
@@ -431,7 +431,7 @@ const openStock = ()=>{
         .detail-blue-box {
           width: 1.16rem;
           height: 0.44rem;
-          background-color: #ecf1fe;
+          background-color: var(--ex-bg-color3);
           color: var(--ex-primary-color);
           margin: auto;
           text-align: center;

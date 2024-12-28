@@ -26,7 +26,7 @@
     width: 100vw;
     height: 100%;
     position: fixed;
-    background: #ffffffd9;
+    background: rgb(var(--ex-bg-color-rgb) / 0.7);
     z-index: 20;
 }
 .lds-ring,

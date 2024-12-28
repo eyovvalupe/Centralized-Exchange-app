@@ -9,7 +9,7 @@
         <div class="tips">恭喜认购完成，请耐心等待中签信息</div>
         <div class="btn flex justify-center items-center w-[100%]">
             <Button @click="router.push('/trade?to=ipo')" round class="next">继续认购</Button>
-            <Button @click="router.push('/trade?to=ipo&active=1')" round color="#FFF;" class="info"
+            <Button @click="router.push('/trade?to=ipo&active=1')" round color="var(--ex-bg-color)" class="info"
                 type="primary">订单详情</Button>
         </div>
     </div>

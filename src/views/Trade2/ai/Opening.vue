@@ -91,10 +91,10 @@
         >
         <Button
           size="large"
-          color="#f2f2f2"
+          color="var(--ex-bg-color2)"
           class="btn"
           round
-          style="color: #999999"
+          style="color: var(--ex-text-color3)"
           @click="jump('register')"
           >{{ t('trade.ai_opening_register') }}</Button
         >
@@ -121,7 +121,7 @@
       </div>
       <div class="btns" v-else>
         <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn"
-          :color="tab == 1 ? '#18b762' : '#e8503a'" round>{{
+          :color="tab == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>{{
             tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
           }}</Button>
       </div>

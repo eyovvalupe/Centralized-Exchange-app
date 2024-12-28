@@ -255,10 +255,10 @@ function countdown(endTime) {
 
   .list {
     margin-top: 0.2rem;
-    border-top: 1px solid #EAEAEA;
+    border-top: 1px solid var(--ex-border-color);
 
     .item {
-      border-bottom: 1px solid #EAEAEA;
+      border-bottom: 1px solid var(--ex-border-color);
       padding: 0 0 0.1rem 0;
       position: relative;
 
@@ -285,7 +285,7 @@ function countdown(endTime) {
 
         .item_top_box {
           .item_top_info {
-            color: #818898;
+            color: var(--ex-text-color3);
             font-size: 0.24rem;
             line-height: 0.48rem;
             font-weight: 400;
@@ -330,7 +330,7 @@ function countdown(endTime) {
                 align-items: center;
                 justify-content: center;
                 line-height: 0;
-                color: #333;
+                color: var(--ex-text-color);
                 font-size: 0.4rem;
                 font-weight: 600;
                 border-top: 1px dashed #C5C5C5;
@@ -411,7 +411,7 @@ function countdown(endTime) {
     .status {
       height: 0.48rem;
       background-color: #C5C5C5;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       padding: 0 0.32rem;
       display: flex;

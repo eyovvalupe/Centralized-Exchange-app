@@ -25,10 +25,10 @@
       @blur="handleBlur(5)" :class="['num-input', { 'focusinput': isFocused === 5 }]" />
 
     <div class="position-account">
-      可买数量 <span style="color: #333">{{ availableNum }}</span>
+      可买数量 <span style="color: var(--ex-text-color)">{{ availableNum }}</span>
     </div>
 
-    <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)" inactive-color="#f2f2f2"
+    <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)" inactive-color="var(--ex-bg-color2)"
       @change="onSliderChange" />
     <div class="percentages">
       <div v-for="percent in percentages" :key="percent" class="percentage">
@@ -319,9 +319,9 @@ onMounted(() => {
     border-radius: 0.12rem;
     border: 0.02rem solid var(--ex-border-color2);
     margin-bottom: 0.4rem;
-    background-color: #f9fafb;
+    background-color: var(--ex-bg-color2);
     margin-top: 0.2rem;
-    color: #333;
+    color: var(--ex-text-color);
     text-align: right;
     font-size: 0.28rem;
     font-style: normal;
@@ -331,10 +331,10 @@ onMounted(() => {
   }
 
   .add {
-    background-color: #f9fafb;
+    background-color: var(--ex-bg-color2);
 
     .vip-input {
-      background-color: #f9fafb;
+      background-color: var(--ex-bg-color2);
     }
   }
 
@@ -400,7 +400,7 @@ onMounted(() => {
   }
 
   .grop-title {
-    color: #333;
+    color: var(--ex-text-color);
     text-align: left;
     font-size: 0.28rem;
     font-style: normal;
@@ -443,14 +443,14 @@ onMounted(() => {
   }
 
   .pricenlarged {
-    background: #f9fafb;
+    background: var(--ex-bg-color2);
   }
 
   .market-button {
     width: 1.9rem;
     height: 0.72rem;
     border-radius: 1.26rem;
-    background: #f2f2f2;
+    background: var(--ex-bg-color2);
     text-align: center;
     line-height: 0.72rem;
     color: var(--ex-text-color3);
@@ -587,7 +587,7 @@ onMounted(() => {
 
     .position-fee {
       margin-top: 0.1rem;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -603,7 +603,7 @@ onMounted(() => {
   }
 
   .co-text {
-    color: #333;
+    color: var(--ex-text-color);
     text-align: center;
     font-size: 0.28rem;
     font-style: normal;
@@ -641,7 +641,7 @@ onMounted(() => {
 
   .purchase-amount {
     margin-top: 0.2rem;
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
   }
 

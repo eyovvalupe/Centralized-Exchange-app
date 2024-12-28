@@ -289,7 +289,7 @@ onMounted(() => {
 }
 
 .send {
-  color: #1a59f6;
+  color: var(--ex-primary-color);
   text-align: center;
   padding: 0.4rem 0;
   cursor: pointer;

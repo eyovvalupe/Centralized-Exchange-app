@@ -117,7 +117,7 @@ defineExpose({
     line-height: 0.32rem;
 
     .title {
-      color: #fff;
+      color: var(--ex-white);
       margin-right: 0.12rem;
       font-size: 0.3rem;
 
@@ -129,12 +129,12 @@ defineExpose({
     .eyes {
       width: 0.32rem;
       height: 0.32rem;
-      color: #fff;
+      color: var(--ex-white);
     }
   }
 
   .money {
-    color: #fff;
+    color: var(--ex-white);
     font-family: "PingFang SC";
     font-size: 0.52rem;
     font-style: normal;
@@ -270,11 +270,11 @@ defineExpose({
         }
 
         .right--green {
-          background-color: #00af70;
+          background-color: var(--ex-success-color);
         }
 
         .right--red {
-          background-color: #e8503a;
+          background-color: var(--ex-error-color);
         }
 
         .right:first-child {

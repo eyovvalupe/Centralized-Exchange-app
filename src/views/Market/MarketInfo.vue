@@ -131,10 +131,10 @@
         <div class="bottom_btn--default" @click="showInfo = true">
           <span>{{ t("market.market_marketinfo_data") }}</span>
         </div>
-        <div class="bottom_btn" @click="goBuy(true)" style="background-color: #00af70">
+        <div class="bottom_btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
           <span>{{ t("market.market_marketinfo_long") }}</span>
         </div>
-        <div class="bottom_btn" @click="goBuy(false)" style="background-color: #e8503a">
+        <div class="bottom_btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
           <span>{{ t("market.market_marketinfo_short") }}</span>
         </div>
       </div>
@@ -583,7 +583,7 @@ const showInfo = ref(false);
   }
 
   .submit {
-    color: #fff;
+    color: var(--ex-white);
     height: 0.8rem;
     border-radius: 1.2rem;
     display: flex;
@@ -596,11 +596,11 @@ const showInfo = ref(false);
   }
 
   .btn-green {
-    background: #18b762;
+    background: var(--ex-success-color);
   }
 
   .btn-red {
-    background: #f3485e;
+    background: var(--ex-error-color);
   }
 
   .info {
@@ -645,12 +645,12 @@ const showInfo = ref(false);
 
   .up .ratio_price,
   .up .ratio_percentage {
-    background: #00af701a;
+    background: rgb(var(--ex-up-color-rgb) / 0.1);
   }
 
   .down .ratio_price,
   .down .ratio_percentage {
-    background: #e53e001a;
+    background: rgb(var(--ex-down-color-rgb) / 0.1);
   }
 
   .align-content {
@@ -694,11 +694,9 @@ const showInfo = ref(false);
         align-items: center;
         justify-content: center;
         padding: 0 0.2rem;
-        // height: 0.72rem;
       }
 
       .active_tab {
-        // background-color: #F6F8FF;
         border-radius: 0.48rem;
         color: var(--ex-primary-color);
         font-weight: bold;
@@ -741,7 +739,7 @@ const showInfo = ref(false);
           line-height: 0.48rem;
 
           span {
-            color: #0f0f1b;
+            color: var(--ex-text-color);
             margin-left: 0.2rem;
           }
         }
@@ -759,7 +757,7 @@ const showInfo = ref(false);
       .right {
         font-size: 0.24rem;
         line-height: 0.48rem;
-        color: #818898;
+        color: var(--ex-text-color3);
         font-weight: 400;
 
         b {
@@ -787,12 +785,12 @@ const showInfo = ref(false);
 
         .tab {
           height: 0.48rem;
-          background-color: #eff6ff;
+          background-color: var(--ex-bg-color3);
           display: flex;
           align-items: center;
           justify-content: center;
           border-radius: 0.3rem;
-          color: #0a54f9;
+          color: var(--ex-primary-color);
           font-size: 0.24rem;
           font-weight: 400;
           margin-right: 0.16rem;
@@ -807,12 +805,10 @@ const showInfo = ref(false);
       }
 
       .full-tab {
-        color: #333;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         width: 0.48rem;
         height: 0.48rem;
-        // margin-left: 0.2rem;
-        // background-color: #EDEDED;
         border-radius: 50%;
         padding: 0.08rem;
         display: center;
@@ -839,7 +835,7 @@ const showInfo = ref(false);
           padding: 0.1rem 0.15rem;
           background: #00000080;
           border-radius: 0.15rem;
-          color: #fff;
+          color: var(--ex-white);
           font-size: 0.22rem;
           font-weight: 400;
           line-height: 0.22rem;
@@ -887,7 +883,7 @@ const showInfo = ref(false);
     align-items: center;
     justify-content: space-between;
     padding: 0.12rem 0.32rem;
-    border-top: 1px solid #eaeef3;
+    border-top: 1px solid var(--ex-border-color);
     height: 1.4rem;
     font-size: 0.3rem;
     font-weight: 400;
@@ -918,7 +914,7 @@ const showInfo = ref(false);
     .bottom_line {
       flex: 1;
       height: 0.32rem;
-      border-left: 1px solid #eaeef3;
+      border-left: 1px solid var(--ex-border-color);
     }
 
     .bottom_btn--default {
@@ -1046,8 +1042,8 @@ const showInfo = ref(false);
   .buy_popup_btn {
     height: 0.9rem;
     border-radius: 0.9rem;
-    background-color: #e8503a;
-    color: #fff;
+    background-color: var(--ex-down-color);
+    color: var(--ex-white);
     font-size: 0.28rem;
     display: flex;
     align-items: center;
@@ -1064,7 +1060,7 @@ const showInfo = ref(false);
   }
 
   .buy_popup_btn2 {
-    background-color: #18b762;
+    background-color: var(--ex-up-color);
   }
 }
 
@@ -1101,7 +1097,7 @@ const showInfo = ref(false);
       height: 0.56rem;
       display: flex;
       align-items: center;
-      background: #00af701a;
+      background: rgb(var(--ex-up-color-rgb) / 0.1);
       border-radius: 1.25rem;
       padding: 0.075rem 0.25rem;
     }
@@ -1111,7 +1107,7 @@ const showInfo = ref(false);
       height: 0.56rem;
       display: flex;
       align-items: center;
-      background: #e53e001a;
+      background: rgb(var(--ex-down-color-rgb) / 0.1);
       border-radius: 1.25rem;
       padding: 0.075rem 0.25rem;
     }
@@ -1131,7 +1127,7 @@ const showInfo = ref(false);
       align-items: center;
       margin-bottom: 0.32rem;
       width: 31%;
-      background-color: #f2f3f8;
+      background-color: var(--ex-bg-color2);
       border-radius: 0.4rem;
       height: 1.14rem;
 

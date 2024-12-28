@@ -23,8 +23,8 @@
       <Slider
         v-model="sliderValue"
         bar-height="0.08rem"
-        active-color="#f2f2f2"
-        inactive-color="#f2f2f2"
+        active-color="var(--ex-bg-color2)"
+        inactive-color="var(--ex-bg-color2)"
         @change="onSliderChange"
       />
       <div class="percentages">
@@ -191,7 +191,7 @@
       padding-top: 0.2rem;
     }
     .order-lose-title {
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -295,7 +295,7 @@
       justify-content: right;
       margin-top: 0.1rem;
       .risk-text {
-        color: #333;
+        color: var(--ex-text-color);
         text-align: center;
         font-size: 0.24rem;
         font-style: normal;

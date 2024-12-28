@@ -2,7 +2,7 @@
    <!-- 拖动 -->
     <div>
         <div class="slider-container">
-            <Slider v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-primary-color)" inactive-color="#E0E7F8"
+            <Slider v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-primary-color)" inactive-color="var(--ex-bg-color3)"
                 @change="onSliderChange">
                 <template #button>
                     <div class="slider-custom-num">
@@ -56,7 +56,7 @@ const onSliderChange = (newValue) => {
     :deep(.slider-custom-num) {
         position: relative;
         background: var(--ex-primary-color);
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
         display: inline-block;
         width: .4rem;
         height: .4rem;
@@ -119,7 +119,7 @@ const onSliderChange = (newValue) => {
         position: absolute;
         right: -0.03rem;
         top: -0.44rem;
-        background: #fff;
+        background: var(--bg-color);
         z-index: 88;
     }
 }

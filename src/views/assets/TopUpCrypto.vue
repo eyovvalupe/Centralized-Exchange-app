@@ -400,7 +400,7 @@ onBeforeUnmount(() => {
       padding: 0.1rem 0.18rem;
       margin-right: 0.2rem;
       border-radius: 0.3rem;
-      background-color: #f0f0f2;
+      background-color: var(--ex-bg-color2);
       color: var(--ex-text-color);
       font-size: 0.24rem;
       font-weight: 400;
@@ -486,7 +486,7 @@ onBeforeUnmount(() => {
     }
 
     .err_ipt {
-      border: 1px solid #e8503a;
+      border: 1px solid var(--ex-error-color);
     }
 
     .select_item {
@@ -571,7 +571,7 @@ onBeforeUnmount(() => {
     }
 
     .ipt::placeholder {
-      color: #a4acb9;
+      color: var(--ex-text-color4);
     }
   }
 

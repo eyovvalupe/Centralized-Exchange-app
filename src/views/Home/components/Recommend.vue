@@ -18,7 +18,7 @@
                             activeStockSymbol.ratio > 0 ? '+' : '' }}{{ activeStockSymbol.ratio  }}%
                     </div>
                     <AreaChart :symbol="activeStockSymbol.symbol"
-                        :color="activeStockSymbol.ratio > 0 ? '#18B762' : '#E8503A'" />
+                        :color="activeStockSymbol.ratio > 0 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" />
                 </div>
                 <!-- 横向滚动 -->
                 <div class="padding_block stock_tabs_box">
@@ -140,7 +140,7 @@ const news = ref([])
 
         .active_tab {
             color: var(--ex-primary-color);
-            background-color: #F6F8FF;
+            background-color: var(--ex-bg-color2);
         }
     }
 
@@ -208,11 +208,11 @@ const news = ref([])
             .stock_tab {
                 width: 2.97rem;
                 height: 1.60rem;
-                border: 1px solid #F8F9FB;
+                border: 1px solid var(--ex-bg-color2);
                 border-radius: 0.08rem;
                 padding: 0.17rem;
                 position: relative;
-                background-color: #F8F9FB;
+                background-color: var(--ex-bg-color2);
 
                 .tab_title {
                     font-weight: 700;
@@ -223,7 +223,7 @@ const news = ref([])
                 }
 
                 .tab_subtitle {
-                    color: #818898;
+                    color: var(--ex-text-color3);
                     font-weight: 400;
                     font-size: 0.2rem;
                     margin-bottom: 0.14rem;
@@ -266,7 +266,7 @@ const news = ref([])
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 font-size: 0.28rem;
-                color: #121212;
+                color: var(--ex-text-color);
             }
 
             .time {

@@ -222,7 +222,7 @@ const swipeChange = (val) => {
 }
 
 .invite_banner_tit {
-  color: #fff;
+  color: var(--ex-white);
   font-size: 0.4rem;
   font-style: normal;
   font-weight: 600;
@@ -252,7 +252,7 @@ const swipeChange = (val) => {
 }
 
 .invite_banner_desc {
-  color: #fff;
+  color: var(--ex-white);
   font-size: 0.28rem;
   font-style: normal;
   font-weight: 400;
@@ -343,13 +343,13 @@ const swipeChange = (val) => {
 }
 
 .achievement_text {
-  color: #fff;
+  color: var(--ex-white);
   font-size: 0.28rem;
   font-weight: 500;
 }
 
 .achievement_amount {
-  color: #fff;
+  color: var(--ex-white);
   font-family: "PingFang SC";
   font-size: 0.6rem;
   font-style: normal;
@@ -392,7 +392,7 @@ const swipeChange = (val) => {
 .record-item {
   border-radius: 0.32rem;
   border: 1px solid var(--ex-border-color);
-  background: linear-gradient(90deg, var(--ex-bg-color2) 0%, #fff 100%);
+  background: linear-gradient(90deg, var(--ex-bg-color2) 0%, var(--ex-bg-color) 100%);
   display: flex;
   justify-content: space-between;
   padding: 0.32rem;

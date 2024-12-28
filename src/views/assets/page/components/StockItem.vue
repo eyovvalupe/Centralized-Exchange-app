@@ -26,7 +26,7 @@
     align-items: baseline;
     justify-content: space-between;
     height: 1.28rem;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid var(--ex-border-color);
 
     .item {
         flex: 10;
@@ -57,7 +57,7 @@
         }
 
         .num {
-            color: #6C7B90;
+            color: var(--ex-text-color2);
             font-weight: 600;
             font-size: 0.28rem;
             line-height: 0.44rem;
@@ -67,8 +67,8 @@
             height: 0.46rem;
             margin-bottom: 0.1rem;
             padding: 0 0.3rem;
-            color: #E8503A;
-            background-color: rgba(232, 80, 58, 0.08);
+            color: var(--ex-down-color);
+            background-color: rgb(var(--ex-down-color-rgb) / 0.08);
             display: flex;
             align-items: center;
             justify-content: center;

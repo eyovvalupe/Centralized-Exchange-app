@@ -423,7 +423,7 @@ const afterRead = (file, { name }) => {
     .icon {
       width: 0.8rem;
       height: 0.8rem;
-      background-color: #ededed;
+      background-color: var(--ex-bg-color3);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -439,15 +439,15 @@ const afterRead = (file, { name }) => {
     .status {
       font-size: 0.28rem;
       font-weight: 400;
-      color: #f3ba2f;
+      color: var(--ex-warning-color);
     }
 
     .status_pass {
-      color: #38a843;
+      color: var(--ex-success-color);
     }
 
     .status_fail {
-      color: #e8503a;
+      color: var(--ex-error-color);
     }
   }
 
@@ -465,14 +465,14 @@ const afterRead = (file, { name }) => {
     align-items: center;
     justify-content: center;
     font-size: 0.24rem;
-    color: #404040;
+    color: var(--ex-text-color2);
     font-weight: 400;
 
     .line {
       flex: 1;
       margin: 0 0.12rem;
       height: 1px;
-      background-color: #f2f2f2;
+      background-color: var(--ex-bg-color2);
     }
   }
 
@@ -579,12 +579,12 @@ const afterRead = (file, { name }) => {
         top: 0.42rem;
         left: 0.44rem;
         font-size: 0.36rem;
-        color: #212121;
+        color: var(--ex-text-color);
         line-height: 0.44rem;
 
         span {
           font-size: 0.24rem;
-          color: #a8a8a8;
+          color: var(--ex-text-color4);
           font-weight: 400;
           line-height: 0.34rem;
         }
@@ -615,7 +615,7 @@ const afterRead = (file, { name }) => {
         content: "";
         width: 100%;
         height: 0.02rem;
-        background-color: #3b82f6;
+        background-color: var(--ex-primary-color);
         position: absolute;
         bottom: 0.32rem;
         left: 0;

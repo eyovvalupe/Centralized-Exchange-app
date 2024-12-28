@@ -53,11 +53,11 @@ const props = defineProps({
 
 const color = computed(() => {
     if (props.ratio >= 0) {
-        return '#55C860'
+        return 'var(--ex-up-color)'
     } else if (props.ratio < 0) {
-        return '#FD4938'
+        return 'var(--ex-down-color)'
     } else {
-        return '#6C7B90'
+        return 'var(--ex-info-color)'
     }
 })
 const lineWidth = ref(0);
@@ -76,11 +76,11 @@ const shadowPoints = computed(() => {
 
 const stopStartColor = computed(() => {
     if (props.ratio >= 0) {
-        return 'rgba(57, 179, 98, 0.15)'
+        return 'rgb(var(--ex-up-color-rgb) / 0.15)'
     } else if (props.ratio < 0) {
-        return 'rgba(253, 73, 56, 0.15)'
+        return 'rgb(var(--ex-down-color-rgb) / 0.15)'
     } else {
-        return 'rgba(108, 123, 144, 0.15)'
+        return 'rgb(var(--ex-info-color-rgb) / 0.15)'
     }
 })
 const stopEndColor = computed(() => {

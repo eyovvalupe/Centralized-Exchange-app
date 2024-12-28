@@ -257,7 +257,7 @@ const getDownNum = () => {
 
     .table_item {
       width: 7%;
-      color: #7e879c;
+      color: var(--ex-info-color);
       font-size: 0.18rem;
       text-align: center;
 
@@ -280,7 +280,7 @@ const getDownNum = () => {
 
       .table_item_bar {
         min-height: 0.15rem;
-        background-color: #87878c;
+        background-color: var(--ex-info-color);
         transition: all ease 0.3s;
       }
 

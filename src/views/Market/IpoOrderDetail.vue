@@ -11,7 +11,7 @@
                 <div style="width: 1.2rem;height: 1.2rem;">
                     <img :src="getStaticImgUrl(`/static/icons/success3.svg`)" alt="">
                 </div>
-                <div class="status_text" style="color:#18B762;">
+                <div class="status_text" style="color:var(--ex-success-color);">
                     恭喜你，已中签
                 </div>
             </div>

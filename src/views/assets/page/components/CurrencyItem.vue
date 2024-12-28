@@ -143,11 +143,11 @@ const goWithdraw = (name) => {
     }
 
     .right--green {
-      background-color: #00af70;
+      background-color: var(--ex-success-color);
     }
 
     .right--red {
-      background-color: #e8503a;
+      background-color: var(--ex-error-color);
     }
 
     .right--disabled {

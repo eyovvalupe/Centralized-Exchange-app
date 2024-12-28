@@ -1,7 +1,7 @@
 <!-- 理财元素 -->
 <template>
     <div class="financial_item" @click="handleClick"
-        :style="{ borderBottom: props.borderBottom ? '1px solid #EEF0F4' : '' }">
+        :style="{ borderBottom: props.borderBottom ? '1px solid var(--ex-border-color)' : '' }">
         <div class="title">稳健回报6号稳健回报6号稳健回报6号回报6号稳健回报6号稳健回报6号稳健回报6号回报6号</div>
         <div class="content">
 
@@ -67,7 +67,7 @@ const handleClick = () => {
 
             .date {
 
-                color: #202124;
+                color: var(--ex-text-color);
             }
 
             .tags {
@@ -76,7 +76,7 @@ const handleClick = () => {
                 margin-bottom: 0.12rem;
 
                 .percent {
-                    color: #F03C3C;
+                    color: var(--ex-error-color);
                     font-size: 0.36rem;
                     line-height: 0.56rem;
                     font-weight: 600;

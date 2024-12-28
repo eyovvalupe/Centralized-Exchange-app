@@ -153,7 +153,7 @@ const formatSec = (seconds, t) => {
     justify-content: space-between;
 
     .time_title {
-      color: #6c7b90;
+      color: var(--ex-text-color2);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -236,7 +236,7 @@ const formatSec = (seconds, t) => {
   }
 
   .income_label {
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.24rem;
     font-weight: 400;
     line-height: 0.24rem;
@@ -251,7 +251,7 @@ const formatSec = (seconds, t) => {
 
   .table {
     display: flex;
-    border-top: 1px dashed #eff3f8;
+    border-top: 1px dashed var(--ex-border-color);
     padding: 0.32rem 0;
 
     .td {

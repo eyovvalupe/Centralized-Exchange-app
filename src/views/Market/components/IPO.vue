@@ -460,15 +460,15 @@ function countdown(endTime) {
           align-items: center;
           text-align: center;
           justify-content: center;
-          color: #fa7500;
-          border: 1px solid #fa7500;
+          color: var(--ex-warning-color);
+          border: 1px solid var(--ex-warning-color);
           border-radius: 0.12rem;
           font-size: 0.28rem;
           font-weight: 600;
           box-sizing: border-box;
         }
         span {
-          color: #fa7500;
+          color: var(--ex-warning-color);
           margin: 0 0.1rem;
           font-size: 0.28rem;
         }
@@ -484,25 +484,25 @@ function countdown(endTime) {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: #fff;
+        color: var(--ex-white);
         position: absolute;
         right: 0;
         top: 0;
       }
 
       .status_pre {
-        background-color: #fa7500;
-        color: #fff;
+        background-color: var(--ex-warning-color);
+        color: var(--ex-white);
       }
 
       .status_done {
         background-color: var(--ex-info-color);
-        color: #fff;
+        color: var(--ex-white);
       }
 
       .status_ed {
-        background-color: #18b762;
-        color: #fff;
+        background-color: var(--ex-success-color);
+        color: var(--ex-white);
       }
 
       .item_info {
@@ -520,7 +520,7 @@ function countdown(endTime) {
           padding: 0.24rem 0.32rem;
         }
         .info_cell + .info_cell {
-          border-top: 1px dashed #eff3f8;
+          border-top: 1px dashed var(--ex-border-color);
         }
         .info_name {
           font-size: 0.28rem;

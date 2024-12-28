@@ -4,7 +4,7 @@
     <Top :title="t('trade.ai_position_title')" :backFunc="backFunc" />
 
     <div class="loading-wrap" v-if="loading">
-      <Loading v-if="loading" size="44px" color="#2168F6" />
+      <Loading v-if="loading" size="44px" color="var(--ex-primary-color)" />
     </div>
     <div class="ai_order_info" v-show="!loading">
       <!-- 盈利 -->
@@ -591,7 +591,7 @@ defineExpose({
 }
 
 .win-animate-amount {
-  color: #fff;
+  color: var(--ex-white);
   text-align: center;
   font-family: "Alibaba PuHuiTi 3.0";
   font-size: 0.8rem;

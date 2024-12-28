@@ -103,7 +103,7 @@ defineExpose({
     height: 0.32rem;
     line-height: 0.32rem;
     .title {
-      color: #fff;
+      color: var(--ex-white);
       margin-right: 0.12rem;
       font-size: 0.3rem;
       span{
@@ -114,12 +114,12 @@ defineExpose({
     .eyes {
       width: 0.32rem;
       height: 0.32rem;
-      color: #fff;
+      color: var(--ex-white);
     }
   }
 
   .money {
-    color: #FFF;
+    color: var(--ex-white);
     font-family: "PingFang SC";
     font-size: 0.52rem;
     font-style: normal;
@@ -248,10 +248,10 @@ defineExpose({
           background-color: #FFAF2A;
         }
         .right--green{
-          background-color: #00AF70;
+          background-color: var(--ex-success-color);
         }
         .right--red{
-          background-color: #E8503A;
+          background-color: var(--ex-error-color);
         }
         .right:first-child{
           border-radius: 0.32rem 0rem 0rem 0.32rem;

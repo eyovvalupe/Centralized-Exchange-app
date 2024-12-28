@@ -122,7 +122,7 @@ const formatDate = (date) => {
     }
 
     .item_title {
-      color: #121212;
+      color: var(--ex-text-color);
       font-weight: 400;
       margin-top: 0.08rem;
       font-size: 0.28rem;
@@ -155,7 +155,7 @@ const formatDate = (date) => {
     }
 
     .status_success {
-      color: #18b762;
+      color: var(--ex-success-color);
     }
 
     .status_failure {

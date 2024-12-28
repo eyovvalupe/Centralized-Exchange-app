@@ -460,7 +460,7 @@ defineExpose({
 
 <style lang="less">
 .open-position {
-  color: #333;
+  color: var(--ex-text-color);
   margin: 0 0.3rem;
   padding-bottom: 0.76rem;
   background-color: var(--ex-bg-color);
@@ -585,7 +585,7 @@ defineExpose({
         color: var(--ex-text-color4);
 
         .keyword {
-          color: #fff;
+          color: var(--ex-white);
           font-weight: normal;
         }
       }
@@ -683,7 +683,7 @@ defineExpose({
     }
 
     .selected-class {
-      color: #1e5eff;
+      color: var(--ex-primary-color);
     }
   }
 
@@ -727,7 +727,7 @@ defineExpose({
   }
 
   .pricenlarged {
-    background: #f9fafb;
+    background: var(--ex-bg-color2);
   }
 
   .right-text {
@@ -738,7 +738,7 @@ defineExpose({
     width: 1.9rem;
     height: 0.72rem;
     border-radius: 1.26rem;
-    background: #f2f2f2;
+    background: var(--ex-bg-color2);
     text-align: center;
     line-height: 0.72rem;
     color: var(--ex-text-color3);
@@ -789,7 +789,7 @@ defineExpose({
     }
 
     .selected-class {
-      color: #1e5eff;
+      color: var(--ex-primary-color);
     }
   }
 
@@ -875,7 +875,7 @@ defineExpose({
 
     .position-fee {
       margin-top: 0.1rem;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -920,7 +920,7 @@ defineExpose({
 
   .purchase-amount {
     margin-top: 0.2rem;
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
   }
 
