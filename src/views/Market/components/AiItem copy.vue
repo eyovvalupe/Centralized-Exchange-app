@@ -142,7 +142,7 @@ const formatSec = (seconds, t) => {
   border-radius: 0.32rem;
   border: 1px solid var(--ex-border-color);
   font-size: 0.28rem;
-  color: var(--el-text-color);
+  color: var(--ex-text-color);
   margin-top: 0.2rem;
   background-color: var(--ex-bg-color2);
   position: relative;
@@ -193,7 +193,7 @@ const formatSec = (seconds, t) => {
   }
 
   .title {
-    color: var(--el-text-color);
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     font-weight: 600;
     display: flex;
@@ -286,7 +286,7 @@ const formatSec = (seconds, t) => {
       left: 0;
       top: 50%;
       margin-top: -0.45rem;
-      background-color: #eff3f8;
+      background-color: var(--ex-bg-color3);
     }
   }
 

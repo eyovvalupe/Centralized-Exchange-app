@@ -451,7 +451,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
     padding: 0 0.24rem 0 0.32rem;
     height: 1.12rem;
     font-weight: 600;
-    color: var(--el-text-color);
+    color: var(--ex-text-color);
     line-height: 0.5rem;
     font-size: 0.5rem;
     display: flex;
@@ -526,7 +526,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
   padding: 0 0.32rem 0.64rem 0.32rem;
 
   .popup-title {
-    color: var(--el-text-color);
+    color: var(--ex-text-color);
     font-size: 0.56rem;
     font-style: normal;
     font-weight: 600;

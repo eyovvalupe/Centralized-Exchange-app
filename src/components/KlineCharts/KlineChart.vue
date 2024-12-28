@@ -306,7 +306,7 @@ const setCurrData = (item) => {
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         display: flex;
         align-items: center;
         justify-content: space-around;

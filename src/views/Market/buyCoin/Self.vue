@@ -779,7 +779,7 @@ defineExpose({
     line-height: 1rem;
     font-size: 0.32rem;
     width: 100%;
-    color: #121826;
+    color: var(--ex-text-color);
     pointer-events: none;
     font-weight: bold;
   }
@@ -833,7 +833,7 @@ defineExpose({
 
     input {
       flex: 1;
-      color: #121826;
+      color: var(--ex-text-color);
     }
   }
 
@@ -896,7 +896,7 @@ defineExpose({
     margin-bottom: 0.36rem;
 
     .card_icon {
-      background-color: #d9e4ff;
+      background-color: var(--ex-bg-color4);
       width: 0.96rem;
       height: 0.96rem;
       border-radius: 0.16rem;

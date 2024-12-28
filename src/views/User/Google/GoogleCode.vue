@@ -91,7 +91,7 @@ const jump = (name, query) => {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       margin-right: 0.12rem;
 
       .chat_icon {

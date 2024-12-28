@@ -20,9 +20,9 @@
             t("market.market_stock_chase_movement_percentage")
           }}</span>
           <div class="flex">
-            <span style="color: #18b762; margin-right: 0.05rem">356</span>
+            <span class="text-success" style=" margin-right: 0.05rem">356</span>
             <span style="margin-right: 0.05rem">:</span>
-            <span style="color: #e8503a">117</span>
+            <span class="text-error">117</span>
           </div>
         </div>
         <div class="chase_graph">
@@ -35,7 +35,7 @@
             class="text-color2 mr-[0.16rem] ovreflow-hidden"
             >{{ t("market.market_stock_chase_todays_effect") }}</span
           >
-          <span style="color: #18b762">99.26%</span>
+          <span class="text-success">99.26%</span>
         </div>
         <div class="chase_graph">
           <img src="static/img/market/todcondis.svg" alt="condi" />

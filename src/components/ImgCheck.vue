@@ -81,8 +81,8 @@ const goLang = () => {
 
 const colorMap = ref({
   default: "var(--ex-primary-color)",
-  success: "#18B762",
-  error: "#ee0a24",
+  success: "var(--ex-success-color)",
+  error: "var(--ex-error-color)",
 });
 
 const open = () => {
@@ -161,7 +161,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
@@ -179,7 +179,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-width: 0.02rem;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       border-radius: 0.36rem;
 
       .language_icon {
@@ -215,7 +215,7 @@ onMounted(() => {
     width: 4.38rem;
     height: 4.38rem;
     flex-shrink: 0;
-    background-color: #d0d8e2;
+    background-color: var(--ex-border-color2);
     padding: 0.2rem;
     border-radius: 2.19rem;
     margin-bottom: 0.8rem;

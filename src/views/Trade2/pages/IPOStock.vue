@@ -312,7 +312,7 @@ function countdown(endTime) {
         font-size: 0.32rem;
         font-weight: 600;
         line-height: 0.36rem;
-        color: var(--el-text-color);
+        color: var(--ex-text-color);
         height: 0.36rem;
 
 
@@ -413,7 +413,7 @@ function countdown(endTime) {
       }
 
       .status_done {
-        background-color: #7e99d6;
+        background-color: var(--ex-info-color);
         color: #fff;
       }
 
@@ -511,7 +511,7 @@ function countdown(endTime) {
     font-weight: 400;
 
     .name {
-      color: var(--el-text-color);
+      color: var(--ex-text-color);
       font-weight: 600;
       font-size: 0.32rem;
     }
@@ -535,12 +535,12 @@ function countdown(endTime) {
     }
 
     .status_success {
-      color: #0953fa;
+      color: var(--ex-text-primary);
       background-color: #8bb2fc;
     }
 
     .val {
-      color: #121826;
+      color: var(--ex-text-color);
       font-weight: 500;
     }
   }

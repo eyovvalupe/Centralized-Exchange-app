@@ -285,7 +285,7 @@ function formatDate(date) {
 
     &.receive {
       .con {
-        background: #eff3f8;
+        background: var(--ex-bg-color3);
         color: var(--ex-text-color);
 
         &.img {
@@ -305,7 +305,7 @@ function formatDate(date) {
 
       .con {
         background: var(--ex-primary-color);
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
 
         &.img {
           box-shadow: none !important;
@@ -355,12 +355,12 @@ function formatDate(date) {
     background: #f5f5f5;
     padding: 10px 0;
     margin-bottom: 10px;
-    color: #959494;
+    color: var(--ex-text-color3);
   }
 
   .no-message {
     text-align: center;
-    color: #999;
+    color: var(--ex-text-color3);
   }
 }
 </style>

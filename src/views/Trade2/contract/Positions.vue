@@ -16,8 +16,8 @@
       <div class="td td-5">
         <div class="name van-omit1">{{ item.name }}</div>
         <div class="lever">
-          <div class="status">{{ item.lever }}X</div>
-          <div class="status" :class="'status-' + item.status">
+          <div class="status-color status">{{ item.lever }}X</div>
+          <div class="status-color status" :class="'status-' + item.status">
             {{
               item.status == "none"
                 ? t("trade.stock_position_status_none")
@@ -103,7 +103,7 @@
                                 :class="!currStock.profit ? '' : (currStock.profit > 0 ? 'up' : 'down')">{{
                                     getRatio(currStock.ratio) }}</div>
                         </div>
-                        <div class="total_item" style="border-top: 1px dashed #CBCBCB">
+                        <div class="total_item" style="border-top: 1px dashed var(--ex-border-color2)">
                             <div class="total_name">手续费</div>
                             <div class="total_num">{{ currStock.fee || 0 }}</div>
                         </div>
@@ -686,11 +686,11 @@ getSessionToken();
     }
 
     .status {
-      color: var(--ex-primary-color);
       height: 0.3rem;
       padding: 0 0.08rem;
       border-radius: 0.3rem;
-      border: 1px solid var(--ex-primary-color);
+      border-width: 1px;
+      border-style: solid;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -698,28 +698,12 @@ getSessionToken();
       margin-right: 0.08rem;
     }
 
-    .status-open {
-      color: #18b762;
-      border-color: #18b762;
-    }
-
-    .status-fail,
-    .status-lock {
-      color: #e8503a;
-      border-color: #e8503a;
-    }
-
-    .status-none {
-      color: #7e99d6;
-      border-color: #7e99d6;
-    }
-
     .state {
       width: 0.68rem;
       height: 0.36rem;
       border-radius: 0.12rem;
-      color: #18b762;
-      background-color: rgba(24, 183, 98, 0.08);
+      color: var(--ex-up-color);
+      background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -728,8 +712,8 @@ getSessionToken();
     }
 
     .state-short {
-      background: rgba(232, 80, 58, 0.1);
-      color: #e8503a;
+      color: var(--ex-down-color);
+      background: rgb(var(--ex-down-color-rgb) / 0.1);
     }
 
     .amount {
@@ -778,7 +762,7 @@ getSessionToken();
   .title {
     text-align: center;
     font-size: 0.28rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-weight: 600;
   }
 

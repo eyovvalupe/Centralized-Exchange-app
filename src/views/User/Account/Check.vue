@@ -114,7 +114,7 @@ const userInfo = computed(() => store.state.userInfo || {})
 
                     .title {
                         font-weight: 400;
-                        color: #343434;
+                        color: var(--ex-text-color);
                         font-size: 0.32rem;
                         line-height: 0.48rem;
                         margin-bottom: 0.18rem;

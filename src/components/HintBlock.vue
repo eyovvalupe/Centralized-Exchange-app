@@ -52,7 +52,7 @@ const jump = () => {
     padding: 0 0.24rem;
 
     .wo_icon {
-        background-color: #D8E4FF;
+        background-color: var(--ex-bg-color4);
         width: 0.5rem;
         height: 0.5rem;
         border-radius: 0.12rem;
@@ -81,13 +81,13 @@ const jump = () => {
         }
 
         .status {
-            background-color: #F2F1F9;
+            background-color: var(--ex-bg-color2);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0.02rem 0.2rem;
             border-radius: 0.04rem;
-            color: #999;
+            color: var(--ex-text-color3);
         }
     }
 

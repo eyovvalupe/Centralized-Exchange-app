@@ -310,8 +310,8 @@ const getSessionToken = () => {
     align-items: stretch;
     justify-content: space-between;
     padding: 0.24rem 0;
-    border-top: 1px dashed #cbcbcb;
-    border-bottom: 1px dashed #cbcbcb;
+    border-top: 1px dashed var(--ex-border-color2);
+    border-bottom: 1px dashed var(--ex-border-color2);
 
     .info_item {
       flex: 1;
@@ -334,7 +334,7 @@ const getSessionToken = () => {
 
   .seller {
     padding: 0.24rem 0;
-    border-bottom: 1px dashed #cbcbcb;
+    border-bottom: 1px dashed var(--ex-border-color2);
 
     .title_box {
       display: flex;
@@ -380,14 +380,14 @@ const getSessionToken = () => {
         height: 0.4rem;
         border-radius: 50%;
         padding: 0.04rem;
-        background-color: #d8e4ff;
+        background-color: var(--ex-bg-color4);
         margin-right: 0.16rem;
       }
     }
 
     .table {
-      border-left: 1px solid #d4d4d4;
-      border-top: 1px solid #d4d4d4;
+      border-left: 1px solid var(--ex-border-color2);
+      border-top: 1px solid var(--ex-border-color2);
 
       .tr {
         display: flex;
@@ -400,8 +400,8 @@ const getSessionToken = () => {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          border-right: 1px solid #d4d4d4;
-          border-bottom: 1px solid #d4d4d4;
+          border-right: 1px solid var(--ex-border-color2);
+          border-bottom: 1px solid var(--ex-border-color2);
         }
 
         .td-3 {

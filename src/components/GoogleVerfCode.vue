@@ -54,7 +54,7 @@ watch(val, (v) => {
       inputStyle.borderColor = "var(--ex-primary-color)";
       inputStyle.color = "var(--ex-primary-color)";
     } else {
-      inputStyle.borderColor = "#D0D8E2";
+      inputStyle.borderColor = "var(--ex-border-color2)";
       inputStyle.color = "var(--ex-text-color2)";
     }
   }
@@ -115,7 +115,7 @@ defineExpose({
   .title {
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: #121826;
+    color: var(--ex-text-color);
     margin-bottom: 0.4rem;
     text-align: center;
     font-weight: bold;
@@ -144,7 +144,7 @@ defineExpose({
 .pass_check {
   border-width: 0.02rem;
   border-style: solid;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   width: 1rem;
   height: 1.2rem;
   box-sizing: border-box;
@@ -160,8 +160,8 @@ defineExpose({
   margin: 0;
 
   :deep(.van-password-input__item) {
-    border: 0.02rem solid #eceff3;
-    background-color: #fff;
+    border: 0.02rem solid var(--ex-border-color);
+    background-color: var(--ex-bg-color);
     width: 1rem;
     height: 1.2rem;
     box-sizing: border-box;

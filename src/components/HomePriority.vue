@@ -164,11 +164,11 @@ const goInfo = (item) => {
 </script>
 <style lang="less">
 .up_price {
-  color: #18b762;
+  color: var(--ex-up-color);
 }
 
 .down_price {
-  color: #e8503a;
+  color: var(--ex-down-color);
 }
 
 .custom-heart-icon {

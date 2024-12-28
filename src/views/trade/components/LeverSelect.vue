@@ -33,7 +33,7 @@
     .detail-update-title {
       text-align: center;
       margin-top: 0.4rem;
-      color: #121826;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-style: normal;
       font-weight: 500;
@@ -53,14 +53,14 @@
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 400;
-        border-bottom: 0.02rem solid #f4f5f7;
+        border-bottom: 0.02rem solid var(--ex-border-color);
       }
       .select-box-item:first-of-type {
         margin-right: 0.3rem;
       }
       .selected-class {
         color: var(--ex-primary-color);
-        background-color: #f4f5f7;
+        background-color: var(--ex-bg-color2);
         position: relative;
       }
     }

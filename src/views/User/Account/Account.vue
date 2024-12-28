@@ -154,7 +154,7 @@ const goBack = () => {
     height: 0.92rem;
     border-radius: 0.32rem;
     border-width: 0.02rem;
-    border-color: #eff3f8;
+    border-color: var(--ex-border-color);
   }
 
   :deep(.van-tab--card.van-tab) {
@@ -176,7 +176,7 @@ const goBack = () => {
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
     }
   }
 
@@ -214,7 +214,7 @@ const goBack = () => {
   }
 }
 </style>
-<style lang="css">
+<style lang="less">
 .van-dialog {
   padding-top: 0.8rem;
 }

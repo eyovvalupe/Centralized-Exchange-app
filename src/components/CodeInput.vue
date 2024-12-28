@@ -13,18 +13,18 @@
           @focus="focusIndex = index" class="digit-input pt-[0.1rem]" :class="{ filled: digit !== '' }" :style="{
             borderColor:
               digit == '' && focusIndex != index
-                ? '#d0d8e2'
+                ? 'var(--ex-border-color2)'
                 : !isSentCodeError || !isAllFilled
                   ? 'var(--ex-primary-color)'
-                  : '#e8503a',
+                  : 'var(--ex-border-error)',
             color:
               digit == ''
                 ? ''
                 : !isSentCodeError || !isAllFilled
                   ? 'var(--ex-primary-color) !important'
-                  : '#e8503a !important',
+                  : 'var(--ex-border-error) !important',
             caretColor:
-              !isSentCodeError || !isAllFilled ? 'var(--ex-primary-color)' : '#e8503a',
+              !isSentCodeError || !isAllFilled ? 'var(--ex-primary-color)' : 'var(--ex-border-error)',
             borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem',
           }" ref="digitInputs" />
         <div v-if="focusIndex == index && digit == ''"
@@ -138,7 +138,7 @@ onMounted(() => {
   width: 1rem;
   height: 1.2rem;
   text-align: center;
-  border: 0.03rem solid #d0d8e2;
+  border: 0.03rem solid var(--ex-border-color2);
   /* border-radius: 0.16rem; */
   font-size: 0.48rem;
 }
@@ -153,7 +153,7 @@ onMounted(() => {
   font-size: 0.36rem;
   /* background-color: var(--ex-primary-color); */
   border-radius: 1.6rem;
-  color: white;
+  color: var(--ex-bg-primary-text-color);
 }
 
 .clear_icon {

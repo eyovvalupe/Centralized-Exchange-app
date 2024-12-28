@@ -175,7 +175,7 @@ defineExpose({
 
 <style lang="less">
 .account_check_popup {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     overflow: hidden;
     padding: 0.2rem 0.32rem 0.64rem 0.32rem;
     position: relative;
@@ -223,7 +223,7 @@ defineExpose({
             .fake_icon_box {
                 width: 0.96rem;
                 height: 0.96rem;
-                background-color: #D9E4FF;
+                background-color: var(--ex-bg-color4);
                 padding: 0.16rem;
                 border-radius: 0.16rem;
                 margin-right: 0.6rem;
@@ -268,7 +268,7 @@ defineExpose({
 
                     .title {
                         font-weight: 400;
-                        color: #343434;
+                        color: var(--ex-text-color);
                         font-size: 0.28rem;
                         line-height: 0.48rem;
                         margin-bottom: 0.18rem;

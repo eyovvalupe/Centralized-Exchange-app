@@ -452,7 +452,7 @@ const afterRead = (file, { name }) => {
   }
 
   .title {
-    color: var(--el-text-color);
+    color: var(--ex-text-color);
     font-weight: 600;
     font-size: 0.48rem;
     line-height: 0.8rem;
@@ -498,7 +498,7 @@ const afterRead = (file, { name }) => {
     border-radius: 0.32rem;
     position: relative;
     width: 3.33rem;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
     display: flex;
     align-items: center;
     justify-content: center;

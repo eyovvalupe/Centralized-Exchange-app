@@ -858,7 +858,7 @@ defineExpose({
     background: #f2f2f2;
     text-align: center;
     line-height: 0.72rem;
-    color: #999;
+    color: var(--ex-text-color3);
     text-align: center;
     font-size: 0.28rem;
     font-style: normal;
@@ -984,7 +984,7 @@ defineExpose({
 
     .position-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0;
       top: 0.5rem;

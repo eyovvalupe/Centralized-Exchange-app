@@ -107,7 +107,7 @@ defineExpose({
   justify-content: center;
 
   .title {
-    color: #121826;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
     line-height: 0.44rem;
     margin-bottom: 0.28rem;

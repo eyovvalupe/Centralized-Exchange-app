@@ -25,8 +25,8 @@ const value = ref(0)
 const activeVal = ref(0)
 const colorMap = ref({
     0: 'var(--ex-primary-color)',
-    1: '#18B762',
-    2: '#ee0a24'
+    1: 'var(--ex-success-color)',
+    2: 'var(--ex-error-color)'
 })
 
 const changeSlider = (e) => {
@@ -58,7 +58,7 @@ defineExpose({
 .slider_check_box {
     width: 80vw;
     border-radius: 0.12rem;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     padding: 0.48rem 0.64rem 0.64rem 0.64rem;
     text-align: center;
 

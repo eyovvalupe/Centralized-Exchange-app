@@ -327,7 +327,7 @@ const goRecord = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #0953fa;
+        color: var(--ex-text-primary);
         font-size: 0.24rem;
 
         .top-record-icon {
@@ -371,7 +371,7 @@ const goRecord = () => {
             .item_pre {
                 width: 1rem;
                 font-size: 0.32rem;
-                color: #707070;
+                color: var(--ex-text-color2);
             }
 
             .item_content {
@@ -452,7 +452,7 @@ const goRecord = () => {
                 transition: all ease .2s;
 
                 span {
-                    // color: #111111;
+                    // color: var(--ex-text-color);
                 }
             }
 
@@ -519,7 +519,7 @@ const goRecord = () => {
             justify-content: flex-start;
             font-weight: 400;
             font-size: 0.24rem;
-            color: #707070;
+            color: var(--ex-text-color2);
             line-height: 0.4rem;
             margin-top: 0.12rem;
 
@@ -532,7 +532,7 @@ const goRecord = () => {
             .subtip {
                 font-weight: 400;
                 font-size: 0.2rem;
-                color: #707070;
+                color: var(--ex-text-color2);
             }
 
             .refresh_box {
@@ -624,7 +624,7 @@ const goRecord = () => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border-bottom: 1px dashed #CBCBCB;
+        border-bottom: 1px dashed var(--ex-border-color2);
         padding-bottom: 0.2rem;
         margin-bottom: 0.1rem;
 
@@ -635,7 +635,7 @@ const goRecord = () => {
             color: var(--ex-text-color3);
 
             .num {
-                color: #121826;
+                color: var(--ex-text-color);
                 font-weight: 600;
                 font-size: 0.32rem;
                 margin-top: 0.2rem;

@@ -95,8 +95,6 @@
       <Button size="large" class="submit" :class="['submit--'+form1.offset]" round :loading="loading" @click="sell">{{ form1.offset == "sell" ?
           t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</Button>
 
-      <!-- <Button v-if="!token" size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
-      <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
     </div>
   </div>
 
@@ -472,7 +470,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       justify-content: space-between;
 
       .link {
-        color: #034cfa;
+        color: var(--ex-primary-color);
       }
     }
 
@@ -513,38 +511,16 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
           pointer-events: none;
         }
 
-        .ipt_tip {
-          color: #b7b7b7;
-          font-size: 0.24rem;
-          position: absolute;
-          left: 0.24rem;
-          transition: all ease 0.3s;
-        }
-
-        .ipt_tip2 {
-          left: auto;
-          right: 0.24rem;
-        }
-
         .ipt {
           flex: 1;
           height: 100%;
           width: 2rem;
           font-size: 0.28rem;
           padding: 0;
-          color: #034cfa;
+          color: var(--ex-primary-color);
           position: relative;
           z-index: 1;
         }
-
-        .base_ipt {
-          font-size: 0.28rem;
-          color: #b7b7b7;
-          position: absolute;
-          left: 0.24rem;
-          z-index: 0;
-        }
-
         .more_icon {
           width: 0.32rem;
           height: 0.32rem;
@@ -554,17 +530,6 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
       .disabled_item {
         background-color: #f5f5f5;
-      }
-
-      .item_focus {
-        // height: 1.12rem;
-        // padding-top: 0.2rem;
-        border: 1px solid #034cfa;
-
-        .ipt_tip {
-          font-size: 0.2rem;
-          transform: translateY(-0.36rem);
-        }
       }
 
       .item_box_left {
@@ -586,7 +551,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
         border-radius: 1.26rem;
         background: #f2f2f2;
         height: 0.72rem;
-        color: #999;
+        color: var(--ex-text-color3);
         text-align: center;
         font-size: 0.28rem;
         font-weight: 600;
@@ -629,7 +594,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     padding: 0 0.4rem;
     margin-bottom: 0.15rem;
     height: 0.8rem;
-    background-color: #f4f5f7;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.8rem;
 
     input {
@@ -669,7 +634,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     .close {
       width: 0.24rem;
       height: 0.24rem;
-      color: #121826;
+      color: var(--ex-text-color);
     }
 
     .search {
@@ -689,7 +654,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     line-height: 1rem;
     font-size: 0.32rem;
     width: 100%;
-    color: #121826;
+    color: var(--ex-text-color);
     pointer-events: none;
     font-weight: bold;
   }
@@ -751,93 +716,6 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       background-color: #f6f8ff;
       color: var(--ex-primary-color);
       font-weight: 500;
-    }
-  }
-
-  .list {
-    max-height: 70vh;
-    overflow-y: auto;
-
-    .add_account {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.4rem 0;
-    }
-  }
-
-  .add_item {
-    margin-bottom: 0.36rem;
-    border: 1px dashed #ccd7fd;
-    border-radius: 0.12rem;
-    height: 1.44rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dialog_account_item {
-    border-radius: 0.12rem;
-    height: 1.44rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    background-color: #f6f7fa;
-    padding: 0 0.4rem 0 0.36rem;
-    overflow: hidden;
-    margin-bottom: 0.36rem;
-
-    .card_icon {
-      background-color: #d9e4ff;
-      width: 0.96rem;
-      height: 0.96rem;
-      border-radius: 0.16rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      >img {
-        width: 0.64rem !important;
-        height: 0.64rem !important;
-      }
-    }
-
-    .card {
-      flex: 1;
-      margin: 0 0.2rem 0 0.36rem;
-      text-align: left;
-      font-size: 0.24rem;
-      color: var(--ex-text-color);
-      font-weight: 500;
-      line-height: 1;
-
-      .code {
-        font-size: 0.28rem;
-        margin-bottom: 0.1rem;
-        font-weight: 400;
-      }
-    }
-  }
-
-  .dialog_account_item_active {
-    border: 1px solid var(--ex-primary-color);
-
-    .checked {
-      position: absolute;
-      top: -0.04rem;
-      right: -0.04rem;
-      background-size: 100% 100%;
-      width: 0.46rem;
-      height: 0.42rem;
-
-      >img {
-        width: 0.18rem !important;
-        height: 0.12rem !important;
-        position: absolute;
-        right: 0.06rem;
-        top: 0.08rem;
-      }
     }
   }
 }

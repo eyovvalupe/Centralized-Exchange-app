@@ -90,7 +90,7 @@ store.commit("setCheckState", true);
 }
 
 .search_block {
-  background-color: #f4f5f7;
+  background-color: var(--ex-bg-color2);
   // border: 1px solid #eeeff1;
   height: 0.8rem;
   border-radius: 0.2rem;

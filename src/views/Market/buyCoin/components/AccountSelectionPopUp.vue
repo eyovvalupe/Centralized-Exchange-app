@@ -160,7 +160,7 @@ const clickAccountItem = val => {
     line-height: 1rem;
     font-size: 0.32rem;
     width: 100%;
-    color: #121826;
+    color: var(--ex-text-color);
     pointer-events: none;
     font-weight: bold;
   }
@@ -214,7 +214,7 @@ const clickAccountItem = val => {
 
     input {
       flex: 1;
-      color: #121826;
+      color: var(--ex-text-color);
     }
   }
 

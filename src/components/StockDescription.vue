@@ -133,14 +133,14 @@ const goInfo = (item) => {
     .stock_price {
       font-size: 0.3rem;
       font-weight: 600;
-      color: #18b762;
+      color: var(--ex-up-color);
     }
 
     .stock_detail {
       width: 100%;
       font-size: 0.24rem;
       font-weight: 400;
-      color: #18b762;
+      color: var(--ex-up-color);
     }
   }
 
@@ -150,14 +150,14 @@ const goInfo = (item) => {
     .stock_price {
       font-size: 0.3rem;
       font-weight: 600;
-      color: #e8503a;
+      color: var(--ex-down-color);
     }
 
     .stock_detail {
       width: 100%;
       font-size: 0.24rem;
       font-weight: 400;
-      color: #e8503a;
+      color: var(--ex-down-color);
     }
   }
 }

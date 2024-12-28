@@ -175,7 +175,7 @@ onMounted(()=>{
             margin: 0;
         }
         .tab{
-            border: 1px solid #D0D8E2;
+            border: 1px solid var(--ex-border-color2);
             margin-right: 0.12rem;
             padding: 0 .32rem;
             height: .8rem;
@@ -188,7 +188,7 @@ onMounted(()=>{
             font-weight: normal;
             .tab-name{
                 font-size: 0.32rem;
-                color:#fff;
+                color:var(--ex-bg-primary-text-color);
             }
             &::after{
                 display: none;

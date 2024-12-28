@@ -231,7 +231,7 @@ const getDate = str => {
 
 <style lang="less">
 .record_list_popup {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border-top-left-radius: 0.24rem;
     border-top-right-radius: 0.24rem;
     overflow: hidden;
@@ -303,7 +303,7 @@ const getDate = str => {
 
     .list_0_item {
         .date {
-            color: #343434;
+            color: var(--ex-text-color);
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.48rem;

@@ -36,7 +36,7 @@
     .detail-update-title {
       text-align: center;
       margin-top: 0.4rem;
-      color: #121826;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-style: normal;
       font-weight: 500;

@@ -282,11 +282,11 @@ getSessionToken();
         font-size: 0.4rem;
         top: 0.3rem;
         right: 0.4rem;
-        color: #161616;
+        color: var(--ex-text-color);
       }
 
       .bottom {
-        color: #111111;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         height: 1.12rem;
         display: flex;
@@ -300,7 +300,7 @@ getSessionToken();
       }
 
       ._bottom {
-        color: #111111;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         height: 1.12rem;
         display: flex;
@@ -341,7 +341,7 @@ getSessionToken();
     height: 0.92rem;
     border-radius: 0.32rem;
     border-width: 0.02rem;
-    border-color: #eff3f8;
+    border-color: var(--ex-border-color);
   }
 
   :deep(.van-tab--card.van-tab) {
@@ -471,7 +471,7 @@ getSessionToken();
 
 }
 </style>
-<style lang="css">
+<style lang="less">
 .van-dialog {
   padding-top: 0.8rem;
 }

@@ -491,7 +491,7 @@ const changeAmount = (val) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0953fa;
+    color: var(--ex-text-primary);
     font-size: 0.28rem;
 
     .top-record-icon {
@@ -575,7 +575,7 @@ const changeAmount = (val) => {
     .tip {
       font-weight: 400;
       font-size: 0.24rem;
-      color: #707070;
+      color: var(--ex-text-color2);
       line-height: 0.4rem;
       margin-top: 0.12rem;
 

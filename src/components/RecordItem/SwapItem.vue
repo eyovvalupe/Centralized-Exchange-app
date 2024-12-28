@@ -48,13 +48,13 @@ const props = defineProps({
 <style lang="less" scoped>
 .swap_item {
     padding: 0.24rem 0;
-    border-bottom: 1px dashed #CBCBCB;
+    border-bottom: 1px dashed var(--ex-border-color2);
 
     .item_title {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #343434;
+        color: var(--ex-text-color);
         font-weight: 0.28rem;
         font-weight: 600;
 
@@ -81,7 +81,7 @@ const props = defineProps({
     }
 
     .time {
-        color: #919193;
+        color: var(--ex-text-color3);
         font-weight: 400;
         font-size: 0.28rem;
         margin-bottom: 0.1rem;

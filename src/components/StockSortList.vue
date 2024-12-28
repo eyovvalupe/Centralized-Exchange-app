@@ -203,7 +203,7 @@ onBeforeUnmount(() => {
         position: relative;
         &::after {
           content: "";
-          background-color: #eff3f8;
+          background-color: var(--ex-bg-color3);
           height: 1px;
           position: absolute;
           bottom: 0;

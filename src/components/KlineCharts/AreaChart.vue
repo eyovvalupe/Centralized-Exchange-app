@@ -141,7 +141,7 @@ const initData = async () => {
                     size: 10,
                     family: 'Helvetica Neue',
                     weight: 'normal',
-                    color: '#121826',
+                    color: 'var(--ex-text-color)',
                     marginLeft: 8,
                     marginTop: 4,
                     marginRight: 8,
@@ -299,7 +299,7 @@ defineExpose({
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         z-index: 99;
         // border-right: 1px solid #7F939E;
         // border-bottom: 1px solid #7F939E;

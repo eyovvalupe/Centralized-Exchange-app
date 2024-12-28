@@ -379,7 +379,7 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0953fa;
+    color: var(--ex-text-primary);
     font-size: 0.28rem;
 
     .top-record-icon {

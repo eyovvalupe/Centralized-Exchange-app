@@ -196,7 +196,7 @@ onBeforeUnmount(() => {
       font-size: 0.32rem;
       font-weight: 600;
       line-height: 0.36rem;
-      color: var(--el-text-color);
+      color: var(--ex-text-color);
       max-width: 80%;
     }
 
@@ -272,7 +272,7 @@ onBeforeUnmount(() => {
     }
 
     .status_done {
-      background-color: #7e99d6;
+      background-color: var(--ex-info-color);
       color: #fff;
     }
 
@@ -341,7 +341,7 @@ onBeforeUnmount(() => {
       content: "";
       width: 1px;
       height: 0.9rem;
-      background-color: #eff3f8;
+      background-color: var(--ex-bg-color3);
       position: absolute;
       left: 0;
       top: 50%;

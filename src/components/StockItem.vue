@@ -255,7 +255,7 @@ const removeStock = (item) => {
 
   &:active,
   &:hover {
-    background-color: #f2f3f7;
+    background-color: var(--ex-bg-color3);
   }
 
   .delete_content {
@@ -264,7 +264,7 @@ const removeStock = (item) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #d0d8e2;
+    background-color: var(--ex-border-color2);
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
 
@@ -280,7 +280,7 @@ const removeStock = (item) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #d0d8e2;
+    background-color: var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-left: -0.32rem;
 
@@ -292,7 +292,7 @@ const removeStock = (item) => {
 }
 
 .active_symbol {
-  background-color: #f2f3f7;
+  background-color: var(--ex-bg-color3);
 }
 
 .stock_item {
@@ -309,7 +309,7 @@ const removeStock = (item) => {
     bottom: 0;
     left: 0.3rem;
     height: 1px;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
   }
 
   .td5 {
@@ -395,7 +395,7 @@ const removeStock = (item) => {
     bottom: 0;
     left: 0.3rem;
     height: 1px;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
   }
 
   .td5 {

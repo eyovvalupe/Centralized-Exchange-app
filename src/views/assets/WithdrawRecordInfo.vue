@@ -154,7 +154,7 @@ const goChat = () => {
     width: 0.72rem;
     height: 0.72rem;
     box-sizing: border-box;
-    border: 1px solid #edf2f7;
+    border: 1px solid var(--ex-border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;

@@ -16,8 +16,8 @@
         <div class="td td-5">
           <div class="name">{{ item.name }}</div>
           <div class="lever">
-            <div class="status">{{ item.lever }}X</div>
-            <div class="status" :class="'status-' + item.status">
+            <div class="status-color status">{{ item.lever }}X</div>
+            <div class="status-color status" :class="'status-' + item.status">
               <!-- {{ statusMap[item.status] || "--" }} -->
               {{
                 item.status == "none"
@@ -278,40 +278,24 @@ defineExpose({
     }
 
     .status {
-      color: var(--ex-primary-color);
       height: 0.3rem;
       padding: 0 0.08rem;
       border-radius: 0.3rem;
-      border: 1px solid var(--ex-primary-color);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.22rem;
       margin-right: 0.08rem;
-    }
-
-    .status-open {
-      color: #18b762;
-      border-color: #18b762;
-    }
-
-    .status-fail,
-    .status-lock {
-      color: #e8503a;
-      border-color: #e8503a;
-    }
-
-    .status-none {
-      color: #7e99d6;
-      border-color: #7e99d6;
+      border-width: 1px;
+      border-style: solid;
     }
 
     .state {
       width: 0.68rem;
       height: 0.36rem;
       border-radius: 0.12rem;
-      color: #18b762;
-      background-color: rgba(24, 183, 98, 0.08);
+      color: var(--ex-up-color);
+      background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -320,8 +304,8 @@ defineExpose({
     }
 
     .state-short {
-      background: rgba(232, 80, 58, 0.1);
-      color: #e8503a;
+      background: rgb(var(--ex-down-color-rgb) / 0.1);
+      color: var(--ex-down-color);
     }
 
     .amount {

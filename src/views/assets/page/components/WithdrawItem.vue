@@ -58,7 +58,7 @@ const props = defineProps({
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #343434;
+        color: var(--ex-text-color);
         font-size: 0.24rem;
     }
 
@@ -73,7 +73,7 @@ const props = defineProps({
 
             .item_info {
                 font-size: 0.28rem;
-                color: #919193;
+                color: var(--ex-text-color3);
                 line-height: 400;
                 line-height: 0.48rem;
 
@@ -91,7 +91,7 @@ const props = defineProps({
     }
 
     .date {
-        color: #919193;
+        color: var(--ex-text-color3);
         font-size: 0.24rem;
         font-weight: 400;
     }

@@ -123,7 +123,7 @@ const openDate = () => {
     .tabs {
 
         :deep(.van-tabs__wrap) {
-            background: #EFF3F8;
+            background: var(--ex-bg-color3);
             margin: 0 .32rem;
             border-radius: .32rem;
             height: 0.8rem;

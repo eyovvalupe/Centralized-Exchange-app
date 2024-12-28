@@ -163,7 +163,7 @@
     .detail-update-title {
       text-align: center;
       margin-top: 0.4rem;
-      color: #121826;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-style: normal;
       font-weight: 500;
@@ -271,7 +271,7 @@
     }
     .risk-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0;
       top: 0.42rem;
@@ -293,7 +293,7 @@
       margin-top: 0.26rem;
       .ipo-code-title {
         text-align: center;
-        color: #121826;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 500;
@@ -306,7 +306,7 @@
     }
     .van-password-input__security li {
       border-radius: 0.16rem;
-      border: 0.02rem solid #eceff3;
+      border: 0.02rem solid var(--ex-border-color);
     }
     @media (min-width: 751px) {
       .van-number-keyboard {

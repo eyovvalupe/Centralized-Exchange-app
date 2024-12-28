@@ -95,7 +95,7 @@ const list = ref([
             left: 0.3rem;
             font-size: 0.6rem;
             letter-spacing: -0.5px;
-            color: #111111;
+            color: var(--ex-text-color);
         }
 
         .subtitle {
@@ -156,7 +156,7 @@ const list = ref([
             .tab_title {
                 font-weight: 700;
                 font-size: 0.2rem;
-                color: var(--el-text-color);
+                color: var(--ex-text-color);
                 line-height: 0.274rem;
                 margin-bottom: 0.06rem;
             }
@@ -169,7 +169,7 @@ const list = ref([
             }
 
             .tab_num {
-                color: var(--el-text-color);
+                color: var(--ex-text-color);
                 font-weight: 600;
                 font-size: 0.17rem;
                 line-height: 0.25rem;

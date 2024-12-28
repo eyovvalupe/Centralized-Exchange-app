@@ -121,7 +121,7 @@ const checkActive = (item) => {
 <style scoped lang="less">
 .bottom_nav {
   border-top: 1px solid #eaeef3;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   display: flex;
   position: fixed;
   overflow: hidden;

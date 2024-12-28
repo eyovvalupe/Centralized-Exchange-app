@@ -104,7 +104,7 @@ defineExpose({
         margin-bottom: 0.32rem;
 
         .link {
-            color: #0953FA;
+            color: var(--ex-text-primary);
             font-size: 0.28rem;
         }
     }
@@ -125,7 +125,7 @@ defineExpose({
         .btn {
             margin-left: 0.4rem;
             height: 0.72rem;
-            background-color: #0953FA;
+            background-color: var(--ex-text-primary);
             border-radius: 0.08rem;
             padding: 0 0.4rem;
             display: flex;

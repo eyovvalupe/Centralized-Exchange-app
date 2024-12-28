@@ -43,7 +43,7 @@
 
     &::after {
         content: '';
-        background-color: #D9D9D9;
+        background-color: var(--ex-border-color2);
         width: 0.64rem;
         height: 0.08rem;
         border-radius: 0.08rem;
@@ -384,7 +384,7 @@
             height: 0.82rem;
             overflow: inherit;
             color: var(--ex-text-color3);
-            background-color: #fff;
+            background-color: var(--ex-bg-color);
             position: relative;
             border-radius: 0.32rem 0.32rem 0 0;
             border-bottom: 0.02rem solid var(--ex-border-color) !important;
@@ -395,7 +395,7 @@
             flex: 1;
             text-align: center;
             color: var(--ex-primary-color);
-            background-color: #fff;
+            background-color: var(--ex-bg-color);
 
             &::after {
                 content: '';
@@ -565,7 +565,7 @@
 
             .van-tab {
                 padding: 0 0.24rem;
-                border: 1px solid #D0D8E2;
+                border: 1px solid var(--ex-border-color2);
                 margin-right: 0.12rem;
                 border-radius: 0.5rem;
                 height: 0.68rem;
@@ -609,7 +609,7 @@
 
             .van-tab {
                 padding: 0 0.24rem;
-                border: 1px solid #D0D8E2;
+                border: 1px solid var(--ex-border-color2);
                 margin-right: 0.12rem;
                 border-radius: 0.5rem;
                 height: 0.64rem;
@@ -621,7 +621,7 @@
                 border-color: var(--ex-primary-color);
 
                 .van-tab__text {
-                    color: #fff;
+                    color: var(--ex-bg-primary-text-color);
                     font-weight: 400;
                 }
             }
@@ -639,15 +639,6 @@
 .van-overlay {
     backdrop-filter: blur(4px);
 }
-
-
-// div.van-slider{
-//     width: 100%;
-//     background-color: #D0D8E2;
-// }
-// .van-slider__button{
-//     margin-left: 40px;
-// }
 
 /* 省略 */
 .van-omit1,

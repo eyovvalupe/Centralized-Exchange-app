@@ -209,13 +209,13 @@ const percentTagClick = (percent) => {
     position: relative;
     height: 0.92rem;
     border-radius: 0.32rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
 
     .ipt_tip {
-      color: #b7b7b7;
+      color: var(--ex-text-color4);
       font-size: 0.24rem;
       position: absolute;
       left: 0.24rem;
@@ -246,7 +246,7 @@ const percentTagClick = (percent) => {
 
   .item_focus {
     height: 1.12rem;
-    border: 1px solid #034cfa;
+    border: 1px solid var(--ex-primary-color);
 
     .ipt_tip {
       font-size: 0.2rem;
@@ -255,7 +255,7 @@ const percentTagClick = (percent) => {
   }
 
   .item_focus2 {
-    border: 1px solid #034cfa;
+    border: 1px solid var(--ex-primary-color);
   }
 
   .percent_tag {

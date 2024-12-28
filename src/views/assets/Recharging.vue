@@ -276,7 +276,7 @@ const copyPrice = () => {
     width: 0.72rem;
     height: 0.72rem;
     box-sizing: border-box;
-    border: 0.02rem solid #edf2f7;
+    border: 0.02rem solid var(--ex-border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;

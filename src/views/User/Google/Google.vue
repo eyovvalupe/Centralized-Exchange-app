@@ -301,7 +301,7 @@ const confirmNext = () => {
     margin: 0;
 
     :deep(.van-password-input__item) {
-      border: 0.02rem solid #eceff3;
+      border: 0.02rem solid var(--ex-border-color);
       background-color: var(--ex-bg-color);
       width: 1rem;
       height: 1.2rem;
@@ -316,13 +316,13 @@ const confirmNext = () => {
 
   .error_ipt {
     :deep(.van-password-input__item) {
-      border: 0.02rem solid #e8503a;
-      border-color: #e8503a;
+      border: 0.02rem solid var(--ex-error-color);
+      border-color: var(--ex-error-color);
     }
   }
 
   .error_text {
-    color: #e8503a;
+    color: var(--ex-error-color);
     margin-top: 0.12rem;
     font-weight: 400;
     font-size: 0.28rem;

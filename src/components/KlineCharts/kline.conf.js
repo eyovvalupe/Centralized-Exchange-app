@@ -105,7 +105,7 @@ export const klineConfig = {
             // 最高价标记
             high: {
                 show: true,
-                color: "#D9D9D9",
+                color: "var(--ex-border-color2)",
                 textOffset: 5,
                 textSize: 10,
                 textFamily: "Helvetica Neue",
@@ -114,7 +114,7 @@ export const klineConfig = {
             // 最低价标记
             low: {
                 show: true,
-                color: "#D9D9D9",
+                color: "var(--ex-border-color2)",
                 textOffset: 5,
                 textSize: 10,
                 textFamily: "Helvetica Neue",
@@ -224,7 +224,7 @@ export const klineConfig = {
         // x轴分割文字
         tickText: {
             show: true,
-            color: "#9EA3AE", // #D9D9D9"
+            color: "#9EA3AE", 
             family: "Helvetica Neue",
             weight: "normal",
             size: 12,
@@ -258,7 +258,7 @@ export const klineConfig = {
         // y轴分割文字
         tickText: {
             show: true,
-            color: "#D9D9D9", // #D9D9D9
+            color: "var(--ex-border-color2)",
             family: "Helvetica Neue",
             weight: "normal",
             size: 12,

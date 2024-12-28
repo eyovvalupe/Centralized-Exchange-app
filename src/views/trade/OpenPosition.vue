@@ -139,7 +139,7 @@ const router = useRouter();
 
 const backgroundImageStyle = computed(() => ({
   backgroundImage: `url(${getStaticImgUrl('/static/img/trade/light-blue.svg')})`,
-  color: "#034cfa",
+  color: "var(--ex-primary-color)",
 }));
 
 const activeBackgroundImageStyle = computed(() => ({
@@ -154,7 +154,7 @@ const activeBlueBackgroundImageStyle = computed(() => ({
 
 const blueBackgroundImageStyle = computed(() => ({
   backgroundImage: `url(${getStaticImgUrl('/static/img/trade/right-white.svg')})`,
-  color: "#034cfa",
+  color: "var(--ex-primary-color)",
 }));
 const currentSymbol = computed(() => {
   return store.state.currentSymbol
@@ -582,7 +582,7 @@ defineExpose({
         height: 0.68rem;
         line-height: 0.68rem;
         z-index: 0;
-        color: #b7b7b7;
+        color: var(--ex-text-color4);
 
         .keyword {
           color: #fff;
@@ -602,7 +602,7 @@ defineExpose({
       top: 0;
       padding: .1rem 0 0 .2rem;
       pointer-events: none;
-      color: #9ea3ae;
+      color: var(--ex-text-color4);
       text-align: left;
       width: 100%;
       line-height: .66rem;
@@ -741,7 +741,7 @@ defineExpose({
     background: #f2f2f2;
     text-align: center;
     line-height: 0.72rem;
-    color: #999;
+    color: var(--ex-text-color3);
     text-align: center;
     font-size: 0.28rem;
     font-style: normal;
@@ -867,7 +867,7 @@ defineExpose({
 
     .position-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0;
       top: 0.5rem;

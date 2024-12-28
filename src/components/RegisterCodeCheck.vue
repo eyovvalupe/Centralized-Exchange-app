@@ -96,7 +96,7 @@ watch(val, (v) => {
       inputStyle.borderColor = "var(--ex-primary-color)";
       inputStyle.color = "var(--ex-primary-color)";
     } else {
-      inputStyle.borderColor = "#D0D8E2";
+      inputStyle.borderColor = "var(--ex-border-color2)";
       inputStyle.color = "var(--ex-text-color2)";
     }
   }
@@ -198,7 +198,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
@@ -217,7 +217,7 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       margin-right: 0.12rem;
 
       .chat_icon {
@@ -233,7 +233,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-width: 0.02rem;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       border-radius: 0.36rem;
 
       .language_icon {
@@ -257,7 +257,7 @@ onMounted(() => {
 .title {
   padding: 0.48rem 0.32rem 0.32rem 0.32rem;
   font-weight: 600;
-  color: var(--el-text-color);
+  color: var(--ex-text-color);
   font-size: 0.54rem;
   line-height: 0.784rem;
   width: 100%;
@@ -275,8 +275,8 @@ onMounted(() => {
 
 .ipt_box {
   :deep(.van-password-input__item) {
-    border: 0.02rem solid #eceff3;
-    background-color: #fff;
+    border: 0.02rem solid var(--ex-border-color);
+    background-color: var(--ex-bg-color);
     width: 1rem;
     height: 1.2rem;
     box-sizing: border-box;
@@ -314,7 +314,7 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #d0d8e2;
+  background-color: var(--ex-border-color2);
   border-radius: 1rem;
   color: var(--ex-primary-color);
   font-size: 0.28rem;

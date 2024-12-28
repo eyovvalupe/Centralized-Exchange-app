@@ -101,7 +101,7 @@ const remove = (item) => {
   width: 100%;
 
   .current_item_effect {
-    // background-color: #fff;
+    // background-color: var(--ex-bg-color);
     box-shadow: 0px 4px 10px 0px rgba(6, 16, 35, 0.1);
   }
 

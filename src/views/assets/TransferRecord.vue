@@ -82,7 +82,7 @@ onUnmounted(() => {
 
         .item {
             height: 2.2rem;
-            border-bottom: 1px dashed #CBCBCB;
+            border-bottom: 1px dashed var(--ex-border-color2);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -92,7 +92,7 @@ onUnmounted(() => {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                color: #343434;
+                color: var(--ex-text-color);
                 font-size: 0.32rem;
             }
 
@@ -110,7 +110,7 @@ onUnmounted(() => {
 
             .date {
                 font-size: 0.28rem;
-                color: #919193;
+                color: var(--ex-text-color3);
                 line-height: 0.36rem;
                 font-weight: 400;
             }

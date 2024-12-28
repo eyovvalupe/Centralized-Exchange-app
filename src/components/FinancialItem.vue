@@ -48,7 +48,7 @@ const handleClick = () => {
         text-overflow: ellipsis;
         white-space: nowrap;
         font-weight: 600;
-        color: var(--el-text-color);
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         line-height: 0.45rem;
         margin-bottom: 0.12rem;
@@ -91,7 +91,7 @@ const handleClick = () => {
                     display: flex;
                     align-items: center;
                     padding: 0 0.09rem;
-                    background-color: #E8F0FF;
+                    background-color: var(--ex-bg-color3);
                     margin-right: 0.1rem;
                     border-radius: 0.04rem;
                 }
@@ -116,8 +116,8 @@ const handleClick = () => {
                 height: 0.56rem;
                 padding: 0 0.36rem;
                 border-radius: 0.3rem;
-                background-color: #E7E7E7;
-                color: #9EA3AE;
+                background-color: var(--ex-bg-color3);
+                color: var(--ex-text-color3);
                 font-size: 0.24rem;
                 font-weight: 400;
                 display: flex;

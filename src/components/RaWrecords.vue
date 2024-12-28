@@ -159,7 +159,7 @@ onBeforeUnmount(() => {
     left: auto;
     border-top-left-radius: 0.4rem;
     border-top-right-radius: 0.4rem;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     box-shadow: -2px 0 5px #ddd;
     transform: translateY(0);
 
@@ -206,7 +206,7 @@ onBeforeUnmount(() => {
                 position: relative;
 
                 .header_num {
-                    background-color: #fff;
+                    background-color: var(--ex-bg-color);
                     height: 0.24rem;
                     font-size: 0.2rem;
                     line-height: 0.24rem;

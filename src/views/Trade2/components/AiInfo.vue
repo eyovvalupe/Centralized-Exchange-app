@@ -486,7 +486,7 @@ defineExpose({
     content: "";
     width: 1px;
     height: 0.9rem;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
     position: absolute;
     left: 0;
     top: 50%;
@@ -537,7 +537,7 @@ defineExpose({
     left: 0;
     top: 50%;
     height: 1px;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
   }
 }
 

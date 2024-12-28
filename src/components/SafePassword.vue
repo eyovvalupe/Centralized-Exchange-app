@@ -113,7 +113,7 @@ defineExpose({
 
   .main_title {
     font-size: 0.32rem;
-    color: #121826;
+    color: var(--ex-text-color);
     position: absolute;
     font-weight: 400;
     top: 0.5rem;
@@ -133,7 +133,7 @@ defineExpose({
       border-radius: 0.96rem;
       flex: 1;
       margin-left: 0.32rem;
-      border: 1px solid #d0d8e2 !important;
+      border: 1px solid var(--ex-border-color2) !important;
 
       :deep(span.van-button__text) {
         font-size: 0.32rem;
@@ -156,7 +156,7 @@ defineExpose({
 
   .pass_ipt {
     height: 1.12rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     width: 100%;
     display: block;
     box-sizing: border-box;
@@ -190,7 +190,7 @@ defineExpose({
   }
 
   .err_ipt {
-    border: 1px solid #e8503a;
+    border: 1px solid var(--ex-border-error);
   }
 
   .code_ipt {
@@ -198,8 +198,8 @@ defineExpose({
     margin: 0;
 
     :deep(.van-password-input__item) {
-      border: 1px solid #eceff3;
-      background-color: #fff;
+      border: 1px solid var(--ex-border-color);
+      background-color: var(--ex-bg-color);
       width: 1rem;
       height: 1rem;
       box-sizing: border-box;

@@ -250,7 +250,7 @@ Promise.all([
     padding: 0 0.24rem 0 0.32rem;
     height: 1.12rem;
     font-weight: 600;
-    color: var(--el-text-color);
+    color: var(--ex-text-color);
     line-height: 0.5rem;
     font-size: 0.5rem;
     display: flex;
@@ -341,7 +341,7 @@ Promise.all([
       padding-right: 0 !important;
       padding-left: 0 !important;
       border-radius: 50%;
-      border: 1px solid #edf2f7;
+      border: 1px solid var(--ex-border-color);
       width: 0.6rem;
       height: 0.6rem;
       display: flex;

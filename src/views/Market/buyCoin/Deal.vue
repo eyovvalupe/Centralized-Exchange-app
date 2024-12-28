@@ -258,7 +258,7 @@ const getSessionToken = () => {
     }
 
     .tip {
-      color: #b7b7b7;
+      color: var(--ex-text-color4);
       font-size: 0.24rem;
       margin-top: 0.24rem;
       margin-bottom: 0.8rem;
@@ -282,13 +282,6 @@ const getSessionToken = () => {
         color: var(--ex-primary-color);
       }
 
-      .tip_text {
-        font-size: 0.28rem;
-        color: #a4acb9;
-        position: absolute;
-        left: 0.24rem;
-        pointer-events: none;
-      }
     }
 
     .info {

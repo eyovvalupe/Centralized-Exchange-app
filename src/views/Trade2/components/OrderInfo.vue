@@ -359,8 +359,8 @@ const copy = (text) => {
   }
 
   &__status {
-    border: 1px solid #7e99d6;
-    color: #7e99d6;
+    border: 1px solid var(--ex-info-color);
+    color: var(--ex-info-color);
     padding: 0.04rem 0.08rem;
     height: 0.3rem;
     line-height: 100%;
@@ -444,7 +444,7 @@ const copy = (text) => {
     content: "";
     width: 1px;
     height: 0.9rem;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
     position: absolute;
     left: 0;
     top: 50%;
@@ -458,7 +458,7 @@ const copy = (text) => {
   .title {
     text-align: center;
     font-size: 0.28rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-weight: bold;
   }
 
@@ -480,7 +480,7 @@ const copy = (text) => {
       align-items: center;
       justify-content: flex-end;
       font-size: 0.28rem;
-      color: #121826;
+      color: var(--ex-text-color);
 
       .tag {
         color: var(--ex-primary-color);
@@ -545,7 +545,7 @@ const copy = (text) => {
   }
 
   .btn3 {
-    background-color: #7e99d6;
+    background-color: var(--ex-info-color);
   }
 
   .btn4 {
@@ -553,7 +553,7 @@ const copy = (text) => {
   }
 
   .disabled_btn {
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
     color: var(--ex-border-color2);
   }
 }

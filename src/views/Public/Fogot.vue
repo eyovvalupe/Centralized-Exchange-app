@@ -94,7 +94,7 @@ const props = defineProps({
 const ggRef = ref();
 const showPass = ref(false);
 const showConfirmPass = ref(false);
-const svgColor = ref("#D9D9D9");
+const svgColor = ref("var(--ex-border-color2)");
 const loading = ref(false);
 
 // Form data
@@ -139,7 +139,7 @@ const checkPasswordStrength = () => {
   } else if (password.length >= 6) {
     svgColor.value = "orange";
   } else {
-    svgColor.value = "#D9D9D9";
+    svgColor.value = "var(--ex-border-color2)";
   }
 };
 const route = useRoute();
@@ -222,7 +222,7 @@ const submitForm = (code) => {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       margin-right: 0.12rem;
 
       .chat_icon {
@@ -238,7 +238,7 @@ const submitForm = (code) => {
       justify-content: center;
       align-items: center;
       border-width: 0.02rem;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       border-radius: 0.36rem;
 
       .language_icon {
@@ -328,7 +328,7 @@ const submitForm = (code) => {
 
       .form_item_clear {
         justify-content: center;
-        color: #161616;
+        color: var(--ex-text-color);
         margin-left: 0.12rem;
         display: flex;
         justify-content: center;

@@ -507,7 +507,7 @@ onMounted(() => {
             .btn {
                 width: 48%;
                 height: 0.76rem;
-                background-color: #f2f3f7;
+                background-color: var(--ex-bg-color3);
                 border-radius: 0.76rem;
                 display: flex;
                 align-items: center;

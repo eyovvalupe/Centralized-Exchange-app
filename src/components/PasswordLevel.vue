@@ -85,7 +85,7 @@ const levels = computed(() => {
     .level {
       width: 0.52rem;
       height: 0.06rem;
-      background-color: #d9d9d9;
+      background-color: var(--ex-border-color2);
       margin-right: 0.08rem;
       border-radius: 0.04rem;
     }

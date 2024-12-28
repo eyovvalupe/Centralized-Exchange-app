@@ -713,14 +713,6 @@ defineExpose({
       z-index: 1;
     }
 
-    .ipt_tip {
-      color: #b7b7b7;
-      font-size: 0.24rem;
-      position: absolute;
-      left: 0.24rem;
-      transition: all ease 0.3s;
-    }
-
     .select {
       height: 0.88rem;
       flex: 1;
@@ -748,22 +740,12 @@ defineExpose({
     padding: 0 0.24rem;
   }
 
-  .item_focus {
-    height: 1.12rem;
-    border: 1px solid #034cfa;
-
-    .ipt_tip {
-      font-size: 0.2rem;
-      transform: translateY(-0.36rem);
-    }
-  }
-
   .disabled_item {
     background-color: var(--ex-bg-color2);
   }
 
   .error_border {
-    border: 1px solid #e8503a !important;
+    border: 1px solid var(--ex-border-error) !important;
   }
 }
 
@@ -787,7 +769,7 @@ defineExpose({
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      color: #121826;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-weight: 600;
 
@@ -803,7 +785,7 @@ defineExpose({
   .subtitle {
     font-size: 0.24rem;
     margin-bottom: 0.2rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-weight: 400;
   }
 

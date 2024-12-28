@@ -151,7 +151,7 @@ const disabled = computed(
     flex-wrap: wrap;
 
     .list_item {
-      background-color: #ffffff;
+      background-color:var(--ex-bg-color);
       height: 1.998rem;
       width: 3.36rem;
       border-radius: 0.2rem;

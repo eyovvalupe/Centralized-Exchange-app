@@ -347,7 +347,7 @@ onMounted(() => {
   .ipo-detail-header {
     padding: 0.3rem 0;
     background-color: var(--ex-bg-color);
-    color: var(--el-text-color);
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 400;
@@ -453,7 +453,7 @@ onMounted(() => {
     background: #f2f2f2;
     text-align: center;
     line-height: 0.72rem;
-    color: #999;
+    color: var(--ex-text-color3);
     text-align: center;
     font-size: 0.28rem;
     font-style: normal;
@@ -579,7 +579,7 @@ onMounted(() => {
 
     .position-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0;
       top: 0.5rem;
@@ -689,7 +689,7 @@ onMounted(() => {
     .subscription-text {
       position: relative;
       text-align: right;
-      color: #343434;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -699,7 +699,7 @@ onMounted(() => {
 
     .subscription-total-text {
       text-align: right;
-      color: #343434;
+      color: var(--ex-text-color);
       font-size: 0.36rem;
       font-style: normal;
       font-weight: 600;
@@ -708,7 +708,7 @@ onMounted(() => {
 
     .subscription-position-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0;
       top: 0.7rem;
@@ -761,7 +761,7 @@ onMounted(() => {
 
   .van-password-input__security li {
     border-radius: 0.16rem;
-    border: 0.02rem solid #eceff3;
+    border: 0.02rem solid var(--ex-border-color);
   }
 }
 </style>

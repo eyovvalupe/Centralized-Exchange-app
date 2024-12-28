@@ -414,7 +414,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-width: 0.02rem;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       border-radius: 0.36rem;
 
       .language_icon {
@@ -500,7 +500,7 @@ onMounted(() => {
     background-color: var(--ex-bg-color);
 
     .top_back {
-      color: #161616;
+      color: var(--ex-text-color);
       font-size: 0.4rem;
       width: 0.8rem;
       height: 0.8rem;
@@ -513,7 +513,7 @@ onMounted(() => {
       width: 0.72rem;
       height: 0.72rem;
       border-radius: 50%;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       border-width: 0.02rem;
       display: flex;
       align-items: center;
@@ -599,7 +599,7 @@ onMounted(() => {
 
       .form_item_clear {
         justify-content: center;
-        color: #161616;
+        color: var(--ex-text-color);
         margin-left: 0.12rem;
         display: flex;
         justify-content: center;

@@ -43,7 +43,7 @@ const list = ref([
         margin-bottom: 0.2rem;
 
         .total {
-            color: #121826;
+            color: var(--ex-text-color);
             margin-left: 0.2rem;
         }
     }

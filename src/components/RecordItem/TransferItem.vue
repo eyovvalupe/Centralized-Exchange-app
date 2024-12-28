@@ -75,7 +75,7 @@ const formatDate = (date) => {
   overflow: hidden;
 
   .item_box {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border: 1px solid var(--ex-border-color);
     align-items: center;
     padding: 0.3rem 0.32rem;

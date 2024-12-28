@@ -424,7 +424,7 @@ function countdown(endTime) {
           font-size: 0.32rem;
           font-weight: 600;
           line-height: 0.36rem;
-          color: var(--el-text-color);
+          color: var(--ex-text-color);
           max-width: 4.5rem;
         }
         .lever_icon {
@@ -496,7 +496,7 @@ function countdown(endTime) {
       }
 
       .status_done {
-        background-color: #7e99d6;
+        background-color: var(--ex-info-color);
         color: #fff;
       }
 
@@ -573,7 +573,7 @@ function countdown(endTime) {
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
-      border-bottom: 0.02rem solid #f4f5f7;
+      border-bottom: 0.02rem solid var(--ex-border-color);
     }
 
     .market_ipo-box-item:first-of-type {
@@ -582,7 +582,7 @@ function countdown(endTime) {
 
     .selected-class {
       color: var(--ex-primary-color);
-      background-color: #f4f5f7;
+      background-color: var(--ex-bg-color2);
       position: relative;
     }
   }
@@ -614,7 +614,7 @@ function countdown(endTime) {
     font-weight: 400;
 
     .name {
-      color: var(--el-text-color);
+      color: var(--ex-text-color);
       font-weight: 600;
       font-size: 0.32rem;
     }
@@ -638,7 +638,7 @@ function countdown(endTime) {
     }
 
     .val {
-      color: #121826;
+      color: var(--ex-text-color);
       font-weight: 500;
     }
   }

@@ -301,7 +301,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     padding: 0 0.4rem;
     margin-bottom: 0.4rem;
     height: 0.8rem;
-    background-color: #f4f5f7;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.4rem;
 
     .type_select {
@@ -331,7 +331,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     .close {
       width: 0.24rem;
       height: 0.24rem;
-      color: #121826;
+      color: var(--ex-text-color);
     }
 
     .search {
@@ -352,7 +352,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       height: 1.12rem;
       display: flex;
       align-items: center;
-      background-color: #f4f5f7;
+      background-color: var(--ex-bg-color2);
       margin-bottom: 0.2rem;
       border-radius: 0.3rem;
       padding-inline: 0.26rem;

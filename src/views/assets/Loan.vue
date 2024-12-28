@@ -536,7 +536,7 @@ onBeforeUnmount(() => {
                     transition: all ease .2s;
 
                     span {
-                        // color: #111111;
+                        // color: var(--ex-text-color);
                     }
                 }
 
@@ -574,7 +574,7 @@ onBeforeUnmount(() => {
         .tip {
             font-size: 0.24rem;
             line-height: 0.4rem;
-            color: #999;
+            color: var(--ex-text-color3);
             font-weight: 400;
 
             .num {
@@ -731,7 +731,7 @@ onBeforeUnmount(() => {
     }
 
     .loan_confirm_tip {
-        border-top: 1px dashed #CBCBCB;
+        border-top: 1px dashed var(--ex-border-color2);
         padding-top: 0.1rem;
         margin-top: 0.05rem;
         margin-bottom: 0.2rem;

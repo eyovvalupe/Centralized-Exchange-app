@@ -546,7 +546,7 @@ onMounted(() => {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       margin-right: 0.12rem;
 
       .chat_icon {
@@ -562,7 +562,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-width: 0.02rem;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       border-radius: 0.36rem;
 
       .language_icon {
@@ -646,7 +646,7 @@ onMounted(() => {
     }
 
     .login_title {
-      color: #343434;
+      color: var(--ex-text-color);
       text-align: right;
       font-family: "PingFang SC";
       font-size: 0.24rem;
@@ -793,7 +793,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #343434;
+    color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.28rem;
     line-height: 0.32rem;

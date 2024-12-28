@@ -503,14 +503,6 @@ const openConfirmBox = () => {
             position: relative;
             z-index: 1;
         }
-
-        .ipt_tip {
-            color: #b7b7b7;
-            font-size: 0.24rem;
-            position: absolute;
-            left: 0.24rem;
-            transition: all ease .3s;
-        }
     }
 
     .item_box {
@@ -520,25 +512,6 @@ const openConfirmBox = () => {
         border: 1px solid var(--ex-border-color2);
         padding: 0 0.24rem;
 
-    }
-
-    .item_focus {
-        height: 1.12rem;
-        border: 1px solid #034cfa;
-
-        .ipt_tip {
-            font-size: 0.2rem;
-            transform: translateY(-0.36rem);
-        }
-    }
-
-    .disabled_item {
-        background-color: var(--ex-bg-color2);
-    }
-
-
-    .error_border {
-        border: 1px solid #e8503a !important;
     }
 
     .submit {
@@ -558,7 +531,7 @@ const openConfirmBox = () => {
         font-size: 0.32rem;
         font-weight: 600;
         line-height: 0.36rem;
-        color: var(--el-text-color);
+        color: var(--ex-text-color);
         overflow: hidden;
         margin-bottom: 0.14rem;
 
@@ -634,7 +607,7 @@ const openConfirmBox = () => {
             content: '';
             width: 1px;
             height: 0.9rem;
-            background-color: #EFF3F8;
+            background-color: var(--ex-bg-color3);
             position: absolute;
             left: 0;
             top: 50%;
@@ -663,7 +636,7 @@ const openConfirmBox = () => {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            color: #121826;
+            color: var(--ex-text-color);
             font-size: 0.28rem;
             font-weight: 600;
 
@@ -679,7 +652,7 @@ const openConfirmBox = () => {
     .subtitle {
         font-size: 0.24rem;
         margin-bottom: 0.2rem;
-        color: #121826;
+        color: var(--ex-text-color);
         font-weight: 400;
     }
 

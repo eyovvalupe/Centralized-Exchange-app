@@ -124,7 +124,7 @@
         v-show="searchLoading"
         type="spinner"
         style="width: 0.28rem; height: 0.28rem"
-        color="#034cfa"
+        color="var(--ex-primary-color)"
       />
       <div
         class="stock_icon"
@@ -1554,42 +1554,15 @@ defineExpose({
         font-size: 0.3rem;
       }
 
-      .info-name {
-        color: #9ea3ae;
-        font-size: 0.24rem;
-        margin-top: 0.08rem;
-      }
-
-      .ipt_tip {
-        color: #b7b7b7;
-        font-size: 0.24rem;
-        position: absolute;
-        left: 0.24rem;
-        transition: all ease 0.3s;
-      }
-
-      .ipt_tip2 {
-        left: auto;
-        right: 0.24rem;
-      }
-
       .ipt {
         flex: 1;
         height: 100%;
         width: 2rem;
         font-size: 0.28rem;
         padding: 0;
-        color: #034cfa;
+        color: var(--ex-primary-color);
         position: relative;
         z-index: 1;
-      }
-
-      .base_ipt {
-        font-size: 0.28rem;
-        color: #b7b7b7;
-        position: absolute;
-        left: 0.24rem;
-        z-index: 0;
       }
 
       .more_icon {
@@ -1601,20 +1574,6 @@ defineExpose({
 
     .disabled_item {
       background-color: var(--ex-border-color2);
-    }
-
-    .item_focus {
-      height: 1.12rem;
-      border: 1px solid #034cfa;
-
-      .ipt_tip {
-        font-size: 0.2rem;
-        transform: translateY(-0.36rem);
-      }
-    }
-
-    .item_focus2 {
-      border: 1px solid #034cfa;
     }
 
     .item_box_left {
@@ -1636,7 +1595,7 @@ defineExpose({
       border-radius: 1.26rem;
       background: #f2f2f2;
       height: 0.72rem;
-      color: #999;
+      color: var(--ex-text-color3);
       text-align: center;
       font-size: 0.28rem;
       font-weight: 600;
@@ -1675,7 +1634,7 @@ defineExpose({
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      color: #121826;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-weight: 500;
 

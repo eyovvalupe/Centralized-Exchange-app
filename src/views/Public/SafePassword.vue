@@ -163,7 +163,7 @@ const focus = () => { // 聚焦
         font-weight: 600;
         font-size: 0.56rem;
         line-height: 0.8rem;
-        color: var(--el-text-color);
+        color: var(--ex-text-color);
     }
 
     .form {

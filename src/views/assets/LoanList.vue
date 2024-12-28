@@ -228,7 +228,7 @@ onUnmounted(() => {
         padding: 0 0.32rem;
 
         .item {
-            border-bottom: 1px dashed #CBCBCB;
+            border-bottom: 1px dashed var(--ex-border-color2);
             padding: 0.2rem 0;
             font-size: 0.28rem;
             font-weight: 400;
@@ -245,7 +245,7 @@ onUnmounted(() => {
             }
 
             .title {
-                color: #343434;
+                color: var(--ex-text-color);
                 font-weight: 600;
             }
 

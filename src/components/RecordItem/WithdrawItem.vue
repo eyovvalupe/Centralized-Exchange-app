@@ -98,7 +98,7 @@ const formatDate = (date) => {
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0.32rem;
-  border: 1px solid #d0d8e2;
+  border: 1px solid var(--ex-border-color2);
   border-radius: 0.32rem;
   margin-top: 0.2rem;
 

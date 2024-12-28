@@ -127,7 +127,7 @@ defineExpose({
 
       > .van-tabs__nav {
         border-radius: 0.32rem;
-        background: #eff3f8 !important;
+        background: var(--ex-bg-color3) !important;
         position: relative;
         display: flex;
         justify-content: space-between;

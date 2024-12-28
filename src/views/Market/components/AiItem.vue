@@ -258,7 +258,7 @@ const formatSec = (seconds, t) => {
     .bot-line {
       height: 0.68rem;
       width: 1px;
-      background-color: #eff3f8;
+      background-color: var(--ex-bg-color3);
     }
 
     .bot-item {

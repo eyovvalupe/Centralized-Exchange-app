@@ -58,9 +58,9 @@
         </div>
       </div>
       <div class="table_tabs flex flex-row justify-between">
-        <div class="bg-custom_green w-[3.04rem] h-[0.2rem]"></div>
-        <div class="bg-custom_blue w-[0.48rem]"></div>
-        <div class="bg-custom_red w-[3.04rem] h-[0.2rem]"></div>
+        <div class="bg-success w-[3.04rem] h-[0.2rem]"></div>
+        <div class="bg-info w-[0.48rem]"></div>
+        <div class="bg-error w-[3.04rem] h-[0.2rem]"></div>
       </div>
     </div>
   </div>
@@ -99,17 +99,17 @@ const actions = computed(() => {
 const count = ref(0);
 const keySoft = ref([5, 4, 3, 2, 1, 0, "-1", "-2", "-3", "-4", "-5"]);
 const bgColors = ref([
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#7e99d6",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
+  "var(--ex-up-color)",
+  "var(--ex-up-color)",
+  "var(--ex-up-color)",
+  "var(--ex-up-color)",
+  "var(--ex-up-color)",
+  "var(--ex-info-color)",
+  "var(--ex-down-color)",
+  "var(--ex-down-color)",
+  "var(--ex-down-color)",
+  "var(--ex-down-color)",
+  "var(--ex-down-color)",
 ]);
 const overview = ref({
   5: 0,
@@ -234,31 +234,12 @@ const getDownNum = () => {
 .total_box {
   padding: 0.4rem 0.32rem;
   position: relative;
-  background-image: linear-gradient(to bottom, #ffffff, var(--ex-bg-color2));
+  background-image: linear-gradient(to bottom, var(--ex-bg-color), var(--ex-bg-color2));
   border-radius: 0.64rem;
 
-  .type_box {
-    position: absolute;
-    top: -0.1rem;
-    right: 0;
-    display: flex;
-    align-items: center;
-    color: #253146;
-    font-size: 0.24rem;
-    border: 1px solid #eee;
-    border-radius: 0.08rem;
-    padding: 0.08rem 0.16rem;
-
-    .type_icon {
-      width: 0.28rem;
-      height: 0.28rem;
-      opacity: 0.8;
-      margin-left: 0.06rem;
-    }
-  }
 
   .total_title {
-    color: #9ea3ae;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     margin-bottom: 0.4rem;
   }
@@ -281,15 +262,15 @@ const getDownNum = () => {
       text-align: center;
 
       .item_red {
-        color: #fc6c6b;
+        color: var(--ex-down-color);
       }
 
       .item_center {
-        color: #7e99d6;
+        color: var(--ex-info-color);
       }
 
       .item_green {
-        color: #19c09a;
+        color: var(--ex-up-color);
       }
 
       .table_item_num {

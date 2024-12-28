@@ -67,7 +67,7 @@ defineExpose({
   padding: 0.36rem 0.32rem;
 
   .amount_popup_title {
-    color: #121826;
+    color: var(--ex-text-color);
     text-align: center;
     font-size: 0.32rem;
     font-weight: 500;

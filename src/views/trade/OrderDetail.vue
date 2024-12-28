@@ -258,7 +258,7 @@ const updateDetailPopup = () => {
   .detail-title {
     text-align: center;
     margin-top: 0.4rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
     font-style: normal;
     font-weight: 500;
@@ -298,7 +298,7 @@ const updateDetailPopup = () => {
 
   .dashed-line {
     width: 3.44rem;
-    border-bottom: 0.02rem dashed #cbcbcb;
+    border-bottom: 0.02rem dashed var(--ex-border-color2);
     margin: auto;
   }
 
@@ -323,7 +323,7 @@ const updateDetailPopup = () => {
 
       .right-text {
         flex: 1;
-        color: #121826;
+        color: var(--ex-text-color);
         text-align: right;
         font-size: 0.28rem;
         font-style: normal;
@@ -411,7 +411,7 @@ const updateDetailPopup = () => {
 
   .risk-line-dashed {
     width: 3.44rem;
-    border-bottom: 0.02rem dashed #cbcbcb;
+    border-bottom: 0.02rem dashed var(--ex-border-color2);
     position: absolute;
     right: 0.32rem;
     top: 0.42rem;

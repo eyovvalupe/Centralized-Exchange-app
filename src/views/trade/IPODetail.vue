@@ -149,7 +149,7 @@ onMounted(() => {
   .ipo-detail-header {
     padding: 0.3rem 0;
     background-color: var(--ex-bg-color);
-    color: var(--el-text-color);
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 400;
@@ -184,7 +184,7 @@ onMounted(() => {
     margin-top: 0.3rem;
     margin-bottom: 0.3rem;
     .h-co-title {
-      color: var(--el-text-color);
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-style: normal;
       font-weight: 600;

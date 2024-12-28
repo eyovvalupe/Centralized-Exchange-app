@@ -130,7 +130,7 @@ defineExpose({
     .line {
       width: 1px;
       height: 0.76rem;
-      background-color: #eff3f8;
+      background-color: var(--ex-bg-color3);
     }
     .nav {
       flex: 1;

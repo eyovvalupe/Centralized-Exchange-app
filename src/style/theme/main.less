@@ -2,34 +2,41 @@
 // 为兼容tailwindcss 所有颜色使用 rgb 配置，全局颜色变量使用 ex- 开头
 
 :root {
-    --ex-up-color-rgb: 24 183 98; //#18B762
-    --ex-down-color-rgb:250 100 102; //#FA6466
-
-    --ex-primary-color-rgb:1 76 250; //#014CFA
-    --ex-text-color-rgb:6 16 35; //#061023
-    --ex-text-color2-rgb:106 109 128; //#6a6d80
-    --ex-text-color3-rgb:143 146 161;//#8F92A1
-    --ex-text-color4-rgb:164 172 185; //#a4acb9
-    --ex-border-color-rgb: 239 243 248; //#EFF3F8
-    --ex-border-color2-rgb: 208 216 226; //#D0D8E2
-    --ex-border-error-rgb:232 80 58;//#E8503A
-    --ex-bg-color-rgb:255 255 255; //#FFFFFF
-    --ex-bg-color2-rgb:245 247 252; //#F5F7FC
-    --ex-bg-color3-rgb:239 243 248; //#EFF3F8
-    --ex-bg-color4-rgb:217 228 255;//#D9E4FF
-    --ex-bg-color5-rgb:166 190 244;//#a6bef4
+    --ex-up-color-rgb: 24 183 98; //#18B762     上涨颜色
+    --ex-down-color-rgb:250 100 102; //#FA6466  下跌颜色
+    --ex-success-color-rgb:24 183 98; //#18b762 成功状态颜色
+    --ex-error-color-rgb:232 80 58;  //e8503a   错误状态颜色
+    --ex-info-color-rgb:126 153 214; //#7e99d6  普通状态颜色
+    --ex-warning-color-rgb:250 117 0; //#fa7500 警告状态颜色
+    --ex-primary-color-rgb:1 76 250; //#014CFA  风格主色
+    --ex-text-color-rgb:6 16 35; //#061023      主要文字颜色
+    --ex-text-color2-rgb:106 109 128; //#6a6d80 辅助文字颜色 
+    --ex-text-color3-rgb:143 146 161;//#8F92A1  提示文字颜色
+    --ex-text-color4-rgb:164 172 185; //#a4acb9 次要文字颜色
+    --ex-border-color-rgb: 239 243 248; //#EFF3F8 边框颜色（浅）
+    --ex-border-color2-rgb: 208 216 226; //#D0D8E2 边框颜色（中）
+    --ex-bg-color-rgb:255 255 255; //#FFFFFF    背景颜色
+    --ex-bg-color2-rgb:245 247 252; //#F5F7FC   
+    --ex-bg-color3-rgb:239 243 248; //#EFF3F8   
+    --ex-bg-color4-rgb:217 228 255;//#D9E4FF    
+    --ex-bg-color5-rgb:166 190 244;//#a6bef4    
     --ex-bg-color6-rgb:228 236 251;//#e4ecfb
 
     --ex-up-color:rgb(var(--ex-up-color-rgb));
     --ex-down-color:rgb(var(--ex-down-color-rgb));
     --ex-primary-color:rgb(var(--ex-primary-color-rgb));
+    --ex-text-primary:rgb(var(--ex-primary-color-rgb));
+    --ex-success-color:rgb(var(var(--ex-success-color-rgb)));
+    --ex-error-color:rgb(var(--ex-error-color-rgb));
+    --ex-info-color:rgb(var(--ex-info-color-rgb));
+    --ex-warning-color:rgb(var(--ex-warning-color-rgb));
     --ex-text-color:rgb(var(--ex-text-color-rgb));
     --ex-text-color2:rgb(var(--ex-text-color2-rgb));
     --ex-text-color3:rgb(var(--ex-text-color3-rgb));
     --ex-text-color4:rgb(var(--ex-text-color4-rgb));
     --ex-border-color:rgb(var(--ex-border-color-rgb));
     --ex-border-color2:rgb(var(--ex-border-color2-rgb));
-    --ex-border-error:rgb(var(--ex-border-error-rgb));
+    --ex-border-error:rgb(var(--ex-error-color-rgb));
     --ex-bg-color:rgb(var(--ex-bg-color-rgb));
     --ex-bg-color2:rgb(var(--ex-bg-color2-rgb));
     --ex-bg-color3:rgb(var(--ex-bg-color3-rgb));
@@ -60,6 +67,23 @@
 .text-primary {
     --tw-text-opacity:1;
     color: rgb(var(--ex-primary-color-rgb) / var(--tw-text-opacity));
+}
+.text-success {
+    --tw-text-opacity:1;
+    color: rgb(var(--ex-success-color-rgb) / var(--tw-text-opacity));
+}
+.text-error {
+    --tw-text-opacity:1;
+    color: rgb(var(--ex-error-color-rgb) / var(--tw-text-opacity));
+}
+.text-info {
+    --tw-text-opacity:1;
+    color: rgb(var(--ex-info-color-rgb) / var(--tw-text-opacity));
+}
+
+.text-warning {
+    --tw-text-opacity:1;
+    color: rgb(var(--ex-warning-color-rgb) / var(--tw-text-opacity));
 }
 
 //涨跌颜色
@@ -98,7 +122,7 @@
     --tw-text-opacity:1;
     color: rgb(var(--ex-down-color-rgb) / var(--tw-text-opacity)) !important;
 }
-//
+//背景
 
 .bg-primary{
     --tw-bg-opacity:1;
@@ -107,6 +131,23 @@
 .bg-primary-text-color {
     --tw-text-opacity:1;
     color: rgb(var(--ex-bg-color-rgb) / var(--tw-text-opacity));
+}
+
+.bg-success{
+    --tw-bg-opacity:1;
+    background-color: rgb(var(--ex-success-color-rgb) / var(--tw-bg-opacity));
+}
+.bg-error{
+    --tw-bg-opacity:1;
+    background-color: rgb(var(--ex-error-color-rgb) / var(--tw-bg-opacity));
+}
+.bg-warning{
+    --tw-bg-opacity:1;
+    background-color: rgb(var(--ex-warning-color-rgb) / var(--tw-bg-opacity));
+}
+.bg-info{
+    --tw-bg-opacity:1;
+    background-color: rgb(var(--ex-info-color-rgb) / var(--tw-bg-opacity));
 }
 .bg-color{
     --tw-bg-opacity:1;
@@ -132,6 +173,7 @@
     --tw-bg-opacity:1;
     background-color: rgb(var(--ex-bg-color6-rgb )/ var(--tw-bg-opacity));
 }
+
 .border-primary {
     --tw-border-opacity:1;
     border-color: rgb(var(--ex-primary-color-rgb) / var(--tw-border-opacity));
@@ -163,7 +205,7 @@
 
 .border-error {
     --tw-border-opacity:1;
-    border-color: rgb(var(--ex-border-error-rgb )/ var(--tw-border-opacity));
+    border-color: rgb(var(--ex-error-color-rgb )/ var(--tw-border-opacity));
 }
 
 //合約種類
@@ -186,35 +228,35 @@
 
 //资产部分
 .bg-topup{
-    background: rgb(var(--ex-primary-color-rgb),0.1);
+    background: rgb(var(--ex-primary-color-rgb) / 0.1);
 }
 
 .bg-withdraw{
-    background: #fa75001a;
+    background: rgb(var(--ex-warning-color-rgb) / 0.1);
 }
 .bg-transfer-in{
-    background: #00af701a;
+    background: rgb(var(--ex-success-color-rgb) / 0.1);
 }
 .bg-transfer-out{
-    background: #e8503a1a;
+    background: rgb(var(--ex-error-color-rgb) / 0.1);
 }
 
 .text-topup{
     color: var(--ex-primary-color);
 }
 .text-withdraw{
-    color: #fa7500;
+    color: var(--ex-warning-color);
 }
 .text-transfer-in{
-    color: #00af70;
+    color: var(--ex-success-color);
 }
 .text-transfer-out{
-    color: #e8503a;
+    color: var(--ex-error-color);
 }
 
 //消息
 .bg-unread-msg{
-    background-color: #e8503a;
+    background-color: var(--ex-error-color);
 }
 .bg-unread-msg-text-color{
     color:#fff;
@@ -222,7 +264,7 @@
 
 //买入
 .bg-buy{
-    background-color: #18B762;
+    background-color: var(--ex-success-color);
 }
 .bg-buy-text-color {
     color:#fff;
@@ -231,19 +273,30 @@
 //卖出
 
 .bg-sell {
-    background-color: #E8503A;
+    background-color: var(--ex-error-color);
 }
 .bg-sell-text-color {
     color:#fff;
 }
 
 
-.bg-status0{
-    background-color: #E8503A;
+.status-color{
+    color: var(--ex-primary-color);
+    border-color:  var(--ex-primary-color);
 }
-.bg-status1{
-    background-color: var(--ex-primary-color);   
+
+.status-color.status-open {
+    color: var(--ex-success-color);
+    border-color: var(--ex-success-color);
 }
-.bg-status2{
-    background-color: #18B762;
+
+.status-color.status-fail,
+.status-color.status-lock {
+   color: var(--ex-error-color);
+   border-color: var(--ex-error-color);
+}
+
+.status-color.status-none {
+   color: var(--ex-info-color);
+   border-color: var(--ex-info-color);
 }

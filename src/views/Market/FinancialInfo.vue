@@ -38,7 +38,7 @@ import FinancialItem from "@/components/FinancialItem.vue"
 
     .intro {
         font-size: 0.28rem;
-        color: #121826;
+        color: var(--ex-text-color);
         font-weight: 400;
         line-height: 0.54rem;
     }

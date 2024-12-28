@@ -185,7 +185,7 @@ const copy = text => {
             font-size: 0.32rem;
             font-weight: 600;
             line-height: 0.36rem;
-            color: var(--el-text-color);
+            color: var(--ex-text-color);
             margin-bottom: 0.14rem;
         }
 
@@ -252,7 +252,7 @@ const copy = text => {
     .status_fail {
         width: 60px;
         height: 60px;
-        background-color: #EFF3F8;
+        background-color: var(--ex-bg-color3);
         border-radius: 0.32rem;
         display: flex;
         align-items: center;
@@ -272,7 +272,7 @@ const copy = text => {
             left: 0;
             top: 50%;
             height: 1px;
-            background-color: #EFF3F8;
+            background-color: var(--ex-bg-color3);
         }
     }
 
@@ -327,7 +327,7 @@ const copy = text => {
             content: '';
             width: 1px;
             height: 0.9rem;
-            background-color: #EFF3F8;
+            background-color: var(--ex-bg-color3);
             position: absolute;
             left: 0;
             top: 50%;

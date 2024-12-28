@@ -29,7 +29,7 @@
               }}
             </div>
           </div>
-          <div class="nav">
+          <div class="nav bg-color bg-opacity-10">
             <div class="nav_label">{{ $t("assets.wallet_order_value") }}</div>
             <div class="num">
               {{ hidden ? "********" : assets.order_value || "0" }}

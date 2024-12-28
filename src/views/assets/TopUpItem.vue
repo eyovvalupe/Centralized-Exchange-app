@@ -127,7 +127,7 @@ getInfo()
             font-weight: 400;
 
             .value {
-                color: #121826;
+                color: var(--ex-text-color);
             }
 
             .status {

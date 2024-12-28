@@ -548,7 +548,7 @@ const showInfo = ref(false);
 
     .count {
       .count_item {
-        color: #55555e;
+        color: var(--ex-text-color2);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.36rem;
@@ -731,12 +731,12 @@ const showInfo = ref(false);
         .price {
           font-size: 0.9rem;
           line-height: 1.06rem;
-          color: #55555e;
+          color: var(--ex-text-color2);
           margin-bottom: 0.12rem;
         }
 
         .time {
-          color: #55555e;
+          color: var(--ex-text-color2);
           font-size: 0.28rem;
           line-height: 0.48rem;
 
@@ -751,7 +751,7 @@ const showInfo = ref(false);
         flex: 1;
         margin-left: 0.36rem;
         margin-right: 0.2rem;
-        color: #55555e;
+        color: var(--ex-text-color2);
         font-size: 0.36rem;
         line-height: 0.48rem;
       }
@@ -763,7 +763,7 @@ const showInfo = ref(false);
         font-weight: 400;
 
         b {
-          color: var(--el-text-color);
+          color: var(--ex-text-color);
           font-weight: 700;
           font-size: 0.28rem;
           line-height: 0.4rem;
@@ -967,7 +967,7 @@ const showInfo = ref(false);
     .intro_content {
       font-size: 0.28rem;
       font-weight: 400;
-      color: #121826;
+      color: var(--ex-text-color);
       line-height: 0.54rem;
       margin-bottom: 0.4rem;
     }
@@ -979,7 +979,7 @@ const showInfo = ref(false);
       height: 0.6rem;
       margin-bottom: 0.28rem;
       font-size: 0.28rem;
-      color: #121826;
+      color: var(--ex-text-color);
       font-weight: 400;
 
       .intro_area_box {
@@ -1024,12 +1024,12 @@ const showInfo = ref(false);
     align-items: center;
     justify-content: center;
     font-size: 0.28rem;
-    color: #55555e;
+    color: var(--ex-text-color2);
     overflow: hidden;
   }
 
   .active_item {
-    background-color: #f4f5f7;
+    background-color: var(--ex-bg-color2);
     color: var(--ex-primary-color);
   }
 }
@@ -1038,7 +1038,7 @@ const showInfo = ref(false);
   padding: 0.8rem 0.32rem 0.2rem 0.32rem;
 
   .buy_name {
-    color: #121826;
+    color: var(--ex-text-color);
     margin-bottom: 0.54rem;
     padding-left: 0.24rem;
   }
@@ -1074,7 +1074,7 @@ const showInfo = ref(false);
   .info_name {
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: #121826;
+    color: var(--ex-text-color);
     margin-bottom: 0.54rem;
     text-align: center;
   }

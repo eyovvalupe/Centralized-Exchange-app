@@ -40,7 +40,7 @@ const selectCategory = (category) => {
 }
 
 button {
-  border: 1px solid #d0d8e2;
+  border: 1px solid var(--ex-border-color2);
   height: 0.7rem;
   padding: 0.2rem 0.26rem;
   border-radius: 1.178rem;
@@ -52,12 +52,12 @@ button {
 }
 
 button:hover {
-  background-color: #d0d0d0;
+  background-color: var(--ex-border-color2);
 }
 
 button.active {
   background-color: var(--ex-primary-color);
   border-color: var(--ex-primary-color);
-  color: white;
+  color: var(--ex-bg-primary-text-color);
 }
 </style>
