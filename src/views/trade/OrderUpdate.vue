@@ -229,7 +229,7 @@
         position: absolute;
         right: 0;
         top: -0.36rem;
-        background: white;
+        background: var(--ex-bg-color);
         z-index: 88;
       }
     }

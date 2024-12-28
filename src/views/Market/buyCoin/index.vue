@@ -143,7 +143,7 @@ defineExpose({
         }
         .van-tab--active {
           box-shadow: 0px -2px 5px 0px rgb(var(--ex-text-color-rgb) / 0.1);
-          background: white;
+          background: var(--ex-bg-color);
           padding: 0;
           border-radius: 0.32rem;
           height: 120%;

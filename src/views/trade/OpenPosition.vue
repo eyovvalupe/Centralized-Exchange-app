@@ -723,7 +723,7 @@ defineExpose({
     border-radius: 0.12rem;
     border: 0.02rem solid var(--ex-border-color2);
     margin-top: 0.2rem;
-    background: white;
+    background: var(--ex-bg-color);
   }
 
   .pricenlarged {
