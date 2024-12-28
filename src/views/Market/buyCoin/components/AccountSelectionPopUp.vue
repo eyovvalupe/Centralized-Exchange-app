@@ -271,7 +271,6 @@ const clickAccountItem = val => {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    // background-color: #f6f7fa;
     border: 1px solid #d0d8e2;
     padding: 0 0.4rem 0 0.36rem;
 

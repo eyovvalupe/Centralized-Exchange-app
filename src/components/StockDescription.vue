@@ -35,7 +35,7 @@
           }}</span>
         </div>
         <div class="re_render" @click="update">
-          <img :src="getStaticImgUrl('/static/icons/refresh.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/market/refresh_big.svg')" alt="">
         </div>
       </div>
     </div>
