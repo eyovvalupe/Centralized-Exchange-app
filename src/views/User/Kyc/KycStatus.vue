@@ -47,7 +47,7 @@
           {{ kycInfo.remarks || "--" }}
         </div>
       </template>
-      <div class="bg-color-3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
+      <div class="bg-color3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
         <div class="px-[0.32rem] mb-[0.3rem]">
           <div class="text-[0.36rem] mb-[0.32rem] leading-[0.5rem]">
             {{ props.kycInfo ? props.kycInfo.name : "--" }}

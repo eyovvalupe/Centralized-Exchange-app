@@ -20,7 +20,7 @@
         </div>
         <div class="flex flex-col">
           <span
-            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-color-3 rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-color">{{
+            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-color3 rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-color">{{
               $t("service.first_message") }}</span>
         </div>
       </div>
