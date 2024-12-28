@@ -32,7 +32,7 @@
               @click="openDialog(2)">
               <div class="flex items-center">
                 <div v-if="currIn.name" class="icon">
-                  <img class="rounded-50" :src="handleUrl(currIn.name)" alt="currency" />
+                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)" alt="currency" />
                 </div>
                 <span>{{ currIn.name || "--" }}</span>
               </div>
@@ -122,7 +122,7 @@
             : currIn.name == item.name,
       }" @click="clickItem(item)">
         <div class="icon">
-          <img class="rounded-50" :src="handleUrl(item.name)" alt="currency" />
+          <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
         </div>
         <span>{{ item.name }}</span>
         <Icon v-if="

@@ -15,9 +15,7 @@
 
       <div class="type_select" @click="closeSearch" v-show="search.length > 0">
         <div class="type_icon">
-          <div class="closeIcon">
-            <img :src="getStaticImgUrl('/static/img/home/mini_close.svg')" alt="">
-          </div>
+            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
         </div>
       </div>
     </div>
@@ -47,7 +45,7 @@
       </div>
       <div class="w-[0.4rem] h-[0.4rem]" @click="resetData">
         <div style="width: 0.4rem;height: 0.4rem;">
-          <img v-if="!marketSearchTextList.length > 0" :src="getStaticImgUrl('/static/icons/vector_b.svg')" alt="">
+          <img v-if="!marketSearchTextList.length > 0" :src="getStaticImgUrl('/static/img/market/refresh_big.svg')" alt="">
           <img v-else :src="getStaticImgUrl('/static/icons/vector.svg')" alt="">
         </div>
       </div>
@@ -315,7 +313,6 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
         width: 0.32rem;
         height: 0.32rem;
         opacity: 0.8;
-        margin-left: 0.06rem;
       }
     }
 

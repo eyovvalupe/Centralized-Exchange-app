@@ -17,7 +17,7 @@
             <div style="flex: 1"></div>
             <div class="func_box" @click="jump('search')">
                 <div class="custom-search-icon">
-                    <img :src="getStaticImgUrl('/static/icons/search.svg')" alt="">
+                    <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="">
                 </div>
             </div>
             <div class="func_box" @click="jump('notification')">
