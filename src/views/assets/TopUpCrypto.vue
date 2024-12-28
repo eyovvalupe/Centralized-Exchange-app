@@ -31,7 +31,7 @@
                 <span>{{ form.currency || "" }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" />
+                <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="more" />
               </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
                 <span>{{ form.network || "" }}</span>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="more" />
+                <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="more" />
               </div>
             </div>
           </div>

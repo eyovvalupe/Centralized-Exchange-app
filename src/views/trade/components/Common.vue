@@ -38,7 +38,7 @@
       <div class="small-select" @click="allSelect">
         <div class="abs-con">
           <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
-          <img :src="getStaticImgUrl('/static/img/trade/down.svg')" class="down-img" />
+          <img :src="getStaticImgUrl('/static/icons/more.svg')" class="down-img" />
         </div>
       </div>
 

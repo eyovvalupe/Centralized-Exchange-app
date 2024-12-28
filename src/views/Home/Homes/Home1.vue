@@ -90,13 +90,13 @@
                             <!-- <div class="assets_login">登录</div>
                                  <div>查看资产</div> -->
                             <div class="assets_icon">
-                                <img :src="getStaticImgUrl('/static/img/home/close_eye.svg')" alt=" ">
+                                <img :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt=" ">
                             </div>
                         </div>
                         <div class="assets" v-if="token">
                             <div class="assets_icon" @click="openEye = !openEye">
-                                <img v-show="!openEye" :src="getStaticImgUrl('/static/img/home/close_eye.svg')" alt=" ">
-                                <img v-show="openEye" :src="getStaticImgUrl('/static/img/home/open_eye.svg')" alt=" ">
+                                <img v-show="!openEye" :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt=" ">
+                                <img v-show="openEye" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt=" ">
                             </div>
                         </div>
                     </div>

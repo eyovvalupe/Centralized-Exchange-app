@@ -80,8 +80,8 @@
         </div>
         <div @click.stop="collect(item)">
           <div style="width: 0.4rem; height: 0.36rem;">
-            <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/icons/star.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/icons/unstar.svg')" alt="">
+            <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/img/market/star.svg')" alt="">
+            <img v-else :src="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
         </div>
       </div>

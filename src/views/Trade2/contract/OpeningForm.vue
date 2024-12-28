@@ -47,7 +47,7 @@
             </span>
             <div class="more_icon">
               <img
-                :src="getStaticImgUrl('/static/img/trade/down.svg')"
+                :src="getStaticImgUrl('/static/icons/more.svg')"
                 alt="↓"
               />
             </div>
@@ -144,7 +144,7 @@
             </div>
           </div>
           <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/img/trade/down.svg')" alt="↓" />
+            <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="↓" />
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@
             {{ form1.lever }}X</span
           >
           <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/img/trade/down.svg')" alt="↓" />
+            <img :src="getStaticImgUrl('/static/icons/more.svg')" alt="↓" />
           </div>
         </div>
       </div>

@@ -49,7 +49,7 @@
                         <img :src="getStaticImgUrl('/static/img/assets/stock_icon.svg')" alt="img">
                     </div>
                     <span>股票账户</span>
-                    <div class="more_icon"><img :src="getStaticImgUrl('/static/img/assets/more.svg')" alt="img"></div>
+                    <div class="more_icon"><img :src="getStaticImgUrl('/static/icons/more.svg')" alt="img"></div>
                 </div>
                 <div class="border_item ipt_box" style="background-color: #f5f5f5">
                     <div class="ipt">

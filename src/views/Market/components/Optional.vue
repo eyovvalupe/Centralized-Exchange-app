@@ -48,8 +48,8 @@
           <div>{{ t('market.market_optional_recommend_stock') }}</div>
           <div @click="changeAllCheckState">
             <div style="width: 0.4rem;height: 0.4rem">
-              <img v-if="allCheckState" :src="getStaticImgUrl('/static/icons/checked.svg')" alt="">
-              <img v-else :src="getStaticImgUrl('/static/icons/uncheck_primary.svg')" alt="">
+              <img v-if="allCheckState" :src="getStaticImgUrl('/static/img/market/checked.svg')" alt="">
+              <img v-else :src="getStaticImgUrl('/static/img/market/uncheck.svg')" alt="">
             </div>
           </div>
         </div>

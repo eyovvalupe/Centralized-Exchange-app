@@ -3,7 +3,7 @@
     <div class="list_delete_icon" @click="confirm(item.id)">
       <Loading :size="18" v-if="loading && currDeleteId == item.id" color="#fff" />
       <div class="delete_icon" v-else>
-        <img :src="getStaticImgUrl('/static/icons/delete.svg')" alt="">
+        <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
       </div>
     </div>
     <GoogleVerfCode ref="googleRef" @submit="submit" />
