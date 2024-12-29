@@ -7,7 +7,7 @@
       <div class="nav" @click="checkGG('password')">
         <div class="nav_icon">
           <div class="change_login_pw">
-            <img :src="getStaticImgUrl('/static/icons/password.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/password.svg')" alt="">
           </div>
         </div>
         <div class="nav_title">{{ $t("safety.change_login_pw") }}</div>
@@ -16,7 +16,7 @@
       <div class="nav" @click="checkGG('fund')">
         <div class="nav_icon">
           <div class="change_trade_pw">
-            <img :src="getStaticImgUrl('/static/icons/password.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/password.svg')" alt="">
           </div>
         </div>
         <div class="nav_title">{{ $t("safety.change_trade_pw") }}</div>
@@ -25,7 +25,7 @@
       <div class="nav" @click="goGG">
         <div class="nav_icon">
           <div class="google_verify">
-            <img :src="getStaticImgUrl('/static/icons/google.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/google_sm.svg')" alt="">
           </div>
         </div>
         <div class="nav_title">{{ $t("safety.bind_google_auth") }}</div>

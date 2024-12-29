@@ -30,6 +30,12 @@ export default {
     login_failed: "登录异常",
     network_error: "网络异常",
   },
+  forget_pw: {
+    title: "忘记密码",
+    email_phone: "邮箱/手机号",
+    success: "密码重置成功",
+    back: "返回登录"
+  },
   register: {
     security: "安全验证",
     security_con: "拖动滑块，使图片角度为正",
@@ -163,6 +169,9 @@ export default {
     status_birthday: "出生日期",
     status_reverify: "重新认证",
     status_service: "联系客服",
+    verify_success: "审核通过",
+    verify_failure: "审核失败",
+    id_photo_requirement: "照片上传要求"
   },
   google_auth: {
     page_title: "谷歌验证器",

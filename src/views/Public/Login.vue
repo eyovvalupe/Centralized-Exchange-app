@@ -9,7 +9,7 @@
 
       <div class="language_icon_container" @click="goLang">
         <div class="language_icon">
-          <img :src="getStaticImgUrl('/static/icons/lang.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <div class="form_item margin_item" v-show="activeTab == 0">
         <div class="form_item_user" v-show="form.email">
           <div class="envelope-icon">
-            <img :src="getStaticImgUrl('/static/icons/envelope.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/envelope.svg')" alt="">
           </div>
         </div>
         <input @change="changeAccount" v-model.trim="form.email" :placeholder="t('login.pw_placeholder1')" type="text"
@@ -39,7 +39,7 @@
         <Loading v-if="accountLoading" :size="'0.32rem'" type="spinner" />
         <div class="form_item_clear" v-show="form.email" @click="form.email = null">
           <div class="cross-icon">
-            <img :src="getStaticImgUrl('/static/icons/close_r.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
           </div>
         </div>
       </div>
@@ -51,11 +51,11 @@
         searchStr = '';
         ">
           <span class="flag_icon">
-            <img :src="getStaticImgUrl('/static/img/common/flag_hongkong.svg')" alt="" />
+            <img :src="getStaticImgUrl('/static/img/user/flag_hongkong.svg')" alt="" />
           </span>
           <span>{{ form.area }}</span>
           <div class="more-svg-icon">
-            <img :src="getStaticImgUrl('/static/img/common/move.svg')" alt="" />
+            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="" />
           </div>
         </div>
         <input maxlength="20" v-model.trim="form.phone" type="text" :placeholder="t('login.pw_placeholder2')"
@@ -66,7 +66,7 @@
         <!-- 显示密码输入时的锁图标 -->
         <div class="form_item_user" v-if="form.password">
           <div class="lock-icon">
-            <img :src="getStaticImgUrl('/static/icons/lock.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/lock.svg')" alt="">
           </div>
         </div>
 
@@ -77,8 +77,8 @@
         <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
           <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showPass" :src="getStaticImgUrl('/static/icons/eye_open.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/icons/eye_close.svg')" alt="">
+            <img v-if="showPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
           </div>
         </div>
       </div>
@@ -114,30 +114,30 @@
         </div>
         <div class="item search_box">
           <div class="search-svg-icon">
-            <img :src="getStaticImgUrl('/static/icons/search2.svg')" alt="">
+            <!-- <img :src="getStaticImgUrl('/static/img/user/search.svg')" alt=""> -->
           </div>
           <input v-model.trim="searchStr" class="ipt" type="text" :placeholder="t('login.pw_placeholder4')" />
           <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon">
-            <img :src="getStaticImgUrl('/static/icons/close_a.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
           </div>
         </div>
         <div style="height: 60vh; overflow-y: auto">
-          <List>
-            <Cell v-for="item in showAreas">
+          <!-- <List> -->
+            <div v-for="item in showAreas">
               <div @click="clickItem(item)"
-                class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-color"
+                class="flex justify-between h-[1.06rem] items-center border-b-[0.02rem] border-b-color"
                 :class="{ transfer_dialog_item_active: form.area == item.code }">
                 <div class="flex h-[1.08rem] items-center">
-                  <div style="width: 0.64rem;height: 0.64rem;">
-                    <img :src="getStaticImgUrl('/static/icons/hk.svg')" alt="">
+                  <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
+                    <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                   </div>
                   <span>{{ item.cn }}</span>
                   <span>({{ item.code }})</span>
                 </div>
                 <Icon v-if="form.area == item.code" class="cross" name="success" />
               </div>
-            </Cell>
-          </List>
+            </div>
+          <!-- </List> -->
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
@@ -386,6 +386,12 @@ onMounted(() => {
 .page-login {
   padding-top: 1rem;
   margin: auto;
+
+  .self_van_popup {
+    :deep(.van-cell) {
+      padding: 0;
+    }
+  }
 
   .top_icon_container {
     position: fixed;

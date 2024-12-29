@@ -30,8 +30,9 @@
         </div>
         
         <div class="flex flex-col items-center h-[1.36rem] my-[0.8rem]" v-if="bankList.length == 0">
-          <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
-          <span class="mt-[0.12rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span>
+          <!-- <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
+          <span class="mt-[0.12rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span> -->
+          <NoData />
         </div>
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }"
           class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
@@ -63,6 +64,7 @@ import store, { useMapState } from '@/store'
 import { _hiddenAccount } from '@/utils/index'
 import { onMounted, computed } from "vue"
 import { useI18n } from 'vue-i18n'
+import NoData from "@/components/NoData.vue"
 
 
 const { t } = useI18n()

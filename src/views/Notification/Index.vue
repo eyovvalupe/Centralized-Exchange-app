@@ -20,7 +20,7 @@
         <Tab :title="'系统通知'" name="0">
           <div class="noti_tab">
             <div
-              class="w-full bg-color-3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
+              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
@@ -67,7 +67,7 @@
               ></div>
             </div>
             <div
-              class="w-full bg-color-3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
+              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
@@ -114,7 +114,7 @@
               ></div>
             </div>
             <div
-              class="w-full bg-color-3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
+              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
@@ -164,7 +164,7 @@
         <Tab :title="'活动'" name="1">
           <div class="noti_tab">
             <div
-              class="w-full h-[3.86rem] bg-color-3 p-[0.32rem] rounded-[0.4rem] flex flex-col justify-between relative"
+              class="w-full h-[3.86rem] bg-color3 p-[0.32rem] rounded-[0.4rem] flex flex-col justify-between relative"
             >
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">

@@ -6,7 +6,7 @@
         <div @click="jump('chat')"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
       </template>
@@ -17,7 +17,7 @@
       <!-- 成功 -->
       <template v-if="kycInfo.status == 'success'">
         <div class="success_icon">
-          <img :src="getStaticImgUrl('/static/img/user/success2.svg')" alt="server" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="success" />
         </div>
         <div class="text-[0.36rem] text-color mt-[0.24rem] mb-[0.4rem]">
           {{ $t("kyc.status_success") }}
@@ -26,7 +26,7 @@
       <!-- 详情 -->
       <template v-if="kycInfo.status == 'review'">
         <div class="review_icon">
-          <img :src="getStaticImgUrl('/static/icons/review.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="review">
         </div>
         <div class="text-[0.36rem] text-color my-[0.24rem]">
           {{ $t("kyc.status_pending") }}
@@ -38,7 +38,7 @@
       <!-- 失败 -->
       <template v-if="kycInfo.status == 'failure'">
         <div class="w-[1.2rem] h-[1.2rem] rounded-[50%] overflow-hidden">
-          <img src="static/img/user/failure.svg" alt="failure" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_error.svg')" alt="failure">
         </div>
         <div class="text-[0.36rem] text-color my-[0.24rem]">
           {{ $t("kyc.status_failure") }}
@@ -47,7 +47,7 @@
           {{ kycInfo.remarks || "--" }}
         </div>
       </template>
-      <div class="bg-color-3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
+      <div class="bg-color3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
         <div class="px-[0.32rem] mb-[0.3rem]">
           <div class="text-[0.36rem] mb-[0.32rem] leading-[0.5rem]">
             {{ props.kycInfo ? props.kycInfo.name : "--" }}

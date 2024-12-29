@@ -30,6 +30,12 @@ export default {
     login_failed: "Login failed",
     network_error: "Network error",
   },
+  forget_pw: {
+    title: "Forgot Password",
+    email_phone: "Email / Phone Number",
+    success: "Reset Password Successfully",
+    back: "Back to Login"
+  },
   register: {
     security: "Security Check",
     security_con: "Drag to rotate image",
@@ -166,6 +172,10 @@ export default {
     status_service: "Contact Support",
     status_card_no: "ID No",
     status_birthday: "Birthday",
+    verify_success: "Success",
+    verify_failure: "Failure",
+    id_photo_requirement: "ID card Upload Requirement"
+
   },
   google_auth: {
     page_title: "Google Authenticator",

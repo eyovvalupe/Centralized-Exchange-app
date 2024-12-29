@@ -4,21 +4,21 @@
     <Top :title="t('kyc.page_title')">
       <!-- 从注册来的 -->
       <template #right v-if="from == 'register'">
-        <span @click="nextStep" style="color: #014cfa; font-weight: 400; font-size: 0.28rem">跳过</span>
+        <span @click="nextStep" style="color: #014cfa; font-weight: 400; font-size: 0.28rem">{{ t('google_auth.from_register_skip') }}</span>
       </template>
       <!-- 提交过认证信息 -->
       <template #right v-if="kycInfo.name">
         <div class="kyc_status">
-          <span class="status" v-if="kycInfo.status == 'review'">审核中</span>
-          <span class="status status_pass" v-if="kycInfo.status == 'success'">审核通过</span>
-          <span class="status status_fail" v-if="kycInfo.status == 'failure'">审核失败</span>
+          <span class="status" v-if="kycInfo.status == 'review'">{{ t('kyc.status_pending') }}</span>
+          <span class="status status_pass" v-if="kycInfo.status == 'success'">{{ t('kyc.verify_success') }}</span>
+          <span class="status status_fail" v-if="kycInfo.status == 'failure'">{{ t('kyc.verify_failure') }}</span>
         </div>
       </template>
       <template #right v-else>
         <div @click="jump('chat')"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
       </template>
@@ -69,7 +69,7 @@
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}
       </div>
       <div class="calendar-icon">
-        <img :src="getStaticImgUrl('/static/icons/calendar.svg')" alt="">
+        <img :src="getStaticImgUrl('/static/img/user/calendar.svg')" alt="">
       </div>
     </div>
 

@@ -19,7 +19,7 @@
       </div>
       <div v-else class="flex items-center -ml-[0.08rem] gap-[0.16rem]" @click="store.commit('setIsLoginOpen', true)">
         <div class="default-avatar">
-          <img :src="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/avatar1.svg')" alt="">
         </div>
         <div class="text-[0.32rem]">{{ $t("user_page.login_out") }}</div>
       </div>
@@ -27,13 +27,13 @@
         <div @click="jump('chat', false)"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
         <div
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="setting-icon">
-            <img :src="getStaticImgUrl('/static/icons/setting.svg')" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
           </div>
         </div>
       </div>
@@ -134,7 +134,7 @@
     <div class="navs">
       <div class="nav" @click="jump('language')">
         <div class="language-icon mr-[0.16rem]">
-          <img :src="getStaticImgUrl('/static/icons/lang_icon.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/lang_icon.svg')" alt="">
         </div>
         <div class="content">
           <div class="title">{{ $t("user_page.set_language") }}</div>
@@ -142,7 +142,7 @@
         <div class="lang">
           <div style="width: 0.57rem; height: 0.57rem; padding: 0.01rem;" class="mr-[0.1rem]">
             <div style="width: 0.52rem;height: 0.52rem;">
-              <img :src="getStaticImgUrl(`/static/icons/${Object.keys(language).length ? language.icon : defaultLang.icon}.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/img/user/${Object.keys(language).length ? language.icon : defaultLang.icon}.svg`)" alt="">
             </div>
           </div>
           <span class="font-1">{{ Object.keys(language).length ? language.name : defaultLang.name }}</span>
@@ -151,7 +151,7 @@
       </div>
       <div class="nav" @click="jump('safety', true)">
         <div class="verify-icon mr-[0.16rem]">
-          <img :src="getStaticImgUrl('/static/icons/verify.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/verify.svg')" alt="">
         </div>
         <div class="content">
           <div class="title">{{ $t("user_page.security") }}</div>
@@ -164,7 +164,7 @@
       </div>
       <div class="nav" @click="jump('about')">
         <div class="info-icon mr-[0.16rem]">
-          <img :src="getStaticImgUrl('/static/icons/warning.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/about.svg')" alt="">
         </div>
         <div class="content">
           <div class="title">{{ $t("user_page.about") }}</div>

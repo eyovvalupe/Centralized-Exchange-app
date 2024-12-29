@@ -49,6 +49,12 @@ export default {
     login_failed: "登錄異常",
     network_error: "網絡異常",
   },
+  forget_pw: {
+    title: "忘記密碼",
+    email_phone: "郵箱/手機號",
+    success: "密碼重置成功",
+    back: "返回登錄"
+  },
   register: {
     security: "安全驗證",
     security_con: "拖動滑塊，使圖片角度為正",
@@ -182,6 +188,10 @@ export default {
     status_birthday: "出生日期",
     status_reverify: "重新認證",
     status_service: "聯絡客服",
+    verify_success: "審核通過",
+    verify_failure: "審核失敗",
+    id_photo_requirement: "照片上產要求"
+
   },
   google_auth: {
     page_title: "谷歌驗證器",

@@ -5,7 +5,7 @@
       @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="back" @click="back()">
-          <img :src="getStaticImgUrl('/static/icons/back.svg')" />
+          <img :src="getStaticImgUrl('/static/img/user/back.svg')" />
         </div>
       </template>
     </HeaderTabs>
@@ -14,7 +14,7 @@
         <div class="scroll-box">
           <div class="px-[0.32rem] pt-[0.26rem] pb-[0.64rem]">
             <div class="invite_banner" :class="['invite_banner--' + locale]">
-              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/invite/banner2.svg')" />
+              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/user/banner2.png')" />
               <div class="invite_banner_titbox">
                 <div class="invite_banner_tit">
                   {{ $t("inviteFriends.banner_title") }}
@@ -69,7 +69,7 @@
                 </div>
                 <div class="achievement_amount">20000</div>
               </div>
-              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/invite/achievement.svg')" />
+              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/user/achievement.png')" />
             </div>
             <div class="invite-title">{{ $t("inviteFriends.details") }}</div>
             <div class="record-tit">
@@ -191,14 +191,14 @@ const swipeChange = (val) => {
 }
 
 .back {
-  width: 1.12rem;
-  height: 1.12rem;
+  width: 0.4rem;
+  height: 0.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 0.32rem;
+  margin: auto 0;
   z-index: 1;
 }
 

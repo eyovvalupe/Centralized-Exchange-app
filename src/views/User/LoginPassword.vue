@@ -11,8 +11,8 @@
           :type="showPass0 ? 'text' : 'password'" class="item_input" />
         <div class="form_item_icon" @click="showPass0 = !showPass0">
           <div :class="showPass0 ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showPass0" :src="getStaticImgUrl('/static/icons/eye_open.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/icons/eye_close.svg')" alt="">
+            <img v-if="showPass0" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
           </div>
         </div>
       </div>
@@ -23,8 +23,8 @@
           :type="showPass ? 'text' : 'password'" class="item_input" @focus="isSame = true" />
         <div class="form_item_icon" @click="showPass = !showPass">
           <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showPass" :src="getStaticImgUrl('/static/icons/eye_open.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/icons/eye_close.svg')" alt="">
+            <img v-if="showPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
           </div>
         </div>
       </div>
@@ -38,8 +38,8 @@
           :type="showPass2 ? 'text' : 'password'" class="item_input" @focus="isSame = true" />
         <div class="form_item_icon" @click="showPass2 = !showPass2">
           <div :class="showPass2 ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showPass2" :src="getStaticImgUrl('/static/icons/eye_open.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/icons/eye_close.svg')" alt="">
+            <img v-if="showPass2" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
           </div>
         </div>
       </div>

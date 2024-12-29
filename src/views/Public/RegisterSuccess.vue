@@ -12,10 +12,10 @@
           <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
         </div>
 
-        <div class="language_icon_container" @click="goLang">
-          <div class="language_icon">
-            <img :src="getStaticImgUrl('/static/icons/lang.svg')" alt="">
-          </div>
+        <div class="w-[0.72rem] h-[0.72rem] border-[0.02rem] border-color rounded-[0.36rem] flex justify-center items-center" @click="goLang">
+            <div class="w-[0.432rem] h-[0.432rem]">
+              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+            </div>
         </div>
       </div>
     </div>

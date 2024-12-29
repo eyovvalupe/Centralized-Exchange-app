@@ -14,7 +14,7 @@
 
         <div class="language_icon_container" @click="goLang">
           <div class="language_icon">
-            <img :src="getStaticImgUrl('/static/icons/lang.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
           </div>
         </div>
       </div>
@@ -22,10 +22,10 @@
     <div class="icon">
       <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
-    <div class="title">密码重置成功</div>
+    <div class="title">{{ t('forget_pw.success') }}</div>
 
     <Button round color="#014CFA" class="submit" type="primary" @click="next"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">返回登录</Button>
+      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">{{ t('forget_pw.back') }}</Button>
   </div>
 </template>
 
@@ -34,6 +34,9 @@ import { getStaticImgUrl } from "@/utils/index.js"
 import { Button, Icon } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+const {t} = useI18n()
 const route = useRoute();
 
 const next = () => {

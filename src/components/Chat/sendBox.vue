@@ -1,10 +1,10 @@
 <template>
   <div class="msg-input">
-    <span class="icon-left"><img :src="getStaticImgUrl('/static/sendImg.svg')" />
+    <span class="icon-left"><img :src="getStaticImgUrl('/static/img/support/sendImg.svg')" />
       <input type="file" id="fileInput" @change="uploadImg" accept="image/*" />
     </span>
     <textarea class="textarea" v-model="message" ref="sendInput" :placeholder="t('service.input_message')"></textarea>
-    <span class="icon-right" @click="sendMessage('text', message)"><img :src="getStaticImgUrl('/static/send.svg')" />
+    <span class="icon-right" @click="sendMessage('text', message)"><img :src="getStaticImgUrl('/static/img/support/send.svg')" />
     </span>
   </div>
 </template>

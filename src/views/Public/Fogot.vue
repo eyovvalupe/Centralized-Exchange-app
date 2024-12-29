@@ -17,7 +17,7 @@
 
         <div class="language_icon_container" @click="goLang">
           <div class="language_icon">
-            <img :src="getStaticImgUrl('/static/icons/lang.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
           </div>
         </div>
       </div>
@@ -25,13 +25,13 @@
 
     <!-- 标题 -->
     <div class="title_box">
-      <div class="title">忘记密码</div>
-      <div class="tologin" @click="router.push({ name: 'login' })">去登录</div>
+      <div class="title">{{ t('forget_pw.title') }}</div>
+      <div class="tologin" @click="router.push({ name: 'login' })">{{ t('register.go_login') }}</div>
     </div>
 
     <!-- 表单 -->
     <div class="form relative">
-      <div class="form_title">邮箱/手机号</div>
+      <div class="form_title">{{ t('forget_pw.email_phone') }}</div>
       <div class="form_item margin_item">
         <input maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text" class="item_input" />
         <div class="form_item_clear" v-show="form.username" @click="form.username = null">
@@ -39,9 +39,9 @@
         </div>
       </div>
 
-      <div class="form_title">新密码</div>
+      <div class="form_title">{{ t('change_login_pw.new_pw') }}</div>
       <div class="form_item mb-[0.05rem]">
-        <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'" placeholder="密码最小8个字符"
+        <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'" :placeholder="t('change_login_pw.new_pw_placeholder')"
           class="item_input" @input="checkPasswordStrength" />
         <div class="form_item_icon" @click="toggleShowPass">
           <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
@@ -50,14 +50,14 @@
       <PasswordLevel class="form_passCheck" :password="form.password" :from="'forgot'" />
 
       <div class="mb-[0.32rem]"></div>
-      <div class="form_title">确认新密码</div>
+      <div class="form_title">{{ t('change_login_pw.confirm_pw') }}</div>
       <div class="form_item">
         <input maxlength="20" v-model.trim="form.confirmPassword" :type="showConfirmPass ? 'text' : 'password'"
-          placeholder="请再次输入新密码" class="item_input" />
+          :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" />
         <div class="form_item_icon" @click="toggleShowConfirmPass">
           <div :class="showConfirmPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showConfirmPass" :src="getStaticImgUrl('/static/icons/eye_open.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/icons/eye_close.svg')" alt="">
+            <img v-if="showConfirmPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">继续</Button>
+      <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="submit" type="primary">{{ t('register.next') }}</Button>
     </div>
 
     <!-- 谷歌 -->
@@ -84,6 +84,9 @@ import store from "@/store";
 import PasswordLevel from "@/components/PasswordLevel.vue";
 import { useRoute } from "vue-router";
 import ForgotSuccess from "./ForgotSuccess.vue";
+import { useI18n } from "vue-i18n";
+
+const {t} = useI18n();
 const props = defineProps({
   backFunc: {
     type: Function,

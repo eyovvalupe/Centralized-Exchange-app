@@ -136,7 +136,7 @@ onMounted(() => {
       }
 
       .register_accounr_dialog .search-svg-icon {
-        background-image: url(${getStaticImgUrl('/static/icons/search2.svg')});
+        background-image: url(${getStaticImgUrl('/static/img/common/search.svg')});
       }
 
       .page_bank .icon_ok {

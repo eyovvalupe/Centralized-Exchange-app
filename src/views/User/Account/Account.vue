@@ -7,8 +7,9 @@
       <Tab :title="t('account.crypto')" name="0">
         <div class="tab_data">
           <div class="no_data" v-if="cryptoList.length == 0">
-            <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
-            <span class="mt-[0.2rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span>
+            <!-- <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
+            <span class="mt-[0.2rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span> -->
+            <NoData />
           </div>
           <div class="list" v-else>
             <CryptoList :list="cryptoList" />
@@ -20,8 +21,9 @@
       <Tab :title="t('account.bank')" name="1">
         <div class="tab_data">
           <div class="no_data" v-if="bankList.length == 0">
-            <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
-            <span class="mt-[0.2rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span>
+            <!-- <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
+            <span class="mt-[0.2rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span> -->
+            <NoData />
           </div>
           <div class="list" v-else>
             <BankList :list="bankList" />
@@ -54,6 +56,7 @@ import CryptoList from "./CryptoList.vue";
 import BankList from "./BankList.vue";
 import Top from "@/components/Top.vue";
 import { useI18n } from "vue-i18n";
+import NoData from "@/components/NoData.vue";
 
 const { t } = useI18n();
 const route = useRoute();

@@ -15,7 +15,7 @@
 
         <div class="language_icon_container" @click="goLang">
           <div class="language_icon">
-            <img :src="getStaticImgUrl('/static/icons/lang.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
           </div>
         </div>
       </div>

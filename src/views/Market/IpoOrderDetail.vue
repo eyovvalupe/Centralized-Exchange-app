@@ -18,7 +18,7 @@
             <div class="status_box" v-else-if="currDetail.status == 'failure'">
                 <div class="status_fail">
                     <div style="width: 0.8rem;height: 0.8rem;">
-                        <img :src="getStaticImgUrl(`/static/icons/close_r.svg`)" alt="">
+                        <img :src="getStaticImgUrl(`/static/img/common/close_eye.svg`)" alt="">
                     </div>
                 </div>
                 <div class="status_text" style="color:#666D80;">

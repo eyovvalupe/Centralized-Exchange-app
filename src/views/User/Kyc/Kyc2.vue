@@ -16,7 +16,7 @@
               top: -0.01rem;
               left: -0.04rem;
             ">
-            <img :src="getStaticImgUrl('/static/img/user/warning.svg')" alt="icon" />
+            <img :src="getStaticImgUrl('/static/img/user/about.svg')" alt="icon" />
           </div>
           <span style="color: #014cfa; font-weight: 400; font-size: 0.24rem">照片上传要求</span>
         </div>
@@ -24,16 +24,16 @@
       <!-- 提交过认证信息 -->
       <template #right v-if="kycInfo.idimg_1">
         <div class="kyc_status">
-          <span class="status" v-if="kycInfo.status == 'review'">审核中</span>
-          <span class="status status_pass" v-if="kycInfo.status == 'success'">审核通过</span>
-          <span class="status status_fail" v-if="kycInfo.status == 'failure'">审核失败</span>
+          <span class="status" v-if="kycInfo.status == 'review'">{{ t('kyc.status_pendding') }}</span>
+          <span class="status status_pass" v-if="kycInfo.status == 'success'">{{ t('kyc.verify_success') }}</span>
+          <span class="status status_fail" v-if="kycInfo.status == 'failure'">{{ t('kyc.verify_failure') }}</span>
         </div>
       </template>
       <template #right v-else>
         <div @click="jump('chat')"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/serverB.svg')" alt="server" />
+            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
       </template>
@@ -50,7 +50,7 @@
       <div class="bg-color4 w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="check-icon">
-            <img :src="getStaticImgUrl('/static/icons/right_white.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/right_white.svg')" alt="">
           </div>
         </div>
       </div>
@@ -73,9 +73,11 @@
       <div class="item">
         <!-- 没有上传 -->
         <div class="id_back1 flex flex-col items-center justify-center"
-          :style="{ 'background-image': `url('/static/icons/iden1.svg')` }"
+          :style="{ 'background-image': `url('/static/img/user/iden1.svg')` }"
           v-if="!files.front.loading && !files.front.url">
-          <div class="camera_icon mb-[0.16rem]"></div>
+          <div class="camera_icon mb-[0.16rem]">
+            <img :src="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
+          </div>
           <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_front") }}</div>
         </div>
         <!-- 上传中 -->
@@ -90,7 +92,7 @@
             class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-tr-[0.32rem] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click.stop="deleteImg('front')" v-if="!checkMode">
             <div class="delete_svg_icon">
-              <img :src="getStaticImgUrl('/static/icons/delete_white.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
             </div>
           </div>
         </div>
@@ -100,9 +102,11 @@
       <div class="item">
         <!-- 没有上传 -->
         <div class="id_back2 flex flex-col items-center justify-center"
-          :style="{ 'background-image': `url('/static/icons/iden2.svg')` }"
+          :style="{ 'background-image': `url('/static/img/user/iden2.svg')` }"
           v-if="!files.back.loading && !files.back.url">
-          <div class="camera_icon mb-[0.16rem]"></div>
+          <div class="camera_icon mb-[0.16rem]">
+            <img :src="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
+          </div>
           <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_back") }}</div>
         </div>
         <!-- 上传中 -->
@@ -117,7 +121,7 @@
             class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-tr-[0.32rem] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click="deleteImg('back')" v-if="!checkMode">
             <div class="delete_svg_icon">
-              <img :src="getStaticImgUrl('/static/icons/delete_white.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
             </div>
           </div>
         </div>
@@ -127,10 +131,10 @@
       <div class="item">
         <!-- 没有上传 -->
         <div class="id_back3 flex flex-col items-center justify-center"
-          :style="{ 'background-image': `url('/static/icons/iden3.svg')` }"
+          :style="{ 'background-image': `url('/static/img/user/iden3.svg')` }"
           v-if="!files.hand.loading && !files.hand.url">
           <div class="camera_icon mb-[0.16rem]">
-            <img :src="getStaticImgUrl('/static/icons/carema.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
           </div>
           <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_hand") }}</div>
         </div>
@@ -146,7 +150,7 @@
             class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-tr-[0.32rem] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click="deleteImg('hand')" v-if="!checkMode">
             <div class="delete_svg_icon">
-              <img :src="getStaticImgUrl('/static/icons/delete_white.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
             </div>
           </div>
         </div>
@@ -163,11 +167,11 @@
         <div>
           <div
             class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
-            <div class="id_status" :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }"></div>
+            <div class="id_status" :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }"></div>
           </div>
           <div class="flex items-center justify-between">
             <div class="check_icon">
-              <img :src="getStaticImgUrl('/static/icons/right_primary.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/right_primary.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color">{{ $t("kyc.second_standard_img") }}</div>
           </div>
@@ -176,11 +180,11 @@
           <div
             class="w-[1.26rem] h-[0.8rem] relative bg-color flex items-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status absolute right-0 -mr-[0.16rem]"
-              :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }"></div>
+              :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }"></div>
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
-              <img :src="getStaticImgUrl('/static/icons/error_red.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed1") }}</div>
           </div>
@@ -188,13 +192,13 @@
         <div>
           <div
             class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
-            <div class="id_status" :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }">
+            <div class="id_status" :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }">
               <div class="bg-[rgba(255,255,255,0.4)] w-full h-full rounded-[0.08rem] backdrop-blur-[0.02rem]"></div>
             </div>
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
-              <img :src="getStaticImgUrl('/static/icons/error_red.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed2") }}</div>
           </div>
@@ -203,13 +207,13 @@
           <div
             class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status flex items-center justify-center"
-              :style="{ 'background-image': `url('/static/icons/id_status_1.svg')` }">
+              :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }">
               <div class="bg-color w-[0.68rem] h-[0.28rem] rounded-[0.2rem] blur-[0.05rem]"></div>
             </div>
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
-              <img :src="getStaticImgUrl('/static/icons/error_red.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed3") }}</div>
           </div>

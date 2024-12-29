@@ -15,12 +15,12 @@
       <div class="flex">
         <div class="mr-[0.2rem]">
           <div style="width: 0.8rem;height: 0.8rem;">
-            <img :src="getStaticImgUrl(`/static/icons/server.svg`)" alt="">
+            <img :src="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
           </div>
         </div>
         <div class="flex flex-col">
           <span
-            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-color-3 rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-color">{{
+            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-color3 rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-color">{{
               $t("service.first_message") }}</span>
         </div>
       </div>
@@ -49,14 +49,14 @@
                 </van-image>
               </div>
               <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
-              <div style="width: 0.8rem;height: 0.8rem;">
-                <img :src="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
+              <div style="width: 0.8rem;height: 0.8rem;" class="ml-[0.2rem]">
+                <img :src="getStaticImgUrl(`/static/img/user/avatar1.svg`)" alt="">
               </div>
             </div>
             <div class="receive-box" v-if="item.direction === 'receive'">
               <div class="mr-[0.2rem]">
                 <div style="width: 0.8rem;height: 0.8rem;">
-                  <img :src="getStaticImgUrl(`/static/icons/server.svg`)" alt="">
+                  <img :src="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
                 </div>
               </div>
               <div class="con break-all receive-text" :class="item.type" v-if="item.type !== 'img'">
@@ -81,7 +81,7 @@
       <div class="msg-item" v-for="item in hasNewMessage" :key="item.msgid" :class="item.direction">
         <div class="mr-[0.2rem]">
           <div style="width: 0.8rem;height: 0.8rem;">
-            <img :src="getStaticImgUrl(`/static/icons/server.svg`)" alt="">
+            <img :src="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
           </div>
         </div>
         <div class="msg-item-con">

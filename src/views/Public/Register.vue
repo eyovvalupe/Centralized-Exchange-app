@@ -22,7 +22,7 @@
 
           <div class="language_icon_container" @click="goLang">
             <div class="language_icon">
-              <img :src="getStaticImgUrl('/static/icons/lang.svg')" alt="">
+              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
             :placeholder="t('register.pw_placeholder1')" type="text" class="item_input"
             :class="{ err_ipt1: errorTip.error1 }" />
           <div class="form_item_clear" v-show="form.email" @click="form.email = null">
-            <img :src="getStaticImgUrl('/static/img/common/close_r.svg')" alt="" />
+            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="" />
           </div>
         </div>
         <div class="form_title" v-show="activeTab == 1">
@@ -75,7 +75,7 @@
         <div class="form_item margin_item" v-show="activeTab == 1" :class="{ err_ipt: errorTip.error1 }">
           <div class="code" @click="(showDialog = true), (searchStr = '')">
             <span class="flag_icon">
-              <img :src="getStaticImgUrl('/static/img/common/flag_hongkong.svg')" alt="" />
+              <img :src="getStaticImgUrl('/static/img/user/flag_hongkong.svg')" alt="" />
             </span>
             <span>{{ form.area }}</span>
             <div class="more_icon">
@@ -91,8 +91,8 @@
             :placeholder="t('register.pw_placeholder3')" :type="showPass ? 'text' : 'password'" class="item_input" />
           <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass = !showPass">
             <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-              <img v-if="showPass" :src="getStaticImgUrl('/static/icons/eye_open.svg')" alt="">
-              <img v-else :src="getStaticImgUrl('/static/icons/eye_close.svg')" alt="">
+              <img v-if="showPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+              <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
             </div>
           </div>
         </div>
@@ -104,8 +104,8 @@
             :placeholder="t('register.pw_placeholder5')" :type="showPass2 ? 'text' : 'password'" class="item_input" />
           <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass2 = !showPass2">
             <div :class="showPass2 ? 'eye-show-icon' : 'eye-hidden-icon'">
-              <img v-if="showPass2" :src="getStaticImgUrl('/static/icons/eye_open.svg')" alt="">
-              <img v-else :src="getStaticImgUrl('/static/icons/eye_close.svg')" alt="">
+              <img v-if="showPass2" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+              <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
             </div>
           </div>
         </div>
@@ -119,8 +119,8 @@
       <!-- 协议 -->
       <label class="register_doc">
         <div :class="checked ? 'checked_icon_blue' : 'unchecked_icon'" class="mr-[0.2rem]" @click="checked = !checked">
-          <img v-if="checked" :src="getStaticImgUrl('/static/icons/checked_white.svg')" alt="">
-          <img v-else :src="getStaticImgUrl('/static/icons/uncheck_primary.svg')" alt="">
+          <img v-if="checked" :src="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
+          <img v-else :src="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
         </div>
         {{ $t("register.agree_con1")
         }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3")
@@ -158,7 +158,7 @@
           <div class="search-svg-icon"></div>
           <input v-model.trim="searchStr" class="ipt" type="text" :placeholder="t('register.pw_placeholder4')" />
           <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon">
-            <img :src="getStaticImgUrl('/static/icons/close_a.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
           </div>
         </div>
         <div ref="scrollRef" style="height: 60vh; overflow-y: auto">
@@ -169,7 +169,7 @@
                 :class="{ transfer_dialog_item_active: form.area == item.code }">
                 <div class="flex h-[1.08rem] items-center">
                   <div style="width: 0.64rem;height: 0.64rem;">
-                    <img :src="getStaticImgUrl('/static/icons/hk.svg')" alt="">
+                    <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                   </div>
                   <span>{{ item.cn }}</span>
                   <span>({{ item.code }})</span>

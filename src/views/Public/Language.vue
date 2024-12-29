@@ -8,7 +8,7 @@
         <div class="lang_item" v-if="item.show">
           <div style="width: 0.57rem; height: 0.57rem" class="mr-[0.1rem]">
             <div style="width: 0.52rem;height: 0.52rem;">
-              <img :src="getStaticImgUrl(`/static/icons/${item.icon}.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/img/user/${item.icon}.svg`)" alt="">
             </div>
           </div>
           <div class="name">{{ item.name }}</div>

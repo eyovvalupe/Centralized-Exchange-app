@@ -9,7 +9,7 @@
 
       <div class="language_icon_container" @click="goLang">
         <div class="language_icon">
-          <img :src="getStaticImgUrl('/static/icons/lang.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
     </div>
     <div class="check_pic">
       <img class="check_img" :style="{ transform: `rotate(${slider * 3.6 - initialRotate}deg)` }"
-        :src="getStaticImgUrl(`/static/img/common/check${initialImg}.webp`)" alt="img" />
+        :src="getStaticImgUrl(`/static/img/user/check${initialImg}.webp`)" alt="img" />
     </div>
     <div class="slider_box" style="width: 100%">
       <Slider @change="changeSlider" @drag-start="activeVal = 0" v-model="slider" bar-height="0.9rem"
@@ -32,9 +32,9 @@
 
     <div class="status_text" v-if="loading" style="opacity: 0">
       <div class="status_text_icon">
-        <img :src="getStaticImgUrl('/static/img/common/check_default.svg')" alt="img" />
-        <img :src="getStaticImgUrl('/static/img/common/check_success.svg')" alt="img" />
-        <img :src="getStaticImgUrl('/static/img/common/check_error.svg')" alt="img" />
+        <img :src="getStaticImgUrl('/static/img/user/check_default.svg')" alt="img" />
+        <img :src="getStaticImgUrl('/static/img/user/check_success.svg')" alt="img" />
+        <img :src="getStaticImgUrl('/static/img/user/check_error.svg')" alt="img" />
       </div>
     </div>
     <div class="status_text status_success" v-else-if="sliderStatus == 'success'">
