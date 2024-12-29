@@ -4,25 +4,25 @@
     <div class="item_box flex justify-between">
       <div class="flex items-center">
         <span class="item_icon" v-if="item.account_from"><img
-            :src="getStaticImgUrl(`/static/img/crypto/${item.account_from.toUpperCase()}.svg`)" alt="currency" /></span>
+            :src="getStaticImgUrl(`/static/img/crypto/${item.from.toUpperCase()}.svg`)" alt="currency" /></span>
         <span>{{
-          dataMap[item.account_from] + `(${item.from})` || "未知"
+          item.from + " " + dataMap[item.account_from] || "未知"
         }}</span>
       </div>
-      <span class="amount">{{ item.amount_from }}</span>
+      <span class="amount">{{ item.from }}</span>
     </div>
     <div class="item_box flex justify-between">
       <div class="icon_to">
-        <img :src="getStaticImgUrl(`/static/icons/trans5.svg`)" alt="">
+        <img :src="getStaticImgUrl(`/static/img/assets/convert_sm.svg`)" alt="">
       </div>
       <div class="flex items-center">
-        <span class="item_icon"><img :src="getStaticImgUrl(`/static/img/crypto/${item.account_to.toUpperCase()}.svg`)"
+        <span class="item_icon"><img :src="getStaticImgUrl(`/static/img/crypto/${item.to.toUpperCase()}.svg`)"
             alt="currency" /></span>
         <span>{{
-          dataMap[item.account_to] + `(${item.to})` || "未知"
+          item.to + " " + dataMap[item.account_to] || "未知"
         }}</span>
       </div>
-      <span class="amount">{{ item.amountt_to }}</span>
+      <span class="amount">{{ item.to }}</span>
     </div>
     <div class="time">{{ formatDate(item.created) }}</div>
   </div>

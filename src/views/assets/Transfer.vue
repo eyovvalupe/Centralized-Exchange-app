@@ -25,9 +25,9 @@
           @click="openDialog('from')">
           <div class="flex items-center">
             <div class="account_item">
-              <div class="account_item_icon">
+              <!-- <div class="account_item_icon">
                 <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="icon" />
-              </div>
+              </div> -->
               <div class="item_content">
                 <span>{{ _accountMap[form.from] }}</span>
               </div>
@@ -58,16 +58,16 @@
           <span class="text-[0.28rem] text-color2">{{ $t("transfer.in") }}</span>
         </div>
         <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-          <img :rc="getStaticImgUrl('/static/icons/trans2.svg')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/convert.svg')" alt="img" />
         </div>
         <div
           class="flex justify-between items-center border-[0.02rem] border-color-2 w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
           @click="openDialog('to')">
           <div class="flex items-center">
             <div class="account_item">
-              <div class="account_item_icon">
+              <!-- <div class="account_item_icon">
                 <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.svg`)" alt="icon" />
-              </div>
+              </div> -->
               <div class="item_content">
                 <span>{{ _accountMap[form.to] }}</span>
               </div>
