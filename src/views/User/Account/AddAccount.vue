@@ -66,7 +66,7 @@
       <div class="">
         <div class="absolute top-[0.2rem] right-[0.3rem]">
           <div style="width: 0.42rem;height: 0.4rem;">
-            <img :src="getStaticImgUrl(`/static/icons/close.svg`)" alt="">
+            <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
           </div>
         </div>
         <div class="w-full px-[0.32rem]">

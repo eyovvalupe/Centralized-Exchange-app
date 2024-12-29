@@ -1,7 +1,7 @@
 <template>
   <div class="relative overflow-hidden w-[6.86rem] h-[2.42rem] pt-[0.16rem] pl-[0.24rem] top-[-0.5rem]">
     <div class="absolute top-[0.02rem] left-[0.01rem] z-[-1]" style="width: 2.38rem;height: 1.02rem;">
-      <img :src="getStaticImgUrl(`/static/icons/close.svg`)" alt="">
+      <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
     </div>
     <div class="absolute top-[0] left-[0] z-[-1]" style="width: 6.86rem;height: 2.42rem;">
       <img :src="getStaticImgUrl(`/static/icons/wallet_bg11.svg`)" alt="">

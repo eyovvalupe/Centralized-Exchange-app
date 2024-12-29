@@ -6,8 +6,8 @@
             <div class="top">
                 <div class="title">冻结金额({{ currency }})</div>
                 <div class="eyes" @click="hidden = !hidden">
-                    <img :src="getStaticImgUrl('/static/img/assets/eye_o.svg')" v-show="!hidden" />
-                    <img :src="getStaticImgUrl('/static/img/assets/closed_eye.svg')" v-show="hidden" />
+                    <img :src="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
+                    <img :src="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
                 </div>
             </div>
             <div class="money">

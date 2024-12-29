@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record.svg')" />
+            <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
           <span>
             {{ $t("transfer.transferRecord") }}

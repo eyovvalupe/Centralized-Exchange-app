@@ -36,7 +36,7 @@
       <div v-if="Object.keys(selectedItem).length" class="w-full relative">
         <div class="absolute top-[0.1rem] right-[0.3rem]" style="width: 0.42rem;height: 0.42rem;"
           @click="() => (handle = false)">
-          <img :src="getStaticImgUrl(`/static/icons/close.svg`)" alt="">
+          <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
         </div>
         <div
           class="w-full flex justify-center pt-[0.5rem] text-[0.32rem] text-color leading-[0.44rem] mb-[0.48rem]">
@@ -64,7 +64,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
-              <img :src="getStaticImgUrl(`/static/icons/deposit_color.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/img/assets/deposit_color.svg`)" alt="">
             </div>
             <div class="text-topup text-[0.32rem]">{{ t('assets.coin_list_recharge') }}</div>
           </div>
@@ -79,7 +79,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width:0.8rem;height:0.8rem">
-              <img :src="getStaticImgUrl(`/static/icons/withdraw_color.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/img/assets/withdraw_color.svg`)" alt="">
             </div>
             <div class="text-withdraw text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
           </div>
@@ -93,7 +93,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
-              <img :src="getStaticImgUrl(`/static/icons/trans4.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
             </div>
             <div class="text-transfer-in text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') :
               t('transfer.in') }}</div>
@@ -108,7 +108,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
-              <img :src="getStaticImgUrl(`/static/icons/share.svg`)" alt="">
+              <img :src="getStaticImgUrl(`/static/img/assets/transfer_out.svg`)" alt="">
             </div>
             <div class="text-transfer-out text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.out_sim') :
               t('transfer.out') }}</div>

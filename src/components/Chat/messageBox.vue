@@ -50,7 +50,7 @@
               </div>
               <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
               <div style="width: 0.8rem;height: 0.8rem;">
-                <img :src="getStaticImgUrl(`/static/icons/trans4.svg`)" alt="">
+                <img :src="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
               </div>
             </div>
             <div class="receive-box" v-if="item.direction === 'receive'">

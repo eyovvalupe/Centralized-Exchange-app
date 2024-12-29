@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record.svg')" />
+            <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
           <span>
             {{ $t("withdraw.withdrawRecord") }}
@@ -159,7 +159,7 @@
             </div>
             <span>{{ item.name.toUpperCase() }}</span>
             <div v-if="form.from == item.name" class="check_icon">
-              <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
+              <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
             </div>
           </div>
         </div>
@@ -186,7 +186,7 @@
             @click="clickNetworkItem(item)" :key="i" style="justify-content: space-between">
             <span>{{ item }}</span>
             <div v-if="form.network == item" class="check_icon">
-              <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
+              <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
             </div>
           </div>
         </div>

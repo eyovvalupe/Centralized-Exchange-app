@@ -83,7 +83,7 @@
       :safe-area-inset-bottom="true" v-model:show="showBottom" position="bottom" class="date_picker">
       <div class="flex justify-between items-center mx-[0.32rem] mt-[0.24rem]">
         <div @click="cancelDate" class="close-icon">
-          <img :src="getStaticImgUrl('/static/icons/close.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
         </div>
         <div @click="confirmDate"
           class="w-[1.2rem] h-[0.6rem] rounded-[0.32rem] bg-primary text-white text-[0.3rem] flex items-center justify-center font-medium">

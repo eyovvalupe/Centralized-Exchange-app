@@ -2,25 +2,25 @@
   <div class="btns">
     <div class="btn-item" @click="jump('topUpCrypto', true)">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/icons/deposit.svg`)" alt="">
+        <img :src="getStaticImgUrl(`/static/img/assets/deposit.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.recharge") }}</div>
     </div>
     <div class="btn-item" @click="jump('withdraw', true)">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/icons/withdraw.svg`)" alt="">
+        <img :src="getStaticImgUrl(`/static/img/assets/withdraw.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.withdraw") }}</div>
     </div>
     <div class="btn-item" @click="jump('transfer')">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/icons/trans.svg`)" alt="">
+        <img :src="getStaticImgUrl(`/static/img/assets/transfer.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.transfer") }}</div>
     </div>
     <div class="btn-item" @click="jump('recordList', true)">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/icons/record.svg`)" alt="">
+        <img :src="getStaticImgUrl(`/static/img/assets/record.svg`)" alt="">
       </div>
       <div class="btn-item__name">{{ $t("assets.financialRecords") }}</div>
     </div>

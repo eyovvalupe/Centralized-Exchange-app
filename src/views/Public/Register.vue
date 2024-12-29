@@ -148,7 +148,7 @@
       position="bottom" teleport="body">
       <div class="register_accounr_dialog">
         <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="showDialog = false">
-          <img :src="getStaticImgUrl('/static/icons/close.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
         </div>
         <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
           {{ $t("register.country_number") }}

@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record.svg')" />
+            <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
           <span class="max-w-[1.2rem]">
             {{ $t("topUpCrypto.rechargeRecord") }}
@@ -105,7 +105,7 @@
             <span>{{ keyStr.toUpperCase() }}</span>
 
             <div v-if="form.currency == keyStr" class="check_icon">
-              <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
+              <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
             </div>
           </div>
         </div>
@@ -123,7 +123,7 @@
           <span>{{ item.network }}</span>
 
           <div v-if="form.network == item.network" class="check_icon">
-            <img :src="getStaticImgUrl('/static/img/assets/success.svg')" />
+            <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
           </div>
         </div>
       </div>
