@@ -17,7 +17,7 @@
             </div>
             <div class="status_box" v-else-if="currDetail.status == 'failure'">
                 <div class="status_fail">
-                    <div style="width: 0.8rem;height: 0.8rem;">
+                    <div style="width: 1.2rem;height: 1.2rem;">
                         <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_failure.svg`)" alt="">
                     </div>
                 </div>
