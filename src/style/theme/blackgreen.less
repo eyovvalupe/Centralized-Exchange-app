@@ -2,6 +2,7 @@
 // 为兼容tailwindcss 所有颜色使用 rgb 配置，全局颜色变量使用 ex- 开头
 
 :root {
+    
     --ex-white-rgb: 255 255 255; //#FFFFFF      白色
     --ex-up-color-rgb: 151 225 128; //#97E180   上涨颜色
     --ex-down-color-rgb: 220 89 89; //#DC5959   下跌颜色
@@ -15,8 +16,9 @@
     --ex-text-color3-rgb: 255 255 255; //#FFFFFF  提示文字颜色
     --ex-text-color4-rgb: 255 255 255; //#FFFFFF 次要文字颜色
     --ex-text-color5-rgb: 255 255 255; //#FFFFFF 禁用颜色
-    --ex-border-color-rgb: 65 67 69; //#414345 边框颜色（浅）
-    --ex-border-color2-rgb: 43 49 57; //#D0D8E2 边框颜色（中）
+    --ex-border-color-rgb: 53 53 55; //#353537 边框颜色（浅）
+    --ex-border-color2-rgb: 65 67 69; //#414345 边框颜色（中）
+    --ex-border-color3-rgb: 171 171 171; //#ABABAB 边框颜色（亮）
     --ex-bg-color-rgb: 23 23 23; //#171717    背景颜色
     --ex-bg-color2-rgb: 255 255 255; //#FFFFFF   
     --ex-bg-color3-rgb: 255 255 255; //#FFFFFF   
@@ -40,6 +42,7 @@
     --ex-text-color5: rgb(var(--ex-text-color5-rgb) / 0.3);
     --ex-border-color: rgb(var(--ex-border-color-rgb));
     --ex-border-color2: rgb(var(--ex-border-color2-rgb));
+    --ex-border-color3: rgb(var(--ex-border-color3-rgb));
     --ex-border-error: rgb(var(--ex-error-color-rgb));
     --ex-bg-color: rgb(var(--ex-bg-color-rgb));
     --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.06);
@@ -49,6 +52,13 @@
     --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 0.1);
     --ex-text-color--bg-primary: rgb(var(--ex-bg-color-rgb)); //主色背景下的文字颜色
     --ex-text-color--bg-light:rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
+
+
+    *, ::before, ::after{
+        border-color:var(--ex-border-color);
+    }
+    
+    
 }
 
 .text-color {
@@ -245,6 +255,10 @@
 .border-color2 {
     --tw-border-opacity: 1;
     border-color: rgb(var(--ex-border-color2-rgb) / var(--tw-border-opacity));
+}
+.border-color3 {
+    --tw-border-opacity: 1;
+    border-color: rgb(var(--ex-border-color3-rgb) / var(--tw-border-opacity));
 }
 
 .border-error {

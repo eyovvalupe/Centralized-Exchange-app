@@ -168,14 +168,17 @@ onMounted(()=>{
             height: .8rem;
             font-size: 0.32rem;
             box-sizing: border-box;
+            color: var(--ex-text-color2);
         }
         .active_tab{
-            background-color: var(--ex-primary-color);
-            border-color:var(--ex-primary-color);
+            background-color: var(--ex-white);
+            border-color:var(--ex-white);
             font-weight: normal;
+            color:var(--ex-text-color--bg-light);
             .tab-name{
+                font-weight: 600;
                 font-size: 0.32rem;
-                color:var(--ex-text-color--bg-primary);
+                
             }
             &::after{
                 display: none;

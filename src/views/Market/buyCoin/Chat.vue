@@ -94,7 +94,7 @@
       <div class="van-safe-area-bottom min-h-[2rem]"></div>
     </div>
     <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-color">
-      <div class="h-[0.02rem] w-full bg-color3" />
+      <div class="h-[1px] w-full bg-color3" />
       <div class="box px-4">
         <div class="box_icon">
           <div style="width:0.6rem;height:0.6rem" class="text-primary">
@@ -300,8 +300,8 @@ onBeforeUnmount(() => {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
-    background-color: var(--ex-bg-primary);
-    color: var(--ex-text-color--bg-primary);
+    background-color: var(--ex-white);
+    color: var(--ex-text-color--bg-light);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -376,14 +376,14 @@ onBeforeUnmount(() => {
         height: 0.64rem;
         position: relative;
         border-radius: 50%;
-        background-color: var(--ex-primary-color);
+        background-color: var(--ex-white);
         margin-right: 0.2rem;
         top: 0.05rem;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--ex-text-color--bg-primary);
+        color: var(--ex-text-color--bg-light);
 
         .pointer {
           width: 0.16rem;
@@ -410,19 +410,15 @@ onBeforeUnmount(() => {
         .op_text_content {
           display: flex;
           align-items: center;
-          // padding: 0.3rem 0.24rem;
           max-width: 4rem;
           padding: 0.2rem 0.4rem;
           height: 1rem;
 
           line-height: 0.4rem;
-          background-color: var(--ex-bg-color2);
-          color: var(--ex-text-color);
+          background-color: var(--ex-white);
+          color: var(--ex-text-color--bg-light);
           text-align: left;
           border-radius: 0.12rem;
-          // border-top-right-radius: 0.24rem;
-          // border-bottom-left-radius: 0.24rem;
-          // border-bottom-right-radius: 0.24rem;
           margin-bottom: 0.1rem;
 
           &::before {
@@ -433,7 +429,7 @@ onBeforeUnmount(() => {
             width: 0;
             height: 0;
             border-left: 0 solid transparent;
-            border-right: 0.14rem solid var(--ex-border-color);
+            border-right: 0.14rem solid var(--ex-white);
             border-top: 0.14rem solid transparent;
             border-bottom: 0.14rem solid transparent;
           }
@@ -522,17 +518,11 @@ onBeforeUnmount(() => {
       }
 
       .content {
-        // width: 5.22rem;
-        // height: 0.6rem;
-        border-radius: 0.32rem;
-        padding: 0.2rem;
-        background: var(--F5F7FC, var(--ex-bg-color2));
-        color: var(--666D80, var(--ex-text-color2));
+        margin-top: 0.32rem;
+        color: var(--ex-text-color3);
         text-align: center;
         font-size: 0.3rem;
-        line-height: 0.6rem;
-        /* 133.333% */
-        padding: 0 0.18rem;
+        line-height: 0.4rem;
       }
     }
   }

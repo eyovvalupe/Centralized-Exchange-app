@@ -209,7 +209,8 @@ const percentTagClick = (percent) => {
     position: relative;
     height: 0.92rem;
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color2);
+    border: 1px solid rgba(0,0,0,0);
+    background-color: var(--ex-bg-color3);
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;

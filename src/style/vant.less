@@ -8,6 +8,7 @@
     --van-background-2:var(--ex-bg-color);
     --van-text-color:var(--ex-text-color);
     --van-button-plain-background:var(--ex-bg-color);
+    --van-button-primary-color:var(--ex-text-color--bg-primary);
 }
 
 .van-toast--loading {
@@ -22,6 +23,7 @@
 
 .van-button {
     border: none !important;
+    font-weight: 600;
 }
 
 .van-button--disabled {
@@ -42,8 +44,9 @@
     background-color: rgba(0, 0, 0, 0) !important;
 }
 
-.van-popup--bottom {
+body .van-popup--bottom {
     padding-top: 0.2rem;
+    background: linear-gradient(-180deg, #2e2e2e 0%, #1c1c1c 100%);
 
     &::after {
         content: '';
@@ -69,7 +72,13 @@
     }
 
     .van-popup__close-icon {
-        font-size: 0.4rem !important;
+        width: 0.6rem;
+        height: 0.6rem;
+        background-color: var(--ex-bg-color3);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 0.6rem;
+        font-size: 0.36rem !important;
     }
 
     .van-popup-custom-body {
@@ -256,8 +265,8 @@
         &::after {
             content: '';
             background: var(--ex-bg-color3);
-            height: 0.8rem;
-            border-radius: 0.32rem;
+            height: 0.96rem;
+            border-radius: 1rem;
             width: 100%;
             left: 0;
             bottom: 0;
@@ -265,11 +274,10 @@
         }
 
         .van-tabs__nav {
-            padding: 0.16rem 0.05rem 0 0.05rem;
+            height: 0.96rem;
+            padding: 0.08rem;
             background: none;
             display: flex;
-            width: calc(100% + 0.12rem);
-            margin-left: -0.06rem;
 
         }
 
@@ -280,35 +288,26 @@
             padding: 0 0.46rem;
         }
 
-        .van-tab__text {
+        .van-tab {
             height: 0.8rem;
-            line-height: 0.8rem;
-            margin-top: 0.08rem;
+            .van-tab__text {
+                font-size: 0.32rem;
+                color: var(--ex-text-color3);
+            }
         }
 
         .van-tab--active {
-            border-radius: 0.32rem 0.32rem 0 0;
+            border-radius: 1rem;
             background: var(--ex-bg-color);
-            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
-            height: 0.92rem;
             position: relative;
             z-index: 1;
 
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 600;
-                color: var(--ex-primary-color);
+                color: var(--ex-text-color);
                 margin-top: 0px;
-
             }
-        }
-
-        .van-tab:first-child.van-tab--active {
-            border-radius: 0.32rem 0.32rem 0 0.32rem;
-        }
-
-        .van-tab:last-child.van-tab--active {
-            border-radius: 0.32rem 0.32rem 0.32rem 0;
         }
 
         .van-tabs__line {
