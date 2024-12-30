@@ -117,8 +117,8 @@ onMounted(()=>{
         }
 
         .tab {
-            font-size: .28rem;
-            color: var(--ex-text-color2);
+            font-size: .3rem;
+            color: var(--ex-text-color3);
             padding: 0 .22rem;
             height: .66rem;
             line-height: 0;
@@ -136,28 +136,15 @@ onMounted(()=>{
                 transition: .3s;
                 font-size: 0.3rem;
             }
-            &::after{
-                content: '';
-                width: 0.6rem;
-                height: 0.2rem;
-                background-color: var(--ex-primary-color);
-                position: absolute;
-                bottom: 0;
-                left:50%;
-                margin-left: -0.3rem;
-                border-radius: 0.6rem;
-                transition: .3s;
-                opacity: 0;
-                transform: scale(0);
-            }
+            
         }
 
         .active_tab {
-            color: var(--ex-text-color);
+            color: var(--ex-primary-color);
             font-weight: 700;
             opacity: 1;
             .tab-name{
-                font-size: 0.56rem;
+                font-size: 0.36rem;
             }
             &::after{
                 opacity: 1;

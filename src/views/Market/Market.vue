@@ -4,14 +4,13 @@
     <IPODetail v-if="detail == '1'" @close-open-detail="closeOpenDetail" />
     <Subscription v-else-if="detail == '2'" @close-open-detail="closeOpenDetail" />
     <div
-      class="boder-color2 absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50 border"
+      class="bg-color2 absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50"
       @click="jump('search')">
       <div style="width: 0.32rem;height: 0.32rem;">
         <img :src="getStaticImgUrl('/static/img/home/search_icon.svg')" alt="">
       </div>
     </div>
-    <div
-      class="absolute right-13 top-[0.2rem] z-10 h-[0.68rem] w-[0.6rem] bg-gradient-to-r from-transparent to-white" />
+    
     <HeaderTabs v-model:active="active" class="w-[6.28rem]" :tabs="[
       $t('market.market_header_optional'),
       $t('market.market_header_buy'),

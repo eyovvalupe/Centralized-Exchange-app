@@ -56,8 +56,8 @@ button:hover {
 }
 
 button.active {
-  background-color: var(--ex-primary-color);
-  border-color: var(--ex-primary-color);
-  color: var(--ex-bg-primary-text-color);
+  background-color: var(--ex-white);
+  border-color: var(--ex-white);
+  color: #000;
 }
 </style>
