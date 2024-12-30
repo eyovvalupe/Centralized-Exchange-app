@@ -159,7 +159,7 @@ function formatDate(date) {
       width: 0;
       height: 0;
       border-left: 0.2rem solid transparent;
-      border-right: 0.2rem solid var(--ex-border-color);
+      border-right: 0.2rem solid var(--ex-bg-color3);
       border-bottom: 0.2rem solid transparent;
       border-top: 0.2rem solid transparent;
     }
@@ -209,7 +209,9 @@ function formatDate(date) {
             width: 0;
             height: 0;
             border-left: 0.2rem solid transparent;
-            border-right: 0.2rem solid var(--ex-border-color);
+            // border-right: 0.2rem solid var(--ex-bg-color3);
+            border-right: 0.2rem solid var(--ex-bg-color3);
+
             border-bottom: 0.2rem solid transparent;
             border-top: 0.2rem solid transparent;
           }

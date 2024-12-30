@@ -1,36 +1,36 @@
 <template>
     <div class="ipo_stock_detail">
-        <Top title="IPO订单详情"></Top>
+        <Top :title="`IPO ${t('trade.ipo_detail_title')}`"></Top>
         <div class="scroller loading_box" v-if="loading">
             <Loading color="var(--ex-primary-color)" />
-            <div class="loading_text">加载中...</div>
+            <div class="loading_text">{{ t('trade.ipo_detail_loading') }}...</div>
         </div>
         <div class="scroller" v-else>
 
             <div class="status_box" v-if="currDetail.status == 'success'">
                 <div style="width: 1.2rem;height: 1.2rem;">
-                    <img :src="getStaticImgUrl(`/static/icons/success3.svg`)" alt="">
+                    <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_success.svg`)" alt="">
                 </div>
                 <div class="status_text" style="color:var(--ex-success-color);">
-                    恭喜你，已中签
+                    {{ t('trade.ipo_detail_status_success') }}
                 </div>
             </div>
             <div class="status_box" v-else-if="currDetail.status == 'failure'">
                 <div class="status_fail">
-                    <div style="width: 0.8rem;height: 0.8rem;">
-                        <img :src="getStaticImgUrl(`/static/img/common/close_eye.svg`)" alt="">
+                    <div style="width: 1.2rem;height: 1.2rem;">
+                        <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_failure.svg`)" alt="">
                     </div>
                 </div>
                 <div class="status_text" style="color:var(--ex-text-color2);">
-                    很可惜，未中签
+                    {{ t('trade.ipo_detail_status_failure') }}
                 </div>
             </div>
             <div class="status_box" v-else>
                 <div style="width: 1.2rem;height: 1.2rem;">
-                    <img :src="getStaticImgUrl(`/static/icons/time.svg`)" alt="">
+                    <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_wait.svg`)" alt="">
                 </div>
                 <div class="status_text">
-                    已认购，等待中签中
+                    {{ t('trade.ipo_detail_status_wait') }}
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
                                 v-if="currDetail.lever > 1">{{ t('trade.ipo_leveraged_trading') }}</span> </div>
                     </div>
                     <div class="item_order_no">
-                        <span>订单号 {{ currDetail.order_no || '--' }}</span>
+                        <span>{{ t('trade.ipo_detail_order_no') }} {{ currDetail.order_no || '--' }}</span>
                         <div class="item_copy_icon" @click="copy(currDetail.order_no)">
                             <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy">
                         </div>
@@ -52,26 +52,26 @@
                 <div class="info_boxs">
 
                     <div class="info_box">
-                        <div>中签数量</div>
+                        <div>{{ t('trade.ipo_detail_win_num') }}</div>
                         <div class="amount blue">
                             {{ currDetail.winning || '--' }}
                         </div>
                     </div>
                     <div class="info_box info_box--line">
-                        <div>认购数量</div>
+                        <div>{{ t('trade.ipo_detail_buy_num') }}</div>
                         <div class="amount">
                             {{ currDetail.volume || '--' }}
                         </div>
                     </div>
                     <div class="split-line"></div>
                     <div class="info_box ">
-                        <div>冻结金额({{ currDetail.currency }})</div>
+                        <div>{{ t('trade.ipo_detail_block_num') }}({{ currDetail.currency }})</div>
                         <div class="amount blue">
                             {{ '--' }}
                         </div>
                     </div>
                     <div class="info_box info_box--line">
-                        <div>认购金额({{ currDetail.currency }})</div>
+                        <div>{{ t('trade.ipo_detail_buy_value') }}({{ currDetail.currency }})</div>
                         <div class="amount">
                             {{ currDetail.issue_price || '--' }}
                         </div>
@@ -86,34 +86,34 @@
                     <div class="val">{{ currDetail.volume || '--' }}</div>
                 </div> -->
                 <div class="detail_item">
-                    <div>手续费</div>
+                    <div>{{ t('trade.ipo_detail_fee') }}</div>
                     <div class="val">{{ currDetail.fee }} <span>{{ currDetail.currency }}</span></div>
                 </div>
                 <div class="detail_item">
-                    <div>认购杠杆</div>
+                    <div>{{ t('trade.ipo_detail_leverage') }}</div>
                     <div class="val">{{ currDetail.lever ? currDetail.lever + 'X' : '--' }}</div>
                 </div>
                 <div class="detail_item">
-                    <div>上市日期</div>
+                    <div>{{ t('trade.ipo_detail_market_date') }}</div>
                     <div class="val">{{ currDetail.listing_date || '--' }}</div>
                 </div>
                 <div class="detail_item">
-                    <div>上市价格</div>
+                    <div>{{ t('trade.ipo_detail_market_price') }}</div>
                     <div class="val">{{ currDetail.listing_price || '--' }} <span>{{ currDetail.currency }}</span></div>
                 </div>
 
                 <div class="detail_item">
-                    <div>认购价格</div>
+                    <div>{{ t('trade.ipo_detail_buy_price') }}</div>
                     <div class="val">{{ currDetail.issue_price || '--' }} <span>{{ currDetail.currency }}</span></div>
                 </div>
 
                 <div class="detail_item">
-                    <div>认购日期</div>
+                    <div>{{ t('trade.ipo_detail_buy_date') }}</div>
                     <div class="val">{{ '--' }}</div>
                 </div>
 
                 <div class="detail_item">
-                    <div>订单时间</div>
+                    <div>{{ t('trade.ipo_detail_order_date') }}</div>
                     <div class="val">{{ currDetail.created }}</div>
                 </div>
 
@@ -134,6 +134,10 @@ import { useRoute } from "vue-router"
 import { _orderGet } from "@/api/api";
 import { _copyTxt } from "@/utils/index"
 import { Loading, showToast } from "vant"
+import { useI18n } from "vue-i18n";
+import IPO from "./IPO.vue";
+
+const {t} = useI18n()
 const route = useRoute()
 const currDetail = ref({})
 

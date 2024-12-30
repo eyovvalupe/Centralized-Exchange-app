@@ -181,11 +181,11 @@
             <span v-else>--</span>
           </div>
           <div style="display: flex; align-items: center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
-            <div v-if="Number(item.price * (item.ratio || 0))" :class="[
+            <div v-if="Number(item.change)" :class="[
               updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
             ]">
               {{ updown === 0 ? "" : updown > 0 ? "+" : ""
-              }}{{ item.price * (item.ratio || 0) }}
+              }}{{ item.change }}
             </div>
             <div v-if="item.ratio" style="margin-left: 0.15rem" :class="[
               updown === 0

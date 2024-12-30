@@ -5,12 +5,12 @@
         <div class="icon">
             <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√">
         </div>
-        <div class="title">认购成功</div>
-        <div class="tips">恭喜认购完成，请耐心等待中签信息</div>
-        <div class="btn flex justify-center items-center w-[100%]">
-            <Button @click="router.push('/trade?to=ipo')" round class="next">继续认购</Button>
-            <Button @click="router.push('/trade?to=ipo&active=1')" round color="var(--ex-bg-color)" class="info"
-                type="primary">订单详情</Button>
+        <div class="title">{{ t('trade.ipo_success_title') }}</div>
+        <div class="tips">{{ t('trade.ipo_success_con') }}</div>
+        <div class="btn flex justify-center items-center w-full">
+            <Button @click="router.push('/trade?to=ipo')" round class="next">{{ t('trade.ipo_success_btn1') }}</Button>
+            <Button @click="router.push('/trade?to=ipo&active=1')" round class="info"
+                type="primary">{{ t('trade.ipo_success_btn2') }}</Button>
         </div>
     </div>
 </template>
@@ -20,7 +20,9 @@ import { getStaticImgUrl } from "@/utils/index.js"
 import { Button } from 'vant'
 import { useRouter, useRoute } from 'vue-router';
 import Top from '@/components/Top.vue';
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n();
 const router = useRouter();
 
 </script>

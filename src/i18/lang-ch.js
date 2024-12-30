@@ -53,7 +53,7 @@ export default {
     title: "忘記密碼",
     email_phone: "郵箱/手機號",
     success: "密碼重置成功",
-    back: "返回登錄"
+    back: "返回登錄",
   },
   register: {
     security: "安全驗證",
@@ -190,8 +190,7 @@ export default {
     status_service: "聯絡客服",
     verify_success: "審核通過",
     verify_failure: "審核失敗",
-    id_photo_requirement: "照片上產要求"
-
+    id_photo_requirement: "照片上產要求",
   },
   google_auth: {
     page_title: "谷歌驗證器",
@@ -698,12 +697,31 @@ export default {
     ipo_sub_buy_code: "認購碼",
     ipo_sub_buy_no_amount: "請輸入認購數量",
     ipo_sub_buy_no_code: "請輸入認購碼",
-
+    ipo_success_title: "認購成功",
+    ipo_success_con: "恭喜認購成功，請耐心等待中簽訊息",
+    ipo_success_btn1: "繼續認購",
+    ipo_success_btn2: "訂單詳情",
+    ipo_detail_title: "訂單詳情",
+    ipo_detail_loading: "加載中",
+    ipo_detail_status_success: "恭喜你，已中簽",
+    ipo_detail_status_wait: "已認購，等待中籤中",
+    ipo_detail_status_failure: "很可惜，未中簽",
+    ipo_detail_order_no: "訂單號碼",
+    ipo_detail_win_num: "中籤數量",
+    ipo_detail_buy_num: "認購數量",
+    ipo_detail_block_num: "凍結金額",
+    ipo_detail_buy_value: "認購金額",
+    ipo_detail_fee: "手續費",
+    ipo_detail_leverage: "認購槓桿",
+    ipo_detail_market_date: "上市日期",
+    ipo_detail_market_price: "上市價格",
+    ipo_detail_buy_price: "認購價格",
+    ipo_detail_buy_date: "認購日期",
+    ipo_detail_order_date: "訂單時間",
     forex_opening_title: "外匯",
     forex_position_title: "外匯/狀態",
     trade_order_history: "曆史訂單",
-    left_search_result: "搜索結果"
-
+    left_search_result: "搜索結果",
   },
   inviteFriends: {
     invite: "推薦朋友",
@@ -746,7 +764,6 @@ export default {
     market_optional_contract: "加密貨幣",
     market_optional_forex: "外匯",
     market_optional_blocktrade: "大宗商品",
-
 
     market_marketinfo_data: "數據",
     market_marketinfo_trade: "交易",
