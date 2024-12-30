@@ -2,12 +2,13 @@
 // 为兼容tailwindcss 所有颜色使用 rgb 配置，全局颜色变量使用 ex- 开头
 
 :root {
+
     --ex-white-rgb: 255 255 255; //#FFFFFF      白色
     --ex-black-rgb: 0 0 0; //#000000      黑色
     --ex-up-color-rgb: 151 225 128; //#97E180   上涨颜色
     --ex-down-color-rgb: 220 89 89; //#DC5959   下跌颜色
-    --ex-success-color-rgb: 24 183 98; //#18b762 成功状态颜色
-    --ex-error-color-rgb: 232 80 58; //e8503a   错误状态颜色
+    --ex-success-color-rgb: 151 225 128; //#97E180 成功状态颜色
+    --ex-error-color-rgb: 220 89 89; //DC5959   错误状态颜色
     --ex-info-color-rgb: 126 153 214; //#7e99d6  普通状态颜色
     --ex-warning-color-rgb: 250 117 0; //#fa7500 警告状态颜色
     --ex-primary-color-rgb: 151 225 128; //#97E180  风格主色
@@ -16,10 +17,10 @@
     --ex-text-color3-rgb: 255 255 255; //#FFFFFF  提示文字颜色
     --ex-text-color4-rgb: 255 255 255; //#FFFFFF 次要文字颜色
     --ex-text-color5-rgb: 255 255 255; //#FFFFFF 禁用颜色
-    --ex-border-color-rgb: 65 67 69; //#414345 边框颜色（浅）
-    --ex-border-color2-rgb: 43 49 57; //#D0D8E2 边框颜色（中）
-    --ex-border-color3-rgb: 34 38 38; //#222626    边框色(深)
-    --ex-border-color4-rgb: 171 171 171; // #ABABAB 输入时边框色
+    --ex-border-color-rgb: 53 53 55; //#353537 边框颜色（浅）
+    --ex-border-color2-rgb: 65 67 69; //#414345 边框颜色（中）
+    --ex-border-color3-rgb: 171 171 171; //#ABABAB 边框颜色（亮）
+    --ex-border-color4-rgb: 34 38 38; //#222626    边框色(深)
     --ex-bg-color-rgb: 23 23 23; //#171717    背景颜色
     --ex-bg-color2-rgb: 255 255 255; //#FFFFFF   
     --ex-bg-color3-rgb: 255 255 255; //#FFFFFF   
@@ -50,11 +51,20 @@
     --ex-bg-color: rgb(var(--ex-bg-color-rgb));
     --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.06);
     --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 0.1);
-    --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 0.1);
+    --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 0.2);
     --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 0.1);
     --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 0.1);
     --ex-text-color--bg-primary: rgb(var(--ex-bg-color-rgb)); //主色背景下的文字颜色
     --ex-text-color--bg-light: rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
+
+
+    *,
+    ::before,
+    ::after {
+        border-color: var(--ex-border-color);
+    }
+
+
 }
 
 .text-color {
@@ -208,7 +218,7 @@
 }
 
 .bg-color4 {
-    --tw-bg-opacity: 0.1;
+    --tw-bg-opacity: 0.2;
     background-color: rgb(var(--ex-bg-color4-rgb) / var(--tw-bg-opacity));
 }
 
@@ -252,6 +262,11 @@
 .border-color2 {
     --tw-border-opacity: 1;
     border-color: rgb(var(--ex-border-color2-rgb) / var(--tw-border-opacity));
+}
+
+.border-color3 {
+    --tw-border-opacity: 1;
+    border-color: rgb(var(--ex-border-color3-rgb) / var(--tw-border-opacity));
 }
 
 .border-error {
@@ -324,21 +339,21 @@
 
 //买入
 .bg-buy {
-    background-color: var(--ex-success-color);
+    background-color: var(--ex-success-color) !important;
 }
 
 .bg-buy-text-color {
-    color: #fff;
+    color: var(--ex-text-color--bg-light) !important;
 }
 
 //卖出
 
 .bg-sell {
-    background-color: var(--ex-error-color);
+    background-color: var(--ex-error-color) !important;
 }
 
 .bg-sell-text-color {
-    color: #fff;
+    color: var(--ex-text-color--bg-light) !important;
 }
 
 

@@ -28,7 +28,7 @@
       </div>
       <div class="tip">{{ t('market.market_buy_list_pre_pay') }} {{ showAmount }} {{ info.currWallet }}</div>
 
-      <Button size="large" class="btn btn--buy" round :loading="loading" color="var(--ex-primary-color)" @click="goSubmit">{{
+      <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color" round :loading="loading" type="primary" @click="goSubmit">{{
         t('market.market_buy_fast_buy')
         }}</Button>
     </div>
@@ -79,7 +79,7 @@
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
         <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
       </div>
-      <Button size="large" class="btn btn--sell" round :loading="loading" color="var(--ex-primary-color)"
+      <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color" round :loading="loading"
         @click="goSubmit">{{ t('market.market_buy_fast_sell') }}</Button>
     </div>
     <!-- 安全密码弹窗 -->
@@ -294,15 +294,16 @@ const getSessionToken = () => {
         width: 0.4rem;
         height: 0.4rem;
         border-radius: 50%;
-        background-color: var(--ex-primary-color);
+        background-color: var(--ex-white);
         margin-right: 0.16rem;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: var(--ex-text-color--bg-primary);
+        color: var(--ex-text-color--bg-light);
         line-height: 0;
+        font-weight: 600;
       }
 
       .info_item {

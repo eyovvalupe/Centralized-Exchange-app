@@ -7,7 +7,7 @@
     <div class="list">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
-        class="relative mb-[0.2rem] h-[2.3rem] w-full rounded-4 bg-color2 px-4 py-[0.2rem]"
+        class="relative mb-[0.2rem] w-full rounded-4 bg-color3 px-[0.12rem] pb-[0.12rem]"
         @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="unreadMessage[item.order_no] > 0"
@@ -18,10 +18,10 @@
           class="absolute right-[-0.06rem] top-0 flex size-4 items-center justify-center rounded-50 bg-unread-msg text-8 bg-unread-msg-text-color">
           <!-- {{ c2cUnread[item.order_no] > 99 ? '+99' : c2cUnread[item.order_no] }} -->
         </div>
-        <div class="mb-[0.2rem] flex items-center justify-between border-b border-color pb-[0.2rem]">
+        <div class="h-[0.76rem] flex items-center justify-between px-[0.28rem]">
           <!-- order_no 订单号 -->
           <div class="text-14 text-color2">{{ item.order_no }}</div>
-          <div class="text-14" :style="{ color: statusEnum[item.status].color }">
+          <div class="text-14 font-500" :style="{ color: statusEnum[item.status].color }">
             <!-- {{ statusEnum[item.status].name }} -->
             {{
               item.status == "waitpayment"
@@ -37,44 +37,51 @@
           </div>
         </div>
         <!-- 交易信息展示 -->
-        <div class="flex items-center justify-between item-body">
-          <!-- 加密货币信息 -->
-          <div class="text-12">
-            <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
-              <!-- 根据交易类型显示“购入”或“售出” -->
-              <span :class="['offset-'+item.offset]">{{
-                item.offset == "buy"
-                  ? t("market.market_buy_list_buy")
-                  : t("market.market_buy_list_sell")
-              }}</span>&nbsp;{{ item.crypto }}&nbsp;
-              <!-- 加密货币图标 -->
-              <img class="!h-4 !w-4 rounded-50"
-                :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.svg`)" alt="currency" />
+         <div class="bg-color rounded-[0.4rem] relative">
+            <div class="w-[0.68rem] flex justify-center items-center leading-[0.4rem] " :class="['offset-'+item.offset]">  
+              <span class="w-[0.32rem] text-[0.32rem] font-600">
+                {{
+                  item.offset == "buy"
+                    ? t("market.market_buy_list_buy")
+                    : t("market.market_buy_list_sell")
+                }}
+              </span>
             </div>
-            <!-- 价格信息 -->
-            <div class="mb-[0.12rem] text-color2">
-              {{ $t("market.market_buy_list_price") }}&nbsp;{{
-                item.price
-              }}&nbsp;{{ item.currency }}
-            </div>
-            <!-- 数量信息 -->
-            <div class="text-color2">
-              {{ $t("market.market_buy_list_amount") }}&nbsp;{{
-                item.volume
-              }}&nbsp;{{ item.crypto }}
-            </div>
-          </div>
+            <div class="flex-1 flex items-center justify-between item-body">
+              <!-- 加密货币信息 -->
+              <div class="text-12">
+                <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
+                  <!-- 根据交易类型显示“购入”或“售出” -->
+                  {{ item.crypto }}&nbsp;
+                  <!-- 加密货币图标 -->
+                  <img class="!h-4 !w-4 rounded-50"
+                    :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.svg`)" alt="currency" />
+                </div>
+                <!-- 价格信息 -->
+                <div class="mb-[0.12rem] text-color2">
+                  {{ $t("market.market_buy_list_price") }}&nbsp;{{
+                    item.price
+                  }}&nbsp;{{ item.currency }}
+                </div>
+                <!-- 数量信息 -->
+                <div class="text-color2">
+                  {{ $t("market.market_buy_list_amount") }}&nbsp;{{
+                    item.volume
+                  }}&nbsp;{{ item.crypto }}
+                </div>
+              </div>
 
-          <!-- 交易总额 -->
-          <div class="flex items-center text-18">
-            <!-- 根据交易类型显示正负号 -->
-            {{ item.offset == "buy" ? "-" : "+" }}{{ item.totalprice }}
-            <!-- 货币类型 -->
-            <span class="ml-2 text-12 font-normal text-color">{{
-              item.currency
-            }}</span>
+              <!-- 交易总额 -->
+              <div class="flex items-center text-18">
+                <!-- 根据交易类型显示正负号 -->
+                {{ item.offset == "buy" ? "-" : "+" }}{{ item.totalprice }}
+                <!-- 货币类型 -->
+                <span class="ml-2 text-12 font-normal text-color">{{
+                  item.currency
+                }}</span>
+              </div>
+            </div>
           </div>
-        </div>
       </div>
 
       <NoData v-if="!loading && !list.length && token" />
@@ -274,13 +281,31 @@ defineExpose({
     
     .item-body{
       position: relative;
+      padding: 0.32rem 0.28rem 0.32rem 0.92rem;
     }
 
+    .offset-sell,
+    .offset-buy{
+      height: 100%;
+      border-radius: 0.4rem;
+      margin-right: 0.24rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      left:0;
+      top:0;
+    }
     .offset-sell{
-      color:var(--ex-error-color);
+      color:var(--ex-text-color--bg-light);
+      background:var(--ex-error-color);
+      
     }
     .offset-buy{
-      color:var(--ex-success-color);
+      color:var(--ex-text-color--bg-light);
+      background:var(--ex-success-color);
+      
     }
     
   }

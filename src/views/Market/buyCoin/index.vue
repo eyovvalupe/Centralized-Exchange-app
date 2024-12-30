@@ -4,10 +4,9 @@
     <Tabs
       v-if="!pageLoading"
       v-model:active="active"
-      class="tabs"
+      type="custom-card"
       :swipeable="false"
       animated
-      color="var(--ex-primary-color)"
       shrink
       @change="(e) => onChange(e)"
     >
@@ -106,80 +105,9 @@ defineExpose({
 <style lang="less" scoped>
 .page-buycoin {
   width: 7.5rem;
-
-  .tabs {
-    > :deep(.van-tabs__wrap) {
-      box-sizing: unset;
-      background: var(--ex-bg-color);
-      margin: 0 0.32rem;
-      height: 0.8rem;
-      padding: 0.2rem 0 0.12rem !important;
-      position: v-bind(positionValue) !important;
-      top: 0;
-      left: 0;
-      z-index: 999;
-      margin: 0 0.32rem 0.2rem;
-
-      .van-tabs__nav--complete {
-        overflow: visible;
-        padding: 0;
-      }
-
-      > .van-tabs__nav {
-        border-radius: 0.32rem;
-        background: var(--ex-bg-color3) !important;
-        position: relative;
-        display: flex;
-        justify-content: space-between;
-        background: initial;
-
-        .van-tabs__line {
-          display: none;
-        }
-
-        .van-tab {
-          width: 33%;
-          color: var(--ex-text-color2);
-        }
-        .van-tab--active {
-          box-shadow: 0px -2px 5px 0px rgb(var(--ex-text-color-rgb) / 0.1);
-          background: var(--ex-bg-color);
-          padding: 0;
-          border-radius: 0.32rem;
-          height: 120%;
-          transform: translateY(-10%);
-          color: var(--ex-primary-color);
-
-          &:first-child {
-            border-end-end-radius: 0;
-          }
-
-          &:nth-child(2) {
-            border-end-start-radius: 0;
-            border-end-end-radius: 0;
-          }
-
-          &:nth-child(3) {
-            border-end-start-radius: 0;
-          }
-        }
-
-        .van-tab__text {
-          font-size: 0.32rem;
-        }
-
-        // &::after {
-        //     content: '';
-        //     width: 100%;
-        //     height: 0.02rem;
-        //     background-color: var(--ex-primary-color);
-        //     position: absolute;
-        //     bottom: 0.32rem;
-        //     left: 0;
-        //     opacity: 0.3;
-        // }
-      }
-    }
+  :deep( > .van-tabs > .van-tabs__wrap){
+    margin: 0 0.4rem 0.32rem 0.4rem;
   }
+  
 }
 </style>

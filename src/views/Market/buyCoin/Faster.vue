@@ -16,74 +16,62 @@
       </div>
       <div class="flex" :class="[form1.offset == 'buy' ? 'flex-col' : 'flex-col-reverse']">
         <!-- 支付 -->
-        <div class="item_box">
-          <div class="item_box_left">
-            <div class="subtitle">
-              <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
-                }}</span>
-            </div>
-            <div class="item">
-              <input v-model="money" :disabled="!rate" @input="moneyInput" @blur="moneyBlur" type="number" class="ipt" />
-            </div>
-          </div>
-          <div class="item_box_right">
-            <div class="subtitle"><span>&nbsp;</span></div>
-            <div class="item justify-between"
-              @click="openDialog(2)">
-              <div class="flex items-center">
-                <div v-if="currIn.name" class="icon">
-                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)" alt="currency" />
+        <div class="item item_box">
+            <div class="flex justify-between">
+              <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center bg-buy bg-buy-text-color mt-[0.06rem]">{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
+                }}</div>
+              <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
+                @click="openDialog(2)">
+                <div class="flex items-center">
+                  <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
+                    <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)" alt="currency" />
+                  </div>
+                  <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
                 </div>
-                <span>{{ currIn.name || "--" }}</span>
-              </div>
-              <div class="more_icon">
-                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+                <div class="more_icon">
+                  <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+                </div>
               </div>
             </div>
-          </div>
+            <div class="h-[1.54rem] py-[0.2rem]">
+              <input v-model="money" placeholder="0" :disabled="!rate" @input="moneyInput" @blur="moneyBlur" type="number" class="ipt" />
+            </div>
         </div>
 
         <!-- 收到 -->
-        <div class="item_box">
-          <div class="item_box_left">
-            <div class="subtitle">
-              <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
-                }}</span>
-              <span v-if="form1.offset == 'sell' && currWallet.amount > 0">
-                <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span style="color: var(--ex-text-color2)">{{ t('assets.wallet_available_sim') }}</span>
-                {{ currWallet.amount }} {{ currOut.name }}</span>
-                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.2rem" />
-              </span>
+        <div class="item item_box">
+          <div class="flex justify-between">
+            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center bg-sell bg-sell-text-color mt-[0.06rem]">{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
+              }}</div>
+            <div class="ml-[0.2rem] mt-[0.06rem]" v-if="form1.offset == 'sell' && currWallet.amount > 0">
+              <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span style="color: var(--ex-text-color2)">{{ t('assets.wallet_available_sim') }}</span>
+              {{ currWallet.amount }} {{ currOut.name }}</span>
+              <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.2rem" />
             </div>
-            <div class="item">
-              <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
-              <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
-               t('trade.stock_position_all')
-              }}</span>
-            </div>
-          </div>
-
-          <div class="item_box_right">
-            <div v-if="token" class="subtitle">
-              <!--  @click="jump('transfer')" -->
-              <span>&nbsp;</span>
-              <!-- <span class="link">划转</span> -->
-            </div>
-            <div v-if="!token" class="subtitle">&nbsp;</div>
-            <div class="item justify-between" 
+           
+            <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
               @click="openDialog(1)">
               <div class="flex items-center">
-                <div v-if="currOut.name" class="icon">
+                <div v-if="currOut.name" class="size-[0.52rem] mr-[0.16rem]">
                   <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.svg`)"
                     alt="currency" />
                 </div>
-                <span>{{ currOut.name || "--" }}</span>
+                <span class="text-[0.3rem] w-[1rem]">{{ currOut.name || "--" }}</span>
               </div>
               <div class="more_icon">
                 <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
               </div>
             </div>
+
           </div>
+
+          <div class="h-[1.54rem] py-[0.2rem]">
+              <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
+              <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
+               t('trade.stock_position_all')
+              }}</span>
+          </div>
+
         </div>
       </div>
       
@@ -432,25 +420,29 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     .tabs {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      line-height: 0.68rem;
-      margin-top:0.4rem;
-      border: 0.5px solid var(--ex-border-color2);
-      width: 47%;
-      border-radius: 0.68rem;
+      height: 0.8rem;
+      margin-top:0.32rem;
 
       .tab {
         color: var(--ex-text-color2);
         margin: 0;
+        height: 100%;
         width: 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         border-radius: 0.68rem;
+        font-size: 0.3rem;
+        border: 1px solid var(--ex-border-color2);
+        margin-right: 0.2rem;
       }
 
       .active_tab {
         font-weight: bold;
-        color: var(--ex-text-color--bg-primary);
-        background: var(--ex-primary-color);
+        color: var(--ex-text-color--bg-light);
+        background: var(--ex-white);
+        border: 0px;
         text-align: center;
       }
     }
@@ -475,106 +467,44 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     .item_box {
-      display: flex;
-      align-items: stretch;
-      margin-top: 0.5rem;
+      
+      margin-top: 0.2rem;
+      background-color: var(--ex-bg-color3);
+      border-radius: 0.4rem;
+      padding: 0.18rem 0.32rem;
+      border: 1px solid rgba(0,0,0,0);
 
-      .item {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: relative;
-        height: 1rem;
-        border-radius: 0.32rem;
-        border: 1px solid var(--ex-border-color2);
-        padding: 0 0.2rem;
-        font-size: 0.32rem;
-
-        .icon {
-          margin-right: 0.12rem;
-          width: 0.64rem;
-          height: 0.64rem;
-          position: relative;
-          top: -0.02rem;
-        }
-
-        .info {
-          flex: 1;
-          text-align: right;
-          margin-left: 0.2rem;
-          font-size: 0.28rem;
-          font-weight: 400;
-          color: var(--ex-text-color);
-          position: absolute;
-          right: 0.24rem;
-          pointer-events: none;
-        }
-
-        .ipt {
-          flex: 1;
-          height: 100%;
-          width: 2rem;
-          font-size: 0.28rem;
-          padding: 0;
-          color: var(--ex-primary-color);
-          position: relative;
-          z-index: 1;
-        }
-        .more_icon {
-          width: 0.32rem;
-          height: 0.32rem;
-          margin-left: 0.08rem;
-        }
-      }
-
-      .disabled_item {
-        background-color: var(--ex-bg-color2);
-      }
-
-      .item_box_left {
-        width: 4.08rem;
-        margin-right: 0.2rem;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .item_box_right {
-        flex: 1;
-      }
-
-      .mode_btn {
-        padding: 0 0.6rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 1.26rem;
-        background: var(--ex-bg-color2);
-        height: 0.72rem;
-        color: var(--ex-text-color3);
-        text-align: center;
-        font-size: 0.28rem;
+      .ipt {
+        height: 100%;
+        width: 100%;
+        font-size: 0.6rem;
         font-weight: 600;
-        margin-left: 0.16rem;
-        margin-top: 0.08rem;
+        padding: 0;
+        color: var(--ex-text-color);
+        position: relative;
+        z-index: 1;
+      }
+      .more_icon {
+        width: 0.36rem;
+        height: 0.36rem;
+        margin-left: 0.08rem;
       }
 
-      .active_btn {
-        background: var(--ex-primary-color);
-        color: var(--ex-text-color--bg-primary);
-      }
     }
   }
 
   .submit {
     margin-top: 1.12rem;
-    color:var(--ex-white);
+    color:var(--ex-text-color--bg-light);
+    font-weight: 600;
+    border-radius: 0.4rem;
   }
   .submit--sell{
     background-color: var(--ex-down-color);
   }
   .submit--buy{
     background-color: var(--ex-up-color);
+    
   }
 }
 </style>

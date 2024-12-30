@@ -244,7 +244,7 @@
           </div>
           <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
             <div
-              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-primary text-color--bg-primary flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-white text-color--bg-light flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
               style="writing-mode: vertical-rl; text-orientation: upright;">
               {{ t('market.market_buy_fast_receive_sim') }}
             </div>
@@ -511,13 +511,10 @@ getSessionToken();
   padding: 1.44rem 0.32rem 0 0.32rem;
 
   .tabs {
-    height: 0.8rem;
-    border-radius: 1.3rem;
-    background-color: var(--ex-bg-color2);
+    height: 1rem;
     display: flex;
-    overflow: hidden;
     margin-bottom: 0.4rem;
-
+    gap: 0.2rem;
     .tab {
       flex: 1;
       height: 100%;
@@ -525,12 +522,13 @@ getSessionToken();
       align-items: center;
       justify-content: center;
       color: var(--ex-text-color2);
-      text-align: center;
-      font-size: 0.3rem;
-      font-weight: 400;
+      font-weight: 500;
       transition: all ease 0.2s;
       position: relative;
-
+      border: 1px solid var(--ex-border-color);
+      height: 100%;
+      font-size: 0.36rem;
+      border-radius: 0.4rem;
       .hint {
         min-width: 0.26rem;
         height: 0.26rem;
@@ -549,9 +547,8 @@ getSessionToken();
     }
 
     .tab_active {
-      background-color: var(--ex-primary-color);
-      color: var(--ex-text-color--bg-primary);
-      border-radius: 1.3rem;
+      background-color: var(--ex-white);
+      color: var(--ex-text-color--bg-light);
     }
   }
 
@@ -624,7 +621,7 @@ getSessionToken();
         .tr {
           display: flex;
           align-items: stretch;
-          border-bottom: 0.08rem solid var(--ex-white);
+          border-bottom: 0.08rem solid var(--ex-bg-color);
           min-height: 0.7rem;
 
           &:nth-last-child {
@@ -633,7 +630,7 @@ getSessionToken();
 
           .td {
             flex: 1;
-            border-right: 0.08rem solid var(--ex-white);
+            border-right: 0.08rem solid var(--ex-bg-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -690,8 +687,8 @@ getSessionToken();
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          background-color: #a7bef4;
-          color: var(--ex-primary-color);
+          background-color: var(--ex-white);
+          color: var(--ex-text-color--bg-light);
           font-size: 0.24rem;
           font-weight: 600;
         }

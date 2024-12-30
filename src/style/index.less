@@ -96,10 +96,8 @@ input {
   background-color: rgba(0, 0, 0, 0);
   font-size: 0.28rem;
   transition: all ease 0.2s;
+  color: var(--ex-text-color);
 
-  &:focus {
-    color: var(--ex-primary-color) !important;
-  }
 }
 
 // 点击效果
@@ -153,7 +151,7 @@ input[type="number"] {
 
 .item {
   &:has(.ipt:focus) {
-    border: 1px solid var(--ex-border-color4) !important;
+    border: 1px solid var(--ex-border-color3) !important;
   }
 
   .ipt::placeholder {

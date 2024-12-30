@@ -5,8 +5,7 @@
     </div>
 
     <div class="px-[0.32rem] pt-[0.52rem]">
-      <div
-        class="flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
+      <div class="flex justify-between items-center px-[0.32rem] h-[1.2rem] bg-color3 rounded-[0.32rem]">
         <template v-if="offset == 'buy'">
           <div class="text-[0.32rem] font-bold text-color">{{ t('market.market_buy_will_pay') }}</div>
           <div class="flex items-center">
@@ -22,8 +21,7 @@
           </div>
         </template>
       </div>
-      <div
-        class="mt-[0.2rem] flex justify-between items-center px-[0.32rem] border-solid border-[1px] h-[1.2rem] box-border rounded-[0.32rem]">
+      <div class="mt-[0.2rem] flex justify-between items-center px-[0.32rem] h-[1.2rem] bg-color3 rounded-[0.32rem]">
         <div class="text-[0.32rem] font-bold text-color">{{ t('market.market_buy_will_receive') }}</div>
         <div class="flex items-center" v-if="offset == 'buy'">
           <strong class="text-primary text-[0.48rem]">{{ volume }}</strong>
@@ -42,7 +40,7 @@
           </div>
           <span class="text-primary" @click="showAccountDialog = true;" v-if="currentAccount.channel">{{
             t('withdraw.change')
-            }}</span>
+          }}</span>
         </div>
         <div class="dialog_account_item h-[1.5rem]" v-if="currentAccount.channel">
           <div class="card_icon">
@@ -71,8 +69,8 @@
       <FormItem size="large" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password"
         v-model="safeword" />
       <div class="pt-[0.6rem] pb-[0.32rem]">
-        <Button size="large" round :loading="loading" @click="submit" color="var(--ex-primary-color)">{{
-          t('trade.stock_opening_confirm') }}</Button>
+        <Button size="large" round :loading="loading" @click="submit" type="primary">{{ t('trade.stock_opening_confirm')
+          }}</Button>
       </div>
     </div>
 
