@@ -482,7 +482,7 @@ onBeforeUnmount(() => {
         top: 0.24rem;
         width: 0;
         height: 0;
-        border-left: 0.14rem solid #3d65f9;
+        border-left: 0.14rem solid var(--ex-primary-color);
         border-right: 0 solid transparent;
         border-top: 0.14rem solid transparent;
         border-bottom: 0.14rem solid transparent;
@@ -493,8 +493,8 @@ onBeforeUnmount(() => {
         align-items: center;
         padding: 0.2rem 0.4rem;
         line-height: 0.4rem;
-        background-color: #3d65f9;
-        color: var(--ex-white);
+        background-color: var(--ex-primary-color);
+        color: var(--ex-text-color--bg-primary);
         text-align: left;
         max-width: 4rem;
         border-radius: 0.12rem;

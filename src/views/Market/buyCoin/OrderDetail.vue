@@ -244,7 +244,7 @@
           </div>
           <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
             <div
-              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-primary text-color--bg-primary flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-white text-color--bg-light flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
               style="writing-mode: vertical-rl; text-orientation: upright;">
               {{ t('market.market_buy_fast_receive_sim') }}
             </div>
@@ -624,7 +624,7 @@ getSessionToken();
         .tr {
           display: flex;
           align-items: stretch;
-          border-bottom: 0.08rem solid var(--ex-white);
+          border-bottom: 0.08rem solid var(--ex-bg-color);
           min-height: 0.7rem;
 
           &:nth-last-child {
@@ -633,7 +633,7 @@ getSessionToken();
 
           .td {
             flex: 1;
-            border-right: 0.08rem solid var(--ex-white);
+            border-right: 0.08rem solid var(--ex-bg-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -690,8 +690,8 @@ getSessionToken();
           align-items: center;
           justify-content: center;
           border-radius: 50%;
-          background-color: #a7bef4;
-          color: var(--ex-primary-color);
+          background-color: var(--ex-white);
+          color: var(--ex-text-color--bg-light);
           font-size: 0.24rem;
           font-weight: 600;
         }
