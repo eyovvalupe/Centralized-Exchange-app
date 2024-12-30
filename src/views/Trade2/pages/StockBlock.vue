@@ -2,7 +2,7 @@
 <template>
     <div class="stock_block">
         <!-- 日期 -->
-        <Tabs type="custom-card" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+        <Tabs type="custom-line" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
             @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">
                 <div class="stock_tab-body">
