@@ -1,27 +1,75 @@
 <!-- 底部导航 -->
 <template>
-  <div class="max-width bottom_nav">
-    <div v-for="(item, i) in navs" :key="i" class="bottom_nav_item"
-      :class="[checkActive(item) ? 'bottom_nav_active' : '']" @touchstart="handleClick(item, $event)"
-      @click="handleClick(item)">
-      <div class="bottom_nav_icon">
-        <img v-if="!checkActive(item)" :src="getStaticImgUrl(item.icon)" alt="">
-        <img v-if="checkActive(item)" :src="getStaticImgUrl(item.icon2)" alt="">
+  <div class="max-width bottom_nav2"
+    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/bottombar2/bg.png')})` }">
+    <div class="nav_box">
+      <div class="bottom_nav_item" @touchstart="handleClick(navs[0], $event)" @click="handleClick(navs[0])"
+        :class="[checkActive(navs[0]) ? 'bottom_nav_active' : '']">
+        <div class="bn_con">
+          <div class="bottom_nav_icon">
+            <img v-if="!checkActive(navs[0])" :src="getStaticImgUrl(navs[0].icon)" alt="">
+            <img v-if="checkActive(navs[0])" :src="getStaticImgUrl(navs[0].icon2)" alt="">
+          </div>
+          <div class="bottom_nav_name">
+            {{ navs[0].name }}
+          </div>
+        </div>
       </div>
+      <div class="bottom_nav_item" @touchstart="handleClick(navs[1], $event)" @click="handleClick(navs[1])"
+        style="align-items: flex-end;" :class="[checkActive(navs[1]) ? 'bottom_nav_active' : '']">
+        <div class="bn_con">
+          <div class="bottom_nav_icon">
+            <img v-if="!checkActive(navs[1])" :src="getStaticImgUrl(navs[1].icon)" alt="">
+            <img v-if="checkActive(navs[1])" :src="getStaticImgUrl(navs[1].icon2)" alt="">
+          </div>
+          <div class="bottom_nav_name">
+            {{ navs[1].name }}
+          </div>
 
-      <div class="bottom_nav_name">
-        {{ item.name }}
-      </div>
-
-      <!-- c2c角标 -->
-      <div v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0" class="bg-unread-msg bg-unread-msg-text-color">
-        {{ store.state.c2cUnreadTotal }}
-      </div>
-      <!-- 角标 -->
-      <div v-if="item.route == 'user' && storeChat.state.messageNum > 0" class="bg-unread-msg bg-unread-msg-text-color">
-        {{ storeChat.state.messageNum }}
+          <div v-if="store.state.c2cUnreadTotal > 0" class="nav_num">
+            {{ store.state.c2cUnreadTotal }}
+          </div>
+        </div>
       </div>
     </div>
+    <div class="nav_curr">
+      <div class="curr" @touchstart="handleClick(navs[2], $event)" @click="handleClick(navs[2])">
+        <div class="curr_icon">
+          <img :src="getStaticImgUrl('/static/bottombar2/curr.svg')" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="nav_box">
+      <div class="bottom_nav_item" @touchstart="handleClick(navs[3], $event)" @click="handleClick(navs[3])"
+        style="align-items: flex-start;" :class="[checkActive(navs[3]) ? 'bottom_nav_active' : '']">
+        <div class="bn_con">
+          <div class="bottom_nav_icon">
+            <img v-if="!checkActive(navs[3])" :src="getStaticImgUrl(navs[3].icon)" alt="">
+            <img v-if="checkActive(navs[3])" :src="getStaticImgUrl(navs[3].icon2)" alt="">
+          </div>
+          <div class="bottom_nav_name">
+            {{ navs[3].name }}
+          </div>
+        </div>
+      </div>
+      <div class="bottom_nav_item" @touchstart="handleClick(navs[4], $event)" @click="handleClick(navs[4])"
+        :class="[checkActive(navs[4]) ? 'bottom_nav_active' : '']">
+        <div class="bn_con">
+          <div class="bottom_nav_icon">
+            <img v-if="!checkActive(navs[4])" :src="getStaticImgUrl(navs[4].icon)" alt="">
+            <img v-if="checkActive(navs[4])" :src="getStaticImgUrl(navs[4].icon2)" alt="">
+          </div>
+          <div class="bottom_nav_name">
+            {{ navs[4].name }}
+          </div>
+
+          <div v-if="storeChat.state.messageNum > 0" class="nav_num">
+            {{ storeChat.state.messageNum }}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -119,60 +167,102 @@ const checkActive = (item) => {
 </script>
 
 <style scoped lang="less">
-.bottom_nav {
-  border-top: 1px solid var(--ex-border-color);
-  background-color: var(--ex-bg-color);
+.bottom_nav2 {
+  background-size: 100% 100%;
   display: flex;
   position: fixed;
   overflow: hidden;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 1.4rem;
+  height: 2rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
 
-  .bottom_nav_item {
-    flex: 1;
+  .nav_curr {
+    width: 2.4rem;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: var(--ex-text-color2);
-    position: relative;
+    justify-content: flex-start;
+    padding-top: 0.16rem;
 
-    .bottom_nav_name {
-      font-size: 0.24rem;
-      line-height: 0.32rem;
-      margin-top: 0.1rem;
-    }
-
-    .bottom_nav_icon {
-      width: 0.48rem;
-      height: 0.48rem;
-      font-size: 0.48rem;
-      object-fit: contain;
-    }
-
-    .nav_num {
-      width: 0.32rem;
-      height: 0.32rem;
+    .curr {
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      background-size: 100% 100%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.2rem;
-      font-weight: 400;
       border-radius: 50%;
-      position: absolute;
-      top: 0.26rem;
-      right: 0.3rem;
+      background-color: var(--ex-text-color3);
+
+      .curr_icon {
+        width: 0.64rem;
+        height: 0.64rem
+      }
     }
   }
 
-  .bottom_nav_active {
-    color: var(--ex-primary-color);
+  .nav_box {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    padding-top: 0.68rem;
+
+    .bottom_nav_item {
+      flex: 1;
+      justify-content: space-between;
+      width: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+
+      .bn_con {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: var(--ex-text-color3);
+        font-size: 0.24rem;
+        position: relative;
+
+        .bottom_nav_icon {
+          width: 0.56rem;
+          height: 0.56rem;
+          margin-bottom: 0.08rem;
+        }
+
+        .nav_num {
+          width: 0.32rem;
+          height: 0.32rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #ff3b30;
+          font-size: 0.2rem;
+          color: #fff;
+          font-weight: 400;
+          border-radius: 50%;
+          position: absolute;
+          top: 0.26rem;
+          right: 0.3rem;
+        }
+
+      }
+    }
+
+    .bottom_nav_active {
+      .bn_con {
+        color: var(--ex-primary-color);
+      }
+
+    }
   }
 }
 </style>
