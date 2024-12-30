@@ -4,7 +4,8 @@
     <Top :title="t('kyc.page_title')">
       <!-- 从注册来的 -->
       <template #right v-if="from == 'register'">
-        <span @click="nextStep" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">{{ t('google_auth.from_register_skip') }}</span>
+        <span @click="nextStep" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">{{
+          t('google_auth.from_register_skip') }}</span>
       </template>
       <!-- 提交过认证信息 -->
       <template #right v-if="kycInfo.name">
@@ -63,7 +64,8 @@
         :placeholder="t('kyc.first_card_id')" maxlength="20" />
     </div>
     <div class="subtitle">{{ $t('kyc.first_birthday') }}</div>
-    <div class="item justify-between" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }"
+    <div class="item justify-between"
+      :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }"
       @click="checkMode ? (showBottom = false) : (showBottom = true)">
       <div :class="form.birthday ? 'text-color' : 'text-color4'">
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}
@@ -74,7 +76,8 @@
     </div>
 
     <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" @click="submit" :loading="loading"
-      :disabled="disabled" round :color="'var(--ex-primary-color)'" class="submit" type="primary">{{ $t("kyc.first_btn") }}</Button>
+      :disabled="disabled" round :color="'var(--ex-primary-color)'" class="submit" type="primary">{{ $t("kyc.first_btn")
+      }}</Button>
     <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="var(--ex-primary-color)" class="submit"
               type="primary" @click="next">继续</Button> -->
 
@@ -231,7 +234,7 @@ const nextStep = () => {
   }
 
   .item {
-    height: 0.92rem;
+    height: 1.12rem;
     border: 0.02px solid var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-bottom: 0.4rem;

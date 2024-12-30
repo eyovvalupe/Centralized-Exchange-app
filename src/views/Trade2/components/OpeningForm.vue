@@ -89,21 +89,32 @@
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
 
     <!-- 股票 -->
-    <div class="subtitle">
+    <!-- <div class="subtitle">
       <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
       <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem"
         color="var(--ex-primary-color)" />
       <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
         <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
       </div>
-    </div>
+    </div> -->
     <!-- 搜索 -->
-    <div class="item_box" @click="openSearchDialog">
+    <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
       <div class="item">
+        <div class="tip-title" v-if="currStock.symbol">
+          <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
+          <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem"
+            color="var(--ex-primary-color)" />
+          <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
+            <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+          </div>
+        </div>
         <div class="info">
-          <div style="flex: 1">
+          <div style="flex: 1;height: 100%;">
+            <div v-if="!currStock.symbol" style="color: var(--ex-text-color3);">{{
+              t("trade.stock_opening_stock")
+            }}</div>
             <div class="info-symbol">{{ currStock.symbol }}</div>
-            <div class="info-name">{{ currStock.name }}</div>
+            <div v-if="currStock.symbol" class="info-name" style="margin-top: 0.15rem;">{{ currStock.name }}</div>
           </div>
           <div class="more_icon">
             <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
@@ -115,19 +126,26 @@
     <!-- 保证金模式 -->
     <div class="item_box">
       <div class="item_box_right" @click="openTypeDialog">
-        <div class="subtitle">
-          <span>{{ t("trade.stock_opening_amount_mode") }}</span>
-        </div>
         <div class="item justify-between">
-          <span v-if="!levers.length">--</span>
-          <span class="flex text-center" v-else>
+          <div class="tip-title">杠杆</div>
+          <span class="flex text-center" style="margin-bottom: 0.06rem;">
             {{
               form1.leverType == "cross"
                 ? t("trade.stock_opening_position_mode_cross")
                 : t("trade.stock_opening_position_mode_isolated") || "--"
-            }}
+            }}</span>
+          <div class="more_icon more_icon2">
+            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+          </div>
+        </div>
+      </div>
+      <div class="item_box_right" style="margin-left: 0.2rem;" @click="openTypeDialog">
+        <div class="item justify-between">
+          <div class="tip-title">杠杆</div>
+          <span v-if="!levers.length">--</span>
+          <span class="flex text-center" style="margin-bottom: 0.06rem;" v-else>
             {{ form1.lever }}X</span>
-          <div class="more_icon">
+          <div class="more_icon more_icon2">
             <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
           </div>
         </div>
@@ -157,29 +175,26 @@
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
-      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>{{
+      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
+      <span style="color:var(--ex-black)">{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
-      }}</Button>
+      }}</span></Button>
 
-    <div v-if="!token">
+    <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
       <div class="flex justify-between mb-[0.32rem]">
-        <div
-          class="w-[3.22rem] h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
+        <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn"
           @click="store.commit('setIsLoginOpen', true)">
           {{ t("trade.stock_opening_token_login") }}
         </div>
-        <div
-          class="w-[3.22rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center text-color--bg-primary text-[0.36rem]"
+        <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn"
           @click="jump('register')">
           {{ t("trade.stock_opening_token_register") }}
         </div>
       </div>
-      <div
-        class="w-full h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
-        @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
-          ">
+      <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+        ">
         {{ t("trade.contract_create_guest_btn") }}
       </div>
     </div>
@@ -1201,6 +1216,7 @@ defineExpose({
     align-items: stretch;
     margin-bottom: 0.4rem;
     position: relative;
+    font-size: 0.32rem;
 
     .item {
       flex: 1;
@@ -1208,27 +1224,40 @@ defineExpose({
       align-items: center;
       justify-content: space-between;
       position: relative;
-      height: 0.92rem;
+      flex-wrap: wrap;
+      height: 1.12rem;
       border-radius: 0.32rem;
-      border: 1px solid var(--ex-border-color2);
-      padding: 0 0.24rem;
+      // border: 1px solid var(--ex-border-color2);
+      padding: 0.06rem 0.24rem;
+      background-color: var(--ex-bg-color3);
+
+      .tip-title {
+        color: var(--ex-text-color3);
+        width: 100%;
+        font-size: 0.28rem;
+        margin-bottom: 0rem;
+        line-height: 0.36rem;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .stock_icon {
+          width: 0.32rem;
+          height: 0.32rem;
+        }
+      }
 
       .info {
         font-size: 0.28rem;
         font-weight: 400;
-        position: absolute;
         width: 100%;
         left: 0;
         box-sizing: border-box;
-        padding-left: 0.32rem;
         pointer-events: none;
         display: flex;
         justify-content: space-between;
         align-items: center;
-
-        .more_icon {
-          margin-right: 0.3rem;
-        }
       }
 
       .info-symbol {
@@ -1247,7 +1276,7 @@ defineExpose({
         flex: 1;
         height: 100%;
         width: 2rem;
-        font-size: 0.28rem;
+        font-size: 0.32rem;
         padding: 0;
         color: var(--ex-primary-color);
         position: relative;
@@ -1258,6 +1287,14 @@ defineExpose({
         width: 0.32rem;
         height: 0.32rem;
         margin-left: 0.08rem;
+        transform: rotate(-90deg);
+      }
+
+      .more_icon2 {
+        position: absolute;
+        right: 0.32rem;
+        top: 50%;
+        transform: translateY(-50%) rotate(-90deg);
       }
     }
 
@@ -1326,6 +1363,19 @@ defineExpose({
     .active_btn {
       background: var(--ex-primary-color);
       color: var(--ex-text-color--bg-primary);
+    }
+  }
+
+  .item_box_big {
+    .item {
+      height: 1.48rem;
+    }
+  }
+
+  .unlogin-box {
+    .btn {
+      background-color: var(--ex-white);
+      color: var(--ex-bg-color);
     }
   }
 

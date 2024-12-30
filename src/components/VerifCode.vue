@@ -1,20 +1,9 @@
 <!-- 验证码弹窗 -->
 <template>
-  <Dialog
-    v-model:show="show"
-    title=""
-    showCancelButton
-    showConfirmButton
-    :width="'6.22rem'"
-    :confirmButtonText="t('register.code_jump_confirm')"
-    :confirmButtonColor="'var(--ex-primary-color)'"
-    :cancelButtonText="t('user_page.message_box_cancel')"
-    :cancelButtonColor="'var(--ex-text-color2)'"
-    overlay
-    @cancel="close"
-    @confirm="confirm"
-    :before-close="() => false"
-  >
+  <Dialog v-model:show="show" title="" showCancelButton showConfirmButton :width="'6.22rem'"
+    :confirmButtonText="t('register.code_jump_confirm')" :confirmButtonColor="'var(--ex-primary-color)'"
+    :cancelButtonText="t('user_page.message_box_cancel')" :cancelButtonColor="'var(--ex-text-color2)'" overlay
+    @cancel="close" @confirm="confirm" :before-close="() => false">
     <div class="verif_box">
       <div class="title">{{ t('register.enter_graphic_number') }}</div>
       <!-- 验证码 -->
@@ -27,13 +16,8 @@
       </div>
       <!-- 输入 -->
       <div class="ipt_box">
-        <input
-          ref="iptRef"
-          type="text"
-          @input="() => (code = code.toString().slice(0, 4))"
-          v-model.trim="code"
-          :placeholder="t('register.enter_verify_code')"
-        />
+        <input ref="iptRef" type="text" @input="() => (code = code.toString().slice(0, 4))" v-model.trim="code"
+          :placeholder="t('register.enter_verify_code')" />
       </div>
     </div>
   </Dialog>
@@ -130,7 +114,7 @@ defineExpose({
   }
 
   .ipt_box {
-    height: 0.92rem;
+    height: 1.12rem;
     border-radius: 0.32rem;
     border: 1px solid var(--ex-text-color3);
     width: 100%;

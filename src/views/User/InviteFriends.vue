@@ -287,7 +287,7 @@ const swipeChange = (val) => {
 .input-box {
   border-radius: 0.32rem;
   border: 1px solid var(--ex-border-color2);
-  height: 0.92rem;
+  height: 1.12rem;
   box-sizing: border-box;
   font-size: 0.3rem;
   display: flex;
@@ -309,7 +309,7 @@ const swipeChange = (val) => {
     padding: 0 0.32rem;
     min-width: 1.28rem;
     color: var(--ex-text-color--bg-primary);
-    line-height: 0.92rem;
+    line-height: 1.12rem;
     font-size: 0.3rem;
     background-color: var(--ex-primary-color);
     border-radius: 0.32rem;

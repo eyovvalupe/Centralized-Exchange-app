@@ -328,7 +328,7 @@ const removeStock = (item) => {
     flex-shrink: 0;
     flex: 2;
     overflow: hidden;
-    height: 0.92rem;
+    height: 1.12rem;
 
     .item_num {
       font-size: 0.32rem;

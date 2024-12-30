@@ -43,8 +43,9 @@
                 </div>
               </div>
               <div class="btn_container">
-                <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)" @click="next">{{
-                  $t("account.add_btn") }}</Button>
+                <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)"
+                  @click="next">{{
+                    $t("account.add_btn") }}</Button>
               </div>
               <!-- 谷歌验证 -->
               <GoogleVerfCode ref="googleRef" @submit="submit" />
@@ -330,7 +331,7 @@ getSessionToken();
 
   :deep(.van-tabs__wrap) {
     padding: 0 0.32rem;
-    height: 0.92rem;
+    height: 1.12rem;
     margin-bottom: 0.4rem;
     margin-top: 1.2rem;
   }
@@ -338,7 +339,7 @@ getSessionToken();
   :deep(.van-tabs__nav) {
     width: 100%;
     margin: 0;
-    height: 0.92rem;
+    height: 1.12rem;
     border-radius: 0.32rem;
     border-width: 0.02rem;
     border-color: var(--ex-border-color);
@@ -414,7 +415,7 @@ getSessionToken();
     .item {
       width: 6.86rem;
       // padding: 0 0.32rem;
-      height: 0.92rem;
+      height: 1.12rem;
       border: 0.02rem solid var(--ex-border-color2);
       border-radius: 0.32rem;
       margin-bottom: 0.4rem;

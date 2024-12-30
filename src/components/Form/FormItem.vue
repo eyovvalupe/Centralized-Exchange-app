@@ -211,7 +211,7 @@ const percentTagClick = (percent) => {
     box-sizing: border-box;
     justify-content: space-between;
     position: relative;
-    height: 0.92rem;
+    height: 1.12rem;
     border-radius: 0.32rem;
     // border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
@@ -240,7 +240,7 @@ const percentTagClick = (percent) => {
     .ipt {
       flex: 1;
       height: 100%;
-      font-size: 0.28rem;
+      font-size: 0.32rem;
       padding: 0;
       position: relative;
       z-index: 1;
@@ -261,6 +261,10 @@ const percentTagClick = (percent) => {
     .ipt_tip {
       font-size: 0.2rem;
       transform: translateY(-0.36rem);
+    }
+
+    .ipt {
+      padding-top: 0.24rem;
     }
   }
 

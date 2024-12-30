@@ -27,7 +27,8 @@
       </div>
     </div>
     <div class="btn_container">
-      <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)" @click="next">保存</Button>
+      <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)"
+        @click="next">保存</Button>
     </div>
 
     <!-- 币种 -->
@@ -169,7 +170,7 @@ getSessionToken();
   .item {
     width: 6.86rem;
     // padding: 0 0.32rem;
-    height: 0.92rem;
+    height: 1.12rem;
     border: 0.02rem solid var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-bottom: 0.4rem;

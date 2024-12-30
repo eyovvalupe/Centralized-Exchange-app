@@ -101,7 +101,7 @@
     <div class="item_box" @click="openSearchDialog">
       <div class="item">
         <div class="info">
-          <div style="flex: 1">
+          <div style="flex: 1;display: flex;align-items: center;">
             <div class="info-symbol" v-show="currStock.name">
               {{ currStock.name }}
             </div>
@@ -1345,7 +1345,7 @@ defineExpose({
       align-items: center;
       justify-content: space-between;
       position: relative;
-      height: 0.92rem;
+      height: 1.12rem;
       border-radius: 0.32rem;
       border: 1px solid var(--ex-border-color2);
       padding: 0 0.24rem;

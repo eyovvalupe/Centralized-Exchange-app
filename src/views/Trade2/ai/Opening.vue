@@ -734,7 +734,7 @@ defineExpose({
 
   .item_box {
     position: relative;
-    height: 0.92rem;
+    height: 1.12rem;
     border-radius: 0.32rem;
     border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;

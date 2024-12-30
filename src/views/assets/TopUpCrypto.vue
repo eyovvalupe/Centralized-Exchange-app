@@ -71,8 +71,9 @@
                         <Loading v-show="rateLoading" type="spinner" size="12px" />
                     </div> -->
         </div>
-        <Button @click="goTopUp" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
-          $t("topUpCrypto.confirm") }}</Button>
+        <Button @click="goTopUp" :loading="loading" round color="var(--ex-primary-color)" class="submit"
+          type="primary">{{
+            $t("topUpCrypto.confirm") }}</Button>
       </Tab>
       <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard"> </Tab>
     </Tabs>
@@ -423,7 +424,7 @@ onBeforeUnmount(() => {
   .form {
     .item {
       width: 100%;
-      height: 0.92rem;
+      height: 1.12rem;
       display: flex;
       align-items: center;
       justify-content: space-between;

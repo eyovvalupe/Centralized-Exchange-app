@@ -14,7 +14,7 @@
           <div class="list" v-else>
             <CryptoList :list="cryptoList" />
           </div>
-         
+
         </div>
         <div class="w-full  h-[1.9rem]"></div>
       </Tab>
@@ -28,12 +28,12 @@
           <div class="list" v-else>
             <BankList :list="bankList" />
           </div>
-          
+
         </div>
         <div class="w-full  h-[1.9rem]"></div>
       </Tab>
     </Tabs>
-    
+
     <div class="add_btn" @click="goAddAccount">
       <span class="text-[white] text-[0.36rem] font-normal">{{ $t("account.add_account_btn") }}</span>
     </div>
@@ -86,7 +86,7 @@ const goAddAccount = async () => {
   //身份认证检测
   if (userInfo.value.kycl2 != 2) {
     return showConfirmDialog({
-      className:'account_dialog',
+      className: 'account_dialog',
       title: t('account.no_kyc_title'),
       message: t('account.no_kyc_con'),
       confirmButtonText: t('account.no_kyc_confirm'),
@@ -98,7 +98,7 @@ const goAddAccount = async () => {
   // google检测
   if (userInfo.value.kycl2 == 2 && !userInfo.value.googlebind) {
     return showConfirmDialog({
-      className:'account_dialog',
+      className: 'account_dialog',
       title: t('account.no_google_title'),
       message: t('account.no_google_con'),
       confirmButtonText: t('account.no_google_confirm'),
@@ -149,14 +149,14 @@ const goBack = () => {
 
   :deep(.van-tabs__wrap) {
     margin-top: 1.2rem;
-    height: 0.92rem;
+    height: 1.12rem;
     margin-bottom: 0.4rem;
   }
 
   :deep(.van-tabs__nav) {
     width: 100%;
     margin: 0;
-    height: 0.92rem;
+    height: 1.12rem;
     border-radius: 0.32rem;
     border-width: 0.02rem;
     border-color: var(--ex-border-color);
@@ -245,7 +245,7 @@ const goBack = () => {
     }
   }
 
-  .van-dialog__confirm  {
+  .van-dialog__confirm {
     .van-button__content {
       font-size: 0.32rem;
       line-height: 0.44rem;

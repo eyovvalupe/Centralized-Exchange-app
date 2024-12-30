@@ -1,8 +1,8 @@
 <!-- 中签 -->
 <template>
   <div v-if="token" class="page_ipo_stock">
-    <Tabs type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange" :color="'var(--ex-primary-color)'"
-      shrink v-if="props.from != 'assets'">
+    <Tabs type="custom-tab" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"
+      :color="'var(--ex-primary-color)'" shrink v-if="props.from != 'assets'">
       <Tab :title="t('trade.ipo_lottery_title1')" name=""> </Tab>
       <Tab :title="t('trade.ipo_lottery_title2')" name="lock"> </Tab>
       <Tab :title="t('trade.ipo_lottery_title3')" name="success"> </Tab>

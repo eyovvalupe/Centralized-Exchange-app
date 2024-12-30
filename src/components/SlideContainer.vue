@@ -1,33 +1,35 @@
 <template>
-   <!-- 拖动 -->
+    <!-- 拖动 -->
     <div>
         <div class="slider-container">
-            <Slider v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-primary-color)" inactive-color="var(--ex-bg-color3)"
-                @change="onSliderChange">
+            <Slider class="slider-dom" v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-white)"
+                inactive-color="var(--ex-bg-color3)" @change="onSliderChange">
                 <template #button>
                     <div class="slider-custom-num">
-                        <span class="number" v-show="sliderValue">{{ Math.floor(sliderValue) }}%</span>
+                        <!-- <span class="number" v-show="sliderValue">{{ Math.floor(sliderValue) }}%</span> -->
                     </div>
                 </template>
             </Slider>
+            <span style="font-size: 0.24rem;margin: 0 auto 0 0.24rem;">{{
+                Math.floor(sliderValue) }}%</span>
         </div>
-        <div class="percentages">
+        <!-- <div class="percentages">
             <div v-for="percent in percentages" :key="percent" class="percentage">
                 <div class="line"></div>
                 {{ percent }}%
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 <script setup>
 import { ref, watch } from 'vue'
 import { Slider } from 'vant'
 
-const emit = defineEmits(['update:modelValue','change'])
+const emit = defineEmits(['update:modelValue', 'change'])
 const props = defineProps({
-    modelValue:{
-        type:Number,
-        default:0
+    modelValue: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -35,35 +37,42 @@ const percentages = [25, 50, 75, 100];
 const sliderValue = ref(props.modelValue);
 
 
-watch(()=>props.modelValue,(newValue)=>{
-    if(newValue != sliderValue){
+watch(() => props.modelValue, (newValue) => {
+    if (newValue != sliderValue) {
         sliderValue.value = newValue
     }
 })
 
 const onSliderChange = (newValue) => {
-    emit('update:modelValue',newValue)
-    emit('change',newValue)
-  
+    emit('update:modelValue', newValue)
+    emit('change', newValue)
+
 }
 
 </script>
 <style lang="less" scoped>
-
 .slider-container {
     margin: 0 0.2rem;
     line-height: 100%;
+    display: flex;
+    align-items: center;
+
+    .slider-dom {
+        width: calc(100% - 1.4rem);
+    }
+
     :deep(.slider-custom-num) {
         position: relative;
-        background: var(--ex-primary-color);
+        background: var(--ex-white);
         color: var(--ex-text-color--bg-primary);
         display: inline-block;
         width: .4rem;
         height: .4rem;
         border-radius: 50%;
-        top:0.01rem;
+        top: 0.01rem;
+
         .number {
-            color: var(--ex-primary-color);
+            color: var(--ex-white);
             position: absolute;
             top: -0.28rem;
             right: 0;
@@ -101,6 +110,7 @@ const onSliderChange = (newValue) => {
     align-items: center;
     margin: 0 0.2rem;
     line-height: 100%;
+
     .percentage {
         color: var(--ex-text-color3);
         font-size: 0.28rem;
@@ -110,9 +120,11 @@ const onSliderChange = (newValue) => {
         width: 25%;
         position: relative;
     }
-    .percentage:last-child .line{
+
+    .percentage:last-child .line {
         display: none;
     }
+
     .line {
         width: 0.07rem;
         height: 0.28rem;

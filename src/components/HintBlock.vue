@@ -41,7 +41,7 @@ const jump = () => {
     left: 0.16rem;
     bottom: 1.4rem;
     width: calc(100% - 0.32rem);
-    height: 0.92rem;
+    height: 1.12rem;
     background: rgba(232, 232, 232, 0.92);
     border: 1px solid;
     border-radius: 0.2rem;
