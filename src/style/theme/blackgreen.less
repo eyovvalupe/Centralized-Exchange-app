@@ -3,6 +3,7 @@
 
 :root {
     --ex-white-rgb: 255 255 255; //#FFFFFF      白色
+    --ex-black-rgb: 0 0 0; //#000000      黑色
     --ex-up-color-rgb: 151 225 128; //#97E180   上涨颜色
     --ex-down-color-rgb: 220 89 89; //#DC5959   下跌颜色
     --ex-success-color-rgb: 24 183 98; //#18b762 成功状态颜色
@@ -17,6 +18,8 @@
     --ex-text-color5-rgb: 255 255 255; //#FFFFFF 禁用颜色
     --ex-border-color-rgb: 65 67 69; //#414345 边框颜色（浅）
     --ex-border-color2-rgb: 43 49 57; //#D0D8E2 边框颜色（中）
+    --ex-border-color3-rgb: 34 38 38; //#222626    边框色(深)
+    --ex-border-color4-rgb: 171 171 171; // #ABABAB 输入时边框色
     --ex-bg-color-rgb: 23 23 23; //#171717    背景颜色
     --ex-bg-color2-rgb: 255 255 255; //#FFFFFF   
     --ex-bg-color3-rgb: 255 255 255; //#FFFFFF   
@@ -25,6 +28,7 @@
     --ex-bg-color6-rgb: 255 255 255; //#FFFFFF
 
     --ex-white: rgb(var(--ex-white-rgb));
+    --ex-black: rgb(var(--ex-black-rgb));
     --ex-up-color: rgb(var(--ex-up-color-rgb));
     --ex-down-color: rgb(var(--ex-down-color-rgb));
     --ex-primary-color: rgb(var(--ex-primary-color-rgb));
@@ -40,6 +44,8 @@
     --ex-text-color5: rgb(var(--ex-text-color5-rgb) / 0.3);
     --ex-border-color: rgb(var(--ex-border-color-rgb));
     --ex-border-color2: rgb(var(--ex-border-color2-rgb));
+    --ex-border-color3: rgb(var(--ex-border-color3-rgb));
+    --ex-border-color4: rgb(var(--ex-border-color4-rgb));
     --ex-border-error: rgb(var(--ex-error-color-rgb));
     --ex-bg-color: rgb(var(--ex-bg-color-rgb));
     --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.06);
@@ -48,7 +54,7 @@
     --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 0.1);
     --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 0.1);
     --ex-text-color--bg-primary: rgb(var(--ex-bg-color-rgb)); //主色背景下的文字颜色
-    --ex-text-color--bg-light:rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
+    --ex-text-color--bg-light: rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
 }
 
 .text-color {
@@ -85,6 +91,7 @@
     --tw-text-opacity: 1;
     color: rgb(var(--ex-bg-color-rgb)/ var(--tw-text-opacity));
 }
+
 .text-color--bg-light {
     --tw-text-opacity: 1;
     color: rgb(var(--ex-bg-color-rgb)/ var(--tw-text-opacity));
@@ -129,7 +136,7 @@
 .up_bg {
     --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-up-color-rgb) / var(--tw-bg-opacity)) !important;
-    color:var(--ex-text-color--bg-light) !important;
+    color: var(--ex-text-color--bg-light) !important;
 }
 
 .bg-down {
@@ -140,7 +147,7 @@
 .down_bg {
     --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-down-color-rgb) / var(--tw-bg-opacity)) !important;
-    color:var(--ex-text-color--bg-light) !important;
+    color: var(--ex-text-color--bg-light) !important;
 }
 
 .text-down {
@@ -355,4 +362,3 @@
     color: var(--ex-info-color);
     border-color: var(--ex-info-color);
 }
-

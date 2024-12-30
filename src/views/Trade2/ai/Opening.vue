@@ -43,7 +43,7 @@
         </div>
         <!-- 数量 -->
         <FormItem :rightContent="true" input-type="number" v-model="form1.grid"
-          :title="t('trade.ai_opening_network_amount')" btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
+          :placeholder="t('trade.ai_opening_network_amount')" btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
 
           <template #title-right>
             <span>{{ maxgrid > 0 ? '≤' + maxgrid : '' }}</span>
@@ -66,7 +66,7 @@
 
         <!-- 投资额 -->
 
-        <FormItem input-type="number" v-model="form1.volume" :title="t('trade.ai_opening_invest_amount')"
+        <FormItem input-type="number" v-model="form1.volume" :placeholder="t('trade.ai_opening_invest_amount')"
           btn-show-mode="focus" :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0"
           @change="changePercent" @btnClick="onSliderChange(100)">
           <template #title-right>
@@ -173,11 +173,11 @@
         </div>
 
         <FormItem v-model="form1.safeword" size="large" input-type="password"
-          :title="t('trade.stock_opening_trade_pw')">
+          :placeholder="t('trade.stock_opening_trade_pw')">
         </FormItem>
 
-        <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit" color="var(--ex-primary-color)"
-          round>{{ t("trade.ai_opening_confirm_btn") }}</Button>
+        <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit"
+          color="var(--ex-primary-color)" round>{{ t("trade.ai_opening_confirm_btn") }}</Button>
       </div>
     </Popup>
 
@@ -563,7 +563,7 @@ const init = () => {
 
 defineExpose({
   init,
-  choose:chooseItem
+  choose: chooseItem
 });
 </script>
 

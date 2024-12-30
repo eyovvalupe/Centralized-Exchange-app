@@ -1,7 +1,8 @@
 <!-- 合约 -->
 <template>
   <div class="stock_block">
-    <Tabs type="oval-card" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink @change="onChange">
+    <Tabs type="oval-card" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+      @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body">
           <Opening :tradeType="props.activeTab" :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1"
@@ -73,11 +74,11 @@ const OpeningRef = ref();
 
 // 选择某个合约
 const choose = (item) => {
-  if(active.value == '0'){
+  if (active.value == '0') {
     OpeningRef.value && OpeningRef.value.choose(item);
-  }else{
+  } else {
     onChange("0");
-    nextTick(()=>{
+    nextTick(() => {
       OpeningRef.value && OpeningRef.value.choose(item);
     })
   }

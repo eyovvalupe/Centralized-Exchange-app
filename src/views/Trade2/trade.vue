@@ -73,7 +73,9 @@
               :onblur="() => (isFocused = false)" />
           </div>
         </div>
-        <div v-if="isFocused || searchStr" class="ml-[0.32rem] mb-[0.2rem] text-[0.32rem]">{{ t('trade.left_search_result') }}</div>
+        <div v-if="isFocused || searchStr" class="ml-[0.32rem] mb-[0.2rem] text-[0.32rem]">{{
+          t('trade.left_search_result')
+          }}</div>
         <!-- 切换 -->
         <Tabs id="option_left" @change="changeTab" class="van-tabs--sub" :lazy-render="false"
           v-model:active="navActiveTab" animated shrink>
@@ -89,24 +91,24 @@
                 class="mt-[0.2rem]" :lazy-render="false" v-model:active="stockActiveTab" shrink>
                 <Tab :title="t('trade.left_all')" name="all"> </Tab>
                 <Tab style="min-width: 2rem" :title="marketItem.market == 'us'
-                    ? t('market.market_stock_country_us_long')
-                    : marketItem.market == 'japan'
-                      ? t('market.market_stock_country_japan_long')
-                      : marketItem.market == 'india'
-                        ? t('market.market_stock_country_india_long')
-                        : marketItem.market == 'korea'
-                          ? t('market.market_stock_country_korea_long')
-                          : marketItem.market == 'germany'
-                            ? t('market.market_stock_country_germany_long')
-                            : marketItem.market == 'uk'
-                              ? t('market.market_stock_country_uk_long')
-                              : marketItem.market == 'singapore'
-                                ? t('market.market_stock_country_singapore_long')
-                                : marketItem.market == 'hongkong'
-                                  ? t('market.market_stock_country_hongkong_long')
-                                  : marketItem.market == 'malaysia'
-                                    ? t('market.market_stock_country_malaysia_long')
-                                    : ''
+                  ? t('market.market_stock_country_us_long')
+                  : marketItem.market == 'japan'
+                    ? t('market.market_stock_country_japan_long')
+                    : marketItem.market == 'india'
+                      ? t('market.market_stock_country_india_long')
+                      : marketItem.market == 'korea'
+                        ? t('market.market_stock_country_korea_long')
+                        : marketItem.market == 'germany'
+                          ? t('market.market_stock_country_germany_long')
+                          : marketItem.market == 'uk'
+                            ? t('market.market_stock_country_uk_long')
+                            : marketItem.market == 'singapore'
+                              ? t('market.market_stock_country_singapore_long')
+                              : marketItem.market == 'hongkong'
+                                ? t('market.market_stock_country_hongkong_long')
+                                : marketItem.market == 'malaysia'
+                                  ? t('market.market_stock_country_malaysia_long')
+                                  : ''
                   " :name="marketItem.market" v-for="marketItem in marketList" :key="marketItem.market">
                 </Tab>
               </Tabs>
@@ -125,16 +127,16 @@
             </Tabs>
             <div class="lists">
               <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="searchLoading" :list="isFocused || searchStr
-                  ? searchResultList
-                  : futureActiveTab == 'all'
-                    ? futuresSearchList
-                    : futureActiveTab == 'crypto'
-                      ? cryptoList
-                      : futureActiveTab == 'forex'
-                        ? forexList
-                        : futureActiveTab == 'blocktrade'
-                          ? blocktradeList
-                          : []
+                ? searchResultList
+                : futureActiveTab == 'all'
+                  ? futuresSearchList
+                  : futureActiveTab == 'crypto'
+                    ? cryptoList
+                    : futureActiveTab == 'forex'
+                      ? forexList
+                      : futureActiveTab == 'blocktrade'
+                        ? blocktradeList
+                        : []
                 " :page="'trade'" :type="'future'" />
             </div>
           </Tab>
@@ -477,9 +479,6 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
     display: flex;
     flex-direction: column;
 
-    .van-tabs--sub :deep(.van-tabs__wrap) {
-      padding: 0 0.32rem;
-    }
 
     .lists {
       overflow-y: auto;

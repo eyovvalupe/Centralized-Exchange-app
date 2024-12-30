@@ -80,12 +80,12 @@ const OpeningRef = ref()
 
 // 选择某个股票
 const choose = item => {
-    if(active.value != '0'){
+    if (active.value != '0') {
         onChange('0')
-        nextTick(()=>{
+        nextTick(() => {
             OpeningRef.value && OpeningRef.value.choose(item)
         })
-    }else{
+    } else {
         OpeningRef.value && OpeningRef.value.choose(item)
     }
 }

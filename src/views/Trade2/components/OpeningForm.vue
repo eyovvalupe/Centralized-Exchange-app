@@ -3,215 +3,97 @@
   <div class="form">
     <!-- 止盈止损 -->
     <template v-if="props.activeTab == 2">
-      <!-- <div class="subtitle" style="position: absolute;right: 0.32rem;">
-                <span></span>
-                <span style="color:var(--ex-primary-color)" @click="changeMode">{{ mode == 1 ? '复杂模式' : '简单模式' }}</span>
-            </div> -->
 
-      <!-- 复杂模式 -->
-      <div class="item_box" v-show="mode == 2">
-        <!-- 止盈 -->
-        <div class="item_box_left" @click="showUpModelDialog = true">
-          <div class="subtitle">
-            <span>{{ t("trade.stock_opening_take") }}</span>
-          </div>
-          <div class="item" style="justify-content: center">
-            <span>{{
-              form1.stop_profit_type == "price"
-                ? t("trade.stock_opening_stop_price")
-                : form1.stop_profit_type == "amount"
-                ? t("trade.stock_opening_stop_amount")
-                : form1.stop_profit_type == "ratio"
-                ? t("trade.stock_opening_stop_ratio")
-                : "--"
-            }}</span>
-            <div class="more_icon">
-              <img
-                :src="getStaticImgUrl('/static/img/common/more.svg')"
-                alt="↓"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="item_box_right">
-          <div class="subtitle">
-            <span>&nbsp;</span>
-          </div>
-          <div class="item">
-            <input
-              @input="inputStop(1)"
-              v-model="form1.stop_profit_price"
-              type="number"
-              class="ipt"
-            />
-            <span v-if="form1.stop_profit_type == 'ratio'">%</span>
-          </div>
-        </div>
-      </div>
-      <div class="item_box" v-show="mode == 2">
-        <!-- 止损 -->
-        <div class="item_box_left" @click="showDownModelDialog = true">
-          <div class="subtitle">
-            <span>{{ t("trade.stock_opening_stop") }}</span>
-          </div>
-          <div class="item" style="justify-content: center">
-            <span>{{
-              form1.stop_profit_type == "price"
-                ? t("trade.stock_opening_stop_price")
-                : form1.stop_profit_type == "amount"
-                ? t("trade.stock_opening_stop_amount")
-                : form1.stop_profit_type == "ratio"
-                ? t("trade.stock_opening_stop_ratio")
-                : "--"
-            }}</span>
-            <div class="more_icon">
-              <img
-                :src="getStaticImgUrl('/static/img/common/more.svg')"
-                alt="↓"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="item_box_right">
-          <div class="subtitle">
-            <span>&nbsp;</span>
-          </div>
-          <div class="item">
-            <input
-              @input="inputStop(2)"
-              v-model="form1.stop_loss_price"
-              type="number"
-              class="ipt"
-            />
-            <span v-if="form1.stop_loss_type == 'ratio'">%</span>
-          </div>
-        </div>
-      </div>
 
       <!-- 简单模式 -->
-      <FormItem
-        :title="
-          activeType == 1
-            ? t('trade.stock_opening_take')
-            : t('trade.stock_opening_stop')
-        "
-        class="mb-[0.4rem]"
-        v-model="form1.stop_loss_price"
-        input-type="number"
-        :percent-tags="
-          props.activeType == 1
-            ? [
-                { label: '-20%', value: 20 },
-                { label: '-15%', value: 15 },
-                { label: '-10%', value: 10 },
-              ]
-            : [
-                { label: '+20%', value: 20 },
-                { label: '+15%', value: 15 },
-                { label: '+10%', value: 10 },
-              ]
-        "
-        @percentTagClick="setPriceStop"
-        v-if="mode == 1"
-      />
+      <FormItem :placeholder="activeType == 1
+        ? t('trade.stock_opening_take')
+        : t('trade.stock_opening_stop')
+        " class="mb-[0.4rem]" v-model="form1.stop_loss_price" input-type="number" :percent-tags="props.activeType == 1
+          ? [
+            { label: '-20%', value: 20 },
+            { label: '-15%', value: 15 },
+            { label: '-10%', value: 10 },
+          ]
+          : [
+            { label: '+20%', value: 20 },
+            { label: '+15%', value: 15 },
+            { label: '+10%', value: 10 },
+          ]
+          " @percentTagClick="setPriceStop" v-if="mode == 1" />
 
       <!-- 价格 -->
       <div class="item_box">
-        <div class="item_box_left" @click="showPriceTypeDialog = true">
-          <div class="subtitle">
-            <span>{{ t("trade.stock_opening_price") }}</span>
-          </div>
-          <div class="item" style="justify-content: center">
-            <span>
-              {{
-                priceMode == 1
-                  ? t("trade.stock_opening_price_market")
-                  : t("trade.stock_opening_price_limit")
-              }}
-            </span>
-            <div class="more_icon">
-              <img
-                :src="getStaticImgUrl('/static/img/common/more.svg')"
-                alt="↓"
-              />
-            </div>
-          </div>
-        </div>
         <div class="item_box_right">
-          <div class="subtitle">
-            <span>&nbsp;</span>
-          </div>
           <FormItem custom disabled v-if="priceMode == 1">
             <span style="color: var(--ex-text-color4)">
-              {{ t("trade.stock_opening_price_latest") }}</span
-            >
+              {{ t("trade.stock_opening_price_latest") }}</span>
+
+            <template #right-con>
+              <!-- 市价/限价 -->
+              <div class="pricetype-modes">
+                <div class="pricetype-mode" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
+                  {{
+                    t("trade.stock_opening_price_market") }}</div>
+                <div class="pricetype-mode" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
+                  {{
+                    t("trade.stock_opening_price_limit") }}</div>
+              </div>
+            </template>
           </FormItem>
 
-          <FormItem
-            v-model="form1.price"
-            input-type="number"
-            :percent-tags="
-              props.activeType == 1
-                ? [
-                    { label: '-3%', value: 3 },
-                    { label: '-1%', value: 1 },
-                  ]
-                : [
-                    { label: '+3%', value: 3 },
-                    { label: '+1%', value: 1 },
-                  ]
-            "
-            v-else
-            @percentTagClick="percentTagClick"
-          >
+          <FormItem :placeholder="t('trade.stock_opening_price')" v-model="form1.price" input-type="number"
+            :percent-tags="props.activeType == 1
+              ? [
+                { label: '-3%', value: 3 },
+                { label: '-1%', value: 1 },
+              ]
+              : [
+                { label: '+3%', value: 3 },
+                { label: '+1%', value: 1 },
+              ]
+              " v-else @percentTagClick="percentTagClick">
+            <template #right-con>
+              <!-- 市价/限价 -->
+              <div class="pricetype-modes">
+                <div class="pricetype-mode" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
+                  {{
+                    t("trade.stock_opening_price_market") }}</div>
+                <div class="pricetype-mode" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
+                  {{
+                    t("trade.stock_opening_price_limit") }}</div>
+              </div>
+            </template>
           </FormItem>
         </div>
 
-        <!-- <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
-                    1 ? '市价' : '限价' }}</div> -->
+
       </div>
     </template>
 
     <!-- 价格 -->
-    <FormItem
-      class="mb-[0.4rem]"
-      input-type="number"
-      :title="t('trade.stock_opening_price_title')"
-      :tip="t('trade.stock_opening_price_tip')"
-      v-model="form1.price"
-      :percent-tags="
-        props.activeType == 1
-          ? [
-              { label: '-3%', value: 3 },
-              { label: '-2%', value: 2 },
-              { label: '-1%', value: 1 },
-              { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-            ]
-          : [
-              { label: '+3%', value: 3 },
-              { label: '+2%', value: 2 },
-              { label: '+1%', value: 1 },
-              { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-            ]
-      "
-      @percentTagClick="percentTagClick"
-      v-if="props.activeTab == 1"
-    />
+    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
+      :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
+        ? [
+          { label: '-3%', value: 3 },
+          { label: '-2%', value: 2 },
+          { label: '-1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
+        : [
+          { label: '+3%', value: 3 },
+          { label: '+2%', value: 2 },
+          { label: '+1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
+        " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
 
     <!-- 股票 -->
     <div class="subtitle">
       <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
-      <Loading
-        v-show="searchLoading"
-        type="spinner"
-        style="width: 0.28rem; height: 0.28rem"
-        color="var(--ex-primary-color)"
-      />
-      <div
-        class="stock_icon"
-        v-show="!searchLoading && currStock.symbol"
-        @click="openStockModel"
-      >
+      <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem"
+        color="var(--ex-primary-color)" />
+      <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
         <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
       </div>
     </div>
@@ -244,8 +126,7 @@
                 ? t("trade.stock_opening_position_mode_cross")
                 : t("trade.stock_opening_position_mode_isolated") || "--"
             }}
-            {{ form1.lever }}X</span
-          >
+            {{ form1.lever }}X</span>
           <div class="more_icon">
             <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
           </div>
@@ -256,27 +137,15 @@
     <!-- 数量 -->
     <div class="item_box">
       <div class="item_box_right">
-        <FormItem
-          :title="t('trade.stock_opening_amount_title')"
-          :max="maxStockNum"
-          v-model="form1.volume"
-          :show-btn="maxStockNum >= 1"
-          btn-show-mode="focus"
-          @btnClick="putAll"
-          @change="changePercent"
-          tip-align="right"
-          :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''"
-          input-type="number"
-        >
+        <FormItem :placeholder="t('trade.stock_opening_amount_title')" :max="maxStockNum" v-model="form1.volume"
+          :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent"
+          tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
           <template #title-right v-if="token">
-            <span
-              style="color: var(--ex-primary-color); font-size: 12px"
-              @click="openConfirmBox"
-              ><span style="color: var(--ex-text-color2)">{{
-                t("assets.wallet_available_sim")
-              }}</span>
-              {{ stockWalletAmount }} {{ paramCurrency }}</span
-            >
+            <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
+                style="color: var(--ex-text-color2)">{{
+                  t("assets.wallet_available_sim")
+                }}</span>
+              {{ stockWalletAmount }} {{ paramCurrency }}</span>
           </template>
         </FormItem>
       </div>
@@ -287,55 +156,37 @@
     <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
     <!-- 按钮 -->
-    <Button
-      v-if="token"
-      :loading="configLoading || submitLoading"
-      size="large"
-      @click="submit1"
-      class="submit"
-      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'"
-      round
-      >{{
+    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
+      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
-      }}</Button
-    >
+      }}</Button>
 
     <div v-if="!token">
       <div class="flex justify-between mb-[0.32rem]">
         <div
           class="w-[3.22rem] h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
-          @click="store.commit('setIsLoginOpen', true)"
-        >
+          @click="store.commit('setIsLoginOpen', true)">
           {{ t("trade.stock_opening_token_login") }}
         </div>
         <div
           class="w-[3.22rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center text-color--bg-primary text-[0.36rem]"
-          @click="jump('register')"
-        >
+          @click="jump('register')">
           {{ t("trade.stock_opening_token_register") }}
         </div>
       </div>
       <div
         class="w-full h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
-        @click="
-          () => router.push({ name: 'register', query: { guest: 'guest' } })
-        "
-      >
+        @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+          ">
         {{ t("trade.contract_create_guest_btn") }}
       </div>
     </div>
   </div>
 
   <!-- 开仓确认弹窗 -->
-  <Popup
-    teleport="body"
-    v-model:show="showModel"
-    position="bottom"
-    round
-    closeable
-  >
+  <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_confirm_title") }}
     </div>
@@ -369,8 +220,8 @@
               params.lever_type == "cross"
                 ? t("trade.stock_opening_position_mode_cross")
                 : params.lever_type == "isolated"
-                ? t("trade.stock_opening_position_mode_isolated")
-                : "--"
+                  ? t("trade.stock_opening_position_mode_isolated")
+                  : "--"
             }}
           </div>
           <div class="lever">{{ params.lever || 1 }}X</div>
@@ -422,123 +273,61 @@
 
       <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div>
       <div class="item pass_ipt">
-        <input
-          v-model="safePass"
-          :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
-          :type="showPassword ? 'text' : 'password'"
-          class="ipt"
-        />
-        <img
-          v-if="!showPassword"
-          :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
-          @click="showPassword = true"
-          alt="off"
-        />
-        <img
-          v-else
-          :src="getStaticImgUrl('/static/img/common/open_eye.svg')"
-          alt="open"
-          @click="showPassword = false"
-        />
+        <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
+          :type="showPassword ? 'text' : 'password'" class="ipt" />
+        <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
+          @click="showPassword = true" alt="off" />
+        <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+          @click="showPassword = false" />
       </div>
-      <Button
-        :loading="submitLoading"
-        @click="submitFormDialog"
-        size="large"
-        color="var(--ex-primary-color)"
-        round
-        >{{ t("trade.stock_open") }}</Button
-      >
+      <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>{{
+        t("trade.stock_open") }}</Button>
     </div>
   </Popup>
 
   <!-- 股票行情弹窗 -->
-  <Popup
-    teleport="body"
-    v-model:show="showStockModel"
-    position="bottom"
-    round
-    closeable
-  >
+  <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
     <StockPopup style="height: 90vh" v-if="showStockModel" />
   </Popup>
 
   <!-- 止盈类型选择 -->
-  <ActionSheet
-    teleport="body"
-    v-model:show="showUpModelDialog"
-    @select="onSelectUpMode"
-    :actions="upModeList"
-    :title="t('trade.stock_opening_take')"
-  >
+  <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
+    :title="t('trade.stock_opening_take')">
   </ActionSheet>
 
   <!-- 止损类型选择 -->
-  <ActionSheet
-    teleport="body"
-    v-model:show="showDownModelDialog"
-    @select="onSelectDownMode"
-    :actions="downModeList"
-    :title="t('trade.stock_opening_stop')"
-  >
+  <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode" :actions="downModeList"
+    :title="t('trade.stock_opening_stop')">
   </ActionSheet>
 
   <!-- 仓位模式选择 -->
-  <Popup
-    class="van-popup-custom--bottom"
-    closeable
-    v-model:show="showTypeDialog"
-    round
-    position="bottom"
-    teleport="body"
-  >
+  <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom"
+    teleport="body">
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_amount_mode") }}
     </div>
     <div class="van-popup-custom__top-rbtn" @click="showTypeDialog = false">
       {{ t("trade.stock_opening_confirm") }}
     </div>
-    <Picker
-      :show-toolbar="false"
-      :swipe-duration="200"
-      :columns="columns"
-      @confirm="showTypeDialog = false"
-      @cancel="showTypeDialog = false"
-      @change="onSelectForm1Type"
-    />
+    <Picker :show-toolbar="false" :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
+      @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
   </Popup>
 
   <!-- 限价模式选择 -->
-  <ActionSheet
-    teleport="body"
-    v-model:show="showPriceTypeDialog"
-    :actions="priceModeList"
-    @select="onSelectForm1PriceType"
-    :title="t('trade.stock_opening_amount_limit_mode')"
-  >
+  <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
+    @select="onSelectForm1PriceType" :title="t('trade.stock_opening_amount_limit_mode')">
   </ActionSheet>
 
   <!-- 跳转选择 -->
-  <ActionSheet
-    teleport="body"
-    v-model:show="showJumpTypeDialog"
-    :actions="jumpModeList"
-    @select="onSelectJumpModeType"
-    :title="t('trade.stock_opening_show_jump_type')"
-  >
+  <ActionSheet teleport="body" v-model:show="showJumpTypeDialog" :actions="jumpModeList" @select="onSelectJumpModeType"
+    :title="t('trade.stock_opening_show_jump_type')">
   </ActionSheet>
 
   <!-- 开仓-安全密码弹窗 -->
   <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 
   <!-- 搜索列表 -->
-  <Popup
-    round
-    v-model:show="showSearchDialog"
-    position="bottom"
-    closeable
-    teleport="body"
-  >
+  <Popup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_search") }}
     </div>
@@ -546,30 +335,16 @@
       <!-- 搜索 -->
       <div class="item search_box">
         <div class="search_icon">
-          <img
-            :src="getStaticImgUrl('/static/img/common/search.svg')"
-            alt="🔍"
-          />
+          <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
         </div>
-        <input
-          v-model.trim="searchDialogStr"
-          @keyup="goDialogSearch('stock')"
-          type="text"
-          class="ipt"
-          style="width: 100%"
-          :placeholder="t('trade.stock_opening_search')"
-        />
+        <input v-model.trim="searchDialogStr" @keyup="goDialogSearch('stock')" type="text" class="ipt"
+          style="width: 100%" :placeholder="t('trade.stock_opening_search')" />
       </div>
 
       <div class="lists">
         <!-- 搜索列表 -->
-        <StockTable
-          :handleClick="handleClick"
-          :loading="searchLoading"
-          :key="'search'"
-          :list="marketSearchList"
-          :page="'trade'"
-        />
+        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'" :list="marketSearchList"
+          :page="'trade'" />
       </div>
     </div>
   </Popup>
@@ -578,8 +353,7 @@
   <Popup round v-model:show="showAmountDialog" closeable teleport="body">
     <div style="width: 6.4rem">
       <!-- 标题 -->
-      <div
-        style="
+      <div style="
           text-align: center;
           font-size: 0.32rem;
           height: 1rem;
@@ -587,14 +361,12 @@
           align-items: center;
           justify-content: center;
           border: 1px solid var(--ex-border-color);
-        "
-      >
+        ">
         {{ t("assets.wallet_available") }}
       </div>
 
       <!-- 内容 -->
-      <div
-        style="
+      <div style="
           display: flex;
           align-items: center;
           justify-content: center;
@@ -607,10 +379,8 @@
           overflow: hidden;
           position: relative;
           margin: 0.32rem 0.4rem;
-        "
-      >
-        <div
-          style="
+        ">
+        <div style="
             color: var(--ex-text-color);
             font-size: 0.28rem;
             font-weight: 400;
@@ -620,55 +390,41 @@
             display: flex;
             align-items: center;
             justify-content: center;
-          "
-        >
+          ">
           {{ t("assets.wallet_header_stock") }}
         </div>
-        <div
-          style="
+        <div style="
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             flex: 1;
-          "
-        >
-          <div
-            style="
+          ">
+          <div style="
               display: flex;
               align-items: center;
               justify-content: center;
               margin-bottom: 0.08rem;
-            "
-          >
-            <div
-              v-if="paramCurrency"
-              style="
+            ">
+            <div v-if="paramCurrency" style="
                 width: 0.32rem;
                 height: 0.32rem;
                 display: flex;
                 position: relative;
                 top: -0.02rem;
-              "
-            >
-              <img
-                :src="
-                  getStaticImgUrl(
-                    `/static/img/crypto/${paramCurrency.toUpperCase()}.svg`
-                  )
-                "
-              />
+              ">
+              <img :src="getStaticImgUrl(
+                `/static/img/crypto/${paramCurrency.toUpperCase()}.svg`
+              )
+                " />
             </div>
 
-            <span
-              style="
+            <span style="
                 font-size: 0.28rem;
                 margin-left: 0.12rem;
                 color: var(--ex-text-color);
                 font-weight: 400;
-              "
-              >{{ paramCurrency }}</span
-            >
+              ">{{ paramCurrency }}</span>
           </div>
           <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
             stockWalletAmount
@@ -677,19 +433,15 @@
       </div>
 
       <!--  按钮 -->
-      <div
-        style="
+      <div style="
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 0 0.4rem;
           font-size: 0.28rem;
           margin: 0.64rem 0 0.4rem 0;
-        "
-      >
-        <div
-          @click="router.push({ name: 'transfer' })"
-          style="
+        ">
+        <div @click="router.push({ name: 'transfer' })" style="
             height: 0.8rem;
             width: 48%;
             display: flex;
@@ -698,22 +450,17 @@
             border-radius: 0.64rem;
             border: 1px solid var(--ex-primary-color);
             color: var(--ex-primary-color);
-          "
-        >
+          ">
           {{ t("trade.stock_opening_btn_transfer") }}
         </div>
-        <div
-          @click="router.push({ name: 'topUpCrypto' })"
-          class="bg-primary text-color--bg-primary"
-          style="
+        <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary" style="
             height: 0.8rem;
             width: 48%;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 0.64rem;
-          "
-        >
+          ">
           {{ t("trade.stock_opening_btn_recharge") }}
         </div>
       </div>
@@ -1427,7 +1174,7 @@ defineExpose({
 }
 
 .form {
-  padding: 0.48rem 0.32rem 0.32rem;
+  padding: 0.32rem 0;
   position: relative;
 
   .subtitle {
@@ -1453,6 +1200,7 @@ defineExpose({
     display: flex;
     align-items: stretch;
     margin-bottom: 0.4rem;
+    position: relative;
 
     .item {
       flex: 1;
@@ -1494,7 +1242,7 @@ defineExpose({
         margin-top: 0.08rem;
       }
 
-      
+
       .ipt {
         flex: 1;
         height: 100%;
@@ -1505,6 +1253,7 @@ defineExpose({
         position: relative;
         z-index: 1;
       }
+
       .more_icon {
         width: 0.32rem;
         height: 0.32rem;
@@ -1525,6 +1274,37 @@ defineExpose({
 
     .item_box_right {
       flex: 1;
+      position: relative;
+
+
+    }
+
+    .pricetype-modes {
+      height: 0.6rem;
+      border-radius: 0.2rem;
+      margin-left: 0.32rem;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      z-index: 99;
+      background-color: var(--ex-bg-color3);
+
+      .pricetype-mode {
+
+        color: var(--ex-text-color2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 0.16rem;
+        font-size: 0.24rem;
+        line-height: 400;
+      }
+
+      .pricetype-mode-active {
+        background-color: var(--ex-white);
+        color: var(--ex-bg-color);
+        border-radius: 0.2rem;
+      }
     }
 
     .mode_btn {

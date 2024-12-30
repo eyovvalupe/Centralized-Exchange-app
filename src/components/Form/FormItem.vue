@@ -2,7 +2,7 @@
   <div class="form-item" :class="{ 'form-item--large': size == 'large' }">
     <div class="form-item-title" v-if="title">
       <div class="form-item-title_content">
-        <span>{{ title }}</span>
+        <!-- <span>{{ title }}</span> -->
         <div style="flex: 1;display: flex;align-items: center;justify-content: flex-start;">
           <slot name="title-icon" />
         </div>
@@ -19,9 +19,11 @@
       <div style="flex: 1;display: flex">
         <div class="item" :class="{
           disabled_item: disabled,
-          item_focus: inputFocus && tip,
-          item_focus2: inputFocus && !tip,
+          item_focus: inputFocus,
+          // item_focus2: inputFocus && !tip,
         }" :style="{ background }">
+          <span class="ipt_tip ipt_tip--left" v-show="inputFocus">{{ placeholder
+            }}</span>
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip" v-show="inputFocus">{{ tip
             }}</span>
 
@@ -33,7 +35,7 @@
             inputFocus = false;
           inputBlur();
           " :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
-            :placeholder="placeholder" />
+            :placeholder="inputFocus ? '' : placeholder" />
 
           <span class="pwd_icon" v-if="inputType == 'password'">
             <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
@@ -60,9 +62,10 @@
           <span @click="emit('btnClick')" v-else-if="showBtn" class="put_all">{{
             btnText ? btnText : t('trade.stock_position_all')
           }}</span>
+
+          <slot name="right-con" />
         </div>
       </div>
-
       <div class="right_content right_item" v-if="props.rightContent">
         <slot name="right-content-item" />
       </div>
@@ -200,6 +203,7 @@ const percentTagClick = (percent) => {
 .form-item-box {
   display: flex;
 
+
   .item {
     flex: 1;
     display: flex;
@@ -209,10 +213,11 @@ const percentTagClick = (percent) => {
     position: relative;
     height: 0.92rem;
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color2);
+    // border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
+    background-color: var(--ex-bg-color3);
 
     .ipt_tip {
       color: var(--ex-text-color4);
@@ -225,6 +230,11 @@ const percentTagClick = (percent) => {
     .ipt_tip--right {
       right: 0.24rem;
       left: inherit;
+    }
+
+    .ipt_tip--left {
+      left: 0.24rem;
+      right: inherit;
     }
 
     .ipt {
@@ -241,7 +251,7 @@ const percentTagClick = (percent) => {
 
 
   .disabled_item {
-    background-color: var(--ex-bg-color2);
+    // background-color: var(--ex-bg-color2);
   }
 
   .item_focus {
@@ -255,7 +265,7 @@ const percentTagClick = (percent) => {
   }
 
   .item_focus2 {
-    border: 1px solid var(--ex-primary-color);
+    // border: 1px solid var(--ex-primary-color);
   }
 
   .percent_tag {

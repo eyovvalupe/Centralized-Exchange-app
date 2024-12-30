@@ -75,7 +75,7 @@
       </div>
       <div class="order_sell_box">
         <div class="form">
-          <FormItem :title="t('trade.contract_opening_amount_title')" :max="currStock.unsold_volume" size="large"
+          <FormItem :placeholder="t('trade.contract_opening_amount_title')" :max="currStock.unsold_volume" size="large"
             btn-show-mode="focus" v-model="sellForm.volume" input-type="digit" @change="changeValue" show-btn
             @btnClick="onSliderChange(100)">
             <template #title-right>
@@ -110,7 +110,7 @@
                     </div> -->
 
           <FormItem v-model="sellForm.safeword" size="large" input-type="password"
-            :title="t('trade.stock_opening_trade_pw')">
+            :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
@@ -152,7 +152,7 @@
             </div>
           </div>
           <FormItem size="large" input-type="number" v-model="updateForm.amount"
-            :title="t('trade.stock_position_add_deposit')" btn-show-mode="focus"
+            :placeholder="t('trade.stock_position_add_deposit')" btn-show-mode="focus"
             :tip="stockWalletAmount > 0 ? '≤ ' + stockWalletAmount : ''" :show-btn="stockWalletAmount > 0"
             @change="changeAmount" @btnClick="onSliderChange(100)">
             <template #title-right>
@@ -165,7 +165,7 @@
           <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
           <FormItem v-model="updateForm.safeword" size="large" input-type="password"
-            :title="t('trade.stock_opening_trade_pw')">
+            :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"

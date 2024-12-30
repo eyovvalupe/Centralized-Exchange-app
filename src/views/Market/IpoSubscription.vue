@@ -27,14 +27,15 @@
         </div>
 
         <div class="form">
-            <FormItem :title="t('trade.ipo_detail_item10')" v-model="form.volume" btn-show-mode="focus"
+            <FormItem :placeholder="t('trade.ipo_detail_item10')" v-model="form.volume" btn-show-mode="focus"
                 @btnClick="onSliderChange(100)" show-btn :inputType="'number'" :tip="max > 0 ? '<=' + max : ''"
                 @change="changePercent">
                 <template #title-right>
                     <div class="flex items-center">
                         <span>{{ t('assets.wallet_available') }}&nbsp;</span>
-                        <Loading size="0.3rem" color="var(--ex-primary-color)" class="mx-[0.2rem]" v-if="!mainWallet.currency" /> <span
-                            v-else @click="openConfirmBox()" class="text-primary">{{ mainWallet.amount }} {{
+                        <Loading size="0.3rem" color="var(--ex-primary-color)" class="mx-[0.2rem]"
+                            v-if="!mainWallet.currency" /> <span v-else @click="openConfirmBox()"
+                            class="text-primary">{{ mainWallet.amount }} {{
                                 mainWallet.currency }}</span>
                         <Icon class="ml-[0.1rem]" name="arrow" size="0.26rem" color="var(--ex-text-color2)" />
                     </div>
@@ -48,17 +49,18 @@
 
             <div class="flex" v-if="activeTab == 1">
                 <div class="flex-1">
-                    <FormItem :title="t('trade.ipo_detail_lever')" disabled :modelValue="currIpo.lever + 'X'">
+                    <FormItem :placeholder="t('trade.ipo_detail_lever')" disabled :modelValue="currIpo.lever + 'X'">
                     </FormItem>
                 </div>
                 <div class="flex-2 ml-[0.2rem]">
-                    <FormItem :title="t('trade.ipo_sub_buy_code')" v-model="form.keyword"></FormItem>
+                    <FormItem :placeholder="t('trade.ipo_sub_buy_code')" v-model="form.keyword"></FormItem>
                 </div>
             </div>
 
         </div>
-        <Button @click="openSafe" :loading="loading" round size="large" color="var(--ex-primary-color)" class="submit" type="primary">{{
-            t('trade.ipo_opening_btn') }}</Button>
+        <Button @click="openSafe" :loading="loading" round size="large" color="var(--ex-primary-color)" class="submit"
+            type="primary">{{
+                t('trade.ipo_opening_btn') }}</Button>
 
 
         <!-- 订单确认弹窗 -->
@@ -125,11 +127,11 @@
                 </div>
 
                 <FormItem v-model="safeword" size="large" input-type="password"
-                    :title="$t('trade.stock_opening_trade_pw')">
+                    :placeholder="$t('trade.stock_opening_trade_pw')">
                 </FormItem>
 
-                <Button :loading="loading" @click="submit(safeword)" size="large" class="submit" color="var(--ex-primary-color)"
-                    round>{{
+                <Button :loading="loading" @click="submit(safeword)" size="large" class="submit"
+                    color="var(--ex-primary-color)" round>{{
                         $t("trade.ipo_opening_btn") }}</Button>
             </div>
         </Popup>

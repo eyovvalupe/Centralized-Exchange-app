@@ -140,7 +140,7 @@
         <div class="form">
           <div class="item_box">
             <div class="item_box_right">
-              <FormItem input-type="number" :title="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
+              <FormItem input-type="number" :placeholder="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
                 " size="large" v-model="updateForm.stop_loss_price" :percent-tags="currStock.offset == 'long'
                   ? [
                     { label: '-20%', value: 20 },

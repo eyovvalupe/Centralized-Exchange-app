@@ -18,7 +18,7 @@
       <Tab :title="$t('withdraw.cryptocurrency')" name="cryptocurrency">
         <!-- 表单 -->
         <div class="form" v-if="currAccount">
-          <FormItem custom :title="$t('withdraw.currency')">
+          <FormItem custom :placeholder="$t('withdraw.currency')">
             <div class="select_item" @click="showDialog = true">
               <div class="currency" v-if="form.from">
                 <div class="currency_icon">
@@ -31,7 +31,7 @@
               </div>
             </div>
           </FormItem>
-          <FormItem custom :title="$t('withdraw.network')">
+          <FormItem custom :placeholder="$t('withdraw.network')">
             <div class="select_item" @click="showNetworkDialog = true">
               <div class="currency">
                 <span>{{ form.network }}</span>
@@ -42,7 +42,7 @@
             </div>
           </FormItem>
           <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')"
-            :title="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
+            :placeholder="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
             <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ balance }}</template>
           </FormItem>
 
@@ -85,13 +85,14 @@
           </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
-          $t("withdraw.confirm") }}</Button>
+        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
+          type="primary">{{
+            $t("withdraw.confirm") }}</Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
         <div class="form">
           <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" :min="0"
-            :title="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
+            :placeholder="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
             <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ totalAmount }}</template>
           </FormItem>
           <div class="tip">
@@ -130,8 +131,9 @@
             </div>
           </div>
         </div>
-        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
-          $t("withdraw.confirm") }}</Button>
+        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
+          type="primary">{{
+            $t("withdraw.confirm") }}</Button>
       </Tab>
     </Tabs>
 

@@ -12,8 +12,8 @@
         </div>
       </div>
 
-      <Tabs key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab"
-        :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
+      <Tabs key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
+        :color="'var(--ex-primary-color)'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
             v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" />
@@ -86,24 +86,20 @@ defineExpose({
   padding: 0.32rem 0;
 
   .open_tab_box {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
+    padding: 0 0.4rem;
 
     .van-tabs--sub {
       width: 100%;
     }
 
     .type_tabs {
-      position: absolute;
-      left: 0.32rem;
-      width: 2.7rem;
-      height: 0.68rem;
+      height: 0.96rem;
       display: flex;
       align-items: center;
       z-index: 99;
-      border: 1px solid var(--ex-border-color2);
-      border-radius: 0.6rem;
+      border-radius: 1rem;
+      background-color: var(--ex-bg-color3);
+      padding: 0 0.1rem;
 
       .type_tab {
         flex: 1;
@@ -113,6 +109,7 @@ defineExpose({
         justify-content: center;
         color: var(--ex-text-color2);
         font-size: 0.3rem;
+
       }
 
       .type_tab_text {
@@ -123,17 +120,9 @@ defineExpose({
       .active_type_tab {
         color: var(--ex-text-color--bg-primary);
         position: relative;
-
-        &::after {
-          content: "";
-          width: calc(100% + 1px);
-          height: calc(100% + 1px);
-          background-color: var(--ex-primary-color);
-          position: absolute;
-          left: 0;
-          top: -1px;
-          border-radius: 0.6rem;
-        }
+        height: 0.8rem;
+        background-color: var(--ex-primary-color);
+        border-radius: 1rem;
       }
 
       .type_tab:first-child.active_type_tab {
@@ -145,13 +134,6 @@ defineExpose({
       }
     }
 
-    .van-tabs--sub {
-      margin-top: 0.1rem;
-    }
-
-    :deep(.van-tabs__nav) {
-      margin-left: 3.4rem !important;
-    }
   }
 }
 </style>

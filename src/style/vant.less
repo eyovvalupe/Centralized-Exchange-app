@@ -2,12 +2,12 @@
 :root:root {
     --van-overlay-background: rgba(31, 41, 55, 0.50);
     --van-button-large-height: 1.12rem;
-    --van-primary-color:var(--ex-primary-color);
+    --van-primary-color: var(--ex-primary-color);
     --van-switch-on-background: var(--ex-primary-color);
-    --van-tab-text-color:var(--ex-text-color2);
-    --van-background-2:var(--ex-bg-color);
-    --van-text-color:var(--ex-text-color);
-    --van-button-plain-background:var(--ex-bg-color);
+    --van-tab-text-color: var(--ex-text-color2);
+    --van-background-2: var(--ex-bg-color);
+    --van-text-color: var(--ex-text-color);
+    --van-button-plain-background: var(--ex-bg-color);
 }
 
 .van-toast--loading {
@@ -197,56 +197,45 @@
 
 /*自定义选项卡样式1*/
 .van-tabs--custom-card {
-    padding-top: 0.16rem;
-
     >.van-tabs__wrap {
-        overflow: inherit;
-
         .van-tabs__nav {
-            background: var(--ex-bg-color3);
-            height: 0.8rem;
-            border-radius: 0.32rem;
-            overflow: inherit;
-
-        }
-
-        .van-tab--active {
-            flex: 1;
-            text-align: center;
-            color: var(--ex-text-color3);
-        }
-
-        .van-tab--shrink {
-            flex: 1;
-        }
-
-        .van-tab--active {
-            border-radius: 0.32rem 0.32rem 0 0;
-            background: var(--ex-bg-color);
-            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
-            height: 0.92rem;
+            height: 0.72rem;
             position: relative;
-            top: -0.12rem;
-            z-index: 1;
 
-            .van-tab__text {
-                font-size: 0.32rem;
-                font-weight: 600;
-                color: var(--ex-primary-color);
-
+            &::after {
+                content: "";
+                width: 100%;
+                height: 1px;
+                background-color: var(--ex-border-color3);
+                position: absolute;
+                bottom: 1px;
+                left: 0;
+                z-index: 1;
             }
-        }
 
-        .van-tab:first-child.van-tab--active {
-            border-radius: 0.32rem 0.32rem 0 0.32rem;
-        }
+            .van-tab {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+            }
 
-        .van-tab:last-child.van-tab--active {
-            border-radius: 0.32rem 0.32rem 0.32rem 0;
-        }
+            .van-tab--active {
+                position: relative;
 
-        .van-tabs__line {
-            display: none;
+                &::after {
+                    content: "";
+                    width: 0.3rem;
+                    height: 0.06rem;
+                    border-radius: 0.2rem;
+                    background-color: var(--ex-white);
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 2;
+                }
+            }
         }
     }
 }
@@ -460,39 +449,34 @@
 
 /*自定义选项卡样式2*/
 .van-tabs--sub {
+    margin-top: 0.32rem;
+
     >.van-tabs__wrap {
-        height: 0.6rem !important;
+        height: 0.8rem;
 
-        .van-tabs__nav--line {
-            border-bottom: 1px solid var(--ex-border-color) !important;
-            padding-bottom: 0.12rem;
-            box-sizing: border-box;
-            padding-left: 0px;
-            padding-right: 0px;
+        .van-tabs__nav {
+            margin: 0 !important;
+            padding: 0;
 
-            .van-tab__text {
-                font-size: 0.28rem;
-                color: var(--ex-text-color3);
-            }
-
-            .van-tab--active {
-                .van-tab__text {
-                    color: var(--ex-text-color);
-                }
+            .van-tabs__line {
+                display: none;
             }
 
             .van-tab {
-                padding: 0px;
-                margin-right: 0.36rem;
+                height: 0.8rem;
+                border: 1px solid var(--ex-border-color);
+                margin-right: 0.12rem;
+                border-radius: 1rem;
             }
 
-            .van-tabs__line {
-                background-color: var(--ex-primary-color) !important;
-                width: 0.36rem;
-                bottom: 0;
-                border-radius: 0.3rem;
-                height: 0.06rem;
+            .van-tab--active {
+                background-color: var(--ex-white);
+                color: var(--ex-black);
             }
+        }
+
+        .van-tabs__nav--line {
+            padding-bottom: 0;
         }
     }
 }
