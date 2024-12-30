@@ -69,14 +69,18 @@ const initData = async () => {
             horizontal: {
                 show: true,
                 size: 1,
-                color: 'var(--ex-border-color)',
+                // color: 'var(--ex-border-color3)',
+                color: '#ededed',
+
                 style: 'dashed',
                 dashedValue: [2, 2]
             },
             vertical: {
                 show: true,
                 size: 1,
-                color: 'var(--ex-border-color)',
+                // color: 'var(--ex-border-color)',
+                color: '#ededed',
+
                 style: 'dashed',
                 dashedValue: [2, 2]
             }
@@ -94,7 +98,9 @@ const initData = async () => {
                 show: props.showY
             },
             area: {
-                lineColor: props.color || "var(--ex-primary-color)",
+                // lineColor: props.color || "var(--ex-primary-color)",
+                lineColor: props.color || "#2168f6",
+
                 point: {
                     show: props.showY
                 },
@@ -290,6 +296,7 @@ defineExpose({
         width: 100%;
         height: 100%;
         background-color: var(--ex-bg-color);
+
         z-index: 99;
         // border-right: 1px solid var(--ex-info-color);
         // border-bottom: 1px solid var(--ex-info-color);
