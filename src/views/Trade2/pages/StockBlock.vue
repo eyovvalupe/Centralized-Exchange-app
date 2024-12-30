@@ -2,7 +2,7 @@
 <template>
     <div class="stock_block">
         <!-- 日期 -->
-        <Tabs type="custom-card" v-model:active="active" :swipeable="false" :color="'#014CFA'" shrink
+        <Tabs type="custom-card" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
             @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0">
                 <div class="stock_tab-body">
@@ -123,7 +123,7 @@ const openDate = () => {
     .tabs {
 
         :deep(.van-tabs__wrap) {
-            background: #EFF3F8;
+            background: var(--ex-bg-color3);
             margin: 0 .32rem;
             border-radius: .32rem;
             height: 0.8rem;

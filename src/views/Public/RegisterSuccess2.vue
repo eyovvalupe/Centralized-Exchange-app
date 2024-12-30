@@ -23,7 +23,7 @@
 
     <!-- <Button
         round
-        color="#014CFA"
+        color="var(--ex-primary-color)"
         class="submit"
         type="primary"
         @click="next"
@@ -31,7 +31,7 @@
         >{{ $t("register.success_btn") }}</Button
       >
       <div @click="back">
-        <span style="color: #014cfa; font-size: 0.32rem; line-height: 0.448rem"
+        <span style="color: var(--ex-primary-color); font-size: 0.32rem; line-height: 0.448rem"
           >{{ $t('register.success_finish') }}</span
         >
       </div> -->
@@ -119,14 +119,14 @@ const goChat = () => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
         width: 20px;
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -138,7 +138,7 @@ const goChat = () => {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       margin-right: 0.12rem;
 
       .chat_icon {
@@ -158,7 +158,7 @@ const goChat = () => {
   .title {
     position: relative;
     top: -1.2rem;
-    color: #333333;
+    color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.3rem;
     line-height: 0.42rem;

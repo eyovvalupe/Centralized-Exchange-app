@@ -19,7 +19,7 @@
       v-model:active="active"
       :swipeable="false"
       animated
-      :color="'#014CFA'"
+      :color="'var(--ex-primary-color)'"
       shrink
       @change="onChange"
     >
@@ -153,7 +153,7 @@ const marketStockIndexList = computed(() => {
 .market_stock_block {
   height: 4.3rem;
   border-radius: 0.64rem;
-  background-image: linear-gradient(to bottom, #ffffff, #f5f7fc);
+  background-image: linear-gradient(to bottom, var(--ex-bg-color), var(--ex-bg-color2));
 
   .van-tabs {
     :deep(.van-tabs__wrap) {

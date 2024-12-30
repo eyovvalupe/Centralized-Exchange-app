@@ -1,7 +1,7 @@
 <!-- 理财元素 -->
 <template>
     <div class="financial_item" @click="handleClick"
-        :style="{ borderBottom: props.borderBottom ? '1px solid #EEF0F4' : '' }">
+        :style="{ borderBottom: props.borderBottom ? '1px solid var(--ex-border-color)' : '' }">
         <div class="title">稳健回报6号稳健回报6号稳健回报6号回报6号稳健回报6号稳健回报6号稳健回报6号回报6号</div>
         <div class="content">
 
@@ -48,7 +48,7 @@ const handleClick = () => {
         text-overflow: ellipsis;
         white-space: nowrap;
         font-weight: 600;
-        color: #0D0D12;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         line-height: 0.45rem;
         margin-bottom: 0.12rem;
@@ -60,14 +60,14 @@ const handleClick = () => {
 
         .left {
             flex: 1;
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             font-weight: 400;
             line-height: 0.34rem;
 
             .date {
 
-                color: #202124;
+                color: var(--ex-text-color);
             }
 
             .tags {
@@ -76,7 +76,7 @@ const handleClick = () => {
                 margin-bottom: 0.12rem;
 
                 .percent {
-                    color: #F03C3C;
+                    color: var(--ex-error-color);
                     font-size: 0.36rem;
                     line-height: 0.56rem;
                     font-weight: 600;
@@ -84,14 +84,14 @@ const handleClick = () => {
                 }
 
                 .tag {
-                    color: #014CFA;
+                    color: var(--ex-primary-color);
                     font-size: 0.24rem;
                     font-weight: 400;
                     height: 0.4rem;
                     display: flex;
                     align-items: center;
                     padding: 0 0.09rem;
-                    background-color: #E8F0FF;
+                    background-color: var(--ex-bg-color3);
                     margin-right: 0.1rem;
                     border-radius: 0.04rem;
                 }
@@ -107,7 +107,7 @@ const handleClick = () => {
 
             .start {
                 font-size: 0.28rem;
-                color: #000;
+                color: var(--ex-text-color);
                 line-height: 0.48rem;
                 font-weight: 500;
             }
@@ -116,8 +116,8 @@ const handleClick = () => {
                 height: 0.56rem;
                 padding: 0 0.36rem;
                 border-radius: 0.3rem;
-                background-color: #E7E7E7;
-                color: #9EA3AE;
+                background-color: var(--ex-bg-color3);
+                color: var(--ex-text-color3);
                 font-size: 0.24rem;
                 font-weight: 400;
                 display: flex;

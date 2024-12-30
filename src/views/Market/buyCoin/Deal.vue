@@ -28,7 +28,7 @@
       </div>
       <div class="tip">{{ t('market.market_buy_list_pre_pay') }} {{ showAmount }} {{ info.currWallet }}</div>
 
-      <Button size="large" class="btn btn--buy" round :loading="loading" color="var(--main-color)" @click="goSubmit">{{
+      <Button size="large" class="btn btn--buy" round :loading="loading" color="var(--ex-primary-color)" @click="goSubmit">{{
         t('market.market_buy_fast_buy')
         }}</Button>
     </div>
@@ -72,14 +72,14 @@
           <div class="text-color2">{{ bank.bankName || bank.symbol }} | {{ bank.accountName }}</div>
         </div>
 
-        <div class="text-12 text-my" @click="goAddAccount">{{ t('withdraw.change') }}</div>
+        <div class="text-12 text-primary" @click="goAddAccount">{{ t('withdraw.change') }}</div>
       </div>
-      <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-color2 text-my"
+      <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-color2 text-primary"
         @click="showAccountDialog = true">
         <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
         <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
       </div>
-      <Button size="large" class="btn btn--sell" round :loading="loading" color="var(--main-color)"
+      <Button size="large" class="btn btn--sell" round :loading="loading" color="var(--ex-primary-color)"
         @click="goSubmit">{{ t('market.market_buy_fast_sell') }}</Button>
     </div>
     <!-- 安全密码弹窗 -->
@@ -212,12 +212,12 @@ const getSessionToken = () => {
       display: flex;
       align-items: center;
       position: relative;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       padding: 0 0.4rem 0 0.36rem;
       overflow: hidden;
 
       .card_icon {
-        background-color: #f5f7fc;
+        background-color: var(--ex-bg-color2);
         width: 0.96rem;
         height: 0.96rem;
         border-radius: 2rem;
@@ -236,7 +236,7 @@ const getSessionToken = () => {
         margin: 0 0.2rem 0 0.36rem;
         text-align: left;
         font-size: 0.24rem;
-        color: #061023;
+        color: var(--ex-text-color);
         font-weight: 500;
         line-height: 1;
 
@@ -251,21 +251,21 @@ const getSessionToken = () => {
     .no_card {
       padding: 0.32rem;
       border-radius: 0.12rem;
-      border: 1px dashed #d0d8e2;
+      border: 1px dashed var(--ex-border-color2);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .tip {
-      color: #b7b7b7;
+      color: var(--ex-text-color4);
       font-size: 0.24rem;
       margin-top: 0.24rem;
       margin-bottom: 0.8rem;
     }
 
     .form_item {
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       height: 0.96rem;
       display: flex;
       align-items: center;
@@ -279,36 +279,29 @@ const getSessionToken = () => {
       }
 
       .all {
-        color: #014cfa;
+        color: var(--ex-primary-color);
       }
 
-      .tip_text {
-        font-size: 0.28rem;
-        color: #a4acb9;
-        position: absolute;
-        left: 0.24rem;
-        pointer-events: none;
-      }
     }
 
     .info {
       padding: 0.32rem;
       border-radius: 0.32rem;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       font-size: 0.32rem;
 
       .avatar {
         width: 0.4rem;
         height: 0.4rem;
         border-radius: 50%;
-        background-color: var(--main-color);
+        background-color: var(--ex-primary-color);
         margin-right: 0.16rem;
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
         line-height: 0;
       }
 

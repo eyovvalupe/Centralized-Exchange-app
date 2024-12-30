@@ -11,7 +11,7 @@
           <div class="detail-flex-title">
             可售股票
           </div>
-          <div class="detail-num" style="color: #014CFA;margin-top: 0.38rem;">
+          <div class="detail-num" style="color: var(--ex-primary-color);margin-top: 0.38rem;">
             {{ detaiList.unsold_volume }}
           </div>
         </div>
@@ -19,10 +19,10 @@
           <div class="detail-flex-title">
             盈亏/盈亏比
           </div>
-          <div class="detail-num" style="color: #e8503a; margin-top: 0.06rem;">
+          <div class="detail-num" style="color: var(--ex-down-color); margin-top: 0.06rem;">
             {{ detaiList.profit }}
           </div>
-          <div class="detail-num" style="color: #e8503a;">
+          <div class="detail-num" style="color: var(--ex-down-color);">
             {{ detaiList.ratio }}
           </div>
         </div>
@@ -49,7 +49,7 @@
             <div>
               {{ detaiList.symbol }}
             </div>
-            <div style="color: #9ea3ae;">
+            <div style="color: var(--ex-text-color3);">
               Ador Welding Limited
             </div>
           </div>
@@ -180,9 +180,9 @@
       </div>
 
       <div style="padding: 0 0.32rem;">
-        <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;"
+        <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;"
           @click="updateClosePositionPopup">平仓</Button>
-        <Button size="large" color="#f2f2f2" round style="margin-bottom: 0.32rem;color: #999999;"
+        <Button size="large" color="var(--ex-bg-color2)" round style="margin-bottom: 0.32rem;color: var(--ex-text-color3);"
           @click="updateDetailPopup">订单更新</Button>
       </div>
 
@@ -258,7 +258,7 @@ const updateDetailPopup = () => {
   .detail-title {
     text-align: center;
     margin-top: 0.4rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
     font-style: normal;
     font-weight: 500;
@@ -278,7 +278,7 @@ const updateDetailPopup = () => {
       flex: 1;
 
       .detail-flex-title {
-        color: #9EA3AE;
+        color: var(--ex-text-color3);
         text-align: center;
         font-size: 0.28rem;
         font-style: normal;
@@ -298,7 +298,7 @@ const updateDetailPopup = () => {
 
   .dashed-line {
     width: 3.44rem;
-    border-bottom: 0.02rem dashed #cbcbcb;
+    border-bottom: 0.02rem dashed var(--ex-border-color2);
     margin: auto;
   }
 
@@ -307,13 +307,13 @@ const updateDetailPopup = () => {
 
     .detail-box {
       display: flex;
-      border-bottom: 0.02rem solid #f5f5f5;
+      border-bottom: 0.02rem solid var(--ex-border-color);
       height: 1rem;
       width: 100%;
 
       .left-text {
         width: 2rem;
-        color: #8F92A1;
+        color: var(--ex-text-color3);
         text-align: left;
         font-size: 0.28rem;
         font-style: normal;
@@ -323,7 +323,7 @@ const updateDetailPopup = () => {
 
       .right-text {
         flex: 1;
-        color: #121826;
+        color: var(--ex-text-color);
         text-align: right;
         font-size: 0.28rem;
         font-style: normal;
@@ -334,8 +334,8 @@ const updateDetailPopup = () => {
         .win-lose-box {
           width: 1.16rem;
           height: 0.44rem;
-          color: #014CFA;
-          background-color: #ecf1fe;
+          color: var(--ex-primary-color);
+          background-color: var(--ex-bg-color3);
           position: absolute;
           right: 0;
           line-height: 0.44rem;
@@ -359,8 +359,8 @@ const updateDetailPopup = () => {
       .detail-red-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: #fbf1ef;
-        color: #e8503a;
+        background-color: rgb(var(--ex-down-color-rgb) / 0.1);;
+        color: var(--ex-down-color);
         margin: auto;
         text-align: center;
         line-height: 0.44rem;
@@ -369,8 +369,8 @@ const updateDetailPopup = () => {
       .detail-green-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: #eff9f2;
-        color: #18b762;
+        background-color: rgb(var(--ex-up-color-rgb) / 0.1);;
+        color: var(--ex-up-color);
         margin: auto;
         text-align: center;
         line-height: 0.44rem;
@@ -379,8 +379,8 @@ const updateDetailPopup = () => {
       .detail-blue-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: #ecf1fe;
-        color: #014cfa;
+        background-color: var(--ex-bg-color3);
+        color: var(--ex-primary-color);
         margin: auto;
         text-align: center;
         line-height: 0.44rem;
@@ -393,7 +393,7 @@ const updateDetailPopup = () => {
     display: flex;
     justify-content: right;
     margin-top: 0.6rem;
-    color: #014CFA;
+    color: var(--ex-primary-color);
     font-size: 0.24rem;
     font-style: normal;
     font-weight: 400;
@@ -411,7 +411,7 @@ const updateDetailPopup = () => {
 
   .risk-line-dashed {
     width: 3.44rem;
-    border-bottom: 0.02rem dashed #cbcbcb;
+    border-bottom: 0.02rem dashed var(--ex-border-color2);
     position: absolute;
     right: 0.32rem;
     top: 0.42rem;
@@ -424,7 +424,7 @@ const updateDetailPopup = () => {
     margin-bottom: 1.46rem;
 
     .risk-text {
-      color: #333;
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 0.24rem;
       font-style: normal;

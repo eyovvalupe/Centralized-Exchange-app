@@ -20,9 +20,9 @@
             t("market.market_stock_chase_movement_percentage")
           }}</span>
           <div class="flex">
-            <span style="color: #18b762; margin-right: 0.05rem">356</span>
+            <span class="text-success" style=" margin-right: 0.05rem">356</span>
             <span style="margin-right: 0.05rem">:</span>
-            <span style="color: #e8503a">117</span>
+            <span class="text-error">117</span>
           </div>
         </div>
         <div class="chase_graph">
@@ -35,7 +35,7 @@
             class="text-color2 mr-[0.16rem] ovreflow-hidden"
             >{{ t("market.market_stock_chase_todays_effect") }}</span
           >
-          <span style="color: #18b762">99.26%</span>
+          <span class="text-success">99.26%</span>
         </div>
         <div class="chase_graph">
           <img src="static/img/market/todcondis.svg" alt="condi" />
@@ -52,7 +52,7 @@ const { t } = useI18n();
 <style lang="less" scoped>
 .market_stock_chase {
   height: 5rem;
-  box-shadow: 0 0.1rem 0.8rem 0 #014cfa33;
+  box-shadow: 0 0.1rem 0.8rem 0 rgb(var(--ex-primary-color-rgb) / 0.33);
   border-radius: 0.64rem;
   position: relative;
   top: -1rem;
@@ -72,7 +72,7 @@ const { t } = useI18n();
       height: 0.5rem;
       border-radius: 0.25rem;
       border-width: 1px;
-      border-color: #014cfa;
+      border-color: var(--ex-primary-color);
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -84,7 +84,7 @@ const { t } = useI18n();
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        color: #014cfa;
+        color: var(--ex-primary-color);
       }
 
       .header_noti_text {
@@ -95,10 +95,10 @@ const { t } = useI18n();
         padding: 0 0.1rem;
         height: 0.5rem;
         border-radius: 0.25rem;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         align-items: center;
         justify-content: center;
-        color: white;
+        color: var(--ex-bg-primary-text-color);
       }
     }
   }

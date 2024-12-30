@@ -30,9 +30,9 @@
         </div>
         <div class="nav_title">{{ $t("safety.bind_google_auth") }}</div>
         <div class="nav_tip">
-          <span style="color: #ff3b30; font-size: 0.3rem" v-if="!userInfo.googlebind">{{ $t("safety.google_status_not")
+          <span class="text-error" style=" font-size: 0.3rem" v-if="!userInfo.googlebind">{{ $t("safety.google_status_not")
             }}</span>
-          <span style="color: #18b762; font-size: 0.3rem" v-if="userInfo.googlebind">{{ $t("safety.google_status_ok")
+          <span class="text-success" style=" font-size: 0.3rem" v-if="userInfo.googlebind">{{ $t("safety.google_status_ok")
             }}</span>
         </div>
         <Icon name="arrow" />
@@ -103,9 +103,9 @@ Promise.all(loadingList).finally(() => {
       padding: 0 0.32rem;
       align-items: center;
       height: 1.04rem;
-      border: 0.02rem solid #eff3f8;
+      border: 0.02rem solid var(--ex-border-color);
       border-radius: 0.32rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
       overflow: hidden;
       margin-bottom: 0.2rem;
@@ -138,7 +138,7 @@ Promise.all(loadingList).finally(() => {
 
       .nav_title {
         margin: 0 0.3rem;
-        color: #1e1e2d;
+        color: var(--ex-text-color);
         font-weight: 400;
         flex: 1;
       }

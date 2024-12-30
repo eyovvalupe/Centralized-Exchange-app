@@ -98,7 +98,7 @@ const formatDate = (date) => {
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0.32rem;
-  border: 1px solid #d0d8e2;
+  border: 1px solid var(--ex-border-color2);
   border-radius: 0.32rem;
   margin-top: 0.2rem;
 
@@ -114,7 +114,7 @@ const formatDate = (date) => {
     flex-direction: column;
 
     .address {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
       font-weight: 400;
       line-height: 0.3rem;
@@ -122,14 +122,14 @@ const formatDate = (date) => {
     }
 
     .item_title {
-      color: #121212;
+      color: var(--ex-text-color);
       font-weight: 400;
       margin-top: 0.08rem;
       font-size: 0.28rem;
     }
 
     .time {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
       font-weight: 400;
       line-height: 0.24rem;
@@ -144,22 +144,22 @@ const formatDate = (date) => {
 
     .amount {
       font-size: 0.3rem;
-      color: #000000;
+      color: var(--ex-text-color);
       font-weight: 600;
     }
 
     .status {
       font-size: 0.28rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       margin-top: 0.14rem;
     }
 
     .status_success {
-      color: #18b762;
+      color: var(--ex-success-color);
     }
 
     .status_failure {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
     }
   }
 }

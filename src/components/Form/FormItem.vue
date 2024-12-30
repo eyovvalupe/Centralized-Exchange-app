@@ -209,13 +209,13 @@ const percentTagClick = (percent) => {
     position: relative;
     height: 0.92rem;
     border-radius: 0.32rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
 
     .ipt_tip {
-      color: #b7b7b7;
+      color: var(--ex-text-color4);
       font-size: 0.24rem;
       position: absolute;
       left: 0.24rem;
@@ -241,12 +241,12 @@ const percentTagClick = (percent) => {
 
 
   .disabled_item {
-    background-color: #F5F7FC;
+    background-color: var(--ex-bg-color2);
   }
 
   .item_focus {
     height: 1.12rem;
-    border: 1px solid #034cfa;
+    border: 1px solid var(--ex-primary-color);
 
     .ipt_tip {
       font-size: 0.2rem;
@@ -255,15 +255,15 @@ const percentTagClick = (percent) => {
   }
 
   .item_focus2 {
-    border: 1px solid #034cfa;
+    border: 1px solid var(--ex-primary-color);
   }
 
   .percent_tag {
-    color: #2168f6;
+    color: var(--ex-primary-color);
     margin-left: 0.08rem;
     transition: all ease 0.3s;
     border-radius: 0.3rem;
-    background: rgba(33, 104, 246, 0.1);
+    background: rgb(var(--ex-primary-color-rgb) / 0.1);
     font-size: 0.24rem;
     padding: 0 0.14rem;
     height: 0.4rem;
@@ -272,7 +272,7 @@ const percentTagClick = (percent) => {
   }
 
   .put_all {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     position: absolute;
     right: 0.32rem;
     font-size: 0.3rem;
@@ -281,7 +281,7 @@ const percentTagClick = (percent) => {
   }
 
   .put_all_place {
-    color: #061023;
+    color: var(--ex-text-color);
   }
 
   .pwd_icon {
@@ -299,7 +299,7 @@ const percentTagClick = (percent) => {
   display: flex;
   align-items: center;
   font-size: 0.28rem;
-  color: #061023;
+  color: var(--ex-text-color);
   font-weight: 400;
   line-height: 0.36rem;
   margin-top: 0.4rem;
@@ -317,7 +317,7 @@ const percentTagClick = (percent) => {
   &__right {
     text-align: right;
     font-size: 0.28rem;
-    color: #666d80;
+    color: var(--ex-text-color2);
   }
 }
 

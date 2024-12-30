@@ -52,11 +52,11 @@ onBeforeUnmount(()=>{
         width: 0.6rem;
         height: 0.6rem;
         text-align: center;
-        color:#E8503A;
+        color:var(--ex-error-color);
         font-weight: 600;
         font-size: 0.32rem;
-        border: 1px solid #E8503A;
-        background-color: rgba(232, 80, 58, 0.10);
+        border: 1px solid var(--ex-error-color);
+        background-color: rgb(var(--ex-error-color-rgb) / 0.10);
         box-sizing: border-box;
         border-radius: 0.12rem;
         
@@ -65,7 +65,7 @@ onBeforeUnmount(()=>{
         font-size: 0.32rem;
         font-weight: 600;
         width: 0.3rem;
-        color:#E8503A;
+        color:var(--ex-error-color);
         text-align: center;
     }
 }

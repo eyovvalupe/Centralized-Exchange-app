@@ -104,13 +104,13 @@ onUnmounted(() => {
 
         .item {
             height: 2rem;
-            border-bottom: 1px dashed #CBCBCB;
+            border-bottom: 1px dashed var(--ex-border-color2);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             padding: 0.2rem 0 0.2rem 0;
-            color: #343434;
+            color: var(--ex-text-color);
             font-size: 0.32rem;
 
             .item_box {
@@ -136,7 +136,7 @@ onUnmounted(() => {
             .amount {
                 font-size: 0.4rem;
                 line-height: 0.48rem;
-                color: #000000;
+                color: var(--ex-text-color);
                 font-weight: 700;
                 margin-top: 0.2rem;
             }
@@ -144,7 +144,7 @@ onUnmounted(() => {
             .date {
                 width: 100%;
                 font-size: 0.28rem;
-                color: #919193;
+                color: var(--ex-text-color3);
                 line-height: 0.36rem;
                 font-weight: 400;
                 margin-bottom: 0.2rem

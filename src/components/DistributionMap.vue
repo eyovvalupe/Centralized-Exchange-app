@@ -23,11 +23,11 @@ import { ref } from "vue"
 
 
 const list = ref([
-    { name: '涨停', val: 41, bgColor: '#F4AEAD', color: '#E8503A' },
-    { name: '>7%', val: 41, bgColor: '#F4AEAD', color: '#7E879C' },
-    { name: '7~5%', val: 41, bgColor: '#F08685', color: '#7E879C' },
-    { name: '5~2%', val: 41, bgColor: '', color: '#7E879C' },
-    { name: '2~0%', val: 41, bgColor: '', color: '#7E879C' },
+    { name: '涨停', val: 41, bgColor: '', color: '' },
+    { name: '>7%',  val: 41, bgColor: '', color: '' },
+    { name: '7~5%', val: 41, bgColor: '', color: '' },
+    { name: '5~2%', val: 41, bgColor: '', color: '' },
+    { name: '2~0%', val: 41, bgColor: '', color: '' },
 ])
 </script>
 
@@ -37,13 +37,13 @@ const list = ref([
 
     .title {
         font-size: 0.32rem;
-        color: #9EA3AE;
+        color: var(--ex-text-color3);
         line-height: 0.48rem;
         font-weight: 400;
         margin-bottom: 0.2rem;
 
         .total {
-            color: #121826;
+            color: var(--ex-text-color);
             margin-left: 0.2rem;
         }
     }
@@ -54,7 +54,7 @@ const list = ref([
         font-weight: 400;
 
         .date {
-            color: #9EA3AE;
+            color: var(--ex-text-color3);
             margin-left: 0.15rem;
         }
     }

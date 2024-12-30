@@ -131,10 +131,10 @@
         <div class="bottom_btn--default" @click="showInfo = true">
           <span>{{ t("market.market_marketinfo_data") }}</span>
         </div>
-        <div class="bottom_btn" @click="goBuy(true)" style="background-color: #00af70">
+        <div class="bottom_btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
           <span>{{ t("market.market_marketinfo_long") }}</span>
         </div>
-        <div class="bottom_btn" @click="goBuy(false)" style="background-color: #e8503a">
+        <div class="bottom_btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
           <span>{{ t("market.market_marketinfo_short") }}</span>
         </div>
       </div>
@@ -475,7 +475,7 @@ const showInfo = ref(false);
 
   .info_header {
     width: 100%;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     padding: 0 0.205rem;
     z-index: 100;
 
@@ -522,10 +522,10 @@ const showInfo = ref(false);
         font-size: 0.24rem;
         line-height: 0.332rem;
         font-weight: 400;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
 
         .title_name {
-          color: #061023;
+          color: var(--ex-text-color);
           font-size: 0.32rem;
           line-height: 0.432rem;
           font-weight: 500;
@@ -548,7 +548,7 @@ const showInfo = ref(false);
 
     .count {
       .count_item {
-        color: #55555e;
+        color: var(--ex-text-color2);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.36rem;
@@ -561,7 +561,7 @@ const showInfo = ref(false);
         }
 
         .num {
-          color: #000;
+          color: var(--ex-text-color);
           margin-left: 0.1rem;
         }
       }
@@ -583,7 +583,7 @@ const showInfo = ref(false);
   }
 
   .submit {
-    color: #fff;
+    color: var(--ex-white);
     height: 0.8rem;
     border-radius: 1.2rem;
     display: flex;
@@ -596,11 +596,11 @@ const showInfo = ref(false);
   }
 
   .btn-green {
-    background: #18b762;
+    background: var(--ex-success-color);
   }
 
   .btn-red {
-    background: #f3485e;
+    background: var(--ex-error-color);
   }
 
   .info {
@@ -645,12 +645,12 @@ const showInfo = ref(false);
 
   .up .ratio_price,
   .up .ratio_percentage {
-    background: #00af701a;
+    background: rgb(var(--ex-up-color-rgb) / 0.1);
   }
 
   .down .ratio_price,
   .down .ratio_percentage {
-    background: #e53e001a;
+    background: rgb(var(--ex-down-color-rgb) / 0.1);
   }
 
   .align-content {
@@ -685,7 +685,7 @@ const showInfo = ref(false);
       align-items: center;
 
       .tab {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         font-weight: 400;
         margin-right: 0.32rem;
@@ -694,13 +694,11 @@ const showInfo = ref(false);
         align-items: center;
         justify-content: center;
         padding: 0 0.2rem;
-        // height: 0.72rem;
       }
 
       .active_tab {
-        // background-color: #F6F8FF;
         border-radius: 0.48rem;
-        color: #014cfa;
+        color: var(--ex-primary-color);
         font-weight: bold;
       }
 
@@ -712,8 +710,8 @@ const showInfo = ref(false);
 
       .submit_btn {
         padding: 0.12rem 0.4rem;
-        color: #fff;
-        background-color: #014cfa;
+        color: var(--ex-bg-primary-text-color);
+        background-color: var(--ex-primary-color);
         border-radius: 0.5rem;
         font-weight: 600;
         font-size: 0.26rem;
@@ -731,17 +729,17 @@ const showInfo = ref(false);
         .price {
           font-size: 0.9rem;
           line-height: 1.06rem;
-          color: #55555e;
+          color: var(--ex-text-color2);
           margin-bottom: 0.12rem;
         }
 
         .time {
-          color: #55555e;
+          color: var(--ex-text-color2);
           font-size: 0.28rem;
           line-height: 0.48rem;
 
           span {
-            color: #0f0f1b;
+            color: var(--ex-text-color);
             margin-left: 0.2rem;
           }
         }
@@ -751,7 +749,7 @@ const showInfo = ref(false);
         flex: 1;
         margin-left: 0.36rem;
         margin-right: 0.2rem;
-        color: #55555e;
+        color: var(--ex-text-color2);
         font-size: 0.36rem;
         line-height: 0.48rem;
       }
@@ -759,11 +757,11 @@ const showInfo = ref(false);
       .right {
         font-size: 0.24rem;
         line-height: 0.48rem;
-        color: #818898;
+        color: var(--ex-text-color3);
         font-weight: 400;
 
         b {
-          color: #0d0d12;
+          color: var(--ex-text-color);
           font-weight: 700;
           font-size: 0.28rem;
           line-height: 0.4rem;
@@ -787,12 +785,12 @@ const showInfo = ref(false);
 
         .tab {
           height: 0.48rem;
-          background-color: #eff6ff;
+          background-color: var(--ex-bg-color3);
           display: flex;
           align-items: center;
           justify-content: center;
           border-radius: 0.3rem;
-          color: #0a54f9;
+          color: var(--ex-primary-color);
           font-size: 0.24rem;
           font-weight: 400;
           margin-right: 0.16rem;
@@ -801,18 +799,16 @@ const showInfo = ref(false);
         }
 
         .active_tab {
-          background-color: #014cfa;
-          color: #fff;
+          background-color: var(--ex-primary-color);
+          color: var(--ex-bg-primary-text-color);
         }
       }
 
       .full-tab {
-        color: #333;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         width: 0.48rem;
         height: 0.48rem;
-        // margin-left: 0.2rem;
-        // background-color: #EDEDED;
         border-radius: 50%;
         padding: 0.08rem;
         display: center;
@@ -836,11 +832,10 @@ const showInfo = ref(false);
           z-index: 999;
           top: 0.24rem;
           left: 0.24rem;
-          color: #999;
           padding: 0.1rem 0.15rem;
           background: #00000080;
           border-radius: 0.15rem;
-          color: #fff;
+          color: var(--ex-white);
           font-size: 0.22rem;
           font-weight: 400;
           line-height: 0.22rem;
@@ -855,7 +850,7 @@ const showInfo = ref(false);
         top: 0;
         // left: 100vw;
         left: 0;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         // transform: rotate(90deg);
         // transform-origin: 0% 0%;
 
@@ -865,7 +860,7 @@ const showInfo = ref(false);
           position: absolute;
           right: 0.4rem;
           top: 0.4rem;
-          color: #000;
+          color: var(--ex-text-color);
           font-size: 0.4rem;
           z-index: 99999;
         }
@@ -888,7 +883,7 @@ const showInfo = ref(false);
     align-items: center;
     justify-content: space-between;
     padding: 0.12rem 0.32rem;
-    border-top: 1px solid #eaeef3;
+    border-top: 1px solid var(--ex-border-color);
     height: 1.4rem;
     font-size: 0.3rem;
     font-weight: 400;
@@ -899,7 +894,7 @@ const showInfo = ref(false);
     }
 
     .symbol {
-      color: #061023;
+      color: var(--ex-text-color);
       margin-bottom: 0.12rem;
     }
 
@@ -910,36 +905,36 @@ const showInfo = ref(false);
       align-items: center;
       text-align: center;
       box-sizing: border-box;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       border-radius: 20px;
-      border: 0.5px solid #d0d8e2;
+      border: 0.5px solid var(--ex-border-color2);
       font-size: 0.24rem;
     }
 
     .bottom_line {
       flex: 1;
       height: 0.32rem;
-      border-left: 1px solid #eaeef3;
+      border-left: 1px solid var(--ex-border-color);
     }
 
     .bottom_btn--default {
       width: 1.44rem;
       height: 0.9rem;
-      color: #061023;
+      color: var(--ex-text-color);
       border-radius: 40px;
       font-size: 0.32rem;
       margin-left: 0.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #fff;
-      border: 1px solid #d0d8e2;
+      background: var(--ex-bg-color);
+      border: 1px solid var(--ex-border-color2);
     }
 
     .bottom_btn {
       width: 1.44rem;
       height: 0.9rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
       border-radius: 40px;
       font-size: 0.32rem;
       margin-left: 0.2rem;
@@ -959,7 +954,7 @@ const showInfo = ref(false);
     padding-top: 0.4rem;
 
     .intro_title {
-      color: #000;
+      color: var(--ex-text-color);
       font-size: 0.36rem;
       font-weight: 600;
       margin-bottom: 0.2rem;
@@ -968,7 +963,7 @@ const showInfo = ref(false);
     .intro_content {
       font-size: 0.28rem;
       font-weight: 400;
-      color: #121826;
+      color: var(--ex-text-color);
       line-height: 0.54rem;
       margin-bottom: 0.4rem;
     }
@@ -980,14 +975,14 @@ const showInfo = ref(false);
       height: 0.6rem;
       margin-bottom: 0.28rem;
       font-size: 0.28rem;
-      color: #121826;
+      color: var(--ex-text-color);
       font-weight: 400;
 
       .intro_area_box {
         width: 2.6rem;
         font-size: 0.2rem;
         font-weight: 500;
-        color: #000;
+        color: var(--ex-text-color);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -1025,13 +1020,13 @@ const showInfo = ref(false);
     align-items: center;
     justify-content: center;
     font-size: 0.28rem;
-    color: #55555e;
+    color: var(--ex-text-color2);
     overflow: hidden;
   }
 
   .active_item {
-    background-color: #f4f5f7;
-    color: #014cfa;
+    background-color: var(--ex-bg-color2);
+    color: var(--ex-primary-color);
   }
 }
 
@@ -1039,7 +1034,7 @@ const showInfo = ref(false);
   padding: 0.8rem 0.32rem 0.2rem 0.32rem;
 
   .buy_name {
-    color: #121826;
+    color: var(--ex-text-color);
     margin-bottom: 0.54rem;
     padding-left: 0.24rem;
   }
@@ -1047,8 +1042,8 @@ const showInfo = ref(false);
   .buy_popup_btn {
     height: 0.9rem;
     border-radius: 0.9rem;
-    background-color: #e8503a;
-    color: #fff;
+    background-color: var(--ex-down-color);
+    color: var(--ex-white);
     font-size: 0.28rem;
     display: flex;
     align-items: center;
@@ -1065,7 +1060,7 @@ const showInfo = ref(false);
   }
 
   .buy_popup_btn2 {
-    background-color: #18b762;
+    background-color: var(--ex-up-color);
   }
 }
 
@@ -1075,7 +1070,7 @@ const showInfo = ref(false);
   .info_name {
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: #121826;
+    color: var(--ex-text-color);
     margin-bottom: 0.54rem;
     text-align: center;
   }
@@ -1087,7 +1082,7 @@ const showInfo = ref(false);
     font-size: 0.32rem;
     height: 1.3rem;
     padding: 0.24rem;
-    background: #e6f9f2;
+    background: var(--ex-bg-color3);
     border-radius: 0.4rem;
 
     .info_num {
@@ -1102,7 +1097,7 @@ const showInfo = ref(false);
       height: 0.56rem;
       display: flex;
       align-items: center;
-      background: #00af701a;
+      background: rgb(var(--ex-up-color-rgb) / 0.1);
       border-radius: 1.25rem;
       padding: 0.075rem 0.25rem;
     }
@@ -1112,7 +1107,7 @@ const showInfo = ref(false);
       height: 0.56rem;
       display: flex;
       align-items: center;
-      background: #e53e001a;
+      background: rgb(var(--ex-down-color-rgb) / 0.1);
       border-radius: 1.25rem;
       padding: 0.075rem 0.25rem;
     }
@@ -1132,7 +1127,7 @@ const showInfo = ref(false);
       align-items: center;
       margin-bottom: 0.32rem;
       width: 31%;
-      background-color: #f2f3f8;
+      background-color: var(--ex-bg-color2);
       border-radius: 0.4rem;
       height: 1.14rem;
 

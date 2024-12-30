@@ -13,7 +13,7 @@
                     <div class="grid">{{ item.order_no }}</div>
                 </div>
                 <div class="right">
-                    <div class="amount" :class="[item.profit < 0 ? 'down_status' : 'up_status']">
+                    <div class="amount" :class="[item.profit < 0 ? 'text-down' : 'text-up']">
                         {{ item.profit >= 0 ? '+' : '' }}
                         {{ item.profit }}
                     </div>
@@ -149,7 +149,7 @@ defineExpose({
     .item {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #EFF3F8;
+        border-bottom: 1px solid var(--ex-border-color);
         line-height: 100%;
         padding: 0.32rem 0;
 
@@ -175,12 +175,12 @@ defineExpose({
 
             .name {
                 font-size: 0.3rem;
-                color: #061023;
+                color: var(--ex-text-color);
                 font-weight: bold;
             }
 
             .grid {
-                color: #8F92A1;
+                color: var(--ex-text-color3);
                 font-weight: 400;
                 font-size: 0.28rem;
                 margin-top: 0.18rem;
@@ -196,18 +196,11 @@ defineExpose({
             }
 
             .date {
-                color: #8F92A1;
+                color: var(--ex-text-color3);
                 font-size: 0.28rem;
                 margin-top: 0.18rem;
             }
 
-            .down_status {
-                color: #E8503A;
-            }
-
-            .up_status {
-                color: #18B762;
-            }
         }
     }
 

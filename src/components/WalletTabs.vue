@@ -60,13 +60,13 @@
   }
   
   .tab:hover {
-    background-color: #f0f0f0; /* Light hover effect */
+    background-color: var(--ex-bg-color2); /* Light hover effect */
   }
   
   .tab.active {
-    background-color: #007bff; /* Blue background for active tab */
-    color: white;
-    border-color: #007bff;
+    background-color: var(--ex-primary-color); /* Blue background for active tab */
+    color: var(--ex-bg-primary-text-color);
+    border-color: var(--ex-primary-color);
   }
   </style>
   

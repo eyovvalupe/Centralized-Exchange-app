@@ -99,7 +99,7 @@ const clearDates = () => {
 .date-date-box {
   position: relative;
   padding: 0 0.3rem;
-  background-color: white;
+  background-color: var(--ex-bg-color);
   padding-bottom: 1.42rem;
   .arrow-left {
     position: absolute;
@@ -107,7 +107,7 @@ const clearDates = () => {
     top: 0.36rem;
   }
   .date-close-button {
-    color: #0953FA;
+    color: var(--ex-text-primary);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -119,8 +119,8 @@ const clearDates = () => {
   }
   .date-header {
     padding: 0.3rem 0;
-    background-color: white;
-    color: #010101;
+    background-color: var(--ex-bg-color);
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 500;
@@ -129,22 +129,22 @@ const clearDates = () => {
   }
   .van-calendar__header {
     box-shadow: inherit;
-    border-bottom: 0.02rem solid #dddddd;
+    border-bottom: 0.02rem solid var(--ex-border-color);
   }
   .van-calendar__header-title {
-    color: #000;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
   }
   .van-calendar__day--start {
-    background-color: #0953fa;
+    background-color: var(--ex-text-primary);
     margin: 0 0.0928rem;
     width: 0.8rem;
     border-radius: 50%;
   }
   .van-calendar__day--end {
-    background-color: #0953fa;
+    background-color: var(--ex-text-primary);
     margin: 0 0.0928rem;
     width: 0.8rem;
     border-radius: 50%;

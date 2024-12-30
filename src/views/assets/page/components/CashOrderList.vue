@@ -5,12 +5,10 @@
       class="w-full h-[0.68rem] bg-color2 border-b-[0.02rem] border-b-color px-[0.32rem] flex items-center justify-between">
       <span class="text-[0.28rem] text-color2">23452345234</span>
       <span class="text-[0.28rem] text-primary">待付款</span>
-      <!-- #014cfa #18b762 #8f92a1 -->
     </div>
     <div class="w-full h-[1.62rem] px-[0.32rem] py-[0.2rem] flex flex-col justify-between">
       <div class="flex h-[0.5rem] items-center">
         <span class="text-[0.32rem] text-up font-semibold">买入</span>
-        <!-- #18b762 #e8503a -->
         <span class="text-[0.32rem] text-color font-semibold">&nbsp;USDT&nbsp;</span>
         <div class="USDT_icon relative top-[-0.02rem]">
           <img :src="getStaticImgUrl(`/static/img/crypto/USDT.svg`)" alt="">

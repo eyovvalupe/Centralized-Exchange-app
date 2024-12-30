@@ -148,40 +148,40 @@ const goInfo = () => {
 
     .subtitlt {
       font-size: 0.28rem;
-      color: #333;
+      color: var(--ex-text-color);
       margin-top: 0.4rem;
     }
 
     .reason {
-      background-color: #f5f8fb;
+      background-color: var(--ex-bg-color2);
       padding: 0.4rem;
       width: 100%;
       margin-top: 0.64rem;
-      color: #333;
+      color: var(--ex-text-color);
       word-break: break-all;
       line-height: 0.4rem;
 
       .reason_title {
-        color: #000;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         margin-bottom: 0.2rem;
       }
     }
 
     .btn {
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
       height: 0.96rem;
       border-radius: 0.96rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: var(--ex-bg-primary-text-color);
       width: 100%;
     }
 
     .light_btn {
-      background-color: #eff6ff;
-      color: #014cfa;
+      background-color: var(--ex-bg-color3);
+      color: var(--ex-primary-color);
     }
   }
 }

@@ -31,29 +31,29 @@ const props = defineProps({
 .stock_tab {
     width: 100%;
     height: 100%;
-    border: 1px solid #F8F9FB;
+    border: 1px solid var(--ex-bg-color2);
     border-radius: 0.08rem;
     padding: 0.17rem;
     position: relative;
-    background-color: #F8F9FB;
+    background-color: var(--ex-bg-color2);
 
     .tab_title {
         font-weight: 700;
         font-size: 0.24rem;
-        color: #0D0D12;
+        color: var(--ex-text-color);
         line-height: 0.274rem;
         margin-bottom: 0.06rem;
     }
 
     .tab_subtitle {
-        color: #818898;
+        color: var(--ex-text-color3);
         font-weight: 400;
         font-size: 0.2rem;
         margin-bottom: 0.14rem;
     }
 
     .tab_num {
-        color: #0D0D12;
+        color: var(--ex-text-color);
         font-weight: 600;
         font-size: 0.2rem;
         line-height: 0.25rem;

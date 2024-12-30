@@ -1,7 +1,7 @@
 <template>
   <div class="list_page" v-for="item in props.list">
     <div class="list_delete_icon" @click="confirm(item.id)">
-      <Loading :size="18" v-if="loading && currDeleteId == item.id" color="#fff" />
+      <Loading :size="18" v-if="loading && currDeleteId == item.id" color="var(--ex-white)" />
       <div class="delete_icon" v-else>
         <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
       </div>
@@ -120,7 +120,7 @@ getSessionToken();
   width: 100%;
   height: 1.44rem;
   border-width: 0.02rem;
-  border-color: #d0d8e2;
+  border-color: var(--ex-border-color2);
   border-radius: 0.36rem;
   overflow: hidden;
   display: flex;
@@ -135,7 +135,7 @@ getSessionToken();
     .bank_icon_container {
       width: 0.96rem;
       height: 0.96rem;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       border-radius: 1rem;
       display: flex;
       justify-content: center;
@@ -148,7 +148,7 @@ getSessionToken();
   .list_delete_icon {
     width: 0.8rem;
     height: 0.52rem;
-    background-color: #d0d8e2;
+    background-color: var(--ex-border-color2);
     border-bottom-left-radius: 0.36rem;
     position: absolute;
     top: 0;

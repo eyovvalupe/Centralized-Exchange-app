@@ -26,8 +26,7 @@
     </div>
     <div class="flex w-full px-[0.28rem] justify-between">
       <div
-        class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-color flex flex-col justify-between items-center py-[0.2rem]"
-        style="box-shadow: 0px 4px 20px 0px #0610231a">
+        class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-color flex flex-col justify-between items-center py-[0.2rem] wallet_money_item">
         <div class="text-[0.28rem] text-color2">{{ type == 'cash' ? t('assets.wallet_available') : type == 'stock' ?
           t('assets.wallet_stock_value') : t('assets.wallet_contract_value') }}</div>
         <div class="text-[0.3rem] text-color font-semibold">
@@ -45,8 +44,7 @@
         </div>
       </div>
       <div
-        class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-color flex flex-col justify-between items-center py-[0.2rem]"
-        style="box-shadow: 0px 4px 20px 0px #0610231a">
+        class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-color flex flex-col justify-between items-center py-[0.2rem] wallet_money_item">
         <div class="text-[0.28rem] text-color2">{{ type == 'cash' ? t('assets.wallet_blocked') :
           t('assets.wallet_order_value') }}</div>
         <div class="text-[0.3rem] text-color font-semibold">
@@ -87,3 +85,9 @@ const toggleShow = () => {
   showInfo.value = !showInfo.value;
 };
 </script>
+
+<style lang="less" scoped>
+.wallet_money_item {
+  box-shadow: 0px 4px 20px 0px rgb(var(--ex-text-color-rgb) / 0.1);
+}
+</style>

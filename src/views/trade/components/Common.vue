@@ -2,8 +2,8 @@
   <div class="common-open-position">
     <div class="stock-box" style="margin: 0 0px 0.1rem;">
       <span class="grop-title">股票</span>
-      <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="#004DFF" />
-      <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" class="stock-img" v-if="stockCo.length > 0"
+      <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="var(--ex-primary-color)" />
+      <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" class="stock-img" v-if="stockCo.length > 0"
         @click="openPopup" />
     </div>
     <div class="animate-input num-input symbol-name"
@@ -16,7 +16,7 @@
         <div>
           {{ stockCo[0].symbol }}
         </div>
-        <div style="color: #9ea3ae">
+        <div style="color: var(--ex-text-color3)">
           {{ stockCo[0].name }}
         </div>
       </div>
@@ -52,8 +52,8 @@
 
     <div class="slider-container-box">
       <div class="slider-container">
-        <Slider :min="0" :max="100" v-model="sliderValue" bar-height="0.08rem" active-color="#014cfa"
-          inactive-color="#f2f2f2" @change="onSliderChange">
+        <Slider :min="0" :max="100" v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)"
+          inactive-color="var(--ex-bg-color2)" @change="onSliderChange">
           <template #button>
             <div class="slider-custom-num">
               <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
@@ -79,15 +79,15 @@
       </div> -->
 
     <div class="m-b-5" style="height: .5rem;"></div>
-    <Button size="large" color="#e8503a" round v-if="isDownActive && token" :disabled="downdisable(active)"
+    <Button size="large" color="var(--ex-down-color)" round v-if="isDownActive && token" :disabled="downdisable(active)"
       @click="openPositPopup('down')">买跌</Button>
-    <Button size="large" color="#18b762" round v-if="isUpActive && token" :disabled="downdisable(active)"
+    <Button size="large" color="var(--ex-up-color)" round v-if="isUpActive && token" :disabled="downdisable(active)"
       @click="openPositPopup('up')">买涨 </Button>
 
 
-    <Button size="large" color="#014cfa" round v-if="!token" style="margin-bottom: 0.34rem"
+    <Button size="large" color="var(--ex-primary-color)" round v-if="!token" style="margin-bottom: 0.34rem"
       @click="jump('login')">登陆</Button>
-    <Button size="large" color="#f2f2f2" round v-if="!token" style="color: #999999"
+    <Button size="large" color="var(--ex-bg-color2)" round v-if="!token" style="color: var(--ex-text-color3)"
       @click="jump('register')">注册</Button>
 
   </div>
@@ -713,21 +713,7 @@ defineExpose({
 .common-open-position {
   padding: .25rem 0;
   padding-bottom: 0.76rem;
-  background-color: white;
-
-  // .van-loading {
-  //   left: 47%;
-  //   margin-top: 2rem !important;
-  // }
-  .yuan {
-    width: 15px;
-    height: 15px;
-    background-color: #e8503a;
-    border-radius: 15px;
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: top;
-  }
+  background-color: var(--ex-bg-color);
 
   .slider-container-box {
     margin-top: .2rem;
@@ -736,8 +722,8 @@ defineExpose({
 
     .slider-custom-num {
       position: relative;
-      background: #014CFA;
-      color: #fff;
+      background: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
       display: inline-block;
       width: .05rem;
       height: .5rem;
@@ -747,7 +733,7 @@ defineExpose({
       border-radius: 10px;
 
       .number {
-        color: #014CFA;
+        color: var(--ex-primary-color);
         position: absolute;
         top: -0.4rem;
         left: -0.1rem;
@@ -761,7 +747,7 @@ defineExpose({
   }
 
   .setall {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     // line-height: 0.35rem;
     margin-left: .2rem;
   }
@@ -772,7 +758,7 @@ defineExpose({
     .up-botton {
       width: 1.2rem;
       height: 0.5rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       line-height: 0.59rem !important;
       text-align: center;
       position: relative;
@@ -783,7 +769,7 @@ defineExpose({
     .down-button {
       width: 1.32rem;
       height: 0.56rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
       line-height: 0.56rem;
       text-align: center;
       background-size: cover;
@@ -823,14 +809,14 @@ defineExpose({
     width: 100%;
     height: 1.14rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin: 0.2rem 0;
   }
 
   .stock-input-text {
     .van-field__control {
       text-align: center;
-      caret-color: #014cfa;
+      caret-color: var(--ex-primary-color);
     }
   }
 
@@ -842,23 +828,23 @@ defineExpose({
     width: 4.9rem;
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     margin-top: 0.2rem;
-    background: white;
+    background: var(--ex-bg-color);
   }
 
   .pricenlarged {
-    background: #f9fafb;
+    background: var(--ex-bg-color2);
   }
 
   .market-button {
     width: 1.9rem;
     height: 0.72rem;
     border-radius: 1.26rem;
-    background: #f2f2f2;
+    background: var(--ex-bg-color2);
     text-align: center;
     line-height: 0.72rem;
-    color: #999;
+    color: var(--ex-text-color3);
     text-align: center;
     font-size: 0.28rem;
     font-style: normal;
@@ -869,8 +855,8 @@ defineExpose({
   }
 
   .marketenlarged {
-    background: #014cfa;
-    color: white;
+    background: var(--ex-primary-color);
+    color: var(--ex-bg-primary-text-color);
   }
 
   // .num-right-text {
@@ -880,7 +866,7 @@ defineExpose({
   // }
 
   .van-dropdown-menu__title:after {
-    border-color: transparent transparent #333333 #333333;
+    border-color: transparent transparent var(--ex-text-color) var(--ex-text-color);
   }
 
   .van-dropdown-menu__title {
@@ -899,11 +885,11 @@ defineExpose({
     width: 100%;
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     line-height: 0.88rem;
     text-align: center;
     position: relative;
-    color: #333333;
+    color: var(--ex-text-color);
   }
 
   .down-img {
@@ -944,7 +930,7 @@ defineExpose({
   .position-account {
     margin: 0.1rem 0 1rem 0;
     text-align: right;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -964,7 +950,7 @@ defineExpose({
     position: relative;
 
     .position-pay {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 600;
@@ -973,7 +959,7 @@ defineExpose({
     }
 
     .pay-num {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       text-align: right;
       font-size: 0.36rem;
       font-style: normal;
@@ -984,7 +970,7 @@ defineExpose({
 
     .position-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0;
       top: 0.5rem;
@@ -992,7 +978,7 @@ defineExpose({
 
     .position-fee {
       margin-top: 0.1rem;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -1004,7 +990,7 @@ defineExpose({
   .custom-button {
     width: 0.06rem;
     height: 0.48rem;
-    background: #014cfa;
+    background: var(--ex-primary-color);
   }
 
   .co-text {
@@ -1012,7 +998,7 @@ defineExpose({
     right: .2rem;
     top: .12rem;
     height: .68rem;
-    color: #333;
+    color: var(--ex-text-color);
     text-align: right;
     font-size: 0.28rem;
     font-style: normal;
@@ -1041,7 +1027,7 @@ defineExpose({
   }
 
   .percentage {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -1052,7 +1038,7 @@ defineExpose({
 
   .purchase-amount {
     margin-top: 0.2rem;
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
   }
 
@@ -1069,7 +1055,7 @@ defineExpose({
   .van-slider__button {
     width: 0.1rem;
     height: 0.48rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     border-radius: inherit;
     top: -0.36rem;
   }
@@ -1090,17 +1076,17 @@ defineExpose({
   }
 
   input:focus {
-    color: #014cfa;
-    caret-color: #014cfa;
+    color: var(--ex-primary-color);
+    caret-color: var(--ex-primary-color);
     /* 光标颜色 */
   }
 
   input:focus::placeholder {
-    // color: #014cfa; /* 占位符颜色 */
+    // color: var(--ex-primary-color); /* 占位符颜色 */
   }
 
   .focusinput {
-    border-color: #014cfa !important;
+    border-color: var(--ex-primary-color) !important;
   }
 }
 

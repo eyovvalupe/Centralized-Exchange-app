@@ -86,6 +86,7 @@ const goAddAccount = async () => {
   //身份认证检测
   if (userInfo.value.kycl2 != 2) {
     return showConfirmDialog({
+      className:'account_dialog',
       title: t('account.no_kyc_title'),
       message: t('account.no_kyc_con'),
       confirmButtonText: t('account.no_kyc_confirm'),
@@ -97,6 +98,7 @@ const goAddAccount = async () => {
   // google检测
   if (userInfo.value.kycl2 == 2 && !userInfo.value.googlebind) {
     return showConfirmDialog({
+      className:'account_dialog',
       title: t('account.no_google_title'),
       message: t('account.no_google_con'),
       confirmButtonText: t('account.no_google_confirm'),
@@ -157,7 +159,7 @@ const goBack = () => {
     height: 0.92rem;
     border-radius: 0.32rem;
     border-width: 0.02rem;
-    border-color: #eff3f8;
+    border-color: var(--ex-border-color);
   }
 
   :deep(.van-tab--card.van-tab) {
@@ -167,19 +169,19 @@ const goBack = () => {
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
   }
 
   :deep(.van-tab--card.van-tab--active) {
     width: 50%;
     border-radius: 0.3rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
 
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
     }
   }
 
@@ -207,7 +209,7 @@ const goBack = () => {
   .add_btn {
     width: 6.86rem;
     height: 1.12rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -217,37 +219,38 @@ const goBack = () => {
   }
 }
 </style>
-<style lang="css">
-.van-dialog {
+<style lang="less">
+.account_dialog {
   padding-top: 0.8rem;
-}
 
-.van-dialog__header {
-  padding: 0;
-  font-size: 0.32rem;
-  line-height: 0.44rem;
-  margin-bottom: 0.2rem;
-}
 
-.van-dialog__message {
-  font-size: 0.28rem;
-  line-height: 0.44rem;
-  color: #333333;
-}
-
-.van-dialog__cancel {
-  .van-button__content {
+  .van-dialog__header {
+    padding: 0;
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: #8f92a1;
+    margin-bottom: 0.2rem;
   }
-}
 
-.van-dialog__confirm {
-  .van-button__content {
-    font-size: 0.32rem;
+  .van-dialog__message {
+    font-size: 0.28rem;
     line-height: 0.44rem;
-    color: #014cfa;
+    color: var(--ex-text-color);
+  }
+
+  .van-dialog__cancel {
+    .van-button__content {
+      font-size: 0.32rem;
+      line-height: 0.44rem;
+      color: var(--ex-text-color3);
+    }
+  }
+
+  .van-dialog__confirm  {
+    .van-button__content {
+      font-size: 0.32rem;
+      line-height: 0.44rem;
+      color: var(--ex-primary-color);
+    }
   }
 }
 </style>

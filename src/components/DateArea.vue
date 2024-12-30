@@ -97,14 +97,14 @@ defineExpose({
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #000;
+        color: var(--ex-text-color);
         font-size: 0.24rem;
         font-weight: 400;
         padding: 0 0.44rem;
         margin-bottom: 0.32rem;
 
         .link {
-            color: #0953FA;
+            color: var(--ex-text-primary);
             font-size: 0.28rem;
         }
     }
@@ -113,7 +113,7 @@ defineExpose({
         display: flex;
         align-items: center;
         padding: 0.2rem 0.44rem 0.4rem 0.44rem;
-        color: #000;
+        color: var(--ex-text-color);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.4rem;
@@ -125,13 +125,13 @@ defineExpose({
         .btn {
             margin-left: 0.4rem;
             height: 0.72rem;
-            background-color: #0953FA;
+            background-color: var(--ex-text-primary);
             border-radius: 0.08rem;
             padding: 0 0.4rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
+            color: var(--ex-bg-primary-text-color);
         }
     }
 

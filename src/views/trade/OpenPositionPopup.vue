@@ -12,7 +12,7 @@
           <div>
             {{ orderList.stockCo[0].symbol }}
           </div>
-          <div style="color: #9ea3ae;">
+          <div style="color: var(--ex-text-color3);">
             {{ orderList.stockCo[0].name }}
           </div>
         </div>
@@ -121,7 +121,7 @@
 
       <Button
         size="large"
-        color="#014cfa"
+        color="var(--ex-primary-color)"
         round
         style="margin-top: 0.6rem;"
         @click="openStock"
@@ -213,7 +213,7 @@ const openStock = ()=>{
   .detail-update-title {
     text-align: center;
     margin-top: 0.4rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
     font-style: normal;
     font-weight: 500;
@@ -225,7 +225,7 @@ const openStock = ()=>{
     padding-top: 0.2rem;
   }
   .order-lose-title {
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
@@ -237,21 +237,21 @@ const openStock = ()=>{
   .lose-field {
     height: 0.88rem;
     border-radius: 0.12rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     .van-field__control {
       text-align: right;
     }
   }
   .account-monkey {
     text-align: right;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-style: normal;
     font-weight: 400;
     line-height: 0.48rem;
     margin: 0.12rem 0;
     .account-num-monkey {
-      color: #333333;
+      color: var(--ex-text-color);
     }
   }
   .position-bottom {
@@ -259,7 +259,7 @@ const openStock = ()=>{
     margin-top: 0.8rem;
     position: relative;
     .position-pay {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 600;
@@ -267,7 +267,7 @@ const openStock = ()=>{
       vertical-align: middle;
     }
     .pay-num {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       text-align: right;
       font-size: 0.36rem;
       font-style: normal;
@@ -277,14 +277,14 @@ const openStock = ()=>{
     }
     .position-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0;
       top: 0.5rem;
     }
     .position-fee {
       margin-top: 0.1rem;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -296,7 +296,7 @@ const openStock = ()=>{
   .risk-line {
     display: flex;
     justify-content: right;
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-size: 0.24rem;
     font-style: normal;
     font-weight: 400;
@@ -311,7 +311,7 @@ const openStock = ()=>{
   }
   .risk-line-dashed {
     width: 3.44rem;
-    border-bottom: 0.02rem dashed #cbcbcb;
+    border-bottom: 0.02rem dashed var(--ex-border-color2);
     position: absolute;
     right: 0.32rem;
     top: 0.42rem;
@@ -321,7 +321,7 @@ const openStock = ()=>{
     justify-content: right;
     margin-top: 0.1rem;
     .risk-text {
-      color: #333;
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 0.24rem;
       font-style: normal;
@@ -333,7 +333,7 @@ const openStock = ()=>{
     margin-top: 0.26rem;
     .ipo-code-title {
       text-align: center;
-      color: #121826;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 500;
@@ -346,7 +346,7 @@ const openStock = ()=>{
   }
   .van-password-input__security li {
     border-radius: 0.16rem;
-    border: 0.02rem solid #eceff3;
+    border: 0.02rem solid var(--ex-border-color);
   }
   @media (min-width: 751px) {
     .van-number-keyboard {
@@ -358,7 +358,7 @@ const openStock = ()=>{
   }
   .close-price-num {
     text-align: right;
-    color: #e8503a;
+    color: var(--ex-error-color);
     font-size: 0.36rem;
     font-style: normal;
     font-weight: 600;
@@ -367,12 +367,12 @@ const openStock = ()=>{
   }
   .detail-box {
         display: flex;
-        border-bottom: 0.02rem solid #f5f5f5;
+        border-bottom: 0.02rem solid var(--ex-border-color);
         height: 1rem;
         width: 100%;
         .left-text {
           width: 2rem;
-          color: #8F92A1;
+          color: var(--ex-text-color3);
           text-align: left;
           font-size: 0.28rem;
           font-style: normal;
@@ -381,7 +381,7 @@ const openStock = ()=>{
         }
         .right-text {
           flex: 1;
-          color: #121826;
+          color: var(--ex-text-color);
           text-align: right;
           font-size: 0.28rem;
           font-style: normal;
@@ -391,8 +391,8 @@ const openStock = ()=>{
           .win-lose-box {
             width: 1.16rem;
             height: 0.44rem;
-            color: #014CFA;
-            background-color: #ecf1fe;
+            color: var(--ex-primary-color);
+            background-color: var(--ex-bg-color3);
             position: absolute;
             right: 0;
             line-height: 0.44rem;
@@ -413,8 +413,8 @@ const openStock = ()=>{
         .detail-red-box {
           width: 1.16rem;
           height: 0.44rem;
-          background-color: #fbf1ef;
-          color: #e8503a;
+          background-color: rgb(var(--ex-down-color-rgb) / 0.08);
+          color: var(--ex-down-color);
           margin: auto;
           text-align: center;
           line-height: 0.44rem;
@@ -422,8 +422,8 @@ const openStock = ()=>{
         .detail-green-box {
           width: 1.16rem;
           height: 0.44rem;
-          background-color: #eff9f2;
-          color: #18b762;
+          background-color: rgb(var(--ex-up-color-rgb) / 0.08);
+          color: var(--ex-up-color);
           margin: auto;
           text-align: center;
           line-height: 0.44rem;
@@ -431,8 +431,8 @@ const openStock = ()=>{
         .detail-blue-box {
           width: 1.16rem;
           height: 0.44rem;
-          background-color: #ecf1fe;
-          color: #014cfa;
+          background-color: var(--ex-bg-color3);
+          color: var(--ex-primary-color);
           margin: auto;
           text-align: center;
           line-height: 0.44rem;

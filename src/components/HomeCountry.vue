@@ -5,7 +5,7 @@
       <Tabs
         v-model:active="active"
         :swipeable="false"
-        :color="'#014CFA'"
+        :color="'var(--ex-primary-color)'"
         shrink
         @change="onChange"
       >
@@ -183,7 +183,7 @@ onMounted(() => {
           line-height: 0.5rem;
           border-bottom-left-radius: 0.2rem;
           border-bottom-right-radius: 0.2rem;
-          background-color: white;
+          background-color: var(--ex-bg-color);
 
           .van-tab__text {
             font-size: 0.28rem;
@@ -198,10 +198,10 @@ onMounted(() => {
           border-top-right-radius: 0;
           border-bottom-left-radius: 0.2rem;
           border-bottom-right-radius: 0.2rem;
-          background-color: #014cfa;
+          background-color: var(--ex-primary-color);
 
           .van-tab__text {
-            color: white;
+            color: var(--ex-bg-primary-text-color);
             font-size: 0.28rem;
             line-height: 0.32rem;
             font-weight: 400;

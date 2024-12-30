@@ -69,14 +69,14 @@ const formatDate = (date) => {
 .transfer_item {
   margin-top: 0.2rem;
   width: calc(100% - 0.02rem);
-  background-color: #f5f7fc;
-  border: 1px solid #eff3f8;
+  background-color: var(--ex-bg-color2);
+  border: 1px solid var(--ex-border-color);
   border-radius: 0.32rem;
   overflow: hidden;
 
   .item_box {
-    background-color: #fff;
-    border: 1px solid #eff3f8;
+    background-color: var(--ex-bg-color);
+    border: 1px solid var(--ex-border-color);
     align-items: center;
     padding: 0.3rem 0.32rem;
     border-radius: 0.32rem;
@@ -109,7 +109,7 @@ const formatDate = (date) => {
   }
 
   .time {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-weight: 400;
     font-size: 0.24rem;
     line-height: 100%;

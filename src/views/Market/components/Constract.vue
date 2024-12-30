@@ -23,36 +23,6 @@
         :key="i"
         @click="goInfo(item)"
       >
-        <!-- <div class="td5">
-            <div class="flex items-center">
-              <div class="item_name flex items-center gap-1">
-                {{ item.name }}
-              </div>
-              <div class="item_type" :class="['item_type--'+item.type]" v-if="activeTab == 0 && typeMap[item.type]">
-                {{ typeMap[item.type] }}
-              </div>
-            </div>
-            <div class="item_lever" v-if="item.lever">
-              <span v-for="(tag,i) in getLever(item.lever)" v-show="i < 1" :key="tag">
-                {{tag}}X
-              </span>
-            </div>
-          </div>
-          <div class="td2 spark_line_box">
-            <SparkLine v-if="getRealtime(item.symbol,'points')" :style="'width: 100%; height: 0.54rem;'"
-              :points="getRealtime(item.symbol,'points')"
-              :polylineStrokeWidth="2"
-              :ratio="getRealtime(item.symbol,'ratio')" />
-          </div>
-          <div class="td2 td_r">
-            <div class="item_num" :class="getRealtime(item.symbol,'ratio') >= 0 ? 'up' : 'down'">{{ getRealtime(item.symbol,'price') || '--' }}</div>
-            <div
-              class="item_info_box">
-                <div class="item_percent" :class="getRealtime(item.symbol,'ratio') >= 0 ? 'up_bg' : 'down_bg'">
-                  {{ getRealtime(item.symbol,'ratio') > 0 ? "+" : "" }}{{ (getRealtime(item.symbol,'ratio') || 0) }}%
-                </div>
-              </div>
-          </div> -->
         <StockItem :item="item" :page="'market'"/>
       </div>
     </div>
@@ -152,7 +122,7 @@ const goInfo = (item) => {
     align-items: center;
     position: relative;
     margin-top: 0.2rem;
-    border: 1px solid #eff3f8;
+    border: 1px solid var(--ex-border-color);
 
     .td5 {
       flex: 5;
@@ -161,7 +131,7 @@ const goInfo = (item) => {
 
       .item_name {
         font-size: 0.32rem;
-        color: #061023;
+        color: var(--ex-text-color);
         line-height: 0.32rem;
         font-weight: 600;
       }
@@ -169,7 +139,7 @@ const goInfo = (item) => {
       .item_info {
         font-size: 0.24rem;
         line-height: 0.332rem;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
@@ -187,7 +157,7 @@ const goInfo = (item) => {
         font-size: 0.3rem;
         font-weight: 600;
         line-height: 0.3rem;
-        color: #6c7b90;
+        color: var(--ex-text-color2);
       }
 
       .item_info_box {
@@ -201,12 +171,12 @@ const goInfo = (item) => {
           font-size: 0.24rem;
           display: inline-block;
           font-weight: 600;
-          color: #fff;
+          color: var(--ex-white);
           border-radius: 0.12rem;
         }
 
         .nodata_percent {
-          background-color: #6c7b90;
+          background-color: var(--ex-text-color2);
         }
       }
     }
@@ -227,7 +197,7 @@ const goInfo = (item) => {
       font-size: 0.24rem;
       display: inline-block;
       font-weight: 600;
-      color: #fff;
+      color: var(--ex-white);
       border-radius: 0.12rem;
     }
   }
@@ -235,42 +205,6 @@ const goInfo = (item) => {
   .coinbuy_content {
     // padding: 0 0.32rem;
   }
-  .item_lever {
-    display: flex;
-    align-items: center;
-    margin-top: 0.2rem;
-  }
-  .item_lever span {
-    height: 0.32rem;
-    padding: 0 0.08rem;
-    border: 1px solid #014cfa;
-    border-radius: 0.24rem;
-    font-size: 0.22rem;
-    color: #014cfa;
-    margin-right: 0.08rem;
-    display: flex;
-    align-items: center;
-  }
-  .item_type {
-    height: 0.3rem;
-    border-radius: 0.08rem;
-    color: #ffaf2a;
-    font-size: 0.22rem;
-    background: rgba(255, 175, 42, 0.1);
-    display: inline-block;
-    align-items: center;
-    padding: 0 0.08rem;
-    line-height: 0.3rem;
-    margin-left: 0.1rem;
-  }
-  .item_type--forex {
-    color: #18b762;
-    background: rgba(24, 183, 98, 0.1);
-  }
-
-  .item_type--blocktrade {
-    color: #6c6cea;
-    background: rgba(108, 108, 234, 0.1);
-  }
+  
 }
 </style>

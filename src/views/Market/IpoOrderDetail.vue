@@ -2,7 +2,7 @@
     <div class="ipo_stock_detail">
         <Top title="IPO订单详情"></Top>
         <div class="scroller loading_box" v-if="loading">
-            <Loading color="#014CFA" />
+            <Loading color="var(--ex-primary-color)" />
             <div class="loading_text">加载中...</div>
         </div>
         <div class="scroller" v-else>
@@ -11,7 +11,7 @@
                 <div style="width: 1.2rem;height: 1.2rem;">
                     <img :src="getStaticImgUrl(`/static/icons/success3.svg`)" alt="">
                 </div>
-                <div class="status_text" style="color:#18B762;">
+                <div class="status_text" style="color:var(--ex-success-color);">
                     恭喜你，已中签
                 </div>
             </div>
@@ -21,7 +21,7 @@
                         <img :src="getStaticImgUrl(`/static/img/common/close_eye.svg`)" alt="">
                     </div>
                 </div>
-                <div class="status_text" style="color:#666D80;">
+                <div class="status_text" style="color:var(--ex-text-color2);">
                     很可惜，未中签
                 </div>
             </div>
@@ -176,16 +176,16 @@ const copy = text => {
 
     .main_item {
         border-radius: 0.32rem;
-        border: 1px solid #EFF3F8;
-        background: #F5F7FC;
+        border: 1px solid var(--ex-border-color);
+        background: var(--ex-bg-color2);
         margin-top: 0.4rem;
 
         .name {
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.32rem;
             font-weight: 600;
             line-height: 0.36rem;
-            color: #0D0D12;
+            color: var(--ex-text-color);
             margin-bottom: 0.14rem;
         }
 
@@ -195,7 +195,7 @@ const copy = text => {
                 height: 0.32rem;
                 padding: 0rem 0.08rem;
                 font-size: 0.22rem;
-                color: #014CFA;
+                color: var(--ex-primary-color);
                 border-radius: 0.08rem;
                 line-height: 0.32rem;
                 font-weight: 400;
@@ -212,7 +212,7 @@ const copy = text => {
         .item_order_no {
             display: flex;
             align-items: center;
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             margin-top: 0.12rem;
 
             span {
@@ -240,7 +240,7 @@ const copy = text => {
     }
 
     .status_text {
-        color: #014CFA;
+        color: var(--ex-primary-color);
         text-align: center;
         font-size: 0.3rem;
         font-style: normal;
@@ -252,7 +252,7 @@ const copy = text => {
     .status_fail {
         width: 60px;
         height: 60px;
-        background-color: #EFF3F8;
+        background-color: var(--ex-bg-color3);
         border-radius: 0.32rem;
         display: flex;
         align-items: center;
@@ -272,17 +272,17 @@ const copy = text => {
             left: 0;
             top: 50%;
             height: 1px;
-            background-color: #EFF3F8;
+            background-color: var(--ex-bg-color3);
         }
     }
 
     .info_boxs {
         padding: 0.3rem 0;
         position: relative;
-        border: 1px solid #EFF3F8;
+        border: 1px solid var(--ex-border-color);
         border-bottom: 0px;
         border-radius: 0.32rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         width: calc(100% + 2px);
         left: -1px;
         z-index: 1;
@@ -300,7 +300,7 @@ const copy = text => {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             line-height: 0.44rem;
             position: relative;
@@ -314,12 +314,12 @@ const copy = text => {
                 line-height: 0.44rem;
                 margin-top: 0.12rem;
                 font-weight: 600;
-                color: #061023;
+                color: var(--ex-text-color);
                 font-size: 0.36rem;
             }
 
             .blue {
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
         }
 
@@ -327,7 +327,7 @@ const copy = text => {
             content: '';
             width: 1px;
             height: 0.9rem;
-            background-color: #EFF3F8;
+            background-color: var(--ex-bg-color3);
             position: absolute;
             left: 0;
             top: 50%;
@@ -345,19 +345,19 @@ const copy = text => {
         justify-content: space-between;
         line-height: 0.44rem;
         padding: 0.32rem 0 0.2rem 0;
-        border-bottom: 1px solid #F5F7FC;
-        color: #8F92A1;
+        border-bottom: 1px solid var(--ex-border-color);
+        color: var(--ex-text-color3);
         font-size: 0.28rem;
         font-weight: 400;
 
         .name {
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-weight: 600;
             font-size: 0.28rem;
         }
 
         .val {
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.3rem;
         }
     }
@@ -376,7 +376,7 @@ const copy = text => {
 }
 
 .loading_text {
-    color: #8F92A1;
+    color: var(--ex-text-color3);
     margin-top: 0.4rem;
     font-size: 0.28rem;
 }

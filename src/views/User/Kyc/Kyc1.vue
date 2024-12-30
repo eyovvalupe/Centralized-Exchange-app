@@ -4,7 +4,7 @@
     <Top :title="t('kyc.page_title')">
       <!-- 从注册来的 -->
       <template #right v-if="from == 'register'">
-        <span @click="nextStep" style="color: #014cfa; font-weight: 400; font-size: 0.28rem">{{ t('google_auth.from_register_skip') }}</span>
+        <span @click="nextStep" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">{{ t('google_auth.from_register_skip') }}</span>
       </template>
       <!-- 提交过认证信息 -->
       <template #right v-if="kycInfo.name">
@@ -53,17 +53,17 @@
 
     <!-- 表单 -->
     <div class="subtitle">{{ $t("kyc.first_legal_name") }}</div>
-    <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }">
+    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }">
       <input :disabled="checkMode" v-model.trim="form.name" class="ipt" type="text"
         :placeholder="t('kyc.first_legal_name')" maxlength="20" />
     </div>
     <div class="subtitle">{{ $t("kyc.first_card_id") }}</div>
-    <div class="item" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }">
+    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }">
       <input :disabled="checkMode" v-model.trim="form.idnum" class="ipt" type="text"
         :placeholder="t('kyc.first_card_id')" maxlength="20" />
     </div>
     <div class="subtitle">{{ $t('kyc.first_birthday') }}</div>
-    <div class="item justify-between" :style="{ backgroundColor: checkMode ? '#f5f5f5' : '#fff' }"
+    <div class="item justify-between" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }"
       @click="checkMode ? (showBottom = false) : (showBottom = true)">
       <div :class="form.birthday ? 'text-color' : 'text-color4'">
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}
@@ -74,8 +74,8 @@
     </div>
 
     <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" @click="submit" :loading="loading"
-      :disabled="disabled" round :color="'#014CFA'" class="submit" type="primary">{{ $t("kyc.first_btn") }}</Button>
-    <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="#014CFA" class="submit"
+      :disabled="disabled" round :color="'var(--ex-primary-color)'" class="submit" type="primary">{{ $t("kyc.first_btn") }}</Button>
+    <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="var(--ex-primary-color)" class="submit"
               type="primary" @click="next">继续</Button> -->
 
     <!-- 日期选择 -->
@@ -209,14 +209,14 @@ const nextStep = () => {
   }
 
   .title {
-    color: #061023;
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     margin-bottom: 0.2rem;
     margin-top: 0.6rem;
   }
 
   .tip {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-weight: 400;
     font-size: 0.24rem;
     margin-bottom: 0.6rem;
@@ -225,14 +225,14 @@ const nextStep = () => {
 
   .subtitle {
     font-weight: 400;
-    color: #061023;
+    color: var(--ex-text-color);
     font-size: 0.28rem;
     margin-bottom: 0.2rem;
   }
 
   .item {
     height: 0.92rem;
-    border: 0.02px solid #d0d8e2;
+    border: 0.02px solid var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-bottom: 0.4rem;
     padding: 0 0.32rem;
@@ -244,7 +244,7 @@ const nextStep = () => {
       height: 100%;
       font-weight: 400;
       font-size: 0.3rem;
-      color: #061023;
+      color: var(--ex-text-color);
     }
   }
 
@@ -262,7 +262,7 @@ const nextStep = () => {
     .icon {
       width: 0.8rem;
       height: 0.8rem;
-      background-color: #ededed;
+      background-color: var(--ex-bg-color3);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -278,15 +278,15 @@ const nextStep = () => {
     .status {
       font-size: 0.28rem;
       font-weight: 400;
-      color: #f3ba2f;
+      color: var(--ex-warning-color);
     }
 
     .status_pass {
-      color: #38a843;
+      color: var(--ex-success-color);
     }
 
     .status_fail {
-      color: #e8503a;
+      color: var(--ex-error-color);
     }
   }
 
@@ -298,7 +298,7 @@ const nextStep = () => {
         content: "";
         width: 100%;
         height: 0.02rem;
-        background-color: #3b82f6;
+        background-color: var(--ex-primary-color);
         position: absolute;
         bottom: 0.32rem;
         left: 0;

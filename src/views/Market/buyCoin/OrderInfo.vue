@@ -124,11 +124,11 @@
       <!-- 按钮 -->
       <div v-if="currItem.status == 'waitpayment'" class="btns">
         <div v-if="currItem.offset == 'buy'" class="btn"
-          :style="{ backgroundColor: loading ? '#ddd' : '', color: loading ? '#fff' : '' }"
+          :style="{ backgroundColor: loading ? 'var(--ex-bg-color4)' : '', color: loading ? 'var(--ex-white)' : '' }"
           style="margin-right: 0.64rem" @click="cancelOrder">取消订单</div>
         <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn"
-          :style="{ backgroundColor: '#ddd' }">等待确认</div>
-        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? '#ddd' : '' }" @click="confirmOrder">{{
+          :style="{ backgroundColor: 'var(--ex-bg-color4)' }">等待确认</div>
+        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? 'var(--ex-bg-color4)' : '' }" @click="confirmOrder">{{
           currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
       </div>
     </template>
@@ -269,24 +269,24 @@ const getSessionToken = () => {
 
     .tab {
       margin-right: 0.6rem;
-      color: #9ea3ae;
+      color: var(--ex-text-color3);
       position: relative;
 
       .hint {
         position: absolute;
         right: -0.2rem;
         top: -0.1rem;
-        background-color: #fd4938;
+        background-color: var(--ex-error-color);
         border-radius: 0.12rem;
         font-size: 0.24rem;
-        color: #fff;
+        color: var(--ex-white);
         line-height: 0.2rem;
         padding: 0.04rem 0.08rem;
       }
     }
 
     .active_tab {
-      color: #000;
+      color: var(--ex-text-color);
       font-weight: bold;
     }
   }
@@ -295,7 +295,7 @@ const getSessionToken = () => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #666666;
+    color: var(--ex-text-color2);
     font-size: 0.24rem;
     padding: 0.28rem 0;
 
@@ -310,8 +310,8 @@ const getSessionToken = () => {
     align-items: stretch;
     justify-content: space-between;
     padding: 0.24rem 0;
-    border-top: 1px dashed #cbcbcb;
-    border-bottom: 1px dashed #cbcbcb;
+    border-top: 1px dashed var(--ex-border-color2);
+    border-bottom: 1px dashed var(--ex-border-color2);
 
     .info_item {
       flex: 1;
@@ -322,19 +322,19 @@ const getSessionToken = () => {
       text-align: center;
 
       .title {
-        color: #666;
+        color: var(--ex-text-color2);
         margin-bottom: 0.24rem;
       }
 
       .val {
-        color: #333;
+        color: var(--ex-text-color);
       }
     }
   }
 
   .seller {
     padding: 0.24rem 0;
-    border-bottom: 1px dashed #cbcbcb;
+    border-bottom: 1px dashed var(--ex-border-color2);
 
     .title_box {
       display: flex;
@@ -346,23 +346,23 @@ const getSessionToken = () => {
         width: 0.52rem;
         height: 0.52rem;
         border-radius: 50%;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         margin-right: 0.32rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
         font-size: 0.36rem;
       }
 
       .title {
-        color: #000;
+        color: var(--ex-text-color);
       }
     }
 
     .remark {
       font-size: 0.24rem;
-      color: #666666;
+      color: var(--ex-text-color2);
     }
   }
 
@@ -380,14 +380,14 @@ const getSessionToken = () => {
         height: 0.4rem;
         border-radius: 50%;
         padding: 0.04rem;
-        background-color: #d8e4ff;
+        background-color: var(--ex-bg-color4);
         margin-right: 0.16rem;
       }
     }
 
     .table {
-      border-left: 1px solid #d4d4d4;
-      border-top: 1px solid #d4d4d4;
+      border-left: 1px solid var(--ex-border-color2);
+      border-top: 1px solid var(--ex-border-color2);
 
       .tr {
         display: flex;
@@ -400,8 +400,8 @@ const getSessionToken = () => {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          border-right: 1px solid #d4d4d4;
-          border-bottom: 1px solid #d4d4d4;
+          border-right: 1px solid var(--ex-border-color2);
+          border-bottom: 1px solid var(--ex-border-color2);
         }
 
         .td-3 {
@@ -417,16 +417,16 @@ const getSessionToken = () => {
 
     .status_wait {
       line-height: 0.56rem;
-      color: #333;
+      color: var(--ex-text-color);
 
       .amount {
         font-weight: bold;
-        color: #000;
+        color: var(--ex-text-color);
         margin-right: 0.2rem;
       }
 
       .time {
-        color: #fd4938;
+        color: var(--ex-error-color);
         font-weight: bold;
         font-size: 0.32rem;
       }
@@ -439,13 +439,13 @@ const getSessionToken = () => {
       justify-content: center;
       font-size: 0.32rem;
       font-weight: bold;
-      color: #aaa !important;
-      background-color: #eee !important;
+      color:  var(--ex-text-color4) !important;
+      background-color:  var(--ex-bg-color3) !important;
       margin-top: 1rem;
     }
 
     .success_status {
-      color: #0ab27d;
+      color: var(--ex-success-color);
     }
   }
 
@@ -459,16 +459,16 @@ const getSessionToken = () => {
       flex: 1;
       height: 0.88rem;
       border-radius: 0.88rem;
-      background-color: #eff6ff;
-      color: #014cfa;
+      background-color: var(--ex-bg-color3);
+      color: var(--ex-primary-color);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .active_btn {
-      background-color: #014cfa;
-      color: #fff;
+      background-color: var(--ex-primary-color);
+      color: var(--ex-bg-primary-text-color);
     }
   }
 }

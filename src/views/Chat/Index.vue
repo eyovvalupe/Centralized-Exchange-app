@@ -137,9 +137,9 @@ watch(
   }
 
   .chat-send {
-    background: #fff;
+    background: var(--ex-bg-color);
     padding: 10px 16px;
-    border-top: 1px solid #eaeef3;
+    border-top: 1px solid var(--ex-border-color);
   }
 }
 </style>

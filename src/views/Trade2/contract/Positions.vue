@@ -16,8 +16,8 @@
       <div class="td td-5">
         <div class="name van-omit1">{{ item.name }}</div>
         <div class="lever">
-          <div class="status">{{ item.lever }}X</div>
-          <div class="status" :class="'status-' + item.status">
+          <div class="status-color status">{{ item.lever }}X</div>
+          <div class="status-color status" :class="'status-' + item.status">
             {{
               item.status == "none"
                 ? t("trade.stock_position_status_none")
@@ -103,7 +103,7 @@
                                 :class="!currStock.profit ? '' : (currStock.profit > 0 ? 'up' : 'down')">{{
                                     getRatio(currStock.ratio) }}</div>
                         </div>
-                        <div class="total_item" style="border-top: 1px dashed #CBCBCB">
+                        <div class="total_item" style="border-top: 1px dashed var(--ex-border-color2)">
                             <div class="total_name">手续费</div>
                             <div class="total_num">{{ currStock.fee || 0 }}</div>
                         </div>
@@ -114,7 +114,7 @@
           </FormItem>
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
-            color="#014CFA">
+            color="var(--ex-primary-color)">
             {{ t("trade.stock_position_btn") }}
           </Button>
         </div>
@@ -169,7 +169,7 @@
           </FormItem>
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
-            color="#014CFA">
+            color="var(--ex-primary-color)">
             {{ t('trade.stock_position_btn') }}
           </Button>
         </div>
@@ -644,7 +644,7 @@ getSessionToken();
 .positions {
   .tr {
     padding: 0.2rem;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;
@@ -652,9 +652,9 @@ getSessionToken();
   }
 
   .th {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.22rem;
-    border-bottom: 1px solid #eff3f8;
+    border-bottom: 1px solid var(--ex-border-color);
     padding: 0.48rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
@@ -674,7 +674,7 @@ getSessionToken();
 
     .name {
       font-size: 0.3rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 600;
       line-height: 0.32rem;
       margin-bottom: 0.18rem;
@@ -686,11 +686,11 @@ getSessionToken();
     }
 
     .status {
-      color: #014cfa;
       height: 0.3rem;
       padding: 0 0.08rem;
       border-radius: 0.3rem;
-      border: 1px solid #014cfa;
+      border-width: 1px;
+      border-style: solid;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -698,28 +698,12 @@ getSessionToken();
       margin-right: 0.08rem;
     }
 
-    .status-open {
-      color: #18b762;
-      border-color: #18b762;
-    }
-
-    .status-fail,
-    .status-lock {
-      color: #e8503a;
-      border-color: #e8503a;
-    }
-
-    .status-none {
-      color: #7e99d6;
-      border-color: #7e99d6;
-    }
-
     .state {
       width: 0.68rem;
       height: 0.36rem;
       border-radius: 0.12rem;
-      color: #18b762;
-      background-color: rgba(24, 183, 98, 0.08);
+      color: var(--ex-up-color);
+      background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -728,29 +712,29 @@ getSessionToken();
     }
 
     .state-short {
-      background: rgba(232, 80, 58, 0.1);
-      color: #e8503a;
+      color: var(--ex-down-color);
+      background: rgb(var(--ex-down-color-rgb) / 0.1);
     }
 
     .amount {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
     }
 
     .price {
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.24rem;
     }
 
     .price:first-child {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-weight: 600;
       line-height: 0.36rem;
     }
 
     .num {
-      color: #6c7b90;
+      color: var(--ex-text-color2);
       font-weight: 600;
       font-size: 0.24rem;
       text-align: right;
@@ -778,13 +762,13 @@ getSessionToken();
   .title {
     text-align: center;
     font-size: 0.28rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-weight: 600;
   }
 
   .form {
     .subtitle {
-      color: #333333;
+      color: var(--ex-text-color);
       font-weight: 400;
       font-size: 0.28rem;
       margin-bottom: 0.12rem;
@@ -795,7 +779,7 @@ getSessionToken();
     }
 
     .subtitle-tip {
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
 
     .submit {
@@ -828,7 +812,7 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;
@@ -843,10 +827,10 @@ getSessionToken();
     .tip {
       text-align: right;
       font-size: 0.24rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
 
       .num {
-        color: #333;
+        color: var(--ex-text-color);
       }
     }
 
@@ -861,7 +845,7 @@ getSessionToken();
         display: flex;
         align-items: center;
         font-size: 0.24rem;
-        color: #333;
+        color: var(--ex-text-color);
         font-weight: 400;
         padding: 0.08rem 0.1rem 0.08rem 0;
 
@@ -887,7 +871,7 @@ getSessionToken();
 }
 
 .num-tag {
-  color: #2168f6;
+  color: var(--ex-primary-color);
   margin-left: 0.08rem;
   transition: all ease 0.3s;
   border-radius: 0.3rem;

@@ -97,7 +97,7 @@
       <div class="h-[0.02rem] w-full bg-color3" />
       <div class="box px-4">
         <div class="box_icon">
-          <div style="width:0.6rem;height:0.6rem" class="text-my">
+          <div style="width:0.6rem;height:0.6rem" class="text-primary">
             <IconSvg name="chatFile" />
           </div>
           <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
@@ -106,7 +106,7 @@
           <input v-model="text" type="text" class="ipt" :placeholder="t('service.input_message')" />
         </div>
         <div class="box_icon" @click="sendText">
-          <div style="width:0.6rem;height:0.6rem" class="text-my">
+          <div style="width:0.6rem;height:0.6rem" class="text-primary">
             <IconSvg name="chatSend" />
           </div>
         </div>
@@ -295,21 +295,13 @@ onBeforeUnmount(() => {
   position: relative;
   height: 100%;
   box-sizing: border-box;
-  // overflow: hidden;
-  // .van-popover__arrow {
-  //   top: 0.32rem;
-  //   margin-left: calc(var(--van-popover-arrow-size) * -1);
-  //   border-left-width: 0;
-  //   border-right-color: #f6f8fe;
-  //   color: #f6f8fe;
-  // }
 
   .avatar_icon {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
-    background-color: #2068F6;
-    color: #fff;
+    background-color: var(--ex-bg-primary);
+    color: var(--ex-bg-primary-text-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,14 +327,14 @@ onBeforeUnmount(() => {
         height: 0.64rem;
         position: relative;
         border-radius: 50%;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         margin-right: 0.2rem;
         top: 0.05rem;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
 
         .pointer {
           width: 0.16rem;
@@ -351,7 +343,7 @@ onBeforeUnmount(() => {
           right: 0;
           bottom: 0;
           border-radius: 50%;
-          background-color: #30bf87;
+          background-color: var(--ex-success-color);
         }
       }
 
@@ -360,14 +352,14 @@ onBeforeUnmount(() => {
           display: inline-block;
           max-width: 4rem;
           height: auto;
-          background-color: #eee;
+          background-color: var(--ex-bg-color3);
           border-radius: 0.12rem;
           margin-bottom: 0.1rem;
         }
 
         .time {
           font-size: 0.24rem;
-          color: #aeaeae;
+          color: var(--ex-text-color4);
         }
       }
 
@@ -384,14 +376,14 @@ onBeforeUnmount(() => {
         height: 0.64rem;
         position: relative;
         border-radius: 50%;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         margin-right: 0.2rem;
         top: 0.05rem;
         flex-shrink: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        color: var(--ex-bg-primary-text-color);
 
         .pointer {
           width: 0.16rem;
@@ -400,7 +392,7 @@ onBeforeUnmount(() => {
           right: 0;
           bottom: 0;
           border-radius: 50%;
-          background-color: #30bf87;
+          background-color: var(--ex-success-color);
         }
       }
 
@@ -411,8 +403,8 @@ onBeforeUnmount(() => {
           top: 0.2rem;
           margin-left: calc(var(--van-popover-arrow-size) * -1);
           border-left-width: 0;
-          border-right-color: #f6f8fe;
-          color: #f6f8fe;
+          border-right-color: var(--ex-border-color);
+          color: var(--ex-border-color);
         }
 
         .op_text_content {
@@ -424,8 +416,8 @@ onBeforeUnmount(() => {
           height: 1rem;
 
           line-height: 0.4rem;
-          background-color: #f6f8fe;
-          color: #333;
+          background-color: var(--ex-bg-color2);
+          color: var(--ex-text-color);
           text-align: left;
           border-radius: 0.12rem;
           // border-top-right-radius: 0.24rem;
@@ -441,7 +433,7 @@ onBeforeUnmount(() => {
             width: 0;
             height: 0;
             border-left: 0 solid transparent;
-            border-right: 0.14rem solid #f6f8fe;
+            border-right: 0.14rem solid var(--ex-border-color);
             border-top: 0.14rem solid transparent;
             border-bottom: 0.14rem solid transparent;
           }
@@ -464,7 +456,7 @@ onBeforeUnmount(() => {
         display: inline-block;
         max-width: 4rem;
         height: auto;
-        background-color: #eee;
+        background-color:  var(--ex-bg-color3);
         border-radius: 0.12rem;
         margin-bottom: 0.1rem;
       }
@@ -502,7 +494,7 @@ onBeforeUnmount(() => {
         padding: 0.2rem 0.4rem;
         line-height: 0.4rem;
         background-color: #3d65f9;
-        color: #fff;
+        color: var(--ex-white);
         text-align: left;
         max-width: 4rem;
         border-radius: 0.12rem;
@@ -515,7 +507,7 @@ onBeforeUnmount(() => {
 
       .time {
         font-size: 0.24rem;
-        color: #aeaeae;
+        color: var(--ex-text-color4);
       }
     }
 
@@ -525,7 +517,7 @@ onBeforeUnmount(() => {
 
       .time {
         font-size: 0.28rem;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         margin-bottom: 0.26rem;
       }
 
@@ -534,8 +526,8 @@ onBeforeUnmount(() => {
         // height: 0.6rem;
         border-radius: 0.32rem;
         padding: 0.2rem;
-        background: var(--F5F7FC, #f5f7fc);
-        color: var(--666D80, #666d80);
+        background: var(--F5F7FC, var(--ex-bg-color2));
+        color: var(--666D80, var(--ex-text-color2));
         text-align: center;
         font-size: 0.3rem;
         line-height: 0.6rem;
@@ -553,13 +545,13 @@ onBeforeUnmount(() => {
     padding-top: 0.2rem;
     display: flex;
     align-items: center;
-    // border-top: 1px solid #d0d8e2;
+    // border-top: 1px solid var(--ex-border-color2);
     // padding: 0 0.32rem;
 
     .item {
       height: 0.96rem;
       padding: 0 0.24rem;
-      border: 0.02rem solid #d0d8e2;
+      border: 0.02rem solid var(--ex-border-color2);
       flex: 1;
       margin: 0 0.3rem;
       border-radius: 0.32rem;

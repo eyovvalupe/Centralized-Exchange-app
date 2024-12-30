@@ -23,9 +23,9 @@
 
       <div class="btns">
         <Button round color="white" class="btn" @click="close">
-          <span style="color: #666d80">{{ $t("assets.safety_trade_cancel") }}</span>
+          <span style="color: var(--ex-text-color2)">{{ $t("assets.safety_trade_cancel") }}</span>
         </Button>
-        <Button :loading="loading" round color="#014CFA" class="btn" type="primary" @click="submit">{{
+        <Button :loading="loading" round color="var(--ex-primary-color)" class="btn" type="primary" @click="submit">{{
           $t("assets.safety_trade_confirm") }}</Button>
       </div>
     </div>
@@ -106,14 +106,14 @@ defineExpose({
 
 <style lang="less" scoped>
 .safepassword_dialog {
-  background-color: #fefefe;
+  background-color: var(--ex-bg-color);
   padding: 0.96rem 0.32rem 0.6rem 0.32rem;
 
   position: relative;
 
   .main_title {
     font-size: 0.32rem;
-    color: #121826;
+    color: var(--ex-text-color);
     position: absolute;
     font-weight: 400;
     top: 0.5rem;
@@ -133,7 +133,7 @@ defineExpose({
       border-radius: 0.96rem;
       flex: 1;
       margin-left: 0.32rem;
-      border: 1px solid #d0d8e2 !important;
+      border: 1px solid var(--ex-border-color2) !important;
 
       :deep(span.van-button__text) {
         font-size: 0.32rem;
@@ -141,14 +141,14 @@ defineExpose({
     }
 
     .btn.van-button--primary {
-      border-color: #014cfa !important;
+      border-color: var(--ex-primary-color) !important;
     }
   }
 
   .title {
     font-size: 0.28rem;
     line-height: 0.44rem;
-    color: #000;
+    color: var(--ex-text-color);
     margin-bottom: 0.2rem;
     margin-top: 0.4rem;
     text-align: left;
@@ -156,7 +156,7 @@ defineExpose({
 
   .pass_ipt {
     height: 1.12rem;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     width: 100%;
     display: block;
     box-sizing: border-box;
@@ -164,7 +164,7 @@ defineExpose({
     padding: 0 0.4rem;
 
     &:focus {
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
     }
   }
 
@@ -190,7 +190,7 @@ defineExpose({
   }
 
   .err_ipt {
-    border: 1px solid #e8503a;
+    border: 1px solid var(--ex-border-error);
   }
 
   .code_ipt {
@@ -198,15 +198,15 @@ defineExpose({
     margin: 0;
 
     :deep(.van-password-input__item) {
-      border: 1px solid #eceff3;
-      background-color: #fff;
+      border: 1px solid var(--ex-border-color);
+      background-color: var(--ex-bg-color);
       width: 1rem;
       height: 1rem;
       box-sizing: border-box;
       border-radius: 0.16rem;
 
       &:has(.van-password-input__cursor) {
-        border: 1px solid #014cfa;
+        border: 1px solid var(--ex-primary-color);
       }
     }
   }

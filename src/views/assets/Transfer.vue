@@ -48,7 +48,7 @@
           <ArrowIcon />
         </div>
 
-        <FormItem background="#fff" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
+        <FormItem background="var(--ex-bg-color)" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
           :btn-placeholder="form.fromCurrency.name" :placeholder="t('transfer.out_amount')" :inputType="'number'"
           @update:modelValue="changeAmount('from')" />
       </div>
@@ -86,13 +86,13 @@
             <img :src="getStaticImgUrl(`/static/icons/more_icon.svg`)" alt="">
           </div>
         </div>
-        <FormItem background="#fff" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
+        <FormItem background="var(--ex-bg-color)" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
           :btn-placeholder="form.toCurrency.name" :placeholder="t('transfer.in_amount')" :inputType="'number'"
           @update:modelValue="changeAmount('to')" />
         <!-- <div>
             <span v-show="formType == 'transfer'">自动换算</span>
             <span
-              :style="{ color: form.amount === '' ? '#A4ACB9' : '' }"
+              :style="{ color: form.amount === '' ? 'var(--ex-text-color4)' : '' }"
               v-show="formType == 'swap'"
               >{{
                 form.amount === ""
@@ -109,7 +109,7 @@
       </div>
     </div>
 
-    <Button @click="openSafePass" :loading="loading" round color="#014CFA" class="submit" type="primary">{{
+    <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
       $t("transfer.btn") }}</Button>
 
     <!-- 充提记录 -->
@@ -491,7 +491,7 @@ const changeAmount = (val) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0953fa;
+    color: var(--ex-text-primary);
     font-size: 0.28rem;
 
     .top-record-icon {
@@ -504,7 +504,7 @@ const changeAmount = (val) => {
   .form {
     .form_box {
       border-radius: 0.32rem;
-      border: 1px solid #eff3f8;
+      border: 1px solid var(--ex-border-color);
       padding: 0.42rem 0.32rem 0.4rem 0.32rem;
       margin-top: 0.52rem;
       position: relative;
@@ -515,16 +515,16 @@ const changeAmount = (val) => {
     }
 
     .form_text {
-      color: #666d80;
+      color: var(--ex-text-color2);
       margin-right: 0.32rem;
     }
 
     .form_box_active {
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
     }
 
     .err_ipt {
-      border: 1px solid #e8503a;
+      border: 1px solid var(--ex-error-color);
     }
 
     .account_item {
@@ -569,18 +569,18 @@ const changeAmount = (val) => {
       font-size: 0.24rem;
       margin-top: 0.2rem;
       line-height: 0.4rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
     }
 
     .tip {
       font-weight: 400;
       font-size: 0.24rem;
-      color: #707070;
+      color: var(--ex-text-color2);
       line-height: 0.4rem;
       margin-top: 0.12rem;
 
       .num {
-        color: #333333;
+        color: var(--ex-text-color);
         margin-left: 0.04rem;
         font-weight: 500;
       }

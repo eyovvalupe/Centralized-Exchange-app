@@ -155,7 +155,7 @@
       <div class="list">
         <div class="add_item" @click="goAddAccount">
           <Icon style="font-size: 0.48rem" name="add-o" />
-          <span style="margin-left: 0.2rem; color: #999999; font-size: 0.24rem">{{
+          <span style="margin-left: 0.2rem; color: var(--ex-text-color3); font-size: 0.24rem">{{
             t('market.market_buy_fast_account_add')
           }}</span>
         </div>
@@ -489,12 +489,12 @@ defineExpose({
     justify-content: space-between;
     line-height: 0.68rem;
     margin: 0.4rem 0 0.2rem;
-    border: 0.5px solid #d0d8e2;
+    border: 0.5px solid var(--ex-border-color2);
     width: 47%;
     border-radius: 0.68rem;
 
     .tab {
-      color: #666d80;
+      color: var(--ex-text-color2);
       margin: 0;
       width: 1.6rem;
       text-align: center;
@@ -503,8 +503,8 @@ defineExpose({
 
     .active_tab {
       font-weight: bold;
-      color: white;
-      background: var(--main-color);
+      color: var(--ex-bg-primary-text-color);
+      background: var(--ex-primary-color);
       text-align: center;
     }
   }
@@ -520,7 +520,7 @@ defineExpose({
     .tab {
       margin-right: 0.24rem;
       min-width: 1rem;
-      color: #9ea3ae;
+      color: var(--ex-text-color3);
       height: 100%;
       display: flex;
       align-items: center;
@@ -529,16 +529,16 @@ defineExpose({
 
     .active_tab {
       font-weight: bold;
-      color: var(--main-text-color);
+      color: var(--ex-text-color);
     }
 
     .encryption {
       > :deep(.van-tabs__wrap) {
-        border-bottom: 1px solid #f0f3f8;
+        border-bottom: 1px solid var(--ex-border-color);
         padding-right: 0;
 
         .van-tabs__line {
-          background-color: var(--main-color) !important;
+          background-color: var(--ex-primary-color) !important;
         }
 
         .van-tabs__nav,
@@ -572,11 +572,11 @@ defineExpose({
     .subtab {
       display: inline-block;
       margin-right: 0.4rem;
-      color: #9ea3ae;
+      color: var(--ex-text-color3);
     }
 
     .active_subtab {
-      color: #000;
+      color: var(--ex-text-color);
       font-weight: bold;
     }
   }
@@ -584,8 +584,8 @@ defineExpose({
   .list {
     .item {
       padding: 0.24rem 0.32rem;
-      color: #666;
-      background-color: #f5f7fc;
+      color: var(--ex-text-color2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       margin-bottom: 0.2rem;
 
@@ -597,14 +597,14 @@ defineExpose({
           width: 0.64rem;
           height: 0.64rem;
           border-radius: 50%;
-          background-color: var(--main-color);
+          background-color: var(--ex-primary-color);
           margin-right: 0.24rem;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 0.48rem;
-          color: #fff;
+          color: var(--ex-bg-primary-text-color);
           line-height: 0;
 
           .avatar_status {
@@ -612,7 +612,7 @@ defineExpose({
             width: 0.13rem;
             height: 0.13rem;
             border-radius: 50%;
-            background-color: #30bf87;
+            background-color: var(--ex-success-color);
             bottom: 0.04rem;
             right: 0.04rem;
           }
@@ -624,14 +624,14 @@ defineExpose({
           .name {
             margin-bottom: 0.2rem;
             font-style: 0.32rem;
-            color: var(--main-text-color);
+            color: var(--ex-text-color);
           }
 
           .info {
             font-size: 0.24rem;
             display: flex;
             align-items: center;
-            color: #8f92a1;
+            color: var(--ex-text-color3);
 
             span {
               margin-right: 0.1rem;
@@ -654,7 +654,7 @@ defineExpose({
 
         .price {
           .amount {
-            color: var(--main-text-color);
+            color: var(--ex-text-color);
             font-weight: bold;
             font-size: 0.48rem;
             margin-bottom: 0.2rem;
@@ -665,8 +665,8 @@ defineExpose({
           width: 1.6rem;
           height: 0.72rem;
           border-radius: 0.64rem;
-          background-color: var(--main-color);
-          color: #fff;
+          background-color: var(--ex-primary-color);
+          color: var(--ex-bg-primary-text-color);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -694,7 +694,7 @@ defineExpose({
     padding: 0.32rem;
 
     .form_item {
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       height: 0.96rem;
       display: flex;
       align-items: center;
@@ -709,12 +709,12 @@ defineExpose({
       }
 
       .all {
-        color: var(--main-color);
+        color: var(--ex-primary-color);
       }
 
       .tip_text {
         font-size: 0.28rem;
-        color: #a4acb9;
+        color: var(--ex-text-color4);
         position: absolute;
         left: 0.24rem;
         pointer-events: none;
@@ -732,18 +732,18 @@ defineExpose({
     }
 
     .tip {
-      color: #333;
+      color: var(--ex-text-color);
     }
 
     .btn {
       margin-top: 0.32rem;
       height: 0.96rem;
-      background-color: var(--main-color);
+      background-color: var(--ex-primary-color);
       border-radius: 0.96rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: var(--ex-bg-primary-text-color);
     }
   }
 }
@@ -763,7 +763,7 @@ defineExpose({
 </style>
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   overflow: hidden;
@@ -779,7 +779,7 @@ defineExpose({
     line-height: 1rem;
     font-size: 0.32rem;
     width: 100%;
-    color: #121826;
+    color: var(--ex-text-color);
     pointer-events: none;
     font-weight: bold;
   }
@@ -798,7 +798,7 @@ defineExpose({
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
 
@@ -810,20 +810,20 @@ defineExpose({
   }
 
   .swap_dialog_item_active {
-    color: var(--main-color);
+    color: var(--ex-primary-color);
     font-weight: 600;
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: var(--main-color);
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
     }
   }
 
   .search_box {
     height: 0.8rem;
-    background-color: #f5f5f5;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.4rem;
     display: flex;
     align-items: center;
@@ -833,7 +833,7 @@ defineExpose({
 
     input {
       flex: 1;
-      color: #121826;
+      color: var(--ex-text-color);
     }
   }
 
@@ -849,14 +849,14 @@ defineExpose({
       display: flex;
       align-items: center;
       padding: 0 0.4rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-weight: 400;
     }
 
     .active_tab {
-      background-color: #f6f8ff;
-      color: var(--main-color);
+      background-color: var(--ex-bg-color2);
+      color: var(--ex-primary-color);
       font-weight: 500;
     }
   }
@@ -875,7 +875,7 @@ defineExpose({
 
   .add_item {
     margin-bottom: 0.36rem;
-    border: 1px dashed #ccd7fd;
+    border: 1px dashed var(--ex-border-color2);
     border-radius: 0.12rem;
     height: 1.44rem;
     display: flex;
@@ -890,13 +890,13 @@ defineExpose({
     align-items: center;
     justify-content: space-between;
     position: relative;
-    background-color: #f6f7fa;
+    background-color: var(--ex-bg-color2);
     padding: 0 0.4rem 0 0.36rem;
     overflow: hidden;
     margin-bottom: 0.36rem;
 
     .card_icon {
-      background-color: #d9e4ff;
+      background-color: var(--ex-bg-color4);
       width: 0.96rem;
       height: 0.96rem;
       border-radius: 0.16rem;
@@ -915,7 +915,7 @@ defineExpose({
       margin: 0 0.2rem 0 0.36rem;
       text-align: left;
       font-size: 0.24rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 500;
       line-height: 1;
 
@@ -928,7 +928,7 @@ defineExpose({
   }
 
   .dialog_account_item_active {
-    border: 1px solid #1a59f6;
+    border: 1px solid var(--ex-primary-color);
 
     .checked {
       position: absolute;

@@ -1,7 +1,7 @@
 <template>
   <router-view v-slot="{ Component }">
     <div v-show="pageLoading" class="full_page_loading">
-      <Loading :size="44" color="#014cfa" />
+      <Loading :size="44" color="var(--ex-primary-color)" />
     </div>
     <div v-show="!pageLoading" class="app_scroll">
       <transition :name="transitionName">

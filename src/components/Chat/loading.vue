@@ -26,7 +26,7 @@
     width: 100vw;
     height: 100%;
     position: fixed;
-    background: #ffffffd9;
+    background: rgb(var(--ex-bg-color-rgb) / 0.7);
     z-index: 20;
 }
 .lds-ring,
@@ -52,10 +52,10 @@
     width: 64px;
     height: 64px;
     margin: 8px;
-    border: 8px solid #165dff;
+    border: 8px solid var(--ex-primary-color);
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: #165dff transparent transparent transparent;
+    border-color: var(--ex-primary-color) transparent transparent transparent;
 }
 
 .lds-ring div:nth-child(1) {

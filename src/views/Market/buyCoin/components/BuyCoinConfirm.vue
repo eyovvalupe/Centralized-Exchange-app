@@ -52,7 +52,7 @@
           
         </div>
         <div class="dialog_account_item h-[1.5rem] "  v-else>
-          <div class="flex w-full flex-col items-center justify-center text-my"
+          <div class="flex w-full flex-col items-center justify-center text-primary"
           @click="showAccountDialog=true;">
             <div class="mb-1 size-6 rounded-50 flex items-center justify-center border-[0.03rem] border-my text-20 leading-none">+</div>
             <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
@@ -62,7 +62,7 @@
 
       <FormItem size="large" :title="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
       <div class="pt-[0.6rem] pb-[0.32rem]">
-        <Button size="large" round :loading="loading" @click="submit" color="#014CFA">{{ t('trade.stock_opening_confirm') }}</Button>
+        <Button size="large" round :loading="loading" @click="submit" color="var(--ex-primary-color)">{{ t('trade.stock_opening_confirm') }}</Button>
       </div>
     </div>
     
@@ -144,7 +144,7 @@ defineExpose({
     position: relative;
 
     .card_icon {
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       width: 0.96rem;
       height: 0.96rem;
       border-radius: 1rem;
@@ -163,7 +163,7 @@ defineExpose({
       margin: 0 0.2rem 0 0.36rem;
       text-align: left;
       font-size: 0.24rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 500;
       line-height: 1;
 

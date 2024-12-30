@@ -67,6 +67,6 @@ const click = (val) => {
 </script>
 <style lang="less" scoped>
 .crypto_icon {
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
 }
 </style>

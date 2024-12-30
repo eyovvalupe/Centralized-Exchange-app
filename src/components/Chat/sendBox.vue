@@ -104,7 +104,7 @@ const uploadImg = (event) => {
     border-radius: 16px;
     text-indent: 16px;
     font-size: 15px;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     overflow-y: hidden;
   }
 

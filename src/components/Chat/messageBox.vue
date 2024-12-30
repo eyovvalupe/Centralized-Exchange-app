@@ -159,7 +159,7 @@ function formatDate(date) {
       width: 0;
       height: 0;
       border-left: 0.2rem solid transparent;
-      border-right: 0.2rem solid #eff3f8;
+      border-right: 0.2rem solid var(--ex-border-color);
       border-bottom: 0.2rem solid transparent;
       border-top: 0.2rem solid transparent;
     }
@@ -209,7 +209,7 @@ function formatDate(date) {
             width: 0;
             height: 0;
             border-left: 0.2rem solid transparent;
-            border-right: 0.2rem solid #eff3f8;
+            border-right: 0.2rem solid var(--ex-border-color);
             border-bottom: 0.2rem solid transparent;
             border-top: 0.2rem solid transparent;
           }
@@ -241,7 +241,7 @@ function formatDate(date) {
         .user-icon {
           width: 0;
           height: 0;
-          border-left: 15px solid #014cfa;
+          border-left: 15px solid var(--ex-primary-color);
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
           margin-left: -9px;
@@ -252,7 +252,7 @@ function formatDate(date) {
       .time {
         font-size: 12px;
         padding: 5px 0 0 10px;
-        color: #666;
+        color: var(--ex-text-color2);
       }
 
       .receive-box {
@@ -261,7 +261,7 @@ function formatDate(date) {
         .user-icon {
           width: 0;
           height: 0;
-          border-right: 15px solid #eff3f8;
+          border-right: 15px solid var(--ex-border-color);
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
           margin-left: 7px;
@@ -285,8 +285,8 @@ function formatDate(date) {
 
     &.receive {
       .con {
-        background: #eff3f8;
-        color: #061023;
+        background: var(--ex-bg-color3);
+        color: var(--ex-text-color);
 
         &.img {
           padding: 0 !important;
@@ -304,22 +304,14 @@ function formatDate(date) {
       }
 
       .con {
-        background: #014cfa;
-        color: #fff;
+        background: var(--ex-primary-color);
+        color: var(--ex-bg-primary-text-color);
 
         &.img {
           box-shadow: none !important;
           background: transparent !important;
         }
 
-        // &::before {
-        //   content: "";
-        //   position: absolute;
-        //   top: 0;
-        //   right: -15px;
-        //   border: 8px solid transparent;
-        //   border-left: 8px solid #449742;
-        // }
       }
     }
 
@@ -329,14 +321,7 @@ function formatDate(date) {
         text-align: left;
       }
 
-      // .con::before {
-      //   content: "";
-      //   position: absolute;
-      //   top: 15px;
-      //   left: -15px;
-      //   border: 8px solid transparent;
-      //   border-right: 8px solid #f2f2f2;
-      // }
+
     }
 
     .send-conimg {
@@ -352,15 +337,15 @@ function formatDate(date) {
 
   #hasNewMessage {
     text-align: center;
-    background: #f5f5f5;
+    background: var(--ex-bg-color2);
     padding: 10px 0;
     margin-bottom: 10px;
-    color: #959494;
+    color: var(--ex-text-color3);
   }
 
   .no-message {
     text-align: center;
-    color: #999;
+    color: var(--ex-text-color3);
   }
 }
 </style>

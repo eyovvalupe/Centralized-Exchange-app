@@ -9,7 +9,7 @@
         <div class="tips">恭喜认购完成，请耐心等待中签信息</div>
         <div class="btn flex justify-center items-center w-[100%]">
             <Button @click="router.push('/trade?to=ipo')" round class="next">继续认购</Button>
-            <Button @click="router.push('/trade?to=ipo&active=1')" round color="#FFF;" class="info"
+            <Button @click="router.push('/trade?to=ipo&active=1')" round color="var(--ex-bg-color)" class="info"
                 type="primary">订单详情</Button>
         </div>
     </div>
@@ -38,7 +38,7 @@ const router = useRouter();
 
     .title {
         margin: -0.6rem 0 0.3rem 0;
-        color: #000;
+        color: var(--ex-text-color);
         font-size: 0.4rem;
         font-style: normal;
         font-weight: 600;
@@ -49,7 +49,7 @@ const router = useRouter();
     .tips {
         font-size: 0.28rem;
         font-style: normal;
-        color: #061023;
+        color: var(--ex-text-color);
         margin-bottom: 0.78rem;
     }
 
@@ -57,10 +57,10 @@ const router = useRouter();
         .next {
             width: 3.27rem;
             height: 1.12rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             padding: 0.16rem;
             border-radius: 1.3rem;
-            border: 1px solid #014CFA !important;
+            border: 1px solid var(--ex-primary-color) !important;
             margin-right: 0.15rem;
             font-size: 0.3rem;
             padding: 0rem;
@@ -69,10 +69,10 @@ const router = useRouter();
         .info {
             width: 3.27rem;
             height: 1.12rem;
-            color: #FFFFFF;
+            color: var(--ex-bg-primary-text-color);
             padding: 0.16rem;
             border-radius: 1.3rem;
-            background: #014CFA;
+            background: var(--ex-primary-color);
             margin-left: 0.15rem;
             font-size: 0.3rem;
             padding: 0rem;

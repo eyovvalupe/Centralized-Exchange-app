@@ -2,8 +2,12 @@
 :root:root {
     --van-overlay-background: rgba(31, 41, 55, 0.50);
     --van-button-large-height: 1.12rem;
-    --van-switch-on-background: rgb(@ex-primary-color-rgb);
-
+    --van-primary-color:var(--ex-primary-color);
+    --van-switch-on-background: var(--ex-primary-color);
+    --van-tab-text-color:var(--ex-text-color2);
+    --van-background-2:var(--ex-bg-color);
+    --van-text-color:var(--ex-text-color);
+    --van-button-plain-background:var(--ex-bg-color);
 }
 
 .van-toast--loading {
@@ -11,7 +15,7 @@
     background: rgba(0, 0, 0, 0) !important;
 
     .van-loading {
-        color: #555;
+        color: var(--ex-info-color);
     }
 }
 
@@ -43,7 +47,7 @@
 
     &::after {
         content: '';
-        background-color: #D9D9D9;
+        background-color: var(--ex-border-color2);
         width: 0.64rem;
         height: 0.08rem;
         border-radius: 0.08rem;
@@ -58,7 +62,7 @@
         margin-top: 0.48rem;
         height: 0.44rem;
         line-height: 0.44rem;
-        color: #121826;
+        color: var(--ex-text-color);
         text-align: center;
         font-size: 0.32rem;
         font-weight: 500;
@@ -89,12 +93,12 @@
     height: 0.6rem;
     flex-shrink: 0;
     border-radius: 1rem;
-    background: #014CFA;
+    background: var(--ex-primary-color);
     line-height: 0.6rem;
     position: absolute;
     right: 0.3rem;
     top: 0.22rem;
-    color: #FFF;
+    color: var(--ex-bg-primary-text-color);
     text-align: center;
     font-size: 0.3rem;
     font-weight: 500;
@@ -143,7 +147,7 @@
 // 弹窗关闭按钮
 .van-popup__close-icon {
     font-size: 0.36rem !important;
-    color: #333 !important;
+    color: var(--ex-text-color) !important;
     transform: translateX(-2px) translateY(2px);
 }
 
@@ -154,21 +158,21 @@
 
     .van-action-sheet__item {
         padding: 0.32rem;
-        border-bottom: 1px solid #F5F5F5;
+        border-bottom: 1px solid var(--ex-border-color);
         font-size: 0.28rem !important;
     }
 }
 
 .van-action-sheet__header {
     font-weight: 500 !important;
-    color: #121826 !important;
+    color: var(--ex-text-color) !important;
     font-size: 0.32rem !important;
     text-align: left !important;
     padding-left: 0.32rem !important;
 }
 
 .action-sheet-active {
-    color: #014CFA !important;
+    color: var(--ex-primary-color) !important;
     font-weight: 600;
     position: relative;
 
@@ -188,7 +192,7 @@
 }
 
 .van-dialog {
-    box-shadow: 0 0 10px #ddd;
+    box-shadow: 0 0 10px var(--ex-border-color2);
 }
 
 /*自定义选项卡样式1*/
@@ -199,7 +203,7 @@
         overflow: inherit;
 
         .van-tabs__nav {
-            background: #EFF3F8;
+            background: var(--ex-bg-color3);
             height: 0.8rem;
             border-radius: 0.32rem;
             overflow: inherit;
@@ -209,7 +213,7 @@
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #8A8C95;
+            color: var(--ex-text-color3);
         }
 
         .van-tab--shrink {
@@ -218,8 +222,8 @@
 
         .van-tab--active {
             border-radius: 0.32rem 0.32rem 0 0;
-            background: #FFF;
-            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            background: var(--ex-bg-color);
+            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
             height: 0.92rem;
             position: relative;
             top: -0.12rem;
@@ -228,7 +232,7 @@
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 600;
-                color: #014CFA;
+                color: var(--ex-primary-color);
 
             }
         }
@@ -255,7 +259,7 @@
 
         &::after {
             content: '';
-            background: #EFF3F8;
+            background: var(--ex-bg-color3);
             height: 0.8rem;
             border-radius: 0.32rem;
             width: 100%;
@@ -288,8 +292,8 @@
 
         .van-tab--active {
             border-radius: 0.32rem 0.32rem 0 0;
-            background: #FFF;
-            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            background: var(--ex-bg-color);
+            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
             height: 0.92rem;
             position: relative;
             z-index: 1;
@@ -297,7 +301,7 @@
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 600;
-                color: #014CFA;
+                color: var(--ex-primary-color);
                 margin-top: 0px;
 
             }
@@ -325,19 +329,19 @@
         .van-tabs__nav {
             height: 0.92rem;
             overflow: inherit;
-            border-bottom: 1px solid #EFF3F8;
-            border-color: #EFF3F8 !important;
+            border-bottom: 1px solid var(--ex-border-color);
+            border-color: var(--ex-border-color) !important;
         }
 
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #8A8C95;
+            color: var(--ex-text-color3);
         }
 
         .van-tab__text {
             font-size: 0.32rem;
-            color: #666D80;
+            color: var(--ex-text-color2);
         }
 
         .van-tab--shrink {
@@ -354,14 +358,14 @@
             .van-tab__text {
                 font-size: 0.36rem;
                 font-weight: 500;
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
 
             &::after {
                 content: '';
                 width: 100%;
                 height: 0.08rem;
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
                 position: absolute;
                 left: 0;
                 bottom: 0;
@@ -383,19 +387,19 @@
         .van-tabs__nav {
             height: 0.82rem;
             overflow: inherit;
-            color: #8A8C95;
-            background-color: #fff;
+            color: var(--ex-text-color3);
+            background-color: var(--ex-bg-color);
             position: relative;
             border-radius: 0.32rem 0.32rem 0 0;
-            border-bottom: 0.02rem solid #EFF3F8 !important;
+            border-bottom: 0.02rem solid var(--ex-border-color) !important;
         }
 
 
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #014CFA;
-            background-color: #fff;
+            color: var(--ex-primary-color);
+            background-color: var(--ex-bg-color);
 
             &::after {
                 content: '';
@@ -414,7 +418,7 @@
 
         .van-tab__text {
             font-size: 0.32rem;
-            color: #666D80;
+            color: var(--ex-text-color2);
         }
 
         .van-tab--shrink {
@@ -430,13 +434,13 @@
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 500;
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
 
         }
 
         .van-tab+.van-tab {
-            border-left: 1px solid #EFF3F8;
+            border-left: 1px solid var(--ex-border-color);
         }
 
         .van-tab:first-child.van-tab--active {
@@ -460,7 +464,7 @@
         height: 0.6rem !important;
 
         .van-tabs__nav--line {
-            border-bottom: 1px solid #EFF3F8 !important;
+            border-bottom: 1px solid var(--ex-border-color) !important;
             padding-bottom: 0.12rem;
             box-sizing: border-box;
             padding-left: 0px;
@@ -468,12 +472,12 @@
 
             .van-tab__text {
                 font-size: 0.28rem;
-                color: #8F92A1;
+                color: var(--ex-text-color3);
             }
 
             .van-tab--active {
                 .van-tab__text {
-                    color: #121826;
+                    color: var(--ex-text-color);
                 }
             }
 
@@ -483,7 +487,7 @@
             }
 
             .van-tabs__line {
-                background-color: #014CFA !important;
+                background-color: var(--ex-primary-color) !important;
                 width: 0.36rem;
                 bottom: 0;
                 border-radius: 0.3rem;
@@ -500,11 +504,11 @@
         overflow: inherit;
 
         .van-tabs__nav {
-            background: #fff;
+            background: var(--ex-bg-color);
             height: 0.92rem;
             border-radius: 0.32rem;
             overflow: inherit;
-            border: 1px solid #EFF3F8 !important;
+            border: 1px solid var(--ex-border-color) !important;
 
         }
 
@@ -519,7 +523,7 @@
         .van-tab--active {
             flex: 1;
             text-align: center;
-            color: #8A8C95;
+            color: var(--ex-text-color3);
         }
 
         .van-tab--shrink {
@@ -528,15 +532,15 @@
 
         .van-tab--active {
             border-radius: 0.32rem;
-            background: #014CFA;
-            box-shadow: 0px -0.04rem 0.1rem 0 rgba(1, 76, 250, 0.10);
+            background: var(--ex-primary-color);
+            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
             height: 0.92rem;
             z-index: 1;
 
             .van-tab__text {
                 font-size: 0.32rem;
                 font-weight: 600;
-                color: #fff;
+                color: var(--ex-bg-primary-text-color);
 
             }
         }
@@ -560,12 +564,12 @@
 
             .van-tab__text {
                 font-size: 0.28rem;
-                color: #8F92A1;
+                color: var(--ex-text-color3);
             }
 
             .van-tab {
                 padding: 0 0.24rem;
-                border: 1px solid #D0D8E2;
+                border: 1px solid var(--ex-border-color2);
                 margin-right: 0.12rem;
                 border-radius: 0.5rem;
                 height: 0.68rem;
@@ -573,11 +577,11 @@
             }
 
             .van-tab--active {
-                background-color: #014CFA;
-                border-color: #014CFA;
+                background-color: var(--ex-primary-color);
+                border-color: var(--ex-primary-color);
 
                 .van-tab__text {
-                    color: #fff;
+                    color: var(--ex-bg-primary-text-color);
                     font-weight: 400;
                 }
             }
@@ -604,12 +608,12 @@
 
             .van-tab__text {
                 font-size: 0.24rem;
-                color: #8F92A1;
+                color: var(--ex-text-color3);
             }
 
             .van-tab {
                 padding: 0 0.24rem;
-                border: 1px solid #D0D8E2;
+                border: 1px solid var(--ex-border-color2);
                 margin-right: 0.12rem;
                 border-radius: 0.5rem;
                 height: 0.64rem;
@@ -617,11 +621,11 @@
             }
 
             .van-tab--active {
-                background-color: #014CFA;
-                border-color: #014CFA;
+                background-color: var(--ex-primary-color);
+                border-color: var(--ex-primary-color);
 
                 .van-tab__text {
-                    color: #fff;
+                    color: var(--ex-bg-primary-text-color);
                     font-weight: 400;
                 }
             }
@@ -639,15 +643,6 @@
 .van-overlay {
     backdrop-filter: blur(4px);
 }
-
-
-// div.van-slider{
-//     width: 100%;
-//     background-color: #D0D8E2;
-// }
-// .van-slider__button{
-//     margin-left: 40px;
-// }
 
 /* 省略 */
 .van-omit1,

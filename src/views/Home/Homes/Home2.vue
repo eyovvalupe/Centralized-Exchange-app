@@ -400,7 +400,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-home2 {
-    background-color: #000;
+    background-color: var(--ex-text-color);
     min-height: 100%;
     position: relative;
     overflow: hidden;
@@ -717,7 +717,7 @@ onMounted(() => {
                     justify-content: center;
                     background-color: #00F0FF;
                     font-size: 0.3rem;
-                    color: #000;
+                    color: var(--ex-text-color);
                     margin: 0.28rem 0 0.2rem 0;
                     padding: 0 0.4rem;
                 }
@@ -740,10 +740,10 @@ onMounted(() => {
                     height: 0.6rem;
                     padding: 0 0.6rem;
                     border-radius: 0.3rem;
-                    background-color: #fff;
+                    background-color: var(--ex-bg-color);
                     font-size: 0.24rem;
                     font-weight: 400;
-                    color: #000;
+                    color: var(--ex-text-color);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -806,7 +806,7 @@ onMounted(() => {
 
             :deep(.van-tab--card) {
                 border-right: none;
-                color: #061023;
+                color: var(--ex-text-color);
                 border-radius: 0.32rem;
                 margin-right: 0.1rem;
                 transition: all ease 0.2s;
@@ -817,7 +817,7 @@ onMounted(() => {
                 background-color: #00F0FF;
                 border-color: #00F0FF;
                 border-radius: 0.32rem;
-                color: #000;
+                color: var(--ex-text-color);
                 font-weight: 500;
                 font-size: 0.3rem;
             }
@@ -899,7 +899,7 @@ onMounted(() => {
                 justify-content: center;
                 font-size: 0.3rem;
                 font-weight: 600;
-                color: #000;
+                color: var(--ex-text-color);
                 margin-top: 0.36rem;
             }
         }

@@ -4,7 +4,7 @@
     <Top :title="t('trade.ai_position_title')" :backFunc="backFunc" />
 
     <div class="loading-wrap" v-if="loading">
-      <Loading v-if="loading" size="44px" color="#2168F6" />
+      <Loading v-if="loading" size="44px" color="var(--ex-primary-color)" />
     </div>
     <div class="ai_order_info" v-show="!loading">
       <!-- 盈利 -->
@@ -27,7 +27,7 @@
             <div class="text">{{ t('trade.ai_position_timer') }}</div>
           </div>
           <Circle v-if="currItem.status == 'open'" start-position="bottom" stroke-linecap="round" stroke-width="142"
-            layer-color="#F5F7FC" :color="gradientColor" size="182" :rate="100" :current-rate="100 - rate" />
+            layer-color="var(--ex-bg-color2)" :color="gradientColor" size="182" :rate="100" :current-rate="100 - rate" />
         </div>
 
         <div class="time_bg">
@@ -157,7 +157,7 @@ const backFunc = () => {
 };
 
 const gradientColor = {
-  "0%": "#014CFA",
+  "0%": "var(--ex-primary-color)",
   "100%": "#608BEF",
 };
 
@@ -280,7 +280,7 @@ defineExpose({
     }
 
     .win_name {
-      color: #000;
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 0.3rem;
       font-weight: 400;
@@ -305,7 +305,7 @@ defineExpose({
     box-sizing: border-box;
     border-radius: 0.32rem;
     padding: 0.52rem;
-    background: #fff;
+    background: var(--ex-bg-color);
     height: 6.88rem;
     display: flex;
     align-items: center;
@@ -336,7 +336,7 @@ defineExpose({
     flex-direction: column;
 
     .time {
-      color: #014cfa;
+      color: var(--ex-primary-color);
       text-align: center;
       font-family: "SF Pro Display";
       font-size: 0.52rem;
@@ -346,7 +346,7 @@ defineExpose({
     }
 
     .text {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       text-align: center;
       font-size: 0.28rem;
       font-style: normal;
@@ -358,7 +358,7 @@ defineExpose({
 
   .name {
     font-weight: 600;
-    color: #000;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
     margin: 0 0 0.2rem 0;
   }
@@ -367,8 +367,8 @@ defineExpose({
     width: 3.42rem;
     height: 1.2rem;
     border-radius: 1rem;
-    background: #014cfa;
-    color: #fff;
+    background: var(--ex-primary-color);
+    color: var(--ex-bg-primary-text-color);
     font-weight: 600;
     font-size: 0.3rem;
     justify-content: center;
@@ -388,7 +388,7 @@ defineExpose({
   }
 
   .time_tip {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     text-align: center;
     font-size: 0.28rem;
     font-weight: 400;
@@ -399,7 +399,7 @@ defineExpose({
 }
 
 .stock-info {
-  background-color: #f5f7fc;
+  background-color: var(--ex-bg-color2);
   border-radius: 0.32rem;
   margin: 0.4rem 0.32rem 0 0.32rem;
   padding: 0.2rem 0.32rem 0.6rem 0.32rem;
@@ -413,7 +413,7 @@ defineExpose({
   &__order_no {
     display: flex;
     align-items: center;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     margin-top: 0.12rem;
 
     span {
@@ -443,9 +443,9 @@ defineExpose({
 .info_boxs {
   padding: 0.3rem 0;
   position: relative;
-  border: 1px solid #eff3f8;
+  border: 1px solid var(--ex-border-color);
   border-radius: 0.32rem;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   margin: -0.5rem 0.32rem 0 0.32rem;
 
   z-index: 1;
@@ -463,7 +463,7 @@ defineExpose({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     line-height: 0.44rem;
     position: relative;
@@ -477,7 +477,7 @@ defineExpose({
       line-height: 0.44rem;
       margin-top: 0.12rem;
       font-weight: 600;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.36rem;
     }
   }
@@ -486,7 +486,7 @@ defineExpose({
     content: "";
     width: 1px;
     height: 0.9rem;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
     position: absolute;
     left: 0;
     top: 50%;
@@ -500,7 +500,7 @@ defineExpose({
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   animation: bganimate 1.4s;
 }
 
@@ -537,7 +537,7 @@ defineExpose({
     left: 0;
     top: 50%;
     height: 1px;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
   }
 }
 
@@ -591,7 +591,7 @@ defineExpose({
 }
 
 .win-animate-amount {
-  color: #fff;
+  color: var(--ex-white);
   text-align: center;
   font-family: "Alibaba PuHuiTi 3.0";
   font-size: 0.8rem;

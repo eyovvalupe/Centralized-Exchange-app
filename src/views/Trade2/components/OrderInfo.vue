@@ -337,7 +337,7 @@ const copy = (text) => {
 }
 
 .stock-info {
-  background-color: #f5f7fc;
+  background-color: var(--ex-bg-color2);
   border-radius: 0.32rem;
   margin: 0.2rem 0.32rem 0 0.32rem;
   padding: 0.2rem 0.32rem 0.6rem 0.32rem;
@@ -359,8 +359,8 @@ const copy = (text) => {
   }
 
   &__status {
-    border: 1px solid #7e99d6;
-    color: #7e99d6;
+    border: 1px solid var(--ex-info-color);
+    color: var(--ex-info-color);
     padding: 0.04rem 0.08rem;
     height: 0.3rem;
     line-height: 100%;
@@ -385,7 +385,7 @@ const copy = (text) => {
   &__order_no {
     display: flex;
     align-items: center;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
 
     span {
       font-size: 0.28rem;
@@ -409,9 +409,9 @@ const copy = (text) => {
   align-items: stretch;
   padding: 0.3rem 0;
   position: relative;
-  border: 1px solid #eff3f8;
+  border: 1px solid var(--ex-border-color);
   border-radius: 0.32rem;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   margin: -0.5rem 0.32rem 0 0.32rem;
   z-index: 1;
 
@@ -421,7 +421,7 @@ const copy = (text) => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     line-height: 0.44rem;
     position: relative;
@@ -435,7 +435,7 @@ const copy = (text) => {
       line-height: 0.44rem;
       margin-top: 0.12rem;
       font-weight: 600;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.36rem;
     }
   }
@@ -444,7 +444,7 @@ const copy = (text) => {
     content: "";
     width: 1px;
     height: 0.9rem;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
     position: absolute;
     left: 0;
     top: 50%;
@@ -458,7 +458,7 @@ const copy = (text) => {
   .title {
     text-align: center;
     font-size: 0.28rem;
-    color: #121826;
+    color: var(--ex-text-color);
     font-weight: bold;
   }
 
@@ -467,10 +467,10 @@ const copy = (text) => {
     align-items: center;
     justify-content: space-between;
     padding: 0.32rem 0 0.18rem 0;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--ex-border-color);
 
     .name {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       font-weight: 400;
     }
@@ -480,10 +480,10 @@ const copy = (text) => {
       align-items: center;
       justify-content: flex-end;
       font-size: 0.28rem;
-      color: #121826;
+      color: var(--ex-text-color);
 
       .tag {
-        color: #014cfa;
+        color: var(--ex-primary-color);
         font-size: 0.24rem;
         background-color: rgba(1, 76, 250, 0.08);
         height: 0.44rem;
@@ -497,14 +497,14 @@ const copy = (text) => {
 
       .red_tag,
       .tag_long {
-        color: #18b762;
-        background-color: rgba(24, 183, 98, 0.08);
+        color: var(--ex-up-color);
+        background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       }
 
       .green_tag,
       .tag_short {
-        color: #e8503a;
-        background-color: rgba(232, 80, 58, 0.08);
+        color: var(--ex-down-color);
+        background-color: rgb(var(--ex-down-color-rgb) / 0.08);
       }
 
       .text {
@@ -529,8 +529,8 @@ const copy = (text) => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #014cfa;
-    color: #fff;
+    background-color: var(--ex-primary-color);
+    color: var(--ex-bg-primary-text-color);
     font-size: 0.32rem;
     font-weight: 400;
     line-height: 100%;
@@ -545,7 +545,7 @@ const copy = (text) => {
   }
 
   .btn3 {
-    background-color: #7e99d6;
+    background-color: var(--ex-info-color);
   }
 
   .btn4 {
@@ -553,8 +553,8 @@ const copy = (text) => {
   }
 
   .disabled_btn {
-    background-color: #eff3f8;
-    color: #d0d8e2;
+    background-color: var(--ex-bg-color3);
+    color: var(--ex-border-color2);
   }
 }
 </style>

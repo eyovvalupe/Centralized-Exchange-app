@@ -43,7 +43,7 @@
                 </div>
               </div>
               <div class="btn_container">
-                <Button :disabled="!form.address" class="submit" type="primary" round color="#014CFA" @click="next">{{
+                <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)" @click="next">{{
                   $t("account.add_btn") }}</Button>
               </div>
               <!-- 谷歌验证 -->
@@ -282,17 +282,17 @@ getSessionToken();
         font-size: 0.4rem;
         top: 0.3rem;
         right: 0.4rem;
-        color: #161616;
+        color: var(--ex-text-color);
       }
 
       .bottom {
-        color: #111111;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         height: 1.12rem;
         display: flex;
         align-items: center;
         overflow: hidden;
-        border-bottom: 0.02rem solid #f5f5f5;
+        border-bottom: 0.02rem solid var(--ex-border-color);
 
         &:last-child {
           border-bottom: none;
@@ -300,14 +300,14 @@ getSessionToken();
       }
 
       ._bottom {
-        color: #111111;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         height: 1.12rem;
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        border-bottom: 0.02rem solid #f5f5f5;
+        border-bottom: 0.02rem solid var(--ex-border-color);
 
         &:last-child {
           border-bottom: none;
@@ -323,7 +323,7 @@ getSessionToken();
       }
 
       .active_bottom {
-        // background-color: #f5f5f5;
+        // background-color: var(--ex-bg-color2);
       }
     }
   }
@@ -341,7 +341,7 @@ getSessionToken();
     height: 0.92rem;
     border-radius: 0.32rem;
     border-width: 0.02rem;
-    border-color: #eff3f8;
+    border-color: var(--ex-border-color);
   }
 
   :deep(.van-tab--card.van-tab) {
@@ -351,19 +351,19 @@ getSessionToken();
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
   }
 
   :deep(.van-tab--card.van-tab--active) {
     width: 50%;
     border-radius: 0.3rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
 
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: white;
+      color: var(--ex-bg-primary-text-color);
     }
   }
 
@@ -391,7 +391,7 @@ getSessionToken();
   .add_btn {
     width: 6.86rem;
     height: 1.12rem;
-    background-color: #014cfa;
+    background-color: var(--ex-primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -407,7 +407,7 @@ getSessionToken();
       font-weight: 400;
       font-size: 0.28rem;
       line-height: 0.36rem;
-      color: #061023;
+      color: var(--ex-text-color);
       margin-bottom: 0.15rem;
     }
 
@@ -415,7 +415,7 @@ getSessionToken();
       width: 6.86rem;
       // padding: 0 0.32rem;
       height: 0.92rem;
-      border: 0.02rem solid #d0d8e2;
+      border: 0.02rem solid var(--ex-border-color2);
       border-radius: 0.32rem;
       margin-bottom: 0.4rem;
       display: flex;
@@ -435,7 +435,7 @@ getSessionToken();
         align-items: center;
         justify-content: flex-start;
         // font-weight: 600;
-        color: #061023;
+        color: var(--ex-text-color);
       }
 
       .item_icon {
@@ -445,7 +445,7 @@ getSessionToken();
       }
 
       :deep(.van-icon) {
-        color: #666d80;
+        color: var(--ex-text-color2);
       }
     }
 
@@ -469,39 +469,5 @@ getSessionToken();
   }
 
 
-}
-</style>
-<style lang="css">
-.van-dialog {
-  padding-top: 0.8rem;
-}
-
-.van-dialog__header {
-  padding: 0;
-  font-size: 0.32rem;
-  line-height: 0.44rem;
-  margin-bottom: 0.2rem;
-}
-
-.van-dialog__message {
-  font-size: 0.28rem;
-  line-height: 0.44rem;
-  color: #333333;
-}
-
-.van-dialog__cancel {
-  .van-button__content {
-    font-size: 0.32rem;
-    line-height: 0.44rem;
-    color: #8f92a1;
-  }
-}
-
-.van-dialog__confirm {
-  .van-button__content {
-    font-size: 0.32rem;
-    line-height: 0.44rem;
-    color: #014cfa;
-  }
 }
 </style>

@@ -70,7 +70,7 @@ onMounted(() => {
     .banner_items {
         height: 1.9rem;
         padding: 0 0.32rem;
-        color: #fff;
+        color: var(--ex-white);
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
@@ -92,13 +92,13 @@ onMounted(() => {
             border-radius: 0.26rem;
             width: 0.14rem;
             height: 0.08rem;
-            background-color: #D2D2D2;
+            background-color: var(--ex-border-color2);
             margin: 0 0.08rem;
         }
 
         .active_indicator {
             width: 0.4rem;
-            background-color: #0063F5;
+            background-color: var(--ex-primary-color);
         }
     }
 }

@@ -12,7 +12,7 @@
       v-model:active="active"
       :swipeable="false"
       animated
-      :color="'#014CFA'"
+      :color="'var(--ex-primary-color)'"
       shrink
     >
       <Tab :title="'活跃'">
@@ -205,20 +205,7 @@ const getData = (list, key, query, listKey) => {
 
 // 获取总览数据
 const count = ref(0);
-const keySoft = ref([5, 4, 3, 2, 1, 0, "-1", "-2", "-3", "-4", "-5"]);
-const bgColors = ref([
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#18b762",
-  "#7e99d6",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-  "#e8503a",
-]);
+
 const overview = ref({
   5: 0,
   4: 0,
@@ -239,49 +226,8 @@ try {
     overview.value[key] = d[key] || 0;
   }
 } catch {}
-const overviewTitleMap = ref({
-  5: "涨停",
-  4: ">7%",
-  3: "7~5％",
-  2: "5~2％",
-  1: "2~0％",
-  0: "平",
-  "-1": "0~2％",
-  "-2": "2~5％",
-  "-3": "5~7％",
-  "-4": "7％<",
-  "-5": "跌停",
-});
-// 获取柱状图高度
-const getHeight = (key) => {
-  let max = 0;
-  for (let k in overview.value) {
-    if (overview.value[k] > max) max = overview.value[k];
-  }
-  return (overview.value[key] * 3) / max; // 最高的3rem
-};
-// 获取下方统计宽度
-const getFlex = (position) => {
-  if (position > 0) {
-    return (
-      overview.value[5] +
-        overview.value[4] +
-        overview.value[3] +
-        overview.value[2] +
-        overview.value[1] || 1
-    );
-  } else if (position == 0) {
-    return overview.value[0] || 1;
-  } else {
-    return (
-      overview.value["-1"] +
-        overview.value["-2"] +
-        overview.value["-3"] +
-        overview.value["-4"] +
-        overview.value["-5"] || 1
-    );
-  }
-};
+
+
 const overviewLoading = ref(false);
 const getOverviewData = () => {
   overviewLoading.value = true;

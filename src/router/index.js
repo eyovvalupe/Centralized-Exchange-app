@@ -334,16 +334,7 @@ const routes = [
       pageType: 'child',
     },
   },
-  {
-    // 交易
-    path: '/trade2',
-    name: 'trade2',
-    component: () => import('../views/trade/trade.vue'),
-    meta: {
-      keepAlive: true,
-      pageType: 'tab',
-    },
-  },
+ 
   {
     // 交易
     path: '/trade',

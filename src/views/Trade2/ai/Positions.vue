@@ -115,7 +115,7 @@ watch(() => store.state.token, () => {
     .item {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #EFF3F8;
+        border-bottom: 1px solid var(--ex-border-color);
         line-height: 100%;
         padding: 0.32rem 0;
 
@@ -126,7 +126,7 @@ watch(() => store.state.token, () => {
             align-items: center;
             justify-content: center;
             border-radius: 0.24rem;
-            background-color: rgba(1, 76, 250, 0.10);
+            background-color: rgb(var(--ex-primary-color-rgb) / 0.10);
 
             img {
                 width: 0.53rem !important;
@@ -141,12 +141,12 @@ watch(() => store.state.token, () => {
 
             .name {
                 font-size: 0.3rem;
-                color: #061023;
+                color: var(--ex-text-color);
                 font-weight: bold;
             }
 
             .grid {
-                color: #8F92A1;
+                color: var(--ex-text-color3);
                 font-weight: 400;
                 font-size: 0.25rem;
                 margin-top: 0.18rem;
@@ -171,11 +171,11 @@ watch(() => store.state.token, () => {
                     width: 0.6rem;
                     height: 0.6rem;
                     text-align: center;
-                    color: #E8503A;
+                    color: var(--ex-error-color);
                     font-weight: 600;
                     font-size: 0.32rem;
-                    border: 1px solid #E8503A;
-                    background-color: rgba(232, 80, 58, 0.10);
+                    border: 1px solid var(--ex-error-color);
+                    background-color: rgb(var(--ex-error-color-rgb) / 0.10);
                     box-sizing: border-box;
                     border-radius: 0.12rem;
 
@@ -185,7 +185,7 @@ watch(() => store.state.token, () => {
                     font-size: 0.32rem;
                     font-weight: 600;
                     width: 0.3rem;
-                    color: #E8503A;
+                    color: var(--ex-error-color);
                     text-align: center;
                 }
             }

@@ -255,10 +255,10 @@ function countdown(endTime) {
 
   .list {
     margin-top: 0.2rem;
-    border-top: 1px solid #EAEAEA;
+    border-top: 1px solid var(--ex-border-color);
 
     .item {
-      border-bottom: 1px solid #EAEAEA;
+      border-bottom: 1px solid var(--ex-border-color);
       padding: 0 0 0.1rem 0;
       position: relative;
 
@@ -271,7 +271,7 @@ function countdown(endTime) {
         .name {
           font-size: 0.28rem;
           font-weight: 600;
-          color: #0D0D12;
+          color: var(--ex-text-color);
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -285,18 +285,18 @@ function countdown(endTime) {
 
         .item_top_box {
           .item_top_info {
-            color: #818898;
+            color: var(--ex-text-color3);
             font-size: 0.24rem;
             line-height: 0.48rem;
             font-weight: 400;
 
             .info_val {
-              color: #000000;
+              color: var(--ex-text-color);
               margin-left: 0.24rem;
             }
 
             .info_price {
-              color: #0953FA;
+              color: var(--ex-text-primary);
               font-size: 0.24rem;
               margin-left: 0.24rem;
             }
@@ -330,7 +330,7 @@ function countdown(endTime) {
                 align-items: center;
                 justify-content: center;
                 line-height: 0;
-                color: #333;
+                color: var(--ex-text-color);
                 font-size: 0.4rem;
                 font-weight: 600;
                 border-top: 1px dashed #C5C5C5;
@@ -356,13 +356,13 @@ function countdown(endTime) {
           }
 
           .status_box_success {
-            border: 1px solid #0953FA;
+            border: 1px solid var(--ex-text-primary);
 
             .status_box_inner {
               border: 1px solid #8BB2FC;
 
               .status_text {
-                color: #0953FA;
+                color: var(--ex-text-primary);
                 border-top: 1px dashed #8BB2FC;
                 border-bottom: 1px dashed #8BB2FC;
               }
@@ -382,7 +382,7 @@ function countdown(endTime) {
   border-top-right-radius: 0.36rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   padding: 0.32rem 0.32rem 0.4rem 0.32rem;
   position: relative;
 
@@ -397,13 +397,13 @@ function countdown(endTime) {
     align-items: center;
     justify-content: space-between;
     height: 1rem;
-    border-bottom: 1px solid #F5F5F5;
-    color: #8F92A1;
+    border-bottom: 1px solid var(--ex-border-color);
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;
 
     .name {
-      color: #0D0D12;
+      color: var(--ex-text-color);
       font-weight: 600;
       font-size: 0.32rem;
     }
@@ -411,7 +411,7 @@ function countdown(endTime) {
     .status {
       height: 0.48rem;
       background-color: #C5C5C5;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       padding: 0 0.32rem;
       display: flex;
@@ -427,12 +427,12 @@ function countdown(endTime) {
     }
 
     .status_success {
-      color: #0953FA;
+      color: var(--ex-text-primary);
       background-color: #8BB2FC
     }
 
     .val {
-      color: #121826;
+      color: var(--ex-text-color);
       font-weight: 500
     }
   }

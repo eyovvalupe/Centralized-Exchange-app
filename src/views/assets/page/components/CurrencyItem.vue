@@ -77,7 +77,7 @@ const goWithdraw = (name) => {
   height: 1.04rem;
   margin-top: 0.12rem;
   border-radius: 0.32rem;
-  background: #f5f7fc;
+  background: var(--ex-bg-color2);
   position: relative;
   display: flex;
   align-items: center;
@@ -95,7 +95,7 @@ const goWithdraw = (name) => {
     width: 0.52rem;
     height: 0.52rem;
     margin-right: 0.16rem;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border-radius: 50%;
     box-sizing: border-box;
     padding: 0.1rem;
@@ -134,8 +134,8 @@ const goWithdraw = (name) => {
       font-size: 0.3rem;
       font-weight: 400;
       text-align: center;
-      color: #fff;
-      background-color: #014cfa;
+      color: var(--ex-bg-primary-text-color);
+      background-color: var(--ex-primary-color);
     }
 
     .right--yellow {
@@ -143,11 +143,11 @@ const goWithdraw = (name) => {
     }
 
     .right--green {
-      background-color: #00af70;
+      background-color: var(--ex-success-color);
     }
 
     .right--red {
-      background-color: #e8503a;
+      background-color: var(--ex-error-color);
     }
 
     .right--disabled {

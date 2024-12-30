@@ -19,7 +19,7 @@
           }}</span>
         </div>
         <div class="navs">
-          <div class="nav">
+          <div class="nav bg-color bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
               {{
@@ -29,7 +29,7 @@
               }}
             </div>
           </div>
-          <div class="nav">
+          <div class="nav bg-color bg-opacity-10">
             <div class="nav_label">{{ $t("assets.wallet_order_value") }}</div>
             <div class="num">
               {{ hidden ? "********" : assets.order_value || "0" }}
@@ -212,7 +212,7 @@ const jump = (name, check = false, query) => {
     line-height: 0.32rem;
 
     .title {
-      color: #fff;
+      color: var(--ex-white);
       margin-right: 0.12rem;
       font-size: 0.3rem;
 
@@ -224,12 +224,12 @@ const jump = (name, check = false, query) => {
     .eyes {
       width: 0.32rem;
       height: 0.32rem;
-      color: #fff;
+      color: var(--ex-white);
     }
   }
 
   .money {
-    color: #fff;
+    color: var(--ex-white);
     font-family: "PingFang SC";
     font-size: 0.52rem;
     font-style: normal;
@@ -250,20 +250,18 @@ const jump = (name, check = false, query) => {
       flex-direction: column;
       width: 2.8rem;
       height: 1.12rem;
-      background: #ffffff1a;
-      // backdrop-filter: blur(50px);
       border-radius: 0.32rem;
     }
 
     .nav_label {
-      color: #fff;
+      color: var(--ex-white);
       font-size: 0.28rem;
       line-height: 100%;
       margin-top: 0.1rem;
     }
 
     .num {
-      color: #fff;
+      color: var(--ex-white);
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.3rem;
@@ -282,7 +280,7 @@ const jump = (name, check = false, query) => {
       height: 1.04rem;
       margin-top: 0.12rem;
       border-radius: 0.32rem;
-      background: #f5f7fc;
+      background: var(--ex-bg-color2);
       position: relative;
       display: flex;
       align-items: center;
@@ -300,7 +298,7 @@ const jump = (name, check = false, query) => {
         width: 0.52rem;
         height: 0.52rem;
         margin-right: 0.16rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         border-radius: 50%;
         box-sizing: border-box;
         padding: 0.1rem;
@@ -344,8 +342,8 @@ const jump = (name, check = false, query) => {
           font-size: 0.3rem;
           font-weight: 400;
           text-align: center;
-          color: #fff;
-          background-color: #014cfa;
+          color: var(--ex-bg-primary-text-color);
+          background-color: var(--ex-primary-color);
         }
 
         .right--yellow {
@@ -353,11 +351,11 @@ const jump = (name, check = false, query) => {
         }
 
         .right--green {
-          background-color: #00af70;
+          background-color: var(--ex-success-color);
         }
 
         .right--red {
-          background-color: #e8503a;
+          background-color: var(--ex-error-color);
         }
 
         .right:first-child {

@@ -15,9 +15,6 @@ module.exports = {
 
     extend: {
       backgroundColor: {
-        'custom_green': '#18b762',
-        'custom_red': '#e8503a',
-        'custom_blue': '#7e99d6'
       },
       fontFamily : {
         'alibaba' : ['AlibabaPuHuiTi', 'sans-serif'],
@@ -73,7 +70,7 @@ module.exports = {
         '3xl': '0.48rem' /* 24px */,
       },
       colors: {
-        my: 'var(--main-color)',
+        my: 'var(--ex-primary-color)',
       },
     },
   },

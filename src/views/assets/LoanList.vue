@@ -163,7 +163,7 @@ onUnmounted(() => {
         .tab {
             padding: 0 0.6rem;
             font-size: 0.28rem;
-            color: #061023;
+            color: var(--ex-text-color);
             font-weight: 400;
             height: 0.64rem;
             display: flex;
@@ -172,8 +172,8 @@ onUnmounted(() => {
         }
 
         .active_tab {
-            background-color: #F6F8FF;
-            color: #014CFA;
+            background-color: var(--ex-bg-color2);
+            color: var(--ex-primary-color);
             font-weight: 600;
         }
     }
@@ -185,15 +185,15 @@ onUnmounted(() => {
 
         :deep(.van-tab--card) {
             border-right: none;
-            color: #061023;
-            // background-color: #f5f5f5;
+            color: var(--ex-text-color);
+            // background-color: var(--ex-bg-color2);
         }
 
         :deep(.van-tab--card.van-tab--active) {
 
-            background-color: #F6F8FF;
+            background-color: var(--ex-bg-color2);
             border-radius: 0.3rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-weight: 500
         }
 
@@ -228,7 +228,7 @@ onUnmounted(() => {
         padding: 0 0.32rem;
 
         .item {
-            border-bottom: 1px dashed #CBCBCB;
+            border-bottom: 1px dashed var(--ex-border-color2);
             padding: 0.2rem 0;
             font-size: 0.28rem;
             font-weight: 400;
@@ -245,7 +245,7 @@ onUnmounted(() => {
             }
 
             .title {
-                color: #343434;
+                color: var(--ex-text-color);
                 font-weight: 600;
             }
 
@@ -304,10 +304,10 @@ onUnmounted(() => {
                 height: 0.6rem;
                 border-radius: 0.5rem;
                 padding: 0 0.4rem;
-                color: #fff;
+                color: var(--ex-bg-primary-text-color);
                 font-weight: 500;
                 font-size: 0.24rem;
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
                 display: flex;
                 align-items: center;
             }

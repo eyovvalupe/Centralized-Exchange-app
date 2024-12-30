@@ -80,9 +80,9 @@ const goLang = () => {
 };
 
 const colorMap = ref({
-  default: "#014CFA",
-  success: "#18B762",
-  error: "#ee0a24",
+  default: "var(--ex-primary-color)",
+  success: "var(--ex-success-color)",
+  error: "var(--ex-error-color)",
 });
 
 const open = () => {
@@ -161,14 +161,14 @@ onMounted(() => {
     display: flex;
     align-items: center;
     top: 0;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
 
     .top_back_container {
       .arrow_icon {
         width: 20px;
         height: 20px;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
-        background-color: #061023;
+        background-color: var(--ex-text-color);
       }
     }
 
@@ -179,7 +179,7 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-width: 0.02rem;
-      border-color: #edf2f7;
+      border-color: var(--ex-border-color);
       border-radius: 0.36rem;
 
       .language_icon {
@@ -215,7 +215,7 @@ onMounted(() => {
     width: 4.38rem;
     height: 4.38rem;
     flex-shrink: 0;
-    background-color: #d0d8e2;
+    background-color: var(--ex-border-color2);
     padding: 0.2rem;
     border-radius: 2.19rem;
     margin-bottom: 0.8rem;
@@ -229,7 +229,7 @@ onMounted(() => {
       width: 5.9rem;
 
       :deep(.van-slider__button) {
-        box-shadow: 0 0.08rem 0.2rem 0 #014cfa33;
+        box-shadow: 0 0.08rem 0.2rem 0 rgb(var(--ex-primary-color-rgb) / 0.33);
         background-size: contain;
         /* Scale the background image */
         background-repeat: no-repeat;
@@ -244,7 +244,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--, #333);
+    color: var(--ex-text-color2);
     font-size: 0.32rem;
     font-weight: 400;
     line-height: 0.32rem;
@@ -257,11 +257,11 @@ onMounted(() => {
   }
 
   .status_success {
-    color: #008822;
+    color: var(--ex-success-color);
   }
 
   .status_error {
-    color: #ff0000;
+    color: var(--ex-error-color);
   }
 
   .check_slider {
@@ -289,13 +289,13 @@ onMounted(() => {
 
   .check_slider_success {
     :deep(.el-slider__bar) {
-      background-color: #17b763;
+      background-color: var(--ex-success-color);
     }
   }
 
   .check_slider_error {
     :deep(.el-slider__bar) {
-      background-color: #fa6466;
+      background-color: var(--ex-error-color);
     }
   }
 }

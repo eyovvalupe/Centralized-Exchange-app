@@ -255,7 +255,7 @@ const removeStock = (item) => {
 
   &:active,
   &:hover {
-    background-color: #f2f3f7;
+    background-color: var(--ex-bg-color3);
   }
 
   .delete_content {
@@ -264,7 +264,7 @@ const removeStock = (item) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #d0d8e2;
+    background-color: var(--ex-border-color2);
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
 
@@ -280,7 +280,7 @@ const removeStock = (item) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #d0d8e2;
+    background-color: var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-left: -0.32rem;
 
@@ -292,7 +292,7 @@ const removeStock = (item) => {
 }
 
 .active_symbol {
-  background-color: #f2f3f7;
+  background-color: var(--ex-bg-color3);
 }
 
 .stock_item {
@@ -309,7 +309,7 @@ const removeStock = (item) => {
     bottom: 0;
     left: 0.3rem;
     height: 1px;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
   }
 
   .td5 {
@@ -320,7 +320,7 @@ const removeStock = (item) => {
 
     .item_name {
       font-size: 0.32rem;
-      color: #061023;
+      color: var(--ex-text-color);
       line-height: 0.32rem;
       font-weight: 600;
     }
@@ -328,7 +328,7 @@ const removeStock = (item) => {
     .item_info {
       font-size: 0.24rem;
       line-height: 0.332rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
@@ -346,7 +346,7 @@ const removeStock = (item) => {
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.3rem;
-      color: #6c7b90;
+      color: var(--ex-text-color2);
     }
 
     .item_info_box {
@@ -360,12 +360,12 @@ const removeStock = (item) => {
         font-size: 0.24rem;
         display: inline-block;
         font-weight: 600;
-        color: #fff;
+        color: var(--ex-white);
         border-radius: 0.12rem;
       }
 
       .nodata_percent {
-        background-color: #6c7b90;
+        background-color: var(--ex-text-color2);
       }
     }
   }
@@ -395,7 +395,7 @@ const removeStock = (item) => {
     bottom: 0;
     left: 0.3rem;
     height: 1px;
-    background-color: #eff3f8;
+    background-color: var(--ex-bg-color3);
   }
 
   .td5 {
@@ -406,7 +406,7 @@ const removeStock = (item) => {
 
     .item_name {
       font-size: 0.32rem;
-      color: #061023;
+      color: var(--ex-text-color);
       line-height: 0.46rem;
       font-weight: 600;
       margin-bottom: 0.06rem;
@@ -415,7 +415,7 @@ const removeStock = (item) => {
     .item_info {
       font-size: 0.28rem;
       line-height: 0.36rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       text-overflow: ellipsis;
       white-space: nowrap;
       width: 100%;
@@ -433,7 +433,7 @@ const removeStock = (item) => {
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.3rem;
-      color: #6c7b90;
+      color: var(--ex-text-color2);
     }
 
     .item_info_box {
@@ -447,12 +447,12 @@ const removeStock = (item) => {
         font-size: 0.24rem;
         display: inline-block;
         font-weight: 600;
-        color: #fff;
+        color: var(--ex-white);
         border-radius: 0.12rem;
       }
 
       .nodata_percent {
-        background-color: #6c7b90;
+        background-color: var(--ex-text-color2);
       }
     }
   }
@@ -468,22 +468,22 @@ const removeStock = (item) => {
 }
 
 .stock_item_bg:active {
-  background-color: #eef0f7;
+  background-color: var(--ex-bg-color3);
 }
 
 .stock_item_up {
-  background-color: rgba(24, 183, 98, 0.12);
+  background-color: rgb(var(--ex-up-color-rgb) / 0.12);
 
   .stock_item {
-    border-bottom: 1px solid rgba(24, 183, 98, 0.12);
+    border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.12);
   }
 }
 
 .stock_item_down {
-  background-color: rgba(250, 100, 102, 0.12);
+  background-color: rgb(var(--ex-down-color-rgb) / 0.12);
 
   .stock_item {
-    border-bottom: 1px solid rgba(250, 100, 102, 0.12);
+    border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.12);
   }
 }
 

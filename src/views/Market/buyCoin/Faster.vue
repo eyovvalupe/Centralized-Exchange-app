@@ -50,9 +50,9 @@
               <span>{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
                 }}</span>
               <span v-if="form1.offset == 'sell' && currWallet.amount > 0">
-                <span style="color: #014cfa; font-size: 12px" @click="openConfirmBox"><span style="color: #666d80">{{ t('assets.wallet_available_sim') }}</span>
+                <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span style="color: var(--ex-text-color2)">{{ t('assets.wallet_available_sim') }}</span>
                 {{ currWallet.amount }} {{ currOut.name }}</span>
-                <Icon name="arrow" class="ml-[0.1rem]" color="#666D80" size="0.2rem" />
+                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.2rem" />
               </span>
             </div>
             <div class="item">
@@ -95,8 +95,6 @@
       <Button size="large" class="submit" :class="['submit--'+form1.offset]" round :loading="loading" @click="sell">{{ form1.offset == "sell" ?
           t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</Button>
 
-      <!-- <Button v-if="!token" size="large" color="#014cfa" round style="margin-bottom: 0.34rem; margin-top: 1.6rem" @click="store.commit('setIsLoginOpen', true)">登录</Button>
-      <Button v-if="!token" size="large" color="#f2f2f2" round style="color: #999999" @click="jump('register')">注册</Button> -->
     </div>
   </div>
 
@@ -222,8 +220,8 @@ const sell = () => {
         message: t('market.market_buy_fast_noti_con'),
         cancelButtonText: t('market.market_buy_fast_noti_cancel'),
         confirmButtonText: t('market.market_buy_fast_noti_confirm'),
-        cancelButtonColor: "var(--main-color)",
-        confirmButtonColor: "var(--main-color)",
+        cancelButtonColor: "var(--ex-primary-color)",
+        confirmButtonColor: "var(--ex-primary-color)",
         closeOnClickOverlay: !0,
       })
         .then(() => {
@@ -437,12 +435,12 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       justify-content: space-between;
       line-height: 0.68rem;
       margin-top:0.4rem;
-      border: 0.5px solid #d0d8e2;
+      border: 0.5px solid var(--ex-border-color2);
       width: 47%;
       border-radius: 0.68rem;
 
       .tab {
-        color: #666d80;
+        color: var(--ex-text-color2);
         margin: 0;
         width: 1.6rem;
         text-align: center;
@@ -451,20 +449,20 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
       .active_tab {
         font-weight: bold;
-        color: white;
-        background: #014cfa;
+        color: var(--ex-bg-primary-text-color);
+        background: var(--ex-primary-color);
         text-align: center;
       }
     }
 
     .tip {
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.24rem;
       margin-top: 0.3rem;
     }
 
     .subtitle {
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       margin-bottom: 0.15rem;
       display: flex;
@@ -472,7 +470,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       justify-content: space-between;
 
       .link {
-        color: #034cfa;
+        color: var(--ex-primary-color);
       }
     }
 
@@ -489,7 +487,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
         position: relative;
         height: 1rem;
         border-radius: 0.32rem;
-        border: 1px solid #d0d8e2;
+        border: 1px solid var(--ex-border-color2);
         padding: 0 0.2rem;
         font-size: 0.32rem;
 
@@ -507,23 +505,10 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
           margin-left: 0.2rem;
           font-size: 0.28rem;
           font-weight: 400;
-          color: #333;
+          color: var(--ex-text-color);
           position: absolute;
           right: 0.24rem;
           pointer-events: none;
-        }
-
-        .ipt_tip {
-          color: #b7b7b7;
-          font-size: 0.24rem;
-          position: absolute;
-          left: 0.24rem;
-          transition: all ease 0.3s;
-        }
-
-        .ipt_tip2 {
-          left: auto;
-          right: 0.24rem;
         }
 
         .ipt {
@@ -532,19 +517,10 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
           width: 2rem;
           font-size: 0.28rem;
           padding: 0;
-          color: #034cfa;
+          color: var(--ex-primary-color);
           position: relative;
           z-index: 1;
         }
-
-        .base_ipt {
-          font-size: 0.28rem;
-          color: #b7b7b7;
-          position: absolute;
-          left: 0.24rem;
-          z-index: 0;
-        }
-
         .more_icon {
           width: 0.32rem;
           height: 0.32rem;
@@ -553,18 +529,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       }
 
       .disabled_item {
-        background-color: #f5f5f5;
-      }
-
-      .item_focus {
-        // height: 1.12rem;
-        // padding-top: 0.2rem;
-        border: 1px solid #034cfa;
-
-        .ipt_tip {
-          font-size: 0.2rem;
-          transform: translateY(-0.36rem);
-        }
+        background-color: var(--ex-bg-color2);
       }
 
       .item_box_left {
@@ -584,9 +549,9 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
         align-items: center;
         justify-content: center;
         border-radius: 1.26rem;
-        background: #f2f2f2;
+        background: var(--ex-bg-color2);
         height: 0.72rem;
-        color: #999;
+        color: var(--ex-text-color3);
         text-align: center;
         font-size: 0.28rem;
         font-weight: 600;
@@ -595,28 +560,28 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       }
 
       .active_btn {
-        background: #014cfa;
-        color: #fff;
+        background: var(--ex-primary-color);
+        color: var(--ex-bg-primary-text-color);
       }
     }
   }
 
   .submit {
     margin-top: 1.12rem;
-    color:#fff;
+    color:var(--ex-white);
   }
   .submit--sell{
-    background-color: #E8503A;
+    background-color: var(--ex-down-color);
   }
   .submit--buy{
-    background-color: #014CFA;
+    background-color: var(--ex-up-color);
   }
 }
 </style>
 
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   overflow: hidden;
@@ -629,7 +594,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     padding: 0 0.4rem;
     margin-bottom: 0.15rem;
     height: 0.8rem;
-    background-color: #f4f5f7;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.8rem;
 
     input {
@@ -637,8 +602,8 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     input::placeholder {
-      // color: #014cfa; /* 占位符颜色 */
-      color: #9ea3ae;
+      // color: var(--ex-primary-color); /* 占位符颜色 */
+      color: var(--ex-text-color3);
       font-size: 0.3rem;
     }
 
@@ -646,7 +611,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       right: 0;
       display: flex;
       align-items: center;
-      color: #253146;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
 
       .type_icon {
@@ -658,7 +623,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     &:has(.search:focus) {
-      border: 1px solid #014cfa;
+      border: 1px solid var(--ex-primary-color);
     }
 
     .icon {
@@ -669,7 +634,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     .close {
       width: 0.24rem;
       height: 0.24rem;
-      color: #121826;
+      color: var(--ex-text-color);
     }
 
     .search {
@@ -689,7 +654,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     line-height: 1rem;
     font-size: 0.32rem;
     width: 100%;
-    color: #121826;
+    color: var(--ex-text-color);
     pointer-events: none;
     font-weight: bold;
   }
@@ -707,10 +672,10 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     line-height: 0;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
-    color: #333333;
+    color: var(--ex-text-color);
 
     .icon {
       width: 0.6rem;
@@ -720,12 +685,12 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
   }
 
   .swap_dialog_item_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.4rem;
     }
   }
@@ -742,102 +707,15 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       display: flex;
       align-items: center;
       padding: 0 0.4rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-weight: 400;
     }
 
     .active_tab {
-      background-color: #f6f8ff;
-      color: #014cfa;
+      background-color: var(--ex-bg-color2);
+      color: var(--ex-primary-color);
       font-weight: 500;
-    }
-  }
-
-  .list {
-    max-height: 70vh;
-    overflow-y: auto;
-
-    .add_account {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.4rem 0;
-    }
-  }
-
-  .add_item {
-    margin-bottom: 0.36rem;
-    border: 1px dashed #ccd7fd;
-    border-radius: 0.12rem;
-    height: 1.44rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dialog_account_item {
-    border-radius: 0.12rem;
-    height: 1.44rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    background-color: #f6f7fa;
-    padding: 0 0.4rem 0 0.36rem;
-    overflow: hidden;
-    margin-bottom: 0.36rem;
-
-    .card_icon {
-      background-color: #d9e4ff;
-      width: 0.96rem;
-      height: 0.96rem;
-      border-radius: 0.16rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      >img {
-        width: 0.64rem !important;
-        height: 0.64rem !important;
-      }
-    }
-
-    .card {
-      flex: 1;
-      margin: 0 0.2rem 0 0.36rem;
-      text-align: left;
-      font-size: 0.24rem;
-      color: #061023;
-      font-weight: 500;
-      line-height: 1;
-
-      .code {
-        font-size: 0.28rem;
-        margin-bottom: 0.1rem;
-        font-weight: 400;
-      }
-    }
-  }
-
-  .dialog_account_item_active {
-    border: 1px solid #1a59f6;
-
-    .checked {
-      position: absolute;
-      top: -0.04rem;
-      right: -0.04rem;
-      background-size: 100% 100%;
-      width: 0.46rem;
-      height: 0.42rem;
-
-      >img {
-        width: 0.18rem !important;
-        height: 0.12rem !important;
-        position: absolute;
-        right: 0.06rem;
-        top: 0.08rem;
-      }
     }
   }
 }

@@ -13,7 +13,7 @@
                         :class="{ 'err_ipt': errorText }" v-model="safeword" ref="iptDom" class="pass_ipt"
                         enterkeyhint="done" @keydown.enter="next">
                     <div v-if="errorText" class="error_text">{{ errorText }}</div>
-                    <Button :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round color="#014CFA"
+                    <Button :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round color="var(--ex-primary-color)"
                         class="btn" type="primary" :disabled="(!safeword)" @click="next">继续</Button>
                 </div>
             </template>
@@ -24,7 +24,7 @@
                         :class="{ 'err_ipt': errorText }" v-model="safeword2" ref="iptDom" class="pass_ipt"
                         enterkeyhint="done" @keydown.enter="next">
                     <Button :loading="loading" :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round
-                        color="#014CFA" class="btn" type="primary" :disabled="(!safeword2)"
+                        color="var(--ex-primary-color)" class="btn" type="primary" :disabled="(!safeword2)"
                         @click="submit">创建账户</Button>
                 </div>
             </template>
@@ -163,7 +163,7 @@ const focus = () => { // 聚焦
         font-weight: 600;
         font-size: 0.56rem;
         line-height: 0.8rem;
-        color: #0D0D12;
+        color: var(--ex-text-color);
     }
 
     .form {
@@ -171,7 +171,7 @@ const focus = () => { // 聚焦
 
         .pass_ipt {
             height: 0.88rem;
-            border: 1px solid #D0D8E2;
+            border: 1px solid var(--ex-border-color2);
             width: 100%;
             display: block;
             box-sizing: border-box;
@@ -179,17 +179,17 @@ const focus = () => { // 聚焦
             padding: 0 0.4rem;
 
             &:focus {
-                border: 1px solid #014CFA;
+                border: 1px solid var(--ex-primary-color);
             }
         }
 
         .err_ipt {
-            border: 1px solid #E8503A;
+            border: 1px solid var(--ex-error-color);
         }
 
         .error_text {
             font-size: 0.28rem;
-            color: #FF5757;
+            color: var(--ex-error-color);
             margin-top: 0.2rem;
         }
 
@@ -212,7 +212,7 @@ const focus = () => { // 聚焦
             border-radius: 0.16rem;
 
             &:has(*) {
-                border: 1px solid #014CFA;
+                border: 1px solid var(--ex-primary-color);
             }
         }
     }

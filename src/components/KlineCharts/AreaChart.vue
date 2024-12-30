@@ -50,74 +50,109 @@ onMounted(() => {
         chart?.setOffsetRightDistance(props.showY ? 50 : 0) // 设置右边距
         chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
         chart?.setMaxOffsetRightDistance(props.showY ? 50 : 0) // 设置右边最大空出的边距
-        const selfStyle = {
-            grid: {
-                vertical: {
-                    show: false
-                }
-            },
-            xAxis: {
-                show: props.showY,
-                size: 'auto'
-            },
-            yAxis: {
-                show: props.showY
-            },
-            candle: {
-                type: 'area',
-                area: {
-                    point: {
-                        show: props.showY
-                    }
-                },
-                priceMark: {
-                    show: props.showY
-                },
-                tooltip: {
-                    offsetLeft: 2,
-                    offsetTop: 3,
-                    offsetRight: 2,
-                    offsetBottom: 3,
-                    showRule: 'follow_cross', /// ,follow_cross
-                    showType: 'rect',
-                    custom: [
-                        { title: 'time', value: '{time}' },
-                        // { title: 'open', value: '{open}' },
-                        // { title: 'high', value: '{high}' },
-                        // { title: 'low', value: '{low}' },
-                        // { title: 'close', value: '{close}' },
-                        { title: 'price', value: '{open}' }
-                    ],
-                    text: {
-                        size: 10,
-                        family: 'Helvetica Neue',
-                        weight: 'normal',
-                        color: '#121826',
-                        marginLeft: 8,
-                        marginTop: 4,
-                        marginRight: 8,
-                        marginBottom: 4
-                    },
-                }
-            },
-        }
-        if (props.showY) {
-            delete selfStyle.yAxis
-        }
-        chart.setStyles(selfStyle)
-        window.addEventListener('resize', resetSize)
     }
     initData()
 })
 onBeforeUnmount(() => {
     dispose('chat_area')
     socket && socket.emit('time', '') // 取消订阅
-    window.removeEventListener('resize', resetSize)
 })
 
 
 const loading = ref(true)
+let timeout = null
 const initData = async () => {
+    // 样式
+    const selfStyle = {
+        grid: {
+            show: true,
+            horizontal: {
+                show: true,
+                size: 1,
+                color: 'var(--ex-border-color)',
+                style: 'dashed',
+                dashedValue: [2, 2]
+            },
+            vertical: {
+                show: true,
+                size: 1,
+                color: 'var(--ex-border-color)',
+                style: 'dashed',
+                dashedValue: [2, 2]
+            }
+        },
+        xAxis: {
+            show: props.showY,
+            size: 'auto'
+        },
+        yAxis: {
+            show: props.showY
+        },
+        candle: {
+            type: 'area',
+            priceMark: {
+                show: props.showY
+            },
+            area: {
+                lineColor: props.color || "var(--ex-primary-color)",
+                point: {
+                    show: props.showY
+                },
+                lineSize: 2,
+                backgroundColor: [
+                    {
+                        offset: 0,
+                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(0, 0, 168, 0.01)"
+                    },
+                    {
+                        offset: 1,
+                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)"
+                    }
+                ],
+                smooth: true,
+                point: {
+                    show: true,
+                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)",
+                    radius: 4,
+                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)", // getAlphaBlue(0.3),
+                    rippleRadius: 8,
+                    animation: true,
+                    animationDuration: 1000
+                }
+            },
+            tooltip: {
+                offsetLeft: 2,
+                offsetTop: 3,
+                offsetRight: 2,
+                offsetBottom: 3,
+                showRule: 'follow_cross', /// ,follow_cross
+                showType: 'rect',
+                custom: [
+                    { title: 'time', value: '{time}' },
+                    // { title: 'open', value: '{open}' },
+                    // { title: 'high', value: '{high}' },
+                    // { title: 'low', value: '{low}' },
+                    // { title: 'close', value: '{close}' },
+                    { title: 'price', value: '{open}' }
+                ],
+                text: {
+                    size: 10,
+                    family: 'Helvetica Neue',
+                    weight: 'normal',
+                    color: 'var(--ex-text-color)',
+                    marginLeft: 8,
+                    marginTop: 4,
+                    marginRight: 8,
+                    marginBottom: 4
+                },
+            }
+        },
+    }
+    if (props.showY) {
+        delete selfStyle.yAxis
+    }
+    chart.setStyles(selfStyle)
+    // 数据
     const query = symbol.value
     loading.value = true
     if (!symbol.value) return
@@ -254,10 +289,10 @@ defineExpose({
         left: 0;
         width: 100%;
         height: 100%;
-        // background-color: rgba(0, 0, 0, 0.05);
+        background-color: var(--ex-bg-color);
         z-index: 99;
-        // border-right: 1px solid #7F939E;
-        // border-bottom: 1px solid #7F939E;
+        // border-right: 1px solid var(--ex-info-color);
+        // border-bottom: 1px solid var(--ex-info-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -290,8 +325,8 @@ defineExpose({
         .item {
             width: 1rem;
             height: 2rem;
-            border-left: 1px solid #7F939E;
-            border-top: 1px solid #7F939E;
+            border-left: 1px solid var(--ex-info-color);
+            border-top: 1px solid var(--ex-info-color);
             position: relative;
         }
 

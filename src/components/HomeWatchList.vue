@@ -6,7 +6,7 @@
         <span class="text-[0.32rem] font-semibold">{{ $t("home.selfSelectedRecommend") }}</span>
       </div>
       <div class="text_container flex flex-row text-center items-center" @click="more">
-        <span style="font-size: 0.24rem; font-weight: 400; color: #666d80">more+</span>
+        <span style="font-size: 0.24rem; font-weight: 400; color: var(--ex-text-color2)">more+</span>
       </div>
     </div>
 
@@ -37,7 +37,7 @@ store.commit("setCheckState", true);
   .text_container {
     width: 0.84rem;
     height: 0.34rem;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -77,8 +77,8 @@ store.commit("setCheckState", true);
   transition: all linear 3s;
 
   .one_click_to_favorite {
-    background-color: #014cfa;
-    color: #ffffff;
+    background-color: var(--ex-primary-color);
+    color: var(--ex-bg-primary-text-color);
   }
 }
 
@@ -90,8 +90,8 @@ store.commit("setCheckState", true);
 }
 
 .search_block {
-  background-color: #f4f5f7;
-  // border: 1px solid #eeeff1;
+  background-color: var(--ex-bg-color2);
+  // border: 1px solid var(--ex-border-color);
   height: 0.8rem;
   border-radius: 0.2rem;
   display: flex;
@@ -99,7 +99,7 @@ store.commit("setCheckState", true);
   justify-content: flex-start;
   padding: 0 0.32rem;
   font-size: 0.28rem;
-  color: #9ea3ae;
+  color: var(--ex-text-color3);
   margin: 0.06rem 0.32rem 0 0.32rem;
 
   .search_icon {
@@ -117,7 +117,7 @@ store.commit("setCheckState", true);
 
   :deep(.van-tabs__nav--line) {
     padding-bottom: 0;
-    border-bottom: 1px solid #3b82f6 !important;
+    border-bottom: 1px solid var(--ex-primary-color) !important;
     margin: 0 0.32rem;
   }
 

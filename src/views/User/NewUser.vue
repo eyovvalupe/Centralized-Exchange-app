@@ -96,8 +96,8 @@
           class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
-              ? 'bg-status0'
-              : `${userInfo.kycl2 == 1 ? 'bg-status1' : 'bg-status2'}`,
+              ? 'bg-error'
+              : `${userInfo.kycl2 == 1 ? 'bg-primary' : 'bg-success'}`,
           ]">
           <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
           <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified")
@@ -114,7 +114,7 @@
         </div>
         <div v-if="token"
           class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
-          :class="[userInfo.googlebind == 0 ? 'bg-status0' : 'bg-status2']">
+          :class="[userInfo.googlebind == 0 ? 'bg-error' : 'bg-success']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
         </div>
@@ -157,8 +157,8 @@
           <div class="title">{{ $t("user_page.security") }}</div>
         </div>
         <div v-if="token" class="gg">
-          <span v-if="!userInfo.googlebind" style="color: #ff3b30">{{ $t("user_page.not_set_google_yet") }}</span>
-          <span v-if="userInfo.googlebind" style="color: #18b762">{{ $t("user_page.already_set_google") }}</span>
+          <span v-if="!userInfo.googlebind" class="text-error">{{ $t("user_page.not_set_google_yet") }}</span>
+          <span v-if="userInfo.googlebind" class="text-success">{{ $t("user_page.already_set_google") }}</span>
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
@@ -216,8 +216,8 @@ const loginout = () => {
       cancelButtonText: t('user_page.message_box_cancel'),
       confirmButtonText: t('user_page.message_box_confirm'),
 
-      confirmButtonColor: "#014CFA",
-      cancelButtonColor: "#323233",
+      confirmButtonColor: "var(--ex-primary-color)",
+      cancelButtonColor: "var(--ex-text-color2)",
     })
       .then(() => {
         _logout();
@@ -290,7 +290,7 @@ if (token.value) {
 
   .title {
     height: 1.12rem;
-    color: #0d0d12;
+    color: var(--ex-text-color);
     font-size: 0.5rem;
     font-weight: 600;
     line-height: 1.12rem;
@@ -300,11 +300,11 @@ if (token.value) {
     width: 100%;
     height: 1.04rem;
     border-radius: 0.32rem;
-    background-color: #f5f7fc;
+    background-color: var(--ex-bg-color2);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #666d80;
+    color: var(--ex-text-color2);
   }
 
   .navs {
@@ -314,10 +314,10 @@ if (token.value) {
       display: flex;
       align-items: center;
       height: 1.04rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
       overflow: hidden;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       padding-inline: 0.32rem;
       margin-bottom: 0.2rem;
@@ -343,21 +343,21 @@ if (token.value) {
         overflow: hidden;
 
         .title {
-          color: #1e1e2d;
+          color: var(--ex-text-color);
           font-size: 0.3rem;
           font-weight: 400;
         }
 
         .info {
           font-size: 0.24rem;
-          color: #c2c2c2;
+          color: var(--ex-text-color4);
           margin-top: 0.2rem;
         }
       }
 
       .nav_more {
         margin-left: 0.12rem;
-        color: #666d80;
+        color: var(--ex-text-color2);
         font-size: 0.32rem;
       }
 
@@ -375,7 +375,7 @@ if (token.value) {
         display: flex;
         align-items: center;
         font-weight: 500;
-        color: #1e1e2d;
+        color: var(--ex-text-color);
 
         // .lang_icon {
         //   width: 0.52rem;

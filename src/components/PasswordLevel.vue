@@ -75,7 +75,7 @@ const levels = computed(() => {
   align-items: center;
   justify-content: flex-start;
   font-size: 0.24rem;
-  color: #ff5757;
+  color: var(--ex-error-color);
 
   .levels {
     display: flex;
@@ -85,7 +85,7 @@ const levels = computed(() => {
     .level {
       width: 0.52rem;
       height: 0.06rem;
-      background-color: #d9d9d9;
+      background-color: var(--ex-border-color2);
       margin-right: 0.08rem;
       border-radius: 0.04rem;
     }
@@ -94,29 +94,29 @@ const levels = computed(() => {
 
 .password_level_1,
 .password_level_2 {
-  color: #e53e00;
+  color: var(--ex-error-color);
 
   .levels {
     .level_active {
-      background-color: #ff5757;
+      background-color: var(--ex-error-color);
     }
   }
 }
 .password_level_3 {
-  color: #014cfa;
+  color: var(--ex-primary-color);
 
   .levels {
     .level_active {
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
     }
   }
 }
 .password_level_4 {
-  color: #00af70;
+  color: var(--ex-success-color);
 
   .levels {
     .level_active {
-      background-color: #00af70;
+      background-color: var(--ex-success-color);
     }
   }
 }

@@ -16,8 +16,8 @@
         <div class="td td-5">
           <div class="name">{{ item.symbol }}</div>
           <div class="lever">
-            <div class="status">{{ item.lever }}X</div>
-            <div class="status" :class="'status-' + item.status">
+            <div class="status-color status">{{ item.lever }}X</div>
+            <div class="status-color status" :class="'status-' + item.status">
               <!-- {{ statusMap[item.status] || "--" }} -->
               {{
                 item.status == "none"
@@ -225,7 +225,7 @@ defineExpose({
 
   .tr {
     padding: 0.24rem 0;
-    border-bottom: 1px solid #eff3f8;
+    border-bottom: 1px solid var(--ex-border-color);
     display: flex;
     align-items: stretch;
   }
@@ -235,7 +235,7 @@ defineExpose({
   }
 
   .th {
-    color: #8f92a1;
+    color: var(--ex-text-color3);
     font-size: 0.22rem;
     padding: 0.48rem 0 0.24rem 0;
   }
@@ -253,7 +253,7 @@ defineExpose({
 
     .name {
       font-size: 0.32rem;
-      color: #061023;
+      color: var(--ex-text-color);
       line-height: 0.32rem;
       margin-bottom: 0.18rem;
     }
@@ -264,11 +264,11 @@ defineExpose({
     }
 
     .status {
-      color: #014cfa;
       height: 0.3rem;
       padding: 0 0.08rem;
       border-radius: 0.3rem;
-      border: 1px solid #014cfa;
+      border-width: 1px;
+      border-style: solid;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -276,28 +276,12 @@ defineExpose({
       margin-right: 0.08rem;
     }
 
-    .status-open {
-      color: #18b762;
-      border-color: #18b762;
-    }
-
-    .status-fail,
-    .status-lock {
-      color: #e8503a;
-      border-color: #e8503a;
-    }
-
-    .status-none {
-      color: #7e99d6;
-      border-color: #7e99d6;
-    }
-
     .state {
       width: 0.68rem;
       height: 0.36rem;
       border-radius: 0.12rem;
-      color: #18b762;
-      background-color: rgba(24, 183, 98, 0.08);
+      color: var(--ex-up-color);
+      background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -306,29 +290,29 @@ defineExpose({
     }
 
     .state-short {
-      color: #e8503a;
-      background: rgba(232, 80, 58, 0.1);
+      color: var(--ex-down-color);
+      background: rgb(var(--ex-down-color-rgb) / 0.1);
     }
 
     .amount {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
     }
 
     .price {
-      color: #666d80;
+      color: var(--ex-text-color2);
       font-size: 0.24rem;
     }
 
     .price:first-child {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-weight: 600;
       line-height: 0.36rem;
     }
 
     .num {
-      color: #6c7b90;
+      color: var(--ex-text-color2);
       font-weight: 600;
       font-size: 0.24rem;
       text-align: right;

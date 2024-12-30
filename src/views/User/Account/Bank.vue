@@ -19,7 +19,7 @@
           :placeholder="t('account.add_bank_address_placeholder')" />
       </div>
     </div>
-    <Button class="submit" :disabled="!(form.bank_name && form.bank_card_number)" type="primary" round color="#014CFA"
+    <Button class="submit" :disabled="!(form.bank_name && form.bank_card_number)" type="primary" round color="var(--ex-primary-color)"
       @click="next">{{ $t("account.add_btn") }}</Button>
 
     <!-- 谷歌验证 -->
@@ -103,14 +103,14 @@ _kycGet().then((res) => {
     font-weight: 400;
     font-size: 0.28rem;
     line-height: 0.36rem;
-    color: #061023;
+    color: var(--ex-text-color);
     margin-bottom: 0.15rem;
   }
 
   .item {
     width: 100%;
     height: 0.92rem;
-    border: 0.02rem solid #d0d8e2;
+    border: 0.02rem solid var(--ex-border-color2);
     border-radius: 0.32rem;
     margin-bottom: 0.4rem;
     display: flex;

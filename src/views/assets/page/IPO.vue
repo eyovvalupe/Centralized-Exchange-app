@@ -16,7 +16,7 @@
             <div class="navs">
                 <div class="nav">
                     <div class="nav_label">盈利金额</div>
-                    <div class="num num--green">{{ hidden ? '********' : '--' }}</div>
+                    <div class="num text-success">{{ hidden ? '********' : '--' }}</div>
                 </div>
                 <div class="line"></div>
                 <div class="nav">
@@ -73,7 +73,7 @@ onMounted(() => {
         line-height: 0.32rem;
 
         .title {
-            color: #fff;
+            color: var(--ex-white);
             margin-right: 0.12rem;
             font-size: 0.3rem;
 
@@ -85,12 +85,12 @@ onMounted(() => {
         .eyes {
             width: 0.32rem;
             height: 0.32rem;
-            color: #fff;
+            color: var(--ex-white);
         }
     }
 
     .money {
-        color: #FFF;
+        color: var(--ex-white);
         font-family: "PingFang SC";
         font-size: 0.52rem;
         font-style: normal;
@@ -104,14 +104,14 @@ onMounted(() => {
         align-items: center;
         justify-content: center;
         height: 1.32rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         border-radius: 0.32rem;
         margin-top: 0.34rem;
 
         .line {
             width: 1px;
             height: 0.76rem;
-            background-color: #EFF3F8;
+            background-color: var(--ex-bg-color3);
         }
 
         .nav {
@@ -123,27 +123,24 @@ onMounted(() => {
         }
 
         .nav_label {
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             line-height: 100%;
         }
 
         .num {
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.3rem;
             font-weight: 600;
             line-height: 0.3rem;
             margin-top: 0.2rem;
         }
 
-        .num--green {
-            color: #18B762;
-        }
     }
 
     .subtitle {
         line-height: 0.32rem;
-        color: #061023;
+        color: var(--ex-text-color);
         font-weight: 600;
         font-size: 0.32rem;
         margin: 0.5rem 0.32rem 0 0.32rem;

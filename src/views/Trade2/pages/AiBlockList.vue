@@ -87,7 +87,7 @@ defineExpose({
                 content: '';
                 width: 100%;
                 height: 1px;
-                background-color: #3B82F6;
+                background-color: var(--ex-primary-color);
                 position: absolute;
                 bottom: 16px;
                 left: 0;
@@ -104,7 +104,7 @@ defineExpose({
     align-items: center;
     z-index: 99;
     margin-top: 0.32rem;
-    border: 1px solid #D0D8E2;
+    border: 1px solid var(--ex-border-color2);
     border-radius: 0.6rem;
 
     .type_tab {
@@ -113,7 +113,7 @@ defineExpose({
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #666D80;
+        color: var(--ex-text-color2);
         font-size: 0.3rem;
     }
 
@@ -123,14 +123,14 @@ defineExpose({
     }
 
     .active_type_tab {
-        color: #fff;
+        color: var(--ex-white);
         position: relative;
 
         &::after {
             content: '';
             width: calc(100% + 1px);
             height: calc(100% + 1px);
-            background-color: #014CFA;
+            background-color: var(--ex-primary-color);
             position: absolute;
             left: 0;
             top: -1px;

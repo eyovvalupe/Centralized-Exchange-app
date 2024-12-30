@@ -18,7 +18,7 @@
           class="flex justify-center items-center rounded-[1.6rem] border-[0.02rem] border-color-2 text-color2 w-[3.27rem] h-[0.97rem]">
           {{ $t("google_auth.google_input_btn_cancel") }}
         </div>
-        <Button :loading="loading" :disabled="disabled" round color="#014CFA" class="btn" type="primary"
+        <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn" type="primary"
           @click="submit">{{ $t("google_auth.google_input_btn_confirm") }}</Button>
       </div>
     </div>
@@ -51,11 +51,11 @@ watch(val, (v) => {
       "van-password-input__item"
     )[i].style;
     if (v.length != 6 && i <= v.length) {
-      inputStyle.borderColor = "#014CFA";
-      inputStyle.color = "#014CFA";
+      inputStyle.borderColor = "var(--ex-primary-color)";
+      inputStyle.color = "var(--ex-primary-color)";
     } else {
-      inputStyle.borderColor = "#D0D8E2";
-      inputStyle.color = "#666D80";
+      inputStyle.borderColor = "var(--ex-border-color2)";
+      inputStyle.color = "var(--ex-text-color2)";
     }
   }
 });
@@ -88,7 +88,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .google_dialog {
-  background-color: #fefefe;
+  background-color: var(--ex-bg-color);
   padding: 0.28rem 0.32rem 0.8rem 0.32rem;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
@@ -115,7 +115,7 @@ defineExpose({
   .title {
     font-size: 0.32rem;
     line-height: 0.44rem;
-    color: #121826;
+    color: var(--ex-text-color);
     margin-bottom: 0.4rem;
     text-align: center;
     font-weight: bold;
@@ -124,7 +124,7 @@ defineExpose({
   .subtitle {
     font-size: 0.28rem;
     line-height: 0.42rem;
-    color: #666d80;
+    color: var(--ex-text-color2);
     font-weight: 400;
     margin-bottom: 0.4rem;
   }
@@ -144,7 +144,7 @@ defineExpose({
 .pass_check {
   border-width: 0.02rem;
   border-style: solid;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   width: 1rem;
   height: 1.2rem;
   box-sizing: border-box;
@@ -160,8 +160,8 @@ defineExpose({
   margin: 0;
 
   :deep(.van-password-input__item) {
-    border: 0.02rem solid #eceff3;
-    background-color: #fff;
+    border: 0.02rem solid var(--ex-border-color);
+    background-color: var(--ex-bg-color);
     width: 1rem;
     height: 1.2rem;
     box-sizing: border-box;
@@ -169,7 +169,7 @@ defineExpose({
     font-size: 0.48rem;
 
     &:has(.van-password-input__cursor) {
-      border: 0.02rem solid #014cfa;
+      border: 0.02rem solid var(--ex-primary-color);
     }
   }
 }

@@ -7,9 +7,9 @@
     showConfirmButton
     :width="'6.22rem'"
     :confirmButtonText="t('register.code_jump_confirm')"
-    :confirmButtonColor="'#014CFA'"
+    :confirmButtonColor="'var(--ex-primary-color)'"
     :cancelButtonText="t('user_page.message_box_cancel')"
-    :cancelButtonColor="'#323233'"
+    :cancelButtonColor="'var(--ex-text-color2)'"
     overlay
     @cancel="close"
     @confirm="confirm"
@@ -107,7 +107,7 @@ defineExpose({
   justify-content: center;
 
   .title {
-    color: #121826;
+    color: var(--ex-text-color);
     font-size: 0.32rem;
     line-height: 0.44rem;
     margin-bottom: 0.28rem;
@@ -123,7 +123,7 @@ defineExpose({
 
   .tip {
     line-height: 0.44rem;
-    color: #014cfa;
+    color: var(--ex-primary-color);
     text-align: center;
     font-weight: 400;
     margin-bottom: 0.08rem;
@@ -132,7 +132,7 @@ defineExpose({
   .ipt_box {
     height: 0.92rem;
     border-radius: 0.32rem;
-    border: 1px solid #70747d;
+    border: 1px solid var(--ex-text-color3);
     width: 100%;
     display: flex;
     align-items: stretch;

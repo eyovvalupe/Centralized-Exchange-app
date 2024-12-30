@@ -14,11 +14,11 @@
       </div>
 
       <!-- c2c角标 -->
-      <div v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0" class="nav_num">
+      <div v-if="item.route == 'market' && store.state.c2cUnreadTotal > 0" class="bg-unread-msg bg-unread-msg-text-color">
         {{ store.state.c2cUnreadTotal }}
       </div>
       <!-- 角标 -->
-      <div v-if="item.route == 'user' && storeChat.state.messageNum > 0" class="nav_num">
+      <div v-if="item.route == 'user' && storeChat.state.messageNum > 0" class="bg-unread-msg bg-unread-msg-text-color">
         {{ storeChat.state.messageNum }}
       </div>
     </div>
@@ -120,8 +120,8 @@ const checkActive = (item) => {
 
 <style scoped lang="less">
 .bottom_nav {
-  border-top: 1px solid #eaeef3;
-  background-color: #fff;
+  border-top: 1px solid var(--ex-border-color);
+  background-color: var(--ex-bg-color);
   display: flex;
   position: fixed;
   overflow: hidden;
@@ -140,7 +140,7 @@ const checkActive = (item) => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #636468;
+    color: var(--ex-text-color2);
     position: relative;
 
     .bottom_nav_name {
@@ -162,9 +162,7 @@ const checkActive = (item) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #ff3b30;
       font-size: 0.2rem;
-      color: #fff;
       font-weight: 400;
       border-radius: 50%;
       position: absolute;
@@ -174,7 +172,7 @@ const checkActive = (item) => {
   }
 
   .bottom_nav_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
   }
 }
 </style>

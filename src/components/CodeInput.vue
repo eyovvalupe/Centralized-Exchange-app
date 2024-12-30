@@ -13,25 +13,25 @@
           @focus="focusIndex = index" class="digit-input pt-[0.1rem]" :class="{ filled: digit !== '' }" :style="{
             borderColor:
               digit == '' && focusIndex != index
-                ? '#d0d8e2'
+                ? 'var(--ex-border-color2)'
                 : !isSentCodeError || !isAllFilled
-                  ? '#014cfa'
-                  : '#e8503a',
+                  ? 'var(--ex-primary-color)'
+                  : 'var(--ex-border-error)',
             color:
               digit == ''
                 ? ''
                 : !isSentCodeError || !isAllFilled
-                  ? '#014cfa !important'
-                  : '#e8503a !important',
+                  ? 'var(--ex-primary-color) !important'
+                  : 'var(--ex-border-error) !important',
             caretColor:
-              !isSentCodeError || !isAllFilled ? '#014cfa' : '#e8503a',
+              !isSentCodeError || !isAllFilled ? 'var(--ex-primary-color)' : 'var(--ex-border-error)',
             borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem',
           }" ref="digitInputs" />
         <div v-if="focusIndex == index && digit == ''"
           class="absolute w-[0.48rem] bottom-[0.24rem] left-[0.26rem] top-[1rem] h-[0.04rem] bg-primary"></div>
       </div>
     </div>
-    <Button :loading="props.loading" :disabled="!isAllFilled" round color="#014CFA" class="submit-button" type="primary"
+    <Button :loading="props.loading" :disabled="!isAllFilled" round color="var(--ex-primary-color)" class="submit-button" type="primary"
       @click="handleSubmit">{{ props.from == "register" ? t('code_input.btn_text1') : t('code_input.btn_text2')
       }}</Button>
   </div>
@@ -138,22 +138,22 @@ onMounted(() => {
   width: 1rem;
   height: 1.2rem;
   text-align: center;
-  border: 0.03rem solid #d0d8e2;
+  border: 0.03rem solid var(--ex-border-color2);
   /* border-radius: 0.16rem; */
   font-size: 0.48rem;
 }
 
 .digit-input.filled {
-  border-color: #014cfa;
+  border-color: var(--ex-primary-color);
 }
 
 .submit-button {
   width: 6.86rem;
   height: 1.12rem;
   font-size: 0.36rem;
-  /* background-color: #014cfa; */
+  /* background-color: var(--ex-primary-color); */
   border-radius: 1.6rem;
-  color: white;
+  color: var(--ex-bg-primary-text-color);
 }
 
 .clear_icon {

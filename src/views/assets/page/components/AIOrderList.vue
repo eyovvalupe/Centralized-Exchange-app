@@ -45,17 +45,17 @@ const changeActiveTab = (val) => {
   .ai_order_tabs {
     width: 100%;
     height: 0.52rem;
-    border-bottom: 0.02rem solid #eff3f8;
+    border-bottom: 0.02rem solid var(--ex-border-color);
 
     .ai_order_tab {
       font-size: 0.24rem;
-      color: #666d80;
+      color: var(--ex-text-color2);
     }
 
     .actived {
       font-size: 0.32rem;
       font-weight: 600;
-      color: #061023;
+      color: var(--ex-text-color);
     }
   }
 

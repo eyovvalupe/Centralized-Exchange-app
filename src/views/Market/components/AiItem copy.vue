@@ -140,11 +140,11 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  border: 1px solid #eff3f8;
+  border: 1px solid var(--ex-border-color);
   font-size: 0.28rem;
-  color: #0d0d12;
+  color: var(--ex-text-color);
   margin-top: 0.2rem;
-  background-color: #f5f7fc;
+  background-color: var(--ex-bg-color2);
   position: relative;
 
   .head {
@@ -153,7 +153,7 @@ const formatSec = (seconds, t) => {
     justify-content: space-between;
 
     .time_title {
-      color: #6c7b90;
+      color: var(--ex-text-color2);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -183,9 +183,9 @@ const formatSec = (seconds, t) => {
   }
 
   .cont {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border-radius: 0.32rem;
-    border: 1px solid #eff3f8;
+    border: 1px solid var(--ex-border-color);
     position: relative;
     width: calc(100% + 2px);
     box-sizing: border-box;
@@ -193,7 +193,7 @@ const formatSec = (seconds, t) => {
   }
 
   .title {
-    color: #0d0d12;
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     font-weight: 600;
     display: flex;
@@ -206,7 +206,7 @@ const formatSec = (seconds, t) => {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: #8f8f8f;
+    color: var(--ex-text-color3);
     font-weight: 400;
     font-size: 0.28rem;
 
@@ -229,14 +229,14 @@ const formatSec = (seconds, t) => {
     }
 
     .tip_text {
-      color: #8f8f8f;
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
       line-height: 140%;
     }
   }
 
   .income_label {
-    color: #333;
+    color: var(--ex-text-color);
     font-size: 0.24rem;
     font-weight: 400;
     line-height: 0.24rem;
@@ -251,7 +251,7 @@ const formatSec = (seconds, t) => {
 
   .table {
     display: flex;
-    border-top: 1px dashed #eff3f8;
+    border-top: 1px dashed var(--ex-border-color);
     padding: 0.32rem 0;
 
     .td {
@@ -263,14 +263,14 @@ const formatSec = (seconds, t) => {
       position: relative;
 
       .td_title {
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         font-size: 0.24rem;
         font-style: normal;
         line-height: 0.44rem;
       }
 
       .td_val {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.3rem;
         font-weight: 600;
         line-height: 0.44rem;
@@ -286,7 +286,7 @@ const formatSec = (seconds, t) => {
       left: 0;
       top: 50%;
       margin-top: -0.45rem;
-      background-color: #eff3f8;
+      background-color: var(--ex-bg-color3);
     }
   }
 
@@ -295,7 +295,7 @@ const formatSec = (seconds, t) => {
 
     .btn {
       height: 0.64rem;
-      color: #fff;
+      color: var(--ex-bg-primary-text-color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -303,7 +303,7 @@ const formatSec = (seconds, t) => {
       height: 0.8rem;
       font-size: 0.3rem;
       font-weight: 600;
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
     }
   }
 }

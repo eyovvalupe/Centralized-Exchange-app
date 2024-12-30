@@ -23,8 +23,8 @@
       <Slider
         v-model="sliderValue"
         bar-height="0.08rem"
-        active-color="#f2f2f2"
-        inactive-color="#f2f2f2"
+        active-color="var(--ex-bg-color2)"
+        inactive-color="var(--ex-bg-color2)"
         @change="onSliderChange"
       />
       <div class="percentages">
@@ -70,7 +70,7 @@
         :gutter="16"
       />
 
-      <Button size="large" color="#014cfa" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;" :disabled="loseValue === '' || value===''  ||  amount ===0 " @click="update">确定</Button>
+      <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;" :disabled="loseValue === '' || value===''  ||  amount ===0 " @click="update">确定</Button>
 
       <!-- 数字键盘 -->
       <NumberKeyboard
@@ -179,7 +179,7 @@
     .detail-update-title {
       text-align: center;
       margin-top: 0.4rem;
-      color: #121826;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-style: normal;
       font-weight: 500;
@@ -191,7 +191,7 @@
       padding-top: 0.2rem;
     }
     .order-lose-title {
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -203,14 +203,14 @@
     .lose-field {
       height: 0.88rem;
       border-radius: 0.12rem;
-      border: 0.02rem solid #D0D8E2;
+      border: 0.02rem solid var(--ex-border-color2);
       .van-field__control {
           text-align: right;
       }
     }
     .account-monkey {
       text-align: right;
-      color: #8F92A1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -229,13 +229,13 @@
         position: absolute;
         right: 0;
         top: -0.36rem;
-        background: white;
+        background: var(--ex-bg-color);
         z-index: 88;
       }
     }
 
     .percentage {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       font-style: normal;
       font-weight: 400;
@@ -257,7 +257,7 @@
     .van-slider__button {
       width: 0.06rem;
       height: 0.48rem;
-      background-color: #014cfa;
+      background-color: var(--ex-primary-color);
       border-radius: inherit;
       top: -0.36rem;
     }
@@ -270,7 +270,7 @@
       display: flex;
       justify-content: right;
       margin-top: 0.6rem;
-      color: #014CFA;
+      color: var(--ex-primary-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
@@ -285,7 +285,7 @@
     }
     .risk-line-dashed {
       width: 3.44rem;
-      border-bottom: 0.02rem dashed #cbcbcb;
+      border-bottom: 0.02rem dashed var(--ex-border-color2);
       position: absolute;
       right: 0.32rem;
       top: 0.42rem;
@@ -295,7 +295,7 @@
       justify-content: right;
       margin-top: 0.1rem;
       .risk-text {
-        color: #333;
+        color: var(--ex-text-color);
         text-align: center;
         font-size: 0.24rem;
         font-style: normal;
@@ -307,7 +307,7 @@
       margin-top: 0.26rem;
       .ipo-code-title {
         text-align: center;
-        color: #121826;
+        color: var(--ex-text-color);
         font-size: 0.28rem;
         font-style: normal;
         font-weight: 500;
@@ -320,7 +320,7 @@
     }
     .van-password-input__security li {
       border-radius: 0.16rem;
-      border: 0.02rem solid #eceff3;
+      border: 0.02rem solid var(--ex-border-color);
     }
     @media (min-width: 751px) {
       .van-number-keyboard {
@@ -331,16 +331,16 @@
       }
     }
     input:focus {
-      color: #014cfa;
-      caret-color: #014cfa; /* 光标颜色 */
+      color: var(--ex-primary-color);
+      caret-color: var(--ex-primary-color); /* 光标颜色 */
     }
 
     input:focus::placeholder {
-      // color: #014cfa; /* 占位符颜色 */
+      // color: var(--ex-primary-color); /* 占位符颜色 */
     }
 
     .focusinput {
-      border-color: #014cfa !important;
+      border-color: var(--ex-primary-color) !important;
     }
   }
 </style>

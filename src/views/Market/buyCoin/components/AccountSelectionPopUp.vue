@@ -23,7 +23,7 @@
           </div>
         </div>
         <!-- 三层容器 -->
-        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-color2 text-my"
+        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-color2 text-primary"
           @click="goAddAccount">
           <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
           <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
@@ -148,7 +148,7 @@ const clickAccountItem = val => {
 }
 
 .withdraw_accounr_dialog {
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   overflow: hidden;
   padding: 1.42rem 0.32rem 0.8rem 0.32rem;
   position: relative;
@@ -162,7 +162,7 @@ const clickAccountItem = val => {
     line-height: 1rem;
     font-size: 0.32rem;
     width: 100%;
-    color: #121826;
+    color: var(--ex-text-color);
     pointer-events: none;
     font-weight: bold;
   }
@@ -181,7 +181,7 @@ const clickAccountItem = val => {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
 
@@ -193,20 +193,20 @@ const clickAccountItem = val => {
   }
 
   .swap_dialog_item_active {
-    color: #014cfa;
+    color: var(--ex-primary-color);
     font-weight: 600;
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: #014cfa;
+      color: var(--ex-primary-color);
       font-size: 0.28rem;
     }
   }
 
   .search_box {
     height: 0.8rem;
-    background-color: #f5f5f5;
+    background-color: var(--ex-bg-color2);
     border-radius: 0.4rem;
     display: flex;
     align-items: center;
@@ -216,7 +216,7 @@ const clickAccountItem = val => {
 
     input {
       flex: 1;
-      color: #121826;
+      color: var(--ex-text-color);
     }
   }
 
@@ -232,14 +232,14 @@ const clickAccountItem = val => {
       display: flex;
       align-items: center;
       padding: 0 0.4rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.32rem;
       font-weight: 400;
     }
 
     .active_tab {
-      background-color: #f6f8ff;
-      color: #014cfa;
+      background-color: var(--ex-bg-color2);
+      color: var(--ex-primary-color);
       font-weight: 500;
     }
   }
@@ -258,7 +258,7 @@ const clickAccountItem = val => {
 
   .add_item {
     margin-bottom: 0.36rem;
-    border: 1px dashed #ccd7fd;
+    border: 1px dashed var(--ex-border-color2);
     border-radius: 0.12rem;
     height: 1.44rem;
     display: flex;
@@ -273,11 +273,11 @@ const clickAccountItem = val => {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    border: 1px solid #d0d8e2;
+    border: 1px solid var(--ex-border-color2);
     padding: 0 0.4rem 0 0.36rem;
 
     .card_icon {
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       width: 0.96rem;
       height: 0.96rem;
       border-radius: 1rem;
@@ -296,7 +296,7 @@ const clickAccountItem = val => {
       margin: 0 0.2rem 0 0.36rem;
       text-align: left;
       font-size: 0.24rem;
-      color: #061023;
+      color: var(--ex-text-color);
       font-weight: 500;
       line-height: 1;
 
@@ -309,8 +309,7 @@ const clickAccountItem = val => {
   }
 
   .dialog_account_item_active {
-    border: 1px solid #1a59f6;
-    border-top-right-radius: 0;
+    border: 1px solid var(--ex-primary-color);
 
     .checked {
       position: absolute;

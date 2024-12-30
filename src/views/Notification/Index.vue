@@ -13,7 +13,7 @@
         v-model:active="active"
         :swipeable="false"
         animated
-        :color="'#014CFA'"
+        :color="'var(--ex-primary-color)'"
         shrink
         @change="onChange"
       >

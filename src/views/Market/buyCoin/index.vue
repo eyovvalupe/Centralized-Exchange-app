@@ -7,7 +7,7 @@
       class="tabs"
       :swipeable="false"
       animated
-      color="#014CFA"
+      color="var(--ex-primary-color)"
       shrink
       @change="(e) => onChange(e)"
     >
@@ -110,7 +110,7 @@ defineExpose({
   .tabs {
     > :deep(.van-tabs__wrap) {
       box-sizing: unset;
-      background: #fff;
+      background: var(--ex-bg-color);
       margin: 0 0.32rem;
       height: 0.8rem;
       padding: 0.2rem 0 0.12rem !important;
@@ -127,7 +127,7 @@ defineExpose({
 
       > .van-tabs__nav {
         border-radius: 0.32rem;
-        background: #eff3f8 !important;
+        background: var(--ex-bg-color3) !important;
         position: relative;
         display: flex;
         justify-content: space-between;
@@ -139,17 +139,16 @@ defineExpose({
 
         .van-tab {
           width: 33%;
-          color: #666d80;
+          color: var(--ex-text-color2);
         }
-
         .van-tab--active {
-          box-shadow: 0px -2px 5px 0px #014cfa1a;
-          background: white;
+          box-shadow: 0px -2px 5px 0px rgb(var(--ex-text-color-rgb) / 0.1);
+          background: var(--ex-bg-color);
           padding: 0;
           border-radius: 0.32rem;
           height: 120%;
           transform: translateY(-10%);
-          color: #014cfa;
+          color: var(--ex-primary-color);
 
           &:first-child {
             border-end-end-radius: 0;
@@ -173,7 +172,7 @@ defineExpose({
         //     content: '';
         //     width: 100%;
         //     height: 0.02rem;
-        //     background-color: #3B82F6;
+        //     background-color: var(--ex-primary-color);
         //     position: absolute;
         //     bottom: 0.32rem;
         //     left: 0;

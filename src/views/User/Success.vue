@@ -6,7 +6,7 @@
     </div>
     <div class="title">{{ $t("safety.success_title") }}</div>
 
-    <Button @click="router.back()" round color="#014CFA" class="submit" type="primary">{{ $t("safety.success_btn")
+    <Button @click="router.back()" round color="var(--ex-primary-color)" class="submit" type="primary">{{ $t("safety.success_btn")
       }}</Button>
   </div>
 </template>
@@ -36,7 +36,7 @@ const { t } = useI18n();
 
   .title {
     margin: 1.12rem 0 1.68rem 0;
-    color: #000;
+    color: var(--ex-text-color);
     font-size: 0.36rem;
     line-height: 0.56rem;
   }

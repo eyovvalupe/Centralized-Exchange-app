@@ -30,8 +30,8 @@
       </div>
       <div class="status" v-else>
         <div class="status_icon">
-          <LoadEffect class="status_loading" color="#fff" />
-          <img :src="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
+          <LoadEffect class="status_loading" color="var(--ex-white)" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_wait.png')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.processing") }}</div>
         <div class="status_desc">{{ $t("withdrawInfo.processingTip") }}</div>
@@ -154,7 +154,7 @@ const goChat = () => {
     width: 0.72rem;
     height: 0.72rem;
     box-sizing: border-box;
-    border: 1px solid #edf2f7;
+    border: 1px solid var(--ex-border-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -193,12 +193,12 @@ const goChat = () => {
       .status_name {
         font-size: 0.3rem;
         line-height: 140%;
-        color: #061023;
+        color: var(--ex-text-color);
         margin-top: 0.32rem;
       }
 
       .status_desc {
-        color: #666d80;
+        color: var(--ex-text-color2);
         text-align: center;
         font-size: 0.28rem;
         line-height: 140%;
@@ -212,17 +212,17 @@ const goChat = () => {
 
     .bottom_item {
       padding: 0.32rem 0 0.2rem 0;
-      border-bottom: 1px solid #f5f7fc;
+      border-bottom: 1px solid var(--ex-border-color);
       display: flex;
       justify-content: space-between;
       font-size: 0.28rem;
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       line-height: 0.44rem;
       font-weight: 400;
 
       .value {
         font-size: 0.3rem;
-        color: #061023;
+        color: var(--ex-text-color);
         display: flex;
         align-items: center;
         justify-content: flex-end;

@@ -46,7 +46,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box">
-      <Button :loading="loading" round :disabled="disapled" color="#014CFA" class="submit" type="primary"
+      <Button :loading="loading" round :disabled="disapled" color="var(--ex-primary-color)" class="submit" type="primary"
         @click="submit">{{ $t("change_trade_pw.btn") }}</Button>
     </div>
 
@@ -121,7 +121,7 @@ const submitForm = (code) => {
     padding-bottom: 0.1rem;
 
     .form_title {
-      color: #061023;
+      color: var(--ex-text-color);
       line-height: 0.42rem;
       font-weight: 400;
       font-size: 0.28rem;
@@ -138,13 +138,13 @@ const submitForm = (code) => {
 
       .item_input {
         flex: 1;
-        color: #061023;
+        color: var(--ex-text-color);
         font-weight: 400;
         font-size: 0.3rem;
       }
 
       &:has(.item_input:focus) {
-        border: 0.02rem solid #014cfa;
+        border: 0.02rem solid var(--ex-primary-color);
       }
 
       .form_item_user {

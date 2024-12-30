@@ -175,7 +175,7 @@ defineExpose({
 
 <style lang="less">
 .account_check_popup {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     overflow: hidden;
     padding: 0.2rem 0.32rem 0.64rem 0.32rem;
     position: relative;
@@ -206,14 +206,14 @@ defineExpose({
             width: 100%;
             text-align: left;
             font-size: 0.28rem;
-            color: #000000;
+            color: var(--ex-text-color);
             line-height: 0.64rem;
             margin: 0.24rem 0;
         }
 
         .fake_user {
             height: 1.5rem;
-            background-color: #F6F7FA;
+            background-color: var(--ex-bg-color2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -223,20 +223,20 @@ defineExpose({
             .fake_icon_box {
                 width: 0.96rem;
                 height: 0.96rem;
-                background-color: #D9E4FF;
+                background-color: var(--ex-bg-color4);
                 padding: 0.16rem;
                 border-radius: 0.16rem;
                 margin-right: 0.6rem;
             }
 
             .fake_btn {
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
                 height: 0.68rem;
                 display: flex;
                 align-items: center;
                 padding: 0 0.24rem;
                 border-radius: 0.4rem;
-                color: #fff;
+                color: var(--ex-bg-primary-text-color);
                 font-size: 0.24rem;
                 margin-left: 0.6rem;
             }
@@ -253,7 +253,7 @@ defineExpose({
             .way {
                 width: 100%;
                 height: 1.8rem;
-                background-color: #F2F2F2;
+                background-color: var(--ex-bg-color2);
                 box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.05);
                 border-radius: 0.16rem;
                 margin-bottom: 0.6rem;
@@ -268,7 +268,7 @@ defineExpose({
 
                     .title {
                         font-weight: 400;
-                        color: #343434;
+                        color: var(--ex-text-color);
                         font-size: 0.28rem;
                         line-height: 0.48rem;
                         margin-bottom: 0.18rem;
@@ -278,7 +278,7 @@ defineExpose({
                         font-weight: 400;
                         font-size: 0.24rem;
                         line-height: 0.32rem;
-                        color: #014CFA;
+                        color: var(--ex-primary-color);
                         padding-left: 0.1rem;
                         display: flex;
                         align-items: center;
@@ -286,7 +286,7 @@ defineExpose({
                         .btn {
                             width: 1.02rem;
                             height: 0.44rem;
-                            background-color: #014CFA;
+                            background-color: var(--ex-primary-color);
                             border-radius: 1.02rem;
                             display: flex;
                             align-items: center;
@@ -320,11 +320,11 @@ defineExpose({
             }
 
             .active_way {
-                background-color: #014CFA;
+                background-color: var(--ex-primary-color);
 
                 .left {
                     .title {
-                        color: #fff;
+                        color: var(--ex-bg-primary-text-color);;
                         line-height: 1;
                     }
                 }
@@ -342,11 +342,11 @@ defineExpose({
             font-weight: 400;
             line-height: 0.32rem;
             margin-bottom: 1rem;
-            color: #333333;
+            color: var(--ex-text-color);
             text-align: center;
 
             span {
-                color: #014CFA;
+                color: var(--ex-primary-color);
             }
         }
     }

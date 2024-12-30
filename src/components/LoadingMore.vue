@@ -35,6 +35,6 @@ const props = defineProps({
   justify-content: center;
   font-weight: 400;
   font-size: 0.24rem;
-  color: #999;
+  color: var(--ex-text-color3);
 }
 </style>

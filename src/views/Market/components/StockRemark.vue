@@ -95,7 +95,7 @@ const list = ref([
             left: 0.3rem;
             font-size: 0.6rem;
             letter-spacing: -0.5px;
-            color: #111111;
+            color: var(--ex-text-color);
         }
 
         .subtitle {
@@ -103,7 +103,7 @@ const list = ref([
             top: 0.64rem;
             left: 0.3rem;
             font-size: 0.28rem;
-            color: #18B762;
+            color: var(--ex-success-color);
         }
     }
 
@@ -140,7 +140,7 @@ const list = ref([
 
             :deep(.van-tab--active) {
                 .stock_tab {
-                    border: 1px solid #014CFA;
+                    border: 1px solid var(--ex-primary-color);
                 }
             }
         }
@@ -148,7 +148,7 @@ const list = ref([
         .stock_tab {
             width: 2.97rem;
             height: 1.90rem;
-            border: 1px solid #EAEAEA;
+            border: 1px solid var(--ex-border-color);
             border-radius: 0.08rem;
             padding: 0.17rem;
             position: relative;
@@ -156,20 +156,20 @@ const list = ref([
             .tab_title {
                 font-weight: 700;
                 font-size: 0.2rem;
-                color: #0D0D12;
+                color: var(--ex-text-color);
                 line-height: 0.274rem;
                 margin-bottom: 0.06rem;
             }
 
             .tab_subtitle {
-                color: #818898;
+                color: var(--ex-text-color3);
                 font-weight: 400;
                 font-size: 0.17rem;
                 margin-bottom: 0.14rem;
             }
 
             .tab_num {
-                color: #0D0D12;
+                color: var(--ex-text-color);
                 font-weight: 600;
                 font-size: 0.17rem;
                 line-height: 0.25rem;
@@ -191,13 +191,13 @@ const list = ref([
             align-items: center;
             justify-content: space-between;
             font-size: 0.36rem;
-            color: #000;
+            color: var(--ex-text-color);
             line-height: 0.48rem;
             margin-bottom: 0.4rem;
 
             .rannk_more {
                 font-weight: 400;
-                color: #666666;
+                color: var(--ex-text-color2);
                 font-size: 0.28rem;
             }
         }
@@ -222,10 +222,10 @@ const list = ref([
         .th {
             padding-bottom: 0.16rem;
             height: 0.64rem;
-            color: #9EA3AE;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             font-weight: 400;
-            border-bottom: 1px solid #E8E8E8;
+            border-bottom: 1px solid var(--ex-border-color);
 
             .td_r {
                 text-align: right;

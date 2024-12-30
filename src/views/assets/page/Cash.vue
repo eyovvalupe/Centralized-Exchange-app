@@ -117,7 +117,7 @@ defineExpose({
     line-height: 0.32rem;
 
     .title {
-      color: #fff;
+      color: var(--ex-white);
       margin-right: 0.12rem;
       font-size: 0.3rem;
 
@@ -129,12 +129,12 @@ defineExpose({
     .eyes {
       width: 0.32rem;
       height: 0.32rem;
-      color: #fff;
+      color: var(--ex-white);
     }
   }
 
   .money {
-    color: #fff;
+    color: var(--ex-white);
     font-family: "PingFang SC";
     font-size: 0.52rem;
     font-style: normal;
@@ -149,14 +149,14 @@ defineExpose({
     align-items: center;
     justify-content: center;
     height: 1.32rem;
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border-radius: 0.32rem;
     margin-top: 0.34rem;
 
     .line {
       width: 1px;
       height: 0.76rem;
-      background-color: #eff3f8;
+      background-color: var(--ex-bg-color3);
     }
 
     .nav {
@@ -168,13 +168,13 @@ defineExpose({
     }
 
     .nav_label {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.28rem;
       line-height: 100%;
     }
 
     .num {
-      color: #061023;
+      color: var(--ex-text-color);
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.3rem;
@@ -189,7 +189,7 @@ defineExpose({
     margin-bottom: 0.28rem;
 
     &_desc {
-      color: #8f92a1;
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
       margin-left: 0.12rem;
     }
@@ -205,7 +205,7 @@ defineExpose({
       height: 1.04rem;
       margin-top: 0.12rem;
       border-radius: 0.32rem;
-      background: #f5f7fc;
+      background: var(--ex-bg-color2);
       position: relative;
       display: flex;
       align-items: center;
@@ -223,7 +223,7 @@ defineExpose({
         width: 0.52rem;
         height: 0.52rem;
         margin-right: 0.16rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         border-radius: 50%;
         box-sizing: border-box;
         padding: 0.1rem;
@@ -261,8 +261,8 @@ defineExpose({
           font-size: 0.3rem;
           font-weight: 400;
           text-align: center;
-          color: #fff;
-          background-color: #014cfa;
+          color: var(--ex-bg-primary-text-color);
+          background-color: var(--ex-primary-color);
         }
 
         .right--yellow {
@@ -270,11 +270,11 @@ defineExpose({
         }
 
         .right--green {
-          background-color: #00af70;
+          background-color: var(--ex-success-color);
         }
 
         .right--red {
-          background-color: #e8503a;
+          background-color: var(--ex-error-color);
         }
 
         .right:first-child {

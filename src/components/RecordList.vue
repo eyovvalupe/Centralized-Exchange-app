@@ -231,7 +231,7 @@ const getDate = str => {
 
 <style lang="less">
 .record_list_popup {
-    background-color: #fff;
+    background-color: var(--ex-bg-color);
     border-top-left-radius: 0.24rem;
     border-top-right-radius: 0.24rem;
     overflow: hidden;
@@ -245,15 +245,15 @@ const getDate = str => {
 
         .van-tab--card {
             border-right: none;
-            color: #061023;
-            // background-color: #f5f5f5;
+            color: var(--ex-text-color);
+            // background-color: var(--ex-bg-color2);
         }
 
         .van-tab--card.van-tab--active {
 
-            background-color: #F6F8FF;
+            background-color: var(--ex-bg-color2);
             border-radius: 0.3rem;
-            color: #014CFA;
+            color: var(--ex-primary-color);
             font-weight: 500
         }
 
@@ -303,7 +303,7 @@ const getDate = str => {
 
     .list_0_item {
         .date {
-            color: #343434;
+            color: var(--ex-text-color);
             font-size: 0.28rem;
             font-weight: 600;
             line-height: 0.48rem;

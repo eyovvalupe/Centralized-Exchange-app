@@ -47,7 +47,7 @@ const props = defineProps({
 <style lang="less" scoped>
 .withdraw_item {
     width: 100%;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid var(--ex-border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -58,7 +58,7 @@ const props = defineProps({
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #343434;
+        color: var(--ex-text-color);
         font-size: 0.24rem;
     }
 
@@ -73,25 +73,25 @@ const props = defineProps({
 
             .item_info {
                 font-size: 0.28rem;
-                color: #919193;
+                color: var(--ex-text-color3);
                 line-height: 400;
                 line-height: 0.48rem;
 
                 .num {
-                    color: #333333;
+                    color: var(--ex-text-color);
                 }
             }
         }
 
         .right {
             font-size: 0.36rem;
-            color: #000000;
+            color: var(--ex-text-color);
             font-weight: 700;
         }
     }
 
     .date {
-        color: #919193;
+        color: var(--ex-text-color3);
         font-size: 0.24rem;
         font-weight: 400;
     }

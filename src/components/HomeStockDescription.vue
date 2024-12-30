@@ -76,36 +76,36 @@ const goInfo = (item)=>{
 .stock_description {
 
   .up_price {
-    background-image: linear-gradient(to bottom, #ffffff, #e4f6ed);
+    background-image: linear-gradient(to bottom, var(--ex-bg-color), rgb(var(--ex-up-color-rgb) / 0.1));
 
     .stock_price {
       font-size: 0.28rem;
       font-weight: 600;
-      color: #18b762;
+      color: var(--ex-up-color);
     }
 
     .stock_detail {
       width: 100%;
       font-size: 0.22rem;
       font-weight: 400;
-      color: #18b762;
+      color: var(--ex-up-color);
     }
   }
 
   .down_price {
-    background-image: linear-gradient(to bottom, #ffffff, #f4e7e5);
+    background-image: linear-gradient(to bottom, var(--ex-bg-color), rgb(var(--ex-down-color-rgb) / 0.1));
 
     .stock_price {
       font-size: 0.28rem;
       font-weight: 600;
-      color: #e8503a;
+      color: var(--ex-down-color);
     }
 
     .stock_detail {
       width: 100%;
       font-size: 0.22rem;
       font-weight: 400;
-      color: #e8503a;
+      color: var(--ex-down-color);
     }
   }
 }

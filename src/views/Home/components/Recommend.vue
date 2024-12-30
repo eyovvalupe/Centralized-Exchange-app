@@ -18,7 +18,7 @@
                             activeStockSymbol.ratio > 0 ? '+' : '' }}{{ activeStockSymbol.ratio  }}%
                     </div>
                     <AreaChart :symbol="activeStockSymbol.symbol"
-                        :color="activeStockSymbol.ratio > 0 ? '#18B762' : '#E8503A'" />
+                        :color="activeStockSymbol.ratio > 0 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" />
                 </div>
                 <!-- 横向滚动 -->
                 <div class="padding_block stock_tabs_box">
@@ -130,7 +130,7 @@ const news = ref([])
 
         .recommend_tab {
             font-size: 0.28rem;
-            color: #061023;
+            color: var(--ex-text-color);
             padding: 0 0.4rem;
             height: 0.6rem;
             border-radius: 0.48rem;
@@ -139,8 +139,8 @@ const news = ref([])
         }
 
         .active_tab {
-            color: #014CFA;
-            background-color: #F6F8FF;
+            color: var(--ex-primary-color);
+            background-color: var(--ex-bg-color2);
         }
     }
 
@@ -156,7 +156,7 @@ const news = ref([])
                 left: 0rem;
                 font-size: 0.6rem;
                 letter-spacing: -0.5px;
-                color: #111111;
+                color: var(--ex-text-color);
             }
 
             .subtitle {
@@ -200,7 +200,7 @@ const news = ref([])
 
                 :deep(.van-tab--active) {
                     .stock_tab {
-                        border: 1px solid #014CFA;
+                        border: 1px solid var(--ex-primary-color);
                     }
                 }
             }
@@ -208,29 +208,29 @@ const news = ref([])
             .stock_tab {
                 width: 2.97rem;
                 height: 1.60rem;
-                border: 1px solid #F8F9FB;
+                border: 1px solid var(--ex-bg-color2);
                 border-radius: 0.08rem;
                 padding: 0.17rem;
                 position: relative;
-                background-color: #F8F9FB;
+                background-color: var(--ex-bg-color2);
 
                 .tab_title {
                     font-weight: 700;
                     font-size: 0.24rem;
-                    color: #0D0D12;
+                    color: var(--ex-text-color);
                     line-height: 0.274rem;
                     margin-bottom: 0.06rem;
                 }
 
                 .tab_subtitle {
-                    color: #818898;
+                    color: var(--ex-text-color3);
                     font-weight: 400;
                     font-size: 0.2rem;
                     margin-bottom: 0.14rem;
                 }
 
                 .tab_num {
-                    color: #0D0D12;
+                    color: var(--ex-text-color);
                     font-weight: 600;
                     font-size: 0.2rem;
                     line-height: 0.25rem;
@@ -266,7 +266,7 @@ const news = ref([])
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 font-size: 0.28rem;
-                color: #121212;
+                color: var(--ex-text-color);
             }
 
             .time {

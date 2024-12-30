@@ -1,7 +1,7 @@
 <!-- 中签 -->
 <template>
   <div v-if="token" class="page_ipo_stock">
-    <Tabs type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange" :color="'#014CFA'"
+    <Tabs type="custom-card" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange" :color="'var(--ex-primary-color)'"
       shrink v-if="props.from != 'assets'">
       <Tab :title="t('trade.ipo_lottery_title1')" name=""> </Tab>
       <Tab :title="t('trade.ipo_lottery_title2')" name="lock"> </Tab>
@@ -303,16 +303,16 @@ function countdown(endTime) {
 
     .item {
       border-radius: 0.32rem;
-      border: 1px solid #eff3f8;
-      background: #f5f7fc;
+      border: 1px solid var(--ex-border-color);
+      background: var(--ex-bg-color2);
       margin-top: 0.2rem;
 
       .name {
-        color: #061023;
+        color: var(--ex-text-color);
         font-size: 0.32rem;
         font-weight: 600;
         line-height: 0.36rem;
-        color: #0d0d12;
+        color: var(--ex-text-color);
         height: 0.36rem;
 
 
@@ -328,7 +328,7 @@ function countdown(endTime) {
           min-width: 0.6rem;
           height: 0.32rem;
           font-size: 0.22rem;
-          color: #014CFA;
+          color: var(--ex-primary-color);
           border-radius: 0.08rem;
           text-align: center;
           line-height: 0.32rem;
@@ -339,13 +339,13 @@ function countdown(endTime) {
       }
 
       .item_winning {
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         font-size: 0.28rem;
         font-weight: 400;
         line-height: 0.36rem;
 
         strong {
-          color: #014cfa;
+          color: var(--ex-primary-color);
           margin-left: 0.18rem;
         }
       }
@@ -395,13 +395,13 @@ function countdown(endTime) {
         height: 0.6rem;
         border-radius: 0rem 0.32rem;
         padding: 0 0.2rem;
-        background-color: #014cfa;
+        background-color: var(--ex-primary-color);
         min-width: 1.1rem;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: #fff;
+        color: var(--ex-white);
         position: absolute;
         right: 0;
         top: 0;
@@ -409,24 +409,24 @@ function countdown(endTime) {
 
       .status_pre {
         background-color: #ffaf2a;
-        color: #fff;
+        color: var(--ex-white);
       }
 
       .status_done {
-        background-color: #7e99d6;
-        color: #fff;
+        background-color: var(--ex-info-color);
+        color: var(--ex-white);
       }
 
       .status_ed {
-        background-color: #18b762;
-        color: #fff;
+        background-color: var(--ex-success-color);
+        color: var(--ex-white);
       }
 
       .item_info {
         border-radius: 0.32rem;
-        border: 1px solid #eff3f8;
+        border: 1px solid var(--ex-border-color);
         border-bottom: 0px;
-        background: #fff;
+        background: var(--ex-bg-color);
         position: relative;
         left: -1px;
         width: calc(100% + 2px);
@@ -440,17 +440,17 @@ function countdown(endTime) {
         }
 
         .info_cell+.info_cell {
-          border-top: 1px dashed #eff3f8;
+          border-top: 1px dashed var(--ex-border-color);
         }
 
         .info_name {
           font-size: 0.28rem;
-          color: #8f92a1;
+          color: var(--ex-text-color3);
         }
 
         .info_date,
         .info_price {
-          color: #061023;
+          color: var(--ex-text-color);
           font-size: 0.28rem;
         }
 
@@ -458,7 +458,7 @@ function countdown(endTime) {
           border-radius: 0.32rem;
           height: 0.44rem;
           line-height: 0.44rem;
-          color: #014cfa;
+          color: var(--ex-primary-color);
           font-size: 0.28rem;
           padding: 0 0.12rem;
           background: rgba(1, 76, 250, 0.08);
@@ -473,10 +473,10 @@ function countdown(endTime) {
           display: flex;
           align-items: center;
           justify-content: center;
-          background-color: #014cfa;
+          background-color: var(--ex-primary-color);
           height: 0.8rem;
           border-radius: 0.5rem;
-          color: #fff;
+          color: var(--ex-bg-primary-text-color);
           font-size: 0.3rem;
           font-weight: 600;
         }
@@ -490,7 +490,7 @@ function countdown(endTime) {
   border-top-right-radius: 0.36rem;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  background-color: #fff;
+  background-color: var(--ex-bg-color);
   padding: 0.32rem 0.32rem 0.4rem 0.32rem;
   position: relative;
 
@@ -505,13 +505,13 @@ function countdown(endTime) {
     align-items: center;
     justify-content: space-between;
     height: 1rem;
-    border-bottom: 1px solid #f5f5f5;
-    color: #8f92a1;
+    border-bottom: 1px solid var(--ex-border-color);
+    color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;
 
     .name {
-      color: #0d0d12;
+      color: var(--ex-text-color);
       font-weight: 600;
       font-size: 0.32rem;
     }
@@ -519,7 +519,7 @@ function countdown(endTime) {
     .status {
       height: 0.48rem;
       background-color: #c5c5c5;
-      color: #333;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       padding: 0 0.32rem;
       display: flex;
@@ -535,12 +535,12 @@ function countdown(endTime) {
     }
 
     .status_success {
-      color: #0953fa;
+      color: var(--ex-text-primary);
       background-color: #8bb2fc;
     }
 
     .val {
-      color: #121826;
+      color: var(--ex-text-color);
       font-weight: 500;
     }
   }

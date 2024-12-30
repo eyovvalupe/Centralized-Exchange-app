@@ -204,22 +204,22 @@ const statusEnum = {
   waitpayment: {
     name: t("market.market_buy_list_wait_pay1"),
     title: t("market.market_buy_list_wait_pay1"),
-    color: "var(--main-color)",
+    color: "var(--ex-primary-color)",
   },
   waitconfirm: {
     name: t("market.market_buy_list_wait_confirm1"),
     title: t("market.market_buy_list_wait_confirm1"),
-    color: "var(--main-color)",
+    color: "var(--ex-primary-color)",
   },
   done: {
     name: t("market.market_buy_list_complete"),
     title: t("market.market_buy_list_complete"),
-    color: "#18B762",
+    color: "var(--ex-success-color)",
   },
   cancel: {
     name: t("market.market_buy_list_cancel"),
     title: t("market.market_buy_list_complete"),
-    color: "#8F92A1",
+    color: "var(--ex-text-color3)",
   },
 };
 const offsetEnum = {
@@ -359,12 +359,12 @@ onInit();
     justify-content: space-between;
     line-height: 0.68rem;
     margin: 0 0 0.2rem;
-    border: 0.5px solid #d0d8e2;
+    border: 0.5px solid var(--ex-border-color2);
     width: 100%;
     border-radius: 0.68rem;
 
     .tab {
-      color: #666d80;
+      color: var(--ex-text-color2);
       margin: 0;
       width: 100%;
       // width: 80px;
@@ -375,8 +375,8 @@ onInit();
 
     .active_tab {
       font-weight: bold;
-      color: white;
-      background: var(--main-color);
+      color: var(--ex-bg-primary-text-color);
+      background: var(--ex-primary-color);
       text-align: center;
     }
   }
@@ -389,7 +389,7 @@ onInit();
       left: 0;
       right: 0;
       height: 0.34rem;
-      border: 1px solid #d0d8e2;
+      border: 1px solid var(--ex-border-color2);
       border-top-left-radius: 0.34rem;
       border-top-right-radius: 0.34rem;
       border-bottom-color: transparent;
@@ -400,16 +400,16 @@ onInit();
     background: linear-gradient(to left,
         transparent 0%,
         transparent 50%,
-        #eff3f8 50%,
-        #eff3f8 100%);
+        var(--ex-border-color) 50%,
+        var(--ex-border-color) 100%);
     background-size: 0.36rem 0.02rem;
     background-repeat: repeat-x;
   }
 
   .disabled-btn {
-    background: #f5f7fa;
-    border-color: #f5f7fa;
-    color: #c0c4cc;
+    background: var(--ex-bg-color2);
+    border-color: var(--ex-bg-color2);
+    color: var(--ex-text-color5);
     cursor: not-allowed;
     pointer-events: none;
   }

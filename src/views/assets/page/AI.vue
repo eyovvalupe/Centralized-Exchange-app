@@ -51,7 +51,7 @@ const profitableFunds = computed(() => {
         line-height: 0.32rem;
 
         .title {
-            color: #fff;
+            color: var(--ex-white);
             margin-right: 0.12rem;
             font-size: 0.3rem;
 
@@ -63,12 +63,12 @@ const profitableFunds = computed(() => {
         .eyes {
             width: 0.32rem;
             height: 0.32rem;
-            color: #fff;
+            color: var(--ex-white);
         }
     }
 
     .money {
-        color: #FFF;
+        color: var(--ex-white);
         font-family: "PingFang SC";
         font-size: 0.52rem;
         font-style: normal;
@@ -82,19 +82,19 @@ const profitableFunds = computed(() => {
         align-items: center;
         justify-content: space-between;
         height: 0.9rem;
-        background-color: #fff;
+        background-color: var(--ex-bg-color);
         border-radius: 0.32rem;
         margin-top: 0.32rem;
         padding: 0 0.32rem;
 
         .nav_label {
-            color: #8F92A1;
+            color: var(--ex-text-color3);
             font-size: 0.28rem;
             line-height: 100%;
         }
 
         .num {
-            color: #061023;
+            color: var(--ex-text-color);
             font-size: 0.3rem;
             font-weight: 600;
             line-height: 0.3rem;
@@ -104,7 +104,7 @@ const profitableFunds = computed(() => {
 
     .subtitle {
         line-height: 0.32rem;
-        color: #061023;
+        color: var(--ex-text-color);
         font-weight: 600;
         font-size: 0.32rem;
         margin: 0.5rem 0.32rem 0 0.32rem;

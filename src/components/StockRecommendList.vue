@@ -148,7 +148,7 @@ const collect = (item) => {
 
     .list_item {
       position: relative;
-      background-color: #f5f7fc;
+      background-color: var(--ex-bg-color2);
       height: 1.998rem;
       width: 3.36rem;
       border-radius: 0.32rem;
@@ -161,12 +161,12 @@ const collect = (item) => {
       .symbol {
         font-size: 0.32rem;
         line-height: 0.432rem;
-        color: #061023;
+        color: var(--ex-text-color);
       }
 
       .name {
         font-size: 0.24rem;
-        color: #8f92a1;
+        color: var(--ex-text-color3);
         line-height: 0.312rem;
         white-space: nowrap;
         overflow: hidden;
@@ -175,7 +175,7 @@ const collect = (item) => {
       }
 
       .price {
-        color: #061023;
+        color: var(--ex-text-color);
         font-weight: 600;
         font-size: 0.32rem;
         line-height: 0.432rem;

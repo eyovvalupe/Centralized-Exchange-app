@@ -50,11 +50,11 @@
   .date-bottom{
     width: 100%;
     height: 1.42rem;
-    background-color: #f7f7f7;
+    background-color: var(--ex-bg-color2);
     position: fixed;
     bottom: 0;
     .date-text-box {
-      color: #000;
+      color: var(--ex-text-color);
       font-size: 0.24rem;
       font-style: normal;
       font-weight: 400;
