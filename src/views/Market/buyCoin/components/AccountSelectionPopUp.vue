@@ -1,12 +1,13 @@
 <template>
-  <!-- 账户选择弹窗 AccountSelectionPopUp -->
-  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
-    class="AccountSelectionPopUp" position="bottom" teleport="body">
+  <!-- 账户选择弹窗  -->
+  <Popup closeable v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" position="bottom" teleport="body">
+
+    <div class="van-popup-custom-title">
+      {{ t('market.market_buy_fast_account_title') }}
+    </div>
+
     <div class="withdraw_accounr_dialog">
-      <div class="close_icon" @click="showAccountDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
-      </div>
-      <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
+     
       <div class="list">
         <!-- 二层容器 -->
         <div class="mb-5 flex text-16 text-color2"  v-if="currencyType.includes('crypto') && currencyType.includes('bank')">
@@ -142,39 +143,9 @@ const clickAccountItem = val => {
 </script>
 
 <style lang="less" scoped>
-.AccountSelectionPopUp {
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
-}
 
 .withdraw_accounr_dialog {
-  background-color: var(--ex-bg-color);
-  overflow: hidden;
-  padding: 1.42rem 0.32rem 0.8rem 0.32rem;
-  position: relative;
-
-  .title {
-    height: 1rem;
-    position: absolute;
-    top: 0.2rem;
-    left: 0;
-    text-align: center;
-    line-height: 1rem;
-    font-size: 0.32rem;
-    width: 100%;
-    color: var(--ex-text-color);
-    pointer-events: none;
-    font-weight: bold;
-  }
-
-  .close_icon {
-    position: absolute;
-    width: 0.4rem;
-    height: 0.4rem;
-    top: 0.24rem;
-    right: 0.32rem;
-  }
-
+  padding: 0.6rem 0.32rem 0.8rem 0.32rem;
   .swap_dialog_item {
     height: 1.12rem;
     line-height: 0;
