@@ -148,7 +148,7 @@ onMounted(() => {
 </script>
 
 <style lang="less">
-@import "./style/theme/main.less";
+@import "./style/theme/blackgreen.less";
 @import "./style/vant.less";
 @import "./style/index.less";
 
