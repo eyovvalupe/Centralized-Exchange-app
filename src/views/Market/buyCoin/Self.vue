@@ -12,21 +12,20 @@
     </div>
     <!-- 二层容器 -->
     <div class="tabs mb-4">
-      <div>
+      <div class="flex items-center">
         <div
-          class="mr-[0.28rem] flex justify-between h-[0.6rem] w-[1.64rem] items-center rounded-[0.6rem] bg-color2 p-2 text-12"
+          class="flex justify-between h-[0.6rem] w-[1.4rem] items-center rounded-[0.6rem] bg-color3 p-2 text-12"
           @click="showDialog = true">
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
             <div class="size-[0.32rem] mr-1">
               <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="img" />
             </div>
-
-            <div class="size-[0.32rem]">
-              <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
-            </div>
           </div>
         </div>
+        <div class="size-[0.32rem] mx-[0.1rem]">
+            <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
+          </div>
       </div>
 
       <div class="w-full overflow-hidden">
@@ -67,12 +66,15 @@
               <span class="text-12 font-normal">{{ currCurrency.name }}</span>
             </div>
             <div class="text-14 text-color3">
-              {{ t('market.market_buy_optional_order_limit') }}&nbsp;{{ item.limitmin || "0" }}-{{
-                item.limitmax || "0"
-              }}
+              {{ t('market.market_buy_optional_order_limit') }}
+              <span class="text-white ml-[0.1rem]">
+                {{ item.limitmin || "0" }}-{{
+                  item.limitmax || "0"
+                }}
+              </span>
             </div>
           </div>
-          <div v-if="token" class="btn" @click="goBuy(item)">
+          <div v-if="token" class="btn" :class="['btn--'+offset]" @click="goBuy(item)">
             {{ offset == "buy" ? t('market.market_buy_optional_buy') : t('market.market_buy_optional_sell') }}
           </div>
         </div>
@@ -486,36 +488,37 @@ defineExpose({
   .tabs-buy {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    line-height: 0.68rem;
-    margin: 0.4rem 0 0.2rem;
-    border: 0.5px solid var(--ex-border-color2);
-    width: 47%;
-    border-radius: 0.68rem;
+    height: 0.8rem;
+    margin: 0.32rem 0 0.2rem;
 
     .tab {
       color: var(--ex-text-color2);
       margin: 0;
       width: 1.6rem;
       text-align: center;
-      border-radius: 0.68rem;
+      border-radius:1rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      border:1px solid var(--ex-border-color);
+      justify-content: center;
+      margin-right: 0.2rem;
     }
-
+    
     .active_tab {
       font-weight: bold;
-      color: var(--ex-text-color--bg-primary);
-      background: var(--ex-primary-color);
-      text-align: center;
+      color: var(--ex-text-color--bg-light);
+      background: var(--ex-white);
+      border: 0px;
     }
   }
 
   .tabs {
-    height: 0.8rem;
-    padding-top: 0.2rem;
+    height: 0.6rem;
+    margin-top: 0.28rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    // border-bottom: 1px solid rgba(59, 130, 246, 0.3);
 
     .tab {
       margin-right: 0.24rem;
@@ -536,16 +539,19 @@ defineExpose({
       > :deep(.van-tabs__wrap) {
         border-bottom: 1px solid var(--ex-border-color);
         padding-right: 0;
-
+        height: 0.54rem;
         .van-tabs__line {
-          background-color: var(--ex-primary-color) !important;
+          background-color: var(--ex-white) !important;
+          
         }
 
         .van-tabs__nav,
         .van-tab--grow {
           padding-right: 0 !important;
           padding-left: 0 !important;
-          margin-right: 14px !important;
+          margin-right: 0.24rem !important;
+          align-items:start;
+          
         }
 
         .van-tabs__nav:last-child {
@@ -583,12 +589,9 @@ defineExpose({
 
   .list {
     .item {
-      padding: 0.24rem 0.32rem;
+      padding: 0.4rem 0;
       color: var(--ex-text-color2);
-      background-color: var(--ex-bg-color2);
-      border-radius: 0.32rem;
-      margin-bottom: 0.2rem;
-
+      border-bottom: 1px solid var(--ex-border-color);
       .top {
         display: flex;
         align-items: flex-start;
@@ -597,14 +600,15 @@ defineExpose({
           width: 0.64rem;
           height: 0.64rem;
           border-radius: 50%;
-          background-color: var(--ex-primary-color);
+          background-color: var(--ex-white);
           margin-right: 0.24rem;
           position: relative;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.48rem;
-          color: var(--ex-text-color--bg-primary);
+          font-size: 0.36rem;
+          font-weight: 600;
+          color: var(--ex-text-color--bg-light);
           line-height: 0;
 
           .avatar_status {
@@ -665,11 +669,17 @@ defineExpose({
           width: 1.6rem;
           height: 0.72rem;
           border-radius: 0.64rem;
-          background-color: var(--ex-primary-color);
+          background-color: var(--ex-up-color);
           color: var(--ex-text-color--bg-primary);
           display: flex;
           align-items: center;
           justify-content: center;
+          font-weight: 600;
+          font-size: 0.28rem;
+        }
+        .btn--sell{
+          background-color: var(--ex-down-color);
+          color: var(--ex-text-color--bg-light);
         }
       }
     }

@@ -253,20 +253,14 @@ const removeStock = (item) => {
   border-radius: 0.12rem;
   overflow: hidden;
 
-  &:active,
-  &:hover {
-    background-color: var(--ex-bg-color3);
-  }
-
   .delete_content {
-    width: 0.78rem;
+    width: 0.8rem;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-border-color2);
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
+    background-color: var(--ex-bg-color4);
+    border-radius: 0.32rem;
 
     .delete_icon {
       width: 0.4rem;
@@ -275,12 +269,12 @@ const removeStock = (item) => {
   }
 
   .delete_content_crypto {
-    width: 0.78rem;
+    width: 0.8rem;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-border-color2);
+    background-color: var(--ex-bg-color4);
     border-radius: 0.32rem;
     margin-left: -0.32rem;
 

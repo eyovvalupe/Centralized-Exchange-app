@@ -204,10 +204,17 @@
 
         .van-tabs__nav {
             background: var(--ex-bg-color3);
-            height: 0.8rem;
-            border-radius: 0.32rem;
+            height: 0.96rem;
+            border-radius: 1rem;
             overflow: inherit;
+            padding: 0.08rem;
 
+        }
+        .van-tab {
+            height: 0.8rem;
+            .van-tab__text {
+                font-size: 0.32rem;
+            }
         }
 
         .van-tab--active {
@@ -221,29 +228,18 @@
         }
 
         .van-tab--active {
-            border-radius: 0.32rem 0.32rem 0 0;
+            border-radius: 1rem;
             background: var(--ex-bg-color);
-            box-shadow: 0px -0.04rem 0.1rem 0 rgb(var(--ex-primary-color-rgb) / 0.10);
-            height: 0.92rem;
-            position: relative;
-            top: -0.12rem;
             z-index: 1;
 
             .van-tab__text {
-                font-size: 0.32rem;
+                
                 font-weight: 600;
-                color: var(--ex-primary-color);
+                color: var(--ex-text-color);
 
             }
         }
 
-        .van-tab:first-child.van-tab--active {
-            border-radius: 0.32rem 0.32rem 0 0.32rem;
-        }
-
-        .van-tab:last-child.van-tab--active {
-            border-radius: 0.32rem 0.32rem 0.32rem 0;
-        }
 
         .van-tabs__line {
             display: none;

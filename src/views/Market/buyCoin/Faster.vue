@@ -432,25 +432,29 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     .tabs {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      line-height: 0.68rem;
-      margin-top:0.4rem;
-      border: 0.5px solid var(--ex-border-color2);
-      width: 47%;
-      border-radius: 0.68rem;
+      height: 0.8rem;
+      margin-top:0.32rem;
 
       .tab {
         color: var(--ex-text-color2);
         margin: 0;
+        height: 100%;
         width: 1.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         border-radius: 0.68rem;
+        font-size: 0.3rem;
+        border: 1px solid var(--ex-border-color2);
+        margin-right: 0.2rem;
       }
 
       .active_tab {
         font-weight: bold;
-        color: var(--ex-text-color--bg-primary);
-        background: var(--ex-primary-color);
+        color: var(--ex-text-color--bg-light);
+        background: var(--ex-white);
+        border: 0px;
         text-align: center;
       }
     }
@@ -568,13 +572,16 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
   .submit {
     margin-top: 1.12rem;
-    color:var(--ex-white);
+    color:var(--ex-text-color--bg-light);
+    font-weight: 600;
+    border-radius: 0.4rem;
   }
   .submit--sell{
     background-color: var(--ex-down-color);
   }
   .submit--buy{
     background-color: var(--ex-up-color);
+    
   }
 }
 </style>
