@@ -244,7 +244,7 @@
           </div>
           <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
             <div
-              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-primary bg-primary-text-color flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-primary text-color--bg-primary flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
               style="writing-mode: vertical-rl; text-orientation: upright;">
               {{ t('market.market_buy_fast_receive_sim') }}
             </div>
@@ -550,7 +550,7 @@ getSessionToken();
 
     .tab_active {
       background-color: var(--ex-primary-color);
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       border-radius: 1.3rem;
     }
   }
@@ -809,7 +809,7 @@ getSessionToken();
     .active_btn {
       background-color: var(--ex-primary-color);
       border-color: var(--ex-primary-color);
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
     }
   }
 }

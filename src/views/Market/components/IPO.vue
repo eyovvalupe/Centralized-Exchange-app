@@ -545,7 +545,7 @@ function countdown(endTime) {
           background-color: var(--ex-primary-color);
           height: 0.8rem;
           border-radius: 0.5rem;
-          color: var(--ex-bg-primary-text-color);
+          color: var(--ex-text-color--bg-primary);
           font-size: 0.3rem;
           font-weight: 600;
         }

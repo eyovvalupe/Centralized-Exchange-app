@@ -107,7 +107,7 @@
             {{ t("trade.stock_opening_token_login") }}
           </div>
           <div
-            class="w-[2.91rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center bg-primary-text-color text-[0.36rem]"
+            class="w-[2.91rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center text-color--bg-primary text-[0.36rem]"
             @click="jump('register')">
             {{ t("trade.stock_opening_token_register") }}
           </div>
@@ -591,7 +591,7 @@ defineExpose({
   position: absolute;
   right: 0.3rem;
   top: 0.22rem;
-  color: var(--ex-bg-primary-text-color);
+  color: var(--ex-text-color--bg-primary);
   text-align: center;
   font-size: 0.3rem;
   font-weight: 500;
@@ -628,7 +628,7 @@ defineExpose({
   .curr_time span {
     background-color: var(--ex-primary-color);
     border-color: var(--ex-primary-color);
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
   }
 
   &::after {

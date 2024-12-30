@@ -263,7 +263,7 @@ const confirmNext = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
     font-weight: 400;
     font-size: 0.3rem;
     line-height: 0.48rem;

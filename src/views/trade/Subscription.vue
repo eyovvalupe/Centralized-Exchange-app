@@ -372,7 +372,7 @@ onMounted(() => {
     .down-button {
       width: 1.32rem;
       height: 0.56rem;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       line-height: 0.56rem;
       text-align: center;
       background-size: cover;
@@ -465,7 +465,7 @@ onMounted(() => {
 
   .marketenlarged {
     background: var(--ex-primary-color);
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
   }
 
   // .num-right-text {

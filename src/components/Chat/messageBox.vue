@@ -307,7 +307,7 @@ function formatDate(date) {
 
       .con {
         background: var(--ex-primary-color);
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
 
         &.img {
           box-shadow: none !important;

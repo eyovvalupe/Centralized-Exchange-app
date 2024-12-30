@@ -710,7 +710,7 @@ const showInfo = ref(false);
 
       .submit_btn {
         padding: 0.12rem 0.4rem;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         background-color: var(--ex-primary-color);
         border-radius: 0.5rem;
         font-weight: 600;
@@ -800,7 +800,7 @@ const showInfo = ref(false);
 
         .active_tab {
           background-color: var(--ex-primary-color);
-          color: var(--ex-bg-primary-text-color);
+          color: var(--ex-text-color--bg-primary);
         }
       }
 
@@ -934,7 +934,7 @@ const showInfo = ref(false);
     .bottom_btn {
       width: 1.44rem;
       height: 0.9rem;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       border-radius: 40px;
       font-size: 0.32rem;
       margin-left: 0.2rem;

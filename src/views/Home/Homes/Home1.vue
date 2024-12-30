@@ -71,7 +71,7 @@
         <div class="relative mt-[0.24rem] mx-[0.32rem]">
             <div class="backdrop-blur-sm bg-['rgba(255, 255, 255, 0.1)'] rounded-[0.32rem] w-full h-[1.6rem] px-[0.4rem] py-[0.28rem] absolute z-20 flex flex-col justify-center items-center"
                 v-show="!token">
-                <div class="w-[1.2rem] h-[0.6rem] bg-primary border-primary bg-primary-text-color rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
+                <div class="w-[1.2rem] h-[0.6rem] bg-primary border-primary text-color--bg-primary rounded-[0.32rem] flex items-center justify-center border-[0.02rem] mb-[0.2rem]"
                     @click="store.commit('setIsLoginOpen', true)">
                     {{ $t("home.login") }}
                 </div>
@@ -105,7 +105,7 @@
                             @click="showAS = true">
                             {{ $t("home.fastTrading") }}
                         </div>
-                        <div class="px-[0.2rem] h-[0.52rem] bg-primary border-primary text-[0.24rem] bg-primary-text-color rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
+                        <div class="px-[0.2rem] h-[0.52rem] bg-primary border-primary text-[0.24rem] text-color--bg-primary rounded-[0.32rem] flex items-center justify-center border-[0.02rem]"
                             @click="jump('topUp', true)">
                             {{ $t("home.recharge") }}
                         </div>
@@ -446,7 +446,7 @@ onMounted(() => {
 
     :deep(button.van-button.van-button--default.van-button--large.van-dialog__confirm) {
         background-color: var(--ex-primary-color);
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         margin-left: 0.16rem;
     }
 
@@ -524,7 +524,7 @@ onMounted(() => {
 
             .active_btn {
                 background-color: var(--ex-primary-color);
-                color: var(--ex-bg-primary-text-color);
+                color: var(--ex-text-color--bg-primary);
             }
         }
     }
@@ -601,7 +601,7 @@ onMounted(() => {
             background-color: var(--ex-primary-color);
             border-color: var(--ex-primary-color);
             border-radius: 0.32rem;
-            color:var(--ex-bg-primary-text-color);
+            color:var(--ex-text-color--bg-primary);
             font-weight: 500;
             font-size: 0.3rem;
         }

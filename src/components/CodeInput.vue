@@ -153,7 +153,7 @@ onMounted(() => {
   font-size: 0.36rem;
   /* background-color: var(--ex-primary-color); */
   border-radius: 1.6rem;
-  color: var(--ex-bg-primary-text-color);
+  color: var(--ex-text-color--bg-primary);
 }
 
 .clear_icon {

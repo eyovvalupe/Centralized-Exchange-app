@@ -650,7 +650,7 @@ onMounted(() => {
     .submit {
       width: 100%;
       height: 1.12rem;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       text-align: center;
       font-family: "PingFang SC";
       font-size: 0.36rem;

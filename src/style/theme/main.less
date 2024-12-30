@@ -48,7 +48,8 @@
     --ex-bg-color4:rgb(var(--ex-bg-color4-rgb));
     --ex-bg-color5:rgb(var(--ex-bg-color5-rgb));
     --ex-bg-color6:rgb(var(--ex-bg-color6-rgb));
-    --ex-bg-primary-text-color:rgb(var(--ex-bg-color-rgb));
+    --ex-text-color--bg-primary:rgb(var(--ex-white-rgb)); //主色背景下的文字颜色 
+    --ex-text-color--bg-light:rgb(var(--ex-text-color-rgb)); //浅色背景下的文字颜色
 }
 
 .text-color {
@@ -95,6 +96,12 @@
     color: rgb(var(--ex-warning-color-rgb) / var(--tw-text-opacity));
 }
 
+.text-color--bg-primary {
+    --tw-text-opacity:1;
+    color: rgb(var(--ex-bg-color-rgb) / var(--tw-text-opacity));
+}
+
+
 //涨跌颜色
 .text-up {
     --tw-text-opacity:1;
@@ -136,10 +143,6 @@
 .bg-primary{
     --tw-bg-opacity:1;
     background-color: rgb(var(--ex-primary-color-rgb) / var(--tw-bg-opacity));
-}
-.bg-primary-text-color {
-    --tw-text-opacity:1;
-    color: rgb(var(--ex-bg-color-rgb) / var(--tw-text-opacity));
 }
 
 .bg-success{

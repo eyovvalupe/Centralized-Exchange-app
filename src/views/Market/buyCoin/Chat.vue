@@ -301,7 +301,7 @@ onBeforeUnmount(() => {
     height: 0.8rem;
     border-radius: 50%;
     background-color: var(--ex-bg-primary);
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -334,7 +334,7 @@ onBeforeUnmount(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
 
         .pointer {
           width: 0.16rem;
@@ -383,7 +383,7 @@ onBeforeUnmount(() => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
 
         .pointer {
           width: 0.16rem;

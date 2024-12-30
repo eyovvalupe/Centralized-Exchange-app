@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-[6.86rem] h-[3.04rem] pt-[0.16rem] mt-[0.32rem] mb-[0.32rem] rounded-[0.32rem]">
     <DefaultWalletInfoContainer />
-    <!-- <span class="text-[0.32rem] bg-primary-text-color">{{ name }}</span> -->
+    <!-- <span class="text-[0.32rem] text-color--bg-primary">{{ name }}</span> -->
     <div class="flex flex-col px-[0.4rem] h-[1.16rem] z-[3] mt-[0.64rem] ml-[0.12rem] mb-[0.4rem]">
       <div class="flex">
         <span class="text-[0.3rem] text-color2 mb-[0.24rem] mr-[0.1rem]" style="width: max-content">{{ name

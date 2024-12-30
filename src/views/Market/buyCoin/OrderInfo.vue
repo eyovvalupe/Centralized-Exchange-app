@@ -351,7 +351,7 @@ const getSessionToken = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         font-size: 0.36rem;
       }
 
@@ -468,7 +468,7 @@ const getSessionToken = () => {
 
     .active_btn {
       background-color: var(--ex-primary-color);
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
     }
   }
 }

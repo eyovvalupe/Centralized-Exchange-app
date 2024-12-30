@@ -503,7 +503,7 @@ defineExpose({
 
     .active_tab {
       font-weight: bold;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       background: var(--ex-primary-color);
       text-align: center;
     }
@@ -604,7 +604,7 @@ defineExpose({
           align-items: center;
           justify-content: center;
           font-size: 0.48rem;
-          color: var(--ex-bg-primary-text-color);
+          color: var(--ex-text-color--bg-primary);
           line-height: 0;
 
           .avatar_status {
@@ -666,7 +666,7 @@ defineExpose({
           height: 0.72rem;
           border-radius: 0.64rem;
           background-color: var(--ex-primary-color);
-          color: var(--ex-bg-primary-text-color);
+          color: var(--ex-text-color--bg-primary);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -743,7 +743,7 @@ defineExpose({
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
     }
   }
 }

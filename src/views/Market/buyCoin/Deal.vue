@@ -301,7 +301,7 @@ const getSessionToken = () => {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         line-height: 0;
       }
 

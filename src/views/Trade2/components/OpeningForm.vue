@@ -311,7 +311,7 @@
           {{ t("trade.stock_opening_token_login") }}
         </div>
         <div
-          class="w-[3.22rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center bg-primary-text-color text-[0.36rem]"
+          class="w-[3.22rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center text-color--bg-primary text-[0.36rem]"
           @click="jump('register')"
         >
           {{ t("trade.stock_opening_token_register") }}
@@ -704,7 +704,7 @@
         </div>
         <div
           @click="router.push({ name: 'topUpCrypto' })"
-          class="bg-primary bg-primary-text-color"
+          class="bg-primary text-color--bg-primary"
           style="
             height: 0.8rem;
             width: 48%;
@@ -1545,7 +1545,7 @@ defineExpose({
 
     .active_btn {
       background: var(--ex-primary-color);
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
     }
   }
 

@@ -93,7 +93,7 @@
         position: absolute;
         top: -0.6rem;
         right: 0px;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         font-size: 0.24rem;
         font-weight: normal;
       }

@@ -375,7 +375,7 @@ onInit();
 
     .active_tab {
       font-weight: bold;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       background: var(--ex-primary-color);
       text-align: center;
     }
