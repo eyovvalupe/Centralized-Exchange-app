@@ -42,12 +42,13 @@
     --ex-border-color2: rgb(var(--ex-border-color2-rgb));
     --ex-border-error: rgb(var(--ex-error-color-rgb));
     --ex-bg-color: rgb(var(--ex-bg-color-rgb));
-    --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.1);
+    --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.06);
     --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 0.1);
     --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 0.1);
     --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 0.1);
     --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 0.1);
-    --ex-bg-primary-text-color: rgb(var(--ex-bg-color-rgb));
+    --ex-bg-primary-text-color: rgb(var(--ex-bg-color-rgb)); //主色背景下的文字颜色
+    --ex-text-color--bg-light:rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
 }
 
 .text-color {
@@ -78,6 +79,15 @@
 .text-primary {
     --tw-text-opacity: 1;
     color: rgb(var(--ex-primary-color-rgb) / var(--tw-text-opacity));
+}
+
+.text-color--bg-primary {
+    --tw-text-opacity: 1;
+    color: rgb(var(--ex-bg-color-rgb)/ var(--tw-text-opacity));
+}
+.text-color--bg-light {
+    --tw-text-opacity: 1;
+    color: rgb(var(--ex-bg-color-rgb)/ var(--tw-text-opacity));
 }
 
 .text-success {
@@ -119,6 +129,7 @@
 .up_bg {
     --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-up-color-rgb) / var(--tw-bg-opacity)) !important;
+    color:var(--ex-text-color--bg-light) !important;
 }
 
 .bg-down {
@@ -129,6 +140,7 @@
 .down_bg {
     --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-down-color-rgb) / var(--tw-bg-opacity)) !important;
+    color:var(--ex-text-color--bg-light) !important;
 }
 
 .text-down {
@@ -179,7 +191,7 @@
 }
 
 .bg-color2 {
-    --tw-bg-opacity: 0.1;
+    --tw-bg-opacity: 0.06;
     background-color: rgb(var(--ex-bg-color2-rgb) / var(--tw-bg-opacity));
 }
 
@@ -242,8 +254,8 @@
 
 //合約種類
 .tag-stock {
-    color: var(--ex-primary-color);
-    background: rgb(var(--ex-primary-color-rgb) / 0.1);
+    color: #FFA346;
+    background: rgba(255, 163, 70, 0.10);
 }
 
 .tag-crypto {
@@ -343,3 +355,4 @@
     color: var(--ex-info-color);
     border-color: var(--ex-info-color);
 }
+

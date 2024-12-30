@@ -170,7 +170,7 @@ const goInfo = (item) => {
           line-height: 0.4rem;
           font-size: 0.24rem;
           display: inline-block;
-          font-weight: 600;
+          font-weight: 400;
           color: var(--ex-white);
           border-radius: 0.12rem;
         }

@@ -1,6 +1,6 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" style="width: 100%">
+  <div ref="root" class="px-[0.4rem] w-full">
     <SwipeCell
       :class="['stock_item_box']"
       @touchstart.start=""
@@ -14,7 +14,7 @@
       >
         <div :class="['stock_item']">
           <div class="td5">
-            <div class="item_name flex items-center gap-1 mb-[0.1rem]">
+            <div class="item_name flex items-center gap-1 mb-[0.2rem]">
               <span class="truncate" v-if="item.type != 'stock'">{{
                 props.item.name
               }}</span>
@@ -23,7 +23,7 @@
                 v-if="props.page == 'market'"
                 :class="`${
                   marketStyle[props.item.type]
-                } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] pt-[0.032rem]`"
+                } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.08rem] h-[0.3rem] `"
               >
                 {{
                   item.type == "stock"
@@ -298,25 +298,15 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.24rem;
+  height: 1.62rem;
   padding: 0 0.3rem;
   position: relative;
-
-  &::after {
-    content: "";
-    width: calc(100% - 0.6rem);
-    position: absolute;
-    bottom: 0;
-    left: 0.3rem;
-    height: 1px;
-    background-color: var(--ex-bg-color3);
-  }
-
+  background-color: var(--ex-bg-color2);
+  border-radius: 0.4rem;
+  margin-top: 0.2rem;
   .td5 {
-    // flex: 5;
     flex-shrink: 0;
-    width: 3.6rem;
-    // overflow: hidden;
+    width: 3.4rem;
 
     .item_name {
       font-size: 0.32rem;
@@ -350,7 +340,7 @@ const removeStock = (item) => {
     }
 
     .item_info_box {
-      margin-top: 0.1rem;
+      margin-top: 0.18rem;
 
       .item_percent {
         text-align: center;
@@ -359,7 +349,7 @@ const removeStock = (item) => {
         line-height: 0.4rem;
         font-size: 0.24rem;
         display: inline-block;
-        font-weight: 600;
+        font-weight: 400;
         color: var(--ex-white);
         border-radius: 0.12rem;
       }
@@ -376,7 +366,6 @@ const removeStock = (item) => {
 
   .spark_line_box {
     padding-right: 0.4rem;
-    padding-left: 0.2rem;
   }
 }
 

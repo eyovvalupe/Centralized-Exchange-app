@@ -58,6 +58,7 @@ button:hover {
 button.active {
   background-color: var(--ex-white);
   border-color: var(--ex-white);
-  color: #000;
+  color: var(--ex-text-color--bg-light);
+  font-weight: 600;
 }
 </style>

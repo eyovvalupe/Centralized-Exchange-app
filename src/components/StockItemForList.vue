@@ -354,7 +354,7 @@ const removeStock = (item) => {
         display: flex;
         justify-content: center;
         align-items: center;
-        font-weight: 600;
+        font-weight: 400;
         color: var(--ex-white);
         border-radius: 0.24rem;
       }
