@@ -121,7 +121,7 @@
                 </div>
 
                 <div class="money_box">
-                    {{ t('trade.market_buy_fast_pay') }} <strong>{{ all }}</strong> <span>{{ currIpo.currency }}</span>
+                    {{ t('market.market_buy_fast_pay') }} <strong>{{ all }}</strong> <span>{{ currIpo.currency }}</span>
                 </div>
 
                 <FormItem v-model="safeword" size="large" input-type="password"
