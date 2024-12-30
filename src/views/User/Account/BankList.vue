@@ -10,7 +10,7 @@
     <div class="list_detail">
       <div class="bank_icon_container mr-[0.2rem]">
         <div style="width: 0.68rem;height: 0.68rem;">
-          <img :src="getStaticImgUrl('/static/icons/card.svg')" alt="">
+          <img :src="getStaticImgUrl('/static/img/bank/card_type_a.svg')" alt="">
         </div>
       </div>
       <div class="flex flex-col">

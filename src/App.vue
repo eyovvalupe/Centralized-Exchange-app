@@ -128,11 +128,11 @@ onMounted(() => {
       }
 
       .slider_box .van-slider .van-slider__button {
-        background-image: url(${getStaticImgUrl('/static/icons/right.svg')});
+        background-image: url(${getStaticImgUrl('/static/img/user/right.svg')});
       }
 
       .action-sheet-active ::after {
-         background-image: url(${getStaticImgUrl('/static/icons/check.svg')});
+         background-image: url(${getStaticImgUrl('/static/img/common/check.svg')});
       }
 
       .register_accounr_dialog .search-svg-icon {
@@ -140,7 +140,7 @@ onMounted(() => {
       }
 
       .page_bank .icon_ok {
-        background-image: url(${getStaticImgUrl('/static/icons/success.svg')});
+        background-image: url(${getStaticImgUrl('/static/img/app/success.svg')});
       }
     `;
   document.head.appendChild(style);

@@ -65,7 +65,7 @@
       class="popup_container">
       <div class="">
         <div class="absolute top-[0.2rem] right-[0.3rem]">
-          <div style="width: 0.42rem;height: 0.4rem;">
+          <div style="width: 0.42rem;height: 0.4rem;" @click="showCrypto = false">
             <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
           </div>
         </div>
@@ -90,7 +90,7 @@
                 <span class="text-[0.3rem]">{{ item }}</span>
               </div>
               <div v-if="form.currency == item" style="width: 0.48rem;height: 0.48rem;">
-                <img :src="getStaticImgUrl(`/static/icons/check.svg`)" alt="">
+                <img :src="getStaticImgUrl(`/static/img/assets/actived_check.svg`)" alt="">
               </div>
             </div>
           </div>
