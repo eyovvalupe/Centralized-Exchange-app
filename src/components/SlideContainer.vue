@@ -56,7 +56,7 @@ const onSliderChange = (newValue) => {
     :deep(.slider-custom-num) {
         position: relative;
         background: var(--ex-primary-color);
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         display: inline-block;
         width: .4rem;
         height: .4rem;

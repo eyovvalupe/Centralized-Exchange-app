@@ -72,7 +72,7 @@
           color="var(--ex-error-color)" style="width: 100%" class="submit" type="info"><span style="color: var(--ex-white)">{{
             $t("recharging.fail") }}</span></Button>
         <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="var(--ex-primary-color)"
-          style="width: 100%" class="submit" type="info"><span style="color: var(--ex-bg-primary-text-color)">{{
+          style="width: 100%" class="submit" type="info"><span style="color: var(--ex-text-color--bg-primary)">{{
             $t("recharging.finish")
           }}</span></Button>
       </div>

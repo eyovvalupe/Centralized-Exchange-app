@@ -121,7 +121,7 @@ defineExpose({
       }
 
       .active_type_tab {
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         position: relative;
 
         &::after {

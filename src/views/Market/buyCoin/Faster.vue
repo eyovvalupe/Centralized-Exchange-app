@@ -449,7 +449,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
       .active_tab {
         font-weight: bold;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         background: var(--ex-primary-color);
         text-align: center;
       }
@@ -561,7 +561,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
       .active_btn {
         background: var(--ex-primary-color);
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
       }
     }
   }

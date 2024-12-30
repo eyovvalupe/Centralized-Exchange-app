@@ -58,6 +58,6 @@ button:hover {
 button.active {
   background-color: var(--ex-primary-color);
   border-color: var(--ex-primary-color);
-  color: var(--ex-bg-primary-text-color);
+  color: var(--ex-text-color--bg-primary);
 }
 </style>

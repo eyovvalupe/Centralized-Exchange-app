@@ -71,7 +71,7 @@ const router = useRouter();
         .info {
             width: 3.27rem;
             height: 1.12rem;
-            color: var(--ex-bg-primary-text-color);
+            color: var(--ex-text-color--bg-primary);
             padding: 0.16rem;
             border-radius: 1.3rem;
             background: var(--ex-primary-color);

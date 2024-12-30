@@ -342,7 +342,7 @@ const jump = (name, check = false, query) => {
           font-size: 0.3rem;
           font-weight: 400;
           text-align: center;
-          color: var(--ex-bg-primary-text-color);
+          color: var(--ex-text-color--bg-primary);
           background-color: var(--ex-primary-color);
         }
 

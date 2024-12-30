@@ -295,7 +295,7 @@ const formatSec = (seconds, t) => {
 
     .btn {
       height: 0.64rem;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       display: flex;
       align-items: center;
       justify-content: center;

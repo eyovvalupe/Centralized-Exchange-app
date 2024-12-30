@@ -304,7 +304,7 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   font-size: 0.3rem;
-  color: var(--ex-bg-primary-text-color);
+  color: var(--ex-text-color--bg-primary);
   margin-bottom: 0.6rem;
 }
 

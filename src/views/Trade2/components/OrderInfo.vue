@@ -530,7 +530,7 @@ const copy = (text) => {
     align-items: center;
     justify-content: center;
     background-color: var(--ex-primary-color);
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
     font-size: 0.32rem;
     font-weight: 400;
     line-height: 100%;

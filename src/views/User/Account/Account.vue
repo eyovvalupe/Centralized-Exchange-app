@@ -181,7 +181,7 @@ const goBack = () => {
     .van-tab__text {
       font-size: 0.32rem;
       line-height: 0.5rem;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
     }
   }
 

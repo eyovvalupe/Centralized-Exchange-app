@@ -392,7 +392,7 @@ const jump = (name) => {
 
   .one_click_to_favorite {
     background-color: var(--ex-primary-color);
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
   }
 }
 

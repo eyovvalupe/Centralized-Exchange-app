@@ -188,7 +188,7 @@ onMounted(()=>{
             font-weight: normal;
             .tab-name{
                 font-size: 0.32rem;
-                color:var(--ex-bg-primary-text-color);
+                color:var(--ex-text-color--bg-primary);
             }
             &::after{
                 display: none;

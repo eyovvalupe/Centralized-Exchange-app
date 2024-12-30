@@ -723,7 +723,7 @@ defineExpose({
     .slider-custom-num {
       position: relative;
       background: var(--ex-primary-color);
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       display: inline-block;
       width: .05rem;
       height: .5rem;
@@ -769,7 +769,7 @@ defineExpose({
     .down-button {
       width: 1.32rem;
       height: 0.56rem;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       line-height: 0.56rem;
       text-align: center;
       background-size: cover;
@@ -856,7 +856,7 @@ defineExpose({
 
   .marketenlarged {
     background: var(--ex-primary-color);
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
   }
 
   // .num-right-text {

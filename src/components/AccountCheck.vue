@@ -236,7 +236,7 @@ defineExpose({
                 align-items: center;
                 padding: 0 0.24rem;
                 border-radius: 0.4rem;
-                color: var(--ex-bg-primary-text-color);
+                color: var(--ex-text-color--bg-primary);
                 font-size: 0.24rem;
                 margin-left: 0.6rem;
             }
@@ -324,7 +324,7 @@ defineExpose({
 
                 .left {
                     .title {
-                        color: var(--ex-bg-primary-text-color);;
+                        color: var(--ex-text-color--bg-primary);;
                         line-height: 1;
                     }
                 }

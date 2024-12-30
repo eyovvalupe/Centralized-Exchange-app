@@ -131,7 +131,7 @@ defineExpose({
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--ex-bg-primary-text-color);
+            color: var(--ex-text-color--bg-primary);
         }
     }
 

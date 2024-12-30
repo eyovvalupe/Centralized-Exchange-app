@@ -211,7 +211,7 @@ const disabled = computed(
         height: 0.4rem;
         background-color: var(--ex-primary-color);
         border-radius: 50%;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
         font-size: 0.5rem;
         position: absolute;
         transition: background-color linear 2s;

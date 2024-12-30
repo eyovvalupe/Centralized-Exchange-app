@@ -32,7 +32,7 @@
           style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;border: 1px solid var(--ex-primary-color);color: var(--ex-primary-color)">
           {{ $t('market.market_buy_fast_noti_confirm') }}</div>
         <div @click="router.push({ name: 'topUpCrypto' });close();"
-          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: var(--ex-primary-color);color: var(--ex-bg-primary-text-color);">
+          style="height: 0.8rem;width:48%;display: flex;align-items: center;justify-content: center;border-radius: 0.64rem;background-color: var(--ex-primary-color);color: var(--ex-text-color--bg-primary);">
           {{ $t('market.market_buy_fast_noti_cancel') }}</div>
       </div>
     </div>

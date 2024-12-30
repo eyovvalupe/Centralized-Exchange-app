@@ -201,7 +201,7 @@ onMounted(() => {
           background-color: var(--ex-primary-color);
 
           .van-tab__text {
-            color: var(--ex-bg-primary-text-color);
+            color: var(--ex-text-color--bg-primary);
             font-size: 0.28rem;
             line-height: 0.32rem;
             font-weight: 400;

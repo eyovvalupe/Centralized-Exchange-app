@@ -502,7 +502,7 @@ defineExpose({
       width: 1.2rem;
       height: .58rem;
       line-height: .58rem;
-      color: var(--ex-bg-primary-text-color);
+      color: var(--ex-text-color--bg-primary);
       text-align: center;
       background-size: 100% 100%;
       background-position: top;
@@ -753,7 +753,7 @@ defineExpose({
 
   .marketenlarged {
     background: var(--ex-primary-color);
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
   }
 
   // .num-right-text {

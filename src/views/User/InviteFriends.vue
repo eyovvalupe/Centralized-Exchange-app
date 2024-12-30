@@ -308,7 +308,7 @@ const swipeChange = (val) => {
   .copy {
     padding: 0 0.32rem;
     min-width: 1.28rem;
-    color: var(--ex-bg-primary-text-color);
+    color: var(--ex-text-color--bg-primary);
     line-height: 0.92rem;
     font-size: 0.3rem;
     background-color: var(--ex-primary-color);
@@ -321,7 +321,7 @@ const swipeChange = (val) => {
   height: 0.7rem;
   margin-top: 0.2rem;
   background-color: var(--ex-primary-color);
-  color: var(--ex-bg-primary-text-color);
+  color: var(--ex-text-color--bg-primary);
   justify-content: center;
   align-items: center;
   display: flex;

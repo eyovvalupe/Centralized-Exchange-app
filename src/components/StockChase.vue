@@ -98,7 +98,7 @@ const { t } = useI18n();
         background-color: var(--ex-primary-color);
         align-items: center;
         justify-content: center;
-        color: var(--ex-bg-primary-text-color);
+        color: var(--ex-text-color--bg-primary);
       }
     }
   }
