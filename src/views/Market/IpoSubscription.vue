@@ -5,7 +5,7 @@
             v-if="currIpo.lever > 1" @change="changeTab">
             <template #before>
                 <div class="back" @click="back()">
-                    <img :src="getStaticImgUrl(`/static/icons/back.svg`)" alt="">
+                    <img :src="getStaticImgUrl(`/static/img/user/back.svg`)" alt="">
                 </div>
             </template>
         </HeaderTabs>

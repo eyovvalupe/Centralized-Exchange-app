@@ -1,22 +1,5 @@
 <template>
   <div class="wallet_container">
-    <div class="flex flex-col items-center" v-if="currSelectedWallet == -1">
-      <div @click="changeActiveTab(0)">
-        <CashWallet :amount="assets.money" />
-      </div>
-      <div @click="changeActiveTab(1)">
-        <StockWallet :amount="assets.stock" />
-      </div>
-      <div @click="changeActiveTab(2)">
-        <ContractWallet :amount="assets.futures" />
-      </div>
-      <div @click="changeActiveTab(3)">
-        <ForexWallet :amount="assets.forex" />
-      </div>
-      <div @click="changeActiveTab(4)">
-        <TradeWallet :amount="assets.blocktrade" />
-      </div>
-    </div>
     <div v-if="currSelectedWallet != -1">
       <div @touchstart.stop="" @touchmove.stop="" @touchend.stop="">
         <HeaderTabs type="card" v-model:active="activeTab" :tabs="[
@@ -53,20 +36,13 @@
   </div>
 </template>
 <script setup>
-import CashWallet from "./components/CashWallet.vue";
-import StockWallet from "./components/StockWallet.vue";
-import ContractWallet from "./components/ContractWallet.vue";
-import ForexWallet from "./components/ForexWallet.vue";
-import TradeWallet from "./components/TradeWallet.vue";
 import { ref, onMounted, computed, watch } from "vue";
 import DefaultWallet from "./components/DefaultWallet.vue";
 import Btns from "./components/Btns.vue";
 import Cash from "./Cash.vue";
-import OtherWallet from "./components/OtherWallet.vue";
 import store from "@/store";
 import StockMyWallet from "./StockWallet.vue";
 import CryptoWallet from "./CryptoWallet.vue";
-import ForexMyWallet from "./ForexWallet.vue";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import { useI18n } from "vue-i18n";
 

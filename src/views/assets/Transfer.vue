@@ -82,9 +82,6 @@
               </div>
             </div>
           </div>
-          <!-- <div style="width: 0.2rem;height: 0.12rem"> -->
-            <!-- <img :src="getStaticImgUrl(`/static/icons/more_icon.svg`)" alt=""> -->
-          <!-- </div> -->
         </div>
         <FormItem background="var(--ex-bg-color)" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
           :btn-placeholder="form.toCurrency.name" :placeholder="t('transfer.in_amount')" :inputType="'number'"
