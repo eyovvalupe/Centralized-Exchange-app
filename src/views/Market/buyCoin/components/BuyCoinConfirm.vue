@@ -1,9 +1,6 @@
 <template>
-  <Popup round v-model:show="orderConfirmDialog" position="bottom" closeable teleport="body">
-    <div class="van-popup-custom-title">
-      {{ t('market.market_buy_confirm_coin') }}
-    </div>
-
+  <BottomPopup :title="t('market.market_buy_confirm_coin')" v-model:show="orderConfirmDialog" closeable>
+    
     <div class="px-[0.32rem] pt-[0.52rem]">
       <div class="flex justify-between items-center px-[0.32rem] h-[1.2rem] bg-color3 rounded-[0.32rem]">
         <template v-if="offset == 'buy'">
@@ -66,7 +63,7 @@
         </div>
       </div>
 
-      <FormItem size="large" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password"
+      <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password"
         v-model="safeword" />
       <div class="pt-[0.6rem] pb-[0.32rem]">
         <Button size="large" round :loading="loading" @click="submit" type="primary">{{ t('trade.stock_opening_confirm')
@@ -74,7 +71,7 @@
       </div>
     </div>
 
-  </Popup>
+  </BottomPopup>
 
   <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="currentAccount" currency-type="bank"
     @on-add-collection="clickAccountItem" />
@@ -89,6 +86,7 @@ import FormItem from '@/components/Form/FormItem.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js"
 import { _hiddenAccount } from '@/utils/index'
+import BottomPopup from '@/components/BottomPopup.vue';
 import AccountSelectionPopUp from "./AccountSelectionPopUp.vue";
 
 const { t } = useI18n();
