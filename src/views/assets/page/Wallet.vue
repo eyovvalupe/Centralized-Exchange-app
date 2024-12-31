@@ -1,24 +1,19 @@
 <template>
   <div class="wallet_container">
-    <Tabs v-model:active="activeTab" type="custom-card" :swipeable="false" animated shrink @change="(e) => changeActiveTab(e)">
+    <Tabs v-model:active="activeTab" type="custom-card" :swipeable="false" animated shrink
+      @change="(e) => changeActiveTab(e)">
       <Tab :title="t('assets.wallet_header_cash')" name="0">
-        <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" />
-        </div>
+        <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" />
         <Btns />
         <Cash @click="(val) => click(val)" />
       </Tab>
       <Tab :title="t('assets.wallet_header_stock')" name="1">
-        <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock" />
-        </div>
+        <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock" />
         <Btns />
         <StockMyWallet @click="(val) => click(val)" />
       </Tab>
       <Tab :title="t('assets.wallet_header_contract')" name="2">
-        <div class="mb-[0.8rem]">
-          <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
-        </div>
+        <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
         <Btns />
         <CryptoWallet @click="(val) => click(val)" />
       </Tab>
@@ -100,9 +95,10 @@ onMounted(() => {
 <style lang="less" scoped>
 .wallet_container {
   width: 7.5rem;
-  :deep( > .van-tabs > .van-tabs__wrap){
+
+  :deep(> .van-tabs > .van-tabs__wrap) {
     margin: 0 0.4rem 0.32rem 0.4rem;
   }
-  
+
 }
 </style>
