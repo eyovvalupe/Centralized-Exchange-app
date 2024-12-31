@@ -9,6 +9,7 @@
     --van-text-color: var(--ex-text-color);
     --van-button-plain-background: var(--ex-bg-color);
     --van-button-primary-color: var(--ex-text-color--bg-primary);
+    --van-button-default-background:var(--ex-bg-color3);
 }
 
 .van-toast--loading {
@@ -25,6 +26,9 @@
     border: none !important;
     font-weight: 600;
 }
+.van-button--default{
+    font-weight: 400;
+}
 
 .van-button--disabled {
     // 按钮不置灰
@@ -35,7 +39,7 @@
 
     // 按钮点击变色
     &:active {
-        background-color: #0039BC !important;
+        background-color: rgb(var(--ex-primary-color-rgb) / 0.8) !important;
     }
 }
 

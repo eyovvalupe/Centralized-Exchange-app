@@ -1,92 +1,118 @@
 <!-- 自选买卖 二级页面 -->
 <template>
   <div class="page-deal">
-    <Top :title="title" class="!z-20" />
+    <Top class="!z-20">
+      <template #title>
+        <span class="flex items-center justify-center">
+          <span class="mr-[0.16rem]" v-if="info.currCrypto">
+            <img class="size-[0.52rem] rounded-50"
+            :src="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+          </span>
+          {{title}}{{ info.currCrypto }}
+          
+        </span>
+      </template>
+    </Top>
 
     <!-- 买入 -->
-    <div v-if="info.offset == 'buy'" class="form">
+    <div class="form">
       <!-- 信息 -->
-      <div class="info" style="margin-bottom: 0.32rem">
-        <div class="flex items-center">
+      <div class="info">
+        <div class="flex items-center pt-[0.12rem] pb-[0.36rem] px-[0.16rem]">
           <div class="avatar">
             {{ info.merchant?.slice(0, 1) }}
           </div>
           {{ info.merchant }}
         </div>
-        <div class="info_item">
-          {{ info.price }}
-          <span class="text-12 font-normal">{{ info.currWallet }}</span>
+        <div class="flex justify-between px-[0.3rem] py-[0.4rem] items-center bg-color rounded-[0.32rem]">
+          <div class="info_item">
+            {{ info.price }}
+            <span class="text-12 font-normal">{{ info.currWallet }}</span>
+          </div>
+          <div class="text-14 text-color3">
+            <div>{{ t('market.market_buy_optional_order_limit') }}</div>
+            <div class="mt-[0.16rem] text-color">{{ info.limitmin }}-{{ info.limitmax }}</div>
+          </div>
         </div>
-        <div class="text-14 text-color3">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
-          info.limitmax }}</div>
       </div>
 
-      <div class="mb-[0.12rem] text-14">{{ t('market.market_buy_list_amount') }}</div>
-      <div class="item form_item">
-        <input v-model="amount" type="number" @blur="amountBlur" class="ipt" />
-        <span>{{ info.currCrypto }}</span>
-      </div>
-      <div class="tip">{{ t('market.market_buy_list_pre_pay') }} {{ showAmount }} {{ info.currWallet }}</div>
+      <template v-if="info.offset == 'buy'">
 
+      <div class="item bg-color3 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] py-[0.18rem]">
+        <div class="flex justify-between items-center">
+          <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
+          <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
+            <span class="mr-[0.16rem]" v-if="info.currCrypto">
+              <img class="size-[0.52rem] rounded-50"
+              :src="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+            </span>
+            {{title}}{{ info.currCrypto }}
+            
+          </div>
+        </div>
+        <div class="form_item">
+          <div class="flex-1">
+            <input v-model="amount" placeholder="0" type="number" @blur="amountBlur" class="ipt" />
+          </div>
+          <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center bg-color3 rounded-[0.32rem] h-[1.3rem] mt-[0.32rem] px-[0.36rem] text-[0.3rem]">
+        <span>{{ t('market.market_buy_list_pre_pay') }} </span>
+        <span>
+          <strong class="text-[0.4rem] mr-[0.14rem]">{{ showAmount }}</strong>
+          {{ info.currWallet }}</span>
+      </div>
       <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color" round :loading="loading" type="primary" @click="goSubmit">{{
         t('market.market_buy_fast_buy')
         }}</Button>
-    </div>
 
-    <!-- 卖出 -->
-    <div v-if="info.offset == 'sell'" class="form">
-      <!-- 信息 一层容器 -->
-      <div class="info" style="margin-bottom: 0.32rem">
-        <div class="flex items-center">
-          <div class="avatar">
-            {{ info.merchant?.slice(0, 1) }}
+      </template>
+
+      <template v-else-if="info.offset == 'sell'">
+        <!-- 卖出 -->
+       <!-- 二层容器 -->
+
+       <div class="item bg-color3 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] py-[0.18rem]">
+        <div class="flex justify-between items-center">
+          <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
+          <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
+            <span class="mr-[0.16rem]" v-if="info.currCrypto">
+              <img class="size-[0.52rem] rounded-50"
+              :src="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+            </span>
+            {{title}}{{ info.currCrypto }}
+            
           </div>
-          {{ info.merchant }}
         </div>
-        <div class="info_item">{{ info.price }} {{ info.currWallet }}</div>
-        <div class="text-14 text-color3">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{
-          info.limitmax }}</div>
+        <div class="form_item">
+          <div class="flex-1">
+            <input v-model="amount" placeholder="0" type="number" @blur="amountBlur" class="ipt" />
+          </div>
+          <!-- <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div> -->
+          <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
+        </div>
       </div>
-      <!-- 二层容器 -->
-      <div style="margin-bottom: 0.12rem; display: flex; align-items: center; justify-content: space-between">
-        <span>{{ t('market.market_buy_list_amount') }}</span>
-      </div>
-      <div class="item form_item">
-        <input v-model="amount" type="number" @blur="amountBlur" :placeholder="`≤${currWallet.amount}`" class="ipt" />
-        <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div>
-      </div>
-     
-      <!-- 三层容器 -->
-      <div class="tip">{{ t('market.market_buy_optional_estreceive') }} {{ showAmount }} {{ info.currWallet }}</div>
 
-      <!-- 银行卡 -->
-      <div class="leading-18" style="margin-bottom: 0.12rem; margin-top: 0.32rem">{{ t('assets.header_wallet') }}</div>
-      <div v-if="bank.id" class="card_box" @click="showAccountDialog = true">
-        <div class="card_icon">
-          <img v-if="bank.symbol" id="img" class="rounded-50"
-            :src="getStaticImgUrl(`/static/img/crypto/${bank.symbol.toUpperCase()}.svg`)" alt="currency" />
-          <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
-        </div>
-        <div class="card">
-          <div class="code">{{ _hiddenAccount(bank.bankCardNumber || bank.address) }}</div>
-          <div class="text-color2">{{ bank.bankName || bank.symbol }} | {{ bank.accountName }}</div>
-        </div>
-
-        <div class="text-12 text-primary" @click="goAddAccount">{{ t('withdraw.change') }}</div>
+       <!-- 三层容器 -->
+      <div class="flex justify-between items-center bg-color3 rounded-[0.32rem] h-[1.3rem] mt-[0.32rem] px-[0.36rem] text-[0.3rem]">
+        <span>{{ t('market.market_buy_optional_estreceive') }} </span>
+        <span>
+          <strong class="text-[0.4rem] mr-[0.14rem]">{{ showAmount }}</strong>
+          {{ info.currWallet }}</span>
       </div>
-      <div v-else class="flex h-18 w-full flex-col items-center justify-center rounded-3 bg-color2 text-primary"
-        @click="showAccountDialog = true">
-        <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20">+</div>
-        <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
-      </div>
+      
       <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color" round :loading="loading"
         @click="goSubmit">{{ t('market.market_buy_fast_sell') }}</Button>
+
+      </template>
+
     </div>
-    <!-- 安全密码弹窗 -->
-    <SafePassword ref="safeRef" @submit="submitSell" />
-    <!-- 账户选择弹窗 -->
-    <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="bank" currency-type="bank"
-      @on-add-collection="clickAccountItem" />
+
+    <BuyCoinConfirm ref="safeRef" :offset="info.offset" :loading="loading" :volume="amount" :currency="info.currCrypto" :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
+
+    
   </div>
 </template>
 
@@ -98,18 +124,16 @@ import { Button, showToast } from 'vant'
 import Decimal from 'decimal.js'
 import Top from '@/components/Top.vue'
 import store, { useMapState } from '@/store'
-import SafePassword from '@/components/SafePassword.vue'
+import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
 import router from '@/router'
 import { _buysell } from '@/api/api'
 import { _hiddenAccount } from '@/utils/index'
-import AccountSelectionPopUp from './components/AccountSelectionPopUp.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 // 收款方式列表 所有钱包
 const { accountList, wallet, sessionToken } = useMapState(['accountList', 'wallet', 'sessionToken'])
 
-const bankList = computed(() => accountList.value.filter(item => item.channel == 'bank')) // 银行账号列表
 const safeRef = ref()
 
 const route = useRoute()
@@ -143,13 +167,6 @@ const amountBlur = ()=>{
   }
 }
 
-// 账户
-const showAccountDialog = ref(false)
-const bank = ref(bankList.value[0] || {})
-const clickAccountItem = item => {
-  bank.value = item
-  showAccountDialog.value = false
-}
 
 const goSubmit = () => {
   if (!amount.value || amount.value <= 0) return showToast(t('market.market_buy_fast_no_amount'))
@@ -158,20 +175,19 @@ const goSubmit = () => {
   if (info.value.offset == 'sell') {
     const cueeWallet = wallet.value.find(item => item.name == info.value.currCrypto)
     if (amount.value > cueeWallet.amount) return showToast(t('transfer.no_enough_balance'))
-    if (!bank.value.id) return showToast(t('market.market_buy_list_firt_select'))
   }
   getSessionToken()
   // 打开密码
   safeRef.value.open()
 }
 
-const submitSell = s => {
+const submitSell = obj => {
   const params = {
     ad_id: info.value.id,
     volume: amount.value,
-    account_id: info.value.offset == 'buy' ? null : bank.value.id,
+    account_id: info.value.offset == 'buy' ? null : obj.account_id,
     token: sessionToken.value,
-    safeword: s,
+    safeword: obj.safeword,
   }
   if (loading.value) return
   loading.value = true
@@ -204,7 +220,7 @@ const getSessionToken = () => {
   padding-top: 1.12rem;
 
   .form {
-    padding: 0 0.32rem 0.32rem 0.32rem;
+    padding: 0.32rem;
 
     .card_box {
       border-radius: 0.3rem;
@@ -265,17 +281,15 @@ const getSessionToken = () => {
     }
 
     .form_item {
-      border: 1px solid var(--ex-border-color2);
-      height: 0.96rem;
+      height: 1.36rem;
       display: flex;
       align-items: center;
-      padding: 0 0.24rem;
-      position: relative;
-      border-radius: 0.24rem;
-
+      justify-content: center;
       .ipt {
-        flex: 1;
-        height: 100%;
+        width: 100%;
+        height: 0.8rem;
+        font-size: 0.6rem;
+        font-weight: 600;
       }
 
       .all {
@@ -285,14 +299,13 @@ const getSessionToken = () => {
     }
 
     .info {
-      padding: 0.32rem;
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-color3);
       font-size: 0.32rem;
-
+      padding: 0.12rem;
       .avatar {
-        width: 0.4rem;
-        height: 0.4rem;
+        width: 0.54rem;
+        height: 0.54rem;
         border-radius: 50%;
         background-color: var(--ex-white);
         margin-right: 0.16rem;
@@ -300,7 +313,7 @@ const getSessionToken = () => {
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 0.24rem;
+        font-size: 0.36rem;
         color: var(--ex-text-color--bg-light);
         line-height: 0;
         font-weight: 600;
@@ -308,13 +321,13 @@ const getSessionToken = () => {
 
       .info_item {
         font-weight: bold;
-        margin: 0.48rem 0 0.16rem;
         font-size: 0.48rem;
       }
     }
 
     .btn {
-      margin-top: 0.9rem;
+      margin-top: 0.6rem;
+      border-radius: 0.4rem;
     }
   }
 }

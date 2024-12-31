@@ -798,7 +798,7 @@ export default {
 
     market_buy_title1: "快捷区",
     market_buy_title2: "自选区",
-    market_buy_title3: "我的订单",
+    market_buy_title3: "订单",
     market_buy_fast_buy: "买入",
     market_buy_fast_sell: "卖出",
     market_buy_fast_buy_btn: "买入",

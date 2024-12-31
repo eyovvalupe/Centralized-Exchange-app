@@ -4,7 +4,8 @@
     <div class="back" @click="clickLeft">
       <Icon :name="props.icon" size="0.4rem" />
     </div>
-    <span>{{ props.title }}</span>
+    <slot name="title" v-if="slots['title']" />
+    <span v-else>{{ props.title }}</span>
     <div class="right">
       <slot name="right" />
     </div>
@@ -15,6 +16,8 @@
 import { Icon } from 'vant'
 import router from '@/router'
 import store from '@/store'
+import { useSlots } from 'vue'
+const slots = useSlots()
 const props = defineProps({
   title: {
     // 标题

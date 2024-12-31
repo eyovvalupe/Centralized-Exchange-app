@@ -18,7 +18,7 @@
         <!-- 支付 -->
         <div class="item item_box">
             <div class="flex justify-between">
-              <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center bg-buy bg-buy-text-color mt-[0.06rem]">{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
+              <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center mt-[0.06rem]" :class="[form1.offset == 'buy' ? ' bg-buy bg-buy-text-color' : 'bg-white text-color--bg-light']">{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
                 }}</div>
               <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
                 @click="openDialog(2)">
@@ -41,13 +41,9 @@
         <!-- 收到 -->
         <div class="item item_box">
           <div class="flex justify-between">
-            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center bg-sell bg-sell-text-color mt-[0.06rem]">{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
+            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center  mt-[0.06rem]" :class="[form1.offset == 'buy' ? 'bg-white text-color--bg-light' : 'bg-sell bg-sell-text-color']">{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
               }}</div>
-            <div class="ml-[0.2rem] mt-[0.06rem]" v-if="form1.offset == 'sell' && currWallet.amount > 0">
-              <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span style="color: var(--ex-text-color2)">{{ t('assets.wallet_available_sim') }}</span>
-              {{ currWallet.amount }} {{ currOut.name }}</span>
-              <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.2rem" />
-            </div>
+            
            
             <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
               @click="openDialog(1)">
@@ -65,11 +61,22 @@
 
           </div>
 
-          <div class="h-[1.54rem] py-[0.2rem]">
-              <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
-              <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
-               t('trade.stock_position_all')
-              }}</span>
+          <div class="flex items-center h-[1.94rem] justify-center">
+              <div class="h-[0.96rem] flex-1">
+                <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
+                
+              </div>
+              <!-- <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
+                t('trade.stock_position_all')
+                }}</span> -->
+              <div class="ml-[0.2rem] flex items-center px-[0.2rem] h-[0.72rem] bg-color rounded-[0.32rem] bg-color" v-if="form1.offset == 'sell' && currWallet.amount > 0">
+                <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox">
+                  <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
+                  {{ currWallet.amount }}
+                  <span class="text-color">{{ currOut.name }}</span>
+                </span>
+                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
+              </div>
           </div>
 
         </div>
@@ -119,7 +126,6 @@
   </BottomPopup>
 
   <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="money" @submit="submitSell" />
-
 
   <!-- 余额提示 -->
    <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')" :amount="currWallet.amount" />
@@ -620,7 +626,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
   }
 
   .swap_dialog_item_active {
-    color: var(--ex-primary-color);
+    color: var(--ex-text-color);
     border-color:var(--ex-primary-color);
     background: none;
     .check_icon {

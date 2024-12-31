@@ -29,9 +29,9 @@
           <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
         </div>
       </div>
-      <div class="mt-[0.2rem] pt-[0.4rem] px-[0.32rem] border-solid border-[1px]  box-border rounded-[0.32rem]"
+      <div class="mt-[0.2rem] pt-[0.3rem] p-[0.12rem] rounded-[0.32rem] bg-color3"
         v-if="offset == 'sell'">
-        <div class="flex items-center justify-between h-[0.36rem]">
+        <div class="flex items-center justify-between px-[0.2rem] h-[0.36rem]">
           <div class="text-[0.32rem] font-bold text-color">
             收款账户
           </div>
@@ -39,25 +39,33 @@
             t('withdraw.change')
           }}</span>
         </div>
-        <div class="dialog_account_item h-[1.5rem]" v-if="currentAccount.channel">
-          <div class="card_icon">
-            <img v-if="currentAccount.channel === 'crypto'" class="rounded-50"
-              :src="getStaticImgUrl(`/static/img/crypto/${currentAccount.symbol?.toUpperCase()}.svg`)" alt="currency" />
-            <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
-          </div>
-          <div class="card">
-            <div class="code">{{ _hiddenAccount(currentAccount.bankCardNumber || currentAccount.address) }}</div>
-            <div class="text-color2">{{ currentAccount.symbol ? `${currentAccount.symbol}-${currentAccount.network}` :
-              `${currentAccount.bankName}` }} <span v-if="currentAccount.accountName">| {{ currentAccount.accountName
-                }}</span></div>
-          </div>
 
+        <div 
+          class="dialog_account_item  mt-[0.32rem] mx-[0.2rem] mb-[0.2rem] px-[0.28rem] bg-color3 rounded-[0.32rem] h-[2.16rem]" :style="{backgroundImage:`url(${getStaticImgUrl('/static/img/bank/card_bg.svg')})`}" v-if="currentAccount.channel">
+          <div>
+            <div class="right-[0.24rem] top-[0.24rem] absolute text-[0.28rem] text-color2" v-if="currentAccount.accountName">户主姓名：{{ currentAccount.accountName }}</div>
+            <div class="flex items-center">
+              <div class="card_icon">
+                <img v-if="currentAccount.channel === 'crypto'" class="rounded-50"
+                  :src="getStaticImgUrl(`/static/img/crypto/${currentAccount.symbol?.toUpperCase()}.svg`)" alt="currency" />
+                <img v-else class="!size-[0.44rem]" :src="getStaticImgUrl('/static/img/bank/card_icon.svg')" alt="img" />
+              </div>
+              <div class="text-color text-[0.32rem]">{{ currentAccount.symbol ? `${currentAccount.symbol}-${currentAccount.network}` : `${currentAccount.bankName}` }}</div>
+              
+            </div>
+            <div class="card">
+              <div class="code">{{ _hiddenAccount(currentAccount.bankCardNumber || currentAccount.address) }}</div>
+              
+            </div>
+          </div>
         </div>
-        <div class="dialog_account_item h-[1.5rem] " v-else>
+        
+        <div class="dialog_account_item h-[1.4rem] mt-[0.32rem] bg-color rounded-[0.32rem]" v-else>
           <div class="flex w-full flex-col items-center justify-center text-primary" @click="showAccountDialog = true;">
             <div
-              class="mb-1 size-6 rounded-50 flex items-center justify-center border-[0.03rem] border-my text-20 leading-none">
-              +</div>
+              class="mb-1 size-[0.48rem]">
+              <img :src="getStaticImgUrl('/static/img/common/add.svg')" />
+            </div>
             <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
           </div>
         </div>
@@ -150,34 +158,23 @@ defineExpose({
   position: relative;
 
   .card_icon {
-    background-color: var(--ex-bg-color2);
-    width: 0.96rem;
-    height: 0.96rem;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    >#img {
-      width: 0.96rem !important;
-      height: 0.96rem !important;
-    }
+      background-color: var(--ex-white);
+      width: 0.68rem;
+      height: 0.68rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.16rem;
   }
-
   .card {
-    flex: 1;
-    margin: 0 0.2rem 0 0.36rem;
-    text-align: left;
-    font-size: 0.24rem;
-    color: var(--ex-text-color);
-    font-weight: 500;
-    line-height: 1;
+      margin-top:0.32rem;
 
-    .code {
-      font-size: 0.32rem;
-      margin-bottom: 0.1rem;
-      font-weight: 600;
+      .code {
+        font-size: 0.4rem;
+        font-weight: 600;
+        color:var(--ex-text-color);
+      }
     }
-  }
 }
 </style>

@@ -24,8 +24,7 @@
         }" :style="{ background }">
           <span class="ipt_tip ipt_tip--left" v-show="inputFocus">{{ placeholder
             }}</span>
-          <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip" v-show="inputFocus">{{ tip
-            }}</span>
+          <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip" v-show="inputFocus">{{ tip }}</span>
 
           <slot v-if="custom" />
           <input :disabled="disabled" v-else v-model="inputVal" @focus="
@@ -34,7 +33,7 @@
           " @blur="
             inputFocus = false;
           inputBlur();
-          " :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
+          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
             :placeholder="inputFocus ? '' : placeholder" />
 
           <span class="pwd_icon" v-if="inputType == 'password'">

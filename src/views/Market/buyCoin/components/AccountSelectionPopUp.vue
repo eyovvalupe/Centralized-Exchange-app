@@ -1,10 +1,6 @@
 <template>
   <!-- 账户选择弹窗  -->
-  <Popup closeable v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" position="bottom" teleport="body">
-
-    <div class="van-popup-custom-title">
-      {{ t('market.market_buy_fast_account_title') }}
-    </div>
+  <BottomPopup closeable v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" :title="t('market.market_buy_fast_account_title')">
 
     <div class="withdraw_accounr_dialog">
      
@@ -24,9 +20,12 @@
           </div>
         </div>
         <!-- 三层容器 -->
-        <div class="mb-[0.2rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-color2 text-primary"
+        <div class="mb-[0.24rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-color text-primary"
           @click="goAddAccount">
-          <div class="mb-1 size-6 rounded-50 border-[0.03rem] border-my text-center text-20 leading-none">+</div>
+          <div class="mb-1 size-[0.48rem]">
+            <img :src="getStaticImgUrl('/static/img/common/add.svg')" alt="img" />
+
+          </div>
           <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
         </div>
         
@@ -35,25 +34,31 @@
           <span class="mt-[0.12rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span> -->
           <NoData />
         </div>
-        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }"
-          class="dialog_account_item mb-[0.2rem]" @click="clickAccountItem(item)">
-          <div class="card_icon">
-            <img v-if="tabsValue === 'crypto'" class="rounded-50"
-              :src="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.svg`)" alt="currency" />
-            <img v-else class="!size-[0.68rem]" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
-          </div>
-          <div class="card">
-            <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
-            <div class="text-color2">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }} <span v-if="item.accountName">| {{ item.accountName }}</span></div>
-          </div>
-          <div v-if="bank.id == item.id" class="checked"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/ok_bg.svg')})` }">
-            <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
+        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id}"
+          class="dialog_account_item mb-[0.24rem]" :style="{backgroundImage:`url(${getStaticImgUrl('/static/img/bank/card_bg.svg')})`}" @click="clickAccountItem(item)">
+          <div>
+            <div class="right-[0.24rem] top-[0.24rem] absolute text-[0.28rem] text-color2" v-if="item.accountName">户主姓名：{{ item.accountName }}</div>
+            <div class="flex items-center">
+              <div class="card_icon">
+                <img v-if="tabsValue === 'crypto'" class="rounded-50"
+                  :src="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.svg`)" alt="currency" />
+                <img v-else class="!size-[0.44rem]" :src="getStaticImgUrl('/static/img/bank/card_icon.svg')" alt="img" />
+              </div>
+              <div class="text-color text-[0.32rem]">{{ item.symbol ? `${item.symbol}-${item.network}` : `${item.bankName}` }}</div>
+              
+            </div>
+            <div class="card">
+              <div class="code">{{ _hiddenAccount(item.bankCardNumber || item.address) }}</div>
+              
+            </div>
+            <div v-if="bank.id == item.id" class="checked">
+              <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </Popup>
+  </BottomPopup>
 
 </template>
 
@@ -66,7 +71,7 @@ import { _hiddenAccount } from '@/utils/index'
 import { onMounted, computed } from "vue"
 import { useI18n } from 'vue-i18n'
 import NoData from "@/components/NoData.vue"
-
+import BottomPopup from "@/components/BottomPopup.vue"
 
 const { t } = useI18n()
 const props = defineProps({
@@ -238,43 +243,35 @@ const clickAccountItem = val => {
   }
 
   .dialog_account_item {
-    border-radius: 0.3rem;
-    height: 1.44rem;
+    border-radius: 0.4rem;
+    height: 2.16rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    border: 1px solid var(--ex-border-color2);
     padding: 0 0.4rem 0 0.36rem;
+    background-size: cover;
+    border: 1px solid rgba(0,0,0,0);
+    background-color: var(--ex-bg-color3);
 
     .card_icon {
-      background-color: var(--ex-bg-color2);
-      width: 0.96rem;
-      height: 0.96rem;
+      background-color: var(--ex-white);
+      width: 0.68rem;
+      height: 0.68rem;
       border-radius: 1rem;
       display: flex;
       align-items: center;
       justify-content: center;
-
-      >#img {
-        width: 0.96rem !important;
-        height: 0.96rem !important;
-      }
+      margin-right: 0.16rem;
     }
 
     .card {
-      flex: 1;
-      margin: 0 0.2rem 0 0.36rem;
-      text-align: left;
-      font-size: 0.24rem;
-      color: var(--ex-text-color);
-      font-weight: 500;
-      line-height: 1;
+      margin-top:0.32rem;
 
       .code {
-        font-size: 0.28rem;
-        margin-bottom: 0.1rem;
-        font-weight: 400;
+        font-size: 0.4rem;
+        font-weight: 600;
+        color:var(--ex-text-color);
       }
     }
   }
@@ -284,18 +281,19 @@ const clickAccountItem = val => {
 
     .checked {
       position: absolute;
-      top: -0.02rem;
-      right: -0.02rem;
-      background-size: 100% 100%;
-      width: 0.46rem;
-      height: 0.42rem;
-
+      bottom:-1px;
+      right: -1px;
+      width: 0.8rem;
+      height: 0.68rem;
+      border-radius: 0.4rem 0rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--ex-primary-color);
       >img {
-        width: 0.18rem !important;
-        height: 0.12rem !important;
-        position: absolute;
-        right: 0.06rem;
-        top: 0.08rem;
+        width: 0.48rem !important;
+        height: 0.48rem !important;
+        
       }
     }
   }
