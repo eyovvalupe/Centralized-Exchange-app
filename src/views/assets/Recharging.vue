@@ -2,26 +2,29 @@
 <template>
   <div class="page page_recharge">
     <Top :title="$t('recharging.recharge')">
-      <template #right>
+      <!-- <template #right>
         <div class="top-record" @click="() => router.push({ name: 'chat' })">
           <span><img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="img" /></span>
         </div>
-      </template>
+      </template> -->
     </Top>
     <Loading :loading="loading" v-show="loading" />
     <template v-if="!loading">
       <div class="recharge_box">
-        <div class="time_box">
+        <div class="time_box w-full">
           <div class="time_label">{{ $t("recharging.countdown") }}</div>
           <CountDown v-model:time="s" class="time_show" />
-          <div class="network-tag">
-            <span>{{ form.network }} · {{ form.currency }}</span>
-          </div>
-          <div class="amount" @click="copyPrice">
-            {{ form.amount }}<span>{{ form.currency }}</span>
-          </div>
-          <div class="network-tag">
-            <span style="color: var(--ex-text-color)">${{ ratePrice }}</span>
+          <div class="w-full h-[2.34rem] rounded-[0.4rem] pt-[0.4rem] mt-[0.68rem] relative" style="background-color: var(--ex-bg-color);">
+            <div class="network-tag w-[6.46rem] h-[0.6rem] mx-auto absolute top-[-0.6rem]">
+              <span>{{ form.network }} · {{ form.currency }}</span>
+            </div>
+            <div class="amount">
+              {{ form.amount }}<span>{{ form.currency }}</span>
+            </div>
+            <div class="network-tag">
+              <span style="color: var(--ex-text-color2); background-color: var(--ex-bg-color2);">${{ ratePrice
+                }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -65,12 +68,14 @@
 
       <div class="btns">
         <Button v-if="orderStatus == 'success'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
-          color="var(--ex-success-color)" style="width: 100%" class="submit" type="info"><span style="color: var(--ex-white)">{{
-            $t("recharging.success")
-          }}</span></Button>
+          color="var(--ex-success-color)" style="width: 100%" class="submit" type="info"><span
+            style="color: var(--ex-white)">{{
+              $t("recharging.success")
+            }}</span></Button>
         <Button v-else-if="orderStatus == 'failure'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
-          color="var(--ex-error-color)" style="width: 100%" class="submit" type="info"><span style="color: var(--ex-white)">{{
-            $t("recharging.fail") }}</span></Button>
+          color="var(--ex-error-color)" style="width: 100%" class="submit" type="info"><span
+            style="color: var(--ex-white)">{{
+              $t("recharging.fail") }}</span></Button>
         <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="var(--ex-primary-color)"
           style="width: 100%" class="submit" type="info"><span style="color: var(--ex-text-color--bg-primary)">{{
             $t("recharging.finish")
@@ -95,7 +100,7 @@ import Decimal from "decimal.js";
 import CountDown from "@/components/CountDown.vue";
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n();
+const { t } = useI18n();
 const route = useRoute();
 
 // sessionToken
@@ -264,13 +269,13 @@ const copyPrice = () => {
 
   position: relative;
 
-  :deep(.top) {
-    background: none;
-    background-image: linear-gradient(to top,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 1));
-    backdrop-filter: blur(3px);
-  }
+  // :deep(.top) {
+  //   background: none;
+  //   background-image: linear-gradient(to top,
+  //       rgba(255, 255, 255, 0),
+  //       rgba(255, 255, 255, 1));
+  //   backdrop-filter: blur(3px);
+  // }
 
   .top-record {
     width: 0.72rem;
@@ -292,13 +297,13 @@ const copyPrice = () => {
   .recharge_box {
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-    background: var(--ex-bg-color);
+    background: var(--ex-bg-color2);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    box-shadow: 0px 0.08rem 0.8rem 0 rgba(1, 76, 250, 0.2);
-    padding: 0.32rem;
+    // box-shadow: 0px 0.08rem 0.8rem 0 rgba(1, 76, 250, 0.2);
+    padding: 0.12rem;
 
     .amount {
       color: var(--ex-primary-color);
@@ -319,7 +324,7 @@ const copyPrice = () => {
       padding-top: 0.06rem;
 
       .time_label {
-        color: var(--ex-text-color2);
+        color: var(--ex-text-color5);
         text-align: center;
         font-size: 0.28rem;
         line-height: 0.36rem;
@@ -335,13 +340,14 @@ const copyPrice = () => {
         justify-content: center;
         align-content: center;
         padding-top: 0.26rem;
+        color: var(--ex-text-color2);
 
         span {
           height: 0.6rem;
           padding: 0 0.28rem;
           border-radius: 0.5rem;
-          background-color: var(--ex-bg-color2);
-          color: var(--ex-primary-color);
+          background-color: var(--ex-primary-color);
+          color: var(--ex-black);
           font-size: 0.28rem;
           display: flex;
           align-items: center;
@@ -359,11 +365,11 @@ const copyPrice = () => {
     }
 
     .qrcode_box {
-      border: 1px solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color);
+      // border: 1px solid var(--ex-white);
+      background-color: var(--ex-white);
       width: 3.18rem;
       height: 3.18rem;
-      margin: 0 auto;
+      margin: 0.2rem auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -401,7 +407,7 @@ const copyPrice = () => {
     }
 
     .address_label {
-      color: var(--ex-text-color2);
+      color: var(--ex-text-color5);
       text-align: center;
       font-size: 0.28rem;
       line-height: 0.36rem;
@@ -409,12 +415,20 @@ const copyPrice = () => {
     }
 
     .address_val {
+      height: 0.92rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1rem;
       color: var(--ex-text-color);
       font-size: 0.3rem;
       font-weight: 600;
       line-height: 0.36rem;
       margin-top: 0.22rem;
       text-align: center;
+      width: max-content;
+      padding: 0 0.5rem;
+      background-color: var(--ex-bg-color);
     }
 
     .address_copy_btn {

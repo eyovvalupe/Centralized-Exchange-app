@@ -364,7 +364,7 @@ export default {
     withdrawalAmount: "Amount",
     serviceFee: "Service Fee",
     receiptAccount: "Receiving Account",
-    change: "Edit",
+    change: "Change Wallet",
     accountSelection: "Choose Cryptocurrency Account",
     no_amount_msg: "Please enter an amount",
     no_enough_balance: "Insufficient balance",
