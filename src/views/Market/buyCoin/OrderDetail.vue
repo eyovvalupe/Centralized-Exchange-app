@@ -88,13 +88,13 @@
 
             <!-- 已完成 -->
             <div v-if="currItem.status == 'done'" class="finish_status success_status">
-              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.svg')"
+              <div class="size-[0.8rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.svg')"
                   alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_complete") }}</div>
             </div>
             <!-- 已取消 -->
             <div v-if="currItem.status == 'cancel'" class="finish_status">
-              <div class="w-[0.6rem] h-[0.6rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.svg')"
+              <div class="size-[0.8rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.svg')"
                   alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_cancel") }}</div>
             </div>
@@ -149,7 +149,7 @@
                 <img :src="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
               </div>
               <div class="name">
-                {{ t("market.market_buy_list_wait_buyer_bank") }}
+                <!-- {{ t("market.market_buy_list_wait_buyer_bank") }} -->
               </div>
             </div>
             <div class="bank" v-if="currItem.bank_status == 'done'">
@@ -193,20 +193,24 @@
           <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
          
             <div
-              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-buy bg-buy-text-color flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
-              v-if="currItem.offset == 'buy'" style="writing-mode: vertical-lr; text-orientation: upright;">
-              {{ t('market.market_buy_fast_pay') }}
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-buy bg-buy-text-color flex items-center justify-center text-[0.3rem] font-[600] "
+              v-if="currItem.offset == 'buy'">
+              <span class="w-[0.32rem] leading-[0.4rem]">
+                {{ t('market.market_buy_fast_pay') }}
+              </span>
             </div>
             <div
-              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-sell bg-sell-text-color flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
-              v-else style="writing-mode: vertical-rl; text-orientation: upright;">
-              {{ t('market.market_buy_fast_sell') }}
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-sell bg-sell-text-color flex items-center justify-center text-[0.3rem] font-[600]"
+              v-else>
+              <span class="w-[0.32rem] leading-[0.4rem]">
+                {{ t('market.market_buy_fast_sell') }}
+              </span>
             </div>
 
             <div class="info_block flex-1" v-if="currItem.offset == 'buy'">
               <div class="info">
                 <div class="amount">{{ currItem.totalprice }}</div>
-                <div class="text-color2">
+                <div class="text-color3">
                   {{ t("market.market_buy_list_wait_total") }}({{
                     currItem.currency
                   }})
@@ -214,7 +218,7 @@
               </div>
               <div class="info">
                 <div class="amount">{{ currItem.price }}</div>
-                <div class="text-color2">
+                <div class="text-color3">
                   {{ t("market.market_buy_list_wait_price") }}({{
                     currItem.currency
                   }})
@@ -225,7 +229,7 @@
             <div class="info_block flex-1" v-else>
               <div class="info">
                 <div class="amount">{{ currItem.volume }}</div>
-                <div class="text-color2">
+                <div class="text-color3">
                   {{ t("market.market_buy_list_wait_amount") }}({{
                     currItem.crypto
                   }})
@@ -233,7 +237,7 @@
               </div>
               <div class="info">
                 <div class="amount">{{ currItem.price }}</div>
-                <div class="text-color2">
+                <div class="text-color3">
                   {{ t("market.market_buy_list_wait_price") }}({{
                     currItem.currency
                   }})
@@ -244,14 +248,15 @@
           </div>
           <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
             <div
-              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-white text-color--bg-light flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]"
-              style="writing-mode: vertical-rl; text-orientation: upright;">
-              {{ t('market.market_buy_fast_receive_sim') }}
+              class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-white text-color--bg-light flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
+              <span class="w-[0.32rem]">
+                {{ t('market.market_buy_fast_receive_sim') }}
+              </span>
             </div>
             <div class="info_block flex-1" v-if="currItem.offset == 'buy'">
               <div class="info">
                 <div class="amount">{{ currItem.volume }}</div>
-                <div class="text-color2">
+                <div class="text-color3">
                   {{ t("market.market_buy_list_wait_amount") }}({{
                     currItem.crypto
                   }})
@@ -261,7 +266,7 @@
             <div class="info_block flex-1" v-else>
               <div class="info">
                 <div class="amount">{{ currItem.totalprice }}</div>
-                <div class="text-color2">
+                <div class="text-color3">
                   {{ t("market.market_buy_list_wait_total") }}({{
                     currItem.currency
                   }})
@@ -280,10 +285,9 @@
             style="margin-right: 0.32rem" @click="cancelOrder">
             {{ t("market.market_buy_list_cancel_order") }}
           </div>
-          <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn"
-            :style="{ backgroundColor: 'var(--ex-bg-color4)' }">
+          <!-- <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn">
             {{ t("market.market_buy_list_wait_confirm") }}
-          </div>
+          </div> -->
           <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn active_btn"
             @click="confirmOrder">
             {{ t("market.market_buy_list_paid") }}
@@ -553,13 +557,12 @@ getSessionToken();
   }
 
   .detail_box {
-    background-color: var(--ex-bg-color2);
-    border: 1px solid var(--ex-border-color2);
+    background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
-
+    padding: 0 0.12rem 0.12rem 0.12rem;
     .status {
       min-height: 1rem;
-      padding: 0.24rem 0.32rem;
+      padding: 0.32rem;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -592,7 +595,7 @@ getSessionToken();
         width: 100%;
         height: 100%;
         color: var(--ex-text-color3);
-        font-size: 0.3rem;
+        font-size: 0.32rem;
         font-weight: 600;
         line-height: 0.5rem;
       }
@@ -604,7 +607,6 @@ getSessionToken();
 
     .detail_content {
       padding: 0.2rem 0 0.36rem 0;
-      border: 1px solid var(--ex-border-color2);
       border-radius: 0.32rem;
       position: relative;
       bottom: -1px;
@@ -613,7 +615,7 @@ getSessionToken();
       left:-1px;
 
       .bank {
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-color3);
         border-radius: 0.32rem;
         overflow: hidden;
         margin: 0.32rem 0.32rem 0 0.32rem;
@@ -676,8 +678,7 @@ getSessionToken();
       }
 
       .seller {
-        padding: 0 0.32rem 0.2rem 0.32rem;
-        border-bottom: 0.02rem dashed var(--ex-border-color);
+        padding: 0 0.32rem;
 
         .avatar {
           width: 0.48rem;
@@ -719,7 +720,7 @@ getSessionToken();
   }
 
   .order {
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
     margin-top: 0.2rem;
 
@@ -787,16 +788,15 @@ getSessionToken();
     justify-content: space-between;
 
     .btn {
-      flex: 1;
+      flex: 2;
       height: 100%;
       height: 0.96rem;
       border-radius: 1.26rem;
-      background-color: var(--ex-bg-color);
-      border: 1px solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color3);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--ex-text-color2);
+      color: var(--ex-text-color);
       text-align: center;
       font-size: 16px;
       font-weight: 400;
@@ -804,9 +804,11 @@ getSessionToken();
     }
 
     .active_btn {
+      flex: 3;
       background-color: var(--ex-primary-color);
       border-color: var(--ex-primary-color);
       color: var(--ex-text-color--bg-primary);
+      font-weight: 600;
     }
   }
 }

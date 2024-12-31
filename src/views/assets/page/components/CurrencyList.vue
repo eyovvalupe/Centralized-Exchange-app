@@ -1,9 +1,10 @@
 <template>
   <div v-if="list.length" v-for="(item, i) in list" class="currency_list">
     <div v-if="type == 'cash'"
-      class="w-[6.86rem] h-[2.36rem] rounded-[0.32rem] bg-color2 border-[0.02rem] border-color overflow-hidden relative mb-[0.2rem]"
+      class="w-full h-[2.48rem] rounded-[0.32rem] bg-color2 border-[0.02rem] border-color overflow-hidden relative mb-[0.2rem]"
       @click="click(item)">
-      <div class="w-[6.86rem] h-[1.4rem] rounded-t-[0.32rem] bg-color absolute bottom-[0] flex items-center">
+      <div class="w-[6.46rem] h-[1.4rem] rounded-[0.32rem] absolute bottom-[0.12rem] flex items-center left-[0.12rem]"
+        style="background-color: var(--ex-black);">
         <div class="w-full h-[0.8rem] relative flex">
           <div class="w-1/2 h-full flex flex-col items-center justify-between">
             <div class="text-[0.28rem] text-color2">{{ t('assets.wallet_available_sim') }}</div>
@@ -19,26 +20,36 @@
           </div>
         </div>
       </div>
-      <div class="px-[0.32rem] mt-[0.28rem] h-[0.52rem] flex items-center">
-        <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[13px] flex justify-center items-center mr-[0.2rem]">
-          <div class="size-[0.4rem]">
+      <div class="px-[0.28rem] mt-[0.28rem] h-[0.52rem] flex items-center">
+        <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[0.26rem] mr-[0.2rem] flex items-center justify-center"
+          style="background-color: var(--ex-white);">
+          <div class=" w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" class=" rounded-full" alt="">
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>
+        <div class="absolute right-[0.34rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" class=" rounded-full" alt="">
+        </div>
       </div>
     </div>
     <div v-else class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-color2 mb-[0.12rem] justify-between"
       @click="click(item)">
       <div class="ml-[0.32rem] flex items-center">
-        <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[13px] flex justify-center items-center mr-[0.2rem]">
+        <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[0.26rem] flex justify-center items-center mr-[0.2rem]"
+          style="background-color: var(--ex-white);">
           <div class="size-[0.4rem]">
             <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="">
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>
       </div>
-      <div class="mr-[0.32rem] text-[0.32rem] font-semibold">{{ item.amount }}</div>
+      <div class="flex mr-[0.4rem]">
+        <div class="mr-[0.24rem] text-[0.32rem] font-semibold">{{ item.amount }}</div>
+        <div class="w-[0.28rem] h-[0.28rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" class=" rounded-full" alt="">
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -66,7 +77,12 @@ const click = (val) => {
 };
 </script>
 <style lang="less" scoped>
-.crypto_icon {
-  background-color: var(--ex-bg-color);
+.currency_list {
+  width: 6.7rem;
+  margin: 0 auto;
+
+  .crypto_icon {
+    background-color: var(--ex-bg-color);
+  }
 }
 </style>

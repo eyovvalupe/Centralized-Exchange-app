@@ -379,7 +379,7 @@ export default {
     withdrawalAmount: "提現金額",
     serviceFee: "手續費",
     receiptAccount: "收款賬戶",
-    change: "更改",
+    change: "更換賬號",
     accountSelection: "加密代幣賬號選擇",
     bankSelection: "銀行卡賬號選擇",
   },
@@ -778,7 +778,7 @@ export default {
 
     market_buy_title1: "快速區",
     market_buy_title2: "自選區",
-    market_buy_title3: "我的訂單",
+    market_buy_title3: "訂單",
     market_buy_fast_buy: "買入",
     market_buy_fast_sell: "賣出",
     market_buy_fast_buy_btn: "買入",

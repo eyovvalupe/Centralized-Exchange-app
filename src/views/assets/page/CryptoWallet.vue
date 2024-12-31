@@ -90,7 +90,16 @@ defineExpose({
 
 <style lang="less" scoped>
 .page_assets_future {
-  padding: 0.32rem 0;
+  padding: 0.9rem 0 0.32rem 0;
+
+  :deep(.van-switch__node) {
+    background-color: var(--ex-black);
+    width: 0.1rem;
+    height: 0.1rem;
+    top: 0.075rem;
+    left: 0.1rem;
+  }
+
   position: relative;
   .top {
     font-size: 0.28rem;

@@ -1,5 +1,6 @@
 <template>
-    <Popup class="ex-bottom-popup" round v-model:show="popupShow" position="bottom" :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom" :closeable="props.closeable" teleport="body" @closed="onClose">
+    <Popup class="ex-bottom-popup" round v-model:show="popupShow" position="bottom" 
+    :close-on-popstate="closeOnPopstate" :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom" :closeable="props.closeable" teleport="body" @closed="onClose">
         <div class="ex-bottom-popup-top">
             <img :src="getStaticImgUrl('/static/img/common/popup_top.svg')" />
         </div>
@@ -21,16 +22,17 @@ const props = defineProps({
         type:Boolean,
         default:false
     },
+    closeOnPopstate:Boolean, //是否在页面回退时自动关闭
     title:String,
     show:{
         type:Boolean,
         default:false
     },
-    safeAreaInsetTop:{
+    safeAreaInsetTop:{ //是否开启顶部安全区适配
         type:Boolean,
         default:false
     },
-    safeAreaInsetBottom:{
+    safeAreaInsetBottom:{ //是否开启底部安全区适配
         type:Boolean,
         default:false
     }

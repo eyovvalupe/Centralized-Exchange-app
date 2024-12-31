@@ -142,6 +142,10 @@ onMounted(() => {
       .page_bank .icon_ok {
         background-image: url(${getStaticImgUrl('/static/img/app/success.svg')});
       }
+
+      .page_withdraw .card_box {
+        background-image: url(${getStaticImgUrl('/static/img/assets/withdraw_wallet_bg.svg')});
+        background-size: cover
     `;
   document.head.appendChild(style);
 })

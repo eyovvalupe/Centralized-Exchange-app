@@ -44,7 +44,7 @@
           " @blur="
             inputFocus = false;
           inputBlur();
-          " :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
+          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
             :placeholder="inputFocus ? '' : placeholder" />
 
           <!-- 密码图标 -->

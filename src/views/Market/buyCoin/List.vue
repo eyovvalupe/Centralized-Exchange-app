@@ -7,7 +7,7 @@
     <div class="list">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
-        class="relative mb-[0.2rem] w-full rounded-4 bg-color3 px-[0.12rem] pb-[0.12rem]"
+        class="relative mb-[0.2rem] w-full  rounded-4 bg-color3 px-[0.12rem] pb-[0.12rem]"
         @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="unreadMessage[item.order_no] > 0"
@@ -20,7 +20,12 @@
         </div>
         <div class="h-[0.76rem] flex items-center justify-between px-[0.28rem]">
           <!-- order_no 订单号 -->
-          <div class="text-14 text-color2">{{ item.order_no }}</div>
+          <div class="flex items-center" @click.stop="copy(item.order_no)">
+            <div class="text-14 text-color3">{{ item.order_no }}</div>
+            <div class="size-[0.24rem] ml-[0.1rem]">
+              <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
+            </div>
+          </div>
           <div class="text-14 font-500" :style="{ color: statusEnum[item.status].color }">
             <!-- {{ statusEnum[item.status].name }} -->
             {{
@@ -58,16 +63,21 @@
                     :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.svg`)" alt="currency" />
                 </div>
                 <!-- 价格信息 -->
-                <div class="mb-[0.12rem] text-color2">
-                  {{ $t("market.market_buy_list_price") }}&nbsp;{{
-                    item.price
-                  }}&nbsp;{{ item.currency }}
+                <div class="mb-[0.12rem] text-color3">
+                  {{ $t("market.market_buy_list_price") }}&nbsp;
+                  <span class="text-color">
+                    <strong>{{
+                      item.price
+                    }}</strong>
+                   &nbsp;{{ item.currency }}
+                </span>
                 </div>
                 <!-- 数量信息 -->
-                <div class="text-color2">
-                  {{ $t("market.market_buy_list_amount") }}&nbsp;{{
-                    item.volume
-                  }}&nbsp;{{ item.crypto }}
+                <div class="text-color3">
+                  {{ $t("market.market_buy_list_amount") }}&nbsp;
+                  <span class="text-color">
+                    <strong>{{ item.volume }}</strong>&nbsp;{{ item.crypto }}
+                  </span>
                 </div>
               </div>
 
@@ -108,9 +118,11 @@ import UnLogin from "@/components/UnLogin.vue";
 import { _c2cOrderInfo, _c2cOrderList } from "@/api/api";
 import LoadingMore from "@/components/LoadingMore.vue";
 import router from "@/router";
+import { showToast } from "vant";
 import { useBuyCoinState } from "./state";
 import { computed, provide } from "vue";
 import { useI18n } from "vue-i18n";
+import { _copyTxt } from "@/utils";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -158,20 +170,14 @@ const openOrderInfo = ({ order_no, ...row }) => {
 // 列表
 const loading = ref(false);
 const finish = ref(false);
-/** 
-interface Order {
-  order_no: string; // 订单号
-  offset: 'buy' | 'sell'; // 方向
-  crypto: string; // 加密货币
-  currency: string; // 计价货币
-  price: number; // 价格
-  volume: number; // 数量
-  totalprice: number; // 总价
-  status: 'waitpayment' | 'waitconfirm' | 'done' | 'cancel'; // 状态
-  endtime?: string; // 结束时间
-  date: string; // 订单时间，格式：MM-dd hh:mm
-}
-*/
+
+//  复制
+const copy = (text) => {
+  _copyTxt(text);
+  showToast(t('trade.order_info_copy'));
+};
+
+
 const list = ref([]);
 const page = ref(0);
 const getData = (isBottom) => {

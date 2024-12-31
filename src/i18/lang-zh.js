@@ -372,7 +372,7 @@ export default {
     withdrawalAmount: "提现金额",
     serviceFee: "手续费",
     receiptAccount: "收款账户",
-    change: "更改",
+    change: "更换账号",
     accountSelection: "加密货币账户选择",
     bankSelection: "银行卡账户选择",
   },
@@ -442,7 +442,7 @@ export default {
     info_recharge_address: "充值地址",
     info_recharge_order: "订单编号",
     info_recharge_date: "充值时间",
-    copy: "已复制",
+    copied: "已复制",
 
   },
   transfer: {
@@ -798,7 +798,7 @@ export default {
 
     market_buy_title1: "快捷区",
     market_buy_title2: "自选区",
-    market_buy_title3: "我的订单",
+    market_buy_title3: "订单",
     market_buy_fast_buy: "买入",
     market_buy_fast_sell: "卖出",
     market_buy_fast_buy_btn: "买入",

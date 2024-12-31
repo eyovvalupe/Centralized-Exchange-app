@@ -1,11 +1,11 @@
 <template>
   <div class="assets_bg_box">
-    <div class="absolute top-[0] left-[0rem] z-[-1] assets_bg">
-      <img :src="getStaticImgUrl(`/static/img/assets/wallet_bg16.svg`)" alt="">
+    <div class="w-full h-full absolute top-[0] left-[0rem] z-[-1] assets_bg">
+      <img :src="getStaticImgUrl(`/static/img/assets/overview_bg.svg`)" alt="">
     </div>
-    <div class="absolute top-[-0.3rem] right-[0.3rem]">
+    <!-- <div class="absolute top-[-0.3rem] right-[0.3rem]">
       <img :src="getStaticImgUrl(`/static/img/assets/wallet.svg`)" alt="">
-    </div>
+    </div> -->
     <slot />
   </div>
 </template>
@@ -14,9 +14,10 @@ import { getStaticImgUrl } from "@/utils/index.js"
 </script>
 <style scoped>
 .assets_bg_box {
-  width: 7.5rem;
-  height: 4.01rem;
+  width: 100%;
+  height: 5.8rem;
   position: relative;
+  margin-bottom: 0.4rem;
 }
 .assets_bg{
   width: 100%;

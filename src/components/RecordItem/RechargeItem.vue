@@ -86,7 +86,8 @@ const formatDate = (date) => {
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0.32rem;
-  border: 0.02rem solid var(--ex-border-color2);
+  // border: 0.02rem solid var(--ex-border-color2);
+  background-color: var(--ex-bg-color2);
   border-radius: 0.32rem;
   margin-top: 0.2rem;
 
@@ -139,6 +140,9 @@ const formatDate = (date) => {
       font-size: 0.28rem;
       color: var(--ex-primary-color);
       margin-top: 0.14rem;
+      padding: 0.05rem 0.15rem;
+      background-color: var(--ex-bg-color5);
+      border-radius: 1rem;
     }
 
     .status_success {

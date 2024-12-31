@@ -7,9 +7,9 @@
           <div class="top-record-icon">
             <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
-          <span>
+          <!-- <span>
             {{ $t("withdraw.withdrawRecord") }}
-          </span>
+          </span> -->
         </div>
       </template>
     </Top>
@@ -17,27 +17,35 @@
     <Tabs type="custom-card" v-model:active="tabActive" :swipeable="false" shrink>
       <Tab :title="$t('withdraw.cryptocurrency')" name="cryptocurrency">
         <!-- 表单 -->
-        <div class="form" v-if="currAccount">
-          <FormItem custom :placeholder="$t('withdraw.currency')">
+        <div class="form mt-[0.4rem]" v-if="currAccount">
+          <FormItem custom :placeholder="$t('withdraw.currency')" class="mb-[0.4rem]">
             <div class="select_item" @click="showDialog = true">
-              <div class="currency" v-if="form.from">
-                <div class="currency_icon">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="currency" />
+              <div class="flex flex-col" v-if="form.from">
+                <div class="text-color5 text-[0.24rem] mb-[0.1rem]">{{ t('withdraw.currency') }}</div>
+                <div class="flex items-center">
+                  <div class="currency_icon mr-[0.2rem]">
+                    <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="currency" />
+                  </div>
+                  <span>{{ form.from.toUpperCase() }}</span>
                 </div>
-                <span>{{ form.from.toUpperCase() }}</span>
               </div>
-              <div class="more">
-                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" />
+              <div class="w-[0.2rem] h-[0.2rem]">
+                <img :src="getStaticImgUrl('/static/img/assets/right_arrow.svg')" alt="more" />
               </div>
             </div>
           </FormItem>
-          <FormItem custom :placeholder="$t('withdraw.network')">
+          <FormItem custom :placeholder="$t('withdraw.network')" class="mb-[0.4rem]">
             <div class="select_item" @click="showNetworkDialog = true">
-              <div class="currency">
-                <span>{{ form.network }}</span>
+              <div>
+                <div class="text-color5 text-[0.24rem] mb-[0.1rem]">
+                  {{ t('withdraw.network') }}
+                </div>
+                <div class="currency">
+                  <span>{{ form.network }}</span>
+                </div>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" />
+                <img :src="getStaticImgUrl('/static/img/assets/right_arrow.svg')" alt="more" />
               </div>
             </div>
           </FormItem>
@@ -46,40 +54,49 @@
             <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ balance }}</template>
           </FormItem>
 
-          <div class="tip">
-            <span>{{ $t("withdraw.serviceFee") + ":" }}</span>
-            <span class="num">{{ form.amount == "" ? "--" : fee }}</span>
+          <div class="tip mb-[0.4rem]">
+            <span class="text-color5">{{ $t("withdraw.serviceFee") + ":" }}</span>
+            <span class="num text-color5">{{ form.amount == "" ? "--" : fee }}</span>
           </div>
 
           <!-- 提款方式 -->
-          <div class="subtitle">{{ $t("withdraw.receiptAccount") }}</div>
-          <div class="account_box">
-            <div class="card_box" v-if="showAccount.length && tabActive == 'cryptocurrency'"
-              @click="showAccountDialog = true">
-              <div class="card_icon">
-                <img v-if="currAccount.symbol"
-                  :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)" alt="currency" />
-              </div>
-              <div class="card">
-                <div class="code">
+          <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem]" style="background-color: var(--ex-bg-color2);">
+            <div class="flex justify-between">
+              <div class="text-color5 mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.12rem]">{{
+                $t("withdraw.receiptAccount")
+              }}</div>
+              <div class="more_card mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.18rem]"
+                @click="showAccountDialog = true">{{ $t("withdraw.change") }}</div>
+            </div>
+            <div class="account_box">
+              <div class="card_box h-full flex flex-col justify-between"
+                v-if="showAccount.length && tabActive == 'cryptocurrency'">
+                <div class="flex">
+                  <div class="card_icon">
+                    <img v-if="currAccount.symbol"
+                      :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)"
+                      alt="currency" />
+                  </div>
+                  <div class="h-full flex items-center">
+                    {{
+                      currAccount.symbol ? currAccount.symbol.toUpperCase() : ""
+                    }}
+                  </div>
+                </div>
+                <div class="text-[0.4rem]">
                   {{
                     _hiddenAccount(
                       currAccount.address ? currAccount.address : ""
                     )
                   }}
                 </div>
-                <div class="name">
-                  {{
-                    currAccount.symbol ? currAccount.symbol.toUpperCase() : ""
-                  }}
-                </div>
               </div>
-              <div class="more_card">{{ $t("withdraw.change") }}</div>
-            </div>
-            <div v-else class="add_account" @click="showAccountDialog = true">
-              <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
-              <div class="add_account_text">
-                {{ $t("withdraw.addPaymentMethod") }}
+              <div v-else class="add_account" style="background-color: var(--ex-bg-color);"
+                @click="showAccountDialog = true">
+                <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
+                <div class="add_account_text">
+                  {{ $t("withdraw.addPaymentMethod") }}
+                </div>
               </div>
             </div>
           </div>
@@ -87,7 +104,7 @@
 
         <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
           type="primary">{{
-            $t("withdraw.confirm") }}</Button>
+            $t("withdraw.withdraw") }}</Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
         <div class="form">
@@ -133,7 +150,7 @@
         </div>
         <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
           type="primary">{{
-            $t("withdraw.confirm") }}</Button>
+            $t("withdraw.withdraw") }}</Button>
       </Tab>
     </Tabs>
 
@@ -595,8 +612,12 @@ watch(
 
 <style lang="less" scoped>
 .page_withdraw {
-  padding: 1.32rem 0.32rem 1.44rem 0.32rem;
+  padding: 1.32rem 0.4rem 1.44rem 0.4rem;
   position: relative;
+
+  :deep(span.van-button__text) {
+    color: var(--ex-black);
+  }
 
   :deep(.top) {
     z-index: 10;
@@ -607,16 +628,17 @@ watch(
   }
 
   .top-record {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 0.3rem;
+    background-color: var(--ex-bg-color2);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ex-text-primary);
-    font-size: 0.28rem;
 
     .top-record-icon {
       width: 0.3rem;
       height: 0.3rem;
-      margin-right: 0.06rem;
     }
   }
 
@@ -629,6 +651,7 @@ watch(
 
   .form {
     .tip {
+
       color: var(--ex-text-color2);
       font-size: 0.28rem;
       line-height: 0.36rem;
@@ -653,6 +676,7 @@ watch(
 
     .select_item {
       flex: 1;
+      height: 1.28rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -675,9 +699,19 @@ watch(
         }
       }
 
+      .currency_icon {
+        width: 0.48rem;
+        height: 0.48rem;
+        margin-right: 0.16rem;
+
+        img {
+          border-radius: 50%;
+        }
+      }
+
       .more {
-        width: 0.32rem;
-        height: 0.32rem;
+        width: 0.2rem;
+        height: 0.2rem;
       }
     }
   }
@@ -702,18 +736,19 @@ watch(
 }
 
 .card_box {
-  border-radius: 0.32rem;
-  display: flex;
-  align-items: center;
+  width: 6.14rem;
+  margin: 0 auto;
+  margin-bottom: 0.14rem;
+  height: 2.16rem;
+  border-radius: 0.4rem;
   justify-content: space-between;
   position: relative;
-  border: 1px solid var(--ex-border-color2);
-  background-color: var(--ex-bg-color);
-  padding: 0.2rem 0.32rem 0.28rem 0.32rem;
+  padding: 0.28rem;
+  background-color: var(--ex-bg-color5);
 
   .card_icon {
-    width: 0.96rem;
-    height: 0.96rem;
+    width: 0.68rem;
+    height: 0.68rem;
     margin-right: 0.18rem;
 
     img {
@@ -737,11 +772,12 @@ watch(
     }
   }
 
-  .more_card {
-    color: var(--ex-primary-color);
-    font-size: 0.24rem;
-    font-weight: 400;
-  }
+}
+
+.more_card {
+  color: var(--ex-primary-color);
+  font-size: 0.24rem;
+  font-weight: 400;
 }
 
 .card_box_active {

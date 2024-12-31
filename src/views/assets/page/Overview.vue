@@ -3,10 +3,10 @@
   <div class="page_assets_overview">
     <!-- 总览 -->
     <OverviewCard>
-      <div class="p-[0.7rem]">
-        <div class="top">
+      <div class="flex flex-col items-center">
+        <div class="top mt-[0.8rem]">
           <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
-          <div class="eyes" @click="hidden = !hidden">
+          <div class="eyes" @click="click">
             <img :src="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
             <img :src="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
           </div>
@@ -18,7 +18,7 @@
               : parseFloat(assets.total).toLocaleString() || "0"
           }}</span>
         </div>
-        <div class="navs">
+        <div class="navs mb-[0.64rem]">
           <div class="nav bg-color bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
@@ -36,23 +36,24 @@
             </div>
           </div>
         </div>
+
+        <!-- 按钮 -->
+        <Btns :money="assets.money" />
       </div>
     </OverviewCard>
 
-    <!-- 按钮 -->
-    <Btns :money="assets.money" />
 
     <!-- 列表 -->
     <div class="tabs">
-      <div ref="tab1" :key="1" class="tab" @click="jumpToWallet(0)">
+      <div ref="tab1" :key="1" class="tab" @click="jumpToWallet('0')">
         <div class="tab_icon">
-          <div style="width: 0.34rem;height: 0.34rem;">
+          <div style="width: 0.32rem;height: 0.32rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/cash.svg`)" alt="">
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_cash") }}</div>
         <div class="amount">
-          {{ parseFloat(assets.money).toLocaleString() || "0" }}
+          {{ hidden ? '******' : (parseFloat(assets.money).toLocaleString() || "0") }}
         </div>
         <div class="more">
           <div style="width: 0.2rem;height: 0.32rem;">
@@ -60,7 +61,7 @@
           </div>
         </div>
       </div>
-      <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet(1)">
+      <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet('1')">
         <div class="tab_icon">
           <div style="width: 0.36rem;height: 0.36rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/stock.svg`)" alt="">
@@ -69,7 +70,7 @@
         <div class="name">{{ $t("assets.over_view_stock") }}</div>
         <div class="amount">
           {{
-            parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
+            hidden ? '******' : parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -78,16 +79,16 @@
           </div>
         </div>
       </div>
-      <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet(2)">
+      <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet('2')">
         <div class="tab_icon">
-          <div style="width: 0.32rem;height: 0.32rem;">
+          <div style="width: 0.28rem;height: 0.28rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/future.svg`)" alt="">
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_contract") }}</div>
         <div class="amount">
           {{
-            parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
+            hidden ? '******' : parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -99,7 +100,7 @@
     </div>
 
     <!-- 类型选择弹窗 -->
-    <ActionSheet v-model:show="showAS" teleport="body" :actions="actions" :title="$t('记录列表')" @select="onSelect" />
+    <!-- <ActionSheet v-model:show="showAS" teleport="body" :actions="actions" :title="$t('记录列表')" @select="onSelect" /> -->
   </div>
 </template>
 
@@ -144,7 +145,11 @@ const jumpToWallet = (val) => {
 }
 
 const token = computed(() => store.state.token || "");
-const hidden = ref(false); // 隐藏数字
+const hidden = ref(true); // 隐藏数字
+
+const click = () => {
+  hidden.value = !hidden.value
+}
 
 // 功能区域控制
 const tab1 = ref();
@@ -170,7 +175,6 @@ useClickAway(tab5, () => {
 
 // 刷新总资产
 const assets = computed(() => store.state.assets || {});
-console.log('assets =======> ', assets.value)
 
 const getAssets = () => {
   if (!token.value) return;
@@ -241,6 +245,8 @@ const jump = (name, check = false, query) => {
 
   .navs {
     display: flex;
+    width: 100%;
+    padding: 0 0.32rem;
     justify-content: space-between;
 
     .nav {
@@ -248,9 +254,11 @@ const jump = (name, check = false, query) => {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      width: 2.8rem;
+      width: 3.27rem;
       height: 1.12rem;
       border-radius: 0.32rem;
+      background-color: var(--ex-bg-color2);
+      // padding-top: 0.1rem;
     }
 
     .nav_label {
@@ -278,7 +286,7 @@ const jump = (name, check = false, query) => {
       padding: 0 0.32rem;
       overflow: hidden;
       height: 1.04rem;
-      margin-top: 0.12rem;
+      margin-bottom: 0.24rem;
       border-radius: 0.32rem;
       background: var(--ex-bg-color2);
       position: relative;
@@ -298,7 +306,7 @@ const jump = (name, check = false, query) => {
         width: 0.52rem;
         height: 0.52rem;
         margin-right: 0.16rem;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-white);
         border-radius: 50%;
         box-sizing: border-box;
         padding: 0.1rem;

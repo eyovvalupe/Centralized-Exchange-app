@@ -589,12 +589,16 @@ defineExpose({
 
   .list {
     .item {
-      padding: 0.4rem 0;
+      margin-top: 0.24rem;
+      padding: 0.12rem;
       color: var(--ex-text-color2);
+      background-color: var(--ex-bg-color3);
+      border-radius: 0.4rem;
       border-bottom: 1px solid var(--ex-border-color);
       .top {
         display: flex;
         align-items: flex-start;
+        padding:0.12rem 0.16rem;
 
         .avatar {
           width: 0.64rem;
@@ -651,7 +655,10 @@ defineExpose({
       }
 
       .bottom {
-        margin-top: 0.4rem;
+        background-color: var(--ex-bg-color);
+        padding: 0.24rem 0.3rem;
+        margin-top: 0.24rem;
+        border-radius: 0.4rem;
         display: flex;
         align-items: center;
         justify-content: space-between;
