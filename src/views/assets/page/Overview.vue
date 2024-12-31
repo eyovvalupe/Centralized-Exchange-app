@@ -6,7 +6,7 @@
       <div class="flex flex-col items-center">
         <div class="top mt-[0.8rem]">
           <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
-          <div class="eyes" @click="hidden = !hidden">
+          <div class="eyes" @click="click">
             <img :src="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
             <img :src="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
           </div>
@@ -53,7 +53,7 @@
         </div>
         <div class="name">{{ $t("assets.over_view_cash") }}</div>
         <div class="amount">
-          {{ parseFloat(assets.money).toLocaleString() || "0" }}
+          {{ hidden ? '******' : (parseFloat(assets.money).toLocaleString() || "0") }}
         </div>
         <div class="more">
           <div style="width: 0.2rem;height: 0.32rem;">
@@ -70,7 +70,7 @@
         <div class="name">{{ $t("assets.over_view_stock") }}</div>
         <div class="amount">
           {{
-            parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
+            hidden ? '******' : parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -88,7 +88,7 @@
         <div class="name">{{ $t("assets.over_view_contract") }}</div>
         <div class="amount">
           {{
-            parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
+            hidden ? '******' : parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -146,6 +146,10 @@ const jumpToWallet = (val) => {
 
 const token = computed(() => store.state.token || "");
 const hidden = ref(true); // 隐藏数字
+
+const click = () => {
+  hidden.value = !hidden.value
+}
 
 // 功能区域控制
 const tab1 = ref();

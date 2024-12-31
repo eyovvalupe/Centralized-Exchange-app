@@ -28,7 +28,7 @@
         </div>
       </SwipeItem>
     </Swipe>
-    <Popup v-model:show="handle" position="bottom" :style="{
+    <!-- <Popup v-model:show="handle" position="bottom" :style="{
       height: '5.46rem',
       borderTopRightRadius: '0.36rem',
       borderTopLeftRadius: '0.36rem',
@@ -115,7 +115,7 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </Popup> -->
     <!-- 充提记录 -->
     <!-- <HintBlock v-if="route.name == 'assets' && hintNum" /> -->
   </div>
