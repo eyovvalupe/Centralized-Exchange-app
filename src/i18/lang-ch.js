@@ -379,7 +379,7 @@ export default {
     withdrawalAmount: "提現金額",
     serviceFee: "手續費",
     receiptAccount: "收款賬戶",
-    change: "更改",
+    change: "更換賬號",
     accountSelection: "加密代幣賬號選擇",
     bankSelection: "銀行卡賬號選擇",
   },

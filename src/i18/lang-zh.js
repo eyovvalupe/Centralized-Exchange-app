@@ -372,7 +372,7 @@ export default {
     withdrawalAmount: "提现金额",
     serviceFee: "手续费",
     receiptAccount: "收款账户",
-    change: "更改",
+    change: "更换账号",
     accountSelection: "加密货币账户选择",
     bankSelection: "银行卡账户选择",
   },

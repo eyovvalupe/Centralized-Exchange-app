@@ -61,32 +61,38 @@
 
           <!-- 提款方式 -->
           <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem]" style="background-color: var(--ex-bg-color2);">
-            <div class="text-color5 mb-[0.28rem] text-[0.32rem] px-[0.16rem] py-[0.12rem]">{{ $t("withdraw.receiptAccount") }}</div>
+            <div class="flex justify-between">
+              <div class="text-color5 mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.12rem]">{{
+                $t("withdraw.receiptAccount")
+              }}</div>
+              <div class="more_card mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.18rem]"
+                @click="showAccountDialog = true">{{ $t("withdraw.change") }}</div>
+            </div>
             <div class="account_box">
-              <div class="card_box" v-if="showAccount.length && tabActive == 'cryptocurrency'"
-                @click="showAccountDialog = true">
-                <div class="card_icon">
-                  <img v-if="currAccount.symbol"
-                    :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)"
-                    alt="currency" />
-                </div>
-                <div class="card">
-                  <div class="code">
-                    {{
-                      _hiddenAccount(
-                        currAccount.address ? currAccount.address : ""
-                      )
-                    }}
+              <div class="card_box h-full flex flex-col justify-between"
+                v-if="showAccount.length && tabActive == 'cryptocurrency'">
+                <div class="flex">
+                  <div class="card_icon">
+                    <img v-if="currAccount.symbol"
+                      :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)"
+                      alt="currency" />
                   </div>
-                  <div class="name">
+                  <div class="h-full flex items-center">
                     {{
                       currAccount.symbol ? currAccount.symbol.toUpperCase() : ""
                     }}
                   </div>
                 </div>
-                <div class="more_card">{{ $t("withdraw.change") }}</div>
+                <div class="text-[0.4rem]">
+                  {{
+                    _hiddenAccount(
+                      currAccount.address ? currAccount.address : ""
+                    )
+                  }}
+                </div>
               </div>
-              <div v-else class="add_account" style="background-color: var(--ex-bg-color);" @click="showAccountDialog = true">
+              <div v-else class="add_account" style="background-color: var(--ex-bg-color);"
+                @click="showAccountDialog = true">
                 <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
                 <div class="add_account_text">
                   {{ $t("withdraw.addPaymentMethod") }}
@@ -606,7 +612,7 @@ watch(
 
 <style lang="less" scoped>
 .page_withdraw {
-  padding: 1.32rem 0.32rem 1.44rem 0.32rem;
+  padding: 1.32rem 0.4rem 1.44rem 0.4rem;
   position: relative;
 
   :deep(span.van-button__text) {
@@ -730,18 +736,19 @@ watch(
 }
 
 .card_box {
-  border-radius: 0.32rem;
-  display: flex;
-  align-items: center;
+  width: 6.14rem;
+  margin: 0 auto;
+  margin-bottom: 0.14rem;
+  height: 2.16rem;
+  border-radius: 0.4rem;
   justify-content: space-between;
   position: relative;
-  border: 1px solid var(--ex-border-color2);
-  background-color: var(--ex-bg-color);
-  padding: 0.2rem 0.32rem 0.28rem 0.32rem;
+  padding: 0.28rem;
+  background-color: var(--ex-bg-color5);
 
   .card_icon {
-    width: 0.96rem;
-    height: 0.96rem;
+    width: 0.68rem;
+    height: 0.68rem;
     margin-right: 0.18rem;
 
     img {
@@ -765,11 +772,12 @@ watch(
     }
   }
 
-  .more_card {
-    color: var(--ex-primary-color);
-    font-size: 0.24rem;
-    font-weight: 400;
-  }
+}
+
+.more_card {
+  color: var(--ex-primary-color);
+  font-size: 0.24rem;
+  font-weight: 400;
 }
 
 .card_box_active {
