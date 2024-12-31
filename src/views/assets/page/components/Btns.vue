@@ -2,25 +2,33 @@
   <div class="btns">
     <div class="btn-item" @click="jump('topUpCrypto', true)">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/img/assets/deposit.svg`)" alt="">
+        <div class="w-0.48rem h-[0.48rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/deposit.svg`)" alt="">
+        </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.recharge") }}</div>
     </div>
     <div class="btn-item" @click="jump('withdraw', true)">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/img/assets/withdraw.svg`)" alt="">
+        <div class="w-[0.48rem] h-[0.48rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/withdraw.svg`)" alt="">
+        </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.withdraw") }}</div>
     </div>
     <div class="btn-item" @click="jump('transfer')">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/img/assets/transfer.svg`)" alt="">
+        <div class="w-[0.48rem] h-[0.48rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/transfer.svg`)" alt="">
+        </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.transfer") }}</div>
     </div>
     <div class="btn-item" @click="jump('recordList', true)">
       <div class="btn-item__icon">
-        <img :src="getStaticImgUrl(`/static/img/assets/record.svg`)" alt="">
+        <div class="w-[0.48rem] h-[0.48rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/record.svg`)" alt="">
+        </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.financialRecords") }}</div>
     </div>
@@ -77,8 +85,8 @@ const onSelect = (item) => {
   flex-direction: column;
 
   &__icon {
-    border-radius: 0.32rem;
-    background: rgba(1, 76, 250, 0.1);
+    border-radius: 0.4rem;
+    background: var(--ex-white);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,7 +106,7 @@ const onSelect = (item) => {
     font-size: 0.3rem;
     font-weight: 400;
     line-height: 0.44rem;
-    margin-top: 0.08rem;
+    margin-top: 0.1rem;
   }
 }
 </style>
