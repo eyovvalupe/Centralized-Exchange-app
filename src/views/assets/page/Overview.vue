@@ -47,7 +47,7 @@
     <div class="tabs">
       <div ref="tab1" :key="1" class="tab" @click="jumpToWallet(0)">
         <div class="tab_icon">
-          <div style="width: 0.34rem;height: 0.34rem;">
+          <div style="width: 0.32rem;height: 0.32rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/cash.svg`)" alt="">
           </div>
         </div>
@@ -81,7 +81,7 @@
       </div>
       <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet(2)">
         <div class="tab_icon">
-          <div style="width: 0.32rem;height: 0.32rem;">
+          <div style="width: 0.28rem;height: 0.28rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/future.svg`)" alt="">
           </div>
         </div>
@@ -307,7 +307,7 @@ const jump = (name, check = false, query) => {
         width: 0.52rem;
         height: 0.52rem;
         margin-right: 0.16rem;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-white);
         border-radius: 50%;
         box-sizing: border-box;
         padding: 0.1rem;
