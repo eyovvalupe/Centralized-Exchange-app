@@ -124,7 +124,7 @@ onMounted(() => {
   const style = document.createElement('style');
   style.innerHTML = `
       .van-tabs--line-card>.van-tabs__wrap  .van-tab--active::after {
-        background-image: url(${getStaticImgUrl('/static/assets/ai-sub.svg')});
+        background-image: url(${getStaticImgUrl('/static/img/app/ai-sub.svg')});
       }
 
       .slider_box .van-slider .van-slider__button {
