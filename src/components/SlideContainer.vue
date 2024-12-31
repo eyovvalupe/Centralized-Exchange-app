@@ -1,6 +1,6 @@
 <template>
     <!-- 拖动 -->
-    <div>
+    <div style="width: 100%;">
         <div class="slider-container">
             <Slider class="slider-dom" v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-white)"
                 inactive-color="var(--ex-bg-color3)" @change="onSliderChange">
@@ -58,7 +58,7 @@ const onSliderChange = (newValue) => {
     align-items: center;
 
     .slider-dom {
-        width: calc(100% - 1.4rem);
+        width: calc(100% - 1rem);
     }
 
     :deep(.slider-custom-num) {

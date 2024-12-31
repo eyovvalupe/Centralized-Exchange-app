@@ -155,23 +155,37 @@
     <!-- 数量 -->
     <div class="item_box">
       <div class="item_box_right">
-        <FormItem :placeholder="t('trade.stock_opening_amount_title')" :max="maxStockNum" v-model="form1.volume"
-          :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll" @change="changePercent"
-          tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
-          <template #title-right v-if="token">
+        <FormItem :hasRT="true" :hasScroll="true" :placeholder="t('trade.stock_opening_amount_title')"
+          :max="maxStockNum" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
+          @btnClick="putAll" @change="changePercent" tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''"
+          input-type="number">
+          <!-- <template #title-right v-if="token">
             <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
                 style="color: var(--ex-text-color2)">{{
                   t("assets.wallet_available_sim")
                 }}</span>
               {{ stockWalletAmount }} {{ paramCurrency }}</span>
+          </template> -->
+
+          <template #rt v-if="token">
+            <div @click="openConfirmBox">
+              <div
+                style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
+                <span>{{ t("assets.wallet_available_sim") }}</span>
+                <span style="color: var(--ex-primary-color);margin:0 0.08rem">{{ stockWalletAmount }} </span>
+                <span>{{ paramCurrency }}</span>
+              </div>
+            </div>
+          </template>
+          <template #scroll>
+            <!-- 拖动 -->
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </template>
         </FormItem>
       </div>
     </div>
 
-    <div style="height: 0.07rem"></div>
-    <!-- 拖动 -->
-    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
