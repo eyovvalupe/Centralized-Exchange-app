@@ -30,7 +30,7 @@
     </Swipe>
 
     <Popup v-model:show="handle" position="bottom" :style="{
-      height: '5.46rem',
+      height: '5.96rem',
       borderTopRightRadius: '0.36rem',
       borderTopLeftRadius: '0.36rem',
     }">
@@ -45,7 +45,7 @@
         </div>
         <div class="w-full flex items-center flex-col mb-[0.4rem]">
           <div class="mb-[0.16rem]">
-            <div style="width: 0.64rem;height: 0.63rem">
+            <div style="width: 1rem; height: 1rem">
               <img :src="getStaticImgUrl(`/static/img/crypto/${selectedItem.name}.svg`)" alt="">
             </div>
           </div>
