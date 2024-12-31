@@ -3,8 +3,8 @@
   <div class="page_assets_overview">
     <!-- 总览 -->
     <OverviewCard>
-      <div class="p-[0.7rem]">
-        <div class="top">
+      <div class="flex flex-col items-center">
+        <div class="top mt-[0.8rem]">
           <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
           <div class="eyes" @click="hidden = !hidden">
             <img :src="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
@@ -18,7 +18,7 @@
               : parseFloat(assets.total).toLocaleString() || "0"
           }}</span>
         </div>
-        <div class="navs">
+        <div class="navs mb-[0.64rem]">
           <div class="nav bg-color bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
@@ -36,11 +36,12 @@
             </div>
           </div>
         </div>
+
+        <!-- 按钮 -->
+        <Btns :money="assets.money" />
       </div>
     </OverviewCard>
 
-    <!-- 按钮 -->
-    <Btns :money="assets.money" />
 
     <!-- 列表 -->
     <div class="tabs">
@@ -144,7 +145,7 @@ const jumpToWallet = (val) => {
 }
 
 const token = computed(() => store.state.token || "");
-const hidden = ref(false); // 隐藏数字
+const hidden = ref(true); // 隐藏数字
 
 // 功能区域控制
 const tab1 = ref();
@@ -241,6 +242,8 @@ const jump = (name, check = false, query) => {
 
   .navs {
     display: flex;
+    width: 100%;
+    padding: 0 0.32rem;
     justify-content: space-between;
 
     .nav {
@@ -248,9 +251,11 @@ const jump = (name, check = false, query) => {
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      width: 2.8rem;
+      width: 3.27rem;
       height: 1.12rem;
       border-radius: 0.32rem;
+      background-color: var(--ex-bg-color2);
+      // padding-top: 0.1rem;
     }
 
     .nav_label {
@@ -278,7 +283,7 @@ const jump = (name, check = false, query) => {
       padding: 0 0.32rem;
       overflow: hidden;
       height: 1.04rem;
-      margin-top: 0.12rem;
+      margin-bottom: 0.24rem;
       border-radius: 0.32rem;
       background: var(--ex-bg-color2);
       position: relative;
