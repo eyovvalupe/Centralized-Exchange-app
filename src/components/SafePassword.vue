@@ -1,41 +1,35 @@
 <!-- 输入安全密码 -->
 <template>
-  <Popup v-model:show="show" :safe-area-inset-top="true" :close-on-click-overlay="false" :safe-area-inset-bottom="true"
-    class="self_van_popup" round="" position="bottom" teleport="body" :close-on-popstate="true"
+  <BottomPopup v-model:show="show" :safe-area-inset-top="true" :close-on-click-overlay="false" :safe-area-inset-bottom="true"
+    :close-on-popstate="true"
+    :title="$t('assets.safety_trade_pw')"
     :closeable="props.closeable">
     <!--  :class="{ 'typing_dialog': showKeyboard }" -->
     <div class="safepassword_dialog" :class="{ safepassword_dialog_uncloseabled: !props.closeable }">
       <slot name="top" />
-      <div class="main_title">{{ $t("assets.safety_trade_pw") }}</div>
-      <div class="title">{{ $t("assets.safety_trade_pw") }}</div>
+      <!-- <div class="title">{{ $t("assets.safety_trade_pw") }}</div> -->
       <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
       <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
-      <div class="show_pass">
-        <input ref="iptDom" v-model="val" :type="passwordInputType" :class="{ err_ipt: errStatus }"
-          :placeholder="$t('assets.safety_trade_placeholder')" class="pass_ipt" enterkeyhint="done"
-          @blur="errStatus = false" @keydown.enter="submit" />
-        <div class="show_hidden_icon" @click="passwordVisibility">
-          <img v-if="showPassword" :src="getStaticImgUrl(`/static/img/common/open_eye.svg`)" alt="">
-          <img v-else :src="getStaticImgUrl(`/static/img/common/close_eye.svg`)" alt="">
-        </div>
-      </div>
-
+      
+      <FormItem :placeholder="$t('assets.safety_trade_pw')" v-model="val" input-type="password" />
+      
       <div class="btns">
-        <Button round color="white" class="btn" @click="close">
+        <Button round  class="btn" @click="close">
           <span style="color: var(--ex-text-color2)">{{ $t("assets.safety_trade_cancel") }}</span>
         </Button>
-        <Button :loading="loading" round color="var(--ex-primary-color)" class="btn" type="primary" @click="submit">{{
+        <Button :loading="loading" round  class="btn" type="primary" @click="submit">{{
           $t("assets.safety_trade_confirm") }}</Button>
       </div>
     </div>
-  </Popup>
+  </BottomPopup>
 </template>
 
 <script setup>
-import { getStaticImgUrl } from "@/utils/index.js"
-import { Popup, Button, showToast } from "vant";
+import {  Button, showToast } from "vant";
 import { ref, computed } from "vue";
+import BottomPopup from "./BottomPopup.vue";
+import FormItem from "./Form/FormItem.vue";
 
 const props = defineProps({
   closeable: {
@@ -106,8 +100,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .safepassword_dialog {
-  background-color: var(--ex-bg-color);
-  padding: 0.96rem 0.32rem 0.6rem 0.32rem;
+  padding: 0.6rem 0.32rem 0.6rem 0.32rem;
 
   position: relative;
 
@@ -133,16 +126,11 @@ defineExpose({
       border-radius: 0.96rem;
       flex: 1;
       margin-left: 0.32rem;
-      border: 1px solid var(--ex-border-color2) !important;
-
       :deep(span.van-button__text) {
         font-size: 0.32rem;
       }
     }
 
-    .btn.van-button--primary {
-      border-color: var(--ex-primary-color) !important;
-    }
   }
 
   .title {

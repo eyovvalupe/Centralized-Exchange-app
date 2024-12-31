@@ -13,61 +13,53 @@
         @click="goInfo(props.item.type)"
       >
         <div :class="['stock_item']">
-          <div class="td5">
+          <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center" v-if="showIcon">
+            <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{ props.item.symbol[0] }}</span>
+            <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
+          </div>
+          <div class="td5" :class="{'td5--ac':showIcon}">
             <div class="item_name flex items-center gap-1 mb-[0.2rem]">
               <span class="truncate" v-if="item.type != 'stock'">{{
                 props.item.name
               }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>
               <div
-                v-if="props.page == 'market'"
+                v-if="props.page == 'market' && item.type == 'stock'"
                 :class="`${
                   marketStyle[props.item.type]
                 } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.08rem] h-[0.3rem] `"
               >
                 {{
-                  item.type == "stock"
-                    ? t("market.market_optional_stock")
-                    : item.type == "crypto"
-                    ? t("market.market_optional_contract")
-                    : item.type == "forex"
-                    ? t("market.market_optional_forex")
-                    : item.type == "blocktrade"
-                    ? t("market.market_optional_blocktrade")
-                    : ""
+                 t("market.market_optional_stock")
                 }}
               </div>
             </div>
             <div class="item_info" v-show="props.item.type == 'stock'">
               {{ props.item.name || "--" }}
             </div>
+
+            
             <div
-              v-if="props.page == 'market'"
-              class="text-primary text-[0.24rem] px-[0.1rem] h-[0.32rem] rounded-[0.24rem] border mt-[0.16rem] items-center flex justify-center border-primary pt-[0.025rem]"
-              style="width: max-content"
-              v-show="props.item.type != 'stock'"
-            >
-              {{ props.item.lever }}X
-            </div>
-            <div
-              v-if="props.page != 'market' && item.type != 'stock'"
-              style="width: max-content"
-              :class="`${
-                marketStyle[props.item.type]
-              } font-normal whitespace-nowrap mt-[0.1rem] text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] pt-[0.032rem]`"
-            >
-              {{
-                item.type == "stock"
-                  ? t("market.market_optional_stock")
-                  : item.type == "crypto"
-                  ? t("market.market_optional_contract")
-                  : item.type == "forex"
-                  ? t("market.market_optional_forex")
-                  : item.type == "blocktrade"
-                  ? t("market.market_optional_blocktrade")
-                  : ""
-              }}
-            </div>
+                v-if="item.type != 'stock'"
+                class=" flex items-center"
+              >
+                <span :class="`${
+                  marketStyle[props.item.type]
+                } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center`">
+                  {{
+                    item.type == "stock"
+                      ? t("market.market_optional_stock")
+                      : item.type == "crypto"
+                      ? t("market.market_optional_contract")
+                      : item.type == "forex"
+                      ? t("market.market_optional_forex")
+                      : item.type == "blocktrade"
+                      ? t("market.market_optional_blocktrade")
+                      : ""
+                  }}
+                </span>
+              </div>
+              
           </div>
           <div :class="['td2 spark_line_box']" v-if="showSparkLine">
             <SparkLine
@@ -181,6 +173,7 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  showIcon:Boolean
 });
 
 const mode = ref(1);
@@ -300,7 +293,7 @@ const removeStock = (item) => {
   margin-top: 0.2rem;
   .td5 {
     flex-shrink: 0;
-    width: 3.4rem;
+    width: 3rem;
 
     .item_name {
       font-size: 0.32rem;
@@ -320,7 +313,9 @@ const removeStock = (item) => {
       padding-right: 0.4rem;
     }
   }
-
+  .td5--ac{
+    width: 2.3rem;
+  }
   .td2 {
     flex-shrink: 0;
     flex: 2;

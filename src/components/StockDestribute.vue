@@ -50,7 +50,7 @@
             }"
           ></div>
           <div
-            class="table_item_name flex flex-row justify-center align-items-center"
+            class="table_item_name text-color3 flex flex-row justify-center align-items-center"
             :class="{ item_green: i == 0, item_red: i == 10 }"
           >
             {{ overviewTitleMap[key] }}

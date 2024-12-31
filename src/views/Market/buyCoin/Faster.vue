@@ -18,7 +18,7 @@
         <!-- 支付 -->
         <div class="item item_box">
             <div class="flex justify-between">
-              <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center bg-buy bg-buy-text-color mt-[0.06rem]">{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
+              <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center mt-[0.06rem]" :class="[form1.offset == 'buy' ? ' bg-buy bg-buy-text-color' : 'bg-white text-color--bg-light']">{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
                 }}</div>
               <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
                 @click="openDialog(2)">
@@ -41,13 +41,9 @@
         <!-- 收到 -->
         <div class="item item_box">
           <div class="flex justify-between">
-            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center bg-sell bg-sell-text-color mt-[0.06rem]">{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
+            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center  mt-[0.06rem]" :class="[form1.offset == 'buy' ? 'bg-white text-color--bg-light' : 'bg-sell bg-sell-text-color']">{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
               }}</div>
-            <div class="ml-[0.2rem] mt-[0.06rem]" v-if="form1.offset == 'sell' && currWallet.amount > 0">
-              <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span style="color: var(--ex-text-color2)">{{ t('assets.wallet_available_sim') }}</span>
-              {{ currWallet.amount }} {{ currOut.name }}</span>
-              <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.2rem" />
-            </div>
+            
            
             <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
               @click="openDialog(1)">
@@ -65,11 +61,22 @@
 
           </div>
 
-          <div class="h-[1.54rem] py-[0.2rem]">
-              <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
-              <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
-               t('trade.stock_position_all')
-              }}</span>
+          <div class="flex items-center h-[1.94rem] justify-center">
+              <div class="h-[0.96rem] flex-1">
+                <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
+                
+              </div>
+              <!-- <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
+                t('trade.stock_position_all')
+                }}</span> -->
+              <div class="ml-[0.2rem] flex items-center px-[0.2rem] h-[0.72rem] bg-color rounded-[0.32rem] bg-color" v-if="form1.offset == 'sell' && currWallet.amount > 0">
+                <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox">
+                  <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
+                  {{ currWallet.amount }}
+                  <span class="text-color">{{ currOut.name }}</span>
+                </span>
+                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
+              </div>
           </div>
 
         </div>
@@ -87,12 +94,9 @@
   </div>
 
   <!-- 售出币种 -->
-  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-    position="bottom" teleport="body">
+  <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"  :title="t('market.market_buy_fast_search_title')">
     <div class="withdraw_accounr_dialog">
-      <div class="close_icon" @click="showDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
-      </div>
+     
       <div class="search_box">
         <div class="icon">
           <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
@@ -100,28 +104,28 @@
         <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
           type="text" enterkeyhint="search" class="search" />
       </div>
-      <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
-      <div v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet" :key="i" class="swap_dialog_item" :class="{
-        swap_dialog_item_active:
-          showDialogType == 1
-            ? currOut.name == item.name
-            : currIn.name == item.name,
-      }" @click="clickItem(item)">
-        <div class="icon">
-          <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+      <div class="swap_dialog_list">
+        <div v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet" :key="i" class="swap_dialog_item" :class="{
+          swap_dialog_item_active:
+            showDialogType == 1
+              ? currOut.name == item.name
+              : currIn.name == item.name,
+        }" @click="clickItem(item)">
+          <div class="icon">
+            <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+          </div>
+          <span>{{ item.name }}</span>
+          <Icon v-if="
+            showDialogType == 1
+              ? currOut.name == item.name
+              : currIn.name == item.name
+          " class="check_icon" name="success" />
         </div>
-        <span>{{ item.name }}</span>
-        <Icon v-if="
-          showDialogType == 1
-            ? currOut.name == item.name
-            : currIn.name == item.name
-        " class="check_icon" name="success" />
       </div>
     </div>
-  </Popup>
+  </BottomPopup>
 
   <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="money" @submit="submitSell" />
-
 
   <!-- 余额提示 -->
    <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')" :amount="currWallet.amount" />
@@ -138,6 +142,7 @@ import { _swapRate, _orderFast } from "@/api/api";
 import AmountDialog from "@/components/AmountDialog.vue";
 import eventBus from "@/utils/eventBus";
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
+import BottomPopup from "@/components/BottomPopup.vue";
 import { useBuyCoinState } from "./state";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
@@ -511,11 +516,8 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  background-color: var(--ex-bg-color);
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
   overflow: hidden;
-  padding: 1.2rem 0.32rem 0.8rem 0.32rem;
+  padding: 0.32rem 0.32rem 0 0.32rem;
   position: relative;
 
   .search_box {
@@ -523,8 +525,8 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     align-items: center;
     padding: 0 0.4rem;
     margin-bottom: 0.15rem;
-    height: 0.8rem;
-    background-color: var(--ex-bg-color2);
+    height: 1rem;
+    background-color: var(--ex-bg-color);
     border-radius: 0.8rem;
 
     input {
@@ -596,27 +598,37 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     top: 0.24rem;
     right: 0.32rem;
   }
+  .swap_dialog_list{
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+  }
 
   .swap_dialog_item {
-    height: 1.12rem;
+    height: 1rem;
     line-height: 0;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--ex-border-color);
+    border-radius: 0.4rem;
+    background-color: var(--ex-bg-color3);
     overflow: hidden;
     position: relative;
+    padding: 0 0.28rem;
+    margin-top: 0.2rem;
     color: var(--ex-text-color);
+    border: 1px solid rgba(0,0,0,0);
 
     .icon {
-      width: 0.6rem;
-      height: 0.6rem;
-      margin-right: 0.24rem;
+      width: 0.64rem;
+      height: 0.64rem;
+      margin-right: 0.2rem;
     }
   }
 
   .swap_dialog_item_active {
-    color: var(--ex-primary-color);
-
+    color: var(--ex-text-color);
+    border-color:var(--ex-primary-color);
+    background: none;
     .check_icon {
       position: absolute;
       right: 0.24rem;

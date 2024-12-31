@@ -76,20 +76,20 @@ const shadowPoints = computed(() => {
 
 const stopStartColor = computed(() => {
     if (props.ratio >= 0) {
-        return 'rgb(var(--ex-up-color-rgb) / 0.15)'
+        return 'rgb(var(--ex-up-color-rgb) / 0.5)'
     } else if (props.ratio < 0) {
-        return 'rgb(var(--ex-down-color-rgb) / 0.15)'
+        return 'rgb(var(--ex-down-color-rgb) / 0.5)'
     } else {
-        return 'rgb(var(--ex-info-color-rgb) / 0.15)'
+        return 'rgb(var(--ex-info-color-rgb) / 0.5)'
     }
 })
 const stopEndColor = computed(() => {
     if (props.ratio >= 0) {
-        return 'rgba(57, 179, 98, 0)'
+        return 'rgb(var(--ex-up-color-rgb) / 0)'
     } else if (props.ratio < 0) {
-        return 'rgba(253, 73, 56, 0)'
+        return 'rgb(var(--ex-down-color-rgb) / 0)'
     } else {
-        return 'rgba(108, 123, 144, 0)'
+        return 'rgb(var(--ex-info-color-rgb) / 0)'
     }
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="form-item" :class="{ 'form-item--large': size == 'large' }">
+  <div class="form-item" :class="{ 'form-item--large': size == 'large', 'form-item--scroll': props.hasScroll }">
     <div class="form-item-title" v-if="title">
       <div class="form-item-title_content">
         <!-- <span>{{ title }}</span> -->
@@ -16,27 +16,38 @@
       </div>
     </div>
     <div class="form-item-box">
-      <div style="flex: 1;display: flex">
+      <div style="flex: 1;display: flex" class="form-item-con">
         <div class="item" :class="{
           disabled_item: disabled,
           item_focus: inputFocus,
           // item_focus2: inputFocus && !tip,
         }" :style="{ background }">
+          <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" v-show="inputFocus">{{ placeholder
             }}</span>
-          <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip" v-show="inputFocus">{{ tip
+          <!-- 右侧提示 -->
+          <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
+            v-show="inputFocus || props.hasScroll">{{ tip
             }}</span>
+          <!-- 右上角模块 -->
+          <div class="rt-box" :class="{ 'rt-box-focus': inputFocus }" v-if="hasRT">
+            <slot name="rt" />
+          </div>
 
+          <!-- 自定义输入框 -->
           <slot v-if="custom" />
+
+          <!-- 输入框 -->
           <input :disabled="disabled" v-else v-model="inputVal" @focus="
             inputFocus = true;
           emit('focus');
           " @blur="
             inputFocus = false;
           inputBlur();
-          " :type="inputType == 'digit' ? 'number' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
+          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
             :placeholder="inputFocus ? '' : placeholder" />
 
+          <!-- 密码图标 -->
           <span class="pwd_icon" v-if="inputType == 'password'">
             <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
               @click="showPassword = true" alt="off" />
@@ -44,6 +55,7 @@
               @click="showPassword = false" />
           </span>
 
+          <!-- 百分比按钮 -->
           <Transition name="opacity">
             <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
               <span class="percent_tag" v-for="(percent, i) in percentTags" :key="i"
@@ -52,24 +64,37 @@
             </div>
           </Transition>
 
+          <!--  输入框右侧 全部按钮或提示 -->
           <span class="put_all put_all_place" v-if="
             showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
           ">{{ btnPlaceholder }}</span>
-          <span @click="emit('btnClick')" v-if="showBtn && btnShowMode == 'focus'" :style="{
-            opacity: inputFocus ? '1' : '0',
-            visibility: inputFocus ? '' : 'hidden',
+
+          <span @click="emit('btnClick')" v-if="(showBtn && btnShowMode == 'focus') || props.hasScroll" :style="{
+            opacity: (inputFocus) ? '1' : '0',
+            visibility: (inputFocus) ? '' : 'hidden',
           }" class="put_all">{{ btnText ? btnText : t('trade.stock_position_all') }}</span>
-          <span @click="emit('btnClick')" v-else-if="showBtn" class="put_all">{{
+
+          <span @click="emit('btnClick')" v-else-if="showBtn || props.hasScroll" class="put_all">{{
             btnText ? btnText : t('trade.stock_position_all')
           }}</span>
 
+          <!-- 右侧自定义内容 -->
           <slot name="right-con" />
+
+          <!-- 底部滚动条 -->
+          <div class="scroll-box" v-if="props.hasScroll">
+            <slot name="scroll" />
+          </div>
         </div>
       </div>
+
+      <!-- 输入框外右侧内容 -->
       <div class="right_content right_item" v-if="props.rightContent">
         <slot name="right-content-item" />
       </div>
     </div>
+
+
   </div>
 </template>
 
@@ -107,6 +132,8 @@ const props = defineProps({
     type: [Number, String],
     default: 99999999999999,
   },
+  hasScroll: Boolean, // 是否有滚动条
+  hasRT: Boolean, // 是否有右上角模块
   background: String,
   title: String,
   custom: Boolean,
@@ -246,12 +273,22 @@ const percentTagClick = (percent) => {
       z-index: 1;
       width: 100%;
     }
+
+    .rt-box {
+      position: absolute;
+      top: 0.24rem;
+      right: 0.24rem;
+      z-index: 999;
+      transition: all ease .3s;
+      transform-origin: 100% 0;
+    }
   }
 
 
 
   .disabled_item {
     // background-color: var(--ex-bg-color2);
+    flex: 1;
   }
 
   .item_focus {
@@ -265,6 +302,11 @@ const percentTagClick = (percent) => {
 
     .ipt {
       padding-top: 0.24rem;
+    }
+
+    .rt-box-focus {
+      top: 0.08rem;
+      transform: scale(0.8);
     }
   }
 
@@ -342,6 +384,47 @@ const percentTagClick = (percent) => {
 
   .item_focus {
     height: 1.32rem;
+  }
+}
+
+.form-item--scroll {
+  height: 2.28rem;
+
+
+  .form-item-box {
+    height: 100%;
+
+    .item_focus {
+      .ipt_tip {
+        font-size: 0.22rem;
+        transform: translateY(-0.28rem);
+      }
+    }
+
+    .form-item-con {
+      height: 100%;
+
+      .item {
+        height: 100%;
+        padding-bottom: 0.24rem;
+
+        .scroll-box {
+          width: 100%;
+          position: absolute;
+          height: 0.8rem;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0 0.28rem;
+        }
+
+        .put_all {
+          transform: translateY(0.12rem);
+        }
+      }
+    }
   }
 }
 </style>
