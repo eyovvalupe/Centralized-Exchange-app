@@ -28,6 +28,97 @@
         </div>
       </SwipeItem>
     </Swipe>
+
+    <Popup v-model:show="handle" position="bottom" :style="{
+      height: '5.46rem',
+      borderTopRightRadius: '0.36rem',
+      borderTopLeftRadius: '0.36rem',
+    }">
+      <div v-if="Object.keys(selectedItem).length" class="w-full relative">
+        <div class="absolute top-[0.1rem] right-[0.3rem]" style="width: 0.42rem;height: 0.42rem;"
+          @click="() => (handle = false)">
+          <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
+        </div>
+        <div
+          class="w-full flex justify-center pt-[0.5rem] text-[0.32rem] text-color leading-[0.44rem] mb-[0.48rem]">
+          {{ t('assets.wallet_handle_title') }}
+        </div>
+        <div class="w-full flex items-center flex-col mb-[0.4rem]">
+          <div class="mb-[0.16rem]">
+            <div style="width: 0.64rem;height: 0.63rem">
+              <img :src="getStaticImgUrl(`/static/img/crypto/${selectedItem.name}.svg`)" alt="">
+            </div>
+          </div>
+          <div class="text-[0.3rem] text-color">
+            {{ selectedItem.name }}
+          </div>
+        </div>
+        <div class="w-full flex px-[0.32rem] justify-between">
+          <div v-if="selectedItem.account == 'money'"
+            class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-topup flex flex-col items-center pt-[0.16rem]"
+            @click="() => {
+              router.push({
+                name: 'topUpCrypto',
+                query: { currency: selectedItem.name },
+              });
+              handle = false;
+            }
+              ">
+            <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
+              <img :src="getStaticImgUrl(`/static/img/assets/deposit_color.svg`)" alt="">
+            </div>
+            <div class="text-topup text-[0.32rem]">{{ t('assets.coin_list_recharge') }}</div>
+          </div>
+          <div v-if="selectedItem.account == 'money'"
+            class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-withdraw flex flex-col items-center pt-[0.16rem]"
+            @click="() => {
+              router.push({
+                name: 'withdraw',
+                query: { currency: selectedItem.name },
+              });
+              handle = false;
+            }
+              ">
+            <div class="mb-[0.16rem]" style="width:0.8rem;height:0.8rem">
+              <img :src="getStaticImgUrl(`/static/img/assets/withdraw_color.svg`)" alt="">
+            </div>
+            <div class="text-withdraw text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
+          </div>
+          <div class="h-[1.565rem] rounded-[0.32rem] bg-transfer-in flex flex-col items-center pt-[0.16rem]"
+            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
+              router.push({
+                name: 'transfer',
+                query: { to: selectedItem.account },
+              });
+              handle = false;
+            }
+              ">
+            <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
+              <img :src="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
+            </div>
+            <div class="text-transfer-in text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') :
+              t('transfer.in') }}</div>
+          </div>
+          <div class="h-[1.565rem] rounded-[0.32rem] bg-transfer-out flex flex-col items-center pt-[0.16rem]"
+            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
+              router.push({
+                name: 'transfer',
+                query: { from: selectedItem.account },
+              });
+              handle = false;
+            }
+              ">
+            <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
+              <img :src="getStaticImgUrl(`/static/img/assets/transfer_out.svg`)" alt="">
+            </div>
+            <div class="text-transfer-out text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.out_sim') :
+              t('transfer.out') }}</div>
+          </div>
+        </div>
+      </div>
+    </Popup>
+    <!-- 充提记录 -->
+    <HintBlock v-if="route.name == 'assets' && hintNum" />
   </div>
 </template>
 
