@@ -28,15 +28,5 @@ onMounted(() => loading.value = false)
 </script>
 
 <style lang="less" scoped>
-.market_stock {
-  .stock_hot {
-    position: relative;
-    top: -0.3rem;
-  }
 
-  .stock_sort {
-    position: relative;
-    top: -0.7rem;
-  }
-}
 </style>

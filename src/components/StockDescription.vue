@@ -113,8 +113,7 @@ const goInfo = (item) => {
 
 <style lang="less" scoped>
 .stock_description {
-  padding: 0 0.32rem;
-  margin-top: 0.34rem;
+  padding: 0.4rem 0.32rem;
   display: flex;
   flex-direction: column;
 
@@ -128,7 +127,7 @@ const goInfo = (item) => {
   }
 
   .up_price {
-    background-image: linear-gradient(to bottom, var(--ex-bg-color), rgb(var(--ex-up-color-rgb) / 0.1));
+    background: var(--ex-bg-color3);
 
     .stock_price {
       font-size: 0.3rem;
@@ -145,7 +144,7 @@ const goInfo = (item) => {
   }
 
   .down_price {
-    background-image: linear-gradient(to bottom, var(--ex-bg-color), rgb(var(--ex-down-color-rgb) / 0.1));
+    background: var(--ex-bg-color3);
 
     .stock_price {
       font-size: 0.3rem;

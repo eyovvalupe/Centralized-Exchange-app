@@ -234,9 +234,9 @@ const getDownNum = () => {
 .total_box {
   padding: 0.4rem 0.32rem;
   position: relative;
-  background-image: linear-gradient(to bottom, var(--ex-bg-color), var(--ex-bg-color2));
-  border-radius: 0.64rem;
-
+  background: var(--ex-bg-color2);
+  border-radius: 0.32rem;
+  margin-top: 0.2rem;
 
   .total_title {
     color: var(--ex-text-color3);

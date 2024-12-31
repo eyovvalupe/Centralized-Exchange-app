@@ -81,7 +81,9 @@ const remove = (item) => {
   .tr {
     display: flex;
     align-items: center;
-
+    background-color: var(--ex-bg-color2);
+    border-radius: 0.4rem;
+    margin-top: 0.2rem;
     .td {
       flex: 1;
     }
@@ -101,7 +103,6 @@ const remove = (item) => {
     color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;
-    // border-bottom: 1px solid var(--ex-border-color);
 
     .td_r {
       text-align: right;

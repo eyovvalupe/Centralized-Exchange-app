@@ -151,11 +151,13 @@ const marketStockIndexList = computed(() => {
 
 <style lang="less" scoped>
 .market_stock_block {
-  height: 4.3rem;
-  border-radius: 0.64rem;
-  background-image: linear-gradient(to bottom, var(--ex-bg-color), var(--ex-bg-color2));
 
   .van-tabs {
+    :deep(> .van-tabs__content){
+      background-color: var(--ex-bg-color2);
+      border-radius: 0.4rem;
+      margin-top: 0.32rem;
+    }
     :deep(.van-tabs__wrap) {
       margin: 0 0.32rem !important;
     }
