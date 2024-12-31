@@ -2,11 +2,6 @@
 <template>
   <div class="recharge_record_info">
     <Top :title="$t('recharging.info_title')">
-      <!-- <template #right>
-        <div class="top-record" @click="goChat">
-          <span><img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="img" /></span>
-        </div>
-      </template> -->
     </Top>
 
     <div class="top_info mb-[0.4rem]">
