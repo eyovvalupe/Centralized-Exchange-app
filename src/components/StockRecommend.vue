@@ -7,17 +7,20 @@
         :key="i">
         <div class="symbol">{{ item.symbol }}</div>
         <div class="name">{{ item.name || "--" }}</div>
-        <div class="price">{{ item.price ? item.price : "--" }}</div>
-        <div class="percent" :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']">
-          {{
-            (item.ratio || 0) > 0
-              ? "+" + (item.ratio || 0)
-              : (item.ratio || 0)
-          }}%
+        <div class="flex justify-between items-center pt-[0.06rem]">
+          <div class="price">{{ item.price ? item.price : "--" }}</div>
+          <div class="percent" :class="[updown(item) === 0 ? '' : updown(item) > 0 ? 'up' : 'down']">
+            {{
+              (item.ratio || 0) > 0
+                ? "+" + (item.ratio || 0)
+                : (item.ratio || 0)
+            }}%
+          </div>
         </div>
 
         <div class="sparkLine">
-          <SparkLine v-if="item.points" style="width: 100%; height: 0.45rem" :points="item.points"
+          <SparkLine :xtimes="2.55"
+          :ytimes="1.4" v-if="item.points" :points="item.points"
             :ratio="item.ratio" />
         </div>
 
@@ -150,12 +153,12 @@ const disabled = computed(
     align-items: stretch;
     justify-content: space-between;
     flex-wrap: wrap;
-
+    gap: 0.2rem;
     .list_item {
-      background-color:var(--ex-bg-color);
-      height: 1.998rem;
-      width: 3.36rem;
-      border-radius: 0.2rem;
+      background-color:var(--ex-bg-color3);
+      height: 2.18rem;
+      border-radius: 0.4rem;
+      width: calc(50% - 0.1rem);
       margin-bottom: 0.15rem;
       position: relative;
       padding: 0.2rem;
@@ -180,7 +183,6 @@ const disabled = computed(
         font-weight: 600;
         font-size: 0.32rem;
         line-height: 0.432rem;
-        margin-bottom: 0.08rem;
       }
 
       .percent {
@@ -191,10 +193,10 @@ const disabled = computed(
 
       .sparkLine {
         position: absolute;
-        width: 1.6rem;
-        height: 0.5rem;
-        right: 0.1rem;
-        bottom: 0.1rem;
+        width: 100%;
+        height: 0.76rem;
+        left: 0;
+        bottom: 0;
       }
     }
 
@@ -246,34 +248,9 @@ const disabled = computed(
         justify-content: center;
         width: 0.4rem;
         height: 0.4rem;
-        background-color: var(--ex-bg-color);
-        border-width: 1px;
-        border-radius: 50%;
-        color: var(--ex-text-color3);
-        font-size: 0.5rem;
         position: absolute;
         transition: background-color linear 2s;
-
-        .uncheckmark {
-          width: 11px;
-          height: 7px;
-          position: relative;
-          transition: background-color linear 2s;
-        }
-
-        .uncheckmark::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: var(--ex-text-color3);
-          transition: background-color linear 2s;
-
-          clip-path: path("M3.52645 6.39447C3.34635 6.38945 3.17542 6.32185 3.04962 6.2059L0.203008 3.66018C0.072772 3.53877 0 3.37669 0 3.20804C0 3.03939 0.072772 2.87731 0.203008 2.7559C0.268598 2.69655 0.346602 2.64945 0.432527 2.61731C0.518452 2.58517 0.610601 2.56862 0.70367 2.56862C0.796739 2.56862 0.888889 2.58517 0.974814 2.61731C1.06074 2.64945 1.13874 2.69655 1.20433 2.7559L3.52645 4.8559L9.45809 0.188751C9.52294 0.129008 9.60043 0.081531 9.68601 0.0491152C9.77158 0.0166994 9.86351 0 9.95637 0C10.0492 0 10.1412 0.0166994 10.2267 0.0491152C10.3123 0.081531 10.3898 0.129008 10.4547 0.188751C10.5207 0.247704 10.5731 0.317814 10.6088 0.395044C10.6446 0.472274 10.663 0.555099 10.663 0.638751C10.663 0.722402 10.6446 0.805227 10.6088 0.882457C10.5731 0.959687 10.5207 1.0298 10.4547 1.08875L4.02712 6.2059C3.89458 6.32584 3.71453 6.39366 3.52645 6.39447Z"
-            );
-        }
+        
       }
     }
   }

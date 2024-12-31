@@ -1,6 +1,6 @@
 // 重写vant样式
 :root:root {
-    --van-overlay-background: rgba(31, 41, 55, 0.50);
+    --van-overlay-background: rgba(0, 0, 0, 0.60);
     --van-button-large-height: 1.12rem;
     --van-primary-color: var(--ex-primary-color);
     --van-switch-on-background: var(--ex-primary-color);
@@ -48,7 +48,7 @@ body .van-button--round {
     background-color: rgba(0, 0, 0, 0) !important;
 }
 
-body .van-popup--bottom {
+body .van-popup--bottom:not(.ex-bottom-popup) {
     padding-top: 0.2rem;
     background: linear-gradient(-180deg, #2e2e2e 0%, #1c1c1c 100%);
     border-radius: 0.4rem 0.4rem 0 0;
@@ -56,7 +56,7 @@ body .van-popup--bottom {
     &::after {
         content: '';
         background-color: var(--ex-border-color2);
-        width: 0.64rem;
+        width: 200;
         height: 0.08rem;
         border-radius: 0.08rem;
         position: absolute;
@@ -742,7 +742,6 @@ body .van-popup--bottom {
         }
     }
 }
-
 
 .van-overlay {
     backdrop-filter: blur(4px);

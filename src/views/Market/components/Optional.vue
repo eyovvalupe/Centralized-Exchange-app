@@ -15,8 +15,8 @@
         <img :src="getStaticImgUrl('/static/img/common/no_data.svg')" alt="暂无数据" />
       </div>
       <p class="text">{{ t('market.market_optional_no_optional') }}</p>
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')">{{
-        t('market.market_optional_add') }}</Button>
+      <!-- <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')">{{
+        t('market.market_optional_add') }}</Button> -->
     </div>
     <Teleport to=".page_market">
       <div class="one_click_to_favorite_container"
@@ -49,7 +49,7 @@
           <div @click="changeAllCheckState">
             <div style="width: 0.4rem;height: 0.4rem">
               <img v-if="allCheckState" :src="getStaticImgUrl('/static/img/market/checked.svg')" alt="">
-              <img v-else :src="getStaticImgUrl('/static/img/market/uncheck.svg')" alt="">
+              <img v-else :src="getStaticImgUrl('/static/img/market/uncheckTicket.svg')" alt="">
             </div>
           </div>
         </div>
@@ -328,8 +328,8 @@ const jump = (name) => {
   line-height: 0.253rem;
 
   .no_data_icon {
-    width: 1.34rem;
-    height: 1.16rem;
+    width: 2.16rem;
+    height: 1.6rem;
   }
 
   .text {
@@ -343,8 +343,7 @@ const jump = (name) => {
 .addBtn {
   color: var(--ex-primary-color);
   border-color: var(--ex-primary-color);
-  // border-width: 10px;
-  // width: 1.82rem;
+  
   height: 0.68rem;
   font-size: 0.28rem;
   font-weight: 400;
@@ -359,9 +358,7 @@ const jump = (name) => {
 }
 
 .recommend_block {
-  background-color: var(--ex-bg-color2);
-  padding: 0.471rem 0.272rem;
-  border-radius: 0.452rem;
+  padding: 0.2rem 0.4rem;
 
   .item_block {
     margin-bottom: 0.471rem;
@@ -393,6 +390,9 @@ const jump = (name) => {
   .one_click_to_favorite {
     background-color: var(--ex-primary-color);
     color: var(--ex-text-color--bg-primary);
+    i {
+      font-style: normal;
+    }
   }
 }
 

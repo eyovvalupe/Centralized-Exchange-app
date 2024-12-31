@@ -87,12 +87,9 @@
   </div>
 
   <!-- 售出币种 -->
-  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-    position="bottom" teleport="body">
+  <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"  :title="t('market.market_buy_fast_search_title')">
     <div class="withdraw_accounr_dialog">
-      <div class="close_icon" @click="showDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
-      </div>
+     
       <div class="search_box">
         <div class="icon">
           <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
@@ -100,25 +97,26 @@
         <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
           type="text" enterkeyhint="search" class="search" />
       </div>
-      <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
-      <div v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet" :key="i" class="swap_dialog_item" :class="{
-        swap_dialog_item_active:
-          showDialogType == 1
-            ? currOut.name == item.name
-            : currIn.name == item.name,
-      }" @click="clickItem(item)">
-        <div class="icon">
-          <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+      <div class="swap_dialog_list">
+        <div v-for="(item, i) in showDialogType == 1 ? outWallet : inWallet" :key="i" class="swap_dialog_item" :class="{
+          swap_dialog_item_active:
+            showDialogType == 1
+              ? currOut.name == item.name
+              : currIn.name == item.name,
+        }" @click="clickItem(item)">
+          <div class="icon">
+            <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+          </div>
+          <span>{{ item.name }}</span>
+          <Icon v-if="
+            showDialogType == 1
+              ? currOut.name == item.name
+              : currIn.name == item.name
+          " class="check_icon" name="success" />
         </div>
-        <span>{{ item.name }}</span>
-        <Icon v-if="
-          showDialogType == 1
-            ? currOut.name == item.name
-            : currIn.name == item.name
-        " class="check_icon" name="success" />
       </div>
     </div>
-  </Popup>
+  </BottomPopup>
 
   <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="money" @submit="submitSell" />
 
@@ -138,6 +136,7 @@ import { _swapRate, _orderFast } from "@/api/api";
 import AmountDialog from "@/components/AmountDialog.vue";
 import eventBus from "@/utils/eventBus";
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
+import BottomPopup from "@/components/BottomPopup.vue";
 import { useBuyCoinState } from "./state";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
@@ -511,11 +510,8 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  background-color: var(--ex-bg-color);
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
   overflow: hidden;
-  padding: 1.2rem 0.32rem 0.8rem 0.32rem;
+  padding: 0.32rem 0.32rem 0 0.32rem;
   position: relative;
 
   .search_box {
@@ -523,8 +519,8 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     align-items: center;
     padding: 0 0.4rem;
     margin-bottom: 0.15rem;
-    height: 0.8rem;
-    background-color: var(--ex-bg-color2);
+    height: 1rem;
+    background-color: var(--ex-bg-color);
     border-radius: 0.8rem;
 
     input {
@@ -596,27 +592,37 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     top: 0.24rem;
     right: 0.32rem;
   }
+  .swap_dialog_list{
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+  }
 
   .swap_dialog_item {
-    height: 1.12rem;
+    height: 1rem;
     line-height: 0;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--ex-border-color);
+    border-radius: 0.4rem;
+    background-color: var(--ex-bg-color3);
     overflow: hidden;
     position: relative;
+    padding: 0 0.28rem;
+    margin-top: 0.2rem;
     color: var(--ex-text-color);
+    border: 1px solid rgba(0,0,0,0);
 
     .icon {
-      width: 0.6rem;
-      height: 0.6rem;
-      margin-right: 0.24rem;
+      width: 0.64rem;
+      height: 0.64rem;
+      margin-right: 0.2rem;
     }
   }
 
   .swap_dialog_item_active {
     color: var(--ex-primary-color);
-
+    border-color:var(--ex-primary-color);
+    background: none;
     .check_icon {
       position: absolute;
       right: 0.24rem;

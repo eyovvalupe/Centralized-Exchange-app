@@ -79,11 +79,8 @@
     </Tabs>
 
     <!-- 币种选择弹窗 -->
-    <Popup v-model:show="showDialog" position="bottom" round closeable teleport="body">
-      <div class="van-popup-custom-title">
-        {{ $t("topUpCrypto.currencySelection") }}
-      </div>
-
+    <BottomPopup v-model:show="showDialog" :title="$t('topUpCrypto.currencySelection')" closeable>
+     
       <div class="topup_accounr_dialog">
         <!-- 搜索 -->
         <div class="search_box">
@@ -111,7 +108,7 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- 网路选择弹窗 -->
     <Popup round closeable v-model:show="showNetDialog" position="bottom" teleport="body">
@@ -159,7 +156,7 @@ import {
   closeToast,
 } from "vant";
 import { useRoute } from "vue-router";
-// import { _networkMapList } from "@/utils/dataMap.js"
+import BottomPopup from "@/components/BottomPopup.vue";
 import RecordList from "@/components/RecordList.vue";
 import SafePassword from "@/components/SafePassword.vue";
 import AccountCheck from "@/components/AccountCheck.vue";
