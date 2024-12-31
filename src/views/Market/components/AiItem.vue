@@ -137,14 +137,10 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  border: 1px solid var(--ex-border-color);
-  background: var(--ex-bg-color);
+  background: var(--ex-bg-color2);
   margin-bottom: 0.2rem;
-
-  &:hover {
-    box-shadow: 0px 0.08rem 0.2rem 0px rgba(6, 16, 35, 0.1);
-  }
-
+  padding: 0.12rem;
+  
   .top {
     padding: 0.24rem;
     display: flex;
@@ -213,23 +209,20 @@ const formatSec = (seconds, t) => {
 
   .content {
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color);
-    background: linear-gradient(180deg, var(--ex-bg-color2) 0%, var(--ex-bg-color) 100%);
-    padding: 0.24rem;
+    background: var(--ex-bg-color);
   }
 
   .mid {
     display: flex;
     align-items: center;
-    margin-bottom: 0.24rem;
-    padding-bottom: 0.24rem;
+    padding: 0.28rem;
     border-bottom: 1px dashed var(--ex-border-color);
     justify-content: space-between;
 
     .ml {
       .ml-title {
-        color: var(--ex-text-color2);
-        font-size: 0.28rem;
+        color: var(--ex-text-color);
+        font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.28rem;
         margin-bottom: 0.2rem;
@@ -254,9 +247,9 @@ const formatSec = (seconds, t) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    padding: 0.32rem 0;
     .bot-line {
-      height: 0.68rem;
+      height: 0.9rem;
       width: 1px;
       background-color: var(--ex-bg-color3);
     }
@@ -275,9 +268,9 @@ const formatSec = (seconds, t) => {
 
       .bot-val {
         color: var(--ex-text-color);
-        font-size: 0.28rem;
+        font-size: 0.3rem;
         font-weight: 600;
-        line-height: 0.28rem;
+        line-height: 0.4rem;
       }
     }
   }

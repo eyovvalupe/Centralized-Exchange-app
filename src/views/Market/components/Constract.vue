@@ -23,7 +23,7 @@
         :key="i"
         @click="goInfo(item)"
       >
-        <StockItem :item="item" :page="'market'"/>
+        <StockItem :item="item" showIcon :page="'market'"/>
       </div>
     </div>
   </div>
