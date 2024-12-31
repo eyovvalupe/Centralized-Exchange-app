@@ -3,12 +3,12 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount,computed } from 'vue'
+import { onBeforeUnmount, computed } from 'vue'
 const emit = defineEmits(['update:time'])
 const props = defineProps({
-    time:{
-        type:Number,
-        default:0
+    time: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -29,43 +29,45 @@ const timeCode = computed(() => {
 })
 
 
-const interval =  setInterval(() => {
+const interval = setInterval(() => {
     if (props.time > 0) {
-        emit('update:time',props.time-1)
+        emit('update:time', props.time - 1)
     }
 }, 1000);
 
-onBeforeUnmount(()=>{
+onBeforeUnmount(() => {
     clearInterval(interval)
 })
 
 
 </script>
 <style lang="less" scoped>
-.count_down{
+.count_down {
     display: flex;
     align-items: center;
     height: 0.6rem;
     line-height: 0.58rem;
     justify-content: center;
-    :deep(.num){
+
+    :deep(.num) {
         width: 0.6rem;
         height: 0.6rem;
         text-align: center;
-        color:var(--ex-error-color);
+        color: var(--ex-count-color);
         font-weight: 600;
         font-size: 0.32rem;
-        border: 1px solid var(--ex-error-color);
-        background-color: rgb(var(--ex-error-color-rgb) / 0.10);
+        border: 1px solid var(--ex-count-color);
+        background-color: rgb(var(--ex-count-color-rgb) / 0.10);
         box-sizing: border-box;
         border-radius: 0.12rem;
-        
+
     }
-    :deep(.split){
+
+    :deep(.split) {
         font-size: 0.32rem;
         font-weight: 600;
         width: 0.3rem;
-        color:var(--ex-error-color);
+        color: var(--ex-count-color);
         text-align: center;
     }
 }

@@ -2,11 +2,11 @@
 <template>
   <div class="page page_recharge">
     <Top :title="$t('recharging.recharge')">
-      <template #right>
+      <!-- <template #right>
         <div class="top-record" @click="() => router.push({ name: 'chat' })">
           <span><img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="img" /></span>
         </div>
-      </template>
+      </template> -->
     </Top>
     <Loading :loading="loading" v-show="loading" />
     <template v-if="!loading">
@@ -264,13 +264,13 @@ const copyPrice = () => {
 
   position: relative;
 
-  :deep(.top) {
-    background: none;
-    background-image: linear-gradient(to top,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 1));
-    backdrop-filter: blur(3px);
-  }
+  // :deep(.top) {
+  //   background: none;
+  //   background-image: linear-gradient(to top,
+  //       rgba(255, 255, 255, 0),
+  //       rgba(255, 255, 255, 1));
+  //   backdrop-filter: blur(3px);
+  // }
 
   .top-record {
     width: 0.72rem;
@@ -292,12 +292,12 @@ const copyPrice = () => {
   .recharge_box {
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-    background: var(--ex-bg-color);
+    background: var(--ex-bg-color2);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    box-shadow: 0px 0.08rem 0.8rem 0 rgba(1, 76, 250, 0.2);
+    // box-shadow: 0px 0.08rem 0.8rem 0 rgba(1, 76, 250, 0.2);
     padding: 0.32rem;
 
     .amount {
