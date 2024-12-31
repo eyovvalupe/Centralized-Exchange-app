@@ -31,7 +31,7 @@
       <div class="status" v-else>
         <div class="status_icon">
           <LoadEffect class="status_loading" color="var(--ex-white)" />
-          <img :src="getStaticImgUrl('/static/img/assets/status_wait.png')" alt="img" />
+          <img :src="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.processing") }}</div>
         <div class="status_desc">{{ $t("withdrawInfo.processingTip") }}</div>

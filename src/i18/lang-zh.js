@@ -442,7 +442,7 @@ export default {
     info_recharge_address: "充值地址",
     info_recharge_order: "订单编号",
     info_recharge_date: "充值时间",
-    copy: "已复制",
+    copied: "已复制",
 
   },
   transfer: {
