@@ -68,7 +68,7 @@
               <div class="more_card mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.18rem]"
                 @click="showAccountDialog = true">{{ $t("withdraw.change") }}</div>
             </div>
-            <div class="account_box">
+            <div class="account_box" :class="showAccount.length ? 'px-[0.16rem]' : ''">
               <div class="card_box h-full flex flex-col justify-between"
                 v-if="showAccount.length && tabActive == 'cryptocurrency'">
                 <div class="flex">
@@ -736,8 +736,7 @@ watch(
 }
 
 .card_box {
-  width: 6.14rem;
-  margin: 0 auto;
+  width: 100%;
   margin-bottom: 0.14rem;
   height: 2.16rem;
   border-radius: 0.4rem;
