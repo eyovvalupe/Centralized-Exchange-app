@@ -45,7 +45,7 @@
 
     <!-- 列表 -->
     <div class="tabs">
-      <div ref="tab1" :key="1" class="tab" @click="jumpToWallet(0)">
+      <div ref="tab1" :key="1" class="tab" @click="jumpToWallet('0')">
         <div class="tab_icon">
           <div style="width: 0.32rem;height: 0.32rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/cash.svg`)" alt="">
@@ -61,7 +61,7 @@
           </div>
         </div>
       </div>
-      <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet(1)">
+      <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet('1')">
         <div class="tab_icon">
           <div style="width: 0.36rem;height: 0.36rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/stock.svg`)" alt="">
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet(2)">
+      <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet('2')">
         <div class="tab_icon">
           <div style="width: 0.28rem;height: 0.28rem;">
             <img :src="getStaticImgUrl(`/static/img/assets/future.svg`)" alt="">
@@ -100,7 +100,7 @@
     </div>
 
     <!-- 类型选择弹窗 -->
-    <ActionSheet v-model:show="showAS" teleport="body" :actions="actions" :title="$t('记录列表')" @select="onSelect" />
+    <!-- <ActionSheet v-model:show="showAS" teleport="body" :actions="actions" :title="$t('记录列表')" @select="onSelect" /> -->
   </div>
 </template>
 
@@ -175,7 +175,6 @@ useClickAway(tab5, () => {
 
 // 刷新总资产
 const assets = computed(() => store.state.assets || {});
-console.log('assets =======> ', assets.value)
 
 const getAssets = () => {
   if (!token.value) return;

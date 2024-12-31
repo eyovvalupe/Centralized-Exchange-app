@@ -73,16 +73,16 @@ const onSelect = (item) => {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0 0.32rem 0.32rem 0.32rem;
+  justify-content: space-between;
+  padding: 0 0.6rem 0.32rem 0.6rem;
 }
 
 .btn-item {
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: relative;
 
   &__icon {
     border-radius: 0.4rem;
@@ -106,7 +106,9 @@ const onSelect = (item) => {
     font-size: 0.3rem;
     font-weight: 400;
     line-height: 0.44rem;
-    margin-top: 0.1rem;
+    position: absolute;
+    top: 0.9rem;
+    width: max-content;
   }
 }
 </style>

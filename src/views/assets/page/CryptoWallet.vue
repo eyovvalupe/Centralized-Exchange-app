@@ -90,7 +90,8 @@ defineExpose({
 
 <style lang="less" scoped>
 .page_assets_future {
-  padding: 0.32rem 0;
+  padding: 0.9rem 0 0.32rem 0;
+
   position: relative;
   .top {
     font-size: 0.28rem;
