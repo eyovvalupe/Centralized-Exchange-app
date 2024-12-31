@@ -9,7 +9,7 @@
       </template>
     </Top>
 
-    <div class="top_info">
+    <div class="top_info mb-[0.4rem]">
       <div class="status" v-if="orderData.status == 'success'">
         <div class="status_icon">
           <img :src="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="img" />
@@ -39,45 +39,43 @@
         <div class="status_desc">{{ $t("recharging.info_recharge_pending_con") }}</div>
       </div>
     </div>
-    <div class="bottom_info">
-      <div class="bottom_item">
-        <div class="name">{{ $t("recharging.info_recharge_balance") }}</div>
-        <div class="value">
-          {{ orderData.amount }}
-          <span class="value_currency">{{ orderData.currency }}</span>
-        </div>
-      </div>
-      <div class="bottom_item">
-        <div class="name">{{ $t("recharging.info_recharge_crpyto") }}</div>
-        <div class="value">{{ orderData.currency }}</div>
-      </div>
-      <div class="bottom_item">
-        <div class="name">{{ $t("recharging.info_recharge_network") }}</div>
-        <div class="value">{{ orderData.network }}</div>
-      </div>
-
-      <div class="bottom_item">
-        <div class="name">{{ $t("recharging.info_recharge_address") }}</div>
-        <div class="value">
-          <div class="value_text van-omit1">{{ orderData.address }}</div>
-          <div class="copy_icon" @click="copy(orderData.address)">
+    
+    <div class="w-full h-[5rem] rounded-[0.32rem] px-[0.12rem] py-[0.12rem] flex flex-col justify-between"
+      style="background-color: var(--ex-bg-color2);">
+      <div class="flex">
+        <div class="flex px-[0.16rem] flex items-center">
+          <div class="text-color5 mr-[0.1rem]">{{ orderData.order_no }}</div>
+          <div class="w-[0.32rem] h-[0.32rem]" @click="copy(orderData.order_no)">
             <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
+        <div class="text-color5 text-end px-[0.16rem]">{{ orderData.date }}</div>
       </div>
-      <div class="bottom_item">
-        <div class="name">{{ $t("recharging.info_recharge_order") }}</div>
-        <div class="value">
-          <div class="value_text van-omit1">{{ orderData.order_no }}</div>
-          <div class="copy_icon" @click="copy(orderData.order_no)">
-            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+      <div class="w-full h-[4rem] rounded-[0.32rem] px-[0.28rem]" style="background-color: var(--ex-bg-color);">
+        <div class="bottom_item">
+          <div class="name">{{ $t("recharging.info_recharge_balance") }}</div>
+          <div class="value">
+            {{ orderData.amount }}
+            <span class="value_currency">{{ orderData.currency }}</span>
           </div>
         </div>
-      </div>
-
-      <div class="bottom_item">
-        <div class="name">{{ $t("recharging.info_recharge_date") }}</div>
-        <div class="value">{{ orderData.date }}</div>
+        <div class="bottom_item">
+          <div class="name">{{ $t("recharging.info_recharge_crpyto") }}</div>
+          <div class="value">{{ orderData.currency }}</div>
+        </div>
+        <div class="bottom_item">
+          <div class="name">{{ $t("recharging.info_recharge_network") }}</div>
+          <div class="value">{{ orderData.network }}</div>
+        </div>
+        <div class="bottom_item">
+          <div class="name">{{ $t("recharging.info_recharge_address") }}</div>
+          <div class="value">
+            <div class="value_text van-omit1">{{ orderData.address }}</div>
+            <div class="copy_icon" @click="copy(orderData.address)">
+              <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -196,49 +194,44 @@ const goChat = () => {
     }
   }
 
-  .bottom_info {
-    padding: 0.22rem 0.32rem;
+  .bottom_item {
+    padding: 0.32rem 0 0.2rem 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.28rem;
+    color: var(--ex-text-color3);
+    line-height: 0.44rem;
+    font-weight: 400;
 
-    .bottom_item {
-      padding: 0.32rem 0 0.2rem 0;
-      border-bottom: 1px solid var(--ex-border-color);
+    .value {
+      font-size: 0.3rem;
+      color: var(--ex-text-color);
       display: flex;
-      justify-content: space-between;
-      font-size: 0.28rem;
-      color: var(--ex-text-color3);
-      line-height: 0.44rem;
-      font-weight: 400;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 1;
+      overflow: hidden;
+      margin-left: 0.32rem;
+    }
 
-      .value {
-        font-size: 0.3rem;
-        color: var(--ex-text-color);
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        flex: 1;
-        overflow: hidden;
-        margin-left: 0.32rem;
-      }
+    .value_text {
+      display: block;
+      flex: 1;
+      text-align: right;
+    }
 
-      .value_text {
-        display: block;
-        flex: 1;
-        text-align: right;
-      }
+    .value_currency {
+      font-size: 0.24rem;
+      margin-left: 0.12rem;
+      vertical-align: bottom;
+      position: relative;
+      top: 0.02rem;
+    }
 
-      .value_currency {
-        font-size: 0.24rem;
-        margin-left: 0.12rem;
-        vertical-align: bottom;
-        position: relative;
-        top: 0.02rem;
-      }
-
-      .copy_icon {
-        width: 0.24rem;
-        height: 0.24rem;
-        margin-left: 0.16rem;
-      }
+    .copy_icon {
+      width: 0.32rem;
+      height: 0.32rem;
+      margin-left: 0.16rem;
     }
   }
 }
