@@ -104,7 +104,7 @@
           <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
           <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem"
             color="var(--ex-primary-color)" />
-          <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
+          <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click.stop="openStockModel">
             <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
           </div>
         </div>
@@ -125,9 +125,9 @@
 
     <!-- 保证金模式 -->
     <div class="item_box">
-      <div class="item_box_right" @click="openTypeDialog">
+      <div class="item_box_right" @click="showModeTypeDialog = true">
         <div class="item justify-between">
-          <div class="tip-title">杠杆</div>
+          <div class="tip-title">保证金模式</div>
           <span class="flex text-center" style="margin-bottom: 0.06rem;">
             {{
               form1.leverType == "cross"
@@ -139,7 +139,7 @@
           </div>
         </div>
       </div>
-      <div class="item_box_right" style="margin-left: 0.2rem;" @click="openTypeDialog">
+      <div class="item_box_right" style="margin-left: 0.2rem;" @click="showLeverTypeDialog = true">
         <div class="item justify-between">
           <div class="tip-title">杠杆</div>
           <span v-if="!levers.length">--</span>
@@ -190,7 +190,7 @@
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
       :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
-      <span style="color:var(--ex-black)">{{
+      <span style="color:var(--ex-black);">{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
@@ -220,97 +220,116 @@
       {{ t("trade.stock_opening_confirm_title") }}
     </div>
     <div class="stock_submit_box">
-      <div class="item">
-        <div class="item_name">{{ t("trade.stock_opening_stock") }}</div>
-        <div class="item_val">
-          <div style="line-height: 0.36rem">
-            <div style="text-align: right; font-size: 0.3rem">
-              {{ currStock.symbol }}
+
+      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding:0.12rem;margin-bottom: 0.32rem;">
+
+
+        <!-- 股票 -->
+        <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
+          <div style="font-size: 0.32rem;margin-bottom: 0.1rem;">
+            {{ currStock.symbol }}
+          </div>
+          <div style="color: var(--ex-text-color3); font-size: 0.24rem">
+            {{ currStock.name }}
+          </div>
+        </div>
+
+        <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color);padding: 0 0.28rem">
+
+          <!-- <div class="item">
+            <div class="item_name">{{ t("trade.stock_opening_stock") }}</div>
+            <div class="item_val">
+              <div style="line-height: 0.36rem">
+                <div style="text-align: right; font-size: 0.3rem">
+                  {{ currStock.symbol }}
+                </div>
+                <div style="color: var(--ex-text-color3); font-size: 0.24rem">
+                  {{ currStock.name }}
+                </div>
+              </div>
             </div>
-            <div style="color: var(--ex-text-color3); font-size: 0.24rem">
-              {{ currStock.name }}
+          </div> -->
+          <div class="item">
+            <div class="item_name">{{ t("trade.stock_open") }}</div>
+            <div class="item_val">
+              <div class="tag" :class="activeType == 1 ? 'green_tag' : 'red_tag'">
+                {{
+                  activeType == 1
+                    ? t("trade.stock_open_long")
+                    : t("trade.stock_open_short")
+                }}
+              </div>
+              <!-- <div class="tag">{{ modeMap[params.lever_type] }}</div> -->
+              <div class="tag">
+                {{
+                  params.lever_type == "cross"
+                    ? t("trade.stock_opening_position_mode_cross")
+                    : params.lever_type == "isolated"
+                      ? t("trade.stock_opening_position_mode_isolated")
+                      : "--"
+                }}
+              </div>
+              <div class="lever">{{ params.lever || 1 }}X</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item_name">{{ t("trade.stock_opening_price") }}</div>
+            <div class="item_val">
+              <div class="tag">
+                {{
+                  params.price_type == "market"
+                    ? t("trade.stock_opening_price_market")
+                    : t("trade.stock_opening_price_limit")
+                }}
+              </div>
+              <div class="lever" v-if="params.price">{{ params.price }}</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item_name">{{ t("trade.stock_opening_amount") }}</div>
+            <div class="item_val">{{ params.volume }}</div>
+          </div>
+          <div class="item">
+            <div class="item_name">{{ t("trade.stock_take_stop") }}</div>
+            <div class="item_val" v-if="props.activeTab != 2">
+              <div class="tag">{{ t("trade.stock_opening_no") }}</div>
+            </div>
+            <div v-if="props.activeTab == 2">
+              <div class="item_val" style="margin-bottom: 0.12rem" v-if="mode == 2">
+                <div class="tag green_tag">{{ t("trade.stock_opening_take") }}</div>
+                <div class="lever">{{ params.stop_profit_price }}</div>
+              </div>
+              <div class="item_val">
+                <div class="tag red_tag">{{ t("trade.stock_opening_stop") }}</div>
+                <div class="lever">{{ params.stop_loss_price }}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="item_name">{{ t("trade.stock_open") }}</div>
-        <div class="item_val">
-          <div class="tag" :class="activeType == 1 ? 'green_tag' : 'red_tag'">
-            {{
-              activeType == 1
-                ? t("trade.stock_open_long")
-                : t("trade.stock_open_short")
-            }}
+
+        <div class="money_box">
+          <div class="amount">
+            {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
           </div>
-          <!-- <div class="tag">{{ modeMap[params.lever_type] }}</div> -->
-          <div class="tag">
-            {{
-              params.lever_type == "cross"
-                ? t("trade.stock_opening_position_mode_cross")
-                : params.lever_type == "isolated"
-                  ? t("trade.stock_opening_position_mode_isolated")
-                  : "--"
-            }}
-          </div>
-          <div class="lever">{{ params.lever || 1 }}X</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item_name">{{ t("trade.stock_opening_price") }}</div>
-        <div class="item_val">
-          <div class="tag">
-            {{
-              params.price_type == "market"
-                ? t("trade.stock_opening_price_market")
-                : t("trade.stock_opening_price_limit")
-            }}
-          </div>
-          <div class="lever" v-if="params.price">{{ params.price }}</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item_name">{{ t("trade.stock_opening_amount") }}</div>
-        <div class="item_val">{{ params.volume }}</div>
-      </div>
-      <div class="item">
-        <div class="item_name">{{ t("trade.stock_take_stop") }}</div>
-        <div class="item_val" v-if="props.activeTab != 2">
-          <div class="tag">{{ t("trade.stock_opening_no") }}</div>
-        </div>
-        <div v-if="props.activeTab == 2">
-          <div class="item_val" style="margin-bottom: 0.12rem" v-if="mode == 2">
-            <div class="tag green_tag">{{ t("trade.stock_opening_take") }}</div>
-            <div class="lever">{{ params.stop_profit_price }}</div>
-          </div>
-          <div class="item_val">
-            <div class="tag red_tag">{{ t("trade.stock_opening_stop") }}</div>
-            <div class="lever">{{ params.stop_loss_price }}</div>
+          <div class="fee">
+            {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> +
+            {{ t("trade.stock_opening_fee") }} <span>{{ payFee }}</span>
           </div>
         </div>
       </div>
 
-      <div class="money_box">
-        <div class="amount">
-          {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
-        </div>
-        <div class="fee">
-          {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> +
-          {{ t("trade.stock_opening_fee") }} <span>{{ payFee }}</span>
-        </div>
-      </div>
-
-      <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div>
+      <!-- <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div> -->
       <div class="item pass_ipt">
-        <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
+        <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
           :type="showPassword ? 'text' : 'password'" class="ipt" />
         <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
           @click="showPassword = true" alt="off" />
         <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
           @click="showPassword = false" />
       </div>
-      <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>{{
-        t("trade.stock_open") }}</Button>
+      <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>
+        <span style="color: var(--ex-black);">{{ t("trade.stock_open") }}</span>
+      </Button>
     </div>
   </Popup>
 
@@ -345,6 +364,16 @@
   <!-- 限价模式选择 -->
   <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
     @select="onSelectForm1PriceType" :title="t('trade.stock_opening_amount_limit_mode')">
+  </ActionSheet>
+
+  <!-- 保证金模式选择 -->
+  <ActionSheet teleport="body" v-model:show="showModeTypeDialog" :actions="modeList" @select="onSelectForm1ModeType"
+    :title="t('trade.stock_opening_amount_mode')">
+  </ActionSheet>
+
+  <!-- 杠杆选择 -->
+  <ActionSheet teleport="body" v-model:show="showLeverTypeDialog" :actions="leversActions" @select="onSelectLeverType"
+    :title="'杠杆'">
   </ActionSheet>
 
   <!-- 跳转选择 -->
@@ -610,10 +639,21 @@ const onSelectJumpModeType = (item) => {
 };
 
 // 仓位类型
+const showModeTypeDialog = ref(false);
 const modeMap = ref({
   cross: t("trade.stock_opening_position_mode_cross"),
   isolated: t("trade.stock_opening_position_mode_isolated"),
 });
+const onSelectForm1ModeType = (item) => {
+  showModeTypeDialog.value = false;
+  form1.value.leverType = item.value;
+};
+// 杠杆选择
+const showLeverTypeDialog = ref(false);
+const onSelectLeverType = (item) => {
+  showLeverTypeDialog.value = false;
+  form1.value.lever = item.value;
+};
 
 // 市价-类型
 const showTypeDialog = ref(false);
@@ -664,6 +704,15 @@ const columns = computed(() => {
     }),
   ];
 });
+const leversActions = computed(() => {
+  return levers.value.map((item) => {
+    return {
+      name: item + "X",
+      value: item,
+      className: form1.value.lever == item ? "action-sheet-active" : "",
+    };
+  })
+})
 const onSelectForm1PriceType = (item) => {
   showPriceTypeDialog.value = false;
   priceMode.value = item.value;
@@ -1395,6 +1444,7 @@ defineExpose({
 
   .submit {
     margin-top: 0.8rem;
+    border-radius: 0.4rem;
   }
 }
 
@@ -1406,7 +1456,7 @@ defineExpose({
     align-items: center;
     justify-content: space-between;
     padding: 0.36rem 0 0.2rem 0;
-    border-bottom: 1px solid var(--ex-border-color);
+    // border-bottom: 1px solid var(--ex-border-color);
 
     .item_name {
       color: var(--ex-text-color3);
@@ -1467,6 +1517,7 @@ defineExpose({
     padding: 0.16rem 0.32rem;
     box-sizing: border-box;
     position: relative;
+    background-color: var(--ex-bg-color3);
 
     img {
       width: 0.4rem;
@@ -1480,14 +1531,36 @@ defineExpose({
   }
 
   .money_box {
-    margin: 0.32rem 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color);
     border-radius: 0.32rem;
-    padding: 0.24rem 0.32rem;
+    height: 1.4rem;
+    text-align: center;
+    margin-top: 0.2rem;
+    position: relative;
+
+    &::after {
+      width: 0.16rem;
+      height: 0.34rem;
+      content: "";
+      background-color: var(--ex-bg-color);
+      position: absolute;
+      top: -0.28rem;
+      right: 1.1rem;
+    }
+
+    &::before {
+      width: 0.16rem;
+      height: 0.34rem;
+      content: "";
+      background-color: var(--ex-bg-color);
+      position: absolute;
+      top: -0.28rem;
+      left: 1.1rem;
+    }
 
     .amount {
       color: var(--ex-text-color2);
@@ -1506,7 +1579,7 @@ defineExpose({
       font-size: 0.24rem;
       font-weight: 400;
       line-height: 0.36rem;
-      padding: 0.1rem 0 0 0.2rem;
+      padding: 0.04rem 0 0 0.2rem;
 
       span {
         color: var(--ex-text-color);
