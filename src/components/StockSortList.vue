@@ -11,30 +11,34 @@
       shrink
     >
       <Tab :title="t('market.market_stock_chase_long_sort')" name="up">
-        <!-- <StockTable :key="'down'" :loading="loading" :list="marketDownList" :marketType="'stock'" /> -->
-        <StockTableForList :loading="loading" :list="marketUpList" />
-        <LoadingMore
-          :classN="'stock_soft_moreup'"
-          class="active_more"
-          :loading="!!(marketUpList.length && loading)"
-          :finish="finish"
-          v-if="((finish && marketUpList.length) || !finish) && active == 2"
-        />
+        <div class="px-[0.4rem]">
+          <!-- <StockTable :key="'down'" :loading="loading" :list="marketDownList" :marketType="'stock'" /> -->
+          <StockTableForList :loading="loading" :list="marketUpList" />
+          <LoadingMore
+            :classN="'stock_soft_moreup'"
+            class="active_more"
+            :loading="!!(marketUpList.length && loading)"
+            :finish="finish"
+            v-if="((finish && marketUpList.length) || !finish) && active == 2"
+          />
+        </div>
       </Tab>
       <Tab :title="t('market.market_stock_chase_short_sort')" name="down">
-        <StockTableForList
-          :key="'up'"
-          :loading="loading"
-          :list="marketDownList"
-        />
+        <div class="px-[0.4rem]">
+          <StockTableForList
+            :key="'up'"
+            :loading="loading"
+            :list="marketDownList"
+          />
 
-        <LoadingMore
-          :classN="'stock_soft_moredown'"
-          class="active_more"
-          :loading="!!(marketDownList.length && loading)"
-          :finish="finish"
-          v-if="((finish && marketDownList.length) || !finish) && active == 1"
-        />
+          <LoadingMore
+            :classN="'stock_soft_moredown'"
+            class="active_more"
+            :loading="!!(marketDownList.length && loading)"
+            :finish="finish"
+            v-if="((finish && marketDownList.length) || !finish) && active == 1"
+          />
+        </div>
       </Tab>
     </Tabs>
   </div>
@@ -196,7 +200,7 @@ onBeforeUnmount(() => {
 .market_stock_list {
   :deep(.van-tabs) {
     .van-tabs__wrap {
-      margin: 0 0 0.32rem 0 !important;
+      margin: 0 0 0.12rem 0 !important;
       height: 1rem !important;
       .van-tabs__nav {
         padding: 0 0.32rem;
@@ -225,6 +229,7 @@ onBeforeUnmount(() => {
 
         .van-tabs__line {
           bottom: 1px;
+          display: none;
           margin-left: -0.4rem;
           width: 0.8rem;
           height: 0.06rem;

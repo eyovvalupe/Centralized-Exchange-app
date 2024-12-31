@@ -286,30 +286,20 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.24rem;
-  padding: 0 0.3rem;
+  height: 1.62rem;
+  padding: 0 0.28rem;
   position: relative;
-
-  &::after {
-    content: "";
-    width: calc(100% - 0.6rem);
-    position: absolute;
-    bottom: 0;
-    left: 0.3rem;
-    height: 1px;
-    background-color: var(--ex-bg-color3);
-  }
 
   .td5 {
     flex: 5;
     flex-shrink: 0;
     overflow: hidden;
-
     .item_name {
       font-size: 0.32rem;
       color: var(--ex-text-color);
       line-height: 0.432rem;
       font-weight: 400;
+      margin-bottom: 0.2rem;
     }
 
     .item_info {
@@ -339,9 +329,10 @@ const removeStock = (item) => {
 
     .item_info_box {
       height: 0.48rem;
-
+      display: flex;
+      justify-content: flex-end;
       .item_percent {
-        width: 1.4rem;
+        width: 1.14rem;
         height: 0.48rem;
         text-align: center;
         line-height: 0.32rem;
@@ -351,7 +342,8 @@ const removeStock = (item) => {
         align-items: center;
         font-weight: 400;
         color: var(--ex-white);
-        border-radius: 0.24rem;
+        border-radius: 0.12rem;
+        margin-top: 0.18rem;
       }
 
       .nodata_percent {
