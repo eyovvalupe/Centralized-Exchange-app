@@ -23,7 +23,7 @@
           : "********"
       }}</span>
     </div>
-    <div class="flex w-full px-[0.6rem] justify-between">
+    <div class="flex w-full px-[0.64rem] justify-between">
       <div
         class="w-[3rem] h-[1.12rem] rounded-[0.32rem] bg-color2 flex flex-col justify-between items-center py-[0.2rem] wallet_money_item">
         <div class="text-[0.28rem] text-color2">{{ type == 'cash' ? t('assets.wallet_available') : type == 'stock' ?
