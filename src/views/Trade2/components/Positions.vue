@@ -13,55 +13,60 @@
     <Loaidng size="0.32rem" :loading="loading" v-if="!positionsList.length && loading" />
 
     <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
-      <div class="td td-5">
-        <div class="name van-omit1">{{ item.symbol }}</div>
-        <div class="lever">
-          <div class="status-color status">{{ item.lever }}X</div>
-          <div class="status-color status" :class="'status-' + item.status">
-            <!-- {{ statusMap[item.status] || "--" }} -->
+
+      <div
+        style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
+        <div class="td td-5">
+          <div class="name van-omit1">{{ item.symbol }}</div>
+          <div class="lever">
+            <div class="status-color status tag-default">{{ item.lever }}X</div>
+            <div class="status-color status" :class="'status-' + item.status">
+              <!-- {{ statusMap[item.status] || "--" }} -->
+              {{
+                item.status == "none"
+                  ? t("trade.stock_position_status_none")
+                  : item.status == "lock"
+                    ? t("trade.stock_position_status_lock")
+                    : item.status == "open"
+                      ? t("trade.stock_position_status_open")
+                      : item.status == "done"
+                        ? t("trade.stock_position_status_done")
+                        : item.status == "fail"
+                          ? t("trade.stock_position_status_fail")
+                          : item.status == "cancel"
+                            ? t("trade.stock_position_status_cancel")
+                            : "--"
+              }}
+            </div>
+          </div>
+        </div>
+        <div class="td td-4">
+          <div class="state" :class="'state-' + item.offset">
+            <!-- {{ offsetMap[item.offset] || "--" }} -->
             {{
-              item.status == "none"
-                ? t("trade.stock_position_status_none")
-                : item.status == "lock"
-                  ? t("trade.stock_position_status_lock")
-                  : item.status == "open"
-                    ? t("trade.stock_position_status_open")
-                    : item.status == "done"
-                      ? t("trade.stock_position_status_done")
-                      : item.status == "fail"
-                        ? t("trade.stock_position_status_fail")
-                        : item.status == "cancel"
-                          ? t("trade.stock_position_status_cancel")
-                          : "--"
+              item.offset == "long"
+                ? t("trade.stock_position_offset_long")
+                : item.offset == "short"
+                  ? t("trade.stock_position_offset_short")
+                  : "--"
             }}
+          </div>
+          <div class="amount">{{ item.unsold_volume || "--" }}</div>
+        </div>
+        <div class="td td-4">
+          <div class="price">{{ item.settled_price || "--" }}</div>
+          <div class="price">{{ item.open_price || "--" }}</div>
+        </div>
+        <div class="td td-4">
+          <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
+            {{ item.profit || "--" }}
+          </div>
+          <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
+            {{ getRatio(item.ratio) }}
           </div>
         </div>
       </div>
-      <div class="td td-4">
-        <div class="state" :class="'state-' + item.offset">
-          <!-- {{ offsetMap[item.offset] || "--" }} -->
-          {{
-            item.offset == "long"
-              ? t("trade.stock_position_offset_long")
-              : item.offset == "short"
-                ? t("trade.stock_position_offset_short")
-                : "--"
-          }}
-        </div>
-        <div class="amount">{{ item.unsold_volume || "--" }}</div>
-      </div>
-      <div class="td td-4">
-        <div class="price">{{ item.settled_price || "--" }}</div>
-        <div class="price">{{ item.open_price || "--" }}</div>
-      </div>
-      <div class="td td-4">
-        <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
-          {{ item.profit || "--" }}
-        </div>
-        <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-          {{ getRatio(item.ratio) }}
-        </div>
-      </div>
+
     </div>
 
     <!-- 订单详情 -->
@@ -653,7 +658,6 @@ getSessionToken();
   .td {
     text-align: center;
     flex-shrink: 0;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: flex;
@@ -665,13 +669,15 @@ getSessionToken();
       font-size: 0.32rem;
       color: var(--ex-text-color);
       line-height: 0.32rem;
-      margin-bottom: 0.18rem;
+      margin-bottom: 0.28rem;
       display: block;
     }
 
     .lever {
       display: flex;
       align-items: center;
+      position: relative;
+      bottom: -0.02rem;
     }
 
     .status {
@@ -711,7 +717,7 @@ getSessionToken();
     }
 
     .price {
-      color: var(--ex-text-color2);
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
     }
 
