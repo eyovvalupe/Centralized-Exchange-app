@@ -7,59 +7,67 @@
           <div class="top-record-icon">
             <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
-          <span class="max-w-[1.2rem]">
-            {{ $t("topUpCrypto.rechargeRecord") }}
-          </span>
         </div>
       </template>
     </Top>
 
     <Tabs type="custom-card" v-model:active="tabActive" :swipeable="false" shrink>
       <Tab :title="$t('topUpCrypto.cryptocurrency')" name="cryptocurrency">
-        <div class="form">
-          <div class="subtitle">
-            <span>{{ $t("topUpCrypto.currency") }}</span>
-          </div>
-
-          <div class="item">
-            <div class="select_item border_item" @click="showDialog = true">
-              <div class="currency">
-                <div class="currency_icon" v-if="form.currency">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)" alt="currency"
-                    class="rounded-full" />
+        <div class="form mt-[0.46rem]">
+          <div
+            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem]"
+            style="background-color: var(--ex-bg-color2);" @click="showDialog = true">
+            <div class="flex flex-col justify-between">
+              <div class="text-[0.28rem] text-color5">
+                <span>{{ $t("topUpCrypto.currency") }}</span>
+              </div>
+              <div class="item relative top-[0.1rem]">
+                <div class="select_item">
+                  <div class="currency">
+                    <div class="w-[0.48rem] h-[0.48rem] mr-[0.2rem]" v-if="form.currency">
+                      <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)"
+                        alt="currency" class="rounded-full" />
+                    </div>
+                    <span>{{ form.currency || "" }}</span>
+                  </div>
                 </div>
-                <span>{{ form.currency || "" }}</span>
-              </div>
-              <div class="more">
-                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" />
               </div>
             </div>
-          </div>
-          <div class="subtitle">
-            <span>{{ $t("topUpCrypto.network") }}</span>
-          </div>
-          <div class="item">
-            <div class="select_item border_item" @click="showNetDialog = true">
-              <div class="currency">
-                <span>{{ form.network || "" }}</span>
-              </div>
-              <div class="more">
-                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" />
-              </div>
+            <div class="w-[0.2rem] h-[0.2rem]">
+              <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
             </div>
           </div>
-
-          <div class="subtitle">
+          
+          <div
+            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem]"
+            style="background-color: var(--ex-bg-color2);" @click="showNetDialog = true">
+            <div class="h-full flex flex-col">
+              <div class="text-[0.28rem] text-color5" style="width: max-content;">
+                <span>{{ t("topUpCrypto.network") }}</span>
+              </div>
+              <div class="item relative top-[0.32rem]">
+                <div class="select_item">
+                  <div class="currency">
+                    <span>{{ form.network || "" }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="w-[0.2rem] h-[0.2rem]">
+              <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
+            </div>
+          </div>
+          <!-- <div class="subtitle">
             <span style="flex: none">{{
               $t("topUpCrypto.rechargeAmount")
             }}</span>
-          </div>
-          <div class="item border_item" :class="{ err_ipt: errStatus }">
+          </div> -->
+          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]" :class="{ err_ipt: errStatus }" style="background-color: var(--ex-bg-color2);">
             <div class="item_content">
               <input class="ipt" @blur="
                 errStatus = false;
               form.amount <= 0 ? (form.amount = '') : '';
-              " type="number" v-model="form.amount" :placeholder="$t('topUpCrypto.inputPlaceholder')" />
+              " type="number" v-model="form.amount" :placeholder="t('topUpCrypto.rechargeAmount')" />
             </div>
             <div>{{ topUpMode == 1 ? form.currency : "USDT" }}</div>
           </div>
@@ -371,22 +379,28 @@ onBeforeUnmount(() => {
     z-index: 10;
   }
 
+  :deep(span.van-button__text) {
+    color: var(--ex-black);
+  }
+
   :deep(span.van-tab__text) {
     font-size: 0.32rem;
     color: var(--ex-text-color2);
   }
 
   .top-record {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 0.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ex-text-primary);
-    font-size: 0.28rem;
+    background-color: var(--ex-bg-color2);
+
 
     .top-record-icon {
-      width: 0.3rem;
-      height: 0.3rem;
-      margin-right: 0.06rem;
+      width: 0.32rem;
+      height: 0.32rem;
     }
   }
 
@@ -424,7 +438,7 @@ onBeforeUnmount(() => {
   .form {
     .item {
       width: 100%;
-      height: 1.12rem;
+      // height: 1.12rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -495,7 +509,7 @@ onBeforeUnmount(() => {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 100%;
+      // height: 100%;
     }
 
     .subtitle {
@@ -505,8 +519,8 @@ onBeforeUnmount(() => {
       color: var(--ex-text-color);
       font-weight: 400;
       line-height: 0.36rem;
-      margin-top: 0.4rem;
-      margin-bottom: 0.12rem;
+      // margin-top: 0.4rem;
+      // margin-bottom: 0.12rem;
 
       >span {
         flex: 1;
