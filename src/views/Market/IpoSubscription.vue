@@ -59,8 +59,8 @@
 
         </div>
         <Button @click="openSafe" :loading="loading" round size="large" color="var(--ex-primary-color)" class="submit"
-            type="primary">{{
-                t('trade.ipo_opening_btn') }}</Button>
+            type="primary"><span style="color: var(--ex-black);">{{
+                t('trade.ipo_opening_btn') }}</span></Button>
 
 
         <!-- 订单确认弹窗 -->
@@ -131,8 +131,8 @@
                 </FormItem>
 
                 <Button :loading="loading" @click="submit(safeword)" size="large" class="submit"
-                    color="var(--ex-primary-color)" round>{{
-                        $t("trade.ipo_opening_btn") }}</Button>
+                    color="var(--ex-primary-color)" round><span style="color: var(--ex-black);">{{
+                        $t("trade.ipo_opening_btn") }}</span></Button>
             </div>
         </Popup>
 
@@ -378,6 +378,7 @@ const openConfirmBox = () => {
         cancelButtonText: t("trade.stock_opening_btn_recharge"),
         confirmButtonColor: "var(--ex-primary-color)",
         cancelButtonColor: "var(--ex-primary-color)",
+        theme: 'round-button'
     })
         .then(() => {
             router.push({

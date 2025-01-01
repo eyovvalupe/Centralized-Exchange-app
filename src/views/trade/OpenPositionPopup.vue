@@ -46,7 +46,7 @@
         <div class="right-text" style="display: flex;" v-if="orderList.active === '1'">
           <div class="detail-flex-1">
           </div>
-          <div class="detail-flex-1 detail-blue-box" >
+          <div class="detail-flex-1 detail-blue-box">
             限价
           </div>
           <div class="detail-flex-1">
@@ -56,7 +56,7 @@
         <div class="right-text" style="display: flex;" v-if="orderList.active === '2' && orderList.marketprice">
           <div class="detail-flex-1">
           </div>
-          <div class="detail-flex-1 detail-blue-box" >
+          <div class="detail-flex-1 detail-blue-box">
             限价
           </div>
           <div class="detail-flex-1">
@@ -86,16 +86,15 @@
         </div>
         <div class="right-text">
           <div class="win-lose-box">
-            {{orderList.active === '2'?'有':'无'}}
+            {{ orderList.active === '2' ? '有' : '无' }}
           </div>
         </div>
       </div>
-      
+
 
       <div class="position-bottom">
         <div>
-          <span class="position-pay">支付 </span
-          ><span class="pay-num">{{ orderList.amount }}</span>
+          <span class="position-pay">支付 </span><span class="pay-num">{{ orderList.amount }}</span>
         </div>
         <div class="position-line-dashed"></div>
         <div class="position-fee">保证金 {{ orderList.paymentAmount }} + 手续费 {{ orderList.openfee }}</div>
@@ -104,30 +103,14 @@
       <div class="ipo-code">
         <div class="ipo-code-title">请输入交易密码</div>
 
-        <PasswordInput
-          :value="value"
-          :focused="showKeyboard"
-          @focus="showKeyboard = true"
-          :gutter="16"
-        />
+        <PasswordInput :value="value" :focused="showKeyboard" @focus="showKeyboard = true" :gutter="16" />
         <!-- 数字键盘 -->
-        <NumberKeyboard
-          v-model="value"
-          :show="showKeyboard"
-          @blur="showKeyboard = false"
-        />
+        <NumberKeyboard v-model="value" :show="showKeyboard" @blur="showKeyboard = false" />
       </div>
 
 
-      <Button
-        size="large"
-        color="var(--ex-primary-color)"
-        round
-        style="margin-top: 0.6rem;"
-        @click="openStock"
-        :disabled = 'value == 0 || value.length === 0'
-        >开仓</Button
-      >
+      <Button size="large" color="var(--ex-primary-color)" round style="margin-top: 0.6rem;" @click="openStock"
+        :disabled='value == 0 || value.length === 0'><span style="color: var(--ex-black);">开仓</span></Button>
 
     </div>
   </div>
@@ -148,7 +131,7 @@ const showKeyboard = ref(false);
 const orderList = computed(() => store.state.orderList)
 const getcommToken = computed(() => store.state.sessionToken)
 
-const openStock = ()=>{
+const openStock = () => {
   let lever_type;
   let offset;
   let price_type;
@@ -168,7 +151,7 @@ const openStock = ()=>{
 
   if (orderList.value.active === '0') {
     price_type = 'market'
-  } else if (orderList.value.active === '2'){
+  } else if (orderList.value.active === '2') {
     if (orderList.value.marketprice) {
       price_type = 'limit'
     } else {
@@ -186,24 +169,24 @@ const openStock = ()=>{
     price = ''
   }
   const data = {
-    symbol:orderList.value.stockCo[0].symbol,
+    symbol: orderList.value.stockCo[0].symbol,
     offset: offset,
     volume: Number(orderList.value.numValue),
     lever_type: lever_type,
     lever: orderList.value.selectedLeverOption,
     price_type: price_type,
     price: price,
-    stop_loss_price:orderList.value.loseValue,
-    token:getcommToken.value,
-    safeword:value.value
+    stop_loss_price: orderList.value.loseValue,
+    token: getcommToken.value,
+    safeword: value.value
   }
 
   _stocksBuy({ ...data }).then(res => {
-        if (res.code == 200) {
-          showToast('开仓成功');
-          store.dispatch('closePopup')
-        }
-    });
+    if (res.code == 200) {
+      showToast('开仓成功');
+      store.dispatch('closePopup')
+    }
+  });
 }
 
 </script>
@@ -220,10 +203,12 @@ const openStock = ()=>{
     line-height: 0.44rem;
     margin-bottom: 0.36rem;
   }
+
   .order-update-box {
     padding: 0 0.32rem;
     padding-top: 0.2rem;
   }
+
   .order-lose-title {
     color: var(--ex-text-color);
     font-size: 0.28rem;
@@ -234,14 +219,17 @@ const openStock = ()=>{
     margin-bottom: 0.2rem;
     margin-top: 0.2rem;
   }
+
   .lose-field {
     height: 0.88rem;
     border-radius: 0.12rem;
     border: 0.02rem solid var(--ex-border-color2);
+
     .van-field__control {
       text-align: right;
     }
   }
+
   .account-monkey {
     text-align: right;
     color: var(--ex-text-color3);
@@ -250,14 +238,17 @@ const openStock = ()=>{
     font-weight: 400;
     line-height: 0.48rem;
     margin: 0.12rem 0;
+
     .account-num-monkey {
       color: var(--ex-text-color);
     }
   }
+
   .position-bottom {
     text-align: right;
     margin-top: 0.8rem;
     position: relative;
+
     .position-pay {
       color: var(--ex-primary-color);
       font-size: 0.28rem;
@@ -266,6 +257,7 @@ const openStock = ()=>{
       line-height: 0.48rem;
       vertical-align: middle;
     }
+
     .pay-num {
       color: var(--ex-primary-color);
       text-align: right;
@@ -275,6 +267,7 @@ const openStock = ()=>{
       line-height: 0.56rem;
       vertical-align: middle;
     }
+
     .position-line-dashed {
       width: 3.44rem;
       border-bottom: 0.02rem dashed var(--ex-border-color2);
@@ -282,6 +275,7 @@ const openStock = ()=>{
       right: 0;
       top: 0.5rem;
     }
+
     .position-fee {
       margin-top: 0.1rem;
       color: var(--ex-text-color);
@@ -302,6 +296,7 @@ const openStock = ()=>{
     font-weight: 400;
     line-height: 0.36rem;
   }
+
   .prcent-num {
     font-weight: 600;
     margin-left: 0.26rem;
@@ -309,6 +304,7 @@ const openStock = ()=>{
     width: 1rem;
     text-align: right;
   }
+
   .risk-line-dashed {
     width: 3.44rem;
     border-bottom: 0.02rem dashed var(--ex-border-color2);
@@ -316,10 +312,12 @@ const openStock = ()=>{
     right: 0.32rem;
     top: 0.42rem;
   }
+
   .all-risk-line {
     display: flex;
     justify-content: right;
     margin-top: 0.1rem;
+
     .risk-text {
       color: var(--ex-text-color);
       text-align: center;
@@ -329,8 +327,10 @@ const openStock = ()=>{
       line-height: 0.36rem;
     }
   }
+
   .ipo-code {
     margin-top: 0.26rem;
+
     .ipo-code-title {
       text-align: center;
       color: var(--ex-text-color);
@@ -341,13 +341,16 @@ const openStock = ()=>{
       margin-bottom: 0.3rem;
     }
   }
+
   .van-password-input {
     margin: 0;
   }
+
   .van-password-input__security li {
     border-radius: 0.16rem;
     border: 0.02rem solid var(--ex-border-color);
   }
+
   @media (min-width: 751px) {
     .van-number-keyboard {
       max-width: 375px;
@@ -356,6 +359,7 @@ const openStock = ()=>{
       transform: translateX(-50%) !important;
     }
   }
+
   .close-price-num {
     text-align: right;
     color: var(--ex-error-color);
@@ -365,79 +369,88 @@ const openStock = ()=>{
     line-height: 0.56rem;
     margin-top: 0.56rem;
   }
+
   .detail-box {
-        display: flex;
-        border-bottom: 0.02rem solid var(--ex-border-color);
-        height: 1rem;
-        width: 100%;
-        .left-text {
-          width: 2rem;
-          color: var(--ex-text-color3);
-          text-align: left;
-          font-size: 0.28rem;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 1rem;
-        }
-        .right-text {
-          flex: 1;
-          color: var(--ex-text-color);
-          text-align: right;
-          font-size: 0.28rem;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 1rem;
-          position: relative;
-          .win-lose-box {
-            width: 1.16rem;
-            height: 0.44rem;
-            color: var(--ex-primary-color);
-            background-color: var(--ex-bg-color3);
-            position: absolute;
-            right: 0;
-            line-height: 0.44rem;
-            text-align: center;
-            top: 0.28rem;
-          }
-          .copy-img {
-            display: inline-block;
-            width: 0.3rem !important;
-            height: 0.3rem !important;
-            vertical-align: middle;
-            margin-left: 0.1rem;
-          }
-        }
-        .detail-flex-1 {
-          flex: 1;
-        }
-        .detail-red-box {
-          width: 1.16rem;
-          height: 0.44rem;
-          background-color: rgb(var(--ex-down-color-rgb) / 0.08);
-          color: var(--ex-down-color);
-          margin: auto;
-          text-align: center;
-          line-height: 0.44rem;
-        }
-        .detail-green-box {
-          width: 1.16rem;
-          height: 0.44rem;
-          background-color: rgb(var(--ex-up-color-rgb) / 0.08);
-          color: var(--ex-up-color);
-          margin: auto;
-          text-align: center;
-          line-height: 0.44rem;
-        }
-        .detail-blue-box {
-          width: 1.16rem;
-          height: 0.44rem;
-          background-color: var(--ex-bg-color3);
-          color: var(--ex-primary-color);
-          margin: auto;
-          text-align: center;
-          line-height: 0.44rem;
-          margin-left: 0.18rem;
-        }
+    display: flex;
+    border-bottom: 0.02rem solid var(--ex-border-color);
+    height: 1rem;
+    width: 100%;
+
+    .left-text {
+      width: 2rem;
+      color: var(--ex-text-color3);
+      text-align: left;
+      font-size: 0.28rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 1rem;
+    }
+
+    .right-text {
+      flex: 1;
+      color: var(--ex-text-color);
+      text-align: right;
+      font-size: 0.28rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 1rem;
+      position: relative;
+
+      .win-lose-box {
+        width: 1.16rem;
+        height: 0.44rem;
+        color: var(--ex-primary-color);
+        background-color: var(--ex-bg-color3);
+        position: absolute;
+        right: 0;
+        line-height: 0.44rem;
+        text-align: center;
+        top: 0.28rem;
       }
+
+      .copy-img {
+        display: inline-block;
+        width: 0.3rem !important;
+        height: 0.3rem !important;
+        vertical-align: middle;
+        margin-left: 0.1rem;
+      }
+    }
+
+    .detail-flex-1 {
+      flex: 1;
+    }
+
+    .detail-red-box {
+      width: 1.16rem;
+      height: 0.44rem;
+      background-color: rgb(var(--ex-down-color-rgb) / 0.08);
+      color: var(--ex-down-color);
+      margin: auto;
+      text-align: center;
+      line-height: 0.44rem;
+    }
+
+    .detail-green-box {
+      width: 1.16rem;
+      height: 0.44rem;
+      background-color: rgb(var(--ex-up-color-rgb) / 0.08);
+      color: var(--ex-up-color);
+      margin: auto;
+      text-align: center;
+      line-height: 0.44rem;
+    }
+
+    .detail-blue-box {
+      width: 1.16rem;
+      height: 0.44rem;
+      background-color: var(--ex-bg-color3);
+      color: var(--ex-primary-color);
+      margin: auto;
+      text-align: center;
+      line-height: 0.44rem;
+      margin-left: 0.18rem;
+    }
+  }
 }
 </style>

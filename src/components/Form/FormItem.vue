@@ -30,7 +30,7 @@
             v-show="inputFocus || props.hasScroll">{{ tip
             }}</span>
           <!-- 右上角模块 -->
-          <div class="rt-box" :class="{ 'rt-box-focus': inputFocus }" v-if="hasRT">
+          <div class="rt-box" :class="{ 'rt-box-focus': inputFocus && tip }" v-if="hasRT">
             <slot name="rt" />
           </div>
 
@@ -44,8 +44,8 @@
           " @blur="
             inputFocus = false;
           inputBlur();
-          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
-            :placeholder="inputFocus ? '' : placeholder" />
+          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
+            @keydown="validateKeydown" class="ipt" @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
 
           <!-- 密码图标 -->
           <span class="pwd_icon" v-if="inputType == 'password'">
@@ -418,6 +418,7 @@ const percentTagClick = (percent) => {
           align-items: center;
           justify-content: center;
           padding: 0 0.28rem;
+          border-top: 1px solid var(--ex-border-color);
         }
 
         .put_all {

@@ -103,8 +103,8 @@
         </div>
 
         <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-          type="primary">{{
-            $t("withdraw.withdraw") }}</Button>
+          type="primary"><span style="color: var(--ex-black);">{{
+            $t("withdraw.withdraw") }}</span></Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
         <div class="form">
@@ -149,8 +149,8 @@
           </div>
         </div>
         <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-          type="primary">{{
-            $t("withdraw.withdraw") }}</Button>
+          type="primary"><span style="color: var(--ex-black);">{{
+            $t("withdraw.withdraw") }}</span></Button>
       </Tab>
     </Tabs>
 
@@ -539,6 +539,7 @@ const goAddAccount = () => {
     return showConfirmDialog({
       title: t("withdraw.no_auth_title"),
       message: t("withdraw.no_auth_con"),
+      theme: 'round-button'
     }).then(() => {
       jump("google");
     });
@@ -549,6 +550,7 @@ const goAddAccount = () => {
       return showConfirmDialog({
         title: t("withdraw.no_google_msg"),
         message: t("withdraw.no_google_con"),
+        theme: 'round-button'
       }).then(() => {
         jump("kyc");
       });

@@ -574,7 +574,8 @@ const copy = (text) => {
   }
 
   .disabled_btn {
-    background-color: var(--ex-sbtn-color);
+    // background-color: var(--ex-bg-color3);
+    visibility: hidden;
   }
 }
 </style>

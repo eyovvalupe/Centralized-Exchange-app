@@ -123,7 +123,7 @@
           <div class="right-text">
             <div class="win-lose-box">
               {{ detaiList.stop_loss_price > 0 || detaiList.stop_loss_price && detaiList.stop_loss_price.length > 0 ?
-              '有':"无"}}
+                '有' : "无" }}
             </div>
           </div>
         </div>
@@ -181,9 +181,10 @@
 
       <div style="padding: 0 0.32rem;">
         <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;"
-          @click="updateClosePositionPopup">平仓</Button>
-        <Button size="large" color="var(--ex-bg-color2)" round style="margin-bottom: 0.32rem;color: var(--ex-text-color3);"
-          @click="updateDetailPopup">订单更新</Button>
+          @click="updateClosePositionPopup"><span style="color: var(--ex-black);">平仓</span></Button>
+        <Button size="large" color="var(--ex-bg-color2)" round
+          style="margin-bottom: 0.32rem;color: var(--ex-text-color3);" @click="updateDetailPopup"><span
+            style="color: var(--ex-black);">订单更新</span></Button>
       </div>
 
     </div>
@@ -359,7 +360,8 @@ const updateDetailPopup = () => {
       .detail-red-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: rgb(var(--ex-down-color-rgb) / 0.1);;
+        background-color: rgb(var(--ex-down-color-rgb) / 0.1);
+        ;
         color: var(--ex-down-color);
         margin: auto;
         text-align: center;
@@ -369,7 +371,8 @@ const updateDetailPopup = () => {
       .detail-green-box {
         width: 1.16rem;
         height: 0.44rem;
-        background-color: rgb(var(--ex-up-color-rgb) / 0.1);;
+        background-color: rgb(var(--ex-up-color-rgb) / 0.1);
+        ;
         color: var(--ex-up-color);
         margin: auto;
         text-align: center;

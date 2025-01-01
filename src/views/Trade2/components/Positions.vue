@@ -81,14 +81,15 @@
       </div>
       <div class="order_sell_box">
         <div class="form">
-          <div class="subtitle">
+          <!-- <div class="subtitle">
             <span>{{ t("trade.stock_position_amount") }}</span>
             <span class="subtitle-tip">{{ t("trade.stock_position_ongoing_amount") }}
               {{ currStock.unsold_volume }}</span>
-          </div>
+          </div> -->
           <div class="item">
-            <input @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
+            <input :placeholder="'数量'" @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
               @input="changeValue" type="number" class="ipt" />
+
             <span :style="{
               opacity: amountFocus ? '1' : '0',
               visibility: amountFocus ? '' : 'hidden',
@@ -97,6 +98,11 @@
                 word-break: keep-all;
                 transition: all ease 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
+
+            <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">{{
+              t("trade.stock_position_ongoing_amount") }} <span
+                style="color: var(--ex-text-primary);margin-left: 0.04rem;"> {{
+                  currStock.unsold_volume || 0 }}</span> </span>
           </div>
           <div style="height: 0.47rem"></div>
 
@@ -130,7 +136,7 @@
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
-            {{ t("trade.stock_position_btn") }}
+            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -160,13 +166,15 @@
                   " @percentTagClick="setPriceStop" />
             </div>
           </div>
-          <div class="subtitle">
+          <!-- <div class="subtitle">
             <span>{{ t("trade.stock_position_add_deposit") }}</span>
             <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
-          </div>
+          </div> -->
           <div class="item">
-            <input @focus="amountFocus = true" @blur="amountFocus = false" @input="changeAmount"
-              v-model="updateForm.amount" type="number" class="ipt" />
+            <input :placeholder="t('trade.stock_position_add_deposit')" @focus="amountFocus = true"
+              @blur="amountFocus = false" @input="changeAmount" v-model="updateForm.amount" type="number" class="ipt" />
+
+
             <span :style="{
               opacity: amountFocus ? '1' : '0',
               visibility: amountFocus ? '' : 'hidden',
@@ -175,6 +183,8 @@
                 word-break: keep-all;
                 transition: all ease 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
+            <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">≤ {{ stockWalletAmount
+              }}</span>
           </div>
           <div style="height: 0.47rem"></div>
           <!-- 拖动 -->
@@ -187,7 +197,7 @@
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
-            {{ t("trade.stock_position_btn") }}
+            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -600,6 +610,7 @@ const cancel = (item) => {
     message: t("trade.stock_position_cancel_con"),
     confirmButtonText: t("trade.stock_position_confirm_btn"),
     cancelButtonText: t("trade.stock_position_cancel_btn"),
+    theme: 'round-button'
   })
     .then(() => {
       showLoadingToast({
@@ -807,7 +818,8 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      border: 1px solid var(--ex-border-color2);
+      // border: 1px solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color3);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

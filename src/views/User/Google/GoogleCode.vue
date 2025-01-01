@@ -19,8 +19,9 @@
     <div class="description">{{ $t("google_auth.google_result_con") }}</div>
 
     <Button round color="var(--ex-primary-color)" class="submit" type="primary" @click="goBack"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">{{ $t("google_auth.google_result_btn")
-      }}</Button>
+      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-black);">{{
+        $t("google_auth.google_result_btn")
+        }}</span></Button>
   </div>
 </template>
 

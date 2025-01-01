@@ -89,8 +89,9 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round  class="submit" type="primary">{{
-        $t("login.login") }}</Button>
+      <Button :loading="loading" :disabled="disabled" round class="submit" type="primary">
+        <span style="color: var(--ex-black);">{{
+          $t("login.login") }}</span></Button>
     </div>
 
     <!-- 去注册 -->
@@ -123,20 +124,20 @@
         </div>
         <div style="height: 60vh; overflow-y: auto">
           <!-- <List> -->
-            <div v-for="item in showAreas">
-              <div @click="clickItem(item)"
-                class="flex justify-between h-[1.06rem] items-center border-b-[0.02rem] border-b-color"
-                :class="{ transfer_dialog_item_active: form.area == item.code }">
-                <div class="flex h-[1.08rem] items-center">
-                  <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
-                    <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
-                  </div>
-                  <span>{{ item.cn }}</span>
-                  <span>({{ item.code }})</span>
+          <div v-for="item in showAreas">
+            <div @click="clickItem(item)"
+              class="flex justify-between h-[1.06rem] items-center border-b-[0.02rem] border-b-color"
+              :class="{ transfer_dialog_item_active: form.area == item.code }">
+              <div class="flex h-[1.08rem] items-center">
+                <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
+                  <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                 </div>
-                <Icon v-if="form.area == item.code" class="cross" name="success" />
+                <span>{{ item.cn }}</span>
+                <span>({{ item.code }})</span>
               </div>
+              <Icon v-if="form.area == item.code" class="cross" name="success" />
             </div>
+          </div>
           <!-- </List> -->
           <NoData v-if="!showAreas.length" />
         </div>

@@ -14,7 +14,8 @@
         <div class="time_box w-full">
           <div class="time_label">{{ $t("recharging.countdown") }}</div>
           <CountDown v-model:time="s" class="time_show" />
-          <div class="w-full h-[2.34rem] rounded-[0.4rem] pt-[0.4rem] mt-[0.68rem] relative" style="background-color: var(--ex-bg-color);">
+          <div class="w-full h-[2.34rem] rounded-[0.4rem] pt-[0.4rem] mt-[0.68rem] relative"
+            style="background-color: var(--ex-bg-color);">
             <div class="network-tag w-[6.46rem] h-[0.6rem] mx-auto absolute top-[-0.6rem]">
               <span>{{ form.network }} · {{ form.currency }}</span>
             </div>

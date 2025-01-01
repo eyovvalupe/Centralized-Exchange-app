@@ -13,8 +13,9 @@
                         :class="{ 'err_ipt': errorText }" v-model="safeword" ref="iptDom" class="pass_ipt"
                         enterkeyhint="done" @keydown.enter="next">
                     <div v-if="errorText" class="error_text">{{ errorText }}</div>
-                    <Button :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round color="var(--ex-primary-color)"
-                        class="btn" type="primary" :disabled="(!safeword)" @click="next">继续</Button>
+                    <Button :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round
+                        color="var(--ex-primary-color)" class="btn" type="primary" :disabled="(!safeword)"
+                        @click="next"><span style="color: var(--ex-black);">继续</span></Button>
                 </div>
             </template>
             <!-- 确认密码 -->
@@ -25,7 +26,7 @@
                         enterkeyhint="done" @keydown.enter="next">
                     <Button :loading="loading" :style="{ marginBottom: showKeyboard ? '5.5rem' : '1rem' }" round
                         color="var(--ex-primary-color)" class="btn" type="primary" :disabled="(!safeword2)"
-                        @click="submit">创建账户</Button>
+                        @click="submit"><span style="color: var(--ex-black);">创建账户</span></Button>
                 </div>
             </template>
         </transition>

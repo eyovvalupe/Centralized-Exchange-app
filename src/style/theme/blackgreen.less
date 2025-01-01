@@ -2,7 +2,6 @@
 // 为兼容tailwindcss 所有颜色使用 rgb 配置，全局颜色变量使用 ex- 开头
 
 :root {
-
     --ex-white-rgb: 255 255 255; //#FFFFFF      白色
     --ex-black-rgb: 0 0 0; //#000000      黑色
     --ex-up-color-rgb: 151 225 128; //#97E180   上涨颜色
@@ -23,6 +22,7 @@
     --ex-border-color3-rgb: 171 171 171; //#ABABAB 边框颜色（亮）
     --ex-border-color4-rgb: 34 38 38; //#222626    边框色(深)
     --ex-bg-color-rgb: 23 23 23; //#171717    背景颜色
+    --ex-bg2-color-rgb: 38 38 38; //#262626    背景颜色
     --ex-bg-color2-rgb: 255 255 255; //#FFFFFF   
     --ex-bg-color3-rgb: 255 255 255; //#FFFFFF   
     --ex-bg-color4-rgb: 255 255 255; //#FFFFFF    
@@ -37,7 +37,7 @@
     --ex-status-color5-rgb: 24 183 98; //#18b762 状态颜色5
     --ex-status-color6-rgb: 108 108 234; //#6c6cea 状态颜色6
 
-
+    --ex-none: rgb(var(--ex-black-rgb) / 0);
     --ex-white: rgb(var(--ex-white-rgb));
     --ex-black: rgb(var(--ex-black-rgb));
     --ex-up-color: rgb(var(--ex-up-color-rgb));
@@ -60,6 +60,7 @@
     --ex-border-color4: rgb(var(--ex-border-color4-rgb));
     --ex-border-error: rgb(var(--ex-error-color-rgb));
     --ex-bg-color: rgb(var(--ex-bg-color-rgb));
+    --ex-bg2-color: rgb(var(--ex-bg2-color-rgb));
     --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.06);
     --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 0.1);
     --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 0.2);
@@ -412,4 +413,57 @@
 .status-cancel {
     color: var(--ex-text-color3);
     border-color: var(--ex-text-color3);
+}
+
+
+
+// 该皮肤的一些特殊修改
+.van-slider.slider-dom {
+    position: relative;
+    height: 0.12rem !important;
+
+    .van-slider__bar {
+        z-index: 1;
+        position: relative;
+    }
+
+    .van-slider__button-wrapper {
+        width: 0.2rem !important;
+        height: 0.2rem !important;
+
+        .slider-custom-num {
+            width: 0.2rem;
+            height: 0.2rem;
+            position: relative;
+            background: var(--ex-white);
+            color: var(--ex-text-color--bg-primary);
+            border-radius: 50%;
+        }
+    }
+
+
+    &::after {
+        content: "";
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 0.06rem solid rgba(0, 0, 0, 0.1);
+        border-right: 0.06rem solid rgba(0, 0, 0, 0.1);
+    }
+
+    &::before {
+        content: "";
+        width: 0.04rem;
+        height: 100%;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 }

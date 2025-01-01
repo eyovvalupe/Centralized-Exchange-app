@@ -137,6 +137,7 @@ const check = () => {
                 title: '谷歌验证器',
                 message:
                     '谷歌验证器未绑定，去绑定？',
+                theme: 'round-button'
             })
                 .then(() => {
                     router.push({ name: 'google' })
@@ -153,6 +154,7 @@ const check = () => {
                 title: '实名认证',
                 message:
                     '实名认证未通过，去认证？',
+                theme: 'round-button'
             })
                 .then(() => {
                     router.push({ name: 'kyc' })
@@ -324,7 +326,8 @@ defineExpose({
 
                 .left {
                     .title {
-                        color: var(--ex-text-color--bg-primary);;
+                        color: var(--ex-text-color--bg-primary);
+                        ;
                         line-height: 1;
                     }
                 }

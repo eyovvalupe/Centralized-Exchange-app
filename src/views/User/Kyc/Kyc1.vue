@@ -76,10 +76,9 @@
     </div>
 
     <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" @click="submit" :loading="loading"
-      :disabled="disabled" round :color="'var(--ex-primary-color)'" class="submit" type="primary">{{ $t("kyc.first_btn")
-      }}</Button>
-    <!-- <Button v-if="kycInfo.status == 'review' || kycInfo.status == 'success'" round color="var(--ex-primary-color)" class="submit"
-              type="primary" @click="next">继续</Button> -->
+      :disabled="disabled" round :color="'var(--ex-primary-color)'" class="submit" type="primary"><span
+        style="color: var(--ex-black);">{{ $t("kyc.first_btn")
+        }}</span></Button>
 
     <!-- 日期选择 -->
     <Popup style="border-top-left-radius: 0.32rem; border-top-right-radius: 0.32rem" :safe-area-inset-top="true"

@@ -128,8 +128,9 @@
           style="margin-right: 0.64rem" @click="cancelOrder">取消订单</div>
         <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn active_btn"
           :style="{ backgroundColor: 'var(--ex-bg-color4)' }">等待确认</div>
-        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? 'var(--ex-bg-color4)' : '' }" @click="confirmOrder">{{
-          currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
+        <div v-else class="btn active_btn" :style="{ backgroundColor: loading ? 'var(--ex-bg-color4)' : '' }"
+          @click="confirmOrder">{{
+            currItem.offset == 'buy' ? '我已付款' : '我已收款' }}</div>
       </div>
     </template>
 
@@ -195,6 +196,7 @@ const confirmOrder = () => {
   showConfirmDialog({
     title: '确认付款',
     message: '确认已经付款给商家?',
+    theme: 'round-button'
   })
     .then(() => {
       action.value = currItem.value.offset == 'buy' ? 'payment' : 'confirm'
@@ -211,6 +213,7 @@ const cancelOrder = () => {
   showConfirmDialog({
     title: '取消',
     message: '确认取消该订单?',
+    theme: 'round-button'
   })
     .then(() => {
       action.value = 'cancel'
@@ -439,8 +442,8 @@ const getSessionToken = () => {
       justify-content: center;
       font-size: 0.32rem;
       font-weight: bold;
-      color:  var(--ex-text-color4) !important;
-      background-color:  var(--ex-bg-color3) !important;
+      color: var(--ex-text-color4) !important;
+      background-color: var(--ex-bg-color3) !important;
       margin-top: 1rem;
     }
 

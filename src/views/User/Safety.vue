@@ -30,9 +30,11 @@
         </div>
         <div class="nav_title">{{ $t("safety.bind_google_auth") }}</div>
         <div class="nav_tip">
-          <span class="text-error" style=" font-size: 0.3rem" v-if="!userInfo.googlebind">{{ $t("safety.google_status_not")
+          <span class="text-error" style=" font-size: 0.3rem" v-if="!userInfo.googlebind">{{
+            $t("safety.google_status_not")
             }}</span>
-          <span class="text-success" style=" font-size: 0.3rem" v-if="userInfo.googlebind">{{ $t("safety.google_status_ok")
+          <span class="text-success" style=" font-size: 0.3rem" v-if="userInfo.googlebind">{{
+            $t("safety.google_status_ok")
             }}</span>
         </div>
         <Icon name="arrow" />
@@ -73,6 +75,7 @@ const checkGG = async (name) => {
     return showConfirmDialog({
       title: t('safety.bind_google_auth'),
       message: t('safety.no_google_dialog_con'),
+      theme: 'round-button'
     }).then(() => {
       jump("google");
     });

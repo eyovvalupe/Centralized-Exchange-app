@@ -13,8 +13,7 @@
     <!-- 二层容器 -->
     <div class="tabs mb-4">
       <div class="flex items-center">
-        <div
-          class="flex justify-between h-[0.6rem] w-[1.4rem] items-center rounded-[0.6rem] bg-color3 p-2 text-12"
+        <div class="flex justify-between h-[0.6rem] w-[1.4rem] items-center rounded-[0.6rem] bg-color3 p-2 text-12"
           @click="showDialog = true">
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
@@ -24,8 +23,8 @@
           </div>
         </div>
         <div class="size-[0.32rem] mx-[0.1rem]">
-            <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
-          </div>
+          <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
+        </div>
       </div>
 
       <div class="w-full overflow-hidden">
@@ -74,7 +73,7 @@
               </span>
             </div>
           </div>
-          <div v-if="token" class="btn" :class="['btn--'+offset]" @click="goBuy(item)">
+          <div v-if="token" class="btn" :class="['btn--' + offset]" @click="goBuy(item)">
             {{ offset == "buy" ? t('market.market_buy_optional_buy') : t('market.market_buy_optional_sell') }}
           </div>
         </div>
@@ -85,9 +84,10 @@
     </div>
   </div>
 
-  
+
   <!-- 法币币种 -->
-  <BottomPopup v-model:show="showDialog" :title="t('market.market_buy_fast_search_title')" :safe-area-inset-top="true" :safe-area-inset-bottom="true" closeable>
+  <BottomPopup v-model:show="showDialog" :title="t('market.market_buy_fast_search_title')" :safe-area-inset-top="true"
+    :safe-area-inset-bottom="true" closeable>
     <div class="withdraw_accounr_dialog">
       <div class="swap_dialog_list">
         <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
@@ -200,7 +200,7 @@ const goBuy = (item) => {
       currWallet: currCurrency.value.name,
     },
   });
-  
+
 };
 
 
@@ -300,15 +300,15 @@ defineExpose({
       margin: 0;
       width: 1.6rem;
       text-align: center;
-      border-radius:1rem;
+      border-radius: 1rem;
       height: 100%;
       display: flex;
       align-items: center;
-      border:1px solid var(--ex-border-color);
+      border: 1px solid var(--ex-border-color);
       justify-content: center;
       margin-right: 0.2rem;
     }
-    
+
     .active_tab {
       font-weight: bold;
       color: var(--ex-text-color--bg-light);
@@ -344,9 +344,10 @@ defineExpose({
         border-bottom: 1px solid var(--ex-border-color);
         padding-right: 0;
         height: 0.54rem;
+
         .van-tabs__line {
           background-color: var(--ex-white) !important;
-          
+
         }
 
         .van-tabs__nav,
@@ -354,8 +355,8 @@ defineExpose({
           padding-right: 0 !important;
           padding-left: 0 !important;
           margin-right: 0.24rem !important;
-          align-items:start;
-          
+          align-items: start;
+
         }
 
         .van-tabs__nav:last-child {
@@ -374,10 +375,11 @@ defineExpose({
       background-color: var(--ex-bg-color3);
       border-radius: 0.4rem;
       border-bottom: 1px solid var(--ex-border-color);
+
       .top {
         display: flex;
         align-items: flex-start;
-        padding:0.12rem 0.16rem;
+        padding: 0.12rem 0.16rem;
 
         .avatar {
           width: 0.64rem;
@@ -463,7 +465,8 @@ defineExpose({
           font-weight: 600;
           font-size: 0.28rem;
         }
-        .btn--sell{
+
+        .btn--sell {
           background-color: var(--ex-down-color);
           color: var(--ex-text-color--bg-light);
         }
@@ -563,8 +566,8 @@ defineExpose({
   padding: 0.32rem 0.32rem 0.8rem 0.32rem;
   position: relative;
 
-  
-  .swap_dialog_list{
+
+  .swap_dialog_list {
     max-height: 60vh;
     overflow-y: auto;
     padding-bottom: 0.8rem;
@@ -582,7 +585,7 @@ defineExpose({
     padding: 0 0.28rem;
     margin-top: 0.2rem;
     color: var(--ex-text-color);
-    border: 1px solid rgba(0,0,0,0);
+    border: 1px solid rgba(0, 0, 0, 0);
 
     .icon {
       width: 0.64rem;
@@ -593,8 +596,9 @@ defineExpose({
 
   .swap_dialog_item_active {
     color: var(--ex-text-color);
-    border-color:var(--ex-primary-color);
+    border-color: var(--ex-primary-color);
     background: none;
+
     .check_icon {
       position: absolute;
       right: 0.24rem;
