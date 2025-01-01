@@ -23,7 +23,7 @@
     </div>
     <!-- 结果列表 -->
     <div v-show="marketSearchTextList.length > 0 && !search.length > 0">
-      <div class="flex justify-between items-center mb-4">
+      <div class="flex justify-between items-center mb-[0.2rem]">
         <div class="text-[0.32rem]">
           {{ t("market.market_search_history") }}
         </div>
@@ -34,20 +34,20 @@
         </div>
       </div>
       <div class="flex gap-[0.2rem] mb-4 flex-wrap">
-        <div class="text-[0.28rem] h-[0.6rem] px-[0.16rem] bg-color2 rounded-[0.32rem] items-center flex"
+        <div class="text-[0.28rem] h-[0.6rem] px-[0.16rem] bg-color3 rounded-[0.32rem] items-center flex"
           v-for="(item, i) in marketSearchTextList" :key="i" @click="handleHistory(item)">
           {{ item }}
         </div>
       </div>
     </div>
 
-    <div class="flex justify-between items-center mb-4" v-show="!search.length > 0">
+    <div class="flex justify-between items-center mb-[0.4rem]" v-show="!search.length > 0">
       <div class="text-[0.32rem]">
         {{ t("market.market_search_recommend") }}
       </div>
       <div class="w-[0.4rem] h-[0.4rem]" @click="resetData">
         <div style="width: 0.4rem;height: 0.4rem;">
-          <img v-if="!marketSearchTextList.length > 0" :src="getStaticImgUrl('/static/img/market/refresh_big.svg')" alt="">
+          <img v-if="!marketSearchTextList.length > 0" :src="getStaticImgUrl('/static/img/market/refresh_white.svg')" alt="">
           <img v-else :src="getStaticImgUrl('/static/img/market/refresh_mini.svg')" alt="">
         </div>
       </div>
@@ -56,13 +56,19 @@
       <Loading v-show="!searchList.length && loading" />
       <NoData v-if="!searchList.length && !loading" />
       <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
+        <div @click.stop="collect(item)">
+          <div class="size-[0.48rem]">
+            <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/img/market/star.svg')" alt="">
+            <img v-else :src="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
+          </div>
+        </div>
         <div class="info">
           <div class="title flex items-center gap-1">
             {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
             <div
+              v-if="item.type == 'stock'"
               :class="`${marketStyle[item.type]
                 } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
-              <!-- {{ market[item.type] }} -->
               {{
                 item.type == "stock"
                   ? t("market.market_optional_stock")
@@ -76,14 +82,41 @@
           </div>
 
           <!-- 给了定值，需要用后端数据该代码 -->
-          <div class="text">{{ t("market.market_search_des") }}</div>
-        </div>
-        <div @click.stop="collect(item)">
-          <div style="width: 0.4rem; height: 0.36rem;">
-            <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/img/market/star.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
+          <div class="text" v-if="item.type == 'stock'">{{ item.name }}</div>
+          <div class="text flex items-center" v-else>
+            <div
+                :class="`${marketStyle[item.type]
+                  } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
+                {{
+                  item.type == "stock"
+                    ? t("market.market_optional_stock")
+                    : item.type == "crypto"
+                      ? t("market.market_optional_contract")
+                      : item.type == "forex"
+                        ? t("market.market_optional_forex")
+                        : "--"
+                }}
+              </div>
           </div>
         </div>
+        
+        <div class="td2 td_r">
+            <div class="item_num" :class="[item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down']">
+              {{ item.price ? item.price : "--" }}
+            </div>
+            <div class="item_info_box">
+              <div v-if="item.ratio !== undefined" class="item_percent"
+                :class="[item.ratio === 0 ? '' : item.ratio > 0 ? 'up_bg' : 'down_bg']">
+                <span>{{
+                  (item.ratio || 0) > 0
+                    ? "+" + (item.ratio || 0)
+                    : (item.ratio || 0)
+                }}%</span>
+               
+              </div>
+            </div>
+          </div>
+
       </div>
     </div>
   </div>
@@ -110,11 +143,7 @@ import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const market = {
-  stock: "股票",
-  crypto: "合约",
-  forex: "外汇",
-};
+
 const marketStyle = {
   stock: "tag-stock",
   crypto: "tag-crypto",
@@ -157,6 +186,12 @@ const getData = () => {
         search: search.value,
         list: res.data || [],
       });
+
+      store.dispatch("subList", {
+        commitKey: "setMarketSearchList",
+        listKey: "marketSearchList",
+      });
+
     })
     .finally(() => {
       loading.value = false;
@@ -298,12 +333,12 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
   .search_box {
     display: flex;
     align-items: center;
-    padding: 0 0.4rem;
+    padding: 0 0.32rem;
     margin-bottom: 0.4rem;
-    height: 0.8rem;
-    background-color: var(--ex-bg-color2);
-    border-radius: 0.4rem;
-
+    height: 0.9rem;
+    background-color: var(--ex-bg-color3);
+    border-radius: 0.5rem;
+    border: 1px solid rgba(0,0,0,0);
     .type_select {
       right: 0;
       display: flex;
@@ -348,7 +383,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     overflow-y: auto;
 
     .item {
-      height: 1.12rem;
+      height: 1.62rem;
       display: flex;
       align-items: center;
       background-color: var(--ex-bg-color2);
@@ -359,7 +394,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       .info {
         flex: 1;
         overflow: hidden;
-
+        margin-left: 0.28rem;
         .title {
           color: var(--ex-text-color);
           font-size: 0.32rem;
@@ -369,7 +404,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
           color: var(--ex-text-color3);
           font-size: 0.24rem;
           font-weight: 400;
-          margin-top: 0.18rem;
+          margin-top: 0.26rem;
         }
       }
 
@@ -389,6 +424,40 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     height: 0.32rem;
     background-size: contain;
     background-repeat: no-repeat;
+  }
+
+  .td2 {
+    flex-shrink: 0;
+    flex: 2;
+    overflow: hidden;
+
+    .item_num {
+      font-size: 0.3rem;
+      font-weight: 600;
+      line-height: 0.3rem;
+      color: var(--ex-text-color2);
+    }
+
+    .item_info_box {
+      margin-top: 0.18rem;
+
+      .item_percent {
+        text-align: center;
+        width: 1rem;
+        height: 0.4rem;
+        line-height: 0.4rem;
+        font-size: 0.24rem;
+        display: inline-block;
+        font-weight: 400;
+        color: var(--ex-white);
+        border-radius: 0.12rem;
+      }
+
+    }
+  }
+
+  .td_r {
+    text-align: right;
   }
 }
 </style>
