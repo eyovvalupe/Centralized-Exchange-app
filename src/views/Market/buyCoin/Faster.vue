@@ -138,7 +138,7 @@
   </BottomPopup>
 
   <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume"
-    :currency="currOut.name" :pay-currency="currIn.name" :money="money" @submit="submitSell" />
+    :currency="currOut.name" :pay-currency="currIn.name" :price="rate" :money="money" @submit="submitSell" />
 
   <!-- 余额提示 -->
   <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')"
