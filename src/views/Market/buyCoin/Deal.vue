@@ -110,7 +110,7 @@
 
     </div>
 
-    <BuyCoinConfirm ref="safeRef" :offset="info.offset" :loading="loading" :volume="amount" :currency="info.currCrypto" :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
+    <BuyCoinConfirm ref="safeRef" :offset="info.offset" :loading="loading" :volume="amount" :price="info.price" :currency="info.currCrypto" :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
 
     
   </div>
@@ -328,6 +328,7 @@ const getSessionToken = () => {
     .btn {
       margin-top: 0.6rem;
       border-radius: 0.4rem;
+      font-weight: 600;
     }
   }
 }

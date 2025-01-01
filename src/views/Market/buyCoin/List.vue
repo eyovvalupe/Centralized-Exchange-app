@@ -22,7 +22,7 @@
           <!-- order_no 订单号 -->
           <div class="flex items-center" @click.stop="copy(item.order_no)">
             <div class="text-14 text-color3">{{ item.order_no }}</div>
-            <div class="size-[0.24rem] ml-[0.1rem]">
+            <div class="size-[0.32rem] ml-[0.1rem]">
               <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
             </div>
           </div>
@@ -56,11 +56,12 @@
               <!-- 加密货币信息 -->
               <div class="text-12">
                 <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
-                  <!-- 根据交易类型显示“购入”或“售出” -->
-                  {{ item.crypto }}&nbsp;
                   <!-- 加密货币图标 -->
-                  <img class="!h-4 !w-4 rounded-50"
+                  <img class="!h-4 !w-4 mr-[0.12rem] rounded-50"
                     :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.svg`)" alt="currency" />
+                  <!-- 根据交易类型显示“购入”或“售出” -->
+                  {{ item.crypto }}
+                  
                 </div>
                 <!-- 价格信息 -->
                 <div class="mb-[0.12rem] text-color3">

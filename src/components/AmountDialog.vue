@@ -27,11 +27,11 @@
         class="flex items-center justify-between text-[0.28rem] gap-[0.4rem]"
         style="padding: 0.6rem 0.4rem 0.76rem 0.4rem;">
         <div @click="router.push({ name: 'topUpCrypto' });close();"
-          class="h-[1.12rem] flex items-center justify-center font-[600] text-[0.36rem]"
-          style="width:calc(50% - 0.2rem);border-radius: 0.64rem;background-color: var(--ex-white);color: var(--ex-text-color--bg-light);">
+          class="flex-1 h-[1.12rem] flex items-center justify-center font-[600] text-[0.36rem]"
+          style="border-radius: 0.64rem;background-color: var(--ex-white);color: var(--ex-text-color--bg-light);">
           {{ $t('market.market_buy_fast_noti_cancel') }}</div>
-          <div  class="h-[1.12rem] flex items-center justify-center font-[600] text-[0.36rem]" @click="router.push({ name: 'transfer' });close();"
-          style="width:calc(50% - 0.2rem);border-radius: 0.64rem; color: var(--ex-text-color--bg-primary);background-color: var(--ex-primary-color);">
+          <div class="flex-1 h-[1.12rem] flex items-center justify-center font-[600] text-[0.36rem]" @click="router.push({ name: 'transfer' });close();"
+          style="border-radius: 0.64rem; color: var(--ex-text-color--bg-primary);background-color: var(--ex-primary-color);">
           {{ $t('market.market_buy_fast_noti_confirm') }}</div>
       </div>
 

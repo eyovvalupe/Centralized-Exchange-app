@@ -2,7 +2,21 @@
   <BottomPopup :title="t('market.market_buy_confirm_coin')" v-model:show="orderConfirmDialog" closeable>
     
     <div class="px-[0.32rem] pt-[0.52rem]">
-      <div class="flex justify-between items-center px-[0.32rem] h-[1.2rem] bg-color3 rounded-[0.32rem]">
+
+      <div class="p-[0.32rem] bg-color3 rounded-[0.32rem]">
+        <div class="flex items-center font-[600]">
+          <img class="size-[0.52rem] rounded-50 mr-[0.12rem]" :src="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" alt="currency" />
+          {{ offset == 'buy' ? t('market.market_buy_list_buy') : t('market.market_buy_list_sell')  }}{{ currency }}
+        </div>
+        <div class="pt-[0.24rem] flex items-center justify-between text-color">
+          <span class="text-[0.32rem]">{{ t('market.market_buy_list_price')}}</span>
+          <span class=" leading-[0.48rem]">
+            <strong class="text-[0.48rem]">{{ price }}</strong>
+            <span class="text-[0.28rem] ml-[0.12rem]">{{ payCurrency }}</span>
+          </span>
+        </div>
+      </div>
+      <div class="flex justify-between mt-[0.2rem] items-center px-[0.32rem] h-[1.2rem] bg-color3 rounded-[0.32rem]">
         <template v-if="offset == 'buy'">
           <div class="text-[0.32rem] font-bold text-color">{{ t('market.market_buy_will_pay') }}</div>
           <div class="flex items-center">
@@ -107,7 +121,8 @@ const props = defineProps({
   currency: String,
   payCurrency: String,
   offset: String,
-  loading: Boolean
+  loading: Boolean,
+  price:[String, Number],
 })
 
 const currentAccount = ref({})
