@@ -10,7 +10,9 @@
         <!-- 标题 -->
         <div class="title" v-if="route.query.type == 'stock'">
           <div class="title_name">{{ item.symbol || "--" }}</div>
-          {{ item.name || "--" }}
+          <div v-if="showDate" class=" leading-[0.4rem]">
+            10/17 16:00:01 美东时间
+          </div>
         </div>
         <div class="title" v-else>
           <div class="title_name">{{ item.name || "--" }}</div>
@@ -19,14 +21,12 @@
         <div class="title_shadow"></div>
         <div v-if="!props.innerPage" class="search star" @click="addCollect"
           :style="{ opacity: loading ? '0.5' : '1' }">
-          <div style="width: 0.4rem;height: 0.4rem;">
+          <div class="size-[0.48rem]">
             <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/img/market/star.svg')" alt="">
             <img v-else :src="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
         </div>
-        <!-- <div v-if="!props.innerPage" class="search" @click="fullScreen(true)">
-                    <Icon name="enlarge" />
-                </div> -->
+
       </div>
       <div class="header-price">
         <h1 class="info" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
@@ -95,7 +95,7 @@
             @click="changeType('1Y')">
             1Y
           </div>
-          <!-- <div style="flex:1"></div> -->
+          <div style="flex:1"></div>
           <div class="full-tab" @click="fullScreen(true)">
             <img :src="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
           </div>
@@ -116,40 +116,31 @@
     </div>
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
-      <div class="market_bottom_symbol">
-        <div class="symbol">
-          {{ route.query.type == "stock" ? item.symbol : item.name || "--" }}
-        </div>
-        <div class="time_type">{{ timeType }}</div>
+      
+      <div class="bottom_btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
+        <span class="bottom_btn_icon">
+          <img :src="getStaticImgUrl('/static/img/market/up.svg')" />
+        </span>
+        <span>{{ t("market.market_marketinfo_long") }}</span>
       </div>
-
-      <!-- <div class="bottom_btn" @click="showBuy = true">
-                <span>交易</span>
-            </div>
-            -->
-      <div style="display: flex">
-        <div class="bottom_btn--default" @click="showInfo = true">
-          <span>{{ t("market.market_marketinfo_data") }}</span>
-        </div>
-        <div class="bottom_btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
-          <span>{{ t("market.market_marketinfo_long") }}</span>
-        </div>
-        <div class="bottom_btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
-          <span>{{ t("market.market_marketinfo_short") }}</span>
-        </div>
+      <div class="bottom_btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
+        <span class="bottom_btn_icon">
+          <img :src="getStaticImgUrl('/static/img/market/down.svg')" />
+        </span>
+        <span>{{ t("market.market_marketinfo_short") }}</span>
       </div>
     </div>
     <!-- 时间选择弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" round position="bottom">
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" >
       <div class="times_list">
         <div v-for="item in minList" :key="item" @click="chooseTime(item)" class="item"
           :class="{ active_item: currMin == item }">
           {{ item }}
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
     <!-- 交易弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBuy" round position="bottom"
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBuy" 
       closeable>
       <div class="buy_popup">
         <div class="buy_name">{{ t('market.market_marketinfo_trade') }}</div>
@@ -166,13 +157,13 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- 数据弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo" round position="bottom"
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo" 
+     :title="t('market.market_marketinfo_data')"
       closeable>
       <div class="info_popup">
-        <div class="info_name">{{ t("market.market_marketinfo_data") }}</div>
         <div class="info_price">
           <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <template v-if="item.price || item.close">
@@ -255,7 +246,7 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
   </div>
 </template>
 
@@ -272,6 +263,7 @@ import { _formatNumber } from "@/utils/index";
 import { _basic, _profile, _add, _del } from "@/api/api";
 import { formatTimestamp } from "@/utils/time";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -489,9 +481,14 @@ const showInfo = ref(false);
       margin-bottom: 0.205rem;
 
       .back {
-        width: 0.36rem;
-        height: 0.36rem;
+        width: 0.6rem;
+        height: 0.6rem;
         font-size: 0.36rem;
+        background-color: var(--ex-bg-color3);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .title_shadow {
@@ -502,7 +499,6 @@ const showInfo = ref(false);
         width: 0.7rem;
         height: 0.7rem;
         border-radius: 50%;
-        border: 1px solid #CFCFCF;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -698,8 +694,9 @@ const showInfo = ref(false);
 
       .active_tab {
         border-radius: 0.48rem;
-        color: var(--ex-primary-color);
+        color: var(--ex-white);
         font-weight: bold;
+        color:var(--ex-text-color--bg-light)
       }
 
       .icon {
@@ -790,17 +787,17 @@ const showInfo = ref(false);
           align-items: center;
           justify-content: center;
           border-radius: 0.3rem;
-          color: var(--ex-primary-color);
+          color: var(--ex-text-color2);
           font-size: 0.24rem;
           font-weight: 400;
-          margin-right: 0.16rem;
+          margin-right: 0.1rem;
           padding: 0 0.1rem;
           min-width: 0.64rem;
         }
 
         .active_tab {
-          background-color: var(--ex-primary-color);
-          color: var(--ex-text-color--bg-primary);
+          background-color: var(--ex-white);
+          color: var(--ex-text-color--bg-light);
         }
       }
 
@@ -810,7 +807,6 @@ const showInfo = ref(false);
         width: 0.48rem;
         height: 0.48rem;
         border-radius: 50%;
-        padding: 0.08rem;
         display: center;
         align-items: center;
         justify-content: center;
@@ -882,16 +878,10 @@ const showInfo = ref(false);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.12rem 0.32rem;
+    padding: 0.32rem;
     border-top: 1px solid var(--ex-border-color);
     height: 1.4rem;
-    font-size: 0.3rem;
-    font-weight: 400;
-
-    .market_bottom_symbol {
-      padding-right: 0.1rem;
-      overflow: hidden;
-    }
+    background: linear-gradient(0deg, rgb(var(--ex-bg-color5-rgb) / 0.2) 0%, rgb(var(--ex-bg-color5-rgb) / 1) 95.61%);
 
     .symbol {
       color: var(--ex-text-color);
@@ -917,35 +907,22 @@ const showInfo = ref(false);
       border-left: 1px solid var(--ex-border-color);
     }
 
-    .bottom_btn--default {
-      width: 1.44rem;
-      height: 0.9rem;
-      color: var(--ex-text-color);
-      border-radius: 40px;
-      font-size: 0.32rem;
-      margin-left: 0.2rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--ex-bg-color);
-      border: 1px solid var(--ex-border-color2);
-    }
-
+   
     .bottom_btn {
-      width: 1.44rem;
+      width: 3.27rem;
       height: 0.9rem;
       color: var(--ex-text-color--bg-primary);
       border-radius: 40px;
       font-size: 0.32rem;
-      margin-left: 0.2rem;
       display: flex;
+      font-weight: 600;
       align-items: center;
       justify-content: center;
 
       .bottom_btn_icon {
         margin-right: 0.08rem;
-        width: 0.32rem;
-        height: 0.32rem;
+        width: 0.52rem;
+        height: 0.52rem;
       }
     }
   }
@@ -1065,7 +1042,7 @@ const showInfo = ref(false);
 }
 
 .info_popup {
-  padding: 0.8rem 0.32rem 0.2rem 0.32rem;
+  padding: 0.4rem 0.32rem 0.2rem 0.32rem;
 
   .info_name {
     font-size: 0.32rem;
@@ -1123,13 +1100,12 @@ const showInfo = ref(false);
     .info_item {
       display: flex;
       flex-direction: column;
-      gap: 0.2rem;
       align-items: center;
       margin-bottom: 0.32rem;
       width: 31%;
       background-color: var(--ex-bg-color2);
       border-radius: 0.4rem;
-      height: 1.14rem;
+      height: 1.26rem;
 
       .name {
         margin-top: 0.2rem;
