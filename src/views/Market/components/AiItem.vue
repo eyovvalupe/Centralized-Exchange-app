@@ -17,20 +17,7 @@
         </div>
       </div>
       <div class="tr">
-        <div class="time-title">{{ t("trade.ai_opening_perform_time") }}</div>
-        <div class="time">
-          <!-- {{ formatSec(item.runtime) }} -->
-          {{
-            formatSec(item.runtime)[0] +
-            t("common.day") +
-            " " +
-            formatSec(item.runtime)[1] +
-            t("common.hour") +
-            " " +
-            formatSec(item.runtime)[2] +
-            t("common.min")
-          }}
-        </div>
+        <div class="px-[0.24rem] text-center min-w-[1.4rem] h-[0.72rem] leading-[0.72rem] text-[0.3rem] text-black bg-white rounded-[0.6rem] font-[600]">{{ t('trade.ai_opening_trade') }}</div>
       </div>
     </div>
     <div class="content">
@@ -42,8 +29,19 @@
           </div>
         </div>
         <div class="mr">
-          <SparkLine v-if="item.points" :polyline-stroke-width="2" :points="item.points" :ratio="item.ratio" :xtimes="2"
-            :ytimes="2" />
+          <div class="time-title">{{ t("trade.ai_opening_perform_time") }}</div>
+          <div class="time">
+            {{
+              formatSec(item.runtime)[0] +
+              t("common.day") +
+              " " +
+              formatSec(item.runtime)[1] +
+              t("common.hour") +
+              " " +
+              formatSec(item.runtime)[2] +
+              t("common.min")
+            }}
+          </div>
         </div>
       </div>
       <div class="bot">
@@ -75,7 +73,6 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
-// import { formatSec } from "@/utils/time";
 import SparkLine from "@/components/SparkLine.vue";
 import store from "@/store";
 import { useRoute } from "vue-router";
@@ -139,7 +136,7 @@ const formatSec = (seconds, t) => {
   border-radius: 0.32rem;
   background: var(--ex-bg-color2);
   margin-bottom: 0.2rem;
-  padding: 0.12rem;
+  padding: 0 0.12rem 0.12rem 0.12rem;
   
   .top {
     padding: 0.24rem;
@@ -152,12 +149,13 @@ const formatSec = (seconds, t) => {
         color: var(--ex-text-color);
         font-size: 0.36rem;
         font-weight: 600;
-        line-height: 140%;
+        line-height: 0.5rem;
       }
 
       .info {
         display: flex;
         align-items: center;
+        margin-top: 0.1rem;
 
         .pp {
           display: flex;
@@ -166,8 +164,8 @@ const formatSec = (seconds, t) => {
           padding:0 0.08rem;
           height: 0.36rem;
           border-radius: 0.04rem;
-          background: rgba(248, 154, 41, 0.08);
-          color: #f89a29;
+          background: rgba(255, 163, 70, 0.10);
+          color: #FFA346;
           font-size: 0.2rem;
           font-weight: 400;
           display: flex;
@@ -182,29 +180,10 @@ const formatSec = (seconds, t) => {
         .grid {
           color: var(--ex-text-color3);
           font-size: 0.24rem;
-          font-weight: 400;
-          line-height: 140%;
         }
       }
     }
 
-    .tr {
-      .time-title {
-        color: var(--ex-text-color3);
-        text-align: right;
-        font-size: 0.24rem;
-        font-weight: 400;
-        line-height: 0.44rem;
-      }
-
-      .time {
-        color: var(--ex-text-color);
-        text-align: right;
-        font-size: 0.28rem;
-        font-weight: 400;
-        line-height: 0.44rem;
-      }
-    }
   }
 
   .content {
@@ -238,8 +217,23 @@ const formatSec = (seconds, t) => {
 
     .mr {
       width: 2.5rem;
-      height: 1rem;
-      margin-top:-0.06rem;
+
+      .time-title {
+        color: var(--ex-text-color3);
+        text-align: right;
+        font-size: 0.24rem;
+        font-weight: 400;
+        line-height: 0.44rem;
+      }
+
+      .time {
+        color: var(--ex-text-color);
+        text-align: right;
+        font-size: 0.28rem;
+        font-weight: 400;
+        line-height: 0.44rem;
+      }
+
     }
   }
 

@@ -1,6 +1,6 @@
 <template>
     <Popup class="ex-bottom-popup" round v-model:show="popupShow" position="bottom" 
-    :close-on-popstate="closeOnPopstate" :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom" :closeable="props.closeable" teleport="body" @closed="onClose">
+    :close-on-popstate="closeOnPopstate" :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom" :closeable="props.closeable" teleport="body" @close="emits('close')" @closed="onClose">
         <div class="ex-bottom-popup-top">
             <img :src="getStaticImgUrl('/static/img/common/popup_top.svg')" />
         </div>
@@ -37,13 +37,14 @@ const props = defineProps({
         default:false
     }
 })
-const emits = defineEmits(['update:show'])
+const emits = defineEmits(['update:show','close','closed'])
 const popupShow = ref(props.show)
 watch(()=>props.show,(v)=>{
     popupShow.value = v
 })
 const onClose = ()=>{
     emits('update:show',popupShow.value)
+    emits('closed')
 }
 </script>
 <style lang="less" scoped>

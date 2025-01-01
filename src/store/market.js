@@ -67,7 +67,8 @@ const pageKeys = {
         'marketStockHongkongDataList',
         'marketStockMalaysiaDataList'
     ],
-    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList']
+    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList'],
+    'search':['marketSearchList']
 }
 
 
