@@ -13,8 +13,7 @@
     <!-- 二层容器 -->
     <div class="tabs mb-4">
       <div class="flex items-center">
-        <div
-          class="flex justify-between h-[0.6rem] w-[1.4rem] items-center rounded-[0.6rem] bg-color3 p-2 text-12"
+        <div class="flex justify-between h-[0.6rem] w-[1.4rem] items-center rounded-[0.6rem] bg-color3 p-2 text-12"
           @click="showDialog = true">
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
@@ -24,8 +23,8 @@
           </div>
         </div>
         <div class="size-[0.32rem] mx-[0.1rem]">
-            <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
-          </div>
+          <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
+        </div>
       </div>
 
       <div class="w-full overflow-hidden">
@@ -74,7 +73,7 @@
               </span>
             </div>
           </div>
-          <div v-if="token" class="btn" :class="['btn--'+offset]" @click="goBuy(item)">
+          <div v-if="token" class="btn" :class="['btn--' + offset]" @click="goBuy(item)">
             {{ offset == "buy" ? t('market.market_buy_optional_buy') : t('market.market_buy_optional_sell') }}
           </div>
         </div>
@@ -111,7 +110,7 @@
           {{ t('market.market_buy_optional_estreceive') }}：{{ showAmount }} {{ currCurrency.name }}
         </div>
 
-        <div class="btn" :class="['btn--'+offset]" @click="preSubmit">
+        <div class="btn" :class="['btn--' + offset]" @click="preSubmit">
           {{ t('market.market_buy_optional_confirm') }}{{ offset == "buy" ? t('market.market_buy_fast_buy') :
             t('market.market_buy_fast_sell') }}
         </div>
@@ -453,6 +452,7 @@ const goAddAccount = () => {
     return showConfirmDialog({
       title: t('safety.bind_google_auth'),
       message: t("safety.no_google_dialog_con?"),
+      theme: 'round-button'
     }).then(() => {
       jump("google");
     });
@@ -496,15 +496,15 @@ defineExpose({
       margin: 0;
       width: 1.6rem;
       text-align: center;
-      border-radius:1rem;
+      border-radius: 1rem;
       height: 100%;
       display: flex;
       align-items: center;
-      border:1px solid var(--ex-border-color);
+      border: 1px solid var(--ex-border-color);
       justify-content: center;
       margin-right: 0.2rem;
     }
-    
+
     .active_tab {
       font-weight: bold;
       color: var(--ex-text-color--bg-light);
@@ -540,9 +540,10 @@ defineExpose({
         border-bottom: 1px solid var(--ex-border-color);
         padding-right: 0;
         height: 0.54rem;
+
         .van-tabs__line {
           background-color: var(--ex-white) !important;
-          
+
         }
 
         .van-tabs__nav,
@@ -550,8 +551,8 @@ defineExpose({
           padding-right: 0 !important;
           padding-left: 0 !important;
           margin-right: 0.24rem !important;
-          align-items:start;
-          
+          align-items: start;
+
         }
 
         .van-tabs__nav:last-child {
@@ -595,10 +596,11 @@ defineExpose({
       background-color: var(--ex-bg-color3);
       border-radius: 0.4rem;
       border-bottom: 1px solid var(--ex-border-color);
+
       .top {
         display: flex;
         align-items: flex-start;
-        padding:0.12rem 0.16rem;
+        padding: 0.12rem 0.16rem;
 
         .avatar {
           width: 0.64rem;
@@ -684,7 +686,8 @@ defineExpose({
           font-weight: 600;
           font-size: 0.28rem;
         }
-        .btn--sell{
+
+        .btn--sell {
           background-color: var(--ex-down-color);
           color: var(--ex-text-color--bg-light);
         }

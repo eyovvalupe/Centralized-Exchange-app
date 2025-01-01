@@ -221,8 +221,9 @@
       </div>
     </div>
 
-    <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" :color="'var(--ex-primary-color)'" @click="submit"
-      :loading="loading" :disabled="disabled" round class="submit" type="primary">{{ $t("kyc.second_btn") }}</Button>
+    <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" :color="'var(--ex-primary-color)'"
+      @click="submit" :loading="loading" :disabled="disabled" round class="submit" type="primary"><span
+        style="color: var(--ex-black);">{{ $t("kyc.second_btn") }}</span></Button>
   </div>
 </template>
 

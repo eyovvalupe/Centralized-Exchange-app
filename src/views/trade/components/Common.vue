@@ -80,15 +80,15 @@
 
     <div class="m-b-5" style="height: .5rem;"></div>
     <Button size="large" color="var(--ex-down-color)" round v-if="isDownActive && token" :disabled="downdisable(active)"
-      @click="openPositPopup('down')">买跌</Button>
+      @click="openPositPopup('down')"><span style="color: var(--ex-black);">买跌</span></Button>
     <Button size="large" color="var(--ex-up-color)" round v-if="isUpActive && token" :disabled="downdisable(active)"
-      @click="openPositPopup('up')">买涨 </Button>
+      @click="openPositPopup('up')"><span style="color: var(--ex-black);">买涨</span> </Button>
 
 
     <Button size="large" color="var(--ex-primary-color)" round v-if="!token" style="margin-bottom: 0.34rem"
-      @click="jump('login')">登陆</Button>
+      @click="jump('login')"><span style="color: var(--ex-black);">登陆</span></Button>
     <Button size="large" color="var(--ex-bg-color2)" round v-if="!token" style="color: var(--ex-text-color3)"
-      @click="jump('register')">注册</Button>
+      @click="jump('register')"><span style="color: var(--ex-black);">注册</span></Button>
 
   </div>
 </template>
@@ -719,27 +719,6 @@ defineExpose({
     margin-top: .2rem;
     height: 1rem;
     padding: .4rem 0 0 0;
-
-    .slider-custom-num {
-      position: relative;
-      background: var(--ex-primary-color);
-      color: var(--ex-text-color--bg-primary);
-      display: inline-block;
-      width: .05rem;
-      height: .5rem;
-      font-size: 12px;
-      text-align: center;
-      line-height: .4rem;
-      border-radius: 10px;
-
-      .number {
-        color: var(--ex-primary-color);
-        position: absolute;
-        top: -0.4rem;
-        left: -0.1rem;
-        font-size: .2rem;
-      }
-    }
   }
 
   [contenteditable="true"]:focus {
@@ -1044,13 +1023,8 @@ defineExpose({
 
   .van-slider {
     margin-top: 0.1rem;
-    height: 0.16rem !important;
-    border-radius: 0.02rem;
   }
 
-  .van-slider__bar {
-    position: relative;
-  }
 
   .van-slider__button {
     width: 0.1rem;

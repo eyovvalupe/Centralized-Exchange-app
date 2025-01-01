@@ -168,11 +168,12 @@
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
-      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>{{
+      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
+      <span style="color: var(--ex-black);">{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
-      }}
+      }}</span>
     </Button>
 
     <div v-if="!token">
@@ -300,7 +301,8 @@
           @click="showPassword = false" />
       </div>
       <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit"
-        color="var(--ex-primary-color)" round>{{ t("trade.stock_open") }}</Button>
+        color="var(--ex-primary-color)" round><span style="color: var(--ex-black);">{{ t("trade.stock_open")
+          }}</span></Button>
     </div>
   </Popup>
 

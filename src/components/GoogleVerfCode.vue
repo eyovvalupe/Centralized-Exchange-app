@@ -4,7 +4,7 @@
     teleport="body" :close-on-popstate="true" :close-on-click-overlay="false" class="self_van_popup">
     <div class="google_dialog">
       <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="close">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg') " alt="">
+        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
       </div>
       <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
         {{ $t("google_auth.google_input_title") }}
@@ -19,7 +19,9 @@
           {{ $t("google_auth.google_input_btn_cancel") }}
         </div>
         <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn" type="primary"
-          @click="submit">{{ $t("google_auth.google_input_btn_confirm") }}</Button>
+          @click="submit">
+          <span style="color: var(--ex-black);">{{ $t("google_auth.google_input_btn_confirm") }}</span>
+        </Button>
       </div>
     </div>
   </Popup>

@@ -44,8 +44,8 @@
               </div>
               <div class="btn_container">
                 <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)"
-                  @click="next">{{
-                    $t("account.add_btn") }}</Button>
+                  @click="next"><span style="color: var(--ex-black);">{{
+                    $t("account.add_btn") }}</span></Button>
               </div>
               <!-- 谷歌验证 -->
               <GoogleVerfCode ref="googleRef" @submit="submit" />

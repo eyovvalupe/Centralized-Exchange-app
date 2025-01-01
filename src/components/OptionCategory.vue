@@ -1,12 +1,8 @@
 <template>
   <div class="category-button-group">
-    <button
-      v-for="category in categories"
-      :key="category.key"
-      :class="{ active: selectedCategory === category.key }"
-      @click="selectCategory(category)"
-    >
-      {{ category.label }}
+    <button v-for="category in categories" :key="category.key" :class="{ active: selectedCategory === category.key }"
+      @click="selectCategory(category)">
+      <span style="color: var(--ex-black);">{{ category.label }}</span>
     </button>
   </div>
 </template>

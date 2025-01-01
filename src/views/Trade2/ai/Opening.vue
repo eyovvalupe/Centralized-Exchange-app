@@ -84,21 +84,6 @@
         <div style="height: 0.28rem"></div>
       </div>
 
-      <!-- 按钮 -->
-      <!-- <div class="btns" v-if="!token">
-        <Button size="large" color="var(--ex-primary-color)" class="btn" round @click="goLogin"
-          >{{ t('trade.ai_opening_login') }}</Button
-        >
-        <Button
-          size="large"
-          color="var(--ex-bg-color2)"
-          class="btn"
-          round
-          style="color: var(--ex-text-color3)"
-          @click="jump('register')"
-          >{{ t('trade.ai_opening_register') }}</Button
-        >
-      </div> -->
       <div class="px-[0.36rem]" v-if="!token">
         <div class="flex justify-between mb-[0.32rem]">
           <div
@@ -121,9 +106,11 @@
       </div>
       <div class="btns" v-else>
         <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn"
-          :color="tab == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>{{
+          :color="tab == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
+          <span style="color: var(--ex-black);">{{
             tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
-          }}</Button>
+          }}</span>
+        </Button>
       </div>
     </div>
 
@@ -177,7 +164,9 @@
         </FormItem>
 
         <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit"
-          color="var(--ex-primary-color)" round>{{ t("trade.ai_opening_confirm_btn") }}</Button>
+          color="var(--ex-primary-color)" round><span style="color: var(--ex-black);">{{
+            t("trade.ai_opening_confirm_btn")
+            }}</span></Button>
       </div>
     </Popup>
 

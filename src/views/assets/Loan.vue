@@ -81,7 +81,8 @@
             </div> -->
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">确定</Button>
+        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
+            type="primary"><span style="color: var(--ex-black);">确定</span></Button>
 
 
         <!-- 账户选择弹窗 -->

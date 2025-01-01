@@ -134,6 +134,7 @@ const close = () => {
     confirmButtonText: t('register.code_jump_confirm'),
     cancelButtonText: t('user_page.message_box_cancel'),
     confirmButtonColor: "var(--ex-primary-color)",
+    theme: 'round-button'
   })
     .then(() => {
       emit("success");

@@ -52,7 +52,7 @@ const onSliderChange = (newValue) => {
 </script>
 <style lang="less" scoped>
 .slider-container {
-    margin: 0 0.2rem;
+    // margin: 0 0.2rem;
     line-height: 100%;
     display: flex;
     align-items: center;
@@ -61,45 +61,9 @@ const onSliderChange = (newValue) => {
         width: calc(100% - 1rem);
     }
 
-    :deep(.slider-custom-num) {
-        position: relative;
-        background: var(--ex-white);
-        color: var(--ex-text-color--bg-primary);
-        display: inline-block;
-        width: .4rem;
-        height: .4rem;
-        border-radius: 50%;
-        top: 0.01rem;
 
-        .number {
-            color: var(--ex-white);
-            position: absolute;
-            top: -0.28rem;
-            right: 0;
-            font-size: .24rem;
-        }
-    }
 
-    :deep(.van-slider) {
-        height: 0.26rem !important;
-        border-radius: 0.2rem;
-    }
 
-    :deep(.van-slider__bar) {
-        position: relative;
-    }
-
-    :deep(.van-slider__button) {
-        width: 0.1rem;
-        height: 0.48rem;
-        background-color: var(--ex-primary-color);
-        border-radius: inherit;
-        top: -0.36rem;
-    }
-
-    :deep(.van-slider__button-wrapper) {
-        z-index: 999 !important;
-    }
 }
 
 .percentages {

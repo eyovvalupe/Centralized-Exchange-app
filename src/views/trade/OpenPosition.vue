@@ -15,7 +15,8 @@
       </div>
 
       <div class="position-tabs">
-        <Tabs class="tabs" v-model="active" :swipeable="false" animated :color="'var(--ex-primary-color)'" shrink @change="onChange">
+        <Tabs class="tabs" v-model="active" :swipeable="false" animated :color="'var(--ex-primary-color)'" shrink
+          @change="onChange">
           <Tab title="市价" name="0"> </Tab>
           <Tab title="限价" name="1"> </Tab>
           <Tab title="止盈/止损" name="2"> </Tab>
@@ -926,13 +927,9 @@ defineExpose({
 
   .van-slider {
     margin-top: 0.1rem;
-    height: 0.16rem !important;
-    border-radius: 0.02rem;
   }
 
-  .van-slider__bar {
-    position: relative;
-  }
+
 
   .van-slider__button {
     width: 0.06rem;

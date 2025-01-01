@@ -115,7 +115,7 @@
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
-            {{ t("trade.stock_position_btn") }}
+            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -170,7 +170,7 @@
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
-            {{ t('trade.stock_position_btn') }}
+            <span style="color: var(--ex-black);">{{ t('trade.stock_position_btn') }}</span>
           </Button>
         </div>
       </div>
@@ -606,6 +606,7 @@ const cancel = (item) => {
     message: t("trade.stock_position_cancel_con"),
     confirmButtonText: t("trade.stock_position_confirm_btn"),
     cancelButtonText: t("trade.stock_position_cancel_btn"),
+    theme: 'round-button'
   })
     .then(() => {
       showLoadingToast({

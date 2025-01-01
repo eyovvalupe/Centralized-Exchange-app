@@ -129,8 +129,9 @@
 
       <!-- 按钮 -->
       <div class="submit_box">
-        <Button @click="submit" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
-          $t("register.next") }}</Button>
+        <Button @click="submit" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">
+          <span style="color: var(--ex-black);">{{
+            $t("register.next") }}</span></Button>
       </div>
     </template>
 

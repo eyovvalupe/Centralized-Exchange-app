@@ -37,7 +37,7 @@
               <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
             </div>
           </div>
-          
+
           <div
             class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem]"
             style="background-color: var(--ex-bg-color2);" @click="showNetDialog = true">
@@ -62,7 +62,8 @@
               $t("topUpCrypto.rechargeAmount")
             }}</span>
           </div> -->
-          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]" :class="{ err_ipt: errStatus }" style="background-color: var(--ex-bg-color2);">
+          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]"
+            :class="{ err_ipt: errStatus }" style="background-color: var(--ex-bg-color2);">
             <div class="item_content">
               <input class="ipt" @blur="
                 errStatus = false;
@@ -80,15 +81,15 @@
                     </div> -->
         </div>
         <Button @click="goTopUp" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-          type="primary">{{
-            $t("topUpCrypto.confirm") }}</Button>
+          type="primary"><span style="color: var(--ex-black);">{{
+            $t("topUpCrypto.confirm") }}</span></Button>
       </Tab>
       <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard"> </Tab>
     </Tabs>
 
     <!-- 币种选择弹窗 -->
     <BottomPopup v-model:show="showDialog" :title="$t('topUpCrypto.currencySelection')" closeable>
-     
+
       <div class="topup_accounr_dialog">
         <!-- 搜索 -->
         <div class="search_box">
