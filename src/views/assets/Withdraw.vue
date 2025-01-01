@@ -746,7 +746,7 @@ watch(
   justify-content: space-between;
   position: relative;
   padding: 0.28rem;
-  background-color: var(--ex-bg-color5);
+  background-color: var(--ex-bg-color3);
 
   .card_icon {
     width: 0.68rem;
