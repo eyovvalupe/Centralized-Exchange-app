@@ -141,7 +141,7 @@ const formatDate = (date) => {
       color: var(--ex-primary-color);
       margin-top: 0.14rem;
       padding: 0.05rem 0.15rem;
-      background-color: var(--ex-bg-color5);
+      background-color: var(--ex-bg-color3);
       border-radius: 1rem;
     }
 
