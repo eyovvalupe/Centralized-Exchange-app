@@ -24,7 +24,7 @@
       <!--  按钮 -->
 
       <div
-        class="flex items-center justify-between text-[0.28rem] gap-[0.4rem] flex-wrap"
+        class="flex items-center justify-between text-[0.28rem] gap-[0.4rem]"
         style="padding: 0.6rem 0.4rem 0.76rem 0.4rem;">
         <div @click="router.push({ name: 'topUpCrypto' });close();"
           class="h-[1.12rem] flex items-center justify-center font-[600] text-[0.36rem]"

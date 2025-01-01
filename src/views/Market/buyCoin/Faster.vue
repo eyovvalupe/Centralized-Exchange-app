@@ -577,27 +577,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
   }
 
-  .title {
-    height: 1rem;
-    position: absolute;
-    top: 0.3rem;
-    left: 0;
-    text-align: center;
-    line-height: 1rem;
-    font-size: 0.32rem;
-    width: 100%;
-    color: var(--ex-text-color);
-    pointer-events: none;
-    font-weight: bold;
-  }
-
-  .close_icon {
-    position: absolute;
-    width: 0.4rem;
-    height: 0.4rem;
-    top: 0.24rem;
-    right: 0.32rem;
-  }
+  
   .swap_dialog_list{
     max-height: 60vh;
     overflow-y: auto;
