@@ -15,7 +15,9 @@
         </div>
       </Tab>
       <Tab :title="t('trade.ai_opening_order')" name="2">
-        <Inquire ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
+        <div class="ai-block-content">
+          <Inquire ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
+        </div>
       </Tab>
     </Tabs>
 
@@ -104,10 +106,14 @@ defineExpose({
 
 <style lang="less" scoped>
 .ai-block {
-  padding: 0.24rem 0.32rem 0.32rem;
+
+  // padding: 0.24rem 0.32rem 0.32rem;
+  :deep(.van-tabs__nav) {
+    padding: 0 0.12rem;
+  }
 
   .ai-block-content {
-    width: calc(100% - 1px);
+    padding: 0 0.32rem;
 
     .ai-block-title {
       padding: 0 0.32rem;

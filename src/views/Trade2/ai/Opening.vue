@@ -5,23 +5,31 @@
 
     <div style="height: 1.12rem" v-if="mode == 'popup'"></div>
     <div class="tabs-container">
-      <!-- 涨跌 -->
-      <Tabs type="line-card" v-model:active="tab" :swipeable="false" animated :color="'var(--ex-primary-color)'">
-        <Tab :title="t('trade.ai_opening_long')" :name="1"> </Tab>
-        <Tab :title="t('trade.ai_opening_short')" :name="2"> </Tab>
-      </Tabs>
+      <div class="type_tabs">
+        <div @click="tab = 1" class="type_tab" :class="{ active_type_tab: tab == 1 }">
+          <span class="type_tab_text">{{ t('trade.ai_opening_long') }}</span>
+        </div>
+        <div @click="tab = 2" class="type_tab" :class="{ active_type_tab: tab == 2 }">
+          <span class="type_tab_text">{{ t('trade.ai_opening_short') }}</span>
+        </div>
+      </div>
+
       <div class="scroller">
         <!-- 品种 -->
         <div class="item_content">
-          <div class="subtitle">
+          <!-- <div class="subtitle">
             {{ t("trade.ai_opening_product_type") }}
             <div class="stock_icon" v-if="form1.name" @click="openStockModel">
               <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" alt="icon" />
             </div>
-          </div>
+          </div> -->
 
-          <div class="item item_box" @click="showNavDialog">
-            {{ form1.name }}
+          <div class="item item_box" :class="{ 'item_box_name': form1.name }" @click="showNavDialog">
+            <div class="placeholder">{{ t("trade.ai_opening_product_type") }}</div>
+            <div class="name">{{ form1.name }}</div>
+            <div class="more_icon">
+              <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+            </div>
           </div>
         </div>
 
@@ -42,46 +50,62 @@
           </div>
         </div>
         <!-- 数量 -->
-        <FormItem :rightContent="true" input-type="number" v-model="form1.grid"
-          :placeholder="t('trade.ai_opening_network_amount')" btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
+        <div style="height: 0.4rem;"></div>
+        <FormItem :hasBot="true" :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.grid"
+          :tip="maxgrid > 0 ? '≤' + maxgrid : ''" :placeholder="t('trade.ai_opening_network_amount')"
+          btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
 
-          <template #title-right>
-            <span>{{ maxgrid > 0 ? '≤' + maxgrid : '' }}</span>
-          </template>
 
           <template #right-content-title>
             <div class="subtitle">{{ t('trade.ai_opening_profit_margin') }}</div>
           </template>
 
-          <template #right-content-item>
-            <div class="item item_box disabled_item">
-              {{ getPercent() }}
+          <template #bottom-con>
+            <div style="padding-left: 0.24rem;width: 100%;padding-top: 0.08rem;">
+              <div style="font-size: 0.24rem;color: var(--ex-text-color3);">盈亏率</div>
+              <div style="font-size: 0.28rem;color: var(--ex-white);font-weight: bold;margin-top: 0.08rem;">{{
+                getPercent() }}</div>
             </div>
           </template>
 
+
+          <template #scroll>
+            <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
+          </template>
         </FormItem>
-        <div style="height: 0.47rem"></div>
-        <!-- 拖动 -->
-        <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
+
 
         <!-- 投资额 -->
-
-        <FormItem input-type="number" v-model="form1.volume" :placeholder="t('trade.ai_opening_invest_amount')"
-          btn-show-mode="focus" :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0"
-          @change="changePercent" @btnClick="onSliderChange(100)">
-          <template #title-right>
+        <div style="height: 0.4rem;"></div>
+        <FormItem :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.volume"
+          :placeholder="t('trade.ai_opening_invest_amount')" btn-show-mode="focus"
+          :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0" @change="changePercent"
+          @btnClick="onSliderChange(100)">
+          <!-- <template #title-right>
             <span v-if="token" style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
                 style="color: var(--ex-text-color2)">{{
                   t("trade.ai_opening_balance")
                 }}</span>
               {{ usdt.amount }} USDT</span>
+          </template> -->
+
+          <template #rt>
+            <div @click="openConfirmBox">
+              <div
+                style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
+                <span>{{ t("trade.ai_opening_balance") }}</span>
+                <span style="color: var(--ex-primary-color);margin:0 0.08rem">{{ usdt.amount || '--' }} </span>
+                <span>USDT</span>
+              </div>
+            </div>
+          </template>
+
+          <template #scroll>
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </template>
         </FormItem>
 
-        <div style="height: 0.47rem"></div>
-        <!-- 拖动 -->
-        <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-        <div style="height: 0.28rem"></div>
+
       </div>
 
       <div class="px-[0.36rem]" v-if="!token">
@@ -166,7 +190,7 @@
         <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit"
           color="var(--ex-primary-color)" round><span style="color: var(--ex-black);">{{
             t("trade.ai_opening_confirm_btn")
-            }}</span></Button>
+          }}</span></Button>
       </div>
     </Popup>
 
@@ -559,7 +583,7 @@ defineExpose({
 <style lang="less" scoped>
 .scroller {
   box-sizing: border-box;
-  padding: 0 0.32rem;
+  // padding: 0 0.32rem;
 }
 
 .time_popup {
@@ -603,7 +627,7 @@ defineExpose({
     span {
       border-radius: 0.7rem;
       display: block;
-      border: 1px solid var(--ex-border-color);
+      border: 1px solid var(--ex-text-color5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -675,6 +699,13 @@ defineExpose({
 
   .item_content {
     margin-top: 0.4rem;
+    background-color: var(--ex-bg-color3);
+    border-radius: 0.32rem;
+    padding: 0.24rem 0.28rem;
+
+    .subtitle {
+      color: var(--ex-text-color3);
+    }
   }
 
   .put_all {
@@ -725,8 +756,39 @@ defineExpose({
     position: relative;
     height: 1.12rem;
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+
+    .placeholder {
+      position: absolute;
+      color: var(--ex-text-color3);
+      font-size: 0.28rem;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0.28rem;
+    }
+
+    .more_icon {
+      width: 0.32rem;
+      height: 0.32rem;
+      margin-left: 0.08rem;
+      transform: rotate(-90deg);
+    }
+  }
+
+  .item_box_name {
+    .placeholder {
+      font-size: 0.24rem;
+      transform: translateY(-150%);
+    }
+
+    .name {
+      position: relative;
+      top: 0.16rem;
+    }
   }
 
   .disabled_item {
@@ -812,7 +874,39 @@ defineExpose({
 }
 
 .tabs-container {
-  border: 1px solid var(--ex-border-color);
-  border-radius: 0.32rem;
+
+  .type_tabs {
+    height: 0.96rem;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+    border-radius: 1rem;
+    background-color: var(--ex-bg-color3);
+    padding: 0 0.1rem;
+
+    .type_tab {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ex-text-color2);
+      font-size: 0.3rem;
+
+    }
+
+    .type_tab_text {
+      position: relative;
+      z-index: 1;
+    }
+
+    .active_type_tab {
+      color: var(--ex-text-color--bg-primary);
+      position: relative;
+      height: 0.8rem;
+      background-color: var(--ex-primary-color);
+      border-radius: 1rem;
+    }
+  }
 }
 </style>

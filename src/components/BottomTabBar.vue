@@ -32,12 +32,13 @@
         </div>
       </div>
     </div>
-    <div class="nav_curr">
+    <div class="nav_curr" :class="[checkActive(navs[2]) ? 'nav_curr_active' : '']">
       <div class="curr" @touchstart="handleClick(navs[2], $event)" @click="handleClick(navs[2])">
         <div class="curr_icon">
           <img :src="getStaticImgUrl('/static/bottombar2/curr.svg')" alt="">
         </div>
       </div>
+      <div style="margin-top: 0.16rem;">{{ navs[2].name }}</div>
     </div>
     <div class="nav_box">
       <div class="bottom_nav_item" @touchstart="handleClick(navs[3], $event)" @click="handleClick(navs[3])"
@@ -188,10 +189,12 @@ const checkActive = (item) => {
     align-items: center;
     justify-content: flex-start;
     padding-top: 0.16rem;
+    color: var(--ex-text-color3);
+    font-size: 0.24rem;
 
     .curr {
-      width: 1.2rem;
-      height: 1.2rem;
+      width: 1rem;
+      height: 1rem;
       border-radius: 50%;
       background-size: 100% 100%;
       display: flex;
@@ -199,11 +202,21 @@ const checkActive = (item) => {
       justify-content: center;
       border-radius: 50%;
       background-color: var(--ex-text-color3);
+      transition: all ease .3s;
 
       .curr_icon {
         width: 0.64rem;
         height: 0.64rem
       }
+    }
+  }
+
+  .nav_curr_active {
+    color: var(--ex-primary-color);
+
+    .curr {
+      background-color: var(--ex-primary-color);
+      transform: rotate(270deg);
     }
   }
 

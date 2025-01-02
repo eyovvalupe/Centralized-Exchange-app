@@ -8,7 +8,7 @@ export const VERSION = 'wb_1216_a'
 
 
 /* 首页模板 */
-export const HOME_MODE = 1
+export const HOME_MODE = 2
 /* 底部导航模板 */
 export const BOTTOMBAR_MODE = 1
 

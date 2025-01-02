@@ -104,10 +104,12 @@
                 style="color: var(--ex-text-primary);margin-left: 0.04rem;"> {{
                   currStock.unsold_volume || 0 }}</span> </span>
           </div>
-          <div style="height: 0.47rem"></div>
 
           <!-- 拖动 -->
-          <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          </div>
+
 
           <!-- 收益分析 -->
           <!-- <div class="total_box">
@@ -149,6 +151,7 @@
       </div>
       <div class="order_sell_box">
         <div class="form">
+
           <div class="item_box">
             <div class="item_box_right">
               <FormItem input-type="number" :placeholder="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
@@ -186,9 +189,12 @@
             <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">≤ {{ stockWalletAmount
               }}</span>
           </div>
-          <div style="height: 0.47rem"></div>
           <!-- 拖动 -->
-          <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          </div>
+
+
 
           <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">

@@ -121,7 +121,7 @@ defineExpose({
   padding: 0.16rem 0 0.32rem 0;
 
   :deep(.van-tabs__nav) {
-    margin: 0 0.32rem;
+    padding: 0 0.12rem;
   }
 
   .stock_tab-body {
