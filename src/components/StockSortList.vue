@@ -13,7 +13,6 @@
       <Tab :title="t('market.market_stock_hot')" name="volume">
         <div class="px-[0.4rem]">
           <StockTableForList :loading="loading" :list="marketVolumeList" />
-          {{ finish }}{{ active }}
           <LoadingMore
             :classN="'stock_soft_morevolume'"
             class="active_more"
