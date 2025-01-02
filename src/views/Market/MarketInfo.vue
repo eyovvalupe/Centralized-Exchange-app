@@ -60,30 +60,30 @@
         </div>
         <div class="count flex-1">
             <div class="count_item">
-                <span class="text-color3">最高</span>
+                <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
                 <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
             </div>
             <div class="count_item">
-                <span class="text-color3">最低</span>
+                <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
                 <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
             </div>
             <div class="count_item">
-                <span class="text-color3">今开</span>
+                <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
                 <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
             </div>
             <div class="count_item">
-                <span class="text-color3">昨收</span>
+                <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
                 <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--' }}</span>
             </div>
         </div>
       </div>
       <div class="flex text-[0.24rem] pt-[0.2rem] gap-[0.2rem]">
         <div class="w-[2.6rem] flex-shrink-0">
-          <span class="text-color3">成交额</span>
+          <span class="text-color3">{{ t('market.market_marketinfo_value') }}</span>
           <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.amount) }}</span>
         </div>
         <div class="flex-1">
-          <span class="text-color3">成交量</span>
+          <span class="text-color3">{{ t('market.market_marketinfo_amount') }}</span>
           <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.volume) }}</span>
         </div>
         
