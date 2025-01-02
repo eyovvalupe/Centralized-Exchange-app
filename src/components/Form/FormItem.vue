@@ -446,7 +446,6 @@ const percentTagClick = (percent) => {
 
         .mid-scroll {
           height: 0.5rem;
-          padding: 0 0.13rem;
           bottom: 0.85rem;
         }
 
