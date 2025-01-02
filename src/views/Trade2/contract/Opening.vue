@@ -12,8 +12,8 @@
 
     <!-- Tabs -->
     <div class="open_tab_box">
-      <Tabs key="form" class="van-tabs--oval-sub" @change="(e) => (activeTab = e)"
-        v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
+      <Tabs key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
+        :color="'var(--ex-primary-color)'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
             v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
@@ -94,15 +94,18 @@ defineExpose({
 
   .open_tab_box {
     border-radius: 0 0 0.32rem 0.32rem;
-    background-color: var(--ex-bg-color2);
-    padding-top: 0.32rem;
+    // background-color: var(--ex-bg-color2);
+    // padding-top: 0.32rem;
   }
 
   .type_tabs {
-    height: 0.68rem;
+    height: 0.96rem;
     display: flex;
     align-items: center;
     z-index: 99;
+    border-radius: 1rem;
+    background-color: var(--ex-bg-color3);
+    padding: 0 0.1rem;
 
     .type_tab {
       flex: 1;
@@ -112,6 +115,7 @@ defineExpose({
       justify-content: center;
       color: var(--ex-text-color2);
       font-size: 0.3rem;
+
     }
 
     .type_tab_text {
@@ -120,11 +124,11 @@ defineExpose({
     }
 
     .active_type_tab {
-      color: var(--ex-primary-color);
-      font-weight: 600;
+      color: var(--ex-text-color--bg-primary);
       position: relative;
-      background: var(--ex-bg-color2);
-      border-radius: 0.32rem 0.32rem 0 0;
+      height: 0.8rem;
+      background-color: var(--ex-primary-color);
+      border-radius: 1rem;
     }
   }
 }

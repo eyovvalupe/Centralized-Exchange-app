@@ -29,6 +29,10 @@
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
             v-show="inputFocus || props.hasScroll">{{ tip
             }}</span>
+          <!-- 左上角模块 -->
+          <div class="lt-box" :class="{ 'lt-box-focus': inputFocus }" v-if="hasLT">
+            <slot name="lt" />
+          </div>
           <!-- 右上角模块 -->
           <div class="rt-box" :class="{ 'rt-box-focus': inputFocus && tip }" v-if="hasRT">
             <slot name="rt" />
@@ -134,6 +138,7 @@ const props = defineProps({
   },
   hasScroll: Boolean, // 是否有滚动条
   hasRT: Boolean, // 是否有右上角模块
+  hasLT: Boolean, // 是否有左上角模块
   background: String,
   title: String,
   custom: Boolean,
@@ -279,6 +284,17 @@ const percentTagClick = (percent) => {
       top: 0.24rem;
       right: 0.24rem;
       z-index: 999;
+      transition: all ease .3s;
+      transform-origin: 100% 0;
+    }
+
+    .lt-box {
+      position: absolute;
+      top: 0.24rem;
+      left: 0.24rem;
+      z-index: 999;
+      font-size: 0.24rem;
+      color: var(--ex-text-color3);
       transition: all ease .3s;
       transform-origin: 100% 0;
     }
