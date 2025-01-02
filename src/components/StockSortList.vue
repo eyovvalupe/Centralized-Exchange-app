@@ -10,16 +10,28 @@
       animated
       shrink
     >
+      <Tab :title="t('market.market_stock_hot')" name="volume">
+        <div class="px-[0.4rem]">
+          <StockTableForList :loading="loading" :list="marketVolumeList" />
+          {{ finish }}{{ active }}
+          <LoadingMore
+            :classN="'stock_soft_morevolume'"
+            class="active_more"
+            :loading="!!(marketVolumeList.length && loading)"
+            :finish="finish"
+            v-if="((finish && marketVolumeList.length) || !finish) "
+          />
+        </div>
+      </Tab>
       <Tab :title="t('market.market_stock_chase_long_sort')" name="up">
         <div class="px-[0.4rem]">
-          <!-- <StockTable :key="'down'" :loading="loading" :list="marketDownList" :marketType="'stock'" /> -->
           <StockTableForList :loading="loading" :list="marketUpList" />
           <LoadingMore
             :classN="'stock_soft_moreup'"
             class="active_more"
             :loading="!!(marketUpList.length && loading)"
             :finish="finish"
-            v-if="((finish && marketUpList.length) || !finish) && active == 2"
+            v-if="((finish && marketUpList.length) || !finish) "
           />
         </div>
       </Tab>
@@ -36,7 +48,7 @@
             class="active_more"
             :loading="!!(marketDownList.length && loading)"
             :finish="finish"
-            v-if="((finish && marketDownList.length) || !finish) && active == 1"
+            v-if="((finish && marketDownList.length) || !finish) "
           />
         </div>
       </Tab>
@@ -59,14 +71,14 @@ const finish = ref(false);
 const page = ref(0);
 
 // tabs
-const active = ref("up");
+const active = ref("volume");
 const changeTab = (key) => {
   page.value = 0;
   loading.value = false;
   finish.value = false;
   // 加载更多元素
   switch (key) {
-    case "":
+    case "volume":
       getData(
         marketVolumeList,
         "setMarketVolumeList",
@@ -155,7 +167,7 @@ const scrollHandler = () => {
   if (rect.top <= totalHeight) {
     // 加载更多
     switch (active.value) {
-      case 0:
+      case 'volume':
         getData(
           marketVolumeList,
           "setMarketVolumeList",
@@ -163,10 +175,10 @@ const scrollHandler = () => {
           "marketVolumeList"
         );
         break;
-      case 1:
+      case 'up':
         getData(marketUpList, "setMarketUpList", "up", "marketUpList");
         break;
-      case 2:
+      case 'down':
         getData(marketDownList, "setMarketDownList", "down", "marketDownList");
         break;
     }
@@ -182,7 +194,7 @@ onMounted(() => {
   changeTab(active.value);
   setTimeout(() => {
     try {
-      document.querySelector(".page").addEventListener("scroll", scrollHandler);
+      document.querySelector(".stock_tab_scroller").addEventListener("scroll", scrollHandler);
       target = document.querySelector(".stock_soft_more" + active.value);
     } catch {}
   }, 500);
@@ -190,7 +202,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   try {
     document
-      .querySelector(".page")
+      .querySelector(".stock_tab_scroller")
       .removeEventListener("scroll", scrollHandler);
   } catch {}
 });
