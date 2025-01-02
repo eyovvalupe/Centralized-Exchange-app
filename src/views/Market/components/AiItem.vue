@@ -163,7 +163,7 @@ const formatSec = (seconds, t) => {
           margin-right: 0.24rem;
           padding:0 0.08rem;
           height: 0.36rem;
-          border-radius: 0.04rem;
+          border-radius: 0.08rem;
           background: rgba(255, 163, 70, 0.10);
           color: #FFA346;
           font-size: 0.2rem;

@@ -11,7 +11,7 @@
         <div class="title" v-if="route.query.type == 'stock'">
           <div class="title_name">{{ item.symbol || "--" }}</div>
           <div v-if="showDate" class=" leading-[0.4rem]">
-            10/17 16:00:01 美东时间
+            {{ showDate }}
           </div>
         </div>
         <div class="title" v-else>
@@ -28,41 +28,68 @@
         </div>
 
       </div>
-      <div class="header-price">
-        <h1 class="info" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
-          <template v-if="item.price || item.close">
-            {{ item.price || item.close }}
-          </template>
-          <span v-else>--</span>
-        </h1>
-        <div style="display: flex; align-items: center; margin-left: 0.2rem" class="ratio"
-          :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
-          <div class="ratio_price" v-if="item.price * (item.ratio || 0)">
-            {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
-            {{ item.change ? item.change : '--' }}
-          </div>
-          <div class="ratio_percentage" v-if="item.ratio">
-            {{
-              item.ratio === undefined
-                ? "--"
-                : item.ratio > 0
-                  ? "+" + item.ratio + "%"
-                  : item.ratio + "%"
-            }}
+      <div class="flex items-center justify-center gap-[0.2rem]">
+        
+        <div class="w-[2.6rem] flex-shrink-0">
+          <h1 class="flex items-center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+            <span class="text-[0.4rem] font-[600]" v-if="item.price || item.close">
+              {{ item.price || item.close }}
+            </span>
+            <span class="text-[0.4rem] font-[600]" v-else>--</span>
+            <span  class="w-[0.24rem] h-[0.26rem] ml-[0.06rem] mt-[0.06rem]">
+              <img :src="getStaticImgUrl('/static/img/market/up_icon.svg')" v-if="updown > 0" />
+              <img :src="getStaticImgUrl('/static/img/market/down_icon.svg')" v-else-if="updown < 0" />
+            </span>
+          </h1>
+          <div class="flex mt-[0.2rem]"
+            :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+            <div class="text-[0.24rem]" v-if="item.price * (item.ratio || 0)">
+              {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
+              {{ item.change ? item.change : '--' }}
+            </div>
+            <div class="text-[0.24rem] ml-[0.16rem]" v-if="item.ratio">
+              {{
+                item.ratio === undefined
+                  ? "--"
+                  : item.ratio > 0
+                    ? "+" + item.ratio + "%"
+                    : item.ratio + "%"
+              }}
+            </div>
           </div>
         </div>
-        <!-- <div class="count van-col van-col--5">
-                    <div class="count_item">
-                        <div class="txt">最高</div>
-                        <span>{{ item.high || '--' }}</span>
-                    </div>
-                    <div class="count_item">
-                        <div class="txt">最低</div>
-                        <span>{{ item.low || '--' }}</span>
-                    </div>
-                </div> -->
+        <div class="count flex-1">
+            <div class="count_item">
+                <span class="text-color3">最高</span>
+                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
+            </div>
+            <div class="count_item">
+                <span class="text-color3">最低</span>
+                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
+            </div>
+            <div class="count_item">
+                <span class="text-color3">今开</span>
+                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
+            </div>
+            <div class="count_item">
+                <span class="text-color3">昨收</span>
+                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--' }}</span>
+            </div>
+        </div>
+      </div>
+      <div class="flex text-[0.24rem] pt-[0.2rem] gap-[0.2rem]">
+        <div class="w-[2.6rem] flex-shrink-0">
+          <span class="text-color3">成交额</span>
+          <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.amount) }}</span>
+        </div>
+        <div class="flex-1">
+          <span class="text-color3">成交量</span>
+          <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.volume) }}</span>
+        </div>
+        
       </div>
     </div>
+    <div class="mt-[0.4rem] h-[0.2rem]" style="border-top:1px solid var(--ex-border-color);"></div>
     <!-- 内容 -->
     <div class="market_content">
       <!-- 图表 -->
@@ -73,7 +100,7 @@
           </div>
           <div class="tab" @click="showPicker = true" :class="{ active_tab: minList.includes(timeType) }">
             {{ currMin }}
-            <Icon style="transform: rotate(90deg)" name="play" />
+            <Icon style="transform: rotate(90deg)" size="0.16rem" class="ml-[0.06rem]" name="play" />
           </div>
           <div class="tab" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
             1h
@@ -530,53 +557,26 @@ const showInfo = ref(false);
 
     }
 
-    .header-price {
-      padding: 0.1rem 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-
-      .info {
-        align-items: center;
-        margin: 0;
-      }
-    }
-
     .count {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
       .count_item {
         color: var(--ex-text-color2);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.36rem;
-
-        .txt {
-          flex: none;
-          display: block;
-          width: 100%;
-          color: #bbb;
-        }
-
+        width: 50%;
+        margin-top:0.18rem;
         .num {
-          color: var(--ex-text-color);
           margin-left: 0.1rem;
         }
-      }
-
-      .flex10 {
-        flex: 5;
-      }
-
-      .flex12 {
-        flex: 6;
       }
     }
   }
 
-  h1.info {
-    font-size: 0.6rem;
-    line-height: 0.81rem;
-    font-weight: 600;
-  }
+
 
   .submit {
     color: var(--ex-white);
@@ -768,7 +768,7 @@ const showInfo = ref(false);
 
     .chart_box {
       width: 100%;
-      height: calc(var(--app-height) - 3.7rem);
+      height: calc(var(--app-height) - 4.8rem);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -989,7 +989,7 @@ const showInfo = ref(false);
 }
 
 .times_list {
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.32rem;
 
   .item {
     height: 1rem;
@@ -1004,6 +1004,7 @@ const showInfo = ref(false);
   .active_item {
     background-color: var(--ex-bg-color2);
     color: var(--ex-primary-color);
+    border-radius: 0.32rem;
   }
 }
 
