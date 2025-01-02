@@ -70,7 +70,7 @@ const initData = async () => {
                 show: true,
                 size: 1,
                 // color: 'var(--ex-border-color3)',
-                color: '#ededed',
+                color: '#414345',
 
                 style: 'dashed',
                 dashedValue: [2, 2]
@@ -79,7 +79,7 @@ const initData = async () => {
                 show: true,
                 size: 1,
                 // color: 'var(--ex-border-color)',
-                color: '#ededed',
+                color: '#414345',
 
                 style: 'dashed',
                 dashedValue: [2, 2]
@@ -99,7 +99,7 @@ const initData = async () => {
             },
             area: {
                 // lineColor: props.color || "var(--ex-primary-color)",
-                lineColor: props.color || "#2168f6",
+                lineColor: props.color || "rgb(151 225 128)",
 
                 point: {
                     show: props.showY
@@ -108,19 +108,19 @@ const initData = async () => {
                 backgroundColor: [
                     {
                         offset: 0,
-                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(0, 0, 168, 0.01)"
+                        color: props.color ? `rgba(${props.rgbColor}, 0.01)` : "rgba(151 225 128, 0.01)"
                     },
                     {
                         offset: 1,
-                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)"
+                        color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(151 225 128, 0.3)"
                     }
                 ],
                 smooth: true,
                 point: {
                     show: true,
-                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)",
+                    color: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(151 225 128, 0.3)",
                     radius: 4,
-                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(0, 0, 168, 0.3)", // getAlphaBlue(0.3),
+                    rippleColor: props.color ? `rgba(${props.rgbColor}, 0.3)` : "rgba(151 225 128, 0.3)", // getAlphaBlue(0.3),
                     rippleRadius: 8,
                     animation: true,
                     animationDuration: 1000

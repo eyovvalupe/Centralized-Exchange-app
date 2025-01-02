@@ -4,10 +4,10 @@
     <StockCountry />
     <StockDestribute />
     <StockChase />
-    <div class="stock_hot">
+    <!-- <div class="stock_hot">
       <StockHot />
-    </div>
-    <div class="stock_sort">
+    </div> -->
+    <div class="pt-[0.5rem]">
       <StockSortList />
     </div>
   </div>
