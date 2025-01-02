@@ -4,10 +4,10 @@
     <StockCountry />
     <StockDestribute />
     <StockChase />
-    <div class="stock_hot">
+    <!-- <div class="stock_hot">
       <StockHot />
-    </div>
-    <div class="stock_sort">
+    </div> -->
+    <div class="pt-[0.5rem]">
       <StockSortList />
     </div>
   </div>
@@ -28,15 +28,5 @@ onMounted(() => loading.value = false)
 </script>
 
 <style lang="less" scoped>
-.market_stock {
-  .stock_hot {
-    position: relative;
-    top: -0.3rem;
-  }
 
-  .stock_sort {
-    position: relative;
-    top: -0.7rem;
-  }
-}
 </style>

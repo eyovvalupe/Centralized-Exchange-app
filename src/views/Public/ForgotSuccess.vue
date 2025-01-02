@@ -25,7 +25,8 @@
     <div class="title">{{ t('forget_pw.success') }}</div>
 
     <Button round color="var(--ex-primary-color)" class="submit" type="primary" @click="next"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">{{ t('forget_pw.back') }}</Button>
+      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">
+      <span style="color: var(--ex-black);">{{ t('forget_pw.back') }}</span></Button>
   </div>
 </template>
 
@@ -36,7 +37,7 @@ import router from "@/router";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n()
+const { t } = useI18n()
 const route = useRoute();
 
 const next = () => {

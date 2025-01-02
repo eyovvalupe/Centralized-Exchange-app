@@ -131,10 +131,6 @@ onMounted(() => {
         background-image: url(${getStaticImgUrl('/static/img/user/right.svg')});
       }
 
-      .action-sheet-active ::after {
-         background-image: url(${getStaticImgUrl('/static/img/common/check.svg')});
-      }
-
       .register_accounr_dialog .search-svg-icon {
         background-image: url(${getStaticImgUrl('/static/img/common/search.svg')});
       }

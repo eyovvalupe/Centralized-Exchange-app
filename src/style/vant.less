@@ -9,7 +9,7 @@
     --van-text-color: var(--ex-text-color);
     --van-button-plain-background: var(--ex-bg-color);
     --van-button-primary-color: var(--ex-text-color--bg-primary);
-    --van-button-default-background:var(--ex-bg-color3);
+    --van-button-default-background: var(--ex-bg-color3);
 }
 
 .van-toast--loading {
@@ -25,7 +25,8 @@
     border: none !important;
     font-weight: 600;
 }
-.van-button--default{
+
+.van-button--default {
     font-weight: 400;
 }
 
@@ -171,9 +172,17 @@ body .van-popup--bottom:not(.ex-bottom-popup) {
     padding: 0.2rem 0 0.4rem 0;
 
     .van-action-sheet__item {
-        padding: 0.32rem;
-        border-bottom: 1px solid var(--ex-border-color);
+        height: 1rem;
+        width: calc(100% - 0.8rem);
+        margin: 0 0.4rem;
+        border-radius: 0.32rem;
         font-size: 0.28rem !important;
+        background-color: var(--ex-none);
+    }
+
+    .action-sheet-active {
+        color: var(--ex-primary-color) !important;
+        background-color: var(--ex-bg-color3);
     }
 }
 
@@ -185,28 +194,31 @@ body .van-popup--bottom:not(.ex-bottom-popup) {
     padding-left: 0.32rem !important;
 }
 
-.action-sheet-active {
-    color: var(--ex-primary-color) !important;
-    font-weight: 600;
-    position: relative;
 
-    &::after {
-        content: "";
-        position: absolute;
-        right: 0.32rem;
-        width: 0.28rem;
-        height: 0.28rem;
-        background-size: 100% 100%;
+
+body .van-dialog {
+    // box-shadow: 0 0 10px var(--ex-border-color2);
+    background-color: var(--ex-bg-color5);
+
+    .van-action-bar {
+        background-color: var(--ex-none);
+
+        .van-action-bar-button--first {
+            border-radius: 1.3rem;
+            background: var(--ex-white);
+            color: var(--ex-black);
+            font-weight: 500;
+        }
+
+
+        .van-action-bar-button--last {
+            border-radius: 1.3rem;
+            background: var(--ex-primary-color);
+            color: var(--ex-black);
+            margin-left: 0.4rem;
+            font-weight: 500;
+        }
     }
-
-    .van-icon-success {
-        position: absolute;
-        right: 0.32rem;
-    }
-}
-
-.van-dialog {
-    box-shadow: 0 0 10px var(--ex-border-color2);
 }
 
 /*自定义选项卡样式1*/

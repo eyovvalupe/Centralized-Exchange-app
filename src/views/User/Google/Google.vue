@@ -192,6 +192,7 @@ const confirmNext = () => {
   setTimeout(() => {
     showConfirmDialog({
       title: t('google_auth.confirm_title'),
+      theme: 'round-button',
       // message: "模拟账号不能进行该操作，去升级？",
     })
       .then(() => {

@@ -124,14 +124,6 @@ defineExpose({
         background-color: var(--ex-primary-color);
         border-radius: 1rem;
       }
-
-      .type_tab:first-child.active_type_tab {
-        left: -1px;
-      }
-
-      .type_tab:last-child.active_type_tab {
-        right: -1px;
-      }
     }
 
   }

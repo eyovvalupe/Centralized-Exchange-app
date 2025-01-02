@@ -13,55 +13,60 @@
     <Loaidng size="0.32rem" :loading="loading" v-if="!positionsList.length && loading" />
 
     <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
-      <div class="td td-5">
-        <div class="name van-omit1">{{ item.symbol }}</div>
-        <div class="lever">
-          <div class="status-color status">{{ item.lever }}X</div>
-          <div class="status-color status" :class="'status-' + item.status">
-            <!-- {{ statusMap[item.status] || "--" }} -->
+
+      <div
+        style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
+        <div class="td td-5">
+          <div class="name van-omit1">{{ item.symbol }}</div>
+          <div class="lever">
+            <div class="status-color status tag-default">{{ item.lever }}X</div>
+            <div class="status-color status" :class="'status-' + item.status">
+              <!-- {{ statusMap[item.status] || "--" }} -->
+              {{
+                item.status == "none"
+                  ? t("trade.stock_position_status_none")
+                  : item.status == "lock"
+                    ? t("trade.stock_position_status_lock")
+                    : item.status == "open"
+                      ? t("trade.stock_position_status_open")
+                      : item.status == "done"
+                        ? t("trade.stock_position_status_done")
+                        : item.status == "fail"
+                          ? t("trade.stock_position_status_fail")
+                          : item.status == "cancel"
+                            ? t("trade.stock_position_status_cancel")
+                            : "--"
+              }}
+            </div>
+          </div>
+        </div>
+        <div class="td td-4">
+          <div class="state" :class="'state-' + item.offset">
+            <!-- {{ offsetMap[item.offset] || "--" }} -->
             {{
-              item.status == "none"
-                ? t("trade.stock_position_status_none")
-                : item.status == "lock"
-                  ? t("trade.stock_position_status_lock")
-                  : item.status == "open"
-                    ? t("trade.stock_position_status_open")
-                    : item.status == "done"
-                      ? t("trade.stock_position_status_done")
-                      : item.status == "fail"
-                        ? t("trade.stock_position_status_fail")
-                        : item.status == "cancel"
-                          ? t("trade.stock_position_status_cancel")
-                          : "--"
+              item.offset == "long"
+                ? t("trade.stock_position_offset_long")
+                : item.offset == "short"
+                  ? t("trade.stock_position_offset_short")
+                  : "--"
             }}
+          </div>
+          <div class="amount">{{ item.unsold_volume || "--" }}</div>
+        </div>
+        <div class="td td-4">
+          <div class="price">{{ item.settled_price || "--" }}</div>
+          <div class="price">{{ item.open_price || "--" }}</div>
+        </div>
+        <div class="td td-4">
+          <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
+            {{ item.profit || "--" }}
+          </div>
+          <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
+            {{ getRatio(item.ratio) }}
           </div>
         </div>
       </div>
-      <div class="td td-4">
-        <div class="state" :class="'state-' + item.offset">
-          <!-- {{ offsetMap[item.offset] || "--" }} -->
-          {{
-            item.offset == "long"
-              ? t("trade.stock_position_offset_long")
-              : item.offset == "short"
-                ? t("trade.stock_position_offset_short")
-                : "--"
-          }}
-        </div>
-        <div class="amount">{{ item.unsold_volume || "--" }}</div>
-      </div>
-      <div class="td td-4">
-        <div class="price">{{ item.settled_price || "--" }}</div>
-        <div class="price">{{ item.open_price || "--" }}</div>
-      </div>
-      <div class="td td-4">
-        <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
-          {{ item.profit || "--" }}
-        </div>
-        <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-          {{ getRatio(item.ratio) }}
-        </div>
-      </div>
+
     </div>
 
     <!-- 订单详情 -->
@@ -76,14 +81,15 @@
       </div>
       <div class="order_sell_box">
         <div class="form">
-          <div class="subtitle">
+          <!-- <div class="subtitle">
             <span>{{ t("trade.stock_position_amount") }}</span>
             <span class="subtitle-tip">{{ t("trade.stock_position_ongoing_amount") }}
               {{ currStock.unsold_volume }}</span>
-          </div>
+          </div> -->
           <div class="item">
-            <input @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
+            <input :placeholder="'数量'" @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
               @input="changeValue" type="number" class="ipt" />
+
             <span :style="{
               opacity: amountFocus ? '1' : '0',
               visibility: amountFocus ? '' : 'hidden',
@@ -92,11 +98,18 @@
                 word-break: keep-all;
                 transition: all ease 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
+
+            <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">{{
+              t("trade.stock_position_ongoing_amount") }} <span
+                style="color: var(--ex-text-primary);margin-left: 0.04rem;"> {{
+                  currStock.unsold_volume || 0 }}</span> </span>
           </div>
-          <div style="height: 0.47rem"></div>
 
           <!-- 拖动 -->
-          <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          </div>
+
 
           <!-- 收益分析 -->
           <!-- <div class="total_box">
@@ -125,7 +138,7 @@
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
-            {{ t("trade.stock_position_btn") }}
+            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -138,6 +151,7 @@
       </div>
       <div class="order_sell_box">
         <div class="form">
+
           <div class="item_box">
             <div class="item_box_right">
               <FormItem input-type="number" :placeholder="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
@@ -155,13 +169,15 @@
                   " @percentTagClick="setPriceStop" />
             </div>
           </div>
-          <div class="subtitle">
+          <!-- <div class="subtitle">
             <span>{{ t("trade.stock_position_add_deposit") }}</span>
             <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
-          </div>
+          </div> -->
           <div class="item">
-            <input @focus="amountFocus = true" @blur="amountFocus = false" @input="changeAmount"
-              v-model="updateForm.amount" type="number" class="ipt" />
+            <input :placeholder="t('trade.stock_position_add_deposit')" @focus="amountFocus = true"
+              @blur="amountFocus = false" @input="changeAmount" v-model="updateForm.amount" type="number" class="ipt" />
+
+
             <span :style="{
               opacity: amountFocus ? '1' : '0',
               visibility: amountFocus ? '' : 'hidden',
@@ -170,10 +186,15 @@
                 word-break: keep-all;
                 transition: all ease 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
+            <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">≤ {{ stockWalletAmount
+              }}</span>
           </div>
-          <div style="height: 0.47rem"></div>
           <!-- 拖动 -->
-          <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          </div>
+
+
 
           <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
                     <div class="item">
@@ -182,7 +203,7 @@
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
-            {{ t("trade.stock_position_btn") }}
+            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -595,6 +616,7 @@ const cancel = (item) => {
     message: t("trade.stock_position_cancel_con"),
     confirmButtonText: t("trade.stock_position_confirm_btn"),
     cancelButtonText: t("trade.stock_position_cancel_btn"),
+    theme: 'round-button'
   })
     .then(() => {
       showLoadingToast({
@@ -653,7 +675,6 @@ getSessionToken();
   .td {
     text-align: center;
     flex-shrink: 0;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     display: flex;
@@ -665,13 +686,15 @@ getSessionToken();
       font-size: 0.32rem;
       color: var(--ex-text-color);
       line-height: 0.32rem;
-      margin-bottom: 0.18rem;
+      margin-bottom: 0.28rem;
       display: block;
     }
 
     .lever {
       display: flex;
       align-items: center;
+      position: relative;
+      bottom: -0.02rem;
     }
 
     .status {
@@ -711,7 +734,7 @@ getSessionToken();
     }
 
     .price {
-      color: var(--ex-text-color2);
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
     }
 
@@ -801,7 +824,8 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      border: 1px solid var(--ex-border-color2);
+      // border: 1px solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color3);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

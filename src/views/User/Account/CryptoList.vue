@@ -26,7 +26,7 @@
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { showToast, showConfirmDialog,Loading } from "vant";
+import { showToast, showConfirmDialog, Loading } from "vant";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { ref } from "vue";
 import { _delAccount, _listAccount } from "@/api/api";
@@ -40,11 +40,12 @@ const googleRef = ref();
 const confirm = (id) => {
   store.commit("setCurrDeleteId", id);
   showConfirmDialog({
-    className:'account_dialog',
+    className: 'account_dialog',
     title: t('account.delete_dialog_title'),
     message: t('account.delete_dialog_con'),
     confirmButtonText: t('google_auth.google_input_btn_confirm'),
-    cancelButtonText: t('google_auth.google_input_btn_cancel')
+    cancelButtonText: t('google_auth.google_input_btn_cancel'),
+    theme: 'round-button'
   })
     .then(() => next(id))
     .catch(() => { });

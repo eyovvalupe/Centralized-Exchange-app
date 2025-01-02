@@ -31,9 +31,12 @@
           class="absolute w-[0.48rem] bottom-[0.24rem] left-[0.26rem] top-[1rem] h-[0.04rem] bg-primary"></div>
       </div>
     </div>
-    <Button :loading="props.loading" :disabled="!isAllFilled" round color="var(--ex-primary-color)" class="submit-button" type="primary"
-      @click="handleSubmit">{{ props.from == "register" ? t('code_input.btn_text1') : t('code_input.btn_text2')
-      }}</Button>
+    <Button :loading="props.loading" :disabled="!isAllFilled" round color="var(--ex-primary-color)"
+      class="submit-button" type="primary" @click="handleSubmit">
+      <span style="color: var(--ex-black);">{{ props.from == "register" ? t('code_input.btn_text1') :
+        t('code_input.btn_text2')
+        }}</span>
+    </Button>
   </div>
 </template>
 

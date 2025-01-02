@@ -3,194 +3,193 @@
     <Top :title="title" :backFunc="backFunc" />
 
     <div class="scroller">
-      <div class="stock-info">
-        <div class="stock-info__head">
-          <div class="stock-info__hl">
-            <span class="stock-info__symbol" v-if="type == 'contract'">{{
-              currStock.name || "--"
-            }}</span>
-            <span class="stock-info__symbol" v-else>{{
-              currStock.symbol || "--"
-            }}</span>
-            <span class="stock-info__status">
-              <!-- {{ statusMap[currStock.status] || "--" }} -->
-              {{
-                currStock.status == 'none' ? t('trade.stock_position_status_none') :
-                  currStock.status == 'lock' ? t('trade.stock_position_status_lock') :
-                    currStock.status == 'open' ? t('trade.stock_position_status_open') :
-                      currStock.status == 'done' ? t('trade.stock_position_status_done') :
-                        currStock.status == 'fail' ? t('trade.stock_position_status_fail') :
-                          currStock.status == 'cancel' ? t('trade.stock_position_status_cancel') :
-                            '--'
-              }}
-            </span>
-          </div>
-          <div class="stock-info__trend" @click="openStockModel(currStock)">
-            <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
-          </div>
-        </div>
-        <div class="stock-info__order_no">
-          <span>{{ currStock.order_no || "--" }}</span>
-          <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
-            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
-          </div>
-        </div>
-      </div>
-      <div class="info_boxs">
-        <div class="info_box" v-if="!finalStatus">
-          <div class="text-center">
-            <!-- 可售{{
-              (type == "stock" && "股票") ||
-              (type == "contract" && "张数") ||
-              ""
-            }} -->
-            {{
-              type == "stock"
-                ? t("trade.order_info_available_stock")
-                : type == "contract"
-                  ? t("trade.order_info_available_contract")
-                  : ""
-            }}
-          </div>
-          <div class="amount">{{ currStock.unsold_volume || "--" }}</div>
-        </div>
-        <div class="info_box">
-          <div>{{ t("trade.order_info_profit") }}</div>
-          <div class="amount" :class="!currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
-            ">
-            <div>{{ currStock.profit || "--" }}</div>
-          </div>
-        </div>
-        <div class="info_box">
-          <div>{{ t("trade.order_info_ratio") }}</div>
-          <div class="amount" :class="!currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
-            ">
-            <div style="font-size: 0.32rem">
-              {{ getRatio(currStock.ratio) }}
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="order_info_box">
-        <div class="info_item">
-          <div class="name">{{ t("trade.stock_open") }}</div>
-          <div class="val_box">
-            <div class="tag" :class="'tag_' + currStock.offset">
-              <!-- {{ offsetMap[currStock.offset] || "--" }} -->
-              {{
-                currStock.offset == 'long' ? t('trade.stock_position_offset_long') :
-                  currStock.offset == 'short' ? t('trade.stock_position_offset_short') :
-                    '--'
-              }}
-            </div>
-            <div class="tag">
-              <!-- {{ leverTypeap[currStock.lever_type] || "--" }} -->
-              {{
-                currStock.lever_type == 'cross' ? t('trade.stock_opening_position_mode_cross') :
-                  currStock.lever_type == 'isolated' ? t('trade.stock_opening_position_mode_isolated') :
-                    '--'
-              }}
-            </div>
-            <div class="text">{{ currStock.lever || "1" }}X</div>
-          </div>
-        </div>
-        <div class="info_item">
-          <div class="name">{{ t("trade.stock_opening_price") }}</div>
-          <div class="val_box">
-            <div class="tag">
-              <!-- {{ priceTypeMap[currStock.price_type] || "--" }} -->
-              {{
-                currStock.price_type == 'market' ? t('trade.stock_market_price') :
-                  currStock.price_type == 'limit' ? t('trade.stock_limit_price') :
-                    '--'
-              }}
-            </div>
-            <div class="text">{{ currStock.price || "--" }}</div>
-          </div>
-        </div>
-        <div class="info_item">
-          <!-- <div class="name">开仓{{ type == "contract" ? "张数" : "数量" }}</div> -->
-          <div class="name">
-            {{
-              type == "contract"
-                ? t("trade.order_info_open_qty_contract")
-                : t("trade.order_info_open_qty_other")
-            }}
-          </div>
-          <div class="val_box">
-            <div class="text">{{ currStock.open_volume || "--" }}</div>
-          </div>
-        </div>
-        <div class="info_item">
-          <div class="name">{{ t("trade.stock_opening_fee") }}</div>
-          <div class="val_box">
-            <div class="text">{{ currStock.fee || "0" }}</div>
-          </div>
-        </div>
-        <div class="info_item">
-          <div class="name">{{ t("trade.stock_take_stop") }}</div>
-          <div>
-            <div class="val_box" style="margin-bottom: 0.1rem" v-if="currStock.stop_profit">
-              <div class="tag green_tag">
-                <!-- 止盈({{ stopMap[currStock.stop_profit_type] }}) -->
+      <div style="padding: 0.12rem;border-radius: 0.32rem;background-color: var(--ex-bg-color3);">
+        <div class="stock-info">
+          <div class="stock-info__head">
+            <div class="stock-info__hl">
+              <span class="stock-info__symbol" v-if="type == 'contract'">{{
+                currStock.name || "--"
+              }}</span>
+              <span class="stock-info__symbol" v-else>{{
+                currStock.symbol || "--"
+              }}</span>
+              <span class="stock-info__status">
+                <!-- {{ statusMap[currStock.status] || "--" }} -->
                 {{
-                  currStock.stop_profit_type == "price"
-                    ? t("trade.order_info_stop_profit_price")
-                    : currStock.stop_profit_type == "amount"
-                      ? t("trade.order_info_stop_profit_amount")
-                      : currStock.stop_profit_type == "ratio"
-                        ? t("trade.order_info_stop_profit_ratio")
-                        : ""
+                  currStock.status == 'none' ? t('trade.stock_position_status_none') :
+                    currStock.status == 'lock' ? t('trade.stock_position_status_lock') :
+                      currStock.status == 'open' ? t('trade.stock_position_status_open') :
+                        currStock.status == 'done' ? t('trade.stock_position_status_done') :
+                          currStock.status == 'fail' ? t('trade.stock_position_status_fail') :
+                            currStock.status == 'cancel' ? t('trade.stock_position_status_cancel') :
+                              '--'
+                }}
+              </span>
+            </div>
+            <div class="stock-info__trend" @click="openStockModel(currStock)">
+              <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+            </div>
+          </div>
+          <div class="stock-info__order_no">
+            <span>{{ currStock.order_no || "--" }}</span>
+            <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
+              <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+            </div>
+          </div>
+        </div>
+        <div class="info_boxs">
+          <div class="info_box" v-if="!finalStatus">
+            <div class="amount">{{ currStock.unsold_volume || "--" }}</div>
+            <div class="text-center">
+              {{
+                type == "stock"
+                  ? t("trade.order_info_available_stock")
+                  : type == "contract"
+                    ? t("trade.order_info_available_contract")
+                    : ""
+              }}
+            </div>
+          </div>
+          <div class="info_box">
+            <div class="amount" :class="!currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
+              ">
+              <div>{{ currStock.profit || "--" }}</div>
+            </div>
+            <div>{{ t("trade.order_info_profit") }}</div>
+          </div>
+          <div class="info_box">
+            <div class="amount" :class="!currStock.profit ? '' : currStock.profit > 0 ? 'up' : 'down'
+              ">
+              <div style="font-size: 0.32rem">
+                {{ getRatio(currStock.ratio) }}
+              </div>
+            </div>
+            <div>{{ t("trade.order_info_ratio") }}</div>
+          </div>
+        </div>
+
+        <div class="order_info_box">
+          <div class="info_item">
+            <div class="name">{{ t("trade.stock_open") }}</div>
+            <div class="val_box">
+              <div class="tag" :class="'tag_' + currStock.offset">
+                <!-- {{ offsetMap[currStock.offset] || "--" }} -->
+                {{
+                  currStock.offset == 'long' ? t('trade.stock_position_offset_long') :
+                    currStock.offset == 'short' ? t('trade.stock_position_offset_short') :
+                      '--'
                 }}
               </div>
-              <div class="text">
-                {{ currStock.stop_profit_price
-                }}{{ currStock.stop_profit_type == "ratio" ? "%" : "" }}
-              </div>
-            </div>
-            <div class="val_box" v-if="currStock.stop_loss">
-              <div class="tag red_tag">
-                <!-- 止损({{ stopMap[currStock.stop_loss_type] }}) -->
+              <div class="tag">
+                <!-- {{ leverTypeap[currStock.lever_type] || "--" }} -->
                 {{
-                  currStock.stop_loss_type == "price"
-                    ? t("trade.order_info_stop_loss_price")
-                    : currStock.stop_loss_type == "amount"
-                      ? t("trade.order_info_stop_loss_amount")
-                      : currStock.stop_loss_type == "ratio"
-                        ? t("trade.order_info_stop_loss_ratio")
-                        : ""
+                  currStock.lever_type == 'cross' ? t('trade.stock_opening_position_mode_cross') :
+                    currStock.lever_type == 'isolated' ? t('trade.stock_opening_position_mode_isolated') :
+                      '--'
                 }}
               </div>
-              <div class="text">
-                {{ currStock.stop_loss_price
-                }}{{ currStock.stop_loss_type == "ratio" ? "%" : "" }}
+              <div class="text">{{ currStock.lever || "1" }}X</div>
+            </div>
+          </div>
+          <div class="info_item">
+            <div class="name">{{ t("trade.stock_opening_price") }}</div>
+            <div class="val_box">
+              <div class="tag">
+                <!-- {{ priceTypeMap[currStock.price_type] || "--" }} -->
+                {{
+                  currStock.price_type == 'market' ? t('trade.stock_market_price') :
+                    currStock.price_type == 'limit' ? t('trade.stock_limit_price') :
+                      '--'
+                }}
+              </div>
+              <div class="text">{{ currStock.price || "--" }}</div>
+            </div>
+          </div>
+          <div class="info_item">
+            <!-- <div class="name">开仓{{ type == "contract" ? "张数" : "数量" }}</div> -->
+            <div class="name">
+              {{
+                type == "contract"
+                  ? t("trade.order_info_open_qty_contract")
+                  : t("trade.order_info_open_qty_other")
+              }}
+            </div>
+            <div class="val_box">
+              <div class="text">{{ currStock.open_volume || "--" }}</div>
+            </div>
+          </div>
+          <div class="info_item">
+            <div class="name">{{ t("trade.stock_opening_fee") }}</div>
+            <div class="val_box">
+              <div class="text">{{ currStock.fee || "0" }}</div>
+            </div>
+          </div>
+          <div class="info_item">
+            <div class="name">{{ t("trade.stock_take_stop") }}</div>
+            <div>
+              <div class="val_box" style="margin-bottom: 0.1rem" v-if="currStock.stop_profit">
+                <div class="tag green_tag">
+                  <!-- 止盈({{ stopMap[currStock.stop_profit_type] }}) -->
+                  {{
+                    currStock.stop_profit_type == "price"
+                      ? t("trade.order_info_stop_profit_price")
+                      : currStock.stop_profit_type == "amount"
+                        ? t("trade.order_info_stop_profit_amount")
+                        : currStock.stop_profit_type == "ratio"
+                          ? t("trade.order_info_stop_profit_ratio")
+                          : ""
+                  }}
+                </div>
+                <div class="text">
+                  {{ currStock.stop_profit_price
+                  }}{{ currStock.stop_profit_type == "ratio" ? "%" : "" }}
+                </div>
+              </div>
+              <div class="val_box" v-if="currStock.stop_loss">
+                <div class="tag red_tag">
+                  <!-- 止损({{ stopMap[currStock.stop_loss_type] }}) -->
+                  {{
+                    currStock.stop_loss_type == "price"
+                      ? t("trade.order_info_stop_loss_price")
+                      : currStock.stop_loss_type == "amount"
+                        ? t("trade.order_info_stop_loss_amount")
+                        : currStock.stop_loss_type == "ratio"
+                          ? t("trade.order_info_stop_loss_ratio")
+                          : ""
+                  }}
+                </div>
+                <div class="text">
+                  {{ currStock.stop_loss_price
+                  }}{{ currStock.stop_loss_type == "ratio" ? "%" : "" }}
+                </div>
+              </div>
+              <div class="val_box" v-if="!currStock.stop_profit && !currStock.stop_loss">
+                <div class="tag">{{ t("trade.stock_opening_no") }}</div>
               </div>
             </div>
-            <div class="val_box" v-if="!currStock.stop_profit && !currStock.stop_loss">
-              <div class="tag">{{ t("trade.stock_opening_no") }}</div>
+          </div>
+          <div class="info_item" v-if="!finalStatus">
+            <div class="name">{{ t("trade.order_info_value") }}</div>
+            <div class="val_box">
+              <div class="text">{{ currStock.order_value || "--" }}</div>
             </div>
           </div>
-        </div>
-        <div class="info_item" v-if="!finalStatus">
-          <div class="name">{{ t("trade.order_info_value") }}</div>
-          <div class="val_box">
-            <div class="text">{{ currStock.order_value || "--" }}</div>
+          <div class="info_item" v-if="!finalStatus">
+            <div class="name">{{ t("trade.stock_opening_upfront") }}</div>
+            <div class="val_box">
+              <div class="text">{{ currStock.margin || "0" }}</div>
+            </div>
           </div>
-        </div>
-        <div class="info_item" v-if="!finalStatus">
-          <div class="name">{{ t("trade.stock_opening_upfront") }}</div>
-          <div class="val_box">
-            <div class="text">{{ currStock.margin || "0" }}</div>
-          </div>
-        </div>
-        <!-- <div class="info_item">
+          <!-- <div class="info_item">
                     <div class="name">持仓利息</div>
                     <div class="val_box">
                         <div class="text">0</div>
                     </div>
                 </div> -->
+        </div>
       </div>
+
     </div>
 
     <div class="btns">
@@ -334,18 +333,17 @@ const copy = (text) => {
   height: calc(100vh - 3.2rem);
   overflow-y: auto;
   margin-top: 1.12rem;
+  padding: 0.4rem;
 }
 
 .stock-info {
-  background-color: var(--ex-bg-color2);
-  border-radius: 0.32rem;
-  margin: 0.2rem 0.32rem 0 0.32rem;
-  padding: 0.2rem 0.32rem 0.6rem 0.32rem;
+  padding: 0.2rem 0.32rem 0.68rem 0.32rem;
 
   &__head {
     display: flex;
     height: 0.4rem;
     justify-content: space-between;
+    margin-bottom: 0.1rem;
   }
 
   &__hl {
@@ -409,10 +407,10 @@ const copy = (text) => {
   align-items: stretch;
   padding: 0.3rem 0;
   position: relative;
-  border: 1px solid var(--ex-border-color);
+  // border: 1px solid var(--ex-border-color);
   border-radius: 0.32rem;
   background-color: var(--ex-bg-color);
-  margin: -0.5rem 0.32rem 0 0.32rem;
+  margin: -0.5rem 0 0 0;
   z-index: 1;
 
   .info_box {
@@ -433,7 +431,7 @@ const copy = (text) => {
       align-items: center;
       justify-content: center;
       line-height: 0.44rem;
-      margin-top: 0.12rem;
+      margin-bottom: 0.12rem;
       font-weight: 600;
       color: var(--ex-primary-color);
       font-size: 0.36rem;
@@ -453,7 +451,31 @@ const copy = (text) => {
 }
 
 .order_info_box {
-  padding: 0.16rem 0.64rem 0.32rem 0.64rem;
+  margin-top: 0.2rem;
+  padding: 0.2rem 0.28rem;
+  border-radius: 0.32rem;
+  background-color: var(--ex-bg-color);
+  position: relative;
+
+  &::after {
+    width: 0.16rem;
+    height: 0.34rem;
+    content: "";
+    background-color: var(--ex-bg-color);
+    position: absolute;
+    top: -0.28rem;
+    right: 1.1rem;
+  }
+
+  &::before {
+    width: 0.16rem;
+    height: 0.34rem;
+    content: "";
+    background-color: var(--ex-bg-color);
+    position: absolute;
+    top: -0.28rem;
+    left: 1.1rem;
+  }
 
   .title {
     text-align: center;
@@ -466,8 +488,8 @@ const copy = (text) => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.32rem 0 0.18rem 0;
-    border-bottom: 1px solid var(--ex-border-color);
+    padding: 0.36rem 0 0.24rem 0;
+    // border-bottom: 1px solid var(--ex-border-color);
 
     .name {
       color: var(--ex-text-color3);
@@ -524,9 +546,8 @@ const copy = (text) => {
 
   .btn {
     width: 2.1532rem;
-    height: 1.4rem;
+    height: 0.92rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: var(--ex-primary-color);
@@ -534,7 +555,7 @@ const copy = (text) => {
     font-size: 0.32rem;
     font-weight: 400;
     line-height: 100%;
-    border-radius: 0.32rem;
+    border-radius: 1rem;
     margin: 0 0.1rem;
 
     .btn_icon {
@@ -549,12 +570,12 @@ const copy = (text) => {
   }
 
   .btn4 {
-    background-color: #b2bbd1;
+    background-color: var(--ex-white);
   }
 
   .disabled_btn {
-    background-color: var(--ex-bg-color3);
-    color: var(--ex-border-color2);
+    // background-color: var(--ex-bg-color3);
+    display: none;
   }
 }
 </style>

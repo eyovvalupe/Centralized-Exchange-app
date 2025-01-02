@@ -3,8 +3,7 @@
     <div class="page-home2">
         <!-- 背景 -->
         <div class="home2-bg1">
-            <img :src="getStaticImgUrl('/static/home2/bg.svg')" alt="">
-            <div class="bg_bottom"></div>
+            <img :src="getStaticImgUrl('/static/home2/bg.png')" alt="">
         </div>
         <div class="home2-bg2">
             <img :src="getStaticImgUrl('/static/home2/bg-shadow.svg')" alt="">
@@ -147,11 +146,11 @@
 
             <!-- Tabs -->
             <div class="home-tabs-box">
-                <Tabs @change="tabChange" v-if="!pageLoading && activated" type="card" class="tabs"
-                    v-model:active="activeTab" animated shrink>
+                <Tabs class="van-tabs--sub" :color="'var(--ex-primary-color)'" @change="tabChange"
+                    v-if="!pageLoading && activated" v-model:active="activeTab" animated shrink>
                     <Tab :title="$t('common.stock')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div class="pt-[0.12rem]">
+                        <div>
                             <StockItem :item="item" v-for="(item, i) in marketStockCurrentList" :key="'s_' + i"
                                 page="home" />
                         </div>
@@ -159,9 +158,9 @@
                     </Tab>
                     <Tab :title="$t('common.crypto')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div class="pt-[0.32rem]">
+                        <div>
                             <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
-                                marketType="crypto" />
+                                marketType="crypto" page="home" />
                         </div>
                         <NoData v-if="!commendLoading && !contractList.length" />
                     </Tab>
@@ -171,7 +170,7 @@
                         </div>
                     </Tab>
                     <Tab :title="$t('common.AI')">
-                        <div class="mx-[0.32rem]">
+                        <div class="mx-[0.32rem] mt-[0.32rem]">
                             <Ai page="home" />
                         </div>
                     </Tab>
@@ -180,13 +179,18 @@
 
 
             <!-- ad -->
-            <div class="ad" :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }">
+            <div class="ad">
 
-                <div class="ad-bg"></div>
+                <div class="ad-bg"
+                    :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }"></div>
                 <div class="ad-content">
                     <div class="title">开启你的交易之旅</div>
                     <div>创造财富之路</div>
                     <div class="btn">去交易</div>
+                </div>
+
+                <div class="ad-tip">
+                    <img :src="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
                 </div>
             </div>
 
@@ -275,7 +279,7 @@ const contractList = computed(() => store.state.contractList || []);
 const marketStockCurrentList = computed(
     () => {
         return store.getters.getMarketStockCurrentList.map(item => {
-            return {...item, type: 'stock'}
+            return { ...item, type: 'stock' }
         })
     }
 );
@@ -400,7 +404,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-home2 {
-    background-color: var(--ex-text-color);
+    background-color: var(--ex-bg-color);
     min-height: 100%;
     position: relative;
     overflow: hidden;
@@ -411,14 +415,11 @@ onMounted(() => {
         width: 100%;
         height: auto;
         z-index: 0;
-        top: -0.6rem;
+        top: -0.02rem;
         left: 0;
 
-        .bg_bottom {
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.7) 40%, rgba(0, 0, 0, 0.9) 70%, #000 100%);
-            height: 2rem;
-            position: relative;
-            top: -2rem;
+        img {
+            object-fit: cover;
         }
     }
 
@@ -447,7 +448,7 @@ onMounted(() => {
                 width: 0.72rem;
                 height: 0.72rem;
                 border-radius: 50%;
-                border: 1px solid rgba(255, 255, 255, 0.5)
+                border: 1px solid var(--ex-text-color3);
             }
         }
 
@@ -457,7 +458,7 @@ onMounted(() => {
             align-items: center;
             justify-content: center;
             margin: 0.16rem 0 0 0;
-            color: #fff;
+            color: var(--ex-white);
             text-align: center;
 
             .title1 {
@@ -473,7 +474,7 @@ onMounted(() => {
                 line-height: 0.76rem;
 
                 span {
-                    color: #00F0FF;
+                    color: var(--ex-primary-color);
                     ;
                 }
             }
@@ -502,20 +503,18 @@ onMounted(() => {
                 flex: 1;
                 height: 0.98rem;
                 border-radius: 1.2rem;
-                background-color: #00F0FF;
+                background-color: var(--ex-primary-color);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: #01060F;
+                color: var(--ex-bg-color);
                 font-weight: 400;
                 font-size: 0.32rem;
             }
 
             .btn2 {
                 margin-right: 0.32rem;
-                border: 1px solid #00F0FF;
-                background-color: rgba(0, 0, 0, 0);
-                color: #00F0FF;
+                background-color: var(--ex-white);
             }
         }
 
@@ -533,6 +532,7 @@ onMounted(() => {
                     color: #fff;
                     overflow: hidden;
                     border-radius: 0.32rem;
+                    background: linear-gradient(0deg, #1C1C1C 0%, #2E2E2E 95.61%);
 
                     .notice-item {
                         display: flex;
@@ -564,7 +564,7 @@ onMounted(() => {
 
                             .notice-more {
                                 font-size: 0.24rem;
-                                color: #00F0FF;
+                                color: var(--ex-primary-color);
                                 font-weight: 400;
                                 margin-top: 0.24rem;
                                 line-height: 0.32rem;
@@ -624,7 +624,7 @@ onMounted(() => {
                     }
 
                     .van-swipe__indicator--active {
-                        background-color: #00F0FF !important;
+                        background-color: var(--ex-primary-color) !important;
                     }
 
                 }
@@ -643,35 +643,30 @@ onMounted(() => {
             }
 
             .card-1 {
-                width: 3.26rem;
+                width: 3.35rem;
                 height: 5.36rem;
                 border-radius: 0.4rem;
-                border: 1px solid #222626;
                 position: relative;
             }
 
             .card-2 {
-                width: 3.26rem;
+                width: 3.35rem;
                 height: 2.76rem;
                 border-radius: 0.3rem;
-                border: 1px solid #222626;
                 position: relative;
             }
 
             .card-3 {
-                width: 3.26rem;
+                width: 3.35rem;
                 height: 3rem;
                 border-radius: 0.4rem;
-                border: 1px solid #222626;
-                background: #000;
                 position: relative;
             }
 
             .card-4 {
                 border-radius: 0.2rem;
-                width: 3.26rem;
+                width: 3.35rem;
                 height: 2.36rem;
-                border: 1px solid #222626;
                 position: relative;
             }
 
@@ -685,14 +680,13 @@ onMounted(() => {
 
         .assets {
             border-radius: 0.3rem;
-            border: 1px solid #222626;
             width: 100%;
             height: 100%;
             overflow: auto;
+            background: linear-gradient(0deg, #1C1C1C 0%, #2E2E2E 95.61%);
 
             .top {
                 background-size: cover;
-                background-color: rgba(255, 255, 255, 0.05);
                 height: 100%;
                 display: flex;
                 flex-direction: column;
@@ -705,7 +699,7 @@ onMounted(() => {
                 text-align: center;
 
                 .total {
-                    color: #fff;
+                    color: var(--ex-white);
                     font-size: 0.24rem;
                 }
 
@@ -715,24 +709,25 @@ onMounted(() => {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    background-color: #00F0FF;
+                    background-color: var(--ex-primary-color);
                     font-size: 0.3rem;
-                    color: var(--ex-text-color);
+                    color: var(--ex-bg-color);
                     margin: 0.28rem 0 0.2rem 0;
                     padding: 0 0.4rem;
                 }
 
                 .login_tip {
-                    color: rgba(255, 255, 255, 0.50);
+                    color: var(--ex-text-color3);
                     font-size: 0.24rem;
                 }
 
                 .amount {
-                    color: #00F0FF;
+                    color: var(--ex-primary-color);
                     font-weight: 700;
                     font-size: 0.48rem;
                     line-height: 0.48rem;
                     margin-top: 0.24rem;
+                    padding: 0 0.1rem;
                     word-break: break-all;
                 }
 
@@ -740,10 +735,10 @@ onMounted(() => {
                     height: 0.6rem;
                     padding: 0 0.6rem;
                     border-radius: 0.3rem;
-                    background-color: var(--ex-bg-color);
+                    background-color: var(--ex-primary-color);
+                    color: var(--ex-bg-color);
                     font-size: 0.24rem;
                     font-weight: 400;
-                    color: var(--ex-text-color);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -756,7 +751,7 @@ onMounted(() => {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            color: #FFF;
+            color: var(--ex-white);
             font-size: 0.36rem;
             font-weight: 600;
 
@@ -764,7 +759,7 @@ onMounted(() => {
                 width: 0.84rem;
                 height: 0.48rem;
                 border-radius: 0.3rem;
-                border: 1px solid #00F0FF;
+                border: 1px solid var(--ex-white);
                 padding: 0 0.22rem;
             }
         }
@@ -772,78 +767,21 @@ onMounted(() => {
         .home-tabs-box {
             margin-top: 0.44rem;
 
-            // 这里重写元素的样式
-            :deep(.stock_item_box) {
-                &:hover {
-                    background-color: rgba(0, 0, 0, 0);
-                }
-            }
-
-            :deep(.stock_item) {
-                border-radius: 15px;
-                border: 1px solid var(--2, #222626);
-                background: rgba(255, 255, 255, 0.06);
-                margin-bottom: 0.2rem;
-
-                &::after {
-                    display: none;
-                }
-
-                .td5 {
-                    .item_name {
-                        color: #fff;
-                    }
-
-                    .item_info {
-                        color: rgba(255, 255, 255, 0.50);
-                    }
-                }
-            }
-
             :deep(.van-tabs__nav) {
-                background-color: rgba(0, 0, 0, 0);
+                background-color: var(--ex-none);
+
+                .van-tab {
+                    background-color: var(--ex-bg-color);
+                    color: var(--ex-text-color2);
+                    min-width: 1.2rem;
+                }
+
+                .van-tab--active {
+                    color: var(--ex-black);
+                    background-color: var(--ex-white);
+                }
             }
 
-            :deep(.van-tab--card) {
-                border-right: none;
-                color: var(--ex-text-color);
-                border-radius: 0.32rem;
-                margin-right: 0.1rem;
-                transition: all ease 0.2s;
-
-            }
-
-            :deep(.van-tab--card.van-tab--active) {
-                background-color: #00F0FF;
-                border-color: #00F0FF;
-                border-radius: 0.32rem;
-                color: var(--ex-text-color);
-                font-weight: 500;
-                font-size: 0.3rem;
-            }
-
-            :deep(.van-tab--shrink) {
-                padding: 0 0.3rem;
-            }
-
-            :deep(.van-tabs__wrap) {
-                height: 0.68rem;
-            }
-
-            :deep(.van-tabs__nav--card) {
-                height: 0.68rem;
-                margin: 0;
-                border: none;
-            }
-
-            :deep(.van-tab) {
-                line-height: 0.68rem;
-                font-size: 0.3rem;
-                border: 0.02rem solid rgba(0, 0, 0, 0);
-                border-radius: 0.32rem;
-                color: rgba(255, 255, 255, 0.5);
-                background-color: rgba(255, 255, 255, 0.10);
-            }
         }
 
         .ad {
@@ -858,6 +796,8 @@ onMounted(() => {
             border-radius: 0.32rem;
             position: relative;
             overflow: hidden;
+            box-shadow: 0px 4px 10px 0px rgba(151, 225, 128, 0.15);
+            background: linear-gradient(0deg, #1C1C1C 0%, #2E2E2E 95.61%);
 
             .ad-bg {
                 position: absolute;
@@ -866,8 +806,6 @@ onMounted(() => {
                 z-index: 0;
                 width: 100%;
                 height: 100%;
-                background: linear-gradient(90deg, rgba(215, 100, 255, 0.20) 4.53%, rgba(0, 240, 255, 0.20) 100%);
-                filter: blur(1rem);
             }
 
             .ad-content {
@@ -879,28 +817,38 @@ onMounted(() => {
                 height: 100%;
                 display: flex;
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
                 justify-content: center;
+                padding: 0.4rem 0.32rem;
+
+
+            }
+
+            .ad-tip {
+                position: absolute;
+                width: 3rem;
+                height: auto;
+                right: 0;
+                bottom: 0;
             }
 
             .title {
                 font-size: 0.48rem;
                 font-weight: 600;
-                margin-bottom: 0.04rem;
+                margin-bottom: 0.12rem;
             }
 
             .btn {
                 padding: 0 0.56rem;
                 height: 0.8rem;
                 border-radius: 1rem;
-                background-color: #00F0FF;
+                background-color: var(--ex-primary-color);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 font-size: 0.3rem;
-                font-weight: 600;
-                color: var(--ex-text-color);
-                margin-top: 0.36rem;
+                color: var(--ex-black);
+                margin-top: 0.4rem;
             }
         }
     }

@@ -1,36 +1,28 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" class="px-[0.4rem] w-full">
-    <SwipeCell
-      :class="['stock_item_box']"
-      @touchstart.start=""
-      @touchmove.stop=""
-      @touchend.stop=""
-    >
-      <div
-        class="stock_item_bg"
-        :class="[`${' stock_item_' + updownStatus}`]"
-        @click="goInfo(props.item.type)"
-      >
+  <div ref="root" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.4rem]']">
+    <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
+      <div class="stock_item_bg"
+        :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"
+        @click="goInfo(props.item.type)">
         <div :class="['stock_item']">
-          <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center" v-if="showIcon">
-            <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{ props.item.symbol[0] }}</span>
+          <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
+            v-if="showIcon">
+            <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{
+              props.item.symbol[0] }}</span>
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
           </div>
-          <div class="td5" :class="{'td5--ac':showIcon}">
+          <div class="td5" :class="{ 'td5--ac': showIcon }">
             <div class="item_name flex items-center gap-1 mb-[0.2rem]">
               <span class="truncate" v-if="item.type != 'stock'">{{
                 props.item.name
               }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>
-              <div
-                v-if="props.page == 'market' && item.type == 'stock'"
-                :class="`${
-                  marketStyle[props.item.type]
-                } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.08rem] h-[0.3rem] `"
-              >
+              <div v-if="props.page == 'market' && item.type == 'stock'"
+                :class="`${marketStyle[props.item.type]
+                  } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.08rem] h-[0.3rem] `">
                 {{
-                 t("market.market_optional_stock")
+                  t("market.market_optional_stock")
                 }}
               </div>
             </div>
@@ -38,60 +30,42 @@
               {{ props.item.name || "--" }}
             </div>
 
-            
-            <div
-                v-if="item.type != 'stock'"
-                class=" flex items-center"
-              >
-                <span :class="`${
-                  marketStyle[props.item.type]
-                } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center`">
-                  {{
-                    item.type == "stock"
-                      ? t("market.market_optional_stock")
-                      : item.type == "crypto"
+
+            <div v-if="item.type != 'stock'" class=" flex items-center">
+              <span
+                :class="`${marketStyle[props.item.type]
+                  } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center`">
+                {{
+                  item.type == "stock"
+                    ? t("market.market_optional_stock")
+                    : item.type == "crypto"
                       ? t("market.market_optional_contract")
                       : item.type == "forex"
-                      ? t("market.market_optional_forex")
-                      : item.type == "blocktrade"
-                      ? t("market.market_optional_blocktrade")
-                      : ""
-                  }}
-                </span>
-              </div>
-              
+                        ? t("market.market_optional_forex")
+                        : item.type == "blocktrade"
+                          ? t("market.market_optional_blocktrade")
+                          : ""
+                }}
+              </span>
+            </div>
+
           </div>
           <div :class="['td2 spark_line_box']" v-if="showSparkLine">
-            <SparkLine
-              :style="['width: 100%; height: 0.6rem;']"
-              v-if="props.item.points"
-              :points="props.item.points"
-              :ratio="props.item.ratio"
-            />
+            <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
+              :ratio="props.item.ratio" />
           </div>
           <div class="td2 td_r">
-            <div
-              class="item_num"
-              :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']"
-            >
+            <div class="item_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
               {{ props.item.price ? props.item.price : "--" }}
             </div>
-            <div
-              class="item_info_box"
-              @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)"
-            >
-              <div
-                v-if="props.item.ratio !== undefined"
-                class="item_percent"
-                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']"
-              >
-                <span v-if="mode == 1"
-                  >{{
-                    (props.item.ratio || 0) > 0
-                      ? "+" + (props.item.ratio || 0)
-                      : props.item.ratio || 0
-                  }}%</span
-                >
+            <div class="item_info_box" @click.stop="() => (mode = mode == 3 ? 1 : mode + 1)">
+              <div v-if="props.item.ratio !== undefined" class="item_percent"
+                :class="[updown === 0 ? '' : updown > 0 ? 'up_bg' : 'down_bg']">
+                <span v-if="mode == 1">{{
+                  (props.item.ratio || 0) > 0
+                    ? "+" + (props.item.ratio || 0)
+                    : props.item.ratio || 0
+                }}%</span>
                 <span v-else-if="mode == 2">{{
                   props.item.price || 0 > 0
                     ? "+" + (props.item.price || 0).toFixed(2)
@@ -141,7 +115,7 @@ const emits = defineEmits(["remove"]);
 const props = defineProps({
   item: {
     type: Object,
-    default: () => {},
+    default: () => { },
   },
   scrollBox: {
     // 滚动的父级
@@ -173,7 +147,7 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  showIcon:Boolean
+  showIcon: Boolean
 });
 
 const mode = ref(1);
@@ -291,6 +265,7 @@ const removeStock = (item) => {
   background-color: var(--ex-bg-color2);
   border-radius: 0.4rem;
   margin-top: 0.2rem;
+
   .td5 {
     flex-shrink: 0;
     width: 3rem;
@@ -313,9 +288,11 @@ const removeStock = (item) => {
       padding-right: 0.4rem;
     }
   }
-  .td5--ac{
+
+  .td5--ac {
     width: 2.3rem;
   }
+
   .td2 {
     flex-shrink: 0;
     flex: 2;
@@ -356,6 +333,10 @@ const removeStock = (item) => {
   .spark_line_box {
     padding-right: 0.4rem;
   }
+}
+
+.stock_item_home {
+  background-color: var(--ex-bg-color);
 }
 
 .stock_item_crypto {
@@ -443,6 +424,10 @@ const removeStock = (item) => {
     padding-right: 0.4rem;
     padding-left: 0.2rem;
   }
+}
+
+.stock_item_bg {
+  border-radius: 0.32rem;
 }
 
 .stock_item_bg:active {

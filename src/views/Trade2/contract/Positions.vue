@@ -76,18 +76,23 @@
       <div class="order_sell_box">
         <div class="form">
           <FormItem :placeholder="t('trade.contract_opening_amount_title')" :max="currStock.unsold_volume" size="large"
-            btn-show-mode="focus" v-model="sellForm.volume" input-type="digit" @change="changeValue" show-btn
+            btn-show-mode="focus" v-model="sellForm.volume" input-type="digit" @change="changeValue"
             @btnClick="onSliderChange(100)">
-            <template #title-right>
-              {{ t("trade.contract_position_ongoing_amount") }}
-              {{ currStock.unsold_volume }}
+            <template #right-con>
+              <div style="color:var(--ex-text-color2);font-size: 0.28rem;">
+                {{ t("trade.contract_position_ongoing_amount") }}
+                <span style="color: var(--ex-primary-color);">{{ currStock.unsold_volume }}</span>
+              </div>
             </template>
           </FormItem>
 
-          <div style="height: 0.47rem"></div>
 
           <!-- 拖动 -->
-          <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          </div>
+
+
 
           <!-- 收益分析 -->
           <!-- <div class="total_box">
@@ -115,7 +120,7 @@
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
-            {{ t("trade.stock_position_btn") }}
+            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -128,16 +133,13 @@
       </div>
       <div class="order_sell_box">
         <div class="form">
+
           <div class="item_box">
             <div class="item_box_right">
-              <div class="subtitle">
-                <span>{{ t('trade.stock_opening_stop') }}</span>
-
-
-              </div>
               <div class="item">
-                <input @focus="priceFocus3 = true" @blur="priceFocus3 = false" @input="inputStop(2)"
-                  v-model="updateForm.stop_loss_price" type="number" class="ipt" />
+                <input :placeholder="t('trade.stock_opening_stop')" @focus="priceFocus3 = true"
+                  @blur="priceFocus3 = false" @input="inputStop(2)" v-model="updateForm.stop_loss_price" type="number"
+                  class="ipt" />
                 <span class="num-tag" @click="setPriceStop(20)" v-show="currStock.open_price"
                   :style="{ visibility: priceFocus3 ? '' : 'hidden' }">{{ currStock.offset == "long" ? "-" : "+"
                   }}20%</span>
@@ -155,14 +157,16 @@
             :placeholder="t('trade.stock_position_add_deposit')" btn-show-mode="focus"
             :tip="stockWalletAmount > 0 ? '≤ ' + stockWalletAmount : ''" :show-btn="stockWalletAmount > 0"
             @change="changeAmount" @btnClick="onSliderChange(100)">
-            <template #title-right>
-              <div>余额 {{ stockWalletAmount }} {{ currStock.currency }}</div>
+            <template #right-con>
+              <div style="font-size: 0.28rem;color: var(--ex-text-color3);">≤ {{ stockWalletAmount }} {{
+                currStock.currency }}</div>
             </template>
           </FormItem>
 
-          <div style="height: 0.47rem"></div>
           <!-- 拖动 -->
-          <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+          </div>
 
           <FormItem v-model="updateForm.safeword" size="large" input-type="password"
             :placeholder="t('trade.stock_opening_trade_pw')">
@@ -170,7 +174,7 @@
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
-            {{ t('trade.stock_position_btn') }}
+            <span style="color: var(--ex-black);">{{ t('trade.stock_position_btn') }}</span>
           </Button>
         </div>
       </div>
@@ -606,6 +610,7 @@ const cancel = (item) => {
     message: t("trade.stock_position_cancel_con"),
     confirmButtonText: t("trade.stock_position_confirm_btn"),
     cancelButtonText: t("trade.stock_position_cancel_btn"),
+    theme: 'round-button'
   })
     .then(() => {
       showLoadingToast({
@@ -812,7 +817,8 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      border: 1px solid var(--ex-border-color2);
+      // border: 1px solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color3);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

@@ -16,7 +16,7 @@
     <div class="graph_container">
       <div class="chase_container relative">
         <div class="chase_text flex text-center" style="width: 3.014rem !important;">
-          <span class="text-color2 mr-[0.16rem]">{{
+          <span class="text-color3 mr-[0.16rem]">{{
             t("market.market_stock_chase_movement_percentage")
           }}</span>
           <div class="flex">
@@ -32,7 +32,7 @@
       <div class="chase_status relative">
         <div class="chase_state_text flex text-center justify-betwen" style="width: 3.12rem !important;">
           <span
-            class="text-color2 mr-[0.16rem] ovreflow-hidden"
+            class="text-color3 mr-[0.16rem] ovreflow-hidden"
             >{{ t("market.market_stock_chase_todays_effect") }}</span
           >
           <span class="text-success">99.26%</span>
@@ -51,22 +51,19 @@ const { t } = useI18n();
 </script>
 <style lang="less" scoped>
 .market_stock_chase {
-  height: 5rem;
-  box-shadow: 0 0.1rem 0.8rem 0 rgb(var(--ex-primary-color-rgb) / 0.33);
-  border-radius: 0.64rem;
+  border-radius: 0.32rem;
+  background: var(--ex-bg-color2);
   position: relative;
-  top: -1rem;
-  padding-top: 1rem;
   padding-left: 0.32rem;
   padding-right: 0.32rem;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-  z-index: -1;
+  margin-top: 0.2rem;
   display: flex;
   flex-direction: column;
 
   .header_container {
-    margin: 0.3rem 0;
+    padding: 0.4rem 0;
     .header_text {
       min-width: 2.24rem;
       height: 0.5rem;
@@ -104,7 +101,7 @@ const { t } = useI18n();
   }
 
   .graph_container {
-    height: 2.4rem;
+    height: 2.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -113,9 +110,7 @@ const { t } = useI18n();
     line-height: 0.32rem;
 
     .chase_graph {
-      /* background-color: red; */
       position: absolute;
-      bottom: -0.3rem;
       width: 3.12rem;
       height: 2rem;
     }

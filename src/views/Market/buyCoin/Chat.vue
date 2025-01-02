@@ -93,11 +93,10 @@
       </div>
       <div class="van-safe-area-bottom min-h-[2rem]"></div>
     </div>
-    <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bg-color">
-      <div class="h-[1px] w-full bg-color3" />
+    <div class="van-safe-area-bottom fixed inset-x-0 bottom-0 min-h-[1.64rem] bottom">
       <div class="box px-4">
         <div class="box_icon">
-          <div style="width:0.6rem;height:0.6rem" class="text-primary">
+          <div class="size-[0.48rem] text-primary">
             <IconSvg name="chatFile" />
           </div>
           <input id="fileInput" class="file" type="file" accept="image/*" @change="uploadImg" />
@@ -106,7 +105,7 @@
           <input v-model="text" type="text" class="ipt" :placeholder="t('service.input_message')" />
         </div>
         <div class="box_icon" @click="sendText">
-          <div style="width:0.6rem;height:0.6rem" class="text-primary">
+          <div class="size-[0.48rem] text-primary">
             <IconSvg name="chatSend" />
           </div>
         </div>
@@ -553,8 +552,8 @@ onBeforeUnmount(() => {
     }
 
     .box_icon {
-      width: 0.6rem;
-      height: 0.6rem;
+      width: 0.48rem;
+      height: 0.48rem;
       position: relative;
 
       .file {
@@ -568,6 +567,10 @@ onBeforeUnmount(() => {
         opacity: 0;
       }
     }
+  }
+  .bottom {
+    border-top: 1px solid var(--ex-border-color2);
+    background: linear-gradient(0deg, rgb(var(--ex-bg-color5-rgb) / 0.2) 0%, rgb(var(--ex-bg-color5-rgb) / 1) 95.61%);
   }
 }
 </style>

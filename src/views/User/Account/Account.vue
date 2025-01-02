@@ -90,6 +90,7 @@ const goAddAccount = async () => {
       title: t('account.no_kyc_title'),
       message: t('account.no_kyc_con'),
       confirmButtonText: t('account.no_kyc_confirm'),
+      theme: 'round-button'
     })
       .then(() => jump("kyc"))
       .catch(() => goBack());
@@ -102,6 +103,7 @@ const goAddAccount = async () => {
       title: t('account.no_google_title'),
       message: t('account.no_google_con'),
       confirmButtonText: t('account.no_google_confirm'),
+      theme: 'round-button'
     })
       .then(() => {
         jump("google");

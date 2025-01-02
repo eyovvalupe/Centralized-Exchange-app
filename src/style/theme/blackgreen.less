@@ -2,7 +2,6 @@
 // 为兼容tailwindcss 所有颜色使用 rgb 配置，全局颜色变量使用 ex- 开头
 
 :root {
-
     --ex-white-rgb: 255 255 255; //#FFFFFF      白色
     --ex-black-rgb: 0 0 0; //#000000      黑色
     --ex-up-color-rgb: 151 225 128; //#97E180   上涨颜色
@@ -26,9 +25,18 @@
     --ex-bg-color2-rgb: 255 255 255; //#FFFFFF   
     --ex-bg-color3-rgb: 255 255 255; //#FFFFFF   
     --ex-bg-color4-rgb: 255 255 255; //#FFFFFF    
-    --ex-bg-color5-rgb: 255 255 255; //#FFFFFF    
+    --ex-bg-color5-rgb: 46 46 46; //#2E2E2E    
     --ex-bg-color6-rgb: 255 255 255; //#FFFFFF
 
+    --ex-sbtn-rgb: 140 161 202; // #8CA1CA 特殊按钮颜色
+    --ex-status-color1-rgb: 255 163 70; //#FFA346 状态颜色1
+    --ex-status-color2-rgb: 220 89 89; //#DC5959 状态颜色2
+    --ex-status-color3-rgb: 151 225 128; //#97E180 状态颜色3
+    --ex-status-color4-rgb: 0 153 209; //#0099d1 状态颜色4
+    --ex-status-color5-rgb: 24 183 98; //#18b762 状态颜色5
+    --ex-status-color6-rgb: 108 108 234; //#6c6cea 状态颜色6
+
+    --ex-none: rgb(var(--ex-black-rgb) / 0);
     --ex-white: rgb(var(--ex-white-rgb));
     --ex-black: rgb(var(--ex-black-rgb));
     --ex-up-color: rgb(var(--ex-up-color-rgb));
@@ -54,11 +62,25 @@
     --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.06);
     --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 0.1);
     --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 0.2);
-    --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 0.1);
+    --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 1);
     --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 0.1);
     --ex-text-color--bg-primary: rgb(var(--ex-bg-color-rgb)); //主色背景下的文字颜色
     --ex-text-color--bg-light: rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
 
+
+    --ex-sbtn-color: rgb(var(--ex-sbtn-rgb));
+    --ex-status-color1: rgb(var(--ex-status-color1-rgb));
+    --ex-status-bg1: rgb(var(--ex-status-color1-rgb) / 0.1);
+    --ex-status-color2: rgb(var(--ex-status-color2-rgb));
+    --ex-status-bg2: rgb(var(--ex-status-color2-rgb) / 0.1);
+    --ex-status-color3: rgb(var(--ex-status-color3-rgb));
+    --ex-status-bg3: rgb(var(--ex-status-color3-rgb) / 0.1);
+    --ex-status-color4: rgb(var(--ex-status-color4-rgb));
+    --ex-status-bg4: rgb(var(--ex-status-color4-rgb) / 0.1);
+    --ex-status-color5: rgb(var(--ex-status-color5-rgb));
+    --ex-status-bg5: rgb(var(--ex-status-color5-rgb) / 0.1);
+    --ex-status-color6: rgb(var(--ex-status-color6-rgb));
+    --ex-status-bg6: rgb(var(--ex-status-color6-rgb) / 0.1);
 
     *,
     ::before,
@@ -66,6 +88,9 @@
         border-color: var(--ex-border-color);
     }
 
+    input::placeholder {
+        color: var(--ex-text-color4);
+    }
 
 }
 
@@ -225,7 +250,7 @@
 }
 
 .bg-color5 {
-    --tw-bg-opacity: 0.1;
+    --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-bg-color5-rgb)/ var(--tw-bg-opacity));
 }
 
@@ -277,6 +302,12 @@
 }
 
 //合約種類
+.tag-default {
+    color: var(--ex-white);
+    background: var(--ex-bg-color3);
+    border-color: var(--ex-bg-color3);
+}
+
 .tag-stock {
     color: var(--ex-text-color);
     background: var(--ex-bg-color3);
@@ -336,7 +367,7 @@
 }
 
 .bg-unread-msg-text-color {
-    color: #fff;
+    color: var(--ex-white);
 }
 
 //买入
@@ -359,23 +390,78 @@
 }
 
 
-.status-color {
-    color: var(--ex-primary-color);
-    border-color: var(--ex-primary-color);
+
+
+.status-open {
+    color: var(--ex-status-color3);
+    border-color: var(--ex-status-color3);
 }
 
-.status-color.status-open {
-    color: var(--ex-success-color);
-    border-color: var(--ex-success-color);
+.status-fail,
+.status-lock {
+    color: var(--ex-status-color2);
+    border-color: var(--ex-status-color2);
 }
 
-.status-color.status-fail,
-.status-color.status-lock {
-    color: var(--ex-error-color);
-    border-color: var(--ex-error-color);
+.status-none {
+    color: var(--ex-status-color1);
+    border-color: var(--ex-status-color1);
 }
 
-.status-color.status-none {
-    color: var(--ex-info-color);
-    border-color: var(--ex-info-color);
+.status-cancel {
+    color: var(--ex-text-color3);
+    border-color: var(--ex-text-color3);
+}
+
+
+
+// 该皮肤的一些特殊修改
+.van-slider.slider-dom {
+    position: relative;
+    height: 0.12rem !important;
+
+    .van-slider__bar {
+        z-index: 1;
+        position: relative;
+    }
+
+    .van-slider__button-wrapper {
+        width: 0.2rem !important;
+        height: 0.2rem !important;
+
+        .slider-custom-num {
+            width: 0.2rem;
+            height: 0.2rem;
+            position: relative;
+            background: var(--ex-white);
+            color: var(--ex-text-color--bg-primary);
+            border-radius: 50%;
+        }
+    }
+
+
+    &::after {
+        content: "";
+        width: 50%;
+        height: 100%;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 0.06rem solid rgba(0, 0, 0, 0.1);
+        border-right: 0.06rem solid rgba(0, 0, 0, 0.1);
+    }
+
+    &::before {
+        content: "";
+        width: 0.04rem;
+        height: 100%;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.1);
+    }
 }

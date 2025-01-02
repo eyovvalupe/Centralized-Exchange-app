@@ -1,6 +1,6 @@
-const upColor = "#55C860";
-const downColor = "#FD4938";
-const noChangeColor = "#7D919D";
+const upColor = "#97E180";
+const downColor = "#DC5959";
+const noChangeColor = "#8CA1CA";
 export const klineConfig = {
     // 类别
     grid: {
@@ -8,21 +8,21 @@ export const klineConfig = {
         horizontal: {
             show: true,
             size: 1,
-            color: '#EDEDED',
+            color: '#414345',
             style: 'dashed',
             dashedValue: [2, 2]
         },
         vertical: {
             show: true,
             size: 1,
-            color: '#EDEDED',
+            color: '#414345',
             style: 'dashed',
             dashedValue: [2, 2]
         }
     },
     separator: {
         size: 1,
-        color: "#EEF1FA",
+        color: "#414345",
         fill: true,
     },
     candle: {
@@ -52,14 +52,14 @@ export const klineConfig = {
                 offsetBottom: 4,
                 borderRadius: 4,
                 borderSize: 1,
-                borderColor: "#f5f5f5",
-                color: "#ffffffbd"
+                borderColor: "rgba(255, 255, 255, 0.10)",
+                color: "rgba(0,0,0,0.5)"
             },
             text: {
                 size: 12,
                 family: 'Helvetica Neue',
                 weight: 'normal',
-                color: '#333',
+                color: 'rgba(255, 255, 255, 0.70)',
                 marginLeft: 8,
                 marginTop: 4,
                 marginRight: 8,
@@ -164,9 +164,9 @@ export const klineConfig = {
                 borderStyle: "dashed",
                 borderSize: 0,
                 borderDashedValue: [1, 1],
-                upColor: "rgba(85, 200, 96, 1)",
-                downColor: "rgba(253, 73, 56, 1)",
-                noChangeColor: "rgba(125, 145, 157, 1)"
+                upColor,
+                downColor,
+                noChangeColor
             }
         ],
         lines: [
@@ -218,13 +218,13 @@ export const klineConfig = {
         // x轴线
         axisLine: {
             show: false,
-            color: "#9EA3AE", // "#888888",
+            color: "rgba(255, 255, 255, 0.50)", // "#888888",
             size: 0.5
         },
         // x轴分割文字
         tickText: {
             show: true,
-            color: "#9EA3AE", 
+            color: "rgba(255, 255, 255, 0.50)", 
             family: "Helvetica Neue",
             weight: "normal",
             size: 12,
@@ -236,7 +236,7 @@ export const klineConfig = {
             show: true,
             size: 0.5,
             length: 3,
-            color: "#9EA3AE" // "#888888"
+            color: "rgba(255, 255, 255, 0.50)" // "#888888"
         }
     },
     // y轴
@@ -252,13 +252,13 @@ export const klineConfig = {
         // y轴线
         axisLine: {
             show: false,
-            color: "#888", // #888
+            color: "rgba(255, 255, 255, 0.50)", // #888
             size: 0.5
         },
         // y轴分割文字
         tickText: {
             show: true,
-            color: "var(--ex-border-color2)",
+            color: "rgba(255,255,255,0.5)",
             family: "Helvetica Neue",
             weight: "normal",
             size: 12,

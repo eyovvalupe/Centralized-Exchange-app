@@ -75,7 +75,7 @@
         </div>
         <div v-if="isFocused || searchStr" class="ml-[0.32rem] mb-[0.2rem] text-[0.32rem]">{{
           t('trade.left_search_result')
-          }}</div>
+        }}</div>
         <!-- 切换 -->
         <Tabs id="option_left" @change="changeTab" class="van-tabs--sub" :lazy-render="false"
           v-model:active="navActiveTab" animated shrink>
@@ -390,8 +390,11 @@ const handleClick = (item) => {
   }, 600);
 };
 
+let swiperTimeout = null
 const swipeResize = () => {
-  setTimeout(() => {
+  if (swiperTimeout) clearTimeout(swiperTimeout)
+  swiperTimeout = setTimeout(() => {
+    swipeRef.value && swipeRef.value.swipeTo(activeTab.value)
     swipeRef.value && swipeRef.value.resize();
   }, 300);
 };

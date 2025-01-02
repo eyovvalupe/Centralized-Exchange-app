@@ -1,8 +1,7 @@
 <!-- 输入安全密码 -->
 <template>
-  <BottomPopup v-model:show="show" :safe-area-inset-top="true" :close-on-click-overlay="false" :safe-area-inset-bottom="true"
-    :close-on-popstate="true"
-    :title="$t('assets.safety_trade_pw')"
+  <BottomPopup v-model:show="show" :safe-area-inset-top="true" :close-on-click-overlay="false"
+    :safe-area-inset-bottom="true" :close-on-popstate="true" :title="$t('assets.safety_trade_pw')"
     :closeable="props.closeable">
     <!--  :class="{ 'typing_dialog': showKeyboard }" -->
     <div class="safepassword_dialog" :class="{ safepassword_dialog_uncloseabled: !props.closeable }">
@@ -11,22 +10,24 @@
       <!-- <div class="subtitle">正在进行谷歌验证码</div> -->
       <!-- <PasswordInput :focused="showKeyboard" @focus="focus" class="code_ipt" :value="val" :length="6"
                 :gutter="'0.16rem'" :mask="true" /> -->
-      
+
       <FormItem :placeholder="$t('assets.safety_trade_pw')" v-model="val" input-type="password" />
-      
+
       <div class="btns">
-        <Button round  class="btn" @click="close">
-          <span style="color: var(--ex-text-color2)">{{ $t("assets.safety_trade_cancel") }}</span>
+        <Button round class="btn" @click="close">
+          <span style="color: var(--ex-text-color2)"><span style="color: var(--ex-black);">{{
+            $t("assets.safety_trade_cancel") }}</span></span>
         </Button>
-        <Button :loading="loading" round  class="btn" type="primary" @click="submit">{{
-          $t("assets.safety_trade_confirm") }}</Button>
+        <Button :loading="loading" round class="btn" type="primary" @click="submit"><span
+            style="color: var(--ex-black);">{{
+              $t("assets.safety_trade_confirm") }}</span></Button>
       </div>
     </div>
   </BottomPopup>
 </template>
 
 <script setup>
-import {  Button, showToast } from "vant";
+import { Button, showToast } from "vant";
 import { ref, computed } from "vue";
 import BottomPopup from "./BottomPopup.vue";
 import FormItem from "./Form/FormItem.vue";
@@ -126,6 +127,7 @@ defineExpose({
       border-radius: 0.96rem;
       flex: 1;
       margin-left: 0.32rem;
+
       :deep(span.van-button__text) {
         font-size: 0.32rem;
       }

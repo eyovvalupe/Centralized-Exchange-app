@@ -1,21 +1,23 @@
 <!-- ai -->
 <template>
   <div class="ai-block">
-    <Tabs type="round-card" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+    <Tabs type="custom-line" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
       @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
           <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" mode="page" ref="OpeningRef"
-            @back="showModel = false"  v-if="loadTab.indexOf('0') > -1" />
+            @back="showModel = false" v-if="loadTab.indexOf('0') > -1" />
         </div>
       </Tab>
       <Tab :title="t('trade.stock_position')" name="1">
         <div class="ai-block-content">
-          <Positions  v-if="loadTab.indexOf('1') > -1" />
+          <Positions v-if="loadTab.indexOf('1') > -1" />
         </div>
       </Tab>
       <Tab :title="t('trade.ai_opening_order')" name="2">
-        <Inquire ref="InquireRef"  v-if="loadTab.indexOf('2') > -1" />
+        <div class="ai-block-content">
+          <Inquire ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
+        </div>
       </Tab>
     </Tabs>
 
@@ -64,7 +66,7 @@ const active = ref(sessionStorage.getItem("trade_ai_tab") || "0");
 const InquireRef = ref();
 const onChange = async (val) => {
   if (loadTab.value.indexOf(val) == -1) {
-      loadTab.value.push(val)
+    loadTab.value.push(val)
   }
   active.value = val;
   sessionStorage.setItem("trade_ai_tab", val);
@@ -76,11 +78,11 @@ const onChange = async (val) => {
 
 // 选择某个合约
 const choose = (item) => {
-  if(active.value == '0'){
+  if (active.value == '0') {
     OpeningRef.value && OpeningRef.value.choose(item);
-  }else{
+  } else {
     onChange('0')
-    nextTick(()=>{
+    nextTick(() => {
       OpeningRef.value && OpeningRef.value.choose(item);
     })
   }
@@ -104,10 +106,14 @@ defineExpose({
 
 <style lang="less" scoped>
 .ai-block {
-  padding: 0.24rem 0.32rem 0.32rem;
+
+  // padding: 0.24rem 0.32rem 0.32rem;
+  :deep(.van-tabs__nav) {
+    padding: 0 0.12rem;
+  }
 
   .ai-block-content {
-    width: calc(100% - 1px);
+    padding: 0 0.32rem;
 
     .ai-block-title {
       padding: 0 0.32rem;

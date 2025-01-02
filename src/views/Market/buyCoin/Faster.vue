@@ -11,40 +11,47 @@
         </div>
       </div>
 
-      <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center z-10 bg-color bg-opacity-30" v-if="!rate">
+      <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center z-10 bg-color bg-opacity-30"
+        v-if="!rate">
         <Loading color="var(--van-primary-color)" />
       </div>
       <div class="flex" :class="[form1.offset == 'buy' ? 'flex-col' : 'flex-col-reverse']">
         <!-- 支付 -->
         <div class="item item_box">
-            <div class="flex justify-between">
-              <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center mt-[0.06rem]" :class="[form1.offset == 'buy' ? ' bg-buy bg-buy-text-color' : 'bg-white text-color--bg-light']">{{ form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
-                }}</div>
-              <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
-                @click="openDialog(2)">
-                <div class="flex items-center">
-                  <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
-                    <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)" alt="currency" />
-                  </div>
-                  <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
+          <div class="flex justify-between">
+            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center mt-[0.06rem]"
+              :class="[form1.offset == 'buy' ? ' bg-buy bg-buy-text-color' : 'bg-white text-color--bg-light']">{{
+                form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
+              }}</div>
+            <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
+              @click="openDialog(2)">
+              <div class="flex items-center">
+                <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
+                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
+                    alt="currency" />
                 </div>
-                <div class="more_icon">
-                  <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
-                </div>
+                <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
+              </div>
+              <div class="more_icon">
+                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
               </div>
             </div>
-            <div class="h-[1.54rem] py-[0.2rem]">
-              <input v-model="money" placeholder="0" :disabled="!rate" @input="moneyInput" @blur="moneyBlur" type="number" class="ipt" />
-            </div>
+          </div>
+          <div class="h-[1.54rem] py-[0.2rem]">
+            <input v-model="money" placeholder="0" :disabled="!rate" @input="moneyInput" @blur="moneyBlur" type="number"
+              class="ipt" />
+          </div>
         </div>
 
         <!-- 收到 -->
         <div class="item item_box">
           <div class="flex justify-between">
-            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center  mt-[0.06rem]" :class="[form1.offset == 'buy' ? 'bg-white text-color--bg-light' : 'bg-sell bg-sell-text-color']">{{ form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
+            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center  mt-[0.06rem]"
+              :class="[form1.offset == 'buy' ? 'bg-white text-color--bg-light' : 'bg-sell bg-sell-text-color']">{{
+                form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
               }}</div>
-            
-           
+
+
             <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
               @click="openDialog(1)">
               <div class="flex items-center">
@@ -62,41 +69,46 @@
           </div>
 
           <div class="flex items-center h-[1.94rem] justify-center">
-              <div class="h-[0.96rem] flex-1">
-                <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus=true;" placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt"  />
-                
-              </div>
-              <!-- <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
+            <div class="h-[0.96rem] flex-1">
+              <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus = true;"
+                placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt" />
+
+            </div>
+            <!-- <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
                 t('trade.stock_position_all')
                 }}</span> -->
-              <div class="ml-[0.2rem] flex items-center px-[0.2rem] h-[0.72rem] bg-color rounded-[0.32rem] bg-color" v-if="form1.offset == 'sell' && currWallet.amount > 0">
-                <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox">
-                  <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
-                  {{ currWallet.amount }}
-                  <span class="text-color">{{ currOut.name }}</span>
-                </span>
-                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
-              </div>
+            <div class="ml-[0.2rem] flex items-center px-[0.2rem] h-[0.72rem] bg-color rounded-[0.32rem] bg-color"
+              v-if="form1.offset == 'sell' && currWallet.amount > 0">
+              <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox">
+                <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
+                {{ currWallet.amount }}
+                <span class="text-color">{{ currOut.name }}</span>
+              </span>
+              <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
+            </div>
           </div>
 
         </div>
       </div>
-      
+
       <div v-if="rate" class="tip absolute">
         1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
 
-      <Button size="large" class="submit" :class="['submit--'+form1.offset]" round :loading="loading" @click="sell">{{ form1.offset == "sell" ?
-          t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</Button>
-
+      <Button size="large" class="submit" :class="['submit--' + form1.offset]" round :loading="loading" @click="sell">
+        <span style="color: var(--ex-black);">{{
+          form1.offset == "sell" ?
+            t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</span>
+      </Button>
     </div>
   </div>
 
   <!-- 售出币种 -->
-  <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"  :title="t('market.market_buy_fast_search_title')">
+  <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+    :title="t('market.market_buy_fast_search_title')">
     <div class="withdraw_accounr_dialog">
-     
+
       <div class="search_box">
         <div class="icon">
           <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
@@ -125,17 +137,19 @@
     </div>
   </BottomPopup>
 
-  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume" :currency="currOut.name" :pay-currency="currIn.name" :money="money" @submit="submitSell" />
+  <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume"
+    :currency="currOut.name" :pay-currency="currIn.name" :price="rate" :money="money" @submit="submitSell" />
 
   <!-- 余额提示 -->
-   <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')" :amount="currWallet.amount" />
+  <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')"
+    :amount="currWallet.amount" />
 
 </template>
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed, onBeforeUnmount, onMounted } from "vue";
-import { Button, Popup, Icon, showToast, showConfirmDialog,Loading } from "vant";
+import { Button, Popup, Icon, showToast, showConfirmDialog, Loading } from "vant";
 import Decimal from "decimal.js";
 import store, { useMapState } from "@/store";
 import { _swapRate, _orderFast } from "@/api/api";
@@ -216,6 +230,7 @@ const sell = () => {
         cancelButtonColor: "var(--ex-primary-color)",
         confirmButtonColor: "var(--ex-primary-color)",
         closeOnClickOverlay: !0,
+        theme: 'round-button'
       })
         .then(() => {
           router.push({ name: "transfer" });
@@ -296,53 +311,53 @@ const clickItem = (item) => {
     await getRate();
     if (showDialogType.value == 1) {
       volumeInput()
-    }else{
+    } else {
       moneyInput()
     }
   }, 100);
 };
 
-const moneyInput = ()=>{
-  if(isNaN(money.value) || money.value <= 0){
+const moneyInput = () => {
+  if (isNaN(money.value) || money.value <= 0) {
     form1.value.volume = ''
     return
   }
   const val = new Decimal(money.value).div(rate.value).toNumber().toFixed(currOut.value.tpp + 1)
-  form1.value.volume = val.substring(0,val.length-1)
+  form1.value.volume = val.substring(0, val.length - 1)
 }
 
-const moneyBlur = ()=>{
-  if(isNaN(money.value) || money.value <= 0){
+const moneyBlur = () => {
+  if (isNaN(money.value) || money.value <= 0) {
     money.value = ''
     return
   }
   const val = new Decimal(money.value).toFixed(3)
-  money.value = val.substring(0,val.length-1)
+  money.value = val.substring(0, val.length - 1)
   const val2 = new Decimal(money.value).div(rate.value).toFixed(currOut.value.tpp + 1)
-  form1.value.volume = val2.substring(0,val2.length-1)
+  form1.value.volume = val2.substring(0, val2.length - 1)
 }
 const volumeIsFocus = ref(false)
-const volumeBlur = ()=>{
+const volumeBlur = () => {
   volumeIsFocus.value = false
-  if(isNaN(form1.value.volume) || form1.value.volume <= 0){
+  if (isNaN(form1.value.volume) || form1.value.volume <= 0) {
     form1.value.volume = ''
     return
   }
-  if(form1.value.offset == 'sell' && form1.value.volume > currWallet.value.amount){
+  if (form1.value.offset == 'sell' && form1.value.volume > currWallet.value.amount) {
     form1.value.volume = currWallet.value.amount
   }
 }
 
-const volumeInput = ()=>{
-  if(isNaN(form1.value.volume) || form1.value.volume <= 0){
+const volumeInput = () => {
+  if (isNaN(form1.value.volume) || form1.value.volume <= 0) {
     money.value = ''
     return
   }
 
   const val = new Decimal(form1.value.volume).mul(rate.value).toFixed(3);
-  money.value = val.substring(0,val.length-1)
+  money.value = val.substring(0, val.length - 1)
 }
-const putAll = ()=>{
+const putAll = () => {
   form1.value.volume = currWallet.value.amount;
   volumeInput()
 }
@@ -357,7 +372,7 @@ const changeTab = (val) => {
   form1.value.offset = val;
   money.value = ''
   form1.value.volume = ''
-  
+
 };
 
 const getRate = () => {
@@ -395,11 +410,11 @@ const getRate = () => {
 //   })
 // }
 
-const onInit = ()=>{
-  if(!currOut.value.currency){
+const onInit = () => {
+  if (!currOut.value.currency) {
     currOut.value = outWallet.value[0] || {}
   }
-  if(!currIn.value.currency){
+  if (!currIn.value.currency) {
     currIn.value = inWallet.value[0] || {}
   }
   if (currOut.value.currency && currIn.value.currency) {
@@ -408,7 +423,7 @@ const onInit = ()=>{
 }
 onInit()
 
-watch(()=>store.state.deWeightCurrencyList,()=>{
+watch(() => store.state.deWeightCurrencyList, () => {
   onInit()
 })
 
@@ -426,7 +441,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
       display: flex;
       align-items: center;
       height: 0.8rem;
-      margin-top:0.32rem;
+      margin-top: 0.32rem;
 
       .tab {
         color: var(--ex-text-color2);
@@ -472,12 +487,12 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
 
     .item_box {
-      
+
       margin-top: 0.2rem;
       background-color: var(--ex-bg-color3);
       border-radius: 0.4rem;
       padding: 0.18rem 0.32rem;
-      border: 1px solid rgba(0,0,0,0);
+      border: 1px solid rgba(0, 0, 0, 0);
 
       .ipt {
         height: 100%;
@@ -489,6 +504,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
         position: relative;
         z-index: 1;
       }
+
       .more_icon {
         width: 0.36rem;
         height: 0.36rem;
@@ -500,16 +516,18 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
   .submit {
     margin-top: 1.12rem;
-    color:var(--ex-text-color--bg-light);
+    color: var(--ex-text-color--bg-light);
     font-weight: 600;
     border-radius: 0.4rem;
   }
-  .submit--sell{
+
+  .submit--sell {
     background-color: var(--ex-down-color);
   }
-  .submit--buy{
+
+  .submit--buy {
     background-color: var(--ex-up-color);
-    
+
   }
 }
 </style>
@@ -577,28 +595,8 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     }
   }
 
-  .title {
-    height: 1rem;
-    position: absolute;
-    top: 0.3rem;
-    left: 0;
-    text-align: center;
-    line-height: 1rem;
-    font-size: 0.32rem;
-    width: 100%;
-    color: var(--ex-text-color);
-    pointer-events: none;
-    font-weight: bold;
-  }
 
-  .close_icon {
-    position: absolute;
-    width: 0.4rem;
-    height: 0.4rem;
-    top: 0.24rem;
-    right: 0.32rem;
-  }
-  .swap_dialog_list{
+  .swap_dialog_list {
     max-height: 60vh;
     overflow-y: auto;
     padding-bottom: 0.8rem;
@@ -616,7 +614,7 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
     padding: 0 0.28rem;
     margin-top: 0.2rem;
     color: var(--ex-text-color);
-    border: 1px solid rgba(0,0,0,0);
+    border: 1px solid rgba(0, 0, 0, 0);
 
     .icon {
       width: 0.64rem;
@@ -627,8 +625,9 @@ watch(()=>store.state.deWeightCurrencyList,()=>{
 
   .swap_dialog_item_active {
     color: var(--ex-text-color);
-    border-color:var(--ex-primary-color);
+    border-color: var(--ex-primary-color);
     background: none;
+
     .check_icon {
       position: absolute;
       right: 0.24rem;

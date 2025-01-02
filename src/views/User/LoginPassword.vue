@@ -47,8 +47,9 @@
 
     <!-- 按钮 -->
     <div class="submit_box">
-      <Button :loading="loading" round :disabled="disapled" color="var(--ex-primary-color)" class="submit" type="primary"
-        @click="submit">{{ $t("change_login_pw.btn") }}</Button>
+      <Button :loading="loading" round :disabled="disapled" color="var(--ex-primary-color)" class="submit"
+        type="primary" @click="submit"><span style="color: var(--ex-black);">{{ $t("change_login_pw.btn")
+          }}</span></Button>
     </div>
 
     <!-- 谷歌 -->

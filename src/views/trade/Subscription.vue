@@ -28,8 +28,8 @@
       可买数量 <span style="color: var(--ex-text-color)">{{ availableNum }}</span>
     </div>
 
-    <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)" inactive-color="var(--ex-bg-color2)"
-      @change="onSliderChange" />
+    <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)"
+      inactive-color="var(--ex-bg-color2)" @change="onSliderChange" />
     <div class="percentages">
       <div v-for="percent in percentages" :key="percent" class="percentage">
         <div class="line"></div>
@@ -72,7 +72,8 @@
     </div>
 
     <Button size="large" color="var(--ex-primary-color)" round @click="openPositPopup()"
-      :disabled="(textSelect != '普通申购' && vipVal == '') || numValue == '' || password == ''">认购</Button>
+      :disabled="(textSelect != '普通申购' && vipVal == '') || numValue == '' || password == ''"><span
+        style="color: var(--ex-black);">认购</span></Button>
 
 
     <!-- 下拉框 -->
@@ -647,13 +648,8 @@ onMounted(() => {
 
   .van-slider {
     margin-top: 0.1rem;
-    height: 0.16rem !important;
-    border-radius: 0.02rem;
   }
 
-  .van-slider__bar {
-    position: relative;
-  }
 
   .van-slider__button {
     width: 0.06rem;

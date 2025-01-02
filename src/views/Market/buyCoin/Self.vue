@@ -13,8 +13,7 @@
     <!-- 二层容器 -->
     <div class="tabs mb-4">
       <div class="flex items-center">
-        <div
-          class="flex justify-between h-[0.6rem] w-[1.4rem] items-center rounded-[0.6rem] bg-color3 p-2 text-12"
+        <div class="flex justify-between h-[0.6rem] w-[1.4rem] items-center rounded-[0.6rem] bg-color3 p-2 text-12"
           @click="showDialog = true">
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
@@ -24,8 +23,8 @@
           </div>
         </div>
         <div class="size-[0.32rem] mx-[0.1rem]">
-            <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
-          </div>
+          <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
+        </div>
       </div>
 
       <div class="w-full overflow-hidden">
@@ -74,7 +73,7 @@
               </span>
             </div>
           </div>
-          <div v-if="token" class="btn" :class="['btn--'+offset]" @click="goBuy(item)">
+          <div v-if="token" class="btn" :class="['btn--' + offset]" @click="goBuy(item)">
             {{ offset == "buy" ? t('market.market_buy_optional_buy') : t('market.market_buy_optional_sell') }}
           </div>
         </div>
@@ -85,111 +84,24 @@
     </div>
   </div>
 
-  <!-- 表单提交 -->
-  <Popup v-model:show="showFormDialog" teleport="body" round position="bottom" closeable>
-    <div class="buycoin_form_dialog">
-      <div class="title">
-        {{ offset == "buy" ? t('market.market_buy_fast_buy') : t('market.market_buy_fast_sell') }}{{ currCrypto.name }}
-      </div>
-
-      <div class="form">
-        <div class="item form_item" :class="{ focus_item: amountFocus }">
-          <div v-show="offset == 'sell'" v-if="!(!amountFocus && amount !== '')" class="tip_text">
-            ≤ {{ maxAmount }}
-            {{ offset == "sell" ? currCrypto.name : currCurrency.name }}
-          </div>
-          <input v-model="amount" type="number" class="ipt" @blur="amountFocus = false" @focus="amountFocus = true" />
-          <div class="all" @click="amount = currWallet.amount">
-            {{ t('form.all') }}
-          </div>
-        </div>
-        <div class="tip">
-          {{ t('market.market_buy_optional_order_limit') }}：{{ currItem.limitmin }}-{{ currItem.limitmax }}
-          {{ offset == "sell" ? currCrypto.name : currCurrency.name }}
-        </div>
-        <div v-if="offset == 'sell'" class="tip">
-          {{ t('market.market_buy_optional_estreceive') }}：{{ showAmount }} {{ currCurrency.name }}
-        </div>
-
-        <div class="btn" :class="['btn--'+offset]" @click="preSubmit">
-          {{ t('market.market_buy_optional_confirm') }}{{ offset == "buy" ? t('market.market_buy_fast_buy') :
-            t('market.market_buy_fast_sell') }}
-        </div>
-      </div>
-    </div>
-  </Popup>
-
-  <!-- 订单弹窗 -->
-  <!-- <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
-    <div class="buycoin_orderinfo_dialog">
-      <div class="orderinfo_dialog_title">{{ t('订单详情') }}</div>
-      <OrderInfo />
-    </div>
-  </Popup> -->
 
   <!-- 法币币种 -->
-  <Popup v-model:show="showDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
-    position="bottom" teleport="body">
+  <BottomPopup v-model:show="showDialog" :title="t('market.market_buy_fast_search_title')" :safe-area-inset-top="true"
+    :safe-area-inset-bottom="true" closeable>
     <div class="withdraw_accounr_dialog">
-      <div class="close_icon" @click="showDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
-      </div>
-      <div class="title">{{ t('market.market_buy_fast_search_title') }}</div>
-      <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
-        :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
-        <div class="icon">
-          <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
-        </div>
-        <span>{{ item.name.toUpperCase() }}</span>
-        <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />
-      </div>
-    </div>
-  </Popup>
-
-  <!-- 账户选择弹窗 -->
-  <Popup v-model:show="showAccountDialog" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
-    class="self_van_popup" position="bottom" teleport="body">
-    <div class="withdraw_accounr_dialog">
-      <div class="close_icon" @click="showAccountDialog = false">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x" />
-      </div>
-      <div class="title">{{ t('market.market_buy_fast_account_title') }}</div>
-      <div class="list">
-        <div class="add_item" @click="goAddAccount">
-          <Icon style="font-size: 0.48rem" name="add-o" />
-          <span style="margin-left: 0.2rem; color: var(--ex-text-color3); font-size: 0.24rem">{{
-            t('market.market_buy_fast_account_add')
-          }}</span>
-        </div>
-        <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: currAccount.id == item.id }"
-          class="dialog_account_item" @click="clickAccountItem(item)">
-          <div class="card_icon">
-            <img v-if="item.bankName" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
-            <img v-else :src="getStaticImgUrl('/static/img/bank/card_type_c.svg')" alt="img" />
+      <div class="swap_dialog_list">
+        <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
+          :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
+          <div class="icon">
+            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
           </div>
-          <div class="card">
-            <div class="code">
-              {{ _hiddenAccount(item.bankCardNumber || item.address) }}
-            </div>
-            <div class="name">
-              {{
-                item.symbol
-                  ? `${item.symbol}-${item.network}`
-                  : `${item.bankName}`
-              }}
-            </div>
-          </div>
-          <div v-if="currAccount.id == item.id" class="checked"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/ok_bg.svg')})` }">
-            <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
-          </div>
+          <span>{{ item.name.toUpperCase() }}</span>
+          <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />
         </div>
       </div>
     </div>
-  </Popup>
+  </BottomPopup>
 
-  <!-- 安全密码弹窗 -->
-  <SafePassword ref="safeRef" @submit="submitSell" />
 </template>
 
 <script setup>
@@ -206,14 +118,14 @@ import SafePassword from "@/components/SafePassword.vue";
 import IconSvg from "@/components/IconSvg.vue";
 import { useBuyCoinState } from "./state";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const {
   userInfo,
   token,
   deWeightCurrencyList: currencyList,
-  accountList,
-  sessionToken,
+
 } = useMapState([
   "userInfo",
   "token",
@@ -224,7 +136,6 @@ const {
 const buycoinScrollTop1 = useSessionStorage("buycoinScrollTop1");
 const { active, handleUrl } = useBuyCoinState();
 const scrollData = inject("scrollData");
-const safeRef = ref();
 const showDialog = ref(false);
 const showDialog2 = ref(false);
 const wallet = computed(() =>
@@ -236,16 +147,6 @@ const fiatWallet = computed(() =>
 const dryptoWallet = computed(() =>
   currencyList.value.filter((item) => item.type == "crypto")
 ); // 加密钱包
-const bankList = computed(() =>
-  accountList.value.filter((item) => item.channel == "bank")
-); // 银行账号列表
-
-const currWallet = computed(() => {
-  if (offset.value == "buy") {
-    return wallet.value.find((item) => item.name == currCurrency.value.name);
-  }
-  return wallet.value.find((item) => item.name == currCrypto.value.name);
-});
 
 // 表单
 const offset = ref(sessionStorage.getItem("buycoin_offset") || "buy");
@@ -253,19 +154,11 @@ const currCurrency = ref({}); // 计价货币
 if (fiatWallet.value[0]) currCurrency.value = fiatWallet.value[0];
 const currCrypto = ref({}); // 加密货币
 
-// 表单弹窗
-const showFormDialog = ref(false);
-const currItem = ref({});
-const amountFocus = ref(false);
-const amount = ref("");
-
 // 列表
 const loading = ref(false);
 const finish = ref(false);
 const list = ref([]);
-// 账户选择
-const showAccountDialog = ref(false);
-const currAccount = ref({});
+
 // 监听
 try {
   list.value = JSON.parse(sessionStorage.getItem("deal_list") || "[]");
@@ -296,20 +189,7 @@ const changeTab = (name) => {
   list.value = [];
   init();
 };
-const maxAmount = computed(() => {
-  if (!currWallet.value.amount || !currItem.value.price) return 0;
-  if (offset.value == "buy") {
-    return new Decimal(currWallet.value.amount).div(currItem.value.price);
-  }
-  return currWallet.value.amount;
-});
-const showAmount = computed(() => {
-  if (!amount.value || amount.value <= 0) return "--";
-  if (offset.value == "buy") {
-    return new Decimal(amount.value).div(currItem.value.price);
-  }
-  return new Decimal(amount.value).mul(currItem.value.price);
-});
+
 const goBuy = (item) => {
   router.push({
     name: "deal",
@@ -320,59 +200,9 @@ const goBuy = (item) => {
       currWallet: currCurrency.value.name,
     },
   });
-  if (offset.value) return;
-  amount.value = "";
-  currItem.value = item;
-  showFormDialog.value = true;
+
 };
 
-// 提交表单
-const preSubmit = () => {
-  if (
-    !amount.value ||
-    amount.value < currItem.value.limitmin ||
-    amount.value > currItem.value.limitmax
-  )
-    return showToast(
-      `${t('market.market_buy_optional_limit_val')}：${currItem.value.limitmin}-${currItem.value.limitmax}`
-    );
-  showFormDialog.value = false;
-  setTimeout(() => {
-    if (offset.value == "buy") {
-      safeRef.value.open();
-    } else {
-      showAccountDialog.value = true;
-    }
-  }, 0);
-};
-const submitSell = (s) => {
-  if (loading.value) return;
-  store.dispatch("updateSessionToken").then((st) => {
-    if (st) {
-      const params = {
-        ad_id: currItem.value.id,
-        volume: amount.value,
-        account_id: offset.value == "buy" ? null : currAccount.value.id,
-        token: sessionToken.value,
-        safeword: s,
-      };
-      loading.value = true;
-      _buysell(params)
-        .then((res) => {
-          if (res.code == 200) {
-            showToast(t('market.market_buy_fast_success'));
-          }
-        })
-        .finally(() => {
-          loading.value = false;
-        });
-    } else {
-      setTimeout(() => {
-        submitSell(s);
-      }, 1000);
-    }
-  });
-};
 
 const page = ref(0);
 const getData = () => {
@@ -441,33 +271,7 @@ onMounted(() => {
   init();
 });
 
-const clickAccountItem = (item) => {
-  currAccount.value = item;
-  showAccountDialog.value = false;
-  safeRef.value.open();
-};
-// 跳转添加
-const goAddAccount = () => {
-  // google检测
-  if (!userInfo.value.googlebind) {
-    return showConfirmDialog({
-      title: t('safety.bind_google_auth'),
-      message: t("safety.no_google_dialog_con?"),
-    }).then(() => {
-      jump("google");
-    });
-  }
-  router.push({
-    name: "account",
-  });
-};
 
-// 跳转
-const jump = (name) => {
-  router.push({
-    name,
-  });
-};
 function cryptoChange({ name: item }) {
   const result = dryptoWallet.value.find((i) => i.name == item);
   sessionStorage.setItem("buycoin_currCrypto", JSON.stringify(result));
@@ -496,15 +300,15 @@ defineExpose({
       margin: 0;
       width: 1.6rem;
       text-align: center;
-      border-radius:1rem;
+      border-radius: 1rem;
       height: 100%;
       display: flex;
       align-items: center;
-      border:1px solid var(--ex-border-color);
+      border: 1px solid var(--ex-border-color);
       justify-content: center;
       margin-right: 0.2rem;
     }
-    
+
     .active_tab {
       font-weight: bold;
       color: var(--ex-text-color--bg-light);
@@ -540,9 +344,10 @@ defineExpose({
         border-bottom: 1px solid var(--ex-border-color);
         padding-right: 0;
         height: 0.54rem;
+
         .van-tabs__line {
           background-color: var(--ex-white) !important;
-          
+
         }
 
         .van-tabs__nav,
@@ -550,8 +355,8 @@ defineExpose({
           padding-right: 0 !important;
           padding-left: 0 !important;
           margin-right: 0.24rem !important;
-          align-items:start;
-          
+          align-items: start;
+
         }
 
         .van-tabs__nav:last-child {
@@ -561,31 +366,6 @@ defineExpose({
     }
   }
 
-  .subtabs2 {
-    margin: 0.2rem 0;
-    padding: 0 0.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .subtabs {
-    overflow-x: auto;
-    white-space: nowrap;
-    margin: 0.2rem 0;
-    padding-left: 0.1rem;
-
-    .subtab {
-      display: inline-block;
-      margin-right: 0.4rem;
-      color: var(--ex-text-color3);
-    }
-
-    .active_subtab {
-      color: var(--ex-text-color);
-      font-weight: bold;
-    }
-  }
 
   .list {
     .item {
@@ -595,10 +375,11 @@ defineExpose({
       background-color: var(--ex-bg-color3);
       border-radius: 0.4rem;
       border-bottom: 1px solid var(--ex-border-color);
+
       .top {
         display: flex;
         align-items: flex-start;
-        padding:0.12rem 0.16rem;
+        padding: 0.12rem 0.16rem;
 
         .avatar {
           width: 0.64rem;
@@ -684,7 +465,8 @@ defineExpose({
           font-weight: 600;
           font-size: 0.28rem;
         }
-        .btn--sell{
+
+        .btn--sell {
           background-color: var(--ex-down-color);
           color: var(--ex-text-color--bg-light);
         }
@@ -780,79 +562,51 @@ defineExpose({
 </style>
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  background-color: var(--ex-bg-color);
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
   overflow: hidden;
-  padding: 1.2rem 0.32rem 0.8rem 0.32rem;
+  padding: 0.32rem 0.32rem 0.8rem 0.32rem;
   position: relative;
 
-  .title {
-    height: 1rem;
-    position: absolute;
-    top: 0.2rem;
-    left: 0;
-    text-align: center;
-    line-height: 1rem;
-    font-size: 0.32rem;
-    width: 100%;
-    color: var(--ex-text-color);
-    pointer-events: none;
-    font-weight: bold;
-  }
 
-  .close_icon {
-    position: absolute;
-    width: 0.4rem;
-    height: 0.4rem;
-    top: 0.24rem;
-    right: 0.32rem;
+  .swap_dialog_list {
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
   }
 
   .swap_dialog_item {
-    height: 1.12rem;
+    height: 1rem;
     line-height: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid var(--ex-border-color);
+    border-radius: 0.4rem;
+    background-color: var(--ex-bg-color3);
     overflow: hidden;
     position: relative;
+    padding: 0 0.28rem;
+    margin-top: 0.2rem;
+    color: var(--ex-text-color);
+    border: 1px solid rgba(0, 0, 0, 0);
 
     .icon {
-      width: 0.4rem;
-      height: 0.4rem;
-      margin-right: 0.24rem;
+      width: 0.64rem;
+      height: 0.64rem;
+      margin-right: 0.2rem;
     }
   }
 
   .swap_dialog_item_active {
-    color: var(--ex-primary-color);
-    font-weight: 600;
+    color: var(--ex-text-color);
+    border-color: var(--ex-primary-color);
+    background: none;
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
       color: var(--ex-primary-color);
-      font-size: 0.28rem;
+      font-size: 0.4rem;
     }
   }
 
-  .search_box {
-    height: 0.8rem;
-    background-color: var(--ex-bg-color2);
-    border-radius: 0.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.32rem;
-    padding: 0 0.4rem;
-
-    input {
-      flex: 1;
-      color: var(--ex-text-color);
-    }
-  }
 
   .tabs {
     display: flex;

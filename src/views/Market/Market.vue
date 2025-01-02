@@ -33,7 +33,7 @@
         </div>
       </SwipeItem>
       <SwipeItem>
-        <div class="assets_body">
+        <div class="assets_body stock_tab_scroller">
           <!-- 股票 -->
           <Stock v-if="loadedTab.includes(2)" />
         </div>

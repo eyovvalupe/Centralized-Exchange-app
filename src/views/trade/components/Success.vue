@@ -8,9 +8,10 @@
         <div class="title">{{ t('trade.ipo_success_title') }}</div>
         <div class="tips">{{ t('trade.ipo_success_con') }}</div>
         <div class="btn flex justify-center items-center w-full">
-            <Button @click="router.push('/trade?to=ipo')" round class="next">{{ t('trade.ipo_success_btn1') }}</Button>
-            <Button @click="router.push('/trade?to=ipo&active=1')" round class="info"
-                type="primary">{{ t('trade.ipo_success_btn2') }}</Button>
+            <Button @click="router.push('/trade?to=ipo')" round class="next"><span style="color: var(--ex-black);">{{
+                t('trade.ipo_success_btn1') }}</span></Button>
+            <Button @click="router.push('/trade?to=ipo&active=1')" round class="info" type="primary"><span
+                    style="color: var(--ex-black);">{{ t('trade.ipo_success_btn2') }}</span></Button>
         </div>
     </div>
 </template>
@@ -22,7 +23,7 @@ import { useRouter, useRoute } from 'vue-router';
 import Top from '@/components/Top.vue';
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n();
+const { t } = useI18n();
 const router = useRouter();
 
 </script>

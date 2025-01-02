@@ -21,7 +21,7 @@
           disabled_item: disabled,
           item_focus: inputFocus,
           // item_focus2: inputFocus && !tip,
-        }" :style="{ background }">
+        }" :style="{ background, paddingBottom: props.hasBot ? '1.2rem' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" v-show="inputFocus">{{ placeholder
             }}</span>
@@ -29,8 +29,12 @@
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
             v-show="inputFocus || props.hasScroll">{{ tip
             }}</span>
+          <!-- 左上角模块 -->
+          <div class="lt-box" :class="{ 'lt-box-focus': inputFocus }" v-if="hasLT">
+            <slot name="lt" />
+          </div>
           <!-- 右上角模块 -->
-          <div class="rt-box" :class="{ 'rt-box-focus': inputFocus }" v-if="hasRT">
+          <div class="rt-box" :class="{ 'rt-box-focus': inputFocus && tip }" v-if="hasRT">
             <slot name="rt" />
           </div>
 
@@ -44,8 +48,8 @@
           " @blur="
             inputFocus = false;
           inputBlur();
-          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType" @keydown="validateKeydown" class="ipt" @input="onInput"
-            :placeholder="inputFocus ? '' : placeholder" />
+          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
+            @keydown="validateKeydown" class="ipt" @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
 
           <!-- 密码图标 -->
           <span class="pwd_icon" v-if="inputType == 'password'">
@@ -82,8 +86,13 @@
           <slot name="right-con" />
 
           <!-- 底部滚动条 -->
-          <div class="scroll-box" v-if="props.hasScroll">
+          <div class="scroll-box" :class="{ 'mid-scroll': props.hasBot }" v-if="props.hasScroll">
             <slot name="scroll" />
+          </div>
+
+          <!-- 滚动条下方区域 -->
+          <div class="bottom_content" v-if="props.hasBot">
+            <slot name="bottom-con" />
           </div>
         </div>
       </div>
@@ -134,6 +143,8 @@ const props = defineProps({
   },
   hasScroll: Boolean, // 是否有滚动条
   hasRT: Boolean, // 是否有右上角模块
+  hasLT: Boolean, // 是否有左上角模块
+  hasBot: Boolean, // 是否有底部模块，有底部模块输入框会往上移
   background: String,
   title: String,
   custom: Boolean,
@@ -227,6 +238,7 @@ const percentTagClick = (percent) => {
   margin-left: 0.24rem;
 }
 
+
 .form-item-box {
   display: flex;
 
@@ -279,6 +291,17 @@ const percentTagClick = (percent) => {
       top: 0.24rem;
       right: 0.24rem;
       z-index: 999;
+      transition: all ease .3s;
+      transform-origin: 100% 0;
+    }
+
+    .lt-box {
+      position: absolute;
+      top: 0.24rem;
+      left: 0.24rem;
+      z-index: 999;
+      font-size: 0.24rem;
+      color: var(--ex-text-color3);
       transition: all ease .3s;
       transform-origin: 100% 0;
     }
@@ -418,6 +441,21 @@ const percentTagClick = (percent) => {
           align-items: center;
           justify-content: center;
           padding: 0 0.28rem;
+          border-top: 1px solid var(--ex-border-color);
+        }
+
+        .mid-scroll {
+          height: 0.5rem;
+          bottom: 0.85rem;
+        }
+
+        .bottom_content {
+          width: 100%;
+          position: absolute;
+          height: 0.85rem;
+          bottom: 0;
+          left: 0;
+          border-top: 1px solid var(--ex-border-color);
         }
 
         .put_all {

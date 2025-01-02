@@ -5,8 +5,10 @@
     <StockTable style="margin-top: 0.1rem" v-if="watchList.length" :loading="loading" @remove="remove"
       :deleteItem="!!token" class="market_optional" :list="watchList" :marketType="marketType" :page="'market'" />
     <div class="addBtn_container">
-      <Button round icon="plus" plain type="primary" hairline="" class="addBtn px-[0.1rem]" @click="jump('search')">{{
-        t('market.market_optional_add') }}</Button>
+      <Button round icon="plus" plain type="primary" hairline="" class="addBtn px-[0.1rem]" @click="jump('search')">
+        <span style="color: var(--ex-black);">{{
+          t('market.market_optional_add') }}</span>
+      </Button>
     </div>
   </div>
   <div v-else-if="!watchList.length && !loading" style="position: relative; margin-bottom: 1rem">
@@ -15,15 +17,14 @@
         <img :src="getStaticImgUrl('/static/img/common/no_data.svg')" alt="暂无数据" />
       </div>
       <p class="text">{{ t('market.market_optional_no_optional') }}</p>
-      <!-- <Button round icon="plus" plain type="primary" hairline="" class="addBtn" @click="jump('search')">{{
-        t('market.market_optional_add') }}</Button> -->
     </div>
     <Teleport to=".page_market">
       <div class="one_click_to_favorite_container"
         v-show="stockList.length + contractList.length > 0 && showFavoriteBtn">
         <Button round block type="primary" size="large" class="one_click_to_favorite" :loading="addLoading"
           @click="addOptional">
-          {{ t('market.market_optional_add_all') }}(<i class="tag">{{
+          <span style="color: var(--ex-black);">{{ t('market.market_optional_add_all') }}</span>
+          (<i class="tag">{{
             stockList.length + contractList.length
           }}</i>)
         </Button>
@@ -343,15 +344,17 @@ const jump = (name) => {
 .addBtn {
   color: var(--ex-primary-color);
   border-color: var(--ex-primary-color);
-  
+
   height: 0.68rem;
   font-size: 0.28rem;
   font-weight: 400;
   line-height: 0.28rem;
   padding: 0 0.2rem;
-  :deep(.van-button__icon){
+
+  :deep(.van-button__icon) {
     font-size: 0.28rem;
   }
+
   :deep('span.van-button__text') {
     margin-left: 0 !important;
   }
@@ -390,6 +393,7 @@ const jump = (name) => {
   .one_click_to_favorite {
     background-color: var(--ex-primary-color);
     color: var(--ex-text-color--bg-primary);
+
     i {
       font-style: normal;
     }

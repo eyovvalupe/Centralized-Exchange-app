@@ -48,9 +48,9 @@
           <!-- <ArrowIcon /> -->
         </div>
 
-        <FormItem background="var(--ex-bg-color)" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
-          :btn-placeholder="form.fromCurrency.name" :placeholder="t('transfer.out_amount')" :inputType="'number'"
-          @update:modelValue="changeAmount('from')" />
+        <FormItem background="var(--ex-bg-color)" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt"
+          show-btn :btn-placeholder="form.fromCurrency.name" :placeholder="t('transfer.out_amount')"
+          :inputType="'number'" @update:modelValue="changeAmount('from')" />
       </div>
 
       <div class="form_box" :class="{ form_box_active: clickKey == 'to' }">
@@ -106,8 +106,9 @@
       </div>
     </div>
 
-    <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit" type="primary">{{
-      $t("transfer.btn") }}</Button>
+    <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
+      type="primary"><span style="color: var(--ex-black);">{{
+        $t("transfer.btn") }}</span></Button>
 
     <!-- 充提记录 -->
     <RecordList ref="RecordListRef" />
@@ -606,10 +607,6 @@ const changeAmount = (val) => {
         border-radius: 50%;
       }
     }
-  }
-
-  :deep(.action-sheet-active)::after {
-    display: none;
   }
 }
 </style>

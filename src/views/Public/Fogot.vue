@@ -41,8 +41,8 @@
 
       <div class="form_title">{{ t('change_login_pw.new_pw') }}</div>
       <div class="form_item mb-[0.05rem]">
-        <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'" :placeholder="t('change_login_pw.new_pw_placeholder')"
-          class="item_input" @input="checkPasswordStrength" />
+        <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'"
+          :placeholder="t('change_login_pw.new_pw_placeholder')" class="item_input" @input="checkPasswordStrength" />
         <div class="form_item_icon" @click="toggleShowPass">
           <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
         </div>
@@ -65,7 +65,8 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit" type="primary">{{ t('register.next') }}</Button>
+      <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit"
+        type="primary"><span style="color: var(--ex-black);">{{ t('register.next') }}</span></Button>
     </div>
 
     <!-- 谷歌 -->
@@ -86,7 +87,7 @@ import { useRoute } from "vue-router";
 import ForgotSuccess from "./ForgotSuccess.vue";
 import { useI18n } from "vue-i18n";
 
-const {t} = useI18n();
+const { t } = useI18n();
 const props = defineProps({
   backFunc: {
     type: Function,

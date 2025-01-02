@@ -195,14 +195,14 @@
             <div
               class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-buy bg-buy-text-color flex items-center justify-center text-[0.3rem] font-[600] "
               v-if="currItem.offset == 'buy'">
-              <span class="w-[0.32rem] leading-[0.4rem]">
+              <span style="writing-mode:vertical-lr; letter-spacing: 0.06rem;">
                 {{ t('market.market_buy_fast_pay') }}
               </span>
             </div>
             <div
               class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-sell bg-sell-text-color flex items-center justify-center text-[0.3rem] font-[600]"
               v-else>
-              <span class="w-[0.32rem] leading-[0.4rem]">
+              <span style="writing-mode:vertical-lr; letter-spacing: 0.06rem;">
                 {{ t('market.market_buy_fast_sell') }}
               </span>
             </div>
@@ -249,7 +249,7 @@
           <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
             <div
               class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-white text-color--bg-light flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
-              <span class="w-[0.32rem]">
+              <span style="writing-mode:vertical-lr; letter-spacing: 0.06rem;">
                 {{ t('market.market_buy_fast_receive_sim') }}
               </span>
             </div>
@@ -641,8 +641,8 @@ getSessionToken();
             font-weight: 400;
 
             .copy {
-              width: 0.2rem;
-              height: 0.2rem;
+              width: 0.32rem;
+              height: 0.32rem;
               margin-left: 0.08rem;
             }
           }
@@ -741,8 +741,8 @@ getSessionToken();
       }
 
       .copy_icon {
-        width: 0.24rem;
-        height: 0.24rem;
+        width: 0.32rem;
+        height: 0.32rem;
         cursor: pointer;
         margin-left: 0.1rem;
       }

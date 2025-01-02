@@ -167,12 +167,12 @@
               {{ stockWalletAmount }} {{ paramCurrency }}</span>
           </template> -->
 
-          <template #rt v-if="token">
+          <template #rt>
             <div @click="openConfirmBox">
               <div
                 style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
                 <span>{{ t("assets.wallet_available_sim") }}</span>
-                <span style="color: var(--ex-primary-color);margin:0 0.08rem">{{ stockWalletAmount }} </span>
+                <span style="color: var(--ex-primary-color);margin:0 0.08rem">{{ stockWalletAmount || '--' }} </span>
                 <span>{{ paramCurrency }}</span>
               </div>
             </div>
@@ -1443,7 +1443,7 @@ defineExpose({
   }
 
   .submit {
-    margin-top: 0.8rem;
+    margin-top: 0.2rem;
     border-radius: 0.4rem;
   }
 }

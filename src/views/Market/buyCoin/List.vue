@@ -22,7 +22,7 @@
           <!-- order_no 订单号 -->
           <div class="flex items-center" @click.stop="copy(item.order_no)">
             <div class="text-14 text-color3">{{ item.order_no }}</div>
-            <div class="size-[0.24rem] ml-[0.1rem]">
+            <div class="size-[0.32rem] ml-[0.1rem]">
               <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
             </div>
           </div>
@@ -43,8 +43,8 @@
         </div>
         <!-- 交易信息展示 -->
          <div class="bg-color rounded-[0.4rem] relative">
-            <div class="w-[0.68rem] flex justify-center items-center leading-[0.4rem] " :class="['offset-'+item.offset]">  
-              <span class="w-[0.32rem] text-[0.32rem] font-600">
+            <div class="w-[0.68rem] flex justify-center items-center" :class="['offset-'+item.offset]">  
+              <span class="text-[0.32rem] font-600" style="writing-mode:vertical-lr; letter-spacing: 0.06rem;">
                 {{
                   item.offset == "buy"
                     ? t("market.market_buy_list_buy")
@@ -56,11 +56,12 @@
               <!-- 加密货币信息 -->
               <div class="text-12">
                 <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
-                  <!-- 根据交易类型显示“购入”或“售出” -->
-                  {{ item.crypto }}&nbsp;
                   <!-- 加密货币图标 -->
-                  <img class="!h-4 !w-4 rounded-50"
+                  <img class="!h-4 !w-4 mr-[0.12rem] rounded-50"
                     :src="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.svg`)" alt="currency" />
+                  <!-- 根据交易类型显示“购入”或“售出” -->
+                  {{ item.crypto }}
+                  
                 </div>
                 <!-- 价格信息 -->
                 <div class="mb-[0.12rem] text-color3">
