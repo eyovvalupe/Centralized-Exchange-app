@@ -44,7 +44,7 @@
         <!-- 交易信息展示 -->
          <div class="bg-color rounded-[0.4rem] relative">
             <div class="w-[0.68rem] flex justify-center items-center leading-[0.4rem] " :class="['offset-'+item.offset]">  
-              <span class="w-[0.32rem] text-[0.32rem] font-600">
+              <span class="w-[0.32rem] text-[0.32rem] font-600" style="writing-mode:vertical-lr">
                 {{
                   item.offset == "buy"
                     ? t("market.market_buy_list_buy")
