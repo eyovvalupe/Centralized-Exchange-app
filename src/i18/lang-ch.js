@@ -129,6 +129,9 @@ export default {
     social_user: "網絡用戶",
     recommend_bonus: "推薦獎金",
     ad_head: "領取投資模擬金",
+    ad_head1: "註冊立領獎勵",
+    ad_con3: "1000USDT",
+
     ad_con1: "模擬投資",
     ad_con2: "收益在售",
     receive_payment: "收款賬戶",
@@ -149,6 +152,8 @@ export default {
     message_box_con: "您當前確定要退出嗎",
     message_box_confirm: "確認",
     message_box_cancel: "取消",
+    get_demo_coin: "去領取",
+
   },
   kyc: {
     page_title: "身份認證",

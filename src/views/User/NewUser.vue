@@ -1,10 +1,31 @@
 <!-- 个人中心 -->
 <template>
-  <div class="page page_user">
+  <div class="page page_user relative">
     <!-- 标题 -->
     <!-- <div class="title">用户</div> -->
-    <div class="flex items-center justify-between h-[0.98rem] mt-[0.28rem] mb-[0.2rem]">
-      <div v-if="token" class="flex items-center justify-center -ml-[0.08rem] gap-[0.16rem]">
+    <div class="flex flex-col mt-[0.2rem] mb-[0.32rem] px-[0.32rem]">
+      <div class="w-full flex justify-end gap-[0.16rem]">
+        <div @click="jump('chat', false)"
+          class="w-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
+          <div class="w-[0.4rem] h-[0.4rem]">
+            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+          </div>
+        </div>
+        <div @click="jump('chat', false)"
+          class="w-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
+          <div class="w-[0.48rem] h-[0.48rem]">
+            <img :src="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
+          </div>
+        </div>
+        <div
+          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center"
+          @click="jump('notification')">
+          <div class="setting-icon">
+            <img :src="getStaticImgUrl('/static/img/common/notice.svg')" alt="server" />
+          </div>
+        </div>
+      </div>
+      <div v-if="token" class="flex items-center -ml-[0.08rem] gap-[0.16rem]">
         <div class="default-avatar">
           <img :src="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
         </div>
@@ -23,64 +44,71 @@
         </div>
         <div class="text-[0.32rem]">{{ $t("user_page.login_out") }}</div>
       </div>
-      <div class="flex items-center justify-center gap-[0.16rem]">
-        <div @click="jump('chat', false)"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
-          <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
-          </div>
+    </div>
+    <div class="flex justify-between rounded-[0.32rem] w-full mb-[0.6rem] px-[1.16rem]">
+      <div class="text-center flex justify-center relative">
+        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
+          0
         </div>
-        <div
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
-          <div class="setting-icon">
-            <img :src="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
-          </div>
+        <div class="text-[0.24rem] text-color3 absolute w-max text-center top-[0.4rem]">{{
+          $t("user_page.recommended_user") }}</div>
+      </div>
+      <div class="text-center flex justify-center relative">
+        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
+          0
         </div>
+        <div class="text-[0.24rem] text-color3 absolute w-max text-center top-[0.4rem]">{{ $t("user_page.social_user")
+          }}</div>
+      </div>
+      <div class="text-center flex justify-center relative">
+        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
+          0
+        </div>
+        <div class="text-[0.24rem] text-color3 absolute w-max text-center top-[0.4rem]">{{
+          $t("user_page.recommend_bonus") }}</div>
       </div>
     </div>
-    <div class="flex items-center bg-color2 rounded-[0.32rem] w-full h-[1.22rem] mb-[0.2rem]">
-      <div class="w-1/3 text-center">
-        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
-          0
-        </div>
-        <div class="text-[0.24rem] text-color3">{{ $t("user_page.recommended_user") }}</div>
+    <div class="h-[1.6rem] relative">
+      <div class="absolute w-full top-[0.69rem]">
+        <img :src="getStaticImgUrl('/static/img/user/user_page_bg.svg')" alt="">
       </div>
-      <div class="w-1/3 text-center">
-        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
-          0
-        </div>
-        <div class="text-[0.24rem] text-color3">{{ $t("user_page.social_user") }}</div>
-      </div>
-      <div class="w-1/3 text-center">
-        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
-          0
-        </div>
-        <div class="text-[0.24rem] text-color3">{{ $t("user_page.recommend_bonus") }}</div>
-      </div>
-    </div>
-    <div class="rounded-[0.32rem] h-[1.6rem] overflow-hidden">
-      <!-- @click=" token ? jump('register', false, { guest: 1 }) : jump('kyc') -->
-      <Carousel :autoplay="3000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide" class="relative">
-        <Slide v-for="(slide, index) in slides" :key="index">
-          <img :src="slide" class="w-full rounded-[0.36rem]" alt="img" />
-          <div class="absolute left-0 ml-[0.32rem]">
-            <div class="text-white text-[0.3rem] font-bold mb-[0.2rem]">
-              {{ $t("user_page.ad_head") }}
+      <div class="w-[6rem] mx-auto rounded-tl-[0.36rem] rounded-tr-[0.36rem] overflow-hidden">
+        <Carousel :autoplay="3000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide" class="relative">
+          <Slide v-for="(slide, index) in token ? slides2 : slides1" :key="index">
+            <img :src="slide" class="w-full bg-color5" alt="img" />
+            <div v-if="token" class="absolute left-0 px-[0.32rem] w-full flex justify-between items-center">
+              <div class="flex flex-col">
+                <div class="text-primary text-[0.3rem] font-bold mb-[0.2rem]">
+                  {{ $t("user_page.ad_head") }}
+                </div>
+                <div class="text-white text-[0.24rem]">{{ $t("user_page.ad_con1") }}，{{ $t("user_page.ad_con2") }}</div>
+              </div>
+              <div
+                class="text-primary text-[0.28rem] w-max h-[0.6rem] flex items-center justify-center bg-color rounded-[1rem] px-[0.2rem]">
+                {{ t('user_page.get_demo_coin') }}
+              </div>
             </div>
-            <div class="text-white text-[0.24rem]">{{ $t("user_page.ad_con1") }}，{{ $t("user_page.ad_con2") }}</div>
-          </div>
-        </Slide>
-      </Carousel>
+            <div v-else class="absolute left-0 px-[0.32rem] w-full flex justify-between items-center">
+              <div class="flex flex-col">
+                <div class="text-white text-[0.28rem] font-bold mb-[0.2rem]">
+                  {{ $t("user_page.ad_head1") }}
+                </div>
+                <div class="text-primary text-[0.32rem] font-semibold">{{ $t("user_page.ad_con3") }}</div>
+              </div>
+            </div>
+          </Slide>
+        </Carousel>
+      </div>
       <div class="flex gap-[0.05rem] justify-center relative -mt-[0.2rem]">
-        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-color" :class="[currentSlide == 0 ? '' : 'opacity-50']">
+        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white" :class="[currentSlide == 0 ? '' : 'opacity-50']">
         </div>
-        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-color" :class="[currentSlide == 1 ? '' : 'opacity-50']">
+        <div class="w-[0.2rem] h-[0.06rem] rounded-[1rem] bg-white" :class="[currentSlide == 1 ? '' : 'opacity-50']">
         </div>
       </div>
     </div>
-    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.18rem]">
+    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.6rem] ">
       <div @click="jump('account', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/payment.svg')" />
         </div>
@@ -88,16 +116,16 @@
           $t("user_page.receive_payment") }}</div>
       </div>
       <div @click="jump('kyc', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.55rem] h-[0.6rem] opacity-100 top-0 mt-[0.1rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/id_card.svg')" />
         </div>
         <div v-if="token"
-          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
+          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-error'
-              : `${userInfo.kycl2 == 1 ? 'bg-primary' : 'bg-success'}`,
+              : `${userInfo.kycl2 == 1 ? 'bg-wait' : 'bg-success'}`,
           ]">
           <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
           <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified")
@@ -108,12 +136,12 @@
           $t("user_page.verify_identity") }}</div>
       </div>
       <div @click="jump('googleCode', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/google.svg')" />
         </div>
         <div v-if="token"
-          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
+          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[userInfo.googlebind == 0 ? 'bg-error' : 'bg-success']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
@@ -122,7 +150,7 @@
           $t("user_page.google_verification") }}</div>
       </div>
       <div @click="jump('inviteFriends', true)" class="text-center flex flex-col items-center justify-center relative">
-        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-primary opacity-10 mb-[0.2rem]"></div>
+        <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/friend.svg')" />
         </div>
@@ -131,7 +159,7 @@
       </div>
     </div>
 
-    <div class="navs">
+    <div class="navs relative">
       <div class="nav" @click="jump('language')">
         <div class="language-icon mr-[0.16rem]">
           <img :src="getStaticImgUrl('/static/img/user/lang_icon.svg')" alt="">
@@ -199,7 +227,8 @@ const messageNum = computed(() => storeChat.state.messageNum);
 const token = computed(() => store.state.token);
 const userInfo = computed(() => store.state.userInfo || {});
 const language = computed(() => store.state.language || {});
-const slides = [getStaticImgUrl("/static/img/user/userid.webp"), getStaticImgUrl("/static/img/user/userid.webp")];
+const slides1 = [getStaticImgUrl("/static/img/user/user_carousel.svg"), getStaticImgUrl("/static/img/user/user_carousel.svg")];
+const slides2 = [getStaticImgUrl("/static/img/user/user_carousel1.svg"), getStaticImgUrl("/static/img/user/user_carousel1.svg")];
 const currentSlide = ref(0);
 // const getFirstCharacter = (username) => {
 //   return username ? username.charAt(0) : "-";
@@ -286,7 +315,7 @@ if (token.value) {
 
 <style lang="less" scoped>
 .page_user {
-  padding: 0 0.32rem 2rem 0.32rem;
+  // padding: 0 0.32rem 2rem 0.32rem;
   position: relative;
   height: 100%;
   overflow-y: auto;

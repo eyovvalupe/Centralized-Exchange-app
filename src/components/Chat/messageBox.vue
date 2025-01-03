@@ -8,7 +8,7 @@
       <p class="no-message mb-[0.2rem]">{{ formatDate(new Date()) }}</p>
       <div class="w-full flex justify-center items-center">
         <p
-          class="w-[5.22rem] rounded-[1rem] text-center h-[0.6rem] mb-[0.6rem] flex justify-center items-center bg-color2 text-[0.3rem] text-color2">
+          class="w-[5.22rem] rounded-[1rem] text-center h-[0.6rem] mb-[0.6rem] flex justify-center items-center text-[0.3rem] text-color5">
           {{ $t("service.message_title") }}
         </p>
       </div>
@@ -210,7 +210,7 @@ function formatDate(date) {
             height: 0;
             border-left: 0.2rem solid transparent;
             // border-right: 0.2rem solid var(--ex-bg-color3);
-            border-right: 0.2rem solid var(--ex-bg-color3);
+            border-right: 0.2rem solid var(--ex-bg-primary);
 
             border-bottom: 0.2rem solid transparent;
             border-top: 0.2rem solid transparent;

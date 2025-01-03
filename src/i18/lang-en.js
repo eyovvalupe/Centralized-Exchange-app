@@ -110,8 +110,10 @@ export default {
     social_user: "Social Users",
     recommend_bonus: "Referral Bonus",
     ad_head: "Invest in Cryptos",
+    ad_head1: "Sign Up to Claim Reward",
     ad_con1: "Virtual Coins",
     ad_con2: "Earn from sales",
+    ad_con3: "1000USDT",
     receive_payment: "Receiving Account",
     verify_identity: "Identity Verification",
     google_verification: "Google Authenticator",
@@ -130,6 +132,8 @@ export default {
     message_box_con: "Are you sure you want to log out?",
     message_box_confirm: "Confirm",
     message_box_cancel: "Cancel",
+    get_demo_coin: "Get it",
+
   },
   kyc: {
     page_title: "Identity Verification",
