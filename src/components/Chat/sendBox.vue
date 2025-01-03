@@ -1,10 +1,12 @@
 <template>
-  <div class="msg-input">
+  <div class="msg-input flex items-center">
     <span class="icon-left"><img :src="getStaticImgUrl('/static/img/support/sendImg.svg')" />
       <input type="file" id="fileInput" @change="uploadImg" accept="image/*" />
     </span>
-    <textarea class="textarea" v-model="message" ref="sendInput" :placeholder="t('service.input_message')"></textarea>
-    <span class="icon-right" @click="sendMessage('text', message)"><img :src="getStaticImgUrl('/static/img/support/send.svg')" />
+    <textarea class="textarea text-black" v-model="message" ref="sendInput"
+      :placeholder="t('service.input_message')"></textarea>
+    <span class="icon-right" @click="sendMessage('text', message)"><img
+        :src="getStaticImgUrl('/static/img/support/send.svg')" />
     </span>
   </div>
 </template>
@@ -106,6 +108,8 @@ const uploadImg = (event) => {
     font-size: 15px;
     border: 1px solid var(--ex-border-color2);
     overflow-y: hidden;
+    background-color: var(--ex-bg-color7);
+    color: var(--ex-text-white);
   }
 
   #fileInput {
@@ -122,6 +126,8 @@ const uploadImg = (event) => {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 0.4rem;
+    height: 0.4rem;
 
     img {
       max-height: 30px;

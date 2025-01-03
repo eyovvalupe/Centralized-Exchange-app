@@ -20,7 +20,7 @@
         </div>
         <div class="flex flex-col">
           <span
-            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center bg-color3 rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] text-color">{{
+            class="service_first h-[1rem] w-[4.7rem] px-[0.32rem] flex justify-left items-center rounded-[0.12rem] mb-[0.2rem] text-[0.3rem] !text-black">{{
               $t("service.first_message") }}</span>
         </div>
       </div>
@@ -48,9 +48,13 @@
                   </template>
                 </van-image>
               </div>
+              {{ console.log(token) }}
               <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
-              <div style="width: 0.8rem;height: 0.8rem;" class="ml-[0.2rem]">
+              <div v-if="!token" style="width: 0.8rem;height: 0.8rem;" class="ml-[0.2rem]">
                 <img :src="getStaticImgUrl(`/static/img/user/avatar1.svg`)" alt="">
+              </div>
+              <div v-if="token" style="width: 0.8rem;height: 0.8rem;" class="ml-[0.2rem]">
+                <img :src="getStaticImgUrl(`/static/img/user/avatar2.svg`)" alt="">
               </div>
             </div>
             <div class="receive-box" v-if="item.direction === 'receive'">
@@ -110,6 +114,7 @@ import { transferTime } from "@/utils";
 import storeChat from "@/store/chat";
 import Loaidng from "@/components/Loaidng.vue";
 import { useI18n } from "vue-i18n";
+import store from "@/store";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -119,6 +124,7 @@ const props = defineProps({
   },
 });
 const messageBoxRef = ref(null);
+const token = computed(() => store.state.token);
 const messageList = computed(() => storeChat.getters.getMessageList);
 const hasNewMessage = computed(() => storeChat.state.hasNewMessage);
 
@@ -150,6 +156,8 @@ function formatDate(date) {
 
   .service_first {
     position: relative;
+    background-color: var(--ex-bg-white);
+    color: var(--ex-text-black);
 
     &::before {
       content: "";
@@ -159,7 +167,7 @@ function formatDate(date) {
       width: 0;
       height: 0;
       border-left: 0.2rem solid transparent;
-      border-right: 0.2rem solid var(--ex-bg-color3);
+      border-right: 0.2rem solid var(--ex-bg-white);
       border-bottom: 0.2rem solid transparent;
       border-top: 0.2rem solid transparent;
     }
