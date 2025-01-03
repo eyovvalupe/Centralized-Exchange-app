@@ -1,43 +1,57 @@
 <template>
-  <div class="bank_list" v-for="item in props.list">
-    <!-- <div class="list_delete_icon" @click="confirm(item.id)"> -->
-    <Loading :size="18" v-if="loading && currDeleteId == item.id" color="var(--ex-white)" />
-    <!-- <div class="delete_icon" v-else>
-      <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
-    </div> -->
-    <SwipeCell>
-      <div class="list_page">
-        <div class="flex mb-[0.32rem] justify-between">
-          <div class="flex items-center">
-            <div style="width: 0.7rem;height: 0.7rem;" class="mr-[0.2rem]">
-              <img :src="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="">
+  <div class="w-full flex flex-col relative">
+    <div class="bank_list" v-for="item in props.list">
+      <SwipeCell>
+        <div class="list_page">
+          <div class="flex mb-[0.32rem] justify-between">
+            <div class="flex items-center">
+              <div style="width: 0.7rem;height: 0.7rem;" class="mr-[0.2rem]">
+                <img :src="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="">
+              </div>
+              <span class="text-[0.32rem] text-color2">{{ item.bankName }}</span>
             </div>
-            <span class="text-[0.32rem] text-color2">{{ item.bankName }}</span>
+            <div class="text-[0.28rem] text-color5">{{ t('用户姓名：') + ' ' + item.accountName }}</div>
           </div>
-          <div class="text-[0.28rem] text-color5">{{ t('用户姓名：') + ' ' + item.accountName }}</div>
+          <div class="flex flex-col">
+            <div class="flex justify-between items-center">
+              <span class="text-[0.4rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{
+                item.bankCardNumber.slice(-4) }}</span>
+              <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)">
+                <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col">
-          <div class="flex justify-between items-center">
-            <span class="text-[0.4rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{
-              item.bankCardNumber.slice(-4) }}</span>
-            <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)">
-              <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+        <template #right>
+          <div class="w-[1rem] h-full bg-color2 rounded-[0.4rem] flex items-center justify-center"
+            @click="confirm(item.id)">
+            <div class="w-[0.4rem] h-[0.4rem]">
+              <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
             </div>
           </div>
+        </template>
+      </SwipeCell>
+    </div>
+    <BottomPopup round closeable v-model:show="confirmDel" position="bottom" teleport="body">
+      <div class="w-full h-[4rem] flex flex-col items-center">
+        <div class="text-[0.36rem] mb-[0.56rem]">{{ t('account.delete_dialog_title') }}</div>
+        <div class="text-[0.32rem] mb-[1rem]">
+          {{ t('account.delete_dialog_con') }}
+        </div>
+        <div class="w-full flex justify-between px-[0.4rem]">
+          <div
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black flex items-center justify-center text-[0.32rem]"
+            @click="confirmDel = false">{{ t('google_auth.google_input_btn_cancel') }}</div>
+          <div
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-black flex items-center justify-center text-[0.32rem]"
+            @click="next">{{ t('google_auth.google_input_btn_confirm') }}</div>
         </div>
       </div>
-      <template #right>
-        <div class="w-[1rem] h-full bg-color2 rounded-[0.4rem] flex items-center justify-center"
-          @click="confirm(item.id)">
-          <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
-          </div>
-        </div>
-      </template>
-    </SwipeCell>
-    <!-- </div> -->
+    </BottomPopup>
     <GoogleVerfCode ref="googleRef" @submit="submit" />
-
+    <div v-if="loading" class="absolute top-[4rem] left-[0] right-[0] flex justify-center">
+      <Loading :size="18" color="var(--ex-white)" />
+    </div>
   </div>
 </template>
 <script setup>
@@ -49,27 +63,22 @@ import { _delAccount, _listAccount } from "@/api/api";
 import router from "@/router";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const loading = ref(false);
 const googleRef = ref();
+const confirmDel = ref(false)
 const currDeleteId = computed(() => store.state.currDeleteId || "");
 
 const confirm = (id) => {
   store.commit("setCurrDeleteId", id);
-  showConfirmDialog({
-    title: t('account.delete_dialog_title'),
-    message: t('account.delete_dialog_con'),
-    confirmButtonText: t('google_auth.google_input_btn_confirm'),
-    cancelButtonText: t('google_auth.google_input_btn_cancel'),
-    theme: 'round-button'
-  })
-    .then(() => next())
-    .catch(() => { });
+  confirmDel.value = true;
 };
 
 const next = () => {
-  googleRef.value[0].open();
+  confirmDel.value = false
+  googleRef.value.open();
 };
 const props = defineProps({
   list: {

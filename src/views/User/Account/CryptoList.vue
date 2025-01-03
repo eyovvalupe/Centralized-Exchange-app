@@ -1,9 +1,6 @@
 <template>
   <div class="w-full flex flex-col relative">
     <div class="crypto_list" v-for="item in props.list">
-      <!-- <div class="delete_icon" v-else>
-        <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
-      </div> -->
       <SwipeCell>
         <div class="list_page">
           <div class="flex items-center mb-[0.32rem]">
