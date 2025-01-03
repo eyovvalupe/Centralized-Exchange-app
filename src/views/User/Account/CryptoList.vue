@@ -33,7 +33,7 @@
         </template>
       </SwipeCell>
     </div>
-    <div v-if="loading && currDeleteId == item.id" class="absolute top-[4rem] left-[0] right-[0] flex justify-center">
+    <div v-if="loading" class="absolute top-[4rem] left-[0] right-[0] flex justify-center">
       <Loading :size="18" color="var(--ex-white)" />
     </div>
     <GoogleVerfCode ref="googleRef" @submit="(code) => submit(code)" />
@@ -72,21 +72,11 @@ const googleRef = ref();
 const confirmDel = ref(false);
 const confirm = (id) => {
   store.commit("setCurrDeleteId", id);
-  // showConfirmDialog({
-  //   className: 'account_dialog',
-  //   title: t('account.delete_dialog_title'),
-  //   message: t('account.delete_dialog_con'),
-  //   confirmButtonText: t('google_auth.google_input_btn_confirm'),
-  //   cancelButtonText: t('google_auth.google_input_btn_cancel'),
-  //   theme: 'round-button'
-  // })
-  //   .then(() => next())
-  //   .catch(() => { });
   confirmDel.value = true
 };
 const next = () => {
   confirmDel.value = false;
-  googleRef.value[0].open();
+  googleRef.value.open();
 };
 
 const props = defineProps({
