@@ -148,6 +148,11 @@ onMounted(() => {
         background-image: url(${getStaticImgUrl('/static/img/assets/withdraw_wallet_bg.svg')});
         background-size: cover;
       }
+        
+      .list_page {
+        background-image: url(${getStaticImgUrl('/static/img/assets/withdraw_wallet_bg.svg')});
+        background-size: cover;
+      }
     `;
   document.head.appendChild(style);
 })

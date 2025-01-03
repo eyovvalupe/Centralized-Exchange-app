@@ -106,7 +106,7 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.6rem] ">
+    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.6rem]">
       <div @click="jump('account', true)" class="text-center flex flex-col items-center justify-center relative">
         <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
@@ -159,7 +159,7 @@
       </div>
     </div>
 
-    <div class="navs relative">
+    <div class="navs px-[0.32rem] relative">
       <div class="nav" @click="jump('language')">
         <div class="language-icon mr-[0.16rem]">
           <img :src="getStaticImgUrl('/static/img/user/lang_icon.svg')" alt="">
@@ -329,7 +329,6 @@ if (token.value) {
   }
 
   .loginout {
-    width: 100%;
     height: 1.04rem;
     border-radius: 0.32rem;
     background-color: var(--ex-bg-color2);
@@ -337,6 +336,7 @@ if (token.value) {
     align-items: center;
     justify-content: center;
     color: var(--ex-text-color2);
+    margin: 0 0.32rem;
   }
 
   .navs {

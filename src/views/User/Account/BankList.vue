@@ -1,34 +1,48 @@
 <template>
-  <div class="list_page" v-for="item in props.list">
-    <div class="list_delete_icon" @click="confirm(item.id)">
-      <Loading :size="18" v-if="loading && currDeleteId == item.id" color="var(--ex-white)" />
-      <div class="delete_icon" v-else>
-        <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
-      </div>
-    </div>
-    <GoogleVerfCode ref="googleRef" @submit="submit" />
-    <div class="list_detail">
-      <div class="bank_icon_container mr-[0.2rem]">
-        <div style="width: 0.68rem;height: 0.68rem;">
-          <img :src="getStaticImgUrl('/static/img/bank/card_type_a.svg')" alt="">
+  <div class="bank_list" v-for="item in props.list">
+    <!-- <div class="list_delete_icon" @click="confirm(item.id)"> -->
+    <Loading :size="18" v-if="loading && currDeleteId == item.id" color="var(--ex-white)" />
+    <!-- <div class="delete_icon" v-else>
+      <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
+    </div> -->
+    <SwipeCell>
+      <div class="list_page">
+        <div class="flex mb-[0.32rem] justify-between">
+          <div class="flex items-center">
+            <div style="width: 0.7rem;height: 0.7rem;" class="mr-[0.2rem]">
+              <img :src="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="">
+            </div>
+            <span class="text-[0.32rem] text-color2">{{ item.bankName }}</span>
+          </div>
+          <div class="text-[0.28rem] text-color5">{{ t('用户姓名：') + ' ' + item.accountName }}</div>
         </div>
-      </div>
-      <div class="flex flex-col">
-        <div class="flex flex-row items-center">
-          <span class="text-[0.32rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{
-            item.bankCardNumber.slice(-4) }}</span>
-          <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)">
-            <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+        <div class="flex flex-col">
+          <div class="flex justify-between items-center">
+            <span class="text-[0.4rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{
+              item.bankCardNumber.slice(-4) }}</span>
+            <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)">
+              <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+            </div>
           </div>
         </div>
-        <span class="text-[0.28rem] text-color2">{{ item.bankName }}</span>
       </div>
-    </div>
+      <template #right>
+        <div class="w-[1rem] h-full bg-color2 rounded-[0.4rem] flex items-center justify-center"
+          @click="confirm(item.id)">
+          <div class="w-[0.4rem] h-[0.4rem]">
+            <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
+          </div>
+        </div>
+      </template>
+    </SwipeCell>
+    <!-- </div> -->
+    <GoogleVerfCode ref="googleRef" @submit="submit" />
+
   </div>
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { showConfirmDialog, showToast, Loading } from "vant";
+import { showConfirmDialog, showToast, Loading, SwipeCell } from "vant";
 import { ref } from "vue";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { _delAccount, _listAccount } from "@/api/api";
@@ -116,54 +130,60 @@ const getSessionToken = () => {
 getSessionToken();
 </script>
 <style lang="less">
-.list_page {
-  position: relative;
-  width: 100%;
-  height: 1.44rem;
-  border-width: 0.02rem;
-  border-color: var(--ex-border-color2);
-  border-radius: 0.36rem;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
+.bank_list {
   margin-bottom: 0.2rem;
 
-  .list_detail {
-    padding-left: 0.32rem;
+  .list_page {
+    position: relative;
+    width: 100%;
+    height: 2.16rem;
+    border-width: 0.02rem;
+    border-radius: 0.36rem;
+    overflow: hidden;
     display: flex;
-    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.2rem;
+    background-color: var(--ex-bg-color2);
+    flex-direction: column;
+    padding: 0 0.32rem;
 
-    .bank_icon_container {
-      width: 0.96rem;
-      height: 0.96rem;
-      background-color: var(--ex-bg-color2);
-      border-radius: 1rem;
+    .list_detail {
+      padding-left: 0.32rem;
+      display: flex;
+      align-items: center;
+
+      .bank_icon_container {
+        width: 0.96rem;
+        height: 0.96rem;
+        background-color: var(--ex-bg-color2);
+        border-radius: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+
+    }
+
+    .list_delete_icon {
+      width: 0.8rem;
+      height: 0.52rem;
+      background-color: var(--ex-border-color2);
+      border-bottom-left-radius: 0.36rem;
+      position: absolute;
+      top: 0;
+      right: 0;
       display: flex;
       justify-content: center;
       align-items: center;
-    }
 
-
-  }
-
-  .list_delete_icon {
-    width: 0.8rem;
-    height: 0.52rem;
-    background-color: var(--ex-border-color2);
-    border-bottom-left-radius: 0.36rem;
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .delete_icon {
-      width: 0.3rem;
-      height: 0.25rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
+      .delete_icon {
+        width: 0.3rem;
+        height: 0.25rem;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
     }
   }
 }

@@ -1,32 +1,43 @@
 <template>
-  <div class="list_page" v-for="item in props.list">
-    <div class="list_delete_icon" @click="confirm(item.id)">
-      <Loading :size="18" v-if="loading && currDeleteId == item.id" color="var(--ex-white)" />
-      <div class="delete_icon" v-else>
+  <div class="crypto_list" v-for="item in props.list">
+    <Loading :size="18" v-if="loading && currDeleteId == item.id" color="var(--ex-white)" />
+    <!-- <div class="delete_icon" v-else>
         <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
+      </div> -->
+    <SwipeCell>
+      <div class="list_page">
+        <div class="flex items-center mb-[0.32rem]">
+          <div class="mr-[0.2rem]" style="width: 0.7rem;height: 0.7rem;">
+            <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" class=" rounded-full" alt="">
+          </div>
+          <span class="text-[0.32rem] text-color2">{{ item.symbol ? item.symbol.toUpperCase() : '--' }}</span>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex justify-between items-center">
+            <span class="text-[0.4rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{ item.address.slice(-4)
+              }}</span>
+            <div class="copy_icon" @click="copyToClipboard(item.address)">
+              <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+            </div>
+          </div>
+
+        </div>
       </div>
-    </div>
-    <div class="list_detail">
-      <div class="mr-[0.2rem]" style="width: 0.96rem;height: 0.96rem;">
-        <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" class=" rounded-full" alt="">
-      </div>
-      <div class="flex flex-col">
-        <div class="flex flex-row items-center">
-          <span class="text-[0.32rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{ item.address.slice(-4)
-            }}</span>
-          <div class="copy_icon" @click="copyToClipboard(item.address)">
-            <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+      <template #right>
+        <div class="w-[1rem] h-full bg-color2 rounded-[0.4rem] flex items-center justify-center"
+          @click="confirm(item.id)">
+          <div class="w-[0.4rem] h-[0.4rem]">
+            <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
           </div>
         </div>
-        <span class="text-[0.28rem] text-color2">{{ item.symbol }}</span>
-      </div>
-    </div>
+      </template>
+    </SwipeCell>
     <GoogleVerfCode ref="googleRef" @submit="(code) => submit(code)" />
   </div>
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { showToast, showConfirmDialog, Loading } from "vant";
+import { showToast, showConfirmDialog, Loading, SwipeCell } from "vant";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import { ref } from "vue";
 import { _delAccount, _listAccount } from "@/api/api";
@@ -112,48 +123,53 @@ const getSessionToken = () => {
 getSessionToken();
 </script>
 <style lang="less">
-.list_page {
-  position: relative;
-  width: 100%;
-  height: 1.44rem;
-  border-width: 0.02rem;
-  border-color: var(--ex-border-color2);
-  border-radius: 0.36rem;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
+.crypto_list {
   margin-bottom: 0.2rem;
 
-  .list_detail {
-    padding-left: 0.32rem;
-    display: flex;
-    align-items: center;
-
-    .copy_icon {
-      width: 0.24rem;
-      height: 0.24rem;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-
-  }
-
-  .list_delete_icon {
-    width: 0.8rem;
-    height: 0.52rem;
-    background-color: var(--ex-border-color2);
-    border-bottom-left-radius: 0.36rem;
-    position: absolute;
-    top: 0;
-    right: 0;
+  .list_page {
+    position: relative;
+    width: 100%;
+    height: 2.16rem;
+    border-width: 0.02rem;
+    border-radius: 0.36rem;
+    overflow: hidden;
     display: flex;
     justify-content: center;
-    align-items: center;
+    background-color: var(--ex-bg-color2);
+    padding: 0 0.32rem;
+    flex-direction: column;
 
-    .delete_icon {
-      width: 0.3rem;
-      height: 0.3rem;
+    .list_detail {
+      padding-left: 0.32rem;
+      display: flex;
+      align-items: center;
+
+      .copy_icon {
+        width: 0.24rem;
+        height: 0.24rem;
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+
+    }
+
+    .list_delete_icon {
+      width: 0.8rem;
+      height: 0.52rem;
+      background-color: var(--ex-border-color2);
+      border-bottom-left-radius: 0.36rem;
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .delete_icon {
+        width: 0.3rem;
+        height: 0.3rem;
+      }
     }
   }
 }

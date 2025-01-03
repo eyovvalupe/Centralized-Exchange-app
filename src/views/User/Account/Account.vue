@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { Tabs, Tab, showConfirmDialog, Popup } from "vant";
+import { Tabs, Tab } from "vant";
 import store from "@/store";
 import { computed, ref, onMounted } from "vue";
 import router from "@/router";
