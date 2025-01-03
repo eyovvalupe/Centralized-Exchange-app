@@ -10,6 +10,7 @@ export default {
     hour: "时",
     min: "分",
     no_more: "没有更多了",
+    no_wallet: "暂无收款账户",
   },
   login: {
     login: "登录",
@@ -241,10 +242,14 @@ export default {
     no_data: "暂无收款账户",
     bank: "银行卡",
     no_kyc_title: "身份未认证",
-    no_kyc_con: "您的身份还未进行认证，请先认证再添加收款账户",
+    no_kyc_con1: "您的身份还未进行认证",
+    no_kyc_con2: "请先认证再添加收款账户",
+
     no_kyc_confirm: "去认证",
     no_google_title: "谷歌验证器未绑定",
-    no_google_con: "您的谷歌验证器还未绑定，请先绑定再添加收款账户",
+    no_google_con1: "您的谷歌验证器还未绑定",
+    no_google_con2: "请先绑定再添加收款账户",
+
     no_google_confirm: "去绑定",
     add_account_btn: "添加收款账户",
     delete_dialog_title: "删除",

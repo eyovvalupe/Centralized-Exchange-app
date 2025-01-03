@@ -10,6 +10,8 @@ export default {
     hour: "時",
     min: "分",
     no_more: "没有更多了",
+    no_wallet: "暫無收款賬戶",
+
   },
   home: {
     login: "登录",
@@ -261,10 +263,14 @@ export default {
     no_data: "暫無收款賬戶",
     bank: "銀行卡",
     no_kyc_title: "身份未認證",
-    no_kyc_con: "您的身份還未進行認證，清閒認證再添加收款賬戶",
+    no_kyc_con1: "您的身份還未進行認證",
+    no_kyc_con2: "清閒認證再添加收款賬戶",
+
     no_kyc_confirm: "去認證",
     no_google_title: "谷歌驗證器未綁定",
-    no_google_con: "您的谷歌驗證器還未綁定，請先綁定再添加收款賬戶",
+    no_google_con1: "您的谷歌驗證器還未綁定",
+    no_google_con2: "請先綁定再添加收款賬戶",
+
     no_google_confirm: "去綁定",
     add_account_btn: "添加收款賬戶",
     delete_dialog_title: "刪除",

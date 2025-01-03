@@ -10,6 +10,8 @@ export default {
     hour: "h",
     min: "m",
     no_more: "No more",
+    no_wallet: "No Payment Account Available",
+
   },
   login: {
     login: "Log In",
@@ -247,10 +249,14 @@ export default {
     no_data: "No Wallet Found",
     bank: "Bank Cards",
     no_kyc_title: "Identity Not Verified",
-    no_kyc_con: "Verify your identity to add payment methods",
+    no_kyc_con1: "Identity Not Verified",
+    no_kyc_con2: "Verify first, then add payment account",
+
     no_kyc_confirm: "Verify Now",
     no_google_title: "Google Auth Not Linked",
-    no_google_con: "Link your Google Auth to add payment methods",
+    no_google_con1: "Google Authenticator not linked",
+    no_google_con2: "Link first, then add payment account",
+
     no_google_confirm: "Link Google Auth",
     add_account_btn: "Add Payment Method",
     delete_dialog_title: "Delete Account",
