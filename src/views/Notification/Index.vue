@@ -8,38 +8,21 @@
       <span class="text-[0.36rem]">消息中心</span>
     </div>
     <div class="pt-[0.16rem]">
-      <Tabs
-        type="oval-card"
-        v-model:active="active"
-        :swipeable="false"
-        animated
-        :color="'var(--ex-primary-color)'"
-        shrink
-        @change="onChange"
-      >
+      <Tabs type="oval-card" v-model:active="active" :swipeable="false" animated :color="'var(--ex-primary-color)'"
+        shrink @change="onChange">
         <Tab :title="'系统通知'" name="0">
           <div class="noti_tab">
             <div
-              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
-            >
+              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative">
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
-                <div
-                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
-                >
-                  <TextEllipsis
-                    rows="2"
-                    :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
-                    expand-text="more"
-                    collapse-text="less"
-                  />
+                <div class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]">
+                  <TextEllipsis rows="2" :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
+                    expand-text="more" collapse-text="less" />
                 </div>
-                <div
-                  class="w-full flex justify-between mb-[0.32rem]"
-                  v-if="false"
-                >
+                <div class="w-full flex justify-between mb-[0.32rem]" v-if="false">
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
                     <img src="static/img/noti/noti-1.webp" />
                   </div>
@@ -56,37 +39,23 @@
               </div>
               <div
                 class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
-                style="width: max-content"
-                @click="jump('notification_detail')"
-              >
+                style="width: max-content" @click="jump('notification_detail')">
                 查看全部
               </div>
-              <div
-                v-if="true"
-                class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]"
-              ></div>
+              <div v-if="true" class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
+              </div>
             </div>
             <div
-              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
-            >
+              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative">
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
-                <div
-                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
-                >
-                  <TextEllipsis
-                    rows="2"
-                    :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
-                    expand-text="more"
-                    collapse-text="less"
-                  />
+                <div class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]">
+                  <TextEllipsis rows="2" :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
+                    expand-text="more" collapse-text="less" />
                 </div>
-                <div
-                  class="w-full flex justify-between mb-[0.32rem]"
-                  v-if="true"
-                >
+                <div class="w-full flex justify-between mb-[0.32rem]" v-if="true">
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
                     <img src="static/img/noti/noti-1.webp" />
                   </div>
@@ -103,37 +72,23 @@
               </div>
               <div
                 class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
-                style="width: max-content"
-                @click="jump('notification_detail')"
-              >
+                style="width: max-content" @click="jump('notification_detail')">
                 查看全部
               </div>
-              <div
-                v-if="true"
-                class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]"
-              ></div>
+              <div v-if="true" class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
+              </div>
             </div>
             <div
-              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
-            >
+              class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative">
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
-                <div
-                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
-                >
-                  <TextEllipsis
-                    rows="2"
-                    :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
-                    expand-text="more"
-                    collapse-text="less"
-                  />
+                <div class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]">
+                  <TextEllipsis rows="2" :content="'摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内内容内容内容内容内容内容内容内...'"
+                    expand-text="more" collapse-text="less" />
                 </div>
-                <div
-                  class="w-full flex justify-between mb-[0.32rem]"
-                  v-if="true"
-                >
+                <div class="w-full flex justify-between mb-[0.32rem]" v-if="true">
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
                     <img src="static/img/noti/noti-1.webp" />
                   </div>
@@ -150,29 +105,23 @@
               </div>
               <div
                 class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
-                style="width: max-content"
-              >
+                style="width: max-content">
                 查看全部
               </div>
-              <div
-                v-if="false"
-                class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]"
-              ></div>
+              <div v-if="false" class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
+              </div>
             </div>
           </div>
         </Tab>
         <Tab :title="'活动'" name="1">
           <div class="noti_tab">
             <div
-              class="w-full h-[3.86rem] bg-color3 p-[0.32rem] rounded-[0.4rem] flex flex-col justify-between relative"
-            >
+              class="w-full h-[3.86rem] bg-color3 p-[0.32rem] rounded-[0.4rem] flex flex-col justify-between relative">
               <div class="flex flex-col">
                 <div class="text-[0.32rem] font-semibold mb-[0.32rem]">
                   消息标题测试消息标题测试消息标题测试
                 </div>
-                <div
-                  class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]"
-                >
+                <div class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]">
                   摘要内容摘要内容摘要内容摘要内容摘要内容摘要内容内容内容内容内容内容内容内容内容内容内...
                 </div>
                 <div class="text-[0.24rem] text-color3">
@@ -181,13 +130,10 @@
               </div>
               <div
                 class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
-                style="width: max-content"
-              >
+                style="width: max-content">
                 查看全部
               </div>
-              <div
-                class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]"
-              ></div>
+              <div class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]"></div>
             </div>
           </div>
         </Tab>

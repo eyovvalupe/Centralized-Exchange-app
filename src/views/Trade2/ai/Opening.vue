@@ -306,7 +306,7 @@ const showModel = ref(false);
 const form1 = ref({
   name: "",
   symbol: "",
-  grid: "1",
+  grid: "",
   volume: "",
   safeword: "",
 });
@@ -568,7 +568,7 @@ const init = () => {
   form1.value = {
     name: route.query.name || "",
     symbol: route.query.symbol || "",
-    grid: "1",
+    grid: "",
     volume: "",
   };
   getParams();

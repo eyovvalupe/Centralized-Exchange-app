@@ -1,6 +1,6 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.4rem]']">
+  <div ref="root" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"

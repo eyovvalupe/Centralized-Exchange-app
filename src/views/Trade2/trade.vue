@@ -77,8 +77,8 @@
           t('trade.left_search_result')
         }}</div>
         <!-- 切换 -->
-        <Tabs id="option_left" @change="changeTab" class="van-tabs--sub" :lazy-render="false"
-          v-model:active="navActiveTab" animated shrink>
+        <Tabs id="option_left" @change="changeTab" type="custom-line" :lazy-render="false" v-model:active="navActiveTab"
+          animated shrink>
           <Tab :title="t('trade.left_mine')" name="option">
             <div class="lists">
               <StockTable :showSparkLine="false" :handleClick="handleClick" :loading="optionLoading" :key="'option'"
@@ -87,8 +87,9 @@
           </Tab>
           <Tab :title="t('trade.left_stock')" name="stock">
             <div class="lists">
-              <Tabs v-if="!(isFocused || searchStr)" @change="changeTab('stock')" type="oval-sub-small"
-                class="mt-[0.2rem]" :lazy-render="false" v-model:active="stockActiveTab" shrink>
+              <Tabs v-if="!(isFocused || searchStr)" @change="changeTab('stock')"
+                class="van-tabs--sub van-tabs--sub_mini mt-[0.2rem]" :lazy-render="false"
+                v-model:active="stockActiveTab" shrink>
                 <Tab :title="t('trade.left_all')" name="all"> </Tab>
                 <Tab style="min-width: 2rem" :title="marketItem.market == 'us'
                   ? t('market.market_stock_country_us_long')
@@ -118,8 +119,9 @@
           </Tab>
 
           <Tab :title="t('market.market_header_contract')" name="contract">
-            <Tabs v-if="!(isFocused || searchStr)" @change="changeTab('future')" type="oval-sub-small"
-              class="mt-[0.2rem]" :lazy-render="false" v-model:active="futureActiveTab" shrink>
+            <Tabs v-if="!(isFocused || searchStr)" @change="changeTab('future')"
+              class="van-tabs--sub van-tabs--sub_mini mt-[0.2rem]" :lazy-render="false" v-model:active="futureActiveTab"
+              shrink>
               <Tab :title="t('trade.left_all')" name="all"> </Tab>
               <Tab :title="t('account.crypto')" name="crypto"></Tab>
               <Tab :title="t('assets.over_view_forex')" name="forex"></Tab>

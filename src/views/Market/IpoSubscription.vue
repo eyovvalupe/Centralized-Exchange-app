@@ -23,13 +23,13 @@
                     {{ t('trade.ipo_detail_price') }} <span>{{ currIpo.issue_price_max }} {{ currIpo.currency }}</span>
                 </div>
             </div>
-            <Icon class="ipo_info_arrow" name="arrow" size="0.4rem" color="var(--ex-text-color2)" />
+            <!-- <Icon class="ipo_info_arrow" name="arrow" size="0.4rem" color="var(--ex-text-color2)" /> -->
         </div>
 
         <div class="form">
-            <FormItem :placeholder="t('trade.ipo_detail_item10')" v-model="form.volume" btn-show-mode="focus"
-                @btnClick="onSliderChange(100)" show-btn :inputType="'number'" :tip="max > 0 ? '<=' + max : ''"
-                @change="changePercent">
+            <FormItem :hasRT="true" :hasLT="true" :hasScroll="true" :placeholder="t('trade.ipo_detail_item10')"
+                v-model="form.volume" btn-show-mode="focus" @btnClick="onSliderChange(100)" show-btn
+                :inputType="'number'" :tip="max > 0 ? '<=' + max : ''" @change="changePercent">
                 <template #title-right>
                     <div class="flex items-center">
                         <span>{{ t('assets.wallet_available') }}&nbsp;</span>
@@ -40,12 +40,25 @@
                         <Icon class="ml-[0.1rem]" name="arrow" size="0.26rem" color="var(--ex-text-color2)" />
                     </div>
                 </template>
+
+                <template #rt>
+                    <div @click="openConfirmBox">
+                        <div
+                            style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
+                            <span>{{ t("assets.wallet_available") }}</span>
+                            <span style="color: var(--ex-primary-color);margin:0 0.08rem">{{ mainWallet.amount || '--'
+                                }} </span>
+                            <span>{{ mainWallet.currency }}</span>
+                        </div>
+                    </div>
+                </template>
+
+                <template #scroll>
+                    <!-- 拖动 -->
+                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                </template>
             </FormItem>
 
-
-            <div style="height:0.47rem;"></div>
-            <!-- 拖动 -->
-            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
 
             <div class="flex" v-if="activeTab == 1">
                 <div class="flex-1">
@@ -79,53 +92,43 @@
                         </div>
                     </div>
 
-                </div>
+                    <div class="info_boxs">
+                        <div class="info_box">
+                            <div>{{ $t("trade.ipo_detail_item10") }}</div>
+                            <div class="amount">
+                                {{ form.volume }}
+                            </div>
+                        </div>
 
-                <div class="info_boxs">
-                    <div class="info_box">
-                        <div>{{ $t("trade.ipo_detail_item10") }}</div>
-                        <div class="amount">
-                            {{ form.volume }}
+                        <div class="info_box">
+                            <div>{{ $t("trade.ipo_detail_item14") }}({{ currIpo.currency }})</div>
+                            <div class="amount">
+                                {{ freezeNum || "--" }}
+                            </div>
+                        </div>
+
+                        <div class="info_box" v-if="activeTab == 1">
+                            <div>{{ $t('trade.ipo_detail_lever') }}</div>
+                            <div class="amount">
+                                {{ lever }}X
+                            </div>
                         </div>
                     </div>
 
-                    <div class="info_box info_box--line">
-                        <div>{{ $t("trade.ipo_detail_item14") }}({{ currIpo.currency }})</div>
-                        <div class="amount">
-                            {{ freezeNum || "--" }}
+                    <div class="info-bottom">
+                        <div class="all">{{ t('market.market_buy_fast_pay') }} <strong>{{ all }} {{
+                            currIpo.currency }}</strong> </div>
+                        <div class="text">
+                            <span>{{ $t("trade.ipo_detail_item9") }} </span>
+                            <span class="amount">{{ feeNum }} {{ currIpo.currency }}</span>
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
             <div class="stock_submit_box">
-                <div class="item" v-if="activeTab == 1">
-                    <div class="item_name">{{ $t('trade.ipo_detail_lever') }}</div>
-                    <div class="item_val">
-                        <div class="item_val_text">{{ lever }}X</div>
-                    </div>
-                </div>
-                <!-- <div class="item">
-                    <div class="item_name">{{ $t("trade.ipo_detail_item13") }}</div>
-                    <div class="item_val">
-                        <div class="item_val_text">
-                            {{ form.volume }}
-                        </div>
-                    </div>
-                </div> -->
-
-                <div class="item">
-                    <div class="item_name">{{ $t("trade.ipo_detail_item9") }}</div>
-                    <div class="item_val">
-                        <div class="item_val_text">{{ feeNum }}</div>
-                        <div class="item_val_unit">{{ currIpo.currency }}</div>
-                    </div>
-                </div>
-
-                <div class="money_box">
-                    {{ t('market.market_buy_fast_pay') }} <strong>{{ all }}</strong> <span>{{ currIpo.currency }}</span>
-                </div>
-
                 <FormItem v-model="safeword" size="large" input-type="password"
                     :placeholder="$t('trade.stock_opening_trade_pw')">
                 </FormItem>
@@ -136,6 +139,124 @@
             </div>
         </Popup>
 
+
+        <!-- 余额提示 -->
+        <Popup round v-model:show="showAmountDialog" closeable teleport="body">
+            <div style="width: 6.4rem">
+                <!-- 标题 -->
+                <div style="
+          text-align: center;
+          font-size: 0.32rem;
+          height: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--ex-border-color);
+        ">
+                    {{ t('trade.stock_opening_enough_balance') }}
+                </div>
+
+                <!-- 内容 -->
+                <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          background: var(--ex-bg-color2);
+          border: 1px solid var(--ex-border-color);
+          border-radius: 0.32rem;
+          line-height: 0.4rem;
+          margin-top: 0.32rem;
+          overflow: hidden;
+          position: relative;
+          margin: 0.32rem 0.4rem;
+        ">
+                    <div style="
+            color: var(--ex-text-color);
+            font-size: 0.28rem;
+            font-weight: 400;
+            padding: 0 0.32rem;
+            height: 1.4rem;
+            background-color: var(--ex-bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          ">
+                        {{ t('trade.ipo_account_balance') }}
+                    </div>
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex: 1;
+          ">
+                        <div style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-bottom: 0.08rem;
+            ">
+                            <div v-if="mainWallet.currency" style="
+                width: 0.32rem;
+                height: 0.32rem;
+                display: flex;
+                position: relative;
+                top: -0.02rem;
+              ">
+                                <img :src="getStaticImgUrl(
+                                    `/static/img/crypto/${mainWallet.currency.toUpperCase()}.svg`
+                                )
+                                    " />
+                            </div>
+
+                            <span style="
+                font-size: 0.28rem;
+                margin-left: 0.12rem;
+                color: var(--ex-text-color);
+                font-weight: 400;
+              ">{{ mainWallet.currency }}</span>
+                        </div>
+                        <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
+                            mainWallet.amount
+                        }}</b>
+                    </div>
+                </div>
+
+                <!--  按钮 -->
+                <div style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 0.4rem;
+          font-size: 0.28rem;
+          margin: 0.64rem 0 0.4rem 0;
+        ">
+                    <div @click="router.push({ name: 'transfer' })" style="
+            height: 0.8rem;
+            width: 48%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.64rem;
+            border: 1px solid var(--ex-primary-color);
+            color: var(--ex-primary-color);
+          ">
+                        {{ t("trade.ai_opening_pop_transfer") }}
+                    </div>
+                    <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary" style="
+            height: 0.8rem;
+            width: 48%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.64rem;
+          ">
+                        {{ t("trade.ai_opening_pop_recharge") }}
+                    </div>
+                </div>
+            </div>
+        </Popup>
     </div>
 </template>
 
@@ -339,58 +460,11 @@ const getFee = () => {
 getFee()
 
 
+const showAmountDialog = ref(false);
 const openConfirmBox = () => {
-
-    const type = max.value > 0 ? 2 : 1
-    // type 1-余额不足 2-余额展示
-    const title =
-        type == 1
-            ? t("trade.stock_opening_no_balance")
-            : t("trade.stock_opening_enough_balance");
-    const content =
-        type == 1
-            ? `<div class="text-color" style="font-size:0.28rem;line-height:0.44rem;margin-top:0.32rem;">${t(
-                "trade.ipo_account_balance"
-            )} <span style="font-weight:600;color:var(--ex-primary-color);">` +
-            mainWallet.value.amount +
-            "</span> " +
-            mainWallet.value.currency +
-            `</div><div class="text-color" style="font-size:0.28rem;line-height:0.44rem;margin-top:0.12rem;">${t(
-                "trade.stock_account_notification"
-            )}</div>`
-            : `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:var(--ex-bg-color2);border:1px solid var(--ex-border-color);border-radius:0.32rem;padding:0.2rem 0;line-height:0.4rem;margin-top:0.32rem;">
-        <div style="color:var(--ex-text-color);font-size:0.32rem;font-weight:400;margin-bottom:0.2rem">${t(
-                "trade.ipo_account_balance"
-            )}</div>
-        <div style="display:flex;align-items:center;justify-content:center;">
-            <b style="font-size:0.4rem;color:var(--ex-primary-color);font-weight:bold">${mainWallet.value.amount
-            }</b><span style="font-size:0.28rem;margin-left:0.12rem;color:var(--ex-text-color);font-weight:400">${mainWallet.value.currency
-            }</span>
-        </div>
-    </div>`;
-    showConfirmDialog({
-        closeOnClickOverlay: true,
-        className: "van-custom-confirm-dialog",
-        title: title,
-        message: content,
-        allowHtml: true,
-        confirmButtonText: t("trade.stock_opening_btn_transfer"),
-        cancelButtonText: t("trade.stock_opening_btn_recharge"),
-        confirmButtonColor: "var(--ex-primary-color)",
-        cancelButtonColor: "var(--ex-primary-color)",
-        theme: 'round-button'
-    })
-        .then(() => {
-            router.push({
-                name: "transfer",
-            });
-        })
-        .catch(() => {
-            router.push({
-                name: "topUpCrypto",
-            });
-        });
+    showAmountDialog.value = true;
 };
+
 
 </script>
 
@@ -415,13 +489,14 @@ const openConfirmBox = () => {
 
 
     .ipo_info {
-        border-radius: 0.32rem;
+        border-radius: 0.4rem;
         border: 1px solid var(--ex-border-color);
         background: var(--ex-bg-color2);
-        padding: 0.28rem 0.32rem;
+        padding: 0.24rem 0.12rem 0.12rem 0.12rem;
         display: flex;
         justify-content: space-between;
         margin-top: 0.28rem;
+        margin-bottom: 0.4rem;
 
         &_lt {
             flex: 1;
@@ -436,20 +511,21 @@ const openConfirmBox = () => {
             font-size: 0.32rem;
             font-weight: 600;
             line-height: 0.36rem;
-            /* 112.5% */
+            padding: 0 0.2rem;
         }
 
         .lever_icon {
             display: inline-block;
+            white-space: nowrap;
             height: 0.32rem;
             padding: 0rem 0.08rem;
             font-size: 0.22rem;
-            color: var(--ex-primary-color);
+            color: var(--ex-status-color1);
             border-radius: 0.08rem;
             line-height: 0.32rem;
             font-weight: 400;
             margin-left: 0.1rem;
-            background: rgba(1, 76, 250, 0.10);
+            background: var(--ex-status-bg1);
         }
 
         &_price {
@@ -458,14 +534,17 @@ const openConfirmBox = () => {
             font-weight: 400;
             line-height: 0.36rem;
             margin-top: 0.2rem;
+            background-color: var(--ex-bg-color);
+            border-radius: 0.4rem;
+            height: 1.24rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0.28rem;
+            color: var(--ex-text-color3);
 
             span {
-                margin-left: 0.12rem;
-                color: var(--ex-error-color);
-            }
-
-            .blue {
-                color: var(--ex-primary-color);
+                color: var(--ex-white);
             }
         }
 
@@ -525,8 +604,7 @@ const openConfirmBox = () => {
 
 .main_item {
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color);
-    background: var(--ex-bg-color2);
+    background: var(--ex-bg-color3);
     margin: 0.4rem 0.32rem 0 0.32rem;
 
     .name {
@@ -554,51 +632,34 @@ const openConfirmBox = () => {
     }
 
     .item_box {
-        padding: 0.26rem 0.32rem 0.16rem 0.32rem;
+        padding: 0.32rem 0.12rem 0.12rem 0.12rem;
         position: relative;
+
+        .name_box {
+            padding: 0 0.12rem 0.2rem 0.12rem;
+        }
     }
 
 
     .info_boxs {
         padding: 0.3rem 0;
-        position: relative;
-        border: 1px solid var(--ex-border-color);
         border-bottom: 0px;
         border-radius: 0.32rem;
         background-color: var(--ex-bg-color);
-        width: calc(100% + 2px);
-        left: -1px;
-        z-index: 1;
 
-        &::after {
-            content: '';
-            display: block;
-            clear: both;
-        }
 
         .info_box {
-            width: 50%;
-            float: left;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             color: var(--ex-text-color3);
             font-size: 0.28rem;
-            line-height: 0.44rem;
             position: relative;
+            padding: 0.16rem 0.28rem;
 
             .amount {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                line-height: 0.44rem;
-                margin-top: 0.12rem;
-                font-weight: 600;
                 color: var(--ex-text-color);
-                font-size: 0.36rem;
+                font-size: 0.3rem;
             }
 
             .blue {
@@ -617,10 +678,64 @@ const openConfirmBox = () => {
             margin-top: -0.45rem;
         }
     }
+
+    .info-bottom {
+        padding: 0.3rem 0;
+        border-radius: 0.32rem;
+        background-color: var(--ex-bg-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 0.2rem;
+        position: relative;
+
+        &::after {
+            width: 0.16rem;
+            height: 0.34rem;
+            content: "";
+            background-color: var(--ex-bg-color);
+            position: absolute;
+            top: -0.28rem;
+            right: 1.1rem;
+        }
+
+        &::before {
+            width: 0.16rem;
+            height: 0.34rem;
+            content: "";
+            background-color: var(--ex-bg-color);
+            position: absolute;
+            top: -0.28rem;
+            left: 1.1rem;
+        }
+
+        .all {
+            color: var(--ex-text-color3);
+            font-size: 0.28rem;
+            margin-bottom: 0.1rem;
+
+            strong {
+                font-size: 0.36rem;
+                margin-left: 0.1rem;
+                color: var(--ex-white);
+            }
+        }
+
+        .text {
+            color: var(--ex-text-color3);
+            font-size: 0.24rem;
+
+            .amount {
+                color: var(--ex-white);
+                margin-left: 0.08rem;
+            }
+        }
+    }
 }
 
 .stock_submit_box {
-    padding: 0.2rem 0.5rem 0.6rem;
+    padding: 0.4rem 0.4rem 0.6rem;
 
     .item {
         display: flex;

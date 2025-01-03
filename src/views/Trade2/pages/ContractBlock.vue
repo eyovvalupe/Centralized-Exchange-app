@@ -118,7 +118,7 @@ defineExpose({
 <style lang="less" scoped>
 .stock_block {
   position: relative;
-  padding: 0.16rem 0 0.32rem 0;
+  padding: 0 0 0.32rem 0;
 
   :deep(.van-tabs__nav) {
     padding: 0 0.12rem;

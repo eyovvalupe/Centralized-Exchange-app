@@ -35,6 +35,7 @@
             </div>
 
             <div class="main_item">
+
                 <div class="item_box">
                     <div class="name_box">
                         <div class="name">{{ currDetail.company_name }} <span class="lever_icon"
@@ -47,79 +48,84 @@
                         </div>
                     </div>
 
-                </div>
 
-                <div class="info_boxs">
+                    <div class="info_boxs">
 
-                    <div class="info_box">
-                        <div>{{ t('trade.ipo_detail_win_num') }}</div>
-                        <div class="amount blue">
-                            {{ currDetail.winning || '--' }}
+                        <div class="info_box">
+                            <div class="amount blue">
+                                {{ currDetail.winning || '--' }}
+                            </div>
+                            <div>{{ t('trade.ipo_detail_win_num') }}</div>
+                        </div>
+                        <div class="info_box info_box--line">
+                            <div class="amount">
+                                {{ currDetail.volume || '--' }}
+                            </div>
+                            <div>{{ t('trade.ipo_detail_buy_num') }}</div>
+                        </div>
+                        <div class="info_box ">
+                            <div class="amount blue">
+                                {{ '--' }}
+                            </div>
+                            <div>{{ t('trade.ipo_detail_block_num') }}({{ currDetail.currency }})</div>
+                        </div>
+                        <div class="info_box info_box--line">
+                            <div class="amount">
+                                {{ currDetail.issue_price || '--' }}
+                            </div>
+                            <div>{{ t('trade.ipo_detail_buy_value') }}({{ currDetail.currency }})</div>
                         </div>
                     </div>
-                    <div class="info_box info_box--line">
-                        <div>{{ t('trade.ipo_detail_buy_num') }}</div>
-                        <div class="amount">
-                            {{ currDetail.volume || '--' }}
-                        </div>
-                    </div>
-                    <div class="split-line"></div>
-                    <div class="info_box ">
-                        <div>{{ t('trade.ipo_detail_block_num') }}({{ currDetail.currency }})</div>
-                        <div class="amount blue">
-                            {{ '--' }}
-                        </div>
-                    </div>
-                    <div class="info_box info_box--line">
-                        <div>{{ t('trade.ipo_detail_buy_value') }}({{ currDetail.currency }})</div>
-                        <div class="amount">
-                            {{ currDetail.issue_price || '--' }}
-                        </div>
-                    </div>
-                </div>
 
-            </div>
 
-            <div class="detail_item_list">
-                <!-- <div class="detail_item">
+                    <div class="detail_item_list">
+                        <!-- <div class="detail_item">
                     <div>订单数量</div>
                     <div class="val">{{ currDetail.volume || '--' }}</div>
                 </div> -->
-                <div class="detail_item">
-                    <div>{{ t('trade.ipo_detail_fee') }}</div>
-                    <div class="val">{{ currDetail.fee }} <span>{{ currDetail.currency }}</span></div>
-                </div>
-                <div class="detail_item">
-                    <div>{{ t('trade.ipo_detail_leverage') }}</div>
-                    <div class="val">{{ currDetail.lever ? currDetail.lever + 'X' : '--' }}</div>
-                </div>
-                <div class="detail_item">
-                    <div>{{ t('trade.ipo_detail_market_date') }}</div>
-                    <div class="val">{{ currDetail.listing_date || '--' }}</div>
-                </div>
-                <div class="detail_item">
-                    <div>{{ t('trade.ipo_detail_market_price') }}</div>
-                    <div class="val">{{ currDetail.listing_price || '--' }} <span>{{ currDetail.currency }}</span></div>
-                </div>
+                        <div class="detail_item">
+                            <div>{{ t('trade.ipo_detail_fee') }}</div>
+                            <div class="val">{{ currDetail.fee }} <span>{{ currDetail.currency }}</span></div>
+                        </div>
+                        <div class="detail_item">
+                            <div>{{ t('trade.ipo_detail_leverage') }}</div>
+                            <div class="val">{{ currDetail.lever ? currDetail.lever + 'X' : '--' }}</div>
+                        </div>
+                        <div class="detail_item">
+                            <div>{{ t('trade.ipo_detail_market_date') }}</div>
+                            <div class="val">{{ currDetail.listing_date || '--' }}</div>
+                        </div>
+                        <div class="detail_item">
+                            <div>{{ t('trade.ipo_detail_market_price') }}</div>
+                            <div class="val">{{ currDetail.listing_price || '--' }} <span>{{ currDetail.currency
+                                    }}</span>
+                            </div>
+                        </div>
 
-                <div class="detail_item">
-                    <div>{{ t('trade.ipo_detail_buy_price') }}</div>
-                    <div class="val">{{ currDetail.issue_price || '--' }} <span>{{ currDetail.currency }}</span></div>
+                        <div class="detail_item">
+                            <div>{{ t('trade.ipo_detail_buy_price') }}</div>
+                            <div class="val">{{ currDetail.issue_price || '--' }} <span>{{ currDetail.currency }}</span>
+                            </div>
+                        </div>
+
+                        <div class="detail_item">
+                            <div>{{ t('trade.ipo_detail_buy_date') }}</div>
+                            <div class="val">{{ '--' }}</div>
+                        </div>
+
+                        <div class="detail_item">
+                            <div>{{ t('trade.ipo_detail_order_date') }}</div>
+                            <div class="val">{{ currDetail.created }}</div>
+                        </div>
+
+
+
+                    </div>
                 </div>
-
-                <div class="detail_item">
-                    <div>{{ t('trade.ipo_detail_buy_date') }}</div>
-                    <div class="val">{{ '--' }}</div>
-                </div>
-
-                <div class="detail_item">
-                    <div>{{ t('trade.ipo_detail_order_date') }}</div>
-                    <div class="val">{{ currDetail.created }}</div>
-                </div>
-
-
 
             </div>
+
+
         </div>
     </div>
 </template>
@@ -137,7 +143,7 @@ import { Loading, showToast } from "vant"
 import { useI18n } from "vue-i18n";
 import IPO from "./IPO.vue";
 
-const {t} = useI18n()
+const { t } = useI18n()
 const route = useRoute()
 const currDetail = ref({})
 
@@ -180,7 +186,6 @@ const copy = text => {
 
     .main_item {
         border-radius: 0.32rem;
-        border: 1px solid var(--ex-border-color);
         background: var(--ex-bg-color2);
         margin-top: 0.4rem;
 
@@ -194,6 +199,8 @@ const copy = text => {
         }
 
         .name_box {
+            padding-left: 0.16rem;
+
             .lever_icon {
                 display: inline-block;
                 height: 0.32rem;
@@ -209,7 +216,7 @@ const copy = text => {
         }
 
         .item_box {
-            padding: 0.26rem 0.32rem 0.16rem 0.32rem;
+            padding: 0.26rem 0.12rem 0.12rem 0.16rem;
             position: relative;
         }
 
@@ -217,7 +224,7 @@ const copy = text => {
             display: flex;
             align-items: center;
             color: var(--ex-text-color3);
-            margin-top: 0.12rem;
+            margin: 0.32rem 0 0.32rem 0.16rem;
 
             span {
                 font-size: 0.28rem;
@@ -282,24 +289,13 @@ const copy = text => {
 
     .info_boxs {
         padding: 0.3rem 0;
-        position: relative;
-        border: 1px solid var(--ex-border-color);
-        border-bottom: 0px;
         border-radius: 0.32rem;
         background-color: var(--ex-bg-color);
-        width: calc(100% + 2px);
-        left: -1px;
-        z-index: 1;
-
-        &::after {
-            content: '';
-            display: block;
-            clear: both;
-        }
+        display: flex;
+        flex-wrap: wrap;
 
         .info_box {
             width: 50%;
-            float: left;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -308,6 +304,7 @@ const copy = text => {
             font-size: 0.28rem;
             line-height: 0.44rem;
             position: relative;
+            padding: 0.24rem 0;
 
             .amount {
                 flex: 1;
@@ -316,7 +313,7 @@ const copy = text => {
                 align-items: center;
                 justify-content: center;
                 line-height: 0.44rem;
-                margin-top: 0.12rem;
+                margin-bottom: 0.12rem;
                 font-weight: 600;
                 color: var(--ex-text-color);
                 font-size: 0.36rem;
@@ -326,21 +323,13 @@ const copy = text => {
                 color: var(--ex-primary-color);
             }
         }
-
-        .info_box--line::after {
-            content: '';
-            width: 1px;
-            height: 0.9rem;
-            background-color: var(--ex-bg-color3);
-            position: absolute;
-            left: 0;
-            top: 50%;
-            margin-top: -0.45rem;
-        }
     }
 
     .detail_item_list {
         padding: 0.08rem 0.32rem 0 0.32rem;
+        border-radius: 0.32rem;
+        background-color: var(--ex-bg-color);
+        margin-top: 0.2rem;
     }
 
     .detail_item {
@@ -349,10 +338,30 @@ const copy = text => {
         justify-content: space-between;
         line-height: 0.44rem;
         padding: 0.32rem 0 0.2rem 0;
-        border-bottom: 1px solid var(--ex-border-color);
         color: var(--ex-text-color3);
         font-size: 0.28rem;
         font-weight: 400;
+        position: relative;
+
+        &::after {
+            width: 0.16rem;
+            height: 0.34rem;
+            content: "";
+            background-color: var(--ex-bg-color);
+            position: absolute;
+            top: -0.28rem;
+            right: 1.1rem;
+        }
+
+        &::before {
+            width: 0.16rem;
+            height: 0.34rem;
+            content: "";
+            background-color: var(--ex-bg-color);
+            position: absolute;
+            top: -0.28rem;
+            left: 1.1rem;
+        }
 
         .name {
             color: var(--ex-text-color3);
