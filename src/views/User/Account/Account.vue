@@ -12,9 +12,7 @@
           <div class="list" v-else>
             <CryptoList :list="cryptoList" />
           </div>
-
         </div>
-        <div class="w-full  h-[1.9rem]"></div>
       </Tab>
       <Tab :title="t('account.bank')" name="1">
         <div class="tab_data">
@@ -24,9 +22,7 @@
           <div class="list" v-else>
             <BankList :list="bankList" />
           </div>
-
         </div>
-        <div class="w-full  h-[1.9rem]"></div>
       </Tab>
     </Tabs>
 
