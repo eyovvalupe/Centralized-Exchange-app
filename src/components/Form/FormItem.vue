@@ -23,7 +23,7 @@
           // item_focus2: inputFocus && !tip,
         }" :style="{ background, paddingBottom: props.hasBot ? '1.2rem' : '' }">
           <!-- 左侧提示 -->
-          <span class="ipt_tip ipt_tip--left" v-show="inputFocus">{{ placeholder
+          <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''" v-show="inputFocus">{{ placeholder
             }}</span>
           <!-- 右侧提示 -->
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
@@ -46,10 +46,9 @@
             inputFocus = true;
           emit('focus');
           " @blur="
-            inputFocus = false;
           inputBlur();
           " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
-            @keydown="validateKeydown" class="ipt" @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
+            @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''" @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
 
           <!-- 密码图标 -->
           <span class="pwd_icon" v-if="inputType == 'password'">
@@ -78,9 +77,20 @@
             visibility: (inputFocus) ? '' : 'hidden',
           }" class="put_all">{{ btnText ? btnText : t('trade.stock_position_all') }}</span>
 
-          <span @click="emit('btnClick')" v-else-if="showBtn || props.hasScroll" class="put_all">{{
-            btnText ? btnText : t('trade.stock_position_all')
-          }}</span>
+          <span @click="emit('btnClick')" v-else-if="from != 'withdraw' && (showBtn || props.hasScroll)"
+            class="put_all">{{
+              btnText ? btnText : t('trade.stock_position_all')
+            }}</span>
+
+          <div class="flex flex-col" v-else-if="from == 'withdraw' && (showBtn || props.hasScroll)">
+            <div class="flex text-end flex-col text-[0.28rem]" v-if="inputFocus" @click="emit('btnClick')">
+              <span class="mb-[0.15rem] text-color5">≤{{ balance }}</span>
+              <span class="text-primary">{{ t('trade.stock_position_all') }}</span>
+            </div>
+            <div class="text-[0.32rem]" v-else>
+              {{ cryptoCurrency }}
+            </div>
+          </div>
 
           <!-- 右侧自定义内容 -->
           <slot name="right-con" />
@@ -179,6 +189,18 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  from: {
+    type: String,
+    default: ''
+  },
+  cryptoCurrency: {
+    type: String,
+    default: ''
+  },
+  balance: {
+    type: Number,
+    default: 0
+  }
 });
 const inputFocus = ref(false);
 const inputVal = ref(props.modelValue);
@@ -207,6 +229,9 @@ const inputBlur = () => {
   emit("update:modelValue", inputVal.value);
   emit("change", inputVal.value);
   emit("blur");
+  setTimeout(() => {
+    inputFocus.value = false
+  }, 30);
 };
 
 const validateKeydown = (e) => {
@@ -333,10 +358,6 @@ const percentTagClick = (percent) => {
     }
   }
 
-  .item_focus2 {
-    // border: 1px solid var(--ex-primary-color);
-  }
-
   .percent_tag {
     color: var(--ex-primary-color);
     margin-left: 0.08rem;
@@ -355,6 +376,23 @@ const percentTagClick = (percent) => {
     position: absolute;
     right: 0.32rem;
     font-size: 0.3rem;
+    z-index: 9;
+    transition: all ease 0.3s;
+  }
+
+  .put_all_withdraw {
+    color: var(--ex-primary-color);
+    position: absolute;
+    right: 0.32rem;
+    font-size: 0.28rem;
+    z-index: 9;
+    transition: all ease 0.3s;
+  }
+
+  ._put_all_withdraw {
+    position: absolute;
+    right: 0.32rem;
+    font-size: 0.32rem;
     z-index: 9;
     transition: all ease 0.3s;
   }

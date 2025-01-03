@@ -11,7 +11,7 @@
     </div>
     <div class="right">
       <div class="amount">{{ item.amount }}</div>
-      <div class="status" :class="['status_' + item.status]">
+      <div class="status" :class="item.status == 'review' ? 'status_review' : item.status == 'success' ? 'status_success' : item.status == 'failure' ? 'status_failure' : 'status_unknown'">
         {{
           item.status == "review"
             ? $t("topUpStatusMap.review")
@@ -138,19 +138,29 @@ const formatDate = (date) => {
 
     .status {
       font-size: 0.28rem;
-      color: var(--ex-primary-color);
       margin-top: 0.14rem;
       padding: 0.05rem 0.15rem;
-      background-color: var(--ex-bg-color3);
       border-radius: 1rem;
     }
 
+    .status_review {
+      color: var(--ex-wait-color);
+    }
+
+    .status_unknown {
+      color: var(--ex-status-color7);
+      background-color: var(--ex-status-bg7);
+    }
+
+
     .status_success {
-      color: var(--ex-success-color);
+      color: var(--ex-status-color3);
+      background-color: var(--ex-status-bg3);
     }
 
     .status_failure {
       color: var(--ex-text-color3);
+      background-color: var(--ex-bg-color5);
     }
   }
 }

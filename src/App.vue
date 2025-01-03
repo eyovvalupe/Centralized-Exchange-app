@@ -144,6 +144,10 @@ onMounted(() => {
         background-size: cover;
       }
 
+      .withdraw_accounr_dialog .card_box {
+        background-image: url(${getStaticImgUrl('/static/img/assets/withdraw_wallet_bg.svg')});
+        background-size: cover;
+      }
     `;
   document.head.appendChild(style);
 })

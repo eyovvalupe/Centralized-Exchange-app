@@ -3,7 +3,7 @@
   <div class="withdraw_item" @click="goInfo" v-if="item.account">
     <div class="icon_box">
       <img v-if="item.currency" :src="getStaticImgUrl(`/static/img/crypto/${item.currency}.svg`)" alt="">
-      <img v-if="item.account && item.account.bank_name" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')"
+      <img v-if="item.account && item.account.bank_name" :src="getStaticImgUrl('/static/img/bank/card_default.svg')"
         alt="img" />
     </div>
     <div class="content">
@@ -18,7 +18,7 @@
         {{
           item.account && item.account.channel == "crypto"
             ? item.account.symbol.toUpperCase()
-            : item.account.bank_name
+            : (item.account.bank_name + ' | ' + item.account.accountName )
         }}
       </div>
       <div class="time">{{ formatDate(item.date) }}</div>
@@ -76,20 +76,21 @@ const formatDate = (date) => {
   const newDate = date.split(" ");
   const newDate1 = newDate[0].split("-");
   const isToday =
-    newDate1[2] == currentDate.getDate().toString() &&
-    newDate1[1] == currentDate.getMonth().toString() &&
-    newDate1[0] == currentDate.getFullYear().toString();
+    Number(newDate1[2]) == currentDate.getDate() &&
+    Number(newDate1[1]) == currentDate.getMonth() + 1 &&
+    Number(newDate1[0]) == currentDate.getFullYear();
 
   const isYesterday =
-    newDate1[2] + 1 == currentDate.getDate().toString() &&
-    newDate1[1] == currentDate.getMonth().toString() &&
-    newDate1[0] == currentDate.getFullYear().toString();
+    Number(newDate1[2]) + 1 == currentDate.getDate() &&
+    Number(newDate1[1]) == currentDate.getMonth() + 1 &&
+    Number(newDate1[0]) == currentDate.getFullYear();
   if (isToday) {
     return `今天 ${newDate[1]}`;
   } else if (isYesterday) {
     return `昨天 ${newDate[1]}`;
   } else return `${newDate1[1]}/${newDate1[2]} ${newDate[1]}`;
 };
+
 </script>
 
 <style lang="less" scoped>
@@ -98,9 +99,9 @@ const formatDate = (date) => {
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0.32rem;
-  border: 1px solid var(--ex-border-color2);
   border-radius: 0.32rem;
   margin-top: 0.2rem;
+  background-color: var(--ex-bg-color2);
 
   .icon_box {
     width: 0.8rem;
@@ -152,10 +153,29 @@ const formatDate = (date) => {
       font-size: 0.28rem;
       color: var(--ex-primary-color);
       margin-top: 0.14rem;
+      padding: 0.05rem 0.15rem;
+      background-color: var(--ex-bg-color3);
+      border-radius: 1rem;
     }
 
+    .status_review {
+      color: var(--ex-wait-color);
+    }
+
+    .status_unknown {
+      color: var(--ex-status-color7);
+      background-color: var(--ex-status-bg7);
+    }
+
+
     .status_success {
-      color: var(--ex-success-color);
+      color: var(--ex-status-color3);
+      background-color: var(--ex-status-bg3);
+    }
+
+    .status_failure {
+      color: var(--ex-text-color3);
+      background-color: var(--ex-bg-color5);
     }
 
     .status_failure {

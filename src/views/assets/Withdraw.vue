@@ -49,9 +49,11 @@
               </div>
             </div>
           </FormItem>
-          <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')"
-            :placeholder="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
-            <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ balance }}</template>
+          <!-- <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" -->
+          <FormItem input-type="number" v-model="form.amount" show-btn :from="'withdraw'"
+            :crypto-currency="form.from.toUpperCase()" :balance="balance" :placeholder="$t('withdraw.withdrawalAmount')"
+            @change="changeAmount" @btnClick="maxIpt">
+            <!-- <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ balance }}</template> -->
           </FormItem>
 
           <div class="tip mb-[0.4rem]">
@@ -65,7 +67,7 @@
               <div class="text-color5 mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.12rem]">{{
                 $t("withdraw.receiptAccount")
               }}</div>
-              <div class="more_card mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.18rem]"
+              <div v-if="showAccount.length" class="text-[0.28rem] text-primary mb-[0.28rem] px-[0.16rem] pt-[0.18rem]"
                 @click="showAccountDialog = true">{{ $t("withdraw.change") }}</div>
             </div>
             <div class="account_box" :class="showAccount.length ? 'px-[0.16rem]' : ''">
@@ -107,43 +109,63 @@
             $t("withdraw.withdraw") }}</span></Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
-        <div class="form">
-          <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" :min="0"
+        <div class="form mt-[0.46rem]">
+          <!-- <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" :min="0"
             :placeholder="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
+          </FormItem> -->
+          <FormItem input-type="number" v-model="form.amount" show-btn :from="'withdraw'" :min="0"
+            :crypto-currency="'USD'" :balance="balance" :placeholder="$t('withdraw.withdrawalAmount')"
+            @change="changeAmount" @btnClick="maxIpt">
             <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ totalAmount }}</template>
           </FormItem>
-          <div class="tip">
+          <div class="tip mb-[0.4rem]">
             <span>{{ $t("withdraw.serviceFee") + ":" }}</span>
             <span class="num">{{ form.amount == "" ? "--" : fee }}</span>
           </div>
 
-          <div class="subtitle">{{ $t("withdraw.receiptAccount") }}</div>
-          <div class="account_box">
-            <div class="card_box" v-if="showBankAccount.length && tabActive == 'bankCard'"
-              @click="showAccountDialog = true">
-              <div class="card_icon">
-                <img :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')" alt="img" />
-              </div>
-              <div class="card">
-                <div class="code">
-                  {{
-                    _hiddenAccount(
-                      currBankAccount.bankCardNumber
-                        ? currBankAccount.bankCardNumber
-                        : ""
-                    )
-                  }}
-                </div>
-                <div class="name">
-                  {{ currBankAccount.bankName ? currBankAccount.bankName : "" }}
-                </div>
-              </div>
-              <div class="more_card">{{ $t("withdraw.change") }}</div>
+          <div class="bg-color2 rounded-[0.32rem]"
+            :class="showBankAccount.length ? 'px-[0.28rem] pt-[0.28rem] pb-[0.12rem]' : 'p-[0.12rem]'">
+            <div class="flex justify-between mb-[0.28rem]"
+              :class="showBankAccount.length ? '' : 'pl-[0.16rem] pt-[0.12rem]'">
+              <div class="text-[0.32rem] text-color5">{{ $t("withdraw.receiptAccount") }}</div>
+              <div class="text-[0.28rem] text-primary" v-if="showBankAccount.length" @click="showAccountDialog = true">
+                {{
+                  $t("withdraw.change") }}</div>
             </div>
-            <div v-else class="add_account" @click="showAccountDialog = true">
-              <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
-              <div class="add_account_text">
-                {{ $t("withdraw.addPaymentMethod") }}
+            <div class="account_box">
+              <div class="card_box" v-if="showBankAccount.length && tabActive == 'bankCard'">
+                <div class="flex justify-between mb-[0.32rem]">
+                  <div class="flex items-center">
+                    <div class="card_icon">
+                      <img :src="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="img" />
+                    </div>
+                    <div class="name">
+                      {{ currBankAccount.bankName ? currBankAccount.bankName : "" }}
+                    </div>
+                  </div>
+                  <div class="text-[0.28rem] text-color3">
+                    {{ t('户主姓名：') + currBankAccount.accountName }}
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="code">
+                    {{
+                      _hiddenAccount(
+                        currBankAccount.bankCardNumber
+                          ? currBankAccount.bankCardNumber
+                          : ""
+                      )
+                    }}
+                  </div>
+
+                </div>
+
+              </div>
+              <div v-else class="add_account" @click="showAccountDialog = true">
+                <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
+                <div class="add_account_text">
+                  {{ $t("withdraw.addPaymentMethod") }}
+                </div>
               </div>
             </div>
           </div>
@@ -237,18 +259,27 @@
                 (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
                 (tabActive == 'bankCard' && currBankAccount.id == item.id),
             }" :key="i">
-            <div class="card_icon">
-              <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/bank/card_type_b.svg')"
-                alt="img" />
-              <img v-else :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="currency" />
+            <div class="flex mb-[0.32rem]">
+              <div class="flex items-center">
+                <div class="card_icon">
+                  <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/bank/card_default.svg')"
+                    alt="img" />
+                  <img v-else :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="currency" />
+                </div>
+                <div class="card">
+                  <div class="name">
+                    {{ item.symbol ? item.symbol.toUpperCase() : item.bankName }}
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1" v-if="tabActive == 'bankCard'">
+                <div class="text-end text-[0.28rem] text-color3">
+                  {{ t('户主姓名：') + currBankAccount.accountName }}
+                </div>
+              </div>
             </div>
-            <div class="card">
-              <div class="code">
-                {{ _hiddenAccount(item.bankCardNumber || item.address) }}
-              </div>
-              <div class="name">
-                {{ item.symbol ? item.symbol.toUpperCase() : item.bankName }}
-              </div>
+            <div class="text-[0.4rem]">
+              {{ _hiddenAccount(item.bankCardNumber || item.address) }}
             </div>
             <div v-if="
               (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
@@ -360,10 +391,11 @@ const submit = (s) => {
       token: sessionToken.value,
     }
   }
+  console.log(withdrawParams.value)
   _withdraw(withdrawParams.value)
     .then((res) => {
       if (res.code == 200) {
-        showToast(t("withdraw.success_msg"));
+        showToast(t("withdraw.successful"));
         form.value.amount = "";
         store.dispatch("updateWallet"); // 更新钱包
         router.push({
@@ -419,6 +451,7 @@ const totalAmount = computed(() => {
 });
 
 const maxIpt = () => {
+  console.log('click!!!!!!!!!')
   form.value.amount = balance.value;
   setTimeout(() => {
     getFee();
@@ -720,7 +753,7 @@ watch(
 }
 
 .add_account {
-  background-color: var(--ex-bg-color2);
+  background-color: var(--ex-bg-color);
   border-radius: 0.32rem;
   display: flex;
   align-items: center;
@@ -783,22 +816,21 @@ watch(
 
 .card_box_active {
   border: 1px solid var(--ex-primary-color);
-  border-top-right-radius: 0;
 
   .checked {
     position: absolute;
-    top: -1px;
+    bottom: -1px;
     right: -1px;
     background-size: 100% 100%;
-    width: 0.48rem;
-    height: 0.41rem;
+    width: 0.8rem;
+    height: 0.7rem;
 
     >img {
-      width: 0.17rem !important;
-      height: 0.14rem !important;
+      width: 0.48rem !important;
+      height: 0.48rem !important;
       position: absolute;
-      right: 0.06rem;
-      top: 0.07rem;
+      right: 0.15rem;
+      bottom: 0.12rem;
     }
   }
 }
@@ -839,6 +871,7 @@ watch(
 
     .ipt::placeholder {
       color: var(--ex-text-color4);
+      font-size: 0.32rem;
     }
   }
 
