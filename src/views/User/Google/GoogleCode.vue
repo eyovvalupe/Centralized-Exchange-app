@@ -19,7 +19,7 @@
     <div class="description">{{ $t("google_auth.google_result_con") }}</div>
 
     <Button round color="var(--ex-primary-color)" class="submit" type="primary" @click="goBack"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-black);">{{
+      :style="'font-size: 0.32rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-black);">{{
         $t("google_auth.google_result_btn")
         }}</span></Button>
   </div>
@@ -104,30 +104,31 @@ const jump = (name, query) => {
   }
 
   .icon {
-    width: 5.4rem;
-    height: 5.4rem;
-    margin-top: 1.7rem;
+    width: 2.22rem;
+    height: 1.78rem;
+    margin-top: 2.64rem;
+    margin-bottom: 0.36rem;
   }
 
   .title {
-    position: relative;
-    top: -1.2rem;
     color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.3rem;
     line-height: 0.42rem;
+    margin-bottom: 0.26rem;
   }
 
   .description {
-    position: relative;
-    top: -1rem;
     font-size: 0.24rem;
     line-height: 0.336rem;
     color: var(--ex-text-color3);
+    margin-bottom: 0.9rem;
   }
 
   .submit {
-    width: 4.5rem;
+    width: 3.6rem;
+    height: 0.9rem;
+    font-weight: 400 !important;
   }
 
 }

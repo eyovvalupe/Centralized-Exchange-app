@@ -1,6 +1,6 @@
 <template>
   <div class="password-input">
-    <div class="flex items-center justify-between mb-[0.32rem]" v-if="!props.from == 'register'">
+    <div class="flex items-center justify-between mb-[0.32rem]" v-if="props.from != 'register'">
       <span class="text-[0.32rem] text-color mr-[0.2rem]">Google Verification Code</span>
       <div class="clear_icon" style="cursor: pointer" @click="clean">
         <img :src="getStaticImgUrl('/static/img/common/clean.svg')" alt="">
@@ -142,7 +142,7 @@ onMounted(() => {
   height: 1.2rem;
   text-align: center;
   border: 0.03rem solid var(--ex-border-color2);
-  /* border-radius: 0.16rem; */
+  border-radius: 0.4rem !important;
   font-size: 0.48rem;
 }
 

@@ -128,9 +128,10 @@ const goChat = () => {
   }
 
   .icon {
-    width: 5.4rem;
-    height: 5.4rem;
-    margin-top: 1.7rem;
+    width: 2.22rem;
+    height: 1.78rem;
+    margin-top: 2.64rem;
+    margin-bottom: 0.36rem;
   }
 
   .title {

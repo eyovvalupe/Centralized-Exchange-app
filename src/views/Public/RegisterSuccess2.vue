@@ -1,41 +1,20 @@
 <!-- 注册成功 -->
 <template>
   <div class="page page_register_success">
-    <!-- 返回和语言 -->
-    <!-- <div class="top_icon_container">
-        <div class="top_back_container text-[0.48rem]" @click="goBack">
-          <Icon name="arrow-left" />
-        </div>
-  
-      </div> -->
     <Top :title="t('register.guest_account')"> </Top>
     <div class="icon">
       <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("register.success_sign_up") }}</div>
-    <div class="text-[0.24rem] leading-[0.34rem] text-color3 relative top-[-1rem]">
+    <div class="text-[0.24rem] leading-[0.34rem] text-color3">
       {{ t('register.already_get_virtual') }}
     </div>
-    <div class="text-[0.36rem] leading-[0.54rem] text-primary relative top-[-0.9rem]">
+    <div class="text-[0.36rem] leading-[0.54rem] text-primary">
       {{ userInfo.amount ? userInfo.amount : 0 }}&nbsp;<span
         class="text-[0.24rem] text-color leading-[0.34rem]">USDT</span>
     </div>
 
-    <!-- <Button
-        round
-        color="var(--ex-primary-color)"
-        class="submit"
-        type="primary"
-        @click="next"
-        :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"
-        >{{ $t("register.success_btn") }}</Button
-      >
-      <div @click="back">
-        <span style="color: var(--ex-primary-color); font-size: 0.32rem; line-height: 0.448rem"
-          >{{ $t('register.success_finish') }}</span
-        >
-      </div> -->
-    <div class="w-full flex justify-between relative top-[-0.4rem]">
+    <div class="w-full flex justify-between">
       <div
         class="w-[3.23rem] h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-primary"
         @click="() => router.replace({ name: 'transfer' })">
@@ -150,14 +129,13 @@ const goChat = () => {
   }
 
   .icon {
-    width: 5.4rem;
-    height: 5.4rem;
-    margin-top: 1.56rem;
+    width: 2.22rem;
+    height: 1.78rem;
+    margin-top: 2.64rem;
+    margin-bottom: 0.36rem;
   }
 
   .title {
-    position: relative;
-    top: -1.2rem;
     color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.3rem;
