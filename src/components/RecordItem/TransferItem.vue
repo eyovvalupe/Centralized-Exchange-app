@@ -107,7 +107,7 @@ const formatDate = (date) => {
   .item_icon {
     width: 0.8rem;
     height: 0.8rem;
-    margin-right: 0.12rem;
+    margin-right: 0.2rem;
   }
 
   .icon_to {

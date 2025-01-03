@@ -1,7 +1,15 @@
 <!-- 记录列表 -->
 <template>
   <div class="page page_record_list">
-    <Top :title="t('recordList.financialRecords')" />
+    <Top :title="t('recordList.financialRecords')">
+      <template #right>
+        <div class="w-[0.6rem] h-[0.6rem] rounded-[0.3rem] bg-color5 flex items-center justify-center" @click="router.push({name: 'chat'})">
+          <div class="w-[0.33rem] h-[0.33rem]">
+            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+          </div>
+        </div>
+      </template>
+    </Top>
     <!-- 兑换记录 -->
     <div ref="list_3" class="list active_list" v-if="active == 3">
       <NoData v-if="!loading && !list.length" />
@@ -91,6 +99,7 @@ import WithdrawItem from "@/components/RecordItem/WithdrawItem.vue";
 import TransferItem from "@/components/RecordItem/TransferItem.vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import router from "@/router";
 
 const { t } = useI18n();
 const openDates = ref([]);
