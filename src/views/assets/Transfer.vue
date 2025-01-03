@@ -7,9 +7,6 @@
           <div class="top-record-icon">
             <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
-          <span>
-            {{ $t("transfer.transferRecord") }}
-          </span>
         </div>
       </template>
     </Top>
@@ -17,87 +14,102 @@
     <!-- 表单 -->
     <div class="form">
       <div class="form_box" :class="{ form_box_active: clickKey == 'from' }">
-        <div class="mb-[0.32rem]">
-          <span class="text-[0.28rem] text-color2">{{ $t("transfer.out") }}</span>
-        </div>
-        <div
-          class="flex justify-between items-center border-[0.02rem] border-color-2 w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
-          @click="openDialog('from')">
-          <div class="flex items-center">
-            <div class="account_item">
-              <!-- <div class="account_item_icon">
+        <div class="flex w-full justify-between">
+          <div class="mb-[0.32rem] w-[1.52rem] h-[0.6rem] flex justify-center items-center bg-white rounded-[1rem]">
+            <span class="text-[0.28rem] text-color--bg-primary">{{ $t("transfer.out") }}</span>
+          </div>
+          <div
+            class="flex justify-between items-center bg-color w-[4rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem]"
+            @click="openDialog('from')">
+            <div class="flex items-center w-full justify-between">
+              <div class="account_item">
+                <!-- <div class="account_item_icon">
                 <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="icon" />
               </div> -->
-              <div class="item_content">
-                <span>{{ _accountMap[form.from] }}</span>
+                <div class="item_content">
+                  <span>{{ _accountMap[form.from] }}</span>
+                </div>
               </div>
-            </div>
 
-            <div class="account_item">
-              <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.svg`)"
-                  alt="img" />
-              </div>
-              <div class="item_content">
-                <span class="monty_span">{{
-                  form.fromCurrency.name || ""
-                }}</span>
+              <div class="account_item relative">
+                <div class="account_item_icon">
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.svg`)"
+                    alt="img" />
+                </div>
+                <div class="item_content mr-[0.1rem]">
+                  <span class="monty_span">{{
+                    form.fromCurrency.name || ""
+                  }}</span>
+                </div>
+                <div class="w-[0.36rem] h-[0.36rem]">
+                  <img :src="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
+                </div>
               </div>
             </div>
+            <!-- <ArrowIcon /> -->
           </div>
-          <!-- <ArrowIcon /> -->
         </div>
 
-        <FormItem background="var(--ex-bg-color)" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt"
-          show-btn :btn-placeholder="form.fromCurrency.name" :placeholder="t('transfer.out_amount')"
-          :inputType="'number'" @update:modelValue="changeAmount('from')" />
+        <!-- <FormItem background="var(--ex-bg-color5)" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt"
+          show-btn :btn-placeholder="form.fromCurrency.name" :placeholder="'0'" :from="'transfer'"
+          :inputType="'number'" @update:modelValue="changeAmount('from')" /> -->
+        <div class="w-full flex justify-between items-center">
+          <div style="width: 80%;">
+            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'from'" @blur="clickKey = ''"/>
+          </div>
+          <div class="flex-1 text-end h-full items-center text-color3">
+            {{ form.fromCurrency ? form.fromCurrency.name : '--' }}
+          </div>
+        </div>
       </div>
 
       <div class="form_box" :class="{ form_box_active: clickKey == 'to' }">
-        <div class="mb-[0.32rem]">
-          <span class="text-[0.28rem] text-color2">{{ $t("transfer.in") }}</span>
-        </div>
         <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
           <img :src="getStaticImgUrl('/static/img/assets/convert.svg')" alt="img" />
         </div>
-        <div
-          class="flex justify-between items-center border-[0.02rem] border-color-2 w-full h-[1.12rem] rounded-[0.32rem] px-[0.32rem] mb-[0.2rem]"
-          @click="openDialog('to')">
-          <div class="flex items-center">
-            <div class="account_item">
-              <!-- <div class="account_item_icon">
+        <div class="flex justify-between">
+          <div class="mb-[0.32rem] w-[1.52rem] h-[0.6rem] flex justify-center items-center bg-white rounded-[1rem]">
+            <span class="text-[0.28rem] text-color--bg-primary">{{ $t("transfer.in") }}</span>
+          </div>
+          <div
+            class="flex justify-between items-centerw-full w-[4rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] bg-color"
+            @click="openDialog('to')">
+            <div class="flex items-center w-full justify-between">
+              <div class="account_item">
+                <!-- <div class="account_item_icon">
                 <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.svg`)" alt="icon" />
               </div> -->
-              <div class="item_content">
-                <span>{{ _accountMap[form.to] }}</span>
+                <div class="item_content">
+                  <span>{{ _accountMap[form.to] }}</span>
+                </div>
               </div>
-            </div>
 
-            <div class="account_item">
-              <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.svg`)" alt="img" />
-              </div>
-              <div class="item_content">
-                <span class="monty_span">{{ form.toCurrency.name || "" }}</span>
+              <div class="account_item">
+                <div class="account_item_icon">
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.svg`)"
+                    alt="img" />
+                </div>
+                <div class="item_content mr-[0.1rem]">
+                  <span class="monty_span">{{ form.toCurrency.name || "" }}</span>
+                </div>
+                <div class="w-[0.36rem] h-[0.36rem]">
+                  <img :src="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <FormItem background="var(--ex-bg-color)" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
+        <!-- <FormItem background="var(--ex-bg-color)" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
           :btn-placeholder="form.toCurrency.name" :placeholder="t('transfer.in_amount')" :inputType="'number'"
-          @update:modelValue="changeAmount('to')" />
-        <!-- <div>
-            <span v-show="formType == 'transfer'">自动换算</span>
-            <span
-              :style="{ color: form.amount === '' ? 'var(--ex-text-color4)' : '' }"
-              v-show="formType == 'swap'"
-              >{{
-                form.amount === ""
-                  ? "自动换算"
-                  : new Decimal(form.amount || 0).mul(rate) || "--"
-              }}</span
-            >
-          </div> -->
+          @update:modelValue="changeAmount('to')" /> -->
+        <div class="w-full flex justify-between items-center">
+          <div style="width: 80%;">
+            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'to'" @blur="clickKey = ''"/>
+          </div>
+          <div class="flex-1 text-end h-full items-center text-color3">
+            {{ form.toCurrency ? form.toCurrency.name : '--' }}
+          </div>
+        </div>
       </div>
 
       <div class="rate_tip" v-if="formType == 'swap'">
@@ -117,16 +129,15 @@
     <SafePassword @submit="submit" ref="safeRef" />
 
     <!-- 账户和币种 -->
-    <Popup class="van-popup-custom--bottom" v-model:show="showPicker" closeable round position="bottom"
+    <Popup class="bg-color5" v-model:show="showPicker" closeable round position="bottom"
       @closed="clickKey = ''">
-      <div class="van-popup-custom__top-rbtn" @click="onConfirm">{{ $t("transfer.confirm") }}</div>
       <div class="van-popup-custom-title">{{ $t("transfer.confirm_con") }}</div>
       <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
         @cancel="hideDialog" @change="onChange">
         <template #option="option">
           <div class="picker-item">
-            <span class="picker-item__icon">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${option.key.toUpperCase()}.svg`)" alt="icon" />
+            <span class="picker-item__icon" v-if="!columnList.includes(option.key)">
+              <img :src="getStaticImgUrl(`/static/img/crypto/${option.key}.svg`)" alt="icon" />
             </span>
             <span class="picker-item__text">
               {{ option.value }}
@@ -162,6 +173,7 @@ const AccountCheckRef = ref();
 const toAmount = ref("");
 const route = useRoute();
 const focus = ref(false); // 是否在输入中
+const columnList = ref(['money', 'stock', 'futures', 'forex'])
 const blurInput = () => {
   setTimeout(() => {
     errStatus.value = focus.value = false;
@@ -313,11 +325,12 @@ const onConfirm = () => {
     form.value.toCurrency = selectedOption.currency;
   }
   getRate();
-  hideDialog();
+  // hideDialog();
 };
 const onChange = ({ selectedOptions }) => {
   selectedOption.key = selectedOptions[0].key;
   selectedOption.currency = selectedOptions[1];
+  onConfirm()
 };
 
 const balance = computed(() => {
@@ -486,26 +499,28 @@ const changeAmount = (val) => {
   }
 
   .top-record {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 0.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ex-text-primary);
-    font-size: 0.28rem;
+    background-color: var(--ex-bg-color2);
 
     .top-record-icon {
       width: 0.3rem;
       height: 0.3rem;
-      margin-right: 0.06rem;
     }
   }
 
   .form {
     .form_box {
       border-radius: 0.32rem;
-      border: 1px solid var(--ex-border-color);
+      background-color: var(--ex-bg-color6);
       padding: 0.42rem 0.32rem 0.4rem 0.32rem;
       margin-top: 0.52rem;
       position: relative;
+      height: 2.6rem;
 
       :deep(.item) {
         height: 1.12rem;

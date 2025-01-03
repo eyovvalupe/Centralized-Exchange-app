@@ -19,7 +19,7 @@
       <div style="flex: 1;display: flex" class="form-item-con">
         <div class="item" :class="{
           disabled_item: disabled,
-          item_focus: inputFocus,
+          item_focus: from != 'transfer' ? inputFocus : '',
           // item_focus2: inputFocus && !tip,
         }" :style="{ background, paddingBottom: props.hasBot ? '1.2rem' : '' }">
           <!-- 左侧提示 -->
