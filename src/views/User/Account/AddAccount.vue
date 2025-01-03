@@ -2,7 +2,7 @@
 <template>
   <div class="page page_account">
     <Top :title="t('account.add_page_title')" />
-    <Tabs type="card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
+    <Tabs type="custom-card" class="tab_content tabs" v-if="!pageLoading" @change="changeTab" v-model:active="active"
       :swipeable="false" animated shrink>
       <Tab :title="t('account.add_tab1')" name="0">
         <div class="tab_data">
@@ -10,35 +10,48 @@
             <div class="page_crypto">
               <div class="flex flex-col items-center">
                 <div style="float: left">
-                  <div class="subtitle">
-                    {{ $t("account.add_subtitle_type") }}
-                  </div>
                   <div class="item" @click="showCrypto = true">
-                    <div class="item_icon">
-                      <div style="width: 0.48rem;height:0.48rem">
-                        <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="">
+                    <div class="flex flex-col">
+                      <div class="subtitle">
+                        {{ $t("account.add_subtitle_type") }}
+                      </div>
+                      <div class="flex items-center">
+                        <div style="width: 0.48rem;height:0.48rem" class="mr-[0.2rem]">
+                          <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="">
+                        </div>
+                        <div class="ipt">{{ form.currency }}</div>
                       </div>
                     </div>
-                    <div class="ipt">{{ form.currency }}</div>
-                    <Icon style="transform: rotate(90deg)" name="play" />
+                    <div class="w-[0.2rem] h-[0.2rem]">
+                      <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
+                    </div>
                   </div>
                 </div>
                 <div style="float: left">
-                  <div class="subtitle">
-                    {{ $t("account.add_subtitle_network") }}
-                  </div>
                   <div class="item" @click="showNet = true">
-                    <div class="ipt">{{ form.network }}</div>
-                    <Icon style="transform: rotate(90deg)" name="play" />
+                    <div class="flex flex-col">
+                      <div class="subtitle">
+                        {{ $t("account.add_subtitle_network") }}
+                      </div>
+                      <div class="ipt">{{ form.network }}</div>
+                    </div>
+                    <div class="w-[0.2rem] h-[0.2rem]">
+                      <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
+                    </div>
                   </div>
                 </div>
                 <div style="float: left">
-                  <div class="subtitle">
-                    {{ $t("account.add_subtitle_address") }}
-                  </div>
                   <div class="item">
-                    <input type="text" v-model.trim="form.address" class="ipt" maxlength="50"
-                      :placeholder="t('account.add_address_placeholder')" />
+                    <div :class="!isFocus ? 'flex' : ''">
+                      <div class="text-color5" :class="isFocus ? 'text-[0.28rem] mb-[0.1rem]' : 'text-[0.32rem]'">
+                        {{ $t("account.add_subtitle_address") }}
+                      </div>
+                      <input type="text" v-model.trim="form.address" class="ipt" maxlength="50"
+                        @focus="isFocus = true" @blur="isFocus = false"/>
+                    </div>
+                    <div class="w-[0.32rem] h-[0.32rem]" v-if="form.address" @click="form.address = ''">
+                      <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -142,6 +155,7 @@ const form = ref({
 
 // 币种
 const showCrypto = ref(false);
+const isFocus = ref(false)
 const chooseCurrency = (item) => {
   form.value.currency = item;
   showCrypto.value = false;
@@ -289,7 +303,7 @@ getSessionToken();
       .bottom {
         color: var(--ex-text-color);
         font-size: 0.28rem;
-        height: 1.12rem;
+        height: 0.96rem;
         display: flex;
         align-items: center;
         overflow: hidden;
@@ -303,7 +317,7 @@ getSessionToken();
       ._bottom {
         color: var(--ex-text-color);
         font-size: 0.28rem;
-        height: 1.12rem;
+        height: 0.96rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -322,16 +336,12 @@ getSessionToken();
           top: -0.04rem;
         }
       }
-
-      .active_bottom {
-        // background-color: var(--ex-bg-color2);
-      }
     }
   }
 
   :deep(.van-tabs__wrap) {
     padding: 0 0.32rem;
-    height: 1.12rem;
+    height: 0.96rem;
     margin-bottom: 0.4rem;
     margin-top: 1.2rem;
   }
@@ -339,8 +349,8 @@ getSessionToken();
   :deep(.van-tabs__nav) {
     width: 100%;
     margin: 0;
-    height: 1.12rem;
-    border-radius: 0.32rem;
+    height: 0.96rem;
+    border-radius: 1rem;
     border-width: 0.02rem;
     border-color: var(--ex-border-color);
   }
@@ -407,21 +417,21 @@ getSessionToken();
     .subtitle {
       font-weight: 400;
       font-size: 0.28rem;
-      line-height: 0.36rem;
-      color: var(--ex-text-color);
+      color: var(--ex-text-color5);
       margin-bottom: 0.15rem;
     }
 
     .item {
       width: 6.86rem;
       // padding: 0 0.32rem;
-      height: 1.12rem;
-      border: 0.02rem solid var(--ex-border-color2);
+      height: 1.28rem;
+      // border: 0.02rem solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color5);
       border-radius: 0.32rem;
       margin-bottom: 0.4rem;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       padding: 0 0.36rem;
 
       .ipt {
@@ -440,9 +450,7 @@ getSessionToken();
       }
 
       .item_icon {
-        width: 0.48rem;
-        height: 0.48rem;
-        margin-right: 0.2rem;
+        display: flex;
       }
 
       :deep(.van-icon) {
