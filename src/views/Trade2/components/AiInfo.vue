@@ -1,6 +1,7 @@
 <!-- ai量化-订单详情 -->
 <template>
-  <Popup teleport="body" lazy-render v-model:show="showModel" position="right" style="width: 100%; height: 100%">
+  <Popup class="aiinfo-popup" teleport="body" lazy-render v-model:show="showModel" position="right"
+    style="width: 100%; height: 100%">
     <Top :title="t('trade.ai_position_title')" :backFunc="backFunc" />
 
     <div class="loading-wrap" v-if="loading">
@@ -9,8 +10,8 @@
     <div class="ai_order_info" v-show="!loading">
       <!-- 盈利 -->
       <div class="win" v-if="currItem.status == 'close'">
-        <img :src="getStaticImgUrl('/static/img/trade/profit_bg.svg')" class="win_bg" v-if="currItem.profit >= 0" />
-        <img :src="getStaticImgUrl('/static/img/trade/loss_bg.svg')" class="win_bg" v-else />
+        <img :src="getStaticImgUrl('/static/img/trade/profit_bg.png')" class="win_bg" v-if="currItem.profit >= 0" />
+        <div class="win_bg loss_bg" v-else></div>
         <div class="win-animate-bg" v-if="!loading"></div>
         <div class="win_name">{{ t('trade.ai_position_profit') }}</div>
         <div class="amount" :class="[currItem.profit < 0 ? 'down' : 'up']">
@@ -27,7 +28,8 @@
             <div class="text">{{ t('trade.ai_position_timer') }}</div>
           </div>
           <Circle v-if="currItem.status == 'open'" start-position="bottom" stroke-linecap="round" stroke-width="142"
-            layer-color="var(--ex-bg-color2)" :color="gradientColor" size="182" :rate="100" :current-rate="100 - rate" />
+            layer-color="var(--ex-bg-color2)" :color="gradientColor" size="182" :rate="100"
+            :current-rate="100 - rate" />
         </div>
 
         <div class="time_bg">
@@ -59,32 +61,33 @@
             <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
+
+        <div class="info_boxs">
+          <div class="info_box">
+            <div>{{ t('trade.ai_opening_time_zone') }}</div>
+            <div class="amount">{{ currItem.time }}{{ currItem.unit }}</div>
+          </div>
+          <div class="info_box info_box--line">
+            <div>{{ t('trade.ai_opening_network_amount') }}</div>
+            <div class="amount">
+              {{ currItem.lever }}
+            </div>
+          </div>
+          <div class="info_box">
+            <div>{{ t('trade.ai_opening_invest_amount') }}(USDT)</div>
+            <div class="amount">
+              {{ currItem.amount }}
+            </div>
+          </div>
+          <div class="info_box info_box--line">
+            <div>{{ t('trade.ai_opening_predict_profit') }}(USDT)</div>
+            <div class="amount">
+              {{ currItem.amountreturn }}
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="info_boxs">
-        <div class="info_box">
-          <div>{{ t('trade.ai_opening_time_zone') }}</div>
-          <div class="amount">{{ currItem.time }}{{ currItem.unit }}</div>
-        </div>
-        <div class="info_box info_box--line">
-          <div>{{ t('trade.ai_opening_network_amount') }}</div>
-          <div class="amount">
-            {{ currItem.lever }}
-          </div>
-        </div>
-        <div class="split-line"></div>
-        <div class="info_box">
-          <div>{{ t('trade.ai_opening_invest_amount') }}(USDT)</div>
-          <div class="amount">
-            {{ currItem.amount }}
-          </div>
-        </div>
-        <div class="info_box info_box--line">
-          <div>{{ t('trade.ai_opening_predict_profit') }}(USDT)</div>
-          <div class="amount">
-            {{ currItem.amountreturn }}
-          </div>
-        </div>
-      </div>
+
     </div>
   </Popup>
 </template>
@@ -158,7 +161,7 @@ const backFunc = () => {
 
 const gradientColor = {
   "0%": "var(--ex-primary-color)",
-  "100%": "#608BEF",
+  "100%": "rgba(0,0,0,0)",
 };
 
 const showWin = ref(false);
@@ -247,6 +250,12 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
+.aiinfo-popup {
+  :deep(.top) {
+    background-color: var(--ex-none);
+  }
+}
+
 .ai_order_info {
   padding: 0.32rem 0 1rem 0;
   margin-top: 1.12rem;
@@ -265,18 +274,27 @@ defineExpose({
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 4.6rem;
+    height: 3rem;
     padding-top: 0.58rem;
     box-sizing: border-box;
-    position: relative;
-    overflow: hidden;
 
     .win_bg {
       width: 100%;
-      height: 3.3rem;
+      height: auto;
       position: absolute;
       left: 0;
-      bottom: 0;
+      top: 0;
+    }
+
+    .loss_bg {
+      width: 2;
+      height: 2rem;
+      background-color: rgba(220, 89, 89, 0.50);
+      filter: blur(2rem);
+      top: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.4;
     }
 
     .win_name {
@@ -311,7 +329,6 @@ defineExpose({
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    box-shadow: 0px 4px 40px 0px rgba(1, 76, 250, 0.2);
     margin: 0 0.32rem;
   }
 
@@ -321,7 +338,6 @@ defineExpose({
   }
 
   .circle-mid {
-    box-shadow: 0px 0px 20px rgba(1, 76, 250, 0.1);
     width: 136px;
     height: 136px;
     border-radius: 50%;
@@ -339,7 +355,7 @@ defineExpose({
       color: var(--ex-primary-color);
       text-align: center;
       font-family: "SF Pro Display";
-      font-size: 0.52rem;
+      font-size: 0.42rem;
       font-style: normal;
       font-weight: 800;
       line-height: 0.6rem;
@@ -377,7 +393,7 @@ defineExpose({
     align-items: center;
 
     strong {
-      font-size: 0.8rem;
+      font-size: 0.6rem;
       margin-right: 0.1rem;
     }
 
@@ -399,15 +415,16 @@ defineExpose({
 }
 
 .stock-info {
-  background-color: var(--ex-bg-color2);
+  background-color: var(--ex-bg-color3);
   border-radius: 0.32rem;
   margin: 0.4rem 0.32rem 0 0.32rem;
-  padding: 0.2rem 0.32rem 0.6rem 0.32rem;
+  padding: 0.32rem 0.1rem 0.12rem 0.12rem;
 
   &__symbol {
     font-size: 0.3rem;
     font-weight: 600;
     line-height: 0.36rem;
+    padding-left: 0.22rem;
   }
 
   &__order_no {
@@ -415,6 +432,7 @@ defineExpose({
     align-items: center;
     color: var(--ex-text-color3);
     margin-top: 0.12rem;
+    padding-left: 0.22rem;
 
     span {
       font-size: 0.28rem;
@@ -441,12 +459,11 @@ defineExpose({
 }
 
 .info_boxs {
-  padding: 0.3rem 0;
+  padding: 0.3rem 0.28rem;
   position: relative;
-  border: 1px solid var(--ex-border-color);
+  margin-top: 0.2rem;
   border-radius: 0.32rem;
   background-color: var(--ex-bg-color);
-  margin: -0.5rem 0.32rem 0 0.32rem;
 
   z-index: 1;
 
@@ -457,40 +474,20 @@ defineExpose({
   }
 
   .info_box {
-    width: 50%;
-    float: left;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     color: var(--ex-text-color3);
     font-size: 0.28rem;
     line-height: 0.44rem;
     position: relative;
 
     .amount {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       line-height: 0.44rem;
-      margin-top: 0.12rem;
-      font-weight: 600;
+      margin-top: 0.4rem;
       color: var(--ex-text-color);
-      font-size: 0.36rem;
+      font-size: 0.3rem;
     }
-  }
-
-  .info_box--line::after {
-    content: "";
-    width: 1px;
-    height: 0.9rem;
-    background-color: var(--ex-bg-color3);
-    position: absolute;
-    left: 0;
-    top: 50%;
-    margin-top: -0.45rem;
   }
 }
 

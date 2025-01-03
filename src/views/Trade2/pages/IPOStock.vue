@@ -1,7 +1,7 @@
 <!-- 中签 -->
 <template>
   <div v-if="token" class="page_ipo_stock">
-    <Tabs type="custom-tab" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"
+    <Tabs class="van-tabs--sub" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"
       :color="'var(--ex-primary-color)'" shrink v-if="props.from != 'assets'">
       <Tab :title="t('trade.ipo_lottery_title1')" name=""> </Tab>
       <Tab :title="t('trade.ipo_lottery_title2')" name="lock"> </Tab>
@@ -296,16 +296,15 @@ function countdown(endTime) {
 
 <style lang="less" scoped>
 .page_ipo_stock {
-  padding: 0.28rem 0.32rem 0 0.32rem;
 
   .list {
-    padding-top: 0.12rem;
+    padding: 0 0.4rem 0.12rem 0.4rem;
 
     .item {
       border-radius: 0.32rem;
-      border: 1px solid var(--ex-border-color);
-      background: var(--ex-bg-color2);
-      margin-top: 0.2rem;
+      background: var(--ex-bg-color3);
+      margin-top: 0.32rem;
+      padding-bottom: 0.12rem;
 
       .name {
         color: var(--ex-text-color);
@@ -325,16 +324,17 @@ function countdown(endTime) {
         align-items: center;
 
         .lever_icon {
+          white-space: nowrap;
           min-width: 0.6rem;
           height: 0.32rem;
           font-size: 0.22rem;
-          color: var(--ex-primary-color);
+          color: var(--ex-status-color1);
           border-radius: 0.08rem;
           text-align: center;
           line-height: 0.32rem;
           font-weight: 400;
           margin-left: 0.1rem;
-          background: rgba(1, 76, 250, 0.10);
+          background: var(--ex-status-bg1);
         }
       }
 
@@ -428,19 +428,16 @@ function countdown(endTime) {
         border-bottom: 0px;
         background: var(--ex-bg-color);
         position: relative;
-        left: -1px;
-        width: calc(100% + 2px);
+        left: 0.12rem;
+        width: calc(100% - 0.24rem);
         box-sizing: border-box;
         line-height: 0.3rem;
+        padding: 0.12rem 0;
 
         .info_cell {
           display: flex;
           justify-content: space-between;
           padding: 0.24rem 0.32rem;
-        }
-
-        .info_cell+.info_cell {
-          border-top: 1px dashed var(--ex-border-color);
         }
 
         .info_name {

@@ -153,6 +153,11 @@ onMounted(() => {
         background-image: url(${getStaticImgUrl('/static/img/assets/withdraw_wallet_bg.svg')});
         background-size: cover;
       }
+
+      .invite_banner1 {
+        background-image: url(${getStaticImgUrl('/static/img/user/achievement.svg')});
+        background-size: cover;
+      }
     `;
   document.head.appendChild(style);
 })

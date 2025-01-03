@@ -1,13 +1,6 @@
 <!-- ipo相关 -->
 <template>
-  <Tabs
-    class="tabs"
-    @change="ipoOnChange"
-    v-model:active="ipoActive"
-    :swipeable="false"
-    type="oval-card"
-    shrink
-  >
+  <Tabs class="ipo-block" type="custom-card" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" shrink>
     <Tab :title="'IPO'" class="optional">
       <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" />
     </Tab>
@@ -44,8 +37,8 @@ const ipoOnChange = (val) => {
   }, 500);
 };
 
-watch(()=>route.query.active,(val)=>{
-  if(val != ipoActive.value){
+watch(() => route.query.active, (val) => {
+  if (val != ipoActive.value) {
     ipoOnChange(Number(val))
   }
 })
@@ -56,7 +49,9 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-.tabs :deep(> .van-tabs__wrap) {
-  padding: 0.16rem 0.32rem 0 0.32rem;
+.ipo-block {
+  &:deep(.van-tabs__wrap) {
+    margin: 0 0.4rem;
+  }
 }
 </style>

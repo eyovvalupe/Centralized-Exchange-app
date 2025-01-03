@@ -5,7 +5,9 @@
       @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="back" @click="back()">
-          <img :src="getStaticImgUrl('/static/img/user/back.svg')" />
+          <div class="w-[0.32rem] h-[0.32rem]">
+            <img :src="getStaticImgUrl('/static/img/user/back.svg')" />
+          </div>
         </div>
       </template>
     </HeaderTabs>
@@ -14,12 +16,12 @@
         <div class="scroll-box">
           <div class="px-[0.32rem] pt-[0.26rem] pb-[0.64rem]">
             <div class="invite_banner" :class="['invite_banner--' + locale]">
-              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/user/banner2.png')" />
+              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/user/banner2.svg')" />
               <div class="invite_banner_titbox">
                 <div class="invite_banner_tit">
                   {{ $t("inviteFriends.banner_title") }}
                 </div>
-                <div class="invite_banner_amount mt-[0.04rem]">
+                <div class="invite_banner_amount text-primary mt-[0.04rem]">
                   <MoneyText :text="'$'" />
                   <MoneyText v-for="(text, i) in moneyTextArr" :key="i" :text="text" />
                 </div>
@@ -62,23 +64,23 @@
       <SwipeItem>
         <div class="scroll-box">
           <div class="px-[0.32rem] pt-[0.26rem] pb-[0.64rem]">
-            <div class="achievement">
-              <div class="achievement_cont">
+            <div class="achievement1">
+              <div class="achievement_cont items-center">
                 <div class="achievement_text">
                   {{ $t("inviteFriends.performance_title") }}
                 </div>
-                <div class="achievement_amount">20000</div>
+                <div class="achievement_amount text-primary">20000</div>
               </div>
-              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/user/achievement.png')" />
+              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/user/achievement.svg')" />
             </div>
             <div class="invite-title">{{ $t("inviteFriends.details") }}</div>
             <div class="record-tit">
-              <span>{{ $t("inviteFriends.user") }}</span>
-              <span>{{ $t("inviteFriends.performance") }}</span>
+              <span class="text-color5">{{ $t("inviteFriends.user") }}</span>
+              <span class="text-color5">{{ $t("inviteFriends.performance") }}</span>
             </div>
             <div class="record-list">
               <div class="record-item" v-for="(item, i) in list" :key="i">
-                <span>{{ item.email }}</span>
+                <span class="text-color2">{{ item.email }}</span>
                 <strong>{{ item.amount }}</strong>
               </div>
             </div>
@@ -191,8 +193,8 @@ const swipeChange = (val) => {
 }
 
 .back {
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.6rem;
+  height: 0.6rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,13 +202,15 @@ const swipeChange = (val) => {
   left: 0.32rem;
   margin: auto 0;
   z-index: 1;
+  border-radius: 0.3rem;
+  background-color: var(--ex-bg-color5);
 }
 
 .invite_banner {
   position: relative;
   height: 2.64rem;
   border-radius: 0.32rem;
-  background: linear-gradient(185deg, #6794fb 7.28%, var(--ex-primary-color) 95.61%);
+  background-color: var(--ex-bg-color5);
 
   &_img {
     width: 100%;
@@ -241,7 +245,6 @@ const swipeChange = (val) => {
 }
 
 .invite_banner_amount {
-  color: #ffaf2a;
   font-family: "Lilita One";
   font-size: 0.6rem;
   font-style: normal;
@@ -261,7 +264,7 @@ const swipeChange = (val) => {
 }
 
 .invite_title {
-  color: var(--ex-text-color);
+  color: var(--ex-text-color5);
   font-size: 0.28rem;
   font-style: normal;
   font-weight: 400;
@@ -286,13 +289,13 @@ const swipeChange = (val) => {
 
 .input-box {
   border-radius: 0.32rem;
-  border: 1px solid var(--ex-border-color2);
   height: 1.12rem;
   box-sizing: border-box;
   font-size: 0.3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: var(--ex-bg-color5);
 
   input {
     width: 100%;
@@ -311,7 +314,7 @@ const swipeChange = (val) => {
     color: var(--ex-text-color--bg-primary);
     line-height: 1.12rem;
     font-size: 0.3rem;
-    background-color: var(--ex-primary-color);
+    background-color: var(--ex-white);
     border-radius: 0.32rem;
   }
 }
@@ -320,7 +323,7 @@ const swipeChange = (val) => {
   width: 2.7rem;
   height: 0.7rem;
   margin-top: 0.2rem;
-  background-color: var(--ex-primary-color);
+  background-color: var(--ex-white);
   color: var(--ex-text-color--bg-primary);
   justify-content: center;
   align-items: center;
@@ -330,16 +333,25 @@ const swipeChange = (val) => {
 }
 
 .achievement {
+  width: 100%;
+  height: 2.34rem;
   border-radius: 0.32rem;
-  background-image: linear-gradient(185deg, #6794fb 7.28%, var(--ex-primary-color) 95.61%);
-  height: 2.2rem;
+  background-color: var(--ex-bg-color5);
+  position: relative;
+}
+
+.achievement1 {
+  width: 100%;
+  height: 2.4rem;
+  border-radius: 0.32rem;
+  background-color: var(--ex-bg-color5);
   position: relative;
 }
 
 .achievement_cont {
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0 0 0.5rem;
+  padding-top: 0.6rem;
 }
 
 .achievement_text {
@@ -349,7 +361,6 @@ const swipeChange = (val) => {
 }
 
 .achievement_amount {
-  color: var(--ex-white);
   font-family: "PingFang SC";
   font-size: 0.6rem;
   font-style: normal;
@@ -391,8 +402,7 @@ const swipeChange = (val) => {
 
 .record-item {
   border-radius: 0.32rem;
-  border: 1px solid var(--ex-border-color);
-  background: linear-gradient(90deg, var(--ex-bg-color2) 0%, var(--ex-bg-color) 100%);
+  background-color: var(--ex-bg-color5);
   display: flex;
   justify-content: space-between;
   padding: 0.32rem;

@@ -71,7 +71,7 @@ const props = defineProps({
     },
     fill: {
         type: String,
-        default: '#FFAF2A'
+        default: '#97e180'
     }
 })
 </script>

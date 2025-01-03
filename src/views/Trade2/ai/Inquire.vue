@@ -149,9 +149,11 @@ defineExpose({
     .item {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid var(--ex-border-color);
         line-height: 100%;
-        padding: 0.32rem 0;
+        padding: 0.32rem 0.28rem;
+        border-radius: 0.32rem;
+        margin-bottom: 0.2rem;
+        background-color: var(--ex-bg-color2);
 
         .ai_icon {
             width: 0.8rem;

@@ -115,9 +115,11 @@ watch(() => store.state.token, () => {
     .item {
         display: flex;
         align-items: center;
-        border-bottom: 1px solid var(--ex-border-color);
+        background-color: var(--ex-bg-color2);
         line-height: 100%;
-        padding: 0.32rem 0;
+        padding: 0.32rem 0.28rem;
+        border-radius: 0.32rem;
+        margin-bottom: 0.2rem;
 
         .ai_icon {
             width: 0.8rem;
@@ -171,11 +173,11 @@ watch(() => store.state.token, () => {
                     width: 0.6rem;
                     height: 0.6rem;
                     text-align: center;
-                    color: var(--ex-error-color);
+                    color: var(--ex-status-color1);
                     font-weight: 600;
                     font-size: 0.32rem;
-                    border: 1px solid var(--ex-error-color);
-                    background-color: rgb(var(--ex-error-color-rgb) / 0.10);
+                    border: 1px solid var(--ex-status-color1);
+                    background-color: var(--ex-status-bg1);
                     box-sizing: border-box;
                     border-radius: 0.12rem;
 
@@ -185,7 +187,7 @@ watch(() => store.state.token, () => {
                     font-size: 0.32rem;
                     font-weight: 600;
                     width: 0.3rem;
-                    color: var(--ex-error-color);
+                    color: var(--ex-status-color1);
                     text-align: center;
                 }
             }

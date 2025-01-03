@@ -11,7 +11,7 @@
             <Button @click="router.push('/trade?to=ipo')" round class="next"><span style="color: var(--ex-black);">{{
                 t('trade.ipo_success_btn1') }}</span></Button>
             <Button @click="router.push('/trade?to=ipo&active=1')" round class="info" type="primary"><span
-                    style="color: var(--ex-black);">{{ t('trade.ipo_success_btn2') }}</span></Button>
+                    style="color: var(--ex-black);font-weight: 500;">{{ t('trade.ipo_success_btn2') }}</span></Button>
         </div>
     </div>
 </template>
@@ -60,13 +60,12 @@ const router = useRouter();
         .next {
             width: 3.27rem;
             height: 1.12rem;
-            color: var(--ex-primary-color);
             padding: 0.16rem;
             border-radius: 1.3rem;
-            border: 1px solid var(--ex-primary-color) !important;
             margin-right: 0.15rem;
             font-size: 0.3rem;
             padding: 0rem;
+            background-color: var(--ex-white);
         }
 
         .info {
