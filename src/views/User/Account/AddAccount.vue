@@ -42,8 +42,8 @@
                 </div>
                 <div style="float: left">
                   <div class="item">
-                    <div :class="!isFocus ? 'flex' : ''">
-                      <div class="text-color5" :class="isFocus ? 'text-[0.28rem] mb-[0.1rem]' : 'text-[0.32rem]'">
+                    <div :class="!isFocus && !form.address ? 'flex' : ''">
+                      <div class="text-color5" :class="isFocus || form.address ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">
                         {{ $t("account.add_subtitle_address") }}
                       </div>
                       <input type="text" v-model.trim="form.address" class="ipt" maxlength="50"

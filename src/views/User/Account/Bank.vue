@@ -2,21 +2,36 @@
 <template>
   <div class="page page_bank">
     <div style="flex: 1; margin-bottom: 0.8rem">
-      <div class="subtitle">{{ $t("account.add_subtitle_user_name") }}</div>
       <div class="item">
-        <span style="flex: 1">{{ name || "--" }}</span>
-        <div class="icon_ok"></div>
-        <span>{{ $t("account.add_subtitle_status") }}</span>
+        <div class="flex flex-col">
+          <div class="subtitle">{{ $t("account.add_subtitle_user_name") }}</div>
+          <span style="flex: 1">{{ name || "--" }}</span>
+        </div>
+        <span class="text-primary">{{ $t("account.add_subtitle_status") }}</span>
       </div>
-      <div class="subtitle">{{ $t("account.add_subtitle_bank_name") }}</div>
       <div class="item">
-        <input v-model="form.bank_name" type="text" class="ipt" maxlength="50"
-          :placeholder="t('account.add_bank_name_placeholder')" />
+        <div class="w-full" :class="!nameFocus && !form.bank_name ? 'flex' : 'flex flex-col'">
+          <div class="text-color5"
+            :class="nameFocus || form.bank_name ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{
+              $t("account.add_subtitle_bank_name") }}</div>
+          <input v-model="form.bank_name" type="text" class="ipt" maxlength="50" @focus="nameFocus = true"
+            @blur="nameFocus = false" />
+        </div>
+        <div class="w-[0.32rem] h-[0.32rem]" v-if="form.bank_name" @click="form.bank_name = ''">
+          <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
+        </div>
       </div>
-      <div class="subtitle">{{ $t("account.add_subtitle_card_number") }}</div>
       <div class="item">
-        <input v-model.trim="form.bank_card_number" type="text" class="ipt" maxlength="50"
-          :placeholder="t('account.add_bank_address_placeholder')" />
+        <div class="w-full" :class="!numFocus && !form.bank_card_number ? 'flex' : 'flex flex-col'">
+          <div class="text-color5"
+            :class="numFocus || form.bank_card_number ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{
+              $t("account.add_subtitle_card_number") }}</div>
+          <input v-model.trim="form.bank_card_number" type="text" class="ipt" maxlength="50" @focus="numFocus = true"
+            @blur="numFocus = false" />
+        </div>
+        <div class="w-[0.32rem] h-[0.32rem]" v-if="form.bank_card_number" @click="form.bank_card_number = ''">
+          <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
+        </div>
       </div>
     </div>
     <Button class="submit" :disabled="!(form.bank_name && form.bank_card_number)" type="primary" round
@@ -29,6 +44,7 @@
 </template>
 
 <script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import Top from "@/components/Top.vue";
 import { Button, showToast } from "vant";
@@ -48,6 +64,9 @@ const form = ref({
   bank_name: "",
   bank_card_number: "",
 });
+
+const nameFocus = ref(false);
+const numFocus = ref(false);
 
 // 提交
 const submit = (googleCode) => {
@@ -101,26 +120,27 @@ _kycGet().then((res) => {
   padding: 0 0.32rem;
 
   .subtitle {
+    width: max-content;
     font-weight: 400;
     font-size: 0.28rem;
     line-height: 0.36rem;
-    color: var(--ex-text-color);
+    color: var(--ex-text-color5);
     margin-bottom: 0.15rem;
   }
 
   .item {
     width: 100%;
     height: 1.12rem;
-    border: 0.02rem solid var(--ex-border-color2);
     border-radius: 0.32rem;
+    background-color: var(--ex-bg-color5);
     margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 0.44rem;
+    padding: 0 0.28rem;
 
     .ipt {
-      width: 100%;
+      width: 70%;
       height: 100%;
       font-size: 0.3rem;
       text-align: left;
