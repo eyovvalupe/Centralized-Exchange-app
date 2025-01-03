@@ -16,7 +16,7 @@
       <div class="nav" @click="checkGG('fund')">
         <div class="nav_icon">
           <div class="change_trade_pw">
-            <img :src="getStaticImgUrl('/static/img/user/password.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/user/password_trade.svg')" alt="">
           </div>
         </div>
         <div class="nav_title">{{ $t("safety.change_trade_pw") }}</div>

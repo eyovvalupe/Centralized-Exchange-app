@@ -5,10 +5,14 @@
 
     <!-- 表单 -->
     <div class="form">
-      <div class="form_title">{{ $t("change_login_pw.origin_pw") }}</div>
       <div class="form_item margin_item">
-        <input maxlength="20" v-model.trim="form.prevPassword" :placeholder="t('change_login_pw.origin_pw_placeholder')"
-          :type="showPass0 ? 'text' : 'password'" class="item_input" />
+        <div :class="originFocus || form.prevPassword ? 'flex flex-col' : 'flex'">
+          <div class="text-color5"
+            :class="originFocus || form.prevPassword ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{
+              $t("change_login_pw.origin_pw") }}</div>
+          <input maxlength="20" v-model.trim="form.prevPassword" :type="showPass0 ? 'text' : 'password'"
+            class="item_input" @focus="originFocus = true" @blur="originFocus = false" />
+        </div>
         <div class="form_item_icon" @click="showPass0 = !showPass0">
           <div :class="showPass0 ? 'eye-show-icon' : 'eye-hidden-icon'">
             <img v-if="showPass0" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
@@ -17,10 +21,14 @@
         </div>
       </div>
 
-      <div class="form_title">{{ $t("change_login_pw.new_pw") }}</div>
       <div class="form_item margin_item" :class="[isSame ? 'border-color-2' : 'border-error']">
-        <input maxlength="20" v-model.trim="form.password" :placeholder="t('change_login_pw.new_pw_placeholder')"
-          :type="showPass ? 'text' : 'password'" class="item_input" @focus="isSame = true" />
+        <div :class="newFocus || form.password ? 'flex flex-col' : 'flex'">
+          <div class="text-color5"
+            :class="newFocus || form.password ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{
+              $t("change_login_pw.new_pw") }}</div>
+          <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'" class="item_input"
+            @input="isSame = true" @focus="newFocus = true" @blur="newFocus = false" />
+        </div>
         <div class="form_item_icon" @click="showPass = !showPass">
           <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
             <img v-if="showPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
@@ -32,10 +40,12 @@
       <PasswordLevel style="position: relative; top: -0.25rem; left: 0.32rem" :password="form.password"
         :from="'reset'" />
 
-      <div class="form_title">{{ $t("change_login_pw.confirm_pw") }}</div>
       <div class="form_item margin_item" :class="[isSame ? 'border-color-2' : 'border-error']">
-        <input maxlength="20" v-model.trim="form.password2" :placeholder="t('change_login_pw.confirm_pw_placeholder')"
-          :type="showPass2 ? 'text' : 'password'" class="item_input" @focus="isSame = true" />
+        <div :class="confirmFocus || form.password2 ? 'flex flex-col' : 'flex'">
+          <div class="text-color5" :class="confirmFocus || form.password2 ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{ $t("change_login_pw.confirm_pw") }}</div>
+          <input maxlength="20" v-model.trim="form.password2" :type="showPass2 ? 'text' : 'password'" class="item_input"
+            @input="isSame = true" @focus="confirmFocus = true" @blur="confirmFocus = false" />
+        </div>
         <div class="form_item_icon" @click="showPass2 = !showPass2">
           <div :class="showPass2 ? 'eye-show-icon' : 'eye-hidden-icon'">
             <img v-if="showPass2" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
@@ -87,6 +97,9 @@ const disapled = computed(
 );
 const loading = ref(false); // 加载
 const isSame = ref(true);
+const originFocus = ref(false);
+const newFocus = ref(false);
+const confirmFocus = ref(false);
 const submit = () => {
   if (form.value.password != form.value.password2) {
     showToast(t('change_login_pw.no_match_noti'));
@@ -123,20 +136,18 @@ const submitForm = (code) => {
     padding-bottom: 0.1rem;
 
     .form_title {
-      color: var(--ex-text-color);
-      line-height: 0.42rem;
+      color: var(--ex-text-color5);
       font-weight: 400;
-      font-size: 0.28rem;
-      margin-bottom: 0.1rem;
     }
 
     .form_item {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.32rem;
-      border-width: 0.02rem;
+      background-color: var(--ex-bg-color5);
 
       .item_input {
         flex: 1;
