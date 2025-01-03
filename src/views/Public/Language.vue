@@ -88,7 +88,7 @@ const clickItem = (item) => {
         flex: 1;
         text-align: left;
         color: var(--ex-text-color);
-        font-size: 0.32rem;
+        font-size: 0.3rem;
       }
 
       .uncheck {
