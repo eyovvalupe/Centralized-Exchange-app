@@ -150,11 +150,11 @@ onMounted(() => {
 }
 
 .submit-button {
-  width: 6.86rem;
+  width: 100%;
   height: 1.12rem;
   font-size: 0.36rem;
   /* background-color: var(--ex-primary-color); */
-  border-radius: 1.6rem;
+  border-radius: 0.4rem;
   color: var(--ex-text-color--bg-primary);
 }
 
