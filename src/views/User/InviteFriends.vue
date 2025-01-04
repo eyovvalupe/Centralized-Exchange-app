@@ -5,7 +5,7 @@
       @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="back" @click="back()">
-          <div class="w-[0.32rem] h-[0.32rem]">
+          <div class="w-[0.28rem] h-[0.28rem]">
             <img :src="getStaticImgUrl('/static/img/user/back.svg')" />
           </div>
         </div>

@@ -54,7 +54,7 @@ export default {
   forget_pw: {
     title: "忘記密碼",
     email_phone: "郵箱/手機號",
-    success: "密碼重置成功",
+    success: "密碼已重置",
     back: "返回登錄",
     get_back: "找回密碼"
 

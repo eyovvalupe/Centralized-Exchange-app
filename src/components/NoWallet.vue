@@ -4,7 +4,7 @@
     <div class="nodata_icon">
       <img :src="getStaticImgUrl('/static/img/common/no_wallet.svg')" alt="nothing" />
     </div>
-    <div class="nodata_text">{{ props.tip ? props.tip : t('common.no_wallet') }}</div>
+    <div class="nodata_text">{{ t('common.no_wallet') }}</div>
   </div>
 </template>
 
@@ -24,7 +24,6 @@ const props = defineProps({
 <style scoped lang="less">
 .no_data {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,7 +32,6 @@ const props = defineProps({
   line-height: 0.4rem;
   font-size: 0.28rem;
   color: var(--ex-text-color4);
-  padding: 1rem 0;
 
   .nodata_icon {
     img {
@@ -44,6 +42,9 @@ const props = defineProps({
   .nodata_text {
     font-size: 0.28rem;
     margin-top: 0.18rem;
+    color: var(--ex-text-color5);
+    width: 100%;
+    text-align: center;
   }
 }
 </style>

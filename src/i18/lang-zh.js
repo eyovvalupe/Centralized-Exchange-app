@@ -34,7 +34,7 @@ export default {
   forget_pw: {
     title: "忘记密码",
     email_phone: "邮箱/手机号",
-    success: "密码重置成功",
+    success: "密码已重置",
     back: "返回登录",
     get_back: "找回密码"
   },
