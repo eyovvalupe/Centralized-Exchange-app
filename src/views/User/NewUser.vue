@@ -5,24 +5,14 @@
     <!-- <div class="title">用户</div> -->
     <div class="flex flex-col mt-[0.2rem] mb-[0.32rem] px-[0.32rem]">
       <div class="w-full flex justify-end gap-[0.16rem]">
-        <div @click="jump('chat', false)"
-          class="w-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
-          <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
-          </div>
+        <div class="w-[0.6rem] h-[0.6rem]">
+          <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
-        <div @click="jump('chat', false)"
-          class="w-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
-          <div class="w-[0.48rem] h-[0.48rem]">
-            <img :src="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
-          </div>
+        <div class="w-[0.6rem] h-[0.6rem]">
+          <img :src="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
         </div>
-        <div
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center"
-          @click="jump('notification')">
-          <div class="setting-icon">
-            <img :src="getStaticImgUrl('/static/img/common/notice.svg')" alt="server" />
-          </div>
+        <div class="w-[0.6rem] h-[0.6rem]">
+          <img :src="getStaticImgUrl('/static/img/common/notice.svg')" alt="server" />
         </div>
       </div>
       <div v-if="token" class="flex items-center -ml-[0.08rem] gap-[0.16rem]">
