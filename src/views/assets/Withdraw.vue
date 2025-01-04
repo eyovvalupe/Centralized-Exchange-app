@@ -177,7 +177,7 @@
     </Tabs>
 
     <!-- 账户种类选择弹窗 -->
-    <Popup v-model:show="showDialog" position="bottom" round closeable teleport="body">
+    <BottomPopup v-model:show="showDialog" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ $t("withdraw.currencySelection") }}
       </div>
@@ -205,7 +205,7 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <Popup v-model:show="showNetworkDialog" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
@@ -326,6 +326,7 @@ import AccountCheck from "@/components/AccountCheck.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const RecordListRef = ref();
