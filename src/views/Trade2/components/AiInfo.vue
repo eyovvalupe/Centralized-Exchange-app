@@ -24,10 +24,10 @@
 
         <div class="circle-wrap">
           <div class="circle-mid">
-            <div class="time">{{ formatSec2(t, currItem.endtime) }}</div>
+            <div class="time">{{ formatSec22(t, currItem.endtime) }}</div>
             <div class="text">{{ t('trade.ai_position_timer') }}</div>
           </div>
-          <Circle v-if="currItem.status == 'open'" start-position="bottom" stroke-linecap="round" stroke-width="142"
+          <Circle v-if="currItem.status == 'open'" start-position="right" stroke-linecap="round" stroke-width="142"
             layer-color="var(--ex-bg-color2)" :color="gradientColor" size="182" :rate="100"
             :current-rate="100 - rate" />
         </div>
@@ -98,7 +98,7 @@ import { Button, Popup, Circle, showToast, Loading } from "vant";
 import { _copyTxt } from "@/utils/index";
 import { ref, computed, onBeforeUnmount } from "vue";
 import { _aiget } from "@/api/api";
-// import { formatSec2 } from "@/utils/time";
+import { formatSec2 } from "@/utils/time";
 import Decimal from "decimal.js";
 import { _dateUnitMap } from "@/utils/dataMap";
 import Top from "@/components/Top.vue";
@@ -161,7 +161,7 @@ const backFunc = () => {
 
 const gradientColor = {
   "0%": "var(--ex-primary-color)",
-  "100%": "rgba(0,0,0,0)",
+  "100%": "var(--ex-primary-bg)",
 };
 
 const showWin = ref(false);
@@ -232,8 +232,9 @@ const getRange = () => {
 
   return rs;
 };
-function formatSec2(t, seconds) {
+function formatSec22(t, seconds) {
   if (seconds < 0) return "--";
+  if (seconds <= 3600) return formatSec2(seconds)
   const days = Math.floor(seconds / (24 * 3600));
   seconds %= 24 * 3600;
   const hours = Math.floor(seconds / 3600);
