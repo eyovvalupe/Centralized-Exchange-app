@@ -3,40 +3,38 @@
   <!-- <ElDialog v-model="show" align-center title="" width="500px" :close-on-click-modal="false"> -->
   <div class="code_check_box">
     <!-- 返回和语言 -->
-    <div class="top_icon_container">
-      <div class="top_back_container text-[0.48rem]" @click="goBack">
-        <Icon name="arrow-left" />
-      </div>
+    <Top>
+      <template #right>
+        <div class="flex gap-1">
+          <div class="server_icon" @click="goChat">
+            <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
+          </div>
 
-      <div class="flex flex-row">
-        <div class="server_icon" @click="goChat">
-          <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
-        </div>
-
-        <div class="language_icon_container" @click="goLang">
-          <div class="language_icon">
-            <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+          <div class="language_icon_container" @click="goLang">
+            <div class="language_icon">
+              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </Top>
     <div class="title">
       {{ titleMap[props.type] }}{{ $t("register.code_verify") }}
     </div>
     <div class="info flex flex-col">
-      <div class="flex">
-        <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem">{{ $t("register.code_con1") }}</span>
-        <span style="font-size: 0.28rem; font-weight: 400; margin-bottom: 1.16rem">{{ props.type == "email" ?
+      <div class="flex mb-[0.8rem]">
+        <span style="font-size: 0.28rem; font-weight: 400;">{{ $t("register.code_con1") }}</span>
+        <span style="font-size: 0.28rem; font-weight: 400;">{{ props.type == "email" ?
           t('register.email') : t('register.phone') }}</span>
       </div>
       <div class="flex flex-row justify-between mb-[0.6rem]">
-        <span style="font-size: 0.3rem; line-height: 0.45rem; font-weight: 400">{{ $t('register.code_con2') }}</span>
+        <span class="text-[0.32rem] text-color2 !font-normal">{{ $t('register.code_con2') }}</span>
         <div class="timer_container" @click="send">
           {{ s ? s + "s" : t('register.code_again') }}
         </div>
       </div>
     </div>
-    <div class="w-full px-[0.32rem] mb-[0.6rem]">
+    <div class="w-full px-[0.6rem] mb-[0.6rem]">
       <CodeInput :from="'register'" @submit="(code) => console.log(code)" />
     </div>
     <div class="jump" @click="close"><span>{{ $t("register.code_jump") }}</span></div>
@@ -59,6 +57,7 @@ import router from "@/router";
 import { useRoute } from "vue-router";
 import CodeInput from "./CodeInput.vue";
 import { useI18n } from "vue-i18n";
+import Top from "./Top.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -256,18 +255,18 @@ onMounted(() => {
 }
 
 .title {
-  padding: 0.48rem 0.32rem 0.32rem 0.32rem;
+  padding: 0.48rem 0.6rem 0.24rem 0.6rem;
   font-weight: 600;
   color: var(--ex-text-color);
-  font-size: 0.54rem;
-  line-height: 0.784rem;
+  font-size: 0.4rem;
   width: 100%;
   // padding: 2rem 0 0.4rem 0;
 }
 
 .info {
-  padding: 0 0.32rem;
+  padding: 0 0.6rem;
   line-height: 0.5rem;
+  color: var(--ex-text-color5);
 
   span {
     font-weight: bold;
