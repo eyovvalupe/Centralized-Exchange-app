@@ -2,7 +2,9 @@
 <template>
   <div class="max-width top">
     <div class="back" @click="clickLeft">
-      <Icon :name="props.icon" size="0.4rem" />
+      <div class="w-[0.28rem] h-[0.28rem]">
+        <img :src="getStaticImgUrl('/static/img/user/back.svg')" alt="">
+      </div>
     </div>
     <slot name="title" v-if="slots['title']" />
     <span v-else>{{ props.title }}</span>
@@ -13,7 +15,7 @@
 </template>
 
 <script setup>
-import { Icon } from 'vant'
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from '@/router'
 import store from '@/store'
 import { useSlots } from 'vue'
@@ -75,11 +77,13 @@ const clickLeft = () => {
   .back {
     position: absolute;
     left: 0.32rem;
-    width: 0.4rem;
-    height: 0.4rem;
+    width: 0.6rem;
+    height: 0.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 0.3rem;
+    background-color: var(--ex-bg-color6);
   }
 
   .right {
