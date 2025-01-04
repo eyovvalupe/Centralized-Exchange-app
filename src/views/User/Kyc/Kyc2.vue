@@ -7,7 +7,7 @@
         <span @click="nextStep" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">跳过</span>
       </template>
       <!-- 从个人中心来的 -->
-      <template #right v-else>
+      <!-- <template #right v-else>
         <div @click="goTip" style="display: flex; align-items: center; line-height: 0">
           <div style="
               width: 0.24rem;
@@ -20,7 +20,7 @@
           </div>
           <span style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.24rem">照片上传要求</span>
         </div>
-      </template>
+      </template> -->
       <!-- 提交过认证信息 -->
       <template #right v-if="kycInfo.idimg_1">
         <div class="kyc_status">
@@ -49,8 +49,8 @@
     <div class="steps" v-if="!checkMode">
       <div class="bg-[var(--ex-none)] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
-          <div class="check-icon">
-            <img :src="getStaticImgUrl('/static/img/user/right_white.svg')" alt="">
+          <div class="w-[0.48rem] h-[0.48rem]">
+            <img :src="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
           </div>
         </div>
       </div>
@@ -166,7 +166,7 @@
       <div class="flex justify-between">
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] bg-color6 flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status" :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }"></div>
           </div>
           <div class="flex items-center justify-between">
@@ -178,7 +178,7 @@
         </div>
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] relative bg-color flex items-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] relative bg-color6 flex items-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status absolute right-0 -mr-[0.16rem]"
               :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }"></div>
           </div>
@@ -186,12 +186,12 @@
             <div class="uncheck_icon">
               <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
-            <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed1") }}</div>
+            <div class="text-[0.24rem] text-color5">{{ $t("kyc.second_failed1") }}</div>
           </div>
         </div>
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] bg-color6 flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status" :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }">
               <div class="bg-[rgba(255,255,255,0.4)] w-full h-full rounded-[0.08rem] backdrop-blur-[0.02rem]"></div>
             </div>
@@ -200,22 +200,22 @@
             <div class="uncheck_icon">
               <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
-            <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed2") }}</div>
+            <div class="text-[0.24rem] text-color5">{{ $t("kyc.second_failed2") }}</div>
           </div>
         </div>
         <div>
           <div
-            class="w-[1.26rem] h-[0.8rem] bg-color flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
+            class="w-[1.26rem] h-[0.8rem] bg-color6 flex items-center justify-center overflow-hidden rounded-[0.2rem] mb-[0.12rem]">
             <div class="id_status flex items-center justify-center"
               :style="{ 'background-image': `url('/static/img/user/id_status_1.svg')` }">
-              <div class="bg-color w-[0.68rem] h-[0.28rem] rounded-[0.2rem] blur-[0.05rem]"></div>
+              <div class="bg-white w-[0.68rem] h-[0.28rem] rounded-[0.2rem] blur-[0.05rem]"></div>
             </div>
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
               <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
-            <div class="text-[0.24rem] text-color">{{ $t("kyc.second_failed3") }}</div>
+            <div class="text-[0.24rem] text-color5">{{ $t("kyc.second_failed3") }}</div>
           </div>
         </div>
       </div>
@@ -639,22 +639,25 @@ const afterRead = (file, { name }) => {
 }
 
 .id_back1 {
-  width: 2.72rem;
-  height: 1.4rem;
+  width: 100%;
+  height: 100%;
   background-size: cover;
+  background-color: var(--ex-bg-color);
 }
 
 .id_back2 {
-  width: 2.72rem;
-  height: 1.48rem;
+  width: 100%;
+  height: 100%;
   background-size: cover;
+  background-color: var(--ex-bg-color);
 }
 
 .id_back3 {
   background-size: cover;
   background-repeat: no-repeat;
-  width: 1.66rem;
-  height: 1.7rem;
+  width: 100%;
+  height: 100%;
+  background-color: var(--ex-bg-color);
 }
 
 

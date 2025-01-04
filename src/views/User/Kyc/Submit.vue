@@ -3,11 +3,8 @@
   <div class="page page-kyc-Submit">
     <Top :title="t('kyc.page_title')">
       <template #right>
-        <div @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
-          <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
-          </div>
+        <div class="w-[0.6rem] h-[0.6rem]" @click="jump('chat')">
+          <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
       </template>
     </Top>
@@ -22,8 +19,8 @@
       router.replace({
         name: 'kyc',
       })
-      " class="w-full text-[0.3rem] w-[3.6rem]" type="primary"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-black);">{{
+      " class="w-[3.6rem] text-[0.3rem] w-[3.6rem]" type="primary"
+      :style="'height: 0.9rem; font-size: 0.3rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-black);">{{
         $t("kyc.final_ok") }}</span></Button>
   </div>
 </template>

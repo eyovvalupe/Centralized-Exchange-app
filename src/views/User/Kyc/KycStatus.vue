@@ -52,7 +52,7 @@
           {{ kycInfo.remarks || "--" }}
         </div>
       </template>
-      <div class="bg-color3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem]">
+      <div class="bg-color3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem] px-[0.12rem] mb-[0.12rem]">
         <div class="px-[0.32rem] mb-[0.3rem]">
           <div class="text-[0.36rem] mb-[0.32rem] leading-[0.5rem]">
             {{ props.kycInfo ? props.kycInfo.name : "--" }}
@@ -71,14 +71,14 @@
           </div>
         </div>
         <div
-          class="w-full bg-color rounded-[0.32rem] border-[0.02rem] border-color h-[4.32rem] flex flex-wrap justify-between p-[0.32rem]">
-          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
+          class="w-[6.46rem] bg-color rounded-[0.32rem] border-[0.02rem] border-color h-[4.14rem] flex flex-wrap justify-between p-[0.2rem]">
+          <div class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.1rem]">
             <img :src="kycInfo.idimg_1" style="object-fit: fill !important" alt="img" />
           </div>
-          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
+          <div class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
             <img :src="kycInfo.idimg_2" style="object-fit: fill !important" alt="img" />
           </div>
-          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
+          <div class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
             <img :src="kycInfo.idimg_3" style="object-fit: fill !important" alt="img" />
           </div>
         </div>

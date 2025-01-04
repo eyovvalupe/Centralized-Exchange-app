@@ -53,19 +53,19 @@
     </div>
 
     <!-- 表单 -->
-    <div class="subtitle">{{ $t("kyc.first_legal_name") }}</div>
-    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }">
+    <!-- <div class="subtitle">{{ $t("kyc.first_legal_name") }}</div> -->
+    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color6)' }">
       <input :disabled="checkMode" v-model.trim="form.name" class="ipt" type="text"
         :placeholder="t('kyc.first_legal_name')" maxlength="20" />
     </div>
-    <div class="subtitle">{{ $t("kyc.first_card_id") }}</div>
-    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }">
+    <!-- <div class="subtitle">{{ $t("kyc.first_card_id") }}</div> -->
+    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color6)' }">
       <input :disabled="checkMode" v-model.trim="form.idnum" class="ipt" type="text"
         :placeholder="t('kyc.first_card_id')" maxlength="20" />
     </div>
-    <div class="subtitle">{{ $t('kyc.first_birthday') }}</div>
+    <!-- <div class="subtitle">{{ $t('kyc.first_birthday') }}</div> -->
     <div class="item justify-between"
-      :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color)' }"
+      :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color6)' }"
       @click="checkMode ? (showBottom = false) : (showBottom = true)">
       <div :class="form.birthday ? 'text-color' : 'text-color4'">
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}
@@ -81,20 +81,11 @@
         }}</span></Button>
 
     <!-- 日期选择 -->
-    <Popup style="border-top-left-radius: 0.32rem; border-top-right-radius: 0.32rem" :safe-area-inset-top="true"
+    <BottomPopup style="border-top-left-radius: 0.32rem; border-top-right-radius: 0.32rem" :safe-area-inset-top="true"
       :safe-area-inset-bottom="true" v-model:show="showBottom" position="bottom" class="date_picker">
-      <!-- <div class="flex justify-between items-center mx-[0.32rem] mt-[0.24rem]">
-        <div @click="cancelDate" class="close-icon">
-          <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
-        </div>
-        <div @click="confirmDate"
-          class="w-[1.2rem] h-[0.6rem] rounded-[0.32rem] bg-primary text-white text-[0.3rem] flex items-center justify-center font-medium">
-          {{ $t("kyc.first_confirm") }}
-        </div>
-      </div> -->
       <DatePicker @cancel="cancelDate" @confirm="confirmDate" v-model="currentDate" :title="t('kyc.first_birthday')"
         :min-date="minDate" :max-date="maxDate" class="date_picker" />
-    </Popup>
+    </BottomPopup>
   </div>
 </template>
 
@@ -107,6 +98,7 @@ import { _kyc1 } from "@/api/api";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 
