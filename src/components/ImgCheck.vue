@@ -227,15 +227,12 @@ onMounted(() => {
 
     .van-slider {
       width: 5.9rem;
+      background-color: var(--ex-bg-color6);
 
       :deep(.van-slider__button) {
-        box-shadow: 0 0.08rem 0.2rem 0 rgb(var(--ex-primary-color-rgb) / 0.33);
         background-size: contain;
-        /* Scale the background image */
         background-repeat: no-repeat;
-        /* Prevent repetition */
         background-position: center;
-        /* Center the background */
       }
     }
   }

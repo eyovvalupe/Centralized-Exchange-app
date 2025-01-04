@@ -2,31 +2,30 @@
 <template>
   <div class="page page-register" v-if="openPage">
     <!-- 图片验证 -->
-    <template v-if="step == 1">
+    <template v-if="step == 2">
       <ImgCheck @success="next" @goBack="goBack" :loadingRegister="loading" />
     </template>
 
-    <template v-else-if="step == 2">
+    <template v-else-if="step == 1">
       <!-- 返回和语言 -->
-      <div class="top_icon_container">
-        <div class="top_back_container text-[0.48rem]" @click="goBack">
-          <Icon name="arrow-left" />
-        </div>
+      <Top>
+        <template #right>
+          <div class="flex">
+            <div class="server_icon mr-[0.1rem]" @click="goChat">
+              <div class="chat_icon">
+                <img :src="getStaticImgUrl('/static/img/user/server.svg')" />
+              </div>
+            </div>
 
-        <div class="flex flex-row">
-          <div class="server_icon" @click="goChat">
-            <div class="chat_icon">
-              <img :src="getStaticImgUrl('/static/img/user/server.svg')" />
+            <div class="language_icon_container" @click="goLang">
+              <div class="language_icon">
+                <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+              </div>
             </div>
           </div>
+        </template>
+      </Top>
 
-          <div class="language_icon_container" @click="goLang">
-            <div class="language_icon">
-              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- 标题 -->
       <div class="title_box">
@@ -36,12 +35,6 @@
               ? t("register.create_guest_account")
               : t("register.create_user_account")
           }}
-        </div>
-        <div class="login_title">
-          {{ $t("register.has_account") }}
-          <span class="tologin" @click="router.push({ name: 'login' })">{{
-            $t("register.go_login")
-          }}</span>
         </div>
       </div>
 
@@ -53,14 +46,9 @@
 
       <!-- 表单 -->
       <div class="form">
-        <!-- <div class="form_title">用户名</div>
-        <div class="form_item margin_item" :class="{ 'err_ipt': errorTip.error1 }">
-          <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.username" placeholder="您的用户名"
-            type="text" class="item_input">
-        </div> -->
-        <div class="form_title" v-show="activeTab == 0">
+        <!-- <div class="form_title" v-show="activeTab == 0">
           {{ $t("register.email") }}
-        </div>
+        </div> -->
         <div class="form_item margin_item" v-show="activeTab == 0" :class="{ err_ipt: errorTip.error1 }">
           <input maxlength="30" @blur="errorTip.error1 = false" v-model.trim="form.email"
             :placeholder="t('register.pw_placeholder1')" type="text" class="item_input"
@@ -69,9 +57,9 @@
             <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="" />
           </div>
         </div>
-        <div class="form_title" v-show="activeTab == 1">
+        <!-- <div class="form_title" v-show="activeTab == 1">
           {{ $t("register.phone_number") }}
-        </div>
+        </div> -->
         <div class="form_item margin_item" v-show="activeTab == 1" :class="{ err_ipt: errorTip.error1 }">
           <div class="code" @click="(showDialog = true), (searchStr = '')">
             <span class="flag_icon">
@@ -85,7 +73,7 @@
           <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.phone"
             :placeholder="t('register.pw_placeholder2')" type="text" class="item_input" />
         </div>
-        <div class="form_title">{{ $t("register.login_password") }}</div>
+        <!-- <div class="form_title">{{ $t("register.login_password") }}</div> -->
         <div class="form_item margin_item relative" :class="{ err_ipt: errorTip.error2 }">
           <input maxlength="20" @blur="errorTip.error2 = false" v-model.trim="form.password"
             :placeholder="t('register.pw_placeholder3')" :type="showPass ? 'text' : 'password'" class="item_input" />
@@ -98,7 +86,7 @@
         </div>
         <!-- 密码等级 -->
         <PasswordLevel style="position: relative; top: -0.32rem; left: 0.32rem" :password="form.password" />
-        <div class="form_title">{{ $t("register.trade_password") }}</div>
+        <!-- <div class="form_title">{{ $t("register.trade_password") }}</div> -->
         <div class="form_item margin_item relative" :class="{ err_ipt: errorTip.error3 }">
           <input maxlength="20" @blur="errorTip.error3 = false" v-model.trim="form.safeword"
             :placeholder="t('register.pw_placeholder5')" :type="showPass2 ? 'text' : 'password'" class="item_input" />
@@ -109,7 +97,7 @@
             </div>
           </div>
         </div>
-        <div class="form_title">{{ $t("register.invite_code") }}</div>
+        <!-- <div class="form_title">{{ $t("register.invite_code") }}</div> -->
         <div class="form_item margin_item">
           <input maxlength="20" v-model.trim="form.invateCode" :placeholder="t('register.pw_placeholder6')" type="text"
             class="item_input" />
@@ -133,6 +121,12 @@
           <span style="color: var(--ex-black);">{{
             $t("register.next") }}</span></Button>
       </div>
+      <div class="login_title">
+        {{ $t("register.has_account") }}
+        <span class="tologin" @click="router.push({ name: 'login' })">{{
+          $t("register.go_login")
+        }}</span>
+      </div>
     </template>
 
     <template v-else>
@@ -145,44 +139,40 @@
       ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
-      position="bottom" teleport="body">
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
+      position="bottom" teleport="body" closeable="">
       <div class="register_accounr_dialog">
-        <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="showDialog = false">
-          <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
-        </div>
         <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
           {{ $t("register.country_number") }}
         </div>
         <div class="item search_box">
-          <!-- <Icon class="search" name="search" size="0.48rem" /> -->
           <div class="search-svg-icon"></div>
           <input v-model.trim="searchStr" class="ipt" type="text" :placeholder="t('register.pw_placeholder4')" />
           <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon">
-            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
+            <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
           </div>
         </div>
-        <div ref="scrollRef" style="height: 60vh; overflow-y: auto">
-          <List>
-            <Cell v-for="item in showAreas">
+        <div ref="scrollRef" style="height: 60vh; overflow-y: auto; padding: 0 0.24rem;">
+          <!-- <List> -->
+            <div v-for="item in showAreas">
               <div @click="clickItem(item)"
                 class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-color"
                 :class="{ transfer_dialog_item_active: form.area == item.code }">
                 <div class="flex h-[1.08rem] items-center">
-                  <div style="width: 0.64rem;height: 0.64rem;">
+                  <div class="w-[0.64rem] h-[0.64rem] mr-[0.2rem]">
                     <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                   </div>
-                  <span>{{ item.cn }}</span>
-                  <span>({{ item.code }})</span>
+                  <span>{{ item.cn }}&nbsp;</span>
+                  <span>{{ item.code }}</span>
                 </div>
                 <Icon v-if="form.area == item.code" class="cross" name="success" />
               </div>
-            </Cell>
-          </List>
+            </div>
+          <!-- </List> -->
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
   </div>
 </template>
 
@@ -201,7 +191,7 @@ import {
   List,
   Cell,
 } from "vant";
-import { ref, computed, onMounted, onBeforeMount } from "vue";
+import { ref, computed, onMounted } from "vue";
 import router from "@/router";
 import { useRoute, useRouter } from "vue-router";
 import PasswordLevel from "@/components/PasswordLevel.vue";
@@ -213,7 +203,8 @@ import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
 import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
 import { useI18n } from "vue-i18n";
-import { DESKTOP_INVITE_URL, MOBILE_INVITE_URL } from "@/config";
+import Top from "@/components/Top.vue";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 // 区号控制
 const step = ref(1);
@@ -519,6 +510,14 @@ onMounted(() => {
   padding-top: 1.12rem;
   height: 100%;
 
+  :deep(.van-tabs__nav.van-tabs__nav--card.van-tabs__nav--shrink.van-tabs__nav--complete) {
+    margin: 0 0.6rem;
+  }
+
+  :deep(button.van-button.van-button--primary.van-button--normal.van-button--round.submit) {
+    border-radius: 0.4rem;
+  }
+
   .top_icon_container {
     position: fixed;
     width: 7.5rem;
@@ -630,7 +629,7 @@ onMounted(() => {
   }
 
   .title_box {
-    padding: 0.12rem 0.32rem 0.4rem 0.32rem;
+    padding: 0.12rem 0.6rem 0.4rem 0.6rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -639,22 +638,10 @@ onMounted(() => {
       color: var(--, var(--ex-text-color));
       text-align: left;
       font-family: "PingFang SC";
-      font-size: 0.56rem;
+      font-size: 0.4rem;
       font-style: normal;
       font-weight: 600;
-      line-height: 0.784rem;
       /* 39.2px */
-    }
-
-    .login_title {
-      color: var(--ex-text-color);
-      text-align: right;
-      font-family: "PingFang SC";
-      font-size: 0.24rem;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 0.32rem;
-      /* 133.333% */
     }
 
     .tologin {
@@ -688,7 +675,7 @@ onMounted(() => {
   }
 
   .form {
-    padding: 0 0.32rem;
+    padding: 0 0.6rem;
 
     .eye-hidden-icon {
       width: 0.4rem;
@@ -716,10 +703,10 @@ onMounted(() => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 1px solid var(--ex-border-color2);
       height: 1.12rem;
       border-radius: 0.32rem;
-      padding: 0 0.32rem;
+      padding: 0 0.28rem;
+      background-color: var(--ex-bg-color6);
 
       .form_item_clear {
         width: 0.32rem;
@@ -789,32 +776,32 @@ onMounted(() => {
   }
 
   .register_doc {
-    padding-left: 0.32rem;
+    padding-left: 0.6rem;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    color: var(--ex-text-color);
+    color: var(--ex-text-color5);
     font-weight: 400;
     font-size: 0.28rem;
     line-height: 0.32rem;
     margin-bottom: 0.5rem;
 
     .checked_icon_blue {
-      width: 0.48rem;
-      height: 0.48rem;
+      width: 0.32rem;
+      height: 0.32rem;
       border: 0.02rem solid var(--ex-border-color2);
       background-size: contain;
-      border-radius: 0.11rem;
+      border-radius: 0.08rem;
       background-repeat: no-repeat;
     }
 
     .unchecked_icon {
-      width: 0.48rem;
-      height: 0.48rem;
+      width: 0.32rem;
+      height: 0.32rem;
       background-color: transparent;
       border: 0.02rem solid var(--ex-border-color2);
-      border-radius: 0.11rem;
+      border-radius: 0.08rem;
     }
 
     .register_doc_check {
@@ -827,7 +814,8 @@ onMounted(() => {
   }
 
   .submit_box {
-    padding: 0 0.32rem;
+    padding: 0 0.6rem;
+    margin-bottom: 0.6rem;
 
     :deep(.van-button__content) {
       font-size: 0.36rem;
@@ -859,16 +847,33 @@ onMounted(() => {
       font-weight: 600;
     }
   }
+  .login_title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: var(--ex-text-color5);
+    text-align: right;
+    font-family: "PingFang SC";
+    font-size: 0.24rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0.32rem;
+    
+    >span {
+      color: var(--ex-text-primary);
+    }
+  }
 }
 </style>
 
 <style lang="less" scoped>
 .register_accounr_dialog {
   background-color: var(--ex-bg-color);
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
+  // border-top-left-radius: 0.4rem;
+  // border-top-right-radius: 0.4rem;
+  background-color: var(--ex-bg-color5);
   overflow: hidden;
-  padding: 0.28rem 0.32rem 0.8rem 0.32rem;
+  padding: 0 0.32rem 0.8rem 0.32rem;
   position: relative;
 
   :deep(.search-svg-icon) {
@@ -889,8 +894,8 @@ onMounted(() => {
 
   .search_box {
     height: 0.84rem;
-    border: 0.02rem solid var(--ex-border-color2);
     border-radius: 0.32rem;
+    background-color: var(--ex-bg-color);
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;
     display: flex;
@@ -939,8 +944,8 @@ onMounted(() => {
 
   .close-svg-icon {
     margin-left: 0.12rem;
-    width: 0.24rem;
-    height: 0.24rem;
+    width: 0.32rem;
+    height: 0.32rem;
     background-size: contain;
     background-repeat: no-repeat;
   }
