@@ -208,7 +208,6 @@ const goBack = () => {
         flex-direction: column;
         align-items: center;
         width: 3.44rem;
-        height: 2.12rem;
         margin-top: 1rem;
       }
     }
