@@ -56,6 +56,8 @@ export default {
     email_phone: "郵箱/手機號",
     success: "密碼重置成功",
     back: "返回登錄",
+    get_back: "找回密碼"
+
   },
   register: {
     security: "安全驗證",

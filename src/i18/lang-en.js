@@ -36,7 +36,9 @@ export default {
     title: "Forgot Password",
     email_phone: "Email / Phone Number",
     success: "Reset Password Successfully",
-    back: "Back to Login"
+    back: "Back to Login",
+    get_back: "Recover Password"
+
   },
   register: {
     security: "Security Check",

@@ -5,33 +5,26 @@
   </div>
   <div v-else class="page page-fogot">
     <!-- 返回和语言 -->
-    <div class="top_icon_container">
-      <div class="top_back_container text-[0.48rem]" @click="goBack">
-        <Icon name="arrow-left" />
-      </div>
-
-      <div class="flex flex-row">
-        <div class="server_icon" @click="goChat">
-          <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
-        </div>
-
-        <div class="language_icon_container" @click="goLang">
-          <div class="language_icon">
-            <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+    <Top>
+      <template #right>
+        <div class="flex gap-1">
+          <div class="language_icon_container" @click="goLang">
+            <div class="language_icon">
+              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </Top>
 
     <!-- 标题 -->
     <div class="title_box">
       <div class="title">{{ t('forget_pw.title') }}</div>
-      <div class="tologin" @click="router.push({ name: 'login' })">{{ t('register.go_login') }}</div>
     </div>
 
     <!-- 表单 -->
     <div class="form relative">
-      <div class="form_title">{{ t('forget_pw.email_phone') }}</div>
+      <!-- <div class="form_title">{{ t('forget_pw.email_phone') }}</div> -->
       <div class="form_item margin_item">
         <input maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text" class="item_input" />
         <div class="form_item_clear" v-show="form.username" @click="form.username = null">
@@ -39,7 +32,7 @@
         </div>
       </div>
 
-      <div class="form_title">{{ t('change_login_pw.new_pw') }}</div>
+      <!-- <div class="form_title">{{ t('change_login_pw.new_pw') }}</div> -->
       <div class="form_item mb-[0.05rem]">
         <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'"
           :placeholder="t('change_login_pw.new_pw_placeholder')" class="item_input" @input="checkPasswordStrength" />
@@ -50,7 +43,7 @@
       <PasswordLevel class="form_passCheck" :password="form.password" :from="'forgot'" />
 
       <div class="mb-[0.32rem]"></div>
-      <div class="form_title">{{ t('change_login_pw.confirm_pw') }}</div>
+      <!-- <div class="form_title">{{ t('change_login_pw.confirm_pw') }}</div> -->
       <div class="form_item">
         <input maxlength="20" v-model.trim="form.confirmPassword" :type="showConfirmPass ? 'text' : 'password'"
           :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" />
@@ -66,8 +59,9 @@
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
       <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit"
-        type="primary"><span style="color: var(--ex-black);">{{ t('register.next') }}</span></Button>
+        type="primary"><span style="color: var(--ex-black);">{{ t('forget_pw.get_back') }}</span></Button>
     </div>
+    <div class="tologin" @click="router.push({ name: 'login' })">{{ t('register.go_login') }}</div>
 
     <!-- 谷歌 -->
     <GoogleVerfCode @submit="submitForm" ref="ggRef" />
@@ -86,6 +80,7 @@ import PasswordLevel from "@/components/PasswordLevel.vue";
 import { useRoute } from "vue-router";
 import ForgotSuccess from "./ForgotSuccess.vue";
 import { useI18n } from "vue-i18n";
+import Top from "@/components/Top.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -256,7 +251,7 @@ const submitForm = (code) => {
   }
 
   .title_box {
-    padding: 0.32rem 0.32rem 0.6rem 0.32rem;
+    padding: 0.32rem 0.6rem 0.84rem 0.6rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -264,26 +259,25 @@ const submitForm = (code) => {
     .title {
       color: var(--ex-text-color);
       font-family: "PingFang SC";
-      font-size: 0.56rem;
+      font-size: 0.4rem;
       font-style: normal;
       font-weight: 600;
       line-height: 140%;
       /* 39.2px */
     }
 
-    .tologin {
-      color: var(--ex-primary-color);
-      text-align: right;
-      font-family: "PingFang SC";
-      font-size: 0.32rem;
-      font-style: normal;
-      font-weight: 600;
-      /* 133.333% */
-    }
+  }
+  .tologin {
+    color: var(--ex-primary-color);
+    font-family: "PingFang SC";
+    font-size: 0.32rem;
+    font-style: normal;
+    width: 100%;
+    text-align: center;
   }
 
   .form {
-    padding: 0 0.32rem;
+    padding: 0 0.6rem;
 
     .form_title {
       color: var(--ex-text-color);
@@ -302,10 +296,10 @@ const submitForm = (code) => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 0.02rem solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color6);
       height: 1.12rem;
       border-radius: 0.32rem;
-      padding: 0 0.32rem;
+      padding: 0 0.2rem;
 
       .item_input {
         flex: 1;
@@ -355,13 +349,15 @@ const submitForm = (code) => {
   }
 
   .submit_box {
-    padding: 0 0.32rem;
+    padding: 0 0.6rem;
     margin-top: 0.6rem;
+    margin-bottom: 0.6rem;
 
     .submit {
       width: 100%;
       height: 1.12rem;
       font-size: 0.36rem;
+      border-radius: 0.4rem;
     }
   }
 
