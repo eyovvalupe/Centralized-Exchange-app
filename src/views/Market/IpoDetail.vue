@@ -260,7 +260,7 @@ onBeforeUnmount(() => {
       align-items: center;
       justify-content: center;
       font-size: 0.24rem;
-      color: var(--ex-white);
+      color: var(--ex-black);
       position: absolute;
       right: 0;
       top: 0;
@@ -268,17 +268,17 @@ onBeforeUnmount(() => {
 
     .status_pre {
       background-color: var(--ex-warning-color);
-      color: var(--ex-white);
+      color: var(--ex-black);
     }
 
     .status_done {
       background-color: var(--ex-info-color);
-      color: var(--ex-white);
+      color: var(--ex-black);
     }
 
     .status_ed {
       background-color: var(--ex-success-color);
-      color: var(--ex-white);
+      color: var(--ex-black);
     }
   }
 

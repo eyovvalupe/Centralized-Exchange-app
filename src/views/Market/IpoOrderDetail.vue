@@ -29,7 +29,7 @@
                 <div style="width: 1.2rem;height: 1.2rem;">
                     <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_wait.svg`)" alt="">
                 </div>
-                <div class="status_text">
+                <div class="status_text status_wait">
                     {{ t('trade.ipo_detail_status_wait') }}
                 </div>
             </div>
@@ -258,6 +258,10 @@ const copy = text => {
         font-weight: 400;
         line-height: 0.44rem;
         margin-top: 0.24rem;
+    }
+
+    .status_wait {
+        color: var(--ex-status-color1);
     }
 
     .status_fail {

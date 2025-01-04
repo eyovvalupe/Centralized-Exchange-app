@@ -22,12 +22,19 @@
             }}</strong>
           </div>
 
-          <div class="status_box" v-if="item.status == 'success'"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_success.svg')})` }"></div>
-          <div class="status_box" v-else-if="item.status == 'failure'"
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_failure.svg')})` }"></div>
-          <div class="status_box" v-else
-            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/trade/ipo_status_lock.svg')})` }"></div>
+
+          <!-- 已中签 -->
+          <div class="status_ing2 status_success" v-if="item.status == 'success'">
+            {{ t("trade.ipo_lottery_title3") }}
+          </div>
+          <!-- 未中签 -->
+          <div class="status_ing2 status_failure" v-else-if="item.status == 'failure'">
+            {{ t("trade.ipo_lottery_title4") }}
+          </div>
+          <!-- 待中签 -->
+          <div class="status_ing2 status_issuing" v-else="item.status == 'issuing'">
+            {{ t("trade.ipo_lottery_title2") }}
+          </div>
         </div>
         <div class="item_info">
           <div class="info_cell">
@@ -350,6 +357,37 @@ function countdown(endTime) {
         }
       }
 
+      .status_ing2 {
+        height: 0.6rem;
+        border-radius: 0rem 0.32rem;
+        padding: 0 0.2rem;
+        background-color: var(--ex-text-color3);
+        min-width: 1.1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.24rem;
+        color: var(--ex-black);
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      .status_failure {
+        background-color: var(--ex-status-color1);
+        color: var(--ex-black);
+      }
+
+      .status_issuing {
+        background-color: var(--ex-text-color3);
+        color: var(--ex-black);
+      }
+
+      .status_success {
+        background-color: var(--ex-status-color3);
+        color: var(--ex-black);
+      }
+
       .item_box {
         padding: 0.24rem 0.32rem;
         position: relative;
@@ -401,7 +439,7 @@ function countdown(endTime) {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: var(--ex-white);
+        color: var(--ex-black);
         position: absolute;
         right: 0;
         top: 0;
@@ -409,17 +447,17 @@ function countdown(endTime) {
 
       .status_pre {
         background-color: #ffaf2a;
-        color: var(--ex-white);
+        color: var(--ex-black);
       }
 
       .status_done {
         background-color: var(--ex-info-color);
-        color: var(--ex-white);
+        color: var(--ex-black);
       }
 
       .status_ed {
         background-color: var(--ex-success-color);
-        color: var(--ex-white);
+        color: var(--ex-black);
       }
 
       .item_info {
