@@ -2,17 +2,13 @@
 <template>
   <div class="page page-login max-width">
     <!-- 返回和语言 -->
-    <div class="top_icon_container">
-      <div class="top_back_container text-[0.48rem]" @click="goBack">
-        <Icon name="arrow-left" />
-      </div>
-
-      <div class="language_icon_container" @click="goLang">
-        <div class="language_icon">
+    <Top>
+      <template #right>
+        <div class="language_icon_container" @click="goLang">
           <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
         </div>
-      </div>
-    </div>
+      </template>
+    </Top>
 
     <!-- 标题 -->
     <div class="title_box">
@@ -27,9 +23,9 @@
 
     <!-- 表单 -->
     <div class="form">
-      <div class="form_title" v-show="activeTab == 0">{{ $t("login.email") }}</div>
+      <!-- <div class="form_title" v-show="activeTab == 0">{{ $t("login.email") }}</div> -->
       <div class="form_item margin_item" v-show="activeTab == 0">
-        <div class="form_item_user" v-show="form.email">
+        <div class="form_item_user">
           <div class="envelope-icon">
             <img :src="getStaticImgUrl('/static/img/user/envelope.svg')" alt="">
           </div>
@@ -44,7 +40,7 @@
         </div>
       </div>
 
-      <div class="form_title" v-show="activeTab == 1">{{ $t("login.phone_number") }}</div>
+      <!-- <div class="form_title" v-show="activeTab == 1">{{ $t("login.phone_number") }}</div> -->
       <div class="form_item margin_item" v-show="activeTab == 1">
         <div class="code" @click="
           showDialog = true;
@@ -61,10 +57,10 @@
         <input maxlength="20" v-model.trim="form.phone" type="text" :placeholder="t('login.pw_placeholder2')"
           class="item_input" />
       </div>
-      <div class="form_title">{{ $t("login.password") }}</div>
+      <!-- <div class="form_title">{{ $t("login.password") }}</div> -->
       <div class="form_item">
         <!-- 显示密码输入时的锁图标 -->
-        <div class="form_item_user" v-if="form.password">
+        <div class="form_item_user">
           <div class="lock-icon">
             <img :src="getStaticImgUrl('/static/img/user/lock.svg')" alt="">
           </div>
@@ -168,6 +164,7 @@ import store from "@/store";
 import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
 import { useI18n } from "vue-i18n";
+import Top from "@/components/Top.vue";
 
 const { t } = useI18n();
 
@@ -388,6 +385,16 @@ onMounted(() => {
   padding-top: 1rem;
   margin: auto;
 
+  :deep(span.van-tab__text) {
+    font-size: 0.32rem;
+  }
+
+  :deep(.van-tab--card.van-tab--active) {
+    span {
+      font-size: 0.36rem;
+    }
+  }
+  
   .self_van_popup {
     :deep(.van-cell) {
       padding: 0;
@@ -415,34 +422,20 @@ onMounted(() => {
     }
 
     .language_icon_container {
-      width: 0.72rem;
-      height: 0.72rem;
+      width: 0.6rem;
+      height: 0.6rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      border-width: 0.02rem;
-      border-color: var(--ex-border-color);
-      border-radius: 0.36rem;
+      background-color: var(--ex-bg-color5);
 
-      .language_icon {
-        width: 0.432rem;
-        height: 0.432rem;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
     }
   }
 
   .tabs {
     overflow: hidden;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.6rem;
     z-index: 1;
-
-    :deep(.van-tab__panel) {
-      // height: calc(var(--app-height) - 3.4rem);
-      // overflow-y: auto;
-    }
 
     :deep(.van-tabs__nav--card) {
       border: none;
@@ -452,10 +445,6 @@ onMounted(() => {
       border-right: none;
       color: var(--ex-text-color2);
       border-bottom: 0.04rem solid var(--ex-border-color2);
-      // background-color: var(--ex-bg-color2);
-      // border-radius: 0.3rem;
-      // margin-left: 0.1rem;
-      // transition: all ease .2s;
     }
 
     :deep(.van-tab--card.van-tab--active) {
@@ -466,7 +455,7 @@ onMounted(() => {
       font-style: normal;
       font-weight: 600;
       line-height: normal;
-      border-bottom: 0.06rem solid var(--ex-primary-color);
+      border-bottom: 0.08rem solid var(--ex-primary-color);
       border-radius: 0.03rem;
     }
 
@@ -477,7 +466,7 @@ onMounted(() => {
     :deep(.van-tabs__wrap) {
       height: 0.8rem;
       border-bottom: 0.02rem solid rgba(0, 0, 0, 0);
-      padding-bottom: 0.2rem;
+      // padding-bottom: 0.2rem;
     }
 
     :deep(.van-tabs__nav--card) {
@@ -489,8 +478,12 @@ onMounted(() => {
       line-height: 0.6rem;
       font-size: 0.28rem;
       width: 50%;
-      padding-bottom: 0.29rem;
+      // padding-bottom: 0.29rem;
     }
+  }
+
+  :deep(.van-tabs__nav.van-tabs__nav--card.van-tabs__nav--shrink.van-tabs__nav--complete) {
+    margin: 0 0.6rem;
   }
 
   .top {
@@ -529,7 +522,7 @@ onMounted(() => {
   }
 
   .title_box {
-    padding: 0.3rem 0.32rem 0.8rem 0.32rem;
+    padding: 0.3rem 0.6rem 0.8rem 0.6rem;
 
     .title {
       // height: 0.78rem;
@@ -546,7 +539,7 @@ onMounted(() => {
   }
 
   .form {
-    padding: 0 0.32rem;
+    padding: 0 0.6rem;
 
     .form_title {
       color: var(--ex-text-color);
@@ -558,10 +551,11 @@ onMounted(() => {
     .form_item {
       display: flex;
       align-items: center;
-      border: 0.02rem solid var(--ex-border-color2);
+      // border: 0.02rem solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color6);
       height: 1.12rem;
       border-radius: 0.32rem;
-      padding: 0 0.32rem;
+      padding: 0 0.2rem;
 
       .code {
         color: var(--ex-text-color);
@@ -636,15 +630,15 @@ onMounted(() => {
   .fogot {
     color: var(--ex-primary-color);
     font-weight: 400;
-    padding-left: 0.44rem;
-    margin: 0.2rem 0 1.2rem 0;
+    padding-left: 0.6rem;
+    margin: 0.32rem 0 0.8rem 0;
   }
 
   .submit_box {
     display: flex;
     width: 100%;
     height: 1.1rem;
-    padding-inline: 0.32rem;
+    padding-inline: 0.6rem;
     justify-content: center;
     align-items: center;
 
