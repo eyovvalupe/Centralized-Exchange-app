@@ -1,7 +1,7 @@
 <template>
     <Popup class="ex-bottom-popup" round v-model:show="popupShow" position="bottom" 
     :close-on-popstate="closeOnPopstate" :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom" :closeable="props.closeable" teleport="body" @close="emits('close')" @closed="onClose">
-        <div class="ex-bottom-popup-top">
+        <div class="ex-bottom-popup-top relative top-[0.02rem]">
             <img :src="getStaticImgUrl('/static/img/common/popup_top.svg')" />
         </div>
         <div class="ex-bottom-popup-body">

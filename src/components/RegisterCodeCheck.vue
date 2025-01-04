@@ -38,6 +38,22 @@
       <CodeInput :from="'register'" @submit="(code) => console.log(code)" />
     </div>
     <div class="jump" @click="close"><span>{{ $t("register.code_jump") }}</span></div>
+    <BottomPopup round closeable v-model:show="confirmRef" position="bottom" teleport="body">
+      <div class="w-full h-[4rem] flex flex-col items-center">
+        <div class="text-[0.36rem] mb-[0.56rem]">{{ t("register.code_jump") }}</div>
+        <div class="text-[0.32rem] mb-[1rem]">
+          {{ t('register.code_jump_title') }}
+        </div>
+        <div class="w-full flex justify-between px-[0.4rem]">
+          <div
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black flex items-center justify-center text-[0.32rem]"
+            @click="confirmRef = false">{{ t('google_auth.google_input_btn_cancel') }}</div>
+          <div
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-black flex items-center justify-center text-[0.32rem]"
+            @click="next">{{ t('google_auth.google_input_btn_confirm') }}</div>
+        </div>
+      </div>
+    </BottomPopup>
   </div>
   <!-- </ElDialog> -->
 </template>
@@ -58,6 +74,7 @@ import { useRoute } from "vue-router";
 import CodeInput from "./CodeInput.vue";
 import { useI18n } from "vue-i18n";
 import Top from "./Top.vue";
+import BottomPopup from "./BottomPopup.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -80,7 +97,7 @@ const titleMap = ref({
 const emit = defineEmits(["success"]);
 
 const val = ref("");
-
+const confirmRef = ref(false);
 const showKeyboard = ref(true);
 watch(val, (v) => {
   if (v && v.length == 6) {
@@ -126,22 +143,14 @@ const focus = () => {
 };
 
 const close = () => {
-  showConfirmDialog({
-    title: t('register.code_jump_title'),
-    message: "",
-    width: "6.23rem",
-    confirmButtonText: t('register.code_jump_confirm'),
-    cancelButtonText: t('user_page.message_box_cancel'),
-    confirmButtonColor: "var(--ex-primary-color)",
-    theme: 'round-button'
-  })
-    .then(() => {
-      emit("success");
-      s.value = 0;
-      timeInterval && clearInterval(timeInterval);
-    })
-    .catch(() => { });
+  confirmRef.value = true;
 };
+
+const next = () => {
+  emit('success');
+  s.value = 0;
+  timeInterval && clearInterval(timeInterval);
+}
 
 let timeInterval = null;
 const s = ref(0);

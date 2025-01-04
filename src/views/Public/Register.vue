@@ -2,11 +2,11 @@
 <template>
   <div class="page page-register" v-if="openPage">
     <!-- 图片验证 -->
-    <template v-if="step == 2">
+    <template v-if="step == 1">
       <ImgCheck @success="next" @goBack="goBack" :loadingRegister="loading" />
     </template>
 
-    <template v-else-if="step == 1">
+    <template v-else-if="step == 2">
       <!-- 返回和语言 -->
       <Top>
         <template #right>

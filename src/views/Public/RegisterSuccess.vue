@@ -3,31 +3,29 @@
   <div class="page page_register_success">
     <!-- 返回和语言 -->
     <div class="top_icon_container">
-      <div class="top_back_container text-[0.48rem]" @click="goBack">
-        <Icon name="arrow-left" />
-      </div>
-
-      <div class="flex flex-row">
-        <div class="server_icon" @click="goChat">
-          <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
-        </div>
-
-        <div class="w-[0.72rem] h-[0.72rem] border-[0.02rem] border-color rounded-[0.36rem] flex justify-center items-center" @click="goLang">
-            <div class="w-[0.432rem] h-[0.432rem]">
-              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+      <Top>
+        <template #right>
+          <div class="flex gap-1">
+            <div class="language_icon_container" @click="goLang">
+              <div class="language_icon">
+                <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+              </div>
             </div>
-        </div>
-      </div>
+          </div>
+        </template>
+      </Top>
     </div>
     <div class="icon">
       <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("register.success_sign_up") }}</div>
 
-    <Button round color="var(--ex-primary-color)" class="submit" type="primary" @click="next"
-      :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'">{{ $t("register.success_btn") }}</Button>
+    <Button round color="var(--ex-primary-color)" class="submit" type="primary" @click="next">{{
+      $t("register.success_btn")
+      }}</Button>
     <div @click="back">
-      <span style="color: var(--ex-primary-color); font-size: 0.32rem; line-height: 0.448rem">{{ $t('register.success_finish') }}</span>
+      <span class="text-white text-[0.32rem]">{{
+        $t('register.success_finish') }}</span>
     </div>
   </div>
 </template>
@@ -38,7 +36,7 @@ import { Button, Icon } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-
+import Top from "@/components/Top.vue";
 const { t } = useI18n();
 
 const route = useRoute();
@@ -135,18 +133,24 @@ const goChat = () => {
   }
 
   .title {
-    position: relative;
-    top: -1.4rem;
     color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.3rem;
     line-height: 0.42rem;
+    margin-bottom: 0.68rem;
   }
 
   .submit {
-    width: 100%;
+    width: max-content;
+    height: 0.9rem;
+    padding: 0 0.36rem;
     margin-bottom: 0.6rem;
+    font-size: 0.32rem;
+    font-weight: 400;
   }
 
+  :deep(span.van-button__text) {
+    color: var(--ex-black);
+  }
 }
 </style>
