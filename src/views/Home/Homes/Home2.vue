@@ -13,10 +13,17 @@
         <div class="home2-content">
             <!-- 头部 -->
             <div class="home2-header">
-                <div class="icon"></div>
+                <div class="icon" @click="jump('user', true)">
+                    <img v-if="token" :src="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
+                    <img v-else :src="getStaticImgUrl('/static/home2/avatar.svg')" alt="">
+                </div>
                 <div style="flex: 1;"></div>
-                <div @click="jump('search')" class="icon" style="margin-right: 0.12rem;"></div>
-                <div @click="jump('notification')" class="icon"></div>
+                <div @click="jump('search')" class="icon icon2" style="margin-right: 0.12rem;">
+                    <img :src="getStaticImgUrl('/static/home2/search.svg')" alt="">
+                </div>
+                <div @click="jump('notification')" class="icon icon2">
+                    <img :src="getStaticImgUrl('/static/home2/notice.svg')" alt="">
+                </div>
             </div>
 
             <!-- 首屏 -->
@@ -45,13 +52,13 @@
                 <div class="card-1">
                     <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
                         <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.svg')" alt="">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
                         </SwipeItem>
                         <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.svg')" alt="">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
                         </SwipeItem>
                         <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.svg')" alt="">
+                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
                         </SwipeItem>
                     </Swipe>
                 </div>
@@ -63,8 +70,16 @@
                                 :style="{ 'background-image': token ? `url('${getStaticImgUrl('/static/home2/assets_bg.svg')}')` : '' }">
                                 <div class="total">
                                     <span>总资产 (USDT)</span>
+
+                                    <div class="icon-eye">
+                                        <img v-if="!showPassword"
+                                            :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
+                                            @click="showPassword = true" alt="off" />
+                                        <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+                                            @click="showPassword = false" />
+                                    </div>
                                 </div>
-                                <div class="amount" v-if="token">{{ assets.total }}</div>
+                                <div class="amount" v-if="token">{{ showPassword ? assets.total : '****' }}</div>
                                 <div class="recharge" v-if="token">充值</div>
                                 <div class="login" v-if="!token" @click="store.commit('setIsLoginOpen', true)">登录</div>
                                 <div class="login_tip" v-if="!token">先登录方可查看资产</div>
@@ -76,7 +91,7 @@
                             <SwipeItem class="swiper-item" v-for="i in 3" :key="i">
                                 <div class="notice-item">
                                     <div class="notice-icon">
-                                        <img :src="getStaticImgUrl('/static/home2/notice.svg')" alt="">
+                                        <img :src="getStaticImgUrl('/static/home2/notice-active.svg')" alt="">
                                     </div>
                                     <div class="notice-con">
                                         <div class="notice-info">阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿</div>
@@ -226,6 +241,7 @@ const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
 // 总资产
 const assets = computed(() => store.state.assets || {});
+const showPassword = ref(false)
 
 
 // 预加载页面
@@ -450,7 +466,11 @@ onMounted(() => {
                 width: 0.72rem;
                 height: 0.72rem;
                 border-radius: 50%;
-                border: 1px solid var(--ex-text-color3);
+                background-color: var(--ex-bg-color3);
+            }
+
+            .icon2 {
+                padding: 0.16rem;
             }
         }
 
@@ -703,6 +723,14 @@ onMounted(() => {
                 .total {
                     color: var(--ex-white);
                     font-size: 0.24rem;
+                    display: flex;
+                    align-items: center;
+
+                    .icon-eye {
+                        width: 0.3rem;
+                        height: 0.3rem;
+                        margin-left: 0.18rem;
+                    }
                 }
 
                 .login {

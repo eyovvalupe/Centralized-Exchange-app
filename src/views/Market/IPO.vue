@@ -1,16 +1,8 @@
 <!-- IPO -->
 <template>
   <div class="page_ipo">
-    <Tabs
-      v-show="props.page != 'home'"
-      type="custom-card"
-      v-model:active="selectedOption"
-      :swipeable="false"
-      animated
-      :color="'var(--ex-primary-color)'"
-      shrink
-      @change="init(true)"
-    >
+    <Tabs v-show="props.page != 'home'" type="custom-card" v-model:active="selectedOption" :swipeable="false" animated
+      :color="'var(--ex-primary-color)'" shrink @change="init(true)">
       <Tab :title="t('trade.ipo_title_all')" :name="''"></Tab>
       <!-- <Tab :title="t('trade.ipo_title_pre')" :name="'none'"></Tab> -->
       <Tab :title="t('trade.ipo_title_going')" :name="'issuing'"></Tab>
@@ -24,12 +16,7 @@
             </Tab>
         </Tabs> -->
     <div class="list" :class="props.page == 'home' && 'mt-[-0.32rem]'">
-      <div
-        class="item"
-        v-for="(item, i) in ipoDataList"
-        :key="i"
-        @click="openDetail(item)"
-      >
+      <div class="item" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -62,17 +49,12 @@
             {{ t("trade.ipo_title_finish") }}
           </div>
         </div>
-        <div
-          class="item_info"
-          :class="{
-            item_info_nobb: item.status != 'issuing' && item.status != 'listed',
-          }"
-        >
+        <div class="item_info" :class="{
+          item_info_nobb: item.status != 'issuing' && item.status != 'listed',
+        }">
           <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_price") }}</span>
-            <span class="info_price"
-              >{{ item.issue_price_max }} {{ item.currency }}</span
-            >
+            <span class="info_price">{{ item.issue_price_max }} {{ item.currency }}</span>
           </div>
           <div class="info_cell" v-if="item.lever > 1">
             <span class="info_name">{{ t("trade.ipo_detail_lever") }}</span>
@@ -91,61 +73,43 @@
           </div>
           <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_date") }}</span>
-            <span class="info_date"
-              >{{ item.issue_start_date }} - {{ item.issue_end_date }}</span
-            >
+            <span class="info_date">{{ item.issue_start_date }} - {{ item.issue_end_date }}</span>
           </div>
           <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_item11") }}</span>
             <span class="info_price">{{ marketMap[item.market] || "--" }}</span>
           </div>
         </div>
-        <div
-          class="control_box"
-          v-if="
-            (item.status == 'issuing' || item.status == 'listed') &&
-            props.page != 'home'
-          "
-        >
+        <div class="control_box" v-if="
+          (item.status == 'issuing' || item.status == 'listed') &&
+          props.page != 'home'
+        ">
           <div class="btn" @click.stop="goBuy(item)">
             {{ t("trade.ipo_opening_btn") }}
           </div>
         </div>
       </div>
 
-      <LoadingMore
-        v-if="!(finish && ipoDataList.length == 0)"
-        :loading="loading"
-        :finish="finish"
-      />
+      <LoadingMore v-if="!(finish && ipoDataList.length == 0)" :loading="loading" :finish="finish" />
       <NoData v-if="finish && ipoDataList.length == 0" />
     </div>
 
     <!-- 详情弹窗 -->
     <teleport to="body">
-      <Popup
-        style="background-color: rgba(0, 0, 0, 0)"
-        :safe-area-inset-top="true"
-        :safe-area-inset-bottom="true"
-        v-model:show="showPopupInfo"
-        position="bottom"
-        closeable
-      >
+      <Popup style="background-color: rgba(0, 0, 0, 0)" :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+        v-model:show="showPopupInfo" position="bottom" closeable>
         <div class="ipo_detail">
           <div class="detail_title">{{ t("trade.ipo_detail") }}</div>
 
           <div class="detail_item">
             <div class="name">{{ currDetail.company_name }}</div>
-            <div
-              class="status"
-              :class="{ close_status: currDetail.status == 'done' }"
-            >
+            <div class="status" :class="{ close_status: currDetail.status == 'done' }">
               {{
                 currDetail.status == "issuing" || currDetail.status == "listed"
                   ? t("trade.ipo_title_going")
                   : currDetail.status == "none"
-                  ? t("trade.ipo_title_pre")
-                  : t("trade.ipo_title_finish")
+                    ? t("trade.ipo_title_pre")
+                    : t("trade.ipo_title_finish")
               }}
             </div>
           </div>
@@ -332,7 +296,7 @@ onMounted(() => {
       document
         .querySelector(props.scrollDom)
         .addEventListener("scroll", scrollHandler);
-    } catch {}
+    } catch { }
   }, 500);
 
   Promise.all([import("@/views/Market/IpoSubscription.vue")]);
@@ -343,7 +307,7 @@ onBeforeUnmount(() => {
     document
       .querySelector(".page")
       .removeEventListener("scroll", scrollHandler);
-  } catch {}
+  } catch { }
 });
 
 defineExpose({
@@ -400,11 +364,13 @@ function countdown(endTime) {
 <style lang="less" scoped>
 .page_ipo {
   padding: 0.28rem 0.32rem 0 0.32rem;
-  .van-tabs--oval-sub {
-  }
+
+  .van-tabs--oval-sub {}
+
   :deep(.van-tab--custom-card) {
     padding: 0 0.12rem !important;
   }
+
   .list {
     padding-top: 0.12rem;
 
@@ -419,6 +385,7 @@ function countdown(endTime) {
         display: flex;
         align-items: center;
         margin-bottom: 0.14rem;
+
         .name {
           color: var(--ex-text-color);
           font-size: 0.32rem;
@@ -427,6 +394,7 @@ function countdown(endTime) {
           color: var(--ex-text-color);
           max-width: 4.5rem;
         }
+
         .lever_icon {
           // width: max-content !important;
           // min-width: 0.6rem;
@@ -445,13 +413,16 @@ function countdown(endTime) {
           background: rgba(1, 76, 250, 0.1);
         }
       }
+
       .item_box {
         padding: 0.26rem 0.32rem 0.16rem 0.32rem;
         position: relative;
       }
+
       .pre_times {
         display: flex;
         align-items: center;
+
         .pre_time {
           height: 0.48rem;
           min-width: 0.48rem;
@@ -467,6 +438,7 @@ function countdown(endTime) {
           font-weight: 600;
           box-sizing: border-box;
         }
+
         span {
           color: var(--ex-warning-color);
           margin: 0 0.1rem;
@@ -484,7 +456,7 @@ function countdown(endTime) {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: var(--ex-white);
+        color: var(--ex-black);
         position: absolute;
         right: 0;
         top: 0;
@@ -492,17 +464,17 @@ function countdown(endTime) {
 
       .status_pre {
         background-color: var(--ex-warning-color);
-        color: var(--ex-white);
+        color: var(--ex-black);
       }
 
       .status_done {
         background-color: var(--ex-info-color);
-        color: var(--ex-white);
+        color: var(--ex-black);
       }
 
       .status_ed {
         background-color: var(--ex-success-color);
-        color: var(--ex-white);
+        color: var(--ex-black);
       }
 
       .item_info {
@@ -514,30 +486,36 @@ function countdown(endTime) {
         width: calc(100% + 2px);
         box-sizing: border-box;
         line-height: 0.3rem;
+
         .info_cell {
           display: flex;
           justify-content: space-between;
           padding: 0.24rem 0.32rem;
         }
-        .info_cell + .info_cell {
+
+        .info_cell+.info_cell {
           border-top: 1px dashed var(--ex-border-color);
         }
+
         .info_name {
           font-size: 0.28rem;
           color: var(--ex-text-color3);
         }
+
         .info_date,
         .info_price {
           color: var(--ex-text-color);
           font-size: 0.28rem;
         }
       }
+
       .item_info_nobb {
         border-bottom: 0px;
       }
 
       .control_box {
         padding: 0.2rem 0.32rem;
+
         .btn {
           display: flex;
           align-items: center;

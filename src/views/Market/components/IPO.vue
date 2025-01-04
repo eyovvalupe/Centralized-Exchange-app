@@ -454,7 +454,7 @@ function countdown(endTime) {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: var(--ex-white);
+        color: var(--ex-black);
         position: absolute;
         right: 0;
         top: 0;
