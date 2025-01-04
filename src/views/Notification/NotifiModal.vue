@@ -51,3 +51,10 @@ const jump = (url) => {
 }
 </script>
 
+<style lang="less">
+.notifi_modal {
+  :deep(.van-popup.van-popup--center.van-dialog) {
+    background: none;
+  }
+}
+</style>

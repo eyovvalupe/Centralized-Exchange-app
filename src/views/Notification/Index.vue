@@ -8,7 +8,7 @@
       <span class="text-[0.36rem]">消息中心</span>
     </div>
     <div class="pt-[0.16rem]">
-      <Tabs type="oval-card" v-model:active="active" :swipeable="false" animated :color="'var(--ex-primary-color)'"
+      <Tabs type="custom-card" v-model:active="active" :swipeable="false" animated :color="'var(--ex-primary-color)'"
         shrink @change="onChange">
         <Tab :title="'系统通知'" name="0">
           <div class="noti_tab">

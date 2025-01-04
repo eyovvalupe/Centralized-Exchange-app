@@ -200,6 +200,7 @@
     <!-- 类型选择弹窗 -->
     <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')">
     </ActionSheet>
+    <NotifiModal />
 </template>
 
 <script setup>
@@ -217,6 +218,7 @@ import StockItem from "@/components/StockItem.vue";
 import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import { useSocket } from "@/utils/ws";
 import SparkLine from "@/components/SparkLine.vue";
+import NotifiModal from "@/views/Notification/NotifiModal.vue";
 
 const { startSocket } = useSocket();
 const { t } = useI18n();
