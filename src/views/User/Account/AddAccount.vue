@@ -75,16 +75,11 @@
       </Tab>
     </Tabs>
     <!-- 币种 -->
-    <Popup :safe-area-inset-top="false" :safe-area-inset-bottom="true" round v-model:show="showCrypto" position="bottom"
-      class="popup_container">
-      <div class="">
-        <div class="absolute top-[0.2rem] right-[0.3rem]">
-          <div style="width: 0.42rem;height: 0.4rem;" @click="showCrypto = false">
-            <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
-          </div>
-        </div>
-        <div class="w-full px-[0.32rem]">
-          <div class="w-full h-[0.8rem] mt-[0.7rem] rounded-[1rem] bg-color3 flex items-center px-[0.2rem]">
+    <BottomPopup :from="'account'" :safeAreaInsetTop="false" :safeAreaInsetBottom="true" round v-model:show="showCrypto" position="bottom"
+      class="popup_container" closeable>
+      <div class="pt-[0.3rem] px-[0.32rem] h-full">
+        <div class="w-full px-[0.32rem] mb-[0.2rem]">
+          <div class="w-full h-[0.8rem] rounded-[1rem] bg-color3 flex items-center px-[0.2rem]">
             <div style="width: 0.48rem;height: 0.48rem;">
               <img :src="getStaticImgUrl(`/static/img/common/search.svg`)" alt="">
             </div>
@@ -92,7 +87,6 @@
               @input="searchItem" />
           </div>
         </div>
-        {{ console.log(searchResult) }}
         <div class="bottoms">
           <div @click="chooseCurrency(item)" class="bottom" :class="{ active_bottom: form.currency == item }"
             v-for="item in searchRef ? searchResult : currencyMapList" :key="item">
@@ -110,18 +104,17 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
     <!-- 网络 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" round v-model:show="showNet" position="bottom"
-      class="popup_container">
+    <BottomPopup closeable :from="'account'" :safe-area-inset-top="true" :safe-area-inset-bottom="true" round v-model:show="showNet" position="bottom"
+      class="popup_container" >
       <div class="bottoms">
         <div @click="chooseNet(item)" class="_bottom" :class="{ active_bottom: form.network == item }"
           v-for="item in currNetwork" :key="item">
           <span>{{ item.network }}</span>
         </div>
-        <Icon @click="showNet = false" class="close" name="cross" />
       </div>
-    </Popup>
+    </BottomPopup>
   </div>
 </template>
 
@@ -138,6 +131,7 @@ import Bank from "./Bank.vue";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import Top from "@/components/Top.vue";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -282,8 +276,6 @@ getSessionToken();
     .bottoms {
       width: 100%;
       height: 50vh;
-      position: relative;
-      margin: 0.2rem 0;
       padding: 0 0.32rem;
       overflow-y: auto;
       justify-content: start;

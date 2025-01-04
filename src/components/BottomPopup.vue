@@ -1,6 +1,7 @@
 <template>
-    <Popup class="ex-bottom-popup" round v-model:show="popupShow" position="bottom" 
-    :close-on-popstate="closeOnPopstate" :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom" :closeable="props.closeable" teleport="body" @close="emits('close')" @closed="onClose">
+    <Popup class="ex-bottom-popup" round v-model:show="popupShow" position="bottom" :close-on-popstate="closeOnPopstate"
+        :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom"
+        :closeable="props.closeable" :teleport="from != 'account' ? 'body' : ''" @close="emits('close')" @closed="onClose">
         <div class="ex-bottom-popup-top relative top-[0.02rem]">
             <img :src="getStaticImgUrl('/static/img/common/popup_top.svg')" />
         </div>
@@ -8,7 +9,7 @@
             <div class="ex-bottom-popup-title" v-if="title">
                 {{ title }}
             </div>
-            <slot/>
+            <slot />
         </div>
     </Popup>
 </template>
@@ -18,38 +19,43 @@ import { Popup } from 'vant'
 import { ref, watch } from 'vue';
 import { getStaticImgUrl } from "@/utils/index.js"
 const props = defineProps({
-    closeable:{
-        type:Boolean,
-        default:false
+    closeable: {
+        type: Boolean,
+        default: false
     },
-    closeOnPopstate:Boolean, //是否在页面回退时自动关闭
-    title:String,
-    show:{
-        type:Boolean,
-        default:false
+    closeOnPopstate: Boolean, //是否在页面回退时自动关闭
+    title: String,
+    show: {
+        type: Boolean,
+        default: false
     },
-    safeAreaInsetTop:{ //是否开启顶部安全区适配
-        type:Boolean,
-        default:false
+    safeAreaInsetTop: { //是否开启顶部安全区适配
+        type: Boolean,
+        default: false
     },
-    safeAreaInsetBottom:{ //是否开启底部安全区适配
-        type:Boolean,
-        default:false
+    safeAreaInsetBottom: { //是否开启底部安全区适配
+        type: Boolean,
+        default: false
+    },
+    from: {
+        type: String,
+        default: ''
     }
 })
-const emits = defineEmits(['update:show','close','closed'])
+const emits = defineEmits(['update:show', 'close', 'closed'])
 const popupShow = ref(props.show)
-watch(()=>props.show,(v)=>{
+watch(() => props.show, (v) => {
     popupShow.value = v
 })
-const onClose = ()=>{
-    emits('update:show',popupShow.value)
+const onClose = () => {
+    emits('update:show', popupShow.value)
     emits('closed')
 }
 </script>
 <style lang="less" scoped>
-.ex-bottom-popup{
+.ex-bottom-popup {
     background: none;
+
     :deep(.van-popup__close-icon) {
         width: 0.6rem;
         height: 0.6rem;
@@ -59,17 +65,20 @@ const onClose = ()=>{
         line-height: 0.6rem;
         font-size: 0.36rem !important;
         position: absolute;
-        right:0.28rem;
-        top:0.24rem;
+        right: 0.28rem;
+        top: 0.24rem;
     }
 }
-.ex-bottom-popup-top{
+
+.ex-bottom-popup-top {
     width: 100%;
     height: 0.58rem;
-    img{
+
+    img {
         object-fit: fill;
     }
 }
+
 .ex-bottom-popup-title {
     height: 0.44rem;
     line-height: 0.44rem;
@@ -78,7 +87,8 @@ const onClose = ()=>{
     font-size: 0.32rem;
     font-weight: 500;
 }
-.ex-bottom-popup-body{
+
+.ex-bottom-popup-body {
     background: linear-gradient(-180deg, #2e2e2e 0%, #1c1c1c 100%);
 }
 </style>
