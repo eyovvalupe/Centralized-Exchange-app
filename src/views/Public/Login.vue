@@ -2,7 +2,7 @@
 <template>
   <div class="page page-login max-width">
     <!-- 返回和语言 -->
-    <Top>
+    <Top :backFunc="goBack">
       <template #right>
         <div class="language_icon_container" @click="goLang">
           <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
@@ -100,8 +100,8 @@
     <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
-      position="bottom" teleport="body" closeable>
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+      v-model:show="showDialog" position="bottom" teleport="body" closeable>
       <div class="register_accounr_dialog">
         <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
           {{ $t("login.country_number") }}
@@ -392,7 +392,7 @@ onMounted(() => {
       font-size: 0.36rem;
     }
   }
-  
+
   .self_van_popup {
     :deep(.van-cell) {
       padding: 0;

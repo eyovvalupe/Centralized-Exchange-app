@@ -121,7 +121,7 @@
 
     <!-- 网路选择弹窗 -->
     <BottomPopup round closeable v-model:show="showNetDialog" position="bottom" teleport="body">
-      <div class="w-full flex flex-col">
+      <div class="w-full flex flex-col h-[3rem] px-[0.28rem]">
         <div class="van-popup-custom-title text-center">
           {{ $t("topUpCrypto.networkSelection") }}
         </div>

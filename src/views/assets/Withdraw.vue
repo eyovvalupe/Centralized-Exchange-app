@@ -178,7 +178,7 @@
 
     <!-- 账户种类选择弹窗 -->
     <BottomPopup v-model:show="showDialog" position="bottom" round closeable teleport="body">
-      <div class="van-popup-custom-title">
+      <div class="van-popup-custom-title w-full text-center text-[0.32rem]">
         {{ $t("withdraw.currencySelection") }}
       </div>
 
@@ -192,7 +192,7 @@
             @input="searchList" />
         </div>
         <div class="lists">
-          <div @click="clickItem(item)" class="swap_dialog_item"
+          <div @click="clickItem(item)" class="swap_dialog_item px-[0.26rem]"
             :class="{ swap_dialog_item_active: form.from == item.name }"
             v-for="(item, i) in searchDialogStr ? searchResult : wallet" :key="i">
             <div class="icon">
@@ -207,8 +207,8 @@
       </div>
     </BottomPopup>
 
-    <Popup v-model:show="showNetworkDialog" position="bottom" round closeable teleport="body">
-      <div class="van-popup-custom-title">
+    <BottomPopup v-model:show="showNetworkDialog" position="bottom" round closeable teleport="body">
+      <div class="van-popup-custom-title w-full text-center text-[0.32rem]">
         {{ $t("withdraw.networkSelection") }}
       </div>
 
@@ -222,7 +222,7 @@
             :placeholder="$t('withdraw.searchPlaceholder')" />
         </div>
         <div class="lists">
-          <div class="swap_dialog_item" :class="{ swap_dialog_item_active: form.from == item.name }"
+          <div class="swap_dialog_item px-[0.28rem]" :class="{ swap_dialog_item_active: form.from == item.name }"
             v-if="Object.keys(currencyMapList).length" v-for="(item, i) in currencyMapList[form.from]"
             @click="clickNetworkItem(item)" :key="i" style="justify-content: space-between">
             <span>{{ item }}</span>
@@ -232,11 +232,11 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- 账户选择弹窗 -->
-    <Popup v-model:show="showAccountDialog" position="bottom" round closeable teleport="body">
-      <div class="van-popup-custom-title">
+    <BottomPopup v-model:show="showAccountDialog" position="bottom" round closeable teleport="body">
+      <div class="van-popup-custom-title w-full text-center text-[0.32rem]">
         {{
           tabActive == "cryptocurrency"
             ? $t("withdraw.accountSelection")
@@ -290,7 +290,7 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- 安全密码弹窗 -->
     <SafePassword @submit="submit" ref="safeRef"> </SafePassword>
@@ -838,7 +838,7 @@ watch(
 
 .withdraw_accounr_dialog {
   .lists {
-    height: 60vh;
+    height: 50vh;
     overflow-y: auto;
     margin-top: 0.2rem;
     padding-bottom: 0.32rem;
