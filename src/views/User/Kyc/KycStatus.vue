@@ -2,14 +2,19 @@
 <template>
   <div class="page page-auth_status">
     <Top :title="t('kyc.page_title')">
-      <template #right>
+      <!-- 从注册来的 -->
+      <template #right v-if="from == 'register'">
+        <span @click="nextStep2" style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.28rem">{{
+          t('google_auth.from_register_skip') }}</span>
+      </template>
+      <!-- <template #right>
         <div @click="jump('chat')"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
-      </template>
+      </template> -->
     </Top>
     <div class="check_box">
       <!-- v-if="kycInfo.status == 'review'" -->
@@ -67,12 +72,10 @@
         </div>
         <div
           class="w-full bg-color rounded-[0.32rem] border-[0.02rem] border-color h-[4.32rem] flex flex-wrap justify-between p-[0.32rem]">
-          <div
-            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
+          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
             <img :src="kycInfo.idimg_1" style="object-fit: fill !important" alt="img" />
           </div>
-          <div
-            class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
+          <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.2rem]">
             <img :src="kycInfo.idimg_2" style="object-fit: fill !important" alt="img" />
           </div>
           <div class="w-[3rem] h-[1.76rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
@@ -99,6 +102,10 @@ import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const from = ref(route.query.from); // 'register'-表示从注册来
 
 const { t } = useI18n();
 const props = defineProps({
@@ -111,6 +118,9 @@ const emits = defineEmits(["next"]);
 const nextStep = () => {
   emits("next");
 };
+const nextStep2 = () => {
+  jump('user')
+}
 const jump = (name, query) => {
   router.push({
     name,

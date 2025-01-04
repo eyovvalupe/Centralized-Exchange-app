@@ -29,14 +29,14 @@
           <span class="status status_fail" v-if="kycInfo.status == 'failure'">{{ t('kyc.verify_failure') }}</span>
         </div>
       </template>
-      <template #right v-else>
+      <!-- <template #right v-else>
         <div @click="jump('chat')"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
             <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
-      </template>
+      </template> -->
     </Top>
     <!-- 查看模式头部 -->
     <Tabs @change="preStep" class="tabs" v-if="checkMode" style="width: 100%" :lazy-render="false"
@@ -47,7 +47,7 @@
 
     <!-- 表单模式头部 -->
     <div class="steps" v-if="!checkMode">
-      <div class="bg-color4 w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
+      <div class="bg-[var(--ex-none)] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="check-icon">
             <img :src="getStaticImgUrl('/static/img/user/right_white.svg')" alt="">
@@ -57,7 +57,7 @@
       <div class="w-[3.04rem] h-[0.16rem] bg-color2"></div>
       <div class="bg-color4 w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.32rem] h-[0.32rem] rounded-[50%] flex items-center justify-center">
-          <div class="bg-color4 w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
+          <div class="bg-[#333D30] w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
         </div>
       </div>
     </div>
@@ -89,7 +89,7 @@
           <img :src="files.front.url" alt="img" />
 
           <div
-            class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-tr-[0.32rem] rounded-bl-[0.32rem] absolute top-0 right-0"
+            class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click.stop="deleteImg('front')" v-if="!checkMode">
             <div class="delete_svg_icon">
               <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
@@ -118,7 +118,7 @@
           <img :src="files.back.url" alt="img" />
 
           <div
-            class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-tr-[0.32rem] rounded-bl-[0.32rem] absolute top-0 right-0"
+            class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click="deleteImg('back')" v-if="!checkMode">
             <div class="delete_svg_icon">
               <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
@@ -147,7 +147,7 @@
           <img :src="files.hand.url" alt="img" />
 
           <div
-            class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-tr-[0.32rem] rounded-bl-[0.32rem] absolute top-0 right-0"
+            class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click="deleteImg('hand')" v-if="!checkMode">
             <div class="delete_svg_icon">
               <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
@@ -496,6 +496,7 @@ const afterRead = (file, { name }) => {
     width: 100%;
     height: 1.12rem;
     font-size: 0.36rem;
+    border-radius: 0.4rem;
   }
 
   .item {

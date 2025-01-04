@@ -196,7 +196,7 @@ const confirmNext = () => {
       // message: "模拟账号不能进行该操作，去升级？",
     })
       .then(() => {
-        router.push({ name: "kyc" });
+        router.push({ name: "kyc", query: { from: 'register' } });
       })
       .catch(() => {
 

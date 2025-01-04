@@ -15,14 +15,14 @@
       <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("kyc.final_title") }}</div>
-    <div class="text-[0.24rem] text-color3 text-center -mt-[0.9rem] mb-[0.8rem]">
+    <div class="text-[0.24rem] text-color3 text-center mt-[0.26rem] mb-[0.8rem]">
       {{ $t("kyc.final_description") }}
     </div>
     <Button round color="var(--ex-primary-color)" @click="
       router.replace({
         name: 'kyc',
       })
-      " class="w-full text-[0.3rem]" type="primary"
+      " class="w-full text-[0.3rem] w-[3.6rem]" type="primary"
       :style="'height: 1.12rem; font-size: 0.3rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-black);">{{
         $t("kyc.final_ok") }}</span></Button>
   </div>
@@ -35,6 +35,7 @@ import { ref } from "vue";
 import router from "@/router";
 import { Button } from "vant";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 
 const { t } = useI18n();
 const jump = (name, query) => {
@@ -47,6 +48,10 @@ const kycInfo = ref({});
 try {
   kycInfo.value = JSON.parse(localStorage.getItem("kycInfo"));
 } catch { }
+
+const route = useRoute();
+const from = ref(route.query.from); // 'register'-表示从注册来
+console.error('???-->', route)
 </script>
 
 <style lang="less" scoped>
@@ -57,14 +62,13 @@ try {
   align-items: center;
 
   .icon {
-    width: 5.4rem;
-    height: 5.4rem;
-    margin-top: 1.7rem;
+    width: 2rem;
+    height: 2rem;
+    margin-top: 2.4rem;
   }
 
   .title {
     position: relative;
-    top: -1.2rem;
     color: var(--ex-text-color);
     font-weight: 400;
     font-size: 0.3rem;
