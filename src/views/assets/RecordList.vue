@@ -3,10 +3,8 @@
   <div class="page page_record_list">
     <Top :title="t('recordList.financialRecords')">
       <template #right>
-        <div class="w-[0.6rem] h-[0.6rem] rounded-[0.3rem] bg-color5 flex items-center justify-center" @click="router.push({name: 'chat'})">
-          <div class="w-[0.33rem] h-[0.33rem]">
-            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
-          </div>
+        <div class="w-[0.6rem] h-[0.6rem]">
+          <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
       </template>
     </Top>

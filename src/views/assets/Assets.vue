@@ -29,18 +29,15 @@
       </SwipeItem>
     </Swipe>
 
-    <Popup v-model:show="handle" position="bottom" :style="{
-      height: '5.96rem',
+    <BottomPopup closeable v-model:show="handle" position="bottom" :style="{
+      height: '5.56rem',
       borderTopRightRadius: '0.36rem',
       borderTopLeftRadius: '0.36rem',
+      overflow: 'hidden'
     }">
-      <div v-if="Object.keys(selectedItem).length" class="w-full relative">
-        <div class="absolute top-[0.1rem] right-[0.3rem]" style="width: 0.42rem;height: 0.42rem;"
-          @click="() => (handle = false)">
-          <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
-        </div>
+      <div v-if="Object.keys(selectedItem).length" class="w-full h-[5.56rem] relative">
         <div
-          class="w-full flex justify-center pt-[0.5rem] text-[0.32rem] text-color leading-[0.44rem] mb-[0.48rem]">
+          class="w-full flex justify-center text-[0.32rem] text-color leading-[0.44rem] mb-[0.48rem]">
           {{ t('assets.wallet_handle_title') }}
         </div>
         <div class="w-full flex items-center flex-col mb-[0.4rem]">
@@ -116,7 +113,7 @@
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
     <!-- 充提记录 -->
     <HintBlock v-if="route.name == 'assets' && hintNum" />
   </div>
@@ -138,6 +135,7 @@ import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
 import AiItem from "../Market/components/AiItem.vue";
 import { fiat } from "@/utils/dataMap";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const handle = ref(false);

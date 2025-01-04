@@ -100,7 +100,7 @@
             :placeholder="$t('topUpCrypto.searchPlaceholder')" />
         </div>
         <div class="lists">
-          <div @click="clickItem(keyStr)" class="swap_dialog_item"
+          <div @click="clickItem(keyStr)" class="swap_dialog_item px-[0.28rem]"
             :class="{ swap_dialog_item_active: form.currency == keyStr }" v-for="(val, keyStr) in networkMapList"
             :key="keyStr" v-show="!searchDialogStr ||
               keyStr.toUpperCase().indexOf(searchDialogStr) > -1
@@ -120,21 +120,24 @@
     </BottomPopup>
 
     <!-- 网路选择弹窗 -->
-    <Popup round closeable v-model:show="showNetDialog" position="bottom" teleport="body">
-      <div class="van-popup-custom-title">
-        {{ $t("topUpCrypto.networkSelection") }}
-      </div>
-      <div class="topup_accounr_dialog network_accounr_dialog">
-        <div @click="clickNetItem(item.network)" class="swap_dialog_item"
-          :class="{ swap_dialog_item_active: form.network == item.network }" v-for="(item, i) in currNetwork" :key="i">
-          <span>{{ item.network }}</span>
+    <BottomPopup round closeable v-model:show="showNetDialog" position="bottom" teleport="body">
+      <div class="w-full flex flex-col h-[3rem] px-[0.28rem]">
+        <div class="van-popup-custom-title text-center">
+          {{ $t("topUpCrypto.networkSelection") }}
+        </div>
+        <div class="topup_accounr_dialog network_accounr_dialog">
+          <div @click="clickNetItem(item.network)" class="swap_dialog_item"
+            :class="{ swap_dialog_item_active: form.network == item.network }" v-for="(item, i) in currNetwork"
+            :key="i">
+            <span class="w-full text-start">{{ item.network }}</span>
 
-          <div v-if="form.network == item.network" class="check_icon">
-            <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+            <div v-if="form.network == item.network" class="check_icon">
+              <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+            </div>
           </div>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- 充提记录 -->
     <RecordList ref="RecordListRef" />

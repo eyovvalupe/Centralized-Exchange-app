@@ -29,7 +29,7 @@ const routes = [
     name: 'user',
     component: () => import('../views/User/NewUser.vue'),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
       pageType: 'tab',
     },
   },
@@ -153,16 +153,16 @@ const routes = [
       pageType: 'child',
     },
   },
-  {
-    // 添加加密货币
-    path: '/crypto',
-    name: 'crypto',
-    component: () => import('../views/User/Account/Crypto.vue'),
-    meta: {
-      keepAlive: false,
-      pageType: 'child',
-    },
-  },
+  // {
+  //   // 添加加密货币
+  //   path: '/crypto',
+  //   name: 'crypto',
+  //   component: () => import('../views/User/Account/Crypto.vue'),
+  //   meta: {
+  //     keepAlive: false,
+  //     pageType: 'child',
+  //   },
+  // },
   {
     // 市场
     path: '/market',

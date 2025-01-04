@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <!-- 返回和语言 -->
-    <div class="top_icon_container">
+    <!-- <div class="top_icon_container">
       <div class="top_back_container text-[0.48rem]" @click="goBack">
         <Icon name="arrow-left" />
       </div>
@@ -12,7 +12,14 @@
           <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
         </div>
       </div>
-    </div>
+    </div> -->
+    <Top>
+      <template #right>
+        <div class="w-[0.6rem] h-[0.6rem]" @click="goLang">
+          <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+        </div>
+      </template>
+    </Top>
 
     <div class="security_description">
       <div class="title">{{ $t("register.security") }}</div>
@@ -61,6 +68,7 @@ import { Slider, showLoadingToast, closeToast, Icon } from "vant";
 import { ref, onMounted, watch } from "vue";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
+import Top from "./Top.vue";
 
 const { t } = useI18n();
 
