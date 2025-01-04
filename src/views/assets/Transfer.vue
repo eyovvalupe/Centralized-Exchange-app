@@ -55,7 +55,8 @@
           :inputType="'number'" @update:modelValue="changeAmount('from')" /> -->
         <div class="w-full flex justify-between items-center">
           <div style="width: 80%;">
-            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'from'" @blur="clickKey = ''"/>
+            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'from'"
+              @blur="clickKey = ''" />
           </div>
           <div class="flex-1 text-end h-full items-center text-color3">
             {{ form.fromCurrency ? form.fromCurrency.name : '--' }}
@@ -104,7 +105,8 @@
           @update:modelValue="changeAmount('to')" /> -->
         <div class="w-full flex justify-between items-center">
           <div style="width: 80%;">
-            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'to'" @blur="clickKey = ''"/>
+            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'to'"
+              @blur="clickKey = ''" />
           </div>
           <div class="flex-1 text-end h-full items-center text-color3">
             {{ form.toCurrency ? form.toCurrency.name : '--' }}
@@ -129,8 +131,7 @@
     <SafePassword @submit="submit" ref="safeRef" />
 
     <!-- 账户和币种 -->
-    <Popup class="bg-color5" v-model:show="showPicker" closeable round position="bottom"
-      @closed="clickKey = ''">
+    <Popup class="bg-color5" v-model:show="showPicker" closeable round position="bottom" @closed="clickKey = ''">
       <div class="van-popup-custom-title">{{ $t("transfer.confirm_con") }}</div>
       <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
         @cancel="hideDialog" @change="onChange">
@@ -494,9 +495,6 @@ const changeAmount = (val) => {
     z-index: 10;
   }
 
-  :deep(li.van-picker-column__item) {
-    justify-content: flex-start;
-  }
 
   .top-record {
     width: 0.6rem;

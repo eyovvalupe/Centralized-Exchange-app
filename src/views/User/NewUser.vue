@@ -309,6 +309,7 @@ if (token.value) {
   position: relative;
   height: 100%;
   overflow-y: auto;
+  padding-bottom: 2rem;
 
   .title {
     height: 1.12rem;
