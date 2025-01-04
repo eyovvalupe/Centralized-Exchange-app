@@ -26,8 +26,10 @@
       </Tab>
     </Tabs>
 
-    <div class="add_btn" @click="goAddAccount">
-      <span class="text-black text-[0.36rem] font-normal font-semibold">{{ $t("account.add_account_btn") }}</span>
+    <div class="w-full flex justify-center">
+      <div class="add_btn" @click="goAddAccount">
+        <span class="text-black text-[0.36rem] font-normal font-semibold">{{ $t("account.add_account_btn") }}</span>
+      </div>
     </div>
 
     <BottomPopup round closeable v-model:show="needAuth" position="bottom" teleport="body">
@@ -218,15 +220,16 @@ const goBack = () => {
   }
 
   .add_btn {
-    width: 6.86rem;
+    width: 6.7rem;
     height: 1.12rem;
     background-color: var(--ex-primary-color);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 1.6rem;
+    border-radius: 0.4rem;
     position: absolute;
     bottom: 0.52rem;
+    margin: 0 auto;
   }
 }
 </style>
