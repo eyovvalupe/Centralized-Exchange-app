@@ -100,12 +100,9 @@
     <VerifCode @submit="submitCode" to="body" ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
-      position="bottom" teleport="body">
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
+      position="bottom" teleport="body" closeable>
       <div class="register_accounr_dialog">
-        <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="showDialog = false">
-          <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
-        </div>
         <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
           {{ $t("login.country_number") }}
         </div>
@@ -118,7 +115,7 @@
             <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
           </div>
         </div>
-        <div style="height: 60vh; overflow-y: auto">
+        <div style="height: 60vh; overflow-y: auto; padding: 0 0.24rem;">
           <!-- <List> -->
           <div v-for="item in showAreas">
             <div @click="clickItem(item)"
@@ -128,8 +125,8 @@
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
                   <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                 </div>
-                <span>{{ item.cn }}</span>
-                <span>({{ item.code }})</span>
+                <span>{{ item.cn }}&nbsp;</span>
+                <span>{{ item.code }}</span>
               </div>
               <Icon v-if="form.area == item.code" class="cross" name="success" />
             </div>
@@ -138,7 +135,7 @@
           <NoData v-if="!showAreas.length" />
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
   </div>
 </template>
 
@@ -165,6 +162,7 @@ import { areaCode, validateEmail } from "@/utils/index";
 import NoData from "@/components/NoData.vue";
 import { useI18n } from "vue-i18n";
 import Top from "@/components/Top.vue";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 
@@ -674,9 +672,7 @@ onMounted(() => {
 .register_accounr_dialog {
   width: 100%;
   height: 100%;
-  background-color: var(--ex-bg-color);
-  border-top-left-radius: 0.4rem;
-  border-top-right-radius: 0.4rem;
+  background-color: var(--ex-bg-color5);
   overflow: hidden;
   padding: 0.28rem 0.32rem 0.8rem 0.32rem;
   position: relative;
@@ -691,8 +687,8 @@ onMounted(() => {
 
   .search_box {
     height: 0.84rem;
-    border: 0.02rem solid var(--ex-border-color2);
-    border-radius: 0.32rem;
+    background-color: var(--ex-bg-color);
+    border-radius: 1rem;
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;
     display: flex;
@@ -794,8 +790,8 @@ onMounted(() => {
 }
 
 .close-svg-icon {
-  width: 0.24rem;
-  height: 0.24rem;
+  width: 0.32rem;
+  height: 0.32rem;
   margin-left: 0.12rem;
   background-size: contain;
   background-repeat: no-repeat;

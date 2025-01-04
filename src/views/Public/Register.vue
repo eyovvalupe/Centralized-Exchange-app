@@ -868,9 +868,6 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .register_accounr_dialog {
-  background-color: var(--ex-bg-color);
-  // border-top-left-radius: 0.4rem;
-  // border-top-right-radius: 0.4rem;
   background-color: var(--ex-bg-color5);
   overflow: hidden;
   padding: 0 0.32rem 0.8rem 0.32rem;
