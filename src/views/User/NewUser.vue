@@ -75,7 +75,7 @@
       <div class="w-[6rem] mx-auto rounded-tl-[0.36rem] rounded-tr-[0.36rem] overflow-hidden">
         <Carousel :autoplay="3000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide" class="relative">
           <Slide v-for="(slide, index) in token ? slides2 : slides1" :key="index">
-            <img :src="slide" class="w-full bg-color5" alt="img" />
+            <img :src="slide" class="w-full bg-color5 rounded-tr-[0.32rem] rounded-tl-[0.32rem]" alt="img" />
             <div v-if="token" class="absolute left-0 px-[0.32rem] w-full flex justify-between items-center">
               <div class="flex flex-col">
                 <div class="text-primary text-[0.3rem] font-bold mb-[0.2rem]">
