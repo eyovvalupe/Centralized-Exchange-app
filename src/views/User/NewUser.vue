@@ -5,13 +5,13 @@
     <!-- <div class="title">用户</div> -->
     <div class="flex flex-col mt-[0.2rem] mb-[0.32rem] px-[0.32rem]">
       <div class="w-full flex justify-end gap-[0.16rem]">
-        <div class="w-[0.6rem] h-[0.6rem]">
+        <div class="w-[0.6rem] h-[0.6rem]" @click="jump('chat')">
           <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
         <div class="w-[0.6rem] h-[0.6rem]">
           <img :src="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
         </div>
-        <div class="w-[0.6rem] h-[0.6rem]">
+        <div class="w-[0.6rem] h-[0.6rem]" @click="jump('notification')">
           <img :src="getStaticImgUrl('/static/img/common/notice.svg')" alt="server" />
         </div>
       </div>
