@@ -1,11 +1,8 @@
 <!-- 谷歌验证弹窗 -->
 <template>
-  <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="bottom"
+  <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="bottom" closeable
     teleport="body" :close-on-popstate="true" :close-on-click-overlay="false" class="self_van_popup">
     <div class="google_dialog">
-      <div class="close-svg-iconB absolute right-0 mr-[0.32rem]" @click="close">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
-      </div>
       <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
         {{ $t("google_auth.google_input_title") }}
       </div>
@@ -14,17 +11,16 @@
         :gutter="'0.16rem'" :mask="false" />
       <input style="opacity: 0" ref="iptRef" v-model="val" maxlength="6" enterkeyhint="done" @keydown.enter="submit" />
       <div class="btns">
-        <div @click="close"
-          class="flex justify-center items-center rounded-[1.6rem] border-[0.02rem] border-color-2 text-color2 w-[3.27rem] h-[0.97rem]">
-          {{ $t("google_auth.google_input_btn_cancel") }}
-        </div>
+        <Button :disabled="disabled" round color="var(--ex-white)" class="btn" type="primary" @click="close">
+          <span class="text-black">{{ $t("google_auth.google_input_btn_cancel") }}</span>
+        </Button>
         <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn" type="primary"
           @click="submit">
-          <span style="color: var(--ex-black);">{{ $t("google_auth.google_input_btn_confirm") }}</span>
+          <span class="text-black">{{ $t("google_auth.google_input_btn_confirm") }}</span>
         </Button>
       </div>
     </div>
-  </Popup>
+  </BottomPopup>
 </template>
 
 <script setup>
@@ -32,6 +28,7 @@ import { getStaticImgUrl } from "@/utils/index.js"
 import { Popup, PasswordInput, Button } from "vant";
 import { ref, computed, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "./BottomPopup.vue";
 
 const { t } = useI18n();
 const emits = defineEmits(["submit"]);
@@ -90,8 +87,8 @@ defineExpose({
 
 <style lang="less" scoped>
 .google_dialog {
-  background-color: var(--ex-bg-color);
-  padding: 0.28rem 0.32rem 0.8rem 0.32rem;
+  background-color: var(--ex-bg-color5);
+  padding: 0 0.32rem 0.8rem 0.32rem;
   border-top-left-radius: 0.4rem;
   border-top-right-radius: 0.4rem;
   position: relative;
