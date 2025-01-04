@@ -619,10 +619,10 @@ const jump = (name) => {
   });
 };
 
-Promise.all([
-  import("@/views/User/Account/Bank.vue"),
-  import("@/views/User/Account/Crypto.vue"),
-]);
+// Promise.all([
+//   import("@/views/User/Account/Bank.vue"),
+//   import("@/views/User/Account/Crypto.vue"),
+// ]);
 
 watch(
   () => form.value.from,

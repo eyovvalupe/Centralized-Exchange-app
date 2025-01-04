@@ -246,9 +246,9 @@ const loginout = () => {
         setTimeout(() => {
           store.dispatch("reset");
           store.commit("setIsLoginOpen", true);
-          // router.push({
-          //     name: 'login'
-          // })
+          router.push({
+              name: 'home'
+          })
         }, 200);
       })
       .catch(() => { });
