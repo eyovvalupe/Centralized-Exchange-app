@@ -131,8 +131,8 @@
     <SafePassword @submit="submit" ref="safeRef" />
 
     <!-- 账户和币种 -->
-    <Popup class="bg-color5" v-model:show="showPicker" closeable round position="bottom" @closed="clickKey = ''">
-      <div class="van-popup-custom-title">{{ $t("transfer.confirm_con") }}</div>
+    <BottomPopup :from="'account'" class="bg-color5" v-model:show="showPicker" closeable round position="bottom" @closed="clickKey = ''">
+      <div class="van-popup-custom-title w-full text-center text-[0.32rem] relative top-[-0.05rem]">{{ $t("transfer.confirm_con") }}</div>
       <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
         @cancel="hideDialog" @change="onChange">
         <template #option="option">
@@ -146,7 +146,7 @@
           </div>
         </template>
       </Picker>
-    </Popup>
+    </BottomPopup>
     <!-- 账号验证 -->
     <AccountCheck ref="AccountCheckRef" />
   </div>
@@ -168,6 +168,7 @@ import router from "@/router";
 import Decimal from "decimal.js";
 import AccountCheck from "@/components/AccountCheck.vue";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const AccountCheckRef = ref();
