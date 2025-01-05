@@ -5,7 +5,7 @@ const { t } = i18n.global;
 
 // 账户类型
 export const _accountMap = {
-  money: t("accountMap.cashAccount"),
+  money: t('accountMap.cashAccount'),
   stock: t("accountMap.stockAccount"),
   futures: t("accountMap.contractAccount"),
   forex: t("accountMap.foreignExchangeAccount"),

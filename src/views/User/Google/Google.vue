@@ -33,7 +33,7 @@
     <div class="w-full h-[1rem] mb-[0.8rem]" v-if="!gg.googlesecret"></div>
     <div class="w-full relative">
       <CodeInput :loading="loading" @submit="(code) => goBind(code)" />
-      <div class="absolute top-[1.3rem] left-[0] text-down" v-if="isSentCodeError">
+      <div class="absolute top-[2rem] left-[0] text-down" v-if="isSentCodeError">
         {{ errText }}
       </div>
     </div>

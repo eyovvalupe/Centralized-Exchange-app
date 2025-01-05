@@ -16,7 +16,7 @@
       <div class="form_box" :class="{ form_box_active: clickKey == 'from' }">
         <div class="flex w-full justify-between">
           <div class="mb-[0.32rem] w-[1.52rem] h-[0.6rem] flex justify-center items-center bg-white rounded-[1rem]">
-            <span class="text-[0.28rem] text-color--bg-primary">{{ $t("transfer.out") }}</span>
+            <span class="text-[0.28rem] text-color--bg-primary text-center">{{ $t("transfer.out") }}</span>
           </div>
           <div
             class="flex justify-between items-center bg-color w-[4rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem]"
@@ -70,7 +70,7 @@
         </div>
         <div class="flex justify-between">
           <div class="mb-[0.32rem] w-[1.52rem] h-[0.6rem] flex justify-center items-center bg-white rounded-[1rem]">
-            <span class="text-[0.28rem] text-color--bg-primary">{{ $t("transfer.in") }}</span>
+            <span class="text-[0.28rem] text-color--bg-primary text-center">{{ $t("transfer.in") }}</span>
           </div>
           <div
             class="flex justify-between items-centerw-full w-[4rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] bg-color"
@@ -604,6 +604,7 @@ const changeAmount = (val) => {
     height: 1.12rem;
     margin-top: 0.84rem;
     font-size: 0.36rem;
+    border-radius: 0.4rem;
   }
 
   .picker-item {

@@ -1,9 +1,10 @@
 <!-- 验证码弹窗 -->
 <template>
-  <Dialog v-model:show="show" title="" showCancelButton showConfirmButton :width="'6.22rem'"
+  <!-- <BottomPopup closeable v-model:show="show" title="" showCancelButton showConfirmButton :width="'6.22rem'"
     :confirmButtonText="t('register.code_jump_confirm')" :confirmButtonColor="'var(--ex-primary-color)'"
     :cancelButtonText="t('user_page.message_box_cancel')" :cancelButtonColor="'var(--ex-text-color2)'" overlay
-    @cancel="close" @confirm="confirm" :before-close="() => false">
+    @closed="close" @confirm="confirm" :before-close="() => false"> -->
+  <BottomPopup round closeable v-model:show="show" position="bottom" teleport="body" @close="close">
     <div class="verif_box">
       <div class="title">{{ t('register.enter_graphic_number') }}</div>
       <!-- 验证码 -->
@@ -19,8 +20,16 @@
         <input ref="iptRef" type="text" @input="() => (code = code.toString().slice(0, 4))" v-model.trim="code"
           :placeholder="t('register.enter_verify_code')" />
       </div>
+      <div class="w-full flex px-[0.4rem] justify-between">
+        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-white text-black text-[0.32rem] font-semibold"
+          @click="close">{{
+            t('user_page.message_box_cancel') }}</div>
+        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-primary text-black text-[0.32rem] font-semibold"
+          @click="confirm">{{
+            t('withdraw.confirm') }}</div>
+      </div>
     </div>
-  </Dialog>
+  </BottomPopup>
 </template>
 
 <script setup>
@@ -28,6 +37,7 @@ import { Dialog, showToast, Loading } from "vant";
 import { ref } from "vue";
 import { _verifcode } from "@/api/api";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "./BottomPopup.vue";
 
 const { t } = useI18n();
 const emits = defineEmits(["submit"]);
@@ -84,25 +94,27 @@ defineExpose({
 
 <style lang="less" scoped>
 .verif_box {
-  padding: 0.4rem 0.48rem 0.16rem 0.48rem;
+  height: 7rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 
   .title {
     color: var(--ex-text-color);
     font-size: 0.32rem;
     line-height: 0.44rem;
-    margin-bottom: 0.28rem;
+    margin-bottom: 0.8rem;
   }
 
   .code {
-    height: 1rem;
-    width: auto;
+    width: 3.4rem;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 0.32rem;
+    overflow: hidden;
+    margin-bottom: 0.2rem;
   }
 
   .tip {
@@ -110,20 +122,22 @@ defineExpose({
     color: var(--ex-primary-color);
     text-align: center;
     font-weight: 400;
-    margin-bottom: 0.08rem;
+    margin-bottom: 0.4rem;
   }
 
   .ipt_box {
     height: 1.12rem;
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-text-color3);
-    width: 100%;
+    background-color: var(--ex-bg-color6);
+    width: 4rem;
     display: flex;
     align-items: stretch;
+    margin-bottom: 0.6rem;
 
     input {
       text-align: center;
       width: 100%;
+      font-size: 0.32rem;
     }
   }
 }

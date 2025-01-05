@@ -683,6 +683,7 @@ watch(
     height: 1.12rem;
     font-size: 0.36rem;
     margin-top: 0.8rem;
+    border-radius: 0.4rem;
   }
 
   .form {
