@@ -6,8 +6,7 @@
       :deleteItem="!!token" class="market_optional" :list="watchList" :marketType="marketType" :page="'market'" />
     <div class="addBtn_container">
       <Button round icon="plus" plain type="primary" hairline="" class="addBtn px-[0.1rem]" @click="jump('search')">
-        <span style="color: var(--ex-black);">{{
-          t('market.market_optional_add') }}</span>
+        {{ t('market.market_optional_add') }}
       </Button>
     </div>
   </div>
@@ -23,7 +22,7 @@
         v-show="stockList.length + contractList.length > 0 && showFavoriteBtn">
         <Button round block type="primary" size="large" class="one_click_to_favorite" :loading="addLoading"
           @click="addOptional">
-          <span style="color: var(--ex-black);">{{ t('market.market_optional_add_all') }}</span>
+          <span style="color: var(--ex-text-color);">{{ t('market.market_optional_add_all') }}</span>
           (<i class="tag">{{
             stockList.length + contractList.length
           }}</i>)
