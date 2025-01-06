@@ -633,6 +633,24 @@ const routes = [
     },
   },
   {
+    path: '/portfolioTrade',
+    name: 'portfolioTrade',
+    component: () => import('../views/Staking/Trade.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    },
+  },
+  {
+    path: '/portfolioOrder',
+    name: 'portfolioOrder',
+    component: () => import('../views/Staking/Order.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    },
+  },
+  {
     // 找不到路由时
     path: '/:pathMatch(.*)*',
     redirect: '/',
