@@ -1,11 +1,18 @@
 <!-- 顶部菜单 -->
 <template>
   <div class="max-width top">
-    <div class="back" @click="clickLeft">
+    <div v-if="from != 'first'" class="back" @click="clickLeft">
       <div class="w-[0.28rem] h-[0.28rem]">
         <img :src="getStaticImgUrl('/static/img/user/back.svg')" alt="">
       </div>
     </div>
+
+    <div v-if="from == 'first'" class="back1" @click="() => {}">
+      <div class="w-[0.4rem] h-[0.4rem] text-white">
+        <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
+      </div>
+    </div>
+   
     <slot name="title" v-if="slots['title']" />
     <span v-else>{{ props.title }}</span>
     <div class="right">
@@ -31,6 +38,10 @@ const props = defineProps({
     default: 'arrow-left',
   },
   searchText: {
+    type: String,
+    default: ""
+  },
+  from: {
     type: String,
     default: ""
   },
@@ -84,6 +95,17 @@ const clickLeft = () => {
     justify-content: center;
     border-radius: 0.3rem;
     background-color: var(--ex-bg-color6);
+  }
+
+  .back1 {
+    position: absolute;
+    left: 0.32rem;
+    width: 0.6rem;
+    height: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.3rem;
   }
 
   .right {
