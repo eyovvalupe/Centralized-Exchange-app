@@ -117,9 +117,9 @@ const checkActive = (item) => {
 };
 </script>
 
-<style scoped lang="less">
+<style scoped lang="less"> 
 .bottom_nav2 {
-  background-color:var(--ex-bg-color2);
+  background-color:var(--ex-bg-color3);
   display: flex;
   position: fixed;
   overflow: hidden;
@@ -130,7 +130,15 @@ const checkActive = (item) => {
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
-
+  &::before{
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: var(--ex-border-color);
+    position: absolute;
+    left:0;
+    top:0;
+  }
   .nav_box {
     flex: 1;
     display: flex;
