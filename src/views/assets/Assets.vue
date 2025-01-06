@@ -3,28 +3,28 @@
   <div class="page page_assets">
     <!-- 头部 -->
     <HeaderTabs v-model:active="activeTab" :tabs="[
-      t('assets.header_total'),
+      // t('assets.header_total'),
       t('assets.header_wallet'),
       t('assets.header_order'),
     ]" @change="changeActiveTab(activeTab, true)" />
 
     <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
-      <SwipeItem>
+      <!-- <SwipeItem>
         <div class="assets_body pb-[0.32rem]">
           <Overview ref="overviewRef" v-if="loadedTab.indexOf(0) > -1" @jumpToWallet="(val) => jumpToWallet(val)"
             @setLoading="(val) => (loading = val)" />
         </div>
-      </SwipeItem>
+      </SwipeItem> -->
       <SwipeItem>
         <div class="assets_body">
-          <Wallet ref="cashRef" v-if="loadedTab.indexOf(1) > -1" @setLoading="(val) => (loading = val)"
+          <Wallet ref="cashRef" v-if="loadedTab.indexOf(0) > -1" @setLoading="(val) => (loading = val)"
             @click="(val) => click(val)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="assets_body" id="assets_order_center_body" ref="orderCenterRef">
           <!-- 记录弹窗 -->
-          <OrderCenter v-if="loadedTab.indexOf(2) > -1" />
+          <OrderCenter v-if="loadedTab.indexOf(1) > -1" />
         </div>
       </SwipeItem>
     </Swipe>

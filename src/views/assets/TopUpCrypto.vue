@@ -15,7 +15,7 @@
       <Tab :title="$t('topUpCrypto.cryptocurrency')" name="cryptocurrency">
         <div class="form mt-[0.46rem]">
           <div
-            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem]"
+            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px]"
             style="background-color: var(--ex-bg-color2);" @click="showDialog = true">
             <div class="flex flex-col justify-between">
               <div class="text-[0.28rem] text-color5">
@@ -39,7 +39,7 @@
           </div>
 
           <div
-            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem]"
+            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px]"
             style="background-color: var(--ex-bg-color2);" @click="showNetDialog = true">
             <div class="h-full flex flex-col">
               <div class="text-[0.28rem] text-color5" style="width: max-content;">
@@ -62,7 +62,7 @@
               $t("topUpCrypto.rechargeAmount")
             }}</span>
           </div> -->
-          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]"
+          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px]"
             :class="{ err_ipt: errStatus }" style="background-color: var(--ex-bg-color2);">
             <div class="item_content">
               <input class="ipt" @blur="
@@ -80,9 +80,9 @@
                         <Loading v-show="rateLoading" type="spinner" size="12px" />
                     </div> -->
         </div>
-        <Button @click="goTopUp" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-          type="primary"><span style="color: var(--ex-black);">{{
-            $t("topUpCrypto.confirm") }}</span></Button>
+        <Button @click="goTopUp" :loading="loading" round class="submit"
+          type="primary">{{
+            $t("topUpCrypto.confirm") }}</Button>
       </Tab>
       <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard"> </Tab>
     </Tabs>
@@ -120,13 +120,10 @@
     </BottomPopup>
 
     <!-- 网路选择弹窗 -->
-    <BottomPopup round closeable v-model:show="showNetDialog" position="bottom" teleport="body">
-      <div class="w-full flex flex-col h-[3rem] px-[0.28rem]">
-        <div class="van-popup-custom-title text-center">
-          {{ $t("topUpCrypto.networkSelection") }}
-        </div>
+    <BottomPopup round closeable :title="$t('topUpCrypto.networkSelection')" v-model:show="showNetDialog" position="bottom" teleport="body">
+        
         <div class="topup_accounr_dialog network_accounr_dialog">
-          <div @click="clickNetItem(item.network)" class="swap_dialog_item"
+          <div @click="clickNetItem(item.network)" class="swap_dialog_item px-[0.28rem]"
             :class="{ swap_dialog_item_active: form.network == item.network }" v-for="(item, i) in currNetwork"
             :key="i">
             <span class="w-full text-start">{{ item.network }}</span>
@@ -136,7 +133,6 @@
             </div>
           </div>
         </div>
-      </div>
     </BottomPopup>
 
     <!-- 充提记录 -->
@@ -380,10 +376,6 @@ onBeforeUnmount(() => {
     z-index: 10;
   }
 
-  :deep(span.van-button__text) {
-    color: var(--ex-black);
-  }
-
   :deep(span.van-tab__text) {
     font-size: 0.32rem;
     color: var(--ex-text-color2);
@@ -396,7 +388,7 @@ onBeforeUnmount(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color3);
 
 
     .top-record-icon {
@@ -568,12 +560,13 @@ onBeforeUnmount(() => {
   }
 
   .search_box {
-    height: 0.8rem;
+    height: 0.96rem;
     padding: 0 0.32rem;
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
     background-color: var(--ex-bg-color2);
+    border: 1px solid var(--ex-border-color);
     border-radius: 0.6rem;
 
     .search_icon {
@@ -593,15 +586,17 @@ onBeforeUnmount(() => {
   }
 
   .swap_dialog_item {
-    height: 1.04rem;
+    height: 1.12rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--ex-border-color);
     overflow: hidden;
     position: relative;
     font-size: 0.3rem;
     margin: 0 0.32rem;
-
+    background-color: var(--ex-bg-color3);
+    border-radius: 0.32rem;
+    margin-top: 0.2rem;
+    
     .icon {
       width: 0.64rem;
       height: 0.64rem;
@@ -616,7 +611,7 @@ onBeforeUnmount(() => {
   .swap_dialog_item_active {
     color: var(--ex-primary-color);
     font-weight: 600;
-
+    background-color: rgba(255,255,255,0.1);
     .check_icon {
       position: absolute;
       right: 0.24rem;
