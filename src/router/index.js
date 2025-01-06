@@ -624,10 +624,20 @@ const routes = [
     },
   },
   {
+    path: '/portfolioIndex',
+    name: 'portfolioIndex',
+    component: () => import('../views/Staking/Index.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    },
+  },
+  {
     // 找不到路由时
     path: '/:pathMatch(.*)*',
     redirect: '/',
   },
+ 
 ]
 
 const router = createRouter({
