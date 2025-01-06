@@ -7,17 +7,17 @@
             <div class="w-full h-full px-[0.32rem] py-[0.4rem] flex flex-col justify-between">
                 <div class="flex flex-col relative">
                     <div class="text-[0.36rem] font-semibold mb-[0.32rem]">BTC+ETH+XRP</div>
-                    <div class="text-color2 font-bold">{{ t('Investment amount: ') + '3500-99999999' }}</div>
+                    <div class="text-color2 font-bold">{{ t('finance.portfolio_investment_amt') + ': ' + '3500-99999999' }}</div>
                 </div>
                 <div class="flex flex-col relative">
                     <div class="flex mb-[0.2rem]">
-                        <div class="mr-[0.2rem]" style="color: var(--ex-blue);">{{ t('Yield') }}</div>
+                        <div class="mr-[0.2rem]" style="color: var(--ex-blue);">{{ t('finance.portfolio_yield') }}</div>
                         <div class="w-max px-[0.15rem] h-[0.4rem] flex items-center rounded-[0.2rem] text-[0.24rem]"
-                            style="background-color: var(--ex-red);">{{ t('Duration:') + ' ' + 7 + t('Days') }}</div>
+                            style="background-color: var(--ex-red);">{{ t('finance.portfolio_duration') + ': ' + 7 + t('Days') }}</div>
                     </div>
-                    <div class="text-[0.38rem] font-bold mb-[0.2rem]">0.3-0.4%/{{ t('Day') }}</div>
+                    <div class="text-[0.38rem] font-bold mb-[0.2rem]">0.3-0.4%/{{ t('finance.portfolio_day') }}</div>
                     <Button class="submit" @click="jump('portfolioTrade')"><span class="text-[0.32rem] font-bold">{{ '+'
-                        + t('Participate')
+                        + t('finance.portfolio_participate')
                             }}</span></Button>
                 </div>
             </div>

@@ -1,18 +1,18 @@
 <!-- 顶部菜单 -->
 <template>
   <div class="max-width top">
-    <div v-if="from != 'first'" class="back" @click="clickLeft">
+    <div class="back" @click="clickLeft">
       <div class="w-[0.28rem] h-[0.28rem]">
         <img :src="getStaticImgUrl('/static/img/user/back.svg')" alt="">
       </div>
     </div>
 
-    <div v-if="from == 'first'" class="back1" @click="() => {}">
+    <!-- <div v-if="from == 'first'" class="back1" @click="() => { }">
       <div class="w-[0.4rem] h-[0.4rem] text-white">
         <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
       </div>
-    </div>
-   
+    </div> -->
+
     <slot name="title" v-if="slots['title']" />
     <span v-else>{{ props.title }}</span>
     <div class="right">
@@ -53,8 +53,8 @@ const clickLeft = () => {
     var prevList = [...marketSearchTextList.value];
     var flag = false;
     prevList.map((item) => {
-        if(item.toUpperCase() == props.searchText.toUpperCase())
-            flag = true;
+      if (item.toUpperCase() == props.searchText.toUpperCase())
+        flag = true;
     })
     var newList = flag ? prevList : [...prevList, props.searchText];
 

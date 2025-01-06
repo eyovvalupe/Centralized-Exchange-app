@@ -1,12 +1,12 @@
 <template>
     <div class="staking_page">
-        <Top :title="t('Staking mining')" :from="'first'">
+        <Top :title="t('finance.portfolio_title')" :from="'first'">
             <template #left>
                 <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="img" />
             </template>
             <template #right>
                 <div class="text-[0.32rem] text-primary" @click="jump('portfolioOrder')">
-                    {{ t('Order') }}
+                    {{ t('finance.portfolio_order') }}
                 </div>
             </template>
         </Top>
@@ -21,7 +21,7 @@
                     <div class="flex">
                         <div class="text-white text-[0.55rem] font-semibold mr-[0.2rem]">0.00</div>
                         <div class="w-max h-[0.6rem] text-[0.27rem] flex px-[0.15rem] items-center rounded-[0.2rem]"
-                            style="background-color: var(--ex-red);">{{ t('Total Revenue') }}</div>
+                            style="background-color: var(--ex-red);">{{ t('finance.portfolio_revenue') }}</div>
                     </div>
                 </div>
             </div>

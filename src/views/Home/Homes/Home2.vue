@@ -48,7 +48,7 @@
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
                 <div style="flex: 1;">质押挖矿</div>
-                <div class="recommend-icon">
+                <div class="recommend-icon" @click="jump('portfolioIndex', true)">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>

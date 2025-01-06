@@ -1,9 +1,9 @@
 <template>
     <div class="staking_mining w-full">
-        <Top :title="t('Staking mining')" />
+        <Top :title="t('finance.portfolio_mining_title')" />
         <div class="px-[0.2rem] mt-[1.1rem]">
             <div class="px-[0.2rem] py-[0.32rem] bg-color6 flex flex-col mb-[0.2rem] rounded-[0.2rem]">
-                <div class="mb-[0.32rem]">{{ t('Subscription Combination') }}</div>
+                <div class="mb-[0.32rem]">{{ t('finance.portfolio_mining_subTitle1') }}</div>
                 <div class="flex mb-[0.6rem]">
                     <div class="flex items-center" v-for="(item, i) in itemsMap" v-if="itemsMap.length">
                         <div class="flex flex-col bg-color px-[0.2rem] py-[0.32rem] rounded-[0.1rem]">
@@ -20,47 +20,44 @@
                 <!-- 挖矿详情 -->
                 <div class="w-full flex flex-col">
                     <div class="w-full flex justify-between mb-[0.2rem]">
-                        <div class="text-color3">{{ t('Operating Time') }}</div>
+                        <div class="text-color3">{{ t('finance.portfolio_mining_operation') }}</div>
                         <div>{{ 15 + t('Days') }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
-                        <div class="text-color3">{{ t('Yield') }}</div>
+                        <div class="text-color3">{{ t('finance.portfolio_yield') }}</div>
                         <div>0.3-0.4%</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
-                        <div class="text-color3">{{ t('Estimated Revenue') }}</div>
+                        <div class="text-color3">{{ t('finance.portfolio_mining_revenue') }}</div>
                         <div>{{ 0.00 - 0.00 }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
-                        <div class="text-color3">{{ t('Investment Amount') }}</div>
+                        <div class="text-color3">{{ t('finance.portfolio_mining_investment') }}</div>
                         <div>{{ 3500 - 999999 }}</div>
                     </div>
                     <div class="w-full flex justify-between">
-                        <div class="text-color3">{{ t('Handling Fee') }}</div>
+                        <div class="text-color3">{{ t('finance.portfolio_mining_fee') }}</div>
                         <div>{{ 0 }}</div>
                     </div>
                 </div>
             </div>
 
             <div class="px-[0.2rem] py-[0.32rem] bg-color6 flex flex-col mb-[0.48rem] rounded-[0.2rem]">
-                <div class="mb-[0.48rem]">{{ t('Subscription Amount') }}</div>
-                <div class="w-full flex justify-center text-[0.4rem] mb-[0.32rem]">{{ t('Estimated Subscription Amount')
+                <div class="mb-[0.48rem]">{{ t('finance.portfolio_mining_subTitle2') }}</div>
+                <div class="w-full flex justify-center text-[0.4rem] mb-[0.32rem]">{{ t('finance.portfolio_mining_header')
                     }}</div>
-                <div class="w-full flex justify-center text-[0.24rem] mb-[0.32rem] text-color2">{{ t('Account Balance:')
-                    + 0 }}</div>
+                <div class="w-full flex justify-center text-[0.24rem] mb-[0.32rem] text-color2">{{ t('finance.portfolio_mining_balance')
+                    + ': ' + 0 }}</div>
                 <div class="bg-color p-[0.2rem] rounded-[0.1rem] mb-[0.6rem]">
                     <Stepper v-model="value" integer />
                 </div>
-                <Button class="submit" @click="showConfirm = true"><span>{{ t('Subscription') }}</span></Button>
+                <Button class="submit" @click="showConfirm = true"><span>{{ t('finance.portfolio_mining_btn') }}</span></Button>
             </div>
 
             <div class="flex flex-col">
-                <div class="text-[0.38rem] mb-[0.4rem]">{{ t('How to Operate?') }}</div>
+                <div class="text-[0.38rem] mb-[0.4rem]">{{ t('finance.portfolio_mining_title3') }}</div>
                 <div class="text-color5 leading-[0.5rem] mb-[0.32rem] text-[0.26rem]">
-                    Access a series of exchanges, such as Coinbase, Huobi, Binance, KuCoin, YFX and other globally
-                    renowned exchanges, and use algorithms to judge the trends of various currencies, monitor the
-                    current market situation in real time. Buy and sell related currencies at high frequency within the
-                    price range to achieve arbitrage and ensure that your profits are maximized.
+                    {{ t('finance.portfolio_mining_guide') }}
                 </div>
             </div>
         </div>
