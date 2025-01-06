@@ -52,7 +52,7 @@
         </div>
         <div class="w-full flex px-[0.32rem] justify-between">
           <div v-if="selectedItem.account == 'money'"
-            class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-topup flex flex-col items-center pt-[0.16rem]"
+            class="w-[1.565rem] h-[1.75rem] rounded-[0.32rem] bg-topup flex flex-col items-center pt-[0.16rem]"
             @click="() => {
               router.push({
                 name: 'topUpCrypto',
@@ -67,7 +67,7 @@
             <div class="text-topup text-[0.32rem]">{{ t('assets.coin_list_recharge') }}</div>
           </div>
           <div v-if="selectedItem.account == 'money'"
-            class="w-[1.565rem] h-[1.565rem] rounded-[0.32rem] bg-withdraw flex flex-col items-center pt-[0.16rem]"
+            class="w-[1.565rem] h-[1.75rem] rounded-[0.32rem] bg-withdraw flex flex-col items-center pt-[0.16rem]"
             @click="() => {
               router.push({
                 name: 'withdraw',
@@ -81,7 +81,7 @@
             </div>
             <div class="text-withdraw text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
           </div>
-          <div class="h-[1.565rem] rounded-[0.32rem] bg-transfer-in flex flex-col items-center pt-[0.16rem]"
+          <div class="h-[1.75rem] rounded-[0.32rem] bg-transfer-in flex flex-col items-center pt-[0.16rem]"
             :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
               router.push({
                 name: 'transfer',
@@ -96,7 +96,7 @@
             <div class="text-transfer-in text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') :
               t('transfer.in') }}</div>
           </div>
-          <div class="h-[1.565rem] rounded-[0.32rem] bg-transfer-out flex flex-col items-center pt-[0.16rem]"
+          <div class="h-[1.75rem] rounded-[0.32rem] bg-transfer-out flex flex-col items-center pt-[0.16rem]"
             :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
               router.push({
                 name: 'transfer',

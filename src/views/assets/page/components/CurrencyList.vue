@@ -1,7 +1,7 @@
 <template>
   <div v-if="list.length" v-for="(item, i) in list" class="currency_list">
     <div v-if="type == 'cash'"
-      class="w-full h-[2.48rem] rounded-[0.32rem] bg-color3 border-[0.02rem] border-color overflow-hidden relative mb-[0.2rem]"
+      class="w-full h-[2.48rem] rounded-[0.32rem] bg-color3  overflow-hidden relative mb-[0.2rem]"
       @click="click(item)">
       <div class="w-[6.46rem] h-[1.4rem] rounded-[0.32rem] absolute bottom-[0.12rem] flex items-center left-[0.12rem] bg-color2">
         <div class="w-full h-[0.8rem] relative flex">

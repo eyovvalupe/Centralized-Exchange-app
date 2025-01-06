@@ -1,7 +1,7 @@
 <template>
-    <div class="chart_item_bg w-full absolute">
-        <div class="w-full h-auto relative top-[2rem]">
-            <img :src="getStaticImgUrl('/static/img/staking/chart.png')" alt="img" />
+    <div class="chart_item_bg w-full h-full absolute">
+        <div class="w-full h-full bg-color5 effect">
+            
         </div>
     </div>
 </template>
@@ -15,15 +15,16 @@ import { getStaticImgUrl } from "@/utils/index.js";
         animation-name: animation;
         animation-duration: 1s;
         animation-timing-function: ease;
+        animation-fill-mode: forwards;
     }
 
     @keyframes animation {
         0% {
-            transform: translateX(-100%);
+            transform: translateX(0);
         }
 
         100% {
-            transform: translateX(0);
+            transform: translateX(102%);
         }
     }
 }

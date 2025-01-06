@@ -79,8 +79,7 @@ const formatDate = (date) => {
 .transfer_item {
   margin-top: 0.32rem;
   width: calc(100% - 0.02rem);
-  background-color: var(--ex-bg-color2);
-  border: 1px solid var(--ex-border-color);
+  background-color: var(--ex-bg-color3);
   border-radius: 0.32rem;
   overflow: hidden;
   padding: 0.28rem 0.12rem 0.12rem 0.12rem;

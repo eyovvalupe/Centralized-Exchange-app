@@ -596,7 +596,7 @@ onBeforeUnmount(() => {
     background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-    
+    color: var(--ex-text-color2);
     .icon {
       width: 0.64rem;
       height: 0.64rem;
@@ -604,18 +604,14 @@ onBeforeUnmount(() => {
     }
   }
 
-  .swap_dialog_item:last-child {
-    border-bottom: 0px;
-  }
-
   .swap_dialog_item_active {
-    color: var(--ex-primary-color);
+    color: var(--ex-text-color);
     font-weight: 600;
     background-color: rgba(255,255,255,0.1);
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: var(--ex-primary-color);
+      color: var(--ex-text-color);
       width: 0.48rem;
       height: 0.48rem;
       top: 50%;

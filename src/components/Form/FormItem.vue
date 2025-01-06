@@ -267,7 +267,6 @@ const percentTagClick = (percent) => {
 .form-item-box {
   display: flex;
 
-
   .item {
     flex: 1;
     display: flex;
@@ -277,11 +276,11 @@ const percentTagClick = (percent) => {
     position: relative;
     height: 1.12rem;
     border-radius: 0.32rem;
-    // border: 1px solid var(--ex-border-color2);
+    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-color2);
 
     .ipt_tip {
       color: var(--ex-text-color4);

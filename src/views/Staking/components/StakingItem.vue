@@ -1,8 +1,9 @@
 <template>
     <div class="staking_item">
         <div v-if="list.length" v-for="(item, i) in list"
-            class="w-full h-[7.32rem] bg-color6 mb-[0.4rem] rounded-[0.2rem] relative">
+            class="w-full h-[7.32rem] bg-color6 mb-[0.4rem] rounded-[0.2rem] relative overflow-hidden">
             <BackgroundImg />
+            <BackgroundImg1 />
             <div class="w-full h-full px-[0.32rem] py-[0.4rem] flex flex-col justify-between">
                 <div class="flex flex-col relative">
                     <div class="text-[0.36rem] font-semibold mb-[0.32rem]">BTC+ETH+XRP</div>
@@ -29,6 +30,7 @@ import { useI18n } from 'vue-i18n';
 import { Button } from 'vant';
 import BackgroundImg from './BackgroundImg.vue';
 import router from "@/router";
+import BackgroundImg1 from './BackgroundImg1.vue';
 
 const jump = (val) => {
     router.push({ name: val })
