@@ -3,10 +3,15 @@
         <Top :title="t('finance.portfolio_mining_title')" />
         <div class="px-[0.2rem] mt-[1.1rem]">
             <div class="px-[0.2rem] py-[0.32rem] bg-color6 flex flex-col mb-[0.2rem] rounded-[0.2rem]">
-                <div class="mb-[0.32rem]">{{ t('finance.portfolio_mining_subTitle1') }}</div>
+                <div class="flex items-center mb-[0.32rem]">
+                    <div class="mr-[0.1rem]">
+                        <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
+                    </div>
+                    <div :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_subTitle1') }}</div>
+                </div>
                 <div class="flex mb-[0.6rem]">
                     <div class="flex items-center" v-for="(item, i) in itemsMap" v-if="itemsMap.length">
-                        <div class="flex flex-col bg-color px-[0.2rem] py-[0.32rem] rounded-[0.1rem]">
+                        <div class="flex flex-col w-[2.07rem] bg-color px-[0.2rem] py-[0.32rem] rounded-[0.1rem]">
                             <div class="w-[0.96rem] h-[0.96rem] mb-[0.32rem]">
                                 <img :src="getStaticImgUrl(`/static/img/crypto/${item.currency}.svg`)" alt="img" />
                             </div>
@@ -14,7 +19,7 @@
                             <div :class="item.ratio > 0 ? 'up' : 'down'">{{ item.ratio ? (item.ratio > 0 ? '+' +
                                 item.ratio : item.ratio) + '%' : '--' }}</div>
                         </div>
-                        <div class="text-color5 text-[0.32rem]" v-if="i < itemsMap.length - 1">+</div>
+                        <div class="text-color5 text-[0.42rem]" v-if="i < itemsMap.length - 1">+</div>
                     </div>
                 </div>
                 <!-- 挖矿详情 -->
@@ -43,19 +48,32 @@
             </div>
 
             <div class="px-[0.2rem] py-[0.32rem] bg-color6 flex flex-col mb-[0.48rem] rounded-[0.2rem]">
-                <div class="mb-[0.48rem]">{{ t('finance.portfolio_mining_subTitle2') }}</div>
-                <div class="w-full flex justify-center text-[0.4rem] mb-[0.32rem]">{{ t('finance.portfolio_mining_header')
-                    }}</div>
-                <div class="w-full flex justify-center text-[0.24rem] mb-[0.32rem] text-color2">{{ t('finance.portfolio_mining_balance')
+                <div class="flex items-center mb-[0.48rem]">
+                    <div class="mr-[0.1rem]">
+                        <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
+                    </div>
+                    <div :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_subTitle2') }}</div>
+                </div>
+                <div class="w-full flex justify-center text-[0.4rem] mb-[0.32rem]">{{
+                    t('finance.portfolio_mining_header')
+                }}</div>
+                <div class="w-full flex justify-center text-[0.24rem] mb-[0.32rem] text-color2">{{
+                    t('finance.portfolio_mining_balance')
                     + ': ' + 0 }}</div>
                 <div class="bg-color p-[0.2rem] rounded-[0.1rem] mb-[0.6rem]">
                     <Stepper v-model="value" integer />
                 </div>
-                <Button class="submit" @click="showConfirm = true"><span>{{ t('finance.portfolio_mining_btn') }}</span></Button>
+                <Button class="submit" @click="showConfirm = true"><span>{{ t('finance.portfolio_mining_btn')
+                        }}</span></Button>
             </div>
 
             <div class="flex flex-col">
-                <div class="text-[0.38rem] mb-[0.4rem]">{{ t('finance.portfolio_mining_title3') }}</div>
+                <div class="flex items-center mb-[0.4rem]">
+                    <div class="mr-[0.1rem]">
+                        <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
+                    </div>
+                    <div class="text-[0.38rem]" :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_title3') }}</div>
+                </div>
                 <div class="text-color5 leading-[0.5rem] mb-[0.32rem] text-[0.26rem]">
                     {{ t('finance.portfolio_mining_guide') }}
                 </div>
@@ -100,11 +118,13 @@ import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js";
 import { Stepper, Button } from 'vant';
 import BottomPopup from '@/components/BottomPopup.vue';
+import { onMounted } from 'vue';
 
 const { t } = useI18n();
 
 const value = ref(0)
 const showConfirm = ref(false)
+const loaded = ref(false)
 
 const itemsMap = [{
     currency: 'BTC',
@@ -118,9 +138,32 @@ const itemsMap = [{
     currency: 'XRP',
     ratio: '-0.3395'
 }]
+
+onMounted(() => {
+    setTimeout(() => {
+        loaded.value = true;
+    }, 300);
+})
 </script>
 <style lang="less">
 .staking_mining {
+    .right_left_effect {
+        animation-name: animation1;
+        animation-duration: 0.5s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes animation1 {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
     .van-stepper {
         width: 100%;
         display: flex;
