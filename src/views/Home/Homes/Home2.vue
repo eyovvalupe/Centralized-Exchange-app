@@ -26,134 +26,55 @@
                 </div>
             </div>
 
-            <!-- 首屏 -->
-            <div class="first">
-                <div class="title1">安全 | 便捷 | 严格</div>
-                <div class="title2">
-                    <span>千万用户</span>都在用的<br />交易所
+
+            <!-- banner -->
+            <view @click="install" class="banners">
+                <Swipe class="swipers" :autoplay="3000" indicator-color="white">
+                    <SwipeItem class="swiper-item">
+                        <img :src="getStaticImgUrl('/static/home2/banner.png')" alt="">
+                    </SwipeItem>
+                    <SwipeItem class="swiper-item">
+                        <img :src="getStaticImgUrl('/static/home2/banner.png')" alt="">
+                    </SwipeItem>
+                    <SwipeItem class="swiper-item">
+                        <img :src="getStaticImgUrl('/static/home2/banner.png')" alt="">
+                    </SwipeItem>
+                </Swipe>
+            </view>
+
+            <!-- 质押挖矿 -->
+            <div class="recommend-title">
+                <div class="point">
+                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div class="title3">体验无限可能</div>
-                <div class="gif" @click="install">
-                    <img :src="getStaticImgUrl('/static/home2/top.gif')" alt="">
-                </div>
-            </div>
-
-            <!-- 按钮 -->
-            <div class="btns">
-                <div class="btn btn2" v-if="!token" @click="store.commit('setIsLoginOpen', true)">登录</div>
-                <div class="btn" v-if="!token" @click="jump('register')">注册</div>
-                <div class="btn" v-if="token">去交易</div>
-            </div>
-
-
-            <!-- 卡片 -->
-            <div class="cards" style="margin-top: 0.56rem">
-                <!-- banner -->
-                <div class="card-1">
-                    <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
-                        <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
-                        </SwipeItem>
-                        <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
-                        </SwipeItem>
-                        <SwipeItem class="swiper-item">
-                            <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
-                        </SwipeItem>
-                    </Swipe>
-                </div>
-                <div class="card-right">
-                    <div class="card-2">
-                        <!-- 资产 -->
-                        <div class="assets">
-                            <div class="top"
-                                :style="{ 'background-image': token ? `url('${getStaticImgUrl('/static/home2/assets_bg.svg')}')` : '' }">
-                                <div class="total">
-                                    <span>总资产 (USDT)</span>
-
-                                    <div class="icon-eye">
-                                        <img v-if="!showPassword"
-                                            :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
-                                            @click="showPassword = true" alt="off" />
-                                        <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
-                                            @click="showPassword = false" />
-                                    </div>
-                                </div>
-                                <div class="amount" v-if="token">{{ showPassword ? assets.total : '****' }}</div>
-                                <div class="recharge" v-if="token">充值</div>
-                                <div class="login" v-if="!token" @click="store.commit('setIsLoginOpen', true)">登录</div>
-                                <div class="login_tip" v-if="!token">先登录方可查看资产</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-4">
-                        <Swipe class="swipers swipers1" :autoplay="3000" indicator-color="white">
-                            <SwipeItem class="swiper-item" v-for="i in 3" :key="i">
-                                <div class="notice-item">
-                                    <div class="notice-icon">
-                                        <img :src="getStaticImgUrl('/static/home2/notice-active.svg')" alt="">
-                                    </div>
-                                    <div class="notice-con">
-                                        <div class="notice-info">阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿阿三大苏打啊阿斯顿</div>
-                                        <div class="notice-more">详情&gt;&gt;</div>
-                                    </div>
-                                </div>
-                            </SwipeItem>
-                        </Swipe>
-                    </div>
+                <div style="flex: 1;">质押挖矿</div>
+                <div class="recommend-icon">
+                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 
-            <div class="cards" style="margin: 0.32rem 0 0.8rem 0;">
-                <div class="card-3">
-                    <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
-                        <SwipeItem class="swiper-item" v-for="(item, i) in marketSrockRecommendList" :key="i">
-                            <div class="stock-item">
-                                <div class="stock-symbol">{{ item.symbol }}</div>
-                                <div class="stock-name">{{ item.name || `&nbsp;` }}</div>
-                                <div class="stock-price">
-                                    <b> {{ item.price ? item.price : "--" }}</b>
-                                    <span>{{ (item.ratio || 0) > 0
-                                        ? "+" + (item.ratio || 0)
-                                        : item.ratio || 0
-                                        }}% </span>
-                                </div>
-                                <div class="stock-spark">
-                                    <SparkLine style="transform: scaleX(2.3) scaleY(1.8);transform-origin: 0 0;"
-                                        v-if="item.points" :points="item.points" :ratio="item.ratio" />
-                                </div>
-                            </div>
-                        </SwipeItem>
-                    </Swipe>
-                </div>
-                <div class="card-3">
-                    <Swipe class="swipers swipers2" :autoplay="3000" indicator-color="white">
-                        <SwipeItem class="swiper-item" v-for="(item, i) in marketContractRecommendList" :key="i">
-                            <div class="stock-item">
-                                <div class="stock-symbol">{{ item.symbol }}</div>
-                                <div class="stock-name">{{ item.name || `&nbsp;` }}</div>
-                                <div class="stock-price">
-                                    <b> {{ item.price ? item.price : "--" }}</b>
-                                    <span>{{ (item.ratio || 0) > 0
-                                        ? "+" + (item.ratio || 0)
-                                        : item.ratio || 0
-                                        }}% </span>
-                                </div>
-                                <div class="stock-spark">
-                                    <SparkLine style="transform: scaleX(2.3) scaleY(1.8);transform-origin: 0 0;"
-                                        v-if="item.points" :points="item.points" :ratio="item.ratio" />
-                                </div>
-                            </div>
-                        </SwipeItem>
-                    </Swipe>
-                </div>
+            <div class="sub-banner">
+                <img :src="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
 
+            <!-- 跟单 -->
+            <div class="recommend-title">
+                <div class="point">
+                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
+                </div>
+                <div style="flex: 1;">跟单</div>
+                <div class="recommend-icon">
+                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                </div>
+            </div>
 
 
             <!-- 市场推荐 -->
             <div class="recommend-title">
-                <div>市场推荐</div>
+                <div class="point">
+                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
+                </div>
+                <div style="flex: 1;">市场推荐</div>
                 <div class="recommend-icon">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
@@ -436,7 +357,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-home2 {
-    background-color: var(--ex-bg-color);
+    background-color: #171717;
     min-height: 100%;
     position: relative;
     overflow: hidden;
@@ -449,6 +370,8 @@ onMounted(() => {
         z-index: 0;
         top: -0.02rem;
         left: 0;
+        filter: blur(0.8rem);
+        opacity: 0.8;
 
         img {
             object-fit: cover;
@@ -468,6 +391,8 @@ onMounted(() => {
         position: relative;
         z-index: 1;
         padding: 0 0.32rem 2rem 0.32rem;
+        display: flex;
+        flex-direction: column;
 
 
         .home2-header {
@@ -488,76 +413,8 @@ onMounted(() => {
             }
         }
 
-        .first {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0.16rem 0 0 0;
-            color: var(--ex-white);
-            text-align: center;
-
-            .title1 {
-                font-weight: 400;
-                font-size: 0.28rem;
-                line-height: 0.4rem;
-                margin-bottom: 0.16rem;
-            }
-
-            .title2 {
-                font-weight: 900;
-                font-size: 0.6rem;
-                line-height: 0.76rem;
-
-                span {
-                    color: var(--ex-primary-color);
-                    ;
-                }
-            }
-
-            .title3 {
-                font-weight: 400;
-                font-size: 0.28rem;
-                line-height: 0.4rem;
-                margin-top: 0.18rem;
-                margin-bottom: 0.36rem;
-            }
-
-            .gif {
-                width: 5.64rem;
-                height: auto;
-            }
-        }
-
-        .btns {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 0.4rem;
-
-            .btn {
-                flex: 1;
-                height: 0.98rem;
-                border-radius: 1.2rem;
-                background-color: var(--ex-primary-color);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: var(--ex-bg-color);
-                font-weight: 400;
-                font-size: 0.32rem;
-            }
-
-            .btn2 {
-                margin-right: 0.32rem;
-                background-color: var(--ex-white);
-            }
-        }
-
-        .cards {
-            display: flex;
-            align-items: stretch;
-            justify-content: space-between;
+        .banners {
+            margin: 0.32rem 0;
 
             .swipers {
                 width: 100%;
@@ -565,102 +422,20 @@ onMounted(() => {
                 position: relative;
 
                 .swiper-item {
-                    color: #fff;
                     overflow: hidden;
                     border-radius: 0.32rem;
-                    background: linear-gradient(0deg, #1C1C1C 0%, #2E2E2E 95.61%);
-
-                    .notice-item {
-                        display: flex;
-                        align-items: flex-start;
-                        padding: 0.2rem;
-
-                        .notice-icon {
-                            width: 0.32rem;
-                            height: 0.32rem;
-                            margin-right: 0.16rem;
-                            position: relative;
-                            top: 0.04rem;
-                        }
-
-                        .notice-con {
-                            flex: 1;
-
-                            .notice-info {
-                                color: #fff;
-                                font-size: 0.28rem;
-                                font-weight: 400;
-                                line-height: 0.4rem;
-                                display: -webkit-box;
-                                -webkit-box-orient: vertical;
-                                -webkit-line-clamp: 3;
-                                /* 显示的行数，超出部分会省略 */
-                                overflow: hidden;
-                            }
-
-                            .notice-more {
-                                font-size: 0.24rem;
-                                color: var(--ex-primary-color);
-                                font-weight: 400;
-                                margin-top: 0.24rem;
-                                line-height: 0.32rem;
-                            }
-                        }
-                    }
-
-                    .stock-item {
-                        padding-top: 0.32rem;
-                        overflow: hidden;
-                        border-radius: 0.32rem;
-
-                        .stock-symbol {
-                            color: #FFF;
-                            font-size: 0.32rem;
-                            font-weight: 600;
-                            line-height: 0.32rem;
-                            margin-bottom: 0.16rem;
-                            padding-left: 0.24rem;
-                        }
-
-                        .stock-name {
-                            color: rgba(255, 255, 255, 0.70);
-                            font-size: 0.24rem;
-                            font-weight: 400;
-                            line-height: 0.24rem;
-                            padding-left: 0.24rem;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;
-                        }
-
-                        .stock-price {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            margin-top: 0.24rem;
-                            padding: 0 0.24rem;
-                        }
-
-                        .stock-spark {
-                            width: 100%;
-                            height: 1.12rem;
-                            position: relative;
-                            top: 0.04rem;
-                            margin-top: 0.24rem;
-                        }
-                    }
                 }
 
                 :deep(.van-swipe__indicators) {
                     .van-swipe__indicator {
-                        width: 0.16rem;
-                        height: 0.08rem;
+                        width: 0.12rem;
+                        height: 0.12rem;
                         border-radius: 0.04rem !important;
-                        background-color: rgba(255, 255, 255, 0.3) !important;
+                        background-color: var(--ex-placeholder-color) !important;
                     }
 
                     .van-swipe__indicator--active {
-                        background-color: var(--ex-primary-color) !important;
+                        background-color: var(--ex-white) !important;
                     }
 
                 }
@@ -671,124 +446,12 @@ onMounted(() => {
                     transform: translateX(0) !important;
                 }
             }
-
-            .swipers2 {
-                :deep(.van-swipe__indicators) {
-                    top: 0.24rem !important;
-                }
-            }
-
-            .card-1 {
-                width: 3.35rem;
-                height: 5.36rem;
-                border-radius: 0.4rem;
-                position: relative;
-            }
-
-            .card-2 {
-                width: 3.35rem;
-                height: 2.76rem;
-                border-radius: 0.3rem;
-                position: relative;
-            }
-
-            .card-3 {
-                width: 3.35rem;
-                height: 3rem;
-                border-radius: 0.4rem;
-                position: relative;
-            }
-
-            .card-4 {
-                border-radius: 0.2rem;
-                width: 3.35rem;
-                height: 2.36rem;
-                position: relative;
-            }
-
-            .card-right {
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
-                justify-content: space-between;
-            }
         }
 
-        .assets {
-            border-radius: 0.3rem;
+        .sub-banner {
             width: 100%;
-            height: 100%;
-            overflow: auto;
-            background: linear-gradient(0deg, #1C1C1C 0%, #2E2E2E 95.61%);
-
-            .top {
-                background-size: cover;
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                border-radius: 0.3rem;
-                position: relative;
-                top: -1px;
-                font-weight: 400;
-                text-align: center;
-
-                .total {
-                    color: var(--ex-white);
-                    font-size: 0.24rem;
-                    display: flex;
-                    align-items: center;
-
-                    .icon-eye {
-                        width: 0.3rem;
-                        height: 0.3rem;
-                        margin-left: 0.18rem;
-                    }
-                }
-
-                .login {
-                    height: 0.6rem;
-                    border-radius: 1rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: var(--ex-primary-color);
-                    font-size: 0.3rem;
-                    color: var(--ex-bg-color);
-                    margin: 0.28rem 0 0.2rem 0;
-                    padding: 0 0.4rem;
-                }
-
-                .login_tip {
-                    color: var(--ex-text-color3);
-                    font-size: 0.24rem;
-                }
-
-                .amount {
-                    color: var(--ex-primary-color);
-                    font-weight: 700;
-                    font-size: 0.48rem;
-                    line-height: 0.48rem;
-                    margin-top: 0.24rem;
-                    padding: 0 0.1rem;
-                    word-break: break-all;
-                }
-
-                .recharge {
-                    height: 0.6rem;
-                    padding: 0 0.6rem;
-                    border-radius: 0.3rem;
-                    background-color: var(--ex-primary-color);
-                    color: var(--ex-bg-color);
-                    font-size: 0.24rem;
-                    font-weight: 400;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-top: 0.36rem;
-                }
-            }
+            height: 2.54rem;
+            margin: 0.4rem 0;
         }
 
         .recommend-title {
@@ -796,28 +459,37 @@ onMounted(() => {
             align-items: center;
             justify-content: space-between;
             color: var(--ex-white);
-            font-size: 0.36rem;
-            font-weight: 600;
+            font-size: 0.4rem;
+            font-weight: 500;
+            margin-bottom: 0.32rem;
+
+            .point {
+                width: 0.28rem;
+                height: 0.28rem;
+                margin-right: 0.2rem;
+            }
 
             .recommend-icon {
-                width: 0.84rem;
+                width: 0.48rem;
                 height: 0.48rem;
-                border-radius: 0.3rem;
-                border: 1px solid var(--ex-white);
-                padding: 0 0.22rem;
+                position: relative;
+                top: 0.02rem;
             }
         }
 
         .home-tabs-box {
-            margin-top: 0.44rem;
+            :deep(.van-tabs--sub) {
+                margin-top: 0;
+            }
 
             :deep(.van-tabs__nav) {
                 background-color: var(--ex-none);
 
                 .van-tab {
-                    background-color: var(--ex-bg-color);
+                    background-color: #171717;
                     color: var(--ex-text-color2);
                     min-width: 1.2rem;
+                    border-color: #414345;
                 }
 
                 .van-tab--active {
