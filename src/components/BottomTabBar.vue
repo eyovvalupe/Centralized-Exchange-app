@@ -46,7 +46,7 @@ const navs = ref([
   { name: t("home.trade"), route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
   {
     name: "理財",
-    route: "market",
+    route: "",
     children: ["market_info", "financial_info", "trading_rules"],
     icon: "/static/img/bottom/licai1.svg",
     icon2: "/static/img/bottom/licai2.svg",
@@ -126,7 +126,7 @@ const checkActive = (item) => {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 1.38rem;
+  height: 1.4rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;

@@ -8,7 +8,7 @@
           show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show")
         }}</span>
       </div>
-      <!-- <CurrencyItem v-for="(item, i) in showList" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
+   
       <CurrencyList @click="(val) => click(val)" :list="showList" :type="'cash'" />
     </div>
   </div>
@@ -16,9 +16,8 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
-import { Icon, Switch } from "vant";
+import { Switch } from "vant";
 import store from "@/store";
-import CurrencyItem from './components/CurrencyItem.vue'
 import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
 import CurrencyList from "./components/CurrencyList.vue";
