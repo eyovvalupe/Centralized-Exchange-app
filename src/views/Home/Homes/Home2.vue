@@ -33,7 +33,7 @@
                     <span>千万用户</span>都在用的<br />交易所
                 </div>
                 <div class="title3">体验无限可能</div>
-                <div class="gif">
+                <div class="gif" @click="install">
                     <img :src="getStaticImgUrl('/static/home2/top.gif')" alt="">
                 </div>
             </div>
@@ -234,6 +234,20 @@ import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import { useSocket } from "@/utils/ws";
 import SparkLine from "@/components/SparkLine.vue";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
+
+
+// 安装
+const install = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+            console.log('User accepted the install prompt');
+        } else {
+            console.log('User dismissed the install prompt');
+        }
+        deferredPrompt = null;
+    });
+}
 
 const { startSocket } = useSocket();
 const { t } = useI18n();
