@@ -4,6 +4,7 @@
       <Loading :size="44" color="var(--ex-primary-color)" />
     </div>
     <div v-show="!pageLoading" class="app_scroll">
+      
       <transition :name="transitionName">
         <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name" />
       </transition>
@@ -14,7 +15,6 @@
   </router-view>
 
   <BottomTabBar v-if="showBottom" />
-
   <!-- 登录弹窗 -->
   <LoginDialog />
 
@@ -25,14 +25,14 @@
 import { defineAsyncComponent, computed, watch, onMounted } from "vue";
 import { Popup, Loading } from "vant";
 import { useRoute } from "vue-router";
+import { getStaticImgUrl } from "@/utils/index.js"
+import { BOTTOMBAR_MODE } from "@/config.js"
 import store from "@/store/index";
 // import { nanoid } from "nanoid";
 // import DateBottom from '@/views/trade/DateBottom.vue'
 import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
 import SuccessToast from "./views/User/Account/SuccessToast.vue";
-import { getStaticImgUrl } from "@/utils/index.js"
-import { BOTTOMBAR_MODE } from "@/config.js"
 
 const showSuccessToast = computed(() => store.state.showSuccessToast);
 
@@ -164,7 +164,7 @@ onMounted(() => {
 </script>
 
 <style lang="less">
-@import "./style/theme/blackgreen.less";
+@import "./style/theme/blackgreen2.less";
 @import "./style/vant.less";
 @import "./style/index.less";
 

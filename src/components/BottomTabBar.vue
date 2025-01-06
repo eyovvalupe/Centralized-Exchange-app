@@ -1,74 +1,23 @@
 <!-- 底部导航 -->
 <template>
-  <div class="max-width bottom_nav2"
-    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/bottombar2/bg.png')})` }">
+  <div class="max-width bottom_nav2" >
     <div class="nav_box">
-      <div class="bottom_nav_item" @touchstart="handleClick(navs[0], $event)" @click="handleClick(navs[0])"
-        :class="[checkActive(navs[0]) ? 'bottom_nav_active' : '']">
+      <div class="bottom_nav_item" v-for="(nav) in navs" :key="nav.route" @touchstart="handleClick(nav, $event)" @click="handleClick(nav)"
+        :class="[checkActive(nav) ? 'bottom_nav_active' : '']">
         <div class="bn_con">
           <div class="bottom_nav_icon">
-            <img v-if="!checkActive(navs[0])" :src="getStaticImgUrl(navs[0].icon)" alt="">
-            <img v-if="checkActive(navs[0])" :src="getStaticImgUrl(navs[0].icon2)" alt="">
+            <img v-if="!checkActive(nav)" :src="getStaticImgUrl(nav.icon)">
+            <img v-if="checkActive(nav)" :src="getStaticImgUrl(nav.icon2)">
           </div>
           <div class="bottom_nav_name">
-            {{ navs[0].name }}
+            {{ nav.name }}
           </div>
-        </div>
-      </div>
-      <div class="bottom_nav_item" @touchstart="handleClick(navs[1], $event)" @click="handleClick(navs[1])"
-        style="align-items: flex-end;" :class="[checkActive(navs[1]) ? 'bottom_nav_active' : '']">
-        <div class="bn_con">
-          <div class="bottom_nav_icon">
-            <img v-if="!checkActive(navs[1])" :src="getStaticImgUrl(navs[1].icon)" alt="">
-            <img v-if="checkActive(navs[1])" :src="getStaticImgUrl(navs[1].icon2)" alt="">
-          </div>
-          <div class="bottom_nav_name">
-            {{ navs[1].name }}
-          </div>
-
-          <div v-if="store.state.c2cUnreadTotal > 0" class="nav_num">
+          <div v-if="store.state.c2cUnreadTotal > 0 && item.route == 'market'" class="nav_num">
             {{ store.state.c2cUnreadTotal }}
           </div>
         </div>
       </div>
-    </div>
-    <div class="nav_curr" :class="[checkActive(navs[2]) ? 'nav_curr_active' : '']">
-      <div class="curr" @touchstart="handleClick(navs[2], $event)" @click="handleClick(navs[2])">
-        <div class="curr_icon">
-          <img :src="getStaticImgUrl('/static/bottombar2/curr.svg')" alt="">
-        </div>
-      </div>
-      <div style="margin-top: 0.16rem;">{{ navs[2].name }}</div>
-    </div>
-    <div class="nav_box">
-      <div class="bottom_nav_item" @touchstart="handleClick(navs[3], $event)" @click="handleClick(navs[3])"
-        style="align-items: flex-start;" :class="[checkActive(navs[3]) ? 'bottom_nav_active' : '']">
-        <div class="bn_con">
-          <div class="bottom_nav_icon">
-            <img v-if="!checkActive(navs[3])" :src="getStaticImgUrl(navs[3].icon)" alt="">
-            <img v-if="checkActive(navs[3])" :src="getStaticImgUrl(navs[3].icon2)" alt="">
-          </div>
-          <div class="bottom_nav_name">
-            {{ navs[3].name }}
-          </div>
-        </div>
-      </div>
-      <div class="bottom_nav_item" @touchstart="handleClick(navs[4], $event)" @click="handleClick(navs[4])"
-        :class="[checkActive(navs[4]) ? 'bottom_nav_active' : '']">
-        <div class="bn_con">
-          <div class="bottom_nav_icon">
-            <img v-if="!checkActive(navs[4])" :src="getStaticImgUrl(navs[4].icon)" alt="">
-            <img v-if="checkActive(navs[4])" :src="getStaticImgUrl(navs[4].icon2)" alt="">
-          </div>
-          <div class="bottom_nav_name">
-            {{ navs[4].name }}
-          </div>
-
-          <div v-if="storeChat.state.messageNum > 0" class="nav_num">
-            {{ storeChat.state.messageNum }}
-          </div>
-        </div>
-      </div>
+     
     </div>
 
   </div>
@@ -93,14 +42,15 @@ const token = computed(() => store.state.token);
 
 const navs = ref([
   { name: t("home.homepage"), route: "home", icon: "/static/img/bottom/shouye1.svg", icon2: "/static/img/bottom/shouye2.svg" },
+
+  { name: t("home.trade"), route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
   {
-    name: t("home.market"),
+    name: "理財",
     route: "market",
     children: ["market_info", "financial_info", "trading_rules"],
-    icon: "/static/img/bottom/shichang1.svg",
-    icon2: "/static/img/bottom/shichang2.svg",
+    icon: "/static/img/bottom/licai1.svg",
+    icon2: "/static/img/bottom/licai2.svg",
   },
-  { name: t("home.trade"), route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
   {
     name: t("home.assets"),
     route: "assets",
@@ -169,63 +119,24 @@ const checkActive = (item) => {
 
 <style scoped lang="less">
 .bottom_nav2 {
-  background-size: 100% 100%;
+  background-color:var(--ex-bg-color2);
   display: flex;
   position: fixed;
   overflow: hidden;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 2rem;
+  height: 1.38rem;
   left: 50%;
   transform: translateX(-50%);
   z-index: 999;
-
-  .nav_curr {
-    width: 2.4rem;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 0.16rem;
-    color: var(--ex-text-color3);
-    font-size: 0.24rem;
-
-    .curr {
-      width: 1rem;
-      height: 1rem;
-      border-radius: 50%;
-      background-size: 100% 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      background-color: var(--ex-text-color3);
-      transition: all ease .3s;
-
-      .curr_icon {
-        width: 0.64rem;
-        height: 0.64rem
-      }
-    }
-  }
-
-  .nav_curr_active {
-    color: var(--ex-primary-color);
-
-    .curr {
-      background-color: var(--ex-primary-color);
-      transform: rotate(270deg);
-    }
-  }
 
   .nav_box {
     flex: 1;
     display: flex;
     align-items: stretch;
     justify-content: center;
-    padding-top: 0.68rem;
+    padding-top: 0.14rem;
 
     .bottom_nav_item {
       flex: 1;

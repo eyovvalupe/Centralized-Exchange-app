@@ -3,8 +3,7 @@
     <div v-if="type == 'cash'"
       class="w-full h-[2.48rem] rounded-[0.32rem] bg-color2 border-[0.02rem] border-color overflow-hidden relative mb-[0.2rem]"
       @click="click(item)">
-      <div class="w-[6.46rem] h-[1.4rem] rounded-[0.32rem] absolute bottom-[0.12rem] flex items-center left-[0.12rem]"
-        style="background-color: var(--ex-black);">
+      <div class="w-[6.46rem] h-[1.4rem] rounded-[0.32rem] absolute bottom-[0.12rem] flex items-center left-[0.12rem] bg-color3">
         <div class="w-full h-[0.8rem] relative flex">
           <div class="w-1/2 h-full flex flex-col items-center justify-between">
             <div class="text-[0.28rem] text-color2">{{ t('assets.wallet_available_sim') }}</div>
