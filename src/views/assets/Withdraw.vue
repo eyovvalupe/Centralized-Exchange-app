@@ -7,9 +7,7 @@
           <div class="top-record-icon">
             <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
-          <!-- <span>
-            {{ $t("withdraw.withdrawRecord") }}
-          </span> -->
+          
         </div>
       </template>
     </Top>
@@ -49,11 +47,11 @@
               </div>
             </div>
           </FormItem>
-          <!-- <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" -->
+        
           <FormItem input-type="number" v-model="form.amount" show-btn :from="'withdraw'"
             :crypto-currency="form.from.toUpperCase()" :balance="balance" :placeholder="$t('withdraw.withdrawalAmount')"
             @change="changeAmount" @btnClick="maxIpt">
-            <!-- <template #title-right>{{ $t("withdraw.withdrawable") }}：{{ balance }}</template> -->
+      
           </FormItem>
 
           <div class="tip mb-[0.4rem]">
@@ -62,7 +60,7 @@
           </div>
 
           <!-- 提款方式 -->
-          <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem]" style="background-color: var(--ex-bg-color2);">
+          <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem] border-[1px]" style="background-color: var(--ex-bg-color2);">
             <div class="flex justify-between">
               <div class="text-color5 mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.12rem]">{{
                 $t("withdraw.receiptAccount")
@@ -104,9 +102,8 @@
           </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-          type="primary"><span style="color: var(--ex-black);">{{
-            $t("withdraw.withdraw") }}</span></Button>
+        <Button @click="openSafePass" :loading="loading" round  class="submit"
+          type="primary">{{ $t("withdraw.withdraw") }}</Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
         <div class="form mt-[0.46rem]">
@@ -170,9 +167,8 @@
             </div>
           </div>
         </div>
-        <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-          type="primary"><span style="color: var(--ex-black);">{{
-            $t("withdraw.withdraw") }}</span></Button>
+        <Button @click="openSafePass" :loading="loading" round class="submit"
+          type="primary">{{  $t("withdraw.withdraw") }}</Button>
       </Tab>
     </Tabs>
 
@@ -192,7 +188,7 @@
             @input="searchList" />
         </div>
         <div class="lists">
-          <div @click="clickItem(item)" class="swap_dialog_item px-[0.26rem]"
+          <div @click="clickItem(item)" class="swap_dialog_item px-[0.28rem]"
             :class="{ swap_dialog_item_active: form.from == item.name }"
             v-for="(item, i) in searchDialogStr ? searchResult : wallet" :key="i">
             <div class="icon">
@@ -207,11 +203,8 @@
       </div>
     </BottomPopup>
 
-    <BottomPopup v-model:show="showNetworkDialog" position="bottom" round closeable teleport="body">
-      <div class="van-popup-custom-title w-full text-center text-[0.32rem]">
-        {{ $t("withdraw.networkSelection") }}
-      </div>
-
+    <BottomPopup :title="$t('withdraw.networkSelection')" v-model:show="showNetworkDialog" position="bottom" round closeable teleport="body">
+    
       <div class="withdraw_accounr_dialog">
         <!-- 搜索 -->
         <div class="search_box">
@@ -222,7 +215,7 @@
             :placeholder="$t('withdraw.searchPlaceholder')" />
         </div>
         <div class="lists">
-          <div class="swap_dialog_item px-[0.28rem]" :class="{ swap_dialog_item_active: form.from == item.name }"
+          <div class="swap_dialog_item px-[0.28rem]" :class="{ swap_dialog_item_active: form.network == item }"
             v-if="Object.keys(currencyMapList).length" v-for="(item, i) in currencyMapList[form.from]"
             @click="clickNetworkItem(item)" :key="i" style="justify-content: space-between">
             <span>{{ item }}</span>
@@ -651,9 +644,6 @@ watch(
   padding: 1.32rem 0.4rem 1.44rem 0.4rem;
   position: relative;
 
-  :deep(span.van-button__text) {
-    color: var(--ex-black);
-  }
 
   :deep(.top) {
     z-index: 10;
@@ -667,7 +657,7 @@ watch(
     width: 0.6rem;
     height: 0.6rem;
     border-radius: 0.3rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -755,7 +745,7 @@ watch(
 }
 
 .add_account {
-  background-color: var(--ex-bg-color);
+  background-color: var(--ex-bg-color3);
   border-radius: 0.32rem;
   display: flex;
   align-items: center;
@@ -850,14 +840,14 @@ watch(
   }
 
   .search_box {
-    height: 0.8rem;
+    height: 0.96rem;
     padding: 0 0.32rem;
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
     background-color: var(--ex-bg-color2);
     border-radius: 0.6rem;
-    // border: 1px solid var(--ex-border-color2);
+    border: 1px solid var(--ex-border-color2);
 
     .search_icon {
       width: 0.48rem;
@@ -871,22 +861,19 @@ watch(
       color: var(--ex-text-color) !important;
     }
 
-    .ipt::placeholder {
-      color: var(--ex-text-color4);
-      font-size: 0.32rem;
-    }
   }
 
   .swap_dialog_item {
-    height: 1.04rem;
+    height: 1.12rem;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--ex-border-color);
+    background-color: var(--ex-bg-color3);
+    border-radius: 0.32rem;
     overflow: hidden;
     position: relative;
     font-size: 0.3rem;
-    margin: 0 0.32rem;
-    // justify-content: space-between;
+    margin: 0.2rem 0.32rem 0 0.32rem;
+    color:var(--ex-text-color2);
 
     .icon {
       width: 0.64rem;
@@ -896,18 +883,14 @@ watch(
     }
   }
 
-  .swap_dialog_item:last-child {
-    border-bottom: 0px;
-  }
-
   .swap_dialog_item_active {
-    color: var(--ex-primary-color);
+    color: var(--ex-text-color);
     font-weight: 600;
 
     .check_icon {
       position: absolute;
       right: 0.24rem;
-      color: var(--ex-primary-color);
+      color: var(--ex-text-color);
       width: 0.48rem;
       height: 0.48rem;
       top: 50%;

@@ -822,5 +822,20 @@ body .van-dialog {
 }
 
 .van-picker__mask {
-    background-image: linear-gradient(180deg, rgba(45, 45, 45, .9), rgba(28, 28, 28, .4)), linear-gradient(0deg, rgba(28, 28, 28, .9), rgba(28, 28, 28, .4)) !important;
+   display: none;
+}
+.van-hairline--top-bottom:after, .van-hairline-unset--top-bottom:after{
+    border:0px !important;
+}
+.van-picker__frame{
+    background: var(--ex-bg-color3);
+    border-radius: 0.32rem;
+}
+.van-picker-column{
+    position: relative;
+    z-index: 3;
+   
+}
+.van-picker-column__item:not(.action-sheet-active) .picker-item__text {
+    color:var(--ex-text-color2);
 }
