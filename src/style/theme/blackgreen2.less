@@ -4,8 +4,8 @@
 :root {
     --ex-white-rgb: 255 255 255; //#FFFFFF      白色
     --ex-black-rgb: 0 0 0; //#000000      黑色
-    --ex-up-color-rgb: 151 225 128; //#97E180   上涨颜色
-    --ex-down-color-rgb: 220 89 89; //#DC5959   下跌颜色
+    --ex-up-color-rgb: 0 215 124; //#00D77C   上涨颜色
+    --ex-down-color-rgb: 255 72 52; //#FF4834   下跌颜色
     --ex-count-color-rgb: 255 163 70;
     --ex-success-color-rgb: 151 225 128; //#97E180 成功状态颜色
     --ex-error-color-rgb: 220 89 89; //DC5959   错误状态颜色
@@ -13,20 +13,20 @@
     --ex-warning-color-rgb: 250 117 0; //#fa7500 警告状态颜色
     --ex-primary-color-rgb: 0 166 9; //#97E180  风格主色
     --ex-text-color-rgb: 255 255 255; //#FFFFFF   主要文字颜色
-    --ex-text-color2-rgb: 255 255 255; //#FFFFFF 辅助文字颜色 
-    --ex-text-color3-rgb: 255 255 255; //#FFFFFF  提示文字颜色
-    --ex-text-color4-rgb: 255 255 255; //#FFFFFF 次要文字颜色
-    --ex-text-color5-rgb: 255 255 255; //#FFFFFF 禁用颜色
-    --ex-border-color-rgb: 53 53 55; //#353537 边框颜色（浅）
+    --ex-text-color2-rgb: 136 136 136; //#888888 辅助文字颜色 
+    --ex-text-color3-rgb: 136 136 136; //#888888  提示文字颜色
+    --ex-text-color4-rgb: 136 136 136; //#888888 次要文字颜色
+    --ex-text-color5-rgb: 136 136 136; //#888888 禁用颜色
+    --ex-border-color-rgb: 26 27 36;; //#1A1B24 边框颜色（浅）
     --ex-border-color2-rgb: 65 67 69; //#414345 边框颜色（中）
     --ex-border-color3-rgb: 171 171 171; //#ABABAB 边框颜色（亮）
     --ex-border-color4-rgb: 34 38 38; //#222626    边框色(深)
-    --ex-bg-color-rgb: 14 15 24; //#0E0F18    背景颜色
-    --ex-bg-color2-rgb: 255 255 255; //#FFFFFF   
-    --ex-bg-color3-rgb: 255 255 255; //#FFFFFF   
-    --ex-bg-color4-rgb: 255 255 255; //#FFFFFF    
-    --ex-bg-color5-rgb: 46 46 46; //#2E2E2E    
-    --ex-bg-color6-rgb: 255 255 255; //#FFFFFF
+    --ex-bg-color-rgb: 14 15 24;  //#0E0F18   背景颜色
+    --ex-bg-color2-rgb: 10 10 15; //#0A0A0F   
+    --ex-bg-color3-rgb: 26 27 36; //#1A1B24   
+    --ex-bg-color4-rgb: 26 27 36; //#1A1B24    
+    --ex-bg-color5-rgb: 26 27 36; //#1A1B24    
+    --ex-bg-color6-rgb: 26 27 36; //#1A1B24
 
     --ex-sbtn-rgb: 140 161 202; // #8CA1CA 特殊按钮颜色
     --ex-status-color1-rgb: 255 163 70; //#FFA346 状态颜色1
@@ -52,21 +52,21 @@
     --ex-info-color: rgb(var(--ex-info-color-rgb));
     --ex-warning-color: rgb(var(--ex-warning-color-rgb));
     --ex-text-color: rgb(var(--ex-text-color-rgb));
-    --ex-text-color2: rgb(var(--ex-text-color2-rgb) / 0.7);
-    --ex-text-color3: rgb(var(--ex-text-color3-rgb) / 0.5);
-    --ex-text-color4: rgb(var(--ex-text-color4-rgb) / 0.4);
-    --ex-text-color5: rgb(var(--ex-text-color5-rgb) / 0.3);
+    --ex-text-color2: rgb(var(--ex-text-color2-rgb) / 1);
+    --ex-text-color3: rgb(var(--ex-text-color3-rgb) / 1);
+    --ex-text-color4: rgb(var(--ex-text-color4-rgb) / 1);
+    --ex-text-color5: rgb(var(--ex-text-color5-rgb) / 1);
     --ex-border-color: rgb(var(--ex-border-color-rgb));
     --ex-border-color2: rgb(var(--ex-border-color2-rgb));
     --ex-border-color3: rgb(var(--ex-border-color3-rgb));
     --ex-border-color4: rgb(var(--ex-border-color4-rgb));
     --ex-border-error: rgb(var(--ex-error-color-rgb));
     --ex-bg-color: rgb(var(--ex-bg-color-rgb));
-    --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 0.06);
-    --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 0.1);
-    --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 0.2);
+    --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 1);
+    --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 1);
+    --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 1);
     --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 1);
-    --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 0.1);
+    --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 1);
     --ex-bg-white: rgb(var(--ex-bg-color4-rgb));
     --ex-text-color--bg-primary: rgb(var(--ex-text-color-rgb)); //主色背景下的文字颜色
     --ex-text-color--bg-light: rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
@@ -108,22 +108,22 @@
 }
 
 .text-color2 {
-    --tw-text-opacity: 0.7;
+    --tw-text-opacity: 1;
     color: rgb(var(--ex-text-color2-rgb) / var(--tw-text-opacity));
 }
 
 .text-color3 {
-    --tw-text-opacity: 0.5;
+    --tw-text-opacity: 1;
     color: rgb(var(--ex-text-color3-rgb)/ var(--tw-text-opacity));
 }
 
 .text-color4 {
-    --tw-text-opacity: 0.4;
+    --tw-text-opacity: 1;
     color: rgb(var(--ex-text-color4-rgb)/ var(--tw-text-opacity));
 }
 
 .text-color5 {
-    --tw-text-opacity: 0.3;
+    --tw-text-opacity: 1;
     color: rgb(var(--ex-text-color5-rgb)/ var(--tw-text-opacity));
 }
 
@@ -248,17 +248,17 @@
 }
 
 .bg-color2 {
-    --tw-bg-opacity: 0.06;
+    --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-bg-color2-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color3 {
-    --tw-bg-opacity: 0.1;
+    --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-bg-color3-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color4 {
-    --tw-bg-opacity: 0.2;
+    --tw-bg-opacity: 1;
     background-color: rgb(var(--ex-bg-color4-rgb) / var(--tw-bg-opacity));
 }
 
@@ -268,13 +268,8 @@
 }
 
 .bg-color6 {
-    --tw-bg-opacity: 0.1;
-    background-color: rgb(var(--ex-bg-color6-rgb)/ var(--tw-bg-opacity));
-}
-
-.bg-color7 {
     --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color2-rgb) / var(--tw-bg-opacity));
+    background-color: rgb(var(--ex-bg-color6-rgb)/ var(--tw-bg-opacity));
 }
 
 .border-primary {

@@ -140,7 +140,7 @@ onMounted(()=>{
         }
 
         .active_tab {
-            color: var(--ex-primary-color);
+            color: var(--ex-text-color);
             font-weight: 700;
             opacity: 1;
             .tab-name{

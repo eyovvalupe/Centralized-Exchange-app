@@ -1,9 +1,9 @@
 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_748_5397)">
 <g filter="url(#filter0_d_748_5397)">
-<rect x="2" y="2" width="23.33" height="23.33" rx="6" fill="#97E180"/>
+<rect x="2" y="2" width="23.33" height="23.33" rx="6" fill="#00A609"/>
 </g>
-<path d="M14.0057 8.22852L19.7804 14.0032L14.0057 19.7779L8.23102 14.0032L14.0057 8.22852ZM14.0057 11.5283L11.5308 14.0032L14.0057 16.4781L16.4806 14.0032L14.0057 11.5283Z" fill="#171717"/>
+<path d="M14.0057 8.22852L19.7804 14.0032L14.0057 19.7779L8.23102 14.0032L14.0057 8.22852ZM14.0057 11.5283L11.5308 14.0032L14.0057 16.4781L16.4806 14.0032L14.0057 11.5283Z" fill="white"/>
 </g>
 <defs>
 <filter id="filter0_d_748_5397" x="-2" y="2" width="31.33" height="31.3301" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
