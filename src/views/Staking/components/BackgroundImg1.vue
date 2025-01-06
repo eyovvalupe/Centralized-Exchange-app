@@ -1,20 +1,25 @@
 <template>
     <div class="chart_item_bg w-full h-full absolute">
-        <div class="w-full h-full bg-color5 effect">
-            
+        <div class="w-full h-full bg-color5" :class="loaded ? 'effect' : ''">
         </div>
     </div>
 </template>
 <script setup>
-import { getStaticImgUrl } from "@/utils/index.js";
+import { onMounted } from 'vue';
+const loaded = ref(false);
 
+onMounted(() => {
+    setTimeout(() => {
+        loaded.value = true;
+    }, 300);
+})
 </script>
 <style lang="less">
 .chart_item_bg {
     .effect {
         animation-name: animation;
-        animation-duration: 1s;
-        animation-timing-function: ease;
+        animation-duration: 0.8s;
+        animation-timing-function: linear;
         animation-fill-mode: forwards;
     }
 
