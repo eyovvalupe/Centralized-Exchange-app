@@ -44,7 +44,7 @@ const { t } = useI18n();
 const kycInfo = ref({});
 try {
   kycInfo.value = JSON.parse(localStorage.getItem("kycInfo"));
-} catch {}
+} catch { }
 </script>
 
 <style lang="less" scoped>
@@ -58,7 +58,7 @@ try {
 
   .info_box {
     padding: 0.32rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.08rem;
     margin-bottom: 0.48rem;
 
@@ -83,7 +83,7 @@ try {
     border-radius: 0.24rem;
     padding: 0.08rem;
 
-    > img {
+    >img {
       object-fit: fill !important;
     }
   }

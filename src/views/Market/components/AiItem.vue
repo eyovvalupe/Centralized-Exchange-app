@@ -17,7 +17,9 @@
         </div>
       </div>
       <div class="tr">
-        <div class="px-[0.24rem] text-center min-w-[1.4rem] h-[0.72rem] leading-[0.72rem] text-[0.3rem] text-black bg-white rounded-[0.6rem] font-[600]">{{ t('trade.ai_opening_trade') }}</div>
+        <div
+          class="px-[0.24rem] text-center min-w-[1.4rem] h-[0.72rem] leading-[0.72rem] text-[0.3rem] text-black bg-white rounded-[0.6rem] font-[600]">
+          {{ t('trade.ai_opening_trade') }}</div>
       </div>
     </div>
     <div class="content">
@@ -134,10 +136,10 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  background: var(--ex-bg-color2);
+  background: var(--ex-bg-white2);
   margin-bottom: 0.2rem;
   padding: 0 0.12rem 0.12rem 0.12rem;
-  
+
   .top {
     padding: 0.24rem;
     display: flex;
@@ -161,7 +163,7 @@ const formatSec = (seconds, t) => {
           display: flex;
           align-items: center;
           margin-right: 0.24rem;
-          padding:0 0.08rem;
+          padding: 0 0.08rem;
           height: 0.36rem;
           border-radius: 0.08rem;
           background: rgba(255, 163, 70, 0.10);
@@ -170,6 +172,7 @@ const formatSec = (seconds, t) => {
           font-weight: 400;
           display: flex;
           align-items: center;
+
           .pp-icon {
             width: 0.2rem;
             height: 0.2rem;
@@ -188,7 +191,7 @@ const formatSec = (seconds, t) => {
 
   .content {
     border-radius: 0.32rem;
-    background: var(--ex-bg-color);
+    background: var(--ex-bg-color7);
   }
 
   .mid {
@@ -242,6 +245,7 @@ const formatSec = (seconds, t) => {
     align-items: center;
     justify-content: space-between;
     padding: 0.32rem 0;
+
     .bot-line {
       height: 0.9rem;
       width: 1px;

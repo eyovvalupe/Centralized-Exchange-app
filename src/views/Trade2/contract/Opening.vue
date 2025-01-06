@@ -94,7 +94,7 @@ defineExpose({
 
   .open_tab_box {
     border-radius: 0 0 0.32rem 0.32rem;
-    // background-color: var(--ex-bg-color2);
+    // background-color: var(--ex-bg-white2);
     // padding-top: 0.32rem;
   }
 

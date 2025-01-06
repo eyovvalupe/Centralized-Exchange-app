@@ -146,7 +146,7 @@ getSessionToken();
     overflow: hidden;
     display: flex;
     justify-content: center;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     padding: 0 0.32rem;
     flex-direction: column;
 

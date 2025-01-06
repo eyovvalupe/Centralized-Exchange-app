@@ -649,7 +649,7 @@ getSessionToken();
 .positions {
   .tr {
     padding: 0.2rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;

@@ -8,7 +8,7 @@
           show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show")
         }}</span>
       </div>
-   
+
       <CurrencyList @click="(val) => click(val)" :list="showList" :type="'cash'" />
     </div>
   </div>
@@ -212,7 +212,7 @@ defineExpose({
       height: 1.04rem;
       margin-top: 0.12rem;
       border-radius: 0.32rem;
-      background: var(--ex-bg-color2);
+      background: var(--ex-bg-white2);
       position: relative;
       display: flex;
       align-items: center;

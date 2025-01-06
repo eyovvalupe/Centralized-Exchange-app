@@ -6,10 +6,10 @@
         <Switch v-model="show0" size="0.2rem" />
         <span class="tab_title_desc">{{ show0 ? $t("assets.coin_list_hide") : $t("assets.coin_list_show") }}</span>
       </div>
-      
+
       <!-- <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
-      <CurrencyList @click="(val) => click(val)" :list="wallet" :type="'stock'"/>
-    
+      <CurrencyList @click="(val) => click(val)" :list="wallet" :type="'stock'" />
+
     </div>
   </div>
 </template>
@@ -40,7 +40,7 @@ const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currenc
 const getAssets = () => {
   if (!token.value) return
   // emits('setLoading', true)
-  store.dispatch('updateWallet','stock').finally(() => {
+  store.dispatch('updateWallet', 'stock').finally(() => {
     emits('setLoading', false)
   })
   // store.dispatch('updateOrderHint')
@@ -79,7 +79,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document.querySelector('.page').removeEventListener('click', removeSwitch)
-  } catch {}
+  } catch { }
 })
 
 const refresh = () => {
@@ -104,6 +104,7 @@ defineExpose({
   }
 
   position: relative;
+
   .top {
     font-size: 0.28rem;
     font-weight: 400;
@@ -111,11 +112,13 @@ defineExpose({
     align-items: center;
     height: 0.32rem;
     line-height: 0.32rem;
+
     .title {
       color: var(--ex-white);
       margin-right: 0.12rem;
       font-size: 0.3rem;
-      span{
+
+      span {
         font-size: 0.24rem;
       }
     }
@@ -133,7 +136,7 @@ defineExpose({
     font-size: 0.52rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 0.6rem; 
+    line-height: 0.6rem;
     margin-top: 0.26rem;
     padding-bottom: 0.4rem;
   }
@@ -146,19 +149,22 @@ defineExpose({
     background-color: var(--ex-bg-color);
     border-radius: 0.32rem;
     margin-top: 0.34rem;
+
     .line {
       width: 1px;
       height: 0.76rem;
       background-color: var(--ex-bg-color3);
     }
-    .nav{
+
+    .nav {
       flex: 1;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
     }
-    .nav_label{
+
+    .nav_label {
       color: var(--ex-text-color3);
       font-size: 0.28rem;
       line-height: 100%;
@@ -168,43 +174,45 @@ defineExpose({
       color: var(--ex-text-color);
       font-size: 0.3rem;
       font-weight: 600;
-      line-height: 0.3rem; 
+      line-height: 0.3rem;
       margin-top: 0.2rem;
 
     }
   }
 
-  .tab_title{
+  .tab_title {
     height: 0.52rem;
     display: flex;
     align-items: center;
     margin-bottom: 0.28rem;
 
-    &_desc{
-      color:var(--ex-text-color3);
+    &_desc {
+      color: var(--ex-text-color3);
       font-size: 0.24rem;
       margin-left: 0.12rem;
     }
   }
-  
+
   .tabs {
     position: relative;
     padding: 0 0.32rem;
+
     .tab {
       padding: 0 0.32rem;
       overflow: hidden;
       height: 1.04rem;
       margin-top: 0.12rem;
       border-radius: 0.32rem;
-      background: var(--ex-bg-color2);
+      background: var(--ex-bg-white2);
       position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      
-      .name{
+
+      .name {
         font-size: 0.3rem;
       }
+
       &:active {
         background-color: rgba(237, 237, 237, 0.87);
       }
@@ -218,7 +226,7 @@ defineExpose({
         box-sizing: border-box;
         padding: 0.1rem;
       }
-      
+
       .more {
         width: 0.3rem;
         height: 0.3rem;
@@ -237,9 +245,10 @@ defineExpose({
         display: flex;
         height: 100%;
         position: absolute;
-        right:-100%;
-        top:0;
+        right: -100%;
+        top: 0;
         transition: .3s;
+
         .right {
           height: 100%;
           width: 1.04rem;
@@ -253,33 +262,40 @@ defineExpose({
           color: var(--ex-text-color--bg-primary);
           background-color: var(--ex-primary-color);
         }
-        .right--yellow{
+
+        .right--yellow {
           background-color: #FFAF2A;
         }
-        .right--green{
+
+        .right--green {
           background-color: var(--ex-success-color);
         }
-        .right--red{
+
+        .right--red {
           background-color: var(--ex-error-color);
         }
-        .right:first-child{
+
+        .right:first-child {
           border-radius: 0.32rem 0rem 0rem 0.32rem;
         }
-        .right:last-child{
+
+        .right:last-child {
           border-radius: 0rem 0.32rem 0.32rem 0rem;
         }
       }
     }
-   
+
     .open_tab {
-      .name{
+      .name {
         display: none;
       }
+
       .amount {
         text-align: left;
-        padding:0px;
+        padding: 0px;
       }
-      .rights{
+
+      .rights {
         right: 0;
       }
     }

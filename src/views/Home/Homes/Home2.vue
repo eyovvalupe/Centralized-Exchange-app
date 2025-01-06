@@ -53,6 +53,12 @@
                 </div>
             </div>
 
+            <div class="scroll-box">
+                <div class="scroll-con">
+                    <MiningItem style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
+                </div>
+            </div>
+
             <div class="sub-banner">
                 <img :src="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
@@ -67,10 +73,17 @@
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
-
+            <div>
+                <div class="follow-btn">期权</div>
+            </div>
+            <div class="scroll-box">
+                <div class="scroll-con">
+                    <FollowItem style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
+                </div>
+            </div>
 
             <!-- 市场推荐 -->
-            <div class="recommend-title">
+            <div class="recommend-title" style="margin-top: 0.8rem;">
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
@@ -86,7 +99,7 @@
                     v-if="!pageLoading && activated" v-model:active="activeTab" animated shrink>
                     <Tab :title="$t('common.stock')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div>
+                        <div style="padding-bottom: 0.2rem;">
                             <StockItem :item="item" v-for="(item, i) in marketStockCurrentList" :key="'s_' + i"
                                 page="home" />
                         </div>
@@ -94,7 +107,7 @@
                     </Tab>
                     <Tab :title="$t('common.crypto')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div>
+                        <div style="padding-bottom: 0.2rem;">
                             <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
                                 marketType="crypto" page="home" />
                         </div>
@@ -155,6 +168,8 @@ import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import { useSocket } from "@/utils/ws";
 import SparkLine from "@/components/SparkLine.vue";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
+import MiningItem from "../Mining/MiningItem.vue"
+import FollowItem from "../Follow/FollowItem.vue"
 
 
 // 安装
@@ -451,7 +466,31 @@ onMounted(() => {
         .sub-banner {
             width: 100%;
             height: 2.54rem;
-            margin: 0.4rem 0;
+            margin: 0.04rem 0 0.4rem 0;
+        }
+
+        .scroll-box {
+            width: calc(100% + 0.32rem);
+            overflow-x: auto;
+            margin-bottom: 0.32rem;
+            padding-right: 0.32rem;
+
+            .scroll-con {
+                white-space: nowrap;
+            }
+        }
+
+        .follow-btn {
+            display: inline-flex;
+            margin-bottom: 0.24rem;
+            height: 0.76rem;
+            border-radius: 1rem;
+            background-color: var(--ex-primary-color);
+            padding: 0 0.32rem;
+            align-items: center;
+            justify-content: center;
+            color: var(--ex-white);
+            font-size: 0.28rem;
         }
 
         .recommend-title {
@@ -498,6 +537,13 @@ onMounted(() => {
                 }
             }
 
+            :deep(.page_ipo) {
+                padding-top: 0.32rem;
+
+                .loading_more {
+                    display: none;
+                }
+            }
         }
 
         .ad {

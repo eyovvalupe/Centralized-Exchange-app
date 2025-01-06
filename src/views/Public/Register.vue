@@ -139,8 +139,8 @@
       ref="verifCodeRef" />
 
     <!-- 区号弹窗 -->
-    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup" v-model:show="showDialog"
-      position="bottom" teleport="body" closeable="">
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
+      v-model:show="showDialog" position="bottom" teleport="body" closeable="">
       <div class="register_accounr_dialog">
         <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
           {{ $t("register.country_number") }}
@@ -154,20 +154,20 @@
         </div>
         <div ref="scrollRef" style="height: 60vh; overflow-y: auto; padding: 0 0.24rem;">
           <!-- <List> -->
-            <div v-for="item in showAreas">
-              <div @click="clickItem(item)"
-                class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-color"
-                :class="{ transfer_dialog_item_active: form.area == item.code }">
-                <div class="flex h-[1.08rem] items-center">
-                  <div class="w-[0.64rem] h-[0.64rem] mr-[0.2rem]">
-                    <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
-                  </div>
-                  <span>{{ item.cn }}&nbsp;</span>
-                  <span>{{ item.code }}</span>
+          <div v-for="item in showAreas">
+            <div @click="clickItem(item)"
+              class="flex justify-between h-[1.08rem] items-center border-b-[0.02rem] border-b-color"
+              :class="{ transfer_dialog_item_active: form.area == item.code }">
+              <div class="flex h-[1.08rem] items-center">
+                <div class="w-[0.64rem] h-[0.64rem] mr-[0.2rem]">
+                  <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                 </div>
-                <Icon v-if="form.area == item.code" class="cross" name="success" />
+                <span>{{ item.cn }}&nbsp;</span>
+                <span>{{ item.code }}</span>
               </div>
+              <Icon v-if="form.area == item.code" class="cross" name="success" />
             </div>
+          </div>
           <!-- </List> -->
           <NoData v-if="!showAreas.length" />
         </div>
@@ -588,7 +588,7 @@ onMounted(() => {
       border-right: none;
       color: var(--ex-text-color);
       border-bottom: 0.04rem solid var(--ex-border-color2);
-      // background-color: var(--ex-bg-color2);
+      // background-color: var(--ex-bg-white2);
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
       // transition: all ease .2s;
@@ -847,6 +847,7 @@ onMounted(() => {
       font-weight: 600;
     }
   }
+
   .login_title {
     width: 100%;
     display: flex;
@@ -858,7 +859,7 @@ onMounted(() => {
     font-style: normal;
     font-weight: 400;
     line-height: 0.32rem;
-    
+
     >span {
       color: var(--ex-text-primary);
     }

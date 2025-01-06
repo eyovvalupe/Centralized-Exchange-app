@@ -192,7 +192,7 @@ const clickAccountItem = val => {
 
   .search_box {
     height: 0.8rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.4rem;
     display: flex;
     align-items: center;
@@ -224,7 +224,7 @@ const clickAccountItem = val => {
     }
 
     .active_tab {
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       color: var(--ex-primary-color);
       font-weight: 500;
     }

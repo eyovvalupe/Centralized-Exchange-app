@@ -57,7 +57,7 @@ import Top from "@/components/Top.vue"
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-color: var(--ex-bg-color2);
+                background-color: var(--ex-bg-white2);
                 padding: 0.1rem;
                 line-height: 0.34rem;
                 font-size: 0.28rem;

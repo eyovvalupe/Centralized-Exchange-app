@@ -63,7 +63,7 @@
                 <img :src="getStaticImgUrl('/static/img/common/server.svg')" alt="server">
             </div>
             <div class="server">if you have questions contact <br /><span>customer service</span></div>
-            <Button @click="router.back()" round color="var(--ex-bg-color2)" class="submit" type="primary">
+            <Button @click="router.back()" round color="var(--ex-bg-white2)" class="submit" type="primary">
                 <span class="text-color3">关闭</span>
             </Button>
         </div>
@@ -99,7 +99,7 @@ const userInfo = computed(() => store.state.userInfo || {})
             .way {
                 width: 100%;
                 height: 2.2rem;
-                background-color: var(--ex-bg-color2);
+                background-color: var(--ex-bg-white2);
                 box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.05);
                 border-radius: 0.2rem;
                 margin-bottom: 0.6rem;

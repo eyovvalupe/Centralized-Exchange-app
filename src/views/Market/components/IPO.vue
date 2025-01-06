@@ -375,7 +375,7 @@ function countdown(endTime) {
 
     .item {
       border-radius: 0.32rem;
-      background: var(--ex-bg-color3);
+      background: var(--ex-bg-white2);
       margin-top: 0.32rem;
 
       .name_box {
@@ -477,7 +477,7 @@ function countdown(endTime) {
 
       .item_info {
         border-radius: 0.32rem;
-        background: var(--ex-bg-color);
+        background: var(--ex-bg-color7);
         position: relative;
         left: 0.12rem;
         width: calc(100% - 0.24rem);
@@ -555,7 +555,7 @@ function countdown(endTime) {
 
     .selected-class {
       color: var(--ex-primary-color);
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       position: relative;
     }
   }
