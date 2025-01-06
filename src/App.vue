@@ -43,9 +43,7 @@ if (BOTTOMBAR_MODE == 1) {
 if (BOTTOMBAR_MODE == 2) {
   BottomTabBar.value = defineAsyncComponent(() => import("@/components/BottomTabBar2.vue"))
 }
-console.error('????', BottomTabBar.value)
-// console.error("---storage---");
-// console.error(store.state)
+
 
 // 引入主题
 // const theme = computed(() => store.state.theme || '')
