@@ -5,7 +5,7 @@
                 <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="img" />
             </template>
             <template #right>
-                <div class="text-[0.32rem] text-primary">
+                <div class="text-[0.32rem] text-primary" @click="jump('portfolioOrder')">
                     {{ t('Order') }}
                 </div>
             </template>
@@ -60,7 +60,13 @@ import Top from '@/components/Top.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js";
 import StakingItem from './components/StakingItem.vue';
+import router from '@/router';
 
 const { t } = useI18n();
+const jump = (name) => {
+    router.push({
+        name
+    })
+}
 
 </script>

@@ -89,6 +89,6 @@ const onClose = () => {
 }
 
 .ex-bottom-popup-body {
-    background: linear-gradient(-180deg, #2e2e2e 0%, #1c1c1c 100%);
+    background: var(--ex-bg-color);
 }
 </style>

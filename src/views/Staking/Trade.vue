@@ -1,7 +1,6 @@
 <template>
     <div class="staking_mining w-full">
-        <Top :title="t('Staking mining')">
-        </Top>
+        <Top :title="t('Staking mining')" />
         <div class="px-[0.2rem] mt-[1.1rem]">
             <div class="px-[0.2rem] py-[0.32rem] bg-color6 flex flex-col mb-[0.2rem] rounded-[0.2rem]">
                 <div class="mb-[0.32rem]">{{ t('Subscription Combination') }}</div>
