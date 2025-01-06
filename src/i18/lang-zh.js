@@ -36,7 +36,7 @@ export default {
     email_phone: "邮箱/手机号",
     success: "密码已重置",
     back: "返回登录",
-    get_back: "找回密码"
+    get_back: "找回密码",
   },
   register: {
     security: "安全验证",
@@ -177,7 +177,7 @@ export default {
     status_service: "联系客服",
     verify_success: "审核通过",
     verify_failure: "审核失败",
-    id_photo_requirement: "照片上传要求"
+    id_photo_requirement: "照片上传要求",
   },
   google_auth: {
     page_title: "谷歌验证器",
@@ -192,16 +192,16 @@ export default {
     google_input_title: "谷歌验证码",
     google_input_con: "请输入6位数代码",
     google_input_btn_cancel: "取消",
-    google_input_btn_confirm: "确认"
+    google_input_btn_confirm: "确认",
   },
   service: {
     page_title: "在线客服",
     message_title: "客服为您服务",
     first_message: "您好，有什么能帮到您？",
-    input_message: "请输入..."
+    input_message: "请输入...",
   },
   language: {
-    page_title: "语言选择"
+    page_title: "语言选择",
   },
   safety: {
     page_title: "安全",
@@ -213,7 +213,7 @@ export default {
     no_google_dialog_title: "谷歌验证器",
     no_google_dialog_con: "你还未绑定谷歌验证器，是否去绑定",
     success_title: "操作成功",
-    success_btn: "关闭"
+    success_btn: "关闭",
   },
   change_login_pw: {
     page_title: "修改登录密码",
@@ -224,7 +224,7 @@ export default {
     confirm_pw: "确认新密码",
     confirm_pw_placeholder: "请再次输入新密码",
     btn: "修改",
-    no_match_noti: "两次密码不一致"
+    no_match_noti: "两次密码不一致",
   },
   change_trade_pw: {
     page_title: "修改交易密码",
@@ -235,7 +235,7 @@ export default {
     confirm_pw: "确认新密码",
     confirm_pw_placeholder: "请再次输入新密码",
     btn: "修改",
-    no_match_noti: "两次密码不一致"
+    no_match_noti: "两次密码不一致",
   },
   account: {
     page_title: "收款账户",
@@ -273,7 +273,7 @@ export default {
     add_bank_address_placeholder: "请输入银行卡卡号",
   },
   success_toast: {
-    message: "添加成功"
+    message: "添加成功",
   },
   home: {
     login: "登录",
@@ -364,7 +364,6 @@ export default {
     order_title_ipo: "IPO",
     order_current_position: "当前持仓",
     order_history: "历史查询",
-
   },
   withdraw: {
     withdraw: "提现",
@@ -453,7 +452,6 @@ export default {
     info_recharge_order: "订单编号",
     info_recharge_date: "充值时间",
     copied: "已复制",
-
   },
   transfer: {
     transferRecord: "划转记录",
@@ -475,7 +473,7 @@ export default {
     transfer_map_stock: "股票账户",
     transfer_map_futures: "合约账户",
     transfer_map_forex: "外汇账户",
-    transfer_map_trade: "大宗商品账户"
+    transfer_map_trade: "大宗商品账户",
   },
   recordList: {
     financialRecords: "资金记录",
@@ -578,7 +576,7 @@ export default {
     stock_opening_err_stop_price: "请输入止损价格",
     stock_opening_err_limit: "请输入限价",
     stock_opening_success: "开仓成功",
-    
+
     stock_position_stock: "股票/状态",
     stock_position_open: "开仓/可售",
     stock_position_cost: "现价/成本",
@@ -611,7 +609,7 @@ export default {
     stock_position_stop_ratio: "百分比",
     stock_position_unlogin_title: "还未登录账号？",
     stock_position_unlogin_con: "马上登录",
-    
+
     order_info_title_stock: "股票订单",
     order_info_title_contract: "合约订单",
     order_info_available_stock: "可售股票",
@@ -630,7 +628,7 @@ export default {
     order_info_stop_loss_ratio: "止损百分比",
     order_info_value: "订单价值",
     order_info_copy: "已复制",
-    
+
     contract_position_no_close_amount: "请输入平仓张数",
     contract_position_ongoing_amount: "持仓张数",
     contract_position_cost: "现价/买价",
@@ -751,25 +749,25 @@ export default {
     forex_position_title: "外汇/状态",
     trade_order_history: "历史订单",
 
-    left_search_result: "搜索结果"
+    left_search_result: "搜索结果",
   },
-  inviteFriends:{
-    invite:'推荐朋友',
-    reward:"我的奖励",
-    banner_title:"推荐朋友可获得",
-    banner_desc:"快邀请朋友一起赚钱吧",
-    qrcode_title:'邀请二维码',
-    save_img:"保存图片",
-    img_name:"我的二维码",
-    invite_code:"邀请代码",
-    copy:"复制",
-    copy_success:"复制成功",
-    url_title:"邀请链接",
-    copy_url:"复制链接",
-    performance_title:"推荐业绩",
-    details:"推荐明细",
-    user:"用户",
-    performance:"业绩"
+  inviteFriends: {
+    invite: "推荐朋友",
+    reward: "我的奖励",
+    banner_title: "推荐朋友可获得",
+    banner_desc: "快邀请朋友一起赚钱吧",
+    qrcode_title: "邀请二维码",
+    save_img: "保存图片",
+    img_name: "我的二维码",
+    invite_code: "邀请代码",
+    copy: "复制",
+    copy_success: "复制成功",
+    url_title: "邀请链接",
+    copy_url: "复制链接",
+    performance_title: "推荐业绩",
+    details: "推荐明细",
+    user: "用户",
+    performance: "业绩",
   },
   market: {
     market_header_optional: "自选",
@@ -928,6 +926,41 @@ export default {
     market_order_details_for_seller: "卖家确认",
     market_order_details_con1: "请根据总价",
     market_order_details_con2: "向商家提供的银行卡转账",
-
-  }
+  },
+  finance: {
+    portfolio: "金融理财",
+    portfolio_menu: "投资组合",
+    portfolio_title: "质押挖矿",
+    portfolio_order: "订单",
+    portfolio_revenue: "总收益",
+    portfolio_investment_amt: "投资金额",
+    portfolio_yield: "收益率",
+    portfolio_duration: "时长",
+    portfolio_participate: "参与使用",
+    portfolio_hot: "HOT",
+    portfolio_day: "天",
+    portfolio_mining_title: "质押挖矿",
+    portfolio_mining_subTitle1: "认购组合",
+    portfolio_mining_subTitle2: "认购金额",
+    portfolio_mining_operation: "运行时长",
+    portfolio_mining_revenue: "预估收益",
+    portfolio_mining_investment: "投资金额",
+    portfolio_mining_fee: "手续费",
+    portfolio_mining_header: "预计申购金额",
+    portfolio_mining_balance: "账户余额",
+    portfolio_mining_placeholder: "请输入投资金额",
+    portfolio_mining_btn: "申购",
+    portfolio_mining_title3: "怎样进行运作?",
+    portfolio_mining_guide:
+      "接入一系列的交易所，例如Coinbase、Huobi、Binance、KuCoin、YFX等全球知名交易所，通过算法判断各币种的趋势，实实监控当前市场情况。在价格范围内，高频率买入和卖出相关币种，实现套利，以保证您的收益最大化。",
+    portfolio_mining_noti: "提示",
+    portfolio_mining_noti_duration: "运行时长",
+    portfolio_mining_noti_daily: "日收益率",
+    portfolio_mining_noti_est: "预估收益",
+    portfolio_mining_noti_investment: "投资金额",
+    portfolio_mining_noti_fee: "手续费",
+    portfolio_order_title: "投资订单",
+    portfolio_order_tab1: "进行中",
+    portfolio_order_tab2: "已完成",
+  },
 };

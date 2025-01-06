@@ -18,7 +18,7 @@ onMounted(() => {
 .chart_item_bg {
     .effect {
         animation-name: animation;
-        animation-duration: 0.8s;
+        animation-duration: 1s;
         animation-timing-function: linear;
         animation-fill-mode: forwards;
     }

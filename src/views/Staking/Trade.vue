@@ -51,7 +51,7 @@
                 <div class="bg-color p-[0.2rem] rounded-[0.1rem] mb-[0.6rem]">
                     <Stepper v-model="value" integer />
                 </div>
-                <Button class="submit"><span>{{ t('Subscription') }}</span></Button>
+                <Button class="submit" @click="showConfirm = true"><span>{{ t('Subscription') }}</span></Button>
             </div>
 
             <div class="flex flex-col">
@@ -64,6 +64,37 @@
                 </div>
             </div>
         </div>
+        <BottomPopup round closeable v-model:show="showConfirm" position="bottom" teleport="body">
+            <div class="w-full h-[6rem]">
+                <div class="w-full flex justify-center text-[0.32rem] mb-[0.4rem]">{{ t('finance.portfolio_mining_noti')
+                    }}</div>
+                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
+                    <div>{{ t('finance.portfolio_mining_noti_duration') }}</div>
+                    <div>{{ 7 + t('finance.portfolio_day') }}</div>
+                </div>
+                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
+                    <div>{{ t('finance.portfolio_mining_noti_daily') }}</div>
+                    <div>{{ '0.2-0.25%' }}</div>
+                </div>
+                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
+                    <div>{{ t('finance.portfolio_mining_noti_est') }}</div>
+                    <div>{{ '0.00-0.00' }}</div>
+                </div>
+                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
+                    <div>{{ t('finance.portfolio_mining_noti_investment') }}</div>
+                    <div>{{ '2000-999999' }}</div>
+                </div>
+                <div class="w-full px-[0.4rem] flex justify-between mb-[0.4rem]">
+                    <div>{{ t('finance.portfolio_mining_noti_fee') }}</div>
+                    <div>{{ 0 }}</div>
+                </div>
+                <div class="px-[0.4rem]">
+                    <Button
+                        style="width: 100%; height: 0.96rem; border-radius: 0.2rem; background-color: var(--ex-primary-color); margin-bottom: 0.2rem;"><span>{{
+                            t('finance.portfolio_mining_btn') }}</span></Button>
+                </div>
+            </div>
+        </BottomPopup>
     </div>
 </template>
 <script setup>
@@ -71,10 +102,12 @@ import Top from '@/components/Top.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js";
 import { Stepper, Button } from 'vant';
+import BottomPopup from '@/components/BottomPopup.vue';
 
 const { t } = useI18n();
 
 const value = ref(0)
+const showConfirm = ref(false)
 
 const itemsMap = [{
     currency: 'BTC',
