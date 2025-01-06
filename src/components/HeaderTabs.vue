@@ -162,19 +162,18 @@ onMounted(()=>{
             margin: 0;
         }
         .tab{
-            border: 1px solid var(--ex-border-color2);
             margin-right: 0.12rem;
             padding: 0 .32rem;
             height: .8rem;
             font-size: 0.32rem;
             box-sizing: border-box;
             color: var(--ex-text-color2);
+            background: var(--ex-bg-color3);
+            color:var(--ex-text-color2);
         }
         .active_tab{
-            background-color: var(--ex-white);
-            border-color:var(--ex-white);
             font-weight: normal;
-            color:var(--ex-text-color--bg-light);
+            color:var(--ex-text-color);
             .tab-name{
                 font-weight: 600;
                 font-size: 0.32rem;

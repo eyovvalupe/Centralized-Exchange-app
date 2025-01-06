@@ -49,10 +49,6 @@
             <!-- <ArrowIcon /> -->
           </div>
         </div>
-
-        <!-- <FormItem background="var(--ex-bg-color5)" v-model="form.amount" btn-show-mode="focus" @btnClick="maxIpt"
-          show-btn :btn-placeholder="form.fromCurrency.name" :placeholder="'0'" :from="'transfer'"
-          :inputType="'number'" @update:modelValue="changeAmount('from')" /> -->
         <div class="w-full flex justify-between items-center">
           <div style="width: 80%;">
             <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'from'"
@@ -77,9 +73,7 @@
             @click="openDialog('to')">
             <div class="flex items-center w-full justify-between">
               <div class="account_item">
-                <!-- <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.svg`)" alt="icon" />
-              </div> -->
+               
                 <div class="item_content">
                   <span>{{ _accountMap[form.to] }}</span>
                 </div>
@@ -100,9 +94,7 @@
             </div>
           </div>
         </div>
-        <!-- <FormItem background="var(--ex-bg-color)" v-model="toAmount" btn-show-mode="focus" @btnClick="maxIpt" show-btn
-          :btn-placeholder="form.toCurrency.name" :placeholder="t('transfer.in_amount')" :inputType="'number'"
-          @update:modelValue="changeAmount('to')" /> -->
+   
         <div class="w-full flex justify-between items-center">
           <div style="width: 80%;">
             <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'to'"
@@ -120,9 +112,8 @@
       </div>
     </div>
 
-    <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-      type="primary"><span style="color: var(--ex-black);">{{
-        $t("transfer.btn") }}</span></Button>
+    <Button @click="openSafePass" :loading="loading" round class="submit"
+      type="primary">{{ $t("transfer.btn") }}</Button>
 
     <!-- 充提记录 -->
     <RecordList ref="RecordListRef" />
@@ -279,34 +270,7 @@ const columns = computed(() => {
         }
         return acc;
       }, [])
-      // console.log('target list =========> ', item.currencys)
-      // if (target) {
-      //   item.currencys = [
-      //     {
-      // key: target.currency,
-      // value: target.name,
-      // currency: target.currency,
-      // name: target.name,
-      // className:
-      //   clickKey.value == "from"
-      //     ? form.value.fromCurrency.currency == target.currency
-      //       ? "action-sheet-active"
-      //       : ""
-      //     : form.value.toCurrency.currency == target.currency
-      //     ? "action-sheet-active"
-      //     : "",
-      //     },
-      //   ];
-      // } else {
-      //   item.currencys = [
-      //     {
-      //       key: "",
-      //       value: "",
-      //       currency: "",
-      //       name: "",
-      //     },
-      //   ];
-      // }
+      
     }
     return item;
   });
@@ -504,7 +468,7 @@ const changeAmount = (val) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color3);
 
     .top-record-icon {
       width: 0.3rem;
@@ -515,12 +479,13 @@ const changeAmount = (val) => {
   .form {
     .form_box {
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-color6);
+      background-color: var(--ex-bg-color2);
       padding: 0.42rem 0.32rem 0.4rem 0.32rem;
       margin-top: 0.52rem;
       position: relative;
       height: 2.6rem;
-
+      border: 1px solid var(--ex-border-color);
+      transition: .3s;
       :deep(.item) {
         height: 1.12rem;
       }
@@ -532,7 +497,7 @@ const changeAmount = (val) => {
     }
 
     .form_box_active {
-      border: 1px solid var(--ex-primary-color);
+      border: 1px solid var(--ex-border-color3);
     }
 
     .err_ipt {

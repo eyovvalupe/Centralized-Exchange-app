@@ -58,7 +58,7 @@ const jump = (url) => {
       width: 2rem !important;
 
       .van-button__content {
-        color: var(--ex-black);
+        color: var(--ex-text-color--bg-primary);
       }
     }
 

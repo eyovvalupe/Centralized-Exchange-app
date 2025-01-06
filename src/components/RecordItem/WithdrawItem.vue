@@ -101,7 +101,7 @@ const formatDate = (date) => {
   padding: 0.3rem 0.32rem;
   border-radius: 0.32rem;
   margin-top: 0.2rem;
-  background-color: var(--ex-bg-color2);
+  background-color: var(--ex-bg-color3);
 
   .icon_box {
     width: 0.8rem;
