@@ -129,6 +129,10 @@ defineExpose({
       height: 0.8rem;
       background-color: var(--ex-primary-color);
       border-radius: 1rem;
+
+      &:nth-child(2) {
+        background-color: var(--ex-down-color);
+      }
     }
   }
 }

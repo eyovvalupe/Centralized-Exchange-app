@@ -8,10 +8,10 @@
         <div class="title">{{ t('trade.ipo_success_title') }}</div>
         <div class="tips">{{ t('trade.ipo_success_con') }}</div>
         <div class="btn flex justify-center items-center w-full">
-            <Button @click="router.push('/trade?to=ipo')" round class="next"><span style="color: var(--ex-black);">{{
+            <Button @click="router.push('/trade?to=ipo')" round class="next"><span style="color: var(--ex-white);">{{
                 t('trade.ipo_success_btn1') }}</span></Button>
             <Button @click="router.push('/trade?to=ipo&active=1')" round class="info" type="primary"><span
-                    style="color: var(--ex-black);font-weight: 500;">{{ t('trade.ipo_success_btn2') }}</span></Button>
+                    style="color: var(--ex-white);font-weight: 500;">{{ t('trade.ipo_success_btn2') }}</span></Button>
         </div>
     </div>
 </template>

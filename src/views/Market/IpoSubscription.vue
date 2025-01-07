@@ -72,7 +72,7 @@
 
         </div>
         <Button @click="openSafe" :loading="loading" round size="large" color="var(--ex-primary-color)" class="submit"
-            type="primary"><span style="color: var(--ex-black);">{{
+            type="primary"><span style="color: var(--ex-white);">{{
                 t('trade.ipo_opening_btn') }}</span></Button>
 
 
@@ -134,7 +134,7 @@
                 </FormItem>
 
                 <Button :loading="loading" @click="submit(safeword)" size="large" class="submit"
-                    color="var(--ex-primary-color)" round><span style="color: var(--ex-black);">{{
+                    color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{
                         $t("trade.ipo_opening_btn") }}</span></Button>
             </div>
         </Popup>

@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div>
-                <div class="follow-btn">{{ t('copy.copy_option') }}</div>
+                <div class="follow-btn">期权</div>
             </div>
             <div class="scroll-box">
                 <div class="scroll-con">
@@ -87,7 +87,7 @@
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">{{ t('home.market_trend') }}</div>
+                <div style="flex: 1;">市场行情</div>
                 <div class="recommend-icon">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
@@ -100,15 +100,15 @@
                     <Tab :title="$t('common.stock')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
                         <div style="padding-bottom: 0.2rem;">
-                            <StockItem :item="item" v-for="(item, i) in marketStockCurrentList" :key="'s_' + i"
-                                page="home" />
+                            <StockItem :showIcon="true" :item="item" v-for="(item, i) in marketStockCurrentList"
+                                :key="'s_' + i" page="home" />
                         </div>
                         <NoData v-if="!commendLoading && !marketStockCurrentList.length" />
                     </Tab>
                     <Tab :title="$t('common.crypto')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
                         <div style="padding-bottom: 0.2rem;">
-                            <StockItem :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
+                            <StockItem :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
                                 marketType="crypto" page="home" />
                         </div>
                         <NoData v-if="!commendLoading && !contractList.length" />
@@ -119,7 +119,7 @@
                         </div>
                     </Tab>
                     <Tab :title="$t('common.AI')">
-                        <div class="mx-[0.32rem] mt-[0.32rem]">
+                        <div class="mt-[0.32rem]">
                             <Ai page="home" />
                         </div>
                     </Tab>
@@ -139,6 +139,58 @@
                 </div>
                 <div class="ad-tip">
                     <img :src="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
+                </div>
+            </div>
+
+            <!-- links -->
+            <div class="links">
+                <div class="link-item">
+                    <div class="item-img">
+                        <img :src="getStaticImgUrl('/static/home2/link1.png')" alt="">
+                    </div>
+                    <div>TheSantumNe...</div>
+                </div>
+                <div class="link-item">
+                    <div class="item-img">
+                        <img :src="getStaticImgUrl('/static/home2/link2.png')" alt="">
+                    </div>
+                    <div>KEEPOFFTHE...</div>
+                </div>
+                <div class="link-item">
+                    <div class="item-img">
+                        <img :src="getStaticImgUrl('/static/home2/link3.png')" alt="">
+                    </div>
+                    <div>AIORBIT</div>
+                </div>
+                <div class="link-item">
+                    <div class="item-img">
+                        <img :src="getStaticImgUrl('/static/home2/link4.png')" alt="">
+                    </div>
+                    <div>GodsUnchained...</div>
+                </div>
+                <div class="link-item">
+                    <div class="item-img">
+                        <img :src="getStaticImgUrl('/static/home2/link5.png')" alt="">
+                    </div>
+                    <div>PudgyRods</div>
+                </div>
+                <div class="link-item">
+                    <div class="item-img">
+                        <img :src="getStaticImgUrl('/static/home2/link6.png')" alt="">
+                    </div>
+                    <div>Azuki</div>
+                </div>
+            </div>
+
+
+            <!-- 市场推荐 -->
+            <div class="recommend-title" style="margin-top: 0.36rem;">
+                <div class="point">
+                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
+                </div>
+                <div style="flex: 1;">新闻</div>
+                <div class="recommend-icon">
+                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 
@@ -165,7 +217,6 @@ import IPO from "@/views/Market/components/IPO.vue";
 import StockItem from "@/components/StockItem.vue";
 import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import { useSocket } from "@/utils/ws";
-import SparkLine from "@/components/SparkLine.vue";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
 import MiningItem from "../Mining/MiningItem.vue"
 import FollowItem from "../Follow/FollowItem.vue"
@@ -371,7 +422,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-home2 {
-    background-color: #171717;
+    background-color: var(--ex-bg-color);
     min-height: 100%;
     position: relative;
     overflow: hidden;
@@ -531,13 +582,17 @@ onMounted(() => {
                 }
 
                 .van-tab--active {
-                    color: var(--ex-black);
-                    background-color: var(--ex-white);
+                    color: var(--ex-white);
+                    background-color: var(--ex-primary-color);
                 }
             }
 
             :deep(.page_ipo) {
                 padding-top: 0.32rem;
+
+                .list {
+                    padding: 0;
+                }
 
                 .loading_more {
                     display: none;
@@ -548,7 +603,6 @@ onMounted(() => {
         .ad {
             width: 100%;
             height: 3.5rem;
-            margin-top: 0.2rem;
             font-size: 0.32rem;
             font-style: normal;
             font-weight: 400;
@@ -610,6 +664,34 @@ onMounted(() => {
                 font-size: 0.3rem;
                 color: var(--ex-black);
                 margin-top: 0.4rem;
+            }
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+
+            .link-item {
+                background-color: var(--ex-bg-color3);
+                width: 3.28rem;
+                border-radius: 0.32rem;
+                padding: 0.12rem 0.12rem 0.16rem 0.12rem;
+                text-align: center;
+                margin-bottom: 0.24rem;
+                color: var(--ex-white);
+                font-size: 0.28rem;
+                font-weight: 400;
+
+                .item-img {
+                    width: 100%;
+                    height: 3.16rem;
+                    border-radius: 0.32rem;
+                    overflow: hidden;
+                    margin-bottom: 0.1rem;
+                }
             }
         }
     }

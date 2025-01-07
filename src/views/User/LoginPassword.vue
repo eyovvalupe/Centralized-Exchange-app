@@ -42,7 +42,9 @@
 
       <div class="form_item margin_item" :class="[isSame ? 'border-color-2' : 'border-[0.02rem] border-error']">
         <div :class="confirmFocus || form.password2 ? 'flex flex-col' : 'flex'">
-          <div class="text-color5" :class="confirmFocus || form.password2 ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{ $t("change_login_pw.confirm_pw") }}</div>
+          <div class="text-color5"
+            :class="confirmFocus || form.password2 ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{
+              $t("change_login_pw.confirm_pw") }}</div>
           <input maxlength="20" v-model.trim="form.password2" :type="showPass2 ? 'text' : 'password'" class="item_input"
             @input="isSame = true" @focus="confirmFocus = true" @blur="confirmFocus = false" />
         </div>
@@ -58,7 +60,7 @@
     <!-- 按钮 -->
     <div class="submit_box">
       <Button :loading="loading" round :disabled="disapled" color="var(--ex-primary-color)" class="submit"
-        type="primary" @click="submit"><span style="color: var(--ex-black);">{{ $t("change_login_pw.btn")
+        type="primary" @click="submit"><span style="color: var(--ex-white);">{{ $t("change_login_pw.btn")
           }}</span></Button>
     </div>
 

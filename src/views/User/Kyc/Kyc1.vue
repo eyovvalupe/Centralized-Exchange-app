@@ -77,7 +77,7 @@
 
     <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" @click="submit" :loading="loading"
       :disabled="disabled" round :color="'var(--ex-primary-color)'" class="submit" type="primary"><span
-        style="color: var(--ex-black);">{{ $t("kyc.first_btn")
+        style="color: var(--ex-white);">{{ $t("kyc.first_btn")
         }}</span></Button>
 
     <!-- 日期选择 -->

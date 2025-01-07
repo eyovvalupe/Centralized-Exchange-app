@@ -570,7 +570,7 @@ const copy = (text) => {
   }
 
   .btn4 {
-    background-color: var(--ex-white);
+    background-color: var(--ex-sbtn-color);
   }
 
   .disabled_btn {

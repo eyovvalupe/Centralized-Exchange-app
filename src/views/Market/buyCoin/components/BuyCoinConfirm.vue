@@ -5,11 +5,12 @@
 
       <div class="p-[0.32rem] bg-color3 rounded-[0.32rem]">
         <div class="flex items-center font-[600]">
-          <img class="size-[0.52rem] rounded-50 mr-[0.12rem]" :src="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" alt="currency" />
-          {{ offset == 'buy' ? t('market.market_buy_list_buy') : t('market.market_buy_list_sell')  }}{{ currency }}
+          <img class="size-[0.52rem] rounded-50 mr-[0.12rem]"
+            :src="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" alt="currency" />
+          {{ offset == 'buy' ? t('market.market_buy_list_buy') : t('market.market_buy_list_sell') }}{{ currency }}
         </div>
         <div class="pt-[0.24rem] flex items-center justify-between text-color">
-          <span class="text-[0.32rem]">{{ t('market.market_buy_list_price')}}</span>
+          <span class="text-[0.32rem]">{{ t('market.market_buy_list_price') }}</span>
           <span class=" leading-[0.48rem]">
             <strong class="text-[0.48rem]">{{ price }}</strong>
             <span class="text-[0.28rem] ml-[0.12rem]">{{ payCurrency }}</span>
@@ -94,7 +95,7 @@
         v-model="safeword" />
       <div class="pt-[0.6rem] pb-[0.32rem]">
         <Button size="large" round :loading="loading" @click="submit" type="primary">
-          <span style="color: var(--ex-black);">{{ t('trade.stock_opening_confirm')
+          <span style="color: var(--ex-white);">{{ t('trade.stock_opening_confirm')
             }}</span></Button>
       </div>
     </div>
@@ -128,7 +129,7 @@ const props = defineProps({
   payCurrency: String,
   offset: String,
   loading: Boolean,
-  price:[String, Number],
+  price: [String, Number],
 })
 
 const currentAccount = ref({})

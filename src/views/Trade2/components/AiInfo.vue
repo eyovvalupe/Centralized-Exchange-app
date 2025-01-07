@@ -28,7 +28,7 @@
             <div class="text">{{ t('trade.ai_position_timer') }}</div>
           </div>
           <Circle v-if="currItem.status == 'open'" start-position="right" stroke-linecap="round" stroke-width="142"
-            layer-color="var(--ex-bg-color2)" :color="gradientColor" size="182" :rate="100"
+            layer-color="var(--ex-bg-color3)" :color="gradientColor" size="182" :rate="100"
             :current-rate="100 - rate" />
         </div>
 

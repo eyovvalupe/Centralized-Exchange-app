@@ -62,7 +62,8 @@
 
           <template #bottom-con>
             <div style="padding-left: 0.24rem;width: 100%;padding-top: 0.08rem;">
-              <div style="font-size: 0.24rem;color: var(--ex-text-color3);">{{ t('trade.ai_opening_profit_ratio') }}</div>
+              <div style="font-size: 0.24rem;color: var(--ex-text-color3);">{{ t('trade.ai_opening_profit_ratio') }}
+              </div>
               <div style="font-size: 0.28rem;color: var(--ex-white);font-weight: bold;margin-top: 0.08rem;">{{
                 getPercent() }}</div>
             </div>
@@ -107,31 +108,26 @@
 
 
       </div>
-
-      <div class="px-[0.36rem]" v-if="!token">
+      <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
         <div class="flex justify-between mb-[0.32rem]">
-          <div
-            class="w-[2.91rem] h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
+          <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn"
             @click="store.commit('setIsLoginOpen', true)">
             {{ t("trade.stock_opening_token_login") }}
           </div>
-          <div
-            class="w-[2.91rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex items-center justify-center text-color--bg-primary text-[0.36rem]"
+          <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn"
             @click="jump('register')">
             {{ t("trade.stock_opening_token_register") }}
           </div>
         </div>
-        <div
-          class="w-full h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex items-center justify-center text-primary text-[0.36rem]"
-          @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
-            ">
+        <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+          ">
           {{ t("trade.contract_create_guest_btn") }}
         </div>
       </div>
       <div class="btns" v-else>
         <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn"
           :color="tab == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
-          <span style="color: var(--ex-black);">{{
+          <span style="color: var(--ex-white);">{{
             tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
           }}</span>
         </Button>
@@ -183,12 +179,12 @@
           </div>
         </div>
 
-        <FormItem v-model="form1.safeword" size="large" input-type="password"
+        <FormItem style="margin-top: 0.4rem;" v-model="form1.safeword" size="large" input-type="password"
           :placeholder="t('trade.stock_opening_trade_pw')">
         </FormItem>
 
         <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit"
-          color="var(--ex-primary-color)" round><span style="color: var(--ex-black);">{{
+          color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{
             t("trade.ai_opening_confirm_btn")
           }}</span></Button>
       </div>
@@ -669,6 +665,7 @@ defineExpose({
     background-color: rgba(255, 255, 255, 0.7);
     z-index: 1000;
   }
+
 }
 
 .trade_ai {
@@ -678,7 +675,15 @@ defineExpose({
 
     .btn {
       flex: 1;
-      margin: 0 0.16rem;
+      margin: 0.2rem 0.16rem 0.6rem 0.16rem;
+      border-radius: 0.4rem;
+    }
+  }
+
+  .unlogin-box {
+    .btn {
+      background-color: var(--ex-white);
+      color: var(--ex-bg-color);
     }
   }
 
@@ -699,7 +704,7 @@ defineExpose({
 
   .item_content {
     margin-top: 0.4rem;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-color2);
     border-radius: 0.32rem;
     padding: 0.24rem 0.28rem;
 
@@ -780,6 +785,8 @@ defineExpose({
   }
 
   .item_box_name {
+    height: 0.64rem;
+
     .placeholder {
       font-size: 0.24rem;
       transform: translateY(-150%);
@@ -906,6 +913,10 @@ defineExpose({
       height: 0.8rem;
       background-color: var(--ex-primary-color);
       border-radius: 1rem;
+
+      &:nth-child(2) {
+        background-color: var(--ex-down-color);
+      }
     }
   }
 }

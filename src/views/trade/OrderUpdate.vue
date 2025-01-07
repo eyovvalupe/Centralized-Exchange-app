@@ -62,7 +62,7 @@
 
         <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;margin-top: 0.6rem;"
           :disabled="loseValue === '' || value === '' || amount === 0" @click="update"><span
-            style="color: var(--ex-black);">确定</span></Button>
+            style="color: var(--ex-white);">确定</span></Button>
 
         <!-- 数字键盘 -->
         <NumberKeyboard v-model="value" :show="showKeyboard" @blur="showKeyboard = false" />

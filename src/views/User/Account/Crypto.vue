@@ -28,7 +28,7 @@
         </div>
         <div class="btn_container">
             <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)"
-                @click="next"><span style="color: var(--ex-black);">保存</span></Button>
+                @click="next"><span style="color: var(--ex-white);">保存</span></Button>
         </div>
 
         <!-- 币种 -->

@@ -80,15 +80,15 @@
 
     <div class="m-b-5" style="height: .5rem;"></div>
     <Button size="large" color="var(--ex-down-color)" round v-if="isDownActive && token" :disabled="downdisable(active)"
-      @click="openPositPopup('down')"><span style="color: var(--ex-black);">买跌</span></Button>
+      @click="openPositPopup('down')"><span style="color: var(--ex-white);">买跌</span></Button>
     <Button size="large" color="var(--ex-up-color)" round v-if="isUpActive && token" :disabled="downdisable(active)"
-      @click="openPositPopup('up')"><span style="color: var(--ex-black);">买涨</span> </Button>
+      @click="openPositPopup('up')"><span style="color: var(--ex-white);">买涨</span> </Button>
 
 
     <Button size="large" color="var(--ex-primary-color)" round v-if="!token" style="margin-bottom: 0.34rem"
-      @click="jump('login')"><span style="color: var(--ex-black);">登陆</span></Button>
+      @click="jump('login')"><span style="color: var(--ex-white);">登陆</span></Button>
     <Button size="large" color="var(--ex-bg-color2)" round v-if="!token" style="color: var(--ex-text-color3)"
-      @click="jump('register')"><span style="color: var(--ex-black);">注册</span></Button>
+      @click="jump('register')"><span style="color: var(--ex-white);">注册</span></Button>
 
   </div>
 </template>

@@ -262,7 +262,7 @@ const removeStock = (item) => {
   height: 1.62rem;
   padding: 0 0.3rem;
   position: relative;
-  background-color: var(--ex-white-bg2);
+  background-color: var(--ex-bg-color3);
   border-radius: 0.4rem;
   margin-top: 0.2rem;
 

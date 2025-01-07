@@ -86,7 +86,7 @@
         </div>
 
         <Button @click="openSafePass" :loading="loading" round color="var(--ex-primary-color)" class="submit"
-            type="primary"><span style="color: var(--ex-black);">确定</span></Button>
+            type="primary"><span style="color: var(--ex-white);">确定</span></Button>
 
         <!-- 账户选择弹窗 -->
         <Popup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"

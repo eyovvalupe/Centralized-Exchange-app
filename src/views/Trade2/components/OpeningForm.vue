@@ -190,7 +190,7 @@
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
       :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
-      <span style="color:var(--ex-black);">{{
+      <span style="color:var(--ex-white);">{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
@@ -328,7 +328,7 @@
           @click="showPassword = false" />
       </div>
       <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>
-        <span style="color: var(--ex-black);">{{ t("trade.stock_open") }}</span>
+        <span style="color: var(--ex-white);">{{ t("trade.stock_open") }}</span>
       </Button>
     </div>
   </Popup>
@@ -401,8 +401,8 @@
 
       <div class="lists">
         <!-- 搜索列表 -->
-        <StockTable :handleClick="handleClick" :loading="searchLoading" :key="'search'" :list="marketSearchList"
-          :page="'trade'" />
+        <StockTable :showIcon="true" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+          :list="marketSearchList" :page="'trade'" />
       </div>
     </div>
   </Popup>
@@ -1292,7 +1292,7 @@ defineExpose({
       border-radius: 0.32rem;
       border: 1px solid var(--ex-border-color2);
       padding: 0.06rem 0.24rem;
-      background-color: var(--ex-bg-color3);
+      background-color: var(--ex-bg-color2);
 
       .tip-title {
         color: var(--ex-text-color3);

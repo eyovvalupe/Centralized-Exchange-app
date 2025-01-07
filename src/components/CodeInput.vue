@@ -10,7 +10,9 @@
       <div v-for="(digit, index) in passwordDigits" class="relative">
         <input :key="index" type="text" maxlength="1" :value="digit"
           @input="(event) => handleInput(event.target.value, index)" @keydown="(event) => handleKeydown(index, event)"
-          @focus="focusIndex = index" class="digit-input pt-[0.1rem]" :class="[digit != '' ? 'filled' : '', from == 'register' ? 'w-[0.92rem] h-[1.12rem]' : 'w-[1rem] h-[1.2rem]']" :style="{
+          @focus="focusIndex = index" class="digit-input pt-[0.1rem]"
+          :class="[digit != '' ? 'filled' : '', from == 'register' ? 'w-[0.92rem] h-[1.12rem]' : 'w-[1rem] h-[1.2rem]']"
+          :style="{
             borderColor:
               digit == '' && focusIndex != index
                 ? 'var(--ex-border-color2)'
@@ -28,12 +30,13 @@
             borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem',
           }" ref="digitInputs" />
         <div v-if="focusIndex == index && digit == ''"
-          class="absolute w-[0.48rem] bottom-[0.24rem] top-[0.92rem] h-[0.04rem] bg-primary" :class="from == 'register' ? 'left-[0.22rem]' : 'left-[0.26rem]'"></div>
+          class="absolute w-[0.48rem] bottom-[0.24rem] top-[0.92rem] h-[0.04rem] bg-primary"
+          :class="from == 'register' ? 'left-[0.22rem]' : 'left-[0.26rem]'"></div>
       </div>
     </div>
     <Button :loading="props.loading" :disabled="!isAllFilled" round color="var(--ex-primary-color)"
       class="submit-button" type="primary" @click="handleSubmit">
-      <span style="color: var(--ex-black);">{{ props.from == "register" ? t('code_input.btn_text1') :
+      <span style="color: var(--ex-white);">{{ props.from == "register" ? t('code_input.btn_text1') :
         t('code_input.btn_text2')
         }}</span>
     </Button>

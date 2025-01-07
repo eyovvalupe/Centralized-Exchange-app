@@ -7,11 +7,11 @@
                 <div class="top">
                     <div class="avatar"></div>
                     <div class="name">萨达撒阿大的</div>
-                    <div class="level">{{ $t('copy.level', {level: '1'}) }}</div>
+                    <div class="level">{{ $t('copy.level', { level: '1' }) }}</div>
                 </div>
                 <div class="bottom">
                     <div class="bottom-info">
-                        <div class="icon"></div>
+                        <div class="icon"><img :src="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
                         <div>2131/5000</div>
                     </div>
                 </div>
@@ -33,14 +33,16 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { getStaticImgUrl } from "@/utils/index.js"
+</script>
 
 <style lang="less">
 .follow-item {
     width: 6.04rem;
     height: 3.32rem;
     border-radius: 0.32rem;
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--ex-bg-color3);
     flex-shrink: 0;
     padding: 0.12rem;
 
@@ -87,8 +89,8 @@
             }
 
             .bottom {
-                padding-left: 0.7rem;
-                margin-top: 0.02rem;
+                padding-left: 0.6rem;
+                margin-top: 0.04rem;
 
                 .bottom-info {
                     background-color: var(--ex-bg-color2);
@@ -97,11 +99,14 @@
                     border-radius: 0.12rem;
                     align-items: center;
                     display: inline-flex;
+                    font-size: 0.2rem;
 
                     .icon {
                         width: 0.2rem;
                         height: 0.2rem;
                         margin-right: 0.04rem;
+                        position: relative;
+                        top: -0.01rem;
                     }
                 }
             }
@@ -125,7 +130,7 @@
         width: 100%;
         height: 1.84rem;
         border-radius: 0.32rem;
-        background-color: #171717;
+        background-color: var(--ex-bg-color);
         display: flex;
         align-items: center;
         justify-content: space-between;

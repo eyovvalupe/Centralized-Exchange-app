@@ -15,11 +15,11 @@
 
       <div class="btns">
         <Button round class="btn" @click="close">
-          <span style="color: var(--ex-text-color2)"><span style="color: var(--ex-black);">{{
+          <span style="color: var(--ex-text-color2)"><span style="color: var(--ex-white);">{{
             $t("assets.safety_trade_cancel") }}</span></span>
         </Button>
         <Button :loading="loading" round class="btn" type="primary" @click="submit"><span
-            style="color: var(--ex-black);">{{
+            style="color: var(--ex-white);">{{
               $t("assets.safety_trade_confirm") }}</span></Button>
       </div>
     </div>

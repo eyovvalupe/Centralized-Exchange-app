@@ -7,7 +7,7 @@
     <div class="title">{{ $t("safety.success_title") }}</div>
 
     <Button @click="router.back()" round color="var(--ex-primary-color)" class="submit" type="primary">
-      <span style="color: var(--ex-black);">{{ $t("safety.success_btn")
+      <span style="color: var(--ex-white);">{{ $t("safety.success_btn")
         }}</span></Button>
   </div>
 </template>

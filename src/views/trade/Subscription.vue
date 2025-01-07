@@ -73,7 +73,7 @@
 
     <Button size="large" color="var(--ex-primary-color)" round @click="openPositPopup()"
       :disabled="(textSelect != '普通申购' && vipVal == '') || numValue == '' || password == ''"><span
-        style="color: var(--ex-black);">认购</span></Button>
+        style="color: var(--ex-white);">认购</span></Button>
 
 
     <!-- 下拉框 -->

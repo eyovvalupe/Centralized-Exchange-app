@@ -87,7 +87,7 @@
       <div v-if="currDetail.status == 'issuing'" style="height: 1.68rem"></div>
       <Button v-if="currDetail.status == 'issuing'" @click="goBuy(currDetail)" round size="large"
         color="var(--ex-primary-color)" class="submit" type="primary">
-        <span style="color: var(--ex-black);">{{ t("trade.ipo_detail_btn") }}</span></Button>
+        <span style="color: var(--ex-white);">{{ t("trade.ipo_detail_btn") }}</span></Button>
     </div>
   </div>
 </template>

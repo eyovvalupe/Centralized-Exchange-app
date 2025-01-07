@@ -138,7 +138,7 @@
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
-            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
+            <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -203,7 +203,7 @@
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
-            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
+            <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -656,8 +656,8 @@ getSessionToken();
   padding: 0 0.32rem;
 
   .tr {
-    padding: 0.24rem 0;
-    border-bottom: 1px solid var(--ex-border-color);
+    padding: 0.05rem 0;
+    // border-bottom: 1px solid var(--ex-border-color);
     display: flex;
     align-items: stretch;
   }
@@ -824,8 +824,8 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      // border: 1px solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color3);
+      border: 1px solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

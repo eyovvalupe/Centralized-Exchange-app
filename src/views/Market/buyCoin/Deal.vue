@@ -67,7 +67,7 @@
         </div>
         <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color" round :loading="loading" type="primary"
           @click="goSubmit">
-          <span style="color: var(--ex-black);">{{
+          <span style="color: var(--ex-white);">{{
             t('market.market_buy_fast_buy')
           }}</span></Button>
       </template>
@@ -107,7 +107,7 @@
         </div>
 
         <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color" round :loading="loading"
-          @click="goSubmit"><span style="color: var(--ex-black);">{{ t('market.market_buy_fast_sell') }}</span></Button>
+          @click="goSubmit"><span style="color: var(--ex-white);">{{ t('market.market_buy_fast_sell') }}</span></Button>
 
       </template>
 

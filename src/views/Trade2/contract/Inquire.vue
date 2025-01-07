@@ -236,8 +236,8 @@ defineExpose({
 <style lang="less" scoped>
 .inquire {
   .tr {
-    padding: 0.2rem;
-    background-color: var(--ex-bg-color2);
+    padding: 0.24rem;
+    background-color: var(--ex-bg-color3);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;
@@ -269,7 +269,7 @@ defineExpose({
       font-size: 0.32rem;
       color: var(--ex-text-color);
       line-height: 0.32rem;
-      margin-bottom: 0.18rem;
+      margin-bottom: 0.28rem;
     }
 
     .lever {
