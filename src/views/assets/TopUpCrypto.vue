@@ -15,8 +15,7 @@
       <Tab :title="$t('topUpCrypto.cryptocurrency')" name="cryptocurrency">
         <div class="form mt-[0.46rem]">
           <div
-            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px]"
-            style="background-color: var(--ex-bg-white2);" @click="showDialog = true">
+            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showDialog = true">
             <div class="flex flex-col justify-between">
               <div class="text-[0.28rem] text-color5">
                 <span>{{ $t("topUpCrypto.currency") }}</span>
@@ -39,8 +38,7 @@
           </div>
 
           <div
-            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px]"
-            style="background-color: var(--ex-bg-white2);" @click="showNetDialog = true">
+            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showNetDialog = true">
             <div class="h-full flex flex-col">
               <div class="text-[0.28rem] text-color5" style="width: max-content;">
                 <span>{{ t("topUpCrypto.network") }}</span>
@@ -57,13 +55,8 @@
               <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
             </div>
           </div>
-          <!-- <div class="subtitle">
-            <span style="flex: none">{{
-              $t("topUpCrypto.rechargeAmount")
-            }}</span>
-          </div> -->
-          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px]"
-            :class="{ err_ipt: errStatus }" style="background-color: var(--ex-bg-white2);">
+          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px] bg-color2"
+            :class="{ err_ipt: errStatus }" >
             <div class="item_content">
               <input class="ipt" @blur="
                 errStatus = false;

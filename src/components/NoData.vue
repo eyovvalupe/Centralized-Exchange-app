@@ -34,7 +34,7 @@ const props = defineProps({
   padding: 1rem 0;
 
   .nodata_icon {
-    width: 2.28rem;
+    width: 1.8rem;
     height: auto;
 
     img {

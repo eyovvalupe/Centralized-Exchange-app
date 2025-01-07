@@ -672,7 +672,6 @@ onMounted(() => {
 .register_accounr_dialog {
   width: 100%;
   height: 100%;
-  background-color: var(--ex-bg-color5);
   overflow: hidden;
   padding: 0.28rem 0.32rem 0.8rem 0.32rem;
   position: relative;
@@ -687,7 +686,7 @@ onMounted(() => {
 
   .search_box {
     height: 0.84rem;
-    background-color: var(--ex-bg-color);
+    background-color: var(--ex-bg-color6);
     border-radius: 1rem;
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;

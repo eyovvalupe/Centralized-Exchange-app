@@ -1,12 +1,7 @@
 <!-- 合约 -->
 <template>
   <div class="notification_page">
-    <div class="w-full h-[0.88rem] flex justify-center items-center">
-      <div class="absolute left-[0.32rem] top-[0.26rem]" @click="back">
-        <Icon :name="'arrow-left'" size="0.4rem" />
-      </div>
-      <span class="text-[0.36rem]">消息中心</span>
-    </div>
+    <Top :title="t('消息中心')" />
     <div class="pt-[0.16rem]">
       <Tabs type="custom-card" v-model:active="active" :swipeable="false" animated :color="'var(--ex-primary-color)'"
         shrink @change="onChange">
@@ -145,10 +140,10 @@
 <script setup>
 import { Tab, Tabs, Icon, TextEllipsis } from "vant";
 import { ref, onMounted, nextTick } from "vue";
-import eventBus from "@/utils/eventBus";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
+import Top from "@/components/Top.vue";
 
 const { t } = useI18n();
 

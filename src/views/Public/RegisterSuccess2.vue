@@ -9,7 +9,7 @@
     <div class="text-[0.24rem] leading-[0.34rem] text-color3">
       {{ t('register.already_get_virtual') }}
     </div>
-    <div class="text-[0.36rem] leading-[0.54rem] text-primary">
+    <div class="text-[0.36rem] leading-[0.54rem] text-primary mb-[0.6rem]">
       {{ userInfo.amount ? userInfo.amount : 0 }}&nbsp;<span
         class="text-[0.24rem] text-color leading-[0.34rem]">USDT</span>
     </div>
@@ -140,6 +140,7 @@ const goChat = () => {
     font-weight: 400;
     font-size: 0.3rem;
     line-height: 0.42rem;
+    margin-bottom: 0.2rem;
   }
 
   .submit {

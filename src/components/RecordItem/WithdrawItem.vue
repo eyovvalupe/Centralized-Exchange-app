@@ -167,7 +167,6 @@ const formatDate = (date) => {
       background-color: var(--ex-status-bg7);
     }
 
-
     .status_success {
       color: var(--ex-status-color3);
       background-color: var(--ex-status-bg3);

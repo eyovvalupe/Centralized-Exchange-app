@@ -869,7 +869,6 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .register_accounr_dialog {
-  background-color: var(--ex-bg-color5);
   overflow: hidden;
   padding: 0 0.32rem 0.8rem 0.32rem;
   position: relative;
@@ -893,7 +892,7 @@ onMounted(() => {
   .search_box {
     height: 0.84rem;
     border-radius: 0.32rem;
-    background-color: var(--ex-bg-color);
+    background-color: var(--ex-bg-color6);
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;
     display: flex;
