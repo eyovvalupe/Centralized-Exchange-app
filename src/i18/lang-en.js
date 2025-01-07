@@ -500,6 +500,8 @@ export default {
     ad_title: "Start Your Trading Journey",
     ad_con: "Create Your Path to Wealth",
     ad_btn: "Start Trade",
+    finance: "Finance"
+
   },
   market: {
     stock: {

@@ -297,6 +297,7 @@ export default {
     ad_title: "开启你的交易之旅",
     ad_con: "创造财富之路",
     ad_btn: "开始交易",
+    finance: "理财"
   },
   market: {
     stock: {

@@ -45,7 +45,7 @@ const navs = ref([
 
   { name: t("home.trade"), route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
   {
-    name: "理財",
+    name: t('home.finance'),
     route: "",
     children: ["market_info", "financial_info", "trading_rules"],
     icon: "/static/img/bottom/licai1.svg",

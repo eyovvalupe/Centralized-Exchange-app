@@ -34,6 +34,8 @@ export default {
     ad_title: "開啟你的交易之旅",
     ad_con: "創造財富之路",
     ad_btn: "開始交易",
+    finance: "理財"
+
   },
   login: {
     login: "登錄",
