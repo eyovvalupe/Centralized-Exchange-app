@@ -96,13 +96,13 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.6rem] relative">
+    <div class="flex items-center w-full mb-[1.04rem] mt-[0.4rem] justify-between px-[0.6rem] relative">
       <div @click="jump('account', true)" class="text-center flex flex-col items-center justify-center relative">
         <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/payment.svg')" />
         </div>
-        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem] leading-[0.32rem]">{{
           $t("user_page.receive_payment") }}</div>
       </div>
       <div @click="jump('kyc', true)" class="text-center flex flex-col items-center justify-center relative">
@@ -122,7 +122,7 @@
             }}</span>
           <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
         </div>
-        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem] leading-[0.32rem]">{{
           $t("user_page.verify_identity") }}</div>
       </div>
       <div @click="jump('googleCode', true)" class="text-center flex flex-col items-center justify-center relative">
@@ -136,7 +136,7 @@
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
         </div>
-        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem] leading-[0.32rem]">{{
           $t("user_page.google_verification") }}</div>
       </div>
       <div @click="jump('inviteFriends', true)" class="text-center flex flex-col items-center justify-center relative">
@@ -144,7 +144,7 @@
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
           <img class="" :src="getStaticImgUrl('/static/img/user/friend.svg')" />
         </div>
-        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem]">{{
+        <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem] leading-[0.32rem]">{{
           $t("user_page.recommend_friend") }}</div>
       </div>
     </div>

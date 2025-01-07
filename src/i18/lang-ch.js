@@ -663,6 +663,7 @@ export default {
     ai_opening_historical_profit_rate: "歷史收益率",
     ai_opening_24_profit_rate: "24小時收益率",
     ai_opening_profit_margin: "利潤率",
+    ai_opening_profit_ratio: "盈虧率",
 
     ai_position_title: "訂單詳情",
     ai_position_profit: "獲利",

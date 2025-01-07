@@ -62,7 +62,7 @@
 
           <template #bottom-con>
             <div style="padding-left: 0.24rem;width: 100%;padding-top: 0.08rem;">
-              <div style="font-size: 0.24rem;color: var(--ex-text-color3);">盈亏率</div>
+              <div style="font-size: 0.24rem;color: var(--ex-text-color3);">{{ t('trade.ai_opening_profit_ratio') }}</div>
               <div style="font-size: 0.28rem;color: var(--ex-white);font-weight: bold;margin-top: 0.08rem;">{{
                 getPercent() }}</div>
             </div>

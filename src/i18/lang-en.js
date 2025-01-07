@@ -695,6 +695,7 @@ export default {
     ai_opening_historical_profit_rate: "Historical Profit",
     ai_opening_24_profit_rate: "24h Profit",
     ai_opening_profit_margin: "Profit Ratio",
+    ai_opening_profit_ratio: "P/L Ratio",
 
     ai_position_title: "Trade Detail",
     ai_position_profit: "Profit",
