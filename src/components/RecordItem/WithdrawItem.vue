@@ -177,9 +177,6 @@ const formatDate = (date) => {
       background-color: var(--ex-bg-color5);
     }
 
-    .status_failure {
-      color: var(--ex-text-color3);
-    }
   }
 }
 </style>
