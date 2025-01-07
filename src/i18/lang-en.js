@@ -496,6 +496,10 @@ export default {
     trade: "Trade",
     assets: "Assets",
     user: "User",
+    market_trend: "Market Trends",
+    ad_title: "Start Your Trading Journey",
+    ad_con: "Create Your Path to Wealth",
+    ad_btn: "Start Trade",
   },
   market: {
     stock: {

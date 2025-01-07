@@ -30,6 +30,10 @@ export default {
     trade: "交易",
     assets: "資產",
     user: "用户",
+    market_trend: "市場推薦",
+    ad_title: "開啟你的交易之旅",
+    ad_con: "創造財富之路",
+    ad_btn: "開始交易",
   },
   login: {
     login: "登錄",

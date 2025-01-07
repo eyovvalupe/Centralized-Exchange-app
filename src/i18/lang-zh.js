@@ -293,6 +293,10 @@ export default {
     trade: "交易",
     assets: "资产",
     user: "用户",
+    market_trend: "市场推荐",
+    ad_title: "开启你的交易之旅",
+    ad_con: "创造财富之路",
+    ad_btn: "开始交易",
   },
   market: {
     stock: {
