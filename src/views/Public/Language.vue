@@ -10,10 +10,16 @@
             <img :src="getStaticImgUrl(`/static/img/flag/${item.icon}.svg`)" alt="">
           </div>
           <div class="name">{{ item.name }}</div>
-          <div :class="checked.val == item.val ? 'check' : 'uncheck'">
-            <!-- <Checkbox checked-color="var(--ex-primary-color)" :name="item.val" /> -->
+          <!-- <div :class="checked.val == item.val ? 'check' : 'uncheck'">
             <div :class="checked.val == item.val ? 'inner' : ''"></div>
+          </div> -->
+          <div v-if="checked.val == item.val">
+            <img :src="getStaticImgUrl('/static/img/user/lang_checked.svg')" alt="">
           </div>
+          <div v-if="checked.val != item.val">
+            <img :src="getStaticImgUrl('/static/img/user/lang_unchecked.svg')" alt="">
+          </div>
+          <div></div>
         </div>
       </div>
     </CheckboxGroup>
@@ -23,7 +29,7 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import { Checkbox, CheckboxGroup } from "vant";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import Top from "@/components/Top.vue";
 import router from "@/router";
 import store from "@/store";
@@ -45,7 +51,8 @@ const envLangList = ref(
     return acc;
   }, [])
 );
-const checked = ref(JSON.parse(localStorage.getItem("language")) || "");
+// const checked = ref(JSON.parse(localStorage.getItem("language")) || "");
+const checked = computed(() => store.state.language || {})
 const langList = ref(_langMap);
 const filteredLangList = ref(
   langList.value.filter((item) => envLangList.value.includes(item.val))
@@ -55,7 +62,9 @@ const clickItem = (item) => {
   store.commit("setLanguage", item);
   checked.value = [item.val];
   locale.value = item.val;
-  router.back();
+  setTimeout(() => {
+    router.back();
+  }, 30);
 };
 </script>
 
