@@ -3,7 +3,7 @@
     <div style="width: 100%;">
         <div class="slider-container">
             <Slider class="slider-dom" v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-white)"
-                inactive-color="var(--ex-bg-color3)" @change="onSliderChange">
+                inactive-color="var(--ex-border-color)" @change="onSliderChange">
                 <template #button>
                     <div class="slider-custom-num">
                         <!-- <span class="number" v-show="sliderValue">{{ Math.floor(sliderValue) }}%</span> -->

@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="h-[1.6rem] relative">
-      <div class="absolute w-full top-[0.69rem]">
+      <div class="user_page_bg absolute w-full top-[0.69rem]">
         <img :src="getStaticImgUrl('/static/img/user/user_page_bg.svg')" alt="">
       </div>
       <div class="w-[6rem] mx-auto rounded-tl-[0.36rem] rounded-tr-[0.36rem] overflow-hidden">
@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.6rem]">
+    <div class="flex items-center w-full mb-[0.84rem] mt-[0.4rem] justify-between px-[0.6rem] relative">
       <div @click="jump('account', true)" class="text-center flex flex-col items-center justify-center relative">
         <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
@@ -310,6 +310,16 @@ if (token.value) {
   height: 100%;
   overflow-y: auto;
   padding-bottom: 2rem;
+
+  .user_page_bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(14, 15, 24, 0), rgba(14, 15, 24, 1));
+  }
 
   .title {
     height: 1.12rem;

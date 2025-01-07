@@ -19,13 +19,13 @@
     --ex-text-color3-rgb: 136 136 136; //#888888  提示文字颜色
     --ex-text-color4-rgb: 136 136 136; //#888888 次要文字颜色
     --ex-text-color5-rgb: 136 136 136; //#888888 禁用颜色
-    --ex-border-color-rgb: 53 53 55; //#353537 边框颜色（浅）
-    --ex-border-color2-rgb: 35 36 37; //#232325 边框颜色（中）
+    --ex-border-color-rgb: 26 27 36; //#1A1B24 边框颜色（浅）
+    --ex-border-color2-rgb: 26 27 36; //#1A1B24 边框颜色（中）
     --ex-border-color3-rgb: 210 210 210; //#D2D2D2 边框颜色（亮）
     --ex-border-color4-rgb: 35 36 37; //#232325    边框色(深)
     --ex-bg-color-rgb: 14 15 24; //#0E0F18   背景颜色
     --ex-bg-white2-rgb: 10 10 15; //#0A0A0F   
-    --ex-bg-color3-rgb: 26 27 36; //#1A1B24   
+    --ex-bg-color3-rgb: 10 10 15; //#0A0A0F   
     --ex-bg-color4-rgb: 26 27 36; //#1A1B24 
     --ex-bg-color5-rgb: 26 27 36; //#1A1B24    
     --ex-bg-color6-rgb: 26 27 36; //#1A1B24
@@ -470,8 +470,8 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        border-left: 0.06rem solid rgba(0, 0, 0, 0.1);
-        border-right: 0.06rem solid rgba(0, 0, 0, 0.1);
+        border-left: 0.06rem solid var(--ex-bg-color3);
+        border-right: 0.06rem solid var(--ex-bg-color3);
     }
 
     &::before {
@@ -483,6 +483,6 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: var(--ex-bg-color3);
     }
 }

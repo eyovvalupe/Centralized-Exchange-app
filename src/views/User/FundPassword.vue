@@ -193,6 +193,7 @@ const submitForm = (code) => {
       width: 100%;
       height: 1.12rem;
       font-size: 0.36rem;
+      border-radius: 0.4rem;
     }
   }
 }

@@ -1421,7 +1421,7 @@ defineExpose({
       flex-wrap: wrap;
       height: 1.12rem;
       border-radius: 0.32rem;
-      // border: 1px solid var(--ex-border-color2);
+      border: 1px solid var(--ex-border-color2);
       padding: 0.06rem 0.24rem;
       background-color: var(--ex-bg-color3);
 

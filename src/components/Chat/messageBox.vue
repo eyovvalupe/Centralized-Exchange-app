@@ -156,7 +156,7 @@ function formatDate(date) {
 
   .service_first {
     position: relative;
-    background-color: var(--ex-bg-white);
+    background-color: var(--ex-white);
     color: var(--ex-text-black);
 
     &::before {
@@ -167,7 +167,7 @@ function formatDate(date) {
       width: 0;
       height: 0;
       border-left: 0.2rem solid transparent;
-      border-right: 0.2rem solid var(--ex-bg-white);
+      border-right: 0.2rem solid var(--ex-white);
       border-bottom: 0.2rem solid transparent;
       border-top: 0.2rem solid transparent;
     }
@@ -217,9 +217,7 @@ function formatDate(date) {
             width: 0;
             height: 0;
             border-left: 0.2rem solid transparent;
-            // border-right: 0.2rem solid var(--ex-bg-color3);
-            border-right: 0.2rem solid var(--ex-bg-primary);
-
+            border-right: 0.2rem solid var(--ex-white);
             border-bottom: 0.2rem solid transparent;
             border-top: 0.2rem solid transparent;
           }
@@ -295,13 +293,15 @@ function formatDate(date) {
 
     &.receive {
       .con {
-        background: var(--ex-bg-color3);
-        color: var(--ex-text-color);
+        background: var(--ex-white);
+        color: var(--ex-black);
 
         &.img {
           padding: 0 !important;
           margin-left: 6px;
         }
+
+        
       }
     }
 
@@ -347,7 +347,7 @@ function formatDate(date) {
 
   #hasNewMessage {
     text-align: center;
-    background: var(--ex-bg-white2);
+    background: var(--ex-white);
     padding: 10px 0;
     margin-bottom: 10px;
     color: var(--ex-text-color3);
