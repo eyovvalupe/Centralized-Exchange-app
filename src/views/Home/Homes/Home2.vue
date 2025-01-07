@@ -68,13 +68,13 @@
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">跟单</div>
+                <div style="flex: 1;">{{ t('copy.title') }}</div>
                 <div class="recommend-icon">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
             <div>
-                <div class="follow-btn">期权</div>
+                <div class="follow-btn">{{ t('copy.copy_option') }}</div>
             </div>
             <div class="scroll-box">
                 <div class="scroll-con">
@@ -87,7 +87,7 @@
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">市场推荐</div>
+                <div style="flex: 1;">{{ t('home.market_trend') }}</div>
                 <div class="recommend-icon">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
@@ -133,11 +133,10 @@
                 <div class="ad-bg"
                     :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }"></div>
                 <div class="ad-content">
-                    <div class="title">开启你的交易之旅</div>
-                    <div>创造财富之路</div>
-                    <div class="btn">去交易</div>
+                    <div class="title">{{ t('home.ad_title') }}</div>
+                    <div>{{ t('home.ad_con') }}</div>
+                    <div class="btn">{{ t('home.ad_btn') }}</div>
                 </div>
-
                 <div class="ad-tip">
                     <img :src="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
                 </div>

@@ -11,7 +11,6 @@ export default {
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暫無收款賬戶",
-
   },
   home: {
     login: "登录",
@@ -31,6 +30,10 @@ export default {
     trade: "交易",
     assets: "資產",
     user: "用户",
+    market_trend: "市場推薦",
+    ad_title: "開啟你的交易之旅",
+    ad_con: "創造財富之路",
+    ad_btn: "開始交易",
   },
   login: {
     login: "登錄",
@@ -56,8 +59,7 @@ export default {
     email_phone: "郵箱/手機號",
     success: "密碼已重置",
     back: "返回登錄",
-    get_back: "找回密碼"
-
+    get_back: "找回密碼",
   },
   register: {
     security: "安全驗證",
@@ -157,7 +159,6 @@ export default {
     message_box_confirm: "確認",
     message_box_cancel: "取消",
     get_demo_coin: "去領取",
-
   },
   kyc: {
     page_title: "身份認證",
@@ -938,18 +939,25 @@ export default {
     portfolio_mining_placeholder: "請輸入投資金額",
     portfolio_mining_btn: "申購",
     portfolio_mining_title3: "怎樣進行運作?",
-    portfolio_mining_guide: "接入一系列的交易所，例如Coinbase、Huobi、Binance、KuCoin、YFX等全球知名交易所，通過算法判斷各幣種的趨勢，實實監控當前市場情況。在價格範圍內，高頻率買入和賣出相關幣種，實現套利，以保證您的收益最大化。" ,
-    
+    portfolio_mining_guide:
+      "接入一系列的交易所，例如Coinbase、Huobi、Binance、KuCoin、YFX等全球知名交易所，通過算法判斷各幣種的趨勢，實實監控當前市場情況。在價格範圍內，高頻率買入和賣出相關幣種，實現套利，以保證您的收益最大化。",
+
     portfolio_mining_noti: "提示",
     portfolio_mining_noti_duration: "運行時長",
     portfolio_mining_noti_daily: "日收益率",
     portfolio_mining_noti_est: "預估收益",
     portfolio_mining_noti_investment: "投資金額",
     portfolio_mining_noti_fee: "手續費",
-    
+
     portfolio_order_title: "投資訂單",
     portfolio_order_tab1: "進行中",
     portfolio_order_tab2: "已完成",
-
-  }
+  },
+  copy: {
+    title: "跟單",
+    copy_option: "跟單",
+    copy_trade: "交易",
+    total_revenue: "收益",
+    level: "{level}級",
+  },
 };

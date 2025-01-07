@@ -496,6 +496,10 @@ export default {
     trade: "Trade",
     assets: "Assets",
     user: "User",
+    market_trend: "Market Trends",
+    ad_title: "Start Your Trading Journey",
+    ad_con: "Create Your Path to Wealth",
+    ad_btn: "Start Trade",
   },
   market: {
     stock: {
@@ -982,5 +986,12 @@ export default {
     portfolio_order_title: "Investment Order",
     portfolio_order_tab1: "In Progress",
     portfolio_order_tab2: "Completed",
+  },
+  copy: {
+    title: "Copy",
+    copy_option: "Optios",
+    copy_trade: "Copy",
+    total_revenue: "Total Revenue",
+    level: 'LV.{level}'
   }
 };

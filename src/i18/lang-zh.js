@@ -293,6 +293,10 @@ export default {
     trade: "交易",
     assets: "资产",
     user: "用户",
+    market_trend: "市场推荐",
+    ad_title: "开启你的交易之旅",
+    ad_con: "创造财富之路",
+    ad_btn: "开始交易",
   },
   market: {
     stock: {
@@ -964,4 +968,12 @@ export default {
     portfolio_order_tab1: "进行中",
     portfolio_order_tab2: "已完成",
   },
+  copy: {
+    title: "跟单",
+    copy_option: "跟单",
+    copy_trade: "交易",
+    total_revenue: "收益",
+    level: '{level}级',
+
+  }
 };

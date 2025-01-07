@@ -19,7 +19,7 @@
             </div>
             <div class="line-box"></div>
         </div>
-        <div class="btn">参与使用</div>
+        <div class="btn">{{ t('finance.portfolio_participate') }}</div>
     </div>
 </template>
 
