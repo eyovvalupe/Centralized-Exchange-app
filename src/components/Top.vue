@@ -2,7 +2,7 @@
 <template>
   <div class="max-width top">
     <div class="back" @click="clickLeft">
-      <div class="w-[0.28rem] h-[0.28rem]">
+      <div class="w-[0.44rem] h-[0.44rem]">
         <img :src="getStaticImgUrl('/static/img/user/back.svg')" alt="">
       </div>
     </div>
@@ -88,20 +88,20 @@ const clickLeft = () => {
   .back {
     position: absolute;
     left: 0.2rem;
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.7rem;
+    height: 0.7rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0.3rem;
+    border-radius: 0.1rem;
     background-color: var(--ex-bg-color6);
   }
 
   .back1 {
     position: absolute;
     left: 0.32rem;
-    width: 0.6rem;
-    height: 0.6rem;
+    width: 0.7rem;
+    height: 0.7rem;
     display: flex;
     align-items: center;
     justify-content: center;

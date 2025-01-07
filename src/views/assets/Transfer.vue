@@ -15,17 +15,15 @@
     <div class="form">
       <div class="form_box" :class="{ form_box_active: clickKey == 'from' }">
         <div class="flex w-full justify-between">
-          <div class="mb-[0.32rem] w-[1.52rem] h-[0.6rem] flex justify-center items-center bg-white rounded-[1rem]">
-            <span class="text-[0.28rem] text-color--bg-primary text-center">{{ $t("transfer.out") }}</span>
+          <div class="mb-[0.32rem] min-w-[1.52rem] h-[0.6rem] flex justify-center items-center">
+            <span class="text-[0.28rem] text-color2 text-center">{{ $t("transfer.out") }}</span>
           </div>
           <div
-            class="flex justify-between items-center bg-color w-[4rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem]"
+            class="flex justify-between items-center bg-color3 w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem]"
             @click="openDialog('from')">
             <div class="flex items-center w-full justify-between">
               <div class="account_item">
-                <!-- <div class="account_item_icon">
-                <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="icon" />
-              </div> -->
+           
                 <div class="item_content">
                   <span>{{ _accountMap[form.from] }}</span>
                 </div>
@@ -46,12 +44,11 @@
                 </div>
               </div>
             </div>
-            <!-- <ArrowIcon /> -->
           </div>
         </div>
-        <div class="w-full flex justify-between items-center">
-          <div style="width: 80%;">
-            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'from'"
+        <div class="w-full flex gap-[0.24rem] justify-between items-center">
+          <div class="flex-2">
+            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0" @focus="clickKey = 'from'"
               @blur="clickKey = ''" />
           </div>
           <div class="flex-1 text-end h-full items-center text-color3">
@@ -65,11 +62,11 @@
           <img :src="getStaticImgUrl('/static/img/assets/convert.svg')" alt="img" />
         </div>
         <div class="flex justify-between">
-          <div class="mb-[0.32rem] w-[1.52rem] h-[0.6rem] flex justify-center items-center bg-white rounded-[1rem]">
-            <span class="text-[0.28rem] text-color--bg-primary text-center">{{ $t("transfer.in") }}</span>
+          <div class="mb-[0.32rem] min-w-[1.52rem] h-[0.6rem] flex justify-center items-center">
+            <span class="text-[0.28rem] text-color2 text-center">{{ $t("transfer.in") }}</span>
           </div>
           <div
-            class="flex justify-between items-centerw-full w-[4rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] bg-color"
+            class="flex justify-between items-centerw-full w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] bg-color3"
             @click="openDialog('to')">
             <div class="flex items-center w-full justify-between">
               <div class="account_item">
@@ -94,10 +91,10 @@
             </div>
           </div>
         </div>
-
-        <div class="w-full flex justify-between items-center">
-          <div style="width: 80%;">
-            <input v-model="form.amount" type="text" class="text-[0.6rem]" placeholder="0" @focus="clickKey = 'to'"
+   
+        <div class="w-full flex  gap-[0.24rem] justify-between items-center">
+          <div class="flex-2">
+            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0" @focus="clickKey = 'to'"
               @blur="clickKey = ''" />
           </div>
           <div class="flex-1 text-end h-full items-center text-color3">
@@ -174,12 +171,12 @@ const blurInput = () => {
     errStatus.value = focus.value = false;
   }, 0);
 };
-const assets = computed(() => store.state.assets || {});
-const wallet = computed(() => store.state.wallet || []); // 钱包
-const elseWallet = computed(() => store.state.elseWallet || []); // 其他账户钱包
+const assets        = computed(() => store.state.assets || {});
+const wallet        = computed(() => store.state.wallet || []); // 钱包
+const elseWallet    = computed(() => store.state.elseWallet || []); // 其他账户钱包
 const elseWalletMap = computed(() => store.state.elseWalletMap || []); // 其他账户钱包
-const elseCoinMap = computed(() => store.state.elseCoinMap || {}); // 其他账户的币种
-const userInfo = computed(() => store.state.userInfo)
+const elseCoinMap   = computed(() => store.state.elseCoinMap || {}); // 其他账户的币种
+const userInfo      = computed(() => store.state.userInfo)
 
 // 表单
 const loading = ref(false);
@@ -461,27 +458,27 @@ const changeAmount = (val) => {
   :deep(.top) {
     z-index: 10;
   }
-
+  
 
   .top-record {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 0.3rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--ex-bg-color3);
 
     .top-record-icon {
-      width: 0.3rem;
-      height: 0.3rem;
+      width: 0.36rem;
+      height: 0.36rem;
     }
   }
 
   .form {
     .form_box {
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color);
       padding: 0.42rem 0.32rem 0.4rem 0.32rem;
       margin-top: 0.52rem;
       position: relative;
