@@ -654,7 +654,7 @@ watch(() => store.state.deWeightCurrencyList, () => {
     }
 
     .active_tab {
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       color: var(--ex-primary-color);
       font-weight: 500;
     }

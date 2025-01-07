@@ -15,7 +15,7 @@
                     <div class="title" v-if="activeStockSymbol.price">{{ activeStockSymbol.price }}</div>
                     <div class="subtitle" v-if="activeStockSymbol.ratio && !isNaN(activeStockSymbol.ratio)"
                         :class="[(activeStockSymbol.ratio > 0 ? 'up' : 'down')]">{{
-                            activeStockSymbol.ratio > 0 ? '+' : '' }}{{ activeStockSymbol.ratio  }}%
+                            activeStockSymbol.ratio > 0 ? '+' : '' }}{{ activeStockSymbol.ratio }}%
                     </div>
                     <AreaChart :symbol="activeStockSymbol.symbol"
                         :color="activeStockSymbol.ratio > 0 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" />
@@ -140,7 +140,7 @@ const news = ref([])
 
         .active_tab {
             color: var(--ex-primary-color);
-            background-color: var(--ex-bg-color2);
+            background-color: var(--ex-bg-white2);
         }
     }
 
@@ -208,11 +208,11 @@ const news = ref([])
             .stock_tab {
                 width: 2.97rem;
                 height: 1.60rem;
-                border: 1px solid var(--ex-bg-color2);
+                border: 1px solid var(--ex-bg-white2);
                 border-radius: 0.08rem;
                 padding: 0.17rem;
                 position: relative;
-                background-color: var(--ex-bg-color2);
+                background-color: var(--ex-bg-white2);
 
                 .tab_title {
                     font-weight: 700;

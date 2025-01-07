@@ -7,7 +7,7 @@
           <div class="top-record-icon">
             <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
-          
+
         </div>
       </template>
     </Top>
@@ -47,11 +47,11 @@
               </div>
             </div>
           </FormItem>
-        
+
           <FormItem input-type="number" v-model="form.amount" show-btn :from="'withdraw'"
             :crypto-currency="form.from.toUpperCase()" :balance="balance" :placeholder="$t('withdraw.withdrawalAmount')"
             @change="changeAmount" @btnClick="maxIpt">
-      
+
           </FormItem>
 
           <div class="tip mb-[0.4rem]">
@@ -60,7 +60,8 @@
           </div>
 
           <!-- 提款方式 -->
-          <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem] border-[1px]" style="background-color: var(--ex-bg-color2);">
+          <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem] border-[1px]"
+            style="background-color: var(--ex-bg-white2);">
             <div class="flex justify-between">
               <div class="text-color5 mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.12rem]">{{
                 $t("withdraw.receiptAccount")
@@ -102,8 +103,8 @@
           </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round  class="submit"
-          type="primary">{{ $t("withdraw.withdraw") }}</Button>
+        <Button @click="openSafePass" :loading="loading" round class="submit" type="primary">{{ $t("withdraw.withdraw")
+          }}</Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
         <div class="form mt-[0.46rem]">
@@ -167,8 +168,8 @@
             </div>
           </div>
         </div>
-        <Button @click="openSafePass" :loading="loading" round class="submit"
-          type="primary">{{  $t("withdraw.withdraw") }}</Button>
+        <Button @click="openSafePass" :loading="loading" round class="submit" type="primary">{{ $t("withdraw.withdraw")
+          }}</Button>
       </Tab>
     </Tabs>
 
@@ -203,8 +204,9 @@
       </div>
     </BottomPopup>
 
-    <BottomPopup :title="$t('withdraw.networkSelection')" v-model:show="showNetworkDialog" position="bottom" round closeable teleport="body">
-    
+    <BottomPopup :title="$t('withdraw.networkSelection')" v-model:show="showNetworkDialog" position="bottom" round
+      closeable teleport="body">
+
       <div class="withdraw_accounr_dialog">
         <!-- 搜索 -->
         <div class="search_box">
@@ -845,7 +847,7 @@ watch(
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.6rem;
     border: 1px solid var(--ex-border-color2);
 
@@ -873,7 +875,7 @@ watch(
     position: relative;
     font-size: 0.3rem;
     margin: 0.2rem 0.32rem 0 0.32rem;
-    color:var(--ex-text-color2);
+    color: var(--ex-text-color2);
 
     .icon {
       width: 0.64rem;

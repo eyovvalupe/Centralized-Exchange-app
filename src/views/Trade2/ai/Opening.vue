@@ -792,7 +792,7 @@ defineExpose({
   }
 
   .disabled_item {
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
   }
 
   .error_border {

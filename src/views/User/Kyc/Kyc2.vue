@@ -477,7 +477,7 @@ const afterRead = (file, { name }) => {
       flex: 1;
       margin: 0 0.12rem;
       height: 1px;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
     }
   }
 

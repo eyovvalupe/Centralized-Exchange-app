@@ -70,7 +70,7 @@
             @click="openDialog('to')">
             <div class="flex items-center w-full justify-between">
               <div class="account_item">
-               
+
                 <div class="item_content">
                   <span>{{ _accountMap[form.to] }}</span>
                 </div>
@@ -109,8 +109,8 @@
       </div>
     </div>
 
-    <Button @click="openSafePass" :loading="loading" round class="submit"
-      type="primary">{{ $t("transfer.btn") }}</Button>
+    <Button @click="openSafePass" :loading="loading" round class="submit" type="primary">{{ $t("transfer.btn")
+      }}</Button>
 
     <!-- 充提记录 -->
     <RecordList ref="RecordListRef" />
@@ -119,8 +119,10 @@
     <SafePassword @submit="submit" ref="safeRef" />
 
     <!-- 账户和币种 -->
-    <BottomPopup :from="'account'" class="bg-color5" v-model:show="showPicker" closeable round position="bottom" @closed="clickKey = ''">
-      <div class="van-popup-custom-title w-full text-center text-[0.32rem] relative top-[-0.05rem]">{{ $t("transfer.confirm_con") }}</div>
+    <BottomPopup :from="'account'" class="bg-color5" v-model:show="showPicker" closeable round position="bottom"
+      @closed="clickKey = ''">
+      <div class="van-popup-custom-title w-full text-center text-[0.32rem] relative top-[-0.05rem]">{{
+        $t("transfer.confirm_con") }}</div>
       <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
         @cancel="hideDialog" @change="onChange">
         <template #option="option">
@@ -267,7 +269,7 @@ const columns = computed(() => {
         }
         return acc;
       }, [])
-      
+
     }
     return item;
   });
@@ -476,13 +478,14 @@ const changeAmount = (val) => {
   .form {
     .form_box {
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-color);
       padding: 0.42rem 0.32rem 0.4rem 0.32rem;
       margin-top: 0.52rem;
       position: relative;
       height: 2.6rem;
       border: 1px solid var(--ex-border-color);
       transition: .3s;
+
       :deep(.item) {
         height: 1.12rem;
       }

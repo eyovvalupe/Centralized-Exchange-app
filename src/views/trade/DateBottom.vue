@@ -50,7 +50,7 @@ const goTrade = () => {
 .date-bottom {
   width: 100%;
   height: 1.42rem;
-  background-color: var(--ex-bg-color2);
+  background-color: var(--ex-bg-white2);
   position: fixed;
   bottom: 0;
 

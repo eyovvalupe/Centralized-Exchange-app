@@ -4,12 +4,7 @@
     <div class="layout-chat">
       <!-- <Loading v-show="!isConnected || chatLoading" /> -->
       <Loaidng v-show="!isConnected || chatLoading" />
-      <div
-        class="chat-con"
-        @touchstart="setRead"
-        @scroll="handleScroll"
-        ref="scrollContainer"
-      >
+      <div class="chat-con" @touchstart="setRead" @scroll="handleScroll" ref="scrollContainer">
         <messageBox :chatLoading="chatLoading" />
       </div>
       <div class="chat-send">
@@ -73,7 +68,7 @@ const scrollToBottom = () => {
     } else {
       try {
         scrollContainer.value.scrollTop = scrollContainer.value.scrollHeight;
-      } catch {}
+      } catch { }
     }
     setTimeout(() => {
       childScroll = false;
@@ -140,7 +135,7 @@ watch(
     background: var(--ex-bg-color);
     padding: 0.26rem 0.32rem;
     border-top: 1px solid var(--ex-border-color);
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
   }
 }
 </style>

@@ -91,8 +91,7 @@
                 </div>
               </div>
               <div class="w-52 bg-color2 leading-35">
-                <div class="flex items-center justify-center text-sm text-color"
-                  @click="copy(form.bank_card_number)">
+                <div class="flex items-center justify-center text-sm text-color" @click="copy(form.bank_card_number)">
                   {{ form.bank_card_number }}
                   <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
                 </div>
@@ -407,8 +406,8 @@ onInit();
   }
 
   .disabled-btn {
-    background: var(--ex-bg-color2);
-    border-color: var(--ex-bg-color2);
+    background: var(--ex-bg-white2);
+    border-color: var(--ex-bg-white2);
     color: var(--ex-text-color5);
     cursor: not-allowed;
     pointer-events: none;

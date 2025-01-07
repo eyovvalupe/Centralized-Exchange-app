@@ -222,7 +222,7 @@ const confirmNext = () => {
 
   .code_container {
     width: 100%;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.32rem;
     display: flex;
     align-items: center;
@@ -332,7 +332,7 @@ const confirmNext = () => {
 
   .cautions {
     padding: 0.4rem 0.3rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.08rem;
     margin-top: 0.4rem;
     font-weight: 400;

@@ -146,13 +146,12 @@ getSessionToken();
     position: relative;
     width: 100%;
     height: 2.16rem;
-    border-width: 0.02rem;
     border-radius: 0.36rem;
     overflow: hidden;
     display: flex;
     justify-content: center;
     margin-bottom: 0.2rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color6);
     flex-direction: column;
     padding: 0 0.32rem;
 
@@ -164,7 +163,7 @@ getSessionToken();
       .bank_icon_container {
         width: 0.96rem;
         height: 0.96rem;
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white2);
         border-radius: 1rem;
         display: flex;
         justify-content: center;

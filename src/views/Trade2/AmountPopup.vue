@@ -98,7 +98,7 @@ defineExpose({
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       height: 100%;
 
       .currency {

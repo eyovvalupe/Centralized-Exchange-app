@@ -113,7 +113,8 @@
 
     </div>
 
-    <BuyCoinConfirm ref="safeRef" :offset="info.offset" :loading="loading" :volume="amount" :price="info.price" :currency="info.currCrypto" :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
+    <BuyCoinConfirm ref="safeRef" :offset="info.offset" :loading="loading" :volume="amount" :price="info.price"
+      :currency="info.currCrypto" :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
 
   </div>
 </template>
@@ -235,7 +236,7 @@ const getSessionToken = () => {
       overflow: hidden;
 
       .card_icon {
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white2);
         width: 0.96rem;
         height: 0.96rem;
         border-radius: 2rem;

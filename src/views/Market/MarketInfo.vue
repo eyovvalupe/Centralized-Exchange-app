@@ -29,20 +29,19 @@
 
       </div>
       <div class="flex items-center justify-center gap-[0.2rem]">
-        
+
         <div class="w-[2.6rem] flex-shrink-0">
           <h1 class="flex items-center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <span class="text-[0.4rem] font-[600]" v-if="item.price || item.close">
               {{ item.price || item.close }}
             </span>
             <span class="text-[0.4rem] font-[600]" v-else>--</span>
-            <span  class="w-[0.24rem] h-[0.26rem] ml-[0.06rem] mt-[0.06rem]">
+            <span class="w-[0.24rem] h-[0.26rem] ml-[0.06rem] mt-[0.06rem]">
               <img :src="getStaticImgUrl('/static/img/market/up_icon.svg')" v-if="updown > 0" />
               <img :src="getStaticImgUrl('/static/img/market/down_icon.svg')" v-else-if="updown < 0" />
             </span>
           </h1>
-          <div class="flex mt-[0.2rem]"
-            :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+          <div class="flex mt-[0.2rem]" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <div class="text-[0.24rem]" v-if="item.price * (item.ratio || 0)">
               {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
               {{ item.change ? item.change : '--' }}
@@ -59,22 +58,22 @@
           </div>
         </div>
         <div class="count flex-1">
-            <div class="count_item">
-                <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
-                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
-            </div>
-            <div class="count_item">
-                <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
-                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
-            </div>
-            <div class="count_item">
-                <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
-                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
-            </div>
-            <div class="count_item">
-                <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
-                <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--' }}</span>
-            </div>
+          <div class="count_item">
+            <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
+            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
+          </div>
+          <div class="count_item">
+            <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
+            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
+          </div>
+          <div class="count_item">
+            <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
+            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
+          </div>
+          <div class="count_item">
+            <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
+            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--' }}</span>
+          </div>
         </div>
       </div>
       <div class="flex text-[0.24rem] pt-[0.2rem] gap-[0.2rem]">
@@ -86,7 +85,7 @@
           <span class="text-color3">{{ t('market.market_marketinfo_amount') }}</span>
           <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.volume) }}</span>
         </div>
-        
+
       </div>
     </div>
     <div class="mt-[0.4rem] h-[0.2rem]" style="border-top:1px solid var(--ex-border-color);"></div>
@@ -143,7 +142,7 @@
     </div>
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
-      
+
       <div class="bottom_btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
         <span class="bottom_btn_icon">
           <img :src="getStaticImgUrl('/static/img/market/up.svg')" />
@@ -158,7 +157,7 @@
       </div>
     </div>
     <!-- 时间选择弹窗 -->
-    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker" >
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showPicker">
       <div class="times_list">
         <div v-for="item in minList" :key="item" @click="chooseTime(item)" class="item"
           :class="{ active_item: currMin == item }">
@@ -167,8 +166,7 @@
       </div>
     </BottomPopup>
     <!-- 交易弹窗 -->
-    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBuy" 
-      closeable>
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showBuy" closeable>
       <div class="buy_popup">
         <div class="buy_name">{{ t('market.market_marketinfo_trade') }}</div>
         <div class="buy_popup_btn" @click="goBuy(true)">
@@ -187,9 +185,8 @@
     </BottomPopup>
 
     <!-- 数据弹窗 -->
-    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo" 
-     :title="t('market.market_marketinfo_data')"
-      closeable>
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo"
+      :title="t('market.market_marketinfo_data')" closeable>
       <div class="info_popup">
         <div class="info_price">
           <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
@@ -562,13 +559,15 @@ const showInfo = ref(false);
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
+
       .count_item {
         color: var(--ex-text-color2);
         font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.36rem;
         width: 50%;
-        margin-top:0.18rem;
+        margin-top: 0.18rem;
+
         .num {
           margin-left: 0.1rem;
         }
@@ -696,7 +695,7 @@ const showInfo = ref(false);
         border-radius: 0.48rem;
         color: var(--ex-white);
         font-weight: bold;
-        color:var(--ex-text-color--bg-light)
+        color: var(--ex-text-color--bg-light)
       }
 
       .icon {
@@ -907,7 +906,7 @@ const showInfo = ref(false);
       border-left: 1px solid var(--ex-border-color);
     }
 
-   
+
     .bottom_btn {
       width: 3.27rem;
       height: 0.9rem;
@@ -1002,7 +1001,7 @@ const showInfo = ref(false);
   }
 
   .active_item {
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     color: var(--ex-primary-color);
     border-radius: 0.32rem;
   }
@@ -1104,7 +1103,7 @@ const showInfo = ref(false);
       align-items: center;
       margin-bottom: 0.32rem;
       width: 31%;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       border-radius: 0.4rem;
       height: 1.26rem;
 

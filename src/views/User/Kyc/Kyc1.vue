@@ -54,18 +54,18 @@
 
     <!-- 表单 -->
     <!-- <div class="subtitle">{{ $t("kyc.first_legal_name") }}</div> -->
-    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color6)' }">
+    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color6)' }">
       <input :disabled="checkMode" v-model.trim="form.name" class="ipt" type="text"
         :placeholder="t('kyc.first_legal_name')" maxlength="20" />
     </div>
     <!-- <div class="subtitle">{{ $t("kyc.first_card_id") }}</div> -->
-    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color6)' }">
+    <div class="item" :style="{ backgroundColor: checkMode ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color6)' }">
       <input :disabled="checkMode" v-model.trim="form.idnum" class="ipt" type="text"
         :placeholder="t('kyc.first_card_id')" maxlength="20" />
     </div>
     <!-- <div class="subtitle">{{ $t('kyc.first_birthday') }}</div> -->
     <div class="item justify-between"
-      :style="{ backgroundColor: checkMode ? 'var(--ex-bg-color2)' : 'var(--ex-bg-color6)' }"
+      :style="{ backgroundColor: checkMode ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color6)' }"
       @click="checkMode ? (showBottom = false) : (showBottom = true)">
       <div :class="form.birthday ? 'text-color' : 'text-color4'">
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}

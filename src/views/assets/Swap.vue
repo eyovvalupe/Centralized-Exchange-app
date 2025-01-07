@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="item ipt_item no_tip_ipt" :class="{ 'err_ipt': errStatus }"
-                    style="background-color: var(--ex-bg-color2)">
+                    style="background-color: var(--ex-bg-white2)">
                     <div class="item_content">
                         {{ form.toAmount || '--' }}
                     </div>
