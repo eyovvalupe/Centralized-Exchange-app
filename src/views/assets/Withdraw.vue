@@ -60,8 +60,7 @@
           </div>
 
           <!-- 提款方式 -->
-          <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem] border-[1px]"
-            style="background-color: var(--ex-bg-white2);">
+          <div class="px-[0.12rem] py-[0.12rem] rounded-[0.32rem] border-[1px] bg-color2">
             <div class="flex justify-between">
               <div class="text-color5 mb-[0.28rem] text-[0.32rem] px-[0.16rem] pt-[0.12rem]">{{
                 $t("withdraw.receiptAccount")
