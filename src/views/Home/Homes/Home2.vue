@@ -114,7 +114,7 @@
                         <NoData v-if="!commendLoading && !contractList.length" />
                     </Tab>
                     <Tab :title="$t('common.IPO')">
-                        <div>
+                        <div class="mb-[0.2rem]">
                             <IPO ref="ipoRef" :page="'home'" />
                         </div>
                     </Tab>
@@ -609,6 +609,7 @@ onMounted(() => {
             color: #fff;
             line-height: normal;
             border-radius: 0.32rem;
+            margin-top: 0.2rem;
             position: relative;
             overflow: hidden;
             box-shadow: 0px 4px 10px 0px rgba(151, 225, 128, 0.15);
@@ -672,7 +673,7 @@ onMounted(() => {
             flex-wrap: wrap;
             align-items: stretch;
             justify-content: space-between;
-            margin-top: 0.5rem;
+            margin-top: 0.4rem;
 
             .link-item {
                 background-color: var(--ex-bg-color3);
