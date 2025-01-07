@@ -153,7 +153,7 @@ defineExpose({
         padding: 0.32rem 0.28rem;
         border-radius: 0.32rem;
         margin-bottom: 0.2rem;
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-color3);
 
         .ai_icon {
             width: 0.8rem;
@@ -162,7 +162,7 @@ defineExpose({
             align-items: center;
             justify-content: center;
             border-radius: 0.24rem;
-            background-color: rgba(1, 76, 250, 0.10);
+            background-color: var(--ex-bg-color2);
 
             img {
                 width: 0.53rem !important;
