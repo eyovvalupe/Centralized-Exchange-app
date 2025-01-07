@@ -69,7 +69,7 @@ const clickItem = (item) => {
     .lang_item {
       height: 1.04rem;
       overflow: hidden;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-color6);
       border-radius: 0.32rem;
       display: flex;
       align-items: center;
