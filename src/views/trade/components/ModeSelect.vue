@@ -68,7 +68,7 @@ const smallSelect = (val) => {
       align-items: center;
       justify-content: center;
       border-bottom: 1px solid var(--ex-border-color);
-      // background-color: var(--ex-bg-white2);
+      // background-color: var(--ex-bg-color2);
     }
 
     .selected-class {

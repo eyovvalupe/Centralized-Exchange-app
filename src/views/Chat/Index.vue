@@ -135,7 +135,7 @@ watch(
     background: var(--ex-bg-color);
     padding: 0.26rem 0.32rem;
     border-top: 1px solid var(--ex-border-color);
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
   }
 }
 </style>

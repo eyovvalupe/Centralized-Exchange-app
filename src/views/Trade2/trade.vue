@@ -498,7 +498,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
       height: 0.8rem;
       display: flex;
       align-items: center;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.6rem;
       border: 1px solid var(--ex-border-color2);
       position: relative;

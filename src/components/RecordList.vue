@@ -246,12 +246,12 @@ const getDate = str => {
         .van-tab--card {
             border-right: none;
             color: var(--ex-text-color);
-            // background-color: var(--ex-bg-white2);
+            // background-color: var(--ex-bg-color2);
         }
 
         .van-tab--card.van-tab--active {
 
-            background-color: var(--ex-bg-white2);
+            background-color: var(--ex-bg-color2);
             border-radius: 0.3rem;
             color: var(--ex-primary-color);
             font-weight: 500

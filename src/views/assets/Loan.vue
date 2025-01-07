@@ -9,7 +9,7 @@
                 <span>抵押</span>
             </div>
             <div class="item2">
-                <div class="border_item account_box" style="background-color: var(--ex-bg-white2)">
+                <div class="border_item account_box" style="background-color: var(--ex-bg-color2)">
                     <div class="item_icon">
                         <img :src="getStaticImgUrl('/static/img/assets/cash_icon.svg')" alt="img">
                     </div>
@@ -51,7 +51,7 @@
                     <span>股票账户</span>
                     <div class="more_icon"><img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="img"></div>
                 </div>
-                <div class="border_item ipt_box" style="background-color: var(--ex-bg-white2)">
+                <div class="border_item ipt_box" style="background-color: var(--ex-bg-color2)">
                     <div class="ipt">
                         <span>{{ amount || '--' }}</span>
                     </div>
@@ -447,7 +447,7 @@ onBeforeUnmount(() => {
                 flex: 1;
                 margin-right: 0.14rem;
                 border-radius: 0.1rem;
-                background-color: var(--ex-bg-white2);
+                background-color: var(--ex-bg-color2);
                 display: flex;
                 align-items: center;
                 justify-content: center;

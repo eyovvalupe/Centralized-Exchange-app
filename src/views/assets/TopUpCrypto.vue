@@ -400,7 +400,7 @@ onBeforeUnmount(() => {
       padding: 0.1rem 0.18rem;
       margin-right: 0.2rem;
       border-radius: 0.3rem;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       color: var(--ex-text-color);
       font-size: 0.24rem;
       font-weight: 400;
@@ -557,7 +557,7 @@ onBeforeUnmount(() => {
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     border: 1px solid var(--ex-border-color);
     border-radius: 0.6rem;
 

@@ -164,7 +164,7 @@ const goInfo = () => {
     }
 
     .reason {
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       padding: 0.4rem;
       width: 100%;
       margin-top: 0.64rem;

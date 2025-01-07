@@ -57,7 +57,7 @@ export default {
 }
 
 .tab:hover {
-  background-color: var(--ex-bg-white2);
+  background-color: var(--ex-bg-color2);
   /* Light hover effect */
 }
 

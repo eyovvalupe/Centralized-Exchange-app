@@ -58,7 +58,7 @@ try {
 
   .info_box {
     padding: 0.32rem;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     border-radius: 0.08rem;
     margin-bottom: 0.48rem;
 

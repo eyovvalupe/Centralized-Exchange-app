@@ -29,7 +29,7 @@
     </div>
 
     <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)"
-      inactive-color="var(--ex-bg-white2)" @change="onSliderChange" />
+      inactive-color="var(--ex-bg-color2)" @change="onSliderChange" />
     <div class="percentages">
       <div v-for="percent in percentages" :key="percent" class="percentage">
         <div class="line"></div>
@@ -320,7 +320,7 @@ onMounted(() => {
     border-radius: 0.12rem;
     border: 0.02rem solid var(--ex-border-color2);
     margin-bottom: 0.4rem;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     margin-top: 0.2rem;
     color: var(--ex-text-color);
     text-align: right;
@@ -332,10 +332,10 @@ onMounted(() => {
   }
 
   .add {
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
 
     .vip-input {
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
     }
   }
 
@@ -444,14 +444,14 @@ onMounted(() => {
   }
 
   .pricenlarged {
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
   }
 
   .market-button {
     width: 1.9rem;
     height: 0.72rem;
     border-radius: 1.26rem;
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
     text-align: center;
     line-height: 0.72rem;
     color: var(--ex-text-color3);

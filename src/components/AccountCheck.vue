@@ -215,7 +215,7 @@ defineExpose({
 
         .fake_user {
             height: 1.5rem;
-            background-color: var(--ex-bg-white2);
+            background-color: var(--ex-bg-color2);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -255,7 +255,7 @@ defineExpose({
             .way {
                 width: 100%;
                 height: 1.8rem;
-                background-color: var(--ex-bg-white2);
+                background-color: var(--ex-bg-color2);
                 box-shadow: 0px 5px 30px 0px rgba(0, 0, 0, 0.05);
                 border-radius: 0.16rem;
                 margin-bottom: 0.6rem;

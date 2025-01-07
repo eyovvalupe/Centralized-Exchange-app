@@ -37,7 +37,7 @@ store.commit("setCheckState", true);
   .text_container {
     width: 0.84rem;
     height: 0.34rem;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -90,7 +90,7 @@ store.commit("setCheckState", true);
 }
 
 .search_block {
-  background-color: var(--ex-bg-white2);
+  background-color: var(--ex-bg-color2);
   // border: 1px solid var(--ex-border-color);
   height: 0.8rem;
   border-radius: 0.2rem;

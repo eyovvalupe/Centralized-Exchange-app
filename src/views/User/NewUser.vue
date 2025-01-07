@@ -332,7 +332,7 @@ if (token.value) {
   .loginout {
     height: 1.04rem;
     border-radius: 0.32rem;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -350,7 +350,7 @@ if (token.value) {
       color: var(--ex-text-color);
       font-size: 0.3rem;
       overflow: hidden;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       padding-inline: 0.32rem;
       margin-bottom: 0.2rem;

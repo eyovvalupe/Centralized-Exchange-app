@@ -73,7 +73,7 @@ const remove = (item) => {
   .tr {
     display: flex;
     align-items: center;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     border-radius: 0.4rem;
     margin-top: 0.2rem;
 

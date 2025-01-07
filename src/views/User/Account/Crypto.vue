@@ -268,7 +268,7 @@ getSessionToken();
             }
 
             .active_bottom {
-                background-color: var(--ex-bg-white2);
+                background-color: var(--ex-bg-color2);
             }
         }
     }

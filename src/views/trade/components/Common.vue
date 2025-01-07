@@ -53,7 +53,7 @@
     <div class="slider-container-box">
       <div class="slider-container">
         <Slider :min="0" :max="100" v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-primary-color)"
-          inactive-color="var(--ex-bg-white2)" @change="onSliderChange">
+          inactive-color="var(--ex-bg-color2)" @change="onSliderChange">
           <template #button>
             <div class="slider-custom-num">
               <span class="number" v-show="sliderValue">{{ sliderValue }}%</span>
@@ -87,7 +87,7 @@
 
     <Button size="large" color="var(--ex-primary-color)" round v-if="!token" style="margin-bottom: 0.34rem"
       @click="jump('login')"><span style="color: var(--ex-black);">登陆</span></Button>
-    <Button size="large" color="var(--ex-bg-white2)" round v-if="!token" style="color: var(--ex-text-color3)"
+    <Button size="large" color="var(--ex-bg-color2)" round v-if="!token" style="color: var(--ex-text-color3)"
       @click="jump('register')"><span style="color: var(--ex-black);">注册</span></Button>
 
   </div>
@@ -813,14 +813,14 @@ defineExpose({
   }
 
   .pricenlarged {
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
   }
 
   .market-button {
     width: 1.9rem;
     height: 0.72rem;
     border-radius: 1.26rem;
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
     text-align: center;
     line-height: 0.72rem;
     color: var(--ex-text-color3);

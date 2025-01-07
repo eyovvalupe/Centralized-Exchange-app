@@ -189,7 +189,7 @@ onBeforeUnmount(() => {
   .main_item {
     border-radius: 0.32rem;
     border: 1px solid var(--ex-border-color);
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
 
     .name {
       color: var(--ex-text-color);

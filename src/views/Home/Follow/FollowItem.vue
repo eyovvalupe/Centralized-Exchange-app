@@ -91,7 +91,7 @@
                 margin-top: 0.02rem;
 
                 .bottom-info {
-                    background-color: var(--ex-bg-white2);
+                    background-color: var(--ex-bg-color2);
                     height: 0.36rem;
                     padding: 0 0.1rem;
                     border-radius: 0.12rem;

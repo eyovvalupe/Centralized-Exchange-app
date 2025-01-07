@@ -65,7 +65,7 @@ const bigLeverSelect = (val) => {
 
     .selected-class {
       color: var(--ex-primary-color);
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       position: relative;
     }
   }

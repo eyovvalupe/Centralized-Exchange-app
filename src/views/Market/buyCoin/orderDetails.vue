@@ -406,8 +406,8 @@ onInit();
   }
 
   .disabled-btn {
-    background: var(--ex-bg-white2);
-    border-color: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
+    border-color: var(--ex-bg-color2);
     color: var(--ex-text-color5);
     cursor: not-allowed;
     pointer-events: none;

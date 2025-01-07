@@ -186,7 +186,7 @@ const copy = text => {
 
     .main_item {
         border-radius: 0.32rem;
-        background: var(--ex-bg-white2);
+        background: var(--ex-bg-color2);
         margin-top: 0.4rem;
 
         .name {
