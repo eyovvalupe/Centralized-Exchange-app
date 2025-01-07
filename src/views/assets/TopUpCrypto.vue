@@ -11,73 +11,69 @@
       </template>
     </Top>
 
-    <Tabs type="custom-card" v-model:active="tabActive" :swipeable="false" shrink>
-      <Tab :title="$t('topUpCrypto.cryptocurrency')" name="cryptocurrency">
-        <div class="form mt-[0.46rem]">
-          <div
-            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showDialog = true">
-            <div class="flex flex-col justify-between">
-              <div class="text-[0.28rem] text-color5">
-                <span>{{ $t("topUpCrypto.currency") }}</span>
-              </div>
-              <div class="item relative top-[0.1rem]">
-                <div class="select_item">
-                  <div class="currency">
-                    <div class="w-[0.48rem] h-[0.48rem] mr-[0.2rem]" v-if="form.currency">
-                      <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)"
-                        alt="currency" class="rounded-full" />
-                    </div>
-                    <span>{{ form.currency || "" }}</span>
-                  </div>
+    <div class="form ">
+      <div
+        class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showDialog = true">
+        <div class="flex flex-col justify-between">
+          <div class="text-[0.28rem] text-color5">
+            <span>{{ $t("topUpCrypto.currency") }}</span>
+          </div>
+          <div class="item relative top-[0.1rem]">
+            <div class="select_item">
+              <div class="currency">
+                <div class="w-[0.48rem] h-[0.48rem] mr-[0.2rem]" v-if="form.currency">
+                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)"
+                    alt="currency" class="rounded-full" />
                 </div>
+                <span>{{ form.currency || "" }}</span>
               </div>
             </div>
-            <div class="w-[0.2rem] h-[0.2rem]">
-              <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
-            </div>
           </div>
-
-          <div
-            class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showNetDialog = true">
-            <div class="h-full flex flex-col">
-              <div class="text-[0.28rem] text-color5" style="width: max-content;">
-                <span>{{ t("topUpCrypto.network") }}</span>
-              </div>
-              <div class="item relative top-[0.32rem]">
-                <div class="select_item">
-                  <div class="currency">
-                    <span>{{ form.network || "" }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="w-[0.2rem] h-[0.2rem]">
-              <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
-            </div>
-          </div>
-          <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px] bg-color2"
-            :class="{ err_ipt: errStatus }" >
-            <div class="item_content">
-              <input class="ipt" @blur="
-                errStatus = false;
-              form.amount <= 0 ? (form.amount = '') : '';
-              " type="number" v-model="form.amount" :placeholder="t('topUpCrypto.rechargeAmount')" />
-            </div>
-            <div>{{ topUpMode == 1 ? form.currency : "USDT" }}</div>
-          </div>
-          <!-- <div>
-                        <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
-                    </div> -->
-          <!-- <div class="tip" v-if="topUpMode == 2">
-                        <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
-                        <Loading v-show="rateLoading" type="spinner" size="12px" />
-                    </div> -->
         </div>
-        <Button @click="goTopUp" :loading="loading" round class="submit" type="primary">{{
-          $t("topUpCrypto.confirm") }}</Button>
-      </Tab>
-      <Tab :title="$t('topUpCrypto.bankCard')" name="bankCard"> </Tab>
-    </Tabs>
+        <div class="w-[0.2rem] h-[0.2rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
+        </div>
+      </div>
+
+      <div
+        class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showNetDialog = true">
+        <div class="h-full flex flex-col">
+          <div class="text-[0.28rem] text-color5" style="width: max-content;">
+            <span>{{ t("topUpCrypto.network") }}</span>
+          </div>
+          <div class="item relative top-[0.32rem]">
+            <div class="select_item">
+              <div class="currency">
+                <span>{{ form.network || "" }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-[0.2rem] h-[0.2rem]">
+          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
+        </div>
+      </div>
+      <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px] bg-color2"
+        :class="{ err_ipt: errStatus }" >
+        <div class="item_content">
+          <input class="ipt" @blur="
+            errStatus = false;
+          form.amount <= 0 ? (form.amount = '') : '';
+          " type="number" v-model="form.amount" :placeholder="t('topUpCrypto.rechargeAmount')" />
+        </div>
+        <div>{{ topUpMode == 1 ? form.currency : "USDT" }}</div>
+      </div>
+      <!-- <div>
+                    <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
+                </div> -->
+      <!-- <div class="tip" v-if="topUpMode == 2">
+                    <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
+                    <Loading v-show="rateLoading" type="spinner" size="12px" />
+                </div> -->
+    </div>
+    <Button @click="goTopUp" :loading="loading" round class="submit" type="primary">{{
+      $t("topUpCrypto.confirm") }}</Button>
+      
 
     <!-- 币种选择弹窗 -->
     <BottomPopup v-model:show="showDialog" :title="$t('topUpCrypto.currencySelection')" closeable>
@@ -374,9 +370,9 @@ onBeforeUnmount(() => {
   }
 
   .top-record {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 0.3rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.4rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -384,8 +380,8 @@ onBeforeUnmount(() => {
 
 
     .top-record-icon {
-      width: 0.32rem;
-      height: 0.32rem;
+      width: 0.36rem;
+      height: 0.36rem;
     }
   }
 

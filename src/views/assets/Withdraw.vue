@@ -645,7 +645,6 @@ watch(
   padding: 1.32rem 0.4rem 1.44rem 0.4rem;
   position: relative;
 
-
   :deep(.top) {
     z-index: 10;
   }
@@ -655,17 +654,17 @@ watch(
   }
 
   .top-record {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 0.3rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 0.4rem;
     background-color: var(--ex-bg-color3);
     display: flex;
     align-items: center;
     justify-content: center;
 
     .top-record-icon {
-      width: 0.3rem;
-      height: 0.3rem;
+      width: 0.36rem;
+      height: 0.36rem;
     }
   }
 
@@ -746,12 +745,13 @@ watch(
 }
 
 .add_account {
-  background-color: var(--ex-bg-color3);
+  background-color: var(--ex-bg-color2);
   border-radius: 0.32rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 0.24rem 0 0.2rem 0;
+  border: 1px solid var(--ex-border-color);
 }
 
 .add_account_text {

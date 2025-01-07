@@ -236,9 +236,8 @@ const loginout = () => {
       message: t("user_page.message_box_con"),
       cancelButtonText: t('user_page.message_box_cancel'),
       confirmButtonText: t('user_page.message_box_confirm'),
-
       confirmButtonColor: "var(--ex-primary-color)",
-      cancelButtonColor: "var(--ex-text-color2)",
+      cancelButtonColor: "rgba(255,255,255,0.1)",
       theme: 'round-button'
     })
       .then(() => {
