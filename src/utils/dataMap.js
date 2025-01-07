@@ -62,6 +62,7 @@ export const _langMap = [
   { name: "中文繁體", icon: "ch", val: "ch", show: true },
   { name: "English", icon: "en", val: "en", show: true },
   { name: "한국어", icon: "kr", val: "kr", show: true},
+  { name: "日本語", icon: "jp", val: "jp", show: true},
 ];
 
 export const fiat = ['INR', 'USD']
