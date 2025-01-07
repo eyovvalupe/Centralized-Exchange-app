@@ -141,12 +141,11 @@ getSessionToken();
     position: relative;
     width: 100%;
     height: 2.16rem;
-    border-width: 0.02rem;
     border-radius: 0.36rem;
     overflow: hidden;
     display: flex;
     justify-content: center;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color6);
     padding: 0 0.32rem;
     flex-direction: column;
 

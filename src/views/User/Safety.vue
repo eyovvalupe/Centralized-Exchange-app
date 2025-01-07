@@ -106,8 +106,8 @@ Promise.all(loadingList).finally(() => {
       padding: 0 0.32rem;
       align-items: center;
       height: 1.04rem;
-      border: 0.02rem solid var(--ex-border-color);
       border-radius: 0.32rem;
+      background-color: var(--ex-bg-color6);
       color: var(--ex-text-color);
       font-size: 0.3rem;
       overflow: hidden;
