@@ -140,7 +140,7 @@ const news = ref([])
 
         .active_tab {
             color: var(--ex-primary-color);
-            background-color: var(--ex-bg-white2);
+            background-color: var(--ex-bg-color2);
         }
     }
 
@@ -208,11 +208,11 @@ const news = ref([])
             .stock_tab {
                 width: 2.97rem;
                 height: 1.60rem;
-                border: 1px solid var(--ex-bg-white2);
+                border: 1px solid var(--ex-bg-color2);
                 border-radius: 0.08rem;
                 padding: 0.17rem;
                 position: relative;
-                background-color: var(--ex-bg-white2);
+                background-color: var(--ex-bg-color2);
 
                 .tab_title {
                     font-weight: 700;

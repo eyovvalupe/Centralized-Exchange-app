@@ -71,7 +71,7 @@ const clickItem = (item) => {
     .lang_item {
       height: 1.04rem;
       overflow: hidden;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       display: flex;
       align-items: center;

@@ -182,7 +182,7 @@
       <div style="padding: 0 0.32rem;">
         <Button size="large" color="var(--ex-primary-color)" round style="margin-bottom: 0.32rem;"
           @click="updateClosePositionPopup"><span style="color: var(--ex-black);">平仓</span></Button>
-        <Button size="large" color="var(--ex-bg-white2)" round
+        <Button size="large" color="var(--ex-bg-color2)" round
           style="margin-bottom: 0.32rem;color: var(--ex-text-color3);" @click="updateDetailPopup"><span
             style="color: var(--ex-black);">订单更新</span></Button>
       </div>

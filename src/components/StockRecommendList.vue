@@ -148,7 +148,7 @@ const collect = (item) => {
 
     .list_item {
       position: relative;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       height: 1.998rem;
       width: 3.36rem;
       border-radius: 0.32rem;

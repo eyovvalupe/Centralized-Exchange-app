@@ -23,7 +23,7 @@
               {{ form.amount }}<span>{{ form.currency }}</span>
             </div>
             <div class="network-tag">
-              <span style="color: var(--ex-text-color2); background-color: var(--ex-bg-white2);">${{ ratePrice
+              <span style="color: var(--ex-text-color2); background-color: var(--ex-bg-color2);">${{ ratePrice
                 }}</span>
             </div>
           </div>
@@ -298,7 +298,7 @@ const copyPrice = () => {
   .recharge_box {
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
     display: flex;
     justify-content: center;
     align-items: center;

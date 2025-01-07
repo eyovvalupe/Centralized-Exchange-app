@@ -588,7 +588,7 @@ onMounted(() => {
       border-right: none;
       color: var(--ex-text-color);
       border-bottom: 0.04rem solid var(--ex-border-color2);
-      // background-color: var(--ex-bg-white2);
+      // background-color: var(--ex-bg-color2);
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
       // transition: all ease .2s;

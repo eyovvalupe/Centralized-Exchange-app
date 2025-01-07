@@ -144,7 +144,7 @@ const formatSec = (seconds, t) => {
   font-size: 0.28rem;
   color: var(--ex-text-color);
   margin-top: 0.2rem;
-  background-color: var(--ex-bg-white2);
+  background-color: var(--ex-bg-color2);
   position: relative;
 
   .head {

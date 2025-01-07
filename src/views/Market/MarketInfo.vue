@@ -1001,7 +1001,7 @@ const showInfo = ref(false);
   }
 
   .active_item {
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     color: var(--ex-primary-color);
     border-radius: 0.32rem;
   }
@@ -1103,7 +1103,7 @@ const showInfo = ref(false);
       align-items: center;
       margin-bottom: 0.32rem;
       width: 31%;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.4rem;
       height: 1.26rem;
 

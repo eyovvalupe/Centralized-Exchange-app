@@ -50,7 +50,7 @@ const { t } = useI18n();
 <style lang="less" scoped>
 .market_stock_chase {
   border-radius: 0.32rem;
-  background: var(--ex-bg-white2);
+  background: var(--ex-bg-color2);
   position: relative;
   padding-left: 0.32rem;
   padding-right: 0.32rem;

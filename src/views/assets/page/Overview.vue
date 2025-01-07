@@ -257,7 +257,7 @@ const jump = (name, check = false, query) => {
       width: 3.27rem;
       height: 1.12rem;
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       // padding-top: 0.1rem;
     }
 
@@ -288,7 +288,7 @@ const jump = (name, check = false, query) => {
       height: 1.04rem;
       margin-bottom: 0.24rem;
       border-radius: 0.32rem;
-      background: var(--ex-bg-white2);
+      background: var(--ex-bg-color2);
       position: relative;
       display: flex;
       align-items: center;

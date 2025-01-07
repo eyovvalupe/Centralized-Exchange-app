@@ -336,7 +336,7 @@ const removeStock = (item) => {
 }
 
 .stock_item_home {
-  background-color: var(--ex-bg-white2);
+  background-color: var(--ex-bg-color2);
 }
 
 .stock_item_crypto {

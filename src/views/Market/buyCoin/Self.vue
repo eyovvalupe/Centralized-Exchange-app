@@ -626,7 +626,7 @@ defineExpose({
     }
 
     .active_tab {
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       color: var(--ex-primary-color);
       font-weight: 500;
     }
@@ -661,7 +661,7 @@ defineExpose({
     align-items: center;
     justify-content: space-between;
     position: relative;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     padding: 0 0.4rem 0 0.36rem;
     overflow: hidden;
     margin-bottom: 0.36rem;

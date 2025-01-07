@@ -728,7 +728,7 @@ defineExpose({
   }
 
   .pricenlarged {
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
   }
 
   .right-text {
@@ -739,7 +739,7 @@ defineExpose({
     width: 1.9rem;
     height: 0.72rem;
     border-radius: 1.26rem;
-    background: var(--ex-bg-white2);
+    background: var(--ex-bg-color2);
     text-align: center;
     line-height: 0.72rem;
     color: var(--ex-text-color3);

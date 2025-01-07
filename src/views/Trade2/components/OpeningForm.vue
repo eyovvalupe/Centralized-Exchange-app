@@ -429,7 +429,7 @@
           align-items: center;
           justify-content: center;
           text-align: center;
-          background: var(--ex-bg-white2);
+          background: var(--ex-bg-color2);
           border: 1px solid var(--ex-border-color);
           border-radius: 0.32rem;
           line-height: 0.4rem;
@@ -1230,7 +1230,7 @@ defineExpose({
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
     border-radius: 0.6rem;
     border: 1px solid var(--ex-border-color2);
 
@@ -1362,7 +1362,7 @@ defineExpose({
     }
 
     .disabled_item {
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
     }
 
     .item_box_left {
@@ -1413,7 +1413,7 @@ defineExpose({
       align-items: center;
       justify-content: center;
       border-radius: 1.26rem;
-      background: var(--ex-bg-white2);
+      background: var(--ex-bg-color2);
       height: 0.72rem;
       color: var(--ex-text-color3);
       text-align: center;

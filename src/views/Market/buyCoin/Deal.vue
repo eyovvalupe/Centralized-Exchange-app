@@ -236,7 +236,7 @@ const getSessionToken = () => {
       overflow: hidden;
 
       .card_icon {
-        background-color: var(--ex-bg-white2);
+        background-color: var(--ex-bg-color2);
         width: 0.96rem;
         height: 0.96rem;
         border-radius: 2rem;

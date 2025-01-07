@@ -126,7 +126,7 @@ const marketStockIndexList = computed(() => {
 
   .van-tabs {
     :deep(> .van-tabs__content) {
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.4rem;
       margin-top: 0.32rem;
     }

@@ -407,7 +407,7 @@ const jump = (name) => {
 }
 
 .search_block {
-  background-color: var(--ex-bg-white2);
+  background-color: var(--ex-bg-color2);
   // border: 1px solid var(--ex-border-color);
   height: 0.8rem;
   border-radius: 0.2rem;

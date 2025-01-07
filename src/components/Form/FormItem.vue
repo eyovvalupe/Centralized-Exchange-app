@@ -336,7 +336,7 @@ const percentTagClick = (percent) => {
 
 
   .disabled_item {
-    // background-color: var(--ex-bg-white2);
+    // background-color: var(--ex-bg-color2);
     flex: 1;
   }
 

@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div class="w-full rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-white2);">
+    <div class="w-full rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-color2);">
       <div class="flex items-center px-[0.28rem] py-[0.2rem] border-b-[0.02rem] border-color5 mb-[0.2rem]">
         <div class="flex flex items-center">
           <div class="text-color5 mr-[0.05rem]">{{ orderData.order_no }}</div>

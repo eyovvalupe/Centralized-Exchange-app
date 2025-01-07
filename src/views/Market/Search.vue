@@ -387,7 +387,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       height: 1.62rem;
       display: flex;
       align-items: center;
-      background-color: var(--ex-bg-white2);
+      background-color: var(--ex-bg-color2);
       margin-bottom: 0.2rem;
       border-radius: 0.3rem;
       padding-inline: 0.26rem;

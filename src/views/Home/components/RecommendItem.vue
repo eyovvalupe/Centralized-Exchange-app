@@ -31,11 +31,11 @@ const props = defineProps({
 .stock_tab {
     width: 100%;
     height: 100%;
-    border: 1px solid var(--ex-bg-white2);
+    border: 1px solid var(--ex-bg-color2);
     border-radius: 0.08rem;
     padding: 0.17rem;
     position: relative;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color2);
 
     .tab_title {
         font-weight: 700;
