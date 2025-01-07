@@ -131,7 +131,7 @@
           <img class="" :src="getStaticImgUrl('/static/img/user/google.svg')" />
         </div>
         <div v-if="token"
-          class="absolute min-w-[0.76rem] px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
+          class="absolute min-w-[0.76rem] w-max px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
           :class="[userInfo.googlebind == 0 ? 'bg-error' : 'bg-success']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
@@ -158,12 +158,10 @@
           <div class="title">{{ $t("user_page.set_language") }}</div>
         </div>
         <div class="lang">
-          <div style="width: 0.57rem; height: 0.57rem; padding: 0.01rem;" class="mr-[0.1rem]">
-            <div style="width: 0.52rem;height: 0.52rem;">
-              <img
-                :src="getStaticImgUrl(`/static/img/user/${Object.keys(language).length ? language.icon : defaultLang.icon}.svg`)"
-                alt="">
-            </div>
+          <div class="w-[0.52rem] h-[0.52rem] mr-[0.15rem]">
+            <img
+              :src="getStaticImgUrl(`/static/img/flag/${Object.keys(language).length ? language.icon : defaultLang.icon}.svg`)"
+              alt="">
           </div>
           <span class="font-1">{{ Object.keys(language).length ? language.name : defaultLang.name }}</span>
         </div>

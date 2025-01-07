@@ -283,9 +283,6 @@ export default {
   success_toast: {
     message: "Added successfully",
   },
-  form: {
-    all: "All",
-  },
   assets: {
     recharge: "Deposit",
     withdraw: "Withdraw",
@@ -502,23 +499,6 @@ export default {
     ad_btn: "Start Trade",
     finance: "Finance"
 
-  },
-  market: {
-    stock: {
-      updateTime: "Last Updated",
-      riseAndFall: "Price Changes",
-      up: "Up",
-      down: "Down",
-      limitUpPursuit: "Limit-Up Watch",
-      profitMakingEffect: "Profit Potential",
-      strong: "Strong",
-      weak: "Weak",
-      contrast: "Price Comparison",
-      performance: "Top Performers",
-      hot: "Hot Stocks",
-      upList: "Top Gainers",
-      downList: "Top Losers",
-    },
   },
   trade: {
     header_stock: "Stocks",

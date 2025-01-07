@@ -6,10 +6,8 @@
     <CheckboxGroup v-model="checked" class="lang_box" :max="2">
       <div v-for="(item, i) in langList" :key="i" @click="clickItem(item)">
         <div class="lang_item" v-if="item.show">
-          <div style="width: 0.57rem; height: 0.57rem" class="mr-[0.1rem]">
-            <div style="width: 0.52rem;height: 0.52rem;">
-              <img :src="getStaticImgUrl(`/static/img/user/${item.icon}.svg`)" alt="">
-            </div>
+          <div class="w-[0.52rem] h-[0.52rem] mr-[0.16rem]">
+            <img :src="getStaticImgUrl(`/static/img/flag/${item.icon}.svg`)" alt="">
           </div>
           <div class="name">{{ item.name }}</div>
           <div :class="checked.val == item.val ? 'check' : 'uncheck'">
