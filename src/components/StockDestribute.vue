@@ -6,12 +6,9 @@
         t('market.market_stock_description_title')
       }}</span>
       <div>
-        <span class="text-[0.28rem] text-up mr-[0.28rem]"
-          >{{ t('market.market_stock_description_des1') }}：{{ up }}</span
-        >
-        <span class="text-[0.28rem] text-down"
-          >{{ t('market.market_stock_description_des2') }}：{{ down }}</span
-        >
+        <span class="text-[0.28rem] text-up mr-[0.28rem]">{{ t('market.market_stock_description_des1') }}：{{ up
+          }}</span>
+        <span class="text-[0.28rem] text-down">{{ t('market.market_stock_description_des2') }}：{{ down }}</span>
       </div>
     </div>
     <div class="table_box justify-center" v-if="overviewLoading && !count">
@@ -20,39 +17,29 @@
     <div class="table_box justify-end" v-if="!overviewLoading || count">
       <div class="table_list">
         <div class="table_item" v-for="(key, i) in keySoft" :key="key">
-          <div
-            class="table_item_num"
-            :class="[
-              i == 5 ? 'item_center' : i < 5 ? 'item_green' : 'item_red',
-            ]"
-          >
+          <div class="table_item_num" :class="[
+            i == 5 ? 'item_center' : i < 5 ? 'item_green' : 'item_red',
+          ]">
             {{ overview[key] }}
           </div>
-          <div
-            class="table_item_bar"
-            :style="{
-              height: getHeight(key) + 'rem',
-              borderTopLeftRadius: `${
-                getHeight(key) > 0.48
-                  ? 0.24
-                  : getHeight(key) > 0.15
+          <div class="table_item_bar" :style="{
+            height: getHeight(key) + 'rem',
+            borderTopLeftRadius: `${getHeight(key) > 0.48
+                ? 0.24
+                : getHeight(key) > 0.15
                   ? getHeight(key)
                   : 0.15
               }rem`,
-              borderTopRightRadius: `${
-                getHeight(key) > 0.48
-                  ? 0.24
-                  : getHeight(key) > 0.15
+            borderTopRightRadius: `${getHeight(key) > 0.48
+                ? 0.24
+                : getHeight(key) > 0.15
                   ? getHeight(key)
                   : 0.15
               }rem`,
-              backgroundColor: bgColors[i],
-            }"
-          ></div>
-          <div
-            class="table_item_name text-color3 flex flex-row justify-center align-items-center"
-            :class="{ item_green: i == 0, item_red: i == 10 }"
-          >
+            backgroundColor: bgColors[i],
+          }"></div>
+          <div class="table_item_name text-color3 flex flex-row justify-center align-items-center"
+            :class="{ item_green: i == 0, item_red: i == 10 }">
             {{ overviewTitleMap[key] }}
           </div>
         </div>
@@ -132,7 +119,7 @@ try {
   for (let key in overview.value) {
     overview.value[key] = d[key] || 0;
   }
-} catch {}
+} catch { }
 const overviewTitleMap = ref({
   5: t('market.market_stock_description_long_end'),
   4: ">7%",
@@ -234,7 +221,7 @@ const getDownNum = () => {
 .total_box {
   padding: 0.4rem 0.32rem;
   position: relative;
-  background: var(--ex-bg-color2);
+  background: var(--ex-bg-white2);
   border-radius: 0.32rem;
   margin-top: 0.2rem;
 

@@ -115,7 +115,7 @@ watch(() => store.state.token, () => {
     .item {
         display: flex;
         align-items: center;
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white2);
         line-height: 100%;
         padding: 0.32rem 0.28rem;
         border-radius: 0.32rem;

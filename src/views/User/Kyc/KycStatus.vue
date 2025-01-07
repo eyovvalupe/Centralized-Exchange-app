@@ -72,7 +72,8 @@
         </div>
         <div
           class="w-[6.46rem] bg-color rounded-[0.32rem] border-[0.02rem] border-color h-[4.14rem] flex flex-wrap justify-between p-[0.2rem]">
-          <div class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.1rem]">
+          <div
+            class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.1rem]">
             <img :src="kycInfo.idimg_1" style="object-fit: fill !important" alt="img" />
           </div>
           <div class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
@@ -163,7 +164,7 @@ const goInfo = () => {
     }
 
     .reason {
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       padding: 0.4rem;
       width: 100%;
       margin-top: 0.64rem;

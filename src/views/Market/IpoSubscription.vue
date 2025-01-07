@@ -162,7 +162,7 @@
           align-items: center;
           justify-content: center;
           text-align: center;
-          background: var(--ex-bg-color2);
+          background: var(--ex-bg-white2);
           border: 1px solid var(--ex-border-color);
           border-radius: 0.32rem;
           line-height: 0.4rem;
@@ -219,7 +219,7 @@
                         </div>
                         <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
                             mainWallet.amount
-                        }}</b>
+                            }}</b>
                     </div>
                 </div>
 
@@ -491,7 +491,7 @@ const openConfirmBox = () => {
     .ipo_info {
         border-radius: 0.4rem;
         border: 1px solid var(--ex-border-color);
-        background: var(--ex-bg-color2);
+        background: var(--ex-bg-white2);
         padding: 0.24rem 0.12rem 0.12rem 0.12rem;
         display: flex;
         justify-content: space-between;
@@ -786,7 +786,7 @@ const openConfirmBox = () => {
     }
 
     .money_box {
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white2);
         border-radius: 0.32rem;
         margin-top: 0.36rem;
         min-height: 1rem;

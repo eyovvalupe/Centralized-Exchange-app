@@ -81,7 +81,7 @@ const jump = () => {
         }
 
         .status {
-            background-color: var(--ex-bg-color2);
+            background-color: var(--ex-bg-white2);
             display: flex;
             align-items: center;
             justify-content: center;

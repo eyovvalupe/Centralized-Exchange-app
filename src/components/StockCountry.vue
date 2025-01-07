@@ -1,64 +1,36 @@
 <!-- 股票 -->
 <template>
-  <div
-    class="market_stock_block flex items-center justify-center"
-    v-if="marketLoading"
-  >
+  <div class="market_stock_block flex items-center justify-center" v-if="marketLoading">
     <Loading :loading="marketLoading" />
   </div>
-  <div
-    class="market_stock_block"
-    :class="{ 'market_stock_block--hide-nav': marketList.length <= 1 }"
-    v-else
-  >
-    <Tabs
-      @touchstart.stop
-      @touchmove.stop
-      @touchup.stop
-      type="custom-scroll-card"
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      :color="'var(--ex-primary-color)'"
-      shrink
-      @change="onChange"
-    >
-      <Tab
-        :title="
-          marketItem.market == 'us'
-            ? t('market.market_stock_country_us')
-            : marketItem.market == 'japan'
+  <div class="market_stock_block" :class="{ 'market_stock_block--hide-nav': marketList.length <= 1 }" v-else>
+    <Tabs @touchstart.stop @touchmove.stop @touchup.stop type="custom-scroll-card" v-model:active="active"
+      :swipeable="false" animated :color="'var(--ex-primary-color)'" shrink @change="onChange">
+      <Tab :title="marketItem.market == 'us'
+          ? t('market.market_stock_country_us')
+          : marketItem.market == 'japan'
             ? t('market.market_stock_country_japan')
             : marketItem.market == 'india'
-            ? t('market.market_stock_country_india')
-            : marketItem.market == 'korea'
-            ? t('market.market_stock_country_korea')
-            : marketItem.market == 'germany'
-            ? t('market.market_stock_country_germany')
-            : marketItem.market == 'uk'
-            ? t('market.market_stock_country_uk')
-            : marketItem.market == 'singapore'
-            ? t('market.market_stock_country_singapore')
-            : marketItem.market == 'hongkong'
-            ? t('market.market_stock_country_hongkong')
-            : marketItem.market == 'malaysia'
-            ? t('market.market_stock_country_malaysia')
-            : ''
-        "
-        :name="marketItem.market"
-        v-for="marketItem in marketList"
-        :key="marketItem.market"
-      >
+              ? t('market.market_stock_country_india')
+              : marketItem.market == 'korea'
+                ? t('market.market_stock_country_korea')
+                : marketItem.market == 'germany'
+                  ? t('market.market_stock_country_germany')
+                  : marketItem.market == 'uk'
+                    ? t('market.market_stock_country_uk')
+                    : marketItem.market == 'singapore'
+                      ? t('market.market_stock_country_singapore')
+                      : marketItem.market == 'hongkong'
+                        ? t('market.market_stock_country_hongkong')
+                        : marketItem.market == 'malaysia'
+                          ? t('market.market_stock_country_malaysia')
+                          : ''
+        " :name="marketItem.market" v-for="marketItem in marketList" :key="marketItem.market">
         <div class="stock_tab-body">
-          <StockDescription
-            v-if="marketStockIndexList[marketItem.market].length"
-            :list="marketStockIndexList[marketItem.market]"
-            :region="marketItem.market"
-            :data="marketStockData[marketItem.market]"
-            :loading="pageLoading"
-            :active="active"
-            @update="update(marketItem.market)"
-          />
+          <StockDescription v-if="marketStockIndexList[marketItem.market].length"
+            :list="marketStockIndexList[marketItem.market]" :region="marketItem.market"
+            :data="marketStockData[marketItem.market]" :loading="pageLoading" :active="active"
+            @update="update(marketItem.market)" />
         </div>
       </Tab>
     </Tabs>
@@ -153,18 +125,21 @@ const marketStockIndexList = computed(() => {
 .market_stock_block {
 
   .van-tabs {
-    :deep(> .van-tabs__content){
-      background-color: var(--ex-bg-color2);
+    :deep(> .van-tabs__content) {
+      background-color: var(--ex-bg-white2);
       border-radius: 0.4rem;
       margin-top: 0.32rem;
     }
+
     :deep(.van-tabs__wrap) {
       margin: 0 0.32rem !important;
     }
   }
 }
+
 .market_stock_block--hide-nav {
   height: 3.5rem;
+
   :deep(.van-tabs__wrap) {
     display: none;
   }

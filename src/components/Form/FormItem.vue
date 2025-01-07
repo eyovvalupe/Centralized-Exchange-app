@@ -23,7 +23,8 @@
           // item_focus2: inputFocus && !tip,
         }" :style="{ background, paddingBottom: props.hasBot ? '1.2rem' : '' }">
           <!-- 左侧提示 -->
-          <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''" v-show="inputFocus">{{ placeholder
+          <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
+            v-show="inputFocus">{{ placeholder
             }}</span>
           <!-- 右侧提示 -->
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
@@ -46,9 +47,10 @@
             inputFocus = true;
           emit('focus');
           " @blur="
-          inputBlur();
+            inputBlur();
           " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
-            @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''" @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
+            @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''"
+            @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
 
           <!-- 密码图标 -->
           <span class="pwd_icon" v-if="inputType == 'password'">
@@ -280,7 +282,7 @@ const percentTagClick = (percent) => {
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
 
     .ipt_tip {
       color: var(--ex-text-color4);
@@ -334,7 +336,7 @@ const percentTagClick = (percent) => {
 
 
   .disabled_item {
-    // background-color: var(--ex-bg-color2);
+    // background-color: var(--ex-bg-white2);
     flex: 1;
   }
 

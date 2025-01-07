@@ -347,7 +347,7 @@ function formatDate(date) {
 
   #hasNewMessage {
     text-align: center;
-    background: var(--ex-bg-color2);
+    background: var(--ex-bg-white2);
     padding: 10px 0;
     margin-bottom: 10px;
     color: var(--ex-text-color3);

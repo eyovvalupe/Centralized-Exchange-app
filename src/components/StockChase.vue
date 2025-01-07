@@ -31,10 +31,8 @@
       </div>
       <div class="chase_status relative">
         <div class="chase_state_text flex text-center justify-betwen" style="width: 3.12rem !important;">
-          <span
-            class="text-color3 mr-[0.16rem] ovreflow-hidden"
-            >{{ t("market.market_stock_chase_todays_effect") }}</span
-          >
+          <span class="text-color3 mr-[0.16rem] ovreflow-hidden">{{ t("market.market_stock_chase_todays_effect")
+            }}</span>
           <span class="text-success">99.26%</span>
         </div>
         <div class="chase_graph">
@@ -52,7 +50,7 @@ const { t } = useI18n();
 <style lang="less" scoped>
 .market_stock_chase {
   border-radius: 0.32rem;
-  background: var(--ex-bg-color2);
+  background: var(--ex-bg-white2);
   position: relative;
   padding-left: 0.32rem;
   padding-right: 0.32rem;
@@ -64,6 +62,7 @@ const { t } = useI18n();
 
   .header_container {
     padding: 0.4rem 0;
+
     .header_text {
       min-width: 2.24rem;
       height: 0.5rem;

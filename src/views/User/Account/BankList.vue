@@ -163,7 +163,7 @@ getSessionToken();
       .bank_icon_container {
         width: 0.96rem;
         height: 0.96rem;
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white2);
         border-radius: 1rem;
         display: flex;
         justify-content: center;

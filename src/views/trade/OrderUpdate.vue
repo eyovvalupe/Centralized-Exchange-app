@@ -20,8 +20,8 @@
       </div>
 
 
-      <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-bg-color2)"
-        inactive-color="var(--ex-bg-color2)" @change="onSliderChange" />
+      <Slider v-model="sliderValue" bar-height="0.08rem" active-color="var(--ex-bg-white2)"
+        inactive-color="var(--ex-bg-white2)" @change="onSliderChange" />
       <div class="percentages">
         <div v-for="percent in percentages" :key="percent" class="percentage">
           <div class="line"></div>

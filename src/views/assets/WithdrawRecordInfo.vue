@@ -37,7 +37,7 @@
         <div class="status_desc">{{ $t("withdrawInfo.processingTip") }}</div>
       </div>
     </div>
-    <div class="w-full rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-color2);">
+    <div class="w-full rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-white2);">
       <div class="flex items-center px-[0.28rem] py-[0.2rem] border-b-[0.02rem] border-color5 mb-[0.2rem]">
         <div class="flex flex items-center">
           <div class="text-color5 mr-[0.05rem]">{{ orderData.order_no }}</div>
@@ -45,7 +45,9 @@
             <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
-        <div class="text-color5 text-end text-[0.24rem] flex-1 text-end">{{ orderData.date ? orderData.date.slice(0, -3) : '--' }}</div>
+        <div class="text-color5 text-end text-[0.24rem] flex-1 text-end">{{ orderData.date ? orderData.date.slice(0, -3)
+          :
+          '--' }}</div>
       </div>
       <div class="h-[4rem] rounded-[0.32rem] px-[0.28rem] mx-[0.12rem] mb-[0.12rem] flex flex-col"
         style="background-color: var(--ex-bg-color);">
@@ -57,28 +59,28 @@
           </div>
         </div>
         <div class="bottom_item">
-        <div class="name">{{ $t("withdrawInfo.receivingAccount") }}</div>
-        <div class="value">
-          {{
-            orderData.account
-              ? orderData.account.symbol.toUpperCase() || ""
-              : ""
-          }}
-          {{
-            orderData.account
-              ? getAddress(orderData.account.address) || "--"
-              : "--"
-          }}
+          <div class="name">{{ $t("withdrawInfo.receivingAccount") }}</div>
+          <div class="value">
+            {{
+              orderData.account
+                ? orderData.account.symbol.toUpperCase() || ""
+                : ""
+            }}
+            {{
+              orderData.account
+                ? getAddress(orderData.account.address) || "--"
+                : "--"
+            }}
+          </div>
         </div>
-      </div>
-      <div class="bottom_item">
-        <div class="name">{{ $t("withdrawInfo.withdrawalCurrency") }}</div>
-        <div class="value">{{ orderData.currency }}</div>
-      </div>
-      <div class="bottom_item">
-        <div class="name">{{ $t("withdrawInfo.withdrawalNetwork") }}</div>
-        <div class="value">{{ orderData.currency ? orderData.account.network.toUpperCase() : '--' }}</div>
-      </div>
+        <div class="bottom_item">
+          <div class="name">{{ $t("withdrawInfo.withdrawalCurrency") }}</div>
+          <div class="value">{{ orderData.currency }}</div>
+        </div>
+        <div class="bottom_item">
+          <div class="name">{{ $t("withdrawInfo.withdrawalNetwork") }}</div>
+          <div class="value">{{ orderData.currency ? orderData.account.network.toUpperCase() : '--' }}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -209,6 +211,7 @@ const goChat = () => {
     padding: 0.22rem 0.32rem;
 
   }
+
   .bottom_item {
     padding: 0.32rem 0 0.2rem 0;
     display: flex;

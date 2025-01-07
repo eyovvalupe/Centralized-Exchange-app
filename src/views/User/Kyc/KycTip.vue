@@ -77,7 +77,7 @@ const backFunc = () => {
 
         .box {
             width: 48%;
-            background-color: var(--ex-bg-color2);
+            background-color: var(--ex-bg-white2);
             border-radius: 0.12rem;
             height: 2rem;
             margin-bottom: 0.28rem;
