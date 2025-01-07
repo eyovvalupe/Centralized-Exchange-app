@@ -47,7 +47,7 @@
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">质押挖矿</div>
+                <div style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
                 <div class="recommend-icon" @click="jump('portfolioIndex', true)">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
