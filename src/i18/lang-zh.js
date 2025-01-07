@@ -939,6 +939,7 @@ export default {
     portfolio_participate: "参与使用",
     portfolio_hot: "HOT",
     portfolio_day: "天",
+    portfolio_day_multi: "天",
     portfolio_mining_title: "质押挖矿",
     portfolio_mining_subTitle1: "认购组合",
     portfolio_mining_subTitle2: "认购金额",

@@ -3,18 +3,18 @@
     <div class="mining-item">
         <div class="name">ETH+MANA</div>
         <div class="info">
-            <div>投资金额 200-99999</div>
+            <div>{{ t('finance.portfolio_investment_amt') }} 200-99999</div>
             <div class="icon"></div>
         </div>
         <div class="info-box">
             <div class="info-con">
                 <div class="per">
                     <b>0.2-0.25</b>
-                    <span>%/天</span>
+                    <span>%/{{ t('finance.portfolio_day') }}</span>
                 </div>
                 <div class="time">
-                    <div>时长</div>
-                    <div class="num">7日</div>
+                    <div>{{ t('finance.portfolio_duration') }}</div>
+                    <div class="num">7{{ t('finance.portfolio_day_multi') }}</div>
                 </div>
             </div>
             <div class="line-box"></div>
@@ -23,7 +23,11 @@
     </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { useI18n } from 'vue-i18n';
+
+const {t} = useI18n();
+</script>
 
 <style lang="less">
 .mining-item {

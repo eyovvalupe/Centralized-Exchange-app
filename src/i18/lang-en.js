@@ -959,6 +959,7 @@ export default {
     portfolio_participate: "Participate",
     portfolio_hot: "HOT",
     portfolio_day: "Day",
+    portfolio_day_multi: "Days",
     portfolio_mining_title: "Staking mining",
     portfolio_mining_subTitle1: "Subscription Combination",
     portfolio_mining_subTitle2: "Subscription Amount",
