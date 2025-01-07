@@ -207,7 +207,7 @@ const goBack = () => {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 3.44rem;
+        width: max-content;
         margin-top: 1rem;
       }
     }
