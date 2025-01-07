@@ -478,7 +478,7 @@ const changeAmount = (val) => {
   .form {
     .form_box {
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-color);
+      background-color: var(--ex-bg-color2);
       padding: 0.42rem 0.32rem 0.4rem 0.32rem;
       margin-top: 0.52rem;
       position: relative;
