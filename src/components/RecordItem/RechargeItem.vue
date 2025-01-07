@@ -156,7 +156,8 @@ const formatDate = (date) => {
     }
 
     .status_failure {
-      color: var(--ex-text-color3);
+      color: var(--ex-status-color2);
+      background-color: var(--ex-status-bg2);
     }
   }
 }

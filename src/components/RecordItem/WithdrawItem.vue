@@ -171,10 +171,10 @@ const formatDate = (date) => {
       color: var(--ex-status-color3);
       background-color: var(--ex-status-bg3);
     }
-
+ 
     .status_failure {
-      color: var(--ex-text-color3);
-      background-color: var(--ex-bg-color5);
+      color: var(--ex-status-color2);
+      background-color: var(--ex-status-bg2);
     }
 
   }

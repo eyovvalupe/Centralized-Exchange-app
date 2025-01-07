@@ -3,7 +3,7 @@
   <div class="page page_record_list">
     <Top :title="t('recordList.financialRecords')">
       <template #right>
-        <div class="w-[0.7rem] h-[0.7rem]">
+        <div class="w-[0.7rem] h-[0.7rem]" @click="router.push('/chat')">
           <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
       </template>

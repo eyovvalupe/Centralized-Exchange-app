@@ -296,7 +296,6 @@ defineExpose({
       height: 100%;
       border-radius: 0.4rem;
       margin-right: 0.24rem;
-      font-weight: 600;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -305,12 +304,12 @@ defineExpose({
       top:0;
     }
     .offset-sell{
-      color:var(--ex-text-color--bg-light);
+      color:var(--ex-text-color);
       background:var(--ex-error-color);
       
     }
     .offset-buy{
-      color:var(--ex-text-color--bg-light);
+      color:var(--ex-text-color);
       background:var(--ex-success-color);
       
     }

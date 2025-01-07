@@ -91,7 +91,7 @@
                   }}
                 </div>
               </div>
-              <div v-else class="add_account" style="background-color: var(--ex-bg-color);"
+              <div v-else class="add_account"
                 @click="showAccountDialog = true">
                 <Icon size="0.48rem" color="var(--ex-primary-color)" name="add-o" />
                 <div class="add_account_text">
@@ -742,13 +742,12 @@ watch(
 }
 
 .add_account {
-  background-color: var(--ex-bg-color2);
+  background-color: var(--ex-bg-color3);
   border-radius: 0.32rem;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding: 0.24rem 0 0.2rem 0;
-  border: 1px solid var(--ex-border-color);
 }
 
 .add_account_text {
