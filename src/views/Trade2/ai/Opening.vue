@@ -135,7 +135,7 @@
     </div>
 
     <!-- 开仓确认弹窗 -->
-    <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
+    <BottomPopup teleport="body" v-model:show="showModel" position="bottom" round closeable>
       <div class="van-popup-custom-title">
         {{ t("trade.ai_opening_confirm_order") }}
       </div>
@@ -188,7 +188,7 @@
             t("trade.ai_opening_confirm_btn")
           }}</span></Button>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- ai订单详情 -->
     <AiInfo ref="infoRef" />
@@ -196,12 +196,12 @@
     <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 
     <!-- 股票行情弹窗 -->
-    <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
+    <BottomPopup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
       <StockPopup type="ai" style="height: 90vh" v-if="showStockModel" />
-    </Popup>
+    </BottomPopup>
 
     <!-- ai列表 -->
-    <Popup teleport="body" v-model:show="showBottom" round closeable position="bottom">
+    <BottomPopup teleport="body" v-model:show="showBottom" round closeable position="bottom">
       <div class="trade_ai_list">
         <div class="trade_ai_list_title">
           {{ t("trade.ai_opening_ai_quantifi_list") }}
@@ -210,7 +210,7 @@
           <AiItem @click.stop="chooseItem(item)" v-for="(item, i) in marketAiList" :key="i" :item="item" />
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
   </div>
 
   <!-- 账户余额弹窗 -->
@@ -246,6 +246,7 @@ import SlideContainer from "@/components/SlideContainer.vue";
 import Top from "@/components/Top.vue";
 import AmountPopup from "../AmountPopup.vue";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -869,13 +870,12 @@ defineExpose({
     line-height: 0.6rem;
     text-align: center;
     margin-bottom: 0.2rem;
-    margin-top: 0.2rem;
     font-weight: bold;
   }
 
   .list {
     max-height: 80vh;
-    padding: 0.4rem 0.32rem;
+    padding: 0 0.32rem 0.4rem 0.32rem;
     overflow-y: auto;
   }
 }

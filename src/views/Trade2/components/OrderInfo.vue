@@ -233,9 +233,9 @@
     </div>
 
     <!-- 行情弹窗 -->
-    <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
+    <BottomPopup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
       <StockPopup style="height: 90vh" v-if="showStockModel" />
-    </Popup>
+    </BottomPopup>
   </div>
 </template>
 
@@ -249,6 +249,7 @@ import Top from "@/components/Top.vue";
 import Decimal from "decimal.js";
 import StockPopup from "../../trade/StockPopup.vue";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup"
 
 const { t } = useI18n();
 const emit = defineEmits(["update", "sell", "cancel", "back"]);

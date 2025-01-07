@@ -69,7 +69,7 @@
     </Popup>
 
     <!-- 平仓 -->
-    <Popup v-model:show="showSell" position="bottom" round closeable teleport="body">
+    <BottomPopup v-model:show="showSell" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ t("trade.stock_position_close_order") }}
       </div>
@@ -124,10 +124,10 @@
           </Button>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- 更新 -->
-    <Popup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
+    <BottomPopup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
       <div class="van-popup-custom-title">
         {{ t("trade.stock_position_update") }}
       </div>
@@ -178,7 +178,7 @@
           </Button>
         </div>
       </div>
-    </Popup>
+    </BottomPopup>
 
     <!-- 止盈类型选择 -->
     <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
@@ -232,6 +232,7 @@ import OrderInfo from "../components/OrderInfo.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
 import Loaidng from "@/components/Loaidng.vue"
+import BottomPopup from "@/components/BottomPopup"
 
 const props = defineProps({
   type: {
