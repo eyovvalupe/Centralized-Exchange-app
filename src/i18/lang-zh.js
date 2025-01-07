@@ -964,4 +964,12 @@ export default {
     portfolio_order_tab1: "进行中",
     portfolio_order_tab2: "已完成",
   },
+  copy: {
+    title: "跟单",
+    copy_option: "跟单",
+    copy_trade: "交易",
+    total_revenue: "收益",
+    level: '{level}级',
+
+  }
 };

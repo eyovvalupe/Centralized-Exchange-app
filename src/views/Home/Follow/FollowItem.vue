@@ -7,7 +7,7 @@
                 <div class="top">
                     <div class="avatar"></div>
                     <div class="name">萨达撒阿大的</div>
-                    <div class="level">1级</div>
+                    <div class="level">{{ $t('copy.level', {level: '1'}) }}</div>
                 </div>
                 <div class="bottom">
                     <div class="bottom-info">
@@ -16,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            <div class="btn">交易</div>
+            <div class="btn">{{ $t('copy.copy_trade') }}</div>
         </div>
 
         <div class="info-box">
@@ -24,7 +24,7 @@
                 <div class="info-title">里约</div>
                 <div class="info-num up">+123123%</div>
                 <div class="info-text">
-                    <span>收益</span>
+                    <span>{{ $t('copy.total_revenue') }}</span>
                     <b>+234234234</b>
                 </div>
             </div>

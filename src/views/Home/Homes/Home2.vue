@@ -68,13 +68,13 @@
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">跟单</div>
+                <div style="flex: 1;">{{ t('copy.title') }}</div>
                 <div class="recommend-icon">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
             <div>
-                <div class="follow-btn">期权</div>
+                <div class="follow-btn">{{ t('copy.copy_option') }}</div>
             </div>
             <div class="scroll-box">
                 <div class="scroll-con">

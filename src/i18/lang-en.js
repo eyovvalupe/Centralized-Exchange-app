@@ -982,5 +982,12 @@ export default {
     portfolio_order_title: "Investment Order",
     portfolio_order_tab1: "In Progress",
     portfolio_order_tab2: "Completed",
+  },
+  copy: {
+    title: "Copy",
+    copy_option: "Optios",
+    copy_trade: "Copy",
+    total_revenue: "Total Revenue",
+    level: 'LV.{level}'
   }
 };
