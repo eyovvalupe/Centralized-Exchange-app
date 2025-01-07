@@ -127,7 +127,7 @@
     <div class="item_box">
       <div class="item_box_right" @click="showModeTypeDialog = true">
         <div class="item justify-between">
-          <div class="tip-title">保证金模式</div>
+          <div class="tip-title">{{ t('trade.stock_opening_amount_mode') }}</div>
           <span class="flex text-center" style="margin-bottom: 0.06rem;">
             {{
               form1.leverType == "cross"
@@ -141,7 +141,7 @@
       </div>
       <div class="item_box_right" style="margin-left: 0.2rem;" @click="showLeverTypeDialog = true">
         <div class="item justify-between">
-          <div class="tip-title">杠杆</div>
+          <div class="tip-title">{{ t('trade.stock_opening_lever') }}</div>
           <span v-if="!levers.length">--</span>
           <span class="flex text-center" style="margin-bottom: 0.06rem;" v-else>
             {{ form1.lever }}X</span>
@@ -373,7 +373,7 @@
 
   <!-- 杠杆选择 -->
   <ActionSheet teleport="body" v-model:show="showLeverTypeDialog" :actions="leversActions" @select="onSelectLeverType"
-    :title="'杠杆'">
+    :title="t('trade.stock_opening_lever')">
   </ActionSheet>
 
   <!-- 跳转选择 -->
@@ -917,7 +917,7 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  if (!currStock.value.trade) return showToast("已闭市,不可交易");
+  if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
   if (!currStock.value.symbol)
     return showToast(t("trade.stock_opening_err_stock"));
   if (!form1.value.volume || form1.value.volume < min.value)

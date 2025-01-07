@@ -593,8 +593,10 @@ export default {
     stock_opening_err_take_price: "Enter take profit price",
     stock_opening_err_stop_price: "Enter stop loss price",
     stock_opening_err_limit: "Enter limit price",
-
     stock_opening_success: "Open success",
+    stock_opening_lever: "Leverage",
+    stock_opening_closed: "Already closed, can not trade",
+
     stock_position_stock: "Stock/Status",
     stock_position_open: "Open/Available",
     stock_position_cost: "Price/Cost",
