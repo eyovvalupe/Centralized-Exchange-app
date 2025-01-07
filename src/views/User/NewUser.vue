@@ -399,6 +399,8 @@ if (token.value) {
       .gg {
         font-weight: 500;
         font-size: 0.3rem;
+        max-width: 50%;
+        text-align: center;
       }
 
       .lang {
