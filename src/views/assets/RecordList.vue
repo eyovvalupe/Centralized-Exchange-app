@@ -3,7 +3,7 @@
   <div class="page page_record_list">
     <Top :title="t('recordList.financialRecords')">
       <template #right>
-        <div class="w-[0.6rem] h-[0.6rem]">
+        <div class="w-[0.7rem] h-[0.7rem]">
           <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
       </template>

@@ -89,7 +89,6 @@ const formatDate = (date) => {
   background-color: var(--ex-bg-color3);
   border-radius: 0.32rem;
   margin-top: 0.2rem;
-
   .icon_box {
     width: 0.84rem;
     height: 0.84rem;
@@ -141,7 +140,7 @@ const formatDate = (date) => {
       padding: 0.05rem 0.15rem;
       border-radius: 1rem;
     }
-
+    
     .status_review {
       color: var(--ex-wait-color);
     }
@@ -158,7 +157,6 @@ const formatDate = (date) => {
 
     .status_failure {
       color: var(--ex-text-color3);
-      background-color: var(--ex-bg-color5);
     }
   }
 }
