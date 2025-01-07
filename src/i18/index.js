@@ -2,14 +2,18 @@ import { createI18n } from 'vue-i18n'
 import en from './lang-en'
 import zh from './lang-zh'
 import ch from './lang-ch'
+import kr from './lang-kr'
+import jp from './lang-jp'
 import { default_language } from '@/config'
 // 设置语言资源包
 const messages = {
   en,
   zh,
-  ch
+  ch,
+  kr,
+  jp
 }
-const supportedLanguage = ['en', 'zh', 'ch'];
+const supportedLanguage = ['en', 'zh', 'ch', 'kr', 'jp'];
 
 const getUserLanguage = () => {
   const userLanguage = localStorage.getItem('language') ? JSON.parse(localStorage.getItem('language')).val : null;

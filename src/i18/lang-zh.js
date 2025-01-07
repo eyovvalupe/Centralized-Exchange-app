@@ -299,26 +299,6 @@ export default {
     ad_btn: "开始交易",
     finance: "理财"
   },
-  market: {
-    stock: {
-      updateTime: "更新时间",
-      riseAndFall: "涨跌分布",
-      up: "上涨",
-      down: "下跌",
-      limitUpPursuit: "涨停追击",
-      profitMakingEffect: "赚钱效应",
-      strong: "强",
-      weak: "弱",
-      contrast: "涨跌停对比",
-      performance: "做涨停今表现",
-      hot: "热门股",
-      upList: "涨幅榜",
-      downList: "跌幅榜",
-    },
-  },
-  form: {
-    all: "全部",
-  },
   assets: {
     recharge: "充值",
     withdraw: "提现",
