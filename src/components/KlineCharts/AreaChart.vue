@@ -99,7 +99,7 @@ const initData = async () => {
             },
             area: {
                 // lineColor: props.color || "var(--ex-primary-color)",
-                lineColor: props.color || "rgb(151 225 128)",
+                lineColor: props.color || "#00D77C",
 
                 point: {
                     show: props.showY

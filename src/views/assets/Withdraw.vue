@@ -107,9 +107,6 @@
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
         <div class="form mt-[0.46rem]">
-          <!-- <FormItem input-type="number" v-model="form.amount" show-btn :btn-text="$t('form.all')" :min="0"
-            :placeholder="$t('withdraw.withdrawalAmount')" @change="changeAmount" @btnClick="maxIpt">
-          </FormItem> -->
           <FormItem input-type="number" v-model="form.amount" show-btn :from="'withdraw'" :min="0"
             :crypto-currency="'USD'" :balance="balance" :placeholder="$t('withdraw.withdrawalAmount')"
             @change="changeAmount" @btnClick="maxIpt">

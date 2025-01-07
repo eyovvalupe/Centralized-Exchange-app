@@ -34,6 +34,8 @@ export default {
     ad_title: "開啟你的交易之旅",
     ad_con: "創造財富之路",
     ad_btn: "開始交易",
+    finance: "理財"
+
   },
   login: {
     login: "登錄",
@@ -562,7 +564,8 @@ export default {
     stock_opening_err_stop_price: "請輸入停損價格",
     stock_opening_err_limit: "請輸入限價",
     stock_opening_success: "開倉成功",
-
+    stock_opening_lever: "槓桿",
+    stock_opening_closed: "已閉市，不可交易",
     stock_position_stock: "股票/狀態",
     stock_position_open: "開倉/可售",
     stock_position_cost: "現價/成本",
@@ -660,6 +663,7 @@ export default {
     ai_opening_historical_profit_rate: "歷史收益率",
     ai_opening_24_profit_rate: "24小時收益率",
     ai_opening_profit_margin: "利潤率",
+    ai_opening_profit_ratio: "盈虧率",
 
     ai_position_title: "訂單詳情",
     ai_position_profit: "獲利",

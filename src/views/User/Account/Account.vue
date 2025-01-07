@@ -36,7 +36,7 @@
       <div class="w-full h-[4rem]">
         <div v-if="userInfo.kycl2 != 2" class="w-full flex flex-col items-center">
           <div class="text-[0.36rem] mb-[0.56rem]">{{ t('account.no_kyc_title') }}</div>
-          <div class="flex flex-col items-center mb-[0.48rem]">
+          <div class="flex flex-col items-center mb-[0.48rem] px-[0.4rem] text-center">
             <span class="text-[0.32rem] ">{{ t('account.no_kyc_con1') }}</span>
             <span class="text-[0.32rem]">{{ t('account.no_kyc_con2') }}</span>
           </div>
@@ -51,7 +51,7 @@
         </div>
         <div v-else-if="userInfo.kycl2 == 2 && !userInfo.googlebind" class="w-full flex flex-col items-center">
           <div class="text-[0.36rem] mb-[0.56rem]">{{ t('account.no_google_title') }}</div>
-          <div class="flex flex-col items-center mb-[0.48rem]">
+          <div class="flex flex-col items-center mb-[0.48rem] px-[0.4rem] text-center">
             <span class="text-[0.32rem] ">{{ t('account.no_google_con1') }}</span>
             <span class="text-[0.32rem]">{{ t('account.no_google_con2') }}</span>
           </div>
@@ -207,7 +207,7 @@ const goBack = () => {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 3.44rem;
+        width: max-content;
         margin-top: 1rem;
       }
     }

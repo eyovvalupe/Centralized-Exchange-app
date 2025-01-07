@@ -110,7 +110,7 @@
 
 
       <Button size="large" color="var(--ex-primary-color)" round style="margin-top: 0.6rem;" @click="openStock"
-        :disabled='value == 0 || value.length === 0'><span style="color: var(--ex-black);">开仓</span></Button>
+        :disabled='value == 0 || value.length === 0'><span style="color: var(--ex-white);">开仓</span></Button>
 
     </div>
   </div>

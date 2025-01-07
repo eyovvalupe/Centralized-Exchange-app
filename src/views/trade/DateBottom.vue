@@ -6,7 +6,7 @@
         <div>结束：{{ endDate }}</div>
       </div>
       <div class="date-button-box">
-        <Button color="#0953fa" @click="goTrade"><span style="color: var(--ex-black);">确认</span></Button>
+        <Button color="#0953fa" @click="goTrade"><span style="color: var(--ex-white);">确认</span></Button>
       </div>
     </div>
   </div>

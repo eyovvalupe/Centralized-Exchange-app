@@ -21,7 +21,8 @@
         </div>
       </div>
 
-      <div class="form_item margin_item mb-[0.05rem]" :class="[isSame ? 'border-color-2' : 'border-[0.02rem] border-error']">
+      <div class="form_item margin_item mb-[0.05rem]"
+        :class="[isSame ? 'border-color-2' : 'border-[0.02rem] border-error']">
         <div :class="newFocus || form.password ? 'flex flex-col' : 'flex'">
           <div class="text-color5"
             :class="newFocus || form.password ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">{{
@@ -59,7 +60,7 @@
     <!-- 按钮 -->
     <div class="submit_box">
       <Button :loading="loading" round :disabled="disapled" color="var(--ex-primary-color)" class="submit"
-        type="primary" @click="submit"><span style="color: var(--ex-black);">{{ $t("change_trade_pw.btn")
+        type="primary" @click="submit"><span style="color: var(--ex-white);">{{ $t("change_trade_pw.btn")
           }}</span></Button>
     </div>
 

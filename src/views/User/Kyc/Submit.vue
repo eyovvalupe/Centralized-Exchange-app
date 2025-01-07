@@ -20,7 +20,7 @@
         name: 'kyc',
       })
       " class="w-[3.6rem] text-[0.3rem] w-[3.6rem]" type="primary"
-      :style="'height: 0.9rem; font-size: 0.3rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-black);">{{
+      :style="'height: 0.9rem; font-size: 0.3rem; margin-bottom: 0.6rem'"><span style="color: var(--ex-white);">{{
         $t("kyc.final_ok") }}</span></Button>
   </div>
 </template>

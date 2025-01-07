@@ -120,7 +120,7 @@
 
           <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
-            <span style="color: var(--ex-black);">{{ t("trade.stock_position_btn") }}</span>
+            <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
       </div>
@@ -174,7 +174,7 @@
 
           <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
-            <span style="color: var(--ex-black);">{{ t('trade.stock_position_btn') }}</span>
+            <span style="color: var(--ex-white);">{{ t('trade.stock_position_btn') }}</span>
           </Button>
         </div>
       </div>
@@ -648,8 +648,8 @@ getSessionToken();
 <style lang="less" scoped>
 .positions {
   .tr {
-    padding: 0.2rem;
-    background-color: var(--ex-bg-color2);
+    padding: 0.24rem;
+    background-color: var(--ex-bg-color3);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;
@@ -682,7 +682,7 @@ getSessionToken();
       color: var(--ex-text-color);
       font-weight: 600;
       line-height: 0.32rem;
-      margin-bottom: 0.18rem;
+      margin-bottom: 0.28rem;
     }
 
     .lever {
@@ -817,8 +817,8 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      // border: 1px solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color3);
+      border: 1px solid var(--ex-border-color2);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

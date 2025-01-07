@@ -283,9 +283,6 @@ export default {
   success_toast: {
     message: "Added successfully",
   },
-  form: {
-    all: "All",
-  },
   assets: {
     recharge: "Deposit",
     withdraw: "Withdraw",
@@ -500,23 +497,8 @@ export default {
     ad_title: "Start Your Trading Journey",
     ad_con: "Create Your Path to Wealth",
     ad_btn: "Start Trade",
-  },
-  market: {
-    stock: {
-      updateTime: "Last Updated",
-      riseAndFall: "Price Changes",
-      up: "Up",
-      down: "Down",
-      limitUpPursuit: "Limit-Up Watch",
-      profitMakingEffect: "Profit Potential",
-      strong: "Strong",
-      weak: "Weak",
-      contrast: "Price Comparison",
-      performance: "Top Performers",
-      hot: "Hot Stocks",
-      upList: "Top Gainers",
-      downList: "Top Losers",
-    },
+    finance: "Finance"
+
   },
   trade: {
     header_stock: "Stocks",
@@ -593,8 +575,10 @@ export default {
     stock_opening_err_take_price: "Enter take profit price",
     stock_opening_err_stop_price: "Enter stop loss price",
     stock_opening_err_limit: "Enter limit price",
-
     stock_opening_success: "Open success",
+    stock_opening_lever: "Leverage",
+    stock_opening_closed: "Already closed, can not trade",
+
     stock_position_stock: "Stock/Status",
     stock_position_open: "Open/Available",
     stock_position_cost: "Price/Cost",
@@ -691,6 +675,7 @@ export default {
     ai_opening_historical_profit_rate: "Historical Profit",
     ai_opening_24_profit_rate: "24h Profit",
     ai_opening_profit_margin: "Profit Ratio",
+    ai_opening_profit_ratio: "P/L Ratio",
 
     ai_position_title: "Trade Detail",
     ai_position_profit: "Profit",

@@ -120,7 +120,7 @@
     <div class="item_box">
       <div class="item_box_right" @click="showModeTypeDialog = true">
         <div class="item justify-between">
-          <div class="tip-title">保证金模式</div>
+          <div class="tip-title">{{ t('trade.stock_opening_amount_mode') }}</div>
           <span class="flex text-center" style="margin-bottom: 0.06rem;">
             {{
               form1.leverType == "cross"
@@ -134,7 +134,7 @@
       </div>
       <div class="item_box_right" style="margin-left: 0.2rem;" @click="showLeverTypeDialog = true">
         <div class="item justify-between">
-          <div class="tip-title">杠杆</div>
+          <div class="tip-title">{{ t('trade.stock_opening_lever') }}</div>
           <span v-if="!levers.length">--</span>
           <span class="flex text-center" style="margin-bottom: 0.06rem;" v-else>
             {{ form1.lever }}X</span>
@@ -195,7 +195,7 @@
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
       :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
-      <span style="color: var(--ex-black);">{{
+      <span style="color: var(--ex-white);">{{
         activeType == 1
           ? t("trade.stock_open_long")
           : t("trade.stock_open_short")
@@ -341,7 +341,7 @@
           @click="showPassword = false" />
       </div>
       <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit"
-        color="var(--ex-primary-color)" round><span style="color: var(--ex-black);">{{ t("trade.stock_open")
+        color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{ t("trade.stock_open")
           }}</span></Button>
     </div>
   </Popup>
@@ -387,7 +387,7 @@
 
   <!-- 杠杆选择 -->
   <ActionSheet teleport="body" v-model:show="showLeverTypeDialog" :actions="leversActions" @select="onSelectLeverType"
-    :title="'杠杆'">
+    :title="t('trade.stock_opening_lever')">
   </ActionSheet>
 
   <!-- 跳转选择 -->
@@ -423,7 +423,7 @@
           :key="'search'"
           :list="marketSearchList"
         /> -->
-        <StockTable theme="classic" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+        <StockTable :showIcon="true" theme="classic" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
           :list="marketSearchList" />
       </div>
     </div>
@@ -1011,7 +1011,7 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  if (!currStock.value.trade) return showToast("已闭市,不可交易");
+  if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
   if (!currStock.value.symbol)
     return showToast(t("trade.contract_opening_err_contract"));
   if (!form1.value.volume || form1.value.volume < min.value)
@@ -1423,7 +1423,7 @@ defineExpose({
       border-radius: 0.32rem;
       border: 1px solid var(--ex-border-color2);
       padding: 0.06rem 0.24rem;
-      background-color: var(--ex-bg-color3);
+      background-color: var(--ex-bg-color2);
 
       .tip-title {
         color: var(--ex-text-color3);

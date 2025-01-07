@@ -43,11 +43,12 @@
                 <div style="float: left">
                   <div class="item">
                     <div :class="!isFocus && !form.address ? 'flex' : ''">
-                      <div class="text-color5" :class="isFocus || form.address ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">
+                      <div class="text-color5"
+                        :class="isFocus || form.address ? 'text-[0.28rem] mb-[0.15rem]' : 'text-[0.32rem]'">
                         {{ $t("account.add_subtitle_address") }}
                       </div>
-                      <input type="text" v-model.trim="form.address" class="ipt" maxlength="50"
-                        @focus="isFocus = true" @blur="isFocus = false"/>
+                      <input type="text" v-model.trim="form.address" class="ipt" maxlength="50" @focus="isFocus = true"
+                        @blur="isFocus = false" />
                     </div>
                     <div class="w-[0.32rem] h-[0.32rem]" v-if="form.address" @click="form.address = ''">
                       <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
@@ -57,7 +58,7 @@
               </div>
               <div class="btn_container">
                 <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)"
-                  @click="next"><span style="color: var(--ex-black);">{{
+                  @click="next"><span style="color: var(--ex-white);">{{
                     $t("account.add_btn") }}</span></Button>
               </div>
               <!-- 谷歌验证 -->
@@ -75,8 +76,8 @@
       </Tab>
     </Tabs>
     <!-- 币种 -->
-    <BottomPopup :from="'account'" :safeAreaInsetTop="false" :safeAreaInsetBottom="true" round v-model:show="showCrypto" position="bottom"
-      class="popup_container" closeable>
+    <BottomPopup :from="'account'" :safeAreaInsetTop="false" :safeAreaInsetBottom="true" round v-model:show="showCrypto"
+      position="bottom" class="popup_container" closeable>
       <div class="pt-[0.3rem] px-[0.32rem] h-full">
         <div class="w-full px-[0.32rem] mb-[0.2rem]">
           <div class="w-full h-[0.8rem] rounded-[1rem] bg-color3 flex items-center px-[0.2rem]">
@@ -106,8 +107,8 @@
       </div>
     </BottomPopup>
     <!-- 网络 -->
-    <BottomPopup closeable :from="'account'" :safe-area-inset-top="true" :safe-area-inset-bottom="true" round v-model:show="showNet" position="bottom"
-      class="popup_container" >
+    <BottomPopup closeable :from="'account'" :safe-area-inset-top="true" :safe-area-inset-bottom="true" round
+      v-model:show="showNet" position="bottom" class="popup_container">
       <div class="bottoms">
         <div @click="chooseNet(item)" class="_bottom" :class="{ active_bottom: form.network == item }"
           v-for="item in currNetwork" :key="item">

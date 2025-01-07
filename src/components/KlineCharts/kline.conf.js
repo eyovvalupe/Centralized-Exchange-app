@@ -1,6 +1,6 @@
-const upColor = "#97E180";
-const downColor = "#DC5959";
-const noChangeColor = "#8CA1CA";
+const upColor = "#00D77C";
+const downColor = "#FF4834";
+const noChangeColor = "#5984DA";
 export const klineConfig = {
     // 类别
     grid: {
@@ -224,7 +224,7 @@ export const klineConfig = {
         // x轴分割文字
         tickText: {
             show: true,
-            color: "rgba(255, 255, 255, 0.50)", 
+            color: "rgba(255, 255, 255, 0.50)",
             family: "Helvetica Neue",
             weight: "normal",
             size: 12,

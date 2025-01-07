@@ -59,7 +59,7 @@
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
       <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit"
-        type="primary"><span style="color: var(--ex-black);">{{ t('forget_pw.get_back') }}</span></Button>
+        type="primary"><span style="color: var(--ex-white);">{{ t('forget_pw.get_back') }}</span></Button>
     </div>
     <div class="tologin" @click="router.push({ name: 'login' })">{{ t('register.go_login') }}</div>
 
@@ -267,6 +267,7 @@ const submitForm = (code) => {
     }
 
   }
+
   .tologin {
     color: var(--ex-primary-color);
     font-family: "PingFang SC";

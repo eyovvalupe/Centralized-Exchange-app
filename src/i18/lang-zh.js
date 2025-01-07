@@ -297,26 +297,7 @@ export default {
     ad_title: "开启你的交易之旅",
     ad_con: "创造财富之路",
     ad_btn: "开始交易",
-  },
-  market: {
-    stock: {
-      updateTime: "更新时间",
-      riseAndFall: "涨跌分布",
-      up: "上涨",
-      down: "下跌",
-      limitUpPursuit: "涨停追击",
-      profitMakingEffect: "赚钱效应",
-      strong: "强",
-      weak: "弱",
-      contrast: "涨跌停对比",
-      performance: "做涨停今表现",
-      hot: "热门股",
-      upList: "涨幅榜",
-      downList: "跌幅榜",
-    },
-  },
-  form: {
-    all: "全部",
+    finance: "理财"
   },
   assets: {
     recharge: "充值",
@@ -580,6 +561,8 @@ export default {
     stock_opening_err_stop_price: "请输入止损价格",
     stock_opening_err_limit: "请输入限价",
     stock_opening_success: "开仓成功",
+    stock_opening_lever: "杠杆",
+    stock_opening_closed: "已闭市,不可交易",
 
     stock_position_stock: "股票/状态",
     stock_position_open: "开仓/可售",
@@ -675,6 +658,7 @@ export default {
     ai_opening_historical_profit_rate: "历史收益率",
     ai_opening_24_profit_rate: "24小时收益率",
     ai_opening_profit_margin: "利润率",
+    ai_opening_profit_ratio: "盈亏率",
 
     ai_position_title: "订单详情",
     ai_position_profit: "盈利",

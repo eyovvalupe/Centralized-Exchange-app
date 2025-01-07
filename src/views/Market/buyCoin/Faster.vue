@@ -97,7 +97,7 @@
       </div>
 
       <Button size="large" class="submit" :class="['submit--' + form1.offset]" round :loading="loading" @click="sell">
-        <span style="color: var(--ex-black);">{{
+        <span style="color: var(--ex-white);">{{
           form1.offset == "sell" ?
             t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</span>
       </Button>

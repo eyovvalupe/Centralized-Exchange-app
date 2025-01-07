@@ -25,8 +25,8 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-
-const {t} = useI18n();
+import { getStaticImgUrl } from "@/utils/index.js"
+const { t } = useI18n();
 </script>
 
 <style lang="less">
@@ -69,7 +69,7 @@ const {t} = useI18n();
         width: 100%;
         height: 2.48rem;
         border-radius: 0.32rem;
-        background-color: #0A0A0F;
+        background-color: var(--ex-bg-color);
         overflow: hidden;
 
         .info-con {

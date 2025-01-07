@@ -10,7 +10,7 @@
     --van-button-plain-background: var(--ex-bg-color);
     --van-button-primary-color: var(--ex-text-color--bg-primary);
     --van-button-default-background: var(--ex-bg-color3);
-    
+
 }
 
 .van-toast--loading {
@@ -52,7 +52,7 @@
 
 body .van-popup--bottom:not(.ex-bottom-popup) {
     padding-top: 0.2rem;
-    background: linear-gradient(-180deg, #2e2e2e 0%, #1c1c1c 100%);
+    background: linear-gradient(0deg, #0E0F18 0%, #0E0F18 100%);
     border-radius: 0.4rem 0.4rem 0 0;
 
     &::after {
@@ -222,6 +222,10 @@ body .van-dialog {
     }
 }
 
+.van-tab--active {
+    font-weight: 500 !important;
+}
+
 /*自定义选项卡样式1*/
 .van-tabs--custom-card {
     >.van-tabs__wrap {
@@ -235,6 +239,7 @@ body .van-dialog {
 
         .van-tab {
             height: 0.8rem;
+
             .van-tab__text {
                 font-size: 0.32rem;
             }
@@ -811,20 +816,25 @@ body .van-dialog {
 }
 
 .van-picker__mask {
-   display: none;
+    display: none;
 }
-.van-hairline--top-bottom:after, .van-hairline-unset--top-bottom:after{
-    border:0px !important;
+
+.van-hairline--top-bottom:after,
+.van-hairline-unset--top-bottom:after {
+    border: 0px !important;
 }
-.van-picker__frame{
+
+.van-picker__frame {
     background: var(--ex-bg-color3);
     border-radius: 0.32rem;
 }
-.van-picker-column{
+
+.van-picker-column {
     position: relative;
     z-index: 3;
-   
+
 }
+
 .van-picker-column__item:not(.action-sheet-active) .picker-item__text {
-    color:var(--ex-text-color2);
+    color: var(--ex-text-color2);
 }

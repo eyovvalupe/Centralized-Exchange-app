@@ -515,7 +515,7 @@ function countdown(endTime) {
           display: flex;
           align-items: center;
           justify-content: center;
-          background-color: var(--ex-white);
+          background-color: var(--ex-primary-color);
           height: 0.8rem;
           border-radius: 0.5rem;
           color: var(--ex-text-color--bg-primary);
