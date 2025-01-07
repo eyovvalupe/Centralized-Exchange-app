@@ -12,11 +12,11 @@
       t('trade.header_aibot'),
       t('trade.header_ipo'),
     ]" v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
-      <template #before>
+      <!-- <template #before>
         <div class="tab_icon" @click="showNavDialogFunc()">
           <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="img" />
         </div>
-      </template>
+      </template> -->
     </HeaderTabs>
 
     <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipeRef" @change="swipeChange">

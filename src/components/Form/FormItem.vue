@@ -282,7 +282,7 @@ const percentTagClick = (percent) => {
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
-    background-color: var(--ex-bg-white2);
+    background-color: var(--ex-bg-color3);
 
     .ipt_tip {
       color: var(--ex-text-color4);
