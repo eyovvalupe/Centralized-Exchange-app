@@ -76,11 +76,11 @@
       </Tab>
     </Tabs>
     <!-- 币种 -->
-    <BottomPopup :from="'account'" :safeAreaInsetTop="false" :safeAreaInsetBottom="true" round v-model:show="showCrypto"
+    <BottomPopup :from="'account'" :title="$t('account.add_subtitle_type')" :safeAreaInsetTop="false" :safeAreaInsetBottom="true" round v-model:show="showCrypto"
       position="bottom" class="popup_container" closeable>
       <div class="pt-[0.3rem] px-[0.32rem] h-full">
-        <div class="w-full px-[0.32rem] mb-[0.2rem]">
-          <div class="w-full h-[0.8rem] rounded-[1rem] bg-color3 flex items-center px-[0.2rem]">
+        <div class="w-full  mb-[0.2rem]">
+          <div class="w-full h-[0.96rem] rounded-[1rem] bg-color2 border-[1px] flex items-center px-[0.2rem]">
             <div style="width: 0.48rem;height: 0.48rem;">
               <img :src="getStaticImgUrl(`/static/img/common/search.svg`)" alt="">
             </div>
@@ -89,9 +89,8 @@
           </div>
         </div>
         <div class="bottoms">
-          <div @click="chooseCurrency(item)" class="bottom" :class="{ active_bottom: form.currency == item }"
+          <div @click="chooseCurrency(item)" class="bottom justify-between" :class="{ active_bottom: form.currency == item }"
             v-for="item in searchRef ? searchResult : currencyMapList" :key="item">
-            <div class="flex w-full justify-between">
               <div class="flex items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
                   <img :src="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="">
@@ -101,18 +100,22 @@
               <div v-if="form.currency == item" style="width: 0.48rem;height: 0.48rem;">
                 <img :src="getStaticImgUrl(`/static/img/assets/actived_check.svg`)" alt="">
               </div>
-            </div>
           </div>
         </div>
       </div>
     </BottomPopup>
     <!-- 网络 -->
-    <BottomPopup closeable :from="'account'" :safe-area-inset-top="true" :safe-area-inset-bottom="true" round
+    <BottomPopup closeable :title="$t('account.add_subtitle_network')" :from="'account'" :safe-area-inset-top="true" :safe-area-inset-bottom="true" round
       v-model:show="showNet" position="bottom" class="popup_container">
-      <div class="bottoms">
-        <div @click="chooseNet(item)" class="_bottom" :class="{ active_bottom: form.network == item }"
-          v-for="item in currNetwork" :key="item">
-          <span>{{ item.network }}</span>
+      <div class="pt-[0.3rem] px-[0.32rem] h-full">
+        <div class="bottoms">
+          <div @click="chooseNet(item)" class="bottom justify-between" :class="{ active_bottom: form.network == item.network }"
+            v-for="item in currNetwork" :key="item">
+            <span>{{ item.network }}</span>
+            <div v-if="form.network == item.network" style="width: 0.48rem;height: 0.48rem;">
+                <img :src="getStaticImgUrl(`/static/img/assets/actived_check.svg`)" alt="">
+              </div>
+          </div>
         </div>
       </div>
     </BottomPopup>
@@ -277,7 +280,6 @@ getSessionToken();
     .bottoms {
       width: 100%;
       height: 50vh;
-      padding: 0 0.32rem;
       overflow-y: auto;
       justify-content: start;
 
@@ -296,39 +298,21 @@ getSessionToken();
       .bottom {
         color: var(--ex-text-color);
         font-size: 0.28rem;
-        height: 0.96rem;
+        height: 1.12rem;
         display: flex;
         align-items: center;
         overflow: hidden;
-        border-bottom: 0.02rem solid var(--ex-border-color);
-
-        &:last-child {
-          border-bottom: none;
-        }
+        background-color: var(--ex-bg-color3);
+        border-radius: 0.32rem;
+        padding: 0 0.28rem;
+        margin-top: 0.2rem;
+        color:var(--ex-text-color2);
       }
 
-      ._bottom {
-        color: var(--ex-text-color);
-        font-size: 0.28rem;
-        height: 0.96rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        border-bottom: 0.02rem solid var(--ex-border-color);
-
-        &:last-child {
-          border-bottom: none;
-        }
-
-        .bottom_icon_container {
-          width: 0.44rem;
-          height: 0.44rem;
-          margin-right: 0.14rem;
-          position: relative;
-          top: -0.04rem;
-        }
+      .active_bottom{
+        color:var(--ex-text-color);
       }
+
     }
   }
 
@@ -418,8 +402,8 @@ getSessionToken();
       width: 6.86rem;
       // padding: 0 0.32rem;
       height: 1.28rem;
-      // border: 0.02rem solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color5);
+      border: 1px solid var(--ex-border-color);
+      background-color: var(--ex-bg-color2);
       border-radius: 0.32rem;
       margin-bottom: 0.4rem;
       display: flex;

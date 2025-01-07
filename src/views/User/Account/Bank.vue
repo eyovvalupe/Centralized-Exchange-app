@@ -132,7 +132,8 @@ _kycGet().then((res) => {
     width: 100%;
     height: 1.12rem;
     border-radius: 0.32rem;
-    background-color: var(--ex-bg-color5);
+    background-color: var(--ex-bg-color2);
+    border: 1px solid var(--ex-border-color);
     margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
