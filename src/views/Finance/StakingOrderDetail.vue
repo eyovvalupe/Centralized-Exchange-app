@@ -4,29 +4,23 @@
         <div
             class=" mt-[1.42rem] mx-[0.32rem] mb-[0.32rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center">
             <div class="h-[1rem] flex flex-col justify-between items-center">
-                <div class="text-color2 text-[0.32rem]">{{ $t('finance.portfolio_mining_revenue') }}<span>({{ 'USDT' }})</span></div>
+                <div class="text-color2 text-[0.32rem]">{{ $t('finance.portfolio_mining_revenue') }}<span>({{ 'USDT'
+                        }})</span></div>
                 <div class="text-[0.6rem] text-primary">+40000</div>
             </div>
         </div>
-        <div class="mx-[0.32rem] bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative">
-            <div class="w-[1.12rem] h-[0.6rem] absolute top-[0] right-[0]" v-if="false">
-                <div class="w-full h-full relative">
-                    <div class="w-full h-full absolute">
-                        <img :src="getStaticImgUrl('/static/img/finance/onGoing.svg')" alt="ongoing" />
-                    </div>
-                    <div class="w-full h-full relative flex items-center justify-center">
-                        {{ $t('finance.portfolio_order_tab1') }}
-                    </div>
+        <div
+            class="mx-[0.32rem] bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
+            <div class="w-max h-[0.6rem] px-[0.28rem] absolute top-[0] right-[0] rounded-bl-[0.32rem] bg-primary"
+                v-if="false">
+                <div class="w-full h-full relative flex items-center justify-center">
+                    {{ $t('finance.portfolio_order_tab1') }}
                 </div>
             </div>
-            <div class="w-[1.12rem] h-[0.6rem] absolute top-[0] right-[0]" v-if="true">
-                <div class="w-full h-full relative">
-                    <div class="w-full h-full absolute">
-                        <img :src="getStaticImgUrl('/static/img/finance/redeemed.svg')" alt="ongoing" />
-                    </div>
-                    <div class="w-full h-full relative flex items-center justify-center">
-                        {{ $t('finance.portfolio_order_tab2') }}
-                    </div>
+            <div class="w-max h-[0.6rem] px-[0.28rem] absolute top-[0] right-[0] rounded-bl-[0.32rem] bg-color8"
+                v-if="true">
+                <div class="w-full h-full relative flex items-center justify-center">
+                    {{ $t('finance.portfolio_order_tab2') }}
                 </div>
             </div>
             <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
