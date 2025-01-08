@@ -961,6 +961,33 @@ export default {
     
     defi_borrow: "DeFi借幣",
 
+    defi_coll_borrow: "質押借幣",
+    defi_borrow_order: "再借訂單",
+    defi_verif_qty: "驗資金額",
+    defi_verifiable_qty: "可驗資金額",
+    defi_avail_qty: "可借數量",
+    defi_borrow_period: "借幣期限",
+    defi_daily_interest: "利息/天",
+    defi_borrow_now: "立即借幣",
+    defi_total_interest: "總利息",
+    defi_service_charge: "手續費",
+    defi_repayment_due: "到期應還",
+    defi_borrow_agreement1: "我已閱讀並同意",
+    defi_borrow_agreement2: "借幣服務協議",
+
+    defi_borrow_confirm: "訂單確認",
+    defi_borrow_stake_amount: "質押金額",
+    defi_borrow_borrow_amount: "借款金額",
+
+    defi_borrow_already: "已借",
+    defi_borrow_remain: "剩餘應還",
+    defi_borrow_on: "在借",
+    defi_borrow_repay: "已歸還",
+    defi_borrow_total_due: "應還總額",
+
+    defi_borrow_est_due: "預估應還總額",
+    defi_borrowed_day: "已借天數",
+    defi_borrow_cal_bill: "應計利息",
   },
   copy: {
     title: "跟單",

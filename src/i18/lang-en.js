@@ -976,6 +976,33 @@ export default {
 
     defi_borrow: "DeFi Borrowing",
 
+    defi_coll_borrow: "Collateralized Borrowing",
+    defi_borrow_order: "Borrowing Order",
+    defi_verif_qty: "Verification Quantity",
+    defi_verifiable_qty: "Verifiable Amount",
+    defi_avail_qty: "Available Quantity",
+    defi_borrow_period: "Borrowing Period",
+    defi_daily_interest: "Daily Interest Rate",
+    defi_borrow_now: "Borrow Coins Now",
+    defi_total_interest: "Total Coin Interest",
+    defi_service_charge: "Total Service Charge",
+    defi_repayment_due: "Repayment Due",
+    defi_borrow_agreement1: "I have read and agree to",
+    defi_borrow_agreement2: "Borrowing Service Agreement",
+
+    defi_borrow_confirm: "Order Confirmation",
+    defi_borrow_stake_amount: "Staking Amount",
+    defi_borrow_borrow_amount: "Borrowing Amount",
+
+    defi_borrow_already: "Borrowed",
+    defi_borrow_remain: "Remaining Due",
+    defi_borrow_on: "Borrowing",
+    defi_borrow_repay: "Returned",
+    defi_borrow_total_due: "Total Amount Due",
+
+    defi_borrow_est_due: "Estimated Amount Due",
+    defi_borrowed_day: "Borrowed Days",
+    defi_borrow_cal_bill: "Accrued Interest",
   },
   copy: {
     title: "Copy",
