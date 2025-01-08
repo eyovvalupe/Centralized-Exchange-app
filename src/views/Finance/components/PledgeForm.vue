@@ -226,6 +226,7 @@ const maxStockNum = computed(()=>{
 // 申请
 const apply = () => {
 };
+const step = ref(1)
 const sliderValue = ref(0);
 
 const onSliderChange = (newValue) => {

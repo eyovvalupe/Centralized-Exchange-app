@@ -61,21 +61,21 @@
                     <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
                         t('finance.portfolio_mining_header') }}</div>
                 </div>
-                <div
-                    class="w-full h-[2.24rem] mb-[0.4rem] bg-color2 rounded-[0.4rem] border-[0.02rem] border-color4 flex flex-col justify-between">
-                    <div class="flex flex-col">
-                        <div class="w-full flex justify-end">
-                            <div
-                                class="text-[0.24rem] p-[0.12rem] gap-[0.12rem] bg-color4 rounded-[0.4rem] flex text-color3 mt-[0.16rem] mr-[0.2rem]">
-                                {{ t('assets.wallet_available_sim')
-                                }}<span class="text-primary">25</span>USDT</div>
+                <div class="w-full relative mb-[0.32rem]">
+                    <FormItem input-height="1.3rem" :hasScroll="true"
+                        :placeholder="t('finance.portfolio_mining_header')" :max="maxStockNum" v-model="form1.amount"
+                        @change="changePercent" input-type="number">
 
-                        </div>
-                        <div class="text-[0.32rem] text-color2 ml-[0.28rem]">{{ t('finance.portfolio_mining_header') }}
-                        </div>
-                    </div>
-                    <div class="w-full h-[0.64rem] flex px-[0.4rem] border-t-[0.02rem] border-color2 items-center">
-                        <SlideContainer @touchstart="" />
+                        <template #scroll>
+                            <!-- 拖动 -->
+                            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                        </template>
+                    </FormItem>
+                    <div class="w-full flex justify-end absolute top-[0] right-[0]">
+                        <div
+                            class="text-[0.24rem] p-[0.12rem] gap-[0.12rem] bg-color4 rounded-[0.4rem] flex text-color3 mt-[0.16rem] mr-[0.2rem]">
+                            {{ t('assets.wallet_available_sim')
+                            }}<span class="text-primary">25</span>USDT</div>
                     </div>
                 </div>
                 <Button class="submit" @click="showConfirm = true"><span class="text-[0.36rem]">{{
@@ -99,7 +99,8 @@
         </div>
         <BottomPopup round closeable v-model:show="showConfirm" position="bottom" teleport="body">
             <div class="w-full px-[0.4rem] pb-[0.6rem]">
-                <div class="text-[0.32rem] w-full text-center mb-[0.6rem]">{{ t('market.market_buy_confirm_coin') }}</div>
+                <div class="text-[0.32rem] w-full text-center mb-[0.6rem]">{{ t('market.market_buy_confirm_coin') }}
+                </div>
                 <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.4rem] pb-[0.12rem] pt-[0.24rem]">
                     <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                         <div class="flex flex-col justify-between">
@@ -131,22 +132,30 @@
                     </div>
                     <div class="rounded-[0.32rem] bg-color2 mx-[0.12rem] flex flex-col justify-center py-[0.3rem]">
                         <div class="w-full flex justify-center items-center h-[0.36rem] mb-[0.2rem] text-color2">{{
-                            t('trade.stock_opening_pay') }}<span class="text-[0.36rem] text-white font-semibold">&nbsp;872000.12</span></div>
-                        <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{ t('finance.portfolio_mining_header')
-                            }}<span class="text-white">&nbsp;30000</span><span>&nbsp;+&nbsp;</span><span>{{ t('finance.portfolio_mining_noti_fee')
-                                }}</span><span class="text-white">&nbsp;20</span></div>
+                            t('trade.stock_opening_pay') }}<span
+                                class="text-[0.36rem] text-white font-semibold">&nbsp;872000.12</span></div>
+                        <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{
+                            t('finance.portfolio_mining_header')
+                        }}<span class="text-white">&nbsp;30000</span><span>&nbsp;+&nbsp;</span><span>{{
+                                t('finance.portfolio_mining_noti_fee')
+                            }}</span><span class="text-white">&nbsp;20</span></div>
                     </div>
                 </div>
                 <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
-                    <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]" :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')"/>
-                    <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw" @click="showPw = true">
+                    <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]"
+                        :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')" />
+                    <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw"
+                        @click="showPw = true">
                         <img :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="" />
                     </div>
-                    <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="showPw" @click="showPw = false">
+                    <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="showPw"
+                        @click="showPw = false">
                         <img :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="" />
                     </div>
                 </div>
-                <Button style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
+                <Button
+                    style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"><span
+                        class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
             </div>
         </BottomPopup>
     </div>
@@ -156,9 +165,11 @@ import Top from '@/components/Top.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js";
 import { Stepper, Button } from 'vant';
+import Decimal from "decimal.js";
 import BottomPopup from '@/components/BottomPopup.vue';
 import { onMounted } from 'vue';
 import SlideContainer from '@/components/SlideContainer.vue';
+import FormItem from '@/components/Form/FormItem.vue';
 
 const { t } = useI18n();
 
@@ -166,7 +177,15 @@ const value = ref(0)
 const showPw = ref(false)
 const showConfirm = ref(false)
 const loaded = ref(false)
-
+const form1 = ref({
+    id: "",
+    amount: "",
+    token: "",
+    safeword: ""
+});
+const maxStockNum = computed(() => {
+    return 1000
+})
 const itemsMap = [{
     currency: 'BTC',
     ratio: '0.7825'
@@ -176,7 +195,37 @@ const itemsMap = [{
     ratio: '-0.0256'
 },
 ]
+
 const iconList = ['BTC', 'USDT']
+
+const sliderValue = ref(0);
+const step = ref(1)
+
+const onSliderChange = (newValue) => {
+    sliderValue.value = newValue;
+    if (maxStockNum.value == "--") return (sliderValue.value = 0);
+    let v = new Decimal(maxStockNum.value).mul(newValue).div(100);
+    v = v.sub(v.mod(step.value));
+    form1.value.amount = v.toNumber();
+    setTimeout(() => {
+        changePercent();
+    }, 0);
+};
+
+const changePercent = () => {
+    if (maxStockNum.value == "--" || !form1.value.amount)
+        return (sliderValue.value = 0);
+    let v = new Decimal(form1.value.amount);
+    form1.value.amount = v.sub(v.mod(step.value));
+    let p = new Decimal(form1.value.amount)
+        .div(maxStockNum.value)
+        .mul(100)
+        .toNumber();
+    if (p < 0) p = 0;
+    if (p > 100) p = 100;
+    sliderValue.value = Number(p);
+};
+
 onMounted(() => {
     setTimeout(() => {
         loaded.value = true;
