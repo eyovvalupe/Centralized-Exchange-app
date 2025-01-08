@@ -935,7 +935,7 @@ export default {
     portfolio_mining_subTitle1: "認購組合",
     portfolio_mining_subTitle2: "認購金額",
     portfolio_mining_operation: "運行時長",
-    portfolio_mining_revenue: "預估收益",
+    portfolio_mining_revenue: "收益",
     portfolio_mining_investment: "投資金額",
     portfolio_mining_fee: "手續費",
     portfolio_mining_header: "申購金額",

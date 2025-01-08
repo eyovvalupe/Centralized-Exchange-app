@@ -932,7 +932,7 @@ export default {
     portfolio_mining_subTitle1: "认购组合",
     portfolio_mining_subTitle2: "认购金额",
     portfolio_mining_operation: "运行时长",
-    portfolio_mining_revenue: "预估收益",
+    portfolio_mining_revenue: "收益",
     portfolio_mining_investment: "投资金额",
     portfolio_mining_fee: "手续费",
     portfolio_mining_header: "申购金额",

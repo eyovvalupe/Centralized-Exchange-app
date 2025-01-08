@@ -39,7 +39,7 @@
                         <div>0.3-0.4%</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
-                        <div class="text-color3">{{ t('finance.portfolio_mining_revenue') }}</div>
+                        <div class="text-color3">{{ t('finance.portfolio_mining_noti_est') }}</div>
                         <div>{{ 0.00 - 0.00 }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">

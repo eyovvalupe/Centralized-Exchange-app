@@ -10,25 +10,25 @@
                 <div class="text-[0.32rem]">BTC+USDT</div>
             </div>
             <div class="flex flex-col justify-between text-end">
-                <div class="text-[0.28rem] text-color2">{{ $t('收益') }}</div>
+                <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_revenue') }}</div>
                 <div class="text-[0.32rem] text-primary">+4000 <span class="text-color text-[0.24rem]">USDT</span></div>
             </div>
         </div>
         <div class="flex flex-col bg-color2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem]">
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                <div class="text-[0.28rem] text-color2">{{ $t('运行时长') }}</div>
-                <div class="text-[0.28rem]">{{ 7 + $t('天') }}</div>
+                <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_noti_duration') }}</div>
+                <div class="text-[0.28rem]">{{ 7 + $t('finance.portfolio_day_multi') }}</div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                <div class="text-[0.28rem] text-color2">{{ $t('收益率') }}</div>
+                <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_yield') }}</div>
                 <div class="text-[0.28rem]">{{ '0.2-0.5' + '%' }}</div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                <div class="text-[0.28rem] text-color2">{{ $t('投资金额') }}</div>
+                <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_investment') }}</div>
                 <div class="text-[0.28rem]">{{ '2000-999999' + ' ' + 'USDT' }}</div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between">
-                <div class="text-[0.28rem] text-color2">{{ $t('手续费') }}</div>
+                <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_fee') }}</div>
                 <div class="text-[0.28rem]">{{ 0 + ' ' + 'USDT' }}</div>
             </div>
         </div>

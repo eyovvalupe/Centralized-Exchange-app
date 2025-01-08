@@ -953,7 +953,7 @@ export default {
     portfolio_mining_subTitle1: "Subscription Combination",
     portfolio_mining_subTitle2: "Subscription Amount",
     portfolio_mining_operation: "Operation Time",
-    portfolio_mining_revenue: "Estimated Revenue",
+    portfolio_mining_revenue: "Revenue",
     portfolio_mining_investment: "Investment Amount",
     portfolio_mining_fee: "Handling Fee",
     portfolio_mining_header: "Subscription Amount",
