@@ -940,7 +940,7 @@ export default {
     portfolio_mining_revenue: "予想利益",
     portfolio_mining_investment: "投資額",
     portfolio_mining_fee: "手数料",
-    portfolio_mining_header: "予想購入額",
+    portfolio_mining_header: "購入額",
     portfolio_mining_balance: "アカウント残高",
     portfolio_mining_placeholder: "投資額を入力してください",
     portfolio_mining_btn: "申し込む",

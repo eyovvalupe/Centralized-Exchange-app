@@ -36,5 +36,4 @@ import NoData from '@/components/NoData.vue';
 const { t } = useI18n();
 </script>
 <style lang="less">
-.order_style {}
 </style>

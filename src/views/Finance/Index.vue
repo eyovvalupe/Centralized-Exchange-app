@@ -9,12 +9,14 @@
 
         <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
             <SwipeItem>
-                <div ref="" v-if="loadedTab.indexOf(0) > -1" @setLoading="(val) => (loading = val)"
-                    @click="(val) => click(val)">aaaaaa</div>
+                <!-- <div ref="" v-if="loadedTab.indexOf(0) > -1"
+                    @click="(val) => click(val)">aaaaaa</div> -->
+                    <div>aaa</div>
             </SwipeItem>
             <SwipeItem>
                 <!-- 质押挖矿 -->
                 <Stake v-if="loadedTab.indexOf(1) > -1" />
+                    <!-- <div>bbb</div> -->
             </SwipeItem>
         </Swipe>
     </div>

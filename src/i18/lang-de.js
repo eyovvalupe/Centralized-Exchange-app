@@ -961,7 +961,7 @@ export default {
     portfolio_mining_revenue: "Geschätzter Gewinn",
     portfolio_mining_investment: "Investitionsbetrag",
     portfolio_mining_fee: "Gebühren",
-    portfolio_mining_header: "Geschätzter Abonnementbetrag",
+    portfolio_mining_header: "Abonnementbetrag",
     portfolio_mining_balance: "Kontostand",
     portfolio_mining_placeholder: "Bitte Investitionsbetrag eingeben",
     portfolio_mining_btn: "Abonnieren",

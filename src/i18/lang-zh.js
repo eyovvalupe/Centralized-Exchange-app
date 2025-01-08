@@ -935,7 +935,7 @@ export default {
     portfolio_mining_revenue: "预估收益",
     portfolio_mining_investment: "投资金额",
     portfolio_mining_fee: "手续费",
-    portfolio_mining_header: "预计申购金额",
+    portfolio_mining_header: "申购金额",
     portfolio_mining_balance: "账户余额",
     portfolio_mining_placeholder: "请输入投资金额",
     portfolio_mining_btn: "申购",

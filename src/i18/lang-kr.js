@@ -939,7 +939,7 @@ export default {
     portfolio_mining_revenue: "예상 수익",
     portfolio_mining_investment: "투자 금액",
     portfolio_mining_fee: "수수료",
-    portfolio_mining_header: "예상 신청 금액",
+    portfolio_mining_header: "신청 금액",
     portfolio_mining_balance: "계좌 잔액",
     portfolio_mining_placeholder: "투자 금액을 입력하세요",
     portfolio_mining_btn: "구독",

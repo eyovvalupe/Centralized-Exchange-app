@@ -938,7 +938,7 @@ export default {
     portfolio_mining_revenue: "預估收益",
     portfolio_mining_investment: "投資金額",
     portfolio_mining_fee: "手續費",
-    portfolio_mining_header: "預計申購金額",
+    portfolio_mining_header: "申購金額",
     portfolio_mining_balance: "賬戶餘額",
     portfolio_mining_placeholder: "請輸入投資金額",
     portfolio_mining_btn: "申購",

@@ -2,31 +2,13 @@
     <div class="staking_mining w-full">
         <Top :title="t('finance.portfolio_mining_title')" />
         <div class="mt-[1.5rem] px-[0.32rem]">
-            <div class="flex flex-col mb-[0.4rem]">
 
-                <div
-                    class="w-full h-[2.24rem] mb-[0.4rem] bg-color2 rounded-[0.4rem] border-[0.02rem] border-color4 flex flex-col justify-between">
-                    <div class="flex flex-col">
-                        <div class="w-full flex justify-end">
-                            <div class="text-[0.24rem] p-[0.12rem] gap-[0.12rem] bg-color4 rounded-[0.4rem] flex text-color3 mt-[0.16rem] mr-[0.2rem]">{{ t('可用')
-                                }}<span class="text-primary">25</span>USDT</div>
-
-                        </div>
-                        <div class="text-[0.32rem] text-color2 ml-[0.28rem]">{{ t('申购金额') }}</div>
-                    </div>
-                    <div class="w-full h-[0.64rem] flex px-[0.4rem] border-t-[0.02rem] border-color2 items-center">
-                        <SlideContainer />
-                    </div>
-                </div>
-                <Button class="submit" @click="showConfirm = true"><span>{{ t('finance.portfolio_mining_btn')
-                        }}</span></Button>
-            </div>
-            <div class="px-[0.2rem] py-[0.2rem] mb-[0.32rem] bg-color6 flex flex-col rounded-[0.32rem]">
+            <div class="px-[0.28rem] py-[0.4rem] mb-[0.32rem] bg-color6 flex flex-col rounded-[0.32rem]">
                 <div class="flex items-center mb-[0.32rem]">
                     <div class="mr-[0.2rem]">
                         <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
                     </div>
-                    <div :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_subTitle1') }}</div>
+                    <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_subTitle1') }}</div>
                 </div>
                 <div class="flex mb-[0.6rem] justify-between">
                     <div class="flex items-center relative" v-for="(item, i) in itemsMap" v-if="itemsMap.length">
@@ -40,7 +22,7 @@
                                 item.ratio : item.ratio) + '%' : '--' }}</div>
                         </div>
                         <div class="absolute w-[0.6rem] h-[0.6rem] z-[1]"
-                            :class="itemsMap.length == 3 ? 'right-[-0.42rem]' : itemsMap.length == 2 ? 'right-[-0.52rem]' : ''"
+                            :class="itemsMap.length == 3 ? 'right-[-0.36rem]' : itemsMap.length == 2 ? 'right-[-0.45rem]' : ''"
                             v-if="i < itemsMap.length - 1"><img :src="getStaticImgUrl(`/static/img/finance/plus.svg`)"
                                 alt="img" /></div>
                     </div>
@@ -69,18 +51,47 @@
                     </div>
                 </div>
             </div>
-            <div class="px-[0.2rem] pt-[0.32rem] bg-color6 flex flex-col rounded-[0.32rem]">
+
+            <div class="flex flex-col mb-[0.4rem] bg-color6 rounded-[0.32rem] px-[0.28rem] py-[0.4rem]">
+                <div class="flex items-center mb-[0.32rem]">
+                    <div class="mr-[0.2rem]">
+                        <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
+                    </div>
+                    <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_header') }}</div>
+                </div>
+                <div
+                    class="w-full h-[2.24rem] mb-[0.4rem] bg-color2 rounded-[0.4rem] border-[0.02rem] border-color4 flex flex-col justify-between">
+                    <div class="flex flex-col">
+                        <div class="w-full flex justify-end">
+                            <div
+                                class="text-[0.24rem] p-[0.12rem] gap-[0.12rem] bg-color4 rounded-[0.4rem] flex text-color3 mt-[0.16rem] mr-[0.2rem]">
+                                {{ t('assets.wallet_available_sim')
+                                }}<span class="text-primary">25</span>USDT</div>
+
+                        </div>
+                        <div class="text-[0.32rem] text-color2 ml-[0.28rem]">{{ t('finance.portfolio_mining_header') }}</div>
+                    </div>
+                    <div class="w-full h-[0.64rem] flex px-[0.4rem] border-t-[0.02rem] border-color2 items-center">
+                        <SlideContainer @touchstart=""/>
+                    </div>
+                </div>
+                <Button class="submit" @click="showConfirm = true"><span>{{ t('finance.portfolio_mining_btn')
+                        }}</span></Button>
+            </div>
+
+            <div class="px-[0.28rem] py-[0.4rem] bg-color6 flex flex-col rounded-[0.32rem]">
                 <div class="flex items-center mb-[0.4rem]">
                     <div class="mr-[0.2rem]">
                         <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
                     </div>
-                    <div class="text-[0.38rem]" :class="loaded ? 'right_left_effect' : ''">{{
+                    <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
                         t('finance.portfolio_mining_title3') }}</div>
                 </div>
-                <div class="text-color5 leading-[0.5rem] mb-[0.2rem] text-[0.26rem]">
+                <div class="text-color5 leading-[0.5rem] text-[0.26rem]">
                     {{ t('finance.portfolio_mining_guide') }}
                 </div>
             </div>
+            <div class="w-full h-[0.32rem]"></div>
         </div>
         <BottomPopup round closeable v-model:show="showConfirm" position="bottom" teleport="body">
             <div class="w-full h-[6rem]">

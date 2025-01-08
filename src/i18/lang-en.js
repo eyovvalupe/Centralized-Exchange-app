@@ -956,7 +956,7 @@ export default {
     portfolio_mining_revenue: "Estimated Revenue",
     portfolio_mining_investment: "Investment Amount",
     portfolio_mining_fee: "Handling Fee",
-    portfolio_mining_header: "Estimated Subscription Amount",
+    portfolio_mining_header: "Subscription Amount",
     portfolio_mining_balance: "Account Balance",
     portfolio_mining_placeholder: "Please Enter Investment",
     portfolio_mining_btn: "Subscription",
