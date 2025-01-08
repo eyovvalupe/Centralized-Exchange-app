@@ -12,15 +12,16 @@
                 <div class="text-[0.4rem]">{{ Number(100000).toLocaleString() }}</div>
             </div>
         </div>
-        <Tabs class="px-[0.2rem]" type="sub" v-model:active="active" :swipeable="false"
+        <Tabs class="" type="sub-stake" v-model:active="active" :swipeable="false"
             :color="'var(--ex-primary-color)'" shrink @change="onChange">
             <Tab style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')" name="0">
-                <div class="mt-[0.2rem]">
-                    <NoData />
+                <div class="mt-[0.4rem]">
+                    <NoData v-if="false"/>
+                    <OrderList :list="[1,2]" />
                 </div>
             </Tab>
             <Tab style="min-width: 2rem" :title="t('finance.portfolio_order_tab2')" name="1">
-                <div class="mt-[0.2rem]">
+                <div class="mt-[0.4rem]">
                     <NoData />
                 </div>
             </Tab>
@@ -32,6 +33,7 @@ import Top from '@/components/Top.vue';
 import { useI18n } from 'vue-i18n';
 import { Tabs, Tab } from 'vant';
 import NoData from '@/components/NoData.vue';
+import OrderList from './OrderList.vue';
 
 const { t } = useI18n();
 </script>

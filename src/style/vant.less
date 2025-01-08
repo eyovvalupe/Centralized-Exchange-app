@@ -660,6 +660,40 @@ body .van-dialog {
     }
 }
 
+.van-tabs--sub-stake {
+    margin-top: 0.32rem;
+
+    >.van-tabs__wrap {
+        height: 0.8rem;
+
+        .van-tabs__nav {
+            margin: 0 !important;
+            padding: 0;
+
+            .van-tabs__line {
+                display: none;
+            }
+
+            .van-tab {
+                height: 0.8rem;
+                padding: 0 0.32rem;
+                border: 1px solid var(--ex-border-color);
+                margin-right: 0.12rem;
+                border-radius: 1rem;
+            }
+
+            .van-tab--active {
+                background-color: var(--ex-white);
+                color: var(--ex-black);
+            }
+        }
+
+        .van-tabs__nav--line {
+            padding-bottom: 0;
+        }
+    }
+}
+
 .van-tabs--sub.van-tabs--sub_mini {
     >.van-tabs__wrap {
         .van-tabs__nav {
