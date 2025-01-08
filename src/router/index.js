@@ -13,16 +13,36 @@ const routes = [
       pageType: 'tab',
     },
   },
-  // {
-  //   // 邀请好友
-  //   path: '/invite',
-  //   name: 'invite',
-  //   component: () => import('../views/Public/Register.vue'),
-  //   meta: {
-  //     keepAlive: true,
-  //     pageType: 'tab',
-  //   },
-  // },
+  {
+    // 跟单广场
+    path: '/follow',
+    name: 'follow',
+    component: () => import('../views/Home/Follow/Index.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
+    // 我的跟单
+    path: '/myfollow',
+    name: 'myfollow',
+    component: () => import('../views/Home/Follow/MyFollow.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
+    // 跟单详情
+    path: '/followDetail',
+    name: 'followDetail',
+    component: () => import('../views/Home/Follow/FollowDetail.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
   {
     // 用户
     path: '/user',

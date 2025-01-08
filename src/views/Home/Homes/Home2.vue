@@ -64,7 +64,7 @@
             </div>
 
             <!-- 跟单 -->
-            <div class="recommend-title">
+            <div class="recommend-title" @click="jump('follow', false)">
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
@@ -78,7 +78,10 @@
             </div>
             <div class="scroll-box">
                 <div class="scroll-con">
-                    <FollowItem style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
+                    <div class="scroll-item-follow" v-for="i in 10" :key="i">
+                        <FollowItem  />
+                    </div>
+                    
                 </div>
             </div>
 
@@ -219,7 +222,7 @@ import { _sort, _watchlistDefault, _futures } from "@/api/api";
 import { useSocket } from "@/utils/ws";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
 import MiningItem from "../Mining/MiningItem.vue"
-import FollowItem from "../Follow/FollowItem.vue"
+import FollowItem from "../components/FollowItem.vue"
 
 
 // 安装
@@ -530,6 +533,12 @@ onMounted(() => {
 
             .scroll-con {
                 white-space: nowrap;
+                .scroll-item-follow {
+                    width: 6.04rem;
+                    height: 3.32rem;
+                    margin-right: 0.32rem;
+                    display: inline-block;
+                }
             }
         }
 
