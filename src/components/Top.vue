@@ -87,7 +87,7 @@ const clickLeft = () => {
 
   .back {
     position: absolute;
-    left: 0.2rem;
+    left: 0.32rem;
     width: 0.7rem;
     height: 0.7rem;
     display: flex;

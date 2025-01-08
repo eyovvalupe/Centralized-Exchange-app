@@ -5,7 +5,7 @@
         <div class="list_page">
           <div class="flex items-center mb-[0.32rem]">
             <div class="mr-[0.2rem]" style="width: 0.7rem;height: 0.7rem;">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" class=" rounded-full" alt="">
+              <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol.toUpperCase()}.svg`)" class=" rounded-full" alt="">
             </div>
             <span class="text-[0.32rem] text-color2">{{ item.symbol ? item.symbol.toUpperCase() : '--' }}</span>
           </div>

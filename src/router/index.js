@@ -624,27 +624,18 @@ const routes = [
     },
   },
   {
-    path: '/portfolioIndex',
-    name: 'portfolioIndex',
-    component: () => import('../views/Staking/Index.vue'),
+    path: '/finance',
+    name: 'finance',
+    component: () => import('../views/Finance/Index.vue'),
     meta: {
       keepAlive: false,
-      pageType: 'child'
+      pageType: 'tab'
     },
   },
   {
-    path: '/portfolioTrade',
-    name: 'portfolioTrade',
-    component: () => import('../views/Staking/Trade.vue'),
-    meta: {
-      keepAlive: false,
-      pageType: 'child'
-    },
-  },
-  {
-    path: '/portfolioOrder',
-    name: 'portfolioOrder',
-    component: () => import('../views/Staking/Order.vue'),
+    path: '/stake',
+    name: 'stake',
+    component: () => import('../views/Finance/Trade.vue'),
     meta: {
       keepAlive: false,
       pageType: 'child'

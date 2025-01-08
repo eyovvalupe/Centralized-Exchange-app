@@ -1,6 +1,6 @@
 <template>
     <div class="chart_item_bg w-full h-full absolute">
-        <div class="w-full h-full bg-color5" :class="loaded ? 'effect' : ''">
+        <div class="w-full h-full bg-color" :class="loaded ? 'effect' : ''">
         </div>
     </div>
 </template>

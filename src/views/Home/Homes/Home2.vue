@@ -48,7 +48,7 @@
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
                 <div style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
-                <div class="recommend-icon" @click="jump('portfolioIndex', true)">
+                <div class="recommend-icon" @click="jump('finance', true, 1)">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -404,11 +404,14 @@ const onSelect = (item) => {
 };
 
 // 跳转
-const jump = (name, needToken) => {
+const jump = (name, needToken, query) => {
     if (needToken && !token.value) return store.commit("setIsLoginOpen", true);
 
     router.push({
         name,
+        query: {
+            activeTab: query
+        }
     });
 };
 

@@ -78,6 +78,7 @@ const showBottom = computed(() => {
       "trading_rules",
       "assets",
       "transfer",
+      "finance",
     ].includes(route.name) && !fullWindow.value
   );
 });

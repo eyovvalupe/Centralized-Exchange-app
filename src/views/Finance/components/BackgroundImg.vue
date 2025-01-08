@@ -1,7 +1,7 @@
 <template>
-    <div class="chart_item_bg w-full absolute">
-        <div class="w-full h-auto relative top-[2rem]">
-            <img :src="getStaticImgUrl('/static/img/staking/chart.png')" alt="img" />
+    <div class="chart_item_bg w-full absolute bottom-0">
+        <div class="w-full h-auto">
+            <img :src="getStaticImgUrl('/static/img/finance/chart.svg')" alt="img" />
         </div>
     </div>
 </template>

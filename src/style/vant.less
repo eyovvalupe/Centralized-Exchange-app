@@ -268,6 +268,47 @@ body .van-dialog {
     }
 }
 
+.van-tabs--custom-card-stake {
+    >.van-tabs__wrap {
+        .van-tabs__nav {
+            background: var(--ex-bg-color3);
+            height: 0.96rem;
+            border-radius: 0.2rem;
+            overflow: inherit;
+            padding: 0.08rem;
+        }
+
+        .van-tab {
+            height: 0.8rem;
+
+            .van-tab__text {
+                font-size: 0.32rem;
+            }
+        }
+
+        .van-tab--active {
+            flex: 1;
+            text-align: center;
+            color: var(--ex-text-color3);
+        }
+
+        .van-tab--shrink {
+            flex: 1;
+        }
+
+        .van-tab--active {
+            border-radius: 0.2rem;
+            background: var(--ex-primary-color);
+            z-index: 1;
+
+            .van-tab__text {
+                font-weight: 400;
+                color: var(--ex-text-color--bg-primary);
+            }
+        }
+    }
+}
+
 .van-tabs--custom-tab {
     >.van-tabs__wrap {
         .van-tabs__nav {
