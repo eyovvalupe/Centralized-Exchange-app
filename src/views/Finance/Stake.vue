@@ -1,10 +1,12 @@
 <template>
     <div class="staking_page">
         <Tabs type="custom-card-stake">
-            <Tab :title="t('质押挖矿')">
+            <Tab :title="t('finance.portfolio_title')">
                 <StakingList />
             </Tab>
-            <Tab :title="t('订单')"></Tab>
+            <Tab :title="t('finance.portfolio_order')">
+                <Order />
+            </Tab>
         </Tabs>
 
     </div>
@@ -13,6 +15,7 @@
 import { Tabs, Tab } from 'vant';
 import StakingList from './components/StakingList.vue';
 import { useI18n } from 'vue-i18n';
+import Order from './components/Order.vue';
 
 const {t} = useI18n();
 </script>

@@ -4,7 +4,7 @@
         <!-- 头部 -->
         <HeaderTabs v-model:active="activeTab" :tabs="[
             t('DeFi借币'),
-            t('质押挖矿'),
+            t('finance.portfolio_title'),
         ]" @change="changeActiveTab(activeTab, true)" />
 
         <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">

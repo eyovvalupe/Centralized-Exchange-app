@@ -942,7 +942,7 @@ export default {
     portfolio_title: "Staking mining",
     portfolio_order: "Order",
     portfolio_revenue: "Total Revenue",
-    portfolio_investment_amt: "Investment Amount",
+    portfolio_investment_amt: "Investment",
     portfolio_yield: "Yield",
     portfolio_duration: "Duration",
     portfolio_participate: "Participate",

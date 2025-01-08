@@ -96,7 +96,7 @@
           }}</span>
           <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem"
             color="var(--ex-primary-color)" />
-          <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
+          <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click.stop="openStockModel">
             <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
           </div>
         </div>
@@ -221,7 +221,7 @@
   </div>
 
   <!-- 开仓确认弹窗 -->
-  <Popup teleport="body" v-model:show="showModel" position="bottom" round closeable>
+  <BottomPopup teleport="body" v-model:show="showModel" position="bottom" round closeable>
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_confirm_title") }}
     </div>
@@ -344,12 +344,12 @@
         color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{ t("trade.stock_open")
           }}</span></Button>
     </div>
-  </Popup>
+  </BottomPopup>
 
   <!-- 股票行情弹窗 -->
-  <Popup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
+  <BottomPopup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
     <StockPopup style="height: 90vh" v-if="showStockModel" />
-  </Popup>
+  </BottomPopup>
 
   <!-- 止盈类型选择 -->
   <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
@@ -363,7 +363,7 @@
 
   <!-- 仓位模式选择 -->
 
-  <Popup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom"
+  <BottomPopup class="van-popup-custom--bottom" closeable v-model:show="showTypeDialog" round position="bottom"
     teleport="body">
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_amount_mode") }}
@@ -373,7 +373,7 @@
     </div>
     <Picker :show-toolbar="false" :swipe-duration="200" :columns="columns" @confirm="showTypeDialog = false"
       @cancel="showTypeDialog = false" @change="onSelectForm1Type" />
-  </Popup>
+  </BottomPopup>
 
   <!-- 限价模式选择 -->
   <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
@@ -399,7 +399,7 @@
   <SafePassword @submit="submitForm" ref="safeRef" :key="'open'"></SafePassword>
 
   <!-- 搜索列表 -->
-  <Popup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
+  <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
     <div class="van-popup-custom-title">
       {{ t("trade.stock_opening_search") }}
     </div>
@@ -427,7 +427,7 @@
           :list="marketSearchList" />
       </div>
     </div>
-  </Popup>
+  </BottomPopup>
 
   <!-- 余额提示 -->
   <Popup round v-model:show="showAmountDialog" closeable teleport="body">
@@ -572,6 +572,7 @@ import StockTable from "@/components/StockTable.vue";
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup.vue";
 
 const props = defineProps({
   activeTab: null, // 0-市价 1-限价 2-止盈止损
@@ -1360,7 +1361,7 @@ defineExpose({
   .search_box {
     height: 0.8rem;
     padding: 0 0.32rem;
-    margin: 0.52rem 0.3rem 0 0.3rem;
+    margin: 0.4rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
     background-color: var(--ex-bg-color2);
