@@ -749,7 +749,7 @@ export default {
     ipo_detail_market_price: "Listing Price",
     ipo_detail_buy_price: "Subscription Price",
     ipo_detail_buy_date: "Subscription Date",
-    ipo_detail_order_date: "Order Time",
+    ipo_detail_order_date: "Order Date",
 
     forex_opening_title: "Forex",
     forex_position_title: "Forex/Status",
@@ -971,6 +971,8 @@ export default {
     portfolio_order_title: "Investment Order",
     portfolio_order_tab1: "Position",
     portfolio_order_tab2: "Redeemed",
+
+    portfolio_order_finish_time: "Expiration Date",
 
     defi_borrow: "DeFi Borrowing",
 

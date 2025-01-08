@@ -952,6 +952,9 @@ export default {
     portfolio_order_tab1: "持仓",
     portfolio_order_tab2: "已赎回",
 
+    portfolio_order_finish_time: "到期时间",
+
+
     defi_borrow: "DeFi借币",
   },
   copy: {

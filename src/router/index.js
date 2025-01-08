@@ -642,6 +642,15 @@ const routes = [
     },
   },
   {
+    path: '/stakingOrderDetail',
+    name: 'stakingOrderDetail',
+    component: () => import('../views/Finance/StakingOrderDetail.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    },
+  },
+  {
     // 找不到路由时
     path: '/:pathMatch(.*)*',
     redirect: '/',
