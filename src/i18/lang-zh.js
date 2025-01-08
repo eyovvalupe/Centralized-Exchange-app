@@ -37,6 +37,7 @@ export default {
     success: "密码已重置",
     back: "返回登录",
     get_back: "找回密码",
+    user_name: "您的用户名"
   },
   register: {
     security: "安全验证",

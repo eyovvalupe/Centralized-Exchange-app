@@ -37,7 +37,8 @@ export default {
     email_phone: "Email / Phone Number",
     success: "Reset Password Successfully",
     back: "Back to Login",
-    get_back: "Recover Password"
+    get_back: "Recover Password",
+    user_name: "Your User Name"
 
   },
   register: {

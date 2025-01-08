@@ -63,6 +63,8 @@ export default {
     success: "密碼已重置",
     back: "返回登錄",
     get_back: "找回密碼",
+    user_name: "您的用戶名"
+
   },
   register: {
     security: "安全驗證",

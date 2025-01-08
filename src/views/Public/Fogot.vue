@@ -26,7 +26,7 @@
     <div class="form relative">
       <!-- <div class="form_title">{{ t('forget_pw.email_phone') }}</div> -->
       <div class="form_item margin_item">
-        <input maxlength="20" v-model.trim="form.username" placeholder="您的用户名" type="text" class="item_input" />
+        <input maxlength="20" v-model.trim="form.username" :placeholder="t('forget_pw.user_name')" type="text" class="item_input" />
         <div class="form_item_clear" v-show="form.username" @click="form.username = null">
           <Icon name="cross" size="0.25rem" />
         </div>
