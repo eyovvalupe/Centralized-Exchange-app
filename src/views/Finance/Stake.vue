@@ -1,6 +1,6 @@
 <template>
     <div class="staking_page">
-        <Tabs type="custom-card-stake">
+        <Tabs type="custom-card-stake" @change="onChange">
             <Tab :title="t('finance.portfolio_title')">
                 <StakingList />
             </Tab>
@@ -18,6 +18,10 @@ import { useI18n } from 'vue-i18n';
 import Order from './components/Order.vue';
 
 const {t} = useI18n();
+
+const onChange = () => {
+    
+}
 </script>
 <style lang="less">
 .staking_page {
