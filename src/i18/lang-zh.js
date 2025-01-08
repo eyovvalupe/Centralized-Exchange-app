@@ -951,6 +951,8 @@ export default {
     portfolio_order_title: "投资订单",
     portfolio_order_tab1: "持仓",
     portfolio_order_tab2: "已赎回",
+
+    defi_borrow: "DeFi借币",
   },
   copy: {
     title: "跟单",

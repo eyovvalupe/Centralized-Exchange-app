@@ -939,7 +939,7 @@ export default {
   finance: {
     portfolio: "Finance",
     portfolio_menu: "Investment Portfolio",
-    portfolio_title: "Staking mining",
+    portfolio_title: "Staking Mining",
     portfolio_order: "Order",
     portfolio_revenue: "Total Revenue",
     portfolio_investment_amt: "Investment",
@@ -971,6 +971,9 @@ export default {
     portfolio_order_title: "Investment Order",
     portfolio_order_tab1: "Position",
     portfolio_order_tab2: "Redeemed",
+
+    defi_borrow: "DeFi Borrowing",
+
   },
   copy: {
     title: "Copy",

@@ -3,7 +3,7 @@
     <div class="page page_finance">
         <!-- 头部 -->
         <HeaderTabs v-model:active="activeTab" :tabs="[
-            t('DeFi借币'),
+            t('finance.defi_borrow'),
             t('finance.portfolio_title'),
         ]" @change="changeActiveTab(activeTab, true)" />
 
