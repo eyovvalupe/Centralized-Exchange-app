@@ -497,7 +497,8 @@ export default {
     ad_title: "Start Your Trading Journey",
     ad_con: "Create Your Path to Wealth",
     ad_btn: "Start Trade",
-    finance: "Finance"
+    finance: "Finance",
+    news: "News",
 
   },
   trade: {
@@ -1005,10 +1006,10 @@ export default {
     defi_borrow_cal_bill: "Accrued Interest",
   },
   copy: {
-    title: "Copy",
+    title: "Follow Orders",
     copy_option: "Optios",
     copy_trade: "Copy",
     total_revenue: "Total Revenue",
-    level: 'LV.{level}'
+    level: 'LV.{level}',
   }
 };

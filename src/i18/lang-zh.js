@@ -293,11 +293,12 @@ export default {
     trade: "交易",
     assets: "资产",
     user: "用户",
-    market_trend: "市场推荐",
+    market_trend: "市场行情",
     ad_title: "开启你的交易之旅",
     ad_con: "创造财富之路",
     ad_btn: "开始交易",
-    finance: "理财"
+    finance: "理财",
+    news: "新闻",
   },
   assets: {
     recharge: "充值",
@@ -990,10 +991,9 @@ export default {
   },
   copy: {
     title: "跟单",
-    copy_option: "跟单",
+    copy_option: "期权",
     copy_trade: "交易",
     total_revenue: "收益",
     level: '{level}级',
-
   }
 };

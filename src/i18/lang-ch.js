@@ -30,11 +30,12 @@ export default {
     trade: "交易",
     assets: "資產",
     user: "用户",
-    market_trend: "市場推薦",
+    market_trend: "市場行情",
     ad_title: "開啟你的交易之旅",
     ad_con: "創造財富之路",
     ad_btn: "開始交易",
-    finance: "理財"
+    finance: "理財",
+    news: "新聞",
 
   },
   login: {
@@ -991,9 +992,10 @@ export default {
   },
   copy: {
     title: "跟單",
-    copy_option: "跟單",
+    copy_option: "期權",
     copy_trade: "交易",
     total_revenue: "收益",
     level: "{level}級",
+
   },
 };
