@@ -15,9 +15,9 @@
         <Tabs key="form" type="sub-stake" v-model="activeTab" :swipeable="false"
             :color="'var(--ex-primary-color)'" shrink @change="(e) => (activeTab = e)">
             <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')" name="0">
-                <div class="mt-[0.4rem]">
+                <div class="h-[10rem] mt-[0.4rem]">
                     <NoData v-if="false"/>
-                    <OrderList :list="[1,2]" />
+                    <OrderList :list="[1,2]"/>
                 </div>
             </Tab>
             <Tab :active="activeTab == 1" style="min-width: 2rem" :title="t('finance.portfolio_order_tab2')" name="1">

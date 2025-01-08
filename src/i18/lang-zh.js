@@ -949,8 +949,8 @@ export default {
     portfolio_mining_noti_investment: "投资金额",
     portfolio_mining_noti_fee: "手续费",
     portfolio_order_title: "投资订单",
-    portfolio_order_tab1: "进行中",
-    portfolio_order_tab2: "已完成",
+    portfolio_order_tab1: "持仓",
+    portfolio_order_tab2: "已赎回",
   },
   copy: {
     title: "跟单",

@@ -954,8 +954,8 @@ export default {
     portfolio_mining_noti_fee: "手續費",
 
     portfolio_order_title: "投資訂單",
-    portfolio_order_tab1: "進行中",
-    portfolio_order_tab2: "已完成",
+    portfolio_order_tab1: "持倉",
+    portfolio_order_tab2: "已贖回",
   },
   copy: {
     title: "跟單",

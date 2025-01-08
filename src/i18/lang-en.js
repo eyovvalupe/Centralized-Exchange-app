@@ -969,8 +969,8 @@ export default {
     portfolio_mining_noti_investment: "Investment Amount",
     portfolio_mining_noti_fee: "Handling Amount",
     portfolio_order_title: "Investment Order",
-    portfolio_order_tab1: "In Progress",
-    portfolio_order_tab2: "Completed",
+    portfolio_order_tab1: "Position",
+    portfolio_order_tab2: "Redeemed",
   },
   copy: {
     title: "Copy",

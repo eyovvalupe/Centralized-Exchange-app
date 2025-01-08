@@ -278,7 +278,7 @@ body .van-dialog {
             background: var(--ex-bg-color3);
             height: 0.96rem;
             border-radius: 0.2rem;
-            overflow: inherit;
+            overflow: auto;
             padding: 0.08rem;
         }
 
@@ -296,9 +296,9 @@ body .van-dialog {
             color: var(--ex-text-color3);
         }
 
-        .van-tab--shrink {
-            flex: 1;
-        }
+        // .van-tab--shrink {
+        //     flex: 1;
+        // }
 
         .van-tab--active {
             border-radius: 0.2rem;
@@ -677,9 +677,14 @@ body .van-dialog {
             .van-tab {
                 height: 0.8rem;
                 padding: 0 0.32rem;
-                border: 1px solid var(--ex-border-color);
                 margin-right: 0.12rem;
                 border-radius: 1rem;
+                background-color: var(--ex-bg-color6);
+
+                span {
+                    font-size: 0.3rem;
+                    font-weight: 600;
+                }
             }
 
             .van-tab--active {

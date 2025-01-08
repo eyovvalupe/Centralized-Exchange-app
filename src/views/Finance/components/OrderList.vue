@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem]" v-for="(item, i) in list">
+    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem]" :class="i == list.length -1 ? 'mb-[3rem]' : ''" v-for="(item, i) in list">
         <div class="flex justify-between mx-[0.28rem] mb-[0.32rem]">
             <div class="flex flex-col justify-between">
                 <div class="flex">
