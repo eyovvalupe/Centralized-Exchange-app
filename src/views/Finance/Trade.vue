@@ -99,7 +99,7 @@
         </div>
         <BottomPopup round closeable v-model:show="showConfirm" position="bottom" teleport="body">
             <div class="w-full px-[0.4rem] pb-[0.6rem]">
-                <div class="text-[0.32rem] w-full text-center mb-[0.6rem]">{{ t('订单确认') }}</div>
+                <div class="text-[0.32rem] w-full text-center mb-[0.6rem]">{{ t('market.market_buy_confirm_coin') }}</div>
                 <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.4rem] pb-[0.12rem] pt-[0.24rem]">
                     <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                         <div class="flex flex-col justify-between">
@@ -123,7 +123,7 @@
                             <div class="text-[0.28rem]">{{ '0.2-0.5' + '%' }}</div>
                         </div>
                         <div class="w-full h-[0.44rem] flex items-center justify-between">
-                            <div class="text-[0.28rem] text-color2">{{ $t('预估收益') }}
+                            <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_noti_est') }}
                             </div>
                             <div class="text-[0.28rem]">{{ '220-1000' }}<span class="text-[0.24rem]">&nbsp;USDT</span>
                             </div>
@@ -131,14 +131,14 @@
                     </div>
                     <div class="rounded-[0.32rem] bg-color2 mx-[0.12rem] flex flex-col justify-center py-[0.3rem]">
                         <div class="w-full flex justify-center items-center h-[0.36rem] mb-[0.2rem] text-color2">{{
-                            t('支付') }}<span class="text-[0.36rem] text-white font-semibold">&nbsp;872000.12</span></div>
-                        <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{ t('申购金额')
-                            }}<span class="text-white">&nbsp;30000</span><span>&nbsp;+&nbsp;</span><span>{{ t('手续费')
+                            t('trade.stock_opening_pay') }}<span class="text-[0.36rem] text-white font-semibold">&nbsp;872000.12</span></div>
+                        <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{ t('finance.portfolio_mining_header')
+                            }}<span class="text-white">&nbsp;30000</span><span>&nbsp;+&nbsp;</span><span>{{ t('finance.portfolio_mining_noti_fee')
                                 }}</span><span class="text-white">&nbsp;20</span></div>
                     </div>
                 </div>
                 <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
-                    <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]" :type="showPw ? 'text' : 'password'" :placeholder="t('交易密码')"/>
+                    <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]" :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')"/>
                     <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw" @click="showPw = true">
                         <img :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="" />
                     </div>
@@ -146,7 +146,7 @@
                         <img :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="" />
                     </div>
                 </div>
-                <Button style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"><span class="text-[0.36rem]">{{ t('确认') }}</span></Button>
+                <Button style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
             </div>
         </BottomPopup>
     </div>
