@@ -8,7 +8,8 @@
                     <div class="mr-[0.2rem]">
                         <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
                     </div>
-                    <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_subTitle1') }}</div>
+                    <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
+                        t('finance.portfolio_mining_subTitle1') }}</div>
                 </div>
                 <div class="flex mb-[0.6rem] justify-between">
                     <div class="flex items-center relative" v-for="(item, i) in itemsMap" v-if="itemsMap.length">
@@ -57,7 +58,8 @@
                     <div class="mr-[0.2rem]">
                         <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
                     </div>
-                    <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{ t('finance.portfolio_mining_header') }}</div>
+                    <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
+                        t('finance.portfolio_mining_header') }}</div>
                 </div>
                 <div
                     class="w-full h-[2.24rem] mb-[0.4rem] bg-color2 rounded-[0.4rem] border-[0.02rem] border-color4 flex flex-col justify-between">
@@ -69,10 +71,11 @@
                                 }}<span class="text-primary">25</span>USDT</div>
 
                         </div>
-                        <div class="text-[0.32rem] text-color2 ml-[0.28rem]">{{ t('finance.portfolio_mining_header') }}</div>
+                        <div class="text-[0.32rem] text-color2 ml-[0.28rem]">{{ t('finance.portfolio_mining_header') }}
+                        </div>
                     </div>
                     <div class="w-full h-[0.64rem] flex px-[0.4rem] border-t-[0.02rem] border-color2 items-center">
-                        <SlideContainer @touchstart=""/>
+                        <SlideContainer @touchstart="" />
                     </div>
                 </div>
                 <Button class="submit" @click="showConfirm = true"><span>{{ t('finance.portfolio_mining_btn')
@@ -118,7 +121,7 @@
                     <div>{{ 0 }}</div>
                 </div>
                 <div class="px-[0.4rem]">
-                    <Button
+                    <Button class="submit"
                         style="width: 100%; height: 0.96rem; border-radius: 0.2rem; background-color: var(--ex-primary-color); margin-bottom: 0.2rem;"><span>{{
                             t('finance.portfolio_mining_btn') }}</span></Button>
                 </div>
@@ -159,6 +162,7 @@ onMounted(() => {
 </script>
 <style lang="less">
 .staking_mining {
+
     .right_left_effect {
         animation-name: animation1;
         animation-duration: 0.5s;
@@ -204,6 +208,14 @@ onMounted(() => {
         height: 0.96rem;
         border-radius: 0.32rem;
         background-color: var(--ex-primary-color);
+
+        .van-button__content {
+            .van-button__text {
+                span {
+                    font-size: 0.36rem;
+                }
+            }
+        }
     }
 }
 </style>

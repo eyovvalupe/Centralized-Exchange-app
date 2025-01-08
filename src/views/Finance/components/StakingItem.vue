@@ -1,5 +1,7 @@
 <template>
-    <div class="staking_item">
+    <div class="staking_item relative">
+        <div class="w-[0.66rem] h-[0.48rem] absolute top-[0] right-[0]"><img
+            :src="getStaticImgUrl('/static/img/finance/hot.svg')" alt="img" /></div>
         <div v-if="list.length" v-for="(item, i) in list" class="w-full bg-color6 mb-[0.24rem] rounded-[0.2rem]">
             <div class="w-full h-full px-[0.12rem] pt-[0.4rem] flex flex-col">
                 <div class="flex flex-col px-[0.16rem] mb-[0.3rem] relative">
