@@ -985,12 +985,17 @@ export default {
     defi_borrow_already: "已借",
     defi_borrow_remain: "剩餘應還",
     defi_borrow_on: "在借",
-    defi_borrow_repay: "已歸還",
+    defi_borrow_repaid: "已歸還",
+    defi_borrow_repay: "歸還",
+    defi_borrow_go_repay: "去歸還",
+
     defi_borrow_total_due: "應還總額",
 
     defi_borrow_est_due: "預估應還總額",
     defi_borrowed_day: "已借天數",
     defi_borrow_cal_bill: "應計利息",
+    defi_borrow_return_confirm: "歸還確認",
+
   },
   copy: {
     title: "跟單",

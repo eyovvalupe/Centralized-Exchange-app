@@ -7,7 +7,7 @@
                 :hasLT="true"
                 :hasRT="true"
                 :hasScroll="true"
-                :placeholder="t('验资数量')"
+                :placeholder="t('finance.defi_verif_qty')"
                 :max="maxStockNum"
                 v-model="form1.volume" 
                 @change="changePercent" 
@@ -18,7 +18,7 @@
                 <template #lt>
                     <div
                         class="pt-[0.12rem] text-color2 text-[0.24rem]">
-                        <span>可验资金额</span>
+                        <span>{{ t('finance.defi_verifiable_qty') }}</span>
                         <span class="text-primary mx-[0.08rem]">{{ stockWalletAmount || '--' }} </span>
                         <span>{{ paramCurrency }}</span>
                     </div>
@@ -51,7 +51,7 @@
                 <FormItem
                 input-height="1.3rem"
                 :hasScroll="true"
-                :placeholder="t('可借数量')"
+                :placeholder="t('finance.defi_avail_qty')"
                 :max="maxStockNum"
                 v-model="form1.volume" 
                 @change="changePercent" 
@@ -65,30 +65,30 @@
             </div>
         </div>
         <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-color2 border-color border-[1px] mt-[0.32rem]">
-            <div class="text-[0.28rem] leading-[0.28rem] text-color2">借币期限</div>
+            <div class="text-[0.28rem] leading-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
             <div class="flex flex-wrap gap-[0.12rem] gap-y-[0.2rem] pt-[0.2rem]">
                 <div class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-color3 leading-[0.6rem]" :class="{'active-day':currentDay == day}" v-for="day in days" :key="day" @click="currentDay=day">
-                    {{day}}天
+                    {{day}}{{ t('finance.portfolio_day_multi') }}
                 </div>
             </div>
         </div>
         <div class="bg-color3 mt-[0.32rem] p-[0.12rem] text-[0.28rem] rounded-[0.32rem]">
             <div class="p-[0.16rem]">
                 <div class="flex justify-between items-center leading-[0.44rem]">
-                    <span class="text-color2">利息/天</span>
+                    <span class="text-color2">{{ t('finance.defi_daily_interest') }}</span>
                     <span class="text-color">0.00%</span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">总利息</span>
+                    <span class="text-color2">{{ t('finance.defi_total_interest') }}</span>
                     <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">手续费</span>
+                    <span class="text-color2">{{ t('finance.defi_service_charge') }}</span>
                     <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
             </div>
             <div class="flex items-center justify-between h-[1.2rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
-                <span class="text-color2">到期应还</span>
+                <span class="text-color2">{{ t('finance.defi_repayment_due') }}</span>
                 <span class="text-color text-[0.32rem]">0 <span class="text-[0.24rem]">USDT</span></span>
             </div>
         </div>
@@ -99,11 +99,11 @@
                     <img v-if="checked" :src="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
                     <img v-else :src="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
                 </div>
-                我已阅读并同意<span>“借币服务协议”</span>
+                {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
             </label>
         </div>
         <Button type="primary" class="submit" @click="visible=true;">
-            <span class="text-[0.32rem] font-bold">{{ t('立即借币') }}</span>
+            <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
         </Button>
         <div class="h-[2.2rem]"></div>
 
@@ -132,7 +132,7 @@
             </div>
             </div>
         </BottomPopup>
-        <BottomPopup closeable v-model:show="visible" title="订单确认">
+        <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_confirm')">
             <PledgeConfirm :paramCurrency="paramCurrency" />
         </BottomPopup>
     </div>

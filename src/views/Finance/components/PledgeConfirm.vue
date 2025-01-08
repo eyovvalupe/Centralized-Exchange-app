@@ -9,50 +9,54 @@
             </div>
             <div class="p-[0.28rem] rounded-[0.32rem] bg-color2">
                 <div class="flex justify-between items-center leading-[0.44rem]">
-                    <span class="text-color2">质押金额</span>
+                    <span class="text-color2">{{t('finance.defi_borrow_stake_amount') }}</span>
                     <span class="text-color">2000 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">借款金额</span>
+                    <span class="text-color2">{{ t('finance.defi_borrow_borrow_amount') }}</span>
                     <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">借币期限</span>
-                    <span class="text-color">7天</span>
+                    <span class="text-color2">{{ t('finance.defi_borrow_period') }}</span>
+                    <span class="text-color">7{{ t('finance.portfolio_day_multi') }}</span>
                 </div>
                 <div class="flex justify-between items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">利息/天</span>
+                    <span class="text-color2">{{ t('finance.defi_daily_interest') }}</span>
                     <span class="text-color">0.00%</span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">总利息</span>
+                    <span class="text-color2">{{ t('finance.defi_total_interest') }}</span>
                     <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">总利息</span>
+                    <span class="text-color2">{{ t('finance.defi_service_charge') }}</span>
                     <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
             </div>
-            <div class="flex items-center justify-center flex-col h-[1.4rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
-                <span class="text-color2">到期应还(USDT)</span>
+            <div
+                class="flex items-center justify-center flex-col h-[1.4rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
+                <span class="text-color2">{{ t('finance.defi_repayment_due') }}(USDT)</span>
                 <span class="text-color mt-[0.06rem] text-[0.32rem]">2400</span>
             </div>
         </div>
 
-        <FormItem size="large" class="mt-[0.4rem]" :placeholder="'交易密码'" input-type="password" v-model="safeword" />
+        <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
 
         <div class="pt-[0.6rem]">
-            <Button size="large" round :loading="loading" @click="submit" type="primary">确认</Button>
+            <Button size="large" round :loading="loading" @click="submit" type="primary">{{ t('trade.stock_opening_confirm') }}</Button>
         </div>
-        
+
     </div>
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import FormItem from "@/components/Form/FormItem.vue";
 import { Button } from 'vant'
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 const props = defineProps({
-    paramCurrency:String
+    paramCurrency: String
 })
 const safeword = ref('')
 
