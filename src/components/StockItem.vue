@@ -212,6 +212,7 @@ const goInfo = (type) => {
 const removeStock = (item) => {
   emits("remove", item);
 };
+
 </script>
 
 <style lang="less" scoped>
