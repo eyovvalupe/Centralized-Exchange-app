@@ -5,16 +5,16 @@
         <div class="title-box">
             <div class="left">
                 <div class="top">
-                    <div class="avatar"></div>
-                    <div class="name">萨达撒阿大的</div>
-                    <div class="level">{{ $t('copy.level', { level: '1' }) }}</div>
+                    <div class="avatar">{{ (props.item.name || '').slice(0, 1) }}</div>
+                    <div class="name">{{ props.item.name }}</div>
+                    <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
                 </div>
                 <div class="bottom">
                     <div class="bottom-info">
                         <div class="icon"><img :src="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
-                        <div>2131/5000</div>
+                        <div>{{ props.item.followers }}</div>
                     </div>
-                    <div class="info-a" v-if="props.showDetail">@1231312</div>
+                    <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div>
                 </div>
             </div>
             <div class="btn" @click="goFollow">跟单</div>
@@ -23,26 +23,29 @@
         <div class="info-box">
             <div class="info-left">
                 <div class="info-title">RIO</div>
-                <div class="info-num up">+123123%</div>
+                <div class="info-num up">+{{ props.item.returnrate }}%</div>
                 <div class="info-text">
                     <span>{{ $t('copy.total_revenue') }}</span>
-                    <b>+234234234</b>
+                    <b>+{{ props.item.returnamount }}</b>
                 </div>
             </div>
-            <div class="line-box"></div>
+            <div class="line-box">
+                <SparkLine v-if="props.item.time" :points="props.item.time" :ratio="1" />
+            </div>
         </div>
 
         <div v-if="props.showDetail" class="detail-box">
             <div class="detail-item">
                 <div class="item-name">胜率</div>
-                <div class="item-val">100%</div>
+                <div class="item-val">{{ props.item.winrate }}%</div>
             </div>
             <div class="detail-item detail-item2">
                 <div class="item-name">带单规模</div>
-                <div class="item-val">123123.13</div>
+                <div class="item-val">{{ props.item.amount }}</div>
             </div>
             <div class="icons">
-                <div class="icon" v-for="i in 5" :key="i"><img :src="getStaticImgUrl('/static/img/crypto/USDT.svg')" alt=""></div>
+                <div class="icon" v-for="i in 5" :key="i"><img :src="getStaticImgUrl('/static/img/crypto/USDT.svg')"
+                        alt=""></div>
             </div>
         </div>
     </div>
@@ -50,12 +53,17 @@
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
+import SparkLine from "@/components/SparkLine.vue";
 import router from "@/router";
 
 const props = defineProps({
     showDetail: { // 是否显示详细信息
         type: Boolean,
         default: false
+    },
+    item: {
+        type: Object,
+        default: () => { }
     }
 })
 
@@ -94,8 +102,12 @@ const goFollow = () => {
                     width: 0.48rem;
                     height: 0.48rem;
                     border-radius: 50%;
-                    background-color: var(--ex-placeholder-color);
+                    background-color: var(--ex-bg-color);
                     margin-right: 0.12rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 0.24rem;
                 }
 
                 .name {
@@ -217,25 +229,31 @@ const goFollow = () => {
         display: flex;
         align-items: center;
         padding: 0.24rem 0.16rem 0.12rem 0.16rem;
+
         .detail-item {
             flex: 1;
             font-size: 0.24rem;
             line-height: 1.5;
+
             .item-name {
                 color: var(--ex-placeholder-color);
             }
+
             .item-val {
                 color: var(--ex-white);
             }
         }
+
         .detail-item2 {
             flex: 2;
         }
+
         .icons {
             flex: 2;
             display: flex;
             align-items: center;
             justify-content: flex-end;
+
             .icon {
                 width: 0.4rem;
                 height: 0.4rem;

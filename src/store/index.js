@@ -5,6 +5,7 @@ import { _listAccount, _sessionToken, _userinfo } from "@/api/api";
 import assets from "./assets";
 import market from "./market";
 import trade from "./trade";
+import follow from "./follow"
 import serviceC2C from "./serviceC2C";
 import { getStaticImgUrl } from "@/utils/index.js"
 
@@ -37,6 +38,7 @@ const store = createStore({
     ...trade.state,
     ...assets.state,
     ...serviceC2C.state,
+    ...follow.state,
   },
   mutations: {
     setLanguage(state, data) {
@@ -88,6 +90,7 @@ const store = createStore({
     ...trade.mutations,
     ...assets.mutations,
     ...serviceC2C.mutations,
+    ...follow.mutations,
   },
   actions: {
     reset({ commit }) {
@@ -160,11 +163,13 @@ const store = createStore({
     ...trade.actions,
     ...assets.actions,
     ...serviceC2C.actions,
+    ...follow.actions,
   },
   getters: {
     ...assets.getters,
     ...market.getters,
     ...serviceC2C.getters,
+    ...follow.getters,
   },
   plugins: [
     createPersistedState({
@@ -199,14 +204,3 @@ export const useMapState = (arr) => {
 };
 export default store;
 
-
-function stateTransfer(state) {
-  console.error('????state', state)
-  onlySaveSymbols.forEach(key => { // 这几个数据只缓存symbol字段
-    if (state[key]) {
-      state[key] = { symbol: state[key].symbol };
-    }
-  })
-
-  return state;
-}

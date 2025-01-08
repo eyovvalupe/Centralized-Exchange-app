@@ -27,9 +27,9 @@
             </div>
             <div class="info-item">
                 <div class="name">跟单额</div>
-                <div class="val">
+                <div class="val" @click="plus">
                     <span>0.08</span>
-                    <div class="plus">
+                    <div class="plus" >
                         <img :src="getStaticImgUrl('/static/home2/plus.svg')" alt="">
                     </div>
                 </div>
@@ -53,6 +53,7 @@ import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const props = defineProps({})
+const emits = defineEmits(['plus'])
 
 const cancel = () => {
     showConfirmDialog({
@@ -62,6 +63,10 @@ const cancel = () => {
         cancelButtonText: t("trade.stock_position_cancel_btn"),
         theme: 'round-button'
     })
+}
+
+const plus = () => {
+    emits('plus')
 }
 </script>
 
