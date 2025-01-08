@@ -650,6 +650,7 @@ onMounted(() => {
       font-style: normal;
       font-weight: 500;
       line-height: 100%;
+      border-radius: 0.4rem;
       /* 18px */
     }
   }
@@ -673,7 +674,7 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  padding: 0.28rem 0.32rem 0.8rem 0.32rem;
+  padding: 0 0.32rem 0.8rem 0.32rem;
   position: relative;
 
   .close_icon {

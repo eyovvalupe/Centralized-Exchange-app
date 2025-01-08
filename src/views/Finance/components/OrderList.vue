@@ -1,6 +1,6 @@
 <template>
-    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem]" :class="i == list.length -1 ? 'mb-[3rem]' : ''" v-for="(item, i) in list">
-        <div class="flex justify-between mx-[0.28rem] mb-[0.32rem]">
+    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem]" :class="i == list.length -1 ? 'mb-[3rem]' : ''" v-for="(item, i) in list" @click="jump(item)">
+        <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
             <div class="flex flex-col justify-between">
                 <div class="flex">
                     <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" v-for="(item, i) in iconList"
@@ -36,6 +36,7 @@
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
+import router from "@/router";
 
 const props = defineProps({
     list: {
@@ -43,6 +44,15 @@ const props = defineProps({
         default: []
     }
 })
+
+const jump = (item) => {
+    router.push({
+        name: 'stakingOrderDetail',
+        query: {
+            id: 'oiuoiuuoiu'
+        }
+    })
+}
 
 const iconList = ['BTC', 'USDT']
 </script>

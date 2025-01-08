@@ -37,7 +37,8 @@ export default {
     email_phone: "Email / Phone Number",
     success: "Reset Password Successfully",
     back: "Back to Login",
-    get_back: "Recover Password"
+    get_back: "Recover Password",
+    user_name: "Your User Name"
 
   },
   register: {
@@ -277,7 +278,7 @@ export default {
     add_subtitle_status: "Verified",
     add_subtitle_bank_name: "Bank Name",
     add_bank_name_placeholder: "Enter bank name",
-    add_subtitle_card_number: "Card Number",
+    add_subtitle_card_number: "Card No",
     add_bank_address_placeholder: "Enter card number",
   },
   success_toast: {
@@ -497,7 +498,8 @@ export default {
     ad_title: "Start Your Trading Journey",
     ad_con: "Create Your Path to Wealth",
     ad_btn: "Start Trade",
-    finance: "Finance"
+    finance: "Finance",
+    news: "News",
 
   },
   trade: {
@@ -749,7 +751,7 @@ export default {
     ipo_detail_market_price: "Listing Price",
     ipo_detail_buy_price: "Subscription Price",
     ipo_detail_buy_date: "Subscription Date",
-    ipo_detail_order_date: "Order Time",
+    ipo_detail_order_date: "Order Date",
 
     forex_opening_title: "Forex",
     forex_position_title: "Forex/Status",
@@ -939,7 +941,7 @@ export default {
   finance: {
     portfolio: "Finance",
     portfolio_menu: "Investment Portfolio",
-    portfolio_title: "Staking mining",
+    portfolio_title: "Staking Mining",
     portfolio_order: "Order",
     portfolio_revenue: "Total Revenue",
     portfolio_investment_amt: "Investment",
@@ -971,12 +973,44 @@ export default {
     portfolio_order_title: "Investment Order",
     portfolio_order_tab1: "Position",
     portfolio_order_tab2: "Redeemed",
+
+    portfolio_order_finish_time: "Expiration Date",
+
+    defi_borrow: "DeFi Borrowing",
+
+    defi_coll_borrow: "Collateralized Borrowing",
+    defi_borrow_order: "Borrowing Order",
+    defi_verif_qty: "Verification Quantity",
+    defi_verifiable_qty: "Verifiable Amount",
+    defi_avail_qty: "Available Quantity",
+    defi_borrow_period: "Borrowing Period",
+    defi_daily_interest: "Daily Interest Rate",
+    defi_borrow_now: "Borrow Coins Now",
+    defi_total_interest: "Total Coin Interest",
+    defi_service_charge: "Total Service Charge",
+    defi_repayment_due: "Repayment Due",
+    defi_borrow_agreement1: "I have read and agree to",
+    defi_borrow_agreement2: "Borrowing Service Agreement",
+
+    defi_borrow_confirm: "Order Confirmation",
+    defi_borrow_stake_amount: "Staking Amount",
+    defi_borrow_borrow_amount: "Borrowing Amount",
+
+    defi_borrow_already: "Borrowed",
+    defi_borrow_remain: "Remaining Due",
+    defi_borrow_on: "Borrowing",
+    defi_borrow_repay: "Returned",
+    defi_borrow_total_due: "Total Amount Due",
+
+    defi_borrow_est_due: "Estimated Amount Due",
+    defi_borrowed_day: "Borrowed Days",
+    defi_borrow_cal_bill: "Accrued Interest",
   },
   copy: {
-    title: "Copy",
+    title: "Follow Orders",
     copy_option: "Optios",
     copy_trade: "Copy",
     total_revenue: "Total Revenue",
-    level: 'LV.{level}'
+    level: 'LV.{level}',
   }
 };

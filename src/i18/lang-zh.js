@@ -37,6 +37,7 @@ export default {
     success: "密码已重置",
     back: "返回登录",
     get_back: "找回密码",
+    user_name: "您的用户名"
   },
   register: {
     security: "安全验证",
@@ -293,11 +294,12 @@ export default {
     trade: "交易",
     assets: "资产",
     user: "用户",
-    market_trend: "市场推荐",
+    market_trend: "市场行情",
     ad_title: "开启你的交易之旅",
     ad_con: "创造财富之路",
     ad_btn: "开始交易",
-    finance: "理财"
+    finance: "理财",
+    news: "新闻",
   },
   assets: {
     recharge: "充值",
@@ -951,13 +953,48 @@ export default {
     portfolio_order_title: "投资订单",
     portfolio_order_tab1: "持仓",
     portfolio_order_tab2: "已赎回",
+
+    //未处理韩，日语言
+    portfolio_order_finish_time: "到期时间",
+
+
+    defi_borrow: "DeFi借币",
+
+    defi_coll_borrow: "质押借币",
+    defi_borrow_order: "在借订单",
+    defi_verif_qty: "验资数量",
+    defi_verifiable_qty: "可验资金额",
+    defi_avail_qty: "可借数量",
+    defi_borrow_period: "借币期限",
+    defi_daily_interest: "利息/天",
+    defi_borrow_now: "立即借币",
+    defi_total_interest: "总利息",
+    defi_service_charge: "手续费",
+    defi_repayment_due: "到期应还",
+    defi_borrow_agreement1: "我已阅读并同意",
+    defi_borrow_agreement2: "借币服务协议",
+
+    defi_borrow_confirm: "订单确认",
+    defi_borrow_stake_amount: "质押金额",
+    defi_borrow_borrow_amount: "借款金额",
+
+    defi_borrow_already: "已借",
+    defi_borrow_remain: "剩余应还",
+    defi_borrow_on: "在借",
+    defi_borrow_repay: "已归还",
+    defi_borrow_total_due: "应还总额",
+
+    defi_borrow_est_due: "预估应还总额",
+    defi_borrowed_day: "已借天数",
+    defi_borrow_cal_bill: "应计利息",
+
+
   },
   copy: {
     title: "跟单",
-    copy_option: "跟单",
+    copy_option: "期权",
     copy_trade: "交易",
     total_revenue: "收益",
     level: '{level}级',
-
   }
 };

@@ -3,15 +3,13 @@
     <div class="page page_finance">
         <!-- 头部 -->
         <HeaderTabs v-model:active="activeTab" :tabs="[
-            t('DeFi借币'),
+            t('finance.defi_borrow'),
             t('finance.portfolio_title'),
         ]" @change="changeActiveTab(activeTab, true)" />
 
         <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
             <SwipeItem>
-                <!-- <div ref="" v-if="loadedTab.indexOf(0) > -1"
-                    @click="(val) => click(val)">aaaaaa</div> -->
-                    <div>aaa</div>
+                <Pledge />
             </SwipeItem>
             <SwipeItem>
                 <!-- 质押挖矿 -->
@@ -29,7 +27,7 @@ import { useRoute } from "vue-router";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import { useI18n } from "vue-i18n";
 import Stake from "./Stake.vue";
-
+import Pledge from './Pledge.vue';
 const { t } = useI18n();
 
 const route = useRoute();

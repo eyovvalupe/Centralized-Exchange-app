@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="h-[1.6rem] relative">
-      <div class="user_page_bg absolute w-full top-[0.69rem]">
+      <div class="user_page_bg absolute w-full top-[0.71rem]">
         <img :src="getStaticImgUrl('/static/img/user/user_page_bg.svg')" alt="">
       </div>
       <div class="w-[6rem] mx-auto rounded-tl-[0.36rem] rounded-tr-[0.36rem] overflow-hidden">

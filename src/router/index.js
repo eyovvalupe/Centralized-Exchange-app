@@ -662,6 +662,24 @@ const routes = [
     },
   },
   {
+    path: '/pledge/orderDetail',
+    name: 'pledgeOrderDetail',
+    component: () => import('../views/Finance/PledgeOrderDetail.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    },
+  },
+  {
+    path: '/stakingOrderDetail',
+    name: 'stakingOrderDetail',
+    component: () => import('../views/Finance/StakingOrderDetail.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child'
+    },
+  },
+  {
     // 找不到路由时
     path: '/:pathMatch(.*)*',
     redirect: '/',

@@ -22,7 +22,7 @@
 
         <div class="info-box">
             <div class="info-left">
-                <div class="info-title">里约</div>
+                <div class="info-title">RIO</div>
                 <div class="info-num up">+123123%</div>
                 <div class="info-text">
                     <span>{{ $t('copy.total_revenue') }}</span>

@@ -78,7 +78,8 @@
                         <SlideContainer @touchstart="" />
                     </div>
                 </div>
-                <Button class="submit" @click="showConfirm = true"><span>{{ t('finance.portfolio_mining_btn')
+                <Button class="submit" @click="showConfirm = true"><span class="text-[0.36rem]">{{
+                    t('finance.portfolio_mining_btn')
                         }}</span></Button>
             </div>
 
@@ -97,34 +98,55 @@
             <div class="w-full h-[0.32rem]"></div>
         </div>
         <BottomPopup round closeable v-model:show="showConfirm" position="bottom" teleport="body">
-            <div class="w-full h-[6rem]">
-                <div class="w-full flex justify-center text-[0.32rem] mb-[0.4rem]">{{ t('finance.portfolio_mining_noti')
-                    }}</div>
-                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
-                    <div>{{ t('finance.portfolio_mining_noti_duration') }}</div>
-                    <div>{{ 7 + t('finance.portfolio_day') }}</div>
+            <div class="w-full px-[0.4rem] pb-[0.6rem]">
+                <div class="text-[0.32rem] w-full text-center mb-[0.6rem]">{{ t('market.market_buy_confirm_coin') }}</div>
+                <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.4rem] pb-[0.12rem] pt-[0.24rem]">
+                    <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
+                        <div class="flex flex-col justify-between">
+                            <div class="flex">
+                                <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" v-for="(item, i) in iconList"
+                                    :class="i == 1 ? 'left-[-0.08rem]' : i == 2 ? 'left-[-0.16rem]' : ''"><img
+                                        :src="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
+                            </div>
+                            <div class="text-[0.32rem]">BTC+USDT</div>
+                        </div>
+                    </div>
+                    <div
+                        class="flex flex-col bg-color2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem] mb-[0.2rem]">
+                        <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
+                            <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_noti_duration') }}
+                            </div>
+                            <div class="text-[0.28rem]">{{ 7 + $t('finance.portfolio_day_multi') }}</div>
+                        </div>
+                        <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
+                            <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_yield') }}</div>
+                            <div class="text-[0.28rem]">{{ '0.2-0.5' + '%' }}</div>
+                        </div>
+                        <div class="w-full h-[0.44rem] flex items-center justify-between">
+                            <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_noti_est') }}
+                            </div>
+                            <div class="text-[0.28rem]">{{ '220-1000' }}<span class="text-[0.24rem]">&nbsp;USDT</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rounded-[0.32rem] bg-color2 mx-[0.12rem] flex flex-col justify-center py-[0.3rem]">
+                        <div class="w-full flex justify-center items-center h-[0.36rem] mb-[0.2rem] text-color2">{{
+                            t('trade.stock_opening_pay') }}<span class="text-[0.36rem] text-white font-semibold">&nbsp;872000.12</span></div>
+                        <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{ t('finance.portfolio_mining_header')
+                            }}<span class="text-white">&nbsp;30000</span><span>&nbsp;+&nbsp;</span><span>{{ t('finance.portfolio_mining_noti_fee')
+                                }}</span><span class="text-white">&nbsp;20</span></div>
+                    </div>
                 </div>
-                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
-                    <div>{{ t('finance.portfolio_mining_noti_daily') }}</div>
-                    <div>{{ '0.2-0.25%' }}</div>
+                <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
+                    <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]" :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')"/>
+                    <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw" @click="showPw = true">
+                        <img :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="" />
+                    </div>
+                    <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="showPw" @click="showPw = false">
+                        <img :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="" />
+                    </div>
                 </div>
-                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
-                    <div>{{ t('finance.portfolio_mining_noti_est') }}</div>
-                    <div>{{ '0.00-0.00' }}</div>
-                </div>
-                <div class="w-full px-[0.4rem] flex justify-between mb-[0.24rem]">
-                    <div>{{ t('finance.portfolio_mining_noti_investment') }}</div>
-                    <div>{{ '2000-999999' }}</div>
-                </div>
-                <div class="w-full px-[0.4rem] flex justify-between mb-[0.4rem]">
-                    <div>{{ t('finance.portfolio_mining_noti_fee') }}</div>
-                    <div>{{ 0 }}</div>
-                </div>
-                <div class="px-[0.4rem]">
-                    <Button class="submit"
-                        style="width: 100%; height: 0.96rem; border-radius: 0.2rem; background-color: var(--ex-primary-color); margin-bottom: 0.2rem;"><span>{{
-                            t('finance.portfolio_mining_btn') }}</span></Button>
-                </div>
+                <Button style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
             </div>
         </BottomPopup>
     </div>
@@ -141,6 +163,7 @@ import SlideContainer from '@/components/SlideContainer.vue';
 const { t } = useI18n();
 
 const value = ref(0)
+const showPw = ref(false)
 const showConfirm = ref(false)
 const loaded = ref(false)
 
@@ -153,7 +176,7 @@ const itemsMap = [{
     ratio: '-0.0256'
 },
 ]
-
+const iconList = ['BTC', 'USDT']
 onMounted(() => {
     setTimeout(() => {
         loaded.value = true;
@@ -208,14 +231,6 @@ onMounted(() => {
         height: 0.96rem;
         border-radius: 0.32rem;
         background-color: var(--ex-primary-color);
-
-        .van-button__content {
-            .van-button__text {
-                span {
-                    font-size: 0.36rem;
-                }
-            }
-        }
     }
 }
 </style>
