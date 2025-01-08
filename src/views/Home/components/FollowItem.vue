@@ -14,9 +14,10 @@
                         <div class="icon"><img :src="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
                         <div>2131/5000</div>
                     </div>
+                    <div class="info-a" v-if="props.showDetail">@1231312</div>
                 </div>
             </div>
-            <div class="btn">{{ $t('copy.copy_trade') }}</div>
+            <div class="btn" @click="goFollow">跟单</div>
         </div>
 
         <div class="info-box">
@@ -30,17 +31,45 @@
             </div>
             <div class="line-box"></div>
         </div>
+
+        <div v-if="props.showDetail" class="detail-box">
+            <div class="detail-item">
+                <div class="item-name">胜率</div>
+                <div class="item-val">100%</div>
+            </div>
+            <div class="detail-item detail-item2">
+                <div class="item-name">带单规模</div>
+                <div class="item-val">123123.13</div>
+            </div>
+            <div class="icons">
+                <div class="icon" v-for="i in 5" :key="i"><img :src="getStaticImgUrl('/static/img/crypto/USDT.svg')" alt=""></div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
+import router from "@/router";
+
+const props = defineProps({
+    showDetail: { // 是否显示详细信息
+        type: Boolean,
+        default: false
+    }
+})
+
+const goFollow = () => {
+    router.push({
+        name: 'followDetail'
+    })
+}
 </script>
 
 <style lang="less">
 .follow-item {
-    width: 6.04rem;
-    height: 3.32rem;
+    width: 100%;
+    height: 100%;
     border-radius: 0.32rem;
     background: var(--ex-bg-color3);
     flex-shrink: 0;
@@ -91,6 +120,9 @@ import { getStaticImgUrl } from "@/utils/index.js"
             .bottom {
                 padding-left: 0.6rem;
                 margin-top: 0.04rem;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
 
                 .bottom-info {
                     background-color: var(--ex-bg-color2);
@@ -108,6 +140,11 @@ import { getStaticImgUrl } from "@/utils/index.js"
                         position: relative;
                         top: -0.01rem;
                     }
+                }
+
+                .info-a {
+                    font-size: 0.24rem;
+                    margin-left: 0.16rem;
                 }
             }
         }
@@ -172,6 +209,37 @@ import { getStaticImgUrl } from "@/utils/index.js"
                     color: var(--ex-white);
                     margin-left: 0.24rem;
                 }
+            }
+        }
+    }
+
+    .detail-box {
+        display: flex;
+        align-items: center;
+        padding: 0.24rem 0.16rem 0.12rem 0.16rem;
+        .detail-item {
+            flex: 1;
+            font-size: 0.24rem;
+            line-height: 1.5;
+            .item-name {
+                color: var(--ex-placeholder-color);
+            }
+            .item-val {
+                color: var(--ex-white);
+            }
+        }
+        .detail-item2 {
+            flex: 2;
+        }
+        .icons {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            .icon {
+                width: 0.4rem;
+                height: 0.4rem;
+                margin-left: -0.1rem;
             }
         }
     }
