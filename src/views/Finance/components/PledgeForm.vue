@@ -5,21 +5,37 @@
             <div class="item_box_right">
                 <FormItem
                 :hasLT="true"
+                :hasRT="true"
                 :hasScroll="true"
                 :placeholder="t('验资数量')"
                 :max="maxStockNum"
                 v-model="form1.volume" 
                 @change="changePercent" 
+                class="!h-[2.98rem]"
+                input-height="1.3rem"
                 input-type="number">
             
                 <template #lt>
-                    <div @click="openConfirmBox">
                     <div
-                        class="text-color2 text-[0.24rem]">
+                        class="pt-[0.12rem] text-color2 text-[0.24rem]">
                         <span>可验资金额</span>
                         <span class="text-primary mx-[0.08rem]">{{ stockWalletAmount || '--' }} </span>
                         <span>{{ paramCurrency }}</span>
                     </div>
+                    
+                </template>
+                <template #rt>
+                    <div class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]">
+                        <div class="flex items-center">
+                            <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
+                                <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
+                                alt="currency" />
+                            </div>
+                            <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
+                        </div>
+                        <div class="more_icon">
+                            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+                        </div>
                     </div>
                 </template>
                 <template #scroll>
@@ -33,6 +49,7 @@
         <div class="item_box mt-[0.32rem]">
             <div class="item_box_right">
                 <FormItem
+                input-height="1.3rem"
                 :hasScroll="true"
                 :placeholder="t('可借数量')"
                 :max="maxStockNum"
@@ -85,10 +102,36 @@
                 我已阅读并同意<span>“借币服务协议”</span>
             </label>
         </div>
-        <Button type="primary" class="submit">
+        <Button type="primary" class="submit" @click="visible=true;">
             <span class="text-[0.32rem] font-bold">{{ t('立即借币') }}</span>
         </Button>
         <div class="h-[2.2rem]"></div>
+
+        <!-- 售出币种 -->
+        <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+            :title="t('market.market_buy_fast_search_title')">
+            <div class="withdraw_accounr_dialog">
+
+            <div class="search_box">
+                <div class="icon">
+                <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+                </div>
+                <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
+                type="text" enterkeyhint="search" class="search" />
+            </div>
+            <div class="swap_dialog_list">
+                <div v-for="(item, i) in wallet" :key="i" class="swap_dialog_item" :class="{
+                swap_dialog_item_active: currIn.name == item.name,
+                }" @click="clickItem(item)">
+                <div class="icon">
+                    <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+                </div>
+                <span>{{ item.name }}</span>
+                <Icon v-if="currIn.name == item.name" class="check_icon" name="success" />
+                </div>
+            </div>
+            </div>
+        </BottomPopup>
         <BottomPopup closeable v-model:show="visible" title="订单确认">
             <PledgeConfirm :paramCurrency="paramCurrency" />
         </BottomPopup>
@@ -108,11 +151,24 @@ import {_pledgePara} from '@/api/api'
 import BottomPopup from '@/components/BottomPopup.vue'
 import PledgeConfirm from './PledgeConfirm.vue'
 
+const searchValue = ref("");
+const filterSearchValue = (data) => {
+  return data.filter((item) =>
+    item.name.toLowerCase().includes(searchValue.value.toLowerCase())
+  );
+};
+
+const wallet = computed(() => {
+  // 售出钱包
+  const data = store.state.deWeightCurrencyList.filter((item) => item.type == "crypto");
+  return filterSearchValue(data);
+});
+
+
 const { t } = useI18n();
 
-const visible = ref(true)
+const visible = ref(false)
 const checked = ref(true)
-const wallet = computed(() => store.state.wallet || []);
 const stockWalletAmount = computed(() => {
   // 钱包余额
   const target = wallet.value.find(
@@ -121,6 +177,17 @@ const stockWalletAmount = computed(() => {
   if (target) return target.amount;
   return 0;
 });
+
+const currIn = ref({
+    name:"USDT"
+}); // 当前收到钱包
+
+const clickItem = (item) => {
+    currIn.value = item;
+    showDialog.value = false;
+
+};
+
 
 const currentDay = ref(7)
 const days = ref([7,15,45,60,90])
@@ -186,10 +253,6 @@ const changePercent = () => {
   sliderValue.value = Number(p);
 };
 
-const showAmountDialog = ref(false);
-const openConfirmBox = () => {
-  showAmountDialog.value = true;
-};
 
 </script>
 <style lang="less" scoped>

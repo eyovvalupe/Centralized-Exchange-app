@@ -43,7 +43,7 @@
           <slot v-if="custom" />
 
           <!-- 输入框 -->
-          <input :disabled="disabled" v-else v-model="inputVal" @focus="
+          <input :disabled="disabled" :style="{height:inputHeight}" v-else v-model="inputVal" @focus="
             inputFocus = true;
           emit('focus');
           " @blur="
@@ -162,6 +162,10 @@ const props = defineProps({
   custom: Boolean,
   btnPlaceholder: String,
   placeholder: String,
+  inputHeight:{
+    type:String,
+    default:'100%'
+  },
   percentTags: {
     type: Array,
     default() {
