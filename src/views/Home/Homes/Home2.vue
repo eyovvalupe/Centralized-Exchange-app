@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div>
-                <div class="follow-btn">期权</div>
+                <div class="follow-btn">{{ t('copy.copy_option') }}</div>
             </div>
             <div class="scroll-box">
                 <div class="scroll-con">
@@ -87,7 +87,7 @@
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">市场行情</div>
+                <div style="flex: 1;">{{ t('home.market_trend') }}</div>
                 <div class="recommend-icon">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
@@ -188,7 +188,7 @@
                 <div class="point">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">新闻</div>
+                <div style="flex: 1;">{{ t('home.news') }}</div>
                 <div class="recommend-icon">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
