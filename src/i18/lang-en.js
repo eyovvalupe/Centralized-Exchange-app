@@ -277,7 +277,7 @@ export default {
     add_subtitle_status: "Verified",
     add_subtitle_bank_name: "Bank Name",
     add_bank_name_placeholder: "Enter bank name",
-    add_subtitle_card_number: "Card Number",
+    add_subtitle_card_number: "Card No",
     add_bank_address_placeholder: "Enter card number",
   },
   success_toast: {
