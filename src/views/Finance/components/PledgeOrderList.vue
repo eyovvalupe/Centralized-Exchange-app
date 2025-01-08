@@ -7,34 +7,34 @@
                     <div class="text-[0.32rem]">USDT</div>
                 </div>
                 <div>
-                    <span class="text-[0.28rem] text-color2">应还总额</span>
+                    <span class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_total_due') }}</span>
                     <span class="text-[0.32rem] text-primary"> 4000 <span class="text-color text-[0.24rem]">USDT</span></span>
                 </div>
                 
             </div>
             <div class="px-[0.24rem] h-[0.6rem] min-w-[1.36rem] flex justify-center items-center bg-primary rounded-full" @click="open()">
-                归还
+                {{ t('finance.defi_borrow_repay') }}
             </div>
         </div>
         <div class="flex flex-col bg-color2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem]">
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                <div class="text-[0.28rem] text-color2">质押金额</div>
+                <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_stake_amount') }}</div>
                 <div class="text-[0.28rem]">2000 <span class="text-[0.24rem]">USDT</span></div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                <div class="text-[0.28rem] text-color2">借款金额</div>
+                <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_borrow_amount') }}</div>
                 <div class="text-[0.28rem]">2000 <span class="text-[0.24rem]">USDT</span></div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                <div class="text-[0.28rem] text-color2">借款期限</div>
+                <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
                 <div class="text-[0.28rem]">7天</div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                <div class="text-[0.28rem] text-color2">总利息</div>
+                <div class="text-[0.28rem] text-color2">{{ t('finance.defi_total_interest') }}</div>
                 <div class="text-[0.28rem]">200 <span class="text-[0.24rem]">USDT</span></div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between">
-                <div class="text-[0.28rem] text-color2">手续费</div>
+                <div class="text-[0.28rem] text-color2">{{ t('finance.defi_service_charge') }}</div>
                 <div class="text-[0.28rem]">200 <span class="text-[0.24rem]">USDT</span></div>
             </div>
         </div>
@@ -43,6 +43,9 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
 import router from "@/router";
+import { useI18n } from "vue-i18n";
+
+const {t} = useI18n();
 const open = ()=>{
     router.push('/pledge/orderDetail')
 }

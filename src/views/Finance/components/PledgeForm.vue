@@ -5,21 +5,37 @@
             <div class="item_box_right">
                 <FormItem
                 :hasLT="true"
+                :hasRT="true"
                 :hasScroll="true"
-                :placeholder="t('验资数量')"
+                :placeholder="t('finance.defi_verif_qty')"
                 :max="maxStockNum"
                 v-model="form1.volume" 
                 @change="changePercent" 
+                class="!h-[2.98rem]"
+                input-height="1.3rem"
                 input-type="number">
             
                 <template #lt>
-                    <div @click="openConfirmBox">
                     <div
-                        class="text-color2 text-[0.24rem]">
-                        <span>可验资金额</span>
+                        class="pt-[0.12rem] text-color2 text-[0.24rem]">
+                        <span>{{ t('finance.defi_verifiable_qty') }}</span>
                         <span class="text-primary mx-[0.08rem]">{{ stockWalletAmount || '--' }} </span>
                         <span>{{ paramCurrency }}</span>
                     </div>
+                    
+                </template>
+                <template #rt>
+                    <div class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]">
+                        <div class="flex items-center">
+                            <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
+                                <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
+                                alt="currency" />
+                            </div>
+                            <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
+                        </div>
+                        <div class="more_icon">
+                            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+                        </div>
                     </div>
                 </template>
                 <template #scroll>
@@ -33,8 +49,9 @@
         <div class="item_box mt-[0.32rem]">
             <div class="item_box_right">
                 <FormItem
+                input-height="1.3rem"
                 :hasScroll="true"
-                :placeholder="t('可借数量')"
+                :placeholder="t('finance.defi_avail_qty')"
                 :max="maxStockNum"
                 v-model="form1.volume" 
                 @change="changePercent" 
@@ -48,30 +65,30 @@
             </div>
         </div>
         <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-color2 border-color border-[1px] mt-[0.32rem]">
-            <div class="text-[0.28rem] leading-[0.28rem] text-color2">借币期限</div>
+            <div class="text-[0.28rem] leading-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
             <div class="flex flex-wrap gap-[0.12rem] gap-y-[0.2rem] pt-[0.2rem]">
                 <div class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-color3 leading-[0.6rem]" :class="{'active-day':currentDay == day}" v-for="day in days" :key="day" @click="currentDay=day">
-                    {{day}}天
+                    {{day}}{{ t('finance.portfolio_day_multi') }}
                 </div>
             </div>
         </div>
         <div class="bg-color3 mt-[0.32rem] p-[0.12rem] text-[0.28rem] rounded-[0.32rem]">
             <div class="p-[0.16rem]">
                 <div class="flex justify-between items-center leading-[0.44rem]">
-                    <span class="text-color2">利息/天</span>
+                    <span class="text-color2">{{ t('finance.defi_daily_interest') }}</span>
                     <span class="text-color">0.00%</span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">总利息</span>
+                    <span class="text-color2">{{ t('finance.defi_total_interest') }}</span>
                     <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">手续费</span>
+                    <span class="text-color2">{{ t('finance.defi_service_charge') }}</span>
                     <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
                 </div>
             </div>
             <div class="flex items-center justify-between h-[1.2rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
-                <span class="text-color2">到期应还</span>
+                <span class="text-color2">{{ t('finance.defi_repayment_due') }}</span>
                 <span class="text-color text-[0.32rem]">0 <span class="text-[0.24rem]">USDT</span></span>
             </div>
         </div>
@@ -82,14 +99,40 @@
                     <img v-if="checked" :src="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
                     <img v-else :src="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
                 </div>
-                我已阅读并同意<span>“借币服务协议”</span>
+                {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
             </label>
         </div>
-        <Button type="primary" class="submit">
-            <span class="text-[0.32rem] font-bold">{{ t('立即借币') }}</span>
+        <Button type="primary" class="submit" @click="visible=true;">
+            <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
         </Button>
         <div class="h-[2.2rem]"></div>
-        <BottomPopup closeable v-model:show="visible" title="订单确认">
+
+        <!-- 售出币种 -->
+        <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+            :title="t('market.market_buy_fast_search_title')">
+            <div class="withdraw_accounr_dialog">
+
+            <div class="search_box">
+                <div class="icon">
+                <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+                </div>
+                <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
+                type="text" enterkeyhint="search" class="search" />
+            </div>
+            <div class="swap_dialog_list">
+                <div v-for="(item, i) in wallet" :key="i" class="swap_dialog_item" :class="{
+                swap_dialog_item_active: currIn.name == item.name,
+                }" @click="clickItem(item)">
+                <div class="icon">
+                    <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+                </div>
+                <span>{{ item.name }}</span>
+                <Icon v-if="currIn.name == item.name" class="check_icon" name="success" />
+                </div>
+            </div>
+            </div>
+        </BottomPopup>
+        <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_confirm')">
             <PledgeConfirm :paramCurrency="paramCurrency" />
         </BottomPopup>
     </div>
@@ -108,11 +151,24 @@ import {_pledgePara} from '@/api/api'
 import BottomPopup from '@/components/BottomPopup.vue'
 import PledgeConfirm from './PledgeConfirm.vue'
 
+const searchValue = ref("");
+const filterSearchValue = (data) => {
+  return data.filter((item) =>
+    item.name.toLowerCase().includes(searchValue.value.toLowerCase())
+  );
+};
+
+const wallet = computed(() => {
+  // 售出钱包
+  const data = store.state.deWeightCurrencyList.filter((item) => item.type == "crypto");
+  return filterSearchValue(data);
+});
+
+
 const { t } = useI18n();
 
-const visible = ref(true)
+const visible = ref(false)
 const checked = ref(true)
-const wallet = computed(() => store.state.wallet || []);
 const stockWalletAmount = computed(() => {
   // 钱包余额
   const target = wallet.value.find(
@@ -121,6 +177,17 @@ const stockWalletAmount = computed(() => {
   if (target) return target.amount;
   return 0;
 });
+
+const currIn = ref({
+    name:"USDT"
+}); // 当前收到钱包
+
+const clickItem = (item) => {
+    currIn.value = item;
+    showDialog.value = false;
+
+};
+
 
 const currentDay = ref(7)
 const days = ref([7,15,45,60,90])
@@ -186,10 +253,6 @@ const changePercent = () => {
   sliderValue.value = Number(p);
 };
 
-const showAmountDialog = ref(false);
-const openConfirmBox = () => {
-  showAmountDialog.value = true;
-};
 
 </script>
 <style lang="less" scoped>

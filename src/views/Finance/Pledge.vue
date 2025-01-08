@@ -1,10 +1,10 @@
 <template>
     <div class="pledge_page">
         <Tabs v-model:active="active" type="custom-card-stake" @change="onChange" style="height: calc(100vh - 0.88rem); overflow-y: auto;">
-            <Tab :title="'质押借币'">
+            <Tab :title="$t('finance.defi_coll_borrow')">
                 <PledgeForm />
             </Tab>
-            <Tab class="mb-[1.2rem]" :title="'在借订单'">
+            <Tab class="mb-[1.2rem]" :title="$t('finance.defi_borrow_order')">
                 <PledgeOrder/>
             </Tab>
         </Tabs>
