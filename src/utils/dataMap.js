@@ -63,7 +63,7 @@ export const _langMap = [
   { name: "English", icon: "en", val: "en", show: true },
   { name: "한국어", icon: "kr", val: "kr", show: true},
   { name: "日本語", icon: "jp", val: "jp", show: true},
-  { name: "Deutsch", icon: "de", val: "de", show: true},
+  // { name: "Deutsch", icon: "de", val: "de", show: true},
 
 ];
 
