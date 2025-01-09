@@ -44,6 +44,16 @@ const routes = [
     },
   },
   {
+    // 跟单订单详情
+    path: '/followInfo',
+    name: 'followInfo',
+    component: () => import('../views/Home/Follow/FollowInfo.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+    },
+  },
+  {
     // 用户
     path: '/user',
     name: 'user',
