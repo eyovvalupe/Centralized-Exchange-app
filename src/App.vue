@@ -118,8 +118,18 @@ watch(
 
 onMounted(() => {
 
-  // 这里处理vant样式里引入图片的问题
+  // 这里处理100vh的问题
+  !(function (n, e) {
+    function setViewHeight() {
+      var windowVH = e.innerHeight / 100
+      n.documentElement.style.setProperty('--vh', windowVH + 'px')
+    }
+    var i = 'orientationchange' in window ? 'orientationchange' : 'resize'
+    n.addEventListener('DOMContentLoaded', setViewHeight)
+    e.addEventListener(i, setViewHeight)
+  })(document, window)
 
+  // 这里处理vant样式里引入图片的问题
   const style = document.createElement('style');
   style.innerHTML = `
       .van-tabs--line-card>.van-tabs__wrap  .van-tab--active::after {

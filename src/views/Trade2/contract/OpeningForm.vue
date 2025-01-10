@@ -348,7 +348,7 @@
 
   <!-- 股票行情弹窗 -->
   <BottomPopup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
-    <StockPopup style="height: 90vh" v-if="showStockModel" />
+    <StockPopup style="height: calc(var(--vh) * 90)" v-if="showStockModel" />
   </BottomPopup>
 
   <!-- 止盈类型选择 -->
@@ -1353,7 +1353,7 @@ defineExpose({
 <style lang="less" scoped>
 .search_dialog_trade {
   .lists {
-    height: 60vh;
+    height: calc(var(--vh) * 60);
     overflow-y: auto;
     margin-top: 0.32rem;
   }

@@ -1,7 +1,7 @@
 {
   "name": "BlackGreen",
   "short_name": "BlackGreen",
-  "theme_color": "#00A609",
+  "theme_color": "#0E0F18",
   "background_color": "#0E0F18",
   "display": "standalone",
   "orientation": "portrait",

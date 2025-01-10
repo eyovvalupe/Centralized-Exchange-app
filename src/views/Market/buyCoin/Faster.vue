@@ -597,7 +597,7 @@ watch(() => store.state.deWeightCurrencyList, () => {
 
 
   .swap_dialog_list {
-    max-height: 60vh;
+    max-height: calc(var(--vh) * 60);
     overflow-y: auto;
     padding-bottom: 0.8rem;
   }

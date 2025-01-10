@@ -197,7 +197,7 @@
 
     <!-- 股票行情弹窗 -->
     <BottomPopup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
-      <StockPopup type="ai" style="height: 90vh" v-if="showStockModel" />
+      <StockPopup type="ai" style="height: calc(var(--vh) * 90)" v-if="showStockModel" />
     </BottomPopup>
 
     <!-- ai列表 -->
@@ -652,7 +652,7 @@ defineExpose({
   padding: 0.28rem 0.32rem 0 0.32rem;
 
   .scroller {
-    height: calc(100vh - 2.42rem);
+    height: calc(var(--vh) * 100 - 2.42rem);
     overflow-y: auto;
     padding-bottom: 2rem;
   }
@@ -874,7 +874,7 @@ defineExpose({
   }
 
   .list {
-    max-height: 80vh;
+    max-height: calc(var(--vh) * 80);
     padding: 0 0.32rem 0.4rem 0.32rem;
     overflow-y: auto;
   }

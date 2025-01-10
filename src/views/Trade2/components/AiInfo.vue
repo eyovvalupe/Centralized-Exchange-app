@@ -261,7 +261,7 @@ defineExpose({
 .ai_order_info {
   padding: 0.32rem 0 1rem 0;
   margin-top: 1.12rem;
-  height: calc(100vh - 1.12rem);
+  height: calc(var(--vh) * 100 - 1.12rem);
   overflow-y: auto;
   box-sizing: border-box;
 
@@ -454,7 +454,7 @@ defineExpose({
 }
 
 .loading-wrap {
-  min-height: calc(100vh - 100px);
+  min-height: calc(var(--vh) * 100 - 100px);
   display: flex;
   align-items: center;
   justify-content: center;

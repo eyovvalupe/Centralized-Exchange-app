@@ -568,7 +568,7 @@ defineExpose({
 
 
   .swap_dialog_list {
-    max-height: 60vh;
+    max-height: calc(var(--vh) * 60);
     overflow-y: auto;
     padding-bottom: 0.8rem;
   }
@@ -633,7 +633,7 @@ defineExpose({
   }
 
   .list {
-    max-height: 70vh;
+    max-height: calc(var(--vh) * 70);
     overflow-y: auto;
 
     .add_account {

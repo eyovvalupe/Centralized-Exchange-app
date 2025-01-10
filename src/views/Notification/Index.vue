@@ -178,7 +178,7 @@ defineExpose({});
 
 <style lang="less" scoped>
 .notification_page {
-  height: 100vh;
+  height: calc(var(--vh) * 100);
 
   :deep(.van-tabs__nav) {
     margin: 0 0.32rem 0.32rem 0.32rem;

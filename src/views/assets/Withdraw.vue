@@ -826,7 +826,7 @@ watch(
 
 .withdraw_accounr_dialog {
   .lists {
-    height: 50vh;
+    height: calc(var(--vh) * 50);
     overflow-y: auto;
     margin-top: 0.2rem;
     padding-bottom: 0.32rem;

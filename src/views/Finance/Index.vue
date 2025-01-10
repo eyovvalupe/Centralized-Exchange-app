@@ -53,7 +53,7 @@ const swipeChange = (val) => {
 </script>
 <style lang="less">
 .page_finance {
-    height: 100vh;
+    height: calc(var(--vh) * 100);
     overflow: hidden;
 }
 </style>

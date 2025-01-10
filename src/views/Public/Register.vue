@@ -152,7 +152,7 @@
             <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
           </div>
         </div>
-        <div ref="scrollRef" style="height: 60vh; overflow-y: auto; padding: 0 0.24rem;">
+        <div ref="scrollRef" style="height: calc(var(--vh) * 60); overflow-y: auto; padding: 0 0.24rem;">
           <!-- <List> -->
           <div v-for="item in showAreas">
             <div @click="clickItem(item)"

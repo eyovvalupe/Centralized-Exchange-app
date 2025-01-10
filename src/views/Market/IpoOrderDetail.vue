@@ -178,7 +178,7 @@ const copy = text => {
 
 
     .scroller {
-        height: calc(100vh - 1.12rem);
+        height: calc(var(--vh) * 100 - 1.12rem);
         overflow-y: auto;
         box-sizing: border-box;
         padding: 0.28rem 0.32rem 0.32rem 0.32rem;

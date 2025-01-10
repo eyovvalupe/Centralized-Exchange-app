@@ -272,7 +272,7 @@ getCoinMap();
 .page_assets {
   .assets_body {
     overflow-y: auto;
-    height: calc(100vh - 2.52rem);
+    height: calc(var(--vh) * 100 - 2.52rem);
     padding-bottom: 1rem
   }
 

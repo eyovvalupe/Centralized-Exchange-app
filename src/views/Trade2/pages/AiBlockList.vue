@@ -4,7 +4,7 @@
 
         <Ai @clickItems="clickItem" :show-tabs="false" v-if="!pageLoading"></Ai>
         
-        <div style="height:50vh" v-else></div>
+        <div style="height:calc(var(--vh) * 50)" v-else></div>
 
         <!-- 下单弹窗 -->
         <Popup teleport="body" v-model:show="showModel" position="right" style="width:100%;height:100%;">

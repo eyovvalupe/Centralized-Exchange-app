@@ -475,7 +475,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
 
   .trade_body {
     overflow-y: auto;
-    height: calc(100vh - 2.52rem);
+    height: calc(var(--vh) * 100 - 2.52rem);
   }
 
   .trade_option_list {
@@ -487,7 +487,7 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
 
     .lists {
       overflow-y: auto;
-      height: calc(100vh - 2rem);
+      height: calc(var(--vh) * 100 - 2rem);
     }
 
     .search_box_wrap {

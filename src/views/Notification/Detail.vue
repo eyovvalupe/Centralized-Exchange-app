@@ -51,6 +51,6 @@ const back = () => {
 <style lang="less">
 .notification_detail {
   padding: 0 0.32rem 0.32rem 0.32rem;
-  height: 100vh;
+  height: calc(var(--vh) * 100);
 }
 </style>

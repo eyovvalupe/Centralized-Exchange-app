@@ -188,7 +188,7 @@ const swipeChange = (val) => {
 }
 
 .scroll-box {
-  height: calc(100vh - 1.12rem);
+  height: calc(var(--vh) * 100 - 1.12rem);
   overflow-y: auto;
 }
 

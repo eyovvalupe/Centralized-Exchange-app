@@ -231,7 +231,7 @@ const clickAccountItem = val => {
   }
 
   .list {
-    max-height: 70vh;
+    max-height: calc(var(--vh) * 70);
     overflow-y: auto;
 
     .add_account {

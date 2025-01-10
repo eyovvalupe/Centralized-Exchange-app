@@ -157,7 +157,7 @@ getSessionToken();
 
 <style lang="less" scoped>
 .page_crypto {
-    height: calc(100vh - 2.52rem);
+    height: calc(var(--vh) * 100 - 2.52rem);
 
     .subtitle {
         font-weight: 400;
@@ -228,7 +228,7 @@ getSessionToken();
 
         .bottoms {
             width: 100%;
-            height: 50vh;
+            height: calc(var(--vh) * 50);
             position: relative;
             padding: 1.12rem 0;
 

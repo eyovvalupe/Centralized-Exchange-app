@@ -1,6 +1,6 @@
 <template>
     <div class="pledge_page">
-        <Tabs v-model:active="active" type="custom-card-stake" @change="onChange" style="height: calc(100vh - 0.88rem); overflow-y: auto;">
+        <Tabs v-model:active="active" type="custom-card-stake" @change="onChange" style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;">
             <Tab :title="$t('finance.defi_coll_borrow')">
                 <PledgeForm />
             </Tab>

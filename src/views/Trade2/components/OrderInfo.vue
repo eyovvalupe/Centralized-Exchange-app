@@ -234,7 +234,7 @@
 
     <!-- 行情弹窗 -->
     <BottomPopup teleport="body" v-model:show="showStockModel" position="bottom" round closeable>
-      <StockPopup style="height: 90vh" v-if="showStockModel" />
+      <StockPopup style="height: calc(var(--vh) * 90)" v-if="showStockModel" />
     </BottomPopup>
   </div>
 </template>
@@ -331,7 +331,7 @@ const copy = (text) => {
 
 <style lang="less" scoped>
 .scroller {
-  height: calc(100vh - 3.2rem);
+  height: calc(var(--vh) * 100 - 3.2rem);
   overflow-y: auto;
   margin-top: 1.12rem;
   padding: 0.4rem;

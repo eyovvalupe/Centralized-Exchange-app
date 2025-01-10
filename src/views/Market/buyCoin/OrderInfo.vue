@@ -261,7 +261,7 @@ const getSessionToken = () => {
 <style lang="less" scoped>
 .order_info {
   padding: 0 0.32rem 0.32rem 0.32rem;
-  height: 85vh;
+  height: calc(var(--vh) * 85);
   display: flex;
   flex-direction: column;
 

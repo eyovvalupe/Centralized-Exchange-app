@@ -279,7 +279,7 @@ getSessionToken();
 
     .bottoms {
       width: 100%;
-      height: 50vh;
+      height: calc(var(--vh) * 50);
       overflow-y: auto;
       justify-content: start;
 
@@ -389,7 +389,7 @@ getSessionToken();
   }
 
   .page_crypto {
-    height: calc(100vh - 2.52rem);
+    height: calc(var(--vh) * 100 - 2.52rem);
 
     .subtitle {
       font-weight: 400;

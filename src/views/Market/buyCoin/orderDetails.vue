@@ -345,7 +345,7 @@ onInit();
 .orderDetails {
   width: 7.5rem;
   padding: 1.12rem 0.32rem 0;
-  height: 100vh;
+  height: calc(var(--vh) * 100);
   display: flex;
   flex-direction: column;
   position: relative;
