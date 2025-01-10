@@ -71,6 +71,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -81,6 +82,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 2,
     },
   },
   {
@@ -714,7 +716,11 @@ router.beforeEach((to, from) => {
   }
 
   if (from.meta.pageType == 'child' && to.meta.pageType == 'child') {
-    store.commit('setTransitionName', 'slide-right')
+    if (from.meta.pageDeep < to.meta.pageDeep) {
+      store.commit('setTransitionName', 'slide-right')
+    } else {
+      store.commit('setTransitionName', 'slide-left')
+    }
     return
   }
   if (to.meta.pageType == 'login') {

@@ -123,8 +123,6 @@ onMounted(() => {
     // 判断触摸目标是否是按钮  水波纹效果
     const button = e.target.closest('.ripple-btn');
     if (button) {
-      // 防止触摸事件的默认行为，避免页面滚动
-      e.preventDefault();
       // 创建水波纹元素
       const ripple = document.createElement('span');
       ripple.classList.add('ripple');
@@ -151,7 +149,6 @@ onMounted(() => {
     // 判断触摸目标是否是按钮  蒙版效果
     const button2 = e.target.closest('.mask-btn');
     if (button2) {
-      e.preventDefault();
       const ripple = document.createElement('span');
       ripple.classList.add('ripple');
       button2.appendChild(ripple);
@@ -231,11 +228,11 @@ onMounted(() => {
 .slide-bottom-leave-active,
 .opacity-enter-active,
 .opacity-leave-active {
-  transition: all ease-in 0.3s;
+  transition: all ease-in 0.2s;
 }
 
 .slide-right-enter-from {
-  transform: translateX(-100%);
+  transform: translateX(60%);
   opacity: 0;
 }
 
@@ -248,12 +245,12 @@ onMounted(() => {
 }
 
 .slide-right-leave-to {
-  transform: translateX(-100%);
+  transform: translateX(-60%);
   opacity: 0;
 }
 
 .slide-bottom-enter-from {
-  transform: translateY(100%);
+  transform: translateY(60%);
   opacity: 0;
 }
 
@@ -266,12 +263,12 @@ onMounted(() => {
 }
 
 .slide-bottom-leave-to {
-  transform: translateY(-100%);
+  transform: translateY(-60%);
   opacity: 0;
 }
 
 .slide-left-enter-from {
-  transform: translateX(-100%);
+  transform: translateX(-60%);
   opacity: 0;
 }
 
@@ -284,12 +281,12 @@ onMounted(() => {
 }
 
 .slide-left-leave-to {
-  transform: translateX(100%);
+  transform: translateX(60%);
   opacity: 0;
 }
 
 .slide-top-enter-from {
-  transform: translateY(-100%);
+  transform: translateY(-60%);
   opacity: 0;
 }
 
@@ -302,7 +299,7 @@ onMounted(() => {
 }
 
 .slide-top-leave-to {
-  transform: translateY(100%);
+  transform: translateY(60%);
   opacity: 0;
 }
 
