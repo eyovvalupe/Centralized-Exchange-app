@@ -432,7 +432,7 @@ const confirmOrder = () => {
 };
 const orderAction = (s) => {
   loading.value = true;
-  showLoadingToast({ duration: 0, loadingType: "spinner" });
+  showLoadingToast({ duration: 0, loadingType: "circular" });
   _c2cOrderStatus({
     order_no: currItem.value.order_no,
     status: action.value,

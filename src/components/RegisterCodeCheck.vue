@@ -120,7 +120,7 @@ watch(val, (v) => {
 const finishIpt = () => {
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   setTimeout(() => {
     closeToast();

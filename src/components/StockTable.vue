@@ -1,7 +1,7 @@
 <!-- 股票列表样式架子 -->
 <template>
   <div class="stock_table">
-    <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
+    <Loading :type="'circular'" v-show="!props.list.length && props.loading" />
     <div v-if="list.length" v-for="(item, i) in props.list" class="tr" :class="page == 'trade' &&
         (type == 'stock' && item.symbol == currStockItem.symbol || type == 'future' && item.name == currConstractItem.name)
         ? 'current_item_effect'

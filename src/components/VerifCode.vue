@@ -11,7 +11,7 @@
       <div @click="getCode" class="" style="overflow: hidden">
         <div class="code">
           <img v-if="codeImg && !loading" :src="codeImg" alt="code" />
-          <Loading v-else type="spinner" />
+          <Loading v-else type="circular" />
         </div>
         <div class="tip">{{ t('register.not_clear') }}</div>
       </div>

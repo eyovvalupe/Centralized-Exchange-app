@@ -216,7 +216,7 @@ const collect = (item) => {
     collectLoading.value = true;
     showLoadingToast({
       duration: 0,
-      loadingType: "spinner",
+      loadingType: "circular",
     });
     watchlist.value.map((i) => {
       if (i.symbol == item.symbol) {

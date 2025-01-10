@@ -68,7 +68,7 @@
                 </div> -->
       <!-- <div class="tip" v-if="topUpMode == 2">
                     <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
-                    <Loading v-show="rateLoading" type="spinner" size="12px" />
+                    <Loading v-show="rateLoading" type="circular" size="12px" />
                 </div> -->
     </div>
     <Button @click="goTopUp" :loading="loading" round class="submit" type="primary">{{
@@ -247,7 +247,7 @@ const coinLists = ref([]);
 const getCoinNet = () => {
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   _cryptoCoin({ dedup: false })
     .then((res) => {
@@ -325,7 +325,7 @@ const getRate = () => {
   if (interval) clearInterval(interval);
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   rateLoading.value = true;
   _swapRate({

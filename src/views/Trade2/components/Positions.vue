@@ -622,7 +622,7 @@ const cancel = (item) => {
     .then(() => {
       showLoadingToast({
         duration: 0,
-        loadingType: "spinner",
+        loadingType: "circular",
       });
       _stocksCancel({
         order_no: item.order_no,

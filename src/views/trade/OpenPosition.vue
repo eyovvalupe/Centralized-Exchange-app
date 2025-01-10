@@ -28,7 +28,7 @@
 
     <transition :name="transitionName">
       <div v-if="active === '1'">
-        <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+        <Loading v-show="loading" type="circular" class="position-loading"></Loading>
         <div v-show="!loading">
           <span class="grop-title">价格</span>
           <!-- <Field v-model="priceValue" :class="['num-input', { 'focusinput': isFocused === 1 }]"
@@ -47,7 +47,7 @@
       </div>
 
       <div v-else-if="active === '2'">
-        <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+        <Loading v-show="loading" type="circular" class="position-loading"></Loading>
         <div v-show="!loading">
           <div class="right-text m-t-5"><span class="link-text" @click="setMode">{{ !mode ? '简单模式' : '复杂模式' }}</span>
           </div>
@@ -105,7 +105,7 @@
       </div>
 
       <div v-else>
-        <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+        <Loading v-show="loading" type="circular" class="position-loading"></Loading>
         <div v-show="!loading">
           <Common @update-value="handleUpdateValue" ref="childComponentRef" @already="already" />
         </div>
@@ -473,7 +473,7 @@ defineExpose({
   .position-loading {
     margin-top: 2rem !important;
 
-    .van-loading__spinner {
+    .van-loading__circular {
       left: 47%;
     }
   }

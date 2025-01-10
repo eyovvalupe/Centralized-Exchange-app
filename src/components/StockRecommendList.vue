@@ -107,7 +107,7 @@ const collect = (item) => {
     if (!reqMap[item.watchlist || 0]) return (collectLoading.value = false);
     showLoadingToast({
       duration: 0,
-      loadingType: "spinner",
+      loadingType: "circular",
     });
     reqMap[item.watchlist || 0]({
       symbol: item.symbol,

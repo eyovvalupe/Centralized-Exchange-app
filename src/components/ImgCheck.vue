@@ -109,7 +109,7 @@ const sliderStatus = ref("default");
 const changeSlider = (val) => {
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   if (
     val * 3.6 >= initialRotate.value - 10 &&

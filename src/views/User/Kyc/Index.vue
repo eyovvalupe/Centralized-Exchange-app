@@ -35,7 +35,7 @@ const getKyc = () => {
     pageLoading.value = true
     showLoadingToast({
         duration: 0,
-        loadingType: 'spinner',
+        loadingType: 'circular',
     })
     _kycGet().then(res => {
         if (res.code == 200) {

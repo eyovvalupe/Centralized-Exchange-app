@@ -94,7 +94,7 @@
           <span @click="showNavDialog">{{
             t("trade.contract_opening_contract")
           }}</span>
-          <Loading v-show="searchLoading" type="spinner" style="width: 0.28rem; height: 0.28rem"
+          <Loading v-show="searchLoading" type="circular" style="width: 0.28rem; height: 0.28rem"
             color="var(--ex-primary-color)" />
           <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click.stop="openStockModel">
             <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />

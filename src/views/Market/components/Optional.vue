@@ -34,7 +34,7 @@
       !marketSrockRecommendList.length &&
       !marketContractRecommendList.length &&
       recommendLoading
-    " :loading="recommendLoading" :type="'spinner'" />
+    " :loading="recommendLoading" :type="'circular'" />
     <NoData v-if="
       !marketSrockRecommendList.length &&
       !marketContractRecommendList.length &&
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  <Loaidng v-else :loading="loading" :type="'spinner'" />
+  <Loaidng v-else :loading="loading" :type="'circular'" />
 </template>
 
 <script setup>
@@ -262,7 +262,7 @@ const remove = (item) => {
   removeLoading.value = true;
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   _del({
     symbol: item.symbol,

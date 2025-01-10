@@ -5,7 +5,7 @@
       <span>中签详情</span>
     </div>
 
-    <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+    <Loading v-show="loading" type="circular" class="position-loading"></Loading>
     <div class="ipo-box" v-if="!loading">
       <div class="ipo-co-f">
         <div class="h-co-title">

@@ -101,7 +101,7 @@ const getGoogle = () => {
   loading.value = true;
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   _google()
     .then((res) => {

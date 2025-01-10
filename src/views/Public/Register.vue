@@ -275,7 +275,7 @@ const next = () => {
   loading.value = true;
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   if (guest.value == "guest") {
     _guestRegister({
@@ -361,7 +361,7 @@ const submit = async () => {
   loading.value = true;
   showLoadingToast({
     duration: 0,
-    loadingType: "spinner",
+    loadingType: "circular",
   });
   console.log({
     ...form.value,

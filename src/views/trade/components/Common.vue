@@ -2,7 +2,7 @@
   <div class="common-open-position">
     <div class="stock-box" style="margin: 0 0px 0.1rem;">
       <span class="grop-title">股票</span>
-      <Loading type="spinner" class="stock-img" v-if="loading && stockCo.length == 0" color="var(--ex-primary-color)" />
+      <Loading type="circular" class="stock-img" v-if="loading && stockCo.length == 0" color="var(--ex-primary-color)" />
       <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" class="stock-img" v-if="stockCo.length > 0"
         @click="openPopup" />
     </div>

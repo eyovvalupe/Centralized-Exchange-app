@@ -10,7 +10,7 @@
                 <div class="item item_2"></div>
                 <div class="item item_3"></div>
             </div> -->
-            <Loading type="spinner" :loading="loading" />
+            <Loading type="circular" :loading="loading" />
         </div>
     </div>
 </template>

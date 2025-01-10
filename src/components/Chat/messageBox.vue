@@ -44,7 +44,7 @@
                 </template>
                 <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
                   <template v-slot:loading>
-                    <Loaidng type="spinner" size="20" />
+                    <Loaidng type="circular" size="20" />
                   </template>
                 </van-image>
               </div>
@@ -71,7 +71,7 @@
               <div class="con break-all" :class="item.type" v-else>
                 <van-image class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
                   <template v-slot:loading>
-                    <Loaidng type="spinner" size="20" />
+                    <Loaidng type="circular" size="20" />
                   </template>
                 </van-image>
               </div>
@@ -95,7 +95,7 @@
             </template>
             <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
               <template v-slot:loading>
-                <Loaidng type="spinner" size="20" />
+                <Loaidng type="circular" size="20" />
               </template>
             </van-image>
           </div>

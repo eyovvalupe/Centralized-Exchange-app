@@ -5,7 +5,7 @@
 
         <!-- 加载更多数据时的loading -->
         <div class="more_loading" v-show="moreLoading">
-            <L color="var(--ex-primary-color)" type="spinner" />
+            <L color="var(--ex-primary-color)" type="circular" />
         </div>
 
         <!-- 初始化时的骨架屏 -->
@@ -13,7 +13,7 @@
             <!-- <div v-for="i in 30" :key="i" class="init_item"
                 :style="{ height: (Math.random() * (1.2 - 0.6) + 0.6) + 'rem', top: (Math.random() * 1 - 0.5) + 'rem' }">
             </div> -->
-            <L type="spinner" :loading="initLoading" />
+            <L type="circular" :loading="initLoading" />
         </div>
     </div>
 

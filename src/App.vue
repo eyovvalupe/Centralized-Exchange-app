@@ -1,10 +1,10 @@
 <template>
   <router-view v-slot="{ Component }">
     <div v-show="pageLoading" class="full_page_loading">
-      <Loading :size="44" color="var(--ex-primary-color)" />
+      <Loading :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
     <div v-show="!pageLoading" class="app_scroll">
-      
+
       <transition :name="transitionName">
         <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name" />
       </transition>
@@ -117,6 +117,50 @@ watch(
 );
 
 onMounted(() => {
+
+  // 这里处理点击效果
+  document.body.addEventListener('touchstart', function (e) {
+    // 判断触摸目标是否是按钮  水波纹效果
+    const button = e.target.closest('.ripple-btn');
+    if (button) {
+      // 防止触摸事件的默认行为，避免页面滚动
+      e.preventDefault();
+      // 创建水波纹元素
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      // 获取按钮的尺寸和位置
+      const buttonRect = button.getBoundingClientRect();
+      const size = Math.max(buttonRect.width, buttonRect.height); // 水波纹的尺寸取按钮的最大边长
+      // 获取触摸位置
+      const touch = e.touches[0];
+      const x = touch.clientX - buttonRect.left - size / 2; // 水波纹的起始位置
+      const y = touch.clientY - buttonRect.top - size / 2;
+      // 设置水波纹的位置和大小
+      ripple.style.width = `${size}px`;
+      ripple.style.height = `${size}px`;
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      // 将水波纹元素添加到按钮中
+      button.appendChild(ripple);
+      // 动画结束后移除水波纹元素
+      ripple.addEventListener('animationend', () => {
+        ripple.remove();
+      });
+      return
+    }
+    // 判断触摸目标是否是按钮  蒙版效果
+    const button2 = e.target.closest('.mask-btn');
+    if (button2) {
+      e.preventDefault();
+      const ripple = document.createElement('span');
+      ripple.classList.add('ripple');
+      button2.appendChild(ripple);
+      ripple.addEventListener('animationend', () => {
+        ripple.remove();
+      });
+      return
+    }
+  }, { passive: false });
 
   // 这里处理100vh的问题
   !(function (n, e) {

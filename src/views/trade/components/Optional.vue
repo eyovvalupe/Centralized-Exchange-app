@@ -75,7 +75,7 @@ const remove = item => {
     removeLoading.value = true
     showLoadingToast({
         duration: 0,
-        loadingType: 'spinner',
+        loadingType: 'circular',
     })
     _del({
         symbol: item.symbol

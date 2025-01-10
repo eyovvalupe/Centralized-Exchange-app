@@ -10,7 +10,7 @@ const props = defineProps({
     size: 48,
     type: {
         type: String,
-        default: 'spinner'
+        default: 'circular'
     },
     color: ''
 })

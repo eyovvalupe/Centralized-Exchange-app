@@ -4,7 +4,7 @@
       订单详情
     </div>
 
-    <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+    <Loading v-show="loading" type="circular" class="position-loading"></Loading>
     <div v-show="!loading">
       <div class="detail-t-title">
         <div class="detail-flex">
@@ -251,7 +251,7 @@ const updateDetailPopup = () => {
   .position-loading {
     margin-top: 2rem !important;
 
-    .van-loading__spinner {
+    .van-loading__circular {
       left: 47%;
     }
   }

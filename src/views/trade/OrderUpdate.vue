@@ -4,7 +4,7 @@
       更新订单
     </div>
 
-    <Loading v-show="loading" type="spinner" class="position-loading"></Loading>
+    <Loading v-show="loading" type="circular" class="position-loading"></Loading>
     <div class="order-update-box" v-show="!loading">
       <div class="order-lose-title">止损</div>
       <Field v-model="loseValue" class="lose-field" type="number" @focus="handleFocus(1)" @blur="handleBlur(1)"

@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="table_box justify-center" v-if="overviewLoading && !count">
-      <Loading :loading="overviewLoading" :type="'spinner'" />
+      <Loading :loading="overviewLoading" :type="'circular'" />
     </div>
     <div class="table_box justify-end" v-if="!overviewLoading || count">
       <div class="table_list">

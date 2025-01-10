@@ -266,7 +266,7 @@ const changeTab = (name) => {
   }
 };
 const getInfo = async () => {
-  showLoadingToast({ duration: 0, loadingType: "spinner" });
+  showLoadingToast({ duration: 0, loadingType: "circular" });
   try {
     const res = await _c2cOrderInfo({
       order_no: route.query.order_no,
@@ -281,7 +281,7 @@ const getInfo = async () => {
 };
 
 const apiSetOrderStatus = async (safeword) => {
-  showLoadingToast({ duration: 0, loadingType: "spinner" });
+  showLoadingToast({ duration: 0, loadingType: "circular" });
   try {
     await _c2cOrderStatus({
       order_no: form.order_no,

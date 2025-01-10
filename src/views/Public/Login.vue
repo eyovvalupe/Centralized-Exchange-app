@@ -32,7 +32,7 @@
         </div>
         <input @change="changeAccount" v-model.trim="form.email" :placeholder="t('login.pw_placeholder1')" type="text"
           class="item_input" />
-        <Loading v-if="accountLoading" :size="'0.32rem'" type="spinner" />
+        <Loading v-if="accountLoading" :size="'0.32rem'" type="circular" />
         <div class="form_item_clear" v-show="form.email" @click="form.email = null">
           <div class="cross-icon">
             <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
@@ -84,8 +84,8 @@
     <div class="fogot" @click="goFoget">{{ $t("login.forget_pw") }}</div>
 
     <!-- 按钮 -->
-    <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round class="submit waves-effect waves-light" type="primary">
+    <div class="submit_box " @click="submit">
+      <Button :loading="loading" :disabled="disabled" round class="submit mask-btn" type="primary">
         <span style="color: var(--ex-white);">{{
           $t("login.login") }}</span></Button>
     </div>

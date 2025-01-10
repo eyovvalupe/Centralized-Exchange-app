@@ -110,7 +110,7 @@ watch(
   () => props.show,
   val => {
     if (val && !accountList.value.length) {
-      showLoadingToast({ duration: 0, loadingType: 'spinner' })
+      showLoadingToast({ duration: 0, loadingType: 'circular' })
       store.dispatch('updateAccountList').then(closeToast)
     }
     if (props.currencyType === 'crypto' || props.currencyType === 'bank') {

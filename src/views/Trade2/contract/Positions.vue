@@ -616,7 +616,7 @@ const cancel = (item) => {
     .then(() => {
       showLoadingToast({
         duration: 0,
-        loadingType: "spinner",
+        loadingType: "circular",
       });
       _futuresCancel({
         order_no: item.order_no,

@@ -1,7 +1,7 @@
 <!-- 股票列表样式架子 -->
 <template>
   <div class="stock_table">
-    <Loading :type="'spinner'" v-show="!props.list.length && props.loading" />
+    <Loading :type="'circular'" v-show="!props.list.length && props.loading" />
     <div class="tr" v-for="(item, i) in props.list" :key="i">
       <StockItemForList :marketType="props.marketType" :theme="theme" :handleClick="props.handleClick"
         :deleteItem="props.deleteItem" :showSparkLine="showSparkLine" :type="props.type" @remove="remove"
