@@ -193,7 +193,7 @@
     </div>
 
     <div class="btns">
-      <div class="btn btn2" @click="emit('update', currStock)"
+      <div class="btn btn2 ripple-btn" @click="emit('update', currStock)"
         v-if="['none', 'lock', 'open'].includes(currStock.status)">
         <div class="btn_icon">
           <img :src="getStaticImgUrl('/static/img/trade/update.svg')" alt="img" />
@@ -206,7 +206,7 @@
         </div>
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
-      <div class="btn btn3" @click="emit('sell', currStock)" v-if="['open'].includes(currStock.status)">
+      <div class="btn btn3 ripple-btn" @click="emit('sell', currStock)" v-if="['open'].includes(currStock.status)">
         <div class="btn_icon">
           <img :src="getStaticImgUrl('/static/img/trade/close.svg')" alt="img" />
         </div>
@@ -218,7 +218,7 @@
         </div>
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
-      <div class="btn btn4" @click="emit('cancel', currStock)" v-if="currStock.status == 'none'">
+      <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)" v-if="currStock.status == 'none'">
         <div class="btn_icon">
           <img :src="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
         </div>

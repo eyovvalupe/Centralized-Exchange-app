@@ -1,6 +1,33 @@
 <!-- 开仓表单 -->
 <template>
   <div class="form">
+
+    <!-- 搜索 -->
+    <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
+      <div class="item">
+        <div class="tip-title" v-if="currStock.symbol">
+          <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
+          <Loading v-show="searchLoading" type="circular" style="width: 0.28rem; height: 0.28rem"
+            color="var(--ex-primary-color)" />
+          <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click.stop="openStockModel">
+            <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+          </div>
+        </div>
+        <div class="info">
+          <div style="flex: 1;height: 100%;">
+            <div v-if="!currStock.symbol" style="color: var(--ex-text-color3);">{{
+              t("trade.stock_opening_stock")
+            }}</div>
+            <div class="info-symbol">{{ currStock.symbol }}</div>
+            <div v-if="currStock.symbol" class="info-name" style="margin-top: 0.15rem;">{{ currStock.name }}</div>
+          </div>
+          <div class="more_icon">
+            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 止盈止损 -->
     <template v-if="props.activeTab == 2">
 
@@ -32,10 +59,10 @@
             <template #right-con>
               <!-- 市价/限价 -->
               <div class="pricetype-modes">
-                <div class="pricetype-mode" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
+                <div class="pricetype-mode tab_ani" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
                   {{
                     t("trade.stock_opening_price_market") }}</div>
-                <div class="pricetype-mode" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
+                <div class="pricetype-mode tab_ani" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
                   {{
                     t("trade.stock_opening_price_limit") }}</div>
               </div>
@@ -97,31 +124,7 @@
         <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
       </div>
     </div> -->
-    <!-- 搜索 -->
-    <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
-      <div class="item">
-        <div class="tip-title" v-if="currStock.symbol">
-          <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
-          <Loading v-show="searchLoading" type="circular" style="width: 0.28rem; height: 0.28rem"
-            color="var(--ex-primary-color)" />
-          <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click.stop="openStockModel">
-            <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
-          </div>
-        </div>
-        <div class="info">
-          <div style="flex: 1;height: 100%;">
-            <div v-if="!currStock.symbol" style="color: var(--ex-text-color3);">{{
-              t("trade.stock_opening_stock")
-            }}</div>
-            <div class="info-symbol">{{ currStock.symbol }}</div>
-            <div v-if="currStock.symbol" class="info-name" style="margin-top: 0.15rem;">{{ currStock.name }}</div>
-          </div>
-          <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- 保证金模式 -->
     <div class="item_box">
@@ -168,7 +171,7 @@
           </template> -->
 
           <template #rt>
-            <div @click="openConfirmBox">
+            <div @click="openConfirmBox" class="mask-btn">
               <div
                 style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
                 <span>{{ t("assets.wallet_available_sim") }}</span>
@@ -188,7 +191,7 @@
 
 
     <!-- 按钮 -->
-    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
+    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit ripple-btn"
       :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
       <span style="color:var(--ex-white);">{{
         activeType == 1
@@ -198,16 +201,16 @@
 
     <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
       <div class="flex justify-between mb-[0.32rem]">
-        <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn"
+        <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
           @click="store.commit('setIsLoginOpen', true)">
           {{ t("trade.stock_opening_token_login") }}
         </div>
-        <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn"
+        <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
           @click="jump('register')">
           {{ t("trade.stock_opening_token_register") }}
         </div>
       </div>
-      <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+      <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
         ">
         {{ t("trade.contract_create_guest_btn") }}
       </div>
@@ -327,7 +330,7 @@
         <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
           @click="showPassword = false" />
       </div>
-      <Button :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>
+      <Button class="ripple-btn" :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>
         <span style="color: var(--ex-white);">{{ t("trade.stock_open") }}</span>
       </Button>
     </div>
@@ -499,7 +502,7 @@
           font-size: 0.28rem;
           margin: 0.64rem 0 0.4rem 0;
         ">
-        <div @click="router.push({ name: 'transfer' })" style="
+        <div class="ripple-btn" @click="router.push({ name: 'transfer' })" style="
             height: 0.8rem;
             width: 48%;
             display: flex;
@@ -511,7 +514,7 @@
           ">
           {{ t("trade.stock_opening_btn_transfer") }}
         </div>
-        <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary" style="
+        <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary ripple-btn" style="
             height: 0.8rem;
             width: 48%;
             display: flex;

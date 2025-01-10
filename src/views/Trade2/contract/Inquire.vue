@@ -12,7 +12,7 @@
     <NoData v-if="!loading && !contractInquireList.length" />
 
     <SwipeCell ref="items" v-for="(item, i) in contractInquireList" :key="i" disabled>
-      <div class="tr" @click="OpeningForm(item)">
+      <div class="tr mask-btn" @click="OpeningForm(item)">
         <div class="td td-5">
           <div class="name">{{ item.name }}</div>
           <div class="lever">

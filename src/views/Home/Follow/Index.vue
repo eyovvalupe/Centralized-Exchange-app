@@ -43,13 +43,18 @@
 
                 <NoData v-if="!loading2 && !myList.length" />
                 <div class="list-i" v-for="(item, i) in myList" :key="i">
-                    <MyFollowItem :item="item" :showDetail="true" />
+                    <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
                 </div>
             </template>
             <LoadingMore :loading="active == 1 ? loading : loading2" :finish="active == 1 ? finish : finish2"
                 v-if="((active == 1 ? finish : finish2) && list.length) || (!(active == 1 ? finish : finish2))" />
         </div>
     </div>
+
+     <!-- 详情 -->
+     <Popup v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
+        <FollowInfo @back="showInfo = false" style="width: 100%;height: 100%;" />
+     </Popup>
 </template>
 
 <script setup>
@@ -58,11 +63,11 @@ import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import FollowItem from "../components/FollowItem.vue"
 import MyFollowItem from "../components/MyFollowItem.vue"
-import { getStaticImgUrl } from "@/utils/index.js"
-import router from "@/router";
 import { _copyMycopy, _copyMyList, _copyList } from '@/api/api'
 import { ref, computed, onMounted, onUnmounted } from "vue"
 import store from "@/store";
+import { Popup } from "vant"
+import FollowInfo from "../Follow/FollowInfo.vue"
 
 const listDom = ref()
 const active = ref(1) // 1-跟单  2-订单
@@ -177,6 +182,18 @@ onUnmounted(() => {
         document.querySelector('.list').removeEventListener('scroll', scrolHandle)
     } catch { }
 })
+
+
+
+
+
+
+
+// 跟单详情
+const showInfo = ref(false)
+const openInfo = item => {
+    showInfo.value = true
+}
 </script>
 
 <style lang="less" scoped>
@@ -202,7 +219,7 @@ onUnmounted(() => {
             border-radius: 0.32rem;
             color: var(--ex-text-color7);
             font-size: 0.32rem;
-            transition: all ease-in .3s;
+            transition: all ease-in .1s;
         }
 
         .active_tab {

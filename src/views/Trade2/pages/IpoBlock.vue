@@ -1,6 +1,6 @@
 <!-- ipo相关 -->
 <template>
-  <Tabs class="ipo-block" type="custom-card" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" shrink>
+  <Tabs animated class="ipo-block" type="custom-card" @change="ipoOnChange" v-model:active="ipoActive" :swipeable="false" shrink>
     <Tab :title="'IPO'" class="optional">
       <IPO v-if="ipoActive == 0" :type="'trade'" ref="IPORef" />
     </Tab>

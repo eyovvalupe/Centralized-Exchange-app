@@ -5,7 +5,7 @@
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"
         @click="goInfo(props.item.type)">
-        <div :class="['stock_item']">
+        <div :class="['stock_item', 'mask-btn']">
           <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
             v-if="showIcon">
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{

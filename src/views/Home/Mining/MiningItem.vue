@@ -19,7 +19,7 @@
             </div>
             <div class="line-box"></div>
         </div>
-        <div class="btn">{{ t('finance.portfolio_participate') }}</div>
+        <div class="btn ripple-btn">{{ t('finance.portfolio_participate') }}</div>
     </div>
 </template>
 

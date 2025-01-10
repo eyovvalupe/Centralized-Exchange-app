@@ -17,7 +17,7 @@
                     <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div>
                 </div>
             </div>
-            <div class="btn" @click="goFollow">跟单</div>
+            <div class="btn ripple-btn" @click="goFollow">跟单</div>
         </div>
 
         <div class="info-box">

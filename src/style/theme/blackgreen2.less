@@ -517,14 +517,22 @@
     .ripple {
         position: absolute;
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.2);
         transform: scale(0);
         animation: ripple-animation 0.5s ease-out;
         pointer-events: none;
+        background-color: rgba(255, 255, 255, 0.3);
     }
 }
 .ripple-primary {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
     .ripple {
+        position: absolute;
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple-animation 0.5s ease-out;
+        pointer-events: none;
         background-color: rgba(0, 166, 9, 0.2);
     }
 }
@@ -567,4 +575,14 @@
     100% {
         opacity: 0.1;
     }
+}
+
+// 自定义tab切换动画
+.tab_ani {
+    transition: all ease-in .1s;
+}
+
+// 自定义元素切换动画
+.block_ani {
+    transition: all ease-in .3s;
 }

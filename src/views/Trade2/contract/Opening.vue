@@ -2,17 +2,17 @@
 <template>
   <div class="opening">
     <div class="type_tabs">
-      <div @click="activeType = 1" class="type_tab" :class="{ active_type_tab: activeType == 1 }">
+      <div @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
         {{ t("trade.stock_open_long_tab") }}
       </div>
-      <div @click="activeType = 2" class="type_tab" :class="{ active_type_tab: activeType == 2 }">
+      <div @click="activeType = 2" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 2 }">
         {{ t("trade.stock_open_short_tab") }}
       </div>
     </div>
 
     <!-- Tabs -->
     <div class="open_tab_box">
-      <Tabs key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
+      <Tabs animated key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
         :color="'var(--ex-primary-color)'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"

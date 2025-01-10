@@ -18,10 +18,10 @@
                     </div>
                 </div>
             </div>
-            <div class="btn">跟单</div>
+            <div class="btn ripple-btn">跟单</div>
         </div>
 
-        <Tabs type="custom-line" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+        <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'" shrink
             @change="onChange">
             <Tab :title="'表现'" name="0">
                 <div class="follow-box">
@@ -89,7 +89,7 @@
                             <div class="td">投资金额</div>
                             <div class="td td2 td-l">预期盈亏</div>
                         </div>
-                        <div class="tr" v-for="i in 10" :key="i">
+                        <div class="tr mask-btn" v-for="i in 10" :key="i">
                             <div class="td td-s">
                                 <div class="name">SDFSD</div>
                                 <div class="fever">20X</div>
@@ -113,7 +113,7 @@
                         <div class="td">带单总金额</div>
                         <div class="td td-l">收益</div>
                     </div>
-                    <div class="tr" v-for="i in 20" :key="i">
+                    <div class="tr mask-btn" v-for="i in 20" :key="i">
                         <div class="td">
                             <div class="user">
                                 <div class="avatar"></div>
@@ -292,6 +292,7 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
                     height: 100%;
                     background-color: var(--ex-up-color);
                     position: relative;
+                    transition: all ease-in .3s;
 
                     &::after {
                         content: '';

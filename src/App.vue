@@ -120,8 +120,8 @@ onMounted(() => {
 
   // 这里处理点击效果
   document.body.addEventListener('touchstart', function (e) {
-    // 判断触摸目标是否是按钮  水波纹效果
-    const button = e.target.closest('.ripple-btn');
+    // 判断触摸目标是否是按钮  水波纹效果 
+    const button = e.target.closest('.ripple-btn') || e.target.closest('.ripple-primary');
     if (button) {
       // 创建水波纹元素
       const ripple = document.createElement('span');

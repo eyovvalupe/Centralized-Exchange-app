@@ -1,91 +1,6 @@
 <!-- 开仓表单 -->
 <template>
   <div class="form">
-    <!-- 止盈止损 -->
-    <template v-if="props.activeTab == 2">
-      <!-- 简单模式 -->
-      <FormItem :placeholder="activeType == 1
-        ? t('trade.stock_opening_take')
-        : t('trade.stock_opening_stop')
-        " class="mb-[0.4rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
-          ? [
-            { label: '-20%', value: 20 },
-            { label: '-15%', value: 15 },
-            { label: '-10%', value: 10 },
-          ]
-          : [
-            { label: '+20%', value: 20 },
-            { label: '+15%', value: 15 },
-            { label: '+10%', value: 10 },
-          ]
-          " @percentTagClick="setPriceStop" v-if="mode == 1" />
-
-      <!-- 价格 -->
-
-      <div class="item_box">
-        <div class="item_box_left" @click="showPriceTypeDialog = true">
-          <div class="subtitle">
-            <span>{{ t("trade.stock_opening_price") }}</span>
-          </div>
-          <div class="item" style="justify-content: center">
-            <span>
-              {{
-                priceMode == 1
-                  ? t("trade.stock_opening_price_market")
-                  : t("trade.stock_opening_price_limit")
-              }}
-            </span>
-            <div class="more_icon">
-              <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
-            </div>
-          </div>
-        </div>
-        <div class="item_box_right">
-          <div class="subtitle">
-            <span>&nbsp;</span>
-          </div>
-          <FormItem custom disabled v-if="priceMode == 1">
-            <span style="color: var(--ex-text-color4)">{{
-              t("trade.stock_opening_price_latest")
-            }}</span>
-          </FormItem>
-
-          <FormItem v-model="form1.price" input-type="number" :percent-tags="props.activeType == 1
-            ? [
-              { label: '-3%', value: 3 },
-              { label: '-1%', value: 1 },
-            ]
-            : [
-              { label: '+3%', value: 3 },
-              { label: '+1%', value: 1 },
-            ]
-            " v-else @percentTagClick="percentTagClick">
-          </FormItem>
-        </div>
-
-        <!-- <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
-                    1 ? '市价' : '限价' }}</div> -->
-      </div>
-    </template>
-
-    <!-- 价格 -->
-    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
-      :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
-        ? [
-          { label: '-3%', value: 3 },
-          { label: '-2%', value: 2 },
-          { label: '-1%', value: 1 },
-          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-        ]
-        : [
-          { label: '+3%', value: 3 },
-          { label: '+2%', value: 2 },
-          { label: '+1%', value: 1 },
-          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-        ]
-        " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
-
-    <!-- 合约 -->
 
     <!-- 搜索 -->
     <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
@@ -115,6 +30,92 @@
         </div>
       </div>
     </div>
+
+    <!-- 止盈止损 -->
+    <template v-if="props.activeTab == 2">
+      <!-- 简单模式 -->
+      <FormItem :placeholder="activeType == 1
+        ? t('trade.stock_opening_take')
+        : t('trade.stock_opening_stop')
+        " class="mb-[0.4rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
+          ? [
+            { label: '-20%', value: 20 },
+            { label: '-15%', value: 15 },
+            { label: '-10%', value: 10 },
+          ]
+          : [
+            { label: '+20%', value: 20 },
+            { label: '+15%', value: 15 },
+            { label: '+10%', value: 10 },
+          ]
+          " @percentTagClick="setPriceStop" v-if="mode == 1" />
+
+      <!-- 价格 -->
+      <div class="item_box">
+        <div class="item_box_right">
+          <FormItem custom disabled v-if="priceMode == 1">
+            <span style="color: var(--ex-text-color4);font-size: 0.32rem;">{{
+              t("trade.stock_opening_price_latest")
+            }}</span>
+            <template #right-con>
+              <!-- 市价/限价 -->
+              <div class="pricetype-modes">
+                <div class="pricetype-mode tab_ani" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
+                  {{
+                    t("trade.stock_opening_price_market") }}</div>
+                <div class="pricetype-mode tab_ani" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
+                  {{
+                    t("trade.stock_opening_price_limit") }}</div>
+              </div>
+            </template>
+          </FormItem>
+
+          <FormItem :placeholder="t('trade.stock_opening_price')" v-model="form1.price" input-type="number" :percent-tags="props.activeType == 1
+            ? [
+              { label: '-3%', value: 3 },
+              { label: '-1%', value: 1 },
+            ]
+            : [
+              { label: '+3%', value: 3 },
+              { label: '+1%', value: 1 },
+            ]
+            " v-else @percentTagClick="percentTagClick">
+            <template #right-con>
+              <!-- 市价/限价 -->
+              <div class="pricetype-modes">
+                <div class="pricetype-mode" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
+                  {{
+                    t("trade.stock_opening_price_market") }}</div>
+                <div class="pricetype-mode" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
+                  {{
+                    t("trade.stock_opening_price_limit") }}</div>
+              </div>
+            </template>
+          </FormItem>
+        </div>
+
+        <!-- <div class="mode_btn" @click="changePriceMode" :class="{ 'active_btn': priceMode == 2 }">{{ priceMode ==
+                    1 ? '市价' : '限价' }}</div> -->
+      </div>
+    </template>
+
+    <!-- 价格 -->
+    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
+      :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
+        ? [
+          { label: '-3%', value: 3 },
+          { label: '-2%', value: 2 },
+          { label: '-1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
+        : [
+          { label: '+3%', value: 3 },
+          { label: '+2%', value: 2 },
+          { label: '+1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
+        " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
+
 
     <!-- 保证金模式 -->
     <div class="item_box">
@@ -174,7 +175,7 @@
             </div>
           </template>
           <template #rt>
-            <div @click="openConfirmBox">
+            <div @click="openConfirmBox" class="mask-btn">
               <div
                 style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
                 <span>{{ t("assets.wallet_available_sim") }}</span>
@@ -193,7 +194,7 @@
     </div>
 
     <!-- 按钮 -->
-    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit"
+    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit ripple-btn"
       :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
       <span style="color: var(--ex-white);">{{
         activeType == 1
@@ -340,7 +341,7 @@
         <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
           @click="showPassword = false" />
       </div>
-      <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit"
+      <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit ripple-btn"
         color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{ t("trade.stock_open")
           }}</span></Button>
     </div>
@@ -521,7 +522,7 @@
           font-size: 0.28rem;
           margin: 0.64rem 0 0.4rem 0;
         ">
-        <div @click="router.push({ name: 'transfer' })" style="
+        <div class="ripple-btn" @click="router.push({ name: 'transfer' })" style="
             height: 0.8rem;
             width: 48%;
             display: flex;
@@ -533,7 +534,7 @@
           ">
           {{ t("trade.ai_opening_pop_transfer") }}
         </div>
-        <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary" style="
+        <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary ripple-btn" style="
             height: 0.8rem;
             width: 48%;
             display: flex;
@@ -1504,6 +1505,34 @@ defineExpose({
     .item_box_right {
       flex: 1;
     }
+    .pricetype-modes {
+      height: 0.6rem;
+      border-radius: 0.2rem;
+      margin-left: 0.32rem;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      z-index: 99;
+      background-color: var(--ex-bg-color3);
+
+      .pricetype-mode {
+
+        color: var(--ex-text-color2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 0.16rem;
+        font-size: 0.24rem;
+        line-height: 400;
+      }
+
+      .pricetype-mode-active {
+        background-color: var(--ex-white);
+        color: var(--ex-bg-color);
+        border-radius: 0.2rem;
+      }
+    }
+
 
     .mode_btn {
       padding: 0 0.6rem;

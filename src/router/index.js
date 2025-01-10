@@ -21,6 +21,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -31,6 +32,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -41,6 +43,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 2,
     },
   },
   {
@@ -51,6 +54,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 3,
     },
   },
   {
@@ -72,6 +76,7 @@ const routes = [
       keepAlive: false,
       pageType: 'child',
       pageDeep: 1,
+      pageDeep: 1,
     },
   },
   {
@@ -82,7 +87,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 2,
+      pageDeep: 1,
     },
   },
   {
@@ -93,6 +98,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -103,6 +109,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -113,6 +120,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -123,6 +131,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -133,6 +142,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -143,6 +153,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -153,6 +164,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -163,6 +175,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -173,6 +186,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -183,18 +197,9 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
-  // {
-  //   // 添加加密货币
-  //   path: '/crypto',
-  //   name: 'crypto',
-  //   component: () => import('../views/User/Account/Crypto.vue'),
-  //   meta: {
-  //     keepAlive: false,
-  //     pageType: 'child',
-  //   },
-  // },
   {
     // 市场
     path: '/market',
@@ -213,6 +218,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -223,6 +229,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -233,6 +240,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -243,6 +251,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -253,6 +262,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -263,6 +273,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 3,
     },
   },
   {
@@ -273,6 +284,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
 
@@ -284,6 +296,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -334,6 +347,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -344,6 +358,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -354,6 +369,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -364,6 +380,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
  
@@ -417,16 +434,6 @@ const routes = [
       pageType: 'tab',
     },
   },
-  // {
-  //   // 账户
-  //   path: '/wallet',
-  //   name: 'wallet',
-  //   component: () => import('../views/assets/page/Wallet.vue'),
-  //   meta: {
-  //     keepAlive: true,
-  //     pageType: 'tab',
-  //   },
-  // },
   {
     // 划转
     path: '/transfer',
@@ -435,6 +442,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -445,6 +453,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -455,6 +464,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -465,6 +475,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -475,6 +486,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -485,6 +497,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -495,6 +508,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -505,6 +519,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -515,6 +530,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -525,6 +541,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -535,6 +552,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -545,6 +563,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -555,6 +574,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -565,6 +585,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -575,6 +596,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -585,6 +607,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -596,6 +619,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -605,6 +629,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 3,
     },
   },
   {
@@ -614,6 +639,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -624,6 +650,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -634,6 +661,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -644,6 +672,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -653,6 +682,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -670,7 +700,8 @@ const routes = [
     component: () => import('../views/Finance/Trade.vue'),
     meta: {
       keepAlive: false,
-      pageType: 'child'
+      pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -679,7 +710,8 @@ const routes = [
     component: () => import('../views/Finance/PledgeOrderDetail.vue'),
     meta: {
       keepAlive: false,
-      pageType: 'child'
+      pageType: 'child',
+      pageDeep: 1,
     },
   },
   {
@@ -688,7 +720,8 @@ const routes = [
     component: () => import('../views/Finance/StakingOrderDetail.vue'),
     meta: {
       keepAlive: false,
-      pageType: 'child'
+      pageType: 'child',
+      pageDeep: 1,
     },
   },
   {

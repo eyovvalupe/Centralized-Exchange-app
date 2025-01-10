@@ -1,7 +1,7 @@
 <!-- 中签 -->
 <template>
   <div v-if="token" class="page_ipo_stock">
-    <Tabs class="van-tabs--sub" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"
+    <Tabs animated class="van-tabs--sub" v-model:active="ipoActive" :swipeable="false" @change="ipoOnChange"
       :color="'var(--ex-primary-color)'" shrink v-if="props.from != 'assets'">
       <Tab :title="t('trade.ipo_lottery_title1')" name=""> </Tab>
       <Tab :title="t('trade.ipo_lottery_title2')" name="lock"> </Tab>
@@ -9,7 +9,7 @@
       <Tab :title="t('trade.ipo_lottery_title4')" name="failure"> </Tab>
     </Tabs>
     <div class="list">
-      <div class="item" v-for="(item, i) in ipoStockList" :key="i" @click="ipoOrderDetail(item)">
+      <div class="item " v-for="(item, i) in ipoStockList" :key="i" @click="ipoOrderDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -21,8 +21,6 @@
               item.winning || "--"
             }}</strong>
           </div>
-
-
           <!-- 已中签 -->
           <div class="status_ing2 status_success" v-if="item.status == 'success'">
             {{ t("trade.ipo_lottery_title3") }}
@@ -36,7 +34,7 @@
             {{ t("trade.ipo_lottery_title2") }}
           </div>
         </div>
-        <div class="item_info">
+        <div class="item_info mask-btn">
           <div class="info_cell">
             <span class="info_name">{{ t("trade.ipo_detail_item10") }}</span>
             <span class="info_val">{{ item.volume || "--"
@@ -55,8 +53,6 @@
             <span class="info_name">{{ t("trade.ipo_detail_item6") }}</span>
             <span class="info_val">{{ item.listed_price || "--" }}</span>
           </div>
-
-
         </div>
       </div>
 

@@ -16,7 +16,7 @@
             </Tab>
         </Tabs> -->
     <div class="list" :class="props.page == 'home' && 'mt-[-0.32rem]'">
-      <div class="item" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
+      <div class="item " v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -49,7 +49,7 @@
             {{ t("trade.ipo_title_finish") }}
           </div>
         </div>
-        <div class="item_info" :class="{
+        <div class="item_info mask-btn" :class="{
           item_info_nobb: item.status != 'issuing' && item.status != 'listed',
         }">
           <div class="info_cell">
@@ -84,7 +84,7 @@
           (item.status == 'issuing' || item.status == 'listed') &&
           props.page != 'home'
         ">
-          <div class="btn" @click.stop="goBuy(item)">
+          <div class="btn ripple-btn" @click.stop="goBuy(item)">
             {{ t("trade.ipo_opening_btn") }}
           </div>
         </div>

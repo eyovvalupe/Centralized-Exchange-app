@@ -14,11 +14,11 @@
       <FormItem :placeholder="$t('assets.safety_trade_pw')" v-model="val" input-type="password" />
 
       <div class="btns">
-        <Button round class="btn" @click="close">
+        <Button round class="btn ripple-primary" @click="close">
           <span style="color: var(--ex-text-color2)"><span style="color: var(--ex-white);">{{
             $t("assets.safety_trade_cancel") }}</span></span>
         </Button>
-        <Button :loading="loading" round class="btn" type="primary" @click="submit"><span
+        <Button :loading="loading" round class="btn ripple-btn" type="primary" @click="submit"><span
             style="color: var(--ex-white);">{{
               $t("assets.safety_trade_confirm") }}</span></Button>
       </div>

@@ -94,30 +94,30 @@
       <!-- 图表 -->
       <div class="chart_box">
         <div class="tabs">
-          <div class="tab" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
+          <div class="tab tab_ani" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
             Time
           </div>
-          <div class="tab" @click="showPicker = true" :class="{ active_tab: minList.includes(timeType) }">
+          <div class="tab tab_ani" @click="showPicker = true" :class="{ active_tab: minList.includes(timeType) }">
             {{ currMin }}
             <Icon style="transform: rotate(90deg)" size="0.16rem" class="ml-[0.06rem]" name="play" />
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
+          <div class="tab tab_ani" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
             1h
           </div>
-          <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '4h' }"
+          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '4h' }"
             @click="changeType('4h')">
             4h
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1D' }" @click="changeType('1D')">
+          <div class="tab tab_ani" :class="{ active_tab: timeType == '1D' }" @click="changeType('1D')">
             1D
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1W' }" @click="changeType('1W')">
+          <div class="tab tab_ani" :class="{ active_tab: timeType == '1W' }" @click="changeType('1W')">
             1W
           </div>
-          <div class="tab" :class="{ active_tab: timeType == '1M' }" @click="changeType('1M')">
+          <div class="tab tab_ani" :class="{ active_tab: timeType == '1M' }" @click="changeType('1M')">
             1M
           </div>
-          <div class="tab" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '1Y' }"
+          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '1Y' }"
             @click="changeType('1Y')">
             1Y
           </div>
@@ -143,13 +143,13 @@
     <!-- 操作 -->
     <div class="market_bottom" v-if="!props.innerPage">
 
-      <div class="bottom_btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
+      <div class="bottom_btn ripple-btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
         <span class="bottom_btn_icon">
           <img :src="getStaticImgUrl('/static/img/market/up.svg')" />
         </span>
         <span>{{ t("market.market_marketinfo_long") }}</span>
       </div>
-      <div class="bottom_btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
+      <div class="bottom_btn ripple-btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
         <span class="bottom_btn_icon">
           <img :src="getStaticImgUrl('/static/img/market/down.svg')" />
         </span>

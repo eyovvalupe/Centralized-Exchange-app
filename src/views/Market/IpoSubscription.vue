@@ -14,7 +14,7 @@
             <div class="h-[1.12rem]"></div>
         </div>
 
-        <div class="ipo_info" @click="ipoDetail">
+        <div class="ipo_info mask-btn" @click="ipoDetail">
             <div class="ipo_info_lt">
                 <div class="ipo_info_name">{{ currIpo.company_name }}<span v-if="currIpo.lever > 1"
                         class="lever_icon">{{
@@ -71,8 +71,8 @@
             </div>
 
         </div>
-        <Button @click="openSafe" :loading="loading" round size="large" color="var(--ex-primary-color)" class="submit"
-            type="primary"><span style="color: var(--ex-white);">{{
+        <Button @click="openSafe" :loading="loading" round size="large" color="var(--ex-primary-color)"
+            class="submit ripple-btn" type="primary"><span style="color: var(--ex-white);">{{
                 t('trade.ipo_opening_btn') }}</span></Button>
 
 
@@ -133,7 +133,7 @@
                     :placeholder="$t('trade.stock_opening_trade_pw')">
                 </FormItem>
 
-                <Button :loading="loading" @click="submit(safeword)" size="large" class="submit"
+                <Button :loading="loading" @click="submit(safeword)" size="large" class="submit ripple-btn"
                     color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{
                         $t("trade.ipo_opening_btn") }}</span></Button>
             </div>
@@ -219,7 +219,7 @@
                         </div>
                         <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
                             mainWallet.amount
-                            }}</b>
+                        }}</b>
                     </div>
                 </div>
 
@@ -232,7 +232,7 @@
           font-size: 0.28rem;
           margin: 0.64rem 0 0.4rem 0;
         ">
-                    <div @click="router.push({ name: 'transfer' })" style="
+                    <div class="ripple-btn" @click="router.push({ name: 'transfer' })" style="
             height: 0.8rem;
             width: 48%;
             display: flex;
@@ -244,7 +244,7 @@
           ">
                         {{ t("trade.ai_opening_pop_transfer") }}
                     </div>
-                    <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary" style="
+                    <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary ripple-btn" style="
             height: 0.8rem;
             width: 48%;
             display: flex;
@@ -357,6 +357,7 @@ const openSafe = () => {
 // 提交表单
 const submit = (s) => {
     if (loading.value) return
+    if (!s) return
     const params = {
         volume: form.value.volume,
         keyword: activeTab.value == 1 ? form.value.keyword : '',

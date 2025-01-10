@@ -1,6 +1,6 @@
 <!-- ai交易元素 -->
 <template>
-  <div class="ai_item" @click="clickItem">
+  <div class="ai_item mask-btn" @click="clickItem">
     <div class="top">
       <div class="tl">
         <div class="name">{{ item.name }}</div>

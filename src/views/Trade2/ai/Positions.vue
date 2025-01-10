@@ -3,7 +3,7 @@
     <div class="page_ai_position">
         <NoData v-if="!loading && !aiPositionsList.length" />
         <div class="list">
-            <div class="item" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)"
+            <div class="item mask-btn" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)"
                 v-show="item.endtime > 0">
                 <div class="ai_icon">
                     <img :src="getStaticImgUrl('/static/img/trade/ai.svg')" alt="ai">

@@ -4,7 +4,7 @@
 
         <NoData v-if="!loading && !aiInquireList.length" />
         <div class="list">
-            <div class="item" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">
+            <div class="item mask-btn" v-for="(item, i) in aiInquireList" :key="i" @click="openInfo(item)">
                 <div class="ai_icon">
                     <img :src="getStaticImgUrl('/static/img/trade/ai.svg')" alt="ai">
                 </div>

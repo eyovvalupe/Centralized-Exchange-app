@@ -49,8 +49,8 @@
         </div>
 
         <div class="btns">
-            <div class="btn cancel" @click="cancel">取消跟单</div>
-            <div class="btn add" @click="plus">追加跟单</div>
+            <div class="btn cancel ripple-primary" @click="cancel">取消跟单</div>
+            <div class="btn add ripple-btn" @click="plus">追加跟单</div>
         </div>
     </div>
 
@@ -61,8 +61,8 @@
             <div class="text-con">确定取消该跟单吗？</div>
 
             <div class="btns">
-                <div class="btn" @click="showCancel = false">不取消</div>
-                <div class="btn btn2" @click="openCancelPass">确定</div>
+                <div class="btn ripple-primary" @click="showCancel = false">不取消</div>
+                <div class="btn btn2 ripple-btn" @click="openCancelPass">确定</div>
             </div>
         </div>
     </BottomPopup>
@@ -111,10 +111,12 @@
             </div>
 
             <div class="btns btns2">
-                <div class="btn btn2 btn3" @click="submitPlus">确定</div>
+                <div class="btn btn2 btn3 ripple-btn" @click="submitPlus">确定</div>
             </div>
         </div>
     </BottomPopup>
+
+   
 </template>
 
 <script setup>
@@ -127,7 +129,8 @@ import { showToast } from "vant"
 import SafePassword from "@/components/SafePassword.vue";
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
-import router from "@/router";
+
+const emits = defineEmits(['openInfo', 'plus', 'cancel'])
 
 const safeRef = ref()
 
@@ -146,7 +149,6 @@ const props = defineProps({
         default: false
     }
 })
-const emits = defineEmits(['plus', 'cancel'])
 const wallet = computed(() => store.state.wallet || []);
 const stockWalletAmount = computed(() => {
   // 钱包余额
@@ -257,11 +259,10 @@ const changePercent = val => {
 
 
 // 跳转
+
 const goInfo = () => {
     if (props.stopJump) return
-    router.push({
-        name: 'followInfo'
-    })
+    emits('openInfo', {})
 }
 </script>
 

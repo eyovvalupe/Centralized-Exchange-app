@@ -28,27 +28,24 @@
 
 
             <!-- banner -->
-            <view @click="install" class="banners">
+            <view @click="install" class="banners wow pulse">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
-                        <img :src="getStaticImgUrl('/static/home2/banner.png')" alt="">
+                        <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
                     </SwipeItem>
                     <SwipeItem class="swiper-item">
-                        <img :src="getStaticImgUrl('/static/home2/banner.png')" alt="">
-                    </SwipeItem>
-                    <SwipeItem class="swiper-item">
-                        <img :src="getStaticImgUrl('/static/home2/banner.png')" alt="">
+                        <img :src="getStaticImgUrl('/static/home2/banner2.png')" alt="">
                     </SwipeItem>
                 </Swipe>
             </view>
 
             <!-- 质押挖矿 -->
             <div class="recommend-title">
-                <div class="point">
+                <div class="point wow slideInLeft">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
-                <div class="recommend-icon" @click="jump('finance', true, 1)">
+                <div class="wow slideInLeft" style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
+                <div class="recommend-icon wow slideInRight" @click="jump('finance', true, 1)">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -59,39 +56,37 @@
                 </div>
             </div>
 
-            <div class="sub-banner">
+            <div class="sub-banner wow pulse">
                 <img :src="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
-
             <!-- 跟单 -->
-            <div class="recommend-title" @click="jump('follow', false)">
-                <div class="point">
+            <div data-wow-duration="2s" class="recommend-title" @click="jump('follow', false)">
+                <div class="point wow slideInLeft">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">{{ t('copy.title') }}</div>
-                <div class="recommend-icon">
+                <div class="wow slideInLeft" style="flex: 1;">{{ t('copy.title') }}</div>
+                <div class="recommend-icon wow slideInRight">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
             <div>
-                <div class="follow-btn">{{ t('copy.copy_option') }}</div>
+                <div class="follow-btn wow slideInLeft">{{ t('copy.copy_option') }}</div>
             </div>
             <div class="scroll-box">
                 <div class="scroll-con">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
-                        <FollowItem :item="item"  />
+                        <FollowItem :item="item" />
                     </div>
-                    
                 </div>
             </div>
 
             <!-- 市场推荐 -->
             <div class="recommend-title" style="margin-top: 0.8rem;">
-                <div class="point">
+                <div class="point wow slideInLeft">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">{{ t('home.market_trend') }}</div>
-                <div class="recommend-icon">
+                <div class="wow slideInLeft" style="flex: 1;">{{ t('home.market_trend') }}</div>
+                <div class="recommend-icon wow slideInRight">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -131,7 +126,7 @@
 
 
             <!-- ad -->
-            <div class="ad">
+            <div class="ad wow pulse">
 
                 <div class="ad-bg"
                     :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }"></div>
@@ -147,37 +142,37 @@
 
             <!-- links -->
             <div class="links">
-                <div class="link-item">
+                <div class="link-item wow slideInLeft">
                     <div class="item-img">
                         <img :src="getStaticImgUrl('/static/home2/link1.png')" alt="">
                     </div>
                     <div>TheSantumNe...</div>
                 </div>
-                <div class="link-item">
+                <div class="link-item wow slideInRight">
                     <div class="item-img">
                         <img :src="getStaticImgUrl('/static/home2/link2.png')" alt="">
                     </div>
                     <div>KEEPOFFTHE...</div>
                 </div>
-                <div class="link-item">
+                <div class="link-item wow slideInLeft">
                     <div class="item-img">
                         <img :src="getStaticImgUrl('/static/home2/link3.png')" alt="">
                     </div>
                     <div>AIORBIT</div>
                 </div>
-                <div class="link-item">
+                <div class="link-item wow slideInRight">
                     <div class="item-img">
                         <img :src="getStaticImgUrl('/static/home2/link4.png')" alt="">
                     </div>
                     <div>GodsUnchained...</div>
                 </div>
-                <div class="link-item">
+                <div class="link-item wow slideInLeft">
                     <div class="item-img">
                         <img :src="getStaticImgUrl('/static/home2/link5.png')" alt="">
                     </div>
                     <div>PudgyRods</div>
                 </div>
-                <div class="link-item">
+                <div class="link-item wow slideInRight">
                     <div class="item-img">
                         <img :src="getStaticImgUrl('/static/home2/link6.png')" alt="">
                     </div>
@@ -188,11 +183,11 @@
 
             <!-- 市场推荐 -->
             <div class="recommend-title" style="margin-top: 0.36rem;">
-                <div class="point">
+                <div class="point wow slideInLeft">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div style="flex: 1;">{{ t('home.news') }}</div>
-                <div class="recommend-icon">
+                <div class="wow slideInLeft" style="flex: 1;">{{ t('home.news') }}</div>
+                <div class="recommend-icon wow slideInRight">
                     <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -223,6 +218,8 @@ import { useSocket } from "@/utils/ws";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
 import MiningItem from "../Mining/MiningItem.vue"
 import FollowItem from "../components/FollowItem.vue"
+import Wow from "wow.js"
+import 'wow.js/css/libs/animate.css';  // 引入动画库样式
 
 
 // 安装
@@ -422,6 +419,17 @@ onMounted(() => {
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();
+
+    setTimeout(() => {
+        const wow = new Wow({
+            boxClass: 'wow',
+            animateClass: 'animated',
+            mobile: true,
+            live: true,
+        })
+        console.error(wow)
+        wow.init()
+    }, 500)
 });
 
 
@@ -547,6 +555,7 @@ const followList = ref([
 
             .scroll-con {
                 white-space: nowrap;
+
                 .scroll-item-follow {
                     width: 6.04rem;
                     height: 3.32rem;

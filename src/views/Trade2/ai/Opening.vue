@@ -6,10 +6,10 @@
     <div style="height: 1.12rem" v-if="mode == 'popup'"></div>
     <div class="tabs-container">
       <div class="type_tabs">
-        <div @click="tab = 1" class="type_tab" :class="{ active_type_tab: tab == 1 }">
+        <div @click="tab = 1" class="type_tab tab_ani" :class="{ active_type_tab: tab == 1 }">
           <span class="type_tab_text">{{ t('trade.ai_opening_long') }}</span>
         </div>
-        <div @click="tab = 2" class="type_tab" :class="{ active_type_tab: tab == 2 }">
+        <div @click="tab = 2" class="type_tab tab_ani" :class="{ active_type_tab: tab == 2 }">
           <span class="type_tab_text">{{ t('trade.ai_opening_short') }}</span>
         </div>
       </div>
@@ -41,7 +41,7 @@
                         
                     </div> -->
           <div class="time_list">
-            <div class="time" @click="currTime = obj" :class="{
+            <div class="time block_ani" @click="currTime = obj" :class="{
               curr_time:
                 currTime.time == obj.time && currTime.unit == obj.unit,
             }" v-for="(obj, i) in times" :key="i">
@@ -110,22 +110,22 @@
       </div>
       <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
         <div class="flex justify-between mb-[0.32rem]">
-          <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn"
+          <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
             @click="store.commit('setIsLoginOpen', true)">
             {{ t("trade.stock_opening_token_login") }}
           </div>
-          <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn"
+          <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
             @click="jump('register')">
             {{ t("trade.stock_opening_token_register") }}
           </div>
         </div>
-        <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+        <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
           ">
           {{ t("trade.contract_create_guest_btn") }}
         </div>
       </div>
       <div class="btns" v-else>
-        <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn"
+        <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn ripple-btn"
           :color="tab == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
           <span style="color: var(--ex-white);">{{
             tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
@@ -183,7 +183,7 @@
           :placeholder="t('trade.stock_opening_trade_pw')">
         </FormItem>
 
-        <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit"
+        <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit ripple-btn"
           color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{
             t("trade.ai_opening_confirm_btn")
           }}</span></Button>

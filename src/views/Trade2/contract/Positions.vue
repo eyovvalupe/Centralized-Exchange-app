@@ -12,7 +12,7 @@
     <NoData v-if="!contractPositionsList.length && !loading" />
     <Loaidng size="0.32rem" :loading="loading" v-if="!contractPositionsList.length && loading" />
 
-    <div class="tr" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
+    <div class="tr mask-btn" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
       <div class="td td-5">
         <div class="name van-omit1">{{ item.name }}</div>
         <div class="lever">
@@ -118,7 +118,7 @@
             :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
-          <Button class="submit" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
+          <Button class="submit ripple-btn" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
             <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
@@ -172,7 +172,7 @@
             :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
-          <Button @click="goUpdateDialog" class="submit" round size="large" :loading="updateLoading" type="primary"
+          <Button @click="goUpdateDialog" class="submit ripple-btn" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
             <span style="color: var(--ex-white);">{{ t('trade.stock_position_btn') }}</span>
           </Button>
