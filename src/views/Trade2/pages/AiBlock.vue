@@ -94,7 +94,7 @@ const handleMounted = () => {
   loadTab.value = []
   setTimeout(() => {
     onChange(active.value)
-  }, 300);
+  }, 0);
 };
 
 

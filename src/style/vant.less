@@ -11,6 +11,10 @@
     --van-button-primary-color: var(--ex-text-color--bg-primary);
     --van-button-default-background: var(--ex-bg-color3);
 
+    --van-duration-base: 0.2s;
+    --van-duration-fast: 0.12s;
+    --van-ease-out: ease-out;
+    --van-ease-in: ease-in;
 }
 
 .van-toast--loading {
@@ -70,7 +74,10 @@ body .van-popup--bottom:not(.ex-bottom-popup) {
 
 }
 body {
-    
+    .van-swipe__track {
+        transition-duration: 200ms!important;
+        transition-timing-function: ease-in;
+    }
     .van-popup-custom-title {
         height: 0.44rem;
         line-height: 0.44rem;

@@ -85,7 +85,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round class="submit" type="primary">
+      <Button :loading="loading" :disabled="disabled" round class="submit waves-effect waves-light" type="primary">
         <span style="color: var(--ex-white);">{{
           $t("login.login") }}</span></Button>
     </div>

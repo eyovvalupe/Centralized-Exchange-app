@@ -285,7 +285,7 @@ const reDir = () => {
 
   setTimeout(() => {
     changeActiveTab(activeTab.value, prevActiveTabVal != activeTab.value, true);
-  }, 300);
+  }, 100);
 };
 
 const swipeChange = (index) => {
@@ -398,7 +398,7 @@ const swipeResize = () => {
   swiperTimeout = setTimeout(() => {
     swipeRef.value && swipeRef.value.swipeTo(activeTab.value)
     swipeRef.value && swipeRef.value.resize();
-  }, 300);
+  }, 1000);
 };
 
 const pageActive = ref(false);

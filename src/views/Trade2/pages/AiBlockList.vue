@@ -51,7 +51,7 @@ const pageLoading = ref(true)
 const handleMounted = () => {
     setTimeout(() => {
         pageLoading.value = false
-    }, 300)
+    }, 0)
 }
 onMounted(() => {
     handleMounted()
