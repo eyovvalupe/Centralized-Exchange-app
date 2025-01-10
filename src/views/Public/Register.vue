@@ -591,7 +591,7 @@ onMounted(() => {
       // background-color: var(--ex-bg-color2);
       // border-radius: 0.3rem;
       // margin-left: 0.1rem;
-      // transition: all ease .2s;
+      // transition: all ease-in .2s;
     }
 
     :deep(.van-tab--card.van-tab--active) {

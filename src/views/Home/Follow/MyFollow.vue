@@ -50,7 +50,7 @@
           }" style="
                 color: var(--ex-primary-color);
                 word-break: keep-all;
-                transition: all ease 0.3s;
+                transition: all ease-in 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
 
           <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">

@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
 
         .arrow {
             margin-right: 0.2rem;
-            transition: all ease .8s;
+            transition: all ease-in .8s;
         }
 
         .arrow_active {
@@ -237,7 +237,7 @@ onBeforeUnmount(() => {
         height: 0;
         padding: 0 0 0 0;
         overflow: hidden;
-        transition: all ease .3s;
+        transition: all ease-in .3s;
     }
 
     .open_list {
@@ -256,7 +256,7 @@ onBeforeUnmount(() => {
         // background-color: var(--ex-bg-color2);
         // border-radius: 0.3rem;
         // margin-left: 0.1rem;
-        // transition: all ease .2s;
+        // transition: all ease-in .2s;
     }
 
     .van-tab--card.van-tab--active {

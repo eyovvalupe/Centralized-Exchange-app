@@ -455,7 +455,7 @@ onBeforeUnmount(() => {
                 font-weight: 400;
                 font-size: 0.28rem;
                 color: var(--ex-text-color);
-                transition: all ease .2s;
+                transition: all ease-in .2s;
 
                 &:last-child {
                     margin-right: 0;
@@ -534,7 +534,7 @@ onBeforeUnmount(() => {
                     top: 50%;
                     transform: translateY(-50%);
                     pointer-events: none;
-                    transition: all ease .2s;
+                    transition: all ease-in .2s;
 
                     span {
                         // color: var(--ex-text-color);
@@ -602,7 +602,7 @@ onBeforeUnmount(() => {
                     height: 100%;
                     background-color: var(--ex-primary-color);
                     border-radius: 0.32rem;
-                    transition: all ease .1s;
+                    transition: all ease-in .1s;
                     pointer-events: none;
 
                     .slider_ball {

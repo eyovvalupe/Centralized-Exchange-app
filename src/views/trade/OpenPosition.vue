@@ -693,7 +693,7 @@ defineExpose({
     height: 0.88rem;
     border-radius: 0.12rem;
     border: 0.02rem solid var(--ex-border-color2);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in;
 
     &.border_item {
       input {

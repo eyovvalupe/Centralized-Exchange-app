@@ -533,7 +533,7 @@ const changeAmount = (val) => {
     }
 
     .transing_icon {
-      transition: all ease 0.5s;
+      transition: all ease-in 0.5s;
       transform: rotate(360deg);
     }
 

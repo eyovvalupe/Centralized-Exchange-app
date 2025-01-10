@@ -24,7 +24,7 @@ const props = defineProps({
     height: 0.4rem;
     border-radius: 50%;
     position: absolute;
-    animation: load 1.04s ease infinite;
+    animation: load 1.04s linear infinite;
 }
 @keyframes load{
     0%{

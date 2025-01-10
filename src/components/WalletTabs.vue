@@ -51,7 +51,7 @@ export default {
   border-radius: 20px;
   /* Rounded rectangular */
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease-in;
   white-space: nowrap;
   border: 2px solid transparent;
 }

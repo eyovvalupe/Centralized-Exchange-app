@@ -238,7 +238,7 @@ onMounted(() => {
     .right_left_effect {
         animation-name: animation1;
         animation-duration: 0.5s;
-        animation-timing-function: ease;
+        animation-timing-function: ease-in;
         animation-fill-mode: forwards;
     }
 

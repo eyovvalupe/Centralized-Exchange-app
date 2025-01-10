@@ -709,7 +709,7 @@ router.beforeEach((to, from) => {
   }
 
   if (from.meta.pageType == 'child' && to.meta.pageType == 'tab') {
-    store.commit('setTransitionName', 'slide-right')
+    store.commit('setTransitionName', 'slide-left')
     return
   }
 
@@ -717,7 +717,6 @@ router.beforeEach((to, from) => {
     store.commit('setTransitionName', 'slide-right')
     return
   }
-
   if (to.meta.pageType == 'login') {
     store.commit('setTransitionName', 'slide-bottom')
     return

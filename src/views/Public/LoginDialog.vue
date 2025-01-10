@@ -42,9 +42,9 @@ const successFunc = () => {
     background-color: var(--ex-bg-color);
     width: 100%;
     height: 100%;
-    transform: translateY(-100%);
+    transform: translateY(100%);
     overflow: hidden;
-    transition: all ease .2s;
+    transition: all ease-in .3s;
 }
 
 .login_dialog_open {

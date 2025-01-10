@@ -312,7 +312,7 @@ defineExpose({
             position: relative;
             left: -2rem;
             top: 2rem;
-            animation: loading 2s ease-out infinite;
+            animation: loading 2s linear infinite;
         }
 
         @keyframes loading {

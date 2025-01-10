@@ -556,7 +556,7 @@ const openConfirmBox = () => {
         right: 0.32rem;
         font-size: 0.3rem;
         z-index: 9;
-        transition: all ease .3s;
+        transition: all ease-in .3s;
     }
 
     .subtitle {

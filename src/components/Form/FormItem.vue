@@ -293,7 +293,7 @@ const percentTagClick = (percent) => {
       font-size: 0.24rem;
       position: absolute;
       left: 0.24rem;
-      transition: all ease 0.3s;
+      transition: all ease-in 0.3s;
     }
 
     .ipt_tip--right {
@@ -321,7 +321,7 @@ const percentTagClick = (percent) => {
       top: 0.24rem;
       right: 0.24rem;
       z-index: 999;
-      transition: all ease .3s;
+      transition: all ease-in .3s;
       transform-origin: 100% 0;
     }
 
@@ -332,7 +332,7 @@ const percentTagClick = (percent) => {
       z-index: 999;
       font-size: 0.24rem;
       color: var(--ex-text-color3);
-      transition: all ease .3s;
+      transition: all ease-in .3s;
       transform-origin: 100% 0;
     }
   }
@@ -366,7 +366,7 @@ const percentTagClick = (percent) => {
   .percent_tag {
     color: var(--ex-primary-color);
     margin-left: 0.08rem;
-    transition: all ease 0.3s;
+    transition: all ease-in 0.3s;
     border-radius: 0.3rem;
     background: rgb(var(--ex-primary-color-rgb) / 0.1);
     font-size: 0.24rem;
@@ -382,7 +382,7 @@ const percentTagClick = (percent) => {
     right: 0.32rem;
     font-size: 0.3rem;
     z-index: 9;
-    transition: all ease 0.3s;
+    transition: all ease-in 0.3s;
   }
 
   .put_all_withdraw {
@@ -391,7 +391,7 @@ const percentTagClick = (percent) => {
     right: 0.32rem;
     font-size: 0.28rem;
     z-index: 9;
-    transition: all ease 0.3s;
+    transition: all ease-in 0.3s;
   }
 
   ._put_all_withdraw {
@@ -399,7 +399,7 @@ const percentTagClick = (percent) => {
     right: 0.32rem;
     font-size: 0.32rem;
     z-index: 9;
-    transition: all ease 0.3s;
+    transition: all ease-in 0.3s;
   }
 
   .put_all_place {

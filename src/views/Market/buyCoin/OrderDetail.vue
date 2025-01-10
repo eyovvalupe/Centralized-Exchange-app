@@ -527,7 +527,7 @@ getSessionToken();
       justify-content: center;
       color: var(--ex-text-color2);
       font-weight: 500;
-      transition: all ease 0.2s;
+      transition: all ease-in 0.2s;
       position: relative;
       border: 1px solid var(--ex-border-color);
       height: 100%;

@@ -14,7 +14,7 @@ import { getStaticImgUrl } from "@/utils/index.js";
     .effect {
         animation-name: animation;
         animation-duration: 1s;
-        animation-timing-function: ease;
+        animation-timing-function: ease-in;
     }
 
     @keyframes animation {

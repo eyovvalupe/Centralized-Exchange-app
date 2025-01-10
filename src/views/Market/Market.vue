@@ -223,7 +223,7 @@ Promise.all([
   .mytab_title {
     display: flex;
     align-items: center;
-    transition: all ease 0.3s;
+    transition: all ease-in 0.3s;
 
     >span {
       margin-left: 0.08rem;

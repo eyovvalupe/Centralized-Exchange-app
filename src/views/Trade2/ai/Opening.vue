@@ -720,7 +720,7 @@ defineExpose({
     right: 0.32rem;
     font-size: 0.3rem;
     z-index: 9;
-    transition: all ease 0.3s;
+    transition: all ease-in 0.3s;
   }
 
   .item {

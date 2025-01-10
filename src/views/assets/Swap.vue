@@ -450,7 +450,7 @@ const goRecord = () => {
                 top: 50%;
                 transform: translateY(-50%);
                 pointer-events: none;
-                transition: all ease .2s;
+                transition: all ease-in .2s;
 
                 span {
                     // color: var(--ex-text-color);
@@ -490,7 +490,7 @@ const goRecord = () => {
             }
 
             .transing_icon {
-                transition: all ease .5s;
+                transition: all ease-in .5s;
                 transform: rotate(360deg);
             }
 

@@ -320,7 +320,7 @@ const setCurrData = (item) => {
             width: 0.14rem;
             background-color: var(--ex-info-color);
             position: relative;
-            animation: loading 2s ease-out infinite;
+            animation: loading 2s linear infinite;
         }
     }
 

@@ -294,7 +294,7 @@ const getDate = str => {
         height: calc(var(--vh) * 60);
         padding: 0.32rem;
         overflow-y: auto;
-        transition: all ease .3s;
+        transition: all ease-in .3s;
     }
 
     .list_down {

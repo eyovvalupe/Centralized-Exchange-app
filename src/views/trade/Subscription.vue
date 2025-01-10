@@ -431,7 +431,7 @@ onMounted(() => {
     border-radius: 0.12rem;
     border: 0.02rem solid var(--ex-border-color2);
     margin-top: 0.2rem;
-    transition: all 0.3s ease;
+    transition: all 0.3s ease-in;
   }
 
   .price-num-input {

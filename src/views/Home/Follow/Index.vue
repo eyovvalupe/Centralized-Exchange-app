@@ -202,7 +202,7 @@ onUnmounted(() => {
             border-radius: 0.32rem;
             color: var(--ex-text-color7);
             font-size: 0.32rem;
-            transition: all ease .3s;
+            transition: all ease-in .3s;
         }
 
         .active_tab {

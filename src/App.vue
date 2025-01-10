@@ -187,7 +187,7 @@ onMounted(() => {
 .slide-bottom-leave-active,
 .opacity-enter-active,
 .opacity-leave-active {
-  transition: all ease 0.3s;
+  transition: all ease-in 0.3s;
 }
 
 .slide-right-enter-from {
@@ -209,7 +209,7 @@ onMounted(() => {
 }
 
 .slide-bottom-enter-from {
-  transform: translateY(-100%);
+  transform: translateY(100%);
   opacity: 0;
 }
 
