@@ -56,7 +56,7 @@
                 :hasScroll="true"
                 :placeholder="t('finance.defi_avail_qty')"
                 :max="maxLoan"
-                v-model="form1.loan" 
+                v-model="loan" 
                 :tip="maxLoan > 0 ? '≤'+maxLoan : ''"
                 @change="changePercent" 
                 input-type="number">
@@ -84,16 +84,16 @@
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
                     <span class="text-color2">{{ t('finance.defi_total_interest') }}</span>
-                    <span class="text-color">{{ interest }} <span class="text-[0.24rem]">USDT</span></span>
+                    <span class="text-color">{{ totalInterest }} <span class="text-[0.24rem]">{{ currIn.currency }}</span></span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
                     <span class="text-color2">{{ t('finance.defi_service_charge') }}</span>
-                    <span class="text-color">{{ fee }} <span class="text-[0.24rem]">USDT</span></span>
+                    <span class="text-color">{{ fee }} <span class="text-[0.24rem]">{{ currIn.currency }}</span></span>
                 </div>
             </div>
             <div class="flex items-center justify-between h-[1.2rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
                 <span class="text-color2">{{ t('finance.defi_repayment_due') }}</span>
-                <span class="text-color text-[0.32rem]">{{ total }} <span class="text-[0.24rem]">USDT</span></span>
+                <span class="text-color text-[0.32rem]">{{ total }} <span class="text-[0.24rem]">{{ currIn.currency }}</span></span>
             </div>
         </div>
         <div>
@@ -106,7 +106,7 @@
                 {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
             </label>
         </div>
-        <Button type="primary" class="submit" @click="visible=true;">
+        <Button type="primary" class="submit" @click="openConfirm">
             <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
         </Button>
         <div class="h-[2.2rem]"></div>
@@ -140,14 +140,24 @@
             </div>
         </BottomPopup>
         <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_confirm')">
-            <PledgeConfirm :paramCurrency="currIn.currency" />
+            <PledgeConfirm 
+            :paramCurrency="currIn.currency"
+            :numb="numb"
+            :fee="fee"
+            :interest="Math.round(param.interest * 1000) / 10"
+            :totalInterest="totalInterest"
+            :total="total"
+            :loan="loan"
+            :days="param.days"
+            @success="visible=false;"
+             />
         </BottomPopup>
     </div>
 </template>
 
 <script setup>
 import { ref,reactive, computed } from 'vue'
-import { Button,Loading } from 'vant'
+import { Button,Loading, showToast } from 'vant'
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
@@ -176,6 +186,12 @@ const wallet = computed(() => {
   return filterSearchValue(data);
 });
 
+const tpp = computed(() => {
+  const target = store.state.deWeightCurrencyList.find((item) => item.currency == currIn.value.currency);
+  if (target) return target.tpp;
+  return 0
+});
+
 
 const { t } = useI18n();
 
@@ -198,12 +214,7 @@ const clickItem = (item) => {
     showDialog.value = false;
 
 };
-const form1 = reactive({
-    loan: "",
-    symbol: "",
-  
-});
-
+const loan = ref('')
 const param = reactive({
     days:'',
     interest:'',
@@ -211,25 +222,37 @@ const param = reactive({
     lever:''
 })
 
-const interest = computed(()=>{
-    if(!param.interest || !form1.loan){
+const totalInterest = computed(()=>{
+    if(!param.interest || !loan.value){
         return 0
     }
-    return new Decimal(form1.loan).mul(param.interest).mul(param.days).toFixed(currIn.value.tpp+1).slice(0,-1)
+    const val = new Decimal(loan.value).mul(param.interest).mul(param.days)
+    if(tpp.value > 0){
+        return val.toFixed(tpp.value+1).slice(0,-1)
+    }
+    return val
 })
 
 const fee = computed(()=>{
-    if(!param.fee || !form1.loan){
+    if(!param.fee || !loan.value){
         return 0
     }
-    return new Decimal(form1.loan).mul(param.fee).toFixed(currIn.value.tpp+1).slice(0,-1)
+    const val = new Decimal(loan.value).mul(param.fee)
+    if(tpp.value > 0){
+        return val.toFixed(tpp.value+1).slice(0,-1)
+    }
+    return val
 })
 
 const total = computed(()=>{
-    if(!form1.loan){
+    if(!loan.value){
         return 0
     }
-    return new Decimal(interest.value).add(form1.loan).toFixed(currIn.value.tpp+1).slice(0,-1)
+    const val = new Decimal(totalInterest.value).add(loan.value)
+    if(tpp.value > 0){
+        return val.toFixed(tpp.value+1).slice(0,-1)
+    }
+    return val
 })
 
 const setParam = (par)=>{
@@ -259,9 +282,6 @@ const maxLoan = computed(()=>{
     return numb.value * (param.lever || 1)
 })
 
-// 申请
-const apply = () => {
-};
 const step = ref(1)
 const sliderValue = ref(0);
 
@@ -270,18 +290,18 @@ const onSliderChange = (newValue) => {
   if (!maxLoan.value) return (sliderValue.value = 0);
   let v = new Decimal(maxLoan.value).mul(newValue).div(100);
   v = v.sub(v.mod(step.value));
-  form1.loan = v.toNumber();
+  loan.value = v.toNumber();
   setTimeout(() => {
     changePercent();
   }, 0);
 };
 
 const changePercent = () => {
-  if (!maxLoan.value || !form1.loan)
+  if (!maxLoan.value || !loan)
     return (sliderValue.value = 0);
-  let v = new Decimal(form1.loan);
-  form1.loan = v.sub(v.mod(step.value));
-  let p = new Decimal(form1.loan)
+  let v = new Decimal(loan.value);
+  loan.value = v.sub(v.mod(step.value));
+  let p = new Decimal(loan.value)
     .div(maxLoan.value)
     .mul(100)
     .toNumber();
@@ -307,7 +327,7 @@ const onSliderChange2 = (newValue) => {
 const changePercent2 = () => {
   if (!walletAmount.value || !numb.value){
     sliderValue2.value = 0
-    form1.loan = ''
+    loan.value = ''
     sliderValue.value = 0
     return 
   }
@@ -320,11 +340,16 @@ const changePercent2 = () => {
   if (p < 0) p = 0;
   if (p > 100) p = 100;
   sliderValue2.value = Number(p);
-  form1.loan = maxLoan.value
+  loan.value = maxLoan.value
   sliderValue.value = 100
 };
 
-
+const openConfirm = ()=>{
+    if(!numb.value){
+        return showToast("请先输入验资数量")
+    }
+    visible.value = true
+}
 
 </script>
 <style lang="less" scoped>
