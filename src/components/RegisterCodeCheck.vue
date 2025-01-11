@@ -46,10 +46,10 @@
         </div>
         <div class="w-full flex justify-between px-[0.4rem]">
           <div
-            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black flex items-center justify-center text-[0.32rem]"
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black flex items-center justify-center text-[0.32rem] ripple-primary"
             @click="confirmRef = false">{{ t('google_auth.google_input_btn_cancel') }}</div>
           <div
-            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-black flex items-center justify-center text-[0.32rem]"
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-black flex items-center justify-center text-[0.32rem] ripple-btn"
             @click="next">{{ t('google_auth.google_input_btn_confirm') }}</div>
         </div>
       </div>

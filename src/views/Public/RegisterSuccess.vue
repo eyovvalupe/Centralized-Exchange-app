@@ -20,7 +20,7 @@
     </div>
     <div class="title">{{ $t("register.success_sign_up") }}</div>
 
-    <Button round color="var(--ex-primary-color)" class="submit" type="primary" @click="next">{{
+    <Button round color="var(--ex-primary-color)" class="submit ripple-btn" type="primary" @click="next">{{
       $t("register.success_btn")
       }}</Button>
     <div @click="back">

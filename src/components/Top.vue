@@ -15,7 +15,7 @@
 
     <slot name="title" v-if="slots['title']" />
     <span v-else>{{ props.title }}</span>
-    <div class="right">
+    <div class="right mask-btn">
       <slot name="right" />
     </div>
   </div>
@@ -111,6 +111,7 @@ const clickLeft = () => {
   .right {
     position: absolute;
     right: 0.32rem;
+    border-radius: 50%;
   }
 }
 </style>
