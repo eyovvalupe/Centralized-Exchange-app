@@ -2,7 +2,7 @@
   <div class="btns">
     <div class="btn-item" @click="jump('topUpCrypto', true)">
       <div class="btn-item__icon">
-        <div class="size-[0.54rem]">
+        <div class="size-[0.48rem]">
           <img :src="getStaticImgUrl(`/static/img/assets/deposit.svg`)" alt="">
         </div>
       </div>
@@ -10,7 +10,7 @@
     </div>
     <div class="btn-item" @click="jump('withdraw', true)">
       <div class="btn-item__icon">
-        <div class="size-[0.54rem]">
+        <div class="size-[0.48rem]">
           <img :src="getStaticImgUrl(`/static/img/assets/withdraw.svg`)" alt="">
         </div>
       </div>
@@ -18,7 +18,7 @@
     </div>
     <div class="btn-item" @click="jump('transfer')">
       <div class="btn-item__icon">
-        <div class="size-[0.54rem]">
+        <div class="size-[0.48rem]">
           <img :src="getStaticImgUrl(`/static/img/assets/transfer.svg`)" alt="">
         </div>
       </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="btn-item" @click="jump('recordList', true)">
       <div class="btn-item__icon">
-        <div class="size-[0.54rem]">
+        <div class="size-[0.48rem]">
           <img :src="getStaticImgUrl(`/static/img/assets/record.svg`)" alt="">
         </div>
       </div>
@@ -86,12 +86,12 @@ const onSelect = (item) => {
 
   &__icon {
     border-radius: 0.6rem;
-    background: var(--ex-bg-color3);
+    background: var(--ex-white);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 0.96rem;
-    height: 0.96rem;
+    width: 0.8rem;
+    height: 0.8rem;
 
   }
 

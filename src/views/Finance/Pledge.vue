@@ -5,7 +5,7 @@
                 <PledgeForm />
             </Tab>
             <Tab class="mb-[1.2rem]" :title="$t('finance.defi_borrow_order')">
-                <PledgeOrder/>
+                <PledgeOrder />
             </Tab>
         </Tabs>
     </div>
@@ -15,10 +15,21 @@
 import { Tabs,Tab } from 'vant';
 import PledgeForm from './components/PledgeForm'
 import PledgeOrder from './components/PledgeOrder.vue';
-const active = ref(1)
+import eventBus from "@/utils/eventBus";
+import { onMounted, onBeforeUnmount } from 'vue';
+const active = ref(0)
 const onChange = () => {
 
 }
+const onPledgeSuccess = ()=>{
+    active.value = 1
+}
+onMounted(()=>{
+    eventBus.on("pledgeSuccess",onPledgeSuccess)
+})
+onBeforeUnmount(()=>{
+    eventBus.off("pledgeSuccess",onPledgeSuccess)
+})
 </script>
 
 <style lang="less">

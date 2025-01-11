@@ -455,8 +455,7 @@ const percentTagClick = (percent) => {
 
 .form-item--scroll {
   height: 2.28rem;
-
-
+ 
   .form-item-box {
     height: 100%;
 
@@ -472,7 +471,7 @@ const percentTagClick = (percent) => {
 
       .item {
         height: 100%;
-        padding-bottom: 0.24rem;
+        padding-bottom: 0.8rem;
 
         .scroll-box {
           width: 100%;
