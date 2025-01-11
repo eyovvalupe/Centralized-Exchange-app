@@ -148,6 +148,9 @@ onMounted(() => {
   initialRotate.value = getRandomNumber(1, 240) + 120;
   initialImg.value = getRandomNumber(1, 6);
   open();
+
+  const slideBtn = document.getElementsByClassName('van-slider__button');
+  slideBtn[0].classList.add('ripple-primary')
 });
 </script>
 

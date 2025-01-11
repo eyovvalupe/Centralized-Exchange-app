@@ -211,6 +211,10 @@ onMounted(() => {
     `;
   document.head.appendChild(style);
 })
+
+// slideBtn.map(item => {
+//   item.add('ripple-primary')
+// })
 </script>
 
 <style lang="less">
