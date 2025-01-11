@@ -1,7 +1,7 @@
 <!-- 顶部菜单 -->
 <template>
   <div class="max-width top">
-    <div class="back" @click="clickLeft">
+    <div class="back mask-btn" @click="clickLeft">
       <div class="w-[0.44rem] h-[0.44rem]">
         <img :src="getStaticImgUrl('/static/img/user/back.svg')" alt="">
       </div>

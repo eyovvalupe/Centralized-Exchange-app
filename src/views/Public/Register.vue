@@ -40,7 +40,7 @@
 
       <!-- tab -->
       <Tabs type="card" class="tabs" v-model:active="activeTab" animated shrink>
-        <Tab :title="t('register.email')"> </Tab>
+        <Tab class="mask-btn" :title="t('register.email')"> </Tab>
         <Tab :title="t('register.phone')"></Tab>
       </Tabs>
 
@@ -49,7 +49,7 @@
         <!-- <div class="form_title" v-show="activeTab == 0">
           {{ $t("register.email") }}
         </div> -->
-        <div class="form_item margin_item ripple-btn" v-show="activeTab == 0" :class="{ err_ipt: errorTip.error1 }">
+        <div class="form_item margin_item mask-btn" v-show="activeTab == 0" :class="{ err_ipt: errorTip.error1 }">
           <input maxlength="30" @blur="errorTip.error1 = false" v-model.trim="form.email"
             :placeholder="t('register.pw_placeholder1')" type="text" class="item_input mask-btn"
             :class="{ err_ipt1: errorTip.error1 }" />
@@ -117,7 +117,7 @@
 
       <!-- 按钮 -->
       <div class="submit_box">
-        <Button @click="submit" :loading="loading" round color="var(--ex-primary-color)" class="submit ripple-btn" type="primary">
+        <Button @click="submit" :loading="loading" round color="var(--ex-primary-color)" class="submit mask-btn" type="primary">
           <span style="color: var(--ex-white);">{{
             $t("register.next") }}</span></Button>
       </div>
