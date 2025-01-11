@@ -1,7 +1,7 @@
 <template>
     <div class="w-full mt-[0.32rem] mb-[2rem]">
         <StakingItem v-if="stakingList.length" :list="stakingList" />
-        <NoData v-if="!stakingList.length" />
+        <NoData v-if="!loading && !stakingList.length" />
         <div class="w-full flex justify-center">
             <Loading v-if="loading" />
         </div>
