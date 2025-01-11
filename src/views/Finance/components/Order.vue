@@ -13,7 +13,7 @@
             </div>
         </div>
         <Tabs key="form" type="sub-stake" v-model="activeTab" :swipeable="false"
-            :color="'var(--ex-primary-color)'" shrink @change="(e) => (activeTab = e)">
+            :color="'var(--ex-primary-color)'" shrink @change="changeTab">
             <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')" name="0">
                 <div class="h-[10rem] mt-[0.4rem]">
                     <NoData v-if="false"/>
@@ -34,9 +34,36 @@ import { Tabs, Tab } from 'vant';
 import NoData from '@/components/NoData.vue';
 import OrderList from './OrderList.vue';
 import { ref } from 'vue';
+import { _stakeOrder } from '@/api/api';
 
 const { t } = useI18n();
-const activeTab = ref(0)
+const activeTab = ref(0);
+
+const page = ref(1);
+
+const changeTab = (e) => {
+    activeTab.value = e;
+    if (e == 0) getData('open');
+    if (e == 1) getData('close')
+}
+
+const loading = ref(false)
+const getData = (val) => {
+    if (loading.value) return;
+    loading.value = true;
+    _stakeOrder({
+        page: page.value,
+        status: val
+    })
+    .then(res => {
+        console.log(res.data)
+    })
+    .catch(err => console.error(err))
+    .finally(() => {
+        loading.value = false;
+    })
+}
+
 </script>
 <style lang="less">
 </style>

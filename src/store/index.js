@@ -5,7 +5,8 @@ import { _listAccount, _sessionToken, _userinfo } from "@/api/api";
 import assets from "./assets";
 import market from "./market";
 import trade from "./trade";
-import follow from "./follow"
+import follow from "./follow";
+import finance from "./finance";
 import serviceC2C from "./serviceC2C";
 import { getStaticImgUrl } from "@/utils/index.js"
 
@@ -39,6 +40,7 @@ const store = createStore({
     ...assets.state,
     ...serviceC2C.state,
     ...follow.state,
+    ...finance.state,
   },
   mutations: {
     setLanguage(state, data) {
@@ -91,6 +93,7 @@ const store = createStore({
     ...assets.mutations,
     ...serviceC2C.mutations,
     ...follow.mutations,
+    ...finance.mutations,
   },
   actions: {
     reset({ commit }) {

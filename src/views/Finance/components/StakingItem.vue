@@ -1,6 +1,6 @@
 <template>
     <div class="staking_item relative" v-if="list.length" v-for="(item, i) in list">
-        <div class="w-[0.66rem] h-[0.48rem] absolute top-[0] right-[0]" v-if="item.hot == 1"><img
+        <div class="w-[0.66rem] h-[0.48rem] absolute top-[0] right-[0]" v-if="item.hot"><img
                 :src="getStaticImgUrl('/static/img/finance/hot.svg')" alt="img" /></div>
         <div class="w-full bg-color6 mb-[0.24rem] rounded-[0.2rem]">
             <div class="w-full h-full px-[0.12rem] pt-[0.4rem] flex flex-col">
@@ -43,7 +43,7 @@
                             t('finance.portfolio_day_multi') }}</div>
                     </div>
                 </div>
-                <Button class="submit ripple-btn" @click="jump('stake')"><span class="text-[0.32rem] font-bold">{{ '+'
+                <Button class="submit ripple-btn" @click="jump(item.id)"><span class="text-[0.32rem] font-bold">{{ '+'
                     + t('finance.portfolio_participate')
                         }}</span></Button>
             </div>
@@ -59,10 +59,12 @@ import BackgroundImg from './BackgroundImg.vue';
 import router from "@/router";
 import BackgroundImg1 from './BackgroundImg1.vue';
 import { _realtime } from "@/api/api";
-import { onMounted } from "vue";
+import { computed, onMounted } from "vue";
+import store from "@/store";
 
-const jump = (val) => {
-    router.push({ name: val })
+const jump = (id) => {
+    store.commit('setStakeId', id)
+    router.push({ name: 'stake' })
 }
 const { t } = useI18n();
 const props = defineProps({
@@ -93,18 +95,19 @@ const getRealData = async () => {
     try {
         if (loading.value) return;
         loading.value = true;
-        const prices = {}
+        const prices = {};
         for (const item of props.list) {
             const symbols = parseSymbol(item.symbol)
             for (const symbol of symbols) {
-                const price = await _realtime({ symbol })
-                prices[symbol] = price.data[0].price;
+                const data = await _realtime({ symbol })
+                prices[symbol] = data.data[0].price;
             }
         }
         priceList.value = {
             ...priceList.value,
             ...prices
         };
+
         loading.value = false;
     } catch (err) {
         console.log("error ========> ", err);

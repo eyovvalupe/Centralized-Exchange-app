@@ -1,5 +1,6 @@
 <template>
-    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem]" :class="i == list.length -1 ? 'mb-[3rem]' : ''" v-for="(item, i) in list" @click="jump(item)">
+    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem]"
+        :class="i == list.length - 1 ? 'mb-[3rem]' : ''" v-for="(item, i) in list" @click="jump(item)">
         <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
             <div class="flex flex-col justify-between">
                 <div class="flex">
@@ -37,6 +38,8 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
 import router from "@/router";
+import { _myEarn } from "@/api/api";
+import { onMounted } from "vue";
 
 const props = defineProps({
     list: {
@@ -55,4 +58,15 @@ const jump = (item) => {
 }
 
 const iconList = ['BTC', 'USDT']
+
+const loading = ref(false);
+const getData = () => {
+    if (loading.value) return;
+    loading.value = true;
+    _myEarn().then(res => console.log(res.data)).catch(err => console.error(err)).finally(() => loading.value = false)
+}
+
+onMounted(() => {
+    getData();
+})
 </script>

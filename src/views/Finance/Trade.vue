@@ -1,8 +1,7 @@
 <template>
     <div class="staking_mining w-full">
         <Top :title="t('finance.portfolio_mining_title')" />
-        <div class="mt-[1.5rem] px-[0.32rem]">
-
+        <div class="mt-[1.5rem] px-[0.32rem]" v-if="!loading">
             <div class="px-[0.28rem] py-[0.4rem] mb-[0.32rem] bg-color6 flex flex-col rounded-[0.32rem]">
                 <div class="flex items-center mb-[0.32rem]">
                     <div class="mr-[0.2rem]">
@@ -12,19 +11,22 @@
                         t('finance.portfolio_mining_subTitle1') }}</div>
                 </div>
                 <div class="flex mb-[0.6rem] justify-between">
-                    <div class="flex items-center relative" v-for="(item, i) in itemsMap" v-if="itemsMap.length">
+                    <div class="flex items-center relative" v-for="(name, i) in cryptoList" :key="i"
+                        v-if="cryptoList.length">
                         <div class="flex flex-col bg-color2 px-[0.2rem] py-[0.32rem] rounded-[0.32rem] items-center"
-                            :class="itemsMap.length == 3 ? 'w-[2rem]' : itemsMap.length == 2 ? 'w-[3rem]' : 'w-[3rem]'">
+                            :class="cryptoList.length == 3 ? 'w-[2rem]' : cryptoList.length == 2 ? 'w-[3rem]' : 'w-[3rem]'">
                             <div class="w-[0.96rem] h-[0.96rem] mb-[0.32rem]">
-                                <img :src="getStaticImgUrl(`/static/img/crypto/${item.currency}.svg`)" alt="img" />
+                                <img :src="getStaticImgUrl(`/static/img/crypto/${name}.svg`)" alt="img" />
                             </div>
-                            <div class="mb-[0.24rem]">{{ item.currency }}</div>
-                            <div :class="item.ratio > 0 ? 'up' : 'down'">{{ item.ratio ? (item.ratio > 0 ? '+' +
-                                item.ratio : item.ratio) + '%' : '--' }}</div>
+                            <div class="mb-[0.24rem]">{{ name }}</div>
+                            <div :class="itemsMap[i][symbolList[i]].ratio > 0 ? 'up' : 'down'">{{
+                                itemsMap[i][symbolList[i]].ratio ? (itemsMap[i][symbolList[i]].ratio > 0 ? '+' +
+                                    itemsMap[i][symbolList[i]].ratio : itemsMap[i][symbolList[i]].ratio) + '%' : '--' }}
+                            </div>
                         </div>
                         <div class="absolute w-[0.6rem] h-[0.6rem] z-[1]"
-                            :class="itemsMap.length == 3 ? 'right-[-0.36rem]' : itemsMap.length == 2 ? 'right-[-0.45rem]' : ''"
-                            v-if="i < itemsMap.length - 1"><img :src="getStaticImgUrl(`/static/img/finance/plus.svg`)"
+                            :class="cryptoList.length == 3 ? 'right-[-0.36rem]' : cryptoList.length == 2 ? 'right-[-0.45rem]' : ''"
+                            v-if="i < cryptoList.length - 1"><img :src="getStaticImgUrl(`/static/img/finance/plus.svg`)"
                                 alt="img" /></div>
                     </div>
                 </div>
@@ -32,23 +34,27 @@
                 <div class="w-full flex flex-col">
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_mining_operation') }}</div>
-                        <div>{{ 15 + t('Days') }}</div>
+                        <div>{{ stakeInfo.days + t('Days') }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_yield') }}</div>
-                        <div>0.3-0.4%</div>
+                        <div>{{ stakeInfo.returnrate ? stakeInfo.returnrate.split(',')[0] + '-' +
+                            stakeInfo.returnrate.split(',')[1] + '%' : '--' }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_mining_noti_est') }}</div>
-                        <div>{{ 0.00 - 0.00 }}</div>
+                        <div>{{ stakeInfo.returnrate ? (Number(stakeInfo.returnrate.split(',')[0]) *
+                            form1.amount).toFixed(2) + '-' + (Number(stakeInfo.returnrate.split(',')[1]) *
+                                form1.amount).toFixed(2) : '--' }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_mining_investment') }}</div>
-                        <div>{{ 3500 - 999999 }}</div>
+                        <div>{{ stakeInfo.limits ? stakeInfo.limits.split(',')[0] + '-' + stakeInfo.limits.split(',')[1]
+                            : '--' }}</div>
                     </div>
                     <div class="w-full flex justify-between">
                         <div class="text-color3">{{ t('finance.portfolio_mining_fee') }}</div>
-                        <div>{{ 0 }}</div>
+                        <div>{{ stakeInfo.fee ? stakeInfo.fee : '--' }}</div>
                     </div>
                 </div>
             </div>
@@ -75,7 +81,7 @@
                         <div
                             class="text-[0.24rem] p-[0.12rem] gap-[0.12rem] bg-color4 rounded-[0.4rem] flex text-color3 mt-[0.16rem] mr-[0.2rem]">
                             {{ t('assets.wallet_available_sim')
-                            }}<span class="text-primary">25</span>USDT</div>
+                            }}<span class="text-primary">{{ maxStockNum }}</span>USDT</div>
                     </div>
                 </div>
                 <Button class="submit" @click="showConfirm = true"><span class="text-[0.36rem]">{{
@@ -105,11 +111,12 @@
                     <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                         <div class="flex flex-col justify-between">
                             <div class="flex">
-                                <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" v-for="(item, i) in iconList"
+                                <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" v-if="stakeInfo.name" :key="i"
+                                    v-for="(item, i) in stakeInfo.name.split('+')"
                                     :class="i == 1 ? 'left-[-0.08rem]' : i == 2 ? 'left-[-0.16rem]' : ''"><img
                                         :src="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
                             </div>
-                            <div class="text-[0.32rem]">BTC+USDT</div>
+                            <div class="text-[0.32rem]">{{ stakeInfo.name ? stakeInfo.name : '--' }}</div>
                         </div>
                     </div>
                     <div
@@ -117,32 +124,38 @@
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_noti_duration') }}
                             </div>
-                            <div class="text-[0.28rem]">{{ 7 + $t('finance.portfolio_day_multi') }}</div>
+                            <div class="text-[0.28rem]">{{ stakeInfo.days + $t('finance.portfolio_day_multi') }}</div>
                         </div>
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_yield') }}</div>
-                            <div class="text-[0.28rem]">{{ '0.2-0.5' + '%' }}</div>
+                            <div class="text-[0.28rem]">{{ stakeInfo.returnrate ? stakeInfo.returnrate.split(',')[0] +
+                                '-' +
+                                stakeInfo.returnrate.split(',')[1] + '%' : '--' }}</div>
                         </div>
                         <div class="w-full h-[0.44rem] flex items-center justify-between">
                             <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_noti_est') }}
                             </div>
-                            <div class="text-[0.28rem]">{{ '220-1000' }}<span class="text-[0.24rem]">&nbsp;USDT</span>
+                            <div class="text-[0.28rem]">{{ stakeInfo.returnrate ?
+                                (Number(stakeInfo.returnrate.split(',')[0]) *
+                                    form1.amount).toFixed(2) + '-' + (Number(stakeInfo.returnrate.split(',')[1]) *
+                                        form1.amount).toFixed(2) : '--' }}<span class="text-[0.24rem]">&nbsp;USDT</span>
                             </div>
                         </div>
                     </div>
                     <div class="rounded-[0.32rem] bg-color2 mx-[0.12rem] flex flex-col justify-center py-[0.3rem]">
                         <div class="w-full flex justify-center items-center h-[0.36rem] mb-[0.2rem] text-color2">{{
                             t('trade.stock_opening_pay') }}<span
-                                class="text-[0.36rem] text-white font-semibold">&nbsp;872000.12</span></div>
+                                class="text-[0.36rem] text-white font-semibold">&nbsp;{{
+                                    form1.amount }}</span></div>
                         <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{
                             t('finance.portfolio_mining_header')
-                        }}<span class="text-white">&nbsp;30000</span><span>&nbsp;+&nbsp;</span><span>{{
+                        }}<span class="text-white">&nbsp;{{form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
                                 t('finance.portfolio_mining_noti_fee')
-                            }}</span><span class="text-white">&nbsp;20</span></div>
+                            }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
                     </div>
                 </div>
                 <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
-                    <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]"
+                    <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]" v-model="form1.safeword"
                         :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')" />
                     <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw"
                         @click="showPw = true">
@@ -154,8 +167,8 @@
                     </div>
                 </div>
                 <Button
-                    style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"><span
-                        class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
+                    style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"
+                    @click="submit"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
             </div>
         </BottomPopup>
     </div>
@@ -164,13 +177,17 @@
 import Top from '@/components/Top.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js";
-import { Stepper, Button } from 'vant';
+import { Stepper, Button, showToast } from 'vant';
 import Decimal from "decimal.js";
 import BottomPopup from '@/components/BottomPopup.vue';
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import SlideContainer from '@/components/SlideContainer.vue';
 import FormItem from '@/components/Form/FormItem.vue';
+import { useRoute } from 'vue-router';
+import { _stake, _stakeGet } from '@/api/api';
+import store from '@/store';
 
+const route = useRoute();
 const { t } = useI18n();
 
 const value = ref(0)
@@ -183,20 +200,41 @@ const form1 = ref({
     token: "",
     safeword: ""
 });
-const maxStockNum = computed(() => {
-    return 1000
-})
-const itemsMap = [{
-    currency: 'BTC',
-    ratio: '0.7825'
-},
-{
-    currency: 'USDT',
-    ratio: '-0.0256'
-},
-]
 
-const iconList = ['BTC', 'USDT']
+const sessionToken = computed(() => store.state.sessionToken)
+const realtimeData = computed(() => store.state.realtimeData)
+const maxStockNum = computed(() => {
+    if (store.state.wallet.length) {
+        const usdtWallet = store.state.wallet.find(item => item.name == 'USDT')
+        return usdtWallet.amount
+    }
+})
+const cryptoList = computed(() => {
+    if (stakeInfo.value.name) return stakeInfo.value.name.split('+')
+    else return [];
+})
+const symbolList = computed(() => {
+    if (stakeInfo.value.symbol) return stakeInfo.value.symbol.split(',')
+    else return [];
+})
+const itemsMap = computed(() => {
+    if (Object.keys(stakeInfo.value).length) {
+        const symbols = stakeInfo.value.symbol.split(',');
+        const items = realtimeData.value.map(data => {
+            const datas = {};
+            for (const symbol of symbols) {
+                if (data.symbol == symbol) {
+                    datas[symbol] = data;
+                }
+            }
+            return datas;
+        }).filter(v => Object.keys(v).length)
+        return items
+    }
+    else return [];
+})
+
+const stakeId = computed(() => store.state.stakeId);
 
 const sliderValue = ref(0);
 const step = ref(1)
@@ -226,10 +264,64 @@ const changePercent = () => {
     sliderValue.value = Number(p);
 };
 
+const stakeInfo = ref({})
+
+const loading = ref(false)
+const getStakeData = () => {
+    if (loading.value) return;
+    loading.value = true;
+    _stakeGet({ id: stakeId.value })
+        .then(res => {
+            if (res.code == 200) {
+                console.log(res.data)
+                stakeInfo.value = res.data
+            }
+        })
+        .catch((err) => console.error(err))
+        .finally(() => loading.value = false)
+}
+
+const submit = () => {
+    if (loading.value) return;
+    if (!form1.value.safeword || !Number(form1.value.amount)) {
+        showToast(t('trade.ai_opening_trade_password'))
+    }
+    loading.value = true;
+    // console.log({
+    //     id: stakeId.value,
+    //     amount: Number(form1.value.amount),
+    //     token: sessionToken.value,
+    //     safeword: form1.value.safeword
+    // })
+    _stake({
+        id: stakeId.value,
+        amount: Number(form1.value.amount),
+        token: sessionToken.value,
+        safeword: form1.value.safeword
+    })
+        .then(res => {
+            if (res.code == 200) {
+                console.log("then data ==========>", res.data)
+            }
+        })
+        .catch(err => console.error(err))
+        .finally(() => {
+            loading.value = false;
+            getSessionToken();
+            store.dispatch("updateWallet");
+        })
+}
+const getSessionToken = () => {
+    store.dispatch("updateSessionToken");
+};
 onMounted(() => {
     setTimeout(() => {
         loaded.value = true;
     }, 300);
+
+    getStakeData();
+    getSessionToken();
+
 })
 </script>
 <style lang="less">

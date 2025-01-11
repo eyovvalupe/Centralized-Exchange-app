@@ -715,3 +715,29 @@ export const _realtime = (data = {}) => {
     custom: { auth: false, toast: true, retry: false}
   })
 }
+// 质押挖矿详情 
+export const _stakeGet = (data = {}) => {
+  return http.post(`/anon/v1/user/mining/get`, data, {
+    custom: { auth: false, toast: true, retry: true },
+  });
+};
+//申购
+export const _stake = (data = {}) => {
+  return http.post(`/authc/v1/mining/apply`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+
+//我的投资订单
+export const _stakeOrder = (data = {}) => {
+  return http.post(`/authc/v1/mining/orders`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+
+//我的收益
+export const _myEarn= (data = {}) => {
+  return http.post(`/authc/v1/mining/earn`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
