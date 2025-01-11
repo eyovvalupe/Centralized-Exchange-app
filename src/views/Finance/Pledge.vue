@@ -15,7 +15,7 @@
 import { Tabs,Tab } from 'vant';
 import PledgeForm from './components/PledgeForm'
 import PledgeOrder from './components/PledgeOrder.vue';
-const active = ref(1)
+const active = ref(0)
 const onChange = () => {
 
 }

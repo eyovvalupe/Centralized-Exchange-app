@@ -1,5 +1,9 @@
 <template>
     <div class="pledge_form">
+        <div v-show="pageLoading" class="w-full h-full absolute left-0 top-0 flex items-center justify-center">
+            <Loading :type="'circular'" :size="44" color="var(--ex-primary-color)" />
+        </div>
+            
         <!-- 验资数量 -->
         <div class="item_box mt-[0.4rem]">
             <div class="item_box_right">
@@ -8,24 +12,24 @@
                 :hasRT="true"
                 :hasScroll="true"
                 :placeholder="t('finance.defi_verif_qty')"
-                :max="maxStockNum"
-                v-model="form1.volume" 
-                @change="changePercent" 
-                class="!h-[2.98rem]"
-                input-height="1.3rem"
+                :max="walletAmount"
+                v-model="numb" 
+                @change="changePercent2" 
+                @btnClick="onSliderChange2(100)"
+                class="yz-form-item"
                 input-type="number">
             
                 <template #lt>
                     <div
                         class="pt-[0.12rem] text-color2 text-[0.24rem]">
                         <span>{{ t('finance.defi_verifiable_qty') }}</span>
-                        <span class="text-primary mx-[0.08rem]">{{ stockWalletAmount || '--' }} </span>
-                        <span>{{ paramCurrency }}</span>
+                        <span class="text-primary mx-[0.08rem]">{{ walletAmount || '--' }} </span>
+                        <span>{{ currIn.currency }}</span>
                     </div>
                     
                 </template>
                 <template #rt>
-                    <div class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]">
+                    <div class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"  @click="showDialog=true;">
                         <div class="flex items-center">
                             <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
                                 <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
@@ -40,7 +44,7 @@
                 </template>
                 <template #scroll>
                     <!-- 拖动 -->
-                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                    <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
                 </template>
                 </FormItem>
             </div>
@@ -49,11 +53,11 @@
         <div class="item_box mt-[0.32rem]">
             <div class="item_box_right">
                 <FormItem
-                input-height="1.3rem"
                 :hasScroll="true"
                 :placeholder="t('finance.defi_avail_qty')"
-                :max="maxStockNum"
-                v-model="form1.volume" 
+                :max="maxLoan"
+                v-model="form1.loan" 
+                :tip="maxLoan > 0 ? '≤'+maxLoan : ''"
                 @change="changePercent" 
                 input-type="number">
             
@@ -67,8 +71,8 @@
         <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-color2 border-color border-[1px] mt-[0.32rem]">
             <div class="text-[0.28rem] leading-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
             <div class="flex flex-wrap gap-[0.12rem] gap-y-[0.2rem] pt-[0.2rem]">
-                <div class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-color3 leading-[0.6rem]" :class="{'active-day':currentDay == day}" v-for="day in days" :key="day" @click="currentDay=day">
-                    {{day}}{{ t('finance.portfolio_day_multi') }}
+                <div class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-color3 leading-[0.6rem]" :class="{'active-day':param.days == item.days}" v-for="item in paraData" :key="item.days" @click="setParam(item)">
+                    {{item.days}}{{ t('finance.portfolio_day_multi') }}
                 </div>
             </div>
         </div>
@@ -76,20 +80,20 @@
             <div class="p-[0.16rem]">
                 <div class="flex justify-between items-center leading-[0.44rem]">
                     <span class="text-color2">{{ t('finance.defi_daily_interest') }}</span>
-                    <span class="text-color">0.00%</span>
+                    <span class="text-color">{{ Math.round(param.interest * 1000) / 10 }}%</span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
                     <span class="text-color2">{{ t('finance.defi_total_interest') }}</span>
-                    <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
+                    <span class="text-color">{{ interest }} <span class="text-[0.24rem]">USDT</span></span>
                 </div>
                 <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
                     <span class="text-color2">{{ t('finance.defi_service_charge') }}</span>
-                    <span class="text-color">0 <span class="text-[0.24rem]">USDT</span></span>
+                    <span class="text-color">{{ fee }} <span class="text-[0.24rem]">USDT</span></span>
                 </div>
             </div>
             <div class="flex items-center justify-between h-[1.2rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
                 <span class="text-color2">{{ t('finance.defi_repayment_due') }}</span>
-                <span class="text-color text-[0.32rem]">0 <span class="text-[0.24rem]">USDT</span></span>
+                <span class="text-color text-[0.32rem]">{{ total }} <span class="text-[0.24rem]">USDT</span></span>
             </div>
         </div>
         <div>
@@ -110,37 +114,40 @@
         <!-- 售出币种 -->
         <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"
             :title="t('market.market_buy_fast_search_title')">
-            <div class="withdraw_accounr_dialog">
+            <div class="pledge_accounr_dialog">
 
-            <div class="search_box">
-                <div class="icon">
-                <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+                <div class="search_box">
+                    <div class="icon">
+                        <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+                    </div>
+                    <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
+                    type="text" enterkeyhint="search" class="search" />
                 </div>
-                <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
-                type="text" enterkeyhint="search" class="search" />
-            </div>
-            <div class="swap_dialog_list">
-                <div v-for="(item, i) in wallet" :key="i" class="swap_dialog_item" :class="{
-                swap_dialog_item_active: currIn.name == item.name,
-                }" @click="clickItem(item)">
-                <div class="icon">
-                    <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+                <div class="swap_dialog_list">
+                    <div v-for="(item, i) in wallet" :key="i" class="swap_dialog_item" :class="{
+                    swap_dialog_item_active: currIn.name == item.name,
+                    }" @click="clickItem(item)">
+                        <div class="icon">
+                            <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+                        </div>
+                        <span>{{ item.name }}</span>
+                    
+                        <div v-if="currIn.name == item.name" class="check_icon">
+                            <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
+                        </div>
+                    </div>
                 </div>
-                <span>{{ item.name }}</span>
-                <Icon v-if="currIn.name == item.name" class="check_icon" name="success" />
-                </div>
-            </div>
             </div>
         </BottomPopup>
         <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_confirm')">
-            <PledgeConfirm :paramCurrency="paramCurrency" />
+            <PledgeConfirm :paramCurrency="currIn.currency" />
         </BottomPopup>
     </div>
 </template>
 
 <script setup>
-import { ref,reactive } from 'vue'
-import { Button } from 'vant'
+import { ref,reactive, computed } from 'vue'
+import { Button,Loading } from 'vant'
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
@@ -151,16 +158,21 @@ import {_pledgePara} from '@/api/api'
 import BottomPopup from '@/components/BottomPopup.vue'
 import PledgeConfirm from './PledgeConfirm.vue'
 
+const pageLoading = ref(true)
 const searchValue = ref("");
 const filterSearchValue = (data) => {
   return data.filter((item) =>
     item.name.toLowerCase().includes(searchValue.value.toLowerCase())
   );
 };
+const currIn = ref({}); // 当前收到钱包
 
 const wallet = computed(() => {
-  // 售出钱包
-  const data = store.state.deWeightCurrencyList.filter((item) => item.type == "crypto");
+  // 现金钱包列表
+  const data = store.state.wallet.filter((item) => item.type == "crypto");
+  if(!currIn.value.currency && data[0]){
+    currIn.value = data[0]
+  }
   return filterSearchValue(data);
 });
 
@@ -169,58 +181,82 @@ const { t } = useI18n();
 
 const visible = ref(false)
 const checked = ref(true)
-const stockWalletAmount = computed(() => {
+const walletAmount = computed(() => {
   // 钱包余额
   const target = wallet.value.find(
-    (item) => item.currency == paramCurrency.value
+    (item) => item.currency == currIn.value.currency
   );
   if (target) return target.amount;
   return 0;
 });
 
-const currIn = ref({
-    name:"USDT"
-}); // 当前收到钱包
+const numb = ref('')
 
+const showDialog = ref(false)
 const clickItem = (item) => {
     currIn.value = item;
     showDialog.value = false;
 
 };
+const form1 = reactive({
+    loan: "",
+    symbol: "",
+  
+});
 
-
-const currentDay = ref(7)
-const days = ref([7,15,45,60,90])
-
-const param = ref({
+const param = reactive({
     days:'',
     interest:'',
     fee:'',
     lever:''
 })
-const paramCurrency = ref("USDT"); // 交易使用的货币
 
-const form1 = ref({
-  leverType: "cross",
-  lever: 1,
-  volume: "",
-  price: "",
-  stop_profit_type: null, // 价格-[ price ]  金额-[ amount ]  百分比-[ ratio ]
-  stop_profit_price: null,
-  stop_loss_type: null,
-  stop_loss_price: null,
-});
+const interest = computed(()=>{
+    if(!param.interest || !form1.loan){
+        return 0
+    }
+    return new Decimal(form1.loan).mul(param.interest).mul(param.days).toFixed(currIn.value.tpp+1).slice(0,-1)
+})
+
+const fee = computed(()=>{
+    if(!param.fee || !form1.loan){
+        return 0
+    }
+    return new Decimal(form1.loan).mul(param.fee).toFixed(currIn.value.tpp+1).slice(0,-1)
+})
+
+const total = computed(()=>{
+    if(!form1.loan){
+        return 0
+    }
+    return new Decimal(interest.value).add(form1.loan).toFixed(currIn.value.tpp+1).slice(0,-1)
+})
+
+const setParam = (par)=>{
+    param.days = par.days
+    param.interest = par.interest
+    param.fee = par.fee
+    param.lever = par.lever
+}
+const paraData = ref([])
 
 const getPara = ()=>{
     _pledgePara().then(res=>{
-        console.log(res)
+        paraData.value = res.data || []
+        if(paraData.value[0]){
+            setParam(paraData.value[0])
+        }
+        pageLoading.value = false
     })
 }
 
-//getPara()
+getPara()
 
-const maxStockNum = computed(()=>{
-    return 1000
+const maxLoan = computed(()=>{
+    if(!numb.value){
+        return 0
+    }
+    return numb.value * (param.lever || 1)
 })
 
 // 申请
@@ -231,28 +267,63 @@ const sliderValue = ref(0);
 
 const onSliderChange = (newValue) => {
   sliderValue.value = newValue;
-  if (maxStockNum.value == "--") return (sliderValue.value = 0);
-  let v = new Decimal(maxStockNum.value).mul(newValue).div(100);
+  if (!maxLoan.value) return (sliderValue.value = 0);
+  let v = new Decimal(maxLoan.value).mul(newValue).div(100);
   v = v.sub(v.mod(step.value));
-  form1.value.volume = v.toNumber();
+  form1.loan = v.toNumber();
   setTimeout(() => {
     changePercent();
   }, 0);
 };
 
 const changePercent = () => {
-  if (maxStockNum.value == "--" || !form1.value.volume)
+  if (!maxLoan.value || !form1.loan)
     return (sliderValue.value = 0);
-  let v = new Decimal(form1.value.volume);
-  form1.value.volume = v.sub(v.mod(step.value));
-  let p = new Decimal(form1.value.volume)
-    .div(maxStockNum.value)
+  let v = new Decimal(form1.loan);
+  form1.loan = v.sub(v.mod(step.value));
+  let p = new Decimal(form1.loan)
+    .div(maxLoan.value)
     .mul(100)
     .toNumber();
   if (p < 0) p = 0;
   if (p > 100) p = 100;
   sliderValue.value = Number(p);
+
 };
+
+const sliderValue2 = ref(0);
+
+const onSliderChange2 = (newValue) => {
+  sliderValue2.value = newValue;
+  if (!walletAmount.value) return (sliderValue2.value = 0);
+  let v = new Decimal(walletAmount.value).mul(newValue).div(100);
+  v = v.sub(v.mod(step.value));
+  numb.value = v.toNumber();
+  setTimeout(() => {
+    changePercent2();
+  }, 0);
+};
+
+const changePercent2 = () => {
+  if (!walletAmount.value || !numb.value){
+    sliderValue2.value = 0
+    form1.loan = ''
+    sliderValue.value = 0
+    return 
+  }
+  let v = new Decimal(numb.value)
+  numb.value = v.sub(v.mod(step.value));
+  let p = new Decimal(numb.value)
+    .div(walletAmount.value)
+    .mul(100)
+    .toNumber();
+  if (p < 0) p = 0;
+  if (p > 100) p = 100;
+  sliderValue2.value = Number(p);
+  form1.loan = maxLoan.value
+  sliderValue.value = 100
+};
+
 
 
 </script>
@@ -304,6 +375,114 @@ const changePercent = () => {
         height: 1.12rem;
         width:100%;
     }
+}
+.yz-form-item{
+    height:3.12rem;
+    :deep(.form-item-box .form-item-con .item){
+        padding-top: 1.12rem;
+    }
+}
+
+.pledge_accounr_dialog {
+  overflow: hidden;
+  padding: 0.32rem 0.32rem 0 0.32rem;
+  position: relative;
+
+  .search_box {
+    display: flex;
+    align-items: center;
+    padding: 0 0.4rem;
+    margin-bottom: 0.15rem;
+    height: 1rem;
+    background-color: var(--ex-bg-color2);
+    border-radius: 0.8rem;
+    border: 1px solid var(--ex-border-color);
+
+    input {
+      padding-top: 0.06rem;
+    }
+
+    input::placeholder {
+      color: var(--ex-text-color3);
+      font-size: 0.3rem;
+    }
+
+    .type_select {
+      right: 0;
+      display: flex;
+      align-items: center;
+      color: var(--ex-text-color);
+      font-size: 0.24rem;
+
+      .type_icon {
+        width: 0.28rem;
+        height: 0.28rem;
+        opacity: 0.8;
+        margin-left: 0.06rem;
+      }
+    }
+
+    &:has(.search:focus) {
+      border: 1px solid var(--ex-primary-color);
+    }
+
+    .icon {
+      width: 0.4rem;
+      height: 0.4rem;
+    }
+
+    .close {
+      width: 0.24rem;
+      height: 0.24rem;
+      color: var(--ex-text-color);
+    }
+
+    .search {
+      flex: 1;
+      margin: 0 0.16rem;
+      font-size: 0.32rem;
+      font-weight: 400;
+    }
+  }
+
+
+  .swap_dialog_list {
+    max-height: calc(var(--vh) * 60);
+    overflow-y: auto;
+    padding-bottom: 0.8rem;
+  }
+
+  .swap_dialog_item {
+    height: 1rem;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    border-radius: 0.4rem;
+    background-color: rgb(var(--ex-bg-color3-rgb) / 0.6);
+    overflow: hidden;
+    position: relative;
+    padding: 0 0.28rem;
+    margin-top: 0.2rem;
+    color: var(--ex-text-color2);
+
+    .icon {
+      width: 0.64rem;
+      height: 0.64rem;
+      margin-right: 0.2rem;
+    }
+  }
+
+  .swap_dialog_item_active {
+    color: var(--ex-text-color);
+    background: var(--ex-bg-color3);
+
+    .check_icon {
+      position: absolute;
+      right: 0.24rem;
+      color: var(--ex-primary-color);
+      font-size: 0.4rem;
+    }
+  }
 }
 
 </style>
