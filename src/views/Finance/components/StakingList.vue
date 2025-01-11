@@ -1,6 +1,10 @@
 <template>
     <div class="w-full mt-[0.32rem] mb-[2rem]">
-        <StakingItem :list="[1, 2]" />
+        <StakingItem v-if="stakingList.length" :list="stakingList" />
+        <NoData v-if="!stakingList.length" />
+        <div class="w-full flex justify-center">
+            <Loading v-if="loading" />
+        </div>
     </div>
 </template>
 <script setup>
@@ -9,8 +13,12 @@ import { getStaticImgUrl } from "@/utils/index.js";
 import StakingItem from './StakingItem.vue';
 import { _miningList } from '@/api/api';
 import { onMounted, ref } from 'vue';
+import { Loading } from 'vant';
+import NoData from '@/components/NoData.vue';
 
 const page = ref(1);
+
+const stakingList = ref([])
 
 const loading = ref(false);
 
@@ -19,7 +27,10 @@ const getList = () => {
     loading.value = true;
     _miningList({page: page.value})
         .then((res) => {
-            console.log("mining list ==========> ", res.code, res.data)
+            if (res.code == 200) {
+                console.log('list ===>', res.data)
+                stakingList.value = res.data
+            }
         })
         .catch(err => console.error(err))
         .finally(() => {

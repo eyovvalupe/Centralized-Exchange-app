@@ -708,3 +708,10 @@ export const _copyGet = (data = {}) => {
     custom: { auth: false, toast: true, retry: true },
   });
 };
+//实时数据
+export const _realtime = (data = {}) => {
+  const urlSeachParam = new URLSearchParams(data).toString();
+  return http.get(`anon/v1/ticker/realtime?${urlSeachParam}`, {
+    custom: { auth: false, toast: true, retry: false}
+  })
+}
