@@ -9,14 +9,8 @@
       <!-- <Tab :title="t('trade.ipo_title_finish')" :name="'done'"></Tab> -->
       <Tab :title="t('trade.ipo_title_market')" :name="'listed'"></Tab>
     </Tabs>
-
-    <!-- <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'var(--ex-primary-color)'"
-            shrink @change="init(true)">
-            <Tab :title="i.text" :name="i.value" v-for="(i, key) in leverOption" :key="key">
-            </Tab>
-        </Tabs> -->
     <div class="list" :class="props.page == 'home' && 'mt-[-0.32rem]'">
-      <div class="item " v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
+      <div class="item wow fadeInUp" :data-wow-delay="( 0.05 * i) + 's'" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -89,7 +83,6 @@
           </div>
         </div>
       </div>
-
       <LoadingMore v-if="!(finish && ipoDataList.length == 0)" :loading="loading" :finish="finish" />
       <NoData v-if="finish && ipoDataList.length == 0" />
     </div>
@@ -268,6 +261,9 @@ const getData = () => {
       }, 500);
     });
 };
+if (props.page == 'home') {
+  init()
+}
 
 // 滚动监听
 let loadingMore = "";

@@ -1,13 +1,13 @@
 <!-- 加载更多 -->
 <template>
+  <Loaidng :loading="props.loading" :size="32" />
   <div class="loading_more" :class="classN">
-    <Loading v-if="props.loading" type="spinner" size="0.32rem" />
     <span v-if="props.finish">{{ t('common.no_more') }}</span>
   </div>
 </template>
 
 <script setup>
-import { Loading } from "vant";
+import Loaidng from "./Loaidng.vue"
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
