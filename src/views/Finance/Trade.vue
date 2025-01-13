@@ -84,7 +84,7 @@
                             }}<span class="text-primary">{{ maxStockNum }}</span>USDT</div>
                     </div>
                 </div>
-                <Button class="submit" @click="showConfirm = true"><span class="text-[0.36rem]">{{
+                <Button class="submit ripple-btn" @click="showConfirm = true"><span class="text-[0.36rem]">{{
                     t('finance.portfolio_mining_btn')
                         }}</span></Button>
             </div>
@@ -167,7 +167,7 @@
                     </div>
                 </div>
                 <Button
-                    style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"
+                    style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;" class="ripple-btn"
                     @click="submit"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
             </div>
         </BottomPopup>
