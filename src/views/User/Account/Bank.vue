@@ -18,7 +18,7 @@
             @blur="nameFocus = false" />
         </div>
         <div class="w-[0.32rem] h-[0.32rem]" v-if="form.bank_name" @click="form.bank_name = ''">
-          <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
         </div>
       </div>
       <div class="item">
@@ -30,7 +30,7 @@
             @blur="numFocus = false" />
         </div>
         <div class="w-[0.32rem] h-[0.32rem]" v-if="form.bank_card_number" @click="form.bank_card_number = ''">
-          <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
         </div>
       </div>
     </div>

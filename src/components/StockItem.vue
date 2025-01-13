@@ -81,7 +81,7 @@
       <template #right v-if="props.deleteItem">
         <div :class="['delete_content']" @click="removeStock(item)">
           <div class="delete_icon">
-            <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
           </div>
         </div>
       </template>

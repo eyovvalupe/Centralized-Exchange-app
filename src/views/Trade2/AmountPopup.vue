@@ -7,7 +7,7 @@
         <div class="right">
           <div class="currency">
             <div class="currency_icon">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${props.currency}.svg`)" alt="" />
+              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${props.currency}.svg`)" alt="" />
             </div>
             <div>{{ props.currency }}</div>
           </div>

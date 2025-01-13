@@ -27,13 +27,13 @@
               @click="openDialog(2)">
               <div class="flex items-center">
                 <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
-                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
+                  <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
                     alt="currency" />
                 </div>
                 <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
               </div>
               <div class="more_icon">
-                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+                <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
               </div>
             </div>
           </div>
@@ -56,13 +56,13 @@
               @click="openDialog(1)">
               <div class="flex items-center">
                 <div v-if="currOut.name" class="size-[0.52rem] mr-[0.16rem]">
-                  <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currOut.name}.svg`)"
+                  <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${currOut.name}.svg`)"
                     alt="currency" />
                 </div>
                 <span class="text-[0.3rem] w-[1rem]">{{ currOut.name || "--" }}</span>
               </div>
               <div class="more_icon">
-                <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+                <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
               </div>
             </div>
 
@@ -111,7 +111,7 @@
 
       <div class="search_box">
         <div class="icon">
-          <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+          <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
         </div>
         <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
           type="text" enterkeyhint="search" class="search" />
@@ -124,7 +124,7 @@
               : currIn.name == item.name,
         }" @click="clickItem(item)">
           <div class="icon">
-            <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+            <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
           </div>
           <span>{{ item.name }}</span>
           <Icon v-if="

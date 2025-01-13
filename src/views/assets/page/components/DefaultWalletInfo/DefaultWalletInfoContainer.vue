@@ -1,7 +1,7 @@
 <template>
   <div class="rounded-[0.32rem] wallet_bg_box">
     <div class="wallet_bg">
-      <img :src="getStaticImgUrl('/static/img/assets/wallet_bg.svg')" alt="">
+      <img v-lazy="getStaticImgUrl('/static/img/assets/wallet_bg.svg')" alt="">
     </div>
   </div>
 </template>

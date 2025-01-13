@@ -10,7 +10,7 @@
     <div class="ai_order_info" v-show="!loading">
       <!-- 盈利 -->
       <div class="win" v-if="currItem.status == 'close'">
-        <img :src="getStaticImgUrl('/static/img/trade/profit_bg.png')" class="win_bg" v-if="currItem.profit >= 0" />
+        <img v-lazy="getStaticImgUrl('/static/img/trade/profit_bg.png')" class="win_bg" v-if="currItem.profit >= 0" />
         <div class="win_bg loss_bg" v-else></div>
         <div class="win-animate-bg" v-if="!loading"></div>
         <div class="win_name">{{ t('trade.ai_position_profit') }}</div>
@@ -44,10 +44,10 @@
 
       <div class="win-animate" @click="showWin = false" v-show="showWin">
         <div class="win-animate-gold">
-          <img :src="getStaticImgUrl('/static/img/trade/gold.svg')" @load="goldLoad = true" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/gold.svg')" @load="goldLoad = true" />
         </div>
         <div class="win-animate-text" v-if="goldLoad">
-          <img :src="getStaticImgUrl('/static/img/trade/wintext.svg')" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/wintext.svg')" />
           <div class="win-animate-amount">
             {{ animateProfit }}
           </div>
@@ -58,7 +58,7 @@
         <div class="stock-info__order_no">
           <span>{{ t('trade.ai_position_order_id') }} {{ currItem.order_no || "--" }}</span>
           <div class="stock-info__copy_icon" @click="copy(currItem.order_no)">
-            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
 

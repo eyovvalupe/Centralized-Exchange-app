@@ -7,12 +7,12 @@
       <template #right>
         <div class="flex gap-1">
           <div class="server_icon" @click="goChat">
-            <div class="chat_icon"><img :src="getStaticImgUrl('/static/img/user/server.svg')" /></div>
+            <div class="chat_icon"><img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" /></div>
           </div>
 
           <div class="language_icon_container" @click="goLang">
             <div class="language_icon">
-              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
             </div>
           </div>
         </div>

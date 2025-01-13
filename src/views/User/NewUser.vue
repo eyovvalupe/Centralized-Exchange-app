@@ -6,18 +6,18 @@
     <div class="flex flex-col mt-[0.2rem] mb-[0.32rem] px-[0.32rem]">
       <div class="w-full flex justify-end gap-[0.16rem]">
         <div class="w-[0.6rem] h-[0.6rem]" @click="jump('chat')">
-          <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+          <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
         <div class="w-[0.6rem] h-[0.6rem]">
-          <img :src="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
+          <img v-lazy="getStaticImgUrl('/static/img/user/setting.svg')" alt="server" />
         </div>
         <div class="w-[0.6rem] h-[0.6rem]" @click="jump('notification')">
-          <img :src="getStaticImgUrl('/static/img/common/notice.svg')" alt="server" />
+          <img v-lazy="getStaticImgUrl('/static/img/common/notice.svg')" alt="server" />
         </div>
       </div>
       <div v-if="token" class="flex items-center -ml-[0.08rem] gap-[0.16rem]">
         <div class="default-avatar">
-          <img :src="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
         </div>
         <div>
           <div class="text-color text-[0.32rem] mb-[0.1rem]">
@@ -30,7 +30,7 @@
       </div>
       <div v-else class="flex items-center -ml-[0.08rem] gap-[0.16rem]" @click="store.commit('setIsLoginOpen', true)">
         <div class="default-avatar">
-          <img :src="getStaticImgUrl('/static/img/user/avatar1.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/user/avatar1.svg')" alt="">
         </div>
         <div class="text-[0.32rem]">{{ $t("user_page.login_out") }}</div>
       </div>
@@ -60,7 +60,7 @@
     </div>
     <div class="h-[1.6rem] relative">
       <div class="user_page_bg absolute w-full top-[0.71rem]">
-        <img :src="getStaticImgUrl('/static/img/user/user_page_bg.svg')" alt="">
+        <img v-lazy="getStaticImgUrl('/static/img/user/user_page_bg.svg')" alt="">
       </div>
       <div class="w-[6rem] mx-auto rounded-tl-[0.36rem] rounded-tr-[0.36rem] overflow-hidden">
         <Carousel :autoplay="3000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide" class="relative">
@@ -100,7 +100,7 @@
       <div @click="jump('account', true)" class="text-center flex flex-col items-center justify-center relative">
         <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
-          <img class="" :src="getStaticImgUrl('/static/img/user/payment.svg')" />
+          <img class="" v-lazy="getStaticImgUrl('/static/img/user/payment.svg')" />
         </div>
         <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem] leading-[0.32rem]">{{
           $t("user_page.receive_payment") }}</div>
@@ -108,7 +108,7 @@
       <div @click="jump('kyc', true)" class="text-center flex flex-col items-center justify-center relative">
         <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.55rem] h-[0.6rem] opacity-100 top-0 mt-[0.1rem]">
-          <img class="" :src="getStaticImgUrl('/static/img/user/id_card.svg')" />
+          <img class="" v-lazy="getStaticImgUrl('/static/img/user/id_card.svg')" />
         </div>
         <div v-if="token"
           class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
@@ -128,7 +128,7 @@
       <div @click="jump('googleCode', true)" class="text-center flex flex-col items-center justify-center relative">
         <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
-          <img class="" :src="getStaticImgUrl('/static/img/user/google.svg')" />
+          <img class="" v-lazy="getStaticImgUrl('/static/img/user/google.svg')" />
         </div>
         <div v-if="token"
           class="absolute min-w-[0.76rem] w-max px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
@@ -142,7 +142,7 @@
       <div @click="jump('inviteFriends', true)" class="text-center flex flex-col items-center justify-center relative">
         <div class="w-[0.8rem] h-[0.8rem] rounded-[0.32rem] bg-white mb-[0.2rem]"></div>
         <div class="absolute w-[0.48rem] h-[0.48rem] opacity-100 top-0 mt-[0.16rem]">
-          <img class="" :src="getStaticImgUrl('/static/img/user/friend.svg')" />
+          <img class="" v-lazy="getStaticImgUrl('/static/img/user/friend.svg')" />
         </div>
         <div class="absolute min-w-[1.4rem] text-color text-[0.28rem] text-center top-[0.96rem] leading-[0.32rem]">{{
           $t("user_page.recommend_friend") }}</div>
@@ -152,7 +152,7 @@
     <div class="navs px-[0.32rem] relative">
       <div class="nav mask-btn" @click="jump('language')">
         <div class="language-icon mr-[0.16rem]">
-          <img :src="getStaticImgUrl('/static/img/user/lang_icon.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/user/lang_icon.svg')" alt="">
         </div>
         <div class="content">
           <div class="title">{{ $t("user_page.set_language") }}</div>
@@ -160,7 +160,7 @@
         <div class="lang">
           <div class="w-[0.52rem] h-[0.52rem] mr-[0.15rem]">
             <img
-              :src="getStaticImgUrl(`/static/img/flag/${Object.keys(language).length ? language.icon : defaultLang.icon}.svg`)"
+              v-lazy="getStaticImgUrl(`/static/img/flag/${Object.keys(language).length ? language.icon : defaultLang.icon}.svg`)"
               alt="">
           </div>
           <span class="font-1">{{ Object.keys(language).length ? language.name : defaultLang.name }}</span>
@@ -169,7 +169,7 @@
       </div>
       <div class="nav mask-btn" @click="jump('safety', true)">
         <div class="verify-icon mr-[0.16rem]">
-          <img :src="getStaticImgUrl('/static/img/user/verify.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/user/verify.svg')" alt="">
         </div>
         <div class="content">
           <div class="title">{{ $t("user_page.security") }}</div>
@@ -182,7 +182,7 @@
       </div>
       <div class="nav mask-btn" @click="jump('about')">
         <div class="info-icon mr-[0.16rem]">
-          <img :src="getStaticImgUrl('/static/img/user/about.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/user/about.svg')" alt="">
         </div>
         <div class="content">
           <div class="title">{{ $t("user_page.about") }}</div>

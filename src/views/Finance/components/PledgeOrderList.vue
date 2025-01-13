@@ -3,7 +3,7 @@
         <div class="flex justify-between items-center mx-[0.28rem] mb-[0.32rem]">
             <div class="flex flex-col justify-between">
                 <div class="mb-[0.16rem] size-[0.4rem] flex items-center gap-[0.16rem]">
-                    <img :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="img" />
+                    <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="img" />
                     <div class="text-[0.32rem]">{{ item.symbol }}</div>
                 </div>
                 <div>

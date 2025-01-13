@@ -6,7 +6,7 @@
                 <div class="subtitle">币种</div>
                 <div class="item" @click="showCrypto = true">
                     <div class="item_icon">
-                        <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="usdt" />
+                        <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="usdt" />
                     </div>
                     <div class="ipt">{{ form.currency }}</div>
                     <Icon style="transform: rotate(90deg)" name="play" />
@@ -38,7 +38,7 @@
                 <div @click="chooseCurrency(item)" class="bottom" :class="{ active_bottom: form.currency == item }"
                     v-for="item in currencyMapList" :key="item">
                     <div class="bottom_icon">
-                        <img :src="getStaticImgUrl(`/static/img/crypto/${item.toUpperCase()}.svg`)" alt="usdt" />
+                        <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.toUpperCase()}.svg`)" alt="usdt" />
                     </div>
                     <span>{{ item }}</span>
                 </div>

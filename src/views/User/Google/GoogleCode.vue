@@ -5,12 +5,12 @@
     <Top :title="t('google_auth.page_title')">
       <template #right>
         <div class="w-[0.6rem] h-[0.6rem]" @click="jump('chat')">
-          <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+          <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
       </template>
     </Top>
     <div class="icon">
-      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
+      <img v-lazy="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("google_auth.google_result_title") }}</div>
     <div class="description">{{ $t("google_auth.google_result_con") }}</div>

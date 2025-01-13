@@ -7,17 +7,17 @@
       <div v-for="(item, i) in langList" :key="i" @click="clickItem(item)">
         <div class="lang_item mask-btn" v-if="item.show">
           <div class="w-[0.52rem] h-[0.52rem] mr-[0.16rem]">
-            <img :src="getStaticImgUrl(`/static/img/flag/${item.icon}.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/flag/${item.icon}.svg`)" alt="">
           </div>
           <div class="name">{{ item.name }}</div>
           <!-- <div :class="checked.val == item.val ? 'check' : 'uncheck'">
             <div :class="checked.val == item.val ? 'inner' : ''"></div>
           </div> -->
           <div v-if="checked.val == item.val">
-            <img :src="getStaticImgUrl('/static/img/user/lang_checked.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/lang_checked.svg')" alt="">
           </div>
           <div v-if="checked.val != item.val">
-            <img :src="getStaticImgUrl('/static/img/user/lang_unchecked.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/lang_unchecked.svg')" alt="">
           </div>
           <div></div>
         </div>

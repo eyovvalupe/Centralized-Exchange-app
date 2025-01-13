@@ -3,7 +3,7 @@
     <Top />
     <div class="page page_success">
         <div class="icon">
-            <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√">
+            <img v-lazy="getStaticImgUrl('/static/img/user/success.svg')" alt="√">
         </div>
         <div class="title">{{ t('trade.ipo_success_title') }}</div>
         <div class="tips">{{ t('trade.ipo_success_con') }}</div>

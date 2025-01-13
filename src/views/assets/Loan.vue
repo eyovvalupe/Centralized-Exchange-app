@@ -11,7 +11,7 @@
             <div class="item2">
                 <div class="border_item account_box" style="background-color: var(--ex-bg-color2)">
                     <div class="item_icon">
-                        <img :src="getStaticImgUrl('/static/img/assets/cash_icon.svg')" alt="img">
+                        <img v-lazy="getStaticImgUrl('/static/img/assets/cash_icon.svg')" alt="img">
                     </div>
                     <span>现金账户</span>
                 </div>
@@ -46,10 +46,10 @@
             <div class="item2">
                 <div class="border_item account_box" @click="showDialog = true" style="padding-right:0.24rem">
                     <div class="item_icon">
-                        <img :src="getStaticImgUrl('/static/img/assets/stock_icon.svg')" alt="img">
+                        <img v-lazy="getStaticImgUrl('/static/img/assets/stock_icon.svg')" alt="img">
                     </div>
                     <span>股票账户</span>
-                    <div class="more_icon"><img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="img"></div>
+                    <div class="more_icon"><img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="img"></div>
                 </div>
                 <div class="border_item ipt_box" style="background-color: var(--ex-bg-color2)">
                     <div class="ipt">
@@ -90,7 +90,7 @@
             v-model:show="showDialog" position="bottom" teleport="body">
             <div class="swap_accounr_dialog">
                 <div class="close_icon" @click="showDialog = false">
-                    <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x">
+                    <img v-lazy="getStaticImgUrl('/static/img/common/close.svg')" alt="x">
                 </div>
                 <div @click="showDialog = false" class="swap_dialog_item swap_dialog_item_active">
                     <span>股票账户</span>
@@ -106,7 +106,7 @@
                     <div class="loan_comfirm_title">
                         <span>借款确认</span>
                         <div class="close_icon" @click="closeSafeRef">
-                            <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="x">
+                            <img v-lazy="getStaticImgUrl('/static/img/common/close.svg')" alt="x">
                         </div>
                     </div>
                     <div class="loan_confirm_item">

@@ -9,7 +9,7 @@
         <div class="tip">
           <div class="tip_member">
             <div class="tip_icon">
-              <img :src="getStaticImgUrl('/static/img/common/member.svg')" alt="icon" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/member.svg')" alt="icon" />
             </div>
             <span>{{ props.item.numpeople || "--" }}</span>
           </div>

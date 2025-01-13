@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
         </div>
       </template>
@@ -31,7 +31,7 @@
 
               <div class="account_item relative">
                 <div class="account_item_icon">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.svg`)"
+                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.svg`)"
                     alt="img" />
                 </div>
                 <div class="item_content mr-[0.1rem]">
@@ -40,7 +40,7 @@
                   }}</span>
                 </div>
                 <div class="w-[0.36rem] h-[0.36rem]">
-                  <img :src="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
+                  <img v-lazy="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
                 </div>
               </div>
             </div>
@@ -59,7 +59,7 @@
 
       <div class="form_box" :class="{ form_box_active: clickKey == 'to' }">
         <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
-          <img :src="getStaticImgUrl('/static/img/assets/convert.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/convert.svg')" alt="img" />
         </div>
         <div class="flex justify-between">
           <div class="mb-[0.32rem] min-w-[1.52rem] h-[0.6rem] flex justify-center items-center">
@@ -78,14 +78,14 @@
 
               <div class="account_item">
                 <div class="account_item_icon">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.svg`)"
+                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.svg`)"
                     alt="img" />
                 </div>
                 <div class="item_content mr-[0.1rem]">
                   <span class="monty_span">{{ form.toCurrency.name || "" }}</span>
                 </div>
                 <div class="w-[0.36rem] h-[0.36rem]">
-                  <img :src="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
+                  <img v-lazy="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
                 </div>
               </div>
             </div>
@@ -128,7 +128,7 @@
         <template #option="option">
           <div class="picker-item">
             <span class="picker-item__icon" v-if="!columnList.includes(option.key)">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${option.key}.svg`)" alt="icon" />
+              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${option.key}.svg`)" alt="icon" />
             </span>
             <span class="picker-item__text">
               {{ option.value }}

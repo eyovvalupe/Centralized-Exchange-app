@@ -9,7 +9,7 @@
 
             <div class="status_box" v-if="currDetail.status == 'success'">
                 <div style="width: 1.2rem;height: 1.2rem;">
-                    <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_success.svg`)" alt="">
+                    <img v-lazy="getStaticImgUrl(`/static/img/trade/ipo_detail_success.svg`)" alt="">
                 </div>
                 <div class="status_text" style="color:var(--ex-success-color);">
                     {{ t('trade.ipo_detail_status_success') }}
@@ -18,7 +18,7 @@
             <div class="status_box" v-else-if="currDetail.status == 'failure'">
                 <div class="status_fail">
                     <div style="width: 1.2rem;height: 1.2rem;">
-                        <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_failure.svg`)" alt="">
+                        <img v-lazy="getStaticImgUrl(`/static/img/trade/ipo_detail_failure.svg`)" alt="">
                     </div>
                 </div>
                 <div class="status_text" style="color:var(--ex-text-color2);">
@@ -27,7 +27,7 @@
             </div>
             <div class="status_box" v-else>
                 <div style="width: 1.2rem;height: 1.2rem;">
-                    <img :src="getStaticImgUrl(`/static/img/trade/ipo_detail_wait.svg`)" alt="">
+                    <img v-lazy="getStaticImgUrl(`/static/img/trade/ipo_detail_wait.svg`)" alt="">
                 </div>
                 <div class="status_text status_wait">
                     {{ t('trade.ipo_detail_status_wait') }}
@@ -44,7 +44,7 @@
                     <div class="item_order_no">
                         <span>{{ t('trade.ipo_detail_order_no') }} {{ currDetail.order_no || '--' }}</span>
                         <div class="item_copy_icon" @click="copy(currDetail.order_no)">
-                            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy">
+                            <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy">
                         </div>
                     </div>
 

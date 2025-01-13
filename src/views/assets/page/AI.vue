@@ -6,8 +6,8 @@
             <div class="top">
                 <div class="title">盈利资金({{ currency }})</div>
                 <div class="eyes" @click="hidden = !hidden">
-                    <img :src="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
-                    <img :src="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
+                    <img v-lazy="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
+                    <img v-lazy="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
                 </div>
             </div>
             <div class="money">

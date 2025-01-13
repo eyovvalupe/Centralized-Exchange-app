@@ -4,7 +4,7 @@
     <Top :title="$t('withdrawInfo.title')">
       <!-- <template #right>
         <div class="top-record" @click="goChat">
-          <span><img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="img" /></span>
+          <span><img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="img" /></span>
         </div>
       </template> -->
     </Top>
@@ -12,7 +12,7 @@
     <div class="top_info mb-[0.4rem]">
       <div class="status" v-if="orderData.status == 'success'">
         <div class="status_icon">
-          <img :src="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.successful") }}</div>
         <div class="status_desc">
@@ -23,7 +23,7 @@
       </div>
       <div class="status" v-else-if="orderData.status == 'failure'">
         <div class="status_icon">
-          <img :src="getStaticImgUrl('/static/img/assets/status_error.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_error.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.failed") }}</div>
         <div class="status_desc">{{ $t("withdrawInfo.failurePrompt") }}</div>
@@ -31,7 +31,7 @@
       <div class="status" v-else>
         <div class="status_icon">
           <!-- <LoadEffect class="status_loading" color="var(--ex-white)" /> -->
-          <img :src="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.processing") }}</div>
         <div class="status_desc">{{ $t("withdrawInfo.processingTip") }}</div>
@@ -42,7 +42,7 @@
         <div class="flex items-center">
           <div class="text-color5 mr-[0.05rem]">{{ orderData.order_no }}</div>
           <div class="w-[0.32rem] h-[0.32rem]" @click="copy(orderData.order_no)">
-            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
         <div class="text-color5 text-[0.24rem] flex-1 text-end">{{ orderData.date ? orderData.date.slice(0, -3)

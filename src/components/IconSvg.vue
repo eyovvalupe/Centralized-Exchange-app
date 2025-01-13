@@ -11,11 +11,11 @@
    -->
     <!-- eslint-disable max-len 示范 -->
     <!-- 时钟 -->
-    <img v-if="name === 'clock'" :src="getStaticImgUrl(`/static/img/common/clock.svg`)" alt="">
+    <img v-if="name === 'clock'" v-lazy="getStaticImgUrl(`/static/img/common/clock.svg`)" alt="">
     <!-- 聊天文件 -->
-    <img v-else-if="name === 'chatFile'" :src="getStaticImgUrl(`/static/img/common/link.svg`)" alt="">
+    <img v-else-if="name === 'chatFile'" v-lazy="getStaticImgUrl(`/static/img/common/link.svg`)" alt="">
     <!-- 聊天发送 -->
-    <img v-else-if="name === 'chatSend'" :src="getStaticImgUrl(`/static/img/common/send.svg`)" alt="">
+    <img v-else-if="name === 'chatSend'" v-lazy="getStaticImgUrl(`/static/img/common/send.svg`)" alt="">
   </div>
 </template>
 

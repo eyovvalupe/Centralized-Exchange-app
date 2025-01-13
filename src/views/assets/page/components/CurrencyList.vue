@@ -23,12 +23,12 @@
         <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[0.26rem] mr-[0.2rem] flex items-center justify-center"
           style="background-color: var(--ex-white);">
           <div class=" w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" class=" rounded-full" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" class=" rounded-full" alt="">
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>
         <div class="absolute right-[0.34rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" class=" rounded-full" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" class=" rounded-full" alt="">
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[0.26rem] flex justify-center items-center mr-[0.2rem]"
           style="background-color: var(--ex-white);">
           <div class="size-[0.4rem]">
-            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="">
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>
@@ -46,7 +46,7 @@
       <div class="flex mr-[0.4rem]">
         <div class="mr-[0.24rem] text-[0.32rem] font-semibold">{{ item.amount }}</div>
         <div class="w-[0.28rem] h-[0.28rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" class=" rounded-full" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" class=" rounded-full" alt="">
         </div>
       </div>
     </div>

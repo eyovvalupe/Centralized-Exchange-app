@@ -26,14 +26,14 @@
           class="mb-[0.24rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-color text-primary"
           @click="goAddAccount">
           <div class="mb-1 size-[0.48rem]">
-            <img :src="getStaticImgUrl('/static/img/common/add.svg')" alt="img" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/add.svg')" alt="img" />
 
           </div>
           <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
         </div>
 
         <div class="flex flex-col items-center h-[1.36rem] my-[0.8rem]" v-if="bankList.length == 0">
-          <!-- <img :src="getStaticImgUrl('/static/img/user/noData.svg')" />
+          <!-- <img v-lazy="getStaticImgUrl('/static/img/user/noData.svg')" />
           <span class="mt-[0.12rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span> -->
           <NoData />
         </div>
@@ -47,8 +47,8 @@
             <div class="flex items-center">
               <div class="card_icon">
                 <img v-if="tabsValue === 'crypto'" class="rounded-50"
-                  :src="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.svg`)" alt="currency" />
-                <img v-else class="!size-[0.44rem]" :src="getStaticImgUrl('/static/img/bank/card_icon.svg')"
+                  v-lazy="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.svg`)" alt="currency" />
+                <img v-else class="!size-[0.44rem]" v-lazy="getStaticImgUrl('/static/img/bank/card_icon.svg')"
                   alt="img" />
               </div>
               <div class="text-color text-[0.32rem]">{{ item.symbol ? `${item.symbol}-${item.network}` :
@@ -60,7 +60,7 @@
 
             </div>
             <div v-if="bank.id == item.id" class="checked">
-              <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
             </div>
           </div>
         </div>

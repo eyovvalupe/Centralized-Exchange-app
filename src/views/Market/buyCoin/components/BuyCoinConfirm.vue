@@ -6,7 +6,7 @@
       <div class="p-[0.32rem] bg-color3 rounded-[0.32rem]">
         <div class="flex items-center font-[600]">
           <img class="size-[0.52rem] rounded-50 mr-[0.12rem]"
-            :src="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" alt="currency" />
+            v-lazy="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" alt="currency" />
           {{ offset == 'buy' ? t('market.market_buy_list_buy') : t('market.market_buy_list_sell') }}{{ currency }}
         </div>
         <div class="pt-[0.24rem] flex items-center justify-between text-color">
@@ -65,9 +65,9 @@
             <div class="flex items-center">
               <div class="card_icon">
                 <img v-if="currentAccount.channel === 'crypto'" class="rounded-50"
-                  :src="getStaticImgUrl(`/static/img/crypto/${currentAccount.symbol?.toUpperCase()}.svg`)"
+                  v-lazy="getStaticImgUrl(`/static/img/crypto/${currentAccount.symbol?.toUpperCase()}.svg`)"
                   alt="currency" />
-                <img v-else class="!size-[0.44rem]" :src="getStaticImgUrl('/static/img/bank/card_icon.svg')"
+                <img v-else class="!size-[0.44rem]" v-lazy="getStaticImgUrl('/static/img/bank/card_icon.svg')"
                   alt="img" />
               </div>
               <div class="text-color text-[0.32rem]">{{ currentAccount.symbol ?
@@ -84,7 +84,7 @@
         <div class="dialog_account_item h-[1.4rem] mt-[0.32rem] bg-color rounded-[0.32rem]" v-else>
           <div class="flex w-full flex-col items-center justify-center text-primary" @click="showAccountDialog = true;">
             <div class="mb-1 size-[0.48rem]">
-              <img :src="getStaticImgUrl('/static/img/common/add.svg')" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/add.svg')" />
             </div>
             <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
           </div>

@@ -5,7 +5,7 @@
     <div class="item_box flex justify-between">
       <div class="flex items-center">
         <span class="item_icon" v-if="item.account_from"><img
-            :src="getStaticImgUrl(`/static/img/crypto/${item.from.toUpperCase()}.svg`)" alt="currency" /></span>
+            v-lazy="getStaticImgUrl(`/static/img/crypto/${item.from.toUpperCase()}.svg`)" alt="currency" /></span>
         <div class="flex flex-col h-[0.64rem] justify-between text-[0.28rem]">
           <span>{{
             item.from ? item.from : '--'
@@ -19,10 +19,10 @@
     </div>
     <div class="item_box flex justify-between">
       <div class="icon_to">
-        <img :src="getStaticImgUrl(`/static/img/assets/convert_sm.svg`)" alt="">
+        <img v-lazy="getStaticImgUrl(`/static/img/assets/convert_sm.svg`)" alt="">
       </div>
       <div class="flex items-center">
-        <span class="item_icon"><img :src="getStaticImgUrl(`/static/img/crypto/${item.to.toUpperCase()}.svg`)"
+        <span class="item_icon"><img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.to.toUpperCase()}.svg`)"
             alt="currency" /></span>
         <div class="flex flex-col justify-between h-[0.64rem]">
           <span>{{

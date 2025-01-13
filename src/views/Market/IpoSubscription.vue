@@ -5,7 +5,7 @@
             v-if="currIpo.lever > 1" @change="changeTab">
             <template #before>
                 <div class="back" @click="back()">
-                    <img :src="getStaticImgUrl(`/static/img/user/back.svg`)" alt="">
+                    <img v-lazy="getStaticImgUrl(`/static/img/user/back.svg`)" alt="">
                 </div>
             </template>
         </HeaderTabs>
@@ -204,7 +204,7 @@
                 position: relative;
                 top: -0.02rem;
               ">
-                                <img :src="getStaticImgUrl(
+                                <img v-lazy="getStaticImgUrl(
                                     `/static/img/crypto/${mainWallet.currency.toUpperCase()}.svg`
                                 )
                                     " />

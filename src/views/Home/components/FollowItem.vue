@@ -11,7 +11,7 @@
                 </div>
                 <div class="bottom">
                     <div class="bottom-info">
-                        <div class="icon"><img :src="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
+                        <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
                         <div>{{ props.item.followers }}</div>
                     </div>
                     <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div>
@@ -44,7 +44,7 @@
                 <div class="item-val">{{ props.item.amount }}</div>
             </div>
             <div class="icons">
-                <div class="icon" v-for="i in 5" :key="i"><img :src="getStaticImgUrl('/static/img/crypto/USDT.svg')"
+                <div class="icon" v-for="i in 5" :key="i"><img v-lazy="getStaticImgUrl('/static/img/crypto/USDT.svg')"
                         alt=""></div>
             </div>
         </div>

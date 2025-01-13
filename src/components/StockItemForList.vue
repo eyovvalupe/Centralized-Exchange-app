@@ -97,7 +97,7 @@
           : 'delete_content_crypto ml-[1px]'
           " @click="removeStock(item)">
           <div class="delete_icon">
-            <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
           </div>
         </div>
       </template>

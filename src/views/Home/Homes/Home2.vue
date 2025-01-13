@@ -3,10 +3,10 @@
     <div class="page-home2">
         <!-- 背景 -->
         <div class="home2-bg1">
-            <img :src="getStaticImgUrl('/static/home2/bg.png')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/home2/bg.png')" alt="">
         </div>
         <div class="home2-bg2">
-            <img :src="getStaticImgUrl('/static/home2/bg-shadow.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/home2/bg-shadow.svg')" alt="">
         </div>
 
         <!-- 内容 -->
@@ -14,15 +14,15 @@
             <!-- 头部 -->
             <div class="home2-header">
                 <div class="icon" @click="jump('user', true)">
-                    <img v-if="token" :src="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
-                    <img v-else :src="getStaticImgUrl('/static/home2/avatar.svg')" alt="">
+                    <img v-if="token" v-lazy="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
+                    <img v-else v-lazy="getStaticImgUrl('/static/home2/avatar.svg')" alt="">
                 </div>
                 <div style="flex: 1;"></div>
                 <div @click="jump('search')" class="icon icon2" style="margin-right: 0.12rem;">
-                    <img :src="getStaticImgUrl('/static/home2/search.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/search.svg')" alt="">
                 </div>
                 <div @click="jump('notification')" class="icon icon2">
-                    <img :src="getStaticImgUrl('/static/home2/notice.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/notice.svg')" alt="">
                 </div>
             </div>
 
@@ -31,10 +31,10 @@
             <view @click="install" class="banners wow fadeInUp">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
-                        <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/banner1.png')" alt="">
                     </SwipeItem>
                     <SwipeItem class="swiper-item">
-                        <img :src="getStaticImgUrl('/static/home2/banner2.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/banner2.png')" alt="">
                     </SwipeItem>
                 </Swipe>
             </view>
@@ -42,11 +42,11 @@
             <!-- 质押挖矿 -->
             <div class="recommend-title">
                 <div class="point wow slideInLeft">
-                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
                 <div class="wow slideInLeft" style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
                 <div class="recommend-icon wow slideInRight" @click="jump('finance', true, 1)">
-                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 
@@ -57,16 +57,16 @@
             </div>
 
             <div class="sub-banner wow fadeInUp">
-                <img :src="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
+                <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
             <!-- 跟单 -->
             <div  class="recommend-title" @click="jump('follow', false)">
                 <div class="point wow slideInLeft">
-                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
                 <div class="wow slideInLeft" style="flex: 1;">{{ t('copy.title') }}</div>
                 <div class="recommend-icon wow slideInRight">
-                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
             <div>
@@ -83,11 +83,11 @@
             <!-- 市场推荐 -->
             <div class="recommend-title" style="margin-top: 0.8rem;">
                 <div class="point wow slideInLeft">
-                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
                 <div class="wow slideInLeft" style="flex: 1;">{{ t('home.market_trend') }}</div>
                 <div class="recommend-icon wow slideInRight">
-                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 
@@ -136,7 +136,7 @@
                     <div class="btn">{{ t('home.ad_btn') }}</div>
                 </div>
                 <div class="ad-tip">
-                    <img :src="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
                 </div>
             </div>
 
@@ -144,37 +144,37 @@
             <div class="links">
                 <div class="link-item wow slideInLeft">
                     <div class="item-img">
-                        <img :src="getStaticImgUrl('/static/home2/link1.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/link1.png')" alt="">
                     </div>
                     <div>TheSantumNe...</div>
                 </div>
                 <div class="link-item wow slideInRight">
                     <div class="item-img">
-                        <img :src="getStaticImgUrl('/static/home2/link2.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/link2.png')" alt="">
                     </div>
                     <div>KEEPOFFTHE...</div>
                 </div>
                 <div class="link-item wow slideInLeft">
                     <div class="item-img">
-                        <img :src="getStaticImgUrl('/static/home2/link3.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/link3.png')" alt="">
                     </div>
                     <div>AIORBIT</div>
                 </div>
                 <div class="link-item wow slideInRight">
                     <div class="item-img">
-                        <img :src="getStaticImgUrl('/static/home2/link4.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/link4.png')" alt="">
                     </div>
                     <div>GodsUnchained...</div>
                 </div>
                 <div class="link-item wow slideInLeft">
                     <div class="item-img">
-                        <img :src="getStaticImgUrl('/static/home2/link5.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/link5.png')" alt="">
                     </div>
                     <div>PudgyRods</div>
                 </div>
                 <div class="link-item wow slideInRight">
                     <div class="item-img">
-                        <img :src="getStaticImgUrl('/static/home2/link6.png')" alt="">
+                        <img v-lazy="getStaticImgUrl('/static/home2/link6.png')" alt="">
                     </div>
                     <div>Azuki</div>
                 </div>
@@ -184,11 +184,11 @@
             <!-- 市场推荐 -->
             <div class="recommend-title" style="margin-top: 0.36rem;">
                 <div class="point wow slideInLeft">
-                    <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
                 <div class="wow slideInLeft" style="flex: 1;">{{ t('home.news') }}</div>
                 <div class="recommend-icon wow slideInRight">
-                    <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 

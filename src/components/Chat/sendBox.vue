@@ -1,12 +1,12 @@
 <template>
   <div class="msg-input flex items-center">
-    <span class="icon-left"><img :src="getStaticImgUrl('/static/img/support/sendImg.svg')" />
+    <span class="icon-left"><img v-lazy="getStaticImgUrl('/static/img/support/sendImg.svg')" />
       <input type="file" id="fileInput" @change="uploadImg" accept="image/*" />
     </span>
     <textarea class="textarea text-black" v-model="message" ref="sendInput"
       :placeholder="t('service.input_message')"></textarea>
     <span class="icon-right mask-btn" @click="sendMessage('text', message)"><img
-        :src="getStaticImgUrl('/static/img/support/send.svg')" />
+        v-lazy="getStaticImgUrl('/static/img/support/send.svg')" />
     </span>
   </div>
 </template>

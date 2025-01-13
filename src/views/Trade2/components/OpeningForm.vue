@@ -10,7 +10,7 @@
           <Loading v-show="searchLoading" type="circular" style="width: 0.28rem; height: 0.28rem"
             color="var(--ex-primary-color)" />
           <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click.stop="openStockModel">
-            <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
           </div>
         </div>
         <div class="info">
@@ -22,7 +22,7 @@
             <div v-if="currStock.symbol" class="info-name" style="margin-top: 0.15rem;">{{ currStock.name }}</div>
           </div>
           <div class="more_icon">
-            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@
       <Loading v-show="searchLoading" type="circular" style="width: 0.28rem; height: 0.28rem"
         color="var(--ex-primary-color)" />
       <div class="stock_icon" v-show="!searchLoading && currStock.symbol" @click="openStockModel">
-        <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+        <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
       </div>
     </div> -->
     
@@ -138,7 +138,7 @@
                 : t("trade.stock_opening_position_mode_isolated") || "--"
             }}</span>
           <div class="more_icon more_icon2">
-            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@
           <span class="flex text-center" style="margin-bottom: 0.06rem;" v-else>
             {{ form1.lever }}X</span>
           <div class="more_icon more_icon2">
-            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
           </div>
         </div>
       </div>
@@ -325,9 +325,9 @@
       <div class="item pass_ipt">
         <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
           :type="showPassword ? 'text' : 'password'" class="ipt" />
-        <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
+        <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
           @click="showPassword = true" alt="off" />
-        <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+        <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
           @click="showPassword = false" />
       </div>
       <Button class="ripple-btn" :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>
@@ -396,7 +396,7 @@
       <!-- 搜索 -->
       <div class="item search_box">
         <div class="search_icon">
-          <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+          <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
         </div>
         <input v-model.trim="searchDialogStr" @keyup="goDialogSearch('stock')" type="text" class="ipt"
           style="width: 100%" :placeholder="t('trade.stock_opening_search')" />
@@ -474,7 +474,7 @@
                 position: relative;
                 top: -0.02rem;
               ">
-              <img :src="getStaticImgUrl(
+              <img v-lazy="getStaticImgUrl(
                 `/static/img/crypto/${paramCurrency.toUpperCase()}.svg`
               )
                 " />

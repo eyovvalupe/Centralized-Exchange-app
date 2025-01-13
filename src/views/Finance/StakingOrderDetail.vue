@@ -28,7 +28,7 @@
                     <div class="flex mr-[0.1rem] items-center">
                         <div class="w-[0.4rem] h-[0.4rem] relative" v-for="(item, i) in iconList"
                             :class="i == 1 ? 'left-[-0.08rem]' : i == 2 ? 'left-[-0.16rem]' : ''"><img
-                                :src="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
+                                v-lazy="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
                     </div>
                     <div class="text-[0.32rem] relative top-[0.04rem]">BTC+USDT</div>
                 </div>

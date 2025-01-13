@@ -4,7 +4,7 @@
     <Top :title="t('recordList.financialRecords')">
       <template #right>
         <div class="w-[0.7rem] h-[0.7rem]" @click="router.push('/chat')">
-          <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+          <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
       </template>
     </Top>
@@ -30,7 +30,7 @@
               {{ getDate(item.date) }}
               <span class="date_more" :class="{
                 date_more_up: !openDates.includes(getDate(item.date)),
-              }"><img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" /></span>
+              }"><img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="more" /></span>
             </div>
             <transition name="opacity">
               <RechargeItem :item="item" v-show="!openDates.includes(getDate(item.date))" />
@@ -49,7 +49,7 @@
               {{ getDate(item.date) }}
               <span class="date_more" :class="{
                 date_more_up: !withdrawOpenDates.includes(getDate(item.date)),
-              }"><img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" /></span>
+              }"><img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="more" /></span>
             </div>
             <transition name="opacity">
               <WithdrawItem :item="item" v-show="!withdrawOpenDates.includes(getDate(item.date))" />
@@ -70,7 +70,7 @@
                 date_more_up: !transferOpenDates.includes(
                   getDate(item.created)
                 ),
-              }"><img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="more" /></span>
+              }"><img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="more" /></span>
             </div>
             <transition name="opacity">
               <TransferItem :item="item" v-show="!transferOpenDates.includes(getDate(item.created))" />

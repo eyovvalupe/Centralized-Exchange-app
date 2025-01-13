@@ -12,7 +12,7 @@
         <div class="flex items-center justify-center flex-col bg-color p-[0.2rem] rounded-[0.4rem]">
           <div class="flex items-center justify-center mb-[0.2rem]">
             <div v-if="currency" class="size-[0.4rem]">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" />
+              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" />
             </div>
 
             <span class="text-[0.3rem] ml-[0.12rem] text-color">{{ currency }}</span>

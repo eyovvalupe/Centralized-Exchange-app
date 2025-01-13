@@ -19,7 +19,7 @@
         <div @click="jump('chat')"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+            <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
       </template> -->
@@ -71,7 +71,7 @@
         {{ form.birthday || $t("kyc.first_birthday_placeholder") }}
       </div>
       <div class="calendar-icon">
-        <img :src="getStaticImgUrl('/static/img/user/calendar.svg')" alt="">
+        <img v-lazy="getStaticImgUrl('/static/img/user/calendar.svg')" alt="">
       </div>
     </div>
 

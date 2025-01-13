@@ -88,13 +88,13 @@
 
             <!-- 已完成 -->
             <div v-if="currItem.status == 'done'" class="finish_status success_status">
-              <div class="size-[0.8rem]"><img :src="getStaticImgUrl('/static/img/assets/status_success.svg')"
+              <div class="size-[0.8rem]"><img v-lazy="getStaticImgUrl('/static/img/assets/status_success.svg')"
                   alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_complete") }}</div>
             </div>
             <!-- 已取消 -->
             <div v-if="currItem.status == 'cancel'" class="finish_status">
-              <div class="size-[0.8rem]"><img :src="getStaticImgUrl('/static/img/assets/status_error.svg')"
+              <div class="size-[0.8rem]"><img v-lazy="getStaticImgUrl('/static/img/assets/status_error.svg')"
                   alt="img" /></div>
               <div class="ml-[0.2rem]">{{ t("market.market_buy_list_cancel") }}</div>
             </div>
@@ -146,7 +146,7 @@
             <!-- 银行卡 -->
             <div class="bank_none" v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'">
               <div class="img">
-                <img :src="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
+                <img v-lazy="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
               </div>
               <div class="name">
                 <!-- {{ t("market.market_buy_list_wait_buyer_bank") }} -->
@@ -166,7 +166,7 @@
                 <div class="td td2">
                   <span>{{ currItem.bank_card_number }}</span>
                   <div class="copy">
-                    <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
+                    <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@
           <div class="top" @click="copy(currItem.order_no)">
             <div class="order_no">{{ currItem.order_no }}</div>
             <div class="copy_icon">
-              <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
             </div>
             <div style="flex: 1"></div>
             <div>{{ currItem.date }}</div>

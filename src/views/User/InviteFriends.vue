@@ -6,7 +6,7 @@
       <template #before>
         <div class="back" @click="back()">
           <div class="w-[0.28rem] h-[0.28rem]">
-            <img :src="getStaticImgUrl('/static/img/user/back.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/user/back.svg')" />
           </div>
         </div>
       </template>
@@ -16,7 +16,7 @@
         <div class="scroll-box">
           <div class="px-[0.32rem] pt-[0.26rem] pb-[0.64rem]">
             <div class="invite_banner" :class="['invite_banner--' + locale]">
-              <img class="invite_banner_img" :src="getStaticImgUrl('/static/img/user/banner2.svg')" />
+              <img class="invite_banner_img" v-lazy="getStaticImgUrl('/static/img/user/banner2.svg')" />
               <div class="invite_banner_titbox">
                 <div class="invite_banner_tit">
                   {{ $t("inviteFriends.banner_title") }}
@@ -71,7 +71,7 @@
                 </div>
                 <div class="achievement_amount text-primary">20000</div>
               </div>
-              <img class="achievement_bg" :src="getStaticImgUrl('/static/img/user/achievement.svg')" />
+              <img class="achievement_bg" v-lazy="getStaticImgUrl('/static/img/user/achievement.svg')" />
             </div>
             <div class="invite-title">{{ $t("inviteFriends.details") }}</div>
             <div class="record-tit">

@@ -8,7 +8,7 @@
                 <!-- <Icon name="arrow-up" class="arrow" v-show="openList" :class="{ 'arrow_active': openList }" /> -->
                 <div class="header_box">
                     <div class="header_box_icon">
-                        <img :src="getStaticImgUrl('/static/img/common/time_icon.svg')" alt="img">
+                        <img v-lazy="getStaticImgUrl('/static/img/common/time_icon.svg')" alt="img">
 
                         <div class="header_num" v-if="hintNum">{{ hintNum }}</div>
                     </div>
@@ -16,7 +16,7 @@
             </div>
 
             <div class="close_icon" @click="close" v-if="openList">
-                <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="img">
+                <img v-lazy="getStaticImgUrl('/static/img/common/close.svg')" alt="img">
             </div>
 
             <div class="list_box list" :class="{ 'open_list': openList }">

@@ -2,7 +2,7 @@
     <div>
         <div class="staking_item relative" v-if="list.length && !loading" v-for="(item, i) in list">
             <div class="w-[0.66rem] h-[0.48rem] absolute top-[0] right-[0]" v-if="item.hot"><img
-                    :src="getStaticImgUrl('/static/img/finance/hot.svg')" alt="img" /></div>
+                    v-lazy="getStaticImgUrl('/static/img/finance/hot.svg')" alt="img" /></div>
             <div class="w-full bg-color6 mb-[0.24rem] rounded-[0.2rem]">
                 <div class="w-full h-full px-[0.12rem] pt-[0.4rem] flex flex-col">
                     <div class="flex flex-col px-[0.16rem] mb-[0.3rem] relative">
@@ -17,7 +17,7 @@
                         <div class="flex flex-col px-[0.28rem] flex-1" v-for="(symbol, i) in parseSymbol(item.symbol)">
                             <div class="flex items-center mb-[0.1rem]">
                                 <div class="w-[0.35rem] h-[0.35rem] mr-[0.1rem]"><img
-                                        :src="getStaticImgUrl(`/static/img/crypto/${dataModify2(item.name)[i]}.svg`)"
+                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${dataModify2(item.name)[i]}.svg`)"
                                         alt="img" /></div>
                                 <div class="text-color3 text-[0.28rem]">{{ dataModify2(item.name)[i] }}</div>
                             </div>

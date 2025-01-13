@@ -22,8 +22,8 @@
         <div v-if="!props.innerPage" class="search star" @click="addCollect"
           :style="{ opacity: loading ? '0.5' : '1' }">
           <div class="size-[0.48rem]">
-            <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/img/market/star.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
+            <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
+            <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
         </div>
 
@@ -37,8 +37,8 @@
             </span>
             <span class="text-[0.4rem] font-[600]" v-else>--</span>
             <span class="w-[0.24rem] h-[0.26rem] ml-[0.06rem] mt-[0.06rem]">
-              <img :src="getStaticImgUrl('/static/img/market/up_icon.svg')" v-if="updown > 0" />
-              <img :src="getStaticImgUrl('/static/img/market/down_icon.svg')" v-else-if="updown < 0" />
+              <img v-lazy="getStaticImgUrl('/static/img/market/up_icon.svg')" v-if="updown > 0" />
+              <img v-lazy="getStaticImgUrl('/static/img/market/down_icon.svg')" v-else-if="updown < 0" />
             </span>
           </h1>
           <div class="flex mt-[0.2rem]" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
@@ -123,7 +123,7 @@
           </div>
           <div style="flex:1"></div>
           <div class="full-tab" @click="fullScreen(true)">
-            <img :src="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
           </div>
         </div>
         <div class="chart_container" :class="{ fullscreen_container: fullWindow }">
@@ -145,13 +145,13 @@
 
       <div class="bottom_btn ripple-btn" @click="goBuy(true)" style="background-color: var(--ex-up-color)">
         <span class="bottom_btn_icon">
-          <img :src="getStaticImgUrl('/static/img/market/up.svg')" />
+          <img v-lazy="getStaticImgUrl('/static/img/market/up.svg')" />
         </span>
         <span>{{ t("market.market_marketinfo_long") }}</span>
       </div>
       <div class="bottom_btn ripple-btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
         <span class="bottom_btn_icon">
-          <img :src="getStaticImgUrl('/static/img/market/down.svg')" />
+          <img v-lazy="getStaticImgUrl('/static/img/market/down.svg')" />
         </span>
         <span>{{ t("market.market_marketinfo_short") }}</span>
       </div>
@@ -172,13 +172,13 @@
         <div class="buy_popup_btn" @click="goBuy(true)">
           <span>{{ t('market.market_marketinfo_long') }}</span>
           <div class="btn_icon">
-            <img :src="getStaticImgUrl('/static/img/market/market.svg')" alt="img" />
+            <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="img" />
           </div>
         </div>
         <div class="buy_popup_btn buy_popup_btn2" @click="goBuy(false)">
           <span>{{ t('market.market_marketinfo_short') }}</span>
           <div class="btn_icon">
-            <img :src="getStaticImgUrl('/static/img/market/market.svg')" alt="img" />
+            <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="img" />
           </div>
         </div>
       </div>

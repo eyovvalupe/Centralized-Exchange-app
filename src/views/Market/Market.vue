@@ -7,7 +7,7 @@
       class="bg-color2 absolute right-4 top-[0.25rem] z-20 flex size-[0.6rem] items-center justify-center rounded-50"
       @click="jump('search')">
       <div style="width: 0.32rem;height: 0.32rem;">
-        <img :src="getStaticImgUrl('/static/img/home/search_icon.svg')" alt="">
+        <img v-lazy="getStaticImgUrl('/static/img/home/search_icon.svg')" alt="">
       </div>
     </div>
     

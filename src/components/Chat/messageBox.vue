@@ -15,7 +15,7 @@
       <div class="flex">
         <div class="mr-[0.2rem]">
           <div style="width: 0.8rem;height: 0.8rem;">
-            <img :src="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
           </div>
         </div>
         <div class="flex flex-col">
@@ -51,16 +51,16 @@
               {{ console.log(token) }}
               <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
               <div v-if="!token" style="width: 0.8rem;height: 0.8rem;" class="ml-[0.2rem]">
-                <img :src="getStaticImgUrl(`/static/img/user/avatar1.svg`)" alt="">
+                <img v-lazy="getStaticImgUrl(`/static/img/user/avatar1.svg`)" alt="">
               </div>
               <div v-if="token" style="width: 0.8rem;height: 0.8rem;" class="ml-[0.2rem]">
-                <img :src="getStaticImgUrl(`/static/img/user/avatar2.svg`)" alt="">
+                <img v-lazy="getStaticImgUrl(`/static/img/user/avatar2.svg`)" alt="">
               </div>
             </div>
             <div class="receive-box" v-if="item.direction === 'receive'">
               <div class="mr-[0.2rem]">
                 <div style="width: 0.8rem;height: 0.8rem;">
-                  <img :src="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
+                  <img v-lazy="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
                 </div>
               </div>
               <div class="con break-all receive-text" :class="item.type" v-if="item.type !== 'img'">
@@ -85,7 +85,7 @@
       <div class="msg-item" v-for="item in hasNewMessage" :key="item.msgid" :class="item.direction">
         <div class="mr-[0.2rem]">
           <div style="width: 0.8rem;height: 0.8rem;">
-            <img :src="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/user/service.svg`)" alt="">
           </div>
         </div>
         <div class="msg-item-con">

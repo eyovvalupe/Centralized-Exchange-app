@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between mb-[0.32rem]" v-if="props.from != 'register'">
       <span class="text-[0.32rem] text-color mr-[0.2rem]">Google Verification Code</span>
       <div class="clear_icon" style="cursor: pointer" @click="clean">
-        <img :src="getStaticImgUrl('/static/img/common/clean.svg')" alt="">
+        <img v-lazy="getStaticImgUrl('/static/img/common/clean.svg')" alt="">
       </div>
     </div>
     <div class="flex justify-between w-full" :class="props.from == 'register' ? 'mb-[0.8rem]' : 'mb-[0.8rem]'">

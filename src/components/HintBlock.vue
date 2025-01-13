@@ -3,7 +3,7 @@
     <Teleport to="body">
         <div class="wait_order" @click="jump">
             <div class="wo_icon">
-                <img :src="getStaticImgUrl('/static/img/bank/card_type_c.svg')" alt="img">
+                <img v-lazy="getStaticImgUrl('/static/img/bank/card_type_c.svg')" alt="img">
             </div>
             <div class="wo_content">
                 <div class="name">USDT TRC20</div>
@@ -14,7 +14,7 @@
                 <div class="status">失败</div>
             </div>
             <div class="wo_more">
-                <img :src="getStaticImgUrl('/static/img/assets/more_icon.svg')" alt=">">
+                <img v-lazy="getStaticImgUrl('/static/img/assets/more_icon.svg')" alt=">">
             </div>
         </div>
     </Teleport>

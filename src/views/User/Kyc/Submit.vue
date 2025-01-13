@@ -4,7 +4,7 @@
     <Top :title="t('kyc.page_title')">
       <template #right>
         <div class="w-[0.6rem] h-[0.6rem]" @click="jump('chat')">
-          <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+          <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
         </div>
       </template>
     </Top>
@@ -13,7 +13,7 @@
       <div class="bg-[var(--ex-none)] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="w-[0.48rem] h-[0.48rem]">
-            <img :src="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
           </div>
         </div>
       </div>
@@ -21,13 +21,13 @@
       <div class="bg-[var(--ex-none)] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="w-[0.48rem] h-[0.48rem]">
-            <img :src="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
           </div>
         </div>
       </div>
     </div>
     <div class="icon">
-      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
+      <img v-lazy="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("kyc.final_title") }}</div>
     <div class="text-[0.24rem] text-color3 text-center mt-[0.26rem] mb-[0.8rem]">

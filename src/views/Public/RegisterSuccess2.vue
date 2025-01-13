@@ -3,7 +3,7 @@
   <div class="page page_register_success">
     <Top :title="t('register.guest_account')"> </Top>
     <div class="icon">
-      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
+      <img v-lazy="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ $t("register.success_sign_up") }}</div>
     <div class="text-[0.24rem] leading-[0.34rem] text-color3">

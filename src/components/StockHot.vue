@@ -6,7 +6,7 @@
         <div class="item_block_title flex justify-between">
           <div>{{ t('market.market_stock_hot') }}</div>
           <div class="re_render" @click.stop="update">
-            <img :src="getStaticImgUrl('/static/img/market/refresh_big.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/market/refresh_big.svg')" alt="">
           </div>
         </div>
         <StockRecommendList :loading="recommendLoading" :list="marketVolumeList" :show-len="4" />
