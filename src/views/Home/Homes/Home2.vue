@@ -218,8 +218,7 @@ import { useSocket } from "@/utils/ws";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
 import MiningItem from "../Mining/MiningItem.vue"
 import FollowItem from "../components/FollowItem.vue"
-import Wow from "wow.js"
-import 'wow.js/css/libs/animate.css';  // 引入动画库样式
+
 
 
 // 安装
@@ -420,16 +419,7 @@ onMounted(() => {
     activated.value = true;
     subs();
 
-    setTimeout(() => {
-        const wow = new Wow({
-            boxClass: 'wow',
-            animateClass: 'animated',
-            mobile: true,
-            live: true,
-            scrollContainer: '.app_scroll'
-        })
-        wow.init()
-    }, 300)
+   
 });
 
 
