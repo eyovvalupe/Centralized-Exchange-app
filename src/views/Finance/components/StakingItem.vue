@@ -23,8 +23,7 @@
                     </div>
                 </div>
                 <div class="w-full h-[3.1rem] bg-color flex rounded-[0.32rem] relative overflow-hidden mb-[0.2rem]">
-                    <BackgroundImg :points="item.time"/>
-                    <!-- <SparkLine v-if="item.time" :points="item.time" :ratio="1" /> -->
+                    <BackgroundImg :times="item.time"/>
                     <BackgroundImg1 />
                     <div class="w-1/2 h-full flex flex-col px-[0.28rem] py-[0.2rem]">
                         <div class="flex mb-[0.2rem] relative">
