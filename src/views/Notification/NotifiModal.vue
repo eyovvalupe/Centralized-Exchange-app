@@ -29,7 +29,7 @@ import { onMounted, ref } from "vue";
 import router from "@/router";
 import { getStaticImgUrl } from "@/utils";
 
-const existNotifi = ref(true);
+const existNotifi = ref(false);
 const jump = (url) => {
   router.push({
     name: url
