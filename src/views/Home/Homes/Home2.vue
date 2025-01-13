@@ -28,7 +28,7 @@
 
 
             <!-- banner -->
-            <view @click="install" class="banners wow pulse">
+            <view @click="install" class="banners wow fadeInUp">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
                         <img :src="getStaticImgUrl('/static/home2/banner1.png')" alt="">
@@ -52,15 +52,15 @@
 
             <div class="scroll-box">
                 <div class="scroll-con">
-                    <MiningItem style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
+                    <MiningItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'" style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
                 </div>
             </div>
 
-            <div class="sub-banner wow pulse">
+            <div class="sub-banner wow fadeInUp">
                 <img :src="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
             <!-- 跟单 -->
-            <div data-wow-duration="2s" class="recommend-title" @click="jump('follow', false)">
+            <div  class="recommend-title" @click="jump('follow', false)">
                 <div class="point wow slideInLeft">
                     <img :src="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
@@ -75,7 +75,7 @@
             <div class="scroll-box">
                 <div class="scroll-con">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
-                        <FollowItem :item="item" />
+                        <FollowItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'" :item="item" />
                     </div>
                 </div>
             </div>
@@ -98,7 +98,7 @@
                     <Tab :title="$t('common.stock')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
                         <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
-                            <StockItem :showIcon="true" :item="item" v-for="(item, i) in marketStockCurrentList"
+                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item" v-for="(item, i) in marketStockCurrentList"
                                 :key="'s_' + i" page="home" />
                         </div>
                         <NoData v-if="!commendLoading && !marketStockCurrentList.length" />
@@ -106,19 +106,19 @@
                     <Tab :title="$t('common.crypto')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
                         <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
-                            <StockItem :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
+                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
                                 marketType="crypto" page="home" />
                         </div>
                         <NoData v-if="!commendLoading && !contractList.length" />
                     </Tab>
                     <Tab :title="$t('common.IPO')">
-                        <div class="mb-[0.2rem]" v-if="activeTab == 2">
-                            <IPO ref="ipoRef" :page="'home'" />
+                        <div class="mb-[0.2rem]" >
+                            <IPO ref="ipoRef" v-if="activeTab == 2" :page="'home'" />
                         </div>
                     </Tab>
                     <Tab :title="$t('common.AI')">
-                        <div class="mt-[0.32rem]" v-if="activeTab == 3">
-                            <Ai page="home" />
+                        <div class="mt-[0.32rem]">
+                            <Ai page="home" v-if="activeTab == 3" />
                         </div>
                     </Tab>
                 </Tabs>
@@ -126,7 +126,7 @@
 
 
             <!-- ad -->
-            <div class="ad wow pulse">
+            <div class="ad wow fadeInUp">
 
                 <div class="ad-bg"
                     :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }"></div>
@@ -420,16 +420,14 @@ onMounted(() => {
     activated.value = true;
     subs();
 
-    setTimeout(() => {
-        const wow = new Wow({
-            boxClass: 'wow',
-            animateClass: 'animated',
-            mobile: true,
-            live: true,
-        })
-        console.error(wow)
-        wow.init()
-    }, 500)
+    const wow = new Wow({
+        boxClass: 'wow',
+        animateClass: 'animated',
+        mobile: true,
+        live: true,
+        scrollContainer: '.app_scroll'
+    })
+    wow.init()
 });
 
 

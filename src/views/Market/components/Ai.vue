@@ -7,9 +7,9 @@
       <NoData v-if="!loading && marketAiList.length == 0" />
     </div>
 
-    <div class="list" v-if="!pageLoading && props.page == 'home'">
+    <div class="list" v-if="props.page == 'home'">
       <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
-      <AiItem @clickItems="clickItem" v-for="(item, i) in marketAiList" :key="i" :item="item" :page="props.page" />
+      <AiItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" @clickItems="clickItem" v-for="(item, i) in marketAiList" :key="i" :item="item" :page="props.page" />
       <NoData v-if="!loading && marketAiList.length == 0" />
     </div>
   </div>
@@ -128,12 +128,7 @@ const getList = () => {
 };
 getList();
 
-const pageLoading = ref(true);
-onMounted(() => {
-  setTimeout(() => {
-    pageLoading.value = false;
-  }, 300);
-});
+
 </script>
 
 <style lang="less" scoped>
