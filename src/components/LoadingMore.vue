@@ -1,8 +1,10 @@
 <!-- 加载更多 -->
 <template>
-  <Loaidng :loading="props.loading" :size="32" />
-  <div class="loading_more" :class="classN">
-    <span v-if="props.finish">{{ t('common.no_more') }}</span>
+  <div>
+    <Loaidng :loading="props.loading" :size="32" />
+    <div class="loading_more" :class="classN">
+      <span v-if="props.finish">{{ t('common.no_more') }}</span>
+    </div>
   </div>
 </template>
 

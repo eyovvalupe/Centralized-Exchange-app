@@ -126,7 +126,7 @@
       </div>
       <div class="btns" v-else>
         <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn ripple-btn"
-          :color="tab == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
+          :color="tab == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
           <span style="color: var(--ex-white);">{{
             tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
           }}</span>

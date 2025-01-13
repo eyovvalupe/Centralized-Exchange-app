@@ -10,7 +10,7 @@
       <Tab :title="t('trade.ipo_title_market')" :name="'listed'"></Tab>
     </Tabs>
     <div class="list" :class="props.page == 'home' && 'mt-[-0.32rem]'">
-      <div class="item wow fadeInUp" :data-wow-delay="( 0.05 * i) + 's'" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
+      <div class="item " :class="{'wow fadeInUp': props.page == 'home'}" :data-wow-delay="( 0.05 * i) + 's'" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -235,13 +235,11 @@ const getData = () => {
   _ipoList(par)
     .then((res) => {
       if (res.data && res.data.length) {
-        console.log("ipoData===============>", res.data);
         res.data = res.data.map((item) => {
           item._timedown = countdown(item.listing_date);
           item.issue_end_date = item.issue_end_date.replaceAll("-", "/");
           item.listing_date = item.listing_date.replaceAll("-", "/");
           item.issue_start_date = item.issue_start_date.replaceAll("-", "/");
-          console.log(item.issue_end_date);
           return item;
         });
         if (page.value == 1) {

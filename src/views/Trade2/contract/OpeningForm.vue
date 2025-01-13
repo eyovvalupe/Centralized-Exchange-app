@@ -195,7 +195,7 @@
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit ripple-btn"
-      :color="activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'" round>
+      :color="activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
       <span style="color: var(--ex-white);">{{
         activeType == 1
           ? t("trade.stock_open_long")

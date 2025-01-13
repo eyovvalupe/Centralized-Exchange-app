@@ -242,13 +242,11 @@ const getData = () => {
   _ipoList(par)
     .then((res) => {
       if (res.data && res.data.length) {
-        console.log("ipoData===============>", res.data);
         res.data = res.data.map((item) => {
           item._timedown = countdown(item.listing_date);
           item.issue_end_date = item.issue_end_date.replaceAll("-", "/");
           item.listing_date = item.listing_date.replaceAll("-", "/");
           item.issue_start_date = item.issue_start_date.replaceAll("-", "/");
-          console.log(item.issue_end_date);
           return item;
         });
         if (page.value == 1) {
