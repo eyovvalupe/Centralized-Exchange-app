@@ -14,7 +14,7 @@ app.config.errorHandler = (err, instance, info) => {
   console.error('info', info)
 }
 app.use(store).use(router).use(i18n).use(lazyPlugin, {
-  loading: require('@/assets/img-default.svg'), // 图片加载时默认图片
-  error: require('@/assets/img-error.svg')// 图片加载失败时默认图片
+  // loading: require('@/assets/img-default.svg'), // 图片加载时默认图片
+  // error: require('@/assets/img-error.svg')// 图片加载失败时默认图片
 }).mount('#app')
 // initVoice()
