@@ -1,6 +1,6 @@
 <template>
     <div class="staking_page">
-        <Tabs type="custom-card-stake" @change="onChange" style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;">
+        <Tabs type="custom-card-stake" @change="onChange" style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;" :swipeable="false" animated >
             <Tab :title="t('finance.portfolio_title')">
                 <StakingList />
             </Tab>
