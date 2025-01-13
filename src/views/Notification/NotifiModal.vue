@@ -14,7 +14,7 @@
           内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
         </div>
         <div class="rounded-[0.32rem] overflow-hidden mb-[0.32rem]">
-          <img src="static/img/noti/noti-3.webp" />
+          <img v-lazy="getStaticImgUrl('static/img/noti/noti-3.webp')" />
         </div>
         <div class="w-full text-[0.28rem] leading-[0.48rem] text-color mb-[0.32rem]">
           内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
@@ -27,6 +27,7 @@
 import { Tab, Tabs, ActionSheet, Dialog } from "vant";
 import { onMounted, ref } from "vue";
 import router from "@/router";
+import { getStaticImgUrl } from "@/utils";
 
 const existNotifi = ref(true);
 const jump = (url) => {
