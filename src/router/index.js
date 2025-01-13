@@ -76,7 +76,6 @@ const routes = [
       keepAlive: false,
       pageType: 'child',
       pageDeep: 1,
-      pageDeep: 1,
     },
   },
   {
@@ -87,7 +86,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -98,7 +97,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -109,7 +108,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -131,7 +130,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -153,7 +152,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -197,7 +196,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -251,7 +250,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 2,
+      pageDeep: 1,
     },
   },
   {
@@ -347,7 +346,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -380,7 +379,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 2,
+      pageDeep: 1,
     },
   },
  
@@ -763,6 +762,24 @@ router.beforeEach((to, from) => {
   if (from.meta.pageType == 'login') {
     store.commit('setTransitionName', 'slide-top')
     return
+  }
+  if (to.name == 'registerSuccess') {
+    store.commit('setTransitionName', 'slide-right')
+  }
+  if (from.name == 'registerSuccess') {
+    store.commit('setTransitionName', 'slide-left')
+  }
+  if (to.name == 'googleCode') {
+    store.commit('setTransitionName', 'slide-right')
+  }
+  if (from.name == 'googleCode') {
+    store.commit('setTransitionName', 'slide-left')
+  }
+  if (from.name == 'safety' && to.name == 'google') {
+    store.commit('setTransitionName', 'slide-right')
+  }
+  if (from.name == 'google' && to.name == 'safety') {
+    store.commit('setTransitionName', 'slide-left')
   }
 
   store.commit('setTransitionName', '')
