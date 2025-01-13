@@ -731,7 +731,7 @@ export const _stake = (data = {}) => {
 //我的投资订单
 export const _stakeOrder = (data = {}) => {
   return http.post(`/authc/v1/mining/orders`, data, {
-    custom: { auth: true, toast: true, retry: true },
+    custom: { auth: true, toast: true, retry: false },
   });
 };
 
