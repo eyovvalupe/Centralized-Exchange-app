@@ -202,7 +202,7 @@ const swipeChange = (val) => {
   left: 0.32rem;
   margin: auto 0;
   z-index: 1;
-  border-radius: 0.3rem;
+  border-radius: 0.1rem;
   background-color: var(--ex-bg-color5);
 }
 
