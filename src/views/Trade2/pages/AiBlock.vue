@@ -26,7 +26,7 @@
 
 <script setup>
 import { Tab, Tabs } from "vant";
-import { ref, onMounted, computed, defineExpose, watch, nextTick } from "vue";
+import { ref, onMounted, computed, watch, nextTick } from "vue";
 import Opening from "../ai/Opening.vue";
 import Positions from "../ai/Positions.vue";
 import Inquire from "../ai/Inquire.vue";

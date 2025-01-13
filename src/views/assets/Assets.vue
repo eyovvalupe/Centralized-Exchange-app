@@ -115,7 +115,7 @@
       </div>
     </BottomPopup>
     <!-- 充提记录 -->
-    <HintBlock v-if="route.name == 'assets' && hintNum" />
+    <!-- <HintBlock v-if="route.name == 'assets' && hintNum" /> -->
   </div>
 </template>
 

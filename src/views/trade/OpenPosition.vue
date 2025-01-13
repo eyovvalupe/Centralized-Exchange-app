@@ -122,7 +122,7 @@
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { ref, computed, onMounted, watch, nextTick, defineExpose } from "vue";
+import { ref, computed, onMounted, watch, nextTick } from "vue";
 import { Tab, Tabs, Field, CellGroup, Slider, Button, Loading, Popup, showToast } from "vant";
 import { _search, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";

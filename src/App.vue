@@ -28,29 +28,12 @@ import { useRoute } from "vue-router";
 import { getStaticImgUrl } from "@/utils/index.js"
 import { BOTTOMBAR_MODE } from "@/config.js"
 import store from "@/store/index";
-// import { nanoid } from "nanoid";
-// import DateBottom from '@/views/trade/DateBottom.vue'
 import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
 import SuccessToast from "./views/User/Account/SuccessToast.vue";
+import BottomTabBar from "@/components/BottomTabBar.vue"
 
 const showSuccessToast = computed(() => store.state.showSuccessToast);
-
-const BottomTabBar = ref(null);
-if (BOTTOMBAR_MODE == 1) {
-  BottomTabBar.value = defineAsyncComponent(() => import("@/components/BottomTabBar.vue"))
-}
-if (BOTTOMBAR_MODE == 2) {
-  BottomTabBar.value = defineAsyncComponent(() => import("@/components/BottomTabBar2.vue"))
-}
-
-
-// 引入主题
-// const theme = computed(() => store.state.theme || '')
-
-// if (theme.value) {
-//   import(`@/style/theme/${theme.value}.less`)
-// }
 
 const token = computed(() => store.state.token);
 if (token.value) {

@@ -38,7 +38,7 @@ export default { name: "Buycoin" };
 <script setup>
 /* eslint-disable */
 import { Tab, Tabs } from "vant";
-import { ref, onMounted, onUnmounted, defineExpose } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useSocket } from "@/utils/ws";
 import Faster from "./Faster.vue";
 import List from "./List.vue";

@@ -395,10 +395,10 @@ const handleClick = (item) => {
 let swiperTimeout = null
 const swipeResize = () => {
   if (swiperTimeout) clearTimeout(swiperTimeout)
+  swipeRef.value && swipeRef.value.swipeTo(activeTab.value)
   swiperTimeout = setTimeout(() => {
-    swipeRef.value && swipeRef.value.swipeTo(activeTab.value)
     swipeRef.value && swipeRef.value.resize();
-  }, 1000);
+  }, 500);
 };
 
 const pageActive = ref(false);
