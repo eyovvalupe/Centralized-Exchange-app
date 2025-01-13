@@ -16,12 +16,12 @@
 
     <div class="w-full flex justify-between">
       <div
-        class="w-[3.23rem] h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-primary"
+        class="w-[3.23rem] h-[1.12rem] border-[0.02rem] border-primary rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-primary ripple-primary"
         @click="() => router.replace({ name: 'transfer' })">
         {{ t('trade.stock_opening_btn_transfer') }}
       </div>
       <div
-        class="w-[3.23rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-color--bg-primary"
+        class="w-[3.23rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-color--bg-primary ripple-btn"
         @click="() => router.back()">
         {{ t('trade.stock_opening_btn_trade') }}
       </div>

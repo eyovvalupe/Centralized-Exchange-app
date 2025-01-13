@@ -6,7 +6,7 @@
       <div class="success_icon mb-[0.24rem]">
         <img :src="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="">
       </div>
-      <div class="text-white text-[0.36rem] max-w-[1.5rem] text-center">{{ $t("success_toast.message") }}</div>
+      <div class="text-white text-[0.36rem] max-w-[1.5rem] text-center ripple-btn">{{ $t("success_toast.message") }}</div>
     </div>
   </div>
 </template>

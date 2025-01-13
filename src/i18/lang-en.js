@@ -11,7 +11,6 @@ export default {
     min: "m",
     no_more: "No more",
     no_wallet: "No Payment Account Available",
-
   },
   login: {
     login: "Log In",
@@ -38,8 +37,7 @@ export default {
     success: "Reset Password Successfully",
     back: "Back to Login",
     get_back: "Recover Password",
-    user_name: "Your User Name"
-
+    user_name: "Your User Name",
   },
   register: {
     security: "Security Check",
@@ -138,7 +136,6 @@ export default {
     message_box_confirm: "Confirm",
     message_box_cancel: "Cancel",
     get_demo_coin: "Get it",
-
   },
   kyc: {
     page_title: "Identity Verification",
@@ -183,8 +180,7 @@ export default {
     status_birthday: "Birthday",
     verify_success: "Success",
     verify_failure: "Failure",
-    id_photo_requirement: "ID card Upload Requirement"
-
+    id_photo_requirement: "ID card Upload Requirement",
   },
   google_auth: {
     page_title: "Google Authenticator",
@@ -500,7 +496,6 @@ export default {
     ad_btn: "Start Trade",
     finance: "Finance",
     news: "News",
-
   },
   trade: {
     header_stock: "Stocks",
@@ -730,7 +725,8 @@ export default {
     ipo_sub_buy_no_amount: "Enter Amount to Buy",
     ipo_sub_buy_no_code: "Enter Buy Code",
     ipo_success_title: "Subscription Successful",
-    ipo_success_con: "Congratulations, Please wait patiently for the winning information",
+    ipo_success_con:
+      "Congratulations, Please wait patiently for the winning information",
     ipo_success_btn1: "Subscribe",
     ipo_success_btn2: "Details",
 
@@ -756,8 +752,7 @@ export default {
     forex_opening_title: "Forex",
     forex_position_title: "Forex/Status",
     trade_order_history: "History",
-    left_search_result: "Result"
-
+    left_search_result: "Result",
   },
   inviteFriends: {
     invite: "Invite",
@@ -963,7 +958,8 @@ export default {
     portfolio_mining_placeholder: "Please Enter Investment",
     portfolio_mining_btn: "Subscription",
     portfolio_mining_title3: "How to Operate?",
-    portfolio_mining_guide: "Access a series of exchanges, such as Coinbase, Huobi, Binance, KuCoin, YFX and other globally renowned exchanges, and use algorithms to judge the trends of various currencies, monitor the current market situation in real time. Buy and sell related currencies at high frequency within the price range to achieve arbitrage and ensure that your profits are maximized." ,
+    portfolio_mining_guide:
+      "Access a series of exchanges, such as Coinbase, Huobi, Binance, KuCoin, YFX and other globally renowned exchanges, and use algorithms to judge the trends of various currencies, monitor the current market situation in real time. Buy and sell related currencies at high frequency within the price range to achieve arbitrage and ensure that your profits are maximized.",
     portfolio_mining_noti: "Prompt",
     portfolio_mining_noti_duration: "Operating Time",
     portfolio_mining_noti_daily: "Daily Yield",
@@ -1009,13 +1005,58 @@ export default {
     defi_borrowed_day: "Borrowed Days",
     defi_borrow_cal_bill: "Accrued Interest",
     defi_borrow_return_confirm: "Returning Confirmation",
-
   },
   copy: {
     title: "Follow Orders",
     copy_option: "Optios",
     copy_trade: "Copy",
     total_revenue: "Total Revenue",
-    level: 'LV.{level}',
-  }
+    level: "LV.{level}",
+
+    copy_ground: "Follow Up Plaza",
+    copy_tab_tab1: "Follow",
+    copy_tab_tab2: "Orders",
+    copy_profit_rate: "Winning Rate",
+    copy_belong_profit: "Profit",
+    copy_belong_title: "Performance of Taking Orders",
+    copy_belong_tab1: "Performance",
+    copy_belong_profit_rate: "Yield",
+    copy_belong_profit_amount: "Yield Amount",
+    copy_belong_total_amount: "Order Size",
+    copy_belong_days: "Order Days",
+    copy_belong_profit_days: "Profitable Days",
+    copy_belong_pl_rate: "Profit-Loss Ratio",
+    copy_belong_loss_days: "Lossing Days",
+    copy_belong_sharing_ratio: "Profit Sharing Ratio",
+    copy_belong_tab2: "Leaders",
+    copy_belong_subtitle1: "Symbol/Status",
+    copy_belong_subtitle2: "Position/Time",
+    copy_belong_subtitle3: "Invest Amount",
+    copy_belong_subtitle4: "Est. Earnings",
+    copy_belong_open1: "Long",
+    copy_belong_open2: "Short",
+    copy_belong_tab3: "Follower",
+    copy_belong_subtitle5: "User Name",
+    copy_belong_subtitle6: "Order Size",
+    copy_belong_subtitle7: "Revenue",
+    copy_confirm_range: "Order Quota",
+    copy_order_total_profit: "Total Profit From Following Orders",
+    copy_order_total_amount: "Total Amount of Orders",
+    copy_order_daily_profit: "Today's Earnings",
+    copy_order_cancel: "Cancel Follow",
+    copy_order_follow: "Follow Orders",
+    copy_order_follow_confirm_title: "Follow Orders",
+    copy_order_follow_confirm_rage: "Order Quota",
+    copy_order_cancel_title: "Cancel Follow",
+    copy_order_cancel_con: "Are you sure to cancel following orders?",
+    copy_order_cancel_cancel: "Cancel",
+    copy_order_cancel_confirm: "Confirm",
+    copy_order_detail_title: "Details",
+    copy_order_detail_on: "Following",
+    copy_order_detail_duration: "Follow Up Time",
+    copy_order_detail_cancel: "Cancel Follow",
+    copy_order_detail_confirm: "Follow Orders",
+    copy_order_detail_tab1: "Current Orders",
+    copy_order_detail_tab2: "Historical Orders",
+  },
 };

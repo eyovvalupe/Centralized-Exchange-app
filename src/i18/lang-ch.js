@@ -36,7 +36,6 @@ export default {
     ad_btn: "開始交易",
     finance: "理財",
     news: "新聞",
-
   },
   login: {
     login: "登錄",
@@ -63,8 +62,7 @@ export default {
     success: "密碼已重置",
     back: "返回登錄",
     get_back: "找回密碼",
-    user_name: "您的用戶名"
-
+    user_name: "您的用戶名",
   },
   register: {
     security: "安全驗證",
@@ -961,7 +959,7 @@ export default {
     portfolio_order_tab2: "已贖回",
 
     portfolio_order_finish_time: "到期時間",
-    
+
     defi_borrow: "DeFi借幣",
 
     defi_coll_borrow: "質押借幣",
@@ -995,7 +993,6 @@ export default {
     defi_borrowed_day: "已借天數",
     defi_borrow_cal_bill: "應計利息",
     defi_borrow_return_confirm: "歸還確認",
-
   },
   copy: {
     title: "跟單",
@@ -1004,5 +1001,50 @@ export default {
     total_revenue: "收益",
     level: "{level}級",
 
+    copy_ground: "跟單廣場",
+    copy_tab_tab1: "跟單",
+    copy_tab_tab2: "訂單",
+    copy_profit_rate: "勝率",
+    copy_belong_profit: "收益",
+    copy_belong_title: "帶單表現",
+    copy_belong_tab1: "表現",
+    copy_belong_profit_rate: "收益率",
+    copy_belong_profit_amount: "收益金額",
+    copy_belong_total_amount: "帶單總金額",
+    copy_belong_days: "帶單天數",
+    copy_belong_profit_days: "獲利天數",
+    copy_belong_pl_rate: "損益比",
+    copy_belong_loss_days: "虧損天數",
+    copy_belong_sharing_ratio: "分潤比利",
+    copy_belong_tab2: "帶單",
+    copy_belong_subtitle1: "名稱/狀態",
+    copy_belong_subtitle2: "開倉/時間",
+    copy_belong_subtitle3: "投資金額",
+    copy_belong_subtitle4: "預期損益",
+    copy_belong_open1: "開多",
+    copy_belong_open2: "開空",
+    copy_belong_tab3: "跟單用戶",
+    copy_belong_subtitle5: "用戶名稱",
+    copy_belong_subtitle6: "帶單總金額",
+    copy_belong_subtitle7: "收益",
+    copy_confirm_range: "跟單額度",
+    copy_order_total_profit: "跟單總收益",
+    copy_order_total_amount: "跟單總額",
+    copy_order_daily_profit: "今日收益",
+    copy_order_cancel: "取消跟單",
+    copy_order_follow: "追加跟單",
+    copy_order_follow_confirm_title: "追加跟單",
+    copy_order_follow_confirm_rage: "跟單額度",
+    copy_order_cancel_title: "取消跟單",
+    copy_order_cancel_con: "確定要取消該跟單嗎？",
+    copy_order_cancel_cancel: "不取消了",
+    copy_order_cancel_confirm: "確定",
+    copy_order_detail_title: "訂單詳情",
+    copy_order_detail_on: "跟單中",
+    copy_order_detail_duration: "跟單時間",
+    copy_order_detail_cancel: "取消跟單",
+    copy_order_detail_confirm: "追加跟單",
+    copy_order_detail_tab1: "目前訂單",
+    copy_order_detail_tab2: "歷史訂單",
   },
 };

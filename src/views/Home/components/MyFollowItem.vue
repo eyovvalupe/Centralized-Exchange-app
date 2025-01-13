@@ -19,16 +19,16 @@
             <div class="btn" v-if="!props.showDetail">
                 <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
             </div>
-            <div class="status" v-if="props.showDetail">跟单中</div>
+            <div class="status" v-if="props.showDetail">{{ $t('copy.copy_order_detail_on') }}</div>
         </div>
 
         <div class="info-flex">
             <div class="info-item">
-                <div class="name">总收益</div>
+                <div class="name">{{ $t('finance.portfolio_revenue') }}</div>
                 <div class="val">{{ props.item.returnamount || '--' }}</div>
             </div>
             <div class="info-item" style="text-align: right;">
-                <div class="name">跟单总额</div>
+                <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
                 <div class="val" @click="plus">
                     <span>{{ props.item.amount || '--' }}</span>
                 </div>
@@ -36,33 +36,33 @@
         </div>
         <div class="info-box">
             <div class="info-item">
-                <div class="name">今日收益</div>
+                <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
                 <div class="val up">{{ props.item.today || '--' }}</div>
             </div>
         </div>
         
         <div class="info-box" v-if="props.showDetail" style="margin-top: 0.12rem;">
             <div class="info-item">
-                <div class="name">跟单时间</div>
+                <div class="name">{{ $t('copy.copy_order_detail_duration') }}</div>
                 <div class="val up">--</div>
             </div>
         </div>
 
         <div class="btns">
-            <div class="btn cancel ripple-primary" @click="cancel">取消跟单</div>
-            <div class="btn add ripple-btn" @click="plus">追加跟单</div>
+            <div class="btn cancel ripple-primary" @click="cancel">{{ $t('copy.copy_order_detail_cancel') }}</div>
+            <div class="btn add ripple-btn" @click="plus">{{ $t('copy.copy_order_detail_confirm') }}</div>
         </div>
     </div>
 
 
     <!-- 取消跟单 -->
-    <BottomPopup v-model:show="showCancel" :title="'取消跟单'" position="bottom" round closeable teleport="body">
+    <BottomPopup v-model:show="showCancel" :title="$t('copy.copy_order_detail_cancel')" position="bottom" round closeable teleport="body">
         <div class="follow_dialog">
-            <div class="text-con">确定取消该跟单吗？</div>
+            <div class="text-con">{{ $t('copy.copy_order_cancel_con') }}</div>
 
             <div class="btns">
-                <div class="btn ripple-primary" @click="showCancel = false">不取消</div>
-                <div class="btn btn2 ripple-btn" @click="openCancelPass">确定</div>
+                <div class="btn ripple-primary" @click="showCancel = false">{{ $t('copy.copy_order_cancel_cancel') }}</div>
+                <div class="btn btn2 ripple-btn" @click="openCancelPass">{{ $t('copy.copy_order_cancel_confirm') }}</div>
             </div>
         </div>
     </BottomPopup>
@@ -70,14 +70,14 @@
     <SafePassword @submit="submitCancel" ref="safeRef" :key="'cancel'"></SafePassword>
 
     <!-- 追加弹窗 -->
-    <BottomPopup v-model:show="showPlus" :title="'追加跟单'" position="bottom" round closeable teleport="body">
+    <BottomPopup v-model:show="showPlus" :title="$t('copy.copy_order_detail_confirm')" position="bottom" round closeable teleport="body">
         <div class="follow_dialog">
 
             <div class="form">
                 <!-- 数量 -->
                 <div class="item_box">
                     <div class="item_box_right">
-                        <FormItem :hasRT="true" :hasScroll="true" :placeholder="'追加额度'"
+                        <FormItem :hasRT="true" :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
                             :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
                             @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
                             :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
@@ -111,7 +111,7 @@
             </div>
 
             <div class="btns btns2">
-                <div class="btn btn2 btn3 ripple-btn" @click="submitPlus">确定</div>
+                <div class="btn btn2 btn3 ripple-btn" @click="submitPlus">{{ $t('copy.copy_order_cancel_confirm') }}</div>
             </div>
         </div>
     </BottomPopup>

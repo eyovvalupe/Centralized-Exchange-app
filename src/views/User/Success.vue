@@ -6,7 +6,7 @@
     </div>
     <div class="title">{{ $t("safety.success_title") }}</div>
 
-    <Button @click="router.back()" round color="var(--ex-primary-color)" class="submit" type="primary">
+    <Button @click="router.back()" round color="var(--ex-primary-color)" class="submit ripple-btn" type="primary">
       <span style="color: var(--ex-white);">{{ $t("safety.success_btn")
         }}</span></Button>
   </div>

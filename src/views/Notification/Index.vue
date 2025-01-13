@@ -33,8 +33,8 @@
                 </div>
               </div>
               <div
-                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
-                style="width: max-content" @click="jump('notification_detail')">
+                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary"
+                @click="jump('notification_detail')">
                 查看全部
               </div>
               <div v-if="true" class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">

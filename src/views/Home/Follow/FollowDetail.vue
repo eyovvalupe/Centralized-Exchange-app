@@ -2,7 +2,7 @@
 <template>
     <div class="page-follow-detail">
 
-        <Top :title="'跟单详情'"></Top>
+        <Top :title="$t('copy.copy_belong_title')"></Top>
 
         <div class="title-box">
             <div class="avatar">{{ (info.name || '').slice(0, 1) }}</div>
@@ -18,32 +18,32 @@
                     </div>
                 </div>
             </div>
-            <div class="btn ripple-btn">跟单</div>
+            <div class="btn ripple-btn">{{ $t('copy.copy_tab_tab1') }}</div>
         </div>
 
         <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'" shrink
             @change="onChange">
-            <Tab :title="'表现'" name="0">
+            <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
                     <div class="follow-info-box">
                         <div class="info-box">
                             <div class="tr">
                                 <div class="tr-item">
-                                    <div class="name">收益率</div>
+                                    <div class="name">{{ $t('copy.copy_belong_profit_rate') }}</div>
                                     <div class="val num">q4324</div>
                                 </div>
                                 <div class="tr-item">
-                                    <div class="name">收益金额</div>
+                                    <div class="name">{{ $t('copy.copy_belong_profit_amount') }}</div>
                                     <div class="val">2342</div>
                                 </div>
                             </div>
                             <div class="tr" style="margin-top: 0.48rem;">
                                 <div class="tr-item">
-                                    <div class="name">带单总金额</div>
+                                    <div class="name">{{ $t('copy.copy_belong_total_amount') }}</div>
                                     <div class="val">q4324</div>
                                 </div>
                                 <div class="tr-item">
-                                    <div class="name">带单天数</div>
+                                    <div class="name">{{ $t('copy.copy_belong_days') }}</div>
                                     <div class="val">2342</div>
                                 </div>
                             </div>
@@ -54,16 +54,16 @@
 
                             <div class="navs">
                                 <div class="nav" style="text-align: left;">
-                                    <div class="name">获利天数</div>
-                                    <div class="val up">260天</div>
+                                    <div class="name">{{ $t('copy.copy_belong_profit_days') }}</div>
+                                    <div class="val up">260{{ $t('finance.portfolio_day_multi') }}</div>
                                 </div>
                                 <div class="nav" style="text-align: center;">
-                                    <div class="name">盈亏比</div>
+                                    <div class="name">{{ $t('copy.copy_belong_pl_rate') }}</div>
                                     <div class="val">92.12%</div>
                                 </div>
                                 <div class="nav" style="text-align: right;">
-                                    <div class="name">亏损天数</div>
-                                    <div class="val down">260天</div>
+                                    <div class="name">{{ $t('copy.copy_belong_loss_days') }}</div>
+                                    <div class="val down">260{{ $t('finance.portfolio_day_multi') }}</div>
                                 </div>
                             </div>
 
@@ -73,21 +73,21 @@
                         </div>
 
                         <div class="per-box">
-                            <div class="name">分润比例</div>
+                            <div class="name">{{ $t('copy.copy_belong_sharing_ratio') }}</div>
                             <div class="val">0.25%</div>
                         </div>
 
                     </div>
                 </div>
             </Tab>
-            <Tab :title="'带单'" name="1">
+            <Tab :title="$t('copy.copy_belong_tab2')" name="1">
                 <div class="follow-box">
                     <div class="table">
                         <div class="th">
-                            <div class="td td-s">名称/状态</div>
-                            <div class="td">开仓/时间</div>
-                            <div class="td">投资金额</div>
-                            <div class="td td2 td-l">预期盈亏</div>
+                            <div class="td td-s">{{ $t('copy.copy_belong_subtitle1') }}</div>
+                            <div class="td">{{ $t('copy.copy_belong_subtitle2') }}</div>
+                            <div class="td">{{ $t('copy.copy_belong_subtitle3') }}</div>
+                            <div class="td td2 td-l">{{ $t('copy.copy_belong_subtitle4') }}</div>
                         </div>
                         <div class="tr mask-btn" v-for="i in 10" :key="i">
                             <div class="td td-s">
@@ -95,7 +95,8 @@
                                 <div class="fever">20X</div>
                             </div>
                             <div class="td">
-                                <div class="fever tag bg-up up">开多</div>
+                                <div class="fever tag bg-up up" v-if="false">{{ $t('copy.copy_belong_open1') }}</div>
+                                <div class="fever tag bg-down down" v-if="true">{{ $t('copy.copy_belong_open2') }}</div>
                                 <div>30min</div>
                             </div>
                             <div class="td">20000</div>
@@ -105,13 +106,13 @@
 
                 </div>
             </Tab>
-            <Tab :title="'跟单用户'" name="2">
+            <Tab :title="$t('copy.copy_belong_tab3')" name="2">
                 <div class="follow-box">
                    <div class="table">
                     <div class="th">
-                        <div class="td">用户名</div>
-                        <div class="td">带单总金额</div>
-                        <div class="td td-l">收益</div>
+                        <div class="td">{{ $t('copy.copy_belong_subtitle5') }}</div>
+                        <div class="td">{{ $t('copy.copy_belong_subtitle6') }}</div>
+                        <div class="td td-l">{{ $t('copy.copy_belong_subtitle7') }}</div>
                     </div>
                     <div class="tr mask-btn" v-for="i in 20" :key="i">
                         <div class="td">

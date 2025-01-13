@@ -59,7 +59,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box">
-      <Button :loading="loading" round :disabled="disapled" color="var(--ex-primary-color)" class="submit"
+      <Button :loading="loading" round :disabled="disapled" color="var(--ex-primary-color)" class="submit ripple-btn"
         type="primary" @click="submit"><span style="color: var(--ex-white);">{{ $t("change_trade_pw.btn")
           }}</span></Button>
     </div>

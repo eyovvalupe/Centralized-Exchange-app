@@ -4,7 +4,7 @@
     <Top :title="t('safety.page_title')" />
 
     <div class="navs">
-      <div class="nav" @click="checkGG('password')">
+      <div class="nav mask-btn" @click="checkGG('password')">
         <div class="nav_icon">
           <div class="change_login_pw">
             <img :src="getStaticImgUrl('/static/img/user/password.svg')" alt="">
@@ -13,7 +13,7 @@
         <div class="nav_title">{{ $t("safety.change_login_pw") }}</div>
         <Icon name="arrow" />
       </div>
-      <div class="nav" @click="checkGG('fund')">
+      <div class="nav mask-btn" @click="checkGG('fund')">
         <div class="nav_icon">
           <div class="change_trade_pw">
             <img :src="getStaticImgUrl('/static/img/user/password_trade.svg')" alt="">
@@ -22,7 +22,7 @@
         <div class="nav_title">{{ $t("safety.change_trade_pw") }}</div>
         <Icon name="arrow" />
       </div>
-      <div class="nav" @click="goGG">
+      <div class="nav mask-btn" @click="goGG">
         <div class="nav_icon">
           <div class="google_verify">
             <img :src="getStaticImgUrl('/static/img/user/google_sm.svg')" alt="">

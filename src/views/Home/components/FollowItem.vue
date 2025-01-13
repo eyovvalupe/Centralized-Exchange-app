@@ -17,7 +17,7 @@
                     <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div>
                 </div>
             </div>
-            <div class="btn ripple-btn" @click="goFollow">跟单</div>
+            <div class="btn ripple-btn" @click="goFollow">{{ $t('copy.copy_tab_tab1') }}</div>
         </div>
 
         <div class="info-box">
@@ -36,11 +36,11 @@
 
         <div v-if="props.showDetail" class="detail-box">
             <div class="detail-item">
-                <div class="item-name">胜率</div>
+                <div class="item-name">{{ $t('copy.copy_profit_rate') }}</div>
                 <div class="item-val">{{ props.item.winrate }}%</div>
             </div>
             <div class="detail-item detail-item2">
-                <div class="item-name">带单规模</div>
+                <div class="item-name">{{ $t('copy.copy_belong_total_amount') }}</div>
                 <div class="item-val">{{ props.item.amount }}</div>
             </div>
             <div class="icons">
@@ -237,6 +237,8 @@ const goFollow = () => {
 
             .item-name {
                 color: var(--ex-placeholder-color);
+                width: max-content;
+                margin-right: 0.2rem;
             }
 
             .item-val {

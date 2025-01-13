@@ -1,12 +1,12 @@
 <!-- 跟单广场 -->
 <template>
     <div class="page-follow">
-        <Top :title="'跟单广场'"></Top>
+        <Top :title="$t('copy.copy_ground')"></Top>
 
         <!-- Tab -->
         <div class="tabs">
-            <div class="tab" :class="{ 'active_tab': active == 1 }" @click="changeTab(1)">跟单</div>
-            <div class="tab" :class="{ 'active_tab': active == 2 }" @click="changeTab(2)">订单</div>
+            <div class="tab" :class="{ 'active_tab': active == 1 }" @click="changeTab(1)">{{ $t('copy.copy_tab_tab1') }}</div>
+            <div class="tab" :class="{ 'active_tab': active == 2 }" @click="changeTab(2)">{{ $t('copy.copy_tab_tab2') }}</div>
         </div>
 
 
@@ -23,11 +23,11 @@
                 <div class="my-total">
                     <div class="info-flex">
                         <div class="info-item">
-                            <div class="name">总收益</div>
+                            <div class="name">{{ $t('copy.total_revenue') }}</div>
                             <div class="val">{{ myCopy.returnamount || '--' }}</div>
                         </div>
                         <div class="info-item" style="text-align: right;">
-                            <div class="name">跟单总额</div>
+                            <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
                             <div class="val" @click="plus">
                                 <span>{{ myCopy.amount || '--' }}</span>
                             </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="info-box">
                         <div class="info-item">
-                            <div class="name">今日收益</div>
+                            <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
                             <div class="val up">{{ myCopy.today || '--' }}</div>
                         </div>
                     </div>

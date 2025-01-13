@@ -11,10 +11,10 @@
         :gutter="'0.16rem'" :mask="false" />
       <input style="opacity: 0" ref="iptRef" v-model="val" maxlength="6" enterkeyhint="done" @keydown.enter="submit" />
       <div class="btns">
-        <Button :disabled="disabled" round color="var(--ex-white)" class="btn" type="primary" @click="close">
+        <Button :disabled="disabled" round color="var(--ex-white)" class="btn ripple-primary" type="primary" @click="close">
           <span class="text-black">{{ $t("google_auth.google_input_btn_cancel") }}</span>
         </Button>
-        <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn" type="primary"
+        <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn ripple-btn" type="primary"
           @click="submit">
           <span class="text-black">{{ $t("google_auth.google_input_btn_confirm") }}</span>
         </Button>

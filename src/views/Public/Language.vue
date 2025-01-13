@@ -5,7 +5,7 @@
 
     <CheckboxGroup v-model="checked" class="lang_box" :max="2">
       <div v-for="(item, i) in langList" :key="i" @click="clickItem(item)">
-        <div class="lang_item" v-if="item.show">
+        <div class="lang_item mask-btn" v-if="item.show">
           <div class="w-[0.52rem] h-[0.52rem] mr-[0.16rem]">
             <img :src="getStaticImgUrl(`/static/img/flag/${item.icon}.svg`)" alt="">
           </div>

@@ -26,7 +26,7 @@
       </Tab>
     </Tabs>
 
-    <div class="w-full flex justify-center">
+    <div class="w-full flex justify-center ripple-btn">
       <div class="add_btn" @click="goAddAccount">
         <span class="text-black text-[0.36rem] font-normal font-semibold">{{ $t("account.add_account_btn") }}</span>
       </div>
@@ -57,10 +57,10 @@
           </div>
           <div class="w-full flex justify-between px-[0.4rem]">
             <div
-              class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-white text-black text-[0.32rem]"
+              class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-white text-black text-[0.32rem] ripple-primary"
               @click="goBack">{{ t('user_page.message_box_cancel') }}</div>
             <div
-              class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-primary text-black text-[0.32rem]"
+              class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-primary text-black text-[0.32rem] ripple-btn"
               @click="jump('google')">{{ t('account.no_kyc_confirm') }}</div>
           </div>
         </div>
@@ -170,7 +170,7 @@ const goBack = () => {
     width: 100%;
     margin: 0;
     height: 0.96rem;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     border-width: 0.02rem;
     border-color: var(--ex-border-color);
   }

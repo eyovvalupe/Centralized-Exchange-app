@@ -1,13 +1,14 @@
 <template>
   <div class="notification_detail">
-    <div
+    <!-- <div
       class="w-full h-[0.88rem] mb-[0.32rem] flex justify-center items-center relative"
     >
       <div class="absolute left-[0] top-[0.26rem]" @click="back">
         <Icon :name="'arrow-left'" size="0.4rem" />
       </div>
       <span class="text-[0.36rem]">消息中心</span>
-    </div>
+    </div> -->
+    <Top :title="$t('消息中心')"></Top>
     <div class="w-full h-[14.5rem]" style="overflow-y: auto;">
       <div class="w-full flex justify-center mb-[0.32rem]">
         <span class="w-[6.02rem] text-[0.4rem] leading-[0.6rem] text-center font-semibold">
@@ -43,6 +44,7 @@
 <script setup>
 import { Tab, Tabs, Icon } from "vant";
 import router from "@/router";
+import Top from "@/components/Top.vue";
 
 const back = () => {
   router.back();

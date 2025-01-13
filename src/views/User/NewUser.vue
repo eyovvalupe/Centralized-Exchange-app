@@ -150,7 +150,7 @@
     </div>
 
     <div class="navs px-[0.32rem] relative">
-      <div class="nav" @click="jump('language')">
+      <div class="nav mask-btn" @click="jump('language')">
         <div class="language-icon mr-[0.16rem]">
           <img :src="getStaticImgUrl('/static/img/user/lang_icon.svg')" alt="">
         </div>
@@ -167,7 +167,7 @@
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
-      <div class="nav" @click="jump('safety', true)">
+      <div class="nav mask-btn" @click="jump('safety', true)">
         <div class="verify-icon mr-[0.16rem]">
           <img :src="getStaticImgUrl('/static/img/user/verify.svg')" alt="">
         </div>
@@ -180,7 +180,7 @@
         </div>
         <Icon class="nav_more" size="0.32rem" name="arrow" />
       </div>
-      <div class="nav" @click="jump('about')">
+      <div class="nav mask-btn" @click="jump('about')">
         <div class="info-icon mr-[0.16rem]">
           <img :src="getStaticImgUrl('/static/img/user/about.svg')" alt="">
         </div>
@@ -192,7 +192,7 @@
     </div>
 
     <!-- 退出登录 -->
-    <div v-if="token" class="loginout" @click="loginout">{{ $t("user_page.logout") }}</div>
+    <div v-if="token" class="loginout mask-btn" @click="loginout">{{ $t("user_page.logout") }}</div>
   </div>
 </template>
 

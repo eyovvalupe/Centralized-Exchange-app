@@ -37,7 +37,7 @@
             <div class="invite_qrcode">
               <img :src="codeUrl" />
             </div>
-            <div class="btn" @click="saveImg">
+            <div class="btn ripple-primary" @click="saveImg">
               {{ $t("inviteFriends.save_img") }}
             </div>
 
@@ -46,7 +46,7 @@
             </div>
             <div class="input-box">
               <input v-model="inviteCode" disabled />
-              <div class="copy" @click="copy(inviteCode)">
+              <div class="copy ripple-primary" @click="copy(inviteCode)">
                 {{ $t("inviteFriends.copy") }}
               </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="input-box">
               <input v-model="url" disabled />
             </div>
-            <div class="btn" @click="copy(url)">
+            <div class="btn ripple-primary" @click="copy(url)">
               {{ $t("inviteFriends.copy_url") }}
             </div>
           </div>

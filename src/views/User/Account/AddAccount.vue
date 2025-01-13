@@ -57,7 +57,7 @@
                 </div>
               </div>
               <div class="btn_container">
-                <Button :disabled="!form.address" class="submit" type="primary" round color="var(--ex-primary-color)"
+                <Button :disabled="!form.address" class="submit ripple-btn" type="primary" round color="var(--ex-primary-color)"
                   @click="next"><span style="color: var(--ex-white);">{{
                     $t("account.add_btn") }}</span></Button>
               </div>
@@ -89,7 +89,7 @@
           </div>
         </div>
         <div class="bottoms">
-          <div @click="chooseCurrency(item)" class="bottom justify-between" :class="{ active_bottom: form.currency == item }"
+          <div @click="chooseCurrency(item)" class="bottom justify-between mask-btn" :class="{ active_bottom: form.currency == item }"
             v-for="item in searchRef ? searchResult : currencyMapList" :key="item">
               <div class="flex items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
@@ -109,7 +109,7 @@
       v-model:show="showNet" position="bottom" class="popup_container">
       <div class="pt-[0.3rem] px-[0.32rem] h-full">
         <div class="bottoms">
-          <div @click="chooseNet(item)" class="bottom justify-between" :class="{ active_bottom: form.network == item.network }"
+          <div @click="chooseNet(item)" class="bottom justify-between mask-btn" :class="{ active_bottom: form.network == item.network }"
             v-for="item in currNetwork" :key="item">
             <span>{{ item.network }}</span>
             <div v-if="form.network == item.network" style="width: 0.48rem;height: 0.48rem;">
@@ -327,7 +327,7 @@ getSessionToken();
     width: 100%;
     margin: 0;
     height: 0.96rem;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     border-width: 0.02rem;
     border-color: var(--ex-border-color);
   }
@@ -445,6 +445,7 @@ getSessionToken();
         margin-top: 0.4rem;
         height: 1rem;
         width: 6.86rem;
+        border-radius: 0.2rem;
 
         :deep(.van-button__text) {
           font-size: 0.32rem;

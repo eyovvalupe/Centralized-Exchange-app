@@ -1,6 +1,6 @@
 <template>
   <div class="notifi_modal">
-    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="'取消'" :confirm-button-text="'查看全部'"
+    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('取消')" :confirm-button-text="$t('查看全部')"
       @cancel="" @confirm="jump('notification')">
       <div class="w-full h-[9.36rem] bg-color rounded-[0.32rem] mt-[0.36rem] mb-[0.32rem] p-[0.32rem]">
         <div
@@ -25,7 +25,7 @@
 </template>
 <script setup>
 import { Tab, Tabs, ActionSheet, Dialog } from "vant";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import router from "@/router";
 
 const existNotifi = ref(true);
@@ -34,6 +34,13 @@ const jump = (url) => {
     name: url
   })
 }
+
+onMounted(() => {
+  const slideBtn = document.getElementsByClassName('van-dialog__cancel');
+  slideBtn[0].classList.add('ripple-primary')
+  const slideBtn1 = document.getElementsByClassName('van-dialog__confirm');
+  slideBtn1[0].classList.add('ripple-btn')
+})
 </script>
 
 <style lang="less">

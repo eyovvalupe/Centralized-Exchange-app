@@ -222,7 +222,7 @@
     </div>
 
     <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" :color="'var(--ex-primary-color)'"
-      @click="submit" :loading="loading" :disabled="disabled" round class="submit" type="primary"><span
+      @click="submit" :loading="loading" :disabled="disabled" round class="submit ripple-btn" type="primary"><span
         style="color: var(--ex-white);">{{ $t("kyc.second_btn") }}</span></Button>
   </div>
 </template>

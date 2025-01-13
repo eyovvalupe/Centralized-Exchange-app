@@ -1,7 +1,7 @@
 <!-- 带单详情 -->
  <template>
     <div class="page-followinfo">
-        <Top :backFunc="backFunc" :title="'订单详情'"></Top>
+        <Top :backFunc="backFunc" :title="$t('copy.copy_order_detail_title')"></Top>
 
         <MyFollowItem :item="info" :stopJump="true" :showDetail="true" />
     </div>

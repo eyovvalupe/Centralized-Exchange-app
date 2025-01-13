@@ -5,7 +5,7 @@
     </span>
     <textarea class="textarea text-black" v-model="message" ref="sendInput"
       :placeholder="t('service.input_message')"></textarea>
-    <span class="icon-right" @click="sendMessage('text', message)"><img
+    <span class="icon-right mask-btn" @click="sendMessage('text', message)"><img
         :src="getStaticImgUrl('/static/img/support/send.svg')" />
     </span>
   </div>
