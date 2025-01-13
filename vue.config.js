@@ -2,6 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 const CompressionPlugin = require('compression-webpack-plugin')
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin')
 const { default: AutoImport } = require('unplugin-auto-import/webpack')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = defineConfig({
   configureWebpack: {
@@ -16,6 +17,18 @@ module.exports = defineConfig({
         retryDelay: 1000, // 重试延迟时间（毫秒）
         maxRetries: 3, // 最大重试次数
         lastResortScript: 'fallback.js', // 备用脚本，当重试次数用尽时加载
+      }),
+      new BundleAnalyzerPlugin({ // 包体积分析
+        analyzerMode: 'server',
+        analyzerHost: '127.0.0.1',
+        analyzerPort: 8888,
+        reportFilename: 'report.html',
+        defaultSizes: 'parsed',
+        openAnalyzer: true,
+        generateStatsFile: false,
+        statsFilename: 'stats.json',
+        statsOptions: null,
+        logLevel: 'info'
       }),
       AutoImport({
         imports: ['vue', 'vue-router', 'vuex', 'vue-i18n', '@vueuse/core'],

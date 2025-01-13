@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build && node move-assets.js",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "analyz": "cross-env NODE_ENV=production npm_config_report=true npm run build"
   },
   "dependencies": {
     "@vant/touch-emulator": "^1.4.0",
@@ -26,7 +27,6 @@
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0",
     "wow.js": "^1.2.2",
-    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -45,6 +45,7 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
     "unplugin-auto-import": "^0.18.3",
+    "webpack-bundle-analyzer": "^4.10.2",
     "webpack-retry-chunk-load-plugin": "^3.1.1"
   }
 }
