@@ -251,7 +251,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -262,7 +262,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
   {
@@ -380,7 +380,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: 'child',
-      pageDeep: 1,
+      pageDeep: 2,
     },
   },
  

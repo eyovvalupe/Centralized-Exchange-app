@@ -19,13 +19,13 @@
                 </div>
                 <div class="w-full flex justify-between mb-[0.32rem]" v-if="false">
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-1.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-1.webp')" />
                   </div>
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-2.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-2.webp')" />
                   </div>
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-2.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-2.webp')" />
                   </div>
                 </div>
                 <div class="text-[0.24rem] text-color3 mb-[0.32rem]">
@@ -52,13 +52,13 @@
                 </div>
                 <div class="w-full flex justify-between mb-[0.32rem]" v-if="true">
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-1.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-1.webp')" />
                   </div>
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-2.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-2.webp')" />
                   </div>
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-2.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-2.webp')" />
                   </div>
                 </div>
                 <div class="text-[0.24rem] text-color3 mb-[0.32rem]">
@@ -85,13 +85,13 @@
                 </div>
                 <div class="w-full flex justify-between mb-[0.32rem]" v-if="true">
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-1.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-1.webp')" />
                   </div>
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-2.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-2.webp')" />
                   </div>
                   <div class="w-[2rem] rounded-[0.2rem] overflow-hidden">
-                    <img src="static/img/noti/noti-2.webp" />
+                    <img v-lazy="getStaticImgUrl('static/img/noti/noti-2.webp')" />
                   </div>
                 </div>
                 <div class="text-[0.24rem] text-color3 mb-[0.32rem]">
@@ -144,6 +144,7 @@ import { useRoute } from "vue-router";
 import router from "@/router";
 import { useI18n } from "vue-i18n";
 import Top from "@/components/Top.vue";
+import { getStaticImgUrl } from "@/utils";
 
 const { t } = useI18n();
 

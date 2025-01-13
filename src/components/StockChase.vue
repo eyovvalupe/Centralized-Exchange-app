@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="chase_graph">
-          <img src="static/img/market/chase.svg" alt="chase" />
+          <img v-lazy="getStaticImgUrl('static/img/market/chase.svg')" alt="chase" />
         </div>
       </div>
       <div class="chase_status relative">
@@ -36,7 +36,7 @@
           <span class="text-success">99.26%</span>
         </div>
         <div class="chase_graph">
-          <img src="static/img/market/todcondis.svg" alt="condi" />
+          <img v-lazy="getStaticImgUrl('static/img/market/todcondis.svg')" alt="condi" />
         </div>
       </div>
     </div>
@@ -45,6 +45,8 @@
 
 <script setup>
 import { useI18n } from "vue-i18n";
+import { getStaticImgUrl } from "@/utils/index.js"
+
 const { t } = useI18n();
 </script>
 <style lang="less" scoped>
