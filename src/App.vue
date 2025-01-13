@@ -108,6 +108,7 @@ onMounted(() => {
     if (button) {
       // 创建水波纹元素
       const ripple = document.createElement('span');
+      if (!ripple) return
       ripple.classList.add('ripple');
       // 获取按钮的尺寸和位置
       const buttonRect = button.getBoundingClientRect();
@@ -133,6 +134,7 @@ onMounted(() => {
     const button2 = e.target.closest('.mask-btn');
     if (button2) {
       const ripple = document.createElement('span');
+      if (!ripple) return
       ripple.classList.add('ripple');
       button2.appendChild(ripple);
       ripple.addEventListener('animationend', () => {

@@ -38,9 +38,13 @@ const jump = (url) => {
 
 onMounted(() => {
   const slideBtn = document.getElementsByClassName('van-dialog__cancel');
-  slideBtn[0].classList.add('ripple-primary')
+  if (slideBtn[0]) {
+    slideBtn[0].classList.add('ripple-primary')
+  }
   const slideBtn1 = document.getElementsByClassName('van-dialog__confirm');
-  slideBtn1[0].classList.add('ripple-btn')
+  if (slideBtn1[0]) {
+    slideBtn1[0].classList.add('ripple-btn')
+  }
 })
 </script>
 

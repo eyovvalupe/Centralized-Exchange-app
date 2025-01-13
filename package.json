@@ -26,7 +26,7 @@
     "vue3-lazy": "^1.0.0-alpha.1",
     "vuex": "^4.0.0",
     "vuex-persistedstate": "^4.1.0",
-    "wow.js": "^1.2.2",
+    "wow.js": "^1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

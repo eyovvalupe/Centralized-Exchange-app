@@ -150,6 +150,7 @@ onMounted(() => {
   open();
 
   const slideBtn = document.getElementsByClassName('van-slider__button');
+  if (!slideBtn[0]) return
   slideBtn[0].classList.add('ripple-primary')
 });
 </script>
