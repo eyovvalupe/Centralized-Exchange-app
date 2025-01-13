@@ -16,7 +16,7 @@
               top: -0.01rem;
               left: -0.04rem;
             ">
-            <img :src="getStaticImgUrl('/static/img/user/about.svg')" alt="icon" />
+            <img v-lazy="getStaticImgUrl('/static/img/user/about.svg')" alt="icon" />
           </div>
           <span style="color: var(--ex-primary-color); font-weight: 400; font-size: 0.24rem">照片上传要求</span>
         </div>
@@ -33,7 +33,7 @@
         <div @click="jump('chat')"
           class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
           <div class="w-[0.4rem] h-[0.4rem]">
-            <img :src="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
+            <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
           </div>
         </div>
       </template> -->
@@ -50,7 +50,7 @@
       <div class="bg-[var(--ex-none)] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="w-[0.48rem] h-[0.48rem]">
-            <img :src="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
           :style="{ 'background-image': `url('/static/img/user/iden1.svg')` }"
           v-if="!files.front.loading && !files.front.url">
           <div class="camera_icon mb-[0.16rem]">
-            <img :src="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
           </div>
           <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_front") }}</div>
         </div>
@@ -92,7 +92,7 @@
             class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click.stop="deleteImg('front')" v-if="!checkMode">
             <div class="delete_svg_icon">
-              <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
             </div>
           </div>
         </div>
@@ -105,7 +105,7 @@
           :style="{ 'background-image': `url('/static/img/user/iden2.svg')` }"
           v-if="!files.back.loading && !files.back.url">
           <div class="camera_icon mb-[0.16rem]">
-            <img :src="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
           </div>
           <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_back") }}</div>
         </div>
@@ -121,7 +121,7 @@
             class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click="deleteImg('back')" v-if="!checkMode">
             <div class="delete_svg_icon">
-              <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@
           :style="{ 'background-image': `url('/static/img/user/iden3.svg')` }"
           v-if="!files.hand.loading && !files.hand.url">
           <div class="camera_icon mb-[0.16rem]">
-            <img :src="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/camera.svg')" alt="">
           </div>
           <div class="text-[0.28rem] text-color">{{ $t("kyc.second_card_hand") }}</div>
         </div>
@@ -150,7 +150,7 @@
             class="w-[0.8rem] h-[0.52rem] flex items-center justify-center bg-[rgba(0,0,0,0.6)] rounded-bl-[0.32rem] absolute top-0 right-0"
             @click="deleteImg('hand')" v-if="!checkMode">
             <div class="delete_svg_icon">
-              <img :src="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/delete_white.svg')" alt="">
             </div>
           </div>
         </div>
@@ -171,7 +171,7 @@
           </div>
           <div class="flex items-center justify-between">
             <div class="check_icon">
-              <img :src="getStaticImgUrl('/static/img/user/right_primary.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/right_primary.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color">{{ $t("kyc.second_standard_img") }}</div>
           </div>
@@ -184,7 +184,7 @@
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
-              <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color5">{{ $t("kyc.second_failed1") }}</div>
           </div>
@@ -198,7 +198,7 @@
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
-              <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color5">{{ $t("kyc.second_failed2") }}</div>
           </div>
@@ -213,7 +213,7 @@
           </div>
           <div class="flex items-center justify-between">
             <div class="uncheck_icon">
-              <img :src="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/error_red.svg')" alt="">
             </div>
             <div class="text-[0.24rem] text-color5">{{ $t("kyc.second_failed3") }}</div>
           </div>

@@ -7,8 +7,8 @@
         <div class="top mt-[0.8rem]">
           <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
           <div class="eyes" @click="click">
-            <img :src="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
-            <img :src="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
           </div>
         </div>
         <div class="money">
@@ -48,7 +48,7 @@
       <div ref="tab1" :key="1" class="tab" @click="jumpToWallet('0')">
         <div class="tab_icon">
           <div style="width: 0.32rem;height: 0.32rem;">
-            <img :src="getStaticImgUrl(`/static/img/assets/cash.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/assets/cash.svg`)" alt="">
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_cash") }}</div>
@@ -57,14 +57,14 @@
         </div>
         <div class="more">
           <div style="width: 0.2rem;height: 0.32rem;">
-            <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
           </div>
         </div>
       </div>
       <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet('1')">
         <div class="tab_icon">
           <div style="width: 0.36rem;height: 0.36rem;">
-            <img :src="getStaticImgUrl(`/static/img/assets/stock.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/assets/stock.svg`)" alt="">
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_stock") }}</div>
@@ -75,14 +75,14 @@
         </div>
         <div class="more">
           <div style="width: 0.2rem;height: 0.32rem;">
-            <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
           </div>
         </div>
       </div>
       <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet('2')">
         <div class="tab_icon">
           <div style="width: 0.28rem;height: 0.28rem;">
-            <img :src="getStaticImgUrl(`/static/img/assets/future.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/assets/future.svg`)" alt="">
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_contract") }}</div>
@@ -93,7 +93,7 @@
         </div>
         <div class="more">
           <div style="width: 0.2rem;height: 0.32rem;">
-            <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
+            <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
           </div>
         </div>
       </div>

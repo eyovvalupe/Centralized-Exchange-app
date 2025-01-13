@@ -14,7 +14,7 @@
     ]" v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <!-- <template #before>
         <div class="tab_icon" @click="showNavDialogFunc()">
-          <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/open.svg')" alt="img" />
         </div>
       </template> -->
     </HeaderTabs>
@@ -66,7 +66,7 @@
         <div class="search_box_wrap">
           <div class="item search_box relative">
             <div class="search_icon">
-              <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
             </div>
             <input v-model.trim="searchStr" @keyup="searchItem()" type="text" class="ipt"
               :placeholder="t('trade.left_search')" :onfocus="() => (isFocused = true)"
@@ -395,10 +395,10 @@ const handleClick = (item) => {
 let swiperTimeout = null
 const swipeResize = () => {
   if (swiperTimeout) clearTimeout(swiperTimeout)
+  swipeRef.value && swipeRef.value.swipeTo(activeTab.value)
   swiperTimeout = setTimeout(() => {
-    swipeRef.value && swipeRef.value.swipeTo(activeTab.value)
     swipeRef.value && swipeRef.value.resize();
-  }, 1000);
+  }, 500);
 };
 
 const pageActive = ref(false);

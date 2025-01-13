@@ -6,7 +6,7 @@
     <div class="search_box">
       <div class="icon" style="display: flex;align-items: center;justify-content: center;">
         <div style="width: 0.32rem;height: 0.32rem;">
-          <img :src="getStaticImgUrl('/static/img/home/search_icon.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/home/search_icon.svg')" alt="">
         </div>
       </div>
       <input ref="iptRef" @keydown="keydown" @keydown.enter="keydownEnter"
@@ -16,7 +16,7 @@
       <div class="type_select" @click="closeSearch" v-show="search.length > 0">
         <div class="type_icon">
           <div class="closeIcon">
-            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
         </div>
         <div class="w-[0.4rem] h-[0.4rem]" @click="clearSearchHistory">
           <div class="clearIcon">
-            <img :src="getStaticImgUrl('/static/img/common/clean.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/common/clean.svg')" alt="">
           </div>
         </div>
       </div>
@@ -47,9 +47,9 @@
       </div>
       <div class="w-[0.4rem] h-[0.4rem]" @click="resetData">
         <div style="width: 0.4rem;height: 0.4rem;">
-          <img v-if="!marketSearchTextList.length > 0" :src="getStaticImgUrl('/static/img/market/refresh_white.svg')"
+          <img v-if="!marketSearchTextList.length > 0" v-lazy="getStaticImgUrl('/static/img/market/refresh_white.svg')"
             alt="">
-          <img v-else :src="getStaticImgUrl('/static/img/market/refresh_mini.svg')" alt="">
+          <img v-else v-lazy="getStaticImgUrl('/static/img/market/refresh_mini.svg')" alt="">
         </div>
       </div>
     </div>
@@ -59,8 +59,8 @@
       <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
         <div @click.stop="collect(item)">
           <div class="size-[0.48rem]">
-            <img v-if="item.watchlist == 1" :src="getStaticImgUrl('/static/img/market/star.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
+            <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
+            <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
         </div>
         <div class="info">

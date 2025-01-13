@@ -3,7 +3,7 @@
         <div class="px-[0.12rem]  pb-[0.12rem] bg-color3 rounded-[0.32rem]">
             <div class="h-[0.92rem] flex items-center text-color text-[0.32rem] px-[0.16rem] gap-[0.16rem]">
                 <div v-if="paramCurrency" class="size-[0.4rem]">
-                    <img :src="getStaticImgUrl(`/static/img/crypto/${paramCurrency.toUpperCase()}.svg`)" />
+                    <img v-lazy="getStaticImgUrl(`/static/img/crypto/${paramCurrency.toUpperCase()}.svg`)" />
                 </div>
                 {{ paramCurrency }}
             </div>

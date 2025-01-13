@@ -5,7 +5,7 @@
         <div class="flex items-center gap-1">
           <div class="font-bold text-[0.32rem]">热卖</div>
           <div class="custom-heart-icon">
-            <img :src="getStaticImgUrl('/static/img/home/fire.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/home/fire.svg')" alt="">
           </div>
         </div>
         <div class=""></div>

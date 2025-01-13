@@ -32,13 +32,13 @@
                     <div class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"  @click="showDialog=true;">
                         <div class="flex items-center">
                             <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
-                                <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
+                                <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
                                 alt="currency" />
                             </div>
                             <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
                         </div>
                         <div class="more_icon">
-                            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+                            <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
                         </div>
                     </div>
                 </template>
@@ -100,8 +100,8 @@
             <!-- 协议 -->
             <label class="pledge_doc">
                 <div :class="checked ? 'checked_icon_blue' : 'unchecked_icon'" class="mr-[0.2rem]" @click="checked = !checked">
-                    <img v-if="checked" :src="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
-                    <img v-else :src="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
+                    <img v-if="checked" v-lazy="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
+                    <img v-else v-lazy="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
                 </div>
                 {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
             </label>
@@ -118,7 +118,7 @@
 
                 <div class="search_box">
                     <div class="icon">
-                        <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+                        <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
                     </div>
                     <input ref="iptRef" v-model.trim="searchValue" :placeholder="t('market.market_buy_fast_search_input')"
                     type="text" enterkeyhint="search" class="search" />
@@ -128,12 +128,12 @@
                     swap_dialog_item_active: currIn.name == item.name,
                     }" @click="clickItem(item)">
                         <div class="icon">
-                            <img class="rounded-50" :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+                            <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
                         </div>
                         <span>{{ item.name }}</span>
                     
                         <div v-if="currIn.name == item.name" class="check_icon">
-                            <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
+                            <img v-lazy="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
                         </div>
                     </div>
                 </div>

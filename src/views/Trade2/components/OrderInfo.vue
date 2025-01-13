@@ -28,13 +28,13 @@
               </span>
             </div>
             <div class="stock-info__trend" @click="openStockModel(currStock)">
-              <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+              <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
             </div>
           </div>
           <div class="stock-info__order_no">
             <span>{{ currStock.order_no || "--" }}</span>
             <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
-              <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
             </div>
           </div>
         </div>
@@ -196,37 +196,37 @@
       <div class="btn btn2 ripple-btn" @click="emit('update', currStock)"
         v-if="['none', 'lock', 'open'].includes(currStock.status)">
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/update.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/update.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
       <div class="btn btn2 disabled_btn" v-else>
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/update_disabled.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/update_disabled.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
       <div class="btn btn3 ripple-btn" @click="emit('sell', currStock)" v-if="['open'].includes(currStock.status)">
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/close.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/close.svg')" alt="img" />
         </div>
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
       <div class="btn btn3 disabled_btn" v-else>
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/close_disabled.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/close_disabled.svg')" alt="img" />
         </div>
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
       <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)" v-if="currStock.status == 'none'">
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_cancel") }}</div>
       </div>
       <div class="btn btn4 disabled_btn" v-else>
         <div class="btn_icon">
-          <img :src="getStaticImgUrl('/static/img/trade/cancel_disabled.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/trade/cancel_disabled.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_cancel") }}</div>
       </div>

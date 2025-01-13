@@ -5,7 +5,7 @@
     <Top :backFunc="goBack">
       <template #right>
         <div class="language_icon_container" @click="goLang">
-          <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
         </div>
       </template>
     </Top>
@@ -27,7 +27,7 @@
       <div class="form_item margin_item" v-show="activeTab == 0">
         <div class="form_item_user">
           <div class="envelope-icon">
-            <img :src="getStaticImgUrl('/static/img/user/envelope.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/envelope.svg')" alt="">
           </div>
         </div>
         <input @change="changeAccount" v-model.trim="form.email" :placeholder="t('login.pw_placeholder1')" type="text"
@@ -35,7 +35,7 @@
         <Loading v-if="accountLoading" :size="'0.32rem'" type="circular" />
         <div class="form_item_clear" v-show="form.email" @click="form.email = null">
           <div class="cross-icon">
-            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="">
           </div>
         </div>
       </div>
@@ -47,11 +47,11 @@
         searchStr = '';
         ">
           <span class="flag_icon">
-            <img :src="getStaticImgUrl('/static/img/user/flag_hongkong.svg')" alt="" />
+            <img v-lazy="getStaticImgUrl('/static/img/user/flag_hongkong.svg')" alt="" />
           </span>
           <span>{{ form.area }}</span>
           <div class="more-svg-icon">
-            <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="" />
           </div>
         </div>
         <input maxlength="20" v-model.trim="form.phone" type="text" :placeholder="t('login.pw_placeholder2')"
@@ -62,7 +62,7 @@
         <!-- 显示密码输入时的锁图标 -->
         <div class="form_item_user">
           <div class="lock-icon">
-            <img :src="getStaticImgUrl('/static/img/user/lock.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/user/lock.svg')" alt="">
           </div>
         </div>
 
@@ -73,8 +73,8 @@
         <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
           <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
+            <img v-if="showPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
           </div>
         </div>
       </div>
@@ -108,11 +108,11 @@
         </div>
         <div class="item search_box">
           <div class="search-svg-icon">
-            <!-- <img :src="getStaticImgUrl('/static/img/user/search.svg')" alt=""> -->
+            <!-- <img v-lazy="getStaticImgUrl('/static/img/user/search.svg')" alt=""> -->
           </div>
           <input v-model.trim="searchStr" class="ipt" type="text" :placeholder="t('login.pw_placeholder4')" />
           <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon">
-            <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/common/close.svg')" alt="">
           </div>
         </div>
         <div style="height: calc(var(--vh) * 60); overflow-y: auto; padding: 0 0.24rem;">
@@ -123,7 +123,7 @@
               :class="{ transfer_dialog_item_active: form.area == item.code }">
               <div class="flex h-[1.08rem] items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
-                  <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
+                  <img v-lazy="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                 </div>
                 <span>{{ item.cn }}&nbsp;</span>
                 <span>{{ item.code }}</span>

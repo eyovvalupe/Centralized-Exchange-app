@@ -11,13 +11,13 @@
                 </div>
                 <div class="bottom">
                     <div class="bottom-info">
-                        <div class="icon"><img :src="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
+                        <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
                         <div>{{ props.item.followers }}</div>
                     </div>
                 </div>
             </div>
             <div class="btn" v-if="!props.showDetail">
-                <img :src="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
             </div>
             <div class="status" v-if="props.showDetail">{{ $t('copy.copy_order_detail_on') }}</div>
         </div>
@@ -103,9 +103,9 @@
                 <div class="item pass_ipt">
                     <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
                         :type="showPassword ? 'text' : 'password'" class="ipt" />
-                    <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
+                    <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
                         @click="showPassword = true" alt="off" />
-                    <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+                    <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
                         @click="showPassword = false" />
                 </div>
             </div>

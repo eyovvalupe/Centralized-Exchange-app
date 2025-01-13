@@ -3,7 +3,7 @@
     <div class="stock-box" style="margin: 0 0px 0.1rem;">
       <span class="grop-title">股票</span>
       <Loading type="circular" class="stock-img" v-if="loading && stockCo.length == 0" color="var(--ex-primary-color)" />
-      <img :src="getStaticImgUrl('/static/img/trade/blue-stock.png')" class="stock-img" v-if="stockCo.length > 0"
+      <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.png')" class="stock-img" v-if="stockCo.length > 0"
         @click="openPopup" />
     </div>
     <div class="animate-input num-input symbol-name"
@@ -38,7 +38,7 @@
       <div class="small-select" @click="allSelect">
         <div class="abs-con">
           <span style="margin-left: 0.2rem">{{ selectedOptionText }}</span>
-          <img :src="getStaticImgUrl('/static/img/common/more.svg')" class="down-img" />
+          <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" class="down-img" />
         </div>
       </div>
 
@@ -95,7 +95,7 @@
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { ref, computed, onMounted, watch, nextTick, defineExpose, onUpdated, onBeforeUnmount, onDeactivated, reactive } from "vue";
+import { ref, computed, onMounted, watch, nextTick, onUpdated, onBeforeUnmount, onDeactivated, reactive } from "vue";
 import { Tab, Tabs, Field, CellGroup, Slider, Button, Loading, Popup, showToast } from "vant";
 import { _search, _stocksPara, _basic, _walletBalance, _commToken } from "@/api/api";
 import { useRouter, useRoute } from "vue-router";

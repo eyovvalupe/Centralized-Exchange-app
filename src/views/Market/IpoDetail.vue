@@ -9,7 +9,7 @@
             <div class="name">
               {{ currDetail.company_name }}
               <span class="lever_icon" v-if="currDetail.lever > 1"
-                :src="getStaticImgUrl('/static/img/trade/level.svg')">{{ t('trade.ipo_leveraged_trading') }}</span>
+                v-lazy="getStaticImgUrl('/static/img/trade/level.svg')">{{ t('trade.ipo_leveraged_trading') }}</span>
             </div>
           </div>
           <div class="pre_times" v-if="currDetail.status == 'none' && currDetail._timedown">

@@ -25,11 +25,11 @@
         </div>
 
         <div class="check_ticket" v-if="checkedList[i]">
-          <img :src="getStaticImgUrl('/static/img/market/checkTicket.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/market/checkTicket.svg')" alt="">
         </div>
 
         <div class="uncheck_ticket" v-else>
-          <img :src="getStaticImgUrl('/static/img/market/uncheckTicket.svg')" alt="">
+          <img v-lazy="getStaticImgUrl('/static/img/market/uncheckTicket.svg')" alt="">
         </div>
       </div>
     </div>

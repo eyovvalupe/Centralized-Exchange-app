@@ -2,7 +2,7 @@
 <template>
   <div class="no_data">
     <div class="nodata_icon">
-      <img :src="getStaticImgUrl('/static/img/common/no_wallet.svg')" alt="nothing" />
+      <img v-lazy="getStaticImgUrl('/static/img/common/no_wallet.svg')" alt="nothing" />
     </div>
     <div class="nodata_text">{{ t('common.no_wallet') }}</div>
   </div>

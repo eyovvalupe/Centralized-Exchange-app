@@ -6,7 +6,7 @@
         <span class="flex items-center justify-center">
           <span class="mr-[0.16rem]" v-if="info.currCrypto">
             <img class="size-[0.52rem] rounded-50"
-              :src="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+              v-lazy="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
           </span>
           {{ title }}{{ info.currCrypto }}
 
@@ -44,7 +44,7 @@
             <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
               <span class="mr-[0.16rem]" v-if="info.currCrypto">
                 <img class="size-[0.52rem] rounded-50"
-                  :src="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+                  v-lazy="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
               </span>
               {{ title }}{{ info.currCrypto }}
 
@@ -82,7 +82,7 @@
             <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
               <span class="mr-[0.16rem]" v-if="info.currCrypto">
                 <img class="size-[0.52rem] rounded-50"
-                  :src="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+                  v-lazy="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
               </span>
               {{ title }}{{ info.currCrypto }}
 

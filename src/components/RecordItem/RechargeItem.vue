@@ -2,7 +2,7 @@
 <template>
   <div class="recgarge_item" @click="goInfo">
     <div class="icon_box" v-if="item.currency">
-      <img :src="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.svg`)" alt="currency" />
+      <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.svg`)" alt="currency" />
     </div>
     <div class="content">
       <div class="item_title">{{ item.currency }}</div>

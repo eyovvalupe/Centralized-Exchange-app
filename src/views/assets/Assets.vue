@@ -43,7 +43,7 @@
         <div class="w-full flex items-center flex-col mb-[0.4rem]">
           <div class="mb-[0.16rem]">
             <div style="width: 1rem; height: 1rem">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${selectedItem.name}.svg`)" alt="">
+              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${selectedItem.name}.svg`)" alt="">
             </div>
           </div>
           <div class="text-[0.3rem] text-color">
@@ -62,7 +62,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
-              <img :src="getStaticImgUrl(`/static/img/assets/deposit_color.svg`)" alt="">
+              <img v-lazy="getStaticImgUrl(`/static/img/assets/deposit_color.svg`)" alt="">
             </div>
             <div class="text-topup text-[0.32rem]">{{ t('assets.coin_list_recharge') }}</div>
           </div>
@@ -77,7 +77,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width:0.8rem;height:0.8rem">
-              <img :src="getStaticImgUrl(`/static/img/assets/withdraw_color.svg`)" alt="">
+              <img v-lazy="getStaticImgUrl(`/static/img/assets/withdraw_color.svg`)" alt="">
             </div>
             <div class="text-withdraw text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
           </div>
@@ -91,7 +91,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
-              <img :src="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
+              <img v-lazy="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
             </div>
             <div class="text-transfer-in text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.in_sim') :
               t('transfer.in') }}</div>
@@ -106,7 +106,7 @@
             }
               ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
-              <img :src="getStaticImgUrl(`/static/img/assets/transfer_out.svg`)" alt="">
+              <img v-lazy="getStaticImgUrl(`/static/img/assets/transfer_out.svg`)" alt="">
             </div>
             <div class="text-transfer-out text-[0.32rem]">{{ selectedItem.account == 'money' ? t('transfer.out_sim') :
               t('transfer.out') }}</div>
@@ -115,7 +115,7 @@
       </div>
     </BottomPopup>
     <!-- 充提记录 -->
-    <HintBlock v-if="route.name == 'assets' && hintNum" />
+    <!-- <HintBlock v-if="route.name == 'assets' && hintNum" /> -->
   </div>
 </template>
 

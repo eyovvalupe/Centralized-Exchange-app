@@ -13,7 +13,7 @@
                 </div>
                 <div class="bottom">
                     <div class="bottom-info">
-                        <div class="icon"><img :src="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
+                        <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
                         <div>{{ info.followers || '11' }}</div>
                     </div>
                 </div>

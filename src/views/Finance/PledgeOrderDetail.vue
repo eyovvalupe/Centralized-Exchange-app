@@ -24,7 +24,7 @@
             
             <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                 <div class="flex h-[0.4rem] items-center justify-center gap-[0.16rem]">
-                    <div class="size-[0.4rem]"><img :src="getStaticImgUrl(`/static/img/crypto/${order.symbol}.svg`)" alt="img" /></div>
+                    <div class="size-[0.4rem]"><img v-lazy="getStaticImgUrl(`/static/img/crypto/${order.symbol}.svg`)" alt="img" /></div>
                     <div class="text-[0.32rem]">{{ order.symbol }}</div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
                     <div class="text-[0.28rem] flex items-center gap-[0.12rem]">
                         {{ order.order_no }}
                         <div class="w-[0.32rem] h-[0.32rem]" @click="copy(order.order_no)">
-                            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+                            <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@
                     
                     <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                         <div class="flex h-[0.4rem] items-center justify-center gap-[0.16rem]">
-                            <div class="size-[0.4rem]"><img :src="getStaticImgUrl(`/static/img/crypto/${order.symbol}.svg`)" alt="img" /></div>
+                            <div class="size-[0.4rem]"><img v-lazy="getStaticImgUrl(`/static/img/crypto/${order.symbol}.svg`)" alt="img" /></div>
                             <div class="text-[0.32rem]">{{ order.symbol }}</div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@
                             <div class="text-[0.28rem] flex items-center gap-[0.12rem]">
                                 20245154545456555
                                 <div class="w-[0.32rem] h-[0.32rem]" @click="copy('20245154545456555')">
-                                    <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+                                    <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
                                 </div>
                             </div>
                         </div>

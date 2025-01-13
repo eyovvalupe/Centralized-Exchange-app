@@ -3,13 +3,13 @@
   <div class="max-width top">
     <div class="back mask-btn" @click="clickLeft">
       <div class="w-[0.44rem] h-[0.44rem]">
-        <img :src="getStaticImgUrl('/static/img/user/back.svg')" alt="">
+        <img v-lazy="getStaticImgUrl('/static/img/user/back.svg')" alt="">
       </div>
     </div>
 
     <!-- <div v-if="from == 'first'" class="back1" @click="() => { }">
       <div class="w-[0.4rem] h-[0.4rem] text-white">
-        <img :src="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
+        <img v-lazy="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
       </div>
     </div> -->
 

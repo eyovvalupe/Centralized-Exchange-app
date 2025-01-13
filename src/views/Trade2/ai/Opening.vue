@@ -20,7 +20,7 @@
           <!-- <div class="subtitle">
             {{ t("trade.ai_opening_product_type") }}
             <div class="stock_icon" v-if="form1.name" @click="openStockModel">
-              <img :src="getStaticImgUrl('/static/img/trade/blue-stock.svg')" alt="icon" />
+              <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" alt="icon" />
             </div>
           </div> -->
 
@@ -28,7 +28,7 @@
             <div class="placeholder">{{ t("trade.ai_opening_product_type") }}</div>
             <div class="name">{{ form1.name }}</div>
             <div class="more_icon">
-              <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
             </div>
           </div>
         </div>

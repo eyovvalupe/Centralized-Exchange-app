@@ -6,7 +6,7 @@
           <div class="flex mb-[0.32rem] justify-between">
             <div class="flex items-center">
               <div style="width: 0.7rem;height: 0.7rem;" class="mr-[0.2rem]">
-                <img :src="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="">
+                <img v-lazy="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="">
               </div>
               <span class="text-[0.32rem] text-color2">{{ item.bankName }}</span>
             </div>
@@ -17,7 +17,7 @@
               <span class="text-[0.4rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{
                 item.bankCardNumber.slice(-4) }}</span>
               <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)">
-                <img :src="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+                <img v-lazy="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
               </div>
             </div>
           </div>
@@ -26,7 +26,7 @@
           <div class="w-[1rem] h-full bg-color2 rounded-[0.4rem] flex items-center justify-center"
             @click="confirm(item.id)">
             <div class="w-[0.4rem] h-[0.4rem]">
-              <img :src="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
             </div>
           </div>
         </template>

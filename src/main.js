@@ -5,7 +5,7 @@ import store from './store'
 import '@vant/touch-emulator'
 import 'vant/lib/index.css'
 import i18n from './i18'
-// import { initVoice } from "./utils/voice"
+import lazyPlugin from 'vue3-lazy'
 
 const app = createApp(App)
 app.config.errorHandler = (err, instance, info) => {
@@ -13,5 +13,8 @@ app.config.errorHandler = (err, instance, info) => {
   console.error('err', err)
   console.error('info', info)
 }
-app.use(store).use(router).use(i18n).mount('#app')
+app.use(store).use(router).use(i18n).use(lazyPlugin, {
+  loading: require('@/assets/img-default.svg'), // 图片加载时默认图片
+  error: require('@/assets/img-error.svg')// 图片加载失败时默认图片
+}).mount('#app')
 // initVoice()

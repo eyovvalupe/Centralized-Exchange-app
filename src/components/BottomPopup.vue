@@ -3,7 +3,7 @@
         :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom"
         :closeable="props.closeable" :teleport="from != 'account' ? 'body' : ''" @close="emits('close')" @closed="onClose">
         <div class="ex-bottom-popup-top relative top-[0.02rem]">
-            <img :src="getStaticImgUrl('/static/img/common/popup_top.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/popup_top.svg')" />
         </div>
         <div class="ex-bottom-popup-body">
             <div class="ex-bottom-popup-title" v-if="title">

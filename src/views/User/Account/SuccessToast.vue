@@ -4,7 +4,7 @@
       class="w-[3.14rem] h-[2.7rem] bg-[rgba(0,0,0,0.7)] rounded-[0.32rem] flex flex-col items-center justify-center transition-opacity duration-300"
       :class="[show ? 'opacity-100' : 'opacity-0 pointer-events-none']">
       <div class="success_icon mb-[0.24rem]">
-        <img :src="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="">
+        <img v-lazy="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="">
       </div>
       <div class="text-white text-[0.36rem] max-w-[1.5rem] text-center ripple-btn">{{ $t("success_toast.message") }}</div>
     </div>

@@ -17,13 +17,13 @@
                       </div>
                       <div class="flex items-center">
                         <div style="width: 0.48rem;height:0.48rem" class="mr-[0.2rem]">
-                          <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="">
+                          <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="">
                         </div>
                         <div class="ipt">{{ form.currency }}</div>
                       </div>
                     </div>
                     <div class="w-[0.2rem] h-[0.2rem]">
-                      <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
+                      <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
                     </div>
                   </div>
                 </div>
@@ -36,7 +36,7 @@
                       <div class="ipt">{{ form.network }}</div>
                     </div>
                     <div class="w-[0.2rem] h-[0.2rem]">
-                      <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
+                      <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
                     </div>
                   </div>
                 </div>
@@ -51,7 +51,7 @@
                         @blur="isFocus = false" />
                     </div>
                     <div class="w-[0.32rem] h-[0.32rem]" v-if="form.address" @click="form.address = ''">
-                      <img :src="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
+                      <img v-lazy="getStaticImgUrl(`/static/img/common/close.svg`)" alt="">
                     </div>
                   </div>
                 </div>
@@ -82,7 +82,7 @@
         <div class="w-full  mb-[0.2rem]">
           <div class="w-full h-[0.96rem] rounded-[1rem] bg-color2 border-[1px] flex items-center px-[0.2rem]">
             <div style="width: 0.48rem;height: 0.48rem;">
-              <img :src="getStaticImgUrl(`/static/img/common/search.svg`)" alt="">
+              <img v-lazy="getStaticImgUrl(`/static/img/common/search.svg`)" alt="">
             </div>
             <input v-model="searchRef" type="text" class="flex-1 h-[0.6rem] px-[0.2rem] text-color text-[0.3rem]"
               @input="searchItem" />
@@ -93,12 +93,12 @@
             v-for="item in searchRef ? searchResult : currencyMapList" :key="item">
               <div class="flex items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="">
+                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="">
                 </div>
                 <span class="text-[0.3rem]">{{ item }}</span>
               </div>
               <div v-if="form.currency == item" style="width: 0.48rem;height: 0.48rem;">
-                <img :src="getStaticImgUrl(`/static/img/assets/actived_check.svg`)" alt="">
+                <img v-lazy="getStaticImgUrl(`/static/img/assets/actived_check.svg`)" alt="">
               </div>
           </div>
         </div>
@@ -113,7 +113,7 @@
             v-for="item in currNetwork" :key="item">
             <span>{{ item.network }}</span>
             <div v-if="form.network == item.network" style="width: 0.48rem;height: 0.48rem;">
-                <img :src="getStaticImgUrl(`/static/img/assets/actived_check.svg`)" alt="">
+                <img v-lazy="getStaticImgUrl(`/static/img/assets/actived_check.svg`)" alt="">
               </div>
           </div>
         </div>

@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
         </div>
       </template>
@@ -22,7 +22,7 @@
             <div class="select_item">
               <div class="currency">
                 <div class="w-[0.48rem] h-[0.48rem] mr-[0.2rem]" v-if="form.currency">
-                  <img :src="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)"
+                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)"
                     alt="currency" class="rounded-full" />
                 </div>
                 <span>{{ form.currency || "" }}</span>
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="w-[0.2rem] h-[0.2rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
         </div>
       </div>
 
@@ -50,7 +50,7 @@
           </div>
         </div>
         <div class="w-[0.2rem] h-[0.2rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
         </div>
       </div>
       <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px] bg-color2"
@@ -82,7 +82,7 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
           </div>
           <input v-model.trim="searchDialogStr" type="text" class="ipt"
             :placeholder="$t('topUpCrypto.searchPlaceholder')" />
@@ -94,13 +94,13 @@
               keyStr.toUpperCase().indexOf(searchDialogStr) > -1
               ">
             <div class="icon">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${keyStr.toUpperCase()}.svg`)" alt="currency"
+              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${keyStr.toUpperCase()}.svg`)" alt="currency"
                 class="rounded-full" />
             </div>
             <span>{{ keyStr.toUpperCase() }}</span>
 
             <div v-if="form.currency == keyStr" class="check_icon">
-              <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+              <img v-lazy="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
             </div>
           </div>
         </div>
@@ -117,7 +117,7 @@
           <span class="w-full text-start">{{ item.network }}</span>
 
           <div v-if="form.network == item.network" class="check_icon">
-            <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
           </div>
         </div>
       </div>

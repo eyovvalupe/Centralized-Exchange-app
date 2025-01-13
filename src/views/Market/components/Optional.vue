@@ -13,7 +13,7 @@
   <div v-else-if="!watchList.length && !loading" style="position: relative; margin-bottom: 1rem">
     <div class="no_self_selection_block">
       <div class="no_data_icon">
-        <img :src="getStaticImgUrl('/static/img/common/no_data.svg')" alt="暂无数据" />
+        <img v-lazy="getStaticImgUrl('/static/img/common/no_data.svg')" alt="暂无数据" />
       </div>
       <p class="text">{{ t('market.market_optional_no_optional') }}</p>
     </div>
@@ -48,8 +48,8 @@
           <div>{{ t('market.market_optional_recommend_stock') }}</div>
           <div @click="changeAllCheckState">
             <div style="width: 0.4rem;height: 0.4rem">
-              <img v-if="allCheckState" :src="getStaticImgUrl('/static/img/market/checked.svg')" alt="">
-              <img v-else :src="getStaticImgUrl('/static/img/market/uncheckTicket.svg')" alt="">
+              <img v-if="allCheckState" v-lazy="getStaticImgUrl('/static/img/market/checked.svg')" alt="">
+              <img v-else v-lazy="getStaticImgUrl('/static/img/market/uncheckTicket.svg')" alt="">
             </div>
           </div>
         </div>

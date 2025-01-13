@@ -93,7 +93,7 @@
               <div class="w-52 bg-color2 leading-35">
                 <div class="flex items-center justify-center text-sm text-color" @click="copy(form.bank_card_number)">
                   {{ form.bank_card_number }}
-                  <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
+                  <img class="ml-1 !size-[0.2rem]" v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
                 </div>
               </div>
             </div>
@@ -111,7 +111,7 @@
             </div>
           </template>
           <div v-else class="flex flex-col items-center justify-center">
-            <img class="mb-[0.2rem] !h-18 !w-[1.8rem]" :src="getStaticImgUrl('/static/img/market/waitFor.svg')"
+            <img class="mb-[0.2rem] !h-18 !w-[1.8rem]" v-lazy="getStaticImgUrl('/static/img/market/waitFor.svg')"
               alt="" />
             <div class="text-xs text-color3">
               {{ $t("market.market_buy_list_wait_buyer_bank") }}
@@ -126,7 +126,7 @@
           class="flex h-[0.68rem] items-center justify-between border border-transparent border-b-color px-4 text-sm leading-34 text-color2">
           <div class="flex items-center" @click="copy(form.order_no)">
             {{ form.order_no }}
-            <img class="ml-1 !size-[0.2rem]" :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
+            <img class="ml-1 !size-[0.2rem]" v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
           </div>
           <div class="text-12 text-color3">{{ form.date }}</div>
         </div>

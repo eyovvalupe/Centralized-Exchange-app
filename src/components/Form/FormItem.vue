@@ -54,9 +54,9 @@
 
           <!-- 密码图标 -->
           <span class="pwd_icon" v-if="inputType == 'password'">
-            <img v-if="!showPassword" :src="getStaticImgUrl('/static/img/common/close_eye.svg')"
+            <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
               @click="showPassword = true" alt="off" />
-            <img v-else :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+            <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
               @click="showPassword = false" />
           </span>
 

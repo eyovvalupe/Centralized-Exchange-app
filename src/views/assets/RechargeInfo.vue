@@ -7,7 +7,7 @@
     <div class="top_info mb-[0.4rem]">
       <div class="status" v-if="orderData.status == 'success'">
         <div class="status_icon">
-          <img :src="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="img" />
         </div>
         <div class="status_name">
           {{ $t("recharging.info_recharge_success") }}
@@ -20,7 +20,7 @@
       </div>
       <div class="status" v-else-if="orderData.status == 'failure'">
         <div class="status_icon">
-          <img :src="getStaticImgUrl('/static/img/assets/status_error.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_error.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("recharging.info_recharge_failure") }}</div>
         <div class="status_desc">{{ $t("recharging.info_recharge_failure_con") }}</div>
@@ -28,7 +28,7 @@
       <div class="status" v-else>
         <div class="status_icon">
           <!-- <LoadEffect class="status_loading" color="var(--ex-white)" /> -->
-          <img :src="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
         </div>
         <div class="status_name">{{ $t("recharging.info_recharge_pending") }}</div>
         <div class="status_desc">{{ $t("recharging.info_recharge_pending_con") }}</div>
@@ -40,7 +40,7 @@
         <div class="flex items-center">
           <div class="text-color5 mr-[0.05rem]">{{ orderData.order_no }}</div>
           <div class="w-[0.32rem] h-[0.32rem]" @click="copy(orderData.order_no)">
-            <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
         <div class="text-color5 text-end text-[0.24rem] flex-1 text-end">{{ orderData.date ? orderData.date.slice(0, -3)
@@ -67,7 +67,7 @@
           <div class="value">
             <div class="value_text van-omit1">{{ orderData.address }}</div>
             <div class="copy_icon" @click="copy(orderData.address)">
-              <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
             </div>
           </div>
         </div>

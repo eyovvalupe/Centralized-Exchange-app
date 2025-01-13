@@ -1,7 +1,7 @@
 <template>
     <div class="chart_item_bg w-full absolute bottom-0">
         <div class="w-full h-auto">
-            <!-- <img :src="getStaticImgUrl('/static/img/finance/chart.svg')" alt="img" /> -->
+            <!-- <img v-lazy="getStaticImgUrl('/static/img/finance/chart.svg')" alt="img" /> -->
             <SparkLine :style="['width: 100%; height: 1rem;']" :points="points" :ytimes="2"
                />
         </div>

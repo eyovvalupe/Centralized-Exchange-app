@@ -18,12 +18,12 @@
           <div class="mr-[0.2rem] flex-1">{{ currCurrency.name }}</div>
           <div class="flex">
             <div class="size-[0.32rem] mr-1">
-              <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="img" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="img" />
             </div>
           </div>
         </div>
         <div class="size-[0.32rem] mx-[0.1rem]">
-          <img :src="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/market/trans.svg')" alt="img" />
         </div>
       </div>
 
@@ -93,7 +93,7 @@
         <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
           :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
           <div class="icon">
-            <img :src="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
           </div>
           <span>{{ item.name.toUpperCase() }}</span>
           <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />

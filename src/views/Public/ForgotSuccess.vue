@@ -7,7 +7,7 @@
         <div class="flex gap-1">
           <div class="language_icon_container" @click="goLang">
             <div class="language_icon">
-              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
             </div>
           </div>
         </div>
@@ -15,7 +15,7 @@
     </Top>
 
     <div class="icon">
-      <img :src="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
+      <img v-lazy="getStaticImgUrl('/static/img/user/success.svg')" alt="√" />
     </div>
     <div class="title">{{ t('forget_pw.success') }}</div>
 

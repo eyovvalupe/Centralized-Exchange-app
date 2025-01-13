@@ -5,7 +5,7 @@
             <div class="px-[0.28rem] py-[0.4rem] mb-[0.32rem] bg-color6 flex flex-col rounded-[0.32rem]">
                 <div class="flex items-center mb-[0.32rem]">
                     <div class="mr-[0.2rem]">
-                        <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
+                        <img v-lazy="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
                     </div>
                     <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
                         t('finance.portfolio_mining_subTitle1') }}</div>
@@ -16,7 +16,7 @@
                         <div class="flex flex-col bg-color2 px-[0.2rem] py-[0.32rem] rounded-[0.32rem] items-center"
                             :class="cryptoList.length == 3 ? 'w-[2rem]' : cryptoList.length == 2 ? 'w-[3rem]' : 'w-[3rem]'">
                             <div class="w-[0.96rem] h-[0.96rem] mb-[0.32rem]">
-                                <img :src="getStaticImgUrl(`/static/img/crypto/${name}.svg`)" alt="img" />
+                                <img v-lazy="getStaticImgUrl(`/static/img/crypto/${name}.svg`)" alt="img" />
                             </div>
                             <div class="mb-[0.24rem]">{{ name }}</div>
                             <div :class="itemsMap[i][symbolList[i]].ratio > 0 ? 'up' : 'down'">{{
@@ -26,7 +26,7 @@
                         </div>
                         <div class="absolute w-[0.6rem] h-[0.6rem] z-[1]"
                             :class="cryptoList.length == 3 ? 'right-[-0.36rem]' : cryptoList.length == 2 ? 'right-[-0.45rem]' : ''"
-                            v-if="i < cryptoList.length - 1"><img :src="getStaticImgUrl(`/static/img/finance/plus.svg`)"
+                            v-if="i < cryptoList.length - 1"><img v-lazy="getStaticImgUrl(`/static/img/finance/plus.svg`)"
                                 alt="img" /></div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
             <div class="flex flex-col mb-[0.4rem] bg-color6 rounded-[0.32rem] px-[0.28rem] py-[0.4rem]">
                 <div class="flex items-center mb-[0.32rem]">
                     <div class="mr-[0.2rem]">
-                        <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
+                        <img v-lazy="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
                     </div>
                     <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
                         t('finance.portfolio_mining_header') }}</div>
@@ -92,7 +92,7 @@
             <div class="px-[0.28rem] py-[0.4rem] bg-color6 flex flex-col rounded-[0.32rem]">
                 <div class="flex items-center mb-[0.4rem]">
                     <div class="mr-[0.2rem]">
-                        <img :src="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
+                        <img v-lazy="getStaticImgUrl(`/static/home2/point.svg`)" alt="img" />
                     </div>
                     <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
                         t('finance.portfolio_mining_title3') }}</div>
@@ -114,7 +114,7 @@
                                 <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" v-if="stakeInfo.name" :key="i"
                                     v-for="(item, i) in stakeInfo.name.split('+')"
                                     :class="i == 1 ? 'left-[-0.08rem]' : i == 2 ? 'left-[-0.16rem]' : ''"><img
-                                        :src="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
+                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
                             </div>
                             <div class="text-[0.32rem]">{{ stakeInfo.name ? stakeInfo.name : '--' }}</div>
                         </div>
@@ -159,11 +159,11 @@
                         :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')" />
                     <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw"
                         @click="showPw = true">
-                        <img :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="" />
+                        <img v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="" />
                     </div>
                     <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="showPw"
                         @click="showPw = false">
-                        <img :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="" />
+                        <img v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="" />
                     </div>
                 </div>
                 <Button

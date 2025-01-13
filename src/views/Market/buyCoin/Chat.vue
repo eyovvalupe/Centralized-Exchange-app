@@ -36,7 +36,7 @@
               <!-- <div class="time">{{ item.time }}</div> -->
             </div>
             <div class="ml-[0.2rem]" style="width: 0.8rem;height: 0.8rem">
-              <img :src="getStaticImgUrl(`/static/img/user/avatar2.svg`)" alt="">
+              <img v-lazy="getStaticImgUrl(`/static/img/user/avatar2.svg`)" alt="">
             </div>
           </div>
         </div>

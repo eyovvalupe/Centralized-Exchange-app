@@ -13,13 +13,13 @@
           <div class="flex">
             <div class="server_icon mr-[0.1rem]" @click="goChat">
               <div class="chat_icon">
-                <img :src="getStaticImgUrl('/static/img/user/server.svg')" />
+                <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" />
               </div>
             </div>
 
             <div class="language_icon_container" @click="goLang">
               <div class="language_icon">
-                <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+                <img v-lazy="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
               </div>
             </div>
           </div>
@@ -54,7 +54,7 @@
             :placeholder="t('register.pw_placeholder1')" type="text" class="item_input mask-btn"
             :class="{ err_ipt1: errorTip.error1 }" />
           <div class="form_item_clear" v-show="form.email" @click="form.email = null">
-            <img :src="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/mini_close.svg')" alt="" />
           </div>
         </div>
         <!-- <div class="form_title" v-show="activeTab == 1">
@@ -63,11 +63,11 @@
         <div class="form_item margin_item" v-show="activeTab == 1" :class="{ err_ipt: errorTip.error1 }">
           <div class="code" @click="(showDialog = true), (searchStr = '')">
             <span class="flag_icon">
-              <img :src="getStaticImgUrl('/static/img/user/flag_hongkong.svg')" alt="" />
+              <img v-lazy="getStaticImgUrl('/static/img/user/flag_hongkong.svg')" alt="" />
             </span>
             <span>{{ form.area }}</span>
             <div class="more_icon">
-              <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="img" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="img" />
             </div>
           </div>
           <input maxlength="20" @blur="errorTip.error1 = false" v-model.trim="form.phone"
@@ -79,8 +79,8 @@
             :placeholder="t('register.pw_placeholder3')" :type="showPass ? 'text' : 'password'" class="item_input" />
           <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass = !showPass">
             <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-              <img v-if="showPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
-              <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
+              <img v-if="showPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+              <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
             </div>
           </div>
         </div>
@@ -92,8 +92,8 @@
             :placeholder="t('register.pw_placeholder5')" :type="showPass2 ? 'text' : 'password'" class="item_input" />
           <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass2 = !showPass2">
             <div :class="showPass2 ? 'eye-show-icon' : 'eye-hidden-icon'">
-              <img v-if="showPass2" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
-              <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
+              <img v-if="showPass2" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+              <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
             </div>
           </div>
         </div>
@@ -107,8 +107,8 @@
       <!-- 协议 -->
       <label class="register_doc">
         <div :class="checked ? 'checked_icon_blue' : 'unchecked_icon'" class="mr-[0.2rem]" @click="checked = !checked">
-          <img v-if="checked" :src="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
-          <img v-else :src="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
+          <img v-if="checked" v-lazy="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
+          <img v-else v-lazy="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
         </div>
         {{ $t("register.agree_con1")
         }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3")
@@ -149,7 +149,7 @@
           <div class="search-svg-icon"></div>
           <input v-model.trim="searchStr" class="ipt" type="text" :placeholder="t('register.pw_placeholder4')" />
           <div v-if="searchStr.length" @click="searchStr = ''" class="close-svg-icon">
-            <img :src="getStaticImgUrl('/static/img/common/close.svg')" alt="">
+            <img v-lazy="getStaticImgUrl('/static/img/common/close.svg')" alt="">
           </div>
         </div>
         <div ref="scrollRef" style="height: calc(var(--vh) * 60); overflow-y: auto; padding: 0 0.24rem;">
@@ -160,7 +160,7 @@
               :class="{ transfer_dialog_item_active: form.area == item.code }">
               <div class="flex h-[1.08rem] items-center">
                 <div class="w-[0.64rem] h-[0.64rem] mr-[0.2rem]">
-                  <img :src="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
+                  <img v-lazy="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                 </div>
                 <span>{{ item.cn }}&nbsp;</span>
                 <span>{{ item.code }}</span>

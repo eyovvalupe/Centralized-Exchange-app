@@ -15,7 +15,7 @@
 
 <script setup>
 import {  Popup } from "vant";
-import { ref, onMounted, computed, defineExpose } from "vue"
+import { ref, onMounted, computed } from "vue"
 import Opening from "../ai/Opening.vue"
 import Ai from "../../Market/components/Ai.vue"
 import store from "@/store";

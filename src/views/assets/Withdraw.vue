@@ -5,7 +5,7 @@
       <template #right>
         <div class="top-record" @click="goRecord">
           <div class="top-record-icon">
-            <img :src="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
 
         </div>
@@ -22,13 +22,13 @@
                 <div class="text-color5 text-[0.24rem] mb-[0.1rem]">{{ t('withdraw.currency') }}</div>
                 <div class="flex items-center">
                   <div class="currency_icon mr-[0.2rem]">
-                    <img :src="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="currency" />
+                    <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="currency" />
                   </div>
                   <span>{{ form.from.toUpperCase() }}</span>
                 </div>
               </div>
               <div class="w-[0.2rem] h-[0.2rem]">
-                <img :src="getStaticImgUrl('/static/img/assets/right_arrow.svg')" alt="more" />
+                <img v-lazy="getStaticImgUrl('/static/img/assets/right_arrow.svg')" alt="more" />
               </div>
             </div>
           </FormItem>
@@ -43,7 +43,7 @@
                 </div>
               </div>
               <div class="more">
-                <img :src="getStaticImgUrl('/static/img/assets/right_arrow.svg')" alt="more" />
+                <img v-lazy="getStaticImgUrl('/static/img/assets/right_arrow.svg')" alt="more" />
               </div>
             </div>
           </FormItem>
@@ -74,7 +74,7 @@
                 <div class="flex">
                   <div class="card_icon">
                     <img v-if="currAccount.symbol"
-                      :src="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)"
+                      v-lazy="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)"
                       alt="currency" />
                   </div>
                   <div class="h-full flex items-center">
@@ -131,7 +131,7 @@
                 <div class="flex justify-between mb-[0.32rem]">
                   <div class="flex items-center">
                     <div class="card_icon">
-                      <img :src="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="img" />
+                      <img v-lazy="getStaticImgUrl('/static/img/bank/card_default.svg')" alt="img" />
                     </div>
                     <div class="name">
                       {{ currBankAccount.bankName ? currBankAccount.bankName : "" }}
@@ -179,7 +179,7 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
           </div>
           <input v-model.trim="searchDialogStr" type="text" class="ipt" :placeholder="$t('withdraw.searchPlaceholder')"
             @input="searchList" />
@@ -189,11 +189,11 @@
             :class="{ swap_dialog_item_active: form.from == item.name }"
             v-for="(item, i) in searchDialogStr ? searchResult : wallet" :key="i">
             <div class="icon">
-              <img :src="getStaticImgUrl(`/static/img/crypto/${item.name.toUpperCase()}.svg`)" alt="currency" />
+              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.toUpperCase()}.svg`)" alt="currency" />
             </div>
             <span>{{ item.name.toUpperCase() }}</span>
             <div v-if="form.from == item.name" class="check_icon">
-              <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+              <img v-lazy="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
             </div>
           </div>
         </div>
@@ -207,7 +207,7 @@
         <!-- 搜索 -->
         <div class="search_box">
           <div class="search_icon">
-            <img :src="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
           </div>
           <input v-model.trim="searchDialogStr" type="text" class="ipt"
             :placeholder="$t('withdraw.searchPlaceholder')" />
@@ -218,7 +218,7 @@
             @click="clickNetworkItem(item)" :key="i" style="justify-content: space-between">
             <span>{{ item }}</span>
             <div v-if="form.network == item" class="check_icon">
-              <img :src="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+              <img v-lazy="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
             </div>
           </div>
         </div>
@@ -253,9 +253,9 @@
             <div class="flex mb-[0.32rem]">
               <div class="flex items-center">
                 <div class="card_icon">
-                  <img v-if="tabActive == 'bankCard'" :src="getStaticImgUrl('/static/img/bank/card_default.svg')"
+                  <img v-if="tabActive == 'bankCard'" v-lazy="getStaticImgUrl('/static/img/bank/card_default.svg')"
                     alt="img" />
-                  <img v-else :src="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="currency" />
+                  <img v-else v-lazy="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="currency" />
                 </div>
                 <div class="card">
                   <div class="name">
@@ -276,7 +276,7 @@
               (tabActive == 'cryptocurrency' && currAccount.id == item.id) ||
               (tabActive == 'bankCard' && currBankAccount.id == item.id)
             " class="checked" :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/ok_bg.svg')})` }">
-              <img :src="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/ok.svg')" alt="img" />
             </div>
           </div>
         </div>

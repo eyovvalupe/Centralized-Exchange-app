@@ -7,7 +7,7 @@
         <div class="info">
           <div class="pp">
             <div class="pp-icon">
-              <img :src="getStaticImgUrl('/static/img/market/pp.svg')" alt="^" />
+              <img v-lazy="getStaticImgUrl('/static/img/market/pp.svg')" alt="^" />
             </div>
             <span>{{ item.numpeople || "--" }}</span>
           </div>

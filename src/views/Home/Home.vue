@@ -10,16 +10,12 @@
 import { shallowRef } from 'vue'
 import { HOME_MODE } from "@/config.js"
 import Loaidng from "@/components/Loaidng.vue"
+import homePage from "@/views/Home/Homes/Home2.vue"
 
-const homePage = shallowRef(null)
-if (HOME_MODE == 1) { // 首页模板1
-  import("@/views/Home/Homes/Home1.vue").then((module) => {
-    homePage.value = module.default
-  })
-}
-if (HOME_MODE == 2) { // 首页模板2
-  import("@/views/Home/Homes/Home2.vue").then((module) => {
-    homePage.value = module.default
-  })
-}
+// const homePage = shallowRef(null)
+// if (HOME_MODE == 2) {
+//   import("@/views/Home/Homes/Home2.vue").then((module) => {
+//     homePage.value = module.default
+//   })
+// }
 </script>

@@ -10,7 +10,7 @@
         <div class="flex gap-1">
           <div class="language_icon_container" @click="goLang">
             <div class="language_icon">
-              <img :src="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
+              <img v-lazy="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
             </div>
           </div>
         </div>
@@ -49,8 +49,8 @@
           :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" />
         <div class="form_item_icon" @click="toggleShowConfirmPass">
           <div :class="showConfirmPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showConfirmPass" :src="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
-            <img v-else :src="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
+            <img v-if="showConfirmPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
           </div>
         </div>
       </div>

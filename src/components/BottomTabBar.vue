@@ -6,8 +6,8 @@
         :class="[checkActive(nav) ? 'bottom_nav_active' : '']">
         <div class="bn_con">
           <div class="bottom_nav_icon">
-            <img v-if="!checkActive(nav)" :src="getStaticImgUrl(nav.icon)">
-            <img v-if="checkActive(nav)" :src="getStaticImgUrl(nav.icon2)">
+            <img v-show="!checkActive(nav)" :src="getStaticImgUrl(nav.icon)">
+            <img v-show="checkActive(nav)" :src="getStaticImgUrl(nav.icon2)">
           </div>
           <div class="bottom_nav_name">
             {{ nav.name }}

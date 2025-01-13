@@ -3,7 +3,7 @@
     <div class="btn-item" @click="jump('topUpCrypto', true)">
       <div class="btn-item__icon">
         <div class="size-[0.48rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/deposit.svg`)" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/deposit.svg`)" alt="">
         </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.recharge") }}</div>
@@ -11,7 +11,7 @@
     <div class="btn-item" @click="jump('withdraw', true)">
       <div class="btn-item__icon">
         <div class="size-[0.48rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/withdraw.svg`)" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/withdraw.svg`)" alt="">
         </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.withdraw") }}</div>
@@ -19,7 +19,7 @@
     <div class="btn-item" @click="jump('transfer')">
       <div class="btn-item__icon">
         <div class="size-[0.48rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/transfer.svg`)" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/transfer.svg`)" alt="">
         </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.transfer") }}</div>
@@ -27,7 +27,7 @@
     <div class="btn-item" @click="jump('recordList', true)">
       <div class="btn-item__icon">
         <div class="size-[0.48rem]">
-          <img :src="getStaticImgUrl(`/static/img/assets/record.svg`)" alt="">
+          <img v-lazy="getStaticImgUrl(`/static/img/assets/record.svg`)" alt="">
         </div>
       </div>
       <div class="btn-item__name">{{ $t("assets.financialRecords") }}</div>
