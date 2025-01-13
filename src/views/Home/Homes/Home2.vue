@@ -198,7 +198,7 @@
     <!-- 类型选择弹窗 -->
     <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')">
     </ActionSheet>
-    <NotifiModal />
+    <NotifiModal /> 
 </template>
 
 <script setup>
@@ -420,14 +420,16 @@ onMounted(() => {
     activated.value = true;
     subs();
 
-    const wow = new Wow({
-        boxClass: 'wow',
-        animateClass: 'animated',
-        mobile: true,
-        live: true,
-        scrollContainer: '.app_scroll'
-    })
-    wow.init()
+    setTimeout(() => {
+        const wow = new Wow({
+            boxClass: 'wow',
+            animateClass: 'animated',
+            mobile: true,
+            live: true,
+            scrollContainer: '.app_scroll'
+        })
+        wow.init()
+    }, 300)
 });
 
 
