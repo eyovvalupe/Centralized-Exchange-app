@@ -11,7 +11,7 @@
           type="card"
           v-model:active="activeTab"
           :tabs="[
-            t('assets.order_title_buy'),
+            // t('assets.order_title_buy'),
             t('assets.order_title_stock'),
             t('assets.order_title_contract'),
             t('assets.order_title_bot'),
@@ -21,23 +21,23 @@
         />
       </div>
 
-      <div class="tab" v-if="activeTab == 0">
+      <!-- <div class="tab" v-if="activeTab == 0">
         <List :from="'orderCenter'" />
-      </div>
+      </div> -->
 
-      <div class="tab" v-if="activeTab == 1">
+      <div class="tab" v-if="activeTab == 0">
         <StockOrderList  />
       </div>
 
-      <div class="tab" v-if="activeTab == 2">
+      <div class="tab" v-if="activeTab == 1">
         <CryptoOrderList  />
       </div>
 
-      <div class="tab" v-if="activeTab == 3">
+      <div class="tab" v-if="activeTab == 2">
         <AIOrderList  />
       </div>
 
-      <div class="tab" v-if="activeTab == 4">
+      <div class="tab" v-if="activeTab == 3">
         <IPOStock ref="IPOStockRef" scrollDom="#assets_order_center_body" :from="'assets'" />
       </div>
     </div>
@@ -59,7 +59,7 @@ const activeTab = ref(0);
 const IPOStockRef = ref();
 const changeActiveTab = (val) => {
   activeTab.value = val;
-  if (val == 4) {
+  if (val == 3) {
     setTimeout(() => {
       IPOStockRef.value && IPOStockRef.value.init();
     }, 0);

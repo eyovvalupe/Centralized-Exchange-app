@@ -43,7 +43,7 @@
         <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
 
         <div class="pt-[0.6rem]">
-            <Button :loading="isLoading" size="large" round class="ripple-primary" @click="submit" type="primary">{{ t('trade.stock_opening_confirm') }}</Button>
+            <Button :loading="isLoading" size="large" round class="ripple-btn" @click="submit" type="primary">{{ t('trade.stock_opening_confirm') }}</Button>
         </div>
 
     </div>

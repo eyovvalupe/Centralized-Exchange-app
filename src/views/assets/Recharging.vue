@@ -69,16 +69,16 @@
 
       <div class="btns">
         <Button v-if="orderStatus == 'success'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
-          color="var(--ex-success-color)" style="width: 100%" class="submit" type="info"><span
+          color="var(--ex-success-color)" style="width: 100%" class="submit ripple-btn" type="info"><span
             style="color: var(--ex-white)">{{
               $t("recharging.success")
             }}</span></Button>
         <Button v-else-if="orderStatus == 'failure'" @click="jumpWithQuery('rechargeInfo')" :loading="loading" round
-          color="var(--ex-error-color)" style="width: 100%" class="submit" type="info"><span
+          color="var(--ex-error-color)" style="width: 100%" class="submit ripple-btn" type="info"><span
             style="color: var(--ex-white)">{{
               $t("recharging.fail") }}</span></Button>
         <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="var(--ex-primary-color)"
-          style="width: 100%" class="submit" type="info"><span style="color: var(--ex-text-color--bg-primary)">{{
+          style="width: 100%" class="submit ripple-btn" type="info"><span style="color: var(--ex-text-color--bg-primary)">{{
             $t("recharging.finish")
           }}</span></Button>
       </div>

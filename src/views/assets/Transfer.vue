@@ -19,10 +19,10 @@
             <span class="text-[0.28rem] text-color2 text-center">{{ $t("transfer.out") }}</span>
           </div>
           <div
-            class="flex justify-between items-center bg-color3 w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem]"
+            class="flex justify-between items-center bg-color3 w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] ripple-btn"
             @click="openDialog('from')">
             <div class="flex items-center w-full justify-between">
-              <div class="account_item">
+              <div class="account_item  flex-shrink-0">
            
                 <div class="item_content">
                   <span>{{ _accountMap[form.from] }}</span>
@@ -66,11 +66,10 @@
             <span class="text-[0.28rem] text-color2 text-center">{{ $t("transfer.in") }}</span>
           </div>
           <div
-            class="flex justify-between items-centerw-full w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] bg-color3"
+            class="flex justify-between items-centerw-full w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] bg-color3 ripple-btn"
             @click="openDialog('to')">
             <div class="flex items-center w-full justify-between">
-              <div class="account_item">
-
+              <div class="account_item flex-shrink-0">
                 <div class="item_content">
                   <span>{{ _accountMap[form.to] }}</span>
                 </div>
@@ -109,8 +108,7 @@
       </div>
     </div>
 
-    <Button @click="openSafePass" :loading="loading" round class="submit" type="primary">{{ $t("transfer.btn")
-      }}</Button>
+    <Button @click="openSafePass" :loading="loading" round class="submit ripple-btn" type="primary">{{ $t("transfer.btn") }}</Button>
 
     <!-- 充提记录 -->
     <RecordList ref="RecordListRef" />

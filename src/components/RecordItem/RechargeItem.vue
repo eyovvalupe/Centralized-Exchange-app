@@ -1,6 +1,6 @@
 <!-- 充值记录-元素 -->
 <template>
-  <div class="recgarge_item" @click="goInfo">
+  <div class="recgarge_item  ripple-btn" @click="goInfo">
     <div class="icon_box" v-if="item.currency">
       <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.svg`)" alt="currency" />
     </div>

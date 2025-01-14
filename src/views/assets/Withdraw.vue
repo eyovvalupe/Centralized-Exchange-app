@@ -7,7 +7,6 @@
           <div class="top-record-icon">
             <img v-lazy="getStaticImgUrl('/static/img/assets/record_sm.svg')" />
           </div>
-
         </div>
       </template>
     </Top>
@@ -102,7 +101,7 @@
           </div>
         </div>
 
-        <Button @click="openSafePass" :loading="loading" round class="submit" type="primary">{{ $t("withdraw.withdraw")
+        <Button @click="openSafePass" :loading="loading" round class="submit ripple-btn" type="primary">{{ $t("withdraw.withdraw")
           }}</Button>
       </Tab>
       <Tab :title="$t('withdraw.bankCard')" name="bankCard">
@@ -164,7 +163,7 @@
             </div>
           </div>
         </div>
-        <Button @click="openSafePass" :loading="loading" round class="submit" type="primary">{{ $t("withdraw.withdraw")
+        <Button @click="openSafePass" :loading="loading" round class="submit ripple-btn" type="primary">{{ $t("withdraw.withdraw")
           }}</Button>
       </Tab>
     </Tabs>

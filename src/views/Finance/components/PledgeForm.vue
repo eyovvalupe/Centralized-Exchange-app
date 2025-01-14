@@ -29,7 +29,7 @@
                     
                 </template>
                 <template #rt>
-                    <div class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"  @click="showDialog=true;">
+                    <div class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]  ripple-btn"  @click="showDialog=true;">
                         <div class="flex items-center">
                             <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
                                 <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
@@ -71,7 +71,7 @@
         <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-color2 border-color border-[1px] mt-[0.32rem]">
             <div class="text-[0.28rem] leading-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
             <div class="flex flex-wrap gap-[0.12rem] gap-y-[0.2rem] pt-[0.2rem]">
-                <div class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-color3 leading-[0.6rem]" :class="{'active-day':param.days == item.days}" v-for="item in paraData" :key="item.days" @click="setParam(item)">
+                <div class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-color3 leading-[0.6rem]  ripple-btn" :class="{'active-day':param.days == item.days}" v-for="item in paraData" :key="item.days" @click="setParam(item)">
                     {{item.days}}{{ t('finance.portfolio_day_multi') }}
                 </div>
             </div>
@@ -106,7 +106,7 @@
                 {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
             </label>
         </div>
-        <Button type="primary" class="submit" @click="openConfirm">
+        <Button type="primary" class="submit ripple-btn" @click="openConfirm">
             <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
         </Button>
         <div class="h-[2.2rem]"></div>
@@ -115,7 +115,6 @@
         <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"
             :title="t('market.market_buy_fast_search_title')">
             <div class="pledge_accounr_dialog">
-
                 <div class="search_box">
                     <div class="icon">
                         <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
@@ -124,7 +123,7 @@
                     type="text" enterkeyhint="search" class="search" />
                 </div>
                 <div class="swap_dialog_list">
-                    <div v-for="(item, i) in wallet" :key="i" class="swap_dialog_item" :class="{
+                    <div v-for="(item, i) in wallet" :key="i" class="swap_dialog_item ripple-btn" :class="{
                     swap_dialog_item_active: currIn.name == item.name,
                     }" @click="clickItem(item)">
                         <div class="icon">

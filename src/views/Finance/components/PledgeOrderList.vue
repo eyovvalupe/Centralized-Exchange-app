@@ -12,7 +12,7 @@
                 </div>
                 
             </div>
-            <div class="px-[0.24rem] h-[0.6rem] min-w-[1.36rem] flex justify-center items-center bg-primary rounded-full" v-if="item.status == 'open'">
+            <div class="px-[0.24rem] h-[0.6rem] min-w-[1.36rem] flex justify-center items-center bg-primary rounded-full ripple-btn" v-if="item.status == 'open'">
                 {{ t('finance.defi_borrow_repay') }}
             </div>
         </div>

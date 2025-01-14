@@ -82,7 +82,7 @@
 
         </div>
         <div class="px-[0.4rem] py-[0.6rem]" v-if="order.status == 'open'">
-            <Button type="primary" class="submit" @click="openConfirm">
+            <Button type="primary" class="submit ripple-btn" @click="openConfirm">
                 <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_go_repay') }}</span>
             </Button>
         </div>
@@ -151,7 +151,7 @@
                 </div>
                 <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
                 <div class="py-[0.6rem]">
-                    <Button :loading="isLoading" type="primary" @click="submit" class="submit">
+                    <Button :loading="isLoading" type="primary" @click="submit" class="submit ripple-btn">
                         <span class="text-[0.32rem] font-bold">{{ t('trade.stock_opening_confirm') }}</span>
                     </Button>
                 </div>

@@ -71,7 +71,7 @@
                     <Loading v-show="rateLoading" type="circular" size="12px" />
                 </div> -->
     </div>
-    <Button @click="goTopUp" :loading="loading" round class="submit" type="primary">{{
+    <Button @click="goTopUp" :loading="loading" round class="submit ripple-btn" type="primary">{{
       $t("topUpCrypto.confirm") }}</Button>
       
 

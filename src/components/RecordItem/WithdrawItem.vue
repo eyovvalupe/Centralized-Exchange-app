@@ -1,6 +1,6 @@
 <!-- 提现记录-元素 -->
 <template>
-  <div class="withdraw_item" @click="goInfo" v-if="item.account">
+  <div class="withdraw_item ripple-btn" @click="goInfo" v-if="item.account">
     <div class="icon_box">
       <img v-if="item.currency" v-lazy="getStaticImgUrl(`/static/img/crypto/${item.currency}.svg`)" alt="">
       <img v-if="item.account && item.account.bank_name" v-lazy="getStaticImgUrl('/static/img/bank/card_default.svg')"
