@@ -3,7 +3,7 @@
     <div v-show="pageLoading" class="full_page_loading">
       <Loading :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
-    <div v-show="!pageLoading" class="app_scroll">
+    <div v-show="!pageLoading" class="app_scroll wow_scroll">
 
       <transition :name="transitionName">
         <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name" />
@@ -109,7 +109,7 @@ onMounted(() => {
             animateClass: 'animated',
             mobile: true,
             live: true,
-            scrollContainer: '.app_scroll'
+            scrollContainer: '.wow_scroll'
         })
         wow.init()
     }, 300)
