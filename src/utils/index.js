@@ -1,6 +1,55 @@
 // 常用工具类
 import { VERSION } from "@/config"
 
+
+// 获取一个虚假的points数据
+// x,y x,y x,y  x-下标 y-数值越小越靠上（0-25）
+// id-表示数据唯一值
+// rf-值为 -100到100  表示涨跌的程度  100表示暴涨
+export const getPoints = (id, rf = 0) => {
+  let d = sessionStorage.getItem('points')
+  try {
+    d = JSON.parse(d || '{}')
+  } catch {
+    d = {}
+  }
+  if (d[id]) return d[id]
+  var result = makePoints(rf)
+  d[id] = result
+  sessionStorage.setItem('points', JSON.stringify(d))
+  return result
+  function makePoints(rf) {
+    // 通道宽度暂定为10(+-5)，涨跌折线在通道范围内随机
+    const rf_num = Math.abs(rf) > 100 ? 100 : Math.abs(rf)
+    const mid = 12.5 // 中位数暂定这个 (25/2)
+    const diff = 12.5 * rf_num / 100 // 上下浮动的最大值
+    const start = rf < 0 ? mid - diff : mid + diff - 5
+    const end = rf < 0 ? mid + diff : mid - diff - 5
+    const step = (end - start) / 100
+    let str = ''
+    let curr = start
+    for (let i = 0; i < 100; i++) {
+      if (i == 0) {
+        str += `${i},${getRandom(curr, rf_num)}`
+      } else {
+        str += ` ${i},${getRandom(curr, rf_num)}`
+      }
+      curr += step
+    }
+    function getRandom(c, r) { // 变化幅度越大波动越小
+      let t = 6
+      if (r > 25)  t = 5
+      if (r > 50)  t = 4
+      if (r > 80)  t = 3
+      const tt = Math.floor(Math.random() * t * 2 + 1) - t
+      return (Number(c) + Number(tt)) > 0 ?  Math.ceil((Number(c) + Number(tt))) : 0
+    }
+    return str
+  }
+}
+
+
+
 // 获取图片地址  后边拼接版本信息
 export const getStaticImgUrl = (url) => {
   return url + '?v=' + VERSION

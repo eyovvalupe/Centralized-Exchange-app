@@ -47,10 +47,6 @@ const props = defineProps({
         type: [Number, String],
         default: 0
     },
-    height: {
-        type: Number,
-        default: 30,
-    }
 })
 
 const color = computed(() => {
@@ -65,6 +61,7 @@ const color = computed(() => {
 const lineWidth = ref(0);
 const scaleX = ref(1)
 const scaleY = ref(1)
+const height = ref(30)
 const newPoints = computed(() =>
     props.points ? props.points.split(' ').map((val) => { const [x, y] = val.split(','); return `${parseFloat(x) * scaleX.value},${parseFloat(y) * scaleY.value}` }).join(' ') : props.points)
 const shadowPoints = computed(() => {
@@ -73,7 +70,7 @@ const shadowPoints = computed(() => {
     // 获取 SVG 的高度
     lineWidth.value = parseFloat(points[points.length - 1][0]) - parseFloat(points[0][0]);
     // 构建 shadowPoints，多边形覆盖 polyline 并扩展到底部
-    const shadowPoints = points.map(p => p.join(',')).join(' ') + ` ${points[points.length - 1][0]},${props.height * scaleY.value} ${points[0][0]},${props.height * scaleY.value}`;
+    const shadowPoints = points.map(p => p.join(',')).join(' ') + ` ${points[points.length - 1][0]},${height.value * scaleY.value} ${points[0][0]},${height.value * scaleY.value}`;
     return shadowPoints;
 })
 
