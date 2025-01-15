@@ -5,7 +5,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 const loaded = ref(false);
 
 onMounted(() => {
