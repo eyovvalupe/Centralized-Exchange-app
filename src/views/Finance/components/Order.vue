@@ -63,7 +63,7 @@ const getData = (val) => {
         status: val
     })
     .then(res => {
-        console.log(res.data)
+        console.log("order list =========> ", res.data)
     })
     .catch(err => console.error(err))
     .finally(() => {
