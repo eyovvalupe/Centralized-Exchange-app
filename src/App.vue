@@ -3,7 +3,7 @@
     <div v-show="pageLoading" class="full_page_loading">
       <Loading :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
-    <div v-show="!pageLoading" class="app_scroll">
+    <div v-show="!pageLoading" class="app_scroll wow_scroll">
 
       <transition :name="transitionName">
         <component :is="Component" v-if="!$route.meta.keepAlive" :key="$route.name" />
@@ -32,7 +32,6 @@ import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
 import SuccessToast from "./views/User/Account/SuccessToast.vue";
 import BottomTabBar from "@/components/BottomTabBar.vue"
-import Wow from "wow.js"
 import 'wow.js/css/libs/animate.css';  // 引入动画库样式
 
 const showSuccessToast = computed(() => store.state.showSuccessToast);
@@ -103,16 +102,6 @@ watch(
 
 onMounted(() => {
 
-  setTimeout(() => { // wow.js
-        const wow = new Wow({
-            boxClass: 'wow',
-            animateClass: 'animated',
-            mobile: true,
-            live: true,
-            scrollContainer: '.app_scroll'
-        })
-        wow.init()
-    }, 300)
 
   // 这里处理点击效果
   document.body.addEventListener('touchstart', function (e) {
