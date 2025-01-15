@@ -111,9 +111,8 @@
                     <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                         <div class="flex flex-col justify-between">
                             <div class="flex">
-                                <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" v-if="stakeInfo.name" :key="i"
-                                    v-for="(item, i) in stakeInfo.name.split('+')"
-                                    :class="i == 1 ? 'left-[-0.08rem]' : i == 2 ? 'left-[-0.16rem]' : ''"><img
+                                <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" :class="i ? '-ml-[0.1rem]' : ''" v-if="stakeInfo.name" :key="i"
+                                    v-for="(item, i) in stakeInfo.name.split('+')"><img
                                         v-lazy="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
                             </div>
                             <div class="text-[0.32rem]">{{ stakeInfo.name ? stakeInfo.name : '--' }}</div>
