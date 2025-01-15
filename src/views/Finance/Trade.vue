@@ -287,12 +287,6 @@ const submit = () => {
         showToast(t('trade.ai_opening_trade_password'))
     }
     loading.value = true;
-    // console.log({
-    //     id: stakeId.value,
-    //     amount: Number(form1.value.amount),
-    //     token: sessionToken.value,
-    //     safeword: form1.value.safeword
-    // })
     _stake({
         id: stakeId.value,
         amount: Number(form1.value.amount),

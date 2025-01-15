@@ -61,14 +61,13 @@
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
-import SparkLine from '@/components/SparkLine.vue';
 import { useI18n } from 'vue-i18n';
 import { Button, Loading } from 'vant';
 import BackgroundImg from './BackgroundImg.vue';
 import router from "@/router";
 import BackgroundImg1 from './BackgroundImg1.vue';
 import { _realtime } from "@/api/api";
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import store from "@/store";
 
 const jump = (id) => {
