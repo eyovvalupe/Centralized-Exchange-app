@@ -296,6 +296,7 @@ const submit = () => {
         .then(res => {
             if (res.code == 200) {
                 console.log("then data ==========>", res.data)
+                showConfirm.value = false
             }
         })
         .catch(err => console.error(err))
