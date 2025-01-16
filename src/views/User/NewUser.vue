@@ -3,7 +3,7 @@
   <div class="page page_user relative">
     <!-- 标题 -->
     <!-- <div class="title">用户</div> -->
-    <div class="flex flex-col mt-[0.2rem] mb-[0.32rem] px-[0.32rem]">
+    <div class="flex flex-col mt-[0.2rem] mb-[0.4rem] px-[0.32rem]">
       <div class="w-full flex justify-end gap-[0.16rem]">
         <div class="w-[0.6rem] h-[0.6rem]" @click="jump('chat')">
           <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
@@ -35,23 +35,23 @@
         <div class="text-[0.32rem]">{{ $t("user_page.login_out") }}</div>
       </div>
     </div>
-    <div class="flex justify-between rounded-[0.32rem] w-full mb-[0.6rem] px-[1.16rem]">
+    <div class="flex justify-between rounded-[0.32rem] w-full mb-[0.8rem] px-[1.16rem]">
       <div class="text-center flex justify-center relative">
-        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
+        <div class="font-bold text-color text-[0.32rem]">
           0
         </div>
         <div class="text-[0.24rem] text-color3 absolute w-max text-center top-[0.4rem]">{{
           $t("user_page.recommended_user") }}</div>
       </div>
       <div class="text-center flex justify-center relative">
-        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
+        <div class="font-bold text-color text-[0.32rem]">
           0
         </div>
         <div class="text-[0.24rem] text-color3 absolute w-max text-center top-[0.4rem]">{{ $t("user_page.social_user")
           }}</div>
       </div>
       <div class="text-center flex justify-center relative">
-        <div class="font-bold text-color text-[0.32rem] mb-[0.12rem]">
+        <div class="font-bold text-color text-[0.32rem]">
           0
         </div>
         <div class="text-[0.24rem] text-color3 absolute w-max text-center top-[0.4rem]">{{
@@ -59,31 +59,31 @@
       </div>
     </div>
     <div class="h-[1.6rem] relative">
-      <div class="user_page_bg absolute w-full top-[0.71rem]">
+      <!-- <div class="user_page_bg absolute w-full top-[0.71rem]">
         <img v-lazy="getStaticImgUrl('/static/img/user/user_page_bg.svg')" alt="">
-      </div>
-      <div class="w-[6rem] mx-auto rounded-tl-[0.36rem] rounded-tr-[0.36rem] overflow-hidden">
+      </div> -->
+      <div class="w-[6.86rem] mx-auto rounded-tl-[0.36rem] rounded-[0.36rem] overflow-hidden">
         <Carousel :autoplay="3000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide" class="relative">
-          <Slide v-for="(slide, index) in token ? slides2 : slides1" :key="index">
+          <Slide v-for="(slide, i) in slides" :key="i">
             <img :src="slide" class="w-full bg-color5 rounded-tr-[0.32rem] rounded-tl-[0.32rem]" alt="img" />
-            <div v-if="token" class="absolute left-0 px-[0.32rem] w-full flex justify-between items-center">
+            <div v-if="i" class="absolute left-0 px-[0.32rem] w-full flex justify-between items-center">
               <div class="flex flex-col">
-                <div class="text-primary text-[0.3rem] font-bold mb-[0.2rem]">
+                <div class="text-primary text-[0.32rem] font-bold mb-[0.2rem]">
                   {{ $t("user_page.ad_head") }}
                 </div>
-                <div class="text-white text-[0.24rem]">{{ $t("user_page.ad_con1") }}，{{ $t("user_page.ad_con2") }}</div>
+                <div class="text-white text-[0.28rem]">{{ $t("user_page.ad_con1") }}，{{ $t("user_page.ad_con2") }}</div>
               </div>
               <div
-                class="text-primary text-[0.28rem] w-max h-[0.6rem] flex items-center justify-center bg-color rounded-[1rem] px-[0.2rem]">
+                class="text-white text-[0.28rem] w-max h-[0.6rem] flex items-center justify-center bg-primary rounded-[1rem] px-[0.2rem] ripple-btn">
                 {{ t('user_page.get_demo_coin') }}
               </div>
             </div>
             <div v-else class="absolute left-0 px-[0.32rem] w-full flex justify-between items-center">
               <div class="flex flex-col">
-                <div class="text-white text-[0.28rem] font-bold mb-[0.2rem]">
+                <div class="text-white text-[0.28rem] mb-[0.2rem]">
                   {{ $t("user_page.ad_head1") }}
                 </div>
-                <div class="text-primary text-[0.32rem] font-semibold">{{ $t("user_page.ad_con3") }}</div>
+                <div class="text-warning text-[0.32rem] font-semibold">{{ $t("user_page.ad_con3") }}</div>
               </div>
             </div>
           </Slide>
@@ -111,7 +111,7 @@
           <img class="" v-lazy="getStaticImgUrl('/static/img/user/id_card.svg')" />
         </div>
         <div v-if="token"
-          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
+          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center pt-[0.05rem]"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-error'
@@ -131,7 +131,7 @@
           <img class="" v-lazy="getStaticImgUrl('/static/img/user/google.svg')" />
         </div>
         <div v-if="token"
-          class="absolute min-w-[0.76rem] w-max px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] pt-[0.03rem] text-black text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center"
+          class="absolute min-w-[0.76rem] w-max px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center pt-[0.05rem]"
           :class="[userInfo.googlebind == 0 ? 'bg-error' : 'bg-success']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
@@ -217,6 +217,7 @@ const userInfo = computed(() => store.state.userInfo || {});
 const language = computed(() => store.state.language || {});
 const slides1 = [getStaticImgUrl("/static/img/user/user_carousel.svg"), getStaticImgUrl("/static/img/user/user_carousel.svg")];
 const slides2 = [getStaticImgUrl("/static/img/user/user_carousel1.svg"), getStaticImgUrl("/static/img/user/user_carousel1.svg")];
+const slides = [getStaticImgUrl("/static/img/user/user_carousel.svg"), getStaticImgUrl("/static/img/user/user_carousel1.svg")];
 const currentSlide = ref(0);
 // const getFirstCharacter = (username) => {
 //   return username ? username.charAt(0) : "-";
@@ -329,7 +330,7 @@ if (token.value) {
   .loginout {
     height: 1.04rem;
     border-radius: 0.32rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -347,7 +348,7 @@ if (token.value) {
       color: var(--ex-text-color);
       font-size: 0.3rem;
       overflow: hidden;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-color3);
       border-radius: 0.32rem;
       padding-inline: 0.32rem;
       margin-bottom: 0.2rem;
