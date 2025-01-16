@@ -553,10 +553,8 @@
 import { getStaticImgUrl } from "@/utils/index.js";
 import {
   Loading,
-  Slider,
   Button,
   showToast,
-  showConfirmDialog,
   Popup,
   ActionSheet,
   Picker,

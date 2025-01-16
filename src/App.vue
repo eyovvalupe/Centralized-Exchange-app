@@ -1,7 +1,34 @@
 <template>
   <router-view v-slot="{ Component }">
     <div v-show="pageLoading" class="full_page_loading">
-      <Loading :type="'circular'" :size="44" color="var(--ex-primary-color)" />
+      <!-- 首页骨架屏 -->
+       <Skeleton v-if="routeName == 'home'" style="padding-top: 0.4rem;flex-direction: column;opacity: 0.5;" animate>
+        <template #template>
+          <div :style="{ display: 'flex', width: '100%' }">
+            <SkeletonAvatar />
+            <div style="flex: 1;"></div>
+            <SkeletonAvatar />
+            <SkeletonAvatar style="margin-right: 0;" />
+          </div>
+          <div style="margin-top: 0.32rem;">
+            <SkeletonImage style="width: 100%;border-radius: 0.32rem;height: 3.48rem;" />
+          </div>
+          <div style="margin-top: 0.32rem;">
+            <SkeletonTitle style="height: 0.48rem;" :title-width="'100%'" />
+          </div>
+          <div style="overflow: hidden;margin-top: 0.32rem;white-space: nowrap;">
+            <SkeletonImage style="display:inline-flex;width: 4.6rem;border-radius: 0.32rem;height: 4.92rem;" />
+            <SkeletonImage style="display:inline-flex;width: 4.6rem;border-radius: 0.32rem;height: 4.92rem;margin-left: 0.32rem;" />
+          </div>
+          <div style="margin-top: 0.32rem;">
+            <SkeletonImage style="width: 100%;border-radius: 0.32rem;height: 2.54rem;" />
+          </div>
+          <div style="margin-top: 0.32rem;">
+            <SkeletonTitle style="height: 0.48rem;" :title-width="'100%'" />
+          </div>
+        </template>
+       </Skeleton>
+       <Loading style="position: absolute;top: 50%;left: 50%;transform: translateX(-50) translateY(-50%);" v-else :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
     <div v-show="!pageLoading" class="app_scroll wow_scroll">
 
@@ -22,11 +49,10 @@
 </template>
 
 <script setup>
-import { defineAsyncComponent, computed, watch, onMounted } from "vue";
-import { Popup, Loading } from "vant";
+import { computed, watch, onMounted } from "vue";
+import { Skeleton, SkeletonTitle, SkeletonAvatar, SkeletonParagraph, SkeletonImage, Loading } from "vant";
 import { useRoute } from "vue-router";
 import { getStaticImgUrl } from "@/utils/index.js"
-import { BOTTOMBAR_MODE } from "@/config.js"
 import store from "@/store/index";
 import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
@@ -70,6 +96,7 @@ const showBottom = computed(() => {
 // 预加载 tab 页面
 const pageLoading = computed(() => store.state.pageLoading);
 store.commit("setPageLoading", true);
+console.error(pageLoading.value)
 Promise.all([
   import("@/views/Home/Home.vue"),
   import("@/views/Market/Market.vue"),
@@ -78,16 +105,11 @@ Promise.all([
   import("@/views/assets/Assets.vue"),
 ]).finally(() => {
   store.commit("setPageLoading", false);
-  setTimeout(() => {
-    // boundFunc()
-  }, 500);
 });
 setTimeout(() => {
   // 最多5s
   store.commit("setPageLoading", false);
 }, 50000);
-// 国际化启动
-// setLocale()
 
 const transitionName = computed(() => store.state.transitionName || "");
 watch(
@@ -312,8 +334,12 @@ onMounted(() => {
 
 .full_page_loading {
   position: fixed;
-  left: 50%;
-  top: 40%;
-  transform: translateX(-50%) translateY(-50%);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  // left: 50%;
+  // top: 40%;
+  // transform: translateX(-50%) translateY(-50%);
 }
 </style>

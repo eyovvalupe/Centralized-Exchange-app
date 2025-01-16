@@ -52,8 +52,8 @@
     </div>
 
      <!-- 详情 -->
-     <Popup v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
-        <FollowInfo @back="showInfo = false" style="width: 100%;height: 100%;" />
+     <Popup teleport="body" v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
+        <FollowInfo v-if="showInfo" @back="showInfo = false" style="width: 100%;height: 100%;" />
      </Popup>
 </template>
 

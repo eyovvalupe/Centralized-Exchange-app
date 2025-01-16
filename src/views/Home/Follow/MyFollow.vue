@@ -26,49 +26,11 @@
     <div class="list">
       <NoData v-if="!loading && !list.length" />
       <div class="list-i" v-for="(item, i) in list" :key="i">
-        <MyFollowItem :item="item" @plus="openPlus" />
+        <MyFollowItem :item="item" />
       </div>
       <LoadingMore :loading="loading" :finish="finish" v-if="(finish && list.length) || (!finish)" />
     </div>
   </div>
-
-
-  <!-- 追加 -->
-  <BottomPopup v-model:show="showPlusDialog" position="bottom" round closeable teleport="body">
-    <div class="van-popup-custom-title">
-      追加跟单金额
-    </div>
-    <div class="order_sell_box">
-      <div class="form">
-        <div class="item">
-          <input :placeholder="'跟单额度'" @focus="amountFocus = true" @blur="amountFocus = false" v-model="plusAmount"
-            @input="changeValue" type="number" class="ipt" />
-
-          <span :style="{
-            opacity: amountFocus ? '1' : '0',
-            visibility: amountFocus ? '' : 'hidden',
-          }" style="
-                color: var(--ex-primary-color);
-                word-break: keep-all;
-                transition: all ease-in 0.3s;
-              " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
-
-          <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">
-            可用 <span style="color: var(--ex-text-primary);margin-left: 0.04rem;"> 0</span> </span>
-        </div>
-
-        <!-- 拖动 -->
-        <div style="padding: 0.2rem 0 0.4rem 0.08rem">
-          <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-        </div>
-
-
-        <Button class="submit" round :loading="sellLoading" type="primary" size="large" color="var(--ex-primary-color)">
-          <span style="color: var(--ex-white);">确认追加</span>
-        </Button>
-      </div>
-    </div>
-  </BottomPopup>
 </template>
 
 <script setup>
@@ -116,6 +78,7 @@ const getData = () => {
   _copyMyList({
     page: page.value
   }).then(res => {
+    console.error('????', res)
     if (page.value == 1) {
       list.value = res.data || []
     } else {
@@ -126,9 +89,6 @@ const getData = () => {
     }
   }).finally(() => {
     loading.value = false
-
-    // mock
-    list.value.push(...[{}, {}, {}, {}])
   })
 }
 
@@ -164,10 +124,6 @@ onUnmounted(() => {
 const showPlusDialog = ref(false)
 const plusAmount = ref('')
 const amountFocus = ref(false)
-const openPlus = () => {
-  plusAmount.value = ''
-  showPlusDialog.value = true
-}
 const sellLoading = ref(false)
 const sliderValue = ref(0)
 const changeValue = () => { }
@@ -244,121 +200,6 @@ const onSliderChange = () => { }
   .list {
     .list-i {
       margin-bottom: 0.32rem;
-    }
-  }
-}
-
-.order_sell_box {
-  padding: 0.32rem 0.32rem 0.64rem 0.32rem;
-
-  .title {
-    text-align: center;
-    font-size: 0.28rem;
-    color: var(--ex-text-color);
-    font-weight: 600;
-  }
-
-  .form {
-    .subtitle {
-      color: var(--ex-text-color);
-      font-weight: 400;
-      font-size: 0.28rem;
-      margin-bottom: 0.12rem;
-      line-height: 0.42rem;
-      align-items: center;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .subtitle-tip {
-      color: var(--ex-text-color2);
-    }
-
-    .submit {
-      margin-top: 0.6rem;
-    }
-
-    .item_box {
-      display: flex;
-      align-items: stretch;
-      margin-bottom: 0.4rem;
-
-      .item_box_left {
-        width: 1.8rem;
-        margin-right: 0.2rem;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .item_box_right {
-        flex: 1;
-      }
-
-      .more_icon {
-        width: 0.32rem;
-        height: 0.32rem;
-        margin-left: 0.08rem;
-      }
-    }
-
-    .item {
-      width: 100%;
-      height: 1.12rem;
-      border: 1px solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color2);
-      border-radius: 0.32rem;
-      padding: 0 0.24rem;
-      display: flex;
-      align-items: center;
-
-      .ipt {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .tip {
-      text-align: right;
-      font-size: 0.24rem;
-      color: var(--ex-text-color3);
-
-      .num {
-        color: var(--ex-text-color);
-      }
-    }
-
-    .total_box {
-      margin: 0.4rem 0;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-
-      .total_item {
-        width: 50%;
-        display: flex;
-        align-items: center;
-        font-size: 0.24rem;
-        color: var(--ex-text-color);
-        font-weight: 400;
-        padding: 0.08rem 0.1rem 0.08rem 0;
-
-        .total_name {
-          text-align: right;
-          flex: 1;
-        }
-
-        .total_num {
-          flex: 1;
-          text-align: right;
-          font-weight: 500;
-          font-size: 0.28rem;
-        }
-
-        .total_big {
-          font-size: 0.36rem;
-          font-weight: 600;
-        }
-      }
     }
   }
 }

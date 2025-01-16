@@ -204,7 +204,7 @@
 <script setup>
 import { Tab, Tabs, ActionSheet, Swipe, SwipeItem } from "vant";
 import { computed, onActivated, onDeactivated, ref, onMounted } from "vue";
-import { getStaticImgUrl, getPoints } from "@/utils/index.js"
+import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
@@ -245,7 +245,7 @@ const showPassword = ref(false)
 
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading);
-store.commit("setPageLoading", true);
+// store.commit("setPageLoading", true);
 
 Promise.all([
     import("@/views/Market/MarketInfo.vue"),
@@ -253,7 +253,7 @@ Promise.all([
     import("@/views/Public/Login.vue"),
     import("@/views/assets/TopUpCrypto.vue"),
 ]).finally(() => {
-    store.commit("setPageLoading", false);
+    // store.commit("setPageLoading", false);
 });
 
 
@@ -280,16 +280,7 @@ onActivated(() => {
     activated.value = true;
     subs();
 
-    setTimeout(() => { // wow.js
-        wowObj = new Wow({
-            boxClass: 'wow',
-            animateClass: 'animated',
-            mobile: true,
-            live: true,
-            scrollContainer: '.wow_scroll'
-        })
-        wowObj.init()
-    }, 300)
+    
 });
 onDeactivated(() => {
     activated.value = false;
@@ -301,7 +292,6 @@ onDeactivated(() => {
         socket && socket.off("snapshot");
     });
 
-    wowObj = {}
 });
 
 // 获取推荐数据
@@ -432,23 +422,23 @@ onMounted(() => {
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();
-
-   
+    setTimeout(() => { // wow.js
+        wowObj = new Wow({
+            boxClass: 'wow',
+            animateClass: 'animated',
+            mobile: true,
+            live: true,
+            scrollContainer: '.wow_scroll'
+        })
+        wowObj.init()
+    }, 0)
 });
 
 
 // 跟单列表
 store.dispatch('updateFollowList')
-// const followList = computed(() => store.state.followList || [])
-const time = getPoints('asd-as2', 0)
-const followList = ref([
-    { uid: 'uid', name: '用户名', lv: '9', followers: '11', amount: '999', returnrate: 50, returnamount: 700, winrate: 20, time: time },
-    { uid: 'uid', name: '用户名', lv: '9', followers: '11', amount: '999', returnrate: 50, returnamount: 700, winrate: 20, time: time },
-    { uid: 'uid', name: '用户名', lv: '9', followers: '11', amount: '999', returnrate: 50, returnamount: 700, winrate: 20, time: time },
-    { uid: 'uid', name: '用户名', lv: '9', followers: '11', amount: '999', returnrate: 50, returnamount: 700, winrate: 20, time: time },
-    { uid: 'uid', name: '用户名', lv: '9', followers: '11', amount: '999', returnrate: 50, returnamount: 700, winrate: 20, time: time },
-    { uid: 'uid', name: '用户名', lv: '9', followers: '11', amount: '999', returnrate: 50, returnamount: 700, winrate: 20, time: time },
-])
+const followList = computed(() => store.state.followList || [])
+// const time = getPoints('asd-as2', 0)
 </script>
 
 

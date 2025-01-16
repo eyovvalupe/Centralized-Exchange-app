@@ -686,6 +686,7 @@ export const _copyMycopy= (data = {}) => {
 };
 // 我的跟单列表
 export const _copyMyList= (data = {}) => {
+  console.error('参数', data)
   return http.post(`/authc/v1/copy/mycopy`, data, {
     custom: { auth: true, toast: false, retry: true },
   });
@@ -693,6 +694,12 @@ export const _copyMyList= (data = {}) => {
 // 我的跟单列表
 export const _copyCancel= (data = {}) => {
   return http.post(`/authc/v1/copy/cancel`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 跟单
+export const _copyApply= (data = {}) => {
+  return http.post(`/authc/v1/copy/apply `, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
@@ -705,6 +712,18 @@ export const _copyAdd= (data = {}) => {
 // 跟单详情 
 export const _copyGet = (data = {}) => {
   return http.post(`/anon/v1/copy/get`, data, {
+    custom: { auth: false, toast: true, retry: true },
+  });
+};
+// 跟单详情-带单 
+export const _copyOrders = (data = {}) => {
+  return http.post(`/anon/v1/copy/orders`, data, {
+    custom: { auth: false, toast: true, retry: true },
+  });
+};
+// 跟单详情-跟单用户 
+export const _copyUsers = (data = {}) => {
+  return http.post(`/anon/v1/copy/users`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };

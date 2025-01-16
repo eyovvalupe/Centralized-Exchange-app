@@ -18,11 +18,11 @@
                     </div>
                 </div>
             </div>
-            <div class="btn ripple-btn">{{ $t('copy.copy_tab_tab1') }}</div>
+            <div class="btn ripple-btn" @click="plus">{{ $t('copy.copy_tab_tab1') }}</div>
         </div>
 
         <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'" shrink
-            @change="onChange">
+            >
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
                     <div class="follow-info-box">
@@ -135,6 +135,11 @@
             </Tab>
         </Tabs>
 
+
+        <!-- 跟单弹窗 -->
+    <BottomPopup v-model:show="showPlus" :title="'跟单'" position="bottom" round closeable teleport="body">
+        <FollowSubmit v-if="showPlus" @success="showPlus = false" :item="info" :mode="'follow'"  />
+    </BottomPopup>
     </div>
 </template>
 
@@ -144,16 +149,47 @@ import { getStaticImgUrl } from "@/utils/index.js"
 import { ref } from "vue"
 import NoData from "@/components/NoData"
 import { Tab, Tabs } from "vant";
-import { _copyGet } from "@/api/api"
+import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
 import SparkLine from "@/components/SparkLine.vue";
+import { useRoute } from "vue-router"
+import BottomPopup from "@/components/BottomPopup.vue";
+import FollowSubmit from "../components/FollowSubmit.vue"
 
+const route = useRoute()
 const active = ref(1)
+
+
+// 跟单
+const showPlus = ref(false)
+const plus = () => {
+    showPlus.value = true
+}
+
 
 // 跟单详情
 const info = ref({})
 const getInfo = () => {
-    _copyGet().then(res => {
+    info.value = route.query || {}
+    // 详情
+    _copyGet({
+        uid: route.query.uid
+    }).then(res => {
         info.value = res.data || {}
+        console.error('详情', res)
+    })
+    // 带单
+    _copyOrders({
+        uid: route.query.uid,
+        status: 'open',
+        page: 1
+    }).then(res => {
+        console.error('带单', res)
+    })
+    // 跟单
+    _copyUsers({
+        uid: route.query.uid,
+    }).then(res => {
+        console.error('跟单', res)
     })
 }
 getInfo()

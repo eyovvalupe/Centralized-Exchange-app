@@ -22,15 +22,16 @@
 
         <div class="info-box">
             <div class="info-left">
-                <div class="info-title">RIO</div>
-                <div class="info-num up">+{{ props.item.returnrate }}%</div>
+                <!-- <div class="info-title">RIO</div> -->
+                <div class="info-num" :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
+                    ? '+' : '') }}{{ props.item.returnrate }}%</div>
                 <div class="info-text">
                     <span>{{ $t('copy.total_revenue') }}</span>
-                    <b>+{{ props.item.returnamount }}</b>
+                    <b>{{ (props.item.returnamount > 0 ? '+' : '') }}{{ props.item.returnamount || '--' }}</b>
                 </div>
             </div>
             <div class="line-box">
-                <SparkLine v-if="props.item.time" :points="props.item.time" :ratio="1" />
+                <SparkLine  :points="getPoints('follow_' + props.item.uid, item.returnrate)" :ratio="item.returnrate > 0 ? 1 : -1" />
             </div>
         </div>
 
@@ -52,7 +53,7 @@
 </template>
 
 <script setup>
-import { getStaticImgUrl } from "@/utils/index.js"
+import { getStaticImgUrl, getPoints } from "@/utils/index.js"
 import SparkLine from "@/components/SparkLine.vue";
 import router from "@/router";
 
@@ -69,7 +70,8 @@ const props = defineProps({
 
 const goFollow = () => {
     router.push({
-        name: 'followDetail'
+        name: 'followDetail',
+        query: props.item
     })
 }
 </script>
@@ -197,7 +199,7 @@ const goFollow = () => {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            justify-content: space-between;
+            justify-content: center;
 
             .info-title {
                 font-size: 0.24rem;
@@ -216,6 +218,7 @@ const goFollow = () => {
                 font-size: 0.24rem;
                 font-weight: 400;
                 line-height: 1;
+                margin-top: 0.24rem;
 
                 b {
                     color: var(--ex-white);
