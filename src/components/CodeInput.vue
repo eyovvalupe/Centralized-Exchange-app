@@ -30,7 +30,7 @@
             borderRadius: props.from == 'register' ? '0.32rem' : '0.16rem',
           }" ref="digitInputs" />
         <div v-if="focusIndex == index && digit == ''"
-          class="absolute w-[0.48rem] bottom-[0.24rem] top-[0.92rem] h-[0.04rem] bg-primary"
+          class="absolute w-[0.48rem] bottom-[0.2rem] h-[0.04rem] bg-primary"
           :class="from == 'register' ? 'left-[0.22rem]' : 'left-[0.26rem]'"></div>
       </div>
     </div>
