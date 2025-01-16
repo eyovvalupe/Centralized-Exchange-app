@@ -21,7 +21,7 @@
           </div>
         </div>
         <template #right>
-          <div class="w-[1rem] h-full bg-color2 rounded-[0.4rem] flex items-center justify-center mask-btn"
+          <div class="w-[1rem] h-full bg-color3 rounded-[0.4rem] flex items-center justify-center mask-btn"
             @click="confirm(item.id)">
             <div class="w-[0.4rem] h-[0.4rem]">
               <img v-lazy="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />
