@@ -249,3 +249,16 @@ input[type="number"] {
     opacity: 0.1;
   }
 }
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.rotating {
+  animation: rotate 1.2s linear infinite;
+}

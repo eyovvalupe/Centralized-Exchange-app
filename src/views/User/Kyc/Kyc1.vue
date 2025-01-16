@@ -37,7 +37,7 @@
           <div class="bg-[#333D30] w-[0.12rem] h-[0.12rem] rounded-[50%]"></div>
         </div>
       </div>
-      <div class="w-[3.04rem] h-[0.16rem] bg-color2"></div>
+      <div class="w-[3.04rem] h-[0.16rem] bg-color6"></div>
       <div
         class="bg-color2 w-[0.56rem] h-[0.56rem] rounded-[50%] text-[0.32rem] font-bold text-color3 flex items-center justify-center">
         2

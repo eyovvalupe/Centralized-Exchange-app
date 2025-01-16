@@ -30,8 +30,8 @@
       </template>
       <!-- 详情 -->
       <template v-if="kycInfo.status == 'review'">
-        <div class="review_icon">
-          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="review">
+        <div class="rotating review_icon">
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.png')" alt="review">
         </div>
         <div class="text-[0.36rem] text-color my-[0.24rem]">
           {{ $t("kyc.status_pending") }}
@@ -200,8 +200,7 @@ const goInfo = () => {
 .review_icon {
   width: 1.2rem;
   height: 1.2rem;
-  background-size: contain;
-  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 .success_icon {

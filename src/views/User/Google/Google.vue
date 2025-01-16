@@ -222,7 +222,7 @@ const confirmNext = () => {
 
   .code_container {
     width: 100%;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
     display: flex;
     align-items: center;

@@ -10,15 +10,15 @@
     </Top>
     <!-- 表单模式头部 -->
     <div class="steps">
-      <div class="bg-[var(--ex-none)] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
+      <div class="bg-color6 w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="w-[0.48rem] h-[0.48rem]">
             <img v-lazy="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">
           </div>
         </div>
       </div>
-      <div class="w-[3.04rem] h-[0.16rem] bg-color2"></div>
-      <div class="bg-[var(--ex-none)] w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
+      <div class="w-[3.04rem] h-[0.16rem] bg-color6"></div>
+      <div class="bg-color6 w-[0.68rem] h-[0.68rem] rounded-[50%] flex items-center justify-center">
         <div class="bg-primary w-[0.56rem] h-[0.56rem] rounded-[50%] flex items-center justify-center">
           <div class="w-[0.48rem] h-[0.48rem]">
             <img v-lazy="getStaticImgUrl('/static/img/user/right_black.svg')" alt="">

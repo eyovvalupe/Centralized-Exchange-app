@@ -420,8 +420,8 @@ onMounted(() => {
     }
 
     .language_icon_container {
-      width: 0.6rem;
-      height: 0.6rem;
+      width: 0.8rem;
+      height: 0.8rem;
       display: flex;
       justify-content: center;
       align-items: center;

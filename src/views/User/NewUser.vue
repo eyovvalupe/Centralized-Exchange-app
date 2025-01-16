@@ -115,7 +115,7 @@
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-error'
-              : `${userInfo.kycl2 == 1 ? 'bg-wait' : 'bg-success'}`,
+              : `${userInfo.kycl2 == 1 ? 'bg-warning' : 'bg-primary'}`,
           ]">
           <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified") }}</span>
           <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{ $t("user_page.pending_verified")
@@ -132,7 +132,7 @@
         </div>
         <div v-if="token"
           class="absolute min-w-[0.76rem] w-max px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center pt-[0.05rem]"
-          :class="[userInfo.googlebind == 0 ? 'bg-error' : 'bg-success']">
+          :class="[userInfo.googlebind == 0 ? 'bg-error' : 'bg-primary']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
         </div>
