@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col relative">
     <div class="crypto_list" v-for="item in props.list">
       <SwipeCell>
-        <div class="list_page">
+        <div class="list_page mask-btn">
           <div class="flex items-center mb-[0.32rem]">
             <div class="mr-[0.2rem]" style="width: 0.7rem;height: 0.7rem;">
               <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.symbol.toUpperCase()}.svg`)" class=" rounded-full" alt="">
@@ -17,11 +17,10 @@
                 <img v-lazy="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
               </div>
             </div>
-
           </div>
         </div>
         <template #right>
-          <div class="w-[1rem] h-full bg-color3 rounded-[0.4rem] flex items-center justify-center mask-btn"
+          <div class="w-[1rem] h-full bg-color3 rounded-[0.4rem] flex items-center justify-center ripple-btn"
             @click="confirm(item.id)">
             <div class="w-[0.4rem] h-[0.4rem]">
               <img v-lazy="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />

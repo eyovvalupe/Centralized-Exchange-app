@@ -18,14 +18,15 @@
                 <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')"
                     name="0">
                     <div class="h-[10rem] mt-[0.4rem]">
-                        <NoData v-if="false" />
-                        <OrderList :list="[1, 2]" />
+                        <NoData v-if="!orderList.length" />
+                        <OrderList :list="orderList" />
                     </div>
                 </Tab>
                 <Tab :active="activeTab == 1" style="min-width: 2rem" :title="t('finance.portfolio_order_tab2')"
                     name="1">
                     <div class="mt-[0.4rem]">
-                        <NoData />
+                        <NoData v-if="!orderList.length" />
+                        <OrderList :list="orderList" />
                     </div>
                 </Tab>
             </Tabs>
@@ -54,6 +55,8 @@ const changeTab = (e) => {
     if (e == 1) getData('close')
 }
 
+const orderList = ref([])
+
 const loading = ref(false)
 const getData = (val) => {
     if (loading.value) return;
@@ -63,7 +66,9 @@ const getData = (val) => {
         status: val
     })
     .then(res => {
-        console.log("order list =========> ", res.data)
+        if (res.code == 200) {
+            orderList.value = res.data;
+        }
     })
     .catch(err => console.error(err))
     .finally(() => {

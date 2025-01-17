@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col relative">
     <div class="bank_list" v-for="item in props.list">
       <SwipeCell>
-        <div class="list_page">
+        <div class="list_page mask-btn">
           <div class="flex mb-[0.32rem] justify-between">
             <div class="flex items-center">
               <div style="width: 0.7rem;height: 0.7rem;" class="mr-[0.2rem]">
@@ -23,7 +23,7 @@
           </div>
         </div>
         <template #right>
-          <div class="w-[1rem] h-full bg-color3 rounded-[0.4rem] flex items-center justify-center"
+          <div class="w-[1rem] h-full bg-color3 rounded-[0.4rem] flex items-center justify-center ripple-btn"
             @click="confirm(item.id)">
             <div class="w-[0.4rem] h-[0.4rem]">
               <img v-lazy="getStaticImgUrl('/static/img/common/delete.svg')" alt="" />

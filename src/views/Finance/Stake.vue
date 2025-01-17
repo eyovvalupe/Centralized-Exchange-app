@@ -2,10 +2,14 @@
     <div class="staking_page">
         <Tabs type="custom-card-stake" @change="onChange" style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;" :swipeable="false" animated >
             <Tab :title="t('finance.portfolio_title')">
-                <StakingList />
+                <div class="px-[0.1rem]">
+                    <StakingList />
+                </div>
             </Tab>
             <Tab class="mb-[1.2rem]" :title="t('finance.portfolio_order')">
-                <Order />
+                <div class="px-[0.1rem]">
+                    <Order />
+                </div>
             </Tab>
         </Tabs>
     </div>

@@ -63,7 +63,10 @@ const loading = ref(false);
 const getData = () => {
     if (loading.value) return;
     loading.value = true;
-    _myEarn().then(res => console.log(res.data)).catch(err => console.error(err)).finally(() => loading.value = false)
+    _myEarn()
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err))
+        .finally(() => loading.value = false);
 }
 
 onMounted(() => {

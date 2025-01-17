@@ -7,11 +7,11 @@
         <Btns />
         <Cash @click="(val) => click(val)" />
       </Tab>
-      <Tab :title="t('assets.wallet_header_stock')" name="1">
+      <!-- <Tab :title="t('assets.wallet_header_stock')" name="1">
         <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock" />
         <Btns />
         <StockMyWallet @click="(val) => click(val)" />
-      </Tab>
+      </Tab> -->
       <Tab :title="t('assets.wallet_header_contract')" name="2">
         <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
         <Btns />

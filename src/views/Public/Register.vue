@@ -284,7 +284,6 @@ const next = () => {
     })
       .then((res) => {
         if (res.code == 200) {
-          console.log(res.data);
           setTimeout(() => {
             store.dispatch("reset");
             setTimeout(() => {

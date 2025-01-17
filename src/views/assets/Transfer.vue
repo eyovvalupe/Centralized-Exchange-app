@@ -30,7 +30,7 @@
               </div>
 
               <div class="account_item relative">
-                <div class="account_item_icon">
+                <div class="account_item_icon" v-if="Object.keys(form.fromCurrency).length">
                   <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.svg`)"
                     alt="img" />
                 </div>
@@ -121,6 +121,7 @@
       @closed="clickKey = ''">
       <div class="van-popup-custom-title w-full text-center text-[0.32rem] relative top-[-0.05rem]">{{
         $t("transfer.confirm_con") }}</div>
+        {{ console.log("column ======> ", columns) }}
       <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
         @cancel="hideDialog" @change="onChange">
         <template #option="option">
@@ -181,7 +182,7 @@ const loading = ref(false);
 const form = ref({
   from: route.query.from || "money",
   fromCurrency: {},
-  to: route.query.to || "stock",
+  to: route.query.to || "futures",
   toCurrency: {},
   amount: "",
 });
@@ -217,7 +218,7 @@ const hideDialog = () => {
   clickKey.value = "";
   showPicker.value = false;
 };
-const columns = computed(() => {
+const columns1 = computed(() => {
   return _accountMapList.map((item) => {
     item.className =
       clickKey.value == "from"
@@ -272,7 +273,9 @@ const columns = computed(() => {
     return item;
   });
 });
-
+const columns = computed(() => columns1.value.filter(item => {
+  return item.key != 'stock'
+}))
 const customFieldName = {
   text: "value",
   value: "key",
@@ -457,6 +460,9 @@ const changeAmount = (val) => {
     z-index: 10;
   }
   
+  :deep(.van-picker-column__item) {
+    justify-content: start;
+  }
 
   .top-record {
     width: 0.7rem;

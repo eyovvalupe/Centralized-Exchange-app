@@ -272,7 +272,6 @@ const getStakeData = () => {
     _stakeGet({ id: stakeId.value })
         .then(res => {
             if (res.code == 200) {
-                console.log(res.data)
                 stakeInfo.value = res.data
             }
         })
