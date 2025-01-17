@@ -223,7 +223,7 @@
             align-items: center;
             justify-content: center;
           ">
-                        {{ t("assets.wallet_header_stock") }}
+                        {{ t("assets.wallet_header_cash") }}
                     </div>
                     <div style="
             display: flex;

@@ -28,7 +28,6 @@ const getList = () => {
     _miningList({page: page.value})
         .then((res) => {
             if (res.code == 200) {
-                console.log('list ===>', res.data)
                 stakingList.value = res.data
             }
         })
