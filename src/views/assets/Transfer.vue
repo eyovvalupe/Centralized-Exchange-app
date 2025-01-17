@@ -121,7 +121,6 @@
       @closed="clickKey = ''">
       <div class="van-popup-custom-title w-full text-center text-[0.32rem] relative top-[-0.05rem]">{{
         $t("transfer.confirm_con") }}</div>
-        {{ console.log("column ======> ", columns) }}
       <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
         @cancel="hideDialog" @change="onChange">
         <template #option="option">
