@@ -12,10 +12,10 @@
           v-model:active="activeTab"
           :tabs="[
             // t('assets.order_title_buy'),
-            t('assets.order_title_stock'),
             t('assets.order_title_contract'),
-            t('assets.order_title_bot'),
-            t('assets.order_title_ipo'),
+            t('跟单'),
+            t('DeFi借币'),
+            t('质押挖矿'),
           ]"
           @change="changeActiveTab(activeTab)"
         />
@@ -26,19 +26,19 @@
       </div> -->
 
       <div class="tab" v-if="activeTab == 0">
-        <StockOrderList  />
-      </div>
-
-      <div class="tab" v-if="activeTab == 1">
         <CryptoOrderList  />
       </div>
 
+      <div class="tab" v-if="activeTab == 1">
+        <!-- <CryptoOrderList  /> -->
+      </div>
+
       <div class="tab" v-if="activeTab == 2">
-        <AIOrderList  />
+        <PledgeOrder />
       </div>
 
       <div class="tab" v-if="activeTab == 3">
-        <IPOStock ref="IPOStockRef" scrollDom="#assets_order_center_body" :from="'assets'" />
+        <Order />
       </div>
     </div>
   </div>
@@ -46,12 +46,9 @@
 <script setup>
 import { ref } from "vue";
 import HeaderTabs from "@/components/HeaderTabs.vue";
-import CashOrderList from "./components/CashOrderList.vue";
-import StockOrderList from "./components/StockOrderList.vue";
 import CryptoOrderList from "./components/CryptoOrderList.vue";
-import IPOStock from "@/views/Trade2/pages/IPOStock.vue";
-import AIOrderList from "./components/AIOrderList.vue";
-import List from "@/views/Market/buyCoin/List.vue";
+import Order from "@/views/Finance/components/Order.vue";
+import PledgeOrder from "@/views/Finance/components/PledgeOrder.vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
