@@ -279,19 +279,19 @@ const jump = (name, needLogin, query) => {
 };
 
 // 预加载页面
-store.commit("setPageLoading", true);
+// store.commit("setPageLoading", true);
 const loadingList = [import("@/views/Public/Language.vue")];
 if (!token.value) {
   loadingList.push(import("@/views/Public/Login.vue"));
 }
 Promise.all(loadingList).finally(() => {
-  store.commit("setPageLoading", false);
+  // store.commit("setPageLoading", false);
 });
 
 // 延迟加载
 if (token.value) {
   setTimeout(() => {
-    store.commit("setPageLoading", false);
+    // store.commit("setPageLoading", false);
     Promise.all([
       import("@/views/User/Safety.vue"),
       import("@/views/User/Account/Account.vue"),
