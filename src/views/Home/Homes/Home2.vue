@@ -511,6 +511,7 @@ const followList = computed(() => store.state.followList || [])
                 .swiper-item {
                     overflow: hidden;
                     border-radius: 0.32rem;
+                    height: 3.48rem;
                 }
 
                 :deep(.van-swipe__indicators) {
