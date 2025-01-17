@@ -165,7 +165,7 @@
             </div>
           </template> -->
           <template #lt>
-            <div style="display: flex;align-items: center;" v-if="amountper && paramCurrency">
+            <div style="display: flex;align-items: center;height: 0.48rem;" v-if="amountper && paramCurrency">
               <div style="width: 0.24rem;height: 0.24rem;margin-right: 0.1rem;">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/warning_icon.svg')" alt="↓" />
               </div>

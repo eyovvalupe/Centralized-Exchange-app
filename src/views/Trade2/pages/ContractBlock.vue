@@ -1,7 +1,7 @@
-<!-- 合约 -->
+<!-- 合约 --> 
 <template>
   <div class="stock_block">
-    <Tabs type="custom-line" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+    <Tabs type="custom-card-stake" animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
       @change="onChange">
       <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body">
@@ -122,6 +122,11 @@ defineExpose({
 
   :deep(.van-tabs__nav) {
     padding: 0 0.12rem;
+  }
+  :deep(.van-tabs--custom-card-stake) {
+    .van-tabs__wrap {
+      margin: 0 0.32rem;
+    }
   }
 
   .stock_tab-body {

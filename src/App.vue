@@ -182,10 +182,6 @@ onMounted(() => {
   // 这里处理vant样式里引入图片的问题
   const style = document.createElement('style');
   style.innerHTML = `
-      .van-tabs--line-card>.van-tabs__wrap  .van-tab--active::after {
-        background-image: url(${getStaticImgUrl('/static/img/app/ai-sub.svg')});
-      }
-
       .slider_box .van-slider .van-slider__button {
         background-image: url(${getStaticImgUrl('/static/img/user/right.svg')});
       }

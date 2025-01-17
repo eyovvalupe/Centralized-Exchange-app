@@ -21,7 +21,7 @@
           disabled_item: disabled,
           item_focus: from != 'transfer' ? inputFocus : '',
           // item_focus2: inputFocus && !tip,
-        }" :style="{ background, paddingBottom: props.hasBot ? '1.2rem' : '' }">
+        }" :style="{ background, paddingBottom: props.hasBot ? '1.2rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
             v-show="inputFocus">{{ placeholder
@@ -318,7 +318,7 @@ const percentTagClick = (percent) => {
 
     .rt-box {
       position: absolute;
-      top: 0.24rem;
+      top: 0.16rem;
       right: 0.24rem;
       z-index: 999;
       transition: all ease-in .3s;
@@ -327,13 +327,17 @@ const percentTagClick = (percent) => {
 
     .lt-box {
       position: absolute;
-      top: 0.24rem;
+      top: 0.16rem;
       left: 0.24rem;
       z-index: 999;
       font-size: 0.24rem;
       color: var(--ex-text-color3);
       transition: all ease-in .3s;
-      transform-origin: 100% 0;
+      transform-origin: 0 0;
+    }
+    .lt-box-focus {
+      top: 0.08rem;
+      transform: scale(0.8);
     }
   }
 
