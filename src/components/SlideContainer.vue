@@ -2,7 +2,7 @@
     <!-- 拖动 -->
     <div style="width: 100%;">
         <div class="slider-container">
-            <Slider class="slider-dom" v-model="sliderValue" bar-height="0.28rem" active-color="var(--ex-white)"
+            <Slider class="slider-dom" v-model="sliderValue" bar-height="0.28rem" :active-color="statusMap[status]"
                 inactive-color="var(--ex-border-color)" @change="onSliderChange">
                 <template #button>
                     <div class="slider-custom-num">
@@ -30,12 +30,21 @@ const props = defineProps({
     modelValue: {
         type: Number,
         default: 0
+    },
+    status: {
+        type: String,
+        default: 'normal'
     }
 })
 
 const percentages = [25, 50, 75, 100];
 const sliderValue = ref(props.modelValue);
 
+const statusMap = ref({
+    normal: 'var(--ex-white)',
+    success: 'var(--ex-success-color)',
+    error: 'var(--ex-error-color)'
+})
 
 watch(() => props.modelValue, (newValue) => {
     if (newValue != sliderValue) {

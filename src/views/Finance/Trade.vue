@@ -19,15 +19,17 @@
                                 <img v-lazy="getStaticImgUrl(`/static/img/crypto/${name}.svg`)" alt="img" />
                             </div>
                             <div class="mb-[0.24rem]">{{ name }}</div>
-                            <div :class="itemsMap[i][symbolList[i]].ratio > 0 ? 'up' : 'down'">{{
-                                itemsMap[i][symbolList[i]].ratio ? (itemsMap[i][symbolList[i]].ratio > 0 ? '+' +
-                                    itemsMap[i][symbolList[i]].ratio : itemsMap[i][symbolList[i]].ratio) + '%' : '--' }}
+                            <div class="text-[0.32rem] font-standard text-color8"
+                                :class="itemsMap[symbolList[i]] ? itemsMap[symbolList[i]].ratio > 0 ? 'up' : 'down' : ''">
+                                {{
+                                    itemsMap[symbolList[i]] ? (itemsMap[symbolList[i]].ratio > 0 ? '+' +
+                                        itemsMap[symbolList[i]].ratio : itemsMap[symbolList[i]].ratio) + '%' : '--' }}
                             </div>
                         </div>
                         <div class="absolute w-[0.6rem] h-[0.6rem] z-[1]"
                             :class="cryptoList.length == 3 ? 'right-[-0.36rem]' : cryptoList.length == 2 ? 'right-[-0.45rem]' : ''"
-                            v-if="i < cryptoList.length - 1"><img v-lazy="getStaticImgUrl(`/static/img/finance/plus.svg`)"
-                                alt="img" /></div>
+                            v-if="i < cryptoList.length - 1"><img
+                                v-lazy="getStaticImgUrl(`/static/img/finance/plus.svg`)" alt="img" /></div>
                     </div>
                 </div>
                 <!-- 挖矿详情 -->
@@ -68,23 +70,30 @@
                         t('finance.portfolio_mining_header') }}</div>
                 </div>
                 <div class="w-full relative mb-[0.32rem]">
-                    <FormItem input-height="1.3rem" :hasScroll="true"
+                    <FormItem :hasRT="true" inputHeight="1.3rem" :hasScroll="true" :from="'toTop'"
                         :placeholder="t('finance.portfolio_mining_header')" :max="maxStockNum" v-model="form1.amount"
-                        @change="changePercent" input-type="number">
+                        @change="changePercent" input-type="number" @input="changePercent">
 
                         <template #scroll>
-                            <!-- 拖动 -->
-                            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                            <SlideContainer :status="amountStatus" v-model="sliderValue" @change="onSliderChange" />
+                        </template>
+                        <template #rt>
+                            <div class="h-[0.48rem] bg-color4 rounded-[0.4rem] flex justify-end mask-btn"
+                                @click="showValanceDetail">
+                                <div class="flex items-center px-[0.15rem]">
+                                    <div class="text-[0.24rem] gap-[0.12rem] mt-[0.05rem] flex text-color3 mr-[0.1rem]">
+                                        {{ t('assets.wallet_available_sim')
+                                        }}<span class="text-primary">{{ maxStockNum }}</span>USDT</div>
+                                    <div class="w-[0.16rem] h-[0.16rem]">
+                                        <img v-lazy="getStaticImgUrl('static/img/finance/right.svg')" alt="" />
+                                    </div>
+                                </div>
+                            </div>
                         </template>
                     </FormItem>
-                    <div class="w-full flex justify-end absolute top-[0] right-[0]">
-                        <div
-                            class="text-[0.24rem] p-[0.12rem] gap-[0.12rem] bg-color4 rounded-[0.4rem] flex text-color3 mt-[0.16rem] mr-[0.2rem]">
-                            {{ t('assets.wallet_available_sim')
-                            }}<span class="text-primary">{{ maxStockNum }}</span>USDT</div>
-                    </div>
+
                 </div>
-                <Button class="submit ripple-btn" @click="showConfirm = true"><span class="text-[0.36rem]">{{
+                <Button class="submit ripple-btn" @click="openConfirm"><span class="text-[0.36rem]">{{
                     t('finance.portfolio_mining_btn')
                         }}</span></Button>
             </div>
@@ -111,7 +120,8 @@
                     <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                         <div class="flex flex-col justify-between">
                             <div class="flex">
-                                <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" :class="i ? '-ml-[0.1rem]' : ''" v-if="stakeInfo.name" :key="i"
+                                <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative"
+                                    :class="i ? '-ml-[0.1rem]' : ''" v-if="stakeInfo.name" :key="i"
                                     v-for="(item, i) in stakeInfo.name.split('+')"><img
                                         v-lazy="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
                             </div>
@@ -148,9 +158,9 @@
                                     form1.amount }}</span></div>
                         <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{
                             t('finance.portfolio_mining_header')
-                        }}<span class="text-white">&nbsp;{{form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
+                            }}<span class="text-white">&nbsp;{{ form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
                                 t('finance.portfolio_mining_noti_fee')
-                            }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
+                                }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
                     </div>
                 </div>
                 <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
@@ -166,25 +176,146 @@
                     </div>
                 </div>
                 <Button
-                    style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;" class="ripple-btn"
-                    @click="submit"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm') }}</span></Button>
+                    style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"
+                    class="ripple-btn" @click="submit"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm')
+                        }}</span></Button>
             </div>
         </BottomPopup>
+        <!-- 余额提示 -->
+        <Popup round v-model:show="showAmountDialog" closeable teleport="body">
+            <div style="width: 6.4rem">
+                <!-- 标题 -->
+                <div style="
+          text-align: center;
+          font-size: 0.32rem;
+          height: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--ex-border-color);
+        ">
+                    {{ t("assets.wallet_available") }}
+                </div>
+
+                <!-- 内容 -->
+                <div style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          background: var(--ex-bg-color2);
+          border: 1px solid var(--ex-border-color);
+          border-radius: 0.32rem;
+          line-height: 0.4rem;
+          margin-top: 0.32rem;
+          overflow: hidden;
+          position: relative;
+          margin: 0.32rem 0.4rem;
+        ">
+                    <div style="
+            color: var(--ex-text-color);
+            font-size: 0.28rem;
+            font-weight: 400;
+            padding: 0 0.32rem;
+            height: 1.4rem;
+            background-color: var(--ex-bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          ">
+                        {{ t("assets.wallet_header_stock") }}
+                    </div>
+                    <div style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            flex: 1;
+          ">
+                        <div style="
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-bottom: 0.08rem;
+            ">
+                            <div style="
+                width: 0.4rem;
+                height: 0.4rem;
+                display: flex;
+                position: relative;
+                top: -0.02rem;
+              ">
+                                <img v-lazy="getStaticImgUrl(
+                                    `/static/img/crypto/USDT.svg`
+                                )
+                                    " />
+                            </div>
+
+                            <span style="
+                font-size: 0.28rem;
+                margin-left: 0.12rem;
+                color: var(--ex-text-color);
+                font-weight: 400;
+              ">USDT</span>
+                        </div>
+                        <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
+                            maxStockNum
+                            }}</b>
+                    </div>
+                </div>
+
+                <!--  按钮 -->
+                <div style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 0.4rem;
+          font-size: 0.28rem;
+          margin: 0.64rem 0 0.4rem 0;
+        ">
+                    <div class="ripple-primary" @click="router.push({ name: 'transfer' })" style="
+            height: 0.8rem;
+            width: 48%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.64rem;
+            background-color: var(--ex-white);
+            color: var(--ex-black);
+          ">
+                        {{ t("trade.stock_opening_btn_transfer") }}
+                    </div>
+                    <div @click="router.push({ name: 'topUpCrypto', query: { currency: 'USDT' } })"
+                        class="bg-primary text-color--bg-primary ripple-btn" style="
+            height: 0.8rem;
+            width: 48%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.64rem;
+            color: var(--ex-white);
+          ">
+                        {{ t("trade.stock_opening_btn_recharge") }}
+                    </div>
+                </div>
+            </div>
+        </Popup>
     </div>
 </template>
 <script setup>
 import Top from '@/components/Top.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js";
-import { Stepper, Button, showToast } from 'vant';
+import { Stepper, Button, showToast, Popup } from 'vant';
 import Decimal from "decimal.js";
 import BottomPopup from '@/components/BottomPopup.vue';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import SlideContainer from '@/components/SlideContainer.vue';
 import FormItem from '@/components/Form/FormItem.vue';
 import { useRoute } from 'vue-router';
-import { _stake, _stakeGet } from '@/api/api';
+import { _realtime, _stake, _stakeGet } from '@/api/api';
 import store from '@/store';
+import router from '@/router';
 
 const route = useRoute();
 const { t } = useI18n();
@@ -192,6 +323,7 @@ const { t } = useI18n();
 const value = ref(0)
 const showPw = ref(false)
 const showConfirm = ref(false)
+const showAmountDialog = ref(false)
 const loaded = ref(false)
 const form1 = ref({
     id: "",
@@ -199,6 +331,12 @@ const form1 = ref({
     token: "",
     safeword: ""
 });
+
+const amountStatus = ref('normal');
+
+const showValanceDetail = () => {
+    showAmountDialog.value = true
+}
 
 const sessionToken = computed(() => store.state.sessionToken)
 const realtimeData = computed(() => store.state.realtimeData)
@@ -216,29 +354,68 @@ const symbolList = computed(() => {
     if (stakeInfo.value.symbol) return stakeInfo.value.symbol.split(',')
     else return [];
 })
-const itemsMap = computed(() => {
-    if (Object.keys(stakeInfo.value).length) {
-        const symbols = stakeInfo.value.symbol.split(',');
-        const items = realtimeData.value.map(data => {
-            const datas = {};
-            for (const symbol of symbols) {
-                if (data.symbol == symbol) {
-                    datas[symbol] = data;
-                }
-            }
-            return datas;
-        }).filter(v => Object.keys(v).length)
-        return items
+// const itemsMap = computed(() => {
+//     if (Object.keys(stakeInfo.value).length) {
+//         const symbols = stakeInfo.value.symbol.split(',');
+//         const items = realtimeData.value.map(data => {
+//             const datas = {};
+//             for (const symbol of symbols) {
+//                 if (data.symbol == symbol) {
+//                     datas[symbol] = data;
+//                 }
+//             }
+//             return datas;
+//         }).filter(v => Object.keys(v).length)
+//         return items
+//     }
+//     else return [];
+// })
+const loadingRealtime = ref(false)
+const itemsMap = ref({})
+const getItemsMapData = async () => {
+    if (!stakeInfo.value.symbol || loadingRealtime.value) return {};
+    loadingRealtime.value = true;
+    const datas = {};
+    for (const symbol of stakeInfo.value.symbol.split(',')) {
+        try {
+            const data = await _realtime({ symbol });
+            datas[symbol] = data.data[0];
+        } catch (error) {
+            console.error('Error fetching data for symbol:', symbol, error);
+        }
     }
-    else return [];
-})
+    loadingRealtime.value = false;
+    itemsMap.value = datas;
+};
 
 const stakeId = computed(() => store.state.stakeId);
 
 const sliderValue = ref(0);
 const step = ref(1)
 
+const maxAmount = computed(() => {
+    if (stakeInfo.value.limits) {
+        return Number(stakeInfo.value.limits.split(',')[1])
+    } else 0
+})
+
+const minAmount = computed(() => {
+    if (stakeInfo.value.limits) {
+        return Number(stakeInfo.value.limits.split(',')[0])
+    } else 0
+})
+
+const openConfirm = () => {
+    if (amountStatus.value != 'success') {
+        showToast('请输入限额范围');
+        return;
+    }
+    showConfirm.value = true
+}
+
 const onSliderChange = (newValue) => {
+    if ((newValue * maxStockNum.value / 100) < minAmount.value || (newValue * maxStockNum.value / 100) > maxAmount.value) { amountStatus.value = 'error' }
+    else amountStatus.value = 'success';
     sliderValue.value = newValue;
     if (maxStockNum.value == "--") return (sliderValue.value = 0);
     let v = new Decimal(maxStockNum.value).mul(newValue).div(100);
@@ -252,6 +429,8 @@ const onSliderChange = (newValue) => {
 const changePercent = () => {
     if (maxStockNum.value == "--" || !form1.value.amount)
         return (sliderValue.value = 0);
+        if (form1.value.amount < minAmount.value || form1.value.amount > maxAmount.value) { amountStatus.value = 'error' }
+        else amountStatus.value = 'success';
     let v = new Decimal(form1.value.amount);
     form1.value.amount = v.sub(v.mod(step.value));
     let p = new Decimal(form1.value.amount)
@@ -314,7 +493,11 @@ onMounted(() => {
 
     getStakeData();
     getSessionToken();
+    getItemsMapData();
+})
 
+watch(stakeInfo, (val) => {
+    getItemsMapData()
 })
 </script>
 <style lang="less">

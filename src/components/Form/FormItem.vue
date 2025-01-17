@@ -35,7 +35,7 @@
             <slot name="lt" />
           </div>
           <!-- 右上角模块 -->
-          <div class="rt-box" :class="{ 'rt-box-focus': inputFocus && tip }" v-if="hasRT">
+          <div class="rt-box" :class="[inputFocus && tip ? 'rt-box-focus' : '', from == 'toTop' ? '-mt-[0.1rem]' : '']" v-if="hasRT">
             <slot name="rt" />
           </div>
 

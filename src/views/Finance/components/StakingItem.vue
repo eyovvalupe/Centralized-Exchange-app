@@ -1,6 +1,8 @@
 <template>
     <div>
         <div class="staking_item relative" v-if="list.length && !loading" v-for="(item, i) in list">
+            {{ console.log("stake id ======> ", item) }}
+
             <div class="w-[0.66rem] h-[0.48rem] absolute top-[0] right-[0]" v-if="item.hot"><img
                     v-lazy="getStaticImgUrl('/static/img/finance/hot.svg')" alt="img" /></div>
             <div class="w-full bg-color6 mb-[0.24rem] rounded-[0.2rem]">
