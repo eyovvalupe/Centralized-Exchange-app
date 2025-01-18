@@ -137,7 +137,7 @@
 
 
         <!-- 跟单弹窗 -->
-    <BottomPopup v-model:show="showPlus" :title="'跟单'" position="bottom" round closeable teleport="body">
+    <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
         <FollowSubmit v-if="showPlus" @success="showPlus = false" :item="info" :mode="'follow'"  />
     </BottomPopup>
     </div>
@@ -154,7 +154,9 @@ import SparkLine from "@/components/SparkLine.vue";
 import { useRoute } from "vue-router"
 import BottomPopup from "@/components/BottomPopup.vue";
 import FollowSubmit from "../components/FollowSubmit.vue"
+import { useI18n } from "vue-i18n";
 
+const {t} = useI18n()
 const route = useRoute()
 const active = ref(1)
 

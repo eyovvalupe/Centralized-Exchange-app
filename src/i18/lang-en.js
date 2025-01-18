@@ -1030,7 +1030,7 @@ export default {
     copy_belong_pl_rate: "Profit-Loss Ratio",
     copy_belong_loss_days: "Lossing Days",
     copy_belong_sharing_ratio: "Profit Sharing Ratio",
-    copy_belong_tab2: "Leaders",
+    copy_belong_tab2: "Orders",
     copy_belong_subtitle1: "Symbol/Status",
     copy_belong_subtitle2: "Position/Time",
     copy_belong_subtitle3: "Invest Amount",
