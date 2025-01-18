@@ -1003,6 +1003,7 @@ export default {
     copy_ground: "跟单广场",
     copy_tab_tab1: "跟单",
     copy_tab_tab2: "订单",
+    copy_portfolio: "跟单",
     copy_profit_rate: "胜率",
     copy_belong_profit: "收益",
     copy_belong_title: "带单表现",

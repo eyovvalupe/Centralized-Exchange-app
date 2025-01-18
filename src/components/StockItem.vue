@@ -2,15 +2,20 @@
 <template>
   <div ref="root" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
+      {{ console.log(item.name.split('/')[0]) }}
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"
         @click="goInfo(props.item.type)">
         <div :class="['stock_item', 'mask-btn']">
-          <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
+          <!-- <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
             v-if="showIcon">
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{
               props.item.symbol[0] }}</span>
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
+          </div> -->
+          <div class="size-[0.96rem] mr-[0.18rem] flex justify-center items-center"
+            v-if="showIcon">
+            <img v-lazy="getStaticImgUrl(`static/img/crypto/${item.name.split('/')[0]}.svg`)" alt="" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
             <div class="item_name flex items-center gap-1 mb-[0.2rem]">

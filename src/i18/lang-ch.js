@@ -1004,6 +1004,7 @@ export default {
     copy_ground: "跟單廣場",
     copy_tab_tab1: "跟單",
     copy_tab_tab2: "訂單",
+    copy_portfolio: "跟單",
     copy_profit_rate: "勝率",
     copy_belong_profit: "收益",
     copy_belong_title: "帶單表現",
