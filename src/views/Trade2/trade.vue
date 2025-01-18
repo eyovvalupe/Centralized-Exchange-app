@@ -7,9 +7,9 @@
     <!-- 头部 -->
 
     <HeaderTabs :tabs="[
-      '现货',
+      t('common.spot'),
       t('trade.header_contract'),
-      t('trade.header_aibot'),
+      t('common.option'),
       // t('trade.header_ipo'),
     ]" v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <!-- <template #before>

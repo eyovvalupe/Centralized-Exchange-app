@@ -11,6 +11,8 @@ export default {
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暫無收款賬戶",
+    spot: "現貨",
+    option: "期貨",
   },
   home: {
     login: "登录",

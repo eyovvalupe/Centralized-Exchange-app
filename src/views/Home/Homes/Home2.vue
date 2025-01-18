@@ -95,7 +95,7 @@
             <div class="home-tabs-box">
                 <Tabs class="van-tabs--sub" :color="'var(--ex-primary-color)'" @change="tabChange"
                     v-if="!pageLoading && activated" v-model:active="activeTab" animated shrink>
-                    <Tab :name="0" :title="'现货'">
+                    <Tab :name="0" :title="t('common.spot')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
                         <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
                             <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
@@ -116,7 +116,7 @@
                             <IPO ref="ipoRef" v-if="activeTab == 2" :page="'home'" />
                         </div>
                     </Tab> -->
-                    <Tab :name="3" :title="$t('common.AI')">
+                    <Tab :name="3" :title="$t('common.option')">
                         <div class="mt-[0.32rem]">
                             <Ai page="home" v-if="activeTab == 3" />
                         </div>

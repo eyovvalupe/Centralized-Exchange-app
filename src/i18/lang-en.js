@@ -11,6 +11,8 @@ export default {
     min: "m",
     no_more: "No more",
     no_wallet: "No Payment Account Available",
+    spot: "Spot",
+    option: "Option",
   },
   login: {
     login: "Log In",

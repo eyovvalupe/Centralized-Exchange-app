@@ -11,6 +11,8 @@ export default {
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暂无收款账户",
+    spot: "现货",
+    option: "期货",
   },
   login: {
     login: "登录",
