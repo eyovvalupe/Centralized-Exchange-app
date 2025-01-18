@@ -5,7 +5,7 @@
 
     <!-- Tab -->
     <div class="tabs">
-      <div class="tab">期权</div>
+      <div class="tab">期货</div>
     </div>
 
     <!-- 统计 -->

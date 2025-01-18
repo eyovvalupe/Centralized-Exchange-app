@@ -17,7 +17,9 @@
                     <div class="num">7{{ t('finance.portfolio_day_multi') }}</div>
                 </div>
             </div>
-            <div class="line-box"></div>
+            <div class="line-box">
+                <SparkLine  :points="getPoints('mining_13213', 80)" :ratio="1" />
+            </div>
         </div>
         <div class="btn ripple-btn">{{ t('finance.portfolio_participate') }}</div>
     </div>
@@ -25,7 +27,9 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-import { getStaticImgUrl } from "@/utils/index.js"
+import { getStaticImgUrl, getPoints } from "@/utils/index.js"
+import SparkLine from "@/components/SparkLine.vue";
+
 const { t } = useI18n();
 </script>
 

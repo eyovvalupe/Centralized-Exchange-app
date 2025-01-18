@@ -2,17 +2,17 @@
 <template>
   <div class="opening">
     <div class="type_tabs">
-      <div @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
+      <div :style="{backgroundImage: `url(${activeType == 1 ? getStaticImgUrl('/static/img/trade/up2.svg') : getStaticImgUrl('/static/img/trade/up1.svg')})`}" @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
         {{ t("trade.stock_open_long_tab") }}
       </div>
-      <div @click="activeType = 2" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 2 }">
+      <div :style="{backgroundImage: `url(${activeType == 2 ? getStaticImgUrl('/static/img/trade/down2.svg') : getStaticImgUrl('/static/img/trade/down1.svg')})`}" @click="activeType = 2" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 2 }">
         {{ t("trade.stock_open_short_tab") }}
       </div>
     </div>
 
     <!-- Tabs -->
     <div class="open_tab_box">
-      <Tabs animated key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
+      <Tabs animated key="form" type="line-card" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
         :color="'var(--ex-primary-color)'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
@@ -41,6 +41,7 @@ import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
+import { getStaticImgUrl } from "@/utils/index.js"
 
 const props = defineProps({
   type: {
@@ -91,47 +92,43 @@ defineExpose({
 <style lang="less" scoped>
 .opening {
   padding: 0.32rem 0;
+  position: relative;
 
   .open_tab_box {
     border-radius: 0 0 0.32rem 0.32rem;
-    // background-color: var(--ex-bg-color2);
-    // padding-top: 0.32rem;
   }
 
   .type_tabs {
-    height: 0.96rem;
     display: flex;
     align-items: center;
+    height: 0.8rem;
     z-index: 99;
-    border-radius: 1rem;
-    background-color: var(--ex-bg-color3);
-    padding: 0 0.1rem;
+    position: absolute;
+    left: 0;
 
     .type_tab {
-      flex: 1;
-      height: 100%;
+      width: 1.36rem;
+      height: 0.68rem;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--ex-text-color2);
       font-size: 0.3rem;
-
-    }
-
-    .type_tab_text {
-      position: relative;
-      z-index: 1;
+      background-size: 100% 100%;
     }
 
     .active_type_tab {
-      color: var(--ex-text-color--bg-primary);
-      position: relative;
-      height: 0.8rem;
-      background-color: var(--ex-primary-color);
-      border-radius: 1rem;
+      color: var(--ex-white);
+    }
+  }
 
-      &:nth-child(2) {
-        background-color: var(--ex-down-color);
+
+  :deep(.van-tabs--line-card) {
+    .van-tabs__wrap {
+      padding-left: 2.6rem;
+      .van-tabs__nav {
+        display: flex;
+        justify-content:space-between;
       }
     }
   }
