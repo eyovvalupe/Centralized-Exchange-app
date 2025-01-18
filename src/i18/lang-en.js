@@ -995,16 +995,16 @@ export default {
     defi_borrow_already: "Borrowed",
     defi_borrow_remain: "Remaining Due",
     defi_borrow_on: "Borrowing",
-    defi_borrow_repaid: "Returned",
-    defi_borrow_repay: "Return",
-    defi_borrow_go_repay: "Return",
+    defi_borrow_repaid: "Repaid",
+    defi_borrow_repay: "Repay",
+    defi_borrow_go_repay: "Repay",
 
     defi_borrow_total_due: "Total Amount Due",
 
     defi_borrow_est_due: "Estimated Amount Due",
     defi_borrowed_day: "Borrowed Days",
     defi_borrow_cal_bill: "Accrued Interest",
-    defi_borrow_return_confirm: "Returning Confirmation",
+    defi_borrow_return_confirm: "Repay Confirmation",
   },
   copy: {
     title: "Follow Orders",
