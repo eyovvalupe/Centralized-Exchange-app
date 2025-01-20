@@ -2,7 +2,7 @@
 
 export default {
   state: {
-    stakeId: '', // 质押挖矿ID
+    stakeId: JSON.parse(sessionStorage.getItem('stakeId')), // 质押挖矿ID
   },
   mutations: {
     setStakeId(state, data) {

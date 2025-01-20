@@ -75,6 +75,7 @@ import store from "@/store";
 
 const jump = (id) => {
     store.commit('setStakeId', id)
+    sessionStorage.setItem('stakeId', JSON.stringify(id))
     router.push({ name: 'stake' })
 }
 const { t } = useI18n();

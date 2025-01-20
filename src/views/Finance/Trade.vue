@@ -10,26 +10,25 @@
                     <div class="text-[0.4rem]" :class="loaded ? 'right_left_effect' : ''">{{
                         t('finance.portfolio_mining_subTitle1') }}</div>
                 </div>
-                <div class="flex mb-[0.6rem] justify-between">
-                    <div class="flex items-center relative" v-for="(name, i) in cryptoList" :key="i"
-                        v-if="cryptoList.length">
-                        <div class="flex flex-col bg-color2 px-[0.2rem] py-[0.32rem] rounded-[0.32rem] items-center"
-                            :class="cryptoList.length == 3 ? 'w-[2rem]' : cryptoList.length == 2 ? 'w-[3rem]' : 'w-[3rem]'">
+                <div class="flex mb-[0.6rem] gap-[0.4rem]">
+                    <div class="flex items-center flex-1 relative" v-for="(item, i) in itemList" :key="i"
+                        v-if="itemList.length">
+                        <div
+                            class="w-full flex flex-col bg-color2 px-[0.2rem] py-[0.32rem] rounded-[0.32rem] items-center">
                             <div class="w-[0.96rem] h-[0.96rem] mb-[0.32rem]">
-                                <img v-lazy="getStaticImgUrl(`/static/img/crypto/${name}.svg`)" alt="img" />
+                                <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.split('/')[0]}.svg`)"
+                                    alt="img" />
                             </div>
-                            <div class="mb-[0.24rem]">{{ name }}</div>
+                            <div class="mb-[0.24rem]">{{ item.name.split('/')[0] }}</div>
                             <div class="text-[0.32rem] font-standard text-color8"
-                                :class="itemsMap[symbolList[i]] ? itemsMap[symbolList[i]] > 0 ? 'up' : 'down' : ''">
+                                :class="itemsMap[item.symbol] ? itemsMap[item.symbol] > 0 ? 'up' : 'down' : ''">
                                 {{
-                                    itemsMap[symbolList[i]] ? (itemsMap[symbolList[i]] > 0 ? '+' +
-                                        itemsMap[symbolList[i]] : itemsMap[symbolList[i]]) + '%' : '--' }}
+                                    itemsMap[item.symbol] ? (itemsMap[item.symbol] > 0 ? '+' +
+                                        itemsMap[item.symbol] : itemsMap[item.symbol]) + '%' : '--' }}
                             </div>
+                            <div class="absolute w-[0.6rem] h-[0.6rem] z-[1] right-[-0.5rem] top-[1rem]" v-if="i < itemList.length - 1"><img
+                                    v-lazy="getStaticImgUrl(`/static/img/finance/plus.svg`)" alt="img" /></div>
                         </div>
-                        <div class="absolute w-[0.6rem] h-[0.6rem] z-[1]"
-                            :class="cryptoList.length == 3 ? 'right-[-0.36rem]' : cryptoList.length == 2 ? 'right-[-0.45rem]' : ''"
-                            v-if="i < cryptoList.length - 1"><img
-                                v-lazy="getStaticImgUrl(`/static/img/finance/plus.svg`)" alt="img" /></div>
                     </div>
                 </div>
                 <!-- 挖矿详情 -->
@@ -121,9 +120,9 @@
                         <div class="flex flex-col justify-between">
                             <div class="flex">
                                 <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative"
-                                    :class="i ? '-ml-[0.1rem]' : ''" v-if="stakeInfo.name" :key="i"
-                                    v-for="(item, i) in stakeInfo.name.split('+')"><img
-                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="img" /></div>
+                                    :class="i ? '-ml-[0.1rem]' : ''" v-if="!isEmpty(stakeInfo)" :key="i"
+                                    v-for="(item, i) in stakeInfo.items"><img
+                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.split('/')[0]}.svg`)" alt="img" /></div>
                             </div>
                             <div class="text-[0.32rem]">{{ stakeInfo.name ? stakeInfo.name : '--' }}</div>
                         </div>
@@ -158,9 +157,9 @@
                                     form1.amount }}</span></div>
                         <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{
                             t('finance.portfolio_mining_header')
-                            }}<span class="text-white">&nbsp;{{ form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
+                        }}<span class="text-white">&nbsp;{{ form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
                                 t('finance.portfolio_mining_noti_fee')
-                                }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
+                            }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
                     </div>
                 </div>
                 <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
@@ -260,7 +259,7 @@
                         </div>
                         <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
                             maxStockNum
-                            }}</b>
+                        }}</b>
                     </div>
                 </div>
 
@@ -316,6 +315,7 @@ import { useRoute } from 'vue-router';
 import { _realtime, _stake, _stakeGet } from '@/api/api';
 import store from '@/store';
 import router from '@/router';
+import { isEmpty } from '@/utils/isEmpty';
 
 const route = useRoute();
 const { t } = useI18n();
@@ -346,44 +346,20 @@ const maxStockNum = computed(() => {
         return usdtWallet.amount
     }
 })
-const cryptoList = computed(() => {
-    if (stakeInfo.value.name) return stakeInfo.value.symbol.split(',')
+const itemList = computed(() => {
+    if (!isEmpty(stakeInfo.value)) return stakeInfo.value.items
     else return [];
 })
-const symbolList = computed(() => {
-    if (stakeInfo.value.symbol) return stakeInfo.value.symbol.split(',')
-    else return [];
-})
-// const itemsMap = computed(() => {
-//     if (Object.keys(stakeInfo.value).length) {
-//         const symbols = stakeInfo.value.symbol.split(',');
-//         const items = realtimeData.value.map(data => {
-//             const datas = {};
-//             for (const symbol of symbols) {
-//                 if (data.symbol == symbol) {
-//                     datas[symbol] = data;
-//                 }
-//             }
-//             return datas;
-//         }).filter(v => Object.keys(v).length)
-//         return items
-//     }
-//     else return [];
-// })
 const loadingRealtime = ref(false)
 const itemsMap = ref({})
 const getItemsMapData = async () => {
-    if (!stakeInfo.value.symbol || loadingRealtime.value) return {};
+    if (isEmpty(stakeInfo.value) || loadingRealtime.value) return {};
     loadingRealtime.value = true;
     const datas = {};
-    for (const symbol of stakeInfo.value.symbol.split(',')) {
+    for (const symbol of stakeInfo.value.items) {
         try {
-            if (symbol.includes('USD')) {
-                datas[symbol] = 0;
-            } else {
-                const data = await _realtime({ symbol });
-                datas[symbol] = data.data[0].ratio;
-            }
+            const data = await _realtime({ symbol: symbol.symbol });
+            datas[symbol.symbol] = data.data[0].ratio;
         } catch (error) {
             console.error('Error fetching data for symbol:', symbol, error);
         }
@@ -449,17 +425,16 @@ const changePercent = () => {
 const stakeInfo = ref({})
 
 const loading = ref(false)
-const getStakeData = () => {
-    if (loading.value) return;
-    loading.value = true;
-    _stakeGet({ id: stakeId.value })
-        .then(res => {
-            if (res.code == 200) {
-                stakeInfo.value = res.data
-            }
-        })
-        .catch((err) => console.error(err))
-        .finally(() => loading.value = false)
+const getStakeData = async () => {
+    try {
+        if (loading.value) return;
+        loading.value = true;
+        stakeInfo.value = (await _stakeGet({ id: stakeId.value })).data
+        loading.value = false
+    } catch (err) {
+        console.error(err)
+        loading.value = false
+    }
 }
 
 const submit = () => {
