@@ -20,10 +20,10 @@
                             </div>
                             <div class="mb-[0.24rem]">{{ name }}</div>
                             <div class="text-[0.32rem] font-standard text-color8"
-                                :class="itemsMap[symbolList[i]] ? itemsMap[symbolList[i]].ratio > 0 ? 'up' : 'down' : ''">
+                                :class="itemsMap[symbolList[i]] ? itemsMap[symbolList[i]] > 0 ? 'up' : 'down' : ''">
                                 {{
-                                    itemsMap[symbolList[i]] ? (itemsMap[symbolList[i]].ratio > 0 ? '+' +
-                                        itemsMap[symbolList[i]].ratio : itemsMap[symbolList[i]].ratio) + '%' : '--' }}
+                                    itemsMap[symbolList[i]] ? (itemsMap[symbolList[i]] > 0 ? '+' +
+                                        itemsMap[symbolList[i]] : itemsMap[symbolList[i]]) + '%' : '--' }}
                             </div>
                         </div>
                         <div class="absolute w-[0.6rem] h-[0.6rem] z-[1]"
@@ -347,7 +347,7 @@ const maxStockNum = computed(() => {
     }
 })
 const cryptoList = computed(() => {
-    if (stakeInfo.value.name) return stakeInfo.value.name.split('+')
+    if (stakeInfo.value.name) return stakeInfo.value.symbol.split(',')
     else return [];
 })
 const symbolList = computed(() => {
@@ -378,8 +378,12 @@ const getItemsMapData = async () => {
     const datas = {};
     for (const symbol of stakeInfo.value.symbol.split(',')) {
         try {
-            const data = await _realtime({ symbol });
-            datas[symbol] = data.data[0];
+            if (symbol.includes('USD')) {
+                datas[symbol] = 0;
+            } else {
+                const data = await _realtime({ symbol });
+                datas[symbol] = data.data[0].ratio;
+            }
         } catch (error) {
             console.error('Error fetching data for symbol:', symbol, error);
         }
@@ -429,8 +433,8 @@ const onSliderChange = (newValue) => {
 const changePercent = () => {
     if (maxStockNum.value == "--" || !form1.value.amount)
         return (sliderValue.value = 0);
-        if (form1.value.amount < minAmount.value || form1.value.amount > maxAmount.value) { amountStatus.value = 'error' }
-        else amountStatus.value = 'success';
+    if (form1.value.amount < minAmount.value || form1.value.amount > maxAmount.value) { amountStatus.value = 'error' }
+    else amountStatus.value = 'success';
     let v = new Decimal(form1.value.amount);
     form1.value.amount = v.sub(v.mod(step.value));
     let p = new Decimal(form1.value.amount)

@@ -14,14 +14,15 @@
                     </div>
                     <!-- 加密代币价格 -->
                     <div class="flex w-full bg-color py-[0.2rem] rounded-[0.32rem] mb-[0.12rem]">
-                        <div class="flex flex-col px-[0.28rem] flex-1" v-for="(symbol, i) in parseSymbol(item.symbol)">
+                        <div class="flex flex-col px-[0.28rem] flex-1" v-for="(symbol, i) in item.items">
                             <div class="flex items-center mb-[0.1rem]">
-                                <div class="w-[0.35rem] h-[0.35rem] mr-[0.1rem]"><img
-                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${dataModify2(item.name)[i]}.svg`)"
+                                <div class="w-[0.4rem] h-[0.4rem] mr-[0.1rem]"><img
+                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${symbol.name.split('/')[0]}.svg`)"
                                         alt="img" /></div>
-                                <div class="text-color3 text-[0.28rem]">{{ dataModify2(item.name)[i] }}</div>
+                                <div class="text-color3 text-[0.28rem]">{{ symbol.name.split('/')[0] }}</div>
                             </div>
-                            <div class="text-[0.28rem] ml-[0.45rem]">{{ priceList[symbol] ? priceList[symbol] : '--' }}
+                            <div class="text-[0.28rem] font-semibold ml-[0.45rem]">{{ priceList[symbol.symbol] ?
+                                priceList[symbol.symbol] : '--' }}
                             </div>
                         </div>
                     </div>
@@ -33,9 +34,10 @@
                                 <div class="text-[0.28rem] text-color2 mr-[0.2rem]">{{ t('finance.portfolio_yield') }}
                                 </div>
                             </div>
-                            <div class="text-[0.24rem] mb-[0.2rem] relative">{{ dataModify3(item.returnrate)[0] + '-' +
-                                dataModify3(item.returnrate)[1] + '/' }}{{
-                                    t('finance.portfolio_day') }}</div>
+                            <div class="text-[0.32rem] font-semibold mb-[0.2rem] relative">{{
+                                dataModify3(item.returnrate)[0] + '-' +
+                                dataModify3(item.returnrate)[1] }}<span class="text-[0.24rem] font-normal">{{ '%/' +
+                                    t('finance.portfolio_day') }}</span></div>
                         </div>
                         <div class="w-1/2 h-full flex flex-col px-[0.28rem] py-[0.2rem]">
                             <div class="flex mb-[0.2rem] relative">
@@ -43,8 +45,9 @@
                                     }}
                                 </div>
                             </div>
-                            <div class="text-[0.24rem] mb-[0.2rem] relative">{{ item.days ? item.days : '--' }}{{
-                                t('finance.portfolio_day_multi') }}</div>
+                            <div class="text-[0.32rem] font-semibold mb-[0.2rem] relative">{{ item.days ? item.days : '--' }}<span
+                                    class="text-[0.24rem] font-normal">{{
+                                        t('finance.portfolio_day_multi') }}</span></div>
                         </div>
                     </div>
                     <Button class="submit ripple-btn" @click="jump(item.id)"><span class="text-[0.32rem] font-bold">{{
@@ -105,10 +108,9 @@ const getRealData = async () => {
         loading.value = true;
         const prices = {};
         for (const item of props.list) {
-            const symbols = parseSymbol(item.symbol)
-            for (const symbol of symbols) {
-                const data = await _realtime({ symbol })
-                prices[symbol] = data.data[0].price;
+            for (const symbol of item.items) {
+                const data = await _realtime({ symbol: symbol.symbol })
+                prices[symbol.symbol] = data.data[0].price;
             }
         }
         priceList.value = {
