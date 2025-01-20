@@ -674,19 +674,12 @@ export const _pledgeRepay = (data = {}) => {
 
 // 跟单列表
 export const _copyList= (data = {}) => {
-  return http.post(`/anon/v1/user/copy/list`, data, {
+  return http.post(`/anon/v1/copy/list`, data, {
     custom: { auth: false, toast: false, retry: true },
-  });
-};
-// 我的跟单数据 
-export const _copyMycopy= (data = {}) => {
-  return http.post(`/authc/v1/copy/mycopy`, data, {
-    custom: { auth: true, toast: false, retry: true },
   });
 };
 // 我的跟单列表
 export const _copyMyList= (data = {}) => {
-  console.error('参数', data)
   return http.post(`/authc/v1/copy/mycopy`, data, {
     custom: { auth: true, toast: false, retry: true },
   });

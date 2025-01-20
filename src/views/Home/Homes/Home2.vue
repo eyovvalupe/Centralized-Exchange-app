@@ -69,9 +69,9 @@
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <div class="follow-btn wow slideInLeft">{{ t('copy.copy_option') }}</div>
-            </div>
+            </div> -->
             <div class="scroll-box">
                 <div class="scroll-con">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
