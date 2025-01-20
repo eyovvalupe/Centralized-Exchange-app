@@ -961,6 +961,7 @@ export default {
     portfolio_order_tab2: "已贖回",
 
     portfolio_order_finish_time: "到期時間",
+    portfolio_repay_date: "贖回時間",
 
     defi_borrow: "DeFi借幣",
 

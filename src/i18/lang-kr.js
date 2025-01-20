@@ -958,6 +958,7 @@ export default {
     portfolio_order_tab1: "포지션",
     portfolio_order_tab2: "상환 완료",
     portfolio_order_finish_time: "만료 일자",
+    portfolio_repay_date: "상환 시간",
 
     defi_borrow: "디파이 대출",
 

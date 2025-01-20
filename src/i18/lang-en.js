@@ -973,6 +973,7 @@ export default {
     portfolio_order_tab2: "Redeemed",
 
     portfolio_order_finish_time: "Expiration Date",
+    portfolio_repay_date: "Redemption Time",
 
     defi_borrow: "DeFi Borrowing",
 

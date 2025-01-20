@@ -132,8 +132,8 @@ export default {
     security: "セキュリティ",
     about: "概要",
     logout: "ログアウト",
-    already_set_google: "Google認証器が設定済み",
-    not_set_google_yet: "Google認証器は未設定",
+    already_set_google: "Google認証器設定済み",
+    not_set_google_yet: "Google認証器未設定",
     message_box_con: "現在、ログアウトしてもよろしいですか？",
     message_box_confirm: "確認",
     message_box_cancel: "キャンセル",
@@ -959,6 +959,7 @@ export default {
     portfolio_order_tab1: "ポジション",
     portfolio_order_tab2: "償還済み",
     portfolio_order_finish_time: "有効期限",
+    portfolio_repay_date: "償還日",
 
     defi_borrow: "DeFi 借入",
 

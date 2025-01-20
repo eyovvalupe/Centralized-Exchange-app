@@ -958,7 +958,7 @@ export default {
 
     //未处理韩，日语言
     portfolio_order_finish_time: "到期时间",
-
+    portfolio_repay_date: "赎回时间",
 
     defi_borrow: "DeFi借币",
 
