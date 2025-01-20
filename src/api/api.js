@@ -653,21 +653,21 @@ export const _pledgePara = (data = {}) => {
 
 //借币
 export const _pledgeApply = (data = {}) => {
-  return http.post(`/anon/v1/pledge/apply`, data, {
+  return http.post(`/authc/v1/pledge/apply`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };
 
 //我的借币订单
 export const _pledgeOrders = (data = {}) => {
-  return http.post(`/anon/v1/pledge/orders`, data, {
+  return http.post(`/authc/v1/pledge/orders`, data, {
     custom: { auth: false, toast: false, retry: true },
   });
 };
 
 //借币还款
 export const _pledgeRepay = (data = {}) => {
-  return http.post(`/anon/v1/pledge/repay`, data, {
+  return http.post(`/authc/v1/pledge/repay`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };

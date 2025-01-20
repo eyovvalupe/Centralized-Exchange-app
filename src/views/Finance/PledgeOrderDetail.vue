@@ -5,7 +5,7 @@
             class=" mt-[1.42rem] mx-[0.32rem] mb-[0.32rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center ">
             <div class="flex flex-col gap-[0.32rem] justify-between items-center">
                 <div class="text-color2 text-[0.32rem]">{{ t('finance.defi_borrow_est_due') }}({{ order.symbol }})</div>
-                <div class="text-[0.6rem] text-color font-[600]">{{ order.totalamount }}</div>
+                <div class="text-[0.6rem] text-color font-[600]">{{ order.loan }}</div>
             </div>
         </div>
         <div
@@ -47,7 +47,7 @@
                 </div>
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.portfolio_order_finish_time') }}</div>
-                    <div class="text-[0.28rem]">{{ order.date }}</div>
+                    <div class="text-[0.28rem]">{{ order.expirydate }}</div>
                 </div>
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.defi_daily_interest') }}</div>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_cal_bill') }}</div>
-                    <div class="text-[0.28rem]">200 <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
+                    <div class="text-[0.28rem]">{{ order.total }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
                 </div>
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.defi_service_charge') }}</div>
@@ -131,13 +131,13 @@
                         </div>
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ t('finance.defi_service_charge') }}</div>
-                            <div class="text-[0.28rem]">200 <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
+                            <div class="text-[0.28rem]">{{order.fee}} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
                         </div>
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ t('trade.ai_position_order_id') }}</div>
                             <div class="text-[0.28rem] flex items-center gap-[0.12rem]">
-                                20245154545456555
-                                <div class="w-[0.32rem] h-[0.32rem]" @click="copy('20245154545456555')">
+                                {{ order.order_no }}
+                                <div class="w-[0.32rem] h-[0.32rem]" @click="copy(order.order_no)">
                                     <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
                                 </div>
                             </div>
@@ -170,20 +170,9 @@ import { _pledgeRepay } from '@/api/api'
 import { useI18n } from "vue-i18n";
 import FormItem from "@/components/Form/FormItem.vue";
 import { reactive } from 'vue';
-
-const order = reactive({
-    totalamount:Math.round(1e9 * Math.random()),
-    order_no:"921581771",
-    symbol:"USDT",
-    amount:Math.round(1e8 * Math.random()),
-    loan:Math.round(1e9 * Math.random()),
-    status:'open',
-    days:7,
-    totainterest:Math.round(1e4 * Math.random()),
-    interest:0.006,
-    fee:Math.round(1e3 * Math.random()),
-    date:"2025/01/12 11:59"
-})
+import {useRoute } from 'vue-router'
+const route = useRoute()
+const order = reactive(route.query)
 
 const safeword = ref('')
 const { t } = useI18n();
@@ -213,9 +202,10 @@ const submit = ()=>{
         token:sessionToken.value,
         safeword:safeword.value
     }).then((res)=>{
-        if(res.code == 1){
+        if(res.code == 200){
             showToast('归还成功')
             order.status = 'close'
+            visible.value = false
         }
     }).finally(()=>{
         isLoading.value = false

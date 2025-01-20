@@ -18,18 +18,17 @@
                 </div>
             </div>
         </div>
-        <Tabs key="form" type="sub-stake" v-model="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
-            <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.defi_borrow_on')">
+        <Tabs key="form" type="sub-stake" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
+            <Tab name="open" style="min-width: 2rem" :title="t('finance.defi_borrow_on')">
             </Tab>
-            <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.defi_borrow_repay')">
-                
+            <Tab name="close" style="min-width: 2rem" :title="t('finance.defi_borrow_repay')">
             </Tab>
         </Tabs>
         <div class="min-h-[10rem] mt-[0.4rem]">
             <div class="flex items-center justify-center p-[0.4rem]" v-if="isLoading">
                 <Loading />
             </div>
-            <NoData v-if="false"/>
+            <NoData v-if="!isLoading && !list.length"/>
             <PledgeOrderList :list="list"/>
         </div>
         <div class="h-[1.5rem]"></div>
@@ -43,7 +42,8 @@ import PledgeOrderList from './PledgeOrderList.vue';
 import {_pledgeOrders} from '@/api/api'
 import eventBus from "@/utils/eventBus";
 import { onBeforeUnmount, onMounted } from "vue";
-const activeTab = ref(0)
+
+const activeTab = ref('open')
 const { t } = useI18n();
 const page = ref(0)
 const list = ref([])
@@ -51,24 +51,14 @@ const isLoading = ref(false)
 const getList = ()=>{
     isLoading.value = true
     page.value ++
-    const status = activeTab.value == 0 ? 'open' : 'close'
     _pledgeOrders({
         page:page.value,
-        status
+        status:activeTab.value
     }).then(res=>{
-        
-        console.log(res)
+        if(res.code == 200){
+            list.value = res.data || []
+        }
     }).finally(()=>{
-        list.value = [{
-            order_no:"921581771",
-            symbol:"USDT",
-            amount:Math.round(1e8 * Math.random()),
-            loan:Math.round(1e9 * Math.random()),
-            status,
-            days:7,
-            totainterest:Math.round(1e4 * Math.random()),
-            fee:Math.round(1e3 * Math.random())
-        }]
         isLoading.value = false
     })
 }
