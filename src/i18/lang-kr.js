@@ -922,7 +922,7 @@ export default {
     market_order_details_con2: "판매자가 제공한 은행 계좌로 이체해 주세요",
   },
   finance: {
-    portfolio: "금융",
+    portfolio: "재무관리",
     portfolio_menu: "투자 포트폴리오",
     portfolio_title: "스테이킹 및 채굴",
     portfolio_order: "주문",
