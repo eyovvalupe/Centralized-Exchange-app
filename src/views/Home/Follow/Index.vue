@@ -5,7 +5,7 @@
 
         <!-- Tab -->
         <div class="tabs">
-            <div class="tab" :class="{ 'active_tab': active == 1 }" @click="changeTab(1)">{{ $t('copy.copy_tab_tab1') }}</div>
+            <div class="tab" :class="{ 'active_tab': active == 1 }" @click="changeTab(1)">{{ $t('copy.copy_portfolio') }}</div>
             <div class="tab" :class="{ 'active_tab': active == 2 }" @click="changeTab(2)">{{ $t('copy.copy_tab_tab2') }}</div>
         </div>
 

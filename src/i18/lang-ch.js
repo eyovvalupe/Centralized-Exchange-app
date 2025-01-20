@@ -11,6 +11,8 @@ export default {
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暫無收款賬戶",
+    spot: "現貨",
+    option: "期貨",
   },
   home: {
     login: "登录",
@@ -959,6 +961,7 @@ export default {
     portfolio_order_tab2: "已贖回",
 
     portfolio_order_finish_time: "到期時間",
+    portfolio_repay_date: "贖回時間",
 
     defi_borrow: "DeFi借幣",
 
@@ -1004,6 +1007,7 @@ export default {
     copy_ground: "跟單廣場",
     copy_tab_tab1: "跟單",
     copy_tab_tab2: "訂單",
+    copy_portfolio: "跟單",
     copy_profit_rate: "勝率",
     copy_belong_profit: "收益",
     copy_belong_title: "帶單表現",

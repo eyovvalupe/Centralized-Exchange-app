@@ -12,7 +12,7 @@
                         <template #bottom-con>
                             <div @click="openConfirmBox"
                                 style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.08rem 0 0.24rem">
-                                <div style="font-size: 0.24rem;color:var(--ex-white);">现金账户</div>
+                                <div style="font-size: 0.24rem;color:var(--ex-white);">{{ t('assets.wallet_cash_value') }}</div>
                                 <div
                                     style="color: var(--ex-white); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
                                     <span>{{ t("assets.wallet_available_sim") }}</span>
@@ -81,8 +81,8 @@ const maxStockNum = computed(() => {
 const plusLoading = ref(false)
 const submitPlus = () => {
     if (plusLoading.value) return
-    if (!amount.value || amount.value < 0) return showToast('请输入金额')
-    if (!safePass.value) return showToast('请输入支付密码')
+    if (!amount.value || amount.value < 0) return showToast(t('topUpCrypto.no_amount_msg'))
+    if (!safePass.value) return showToast(t('trade.ai_opening_trade_password'))
     plusLoading.value = true
     store.dispatch("updateSessionToken").then(token => {
         setTimeout(() => {
@@ -98,7 +98,7 @@ const submitPlus = () => {
                     amount: amount.value,
                     safeword: safePass.value
                 }).then(() => {
-                    showToast('操作成功')
+                    showToast(t('safety.success_title'))
                     emits('success', {})
                 }).finally(() => {
                     plusLoading.value = false

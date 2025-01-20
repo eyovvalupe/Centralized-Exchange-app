@@ -23,20 +23,20 @@
             @click="openDialog('from')">
             <div class="flex items-center w-full justify-between">
               <div class="account_item  flex-shrink-0">
-           
+
                 <div class="item_content">
                   <span>{{ _accountMap[form.from] }}</span>
                 </div>
               </div>
 
               <div class="account_item relative">
-                <div class="account_item_icon" v-if="Object.keys(form.fromCurrency).length">
-                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name.toUpperCase()}.svg`)"
-                    alt="img" />
+                <div class="account_item_icon" v-if="!isEmpty(form.fromCurrency)">
+                  <img :key="form.fromCurrency.name"
+                    v-lazy="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name}.svg`)" alt="img" />
                 </div>
                 <div class="item_content mr-[0.1rem]">
                   <span class="monty_span">{{
-                    form.fromCurrency.name || ""
+                    !isEmpty(form.fromCurrency) ? form.fromCurrency.name : ""
                   }}</span>
                 </div>
                 <div class="w-[0.36rem] h-[0.36rem]">
@@ -48,11 +48,11 @@
         </div>
         <div class="w-full flex gap-[0.24rem] justify-between items-center">
           <div class="flex-2">
-            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0" @focus="clickKey = 'from'"
-              @blur="clickKey = ''" />
+            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0"
+              @focus="clickKey = 'from'" @blur="clickKey = ''" />
           </div>
           <div class="flex-1 text-end h-full items-center text-color3">
-            {{ form.fromCurrency ? form.fromCurrency.name : '--' }}
+            {{ !isEmpty(form.fromCurrency) ? form.fromCurrency.name : '--' }}
           </div>
         </div>
       </div>
@@ -76,12 +76,12 @@
               </div>
 
               <div class="account_item">
-                <div class="account_item_icon">
-                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name.toUpperCase()}.svg`)"
-                    alt="img" />
+                <div class="account_item_icon" v-if="!isEmpty(form.toCurrency)">
+                  <img :key="form.toCurrency.name"
+                    v-lazy="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name}.svg`)" alt="img" />
                 </div>
                 <div class="item_content mr-[0.1rem]">
-                  <span class="monty_span">{{ form.toCurrency.name || "" }}</span>
+                  <span class="monty_span">{{ !isEmpty(form.toCurrency) ? form.toCurrency.name : "" }}</span>
                 </div>
                 <div class="w-[0.36rem] h-[0.36rem]">
                   <img v-lazy="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
@@ -90,11 +90,11 @@
             </div>
           </div>
         </div>
-   
+
         <div class="w-full flex  gap-[0.24rem] justify-between items-center">
           <div class="flex-2">
-            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0" @focus="clickKey = 'to'"
-              @blur="clickKey = ''" />
+            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0"
+              @focus="clickKey = 'to'" @blur="clickKey = ''" />
           </div>
           <div class="flex-1 text-end h-full items-center text-color3">
             {{ form.toCurrency ? form.toCurrency.name : '--' }}
@@ -102,13 +102,15 @@
         </div>
       </div>
 
-      <div class="rate_tip" v-if="formType == 'swap'">
+      <div class="rate_tip" v-if="!isEmpty(form.fromCurrency) && formType == 'swap'">
         1{{ form.fromCurrency.name }} ≈ {{ rateLoading ? "--" : rate }}
         {{ form.toCurrency.name }}
       </div>
     </div>
 
-    <Button @click="openSafePass" :loading="loading" round class="submit ripple-btn" type="primary">{{ $t("transfer.btn") }}</Button>
+    <Button @click="openSafePass" :loading="loading" round class="submit ripple-btn" type="primary">{{
+      $t("transfer.btn")
+    }}</Button>
 
     <!-- 充提记录 -->
     <RecordList ref="RecordListRef" />
@@ -144,7 +146,7 @@
 import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import { Button, Popup, showToast, Picker, Row, Col } from "vant";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { _accountMap, _accountMapList } from "@/utils/dataMap";
 import store from "@/store";
 import SafePassword from "@/components/SafePassword.vue";
@@ -157,6 +159,7 @@ import Decimal from "decimal.js";
 import AccountCheck from "@/components/AccountCheck.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
+import { isEmpty } from "@/utils/isEmpty";
 
 const { t } = useI18n();
 const AccountCheckRef = ref();
@@ -169,12 +172,9 @@ const blurInput = () => {
     errStatus.value = focus.value = false;
   }, 0);
 };
-const assets        = computed(() => store.state.assets || {});
-const wallet        = computed(() => store.state.wallet || []); // 钱包
-const elseWallet    = computed(() => store.state.elseWallet || []); // 其他账户钱包
-const elseWalletMap = computed(() => store.state.elseWalletMap || []); // 其他账户钱包
-const elseCoinMap   = computed(() => store.state.elseCoinMap || {}); // 其他账户的币种
-const userInfo      = computed(() => store.state.userInfo)
+const wallet = computed(() => store.state.wallet || []); // 钱包
+const elseWallet = computed(() => store.state.elseWallet || []); // 其他账户钱包
+const userInfo = computed(() => store.state.userInfo)
 
 // 表单
 const loading = ref(false);
@@ -186,19 +186,27 @@ const form = ref({
   amount: "",
 });
 const formType = computed(() => {
+  if (isEmpty(form.value.fromCurrency) || isEmpty(form.value.toCurrency)) return '';
   // 币种相同是划转  币种不同是兑换
   if (form.value.fromCurrency.currency == form.value.toCurrency.currency)
     return "transfer";
   return "swap";
 });
+
 // 设置默认货币
-if (wallet.value[0]) {
-  form.value.fromCurrency = wallet.value[0];
+const fromCurrency = computed(() => (wallet.value[0]));
+
+const t1 = computed(() => {
+  const temp = elseWallet.value.find((item) => item.account == form.value.to);
+  if (temp) return temp;
+  return wallet.value[0]
+})
+
+const init = () => {
+  form.value.fromCurrency = fromCurrency.value
+  form.value.toCurrency = t1.value
 }
-const t1 = elseWallet.value.find((item) => item.account == form.value.to);
-if (t1) {
-  form.value.toCurrency = t1;
-} else form.value.toCurrency = wallet.value[0];
+
 setTimeout(() => {
   getRate();
 }, 0);
@@ -218,59 +226,61 @@ const hideDialog = () => {
   showPicker.value = false;
 };
 const columns1 = computed(() => {
-  return _accountMapList.map((item) => {
-    item.className =
-      clickKey.value == "from"
-        ? form.value.from == item.key
-          ? "action-sheet-active"
-          : ""
-        : form.value.to == item.key
-          ? "action-sheet-active"
-          : "";
-    if (item.key == "money") {
-      // 现金账户
-      item.currencys = wallet.value.map((w) => {
-        return {
-          key: w.currency,
-          currency: w.currency,
-          value: w.name,
-          name: w.name,
-          className:
-            clickKey.value == "from"
-              ? form.value.fromCurrency.currency == w.currency
-                ? "action-sheet-active"
-                : ""
-              : form.value.toCurrency.currency == w.currency
-                ? "action-sheet-active"
-                : "",
-        };
-      });
-    } else {
-      // 其他账户
-      // const target = elseWallet.value.map((a) => a.account == item.key);
-      item.currencys = elseWallet.value.reduce((acc, cur) => {
-        if (cur.account == item.key) {
-          acc.push({
-            key: cur.currency,
-            value: cur.name,
-            currency: cur.currency,
-            name: cur.name,
-            className:
-              clickKey.value == "from"
-                ? form.value.fromCurrency.currency == cur.currency
-                  ? "action-sheet-active"
-                  : ""
-                : form.value.toCurrency.currency == cur.currency
-                  ? "action-sheet-active"
-                  : "",
-          })
-        }
-        return acc;
-      }, [])
+  if (!isEmpty(form.value.fromCurrency) && !isEmpty(form.value.toCurrency)) {
+    return _accountMapList.map((item) => {
+      item.className =
+        clickKey.value == "from"
+          ? form.value.from == item.key
+            ? "action-sheet-active"
+            : ""
+          : form.value.to == item.key
+            ? "action-sheet-active"
+            : "";
+      if (item.key == "money") {
+        // 现金账户
+        item.currencys = wallet.value.map((w) => {
+          return {
+            key: w.currency,
+            currency: w.currency,
+            value: w.name,
+            name: w.name,
+            // className:
+            //   clickKey.value == "from"
+            //     ? form.value.fromCurrency.currency == w.currency
+            //       ? "action-sheet-active"
+            //       : ""
+            //     : form.value.toCurrency.currency == w.currency
+            //       ? "action-sheet-active"
+            //       : "",
+          };
+        });
+      } else {
+        // 其他账户
+        // const target = elseWallet.value.map((a) => a.account == item.key);
+        item.currencys = elseWallet.value.reduce((acc, cur) => {
+          if (cur.account == item.key) {
+            acc.push({
+              key: cur.currency,
+              value: cur.name,
+              currency: cur.currency,
+              name: cur.name,
+              className:
+                clickKey.value == "from"
+                  ? form.value.fromCurrency.currency == cur.currency
+                    ? "action-sheet-active"
+                    : ""
+                  : form.value.toCurrency.currency == cur.currency
+                    ? "action-sheet-active"
+                    : "",
+            })
+          }
+          return acc;
+        }, [])
 
-    }
-    return item;
-  });
+      }
+      return item;
+    });
+  } else return []
 });
 const columns = computed(() => columns1.value.filter(item => {
   return item.key != 'stock'
@@ -280,7 +290,9 @@ const customFieldName = {
   value: "key",
   children: "currencys",
 };
+
 let selectedOption = {};
+
 const onConfirm = () => {
   if (clickKey.value == "from") {
     form.value.from = selectedOption.key;
@@ -309,7 +321,6 @@ const balance = computed(() => {
   } else {
     // 转入
     const w = elseWallet.value.find((item) => item.account == form.value.from);
-    console.log(w.amount);
     return w ? w.amount : 0;
   }
 });
@@ -448,6 +459,12 @@ const changeAmount = (val) => {
     );
   }
 };
+
+store.dispatch('updateWallet')
+
+watch(wallet, (val) => {
+  init()
+})
 </script>
 
 <style lang="less" scoped>
@@ -458,7 +475,7 @@ const changeAmount = (val) => {
   :deep(.top) {
     z-index: 10;
   }
-  
+
   :deep(.van-picker-column__item) {
     justify-content: start;
   }

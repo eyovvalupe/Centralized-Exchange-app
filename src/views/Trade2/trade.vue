@@ -7,10 +7,10 @@
     <!-- 头部 -->
 
     <HeaderTabs :tabs="[
-      t('trade.header_stock'),
+      t('common.spot'),
       t('trade.header_contract'),
-      t('trade.header_aibot'),
-      t('trade.header_ipo'),
+      t('common.option'),
+      // t('trade.header_ipo'),
     ]" v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
       <!-- <template #before>
         <div class="tab_icon" @click="showNavDialogFunc()">
@@ -20,10 +20,16 @@
     </HeaderTabs>
 
     <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipeRef" @change="swipeChange">
-      <SwipeItem>
+      <!-- <SwipeItem>
         <div class="trade_body" ref="stockTradeBody" @scroll="tradeBodyScroll('stockTradeBody')">
           <StockBlock :activeTab="Number(activeTab + 1)" @showNavDialog="showNavDialogFunc" ref="StockBlockRef"
             v-if="loadedTab.includes(0)" />
+        </div>
+      </SwipeItem> -->
+      <SwipeItem>
+        <div class="trade_body" ref="contractTradeBody" @scroll="tradeBodyScroll('contractTradeBody')">
+          <ContractBlock :activeTab="Number(activeTab + 1)" :key="'constract'" :mode="'constract'"
+            @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(0)" />
         </div>
       </SwipeItem>
       <SwipeItem>
@@ -38,11 +44,11 @@
             v-if="loadedTab.includes(2)" />
         </div>
       </SwipeItem>
-      <SwipeItem>
+      <!-- <SwipeItem>
         <div class="trade_body">
           <IpoBlock :activeTab="Number(activeTab + 1)" ref="IpoBlockRef" v-if="loadedTab.includes(3)" />
         </div>
-      </SwipeItem>
+      </SwipeItem> -->
       <!-- <SwipeItem>
         <div class="trade_body">
           <ContractBlock :key="'foreign'" :mode="'foreign'" @showNavDialog="showNavDialogFunc" ref="ForeignBlockRef"
@@ -446,9 +452,6 @@ watch(() => (isFocused.value || searchStr.value), (val) => {
   display: flex;
   flex-direction: column;
 
-  :deep(span.van-tab__text) {
-    font-size: 0.32rem;
-  }
 
   :deep(.van-tab--shrink) {
     padding: 0 0.28rem;

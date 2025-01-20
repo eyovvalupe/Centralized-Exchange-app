@@ -29,9 +29,12 @@ const getList = () => {
         .then((res) => {
             if (res.code == 200) {
                 stakingList.value = res.data
+                console.log("staking list ======>", res.data)
             }
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+            console.error(err)
+        })
         .finally(() => {
             loading.value = false;
         })

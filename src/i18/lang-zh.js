@@ -2,7 +2,7 @@ export default {
   common: {
     stock: "股票",
     crypto: "合约",
-    AI: "交易机器人",
+    AI: "期货",
     IPO: "IPO",
     closed: "已收盘",
     no_data: "暂无数据",
@@ -11,6 +11,8 @@ export default {
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暂无收款账户",
+    spot: "现货",
+    option: "期货",
   },
   login: {
     login: "登录",
@@ -347,7 +349,7 @@ export default {
     order_title_buy: "买币",
     order_title_stock: "股票",
     order_title_contract: "合约",
-    order_title_bot: "交易机器人",
+    order_title_bot: "期货",
     order_title_ipo: "IPO",
     order_current_position: "当前持仓",
     order_history: "历史查询",
@@ -489,7 +491,7 @@ export default {
   trade: {
     header_stock: "股票",
     header_contract: "合约",
-    header_aibot: "交易机器人",
+    header_aibot: "期货",
     header_ipo: "IPO",
     header_forex: "外汇",
     header_block: "大宗商品",
@@ -509,7 +511,7 @@ export default {
     left_mine: "自选",
     left_stock: "股票",
     left_contract: "合约",
-    left_bot: "交易机器人",
+    left_bot: "期货",
     left_forex: "外汇",
     left_all: "全部",
 
@@ -764,7 +766,7 @@ export default {
     market_header_buy: "买币",
     market_header_stock: "股票",
     market_header_contract: "合约",
-    market_header_ai: "交易机器人",
+    market_header_ai: "期货",
     market_header_forex: "外汇",
 
     market_optional_add: "添加自选",
@@ -956,7 +958,7 @@ export default {
 
     //未处理韩，日语言
     portfolio_order_finish_time: "到期时间",
-
+    portfolio_repay_date: "赎回时间",
 
     defi_borrow: "DeFi借币",
 
@@ -995,7 +997,7 @@ export default {
   },
   copy: {
     title: "跟单",
-    copy_option: "期权",
+    copy_option: "期货",
     copy_trade: "交易",
     total_revenue: "收益",
     level: '{level}级',
@@ -1003,6 +1005,7 @@ export default {
     copy_ground: "跟单广场",
     copy_tab_tab1: "跟单",
     copy_tab_tab2: "订单",
+    copy_portfolio: "跟单",
     copy_profit_rate: "胜率",
     copy_belong_profit: "收益",
     copy_belong_title: "带单表现",
