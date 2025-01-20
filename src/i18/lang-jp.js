@@ -923,7 +923,7 @@ export default {
     market_order_details_con2: "商人の提供した銀行口座に振込してください",
   },
   finance: {
-    portfolio: "金融",
+    portfolio: "ファイナンシャルプランニング ",
     portfolio_menu: "投資ポートフォリオ",
     portfolio_title: "ステーキングマイニング",
     portfolio_order: "注文",
