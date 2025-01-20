@@ -638,7 +638,7 @@ export const _blocktradeSell = (data = {}) => {
 };
 //质押挖矿
 export const _miningList = (data = {}) => {
-  return http.post(`/anon/v1/user/mining/list`, data, {
+  return http.post(`/anon/v1/mining/list`, data, {
     custom: { auth: false, toast: true, retry: true },
   });
 };

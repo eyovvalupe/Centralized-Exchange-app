@@ -31,7 +31,9 @@ const getList = () => {
                 stakingList.value = res.data
             }
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+            console.error(err)
+        })
         .finally(() => {
             loading.value = false;
         })
