@@ -1,6 +1,6 @@
 <!-- 跟单详情 -->
 <template>
-    <div class="page-follow-detail">
+    <div class="page-follow-detail" v-if="!isEmpty(info)">
 
         <Top :title="$t('copy.copy_belong_title')"></Top>
 
@@ -21,8 +21,8 @@
             <div class="btn ripple-btn" @click="plus">{{ $t('copy.copy_tab_tab1') }}</div>
         </div>
 
-        <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'" shrink
-            >
+        <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'"
+            shrink>
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
                     <div class="follow-info-box">
@@ -108,44 +108,45 @@
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab3')" name="2">
                 <div class="follow-box">
-                   <div class="table">
-                    <div class="th">
-                        <div class="td">{{ $t('copy.copy_belong_subtitle5') }}</div>
-                        <div class="td">{{ $t('copy.copy_belong_subtitle6') }}</div>
-                        <div class="td td-l">{{ $t('copy.copy_belong_subtitle7') }}</div>
-                    </div>
-                    <div class="tr mask-btn" v-for="(item, i) in follows" :key="i">
-                        <div class="td">
-                            <div class="user">
-                                <!-- <div class="avatar"></div> -->
-                                <div>{{ item.name }}</div>
+                    <div class="table">
+                        <div class="th">
+                            <div class="td">{{ $t('copy.copy_belong_subtitle5') }}</div>
+                            <div class="td">{{ $t('copy.copy_belong_subtitle6') }}</div>
+                            <div class="td td-l">{{ $t('copy.copy_belong_subtitle7') }}</div>
+                        </div>
+                        <div class="tr mask-btn" v-for="(item, i) in follows" :key="i">
+                            <div class="td">
+                                <div class="user">
+                                    <!-- <div class="avatar"></div> -->
+                                    <div>{{ item.name }}</div>
+                                </div>
+                            </div>
+                            <div class="td">
+                                <div>{{ item.amount }}</div>
+                            </div>
+                            <div class="td td-l up" :class="[item.returnamount < 0 ? 'down' : 'up']">
+                                <div>{{ item.returnamount }}</div>
+                                <div style="margin-top: 0.16rem;">{{ item.returnrate > 0 ? '+' : '' }}{{
+                                    item.returnrate }}%</div>
                             </div>
                         </div>
-                        <div class="td">
-                            <div>{{ item.amount }}</div>
-                        </div>
-                        <div class="td td-l up" :class="[ item.returnamount < 0 ? 'down' : 'up' ]">
-                            <div>{{ item.returnamount }}</div>
-                            <div style="margin-top: 0.16rem;">{{ item.returnrate > 0 ? '+' : '' }}{{ item.returnrate}}%</div>
-                        </div>
                     </div>
-                   </div>
                 </div>
             </Tab>
         </Tabs>
 
 
         <!-- 跟单弹窗 -->
-    <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
-        <FollowSubmit v-if="showPlus" @success="showPlus = false" :item="info" :mode="'follow'"  />
-    </BottomPopup>
+        <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
+            <FollowSubmit v-if="showPlus" @success="showPlus = false" :item="info" :mode="'follow'" />
+        </BottomPopup>
     </div>
 </template>
 
 <script setup>
 import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
-import { ref } from "vue"
+import { computed, ref, watch } from "vue"
 import NoData from "@/components/NoData"
 import { Tab, Tabs } from "vant";
 import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
@@ -154,11 +155,12 @@ import { useRoute } from "vue-router"
 import BottomPopup from "@/components/BottomPopup.vue";
 import FollowSubmit from "../components/FollowSubmit.vue"
 import { useI18n } from "vue-i18n";
+import { isEmpty } from "@/utils/isEmpty";
+import store from "@/store";
 
-const {t} = useI18n()
+const { t } = useI18n()
 const route = useRoute()
 const active = ref(1)
-
 
 // 跟单
 const showPlus = ref(false)
@@ -168,33 +170,50 @@ const plus = () => {
 
 
 // 跟单详情
+const copyItem = computed(() => store.state.copyItem || {})
 const info = ref({})
+const orders = ref([])
 const follows = ref([])
+
 const getInfo = () => {
-    info.value = route.query || {}
+    if (isEmpty(copyItem.value)) return;
+    console.log(copyItem.value.id)
     // 详情
     _copyGet({
-        uid: route.query.uid
+        uid: copyItem.value.id
     }).then(res => {
         info.value = res.data || {}
-        console.error('详情', res)
-    })
+        console.log('详情 =======> ', res)
+    }).catch(err => console.error(err))
+        .finally(() => {
+
+        });
     // 带单
     _copyOrders({
-        uid: route.query.uid,
+        uid: copyItem.value.id,
         status: 'open',
         page: 1
     }).then(res => {
-        console.error('带单', res)
-    })
+        orders.value = res.data || []
+        console.log('带单 ======> ', res)
+    }).catch(err => console.error(err)).finally(() => {
+
+    });
     // 跟单
     _copyUsers({
-        uid: route.query.uid,
+        uid: copyItem.value.id,
     }).then(res => {
         follows.value = res.data || []
-    })
+        console.log("followers =======>", res.data)
+    }).catch((err) => console.error(err)).finally(() => {
+
+    });
 }
 getInfo()
+
+watch(copyItem, (val) => {
+    getInfo();
+})
 
 
 
@@ -453,7 +472,7 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
             background-color: var(--ex-bg-color3);
         }
 
-        
+
 
         .td {
             flex: 1;
@@ -461,9 +480,11 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             .name {
                 font-size: 0.28rem;
             }
+
             .fever {
                 margin-top: 0.2rem;
                 height: 0.3rem;
@@ -472,20 +493,23 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-color: rgba(255,255,255,0.1);
+                background-color: rgba(255, 255, 255, 0.1);
             }
+
             .tag {
                 margin-bottom: 0.2rem;
                 margin-top: 0;
                 height: 0.36rem;
 
             }
+
             .user {
                 width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 font-size: 0.28rem;
+
                 .avatar {
                     width: 0.4rem;
                     height: 0.4rem;
@@ -495,9 +519,11 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
                 }
             }
         }
+
         .td-s {
             align-items: flex-start;
         }
+
         .td2 {
             flex: 2;
         }

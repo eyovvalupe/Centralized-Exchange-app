@@ -42,7 +42,6 @@
                 </div>
 
                 <NoData v-if="!myList.length" />
-                {{ console.log("copy list ========> ", myList) }}
                 <div class="list-i" v-for="(item, i) in myList" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
                 </div>

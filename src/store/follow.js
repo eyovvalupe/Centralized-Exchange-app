@@ -5,8 +5,12 @@ export default {
   state: {
     followList: [], // 跟单列表
     myCopy: [], // 我的跟单
+    copyItem: JSON.parse(sessionStorage.getItem('copyItem'))
   },
   mutations: {
+    setCopyItem(state, data) {
+      state.copyItem = data
+    },
     setFollowList(state, data) {
       state.followList = data || []
     },
