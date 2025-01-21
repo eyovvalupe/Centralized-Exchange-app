@@ -134,7 +134,7 @@
                 </div>
             </Tab>
         </Tabs>
-
+        {{ console.log(copyItem) }}
 
         <!-- 跟单弹窗 -->
         <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
@@ -182,7 +182,7 @@ const getInfo = () => {
     console.log(copyItem.value.id)
     // 详情
     _copyGet({
-        id: `${copyItem.value.id}`
+        id: copyItem.value.id
     }).then(res => {
         info.value = res.data || {}
         console.log('详情 =======> ', res)

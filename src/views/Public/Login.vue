@@ -278,20 +278,22 @@ const submit = () => {
           store.dispatch("updateWallet");
 
           if (props.successFunc) return props.successFunc();
-          if (route.query.reurl) {
-            router.replace({
-              name: route.query.reurl,
-              query: {
-                redata: route.query.redata,
-              },
-            });
-          } else {
-            router.push({
-              name: "home",
-            });
-          }
+          // if (route.query.reurl) {
+          //   router.replace({
+          //     name: route.query.reurl,
+          //     query: {
+          //       redata: route.query.redata,
+          //     },
+          //   });
+          // } else {
+          // router.push({
+          //   name: "home",
+          // });
+          // }
         }, 300);
-        console.log('redirect')
+        router.push({
+          name: "home",
+        });
         _watchlist()
           .then((res) => {
             if (res.code == 200) {

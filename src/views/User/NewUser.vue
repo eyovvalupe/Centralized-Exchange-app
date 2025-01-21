@@ -227,7 +227,9 @@ const defaultLang = _langMap.reduce((acc, cur) => {
   if (cur.val == locale.value) acc = cur
   return acc
 }, {})
-
+const clearLastExecutionTime = () => {
+  localStorage.removeItem('lastExecutionTime');
+};
 const loginout = () => {
   if (token.value) {
     showConfirmDialog({
@@ -240,14 +242,17 @@ const loginout = () => {
       theme: 'round-button'
     })
       .then(() => {
-        _logout();
-        setTimeout(() => {
-          store.dispatch("reset");
-          store.commit("setIsLoginOpen", true);
-          router.push({
-            name: 'home'
-          })
-        }, 200);
+        _logout()
+          .then(res => {
+            setTimeout(() => {
+              clearLastExecutionTime();
+              store.dispatch("reset");
+              store.commit("setIsLoginOpen", true);
+              router.push({
+                name: 'home'
+              })
+            }, 200);
+          });
       })
       .catch(() => { });
   }

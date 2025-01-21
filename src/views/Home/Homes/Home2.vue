@@ -206,7 +206,7 @@
     <!-- 类型选择弹窗 -->
     <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')">
     </ActionSheet>
-    <NotifiModal v-if="openNotifiModal" />
+    <NotifiModal v-if="notifiOpen" />
 </template>
 
 <script setup>
@@ -249,9 +249,7 @@ const { t } = useI18n();
 const activeTab = ref(0);
 const token = computed(() => store.state.token || "");
 // 总资产
-const assets = computed(() => store.state.assets || {});
-const showPassword = ref(false)
-
+const notifiOpen = computed(() => store.state.notifiOpen);
 
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading);
@@ -307,13 +305,7 @@ onDeactivated(() => {
 // 获取推荐数据
 const commendLoading = ref(false);
 const contractList = computed(() => store.state.contractList || []);
-const marketStockCurrentList = computed(
-    () => {
-        return store.getters.getMarketStockCurrentList.map(item => {
-            return { ...item, type: 'stock' }
-        })
-    }
-);
+
 const getRecommendData = () => {
     commendLoading.value = true;
     _futures()
@@ -428,20 +420,17 @@ const jump = (name, needToken, query) => {
     });
 };
 
-const openNotifiModal = ref(false)
-const notifiLoading = ref(false)
 const getNotifiData = () => {
-    if (notifiLoading.value) return;
-    notifiLoading.value = true;
     _notifiPopup().then(res => {
         store.commit('setNotifiData', res.data);
         sessionStorage.setItem('notifiData', JSON.stringify(res.data));
-        if (isEmpty(res.data)) { openNotifiModal.value = false }
-        else {
-            openNotifiModal.value = true
-            store.commit('setNotifiOpen', true)
-        }
-    }).catch(err => console.error(err)).finally(() => { notifiLoading.value = false });
+        setTimeout(() => {
+            if (isEmpty(res.data)) { store.commit('setNotifiOpen', false) }
+            else {
+                store.commit('setNotifiOpen', true)
+            }
+        }, 50);
+    }).catch(err => console.error(err)).finally(() => { });
 }
 
 const getToday6AMTime = () => {
@@ -472,6 +461,12 @@ watch(() => (route.path), (val) => {
         const canExecute = canExecuteToday();
         if (token.value && canExecute) getNotifiData();
     };
+})
+
+watch(() => (token.value), (val) => {
+    if (val && canExecuteToday()) {
+        getNotifiData();
+    }
 })
 
 onMounted(() => {

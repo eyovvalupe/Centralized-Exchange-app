@@ -15,7 +15,7 @@
             <template v-if="active == 1">
                 <NoData v-if="!loading && !list.length" />
                 {{ console.log("copy list =======> ", followList) }}
-                <div class="list-i" v-for="(item, i) in list" :key="i">
+                <div class="list-i" v-for="(item, i) in followList" :key="i">
                     <FollowItem :item="item" :showDetail="true" />
                 </div>
             </template>
