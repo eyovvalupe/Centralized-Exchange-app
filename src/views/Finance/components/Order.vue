@@ -24,7 +24,7 @@
                     <div v-if="loading" class="w-full h-[3rem] flex items-center justify-center">
                         <Loading />
                     </div>
-                    <LoadingMore :loading="true"/>
+                    <!-- <LoadingMore :loading="true"/> -->
                 </Tab>
                 <Tab :active="activeTab == 1" style="min-width: 2rem" :title="t('finance.portfolio_order_tab2')"
                     name="1">
@@ -51,7 +51,7 @@ import OrderList from './OrderList.vue';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { _myEarn, _stakeOrder } from '@/api/api';
 import { isEmpty } from '@/utils/isEmpty';
-import LoadingMore from '@/components/LoadingMore.vue';
+// import LoadingMore from '@/components/LoadingMore.vue';
 
 const { t } = useI18n();
 const activeTab = ref(0);
