@@ -470,12 +470,12 @@ const canExecuteToday = () => {
 watch(() => (route.path), (val) => {
     if (val == '/') {
         const canExecute = canExecuteToday();
-        if (canExecute) getNotifiData();
+        if (token.value && canExecute) getNotifiData();
     };
 })
 
 onMounted(() => {
-    if (canExecuteToday()) getNotifiData();
+    if (token.value && canExecuteToday()) getNotifiData();
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();

@@ -182,7 +182,7 @@ const getInfo = () => {
     console.log(copyItem.value.id)
     // 详情
     _copyGet({
-        id: copyItem.value.id
+        id: `${copyItem.value.id}`
     }).then(res => {
         info.value = res.data || {}
         console.log('详情 =======> ', res)
