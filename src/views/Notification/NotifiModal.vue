@@ -1,23 +1,23 @@
 <template>
-  <div class="notifi_modal">
+  <div class="notifi_modal" v-if="!isEmpty(notifiData)">
     <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('取消')" :confirm-button-text="$t('查看全部')"
-      @cancel="" @confirm="jump('notification')">
+      @cancel="cancel" @confirm="jump('notification')">
       <div class="w-full h-[9.36rem] bg-color rounded-[0.32rem] mt-[0.36rem] mb-[0.32rem] p-[0.32rem]">
         <div
           class="w-full text-[0.32rem] text-color leading-[0.52rem] mb-[0.32rem] text-center px-[0.1rem] font-semibold">
-          消息标题测试消息标题测试消息标题测试标题测试标题测试标题测试标题测试标题测试标题测试
+          {{ notifiData.title }}
         </div>
         <div class="w-full text-center text-[0.28rem] text-color3 mb-[0.32rem]">
-          2024/11/26 13:00:02
+          {{ notifiData.date }}
         </div>
         <div class="w-full text-[0.28rem] leading-[0.48rem] text-color mb-[0.32rem]">
-          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+          {{ notifiData.content }}
         </div>
         <div class="rounded-[0.32rem] overflow-hidden mb-[0.32rem]">
           <img v-lazy="getStaticImgUrl('static/img/noti/noti-3.webp')" />
         </div>
         <div class="w-full text-[0.28rem] leading-[0.48rem] text-color mb-[0.32rem]">
-          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+          {{ notifiData.content }}
         </div>
       </div>
     </Dialog>
@@ -25,15 +25,25 @@
 </template>
 <script setup>
 import { Tab, Tabs, ActionSheet, Dialog } from "vant";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import router from "@/router";
 import { getStaticImgUrl } from "@/utils";
+import store from "@/store";
+import { isEmpty } from "@/utils/isEmpty";
 
-const existNotifi = ref(false);
 const jump = (url) => {
+  localStorage.setItem('lastExecutionTime', Date.now());
   router.push({
     name: url
   })
+}
+
+const notifiData = computed(() => store.state.notifiData)
+const notifiOpen = computed(() => store.state.notifiOpen)
+const existNotifi = ref(notifiOpen.value);
+
+const cancel = () => {
+  store.commit('setNotifiOpen', false)
 }
 
 onMounted(() => {
@@ -45,6 +55,10 @@ onMounted(() => {
   if (slideBtn1[0]) {
     slideBtn1[0].classList.add('ripple-btn')
   }
+})
+
+watch(notifiOpen, (val) => {
+  if (val) existNotifi.value = val
 })
 </script>
 

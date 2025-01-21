@@ -152,6 +152,7 @@ import router from "@/router";
 import { useI18n } from "vue-i18n";
 import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils";
+import { _notifiList } from "@/api/api";
 
 const { t } = useI18n();
 
@@ -171,14 +172,25 @@ const back = () => {
   router.back();
 };
 
-const jump = (url) => {
+const jump = (name) => {
   router.push({
-    name: url,
+    name,
   });
 };
 
+const page = ref(1)
+
+const loading = ref(false);
+const getData = () => {
+  if (loading.value) return;
+  loading.value = true;
+  _notifiList({
+    page: page.value
+  }).then(res => console.log("notifi list ==========> ", res.data)).catch(err => console.error(err)).finally(() => loading.value = false);
+}
+
 onMounted(() => {
-  onChange(active.value);
+  getData();
 });
 
 defineExpose({});

@@ -42,7 +42,7 @@
                 </div>
 
                 <NoData v-if="!myList.length" />
-                <div class="list-i" v-for="(item, i) in myList" :key="i">
+                <div class="list-i" v-for="(item, i) in [1,2]" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
                 </div>
             </template>
@@ -107,7 +107,6 @@ const getData = () => {
     })
 }
 getData()
-
 
 const myList = computed(() => store.state.myCopy || []) // 我的跟单
 store.dispatch('updateMyFollowList')

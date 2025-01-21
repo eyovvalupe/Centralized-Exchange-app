@@ -26,6 +26,8 @@ const store = createStore({
     accountList: [], // 收款方式列表
     sessionToken: "", // 关键请求token
     isLoginOpen: false, // 登录弹窗开关
+    notifiData: JSON.parse(sessionStorage.getItem('notifiData')),
+    notifiOpen: false,
     i18Data: {
       name: "中文简体",
       locale: "zh",
@@ -43,6 +45,12 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setNotifiOpen(state, data) {
+      state.notifiOpen = data
+    },
+    setNotifiData(state, data) {
+      state.notifiData = data
+    },
     setLanguage(state, data) {
       state.language = data
     },

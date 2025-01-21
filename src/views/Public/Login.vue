@@ -287,10 +287,11 @@ const submit = () => {
             });
           } else {
             router.push({
-              name: "user",
+              name: "home",
             });
           }
         }, 300);
+        console.log('redirect')
         _watchlist()
           .then((res) => {
             if (res.code == 200) {

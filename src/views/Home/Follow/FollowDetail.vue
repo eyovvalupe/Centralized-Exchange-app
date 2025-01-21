@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="line">
-                                <SparkLine v-if="time" :points="time" :ratio="1" />
+                                <SparkLine v-if="time" :points="points" :ratio="1" />
                             </div>
                         </div>
 
@@ -157,6 +157,8 @@ import FollowSubmit from "../components/FollowSubmit.vue"
 import { useI18n } from "vue-i18n";
 import { isEmpty } from "@/utils/isEmpty";
 import store from "@/store";
+import { getPoints } from "@/utils/index.js"
+const points = getPoints('id-123456', 100)
 
 const { t } = useI18n()
 const route = useRoute()
@@ -180,7 +182,7 @@ const getInfo = () => {
     console.log(copyItem.value.id)
     // 详情
     _copyGet({
-        uid: copyItem.value.id
+        id: copyItem.value.id
     }).then(res => {
         info.value = res.data || {}
         console.log('详情 =======> ', res)
