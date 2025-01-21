@@ -23,7 +23,13 @@
         </div>
       </div>
     </Dialog>
-    <ImagePreview v-model:show="isPreview" :imgages="['https://xximg1.meitudata.com/98qvJ5YCbyexRLR33YE4ivJEXBKP2G.jpg']" :closeable="true" @change="onChange"/>
+    <ImagePreview 
+      v-model:show="isPreview" 
+      :images="previewImages" 
+      :startPosition="index"
+      :loop="true"
+      @change="onChange"
+    />
   </div>
 </template>
 <script setup>
@@ -50,13 +56,22 @@ const cancel = () => {
 
 const isPreview = ref(false)
 const index = ref(0)
+const previewImages = computed(() => {
+  if (!notifiData.value.images) return []
+  return notifiData.value.images.split(';').map(url => getStaticImgUrl(url))
+})
+
 const showPreview = (i) => {
   index.value = i
   isPreview.value = true
 }
-const onChange = () => {
+
+const onChange = (current) => {
+  // index.value = (current + previewImages.value.length) % previewImages.value.length;
+  index.value = current;
 
 }
+
 
 onMounted(() => {
   const slideBtn = document.getElementsByClassName('van-dialog__cancel');
