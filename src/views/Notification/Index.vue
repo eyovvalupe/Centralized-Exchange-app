@@ -2,10 +2,10 @@
 <template>
   <div class="notification_page">
     <Top :title="t('消息中心')" />
-    <div class="pt-[0.16rem]">
-      <Tabs type="custom-card" v-model:active="active" :swipeable="false" animated :color="'var(--ex-primary-color)'"
-        shrink @change="onChange">
-        <Tab :title="'系统通知'" name="0">
+    <div class="pt-[1.16rem]">
+      <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab"
+        style="height: calc(var(--vh) * 100 - 0.88rem);" :swipeable="false" animated>
+        <Tab :title="'公告'" name="0">
           <div class="noti_tab">
             <div
               class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative">
@@ -65,10 +65,17 @@
                   2024/11/26 13:00:02
                 </div>
               </div>
-              <div
-                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary"
-                style="width: max-content" @click="jump('notification_detail')">
-                查看全部
+              <div class="flex">
+                <div
+                  class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary mr-[0.2rem] ripple-primary"
+                  style="width: max-content" @click="jump('notification_detail')">
+                  查看全部
+                </div>
+                <div
+                  class="px-[0.48rem] h-[0.74rem] bg-primary border-primary flex justify-center items-center rounded-[1.6rem] text-white ripple-btn"
+                  style="width: max-content" @click="jump('notification_detail')">
+                  加入活动
+                </div>
               </div>
               <div v-if="true" class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
               </div>
@@ -108,7 +115,7 @@
             </div>
           </div>
         </Tab>
-        <Tab :title="'活动'" name="1">
+        <Tab :title="'市场活动'" name="1">
           <div class="noti_tab">
             <div
               class="w-full h-[3.86rem] bg-color3 p-[0.32rem] rounded-[0.4rem] flex flex-col justify-between relative">
@@ -152,12 +159,12 @@ const route = useRoute();
 const loadTab = ref([]);
 const active = ref(0);
 const onChange = async (val) => {
-  active.value = val;
-  if (loadTab.value.indexOf(val) == -1) {
-    loadTab.value.push(val);
-  }
-  if (val == 2) {
-  }
+  // active.value = val;
+  // if (loadTab.value.indexOf(val) == -1) {
+  //   loadTab.value.push(val);
+  // }
+  // if (val == 2) {
+  // }
 };
 
 const back = () => {

@@ -111,7 +111,7 @@
           <img class="" v-lazy="getStaticImgUrl('/static/img/user/id_card.svg')" />
         </div>
         <div v-if="token"
-          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center pt-[0.05rem]"
+          class="absolute px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center pt-[0.025rem]"
           :class="[
             userInfo.kycl2 == 0
               ? 'bg-error'
@@ -131,7 +131,7 @@
           <img class="" v-lazy="getStaticImgUrl('/static/img/user/google.svg')" />
         </div>
         <div v-if="token"
-          class="absolute min-w-[0.76rem] w-max px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center pt-[0.05rem]"
+          class="absolute min-w-[0.76rem] w-max px-[0.05rem] top-0 ml-[1rem] mt-[0.03rem] text-white text-[0.22rem] h-[0.32rem] rounded-[0.12rem] flex items-center justify-center pt-[0.025rem]"
           :class="[userInfo.googlebind == 0 ? 'bg-error' : 'bg-primary']">
           <span v-if="userInfo.googlebind == 0">{{ $t("user_page.not_set") }}</span>
           <span v-else>{{ $t("user_page.already_set") }}</span>
