@@ -2,7 +2,6 @@
 <template>
   <div ref="root" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
-      {{ console.log(item.name.split('/')[0]) }}
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"
         @click="goInfo(props.item.type)">

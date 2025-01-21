@@ -172,6 +172,7 @@ onMounted(() => {
     setTimeout(() => {
         try {
             moreDom = document.querySelector('.loading_more')
+            console.log("more dom ===>", moreDom)
             document.querySelector('.list').addEventListener('scroll', scrolHandle)
         } catch {
         }
