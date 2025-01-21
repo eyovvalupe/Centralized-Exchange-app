@@ -114,20 +114,19 @@
                         <div class="td">{{ $t('copy.copy_belong_subtitle6') }}</div>
                         <div class="td td-l">{{ $t('copy.copy_belong_subtitle7') }}</div>
                     </div>
-                    <div class="tr mask-btn" v-for="i in 20" :key="i">
+                    <div class="tr mask-btn" v-for="(item, i) in follows" :key="i">
                         <div class="td">
                             <div class="user">
-                                <div class="avatar"></div>
-                                <div>萨达萨达</div>
+                                <!-- <div class="avatar"></div> -->
+                                <div>{{ item.name }}</div>
                             </div>
                         </div>
                         <div class="td">
-                            <div>23123</div>
-                            <div style="margin-top: 0.16rem;">23123423423</div>
+                            <div>{{ item.amount }}</div>
                         </div>
-                        <div class="td td-l up">
-                            <div>23123</div>
-                            <div style="margin-top: 0.16rem;">23123423423</div>
+                        <div class="td td-l up" :class="[ item.returnamount < 0 ? 'down' : 'up' ]">
+                            <div>{{ item.returnamount }}</div>
+                            <div style="margin-top: 0.16rem;">{{ item.returnrate > 0 ? '+' : '' }}{{ item.returnrate}}%</div>
                         </div>
                     </div>
                    </div>
@@ -170,6 +169,7 @@ const plus = () => {
 
 // 跟单详情
 const info = ref({})
+const follows = ref([])
 const getInfo = () => {
     info.value = route.query || {}
     // 详情
@@ -191,7 +191,7 @@ const getInfo = () => {
     _copyUsers({
         uid: route.query.uid,
     }).then(res => {
-        console.error('跟单', res)
+        follows.value = res.data || []
     })
 }
 getInfo()

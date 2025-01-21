@@ -42,7 +42,7 @@ instance.interceptors.request.use(
       }
       return
     }
-    config.headers.lang = 'EN'
+    config.headers.lang = 'en_US'
     config.headers['Content-Type'] = 'application/json'
     if (config && config.custom && config.custom['Content-Type']) {
       config.headers['Content-Type'] = config.custom['Content-Type']
