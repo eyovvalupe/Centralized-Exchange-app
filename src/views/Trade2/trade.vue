@@ -28,8 +28,8 @@
       </SwipeItem> -->
       <SwipeItem>
         <div class="trade_body" ref="contractTradeBody" @scroll="tradeBodyScroll('contractTradeBody')">
-          <ContractBlock :activeTab="Number(activeTab + 1)" :key="'constract'" :mode="'constract'"
-            @showNavDialog="showNavDialogFunc" ref="ContractBlockRef" v-if="loadedTab.includes(0)" />
+          <SpotBlock :activeTab="Number(activeTab + 1)" :key="'spot'" :mode="'spot'" @showNavDialog="showNavDialogFunc"
+            ref="SpotBlockRef" v-if="loadedTab.includes(0)" />
         </div>
       </SwipeItem>
       <SwipeItem>
@@ -201,6 +201,7 @@ import IpoBlock from "./pages/IpoBlock.vue";
 import StockBlock from "./pages/StockBlock.vue";
 import AiBlock from "./pages/AiBlock.vue";
 import ContractBlock from "./pages/ContractBlock.vue";
+import SpotBlock from "./pages/SpotBlock.vue";
 import store from "@/store";
 import StockTable from "@/components/StockTable.vue";
 import { useRoute } from "vue-router";
@@ -249,7 +250,7 @@ const changeActiveTab = (val, slideSwipe = false, init = false) => {
     setTimeout(() => {
       switch (val) {
         case 0:
-          StockBlockRef.value.handleMounted();
+          SpotBlockRef.value.handleMounted();
           break;
         case 1:
           ContractBlockRef.value.handleMounted();
@@ -353,6 +354,9 @@ const handleClickStock = (item) => {
     isFocused.value = false;
   }, 600);
 };
+
+// 选择现货
+const SpotBlockRef = ref()
 
 // 选择合约
 const ContractBlockRef = ref();

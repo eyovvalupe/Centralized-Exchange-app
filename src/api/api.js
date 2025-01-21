@@ -171,7 +171,7 @@ export const _safeword = (data = {}) => {
 
 //开仓
 export const _stocksBuy = (data = {}) => {
-  return http.post(`authc/v1/stock/buy`, data, {
+  return http.post(`/authc/v1/stock/buy`, data, {
     custom: { auth: true, toast: true, retry: false },
   });
 };
@@ -515,6 +515,12 @@ export const _futuresPara = (data = {}) => {
     custom: { auth: false, toast: false, retry: true },
   });
 };
+// 现货参数
+export const _spotPara = (data = {}) => {
+  return http.post(`/anon/v1/trade/para`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
 // 订单列表
 export const _futuresList = (data = {}) => {
   return http.post(`/authc/v1/futures/list`, data, {
@@ -526,6 +532,12 @@ export const _futuresList = (data = {}) => {
 export const _futuresBuy = (data = {}) => {
   return http.post(`/authc/v1/futures/buy`, data, {
     custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 现货开仓
+export const _spotBuy = (data = {}) => {
+  return http.post(`/authc/v1/trade/buysell`, data, {
+    custom: { auth: true, toast: true, retry: false },
   });
 };
 // 合约平仓
