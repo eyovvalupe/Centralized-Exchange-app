@@ -96,7 +96,6 @@ const showBottom = computed(() => {
 // 预加载 tab 页面
 const pageLoading = computed(() => store.state.pageLoading);
 store.commit("setPageLoading", true);
-console.error(pageLoading.value)
 Promise.all([
   import("@/views/Home/Home.vue"),
   import("@/views/Market/Market.vue"),

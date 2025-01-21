@@ -14,6 +14,7 @@
         <div class="list" ref="listDom">
             <template v-if="active == 1">
                 <NoData v-if="!loading && !list.length" />
+                {{ console.log("copy list =======> ", followList) }}
                 <div class="list-i" v-for="(item, i) in list" :key="i">
                     <FollowItem :item="item" :showDetail="true" />
                 </div>
@@ -42,7 +43,7 @@
                 </div>
 
                 <NoData v-if="!myList.length" />
-                <div class="list-i" v-for="(item, i) in myList" :key="i">
+                <div class="list-i" v-for="(item, i) in [1,2]" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
                 </div>
             </template>
@@ -81,36 +82,36 @@ const changeTab = val => {
 // 我的跟单统计
 const myCopy = computed(() => store.state.myCopy || {})
 
-const followList = ref([])
+const followList = computed(() => store.state.followList || [])
 
 const loading = ref(false)
 const finish = ref(false)
 const list = ref([]) // 跟单列表
 const page = ref(0)
-const getData = () => {
-    if (loading.value || finish.value) return
-    loading.value = true
-    page.value++
-    _copyList({
-        page: page.value
-    }).then(res => {
-        if (page.value == 1) {
-            list.value = res.data || []
-        } else {
-            list.value.push(...(res.data || []))
-        }
-        if (!res.data?.length) {
-            finish.value = true
-        }
-    }).finally(() => {
-        loading.value = false
-    })
-}
-getData()
+// const getData = () => {
+//     if (loading.value || finish.value) return
+//     loading.value = true
+//     page.value++
+//     _copyList({
+//         page: 1
+//     }).then(res => {
+//         if (page.value == 1) {
+//             list.value = res.data || []
+//         } else {
+//             list.value.push(...(res.data || []))
+//         }
+//         if (!res.data?.length) {
+//             finish.value = true
+//         }
+//         console.log('copy list ========> ', res.data)
+//     }).finally(() => {
+//         loading.value = false
+//     })
+// }
+// getData()
 
-
-const myList = computed(() => store.state.myCopy || []) // 我的跟单
-store.dispatch('updateMyFollowList')
+// const myList = computed(() => store.state.myCopy || []) // 我的跟单
+// store.dispatch('updateMyFollowList')
 
 
 let moreDom = null
@@ -121,7 +122,7 @@ const scrolHandle = () => {
         // 加载更多
         console.error('加载更多')
         if (active.value == 1) {
-            getData()
+            // getData()
         }
     }
 }

@@ -52,7 +52,8 @@
 
             <div class="scroll-box">
                 <div class="scroll-con">
-                    <MiningItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'" style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
+                    <MiningItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'"
+                        style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
                 </div>
             </div>
 
@@ -60,7 +61,7 @@
                 <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
             <!-- 跟单 -->
-            <div  class="recommend-title" @click="jump('follow', false)">
+            <div class="recommend-title" @click="jump('follow', false)">
                 <div class="point wow slideInLeft">
                     <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
@@ -98,16 +99,18 @@
                     <Tab :name="0" :title="t('common.spot')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
                         <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
-                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
-                                marketType="crypto" page="home" />
+                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true"
+                                :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto"
+                                page="home" />
                         </div>
                         <NoData v-if="!commendLoading && !contractList.length" />
                     </Tab>
                     <Tab :name="1" :title="$t('common.crypto')">
                         <Loaidng v-if="commendLoading" :loading="commendLoading" />
                         <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
-                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
-                                marketType="crypto" page="home" />
+                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true"
+                                :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto"
+                                page="home" />
                         </div>
                         <NoData v-if="!commendLoading && !contractList.length" />
                     </Tab>
@@ -203,12 +206,12 @@
     <!-- 类型选择弹窗 -->
     <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')">
     </ActionSheet>
-    <NotifiModal /> 
+    <NotifiModal v-if="openNotifiModal" />
 </template>
 
 <script setup>
 import { Tab, Tabs, ActionSheet, Swipe, SwipeItem } from "vant";
-import { computed, onActivated, onDeactivated, ref, onMounted } from "vue";
+import { computed, onActivated, onDeactivated, ref, onMounted, watch } from "vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
@@ -216,15 +219,17 @@ import { useI18n } from "vue-i18n";
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import Ai from "@/views/Market/components/Ai.vue";
-import IPO from "@/views/Market/components/IPO.vue";
 import StockItem from "@/components/StockItem.vue";
-import { _sort, _watchlistDefault, _futures } from "@/api/api";
+import { _sort, _watchlistDefault, _futures, _notifiPopup } from "@/api/api";
 import { useSocket } from "@/utils/ws";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
 import MiningItem from "../Mining/MiningItem.vue"
 import FollowItem from "../components/FollowItem.vue"
 import Wow from "wow.js"
+import { isEmpty } from "@/utils/isEmpty";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 
 // 安装
 const install = () => {
@@ -285,7 +290,7 @@ onActivated(() => {
     activated.value = true;
     subs();
 
-    
+
 });
 onDeactivated(() => {
     activated.value = false;
@@ -330,7 +335,7 @@ const getRecommendData = () => {
                 subs();
 
                 setTimeout(() => {
-                    console.error(contractList.value)
+                    // console.error(contractList.value)
                 })
             }
         })
@@ -423,7 +428,54 @@ const jump = (name, needToken, query) => {
     });
 };
 
+const openNotifiModal = ref(false)
+const notifiLoading = ref(false)
+const getNotifiData = () => {
+    if (notifiLoading.value) return;
+    notifiLoading.value = true;
+    _notifiPopup().then(res => {
+        store.commit('setNotifiData', res.data);
+        sessionStorage.setItem('notifiData', JSON.stringify(res.data));
+        if (isEmpty(res.data)) { openNotifiModal.value = false }
+        else {
+            openNotifiModal.value = true
+            store.commit('setNotifiOpen', true)
+        }
+    }).catch(err => console.error(err)).finally(() => { notifiLoading.value = false });
+}
+
+const getToday6AMTime = () => {
+    const now = new Date();
+    now.setHours(6, 0, 0, 0);
+    return now.getTime()
+}
+
+const getLastExecutionTime = () => {
+    return localStorage.getItem('lastExecutionTime');
+};
+
+const getTimeSince6AM = () => {
+    const today6AMTime = getToday6AMTime();
+    return (Date.now - today6AMTime) / 1000;
+};
+
+const canExecuteToday = () => {
+    const timeSince6AM = getTimeSince6AM();
+    const lastExecutionTime = getLastExecutionTime();
+
+    if (!lastExecutionTime || (lastExecutionTime && timeSince6AM > 24 * 60 * 60)) return true;
+    return false
+}
+
+watch(() => (route.path), (val) => {
+    if (val == '/') {
+        const canExecute = canExecuteToday();
+        if (token.value && canExecute) getNotifiData();
+    };
+})
+
 onMounted(() => {
+    if (token.value && canExecuteToday()) getNotifiData();
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();
@@ -444,6 +496,7 @@ onMounted(() => {
 store.dispatch('updateFollowList')
 const followList = computed(() => store.state.followList || [])
 // const time = getPoints('asd-as2', 0)
+
 </script>
 
 

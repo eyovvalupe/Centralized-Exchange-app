@@ -65,7 +65,7 @@ onMounted(() => {
             document.querySelector('.list').addEventListener('scroll', scrolHandle)
         } catch {
         }
-    }, 500)
+    }, 300)
 })
 onUnmounted(() => {
     try {

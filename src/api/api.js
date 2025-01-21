@@ -760,8 +760,22 @@ export const _stakeOrder = (data = {}) => {
 };
 
 //我的收益
-export const _myEarn= (data = {}) => {
+export const _myEarn = (data = {}) => {
   return http.post(`/authc/v1/mining/earn`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+
+//公告弹窗
+export const _notifiPopup = (data = {}) => {
+  return http.post(`/authc/v1/notice/popup`, data, {
+    custom: {auth: true, toast: true, retry: true}
+  })
+}
+
+//公告列表
+export const _notifiList = (data = {}) => {
+  return http.post(`/anon/v1/notice/list`, data, {
+    custom: {auth: false, toast: true, retry: true}
+  })
+}
