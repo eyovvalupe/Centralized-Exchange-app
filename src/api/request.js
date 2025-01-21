@@ -89,37 +89,6 @@ instance.interceptors.response.use(
       }
       if(res.message == 'fund_password_wrong'){
         res.message = '交易密码错误'
-      }else{
-        switch (res.code) {
-          case '400':
-            newShowToast('请求无法被服务器理解。请检查您的输入是否有误，并尝试再次提交。')
-            break
-          case '401':
-            newShowToast('您尚未登录。请先登录后再尝试此操作。')
-            break
-          case '403':
-            newShowToast('您没有权限执行此操作。请联系管理员获取更多权限。')
-            break
-          case '422':
-            newShowToast('请求无法被处理，因为存在验证错误。请检查您的输入并尝试再次提交。')
-            store.dispatch('updateSessionToken')
-            break
-          case '500':
-            // newShowToast('服务器遇到了意外情况，无法完成您的请求。请稍后再试，或联系技术支持。')
-            break
-          case '510':
-            // newShowToast('请求参数有误。请检查您的输入并确保所有必填项都已填写。')
-            break
-          case '1001':
-            newShowToast('图片验证码输入错误。请重新输入正确的验证码。')
-            break
-          case '1002':
-            newShowToast('您尚未完成实名验证。请前往个人中心完成实名验证后再次尝试。')
-            break
-          case '1003':
-            newShowToast('您尚未绑定谷歌验证器。请前往个人中心绑定谷歌验证器后再次尝试。')
-            break
-        }
       }
       if (custom.toast) {
         setTimeout(() => {
