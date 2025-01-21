@@ -1218,6 +1218,13 @@ const handleClick = (item) => {
   });
 };
 
+// 初始化
+setTimeout(() => {
+  if (currStock.value.symbol) {
+    handleClick(currStock.value)
+  }
+}, 500)
+
 // url参数处理
 if (props.tradeType == 2) {
   // 合约

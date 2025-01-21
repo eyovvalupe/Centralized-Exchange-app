@@ -7,7 +7,7 @@
       <div class="item">
         <div class="tip-title" v-if="currStock.symbol">
           <span @click="showNavDialog">{{
-            t("trade.contract_opening_contract")
+            t("common.spot")
           }}</span>
           <Loading v-show="searchLoading" type="circular" style="width: 0.28rem; height: 0.28rem"
             color="var(--ex-primary-color)" />
@@ -149,10 +149,10 @@
     <!-- 张数 -->
     <div class="item_box">
       <div class="item_box_right">
-        <FormItem :hasRT="true" :hasLT="true" :hasScroll="true" :placeholder="t('trade.contract_lots_amount')"
+        <FormItem :hasRT="true"  :hasScroll="true" :placeholder="t('trade.stock_position_amount')"
           @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-          @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
-          :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
+          @btnClick="putAll" @change="changePercent" :tip="'≤' + maxStockNum" :max="maxStockNum" tip-align="right"
+           input-type="digit">
           <!-- <template #title-icon v-if="amountper && paramCurrency">
             <div style="width: 0.2rem; height: 0.2rem; margin-left: 0.06rem" @click="() =>
               showToast(
@@ -164,7 +164,7 @@
               <img v-lazy="getStaticImgUrl('/static/img/trade/warning.svg')" alt="" />
             </div>
           </template> -->
-          <template #lt>
+          <!-- <template #lt>
             <div style="display: flex;align-items: center;height: 0.48rem;" v-if="amountper && paramCurrency">
               <div style="width: 0.24rem;height: 0.24rem;margin-right: 0.1rem;">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/warning_icon.svg')" alt="↓" />
@@ -173,7 +173,7 @@
                 'trade.contract_one_lot'
               )} = ${amountper} ${paramCurrency}` }}</span>
             </div>
-          </template>
+          </template> -->
           <template #rt>
             <div @click="openConfirmBox" class="mask-btn">
               <div
@@ -232,7 +232,7 @@
         <!-- 股票 -->
         <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
           <div style="font-size: 0.32rem;margin-bottom: 0.1rem;">
-            {{ t("trade.contract_opening_contract") }}
+            {{ t("common.spot") }}
           </div>
           <div style="color: var(--ex-text-color3); font-size: 0.24rem">
             {{ currStock.name }}
@@ -260,7 +260,7 @@
                     : t("trade.stock_open_short")
                 }}
               </div>
-              <div class="tag">
+              <!-- <div class="tag">
                 {{
                   params.lever_type == "cross"
                     ? t("trade.stock_opening_position_mode_cross")
@@ -269,7 +269,7 @@
                       : "--"
                 }}
               </div>
-              <div class="lever">{{ params.lever || 1 }}X</div>
+              <div class="lever">{{ params.lever || 1 }}X</div> -->
             </div>
           </div>
           <div class="item">
@@ -286,10 +286,10 @@
             </div>
           </div>
           <div class="item">
-            <div class="item_name">{{ t("trade.contract_opening_amount") }}</div>
+            <div class="item_name">{{ t("trade.stock_opening_amount") }}</div>
             <div class="item_val">{{ params.volume }}</div>
           </div>
-          <div class="item">
+          <!-- <div class="item">
             <div class="item_name">{{ t("trade.stock_take_stop") }}</div>
             <div class="item_val" v-if="props.activeTab != 2">
               <div class="tag">{{ t("trade.stock_opening_no") }}</div>
@@ -304,7 +304,7 @@
                 <div class="lever">{{ params.stop_loss_price }}</div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="item">
             <div class="item_name">
@@ -321,7 +321,7 @@
             {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
           </div>
           <div class="fee">
-            {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> +
+            <!-- {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> + -->
             {{ t("trade.stock_opening_fee") }} <span>{{ payFee }}</span>
           </div>
         </div>
@@ -444,6 +444,7 @@
           border: 1px solid var(--ex-border-color);
         ">
         {{ t('market.market_faster_available') }}
+
       </div>
 
       <!-- 内容 -->
@@ -472,7 +473,7 @@
             align-items: center;
             justify-content: center;
           ">
-          {{ t('assets.wallet_header_contract') }}
+          {{ t('assets.wallet_header_cash') }}
         </div>
         <div style="
             display: flex;
@@ -815,32 +816,19 @@ const modeList = computed(() => {
   return list;
 });
 
-const elseWallet = computed(() => store.state.elseWallet || []);
+const wallet = computed(() => store.state.wallet || []); // 现金钱包
 
 const stockWalletAmount = computed(() => {
-  // 股票账户余额
-  const target = elseWallet.value.find(
-    (item) => item.account == "futures" && item.name == paramCurrency.value
+  // 现金账户余额
+  const target = wallet.value.find(
+    (item) => item.currency == paramCurrency.value
   );
   if (target) return target.amount;
   return 0;
 });
 
 const maxStockNum = computed(() => {
-  // 最大可买 可卖
-  if (!levers.value.length) {
-    return "--";
-  }
-  if (currStock.value.price) {
-    const max = new Decimal(stockWalletAmount.value)
-      .mul(1 - (openFee.value || 0))
-      .div(amountper.value)
-      .mul(form1.value.lever)
-      .floor();
-    const rs = max - max.mod(step.value);
-    return rs > min.value ? rs : 0;
-  }
-  return "--";
+  return new Decimal(stockWalletAmount.value).mul( 1 - openFee.value).floor()
 });
 
 const showAmountDialog = ref(false);
@@ -884,6 +872,9 @@ const currStock = computed(() => {
   let obj = {};
   switch (props.mode) {
     case "constract":
+      obj = store.state.currConstact || [];
+      break;
+    case "spot":
       obj = store.state.currConstact || [];
       break;
     case "foreign":
@@ -1016,6 +1007,7 @@ const submit1 = () => {
     return showToast(t("trade.contract_opening_err_contract"));
   if (!form1.value.volume || form1.value.volume < min.value)
     return showToast(t("trade.contract_opening_err_amount"));
+  if (form1.value.volume > maxStockNum.value) return showToast(t("trade.stock_opening_no_balance"))
   // 限价校验
   if (props.activeTab == 1) {
     if (!form1.value.price)
@@ -1023,17 +1015,6 @@ const submit1 = () => {
   }
   // 止盈止损校验
   if (props.activeTab == 2) {
-    if (mode.value == 1) {
-      // 简单模式
-      if (!form1.value.stop_loss_price)
-        return showToast(t("trade.stock_opening_err_stop_price"));
-    } else {
-      // 复杂模式
-      if (!form1.value.stop_profit_price)
-        return showToast(t("trade.stock_opening_err_take_price"));
-      if (!form1.value.stop_loss_price)
-        return showToast(t("trade.stock_opening_err_stop_price"));
-    }
     if (priceMode.value == 2 && !form1.value.price) {
       // 限价
       return showToast(t("trade.stock_opening_err_limit"));
@@ -1048,12 +1029,12 @@ const submit1 = () => {
     price_type: form1.value.price_type,
     price: form1.value.price_type == "market" ? "" : form1.value.price || "",
 
-    lever_type: form1.value.leverType,
-    lever: form1.value.lever,
-    stop_profit_type: form1.value.stop_profit_type,
-    stop_profit_price: form1.value.stop_profit_price,
-    stop_loss_type: form1.value.stop_loss_type,
-    stop_loss_price: form1.value.stop_loss_price,
+    // lever_type: form1.value.leverType,
+    // lever: form1.value.lever,
+    // stop_profit_type: form1.value.stop_profit_type,
+    // stop_profit_price: form1.value.stop_profit_price,
+    // stop_loss_type: form1.value.stop_loss_type,
+    // stop_loss_price: form1.value.stop_loss_price,
   };
   if (props.activeTab == 2) {
     // 止盈止损
@@ -1121,7 +1102,7 @@ const interest = ref(0); // 持仓费
 const closingline = ref(100); // 强平线
 const amountper = ref(1); // 每张金额
 const configLoading = ref(false);
-const paramCurrency = ref(""); // 交易使用的货币
+const paramCurrency = ref("USDT"); // 交易使用的货币
 const levers = ref([]); // 杠杆
 
 const getParam = () => {
@@ -1152,9 +1133,6 @@ const paramHandle = (data) => {
     openFee.value = data.fee || 0;
     closeFee.value = data.fee || 0;
   }
-  if (data.currency) {
-    paramCurrency.value = data.currency || "";
-  }
   if (data.lever) {
     levers.value = data.lever.split(",");
     if (levers.value[0]) {
@@ -1181,8 +1159,9 @@ const initParam = () => {
 };
 
 const setCurrStockFunc = (item) => {
+  
   switch (props.mode) {
-    case "constract":
+    case "spot":
       sessionStorage.setItem("currConstract", JSON.stringify(item));
       store.commit("setCurrConstract", item);
       break;
@@ -1217,6 +1196,13 @@ const handleClick = (item) => {
     }
   });
 };
+
+// 初始化
+setTimeout(() => {
+  if (currStock.value.symbol) {
+    handleClick(currStock.value)
+  }
+}, 500)
 
 // url参数处理
 if (props.tradeType == 2) {
@@ -1266,13 +1252,11 @@ const showModel = ref(false);
 const safePass = ref("");
 const payAmount = computed(() => {
   // 需要支付
-  return new Decimal(payOrigin.value).add(payFee.value);
+  return new Decimal(orderAmount.value).add(payFee.value);
 });
 
 const orderAmount = computed(() => {
-  // 订单金额
-  if (!params.value.volume || !amountper.value) return 0;
-  return new Decimal(amountper.value).mul(params.value.volume);
+  return params.value.volume
 });
 const payOrigin = computed(() => {
   // 保证金
@@ -1283,16 +1267,16 @@ const payOrigin = computed(() => {
 });
 const payFee = computed(() => {
   // 手续费
-  return new Decimal(payOrigin.value).mul(openFee.value);
+  return new Decimal(orderAmount.value).mul(openFee.value);
 });
 const submitLoading = ref(false);
 const submitFormDialog = () => {
   if (!safePass.value) {
     return showToast(t("trade.stock_opening_trade_pw_placeholder"));
   }
-  submitForm(safePass.value);
-  //showModel.value = false
-  //safeRef.value && safeRef.value.open()
+  // showModel.value = false
+  // safeRef.value && safeRef.value.open()
+  submitForm(safePass.value)
 };
 const submitForm = (s) => {
   if (submitLoading.value) return;
@@ -1301,6 +1285,7 @@ const submitForm = (s) => {
     ...params.value,
     token: sessionToken.value,
     safeword: s,
+    offset: params.value.offset == 'long' ? 'buy' : 'sell'
   })
     .then((res) => {
       if (res && res.code == 200) {
