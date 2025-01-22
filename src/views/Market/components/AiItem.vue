@@ -89,7 +89,6 @@ import BottomPopup from "@/components/BottomPopup"
 import Opening from "@/views/Trade2/ai/Opening.vue"
 
 
-
 const { t } = useI18n();
 const emits = defineEmits("click", 'clickItems');
 const openingRef = ref()
