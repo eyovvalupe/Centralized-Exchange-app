@@ -1,7 +1,6 @@
 <!-- 我的跟单元素 -->
 <template>
-    <div class="myfollow-item">
-
+    <div class="myfollow-item" v-if="!isEmpty(item)">
         <div class="title-box" @click="goInfo">
             <div class="left">
                 <div class="top">
@@ -25,19 +24,19 @@
         <div class="info-flex">
             <div class="info-item">
                 <div class="name">{{ $t('finance.portfolio_revenue') }}</div>
-                <div class="val">{{ props.item.returnamount || '--' }}</div>
+                <div class="val">{{ props.item.returnamount }}</div>
             </div>
             <div class="info-item" style="text-align: right;">
                 <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
                 <div class="val" @click="plus">
-                    <span>{{ props.item.amount || '--' }}</span>
+                    <span>{{ props.item.amount }}</span>
                 </div>
             </div>
         </div>
         <div class="info-box">
             <div class="info-item">
                 <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
-                <div class="val up">{{ props.item.today || '--' }}</div>
+                <div class="val up">{{ props.item.today }}</div>
             </div>
         </div>
         
@@ -57,12 +56,12 @@
 
     <!-- 取消跟单 -->
     <BottomPopup v-model:show="showCancel" :title="$t('copy.copy_order_detail_cancel')" position="bottom" round closeable teleport="body">
-        <div class="follow_dialog">
-            <div class="text-con">{{ $t('copy.copy_order_cancel_con') }}</div>
+        <div class="follow_dialog pb-[0.6rem]">
+            <div class="w-full flex justify-center mb-[0.6rem] mt-[0.6rem]">{{ $t('copy.copy_order_cancel_con') }}</div>
 
-            <div class="btns">
-                <div class="btn ripple-primary" @click="showCancel = false">{{ $t('copy.copy_order_cancel_cancel') }}</div>
-                <div class="btn btn2 ripple-btn" @click="openCancelPass">{{ $t('copy.copy_order_cancel_confirm') }}</div>
+            <div class="w-full flex gap-[0.3rem] justify-center">
+                <div class="w-[3rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black text-[0.28rem] font-semibold flex justify-center items-center ripple-primary" @click="showCancel = false">{{ $t('copy.copy_order_cancel_cancel') }}</div>
+                <div class="w-[3rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-white text-[0.28rem] font-semibold flex justify-center items-center ripple-btn" @click="openCancelPass">{{ $t('copy.copy_order_cancel_confirm') }}</div>
             </div>
         </div>
     </BottomPopup>
@@ -71,7 +70,7 @@
 
     <!-- 追加弹窗 -->
     <BottomPopup v-model:show="showPlus" :title="$t('copy.copy_order_detail_confirm')" position="bottom" round closeable teleport="body">
-        <FollowSubmit :mode="'plus'" />
+        <FollowSubmit :mode="'plus'" :item="item"/>
     </BottomPopup>
 
    
@@ -86,6 +85,7 @@ import store from "@/store";
 import { showToast } from "vant"
 import SafePassword from "@/components/SafePassword.vue";
 import FollowSubmit from "./FollowSubmit.vue"
+import { isEmpty } from "@/utils/isEmpty";
 
 const emits = defineEmits(['openInfo', 'plus', 'cancel'])
 
@@ -127,11 +127,12 @@ const submitCancel = safeword => {
             if (token) {
                 cancelLoading.value = true
                 _copyCancel({
-                    uid: '',
+                    id: props.item.id,
                     token: token,
                     safeword: safeword
                 }).then(() => {
                     showToast('已撤单')
+                    store.dispatch("updateMyFollowList")
                     emits('cancel', {})
                 }).finally(() => {
                     cancelLoading.value = false
@@ -158,6 +159,8 @@ const plus = () => {
 
 const goInfo = () => {
     if (props.stopJump) return
+    store.commit('setCopyItemDetail', props.item)
+    sessionStorage.setItem('copyItemDetail', JSON.stringify(props.item))
     emits('openInfo', {})
 }
 </script>

@@ -184,6 +184,7 @@ const getInfo = () => {
     _copyGet({
         id: copyItem.value.id
     }).then(res => {
+        console.log('info ====> ', res.data)
         info.value = res.data || {}
     }).catch(err => console.error(err))
         .finally(() => {
@@ -191,17 +192,18 @@ const getInfo = () => {
         });
     // 带单
     _copyOrders({
-        uid: copyItem.value.id,
+        id: copyItem.value.id,
         status: 'open',
         page: 1
     }).then(res => {
+        console.log('orders =======> ', res.data)
         orders.value = res.data
     }).catch(err => console.error(err)).finally(() => {
 
     });
     // 跟单
     _copyUsers({
-        uid: copyItem.value.id,
+        id: copyItem.value.id,
     }).then(res => {
         follows.value = res.data || []
         console.log("followers =======>", res.data)

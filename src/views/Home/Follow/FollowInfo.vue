@@ -10,13 +10,15 @@
  <script setup>
 import Top from "@/components/Top.vue";
 import MyFollowItem from "../components/MyFollowItem.vue"
+import { computed } from "vue";
+import store from "@/store";
 
 const emits = defineEmits(['back'])
 
 const backFunc = () => {
     emits('back')
 }
-const info = ref({ uid: 'uid', name: '用户名', lv: '9', followers: '11', amount: '999', returnrate: 50, returnamount: 700, winrate: 20, time: [] })
+const info = computed(() => store.state.copyItemDetail)
 </script>
 
 <style lang="less">

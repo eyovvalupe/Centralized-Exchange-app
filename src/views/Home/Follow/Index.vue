@@ -19,30 +19,31 @@
                 </div>
             </template>
             <template v-if="active == 2">
-
-                <div class="my-total">
+                <div class="my-total" v-if="!isEmpty(myCopyData)">
                     <div class="info-flex">
                         <div class="info-item">
                             <div class="name">{{ $t('copy.total_revenue') }}</div>
-                            <div class="val">{{ myCopy.returnamount || '--' }}</div>
+                            <div class="val">{{ myCopyData.returnamount }}</div>
                         </div>
                         <div class="info-item" style="text-align: right;">
                             <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
                             <div class="val" @click="plus">
-                                <span>{{ myCopy.amount || '--' }}</span>
+                                <span>{{ myCopyData.amount }}</span>
                             </div>
                         </div>
                     </div>
                     <div class="info-box">
                         <div class="info-item">
                             <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
-                            <div class="val up">{{ myCopy.today || '--' }}</div>
+                            <div class="val up">{{ myCopyData.today }}</div>
                         </div>
                     </div>
                 </div>
 
-                <NoData v-if="!myList.length" />
-                <div class="list-i" v-for="(item, i) in [1,2]" :key="i">
+                <NoData v-if="!myFollowList.length" />
+                {{ console.log('my follow list =====> ', myFollowList) }}
+                {{ console.log('my copy data =====>', myCopyData) }}
+                <div class="list-i" v-for="(item, i) in myFollowList" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
                 </div>
             </template>
@@ -66,6 +67,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue"
 import store from "@/store";
 import { Popup } from "vant"
 import FollowInfo from "../Follow/FollowInfo.vue"
+import { isEmpty } from "@/utils/isEmpty";
 
 const listDom = ref()
 const active = ref(1) // 1-跟单  2-订单
@@ -79,39 +81,11 @@ const changeTab = val => {
 }
 
 // 我的跟单统计
-const myCopy = computed(() => store.state.myCopy || {})
-
-const followList = computed(() => store.state.followList || [])
+const followList = computed(() => store.state.followList)
+const myFollowList = computed(() => store.state.myCopy)
+const myCopyData = computed(() => store.state.myCopyData)
 
 const loading = ref(false)
-const finish = ref(false)
-const list = ref([]) // 跟单列表
-const page = ref(0)
-// const getData = () => {
-//     if (loading.value || finish.value) return
-//     loading.value = true
-//     page.value++
-//     _copyList({
-//         page: 1
-//     }).then(res => {
-//         if (page.value == 1) {
-//             list.value = res.data || []
-//         } else {
-//             list.value.push(...(res.data || []))
-//         }
-//         if (!res.data?.length) {
-//             finish.value = true
-//         }
-//         console.log('copy list ========> ', res.data)
-//     }).finally(() => {
-//         loading.value = false
-//     })
-// }
-// getData()
-
-// const myList = computed(() => store.state.myCopy || []) // 我的跟单
-// store.dispatch('updateMyFollowList')
-
 
 let moreDom = null
 const totalHeight = window.innerHeight || document.documentElement.clientHeight;
@@ -127,6 +101,8 @@ const scrolHandle = () => {
 }
 
 onMounted(() => {
+    store.dispatch('updateFollowList')
+    store.dispatch('updateMyFollowList')
     setTimeout(() => {
         try {
             moreDom = document.querySelector('.loading_more')
@@ -140,12 +116,6 @@ onUnmounted(() => {
         document.querySelector('.list').removeEventListener('scroll', scrolHandle)
     } catch { }
 })
-
-
-
-
-
-
 
 // 跟单详情
 const showInfo = ref(false)

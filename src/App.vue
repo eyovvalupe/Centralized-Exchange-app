@@ -68,6 +68,8 @@ if (token.value) {
   store.dispatch("updateUserInfo");
   store.dispatch("updateAssets");
   store.dispatch("updateWallet");
+  store.dispatch("updateMyFollowList");
+  store.dispatch("updateMyCopyData");
 }
 store.dispatch("updateCurrency"); // 获取币种等配置信息
 store.dispatch("updateNotifiList")

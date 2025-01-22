@@ -714,6 +714,12 @@ export const _copyAdd= (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+// 追加跟单
+export const _copyMyData= (data = {}) => {
+  return http.post(`/authc/v1/copy/mycopydata`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
 // 跟单详情 
 export const _copyGet = (data = {}) => {
   return http.post(`/anon/v1/copy/get`, data, {
