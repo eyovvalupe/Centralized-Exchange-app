@@ -70,6 +70,7 @@ if (token.value) {
   store.dispatch("updateWallet");
 }
 store.dispatch("updateCurrency"); // 获取币种等配置信息
+store.dispatch("updateNotifiList")
 
 const fullWindow = computed(() => store.state.fullscreen); // 全屏状态
 store.commit("setFullscreen", false);

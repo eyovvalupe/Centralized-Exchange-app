@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { _listAccount, _sessionToken, _userinfo } from "@/api/api";
+import { _listAccount, _notifiList, _sessionToken, _userinfo } from "@/api/api";
 import assets from "./assets";
 import market from "./market";
 import trade from "./trade";
@@ -28,6 +28,7 @@ const store = createStore({
     isLoginOpen: false, // 登录弹窗开关
     notifiData: JSON.parse(sessionStorage.getItem('notifiData')),
     notifiOpen: false,
+    notifiList: [],
     i18Data: {
       name: "中文简体",
       locale: "zh",
@@ -45,6 +46,9 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setNotifiList(state, data) {
+      state.notifiList = data
+    },
     setNotifiOpen(state, data) {
       state.notifiOpen = data
     },
@@ -169,6 +173,20 @@ const store = createStore({
           })
           .catch(() => resolve(false));
       });
+    },
+    updateNotifiList({commit}) {
+      return new Promise((resolve) => {
+        _notifiList({page: 1})
+          .then(res => {
+            if (res.code == 200 && res.data) {
+              commit('setNotifiList', res.data)
+              resolve(res.data)
+            } else {
+              resolve(false)
+            }
+          })
+          .catch(() => resolve(false))
+      })
     },
     ...market.actions,
     ...trade.actions,

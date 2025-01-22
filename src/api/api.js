@@ -779,3 +779,10 @@ export const _notifiList = (data = {}) => {
     custom: {auth: false, toast: true, retry: true}
   })
 }
+
+//公告详情
+export const _notifiDetail = (data = {}) => {
+  return http.post(`/anon/v1/notice/get`, data, {
+    custom: {auth: false, toast: true, retry: true}
+  })
+}
