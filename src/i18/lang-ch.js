@@ -1051,4 +1051,14 @@ export default {
     copy_order_detail_tab1: "目前訂單",
     copy_order_detail_tab2: "歷史訂單",
   },
+  notifi: {
+    notifi_center: "訊息中心",
+    notifi_pub: "公告",
+    notifi_marke: "市場活動",
+    notifi_detail: "查看詳細",
+    notifi_join: "加入活動",
+    notifi_joined: "已加入活動",
+    btn_see_all: "查看全部",
+    btn_cancel: "取消",
+  },
 };

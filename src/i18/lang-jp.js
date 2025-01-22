@@ -1050,4 +1050,14 @@ export default {
     copy_order_detail_tab1: "現在の注文",
     copy_order_detail_tab2: "履歴注文",
   },
+  notifi: {
+    notifi_center: "通知センター",
+    notifi_pub: "お知らせ",
+    notifi_marke: "マーケットイベント",
+    notifi_detail: "詳細を見る",
+    notifi_join: "イベントに参加",
+    notifi_joined: "イベントに参加済み",
+    btn_see_all: "すべて見る",
+    btn_cancel: "キャンセル",
+  },
 };

@@ -1,6 +1,6 @@
 <template>
   <div class="notifi_modal">
-    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('取消')" :confirm-button-text="$t('查看全部')"
+    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('notifi.btn_cancel')" :confirm-button-text="$t('notifi.btn_see_all')"
       @cancel="cancel" @confirm="jump('notification')">
       <div class="w-full h-[9.36rem] bg-color rounded-[0.32rem] mt-[0.36rem] mb-[0.32rem] p-[0.32rem]">
         <div

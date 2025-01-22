@@ -1,12 +1,11 @@
 <!-- 合约 -->
 <template>
   <div class="notification_page">
-    {{ console.log(marketNotifiList) }}
-    <Top :title="t('消息中心')" />
+    <Top :title="t('notifi.notifi_center')" />
     <div class="pt-[1.16rem]">
       <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab"
         style="height: calc(var(--vh) * 100 - 1.2rem);" :swipeable="false" animated>
-        <Tab :title="'公告'" name="0">
+        <Tab :title="t('notifi.notifi_pub')" name="0">
           <div class="noti_tab">
             <div
               class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
@@ -32,7 +31,7 @@
               <div
                 class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary"
                 @click="jump('notification_detail', item)">
-                查看详细
+                {{ t('notifi.notifi_detail') }}
               </div>
               <div v-if="!item.read"
                 class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
@@ -41,7 +40,7 @@
             <NoData v-if="!publicNotifiList.length" />
           </div>
         </Tab>
-        <Tab :title="'市场活动'" name="1">
+        <Tab :title="t('notifi.notifi_marke')" name="1">
           <div class="noti_tab">
             <div
               class="w-full bg-color3 p-[0.32rem] rounded-[0.4rem] mb-[0.32rem] flex flex-col justify-between relative"
@@ -68,13 +67,13 @@
                 <div
                   class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary mr-[0.2rem]"
                   @click="jump('notification_detail', item)">
-                  查看详细
+                  {{ t('notifi.notifi_detail') }}
                 </div>
                 <div
                   class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary"
                   :class="item.join ? 'bg-color3 text-color4 ripple-primary' : 'bg-primary text-white ripple-btn'"
                   >
-                  {{ item.join ? '已加入活动' : '加入活动' }}
+                  {{ item.join ? t('notifi.notifi_joined') : t('notifi.notifi_join') }}
                 </div>
               </div>
               <div v-if="!item.read"

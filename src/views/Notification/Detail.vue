@@ -1,6 +1,6 @@
 <template>
   <div class="notification_detail" v-if="!isEmpty(notifiDetailItem)">
-    <Top :title="$t('消息中心')"></Top>
+    <Top :title="$t('notifi.notifi_center')"></Top>
     <div class="w-full mt-[1.5rem]" style="overflow-y: auto;">
       <div class="w-full flex justify-center mb-[0.32rem]">
         <span class="w-[6.02rem] text-[0.4rem] leading-[0.6rem] text-center font-semibold">
@@ -24,7 +24,7 @@
       <div class="w-full text-[0.32rem] text-color mb-[0.6rem] leading-[0.52rem]">
         {{ notifiDetailItem.content }}
       </div>
-      <Button v-if="notifiDetailItem.marke" class="submit" :class="notifiDetailItem.join ? 'joined ripple-primary' : 'unjoined ripple-btn'"><span class="text-[0.32rem]">{{ notifiDetailItem.join ? '已加入活动' : '加入活动' }}</span></Button>
+      <Button v-if="notifiDetailItem.marke" class="submit" :class="notifiDetailItem.join ? 'joined ripple-primary' : 'unjoined ripple-btn'"><span class="text-[0.32rem]">{{ notifiDetailItem.join ? $t('notifi.notifi_joined') : $t('notifi.notifi_join') }}</span></Button>
     </div>
     <ImagePreview v-model:show="isPreview" :images="previewImages" :startPosition="index" :loop="true"
       @change="onChange" />
