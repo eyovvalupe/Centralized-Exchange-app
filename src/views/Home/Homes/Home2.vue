@@ -93,44 +93,7 @@
             </div>
 
             <!-- Tabs -->
-            <div class="home-tabs-box">
-                <Tabs class="van-tabs--sub" :color="'var(--ex-primary-color)'" @change="tabChange"
-                    v-if="!pageLoading && activated" v-model:active="activeTab" animated shrink>
-                    <Tab :name="0" :title="t('common.spot')">
-                        <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
-                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true"
-                                :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto"
-                                page="home" />
-                        </div>
-                        <NoData v-if="!commendLoading && !contractList.length" />
-                    </Tab>
-                    <Tab :name="1" :title="$t('common.crypto')">
-                        <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
-                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true"
-                                :item="item" v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto"
-                                page="home" />
-                        </div>
-                        <NoData v-if="!commendLoading && !contractList.length" />
-                    </Tab>
-                    <!-- <Tab :title="$t('common.IPO')">
-                        <div class="mb-[0.2rem]" >
-                            <IPO ref="ipoRef" v-if="activeTab == 2" :page="'home'" />
-                        </div>
-                    </Tab> -->
-                    <Tab :name="3" :title="$t('common.option')">
-                        <div class="mt-[0.32rem]">
-                            <Ai page="home" v-if="activeTab == 3" />
-                        </div>
-                    </Tab>
-                    <Tab :name="4" :title="'ETF'">
-                        <div class="mt-[0.32rem]">
-                            <Ai page="home" v-if="activeTab == 4" />
-                        </div>
-                    </Tab>
-                </Tabs>
-            </div>
+            <Recommend :activated="activated" />
 
 
             <!-- ad -->
@@ -210,17 +173,13 @@
 </template>
 
 <script setup>
-import { Tab, Tabs, ActionSheet, Swipe, SwipeItem } from "vant";
+import { ActionSheet, Swipe, SwipeItem } from "vant";
 import { computed, onActivated, onDeactivated, ref, onMounted, watch } from "vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
-import NoData from "@/components/NoData.vue";
-import Loaidng from "@/components/Loaidng.vue";
-import Ai from "@/views/Market/components/Ai.vue";
-import StockItem from "@/components/StockItem.vue";
-import { _sort, _watchlistDefault, _futures, _notifiPopup } from "@/api/api";
+import { _watchlistDefault, _notifiPopup } from "@/api/api";
 import { useSocket } from "@/utils/ws";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
 import MiningItem from "../Mining/MiningItem.vue"
@@ -228,6 +187,7 @@ import FollowItem from "../components/FollowItem.vue"
 import Wow from "wow.js"
 import { isEmpty } from "@/utils/isEmpty";
 import { useRoute } from "vue-router";
+import Recommend from "./Recommend"
 
 const route = useRoute();
 
@@ -246,7 +206,7 @@ const install = () => {
 
 const { startSocket } = useSocket();
 const { t } = useI18n();
-const activeTab = ref(0);
+
 const token = computed(() => store.state.token || "");
 // 总资产
 const notifiOpen = computed(() => store.state.notifiOpen);
@@ -264,22 +224,13 @@ Promise.all([
     // store.commit("setPageLoading", false);
 });
 
-
-const ipoRef = ref();
-const ipoDataList = computed(() => store.state.ipoDataList || []);
-const tabChange = (val) => {
-    if (val == 2 && !ipoDataList.value.length) {
-        nextTick(() => {
-            ipoRef.value && ipoRef.value.init();
-        });
-    }
-};
-
 // 订阅
 const subs = () => {
     store.commit("setMarketWatchKeysByPage");
     store.dispatch("subList", {});
 };
+
+
 
 const activated = ref(false);
 let wowObj = {}
@@ -287,8 +238,6 @@ onActivated(() => {
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();
-
-
 });
 onDeactivated(() => {
     activated.value = false;
@@ -302,40 +251,7 @@ onDeactivated(() => {
 
 });
 
-// 获取推荐数据
-const commendLoading = ref(false);
-const contractList = computed(() => store.state.contractList || []);
 
-const getRecommendData = () => {
-    commendLoading.value = true;
-    _futures()
-        .then((res) => {
-            if (res.code == 200) {
-                const rs = res.data.map((item) => {
-                    const target = contractList.value.find(
-                        (a) => a.symbol == item.symbol
-                    );
-                    item.type = "crypto";
-                    if (target) {
-                        Object.assign(target, item);
-                        item = target;
-                    }
-                    return item;
-                });
-                store.commit("setContractList", rs || []);
-
-                subs();
-
-                setTimeout(() => {
-                    // console.error(contractList.value)
-                })
-            }
-        })
-        .finally(() => {
-            commendLoading.value = false;
-        });
-};
-getRecommendData();
 
 
 // 热门数据
@@ -649,39 +565,7 @@ const followList = computed(() => store.state.followList || [])
             }
         }
 
-        .home-tabs-box {
-            :deep(.van-tabs--sub) {
-                margin-top: 0;
-            }
-
-            :deep(.van-tabs__nav) {
-                background-color: var(--ex-none);
-
-                .van-tab {
-                    background-color: #171717;
-                    color: var(--ex-text-color2);
-                    min-width: 1.2rem;
-                    border-color: #414345;
-                }
-
-                .van-tab--active {
-                    color: var(--ex-white);
-                    background-color: var(--ex-primary-color);
-                }
-            }
-
-            :deep(.page_ipo) {
-                padding-top: 0.32rem;
-
-                .list {
-                    padding: 0;
-                }
-
-                .loading_more {
-                    display: none;
-                }
-            }
-        }
+       
 
         .ad {
             width: 100%;

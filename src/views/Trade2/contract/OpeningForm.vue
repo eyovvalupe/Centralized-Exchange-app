@@ -3,7 +3,7 @@
   <div class="form">
 
     <!-- 搜索 -->
-    <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
+    <!-- <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
       <div class="item">
         <div class="tip-title" v-if="currStock.symbol">
           <span @click="showNavDialog">{{
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 止盈止损 -->
     <template v-if="props.activeTab == 2">
@@ -1316,9 +1316,10 @@ const submitForm = (s) => {
         showToast(t("trade.stock_opening_success"));
         form1.value.volume = "";
         sliderValue.value = 0;
-        setTimeout(() => {
-          emits("success");
-        }, 1500);
+        // setTimeout(() => {
+        //   emits("success");
+        // }, 1500);
+        emits("success");
       }
     })
     .finally(() => {

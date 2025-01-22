@@ -16,14 +16,7 @@
 
       <div class="scroller">
         <!-- 品种 -->
-        <div class="item_content">
-          <!-- <div class="subtitle">
-            {{ t("trade.ai_opening_product_type") }}
-            <div class="stock_icon" v-if="form1.name" @click="openStockModel">
-              <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" alt="icon" />
-            </div>
-          </div> -->
-
+        <!-- <div class="item_content">
           <div class="item item_box" :class="{ 'item_box_name': form1.name }" @click="showNavDialog">
             <div class="placeholder">{{ t("trade.ai_opening_product_type") }}</div>
             <div class="name">{{ form1.name }}</div>
@@ -31,7 +24,7 @@
               <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- 时间 -->
         <div class="item_content" v-if="times.length">
@@ -282,7 +275,7 @@ const usdt = computed(
   () => wallet.value.find((item) => item.currency == "USDT") || {}
 );
 
-const emits = defineEmits(["showNavDialog", "back"]);
+const emits = defineEmits(["showNavDialog", "back", 'success']);
 const showNavDialog = () => {
   // emits('showNavDialog', 'ai')
   showBottom.value = true;
@@ -415,6 +408,7 @@ const submitForm = (s) => {
         showModel.value = false;
         store.dispatch("updateWallet");
         showToast(t("trade.ai_opening_success"));
+        emits('success')
         setTimeout(() => {
           openInfo(res.data);
         }, 500);

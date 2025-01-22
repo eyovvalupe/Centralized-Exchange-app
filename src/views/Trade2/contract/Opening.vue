@@ -1,7 +1,7 @@
 <!-- 开仓 -->
 <template>
   <div class="opening">
-    <div class="type_tabs">
+    <div class="type_tabs" v-if="props.from != 'trade'">
       <div :style="{backgroundImage: `url(${activeType == 1 ? getStaticImgUrl('/static/img/trade/up2.svg') : getStaticImgUrl('/static/img/trade/up1.svg')})`}" @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
         {{ t("trade.stock_open_long_tab") }}
       </div>
@@ -11,7 +11,7 @@
     </div>
 
     <!-- Tabs -->
-    <div class="open_tab_box">
+    <div class="open_tab_box" :class="{'trade-dialog': props.from == 'trade'}">
       <Tabs animated key="form" type="line-card" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
         :color="'var(--ex-primary-color)'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
@@ -55,7 +55,8 @@ const props = defineProps({
   tradeType: {
     type: [String, Number],
     default: ''
-  }
+  },
+  from: ''
 })
 
 const { t } = useI18n();
@@ -78,7 +79,12 @@ const activeTab = ref(0); // 0-市价 1-限价 2-止盈止损
 
 
 // 选择某个股票
-const choose = (item) => {
+const choose = (item, key) => {
+  if (key) {
+    activeType.value = 1
+  } else {
+    activeType.value = 2
+  }
   OpeningForm0Ref.value && OpeningForm0Ref.value.choose(item);
   OpeningForm1Ref.value && OpeningForm1Ref.value.choose(item);
   OpeningForm2Ref.value && OpeningForm2Ref.value.choose(item);
@@ -131,6 +137,14 @@ defineExpose({
         justify-content:space-between;
       }
     }
+  }
+
+  .trade-dialog {
+    :deep(.van-tabs--line-card) {
+    .van-tabs__wrap {
+      padding: 0 0.6rem;
+    }
+  }
   }
 }
 </style>

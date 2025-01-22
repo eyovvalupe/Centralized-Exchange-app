@@ -387,7 +387,7 @@ const routes = [
     // 交易
     path: '/trade',
     name: 'trade',
-    component: () => import('../views/Trade2/trade.vue'),
+    component: () => import('../views/Trade3/Index.vue'),
     meta: {
       keepAlive: true,
       pageType: 'tab',
