@@ -51,6 +51,7 @@ const notifiData = computed(() => store.state.notifiData)
 const notifiOpen = computed(() => store.state.notifiOpen)
 const existNotifi = ref(notifiOpen.value)
 const cancel = () => {
+  localStorage.setItem('lastExecutionTime', Date.now());
   store.commit('setNotifiOpen', false)
 }
 
