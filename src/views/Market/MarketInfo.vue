@@ -462,7 +462,7 @@ const openingRef = ref()
 const goBuy = (key) => {
   showDialog.value = true
   setTimeout(() => {
-    openingRef.value && openingRef.value.choose(props.item, key)
+    openingRef.value && openingRef.value.choose(item.value, key)
   }, 300)
   // showBuy.value = false;
   // router.push({
