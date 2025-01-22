@@ -29,6 +29,7 @@ const store = createStore({
     notifiData: JSON.parse(sessionStorage.getItem('notifiData')),
     notifiOpen: false,
     notifiList: [],
+    notifiDetailItem: JSON.parse(sessionStorage.getItem('notifiDetailItem')),
     i18Data: {
       name: "中文简体",
       locale: "zh",
@@ -46,6 +47,9 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setNotifiDetailItem(state, data) {
+      state.notifiDetailItem = data
+    },
     setNotifiList(state, data) {
       state.notifiList = data
     },

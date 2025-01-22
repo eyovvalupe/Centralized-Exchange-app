@@ -5,7 +5,7 @@
     <Top :title="t('消息中心')" />
     <div class="pt-[1.16rem]">
       <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab"
-        style="height: calc(var(--vh) * 100 - 0.88rem);" :swipeable="false" animated>
+        style="height: calc(var(--vh) * 100 - 1.2rem);" :swipeable="false" animated>
         <Tab :title="'公告'" name="0">
           <div class="noti_tab">
             <div
@@ -31,10 +31,11 @@
               </div>
               <div
                 class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary"
-                @click="jump('notification_detail')">
-                查看全部
+                @click="jump('notification_detail', item)">
+                查看详细
               </div>
-              <div v-if="!item.read" class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
+              <div v-if="!item.read"
+                class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
               </div>
             </div>
             <NoData v-if="!publicNotifiList.length" />
@@ -63,12 +64,21 @@
                   {{ item.date }}
                 </div>
               </div>
-              <div
-                class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary"
-                @click="jump('notification_detail')">
-                查看全部
+              <div class="flex">
+                <div
+                  class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary mr-[0.2rem]"
+                  @click="jump('notification_detail', item)">
+                  查看详细
+                </div>
+                <div
+                  class="px-[0.48rem] h-[0.74rem] border-primary border-[0.02rem] flex justify-center items-center rounded-[1.6rem] text-primary w-max ripple-primary"
+                  :class="item.join ? 'bg-color3 text-color4 ripple-primary' : 'bg-primary text-white ripple-btn'"
+                  >
+                  {{ item.join ? '已加入活动' : '加入活动' }}
+                </div>
               </div>
-              <div v-if="!item.read" class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
+              <div v-if="!item.read"
+                class="absolute right-[0] top-[0] w-[0.24rem] h-[0.24rem] rounded-[0.12rem] bg-[red]">
               </div>
             </div>
             <NoData v-if="!marketNotifiList.length" />
@@ -124,7 +134,9 @@ const back = () => {
   router.back();
 };
 
-const jump = (name) => {
+const jump = (name, item) => {
+  store.commit('setNotifiDetailItem', item)
+  sessionStorage.setItem('notifiDetailItem', JSON.stringify(item))
   router.push({
     name,
   });
@@ -148,7 +160,6 @@ defineExpose({});
 
   .noti_tab {
     padding: 0 0.32rem 0.32rem 0.32rem;
-    height: 13rem;
     overflow-y: auto;
   }
 }
