@@ -69,28 +69,30 @@
         </div>
       </div>
     </div>
+
+     <!-- 交易弹窗 -->
+    <BottomPopup  v-model:show="showDialog" :title="''"  closeable >
+      <div style="padding: 0.5rem 0.32rem 0 0.32rem">
+        <Opening ref="openingRef" @success="showDialog = false" />
+      </div>
+    </BottomPopup>
   </div>
 </template>
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
-import SparkLine from "@/components/SparkLine.vue";
 import store from "@/store";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
+import BottomPopup from "@/components/BottomPopup"
+import Opening from "@/views/Trade2/ai/Opening.vue"
+
 
 const { t } = useI18n();
 const emits = defineEmits("click", 'clickItems');
+const openingRef = ref()
 
-const getRealtime = (symbol, k) => {
-  for (let i = 0; i < store.state.realtimeData.length; i++) {
-    if (store.state.realtimeData[i].symbol == symbol) {
-      return store.state.realtimeData[i][k]
-    }
-  }
-  return ''
-}
 const route = useRoute();
 const props = defineProps({
   item: {
@@ -103,9 +105,15 @@ const props = defineProps({
   },
 });
 
+
+const showDialog = ref(false)
 const clickItem = () => {
-  // props.page == 'home' ? goTrade() : null
-  goTrade()
+  console.error('打开交易弹窗')
+  showDialog.value = true
+  setTimeout(() => {
+    openingRef.value && openingRef.value.choose(props.item)
+  }, 300)
+  // goTrade()
 }
 const goTrade = () => {
   store.commit("setCurrAi", props.item);

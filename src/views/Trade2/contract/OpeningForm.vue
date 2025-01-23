@@ -3,7 +3,7 @@
   <div class="form">
 
     <!-- 搜索 -->
-    <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
+    <!-- <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
       <div class="item">
         <div class="tip-title" v-if="currStock.symbol">
           <span @click="showNavDialog">{{
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 止盈止损 -->
     <template v-if="props.activeTab == 2">
@@ -206,7 +206,7 @@
     <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
       <div class="flex justify-between mb-[0.32rem]">
         <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn"
-          @click="store.commit('setIsLoginOpen', true)">
+          @click="store.commit('setIsLoginOpen', true), emits('success')">
           {{ t("trade.stock_opening_token_login") }}
         </div>
         <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn"
@@ -1316,9 +1316,10 @@ const submitForm = (s) => {
         showToast(t("trade.stock_opening_success"));
         form1.value.volume = "";
         sliderValue.value = 0;
-        setTimeout(() => {
-          emits("success");
-        }, 1500);
+        // setTimeout(() => {
+        //   emits("success");
+        // }, 1500);
+        emits("success");
       }
     })
     .finally(() => {

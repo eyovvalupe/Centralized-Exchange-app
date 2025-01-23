@@ -1,5 +1,5 @@
 <template>
-  <div class="form-item" :class="{ 'form-item--large': size == 'large', 'form-item--scroll': props.hasScroll }">
+  <div class="form-item"  :class="{ 'form-item--large': size == 'large', 'form-item--scroll': props.hasScroll }">
     <div class="form-item-title" v-if="title">
       <div class="form-item-title_content">
         <!-- <span>{{ title }}</span> -->
@@ -21,7 +21,7 @@
           disabled_item: disabled,
           item_focus: from != 'transfer' ? inputFocus : '',
           // item_focus2: inputFocus && !tip,
-        }" :style="{ background, paddingBottom: props.hasBot ? '1.2rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
+        }" :style="{ background,  paddingBottom: props.hasBot ? '2rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
             v-show="inputFocus">{{ placeholder
@@ -458,7 +458,7 @@ const percentTagClick = (percent) => {
 }
 
 .form-item--scroll {
-  height: 2.28rem;
+  height: 3rem;
  
   .form-item-box {
     height: 100%;
@@ -492,13 +492,13 @@ const percentTagClick = (percent) => {
 
         .mid-scroll {
           height: 0.5rem;
-          bottom: 0.85rem;
+          bottom: 1.2rem;
         }
 
         .bottom_content {
           width: 100%;
           position: absolute;
-          height: 0.85rem;
+          height: 1.2rem;
           bottom: 0;
           left: 0;
           border-top: 1px solid var(--ex-border-color);
