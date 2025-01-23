@@ -1,14 +1,14 @@
 <!-- ai -->
 <template>
   <div class="ai-block">
-    <Tabs type="custom-line" animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+    <Tabs type="custom-tab"  animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
       @change="onChange">
-      <Tab :title="t('trade.stock_open')" name="0">
+      <!-- <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
           <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" mode="page" ref="OpeningRef"
             @back="showModel = false" v-if="loadTab.indexOf('0') > -1" />
         </div>
-      </Tab>
+      </Tab> -->
       <Tab :title="t('trade.stock_position')" name="1">
         <div class="ai-block-content">
           <Positions v-if="loadTab.indexOf('1') > -1" />
@@ -62,7 +62,8 @@ const showNavDialog = () => {
 };
 
 const loadTab = ref([]);
-const active = ref(sessionStorage.getItem("trade_ai_tab") || "0");
+// const active = ref(sessionStorage.getItem("trade_ai_tab") || "0");
+const active = ref(1)
 const InquireRef = ref();
 const onChange = async (val) => {
   if (loadTab.value.indexOf(val) == -1) {
@@ -113,7 +114,7 @@ defineExpose({
   }
 
   .ai-block-content {
-    padding: 0 0.32rem;
+    // padding: 0 0.32rem;
 
     .ai-block-title {
       padding: 0 0.32rem;

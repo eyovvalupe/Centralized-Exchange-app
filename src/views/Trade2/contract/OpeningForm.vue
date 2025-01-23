@@ -60,26 +60,29 @@
             <template #right-con>
               <!-- 市价/限价 -->
               <div class="pricetype-modes">
-                <div class="pricetype-mode tab_ani" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
+                <div class="pricetype-mode tab_ani" @click="priceMode = 1"
+                  :class="{ 'pricetype-mode-active': priceMode == 1 }">
                   {{
                     t("trade.stock_opening_price_market") }}</div>
-                <div class="pricetype-mode tab_ani" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
+                <div class="pricetype-mode tab_ani" @click="priceMode = 2"
+                  :class="{ 'pricetype-mode-active': priceMode == 2 }">
                   {{
                     t("trade.stock_opening_price_limit") }}</div>
               </div>
             </template>
           </FormItem>
 
-          <FormItem :placeholder="t('trade.stock_opening_price')" v-model="form1.price" input-type="number" :percent-tags="props.activeType == 1
-            ? [
-              { label: '-3%', value: 3 },
-              { label: '-1%', value: 1 },
-            ]
-            : [
-              { label: '+3%', value: 3 },
-              { label: '+1%', value: 1 },
-            ]
-            " v-else @percentTagClick="percentTagClick">
+          <FormItem :placeholder="t('trade.stock_opening_price')" v-model="form1.price" input-type="number"
+            :percent-tags="props.activeType == 1
+              ? [
+                { label: '-3%', value: 3 },
+                { label: '-1%', value: 1 },
+              ]
+              : [
+                { label: '+3%', value: 3 },
+                { label: '+1%', value: 1 },
+              ]
+              " v-else @percentTagClick="percentTagClick">
             <template #right-con>
               <!-- 市价/限价 -->
               <div class="pricetype-modes">
@@ -147,24 +150,17 @@
     </div>
 
     <!-- 张数 -->
-    <div class="item_box">
+    <div class="item_box" style="overflow: hidden;border-radius: 0 0.32rem 0 0;">
+      <div class="tip-box" @click="tipZ" :style="{opacity: volumeF ? '0' : '1'}"><img v-lazy="getStaticImgUrl(
+        `/static/img/common/warning.svg`
+      )
+        " /></div>
       <div class="item_box_right">
-        <FormItem :hasRT="true" :hasLT="true" :hasScroll="true" :placeholder="t('trade.contract_lots_amount')"
-          @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-          @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
-          :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
-          <!-- <template #title-icon v-if="amountper && paramCurrency">
-            <div style="width: 0.2rem; height: 0.2rem; margin-left: 0.06rem" @click="() =>
-              showToast(
-                `1${t(
-                  'trade.contract_one_lot'
-                )} = ${amountper} ${paramCurrency}`
-              )
-              ">
-              <img v-lazy="getStaticImgUrl('/static/img/trade/warning.svg')" alt="" />
-            </div>
-          </template> -->
-          <template #lt>
+        <FormItem :hasScroll="true" :placeholder="t('trade.contract_lots_amount')" @blur="volumeF = false" @focus="volumeFocus"
+          v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll"
+          @change="changePercent" :max="maxStockNum" tip-align="right" :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''"
+          input-type="digit">
+          <!-- <template #lt>
             <div style="display: flex;align-items: center;height: 0.48rem;" v-if="amountper && paramCurrency">
               <div style="width: 0.24rem;height: 0.24rem;margin-right: 0.1rem;">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/warning_icon.svg')" alt="↓" />
@@ -173,8 +169,8 @@
                 'trade.contract_one_lot'
               )} = ${amountper} ${paramCurrency}` }}</span>
             </div>
-          </template>
-          <template #rt>
+          </template> -->
+          <!-- <template #rt>
             <div @click="openConfirmBox" class="mask-btn">
               <div
                 style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
@@ -183,7 +179,7 @@
                 <span>{{ paramCurrency }}</span>
               </div>
             </div>
-          </template>
+          </template> -->
 
           <template #scroll>
             <!-- 拖动 -->
@@ -194,8 +190,8 @@
     </div>
 
     <!-- 按钮 -->
-    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit ripple-btn"
-      :color="activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
+    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1"
+      class="submit ripple-btn" :color="activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
       <span style="color: var(--ex-white);">{{
         activeType == 1
           ? t("trade.stock_open_long")
@@ -228,7 +224,7 @@
     </div>
     <div class="stock_submit_box">
 
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding:0.12rem;margin-bottom: 0.32rem;">
+      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-white2);padding:0.12rem;margin-bottom: 0.32rem;">
         <!-- 股票 -->
         <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
           <div style="font-size: 0.32rem;margin-bottom: 0.1rem;">
@@ -415,15 +411,6 @@
       </div>
 
       <div class="lists">
-        <!-- 搜索列表 -->
-        <!-- <StockTable
-          theme="classic"
-          market-type="crypto"
-          :handleClick="handleClick"
-          :loading="searchLoading"
-          :key="'search'"
-          :list="marketSearchList"
-        /> -->
         <StockTable :showIcon="true" theme="classic" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
           :list="marketSearchList" />
       </div>
@@ -599,6 +586,10 @@ const searchMap = {
 const { t } = useI18n();
 const showPassword = ref(false);
 const safeRef = ref();
+
+const tipZ = () => {
+  showToast(`1${t('trade.contract_one_lot')} = ${amountper.value} ${paramCurrency.value}`)
+}
 
 //搜索
 // const marketSearchList = computed(() => {
@@ -816,7 +807,6 @@ const modeList = computed(() => {
 });
 
 const elseWallet = computed(() => store.state.elseWallet || []);
-
 const stockWalletAmount = computed(() => {
   // 股票账户余额
   const target = elseWallet.value.find(
@@ -1107,7 +1097,9 @@ const changePercent = () => {
   sliderValue.value = Number(p);
 };
 
+const volumeF = ref(false)
 const volumeFocus = () => {
+  volumeF.value = true
   if (!currStock.value.symbol)
     return showToast(t("trade.contract_opening_err_contract"));
 };
@@ -1354,6 +1346,7 @@ const jump = (name) => {
 defineExpose({
   // 选择某个股票
   choose: handleClick,
+  stockWalletAmount,
 });
 </script>
 
@@ -1393,8 +1386,11 @@ defineExpose({
 }
 
 .form {
-  padding: 0.32rem 0;
+  padding: 0.28rem;
   position: relative;
+  border-radius: 0.32rem;
+  background-color: var(--ex-bg-color3);
+  margin-top: 0.24rem;
 
   .subtitle {
     color: var(--ex-text-color);
@@ -1419,6 +1415,20 @@ defineExpose({
     display: flex;
     align-items: stretch;
     margin-bottom: 0.4rem;
+    position: relative;
+
+    .tip-box {
+      width: 0.6rem;
+      height: 0.4rem;
+      border-radius: 0 0 0 0.32rem;
+      background-color: var(--ex-bg-color);
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.1rem 0.05rem;
+      z-index: 999;
+      transition: all ease-in .3s;
+    }
 
     .item {
       flex: 1;
@@ -1431,7 +1441,7 @@ defineExpose({
       border-radius: 0.32rem;
       border: 1px solid var(--ex-border-color2);
       padding: 0.06rem 0.24rem;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white1);
 
       .tip-title {
         color: var(--ex-text-color3);
@@ -1511,6 +1521,7 @@ defineExpose({
     .item_box_right {
       flex: 1;
     }
+
     .pricetype-modes {
       height: 0.6rem;
       border-radius: 0.2rem;
@@ -1650,7 +1661,7 @@ defineExpose({
     padding: 0.16rem 0.32rem;
     box-sizing: border-box;
     position: relative;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white1);
 
     img {
       width: 0.4rem;

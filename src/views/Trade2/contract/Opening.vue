@@ -1,19 +1,20 @@
 <!-- 开仓 -->
 <template>
   <div class="opening">
-    <div class="type_tabs" v-if="props.from != 'trade'">
-      <div :style="{backgroundImage: `url(${activeType == 1 ? getStaticImgUrl('/static/img/trade/up2.svg') : getStaticImgUrl('/static/img/trade/up1.svg')})`}" @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
+    <div class="type_tabs">
+      <div @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
         {{ t("trade.stock_open_long_tab") }}
       </div>
-      <div :style="{backgroundImage: `url(${activeType == 2 ? getStaticImgUrl('/static/img/trade/down2.svg') : getStaticImgUrl('/static/img/trade/down1.svg')})`}" @click="activeType = 2" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 2 }">
+      <div @click="activeType = 2" class="type_tab tab_ani"
+        :class="{ 'active_type_tab active_type_tab2': activeType == 2 }">
         {{ t("trade.stock_open_short_tab") }}
       </div>
     </div>
 
     <!-- Tabs -->
-    <div class="open_tab_box" :class="{'trade-dialog': props.from == 'trade'}">
-      <Tabs animated key="form" type="line-card" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
-        :color="'var(--ex-primary-color)'" shrink>
+    <div class="open_tab_box" :class="{ 'trade-dialog': props.from == 'trade' }">
+      <Tabs animated key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab"
+        :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
             v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
@@ -30,6 +31,22 @@
             @success="emits('success')" />
         </Tab>
       </Tabs>
+
+      <div class="account-box">
+        <div class="title">合约账户</div>
+        <div class="info">
+          <div>可用余额</div>
+          <div>
+            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ stockWalletAmount || '--' }}</span>
+            <span style="color:var(--ex-white)">USDT</span>
+          </div>
+        </div>
+
+        <div class="btns">
+          <div class="btn ripple-primary" @click="jump('topUpCrypto')">充值</div>
+          <div class="btn ripple-primary" @click="jump('transfer')">划转</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -42,6 +59,9 @@ import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
 import { getStaticImgUrl } from "@/utils/index.js"
+import router from "@/router";
+
+const jump = name => router.push({name})
 
 const props = defineProps({
   type: {
@@ -69,6 +89,12 @@ const route = useRoute();
 const OpeningForm0Ref = ref();
 const OpeningForm1Ref = ref();
 const OpeningForm2Ref = ref();
+const stockWalletAmount = computed(() => {
+  if (activeTab.value == 0 && OpeningForm0Ref.value) return OpeningForm0Ref.value.stockWalletAmount
+  if (activeTab.value == 1 && OpeningForm1Ref.value) return OpeningForm1Ref.value.stockWalletAmount
+  if (activeTab.value == 2 && OpeningForm2Ref.value) return OpeningForm2Ref.value.stockWalletAmount
+  return 0
+})
 
 const activeType = ref(1); // 1-买涨 2-买跌
 // url参数处理
@@ -102,29 +128,73 @@ defineExpose({
 
   .open_tab_box {
     border-radius: 0 0 0.32rem 0.32rem;
+
+    .account-box {
+      border-radius: 0.32rem;
+      background-color: var(--ex-bg-color3);
+      padding: 0.36rem 0.32rem;
+      margin-top: 0.2rem;
+
+      .title {
+        font-size: 0.32rem;
+        color: var(--white);
+        margin-bottom: 0.4rem;
+      }
+
+      .info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .btns {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.52rem;
+        .btn {
+          width: 3rem;
+          height: 0.6rem;
+          border-radius: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ex-bg-color);
+          font-size: 0.28rem;
+          background-color: var(--ex-white);
+        }
+      }
+    }
   }
 
   .type_tabs {
+    margin-top: 0.24rem;
     display: flex;
     align-items: center;
-    height: 0.8rem;
-    z-index: 99;
-    position: absolute;
-    left: 0;
+    height: 0.96rem;
+    border-radius: 1rem;
+    background-color: var(--ex-bg-color3);
+    padding: 0.08rem;
 
     .type_tab {
-      width: 1.36rem;
-      height: 0.68rem;
+      flex: 1;
+      font-size: 0.32rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--ex-text-color2);
-      font-size: 0.3rem;
-      background-size: 100% 100%;
+      color: var(--ex-text-color3);
+      transition: all ease-in .1s;
+      height: 100%;
+      border-radius: 1rem;
     }
 
     .active_type_tab {
+      background-color: var(--ex-primary-color);
       color: var(--ex-white);
+    }
+
+    .active_type_tab2 {
+      background-color: var(--ex-down-color);
     }
   }
 
@@ -132,19 +202,20 @@ defineExpose({
   :deep(.van-tabs--line-card) {
     .van-tabs__wrap {
       padding-left: 2.6rem;
+
       .van-tabs__nav {
         display: flex;
-        justify-content:space-between;
+        justify-content: space-between;
       }
     }
   }
 
   .trade-dialog {
     :deep(.van-tabs--line-card) {
-    .van-tabs__wrap {
-      padding: 0 0.6rem;
+      .van-tabs__wrap {
+        padding: 0 0.6rem;
+      }
     }
-  }
   }
 }
 </style>

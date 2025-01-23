@@ -28,7 +28,7 @@
             <div class="text">{{ t('trade.ai_position_timer') }}</div>
           </div>
           <Circle v-if="currItem.status == 'open'" start-position="right" stroke-linecap="round" stroke-width="142"
-            layer-color="var(--ex-bg-color3)" :color="gradientColor" size="182" :rate="100"
+            layer-color="var(--ex-bg-white1)" :color="gradientColor" size="182" :rate="100"
             :current-rate="100 - rate" />
         </div>
 
@@ -465,7 +465,7 @@ defineExpose({
   position: relative;
   margin-top: 0.2rem;
   border-radius: 0.32rem;
-  background-color: var(--ex-bg-color);
+  background-color: var(--ex-bg-white2);
 
   z-index: 1;
 
@@ -483,10 +483,11 @@ defineExpose({
     font-size: 0.28rem;
     line-height: 0.44rem;
     position: relative;
+    margin-top: 0.4rem;
 
     .amount {
       line-height: 0.44rem;
-      margin-top: 0.4rem;
+      
       color: var(--ex-text-color);
       font-size: 0.3rem;
     }
