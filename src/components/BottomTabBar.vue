@@ -119,7 +119,10 @@ const checkActive = (item) => {
 
 <style scoped lang="less"> 
 .bottom_nav2 {
-  background-color:var(--ex-bg-color3);
+  fill: rgba(26, 27, 36, 0.60);
+  filter: drop-shadow(0px -1px 1px rgba(255, 255, 255, 0.10));
+  backdrop-filter: blur(25px);
+  border-radius: 0.32rem 0.32rem 0 0;
   display: flex;
   position: fixed;
   overflow: hidden;

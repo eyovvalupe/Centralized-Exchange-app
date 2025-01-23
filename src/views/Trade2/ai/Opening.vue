@@ -44,7 +44,7 @@
         </div>
         <!-- 数量 -->
         <div style="height: 0.2rem;"></div>
-        <FormItem :hasBot="true" :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.grid"
+        <FormItem style="height: 3.6rem;" :hasBot="true" :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.grid"
           :tip="maxgrid > 0 ? '≤' + maxgrid : ''" :placeholder="t('trade.ai_opening_network_amount')"
           btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
 
@@ -70,9 +70,9 @@
 
         <!-- 投资额 -->
         <div style="height: 0.2rem;"></div>
-        <FormItem :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.volume"
+        <FormItem  :hasScroll="true" input-type="number" v-model="form1.volume"
           :placeholder="t('trade.ai_opening_invest_amount')" btn-show-mode="focus"
-          :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0" @change="changePercent"
+          :tip="'≥' + minamount" :show-btn="usdt.amount > 0" @change="changePercent"
           @btnClick="onSliderChange(100)">
           <!-- <template #title-right>
             <span v-if="token" style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
@@ -82,7 +82,7 @@
               {{ usdt.amount }} USDT</span>
           </template> -->
 
-          <template #rt>
+          <!-- <template #rt>
             <div @click="openConfirmBox">
               <div
                 style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
@@ -91,16 +91,14 @@
                 <span>USDT</span>
               </div>
             </div>
-          </template>
+          </template> -->
 
           <template #scroll>
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </template>
         </FormItem>
 
-
-      </div>
-      <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box pb-[0.4rem]">
+        <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box pb-[0.4rem]">
         <div class="flex justify-between mb-[0.32rem]">
           <div
             class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
@@ -128,6 +126,24 @@
           }}</span>
         </Button>
       </div>
+      </div>
+
+      <div class="account-box">
+        <div class="title">合约账户</div>
+        <div class="info">
+          <div>可用余额</div>
+          <div>
+            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ usdt.amount || '--' }}</span>
+            <span style="color:var(--ex-white)">USDT</span>
+          </div>
+        </div>
+
+        <div class="btns">
+          <div class="btn ripple-primary" @click="jump('topUpCrypto')">充值</div>
+          <div class="btn ripple-primary" style="margin-left: 0.28rem;" @click="jump('transfer')">划转</div>
+        </div>
+      </div>
+     
     </div>
 
     <!-- 开仓确认弹窗 -->
@@ -215,16 +231,10 @@
 </template>
 
 <script setup>
-import { getStaticImgUrl } from "@/utils/index.js"
-import { ref, computed, onBeforeUnmount } from "vue";
+import { ref, computed } from "vue";
 import {
-  Slider,
   Button,
-  Popup,
   showToast,
-  Tabs,
-  Tab,
-  showConfirmDialog,
 } from "vant";
 import Decimal from "decimal.js";
 import store from "@/store";
@@ -237,12 +247,12 @@ import SafePassword from "@/components/SafePassword.vue";
 import { _dateUnitMap } from "@/utils/dataMap";
 import StockPopup from "../../trade/StockPopup.vue";
 import FormItem from "@/components/Form/FormItem.vue";
-import eventBus from "@/utils/eventBus";
 import SlideContainer from "@/components/SlideContainer.vue";
 import Top from "@/components/Top.vue";
 import AmountPopup from "../AmountPopup.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
+
 
 const { t } = useI18n();
 const props = defineProps({
@@ -577,8 +587,48 @@ defineExpose({
 <style lang="less" scoped>
 .scroller {
   box-sizing: border-box;
-  // padding: 0 0.32rem;
+  padding: 0.28rem;
+  border-radius: 0.32rem;
+  background-color: var(--ex-bg-color3);
+  margin-top: 0.4rem;
 }
+.account-box {
+      border-radius: 0.32rem;
+      background-color: var(--ex-bg-color3);
+      padding: 0.36rem 0.32rem;
+      margin-top: 0.2rem;
+      margin-bottom: 0.4rem;
+
+      .title {
+        font-size: 0.32rem;
+        color: var(--white);
+        margin-bottom: 0.4rem;
+      }
+
+      .info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .btns {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.52rem;
+        .btn {
+          flex: 1;
+          height: 0.6rem;
+          border-radius: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--ex-bg-color);
+          font-size: 0.28rem;
+          background-color: var(--ex-white);
+        }
+      }
+    }
 
 .time_popup {
   :deep(.van-popup__close-icon) {
@@ -667,13 +717,15 @@ defineExpose({
 }
 
 .trade_ai {
+  
   .btns {
-    padding: 0.32rem 0.16rem 0.4rem 0.16rem;
+    // padding: 0.32rem 0.16rem 0.4rem 0.16rem;
+    padding: 0.32rem 0 0.08rem 0;
     display: flex;
 
     .btn {
       flex: 1;
-      margin: 0.2rem 0.16rem 0.6rem 0.16rem;
+      // margin: 0.2rem 0.16rem 0.6rem 0.16rem;
       border-radius: 0.4rem;
     }
   }
@@ -701,8 +753,7 @@ defineExpose({
   }
 
   .item_content {
-    margin-top: 0.4rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white1);
     border-radius: 0.32rem;
     padding: 0.24rem 0.28rem;
 

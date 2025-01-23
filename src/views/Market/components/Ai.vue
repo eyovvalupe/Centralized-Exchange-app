@@ -9,7 +9,7 @@
 
     <div class="list" v-if="props.page == 'home'">
       <Loaidng :loading="loading" v-if="!marketAiList.length && loading" />
-      <AiItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'"  v-for="(item, i) in marketAiList" :key="i" :item="item" :page="props.page" />
+      <AiItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.05 * i) + 's'"  v-for="(item, i) in marketAiList" :key="i" :item="item" :page="props.page" />
       <NoData v-if="!loading && marketAiList.length == 0" />
     </div>
   </div>
@@ -46,7 +46,8 @@ const props = defineProps({
   propsLoading: {
     type: Boolean,
     default: false
-  }
+  },
+  from: ''
 });
 
 const marketAiList = computed(() => store.state.marketAiList || []); // ai量化默认列表

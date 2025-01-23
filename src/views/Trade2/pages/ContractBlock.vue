@@ -1,14 +1,14 @@
 <!-- 合约 --> 
 <template>
   <div class="stock_block">
-    <Tabs type="custom-card-stake" animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+    <Tabs type="custom-tab" animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
       @change="onChange">
-      <Tab :title="t('trade.stock_open')" name="0">
+      <!-- <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body">
           <Opening :tradeType="props.activeTab" :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1"
             @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
         </div>
-      </Tab>
+      </Tab> -->
       <Tab :title="t('trade.stock_position')" name="1">
         <div class="stock_tab-body">
           <Positions :type="'constract'" v-if="loadTab.indexOf('1') > -1" />
@@ -54,7 +54,8 @@ const showNavDialog = () => {
 
 
 const loadTab = ref([]);
-const active = ref(sessionStorage.getItem("trade_contract_tab") || "0");
+// const active = ref(sessionStorage.getItem("trade_contract_tab") || "0");
+const active = ref(1)
 const InquireRef = ref();
 const onChange = async (val) => {
   active.value = val;
@@ -121,16 +122,16 @@ defineExpose({
   padding: 0 0 0.32rem 0;
 
   :deep(.van-tabs__nav) {
-    padding: 0 0.12rem;
+    // padding: 0 0.12rem;
   }
   :deep(.van-tabs--custom-card-stake) {
     .van-tabs__wrap {
-      margin: 0 0.32rem;
+      // margin: 0 0.32rem;
     }
   }
 
   .stock_tab-body {
-    padding: 0 0.32rem;
+    // padding: 0 0.32rem;
   }
 }
 </style>

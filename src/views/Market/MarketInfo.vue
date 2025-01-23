@@ -9,13 +9,15 @@
         </div>
         <!-- 标题 -->
         <div class="title" v-if="route.query.type == 'stock'">
-          <div class="title_name">{{ item.symbol || "--" }}</div>
+          <div class="title_name">{{ item.symbol || "--" }} </div>
           <div v-if="showDate" class=" leading-[0.4rem]">
             {{ showDate }}
           </div>
         </div>
-        <div class="title" v-else>
-          <div class="title_name">{{ item.name || "--" }}</div>
+        <div class="title" v-else @click="showSearchDialog = true">
+          <div class="title_name">{{ item.name || "--" }}
+            <Icon name="arrow-down" />
+          </div>
         </div>
         <!-- 详情 -->
         <div class="title_shadow"></div>
@@ -104,8 +106,8 @@
           <div class="tab tab_ani" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
             1h
           </div>
-          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '4h' }"
-            @click="changeType('4h')">
+          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)"
+            :class="{ active_tab: timeType == '4h' }" @click="changeType('4h')">
             4h
           </div>
           <div class="tab tab_ani" :class="{ active_tab: timeType == '1D' }" @click="changeType('1D')">
@@ -117,8 +119,8 @@
           <div class="tab tab_ani" :class="{ active_tab: timeType == '1M' }" @click="changeType('1M')">
             1M
           </div>
-          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)" :class="{ active_tab: timeType == '1Y' }"
-            @click="changeType('1Y')">
+          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)"
+            :class="{ active_tab: timeType == '1Y' }" @click="changeType('1Y')">
             1Y
           </div>
           <div style="flex:1"></div>
@@ -126,7 +128,7 @@
             <img v-lazy="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
           </div>
         </div>
-        <div class="chart_container" :class="{ fullscreen_container: fullWindow }">
+        <div v-if="!chartLoading" class="chart_container" :class="{ fullscreen_container: fullWindow }">
           <!-- 时区 -->
           <div v-if="showDate" class="chart_time">{{ showDate }}</div>
           <!-- 分时图 -->
@@ -273,9 +275,38 @@
     </BottomPopup>
 
     <!-- 交易弹窗 -->
-    <BottomPopup  v-model:show="showDialog" :title="''"  closeable >
-      <div style="padding: 0.5rem 0.32rem 0 0.32rem">
+    <Popup class="trade-popup" v-model:show="showDialog" :title="''" position="bottom" close-on-popstate>
+      <div style="padding: 0.5rem 0.32rem 0 0.32rem;width: 100%;height: 100%;">
+        <div class="trade-popup-title">
+          <div class="back" @click="showDialog = false">
+            <Icon name="arrow-left" />
+          </div>
+          <div class="title">{{ item.name }}</div>
+          <div style="width: 0.6rem;height: 0.6rem;"></div>
+        </div>
         <Opening ref="openingRef" @success="showDialog = false" :from="'trade'" />
+      </div>
+    </Popup>
+
+    <!-- 搜索列表 -->
+    <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
+      <div class="van-popup-custom-title">
+        {{ t("trade.stock_opening_search") }}
+      </div>
+      <div class="search_dialog_trade">
+        <!-- 搜索 -->
+        <div class="item search_box">
+          <div class="search_icon">
+            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
+          </div>
+          <input v-model.trim="searchDialogStr" @keyup="goDialogSearch" type="text" class="ipt" style="width: 100%"
+            :placeholder="t('trade.stock_opening_search')" />
+        </div>
+
+        <div class="lists">
+          <StockTable :showIcon="true" theme="classic" :handleClick="handleClick" :loading="searchLoading"
+            :key="'search'" :list="marketSearchList" />
+        </div>
       </div>
     </BottomPopup>
   </div>
@@ -286,16 +317,17 @@ import { getStaticImgUrl } from "@/utils/index.js"
 import { Icon, Popup, showToast } from "vant";
 import router from "@/router";
 import { useRoute } from "vue-router";
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import store from "@/store";
 import AreaChart from "@/components/KlineCharts/AreaChart.vue";
 import KlineChart from "@/components/KlineCharts/KlineChart.vue";
 import { _formatNumber } from "@/utils/index";
-import { _basic, _profile, _add, _del } from "@/api/api";
+import { _basic, _profile, _add, _del, _futures } from "@/api/api";
 import { formatTimestamp } from "@/utils/time";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
 import Opening from "@/views/Trade2/contract/Opening.vue"
+import StockTable from "@/components/StockTable.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -397,25 +429,26 @@ const updown = computed(() => {
 });
 
 // 获取股票最新信息
-if (item.value.symbol) {
-  _basic({ symbol: item.value.symbol }).then((res) => {
+const getBasic = (obj) => {
+  _basic({ symbol: obj.symbol }).then((res) => {
     if (res.code == 200) {
       if (res.data.symbol == item.value.symbol) {
-        store.commit("setCurrStock", {
-          ...item.value,
-          ...res.data,
-        });
+        const type = route.query.type || props.type;
+        switch (type) {
+          case "constract": // 合约
+            store.commit("setCurrConstract", {
+              ...obj,
+              ...res.data,
+            });
+            break;
+        }
+
       }
     }
   });
-  // _profile({ symbol: item.value.symbol }).then(res => {
-  //     if (res.code == 200) {
-  //         store.commit('setCurrStock', {
-  //             ...item.value,
-  //             ...res.data
-  //         })
-  //     }
-  // })
+}
+if (item.value.symbol) {
+  getBasic(item.value)
 }
 
 // 图表信息  Time 1m 5m 10m 15m 30m 1h 4h 1D 1W 1M 1Y
@@ -464,15 +497,6 @@ const goBuy = (key) => {
   setTimeout(() => {
     openingRef.value && openingRef.value.choose(item.value, key)
   }, 300)
-  // showBuy.value = false;
-  // router.push({
-  //   name: "trade",
-  //   query: {
-  //     symbol: item.value.symbol,
-  //     type: key ? 1 : 2,
-  //     to: route.query.type,
-  //   },
-  // });
 };
 
 // 返回
@@ -488,15 +512,143 @@ const backFunc = () => {
 // 弹窗
 const showBuy = ref(false);
 const showInfo = ref(false);
+
+
+
+const chartLoading = ref(false)
+const handleClick = (obj) => {
+  console.error(obj)
+  showSearchDialog.value = false
+  chartLoading.value = true
+  store.commit("setCurrConstract", obj);
+  getBasic(obj)
+  setTimeout(() => {
+    chartLoading.value = false
+  }, 0)
+};
+
+// 搜索
+const marketSearchList = computed(() => store.state.futuresSearchList)
+const showSearchDialog = ref(false);
+const searchDialogStr = ref("");
+let searchTimeout = null;
+const searchLoading = ref(false);
+const goDialogSearch = () => {
+  if (searchTimeout) clearTimeout(searchTimeout);
+  searchLoading.value = true;
+  let s = searchDialogStr.value;
+  searchTimeout = setTimeout(() => {
+    _futures({
+      name: s,
+      type: "",
+    })
+      .then((res) => {
+        if (searchDialogStr.value == s) {
+          let arr = (res.data || []).map((item) => {
+            const target = marketSearchList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            if (target)
+              return {
+                ...target,
+                ...item,
+              };
+            return item;
+          });
+          store.commit("setFuturesSearchList", arr);
+          store.dispatch("subList", {
+            commitKey: "setFuturesSearchList",
+            listKey: "futuresSearchList",
+          });
+        }
+      })
+      .finally(() => {
+        searchLoading.value = false;
+      });
+  }, 100);
+};
+setTimeout(() => {
+  goDialogSearch()
+}, 2000)
+
+
 </script>
 
 <style lang="less" scoped>
+.search_dialog_trade {
+  .lists {
+    height: calc(var(--vh) * 60);
+    overflow-y: auto;
+    margin-top: 0.32rem;
+  }
+
+  .search_box {
+    height: 0.8rem;
+    padding: 0 0.32rem;
+    margin: 0.4rem 0.3rem 0 0.3rem;
+    display: flex;
+    align-items: center;
+    background-color: var(--ex-bg-color2);
+    border-radius: 0.6rem;
+    border: 1px solid var(--ex-border-color2);
+
+    .search_icon {
+      width: 0.48rem;
+      height: 0.48rem;
+      margin-right: 0.24rem;
+    }
+
+    .ipt {
+      height: 100%;
+      font-weight: 400;
+    }
+
+    .ipt::placeholder {
+      color: var(--ex-text-color4);
+    }
+  }
+}
+
 .page_marketinfo {
   // padding: 1.8rem 0 0 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   position: relative;
+
+  :deep(.trade-popup) {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 0;
+
+    .trade-popup-title {
+      width: 100%;
+      top: 0.18rem;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .back {
+        width: 0.6rem;
+        height: 0.6rem;
+        border-radius: 50%;
+        background-color: var(--ex-bg-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.32rem;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 0.32rem;
+        color: var(--ex-white);
+      }
+    }
+  }
+
 
   .has_padding_x {
     padding: 0 0.3rem;
@@ -520,7 +672,7 @@ const showInfo = ref(false);
       .back {
         width: 0.6rem;
         height: 0.6rem;
-        font-size: 0.36rem;
+        font-size: 0.32rem;
         background-color: var(--ex-bg-color3);
         border-radius: 50%;
         display: flex;
@@ -542,7 +694,7 @@ const showInfo = ref(false);
       }
 
       .title {
-        pointer-events: none;
+        // pointer-events: none;
         position: absolute;
         width: calc(100% - 1.6rem);
         top: 50%;

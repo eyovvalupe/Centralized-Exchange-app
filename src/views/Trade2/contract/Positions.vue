@@ -88,7 +88,7 @@
 
 
           <!-- 拖动 -->
-          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+          <div style="padding: 0.2rem 0.24rem 0.4rem 0.24rem">
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </div>
 
@@ -164,7 +164,7 @@
           </FormItem>
 
           <!-- 拖动 -->
-          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+          <div style="padding: 0.2rem 0.24rem 0.4rem 0.24rem">
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </div>
 
@@ -650,7 +650,7 @@ getSessionToken();
 .positions {
   .tr {
     padding: 0.24rem;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;
@@ -819,7 +819,7 @@ getSessionToken();
       width: 100%;
       height: 1.12rem;
       border: 1px solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white1);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

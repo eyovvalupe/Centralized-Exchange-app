@@ -410,7 +410,7 @@ const copy = (text) => {
   position: relative;
   // border: 1px solid var(--ex-border-color);
   border-radius: 0.32rem;
-  background-color: var(--ex-bg-color);
+  background-color: var(--ex-bg-white2);
   margin: -0.5rem 0 0 0;
   z-index: 1;
 
@@ -455,28 +455,8 @@ const copy = (text) => {
   margin-top: 0.2rem;
   padding: 0.2rem 0.28rem;
   border-radius: 0.32rem;
-  background-color: var(--ex-bg-color);
+  background-color: var(--ex-bg-white2);
   position: relative;
-
-  &::after {
-    width: 0.16rem;
-    height: 0.34rem;
-    content: "";
-    background-color: var(--ex-bg-color);
-    position: absolute;
-    top: -0.28rem;
-    right: 1.1rem;
-  }
-
-  &::before {
-    width: 0.16rem;
-    height: 0.34rem;
-    content: "";
-    background-color: var(--ex-bg-color);
-    position: absolute;
-    top: -0.28rem;
-    left: 1.1rem;
-  }
 
   .title {
     text-align: center;
@@ -506,9 +486,9 @@ const copy = (text) => {
       color: var(--ex-text-color);
 
       .tag {
-        color: var(--ex-primary-color);
+        color: var(--ex-white);
         font-size: 0.24rem;
-        background-color: rgba(1, 76, 250, 0.08);
+        background-color: var(--ex-bg-white2);
         height: 0.44rem;
         display: flex;
         align-items: center;

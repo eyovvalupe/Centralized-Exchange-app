@@ -115,7 +115,7 @@ watch(() => store.state.token, () => {
     .item {
         display: flex;
         align-items: center;
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white2);
         line-height: 100%;
         padding: 0.32rem 0.28rem;
         border-radius: 0.32rem;
@@ -128,7 +128,7 @@ watch(() => store.state.token, () => {
             align-items: center;
             justify-content: center;
             border-radius: 0.24rem;
-            background-color: rgb(var(--ex-primary-color-rgb) / 0.10);
+            background-color: var(--ex-bg-color);
 
             img {
                 width: 0.53rem !important;

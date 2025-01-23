@@ -1,11 +1,11 @@
 <template>
     <div class="home-tabs-box">
-        <Tabs :offset-top="'0'" class="van-tabs--sub" :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange"
+        <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']" :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange"
             v-if="$props.activated" v-model:active="activeTab" animated shrink>
             <Tab :name="0" :title="t('common.spot')">
                 <Loaidng v-if="commendLoading" :loading="commendLoading" />
                 <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
-                    <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item"
+                    <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item"
                         v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                 </div>
                 <NoData v-if="!commendLoading && !contractList.length" />
@@ -13,7 +13,7 @@
             <Tab :name="1" :title="$t('common.crypto')">
                 <Loaidng v-if="commendLoading" :loading="commendLoading" />
                 <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
-                    <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item"
+                    <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item"
                         v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                 </div>
                 <NoData v-if="!commendLoading && !contractList.length" />
@@ -25,12 +25,12 @@
                     </Tab> -->
             <Tab :name="3" :title="$t('common.option')">
                 <div class="mt-[0.32rem]">
-                    <Ai page="home" v-if="activeTab == 3" />
+                    <Ai :from="props.from" page="home" v-if="activeTab == 3" />
                 </div>
             </Tab>
             <Tab :name="4" :title="'ETF'">
                 <div class="mt-[0.32rem]">
-                    <Ai page="home" v-if="activeTab == 4" />
+                    <Ai :from="props.from" page="home" v-if="activeTab == 4" />
                 </div>
             </Tab>
         </Tabs>
@@ -51,7 +51,8 @@ const { t } = useI18n();
 
 const props = defineProps({
     activated: false,
-    sticky: false
+    sticky: false,
+    from: ''
 })
 
 const activeTab = ref(0);
