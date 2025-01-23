@@ -78,6 +78,7 @@
     --ex-bg-color8: rgb(var(--ex-bg-color8-rgb) / 1);
     --ex-bg-white: rgb(var(--ex-bg-color4-rgb));
     --ex-bg-white2: rgb(var(--ex-white-rgb) / 0.06);
+    --ex-bg-white1: rgb(var(--ex-white-rgb) / 0.1);
     --ex-text-color--bg-primary: rgb(var(--ex-text-color-rgb)); //主色背景下的文字颜色
     --ex-text-color--bg-light: rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
 
@@ -461,7 +462,7 @@
             width: 0.2rem;
             height: 0.2rem;
             position: relative;
-            background: var(--ex-white);
+            background: var(--ex-primary-color);
             color: var(--ex-text-color--bg-primary);
             border-radius: 50%;
         }
@@ -477,8 +478,8 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        border-left: 0.06rem solid var(--ex-bg-color2);
-        border-right: 0.06rem solid var(--ex-bg-color2);
+        border-left: 0.06rem solid var(--ex-bg-white1);
+        border-right: 0.06rem solid var(--ex-bg-white1);
     }
 
     &::before {
@@ -490,7 +491,7 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white1);
     }
 }
 

@@ -71,11 +71,18 @@
     </div>
 
      <!-- 交易弹窗 -->
-    <BottomPopup  v-model:show="showDialog" :title="''"  closeable >
-      <div style="padding: 0.5rem 0.32rem 0 0.32rem">
+     <Popup class="trade-popup" teleport="body" v-model:show="showDialog" :title="''" position="bottom" close-on-popstate  >
+      <div style="padding: 1.14rem 0.32rem 0 0.32rem">
+        <div class="trade-popup-title">
+          <div class="back" @click="showDialog = false">
+            <Icon name="arrow-left" />
+          </div>
+          <div class="title">{{ props.item.name }}</div>
+          <div style="width: 0.6rem;height: 0.6rem;"></div>
+        </div>
         <Opening ref="openingRef" @success="showDialog = false" />
       </div>
-    </BottomPopup>
+    </Popup>
   </div>
 </template>
 
@@ -85,7 +92,7 @@ import router from "@/router";
 import store from "@/store";
 import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
-import BottomPopup from "@/components/BottomPopup"
+import { Popup, Icon } from "vant"
 import Opening from "@/views/Trade2/ai/Opening.vue"
 
 
@@ -141,12 +148,46 @@ const formatSec = (seconds, t) => {
 };
 </script>
 
+<style lang="less">
+.trade-popup {
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-radius: 0;
+    .trade-popup-title {
+      width: 100%;
+      top: 0.18rem;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .back {
+        width: 0.6rem;
+        height: 0.6rem;
+        border-radius: 50%;
+        background-color: var(--ex-bg-white);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.32rem;
+      }
+      .title {
+        text-align: center;
+        font-size: 0.32rem;
+        color: var(--ex-white);
+      }
+    }
+  }
+</style>
+
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
   background: var(--ex-bg-color2);
   margin-bottom: 0.2rem;
   padding: 0 0.12rem 0.12rem 0.12rem;
+
+  
 
   .top {
     padding: 0.24rem;

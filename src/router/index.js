@@ -382,7 +382,6 @@ const routes = [
       pageDeep: 1,
     },
   },
- 
   {
     // 交易
     path: '/trade',
@@ -391,6 +390,17 @@ const routes = [
     meta: {
       keepAlive: true,
       pageType: 'tab',
+    },
+  },
+  {
+    // 交易订单
+    path: '/tradeOrder',
+    name: 'tradeOrder',
+    component: () => import('../views/Trade3/Order.vue'),
+    meta: {
+      keepAlive: false,
+      pageType: 'child',
+      pageDeep: 1,
     },
   },
   {

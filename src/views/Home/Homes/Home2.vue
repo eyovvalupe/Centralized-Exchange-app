@@ -93,7 +93,7 @@
             </div>
 
             <!-- Tabs -->
-            <Recommend :activated="activated" />
+            <Recommend :from="'home'" :activated="activated" />
 
 
             <!-- ad -->

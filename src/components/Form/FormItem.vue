@@ -21,7 +21,7 @@
           disabled_item: disabled,
           item_focus: from != 'transfer' ? inputFocus : '',
           // item_focus2: inputFocus && !tip,
-        }" :style="{ background,  paddingBottom: props.hasBot ? '2rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
+        }" :style="{ background,  paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
             v-show="inputFocus">{{ placeholder
@@ -286,7 +286,7 @@ const percentTagClick = (percent) => {
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white1);
 
     .ipt_tip {
       color: var(--ex-text-color4);
@@ -458,7 +458,7 @@ const percentTagClick = (percent) => {
 }
 
 .form-item--scroll {
-  height: 3rem;
+  height: 2.54rem;
  
   .form-item-box {
     height: 100%;
@@ -475,24 +475,24 @@ const percentTagClick = (percent) => {
 
       .item {
         height: 100%;
-        padding-bottom: 0.8rem;
+        padding-bottom: 1.1rem;
 
         .scroll-box {
           width: 100%;
           position: absolute;
-          height: 0.8rem;
+          height: 1.14rem;
           bottom: 0;
           left: 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 0 0.28rem;
-          border-top: 1px solid var(--ex-border-color);
+          padding: 0.1rem 0.28rem 0 0.28rem;
+          border-top: 1px solid var(--ex-bg-white2);
         }
 
         .mid-scroll {
-          height: 0.5rem;
-          bottom: 1.2rem;
+          height: 1.2rem;
+          bottom: 1.1rem;
         }
 
         .bottom_content {
@@ -501,7 +501,7 @@ const percentTagClick = (percent) => {
           height: 1.2rem;
           bottom: 0;
           left: 0;
-          border-top: 1px solid var(--ex-border-color);
+          border-top: 1px solid var(--ex-bg-white2);
         }
 
         .put_all {
