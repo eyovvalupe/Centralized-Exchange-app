@@ -1064,4 +1064,14 @@ export default {
     copy_order_detail_tab1: "Current Orders",
     copy_order_detail_tab2: "Historical Orders",
   },
+  notifi: {
+    notifi_center: "Notification Center",
+    notifi_pub: "Announcements",
+    notifi_marke: "Market Events",
+    notifi_detail: "Details",
+    notifi_join: "Join",
+    notifi_joined: "Joined",
+    btn_see_all: "See All",
+    btn_cancel: "Cancel",
+  },
 };

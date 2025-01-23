@@ -171,7 +171,7 @@ export const _safeword = (data = {}) => {
 
 //开仓
 export const _stocksBuy = (data = {}) => {
-  return http.post(`authc/v1/stock/buy`, data, {
+  return http.post(`/authc/v1/stock/buy`, data, {
     custom: { auth: true, toast: true, retry: false },
   });
 };
@@ -515,6 +515,12 @@ export const _futuresPara = (data = {}) => {
     custom: { auth: false, toast: false, retry: true },
   });
 };
+// 现货参数
+export const _spotPara = (data = {}) => {
+  return http.post(`/anon/v1/trade/para`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
 // 订单列表
 export const _futuresList = (data = {}) => {
   return http.post(`/authc/v1/futures/list`, data, {
@@ -526,6 +532,12 @@ export const _futuresList = (data = {}) => {
 export const _futuresBuy = (data = {}) => {
   return http.post(`/authc/v1/futures/buy`, data, {
     custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 现货开仓
+export const _spotBuy = (data = {}) => {
+  return http.post(`/authc/v1/trade/buysell`, data, {
+    custom: { auth: true, toast: true, retry: false },
   });
 };
 // 合约平仓
@@ -674,19 +686,12 @@ export const _pledgeRepay = (data = {}) => {
 
 // 跟单列表
 export const _copyList= (data = {}) => {
-  return http.post(`/anon/v1/user/copy/list`, data, {
+  return http.post(`/anon/v1/copy/list`, data, {
     custom: { auth: false, toast: false, retry: true },
-  });
-};
-// 我的跟单数据 
-export const _copyMycopy= (data = {}) => {
-  return http.post(`/authc/v1/copy/mycopy`, data, {
-    custom: { auth: true, toast: false, retry: true },
   });
 };
 // 我的跟单列表
 export const _copyMyList= (data = {}) => {
-  console.error('参数', data)
   return http.post(`/authc/v1/copy/mycopy`, data, {
     custom: { auth: true, toast: false, retry: true },
   });
@@ -706,6 +711,12 @@ export const _copyApply= (data = {}) => {
 // 追加跟单
 export const _copyAdd= (data = {}) => {
   return http.post(`/authc/v1/copy/add`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 追加跟单
+export const _copyMyData= (data = {}) => {
+  return http.post(`/authc/v1/copy/mycopydata`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
@@ -755,8 +766,29 @@ export const _stakeOrder = (data = {}) => {
 };
 
 //我的收益
-export const _myEarn= (data = {}) => {
+export const _myEarn = (data = {}) => {
   return http.post(`/authc/v1/mining/earn`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+
+//公告弹窗
+export const _notifiPopup = (data = {}) => {
+  return http.post(`/authc/v1/notice/popup`, data, {
+    custom: {auth: true, toast: true, retry: true}
+  })
+}
+
+//公告列表
+export const _notifiList = (data = {}) => {
+  return http.post(`/anon/v1/notice/list`, data, {
+    custom: {auth: false, toast: true, retry: true}
+  })
+}
+
+//公告详情
+export const _notifiDetail = (data = {}) => {
+  return http.post(`/anon/v1/notice/get`, data, {
+    custom: {auth: false, toast: true, retry: true}
+  })
+}

@@ -1050,4 +1050,14 @@ export default {
     copy_order_detail_tab1: "현재 주문",
     copy_order_detail_tab2: "과거 주문",
   },
+  notifi: {
+    notifi_center: "알림센터",
+    notifi_pub: "공지사항",
+    notifi_marke: "마켓이벤트",
+    notifi_detail: "상세 보기",
+    notifi_join: "이벤트참여",
+    notifi_joined: "이벤트참여완료",
+    btn_see_all: "모두보기",
+    btn_cancel: "취소",
+  },
 };

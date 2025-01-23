@@ -52,7 +52,8 @@
 
             <div class="scroll-box">
                 <div class="scroll-con">
-                    <MiningItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'" style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
+                    <MiningItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'"
+                        style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
                 </div>
             </div>
 
@@ -60,7 +61,7 @@
                 <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
             <!-- 跟单 -->
-            <div  class="recommend-title" @click="jump('follow', false)">
+            <div class="recommend-title" @click="jump('follow', false)">
                 <div class="point wow slideInLeft">
                     <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
@@ -69,9 +70,9 @@
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <div class="follow-btn wow slideInLeft">{{ t('copy.copy_option') }}</div>
-            </div>
+            </div> -->
             <div class="scroll-box">
                 <div class="scroll-con">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
@@ -92,42 +93,7 @@
             </div>
 
             <!-- Tabs -->
-            <div class="home-tabs-box">
-                <Tabs class="van-tabs--sub" :color="'var(--ex-primary-color)'" @change="tabChange"
-                    v-if="!pageLoading && activated" v-model:active="activeTab" animated shrink>
-                    <Tab :name="0" :title="t('common.spot')">
-                        <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
-                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
-                                marketType="crypto" page="home" />
-                        </div>
-                        <NoData v-if="!commendLoading && !contractList.length" />
-                    </Tab>
-                    <Tab :name="1" :title="$t('common.crypto')">
-                        <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                        <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
-                            <StockItem class="wow fadeInUp" :data-wow-delay="(0.05 * i) + 's'" :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
-                                marketType="crypto" page="home" />
-                        </div>
-                        <NoData v-if="!commendLoading && !contractList.length" />
-                    </Tab>
-                    <!-- <Tab :title="$t('common.IPO')">
-                        <div class="mb-[0.2rem]" >
-                            <IPO ref="ipoRef" v-if="activeTab == 2" :page="'home'" />
-                        </div>
-                    </Tab> -->
-                    <Tab :name="3" :title="$t('common.option')">
-                        <div class="mt-[0.32rem]">
-                            <Ai page="home" v-if="activeTab == 3" />
-                        </div>
-                    </Tab>
-                    <Tab :name="4" :title="'ETF'">
-                        <div class="mt-[0.32rem]">
-                            <Ai page="home" v-if="activeTab == 4" />
-                        </div>
-                    </Tab>
-                </Tabs>
-            </div>
+            <Recommend :activated="activated" />
 
 
             <!-- ad -->
@@ -203,28 +169,27 @@
     <!-- 类型选择弹窗 -->
     <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')">
     </ActionSheet>
-    <NotifiModal /> 
+    <NotifiModal v-if="notifiOpen" />
 </template>
 
 <script setup>
-import { Tab, Tabs, ActionSheet, Swipe, SwipeItem } from "vant";
-import { computed, onActivated, onDeactivated, ref, onMounted } from "vue";
+import { ActionSheet, Swipe, SwipeItem } from "vant";
+import { computed, onActivated, onDeactivated, ref, onMounted, watch } from "vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
-import NoData from "@/components/NoData.vue";
-import Loaidng from "@/components/Loaidng.vue";
-import Ai from "@/views/Market/components/Ai.vue";
-import IPO from "@/views/Market/components/IPO.vue";
-import StockItem from "@/components/StockItem.vue";
-import { _sort, _watchlistDefault, _futures } from "@/api/api";
+import { _watchlistDefault, _notifiPopup } from "@/api/api";
 import { useSocket } from "@/utils/ws";
 import NotifiModal from "@/views/Notification/NotifiModal.vue";
 import MiningItem from "../Mining/MiningItem.vue"
 import FollowItem from "../components/FollowItem.vue"
 import Wow from "wow.js"
+import { isEmpty } from "@/utils/isEmpty";
+import { useRoute } from "vue-router";
+import Recommend from "./Recommend"
 
+const route = useRoute();
 
 // 安装
 const install = () => {
@@ -241,12 +206,10 @@ const install = () => {
 
 const { startSocket } = useSocket();
 const { t } = useI18n();
-const activeTab = ref(0);
+
 const token = computed(() => store.state.token || "");
 // 总资产
-const assets = computed(() => store.state.assets || {});
-const showPassword = ref(false)
-
+const notifiOpen = computed(() => store.state.notifiOpen);
 
 // 预加载页面
 const pageLoading = computed(() => store.state.pageLoading);
@@ -261,22 +224,13 @@ Promise.all([
     // store.commit("setPageLoading", false);
 });
 
-
-const ipoRef = ref();
-const ipoDataList = computed(() => store.state.ipoDataList || []);
-const tabChange = (val) => {
-    if (val == 2 && !ipoDataList.value.length) {
-        nextTick(() => {
-            ipoRef.value && ipoRef.value.init();
-        });
-    }
-};
-
 // 订阅
 const subs = () => {
     store.commit("setMarketWatchKeysByPage");
     store.dispatch("subList", {});
 };
+
+
 
 const activated = ref(false);
 let wowObj = {}
@@ -284,8 +238,6 @@ onActivated(() => {
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();
-
-    
 });
 onDeactivated(() => {
     activated.value = false;
@@ -299,46 +251,7 @@ onDeactivated(() => {
 
 });
 
-// 获取推荐数据
-const commendLoading = ref(false);
-const contractList = computed(() => store.state.contractList || []);
-const marketStockCurrentList = computed(
-    () => {
-        return store.getters.getMarketStockCurrentList.map(item => {
-            return { ...item, type: 'stock' }
-        })
-    }
-);
-const getRecommendData = () => {
-    commendLoading.value = true;
-    _futures()
-        .then((res) => {
-            if (res.code == 200) {
-                const rs = res.data.map((item) => {
-                    const target = contractList.value.find(
-                        (a) => a.symbol == item.symbol
-                    );
-                    item.type = "crypto";
-                    if (target) {
-                        Object.assign(target, item);
-                        item = target;
-                    }
-                    return item;
-                });
-                store.commit("setContractList", rs || []);
 
-                subs();
-
-                setTimeout(() => {
-                    console.error(contractList.value)
-                })
-            }
-        })
-        .finally(() => {
-            commendLoading.value = false;
-        });
-};
-getRecommendData();
 
 
 // 热门数据
@@ -423,7 +336,57 @@ const jump = (name, needToken, query) => {
     });
 };
 
+const getNotifiData = () => {
+    _notifiPopup().then(res => {
+        store.commit('setNotifiData', res.data);
+        sessionStorage.setItem('notifiData', JSON.stringify(res.data));
+        setTimeout(() => {
+            if (isEmpty(res.data)) { store.commit('setNotifiOpen', false) }
+            else {
+                store.commit('setNotifiOpen', true)
+            }
+        }, 50);
+    }).catch(err => console.error(err)).finally(() => { });
+}
+
+const getToday6AMTime = () => {
+    const now = new Date();
+    now.setHours(6, 0, 0, 0);
+    return now.getTime()
+}
+
+const getLastExecutionTime = () => {
+    return localStorage.getItem('lastExecutionTime');
+};
+
+const getTimeSince6AM = () => {
+    const today6AMTime = getToday6AMTime();
+    return (Date.now() - today6AMTime) / 1000;
+};
+
+const canExecuteToday = () => {
+    const timeSince6AM = getTimeSince6AM();
+    const lastExecutionTime = getLastExecutionTime();
+
+    if (!lastExecutionTime || (lastExecutionTime && ((timeSince6AM > 0) && (getToday6AMTime() > getLastExecutionTime())) || ((timeSince6AM < 0) && (getToday6AMTime() - 24 * 60 * 60 > getLastExecutionTime())))) return true;
+    return false
+}
+
+watch(() => (route.path), (val) => {
+    if (val == '/') {
+        const canExecute = canExecuteToday();
+        if (token.value && canExecute) getNotifiData();
+    };
+})
+
+watch(() => (token.value), (val) => {
+    if (val && canExecuteToday()) {
+        getNotifiData();
+    }
+})
+
 onMounted(() => {
+    if (token.value && canExecuteToday()) getNotifiData();
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();
@@ -444,6 +407,7 @@ onMounted(() => {
 store.dispatch('updateFollowList')
 const followList = computed(() => store.state.followList || [])
 // const time = getPoints('asd-as2', 0)
+
 </script>
 
 
@@ -601,39 +565,7 @@ const followList = computed(() => store.state.followList || [])
             }
         }
 
-        .home-tabs-box {
-            :deep(.van-tabs--sub) {
-                margin-top: 0;
-            }
-
-            :deep(.van-tabs__nav) {
-                background-color: var(--ex-none);
-
-                .van-tab {
-                    background-color: #171717;
-                    color: var(--ex-text-color2);
-                    min-width: 1.2rem;
-                    border-color: #414345;
-                }
-
-                .van-tab--active {
-                    color: var(--ex-white);
-                    background-color: var(--ex-primary-color);
-                }
-            }
-
-            :deep(.page_ipo) {
-                padding-top: 0.32rem;
-
-                .list {
-                    padding: 0;
-                }
-
-                .loading_more {
-                    display: none;
-                }
-            }
-        }
+       
 
         .ad {
             width: 100%;

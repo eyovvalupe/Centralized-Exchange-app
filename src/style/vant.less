@@ -643,6 +643,38 @@ body .van-dialog {
             padding-bottom: 0;
         }
     }
+    .van-sticky {
+        > div > .van-tabs__wrap {
+            height: 1.4rem;
+            padding-top: 0.4rem;
+            background-color: var(--ex-bg-color);
+    
+            .van-tabs__nav {
+                margin: 0 !important;
+                padding: 0;
+    
+                .van-tabs__line {
+                    display: none;
+                }
+    
+                .van-tab {
+                    height: 0.8rem;
+                    border: 1px solid var(--ex-border-color);
+                    margin-right: 0.12rem;
+                    border-radius: 1rem;
+                }
+    
+                .van-tab--active {
+                    background-color: var(--ex-white);
+                    color: var(--ex-black);
+                }
+            }
+    
+            .van-tabs__nav--line {
+                padding-bottom: 0;
+            }
+        }
+    }
 }
 
 .van-tabs--sub-stake {

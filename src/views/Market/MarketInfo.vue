@@ -271,6 +271,13 @@
         </div>
       </div>
     </BottomPopup>
+
+    <!-- 交易弹窗 -->
+    <BottomPopup  v-model:show="showDialog" :title="''"  closeable >
+      <div style="padding: 0.5rem 0.32rem 0 0.32rem">
+        <Opening ref="openingRef" @success="showDialog = false" :from="'trade'" />
+      </div>
+    </BottomPopup>
   </div>
 </template>
 
@@ -288,6 +295,7 @@ import { _basic, _profile, _add, _del } from "@/api/api";
 import { formatTimestamp } from "@/utils/time";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
+import Opening from "@/views/Trade2/contract/Opening.vue"
 
 const { t } = useI18n();
 const route = useRoute();
@@ -449,17 +457,22 @@ const fullScreen = (key) => {
 };
 
 // 下单
+const showDialog = ref(false)
+const openingRef = ref()
 const goBuy = (key) => {
-  showBuy.value = false;
-  // store.commit('setActive', key)
-  router.push({
-    name: "trade",
-    query: {
-      symbol: item.value.symbol,
-      type: key ? 1 : 2,
-      to: route.query.type,
-    },
-  });
+  showDialog.value = true
+  setTimeout(() => {
+    openingRef.value && openingRef.value.choose(item.value, key)
+  }, 300)
+  // showBuy.value = false;
+  // router.push({
+  //   name: "trade",
+  //   query: {
+  //     symbol: item.value.symbol,
+  //     type: key ? 1 : 2,
+  //     to: route.query.type,
+  //   },
+  // });
 };
 
 // 返回

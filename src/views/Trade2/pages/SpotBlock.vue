@@ -29,9 +29,9 @@
 
 import { Tab, Tabs } from "vant";
 import { ref, onMounted, nextTick, onUnmounted } from "vue";
-import Opening from "../contract/Opening.vue";
-import Positions from "../contract/Positions.vue";
-import Inquire from "../contract/Inquire.vue";
+import Opening from "../spot/Opening.vue";
+import Positions from "../spot/Positions.vue";
+import Inquire from "../spot/Inquire.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
 
@@ -49,19 +49,19 @@ const props = defineProps({
 const { t } = useI18n();
 const emits = defineEmits(["showNavDialog"]);
 const showNavDialog = () => {
-  emits("showNavDialog", "contract");
+  emits("showNavDialog", "spot");
 };
 
 
 const loadTab = ref([]);
-const active = ref(sessionStorage.getItem("trade_contract_tab") || "0");
+const active = ref(sessionStorage.getItem("trade_spot_tab") || "0");
 const InquireRef = ref();
 const onChange = async (val) => {
   active.value = val;
   if (loadTab.value.indexOf(val) == -1) {
     loadTab.value.push(val);
   }
-  sessionStorage.setItem("trade_contract_tab", val);
+  sessionStorage.setItem("trade_spot_tab", val);
 
   if (val == 2) {
     nextTick(() => {
@@ -98,7 +98,7 @@ const handleMounted = () => {
 };
 onMounted(() => {
 
-  eventBus.on("contractTradeBodyScrollToBottom", () => {
+  eventBus.on("spotTradeBodyScrollToBottom", () => {
     if (active.value == "2") {
       // 加载更多
       InquireRef.value && InquireRef.value.getList();
@@ -106,7 +106,7 @@ onMounted(() => {
   });
 });
 onUnmounted(() => {
-  eventBus.off("contractTradeBodyScrollToBottom");
+  eventBus.off("spotTradeBodyScrollToBottom");
 });
 
 defineExpose({

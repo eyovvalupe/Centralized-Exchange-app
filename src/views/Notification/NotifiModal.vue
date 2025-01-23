@@ -1,40 +1,78 @@
 <template>
   <div class="notifi_modal">
-    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('取消')" :confirm-button-text="$t('查看全部')"
-      @cancel="" @confirm="jump('notification')">
+    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('notifi.btn_cancel')" :confirm-button-text="$t('notifi.btn_see_all')"
+      @cancel="cancel" @confirm="jump('notification')">
       <div class="w-full h-[9.36rem] bg-color rounded-[0.32rem] mt-[0.36rem] mb-[0.32rem] p-[0.32rem]">
         <div
           class="w-full text-[0.32rem] text-color leading-[0.52rem] mb-[0.32rem] text-center px-[0.1rem] font-semibold">
-          消息标题测试消息标题测试消息标题测试标题测试标题测试标题测试标题测试标题测试标题测试
+          {{ notifiData.title || '--' }}
         </div>
         <div class="w-full text-center text-[0.28rem] text-color3 mb-[0.32rem]">
-          2024/11/26 13:00:02
+          {{ notifiData.date || '--' }}
         </div>
         <div class="w-full text-[0.28rem] leading-[0.48rem] text-color mb-[0.32rem]">
-          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+          {{ notifiData.content || '--' }}
         </div>
-        <div class="rounded-[0.32rem] overflow-hidden mb-[0.32rem]">
-          <img v-lazy="getStaticImgUrl('static/img/noti/noti-3.webp')" />
+        <div class="flex gap-[4px]">
+          <div class="flex-1 h-[2rem] rounded-[0.2rem] overflow-hidden mb-[0.32rem]" v-for="(url, i) in notifiData.images.split(';')">
+            <img class="!object-fill" v-lazy="getStaticImgUrl(url)" @click="showPreview(i)"/>
+          </div>
         </div>
         <div class="w-full text-[0.28rem] leading-[0.48rem] text-color mb-[0.32rem]">
-          内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+          {{ notifiData.content || '--' }}
         </div>
       </div>
     </Dialog>
+    <ImagePreview 
+      v-model:show="isPreview" 
+      :images="previewImages" 
+      :startPosition="index"
+      :loop="true"
+      @change="onChange"
+    />
   </div>
 </template>
 <script setup>
-import { Tab, Tabs, ActionSheet, Dialog } from "vant";
-import { onMounted, ref } from "vue";
+import { ImagePreview, Dialog } from "vant";
+import { computed, onMounted, ref, watch } from "vue";
 import router from "@/router";
 import { getStaticImgUrl } from "@/utils";
+import store from "@/store";
 
-const existNotifi = ref(false);
 const jump = (url) => {
+  localStorage.setItem('lastExecutionTime', Date.now());
+  store.commit('setNotifiOpen', false)
   router.push({
     name: url
   })
 }
+
+const notifiData = computed(() => store.state.notifiData)
+const notifiOpen = computed(() => store.state.notifiOpen)
+const existNotifi = ref(notifiOpen.value)
+const cancel = () => {
+  localStorage.setItem('lastExecutionTime', Date.now());
+  store.commit('setNotifiOpen', false)
+}
+
+const isPreview = ref(false)
+const index = ref(0)
+const previewImages = computed(() => {
+  if (!notifiData.value.images) return []
+  return notifiData.value.images.split(';').map(url => getStaticImgUrl(url))
+})
+
+const showPreview = (i) => {
+  index.value = i
+  isPreview.value = true
+}
+
+const onChange = (current) => {
+  // index.value = (current + previewImages.value.length) % previewImages.value.length;
+  index.value = current;
+
+}
+
 
 onMounted(() => {
   const slideBtn = document.getElementsByClassName('van-dialog__cancel');
@@ -45,6 +83,10 @@ onMounted(() => {
   if (slideBtn1[0]) {
     slideBtn1[0].classList.add('ripple-btn')
   }
+})
+
+watch(notifiOpen, (val) => {
+  if (val) existNotifi.value = val
 })
 </script>
 

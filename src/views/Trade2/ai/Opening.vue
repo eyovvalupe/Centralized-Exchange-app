@@ -16,14 +16,7 @@
 
       <div class="scroller">
         <!-- 品种 -->
-        <div class="item_content">
-          <!-- <div class="subtitle">
-            {{ t("trade.ai_opening_product_type") }}
-            <div class="stock_icon" v-if="form1.name" @click="openStockModel">
-              <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" alt="icon" />
-            </div>
-          </div> -->
-
+        <!-- <div class="item_content">
           <div class="item item_box" :class="{ 'item_box_name': form1.name }" @click="showNavDialog">
             <div class="placeholder">{{ t("trade.ai_opening_product_type") }}</div>
             <div class="name">{{ form1.name }}</div>
@@ -31,7 +24,7 @@
               <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- 时间 -->
         <div class="item_content" v-if="times.length">
@@ -50,11 +43,10 @@
           </div>
         </div>
         <!-- 数量 -->
-        <div style="height: 0.4rem;"></div>
+        <div style="height: 0.2rem;"></div>
         <FormItem :hasBot="true" :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.grid"
           :tip="maxgrid > 0 ? '≤' + maxgrid : ''" :placeholder="t('trade.ai_opening_network_amount')"
           btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
-
 
           <template #right-content-title>
             <div class="subtitle">{{ t('trade.ai_opening_profit_margin') }}</div>
@@ -77,7 +69,7 @@
 
 
         <!-- 投资额 -->
-        <div style="height: 0.4rem;"></div>
+        <div style="height: 0.2rem;"></div>
         <FormItem :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.volume"
           :placeholder="t('trade.ai_opening_invest_amount')" btn-show-mode="focus"
           :tip="usdt.amount > 0 ? '≤ ' + usdt.amount : ''" :show-btn="usdt.amount > 0" @change="changePercent"
@@ -108,19 +100,23 @@
 
 
       </div>
-      <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
+      <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box pb-[0.4rem]">
         <div class="flex justify-between mb-[0.32rem]">
-          <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
-            @click="store.commit('setIsLoginOpen', true)">
+          <div
+            class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
+            @click="store.commit('setIsLoginOpen', true), emits('success')">
             {{ t("trade.stock_opening_token_login") }}
           </div>
-          <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
+          <div
+            class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
             @click="jump('register')">
             {{ t("trade.stock_opening_token_register") }}
           </div>
         </div>
-        <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
-          ">
+        <div
+          class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
+          @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+            ">
           {{ t("trade.contract_create_guest_btn") }}
         </div>
       </div>
@@ -282,7 +278,7 @@ const usdt = computed(
   () => wallet.value.find((item) => item.currency == "USDT") || {}
 );
 
-const emits = defineEmits(["showNavDialog", "back"]);
+const emits = defineEmits(["showNavDialog", "back", 'success']);
 const showNavDialog = () => {
   // emits('showNavDialog', 'ai')
   showBottom.value = true;
@@ -415,6 +411,7 @@ const submitForm = (s) => {
         showModel.value = false;
         store.dispatch("updateWallet");
         showToast(t("trade.ai_opening_success"));
+        emits('success')
         setTimeout(() => {
           openInfo(res.data);
         }, 500);

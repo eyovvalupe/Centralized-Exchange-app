@@ -1,7 +1,7 @@
 <!-- 开仓 -->
 <template>
   <div class="opening">
-    <div class="type_tabs" v-if="props.from != 'trade'">
+    <div class="type_tabs">
       <div :style="{backgroundImage: `url(${activeType == 1 ? getStaticImgUrl('/static/img/trade/up2.svg') : getStaticImgUrl('/static/img/trade/up1.svg')})`}" @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
         {{ t("trade.stock_open_long_tab") }}
       </div>
@@ -11,9 +11,9 @@
     </div>
 
     <!-- Tabs -->
-    <div class="open_tab_box" :class="{'trade-dialog': props.from == 'trade'}">
+    <div class="open_tab_box">
       <Tabs animated key="form" type="line-card" @change="(e) => (activeTab = e)" v-model="activeTab" :swipeable="false"
-        :color="'var(--ex-primary-color)'" shrink>
+        :color="'var(--ex-primary-color)'" >
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
             v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
@@ -24,20 +24,19 @@
             v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType"
             @success="emits('success')" />
         </Tab>
-        <Tab :title="t('trade.stock_take_stop')" name="2">
+        <!-- <Tab :title="t('trade.stock_take_stop')" name="2">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
             v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType"
             @success="emits('success')" />
-        </Tab>
+        </Tab> -->
       </Tabs>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { Tab, Tabs } from "vant";
-import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
@@ -55,8 +54,7 @@ const props = defineProps({
   tradeType: {
     type: [String, Number],
     default: ''
-  },
-  from: ''
+  }
 })
 
 const { t } = useI18n();
@@ -79,12 +77,7 @@ const activeTab = ref(0); // 0-市价 1-限价 2-止盈止损
 
 
 // 选择某个股票
-const choose = (item, key) => {
-  if (key) {
-    activeType.value = 1
-  } else {
-    activeType.value = 2
-  }
+const choose = (item) => {
   OpeningForm0Ref.value && OpeningForm0Ref.value.choose(item);
   OpeningForm1Ref.value && OpeningForm1Ref.value.choose(item);
   OpeningForm2Ref.value && OpeningForm2Ref.value.choose(item);
@@ -137,14 +130,6 @@ defineExpose({
         justify-content:space-between;
       }
     }
-  }
-
-  .trade-dialog {
-    :deep(.van-tabs--line-card) {
-    .van-tabs__wrap {
-      padding: 0 0.6rem;
-    }
-  }
   }
 }
 </style>

@@ -53,7 +53,6 @@ const jump = name => {
 }
 
 // 我的跟单
-store.dispatch('updateMyCopy')
 // const myCopy = computed(() => store.state.myCopy || {})
 const myCopy = computed(() => {
   return {

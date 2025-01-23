@@ -1,6 +1,6 @@
 <!-- 跟单详情 -->
 <template>
-    <div class="page-follow-detail">
+    <div class="page-follow-detail" v-if="!isEmpty(info)">
 
         <Top :title="$t('copy.copy_belong_title')"></Top>
 
@@ -21,8 +21,8 @@
             <div class="btn ripple-btn" @click="plus">{{ $t('copy.copy_tab_tab1') }}</div>
         </div>
 
-        <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'" shrink
-            >
+        <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'"
+            shrink>
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
                     <div class="follow-info-box">
@@ -30,21 +30,21 @@
                             <div class="tr">
                                 <div class="tr-item">
                                     <div class="name">{{ $t('copy.copy_belong_profit_rate') }}</div>
-                                    <div class="val num">q4324</div>
+                                    <div class="val num">{{ info.returnrate }}</div>
                                 </div>
                                 <div class="tr-item">
                                     <div class="name">{{ $t('copy.copy_belong_profit_amount') }}</div>
-                                    <div class="val">2342</div>
+                                    <div class="val">{{ info.returnamount }}</div>
                                 </div>
                             </div>
                             <div class="tr" style="margin-top: 0.48rem;">
                                 <div class="tr-item">
                                     <div class="name">{{ $t('copy.copy_belong_total_amount') }}</div>
-                                    <div class="val">q4324</div>
+                                    <div class="val">{{ info.amount }}</div>
                                 </div>
                                 <div class="tr-item">
                                     <div class="name">{{ $t('copy.copy_belong_days') }}</div>
-                                    <div class="val">2342</div>
+                                    <div class="val">{{ info.days }}</div>
                                 </div>
                             </div>
 
@@ -55,26 +55,26 @@
                             <div class="navs">
                                 <div class="nav" style="text-align: left;">
                                     <div class="name">{{ $t('copy.copy_belong_profit_days') }}</div>
-                                    <div class="val up">260{{ $t('finance.portfolio_day_multi') }}</div>
+                                    <div class="val up">{{ info.windays }}{{ $t('finance.portfolio_day_multi') }}</div>
                                 </div>
                                 <div class="nav" style="text-align: center;">
                                     <div class="name">{{ $t('copy.copy_belong_pl_rate') }}</div>
-                                    <div class="val">92.12%</div>
+                                    <div class="val">{{ info.profitlossratio }}%</div>
                                 </div>
                                 <div class="nav" style="text-align: right;">
                                     <div class="name">{{ $t('copy.copy_belong_loss_days') }}</div>
-                                    <div class="val down">260{{ $t('finance.portfolio_day_multi') }}</div>
+                                    <div class="val down">{{ info.lossdays }}{{ $t('finance.portfolio_day_multi') }}</div>
                                 </div>
                             </div>
 
                             <div class="line">
-                                <SparkLine v-if="time" :points="time" :ratio="1" />
+                                <SparkLine v-if="time" :points="points" :ratio="1" />
                             </div>
                         </div>
 
                         <div class="per-box">
                             <div class="name">{{ $t('copy.copy_belong_sharing_ratio') }}</div>
-                            <div class="val">0.25%</div>
+                            <div class="val">{{ info.profitratio }}%</div>
                         </div>
 
                     </div>
@@ -89,64 +89,64 @@
                             <div class="td">{{ $t('copy.copy_belong_subtitle3') }}</div>
                             <div class="td td2 td-l">{{ $t('copy.copy_belong_subtitle4') }}</div>
                         </div>
-                        <div class="tr mask-btn" v-for="i in 10" :key="i">
+                        <div class="tr mask-btn" v-if="orders.length" v-for="i in orders" :key="i">
                             <div class="td td-s">
-                                <div class="name">SDFSD</div>
-                                <div class="fever">20X</div>
+                                <div class="name">{{ item.symbol }}</div>
+                                <div class="fever">{{ item.lever }}X</div>
                             </div>
                             <div class="td">
-                                <div class="fever tag bg-up up" v-if="false">{{ $t('copy.copy_belong_open1') }}</div>
-                                <div class="fever tag bg-down down" v-if="true">{{ $t('copy.copy_belong_open2') }}</div>
-                                <div>30min</div>
+                                <div class="fever tag bg-up up" v-if="item.offset == 'long'">{{ $t('copy.copy_belong_open1') }}</div>
+                                <div class="fever tag bg-down down" v-if="item.offset == 'short'">{{ $t('copy.copy_belong_open2') }}</div>
+                                <div>{{ item.time }}{{ item.unit }}</div>
                             </div>
-                            <div class="td">20000</div>
-                            <div class="td td2 td-l">2020-2200</div>
+                            <div class="td">{{ item.amount }}</div>
+                            <div class="td td2 td-l">{{ item.amountreturn }}</div>
                         </div>
+                        <NoData v-if="!orders.length" />
                     </div>
 
                 </div>
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab3')" name="2">
                 <div class="follow-box">
-                   <div class="table">
-                    <div class="th">
-                        <div class="td">{{ $t('copy.copy_belong_subtitle5') }}</div>
-                        <div class="td">{{ $t('copy.copy_belong_subtitle6') }}</div>
-                        <div class="td td-l">{{ $t('copy.copy_belong_subtitle7') }}</div>
-                    </div>
-                    <div class="tr mask-btn" v-for="i in 20" :key="i">
-                        <div class="td">
-                            <div class="user">
-                                <div class="avatar"></div>
-                                <div>萨达萨达</div>
+                    <div class="table" >
+                        <div class="th">
+                            <div class="td">{{ $t('copy.copy_belong_subtitle5') }}</div>
+                            <div class="td">{{ $t('copy.copy_belong_subtitle6') }}</div>
+                            <div class="td td-l">{{ $t('copy.copy_belong_subtitle7') }}</div>
+                        </div>
+                        <div class="tr mask-btn" v-if="follows.length" v-for="(item, i) in follows" :key="i">
+                            <div class="td">
+                                <div class="user">
+                                    <!-- <div class="avatar"></div> -->
+                                    <div>{{ item.name }}</div>
+                                </div>
+                            </div>
+                            <div class="td">
+                                <div>{{ item.amount }}</div>
+                            </div>
+                            <div class="td td-l up" :class="[item.returnamount < 0 ? 'down' : 'up']">
+                                <div>{{ item.returnamount }}</div>
+                                <div style="margin-top: 0.16rem;">{{ item.returnrate > 0 ? '+' : '' }}{{
+                                    item.returnrate }}%</div>
                             </div>
                         </div>
-                        <div class="td">
-                            <div>23123</div>
-                            <div style="margin-top: 0.16rem;">23123423423</div>
-                        </div>
-                        <div class="td td-l up">
-                            <div>23123</div>
-                            <div style="margin-top: 0.16rem;">23123423423</div>
-                        </div>
+                        <NoData v-if="!follows.length" />
                     </div>
-                   </div>
                 </div>
             </Tab>
         </Tabs>
-
-
         <!-- 跟单弹窗 -->
-    <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
-        <FollowSubmit v-if="showPlus" @success="showPlus = false" :item="info" :mode="'follow'"  />
-    </BottomPopup>
+        <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
+            <FollowSubmit v-if="showPlus" @success="showPlus = false" :item="info" :mode="'follow'" />
+        </BottomPopup>
     </div>
 </template>
 
 <script setup>
 import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
-import { ref } from "vue"
+import { computed, ref, watch } from "vue"
 import NoData from "@/components/NoData"
 import { Tab, Tabs } from "vant";
 import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
@@ -155,11 +155,14 @@ import { useRoute } from "vue-router"
 import BottomPopup from "@/components/BottomPopup.vue";
 import FollowSubmit from "../components/FollowSubmit.vue"
 import { useI18n } from "vue-i18n";
+import { isEmpty } from "@/utils/isEmpty";
+import store from "@/store";
+import { getPoints } from "@/utils/index.js"
+const points = getPoints('id-123456', 100)
 
-const {t} = useI18n()
+const { t } = useI18n()
 const route = useRoute()
 const active = ref(1)
-
 
 // 跟单
 const showPlus = ref(false)
@@ -169,32 +172,50 @@ const plus = () => {
 
 
 // 跟单详情
+const copyItem = computed(() => store.state.copyItem || {})
 const info = ref({})
+const orders = ref([])
+const follows = ref([])
+
 const getInfo = () => {
-    info.value = route.query || {}
+    if (isEmpty(copyItem.value)) return;
+    console.log(copyItem.value.id)
     // 详情
     _copyGet({
-        uid: route.query.uid
+        id: copyItem.value.id
     }).then(res => {
+        console.log('info ====> ', res.data)
         info.value = res.data || {}
-        console.error('详情', res)
-    })
+    }).catch(err => console.error(err))
+        .finally(() => {
+
+        });
     // 带单
     _copyOrders({
-        uid: route.query.uid,
+        id: copyItem.value.id,
         status: 'open',
         page: 1
     }).then(res => {
-        console.error('带单', res)
-    })
+        console.log('orders =======> ', res.data)
+        orders.value = res.data
+    }).catch(err => console.error(err)).finally(() => {
+
+    });
     // 跟单
     _copyUsers({
-        uid: route.query.uid,
+        id: copyItem.value.id,
     }).then(res => {
-        console.error('跟单', res)
-    })
+        follows.value = res.data || []
+        console.log("followers =======>", res.data)
+    }).catch((err) => console.error(err)).finally(() => {
+
+    });
 }
 getInfo()
+
+watch(copyItem, (val) => {
+    getInfo();
+})
 
 
 
@@ -453,7 +474,7 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
             background-color: var(--ex-bg-color3);
         }
 
-        
+
 
         .td {
             flex: 1;
@@ -461,9 +482,11 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             .name {
                 font-size: 0.28rem;
             }
+
             .fever {
                 margin-top: 0.2rem;
                 height: 0.3rem;
@@ -472,20 +495,23 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-color: rgba(255,255,255,0.1);
+                background-color: rgba(255, 255, 255, 0.1);
             }
+
             .tag {
                 margin-bottom: 0.2rem;
                 margin-top: 0;
                 height: 0.36rem;
 
             }
+
             .user {
                 width: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 font-size: 0.28rem;
+
                 .avatar {
                     width: 0.4rem;
                     height: 0.4rem;
@@ -495,11 +521,13 @@ const time = "0.00,6.00 0.07,6.06 0.13,5.92 0.20,6.21 0.27,5.90 0.33,6.71 0.40,6
                 }
             }
         }
+
         .td-s {
             align-items: flex-start;
         }
+
         .td2 {
-            flex: 2;
+            flex: 1.5;
         }
 
         .td-l {

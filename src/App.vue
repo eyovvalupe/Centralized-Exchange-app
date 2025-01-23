@@ -68,8 +68,11 @@ if (token.value) {
   store.dispatch("updateUserInfo");
   store.dispatch("updateAssets");
   store.dispatch("updateWallet");
+  store.dispatch("updateMyFollowList");
+  store.dispatch("updateMyCopyData");
 }
 store.dispatch("updateCurrency"); // 获取币种等配置信息
+store.dispatch("updateNotifiList")
 
 const fullWindow = computed(() => store.state.fullscreen); // 全屏状态
 store.commit("setFullscreen", false);
@@ -96,7 +99,6 @@ const showBottom = computed(() => {
 // 预加载 tab 页面
 const pageLoading = computed(() => store.state.pageLoading);
 store.commit("setPageLoading", true);
-console.error(pageLoading.value)
 Promise.all([
   import("@/views/Home/Home.vue"),
   import("@/views/Market/Market.vue"),

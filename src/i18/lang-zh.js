@@ -1049,5 +1049,15 @@ export default {
     copy_order_detail_tab1: "当前订单",
     copy_order_detail_tab2: "历史订单",
 
+  },
+  notifi: {
+    notifi_center: "消息中心",
+    notifi_pub: "公告",
+    notifi_marke: "市场活动",
+    notifi_detail: "查看详细",
+    notifi_join: "加入活动",
+    notifi_joined: "已加入活动",
+    btn_see_all: "查看全部",
+    btn_cancel: "取消"
   }
 };

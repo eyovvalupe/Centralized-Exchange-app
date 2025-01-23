@@ -1,7 +1,6 @@
 <!-- 跟单元素 -->
 <template>
     <div class="follow-item">
-
         <div class="title-box">
             <div class="left">
                 <div class="top">
@@ -31,7 +30,8 @@
                 </div>
             </div>
             <div class="line-box">
-                <SparkLine  :points="getPoints('follow_' + props.item.uid, item.returnrate)" :ratio="item.returnrate > 0 ? 1 : -1" />
+                <SparkLine :points="points"
+                    :ratio="item.returnrate > 0 ? 1 : -1" />
             </div>
         </div>
 
@@ -56,7 +56,8 @@
 import { getStaticImgUrl, getPoints } from "@/utils/index.js"
 import SparkLine from "@/components/SparkLine.vue";
 import router from "@/router";
-
+import store from "@/store";
+const points = getPoints('id-123456', 100)
 const props = defineProps({
     showDetail: { // 是否显示详细信息
         type: Boolean,
@@ -69,10 +70,13 @@ const props = defineProps({
 })
 
 const goFollow = () => {
-    router.push({
-        name: 'followDetail',
-        query: props.item
-    })
+    store.commit('setCopyItem', props.item)
+    sessionStorage.setItem('copyItem', JSON.stringify(props.item))
+    setTimeout(() => {
+        router.push({
+            name: 'followDetail',
+        })
+    }, 50);
 }
 </script>
 

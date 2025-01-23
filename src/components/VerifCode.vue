@@ -1,9 +1,5 @@
 <!-- 验证码弹窗 -->
 <template>
-  <!-- <BottomPopup closeable v-model:show="show" title="" showCancelButton showConfirmButton :width="'6.22rem'"
-    :confirmButtonText="t('register.code_jump_confirm')" :confirmButtonColor="'var(--ex-primary-color)'"
-    :cancelButtonText="t('user_page.message_box_cancel')" :cancelButtonColor="'var(--ex-text-color2)'" overlay
-    @closed="close" @confirm="confirm" :before-close="() => false"> -->
   <BottomPopup round closeable v-model:show="show" position="bottom" teleport="body" @close="close">
     <div class="verif_box">
       <div class="title">{{ t('register.enter_graphic_number') }}</div>
@@ -21,12 +17,12 @@
           :placeholder="t('register.enter_verify_code')" />
       </div>
       <div class="w-full flex px-[0.4rem] justify-between">
-        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-white text-black text-[0.32rem] font-semibold"
+        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-white text-black text-[0.32rem] font-semibold ripple-primary"
           @click="close">{{
             t('user_page.message_box_cancel') }}</div>
-        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-primary text-black text-[0.32rem] font-semibold"
+        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-primary text-black text-[0.32rem] font-semibold ripple-btn"
           @click="confirm">{{
-            t('withdraw.confirm') }}</div>
+            t('register.code_jump_confirm') }}</div>
       </div>
     </div>
   </BottomPopup>

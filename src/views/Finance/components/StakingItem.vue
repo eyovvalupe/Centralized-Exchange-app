@@ -7,11 +7,17 @@
                 <div class="w-full h-full px-[0.12rem] pt-[0.4rem] flex flex-col">
                     <div class="flex flex-col px-[0.16rem] mb-[0.3rem] relative">
                         <div class="text-[0.36rem] mb-[0.15rem]">{{ item.name }}</div>
-                        <div class="text-color2 text-[0.28rem]">{{ t('finance.portfolio_investment_amt') + ': ' +
-                            dataModify1(item.limits)[0] +
-                            '-' + dataModify1(item.limits)[1]
-                            }}</div>
+                        <div class="flex items-center">
+                            <div class="text-color2 text-[0.28rem] mr-[0.1rem]">{{ t('finance.portfolio_investment_amt') + ': ' +
+                                dataModify1(item.limits)[0] +
+                                '-' + dataModify1(item.limits)[1]
+                                }}</div>
+                            <div class="w-[0.24rem] h-[0.24rem]">
+                                <img v-lazy="getStaticImgUrl('static/img/crypto/USDT.svg')" alt="usdt" />
+                            </div>
+                        </div>
                     </div>
+                    {{ console.log(item) }}
                     <!-- 加密代币价格 -->
                     <div class="flex w-full bg-color py-[0.2rem] rounded-[0.32rem] mb-[0.12rem]">
                         <div class="flex flex-col px-[0.28rem] flex-1" v-for="(symbol, i) in item.items">
@@ -45,9 +51,9 @@
                                     }}
                                 </div>
                             </div>
-                            <div class="text-[0.32rem] font-semibold mb-[0.2rem] relative">{{ item.days ? item.days : '--' }}<span
-                                    class="text-[0.24rem] font-normal">{{
-                                        t('finance.portfolio_day_multi') }}</span></div>
+                            <div class="text-[0.32rem] font-semibold mb-[0.2rem] relative">{{ item.days ? item.days :
+                                '--' }}<span class="text-[0.24rem] font-normal">{{
+                                    t('finance.portfolio_day_multi') }}</span></div>
                         </div>
                     </div>
                     <Button class="submit ripple-btn" @click="jump(item.id)"><span class="text-[0.32rem] font-bold">{{
