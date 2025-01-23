@@ -445,14 +445,14 @@ const getLastExecutionTime = () => {
 
 const getTimeSince6AM = () => {
     const today6AMTime = getToday6AMTime();
-    return (Date.now - today6AMTime) / 1000;
+    return (Date.now() - today6AMTime) / 1000;
 };
 
 const canExecuteToday = () => {
     const timeSince6AM = getTimeSince6AM();
     const lastExecutionTime = getLastExecutionTime();
 
-    if (!lastExecutionTime || (lastExecutionTime && timeSince6AM > 24 * 60 * 60)) return true;
+    if (!lastExecutionTime || (lastExecutionTime && ((timeSince6AM > 0) && (getToday6AMTime() > getLastExecutionTime())) || ((timeSince6AM < 0) && (getToday6AMTime() - 24 * 60 * 60 > getLastExecutionTime())))) return true;
     return false
 }
 
