@@ -225,7 +225,7 @@
     </div>
 
     <div v-if="props.type == 'spot'" class="btns" >
-      <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)" v-if="!['done'].includes(currStock.status)">
+      <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)" v-if="['open', 'none'].includes(currStock.status)">
         <div class="btn_icon">
           <img v-lazy="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
         </div>
