@@ -2,33 +2,33 @@
 <template>
     <div class="page-home2">
         <!-- 背景 -->
-        <div class="home2-bg1">
+        <!-- <div class="home2-bg1">
             <img v-lazy="getStaticImgUrl('/static/home2/bg.png')" alt="">
         </div>
         <div class="home2-bg2">
             <img v-lazy="getStaticImgUrl('/static/home2/bg-shadow.svg')" alt="">
-        </div>
+        </div> -->
 
         <!-- 内容 -->
         <div class="home2-content">
             <!-- 头部 -->
             <div class="home2-header">
-                <div class="icon" @click="jump('user', true)">
+                <div class="icon ripple-btn" @click="jump('user', true)">
                     <img v-if="token" v-lazy="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
                     <img v-else v-lazy="getStaticImgUrl('/static/home2/avatar.svg')" alt="">
                 </div>
                 <div style="flex: 1;"></div>
-                <div @click="jump('search')" class="icon icon2" style="margin-right: 0.12rem;">
+                <div @click="jump('search')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
                     <img v-lazy="getStaticImgUrl('/static/home2/search.svg')" alt="">
                 </div>
-                <div @click="jump('notification')" class="icon icon2">
+                <div @click="jump('notification')" class="icon icon2 ripple-btn">
                     <img v-lazy="getStaticImgUrl('/static/home2/notice.svg')" alt="">
                 </div>
             </div>
 
 
             <!-- banner -->
-            <view @click="install" class="banners wow fadeInUp">
+            <view @click="install" class="banners wow fadeInUp" data-wow-duration="1s">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
                         <img v-lazy="getStaticImgUrl('/static/home2/banner1.png')" alt="">
@@ -41,32 +41,32 @@
 
             <!-- 质押挖矿 -->
             <div class="recommend-title">
-                <div class="point wow slideInLeft">
+                <div class="point wow slideInLeft" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div class="wow slideInLeft" style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
-                <div class="recommend-icon wow slideInRight" @click="jump('finance', true, 1)">
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s" @click="jump('finance', true, 1)">
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 
-            <div class="scroll-box">
-                <div class="scroll-con">
-                    <MiningItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'"
+            <div class="scroll-box ">
+                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                    <MiningItem  
                         style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
                 </div>
             </div>
 
-            <div class="sub-banner wow fadeInUp">
+            <div class="sub-banner wow fadeInUp" data-wow-duration="0.6s">
                 <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
             </div>
             <!-- 跟单 -->
             <div class="recommend-title" @click="jump('follow', false)">
-                <div class="point wow slideInLeft">
+                <div class="point wow slideInLeft" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div class="wow slideInLeft" style="flex: 1;">{{ t('copy.title') }}</div>
-                <div class="recommend-icon wow slideInRight">
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('copy.title') }}</div>
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -74,20 +74,20 @@
                 <div class="follow-btn wow slideInLeft">{{ t('copy.copy_option') }}</div>
             </div> -->
             <div class="scroll-box">
-                <div class="scroll-con">
+                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
-                        <FollowItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'" :item="item" />
+                        <FollowItem  :item="item" />
                     </div>
                 </div>
             </div>
 
             <!-- 市场推荐 -->
             <div class="recommend-title" style="margin-top: 0.8rem;">
-                <div class="point wow slideInLeft">
+                <div class="point wow slideInLeft" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
-                <div class="wow slideInLeft" style="flex: 1;">{{ t('home.market_trend') }}</div>
-                <div class="recommend-icon wow slideInRight">
+                <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}</div>
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -97,14 +97,14 @@
 
 
             <!-- ad -->
-            <div class="ad wow fadeInUp">
+            <div class="ad wow fadeInUp" data-wow-duration="0.6s">
 
                 <div class="ad-bg"
                     :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }"></div>
                 <div class="ad-content">
                     <div class="title">{{ t('home.ad_title') }}</div>
                     <div>{{ t('home.ad_con') }}</div>
-                    <div class="btn">{{ t('home.ad_btn') }}</div>
+                    <div class="btn ripple-btn" @click="jump('trade')">{{ t('home.ad_btn') }}</div>
                 </div>
                 <div class="ad-tip">
                     <img v-lazy="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
@@ -113,37 +113,37 @@
 
             <!-- links -->
             <div class="links">
-                <div class="link-item wow slideInLeft">
+                <div class="link-item wow slideInLeft" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link1.png')" alt="">
                     </div>
                     <div>TheSantumNe...</div>
                 </div>
-                <div class="link-item wow slideInRight">
+                <div class="link-item wow slideInRight" data-wow-duration="0.6s" >
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link2.png')" alt="">
                     </div>
                     <div>KEEPOFFTHE...</div>
                 </div>
-                <div class="link-item wow slideInLeft">
+                <div class="link-item wow slideInLeft" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link3.png')" alt="">
                     </div>
                     <div>AIORBIT</div>
                 </div>
-                <div class="link-item wow slideInRight">
+                <div class="link-item wow slideInRight" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link4.png')" alt="">
                     </div>
                     <div>GodsUnchained...</div>
                 </div>
-                <div class="link-item wow slideInLeft">
+                <div class="link-item wow slideInLeft" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link5.png')" alt="">
                     </div>
                     <div>PudgyRods</div>
                 </div>
-                <div class="link-item wow slideInRight">
+                <div class="link-item wow slideInRight" data-wow-duration="0.6s" >
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link6.png')" alt="">
                     </div>
@@ -152,8 +152,8 @@
             </div>
 
 
-            <!-- 市场推荐 -->
-            <div class="recommend-title" style="margin-top: 0.36rem;">
+            <!-- 新闻 -->
+            <!-- <div class="recommend-title" style="margin-top: 0.36rem;">
                 <div class="point wow slideInLeft">
                     <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
                 </div>
@@ -161,7 +161,7 @@
                 <div class="recommend-icon wow slideInRight">
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>
@@ -630,7 +630,7 @@ const followList = computed(() => store.state.followList || [])
                 align-items: center;
                 justify-content: center;
                 font-size: 0.3rem;
-                color: var(--ex-black);
+                color: var(--ex-white);
                 margin-top: 0.4rem;
             }
         }
