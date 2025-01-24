@@ -5,7 +5,8 @@
                 <PledgeForm />
             </Tab>
             <Tab class="mb-[1.2rem]" :title="$t('finance.defi_borrow_order')">
-                <!-- <PledgeOrder /> -->
+                <PledgeOrder v-if="token"/>
+                <NoData v-if="!token"/>
             </Tab>
         </Tabs>
     </div>
@@ -17,6 +18,11 @@ import PledgeForm from './components/PledgeForm'
 import PledgeOrder from './components/PledgeOrder.vue';
 import eventBus from "@/utils/eventBus";
 import { onMounted, onBeforeUnmount } from 'vue';
+import store from '@/store';
+import NoData from '@/components/NoData.vue';
+
+const token = computed(() => store.state.token);
+
 const active = ref(0)
 const onChange = () => {
 
