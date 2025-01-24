@@ -527,6 +527,12 @@ export const _futuresList = (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+// 现货-订单列表
+export const _spotList = (data = {}) => {
+  return http.post(`/authc/v1/trade/orders`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
 
 // 合约开仓
 export const _futuresBuy = (data = {}) => {
@@ -549,6 +555,12 @@ export const _futuresSell = (data = {}) => {
 // 合约撤单
 export const _futuresCancel = (data = {}) => {
   return http.post(`/authc/v1/futures/cancel`, data, {
+    custom: { auth: true, toast: true, retry: true },
+  });
+};
+// 现货撤单
+export const _spotCancel = (data = {}) => {
+  return http.post(`/authc/v1/trade/cancel`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };

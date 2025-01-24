@@ -214,7 +214,7 @@ onMounted(() => {
     try {
       moreDom = document.querySelector(".loading_more");
       document
-        .querySelector(".trade_body")
+        .querySelector(".page")
         .addEventListener("scroll", scrolHandle);
     } catch { }
   }, 500);
@@ -222,7 +222,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document
-      .querySelector(".trade_body")
+      .querySelector(".page")
       .removeEventListener("scroll", scrolHandle);
   } catch { }
 });

@@ -3,10 +3,10 @@
   <div v-if="token" class="positions">
     <div class="tr th">
       <div class="td td-5">{{ t("trade.contract_opening_contract") }}</div>
-      <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
-      <div class="td td-4">{{ t("trade.contract_position_cost") }}</div>
+      <div class="td td-2">状态</div>
+      <div class="td td-2">开仓</div>
       <div class="td td-4" style="text-align: end !important; margin-right: 0.2rem !important">
-        {{ t("trade.order_info_profit") }}
+        价格
       </div>
     </div>
     <NoData v-if="!contractPositionsList.length && !loading" />
@@ -15,8 +15,9 @@
     <div class="tr mask-btn" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
       <div class="td td-5">
         <div class="name van-omit1">{{ item.name }}</div>
+      </div>
+      <div class="td td-2">
         <div class="lever">
-          <div class="status-color status">{{ item.lever }}X</div>
           <div class="status-color status" :class="'status-' + item.status">
             {{
               item.status == "none"
@@ -36,35 +37,25 @@
           </div>
         </div>
       </div>
-      <div class="td td-4">
+      <div class="td td-2">
         <div class="state" :class="'state-' + item.offset">
           {{
-            item.offset == "long"
-              ? t("trade.stock_position_offset_long")
-              : item.offset == "short"
-                ? t("trade.stock_position_offset_short")
+            item.offset == "buy"
+              ? '买入'
+              : item.offset == "sell"
+                ? '卖出'
                 : "--"
           }}
         </div>
-        <div class="amount">{{ item.unsold_volume || "--" }}</div>
       </div>
       <div class="td td-4">
-        <div class="price">{{ item.settled_price || "--" }}</div>
-        <div class="price">{{ item.open_price || "--" }}</div>
-      </div>
-      <div class="td td-4">
-        <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
-          {{ item.profit || "--" }}
-        </div>
-        <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-          {{ getRatio(item.ratio) }}
-        </div>
+        <div class="price">{{ item.price || "--" }}</div>
       </div>
     </div>
 
     <!-- 订单详情 -->
     <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
-      <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
+      <OrderInfo type="spot" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
         @back="showInfo = false" />
     </Popup>
 
@@ -88,7 +79,7 @@
 
 
           <!-- 拖动 -->
-          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+          <div style="padding: 0.2rem 0.24rem 0.4rem 0.24rem">
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </div>
 
@@ -164,7 +155,7 @@
           </FormItem>
 
           <!-- 拖动 -->
-          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+          <div style="padding: 0.2rem 0.24rem 0.4rem 0.24rem">
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </div>
 
@@ -224,7 +215,7 @@ import {
 import store from "@/store";
 import NoData from "@/components/NoData.vue";
 import Decimal from "decimal.js";
-import { _futuresSell, _futuresUpdate, _futuresCancel } from "@/api/api";
+import { _futuresSell, _futuresUpdate, _spotCancel } from "@/api/api";
 import UnLogin from "@/components/UnLogin.vue";
 import SafePassword from "@/components/SafePassword.vue";
 import SlideContainer from "@/components/SlideContainer.vue";
@@ -253,7 +244,7 @@ const safeRef2 = ref();
 
 const token = computed(() => store.state.token);
 
-const contractPositionsList = computed(() => store.state.contractPositionsList);
+const contractPositionsList = computed(() => store.state.positionSpotList);
 const elseWallet = computed(() => store.state.elseWallet || []);
 const stockWalletAmount = computed(() => {
   // 合约账户余额
@@ -300,13 +291,13 @@ const loading = ref(false);
 const subs = () => {
   const socket = startSocket(() => {
     socket && socket.off("user");
-    socket && socket.off("futuresorder");
+    socket && socket.off("tradeorder");
     socket && socket.emit("user", store.state.token);
-    socket && socket.emit("futuresorder", "#all");
+    socket && socket.emit("tradeorder", "#all");
     loading.value = true;
-    socket.on("futuresorder", (res) => {
+    socket.on("tradeorder", (res) => {
       store.commit(
-        "setContractPositionsList",
+        "setPositionsSpotList",
         (res.data || []).map((item) => {
           if (!item.order_no && item.father_username) {
             item.order_no = item.father_username;
@@ -322,9 +313,9 @@ const subs = () => {
 const cancelSubs = () => {
   const socket = startSocket(() => {
     socket && socket.off("user");
-    socket && socket.off("futuresorder");
+    socket && socket.off("tradeorder");
     socket && socket.emit("user", "");
-    socket && socket.emit("futuresorder", "");
+    socket && socket.emit("tradeorder", "");
   });
 };
 
@@ -618,12 +609,13 @@ const cancel = (item) => {
         duration: 0,
         loadingType: "circular",
       });
-      _futuresCancel({
+      _spotCancel({
         order_no: item.order_no,
         token: sessionToken.value,
       })
         .then((res) => {
           if (res && res.code == 200) {
+            showInfo.value = false
             setTimeout(() => {
               store.dispatch("updateWallet");
               showToast(t("trade.stock_position_success"));
@@ -650,7 +642,7 @@ getSessionToken();
 .positions {
   .tr {
     padding: 0.24rem;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;
@@ -717,7 +709,7 @@ getSessionToken();
       margin: 0 auto;
     }
 
-    .state-short {
+    .state-short, .state-sell {
       color: var(--ex-down-color);
       background: rgb(var(--ex-down-color-rgb) / 0.1);
     }
@@ -759,6 +751,10 @@ getSessionToken();
 
   .td-4 {
     flex: 4;
+    text-align: right;
+  }
+  .td-2 {
+    flex: 2;
   }
 }
 
@@ -819,7 +815,7 @@ getSessionToken();
       width: 100%;
       height: 1.12rem;
       border: 1px solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white1);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

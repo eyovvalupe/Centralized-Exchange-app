@@ -149,13 +149,13 @@
         <span class="bottom_btn_icon">
           <img v-lazy="getStaticImgUrl('/static/img/market/up.svg')" />
         </span>
-        <span>{{ t("market.market_marketinfo_long") }}</span>
+        <span>{{ tradeType == 'spot' ? '买入' : t("market.market_marketinfo_long") }}</span>
       </div>
       <div class="bottom_btn ripple-btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
         <span class="bottom_btn_icon">
           <img v-lazy="getStaticImgUrl('/static/img/market/down.svg')" />
         </span>
-        <span>{{ t("market.market_marketinfo_short") }}</span>
+        <span>{{ tradeType == 'spot' ? '卖出' : t("market.market_marketinfo_short") }}</span>
       </div>
     </div>
     <!-- 时间选择弹窗 -->
@@ -284,7 +284,10 @@
           <div class="title">{{ item.name }}</div>
           <div style="width: 0.6rem;height: 0.6rem;"></div>
         </div>
-        <Opening ref="openingRef" @success="showDialog = false" :from="'trade'" />
+        <!-- 合约-->
+        <Opening :item="item" v-if="tradeType == 'constract'" ref="openingRef" @success="showDialog = false" :from="'trade'" />
+        <!-- 现货 -->
+        <OpeningSpot :item="item" v-if="tradeType == 'spot'" ref="openingRef2" @success="showDialog = false" :from="'trade'" />
       </div>
     </Popup>
 
@@ -327,6 +330,7 @@ import { formatTimestamp } from "@/utils/time";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
 import Opening from "@/views/Trade2/contract/Opening.vue"
+import OpeningSpot from "@/views/Trade2/spot/Opening.vue"
 import StockTable from "@/components/StockTable.vue";
 
 const { t } = useI18n();
@@ -394,6 +398,7 @@ const addCollect = () => {
 };
 
 const periodType = computed(() => route.query.type || props.type);
+const tradeType = ref(route.query.tradeType)
 // 股票信息
 const item = computed(() => {
   let it = {};
@@ -492,10 +497,12 @@ const fullScreen = (key) => {
 // 下单
 const showDialog = ref(false)
 const openingRef = ref()
+const openingRef2 = ref()
 const goBuy = (key) => {
   showDialog.value = true
   setTimeout(() => {
     openingRef.value && openingRef.value.choose(item.value, key)
+    openingRef2.value && openingRef2.value.choose(item.value, key)
   }, 300)
 };
 

@@ -7,7 +7,9 @@
             <Tabs :offset-top="'1.12rem'" class="van-tabs--sub van-tabs--sub_line" :sticky="true" :color="'var(--ex-primary-color)'"
              v-model:active="activeTab" animated shrink>
             <Tab :name="0" :title="t('common.spot')">
-                <div class="pt-[0.2rem]">现货</div>
+                <div class="pt-[0.2rem]">
+                    <SpotBlock />
+                </div>
             </Tab>
             <Tab :name="1" :title="$t('common.crypto')">
                 <div class="pt-[0.2rem]">
@@ -34,6 +36,7 @@ import { Tab, Tabs } from "vant";
 import { useI18n } from "vue-i18n";
 import ContractBlock from "@/views/Trade2/pages/ContractBlock"
 import AiBlock from "@/views/Trade2/pages/AiBlock"
+import SpotBlock from "@/views/Trade2/pages/SpotBlock"
 
 const { t } = useI18n();
 const activeTab = ref(0);
@@ -42,6 +45,7 @@ const activeTab = ref(0);
 <style lang="less" scoped>
 .trade-orders{
     padding-top: 0.48rem;
-
+    height: 100%;
+    overflow-y: auto;
 }
 </style>

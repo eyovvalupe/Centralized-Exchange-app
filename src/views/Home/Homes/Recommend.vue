@@ -5,7 +5,7 @@
             <Tab :name="0" :title="t('common.spot')">
                 <Loaidng v-if="commendLoading" :loading="commendLoading" />
                 <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
-                    <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
+                    <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{...item, type: 'spot'}"
                         v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                 </div>
                 <NoData v-if="!commendLoading && !contractList.length" />

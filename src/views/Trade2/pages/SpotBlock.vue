@@ -1,14 +1,14 @@
 <!-- 合约 --> 
 <template>
   <div class="stock_block">
-    <Tabs type="custom-card-stake" animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+    <Tabs type="custom-tab" animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
       @change="onChange">
-      <Tab :title="t('trade.stock_open')" name="0">
+      <!-- <Tab :title="t('trade.stock_open')" name="0">
         <div class="stock_tab-body">
           <Opening :tradeType="props.activeTab" :mode="props.mode" :type="'constract'" v-if="loadTab.indexOf('0') > -1"
             @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
         </div>
-      </Tab>
+      </Tab> -->
       <Tab :title="t('trade.stock_position')" name="1">
         <div class="stock_tab-body">
           <Positions :type="'constract'" v-if="loadTab.indexOf('1') > -1" />
@@ -29,7 +29,7 @@
 
 import { Tab, Tabs } from "vant";
 import { ref, onMounted, nextTick, onUnmounted } from "vue";
-import Opening from "../spot/Opening.vue";
+// import Opening from "../contract/Opening.vue";
 import Positions from "../spot/Positions.vue";
 import Inquire from "../spot/Inquire.vue";
 import eventBus from "@/utils/eventBus";
@@ -49,19 +49,20 @@ const props = defineProps({
 const { t } = useI18n();
 const emits = defineEmits(["showNavDialog"]);
 const showNavDialog = () => {
-  emits("showNavDialog", "spot");
+  emits("showNavDialog", "contract");
 };
 
 
 const loadTab = ref([]);
-const active = ref(sessionStorage.getItem("trade_spot_tab") || "0");
+// const active = ref(sessionStorage.getItem("trade_contract_tab") || "0");
+const active = ref(1)
 const InquireRef = ref();
 const onChange = async (val) => {
   active.value = val;
   if (loadTab.value.indexOf(val) == -1) {
     loadTab.value.push(val);
   }
-  sessionStorage.setItem("trade_spot_tab", val);
+  sessionStorage.setItem("trade_contract_tab", val);
 
   if (val == 2) {
     nextTick(() => {
@@ -98,7 +99,7 @@ const handleMounted = () => {
 };
 onMounted(() => {
 
-  eventBus.on("spotTradeBodyScrollToBottom", () => {
+  eventBus.on("contractTradeBodyScrollToBottom", () => {
     if (active.value == "2") {
       // 加载更多
       InquireRef.value && InquireRef.value.getList();
@@ -106,7 +107,7 @@ onMounted(() => {
   });
 });
 onUnmounted(() => {
-  eventBus.off("spotTradeBodyScrollToBottom");
+  eventBus.off("contractTradeBodyScrollToBottom");
 });
 
 defineExpose({
@@ -125,12 +126,12 @@ defineExpose({
   }
   :deep(.van-tabs--custom-card-stake) {
     .van-tabs__wrap {
-      margin: 0 0.32rem;
+      // margin: 0 0.32rem;
     }
   }
 
   .stock_tab-body {
-    padding: 0 0.32rem;
+    // padding: 0 0.32rem;
   }
 }
 </style>
