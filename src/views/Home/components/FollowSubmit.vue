@@ -3,24 +3,28 @@
     <div class="follow_dialog">
         <div class="form">
             <!-- 数量 -->
-            <!-- <FormItem :hasBot="true" :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
-                :max="maxStockNum" v-model="amount">
-                <FormItem :hasBot="true" :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
-                :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-                @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
-                :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
-                
-            </FormItem> -->
-            <FormItem :hasScroll="true" :btnText="'USDT'" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
-            :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-            @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
-            :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number"
-            >
-                <template #scroll>
-                    <!-- 拖动 -->
-                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-                </template>
-            </FormItem>
+            <div class="mb-[0.2rem]">
+                <FormItem :hasScroll="true" :btnText="'USDT'" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
+                    :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
+                    @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
+                    :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
+                    <template #scroll>
+                        <!-- 拖动 -->
+                        <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                    </template>
+                </FormItem>
+            </div>
+            <div class="w-full p-[0.28rem] rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-white2);">
+                <div class="text-[0.32rem] mb-[0.4rem]">现金账户</div>
+                <div class="flex justify-between mb-[0.52rem] text-[0.28rem]">
+                    <div class="text-color2">可用余额</div>
+                    <div class="flex text-primary">{{ maxStockNum }}<span class="text-color">&nbsp;USDT</span></div>
+                </div>
+                <div class="flex gap-[0.28rem] justify-center">
+                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goDeposit">充值</div>
+                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goTransfer">划转</div>
+                </div>
+            </div>
             <div class="line"></div>
             <div class="item pass_ipt">
                 <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
@@ -33,8 +37,8 @@
         </div>
 
         <div class="btns btns2">
-            <Button :loading="plusLoading" class="btn btn2 btn3 ripple-btn" @click="submitPlus">{{
-                $t('copy.copy_order_cancel_confirm') }}</Button>
+            <Button :loading="plusLoading" class="btn btn2 btn3 ripple-btn" @click="submitPlus"><span class="text-[0.36rem] font-semibold">{{
+                $t('copy.copy_order_cancel_confirm') }}</span></Button>
         </div>
     </div>
 </template>
@@ -49,6 +53,7 @@ import { useI18n } from "vue-i18n";
 import { showToast, Button } from "vant"
 import Decimal from "decimal.js";
 import { _copyApply, _copyAdd } from "@/api/api"
+import router from "@/router";
 
 const emits = defineEmits(['success'])
 const { t } = useI18n();
@@ -70,7 +75,22 @@ const maxStockNum = computed(() => {
     // 最大可买 可卖
     return stockWalletAmount.value;
 });
-
+const goDeposit = () => {
+    router.push({
+        name: 'topUpCrypto',
+        query: {
+            currency: 'USDT'
+        }
+    })
+}
+const goTransfer = () => {
+    router.push({
+        name: 'transfer',
+        query: {
+            to: 'USDT'
+        }
+    })
+}
 const plusLoading = ref(false)
 const submitPlus = () => {
     if (plusLoading.value) return
@@ -171,7 +191,7 @@ const openConfirmBox = () => {
         padding: 0.16rem 0.32rem;
         box-sizing: border-box;
         position: relative;
-        background-color: var(--ex-bg-color2);
+        background-color: var(--ex-bg-white2);
         margin-top: 0.32rem;
 
         .ipt {
@@ -180,7 +200,7 @@ const openConfirmBox = () => {
             width: 100%;
             font-size: 0.32rem;
             padding: 0;
-            color: var(--ex-primary-color);
+            color: var(--ex-text-white);
             position: relative;
             z-index: 1;
         }

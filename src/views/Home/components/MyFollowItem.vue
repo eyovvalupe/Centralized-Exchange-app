@@ -4,7 +4,9 @@
         <div class="title-box" @click="goInfo">
             <div class="left">
                 <div class="top">
-                    <div class="avatar">{{ (props.item.name || '').slice(0, 1) }}</div>
+                    <div class="avatar overflow-hidden">
+                        <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar || 1}.png`)" alt="" />
+                    </div>
                     <div class="name">{{ props.item.name }}</div>
                     <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
                 </div>
@@ -36,7 +38,7 @@
         <div class="info-box">
             <div class="info-item">
                 <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
-                <div class="val up">{{ props.item.today }}</div>
+                <div class="val up">{{ props.item.today || '--' }}</div>
             </div>
         </div>
         
@@ -302,7 +304,7 @@ const goInfo = () => {
     .info-box {
         width: 100%;
         border-radius: 0.32rem;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-bg-white2);
         padding: 0.28rem;
 
         .info-item {
