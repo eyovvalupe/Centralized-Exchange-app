@@ -128,7 +128,7 @@
       </div>
       </div>
 
-      <div class="account-box">
+      <div class="account-box" v-if="token">
         <div class="title">合约账户</div>
         <div class="info">
           <div>可用余额</div>
@@ -262,6 +262,7 @@ import AmountPopup from "../AmountPopup.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
+
 
 const { t } = useI18n();
 const props = defineProps({

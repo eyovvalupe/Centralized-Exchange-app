@@ -4,7 +4,9 @@
         <div class="name">ETH+MANA</div>
         <div class="info">
             <div>{{ t('finance.portfolio_investment_amt') }} 200-99999</div>
-            <div class="icon"></div>
+            <div class="icon">
+                <img :src="getStaticImgUrl(`static/img/crypto/USDT.svg`)" alt="" />
+            </div>
         </div>
         <div class="info-box">
             <div class="info-con">
