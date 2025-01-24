@@ -20,90 +20,197 @@
                     </div>
                 </div>
             </div>
-            <div class="btn ripple-btn" @click="plus">{{ $t('copy.copy_tab_tab1') }}</div>
+            <!-- <div class="btn ripple-btn" @click="plus">{{ $t('copy.copy_tab_tab1') }}</div> -->
         </div>
 
         <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'"
             shrink>
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
-                    <div class="follow-info-box">
-                        <div class="info-box">
-                            <div class="flex justify-between">
+                    <div class="follow-info-box mb-[0.24rem] mx-[0.32rem]">
+                        <div class="info-box pb-[0.12rem]">
+                            <div class="flex justify-between mb-[0.48rem]">
                                 <div class="flex ml-[0.28rem] mt-[0.28rem] items-center">
                                     <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                         <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                     </div>
-                                    <div class="text-[0.4rem]">带单情况</div>
+                                    <div class="right_left_effect text-[0.4rem]">带单情况</div>
                                 </div>
-                                <div class="w-[2.4rem] h-[0.6rem] rounded-[]">
+                                <div class="w-[2.4rem] h-[0.6rem] rounded-[0.32rem] flex items-center justify-between px-[0.28rem] mr-[0.28rem] mt-[0.28rem] mask-btn"
+                                    style="background-color: var(--ex-bg-white2);">
+                                    <div class="text-[0.24rem] text-color">近一年</div>
+                                    <div class="w-[0.32rem] h-[0.32rem]">
+                                        <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
+                                    </div>
+                                </div>
+                            </div>
 
-                                </div>
-                            </div>
-                            <div class="tr">
-                                <div class="tr-item">
-                                    <div class="name">{{ $t('copy.copy_belong_profit_rate') }}</div>
-                                    <div class="val num">{{ info.returnrate }}</div>
-                                </div>
-                                <div class="tr-item">
-                                    <div class="name">{{ $t('copy.copy_belong_profit_amount') }}</div>
-                                    <div class="val">{{ info.returnamount }}</div>
-                                </div>
-                            </div>
-                            <div class="tr" style="margin-top: 0.48rem;">
-                                <div class="tr-item">
-                                    <div class="name">{{ $t('copy.copy_belong_total_amount') }}</div>
-                                    <div class="val">{{ info.amount }}</div>
-                                </div>
-                                <div class="tr-item">
-                                    <div class="name">{{ $t('copy.copy_belong_days') }}</div>
-                                    <div class="val">{{ info.days }}</div>
-                                </div>
-                            </div>
 
                             <div class="bar-box">
-                                <div class="up-box"></div>
+                                <div class="up-box" style="width: calc(100% * 10 /11);"></div>
                             </div>
 
                             <div class="navs">
                                 <div class="nav" style="text-align: left;">
                                     <div class="name">{{ $t('copy.copy_belong_profit_days') }}</div>
-                                    <div class="val up">{{ info.windays }}{{ $t('finance.portfolio_day_multi') }}</div>
+                                    <div class="val up font-semibold">{{ info.windays }}{{
+                                        $t('finance.portfolio_day_multi') }}</div>
                                 </div>
-                                <div class="nav" style="text-align: center;">
-                                    <div class="name">{{ $t('copy.copy_belong_pl_rate') }}</div>
-                                    <div class="val">{{ info.profitlossratio }}%</div>
-                                </div>
+
                                 <div class="nav" style="text-align: right;">
                                     <div class="name">{{ $t('copy.copy_belong_loss_days') }}</div>
-                                    <div class="val down">{{ info.lossdays }}{{ $t('finance.portfolio_day_multi') }}
+                                    <div class="val down font-semibold">{{ info.lossdays }}{{
+                                        $t('finance.portfolio_day_multi') }}
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="line">
-                                <SparkLine v-if="points" :points="points" :ratio="1" />
+                            <div class="mx-[0.12rem] h-[1.8rem] rounded-[0.32rem] px-[0.28rem] py-[0.42rem] flex flex-col justify-between"
+                                style="background-color: var(--ex-bg-white2);">
+                                <div class="w-full flex justify-between">
+                                    <div class="text-[0.28rem] text-color2">胜率</div>
+                                    <div class="text-[0.28rem] text-color">50%</div>
+                                </div>
+                                <div class="w-full flex justify-between">
+                                    <div class="text-[0.28rem] text-color2">盈亏比</div>
+                                    <div class="text-[0.28rem] text-color">1.36:1</div>
+                                </div>
                             </div>
+
+                            <!-- <div class="line">
+                                <SparkLine v-if="points" :points="points" :ratio="1" />
+                            </div> -->
                         </div>
 
-                        <div class="per-box">
+                        <!-- <div class="per-box">
                             <div class="name">{{ $t('copy.copy_belong_sharing_ratio') }}</div>
                             <div class="val">{{ info.profitratio }}%</div>
+                        </div> -->
+                    </div>
+                    <div class="h-[6rem] rounded-[0.32rem] p-[0.28rem] mb-[0.24rem] mx-[0.32rem]"
+                        style="background-color: var(--ex-bg-white);">
+                        <div class="flex items-center">
+                            <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
+                                <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
+                            </div>
+                            <div class="right_left_effect text-[0.4rem]">带单员总览</div>
                         </div>
-
+                        <div class="w-full h-full py-[0.6rem] flex flex-col justify-between">
+                            <div class="w-full flex">
+                                <div class="flex-1 flex flex-col">
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">带单天数</div>
+                                    <div class="text-[0.4rem] font-semibold text-center">360</div>
+                                </div>
+                                <div class="flex-1 flex flex-col">
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">交易员带单资产</div>
+                                    <div class="text-[0.4rem] font-semibold text-center">1111111</div>
+                                </div>
+                            </div>
+                            <div class="w-full flex">
+                                <div class="flex-1 flex flex-col">
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">带单规模</div>
+                                    <div class="text-[0.4rem] font-semibold text-center">8989</div>
+                                </div>
+                                <div class="flex-1 flex flex-col">
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">当前跟单用户收益</div>
+                                    <div class="text-[0.4rem] font-semibold text-center">1111111</div>
+                                </div>
+                            </div>
+                            <div class="w-full flex">
+                                <div class="flex-1 flex flex-col">
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">跟单人数</div>
+                                    <div class="text-[0.4rem] font-semibold text-center">28/50</div>
+                                </div>
+                                <div class="flex-1 flex flex-col">
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">分润比例</div>
+                                    <div class="text-[0.4rem] font-semibold text-center">10%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
+                        style="background-color: var(--ex-bg-white);">
+                        <div class="flex justify-between items-center mb-[0.4rem]">
+                            <div class="flex items-center">
+                                <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
+                                    <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
+                                </div>
+                                <div class="right_left_effect text-[0.4rem]">收益率</div>
+                            </div>
+                            <div class="flex">
+                                <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]  mr-[0.12rem]"
+                                    :class="activeRatio == 0 ? 'font-semibold text-black ripple-primary bg-white' : 'text-color2 ripple-btn'"
+                                    :style="activeRatio == 1 ? 'background-color: var(--ex-bg-white2);' : ''"
+                                    @click="activeRatio = 0">
+                                    收益率
+                                </div>
+                                <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]"
+                                    :class="activeRatio == 1 ? 'font-semibold text-black ripple-primary bg-white' : 'text-color2 ripple-btn'"
+                                    :style="activeRatio == 0 ? 'background-color: var(--ex-bg-white2);' : ''"
+                                    @click="activeRatio = 1">
+                                    收益率
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mb-[0.36rem]">
+                            <div class="text-[0.6rem] font-semibold" :class="true ? 'text-up' : 'text-down'">
+                                +67.5%
+                            </div>
+                            <div class="flex items-center">
+                                <div class="text-[0.24rem] text-color mr-[0.1rem]">近一年</div>
+                                <div class="w-[0.32rem] h-[0.32rem]">
+                                    <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="line">
+                            <SparkLine v-if="points" :points="points" :ratio="1" />
+                        </div>
+                    </div>
+                    <div class="rounded-[0.32rem] mb-[0.4rem] p-[0.28rem] mx-[0.32rem]"
+                        style="background-color: var(--ex-bg-white);">
+                        <div class="flex justify-between items-center mb-[0.4rem] mb-[0.4rem]">
+                            <div class="flex items-center">
+                                <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
+                                    <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
+                                </div>
+                                <div class="right_left_effect text-[0.4rem]">收益率</div>
+                            </div>
+                            <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn">
+                                <img v-lazy="getStaticImgUrl('static/img/common/next.svg')" alt="" />
+                            </div>
+                        </div>
+                        <div class="rounded-[0.32rem] h-[1.72rem] flex items-center justify-center mb-[0.24rem]"
+                            style="background-color: var(--ex-bg-white2);">
+                            <div class="flex flex-col items-center">
+                                <div class="text-[0.28rem] text-color2 mb-[0.24rem]">累计跟单用户</div>
+                                <div class="text-[0.4rem] font-semibold">360</div>
+                            </div>
+                        </div>
+                        <div class="w-full rounded-[0.32rem] h-[0.96rem] flex items-center px-[0.28rem] justify-between mb-[0.12rem]"
+                            v-for="(item, i) in [1, 2, 3, 4, 5]" style="background-color: var(--ex-bg-white2);">
+                            <div class="flex items-center">
+                                <div class="w-[0.4rem] h-[0.4rem] rounded-[0.2rem] overflow-hidden mr-[0.16rem]">
+                                    <img v-lazy="getStaticImgUrl('static/avatar/1.png')" alt="" />
+                                </div>
+                                <div class="text-[0.28rem]">{{ 'asfasdf@gmail.com' }}</div>
+                            </div>
+                            <div class="text-[0.28rem] font-semibold" :class="true ? 'text-up' : 'text-down'">+234234
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full h-[1.6rem] rounded-tl-[0.32rem] rounded-tr-[0.32rem] px-[0.28rem] pt-[0.2rem]"
+                        style="background-color: var(--ex-bg-white);">
+                        <div class="w-full h-[0.92rem] rounded-[1.3rem] ripple-btn text-[0.36rem] font-semibold flex items-center justify-center"
+                            @click="plus" style="background-color: var(--ex-primary-color);">{{ $t('copy.copy_tab_tab1')
+                            }}</div>
                     </div>
                 </div>
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab2')" name="1">
                 <div class="follow-box">
                     <div class="table">
-                        <div class="th">
-                            <div class="td td-s">{{ $t('copy.copy_belong_subtitle1') }}</div>
-                            <div class="td">{{ $t('copy.copy_belong_subtitle2') }}</div>
-                            <div class="td">{{ $t('copy.copy_belong_subtitle3') }}</div>
-                            <div class="td td2 td-l">{{ $t('copy.copy_belong_subtitle4') }}</div>
-                        </div>
-                        <div class="tr mask-btn" v-if="orders.length" v-for="i in orders" :key="i">
+                        <div class="tr mask-btn" v-if="orders.length" v-for="(item, i) in orders" :key="i">
                             <div class="td td-s">
                                 <div class="name">{{ item.symbol }}</div>
                                 <div class="fever">{{ item.lever }}X</div>
@@ -127,14 +234,16 @@
                 <div class="follow-box">
                     <div class="table">
                         <div class="th">
-                            <div class="td">{{ $t('copy.copy_belong_subtitle5') }}</div>
+                            <div class="td td2">{{ $t('copy.copy_belong_subtitle5') }}</div>
                             <div class="td">{{ $t('copy.copy_belong_subtitle6') }}</div>
                             <div class="td td-l">{{ $t('copy.copy_belong_subtitle7') }}</div>
                         </div>
                         <div class="tr mask-btn" v-if="follows.length" v-for="(item, i) in follows" :key="i">
-                            <div class="td">
+                            <div class="td td2">
                                 <div class="user">
-                                    <!-- <div class="avatar"></div> -->
+                                    <div class="avatar overflow-hidden">
+                                        <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar || 1}.png`)" alt="" />
+                                    </div>
                                     <div>{{ item.name }}</div>
                                 </div>
                             </div>
@@ -142,8 +251,8 @@
                                 <div>{{ item.amount }}</div>
                             </div>
                             <div class="td td-l up" :class="[item.returnamount < 0 ? 'down' : 'up']">
-                                <div>{{ item.returnamount }}</div>
-                                <div style="margin-top: 0.16rem;">{{ item.returnrate > 0 ? '+' : '' }}{{
+                                <div class="mb-[0.16rem]">{{ item.returnamount }}</div>
+                                <div class="w-[1.08rem] h-[0.48rem] rounded-[0.12rem] flex items-center justify-center text-white" :class="item.returnrate > 0 ? 'bg-up' : 'bg-down'">{{ item.returnrate > 0 ? '+' : '' }}{{
                                     item.returnrate }}%</div>
                             </div>
                         </div>
@@ -164,7 +273,7 @@ import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, ref, watch } from "vue"
 import NoData from "@/components/NoData"
-import { Tab, Tabs } from "vant";
+import { Tab, Tabs, Button } from "vant";
 import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
 import SparkLine from "@/components/SparkLine.vue";
 import { useRoute } from "vue-router"
@@ -179,7 +288,7 @@ const points = getPoints('id-123456', 100)
 const { t } = useI18n()
 const route = useRoute()
 const active = ref(1)
-
+const activeRatio = ref(0)
 // 跟单
 const showPlus = ref(false)
 const plus = () => {
@@ -237,7 +346,7 @@ watch(copyItem, (val) => {
 
 <style lang="less" scoped>
 .page-follow-detail {
-    padding: 1.28rem 0 0.32rem 0;
+    padding-top: 1.28rem;
 
     :deep(.van-tabs__nav) {
         padding-left: 0.24rem;
@@ -255,12 +364,13 @@ watch(copyItem, (val) => {
             width: 0.8rem;
             height: 0.8rem;
             border-radius: 50%;
-            background-color: var(--ex-bg-color3);
+            // background-color: var(--ex-bg-color3);
             margin-right: 0.12rem;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.24rem;
+            // align-items: center;
+            // justify-content: center;
+            // font-size: 0.24rem;
+            overflow: hidden;
         }
 
         .left {
@@ -339,7 +449,7 @@ watch(copyItem, (val) => {
     }
 
     .follow-box {
-        padding: 0.4rem 0.32rem;
+        padding-top: 0.4rem;
     }
 
     .follow-info-box {
@@ -360,7 +470,6 @@ watch(copyItem, (val) => {
                 margin: 0.04rem 0.28rem 0.24rem 0.28rem;
 
                 .up-box {
-                    width: 50%;
                     height: 100%;
                     background-color: var(--ex-up-color);
                     position: relative;
@@ -458,7 +567,8 @@ watch(copyItem, (val) => {
     }
 
     .table {
-        width: 100%;
+        width: calc(100% - 0.64rem);
+        margin: 0 auto;
 
         .th {
             display: flex;
@@ -492,7 +602,7 @@ watch(copyItem, (val) => {
             flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: start;
             justify-content: center;
 
             .name {
@@ -545,6 +655,29 @@ watch(copyItem, (val) => {
         .td-l {
             align-items: flex-end;
         }
+    }
+
+    .right_left_effect {
+        animation-name: animation1;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in;
+        animation-fill-mode: forwards;
+    }
+
+    @keyframes animation1 {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+
+    .submit {
+        width: 100%;
+        height: 0.92rem;
+        background-color: var(--ex-bg-primary);
     }
 }
 </style>
