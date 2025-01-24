@@ -47,7 +47,15 @@
           </div>
           </div>
         </div>
-        <div class="info_boxs">
+        <div class="info_boxs" v-if="props.type == 'spot'">
+          <div class="info_box">
+            <div class="amount" :class="[currStock.offset == 'buy' ? 'up' : 'down']">
+              <div>{{ currStock.volume || "--" }}{{ currStock.symbol ? currStock.symbol.replace('usdt', '').toUpperCase() : '' }}</div>
+            </div>
+            <div>{{ currStock.offset == 'buy' ? '买入' : '卖出' }}</div>
+          </div>
+        </div>
+        <div class="info_boxs" v-else>
           <div class="info_box" v-if="!finalStatus">
             <div class="amount">{{ currStock.unsold_volume || "--" }}</div>
             <div class="text-center">
@@ -77,9 +85,24 @@
             <div>{{ t("trade.order_info_ratio") }}</div>
           </div>
         </div>
+        
 
         <div class="order_info_box">
-          <div class="info_item">
+          
+          <div class="info_item" v-if="props.type == 'spot'">
+            <div class="name">{{ t("trade.stock_open") }}</div>
+            <div class="val_box">
+              <div class="tag" :class="'tag_' + currStock.offset">
+                <!-- {{ offsetMap[currStock.offset] || "--" }} -->
+                {{
+                  currStock.offset == 'buy' ? '买入' :
+                    currStock.offset == 'sell' ? '卖出' :
+                      '--'
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="info_item" v-else>
             <div class="name">{{ t("trade.stock_open") }}</div>
             <div class="val_box">
               <div class="tag" :class="'tag_' + currStock.offset">
@@ -125,7 +148,7 @@
               }}
             </div>
             <div class="val_box">
-              <div class="text">{{ currStock.open_volume || "--" }}</div>
+              <div class="text">{{ currStock.open_volume || currStock.volume || "--" }}</div>
             </div>
           </div>
           <div class="info_item">
@@ -134,7 +157,7 @@
               <div class="text">{{ currStock.fee || "0" }}</div>
             </div>
           </div>
-          <div class="info_item">
+          <div class="info_item" v-if="props.type != 'spot'">
             <div class="name">{{ t("trade.stock_take_stop") }}</div>
             <div>
               <div class="val_box" style="margin-bottom: 0.1rem" v-if="currStock.stop_profit">
@@ -181,10 +204,10 @@
           <div class="info_item" v-if="!finalStatus">
             <div class="name">{{ t("trade.order_info_value") }}</div>
             <div class="val_box">
-              <div class="text">{{ currStock.order_value || "--" }}</div>
+              <div class="text">{{ currStock.order_value || currStock.amount || "--" }}</div>
             </div>
           </div>
-          <div class="info_item" v-if="!finalStatus">
+          <div class="info_item" v-if="!finalStatus && props.type != 'spot'" >
             <div class="name">{{ t("trade.stock_opening_upfront") }}</div>
             <div class="val_box">
               <div class="text">{{ currStock.margin || "0" }}</div>
@@ -201,7 +224,15 @@
 
     </div>
 
-    <div class="btns">
+    <div v-if="props.type == 'spot'" class="btns" >
+      <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)" v-if="['open', 'none'].includes(currStock.status)">
+        <div class="btn_icon">
+          <img v-lazy="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
+        </div>
+        <div>{{ t("trade.order_info_cancel") }}</div>
+      </div>
+    </div>
+    <div class="btns" v-else>
       <div class="btn btn2 ripple-btn" @click="emit('update', currStock)"
         v-if="['none', 'lock', 'open'].includes(currStock.status)">
         <div class="btn_icon">
@@ -275,6 +306,7 @@ const props = defineProps({
   },
 });
 const title = computed(() => {
+  if (props.type == 'spot') return '现货订单'
   if (props.type == 'stock') return t('trade.order_info_title_stock')
   if (props.type == 'contract') return t('trade.order_info_title_contract')
   if (props.type == 'foreign') return '外汇订单'
@@ -508,13 +540,13 @@ const copy = (text) => {
       }
 
       .red_tag,
-      .tag_long {
+      .tag_long, .tag_buy {
         color: var(--ex-up-color);
         background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       }
 
       .green_tag,
-      .tag_short {
+      .tag_short, .tag_sell {
         color: var(--ex-down-color);
         background-color: rgb(var(--ex-down-color-rgb) / 0.08);
       }
@@ -560,7 +592,8 @@ const copy = (text) => {
   }
 
   .btn4 {
-    background-color: var(--ex-sbtn-color);
+    background-color: var(--ex-white);
+    color: var(--ex-bg-color);
   }
 
   .disabled_btn {

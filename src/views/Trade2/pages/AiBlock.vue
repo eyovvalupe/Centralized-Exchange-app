@@ -16,7 +16,7 @@
       </Tab>
       <Tab :title="t('trade.ai_opening_order')" name="2">
         <div class="ai-block-content">
-          <Inquire ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
+          <Inquire :scrollDom="'.page'" ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
         </div>
       </Tab>
     </Tabs>

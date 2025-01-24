@@ -190,6 +190,17 @@ const goInfo = (type) => {
       },
     });
   }
+  if (type == "spot") {
+    store.commit("setCurrConstract", props.item);
+    router.push({
+      name: "market_info",
+      query: {
+        symbol: props.item.name,
+        type: "constract",
+        tradeType: 'spot'
+      },
+    });
+  }
   if (type == "crypto") {
     store.commit("setCurrConstract", props.item);
     router.push({
@@ -197,6 +208,7 @@ const goInfo = (type) => {
       query: {
         symbol: props.item.name,
         type: "constract",
+        tradeType: 'constract'
       },
     });
   }

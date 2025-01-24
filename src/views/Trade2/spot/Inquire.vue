@@ -3,10 +3,9 @@
   <div class="inquire" v-if="token">
     <div class="tr th">
       <div class="td td-5">{{ t("trade.contract_opening_contract") }}</div>
-      <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
-      <div class="td td-4">{{ t("trade.contract_position_cost") }}</div>
-      <div class="td td-4" style="text-align: end !important; margin-right: 0.2rem !important">
-        {{ t("trade.order_info_profit") }}
+      <div class="td td-2">开仓</div>
+      <div class="td td-6" style="text-align: end !important; margin-right: 0.2rem !important">
+        数量/成交价
       </div>
     </div>
     <NoData v-if="!loading && !contractInquireList.length" />
@@ -15,52 +14,22 @@
       <div class="tr mask-btn" @click="OpeningForm(item)">
         <div class="td td-5">
           <div class="name">{{ item.name }}</div>
-          <div class="lever">
-            <div class="status-color status">{{ item.lever }}X</div>
-            <div class="status-color status" :class="'status-' + item.status">
-              <!-- {{ statusMap[item.status] || "--" }} -->
-              {{
-                item.status == "none"
-                  ? t("trade.stock_position_status_none")
-                  : item.status == "lock"
-                    ? t("trade.stock_position_status_lock")
-                    : item.status == "open"
-                      ? t("trade.stock_position_status_open")
-                      : item.status == "done"
-                        ? t("trade.stock_position_status_done")
-                        : item.status == "fail"
-                          ? t("trade.stock_position_status_fail")
-                          : item.status == "cancel"
-                            ? t("trade.stock_position_status_cancel")
-                            : "--"
-              }}
-            </div>
-          </div>
         </div>
-        <div class="td td-4">
+        <div class="td td-2">
           <div class="state" :class="'state-' + item.offset">
             <!-- {{ offsetMap[item.offset] || "--" }} -->
             {{
-              item.offset == "long"
-                ? t("trade.stock_position_offset_long")
-                : item.offset == "short"
-                  ? t("trade.stock_position_offset_short")
+              item.offset == "buy"
+                ? '买入'
+                : item.offset == "sell"
+                  ? '卖出'
                   : "--"
             }}
           </div>
-          <div class="amount">{{ item.unsold_volume || "--" }}</div>
         </div>
-        <div class="td td-4">
+        <div class="td td-6" style="text-align: right;">
+          <div class="price">{{ item.volume || "--" }}</div>
           <div class="price">{{ item.settled_price || "--" }}</div>
-          <div class="price">{{ item.open_price || "--" }}</div>
-        </div>
-        <div class="td td-4">
-          <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
-            {{ item.profit || "--" }}
-          </div>
-          <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-            {{ getRatio(item.ratio) }}
-          </div>
         </div>
       </div>
     </SwipeCell>
@@ -70,7 +39,7 @@
 
   <!-- 订单详情 -->
   <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
-    <OrderInfo type="contract" :curr-stock="currStock" @back="showInfo = false" />
+    <OrderInfo type="spot" :curr-stock="currStock" @back="showInfo = false" />
   </Popup>
 
   <UnLogin @loginfinish="loginfinish" v-show="!token" />
@@ -82,7 +51,7 @@ import { SwipeCell, Popup } from "vant";
 import store from "@/store";
 import NoData from "@/components/NoData.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
-import { _futuresList } from "@/api/api";
+import { _spotList } from "@/api/api";
 import UnLogin from "@/components/UnLogin.vue";
 import OrderInfo from "../components/OrderInfo.vue";
 import Decimal from "decimal.js";
@@ -175,7 +144,7 @@ const getList = () => {
     page: page.value,
   };
   loading.value = true;
-  _futuresList(params)
+  _spotList(params)
     .then((res) => {
       res.data = res.data || [];
       if (page.value == 1) {
@@ -214,7 +183,7 @@ onMounted(() => {
     try {
       moreDom = document.querySelector(".loading_more");
       document
-        .querySelector(".trade_body")
+        .querySelector(".page")
         .addEventListener("scroll", scrolHandle);
     } catch { }
   }, 500);
@@ -222,7 +191,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document
-      .querySelector(".trade_body")
+      .querySelector(".page")
       .removeEventListener("scroll", scrolHandle);
   } catch { }
 });
@@ -303,7 +272,7 @@ defineExpose({
       margin: 0 auto;
     }
 
-    .state-short {
+    .state-short, .state-sell {
       background: rgb(var(--ex-down-color-rgb) / 0.1);
       color: var(--ex-down-color);
     }
@@ -314,16 +283,12 @@ defineExpose({
     }
 
     .price {
-      color: var(--ex-text-color2);
-      font-size: 0.24rem;
-    }
-
-    .price:first-child {
       color: var(--ex-text-color);
       font-size: 0.28rem;
       font-weight: 600;
       line-height: 0.36rem;
     }
+
 
     .num {
       color: var(--ex-text-color2);
@@ -343,8 +308,14 @@ defineExpose({
     text-align: left;
   }
 
+  .td-2 {
+    flex: 2;
+  }
   .td-4 {
     flex: 4;
+  }
+  .td-6 {
+    flex: 6;
   }
 }
 </style>

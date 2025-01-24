@@ -3,6 +3,7 @@ export default {
   state: {
     positionsList: [], // 持仓列表
     contractPositionsList: [], // 合约持仓列表
+    positionSpotList: [], // 现货持仓列表
     aiPositionsList: [], // ai持仓列表
     ipoDataList: [], // ipo列表
     ipoStockList: [], // ipo股票列表
@@ -28,6 +29,9 @@ export default {
     },
     setContractPositionsList(state, data) {
       state.contractPositionsList = data
+    },
+    setPositionsSpotList(state, data) {
+      state.positionSpotList = data
     },
     setAiPositionsList(state, data) {
       state.aiPositionsList = data
