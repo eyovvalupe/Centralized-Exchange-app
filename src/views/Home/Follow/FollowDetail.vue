@@ -34,11 +34,11 @@
                                     <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                         <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                     </div>
-                                    <div class="right_left_effect text-[0.4rem]">带单情况</div>
+                                    <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_order_status') }}</div>
                                 </div>
                                 <div class="w-[2.4rem] h-[0.6rem] rounded-[0.32rem] flex items-center justify-between px-[0.28rem] mr-[0.28rem] mt-[0.28rem] mask-btn"
                                     style="background-color: var(--ex-bg-white2);">
-                                    <div class="text-[0.24rem] text-color">近一年</div>
+                                    <div class="text-[0.24rem] text-color">{{ $t('copy.copy_order_time1') }}</div>
                                     <div class="w-[0.32rem] h-[0.32rem]">
                                         <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
                                     </div>
@@ -68,11 +68,11 @@
                             <div class="mx-[0.12rem] h-[1.8rem] rounded-[0.32rem] px-[0.28rem] py-[0.42rem] flex flex-col justify-between"
                                 style="background-color: var(--ex-bg-white2);">
                                 <div class="w-full flex justify-between">
-                                    <div class="text-[0.28rem] text-color2">胜率</div>
+                                    <div class="text-[0.28rem] text-color2">{{ $t('copy.copy_profit_rate') }}</div>
                                     <div class="text-[0.28rem] text-color">50%</div>
                                 </div>
                                 <div class="w-full flex justify-between">
-                                    <div class="text-[0.28rem] text-color2">盈亏比</div>
+                                    <div class="text-[0.28rem] text-color2">{{ $t('copy.copy_belong_pl_rate') }}</div>
                                     <div class="text-[0.28rem] text-color">1.36:1</div>
                                 </div>
                             </div>
@@ -93,36 +93,36 @@
                             <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                 <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                             </div>
-                            <div class="right_left_effect text-[0.4rem]">带单员总览</div>
+                            <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_leader_overview') }}</div>
                         </div>
                         <div class="w-full h-full py-[0.6rem] flex flex-col justify-between">
                             <div class="w-full flex">
                                 <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">带单天数</div>
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_belong_days') }}</div>
                                     <div class="text-[0.4rem] font-semibold text-center">360</div>
                                 </div>
                                 <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">交易员带单资产</div>
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_order_amount') }}</div>
                                     <div class="text-[0.4rem] font-semibold text-center">1111111</div>
                                 </div>
                             </div>
                             <div class="w-full flex">
                                 <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">带单规模</div>
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_order_size') }}</div>
                                     <div class="text-[0.4rem] font-semibold text-center">8989</div>
                                 </div>
                                 <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">当前跟单用户收益</div>
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_followers_profit') }}</div>
                                     <div class="text-[0.4rem] font-semibold text-center">1111111</div>
                                 </div>
                             </div>
                             <div class="w-full flex">
                                 <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">跟单人数</div>
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_followers_num') }}</div>
                                     <div class="text-[0.4rem] font-semibold text-center">28/50</div>
                                 </div>
                                 <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">分润比例</div>
+                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_profit_divide_ratio') }}</div>
                                     <div class="text-[0.4rem] font-semibold text-center">10%</div>
                                 </div>
                             </div>
@@ -135,20 +135,20 @@
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                 </div>
-                                <div class="right_left_effect text-[0.4rem]">收益率</div>
+                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_profit_rate') }}</div>
                             </div>
                             <div class="flex">
                                 <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]  mr-[0.12rem]"
                                     :class="activeRatio == 0 ? 'font-semibold text-black ripple-primary bg-white' : 'text-color2 ripple-btn'"
                                     :style="activeRatio == 1 ? 'background-color: var(--ex-bg-white2);' : ''"
                                     @click="activeRatio = 0">
-                                    收益率
+                                    {{ $t('copy.copy_belong_profit_rate') }}
                                 </div>
                                 <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]"
                                     :class="activeRatio == 1 ? 'font-semibold text-black ripple-primary bg-white' : 'text-color2 ripple-btn'"
                                     :style="activeRatio == 0 ? 'background-color: var(--ex-bg-white2);' : ''"
                                     @click="activeRatio = 1">
-                                    收益率
+                                    {{ $t('copy.copy_belong_profit_rate') }}
                                 </div>
                             </div>
                         </div>
@@ -157,7 +157,7 @@
                                 +67.5%
                             </div>
                             <div class="flex items-center">
-                                <div class="text-[0.24rem] text-color mr-[0.1rem]">近一年</div>
+                                <div class="text-[0.24rem] text-color mr-[0.1rem]">{{ $t('copy.copy_order_time1') }}</div>
                                 <div class="w-[0.32rem] h-[0.32rem]">
                                     <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
                                 </div>
@@ -174,7 +174,7 @@
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                 </div>
-                                <div class="right_left_effect text-[0.4rem]">收益率</div>
+                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_profit_rate') }}</div>
                             </div>
                             <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn">
                                 <img v-lazy="getStaticImgUrl('static/img/common/next.svg')" alt="" />
@@ -183,7 +183,7 @@
                         <div class="rounded-[0.32rem] h-[1.72rem] flex items-center justify-center mb-[0.24rem]"
                             style="background-color: var(--ex-bg-white2);">
                             <div class="flex flex-col items-center">
-                                <div class="text-[0.28rem] text-color2 mb-[0.24rem]">累计跟单用户</div>
+                                <div class="text-[0.28rem] text-color2 mb-[0.24rem]">{{ $t('copy.copy_follower_amount') }}</div>
                                 <div class="text-[0.4rem] font-semibold">{{ follows.length }}</div>
                             </div>
                         </div>

@@ -12,7 +12,7 @@ export default {
     no_more: "没有更多了",
     no_wallet: "暂无收款账户",
     spot: "现货",
-    option: "期货",
+    option: "期权",
   },
   login: {
     login: "登录",
@@ -1048,6 +1048,28 @@ export default {
     copy_order_detail_confirm: "追加跟单",
     copy_order_detail_tab1: "当前订单",
     copy_order_detail_tab2: "历史订单",
+
+    copy_apply_now: "立即申请",
+    copy_apply_con: "成为带单交易员，享受高达30%的跟单分润+10%的跟单手续费返佣",
+    copy_trade: "跟单交易",
+    copy_trade_con: "世界顶级加密货币交易员，带领你一键跟单赚取收益",
+    copy_order_status: "带单情况",
+    copy_order_time1: "近一年",
+    copy_leader_overview: "带单员总览",
+    copy_leader_order_amount: "交易员带单资产",
+    copy_leader_order_size: "带单规模",
+    copy_leader_followers_profit: "当前跟单用户收益",
+    copy_leader_followers_num: "跟单人数",
+    copy_leader_profit_amount: "收益额",
+    copy_follower_amount: "累计跟单用户",
+    copy_profit_divide_ratio: "分润比例",
+
+    copy_order_name: "名称",
+    copy_order_direction: "开仓方向",
+    copy_order_price: "买入/目前价",
+    copy_paid_date: "结算时间",
+    copy_start_date: "开始时间",
+    copy_finish_date: "结束时间"
 
   },
   notifi: {

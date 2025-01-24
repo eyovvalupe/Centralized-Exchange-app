@@ -1049,6 +1049,30 @@ export default {
     copy_order_detail_confirm: "주문 따라하기",
     copy_order_detail_tab1: "현재 주문",
     copy_order_detail_tab2: "과거 주문",
+
+    copy_apply_now: "지금 신청",
+    copy_apply_con:
+      "복사 거래자가 되어 최대 30% 복사 거래 수익 분배 + 10% 거래 수수료 리베이트를 받으세요",
+    copy_trade: "복사 거래",
+    copy_trade_con:
+      "전 세계 최고의 암호화폐 트레이더들이 당신을 이끌어 한 번의 클릭으로 거래를 복사하고 수익을 얻을 수 있습니다",
+    copy_order_status: "복사 거래 상태",
+    copy_order_time1: "최근 1년",
+    copy_leader_overview: "복사 거래자 개요",
+    copy_leader_order_amount: "트레이더의 복사 거래 자산",
+    copy_leader_order_size: "복사 거래 규모",
+    copy_leader_followers_profit: "현재 팔로워 수익",
+    copy_leader_followers_num: "팔로워 수",
+    copy_leader_profit_amount: "총 수익",
+    copy_follower_amount: "총 팔로워 수",
+
+    copy_profit_divide_ratio: "수익 배분 비율",
+    copy_order_name: "이름",
+    copy_order_direction: "포지션 방향",
+    copy_order_price: "구매/현재 가격",
+    copy_paid_date: "결제 시간",
+    copy_start_date: "시작 시간",
+    copy_finish_date: "종료 시간",
   },
   notifi: {
     notifi_center: "알림센터",

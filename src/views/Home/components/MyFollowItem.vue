@@ -57,7 +57,7 @@
         </div>
         <div v-if="showDetail">
             <Tabs type="custom-line-small" @change="onChange" v-model="activeTab" :swipeable="false" animated>
-                <Tab :title="'当前订单'" :name="'0'">
+                <Tab :title="$t('copy.copy_order_detail_tab1')" :name="'0'">
                     <div class="px-[0.1rem] w-full pt-[0.28rem] flex flex-col">
                         <div class="w-full h-[1.5rem] rounded-[0.32rem] mb-[0.2rem] items-center px-[0.4rem] flex justify-between"
                             v-for="(item, i) in [1, 2]" style="background-color: var(--ex-bg-white);">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
                 </Tab>
-                <Tab :title="'历史订单'" :name="'1'">
+                <Tab :title="$t('copy.copy_order_detail_tab2')" :name="'1'">
                     <div class="px-[0.1rem] w-full pt-[0.28rem] flex flex-col">
                         <div class="w-full h-[1.5rem] rounded-[0.32rem] mb-[0.2rem] items-center px-[0.4rem] flex justify-between"
                             v-for="(item, i) in [1, 2]" style="background-color: var(--ex-bg-white);">

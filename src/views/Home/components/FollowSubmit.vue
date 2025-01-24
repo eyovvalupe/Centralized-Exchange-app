@@ -15,14 +15,14 @@
                 </FormItem>
             </div>
             <div class="w-full p-[0.28rem] rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-white2);">
-                <div class="text-[0.32rem] mb-[0.4rem]">现金账户</div>
+                <div class="text-[0.32rem] mb-[0.4rem]">{{ $t('assets.wallet_cash_value') }}</div>
                 <div class="flex justify-between mb-[0.52rem] text-[0.28rem]">
-                    <div class="text-color2">可用余额</div>
+                    <div class="text-color2">{{ $t('market.market_faster_available') }}</div>
                     <div class="flex text-primary">{{ maxStockNum }}<span class="text-color">&nbsp;USDT</span></div>
                 </div>
                 <div class="flex gap-[0.28rem] justify-center">
-                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goDeposit">充值</div>
-                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goTransfer">划转</div>
+                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goDeposit">{{ $t('home.recharge') }}</div>
+                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goTransfer">{{ $t('assets.transfer') }}</div>
                 </div>
             </div>
             <div class="line"></div>
