@@ -184,11 +184,12 @@
                             style="background-color: var(--ex-bg-white2);">
                             <div class="flex flex-col items-center">
                                 <div class="text-[0.28rem] text-color2 mb-[0.24rem]">累计跟单用户</div>
-                                <div class="text-[0.4rem] font-semibold">360</div>
+                                <div class="text-[0.4rem] font-semibold">{{ follows.length }}</div>
                             </div>
                         </div>
                         <div class="w-full rounded-[0.32rem] h-[0.96rem] flex items-center px-[0.28rem] justify-between mb-[0.12rem]"
-                            v-for="(item, i) in [1, 2, 3, 4, 5]" style="background-color: var(--ex-bg-white2);">
+                            v-if="follows.length" v-for="(item, i) in follows"
+                            style="background-color: var(--ex-bg-white2);">
                             <div class="flex items-center">
                                 <div class="w-[0.4rem] h-[0.4rem] rounded-[0.2rem] overflow-hidden mr-[0.16rem]">
                                     <img v-lazy="getStaticImgUrl('static/avatar/1.png')" alt="" />
@@ -197,6 +198,9 @@
                             </div>
                             <div class="text-[0.28rem] font-semibold" :class="true ? 'text-up' : 'text-down'">+234234
                             </div>
+                        </div>
+                        <div v-if="!follows.length">
+                            <NoData />
                         </div>
                     </div>
                     <div class="w-full h-[1.6rem] rounded-tl-[0.32rem] rounded-tr-[0.32rem] px-[0.28rem] pt-[0.2rem]"
@@ -252,8 +256,10 @@
                             </div>
                             <div class="td td-l up" :class="[item.returnamount < 0 ? 'down' : 'up']">
                                 <div class="mb-[0.16rem]">{{ item.returnamount }}</div>
-                                <div class="w-[1.08rem] h-[0.48rem] rounded-[0.12rem] flex items-center justify-center text-white" :class="item.returnrate > 0 ? 'bg-up' : 'bg-down'">{{ item.returnrate > 0 ? '+' : '' }}{{
-                                    item.returnrate }}%</div>
+                                <div class="w-[1.08rem] h-[0.48rem] rounded-[0.12rem] flex items-center justify-center text-white"
+                                    :class="item.returnrate > 0 ? 'bg-up' : 'bg-down'">{{ item.returnrate > 0 ? '+' : ''
+                                    }}{{
+                                        item.returnrate }}%</div>
                             </div>
                         </div>
                         <NoData v-if="!follows.length" />
@@ -283,6 +289,7 @@ import { useI18n } from "vue-i18n";
 import { isEmpty } from "@/utils/isEmpty";
 import store from "@/store";
 import { getPoints } from "@/utils/index.js"
+import follow from "@/store/follow";
 const points = getPoints('id-123456', 100)
 
 const { t } = useI18n()

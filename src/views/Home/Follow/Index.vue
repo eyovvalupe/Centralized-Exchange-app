@@ -23,7 +23,7 @@
                 <div class="my-total" v-if="!isEmpty(myCopyData)">
                     <div class="info-flex">
                         <div class="info-item">
-                            <div class="name">{{ $t('copy.total_revenue') }}</div>
+                            <div class="name">{{ $t('跟单总收益') }}</div>
                             <div class="val">{{ myCopyData.returnamount }}</div>
                         </div>
                         <div class="info-item" style="text-align: right;">
@@ -36,15 +36,24 @@
                     <div class="info-box">
                         <div class="info-item">
                             <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
-                            <div class="val up">{{ myCopyData.today }}</div>
+                            <div class="val up">{{ myCopyData.today || '--' }}</div>
                         </div>
                     </div>
                 </div>
-
-                <NoData v-if="!myFollowList.length" />
+                <div class="flex gap-[0.12rem] mb-[0.32rem]">
+                    <div class="w-[1.24rem] h-[0.78rem] rounded-[1rem] text-[0.3rem] font-semibold flex items-center justify-center"
+                        :class="typeChange == 'option' ? 'bg-white text-black ripple-primary' : 'text-color2 ripple-btn'"
+                        @click="typeChange = 'option'"
+                        :style="typeChange == 'option' ? '' : 'background-color: var(--ex-bg-white2)'">期权</div>
+                    <div class="w-[1.24rem] h-[0.78rem] rounded-[1rem] text-[0.3rem] font-semibold flex items-center justify-center"
+                        :class="typeChange == 'future' ? 'bg-white text-black ripple-primary' : 'text-color2 ripple-btn'"
+                        @click="typeChange = 'future'"
+                        :style="typeChange == 'future' ? '' : 'background-color: var(--ex-bg-white2)'">合约</div>
+                </div>
                 <div class="list-i" v-for="(item, i) in myFollowList" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
                 </div>
+                <NoData v-if="!myFollowList.length" />
             </template>
         </div>
     </div>
@@ -78,7 +87,7 @@ const changeTab = val => {
         }
     }, 100)
 }
-
+const typeChange = ref('option')
 const onChange = () => {
 
 }
@@ -202,7 +211,7 @@ const openInfo = item => {
             .info-box {
                 width: 100%;
                 border-radius: 0.32rem;
-                background-color: var(--ex-bg-color);
+                background-color: var(--ex-bg-white2);
                 padding: 0.28rem;
 
                 .info-item {
