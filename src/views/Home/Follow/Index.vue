@@ -5,10 +5,11 @@
 
         <!-- Tab -->
         <div class="tabs">
-            <div class="tab" :class="{ 'active_tab': active == 1 }" @click="changeTab(1)">{{ $t('copy.copy_portfolio') }}</div>
-            <div class="tab" :class="{ 'active_tab': active == 2 }" @click="changeTab(2)">{{ $t('copy.copy_tab_tab2') }}</div>
+            <div class="tab" :class="{ 'active_tab': active == 1 }" @click="changeTab(1)">{{ $t('copy.copy_portfolio')
+                }}</div>
+            <div class="tab" :class="{ 'active_tab': active == 2 }" @click="changeTab(2)">{{ $t('copy.copy_tab_tab2') }}
+            </div>
         </div>
-
 
         <!-- 列表 -->
         <div class="list" ref="listDom">
@@ -41,8 +42,6 @@
                 </div>
 
                 <NoData v-if="!myFollowList.length" />
-                {{ console.log('my follow list =====> ', myFollowList) }}
-                {{ console.log('my copy data =====>', myCopyData) }}
                 <div class="list-i" v-for="(item, i) in myFollowList" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
                 </div>
@@ -50,10 +49,10 @@
         </div>
     </div>
 
-     <!-- 详情 -->
-     <Popup teleport="body" v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
+    <!-- 详情 -->
+    <Popup teleport="body" v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
         <FollowInfo v-if="showInfo" @back="showInfo = false" style="width: 100%;height: 100%;" />
-     </Popup>
+    </Popup>
 </template>
 
 <script setup>
@@ -65,7 +64,7 @@ import MyFollowItem from "../components/MyFollowItem.vue"
 import { _copyMyList, _copyList } from '@/api/api'
 import { ref, computed, onMounted, onUnmounted } from "vue"
 import store from "@/store";
-import { Popup } from "vant"
+import { Popup, Tabs, Tab } from "vant"
 import FollowInfo from "../Follow/FollowInfo.vue"
 import { isEmpty } from "@/utils/isEmpty";
 
@@ -78,6 +77,10 @@ const changeTab = val => {
             listDom.value.scrollTop = 0
         }
     }, 100)
+}
+
+const onChange = () => {
+
 }
 
 // 我的跟单统计
@@ -181,6 +184,7 @@ const openInfo = item => {
                 .info-item {
                     text-align: left;
                     padding: 0 0.16rem;
+
                     .name {
                         color: var(--ex-placeholder-color);
                         font-size: 0.28rem;

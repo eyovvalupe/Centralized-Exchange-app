@@ -367,9 +367,8 @@ const getTimeSince6AM = () => {
 const canExecuteToday = () => {
     const timeSince6AM = getTimeSince6AM();
     const lastExecutionTime = getLastExecutionTime();
-
-    if (!lastExecutionTime || (lastExecutionTime && ((timeSince6AM > 0) && (getToday6AMTime() > getLastExecutionTime())) || ((timeSince6AM < 0) && (getToday6AMTime() - 24 * 60 * 60 > getLastExecutionTime())))) return true;
-    return false
+    if (lastExecutionTime && ((timeSince6AM > 0) && (getToday6AMTime() < getLastExecutionTime())) || ((timeSince6AM < 0) && (getToday6AMTime() - 24 * 60 * 60 * 1000 < getLastExecutionTime()))) return false;
+    return true
 }
 
 watch(() => (route.path), (val) => {
@@ -565,7 +564,7 @@ const followList = computed(() => store.state.followList || [])
             }
         }
 
-       
+
 
         .ad {
             width: 100%;

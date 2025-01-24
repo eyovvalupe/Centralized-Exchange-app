@@ -714,7 +714,7 @@ export const _copyAdd= (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
-// 追加跟单
+// 我的跟单数据
 export const _copyMyData= (data = {}) => {
   return http.post(`/authc/v1/copy/mycopydata`, data, {
     custom: { auth: true, toast: true, retry: true },

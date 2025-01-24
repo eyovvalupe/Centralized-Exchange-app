@@ -1,7 +1,6 @@
 <!-- 我的跟单元素 -->
 <template>
     <div class="myfollow-item" v-if="!isEmpty(item)">
-        {{ console.log("my copy item =====> ", item) }}
         <div class="title-box" @click="goInfo">
             <div class="left">
                 <div class="top">

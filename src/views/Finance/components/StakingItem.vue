@@ -17,7 +17,6 @@
                             </div>
                         </div>
                     </div>
-                    {{ console.log(item) }}
                     <!-- 加密代币价格 -->
                     <div class="flex w-full bg-color py-[0.2rem] rounded-[0.32rem] mb-[0.12rem]">
                         <div class="flex flex-col px-[0.28rem] flex-1" v-for="(symbol, i) in item.items">
@@ -71,13 +70,15 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
 import { useI18n } from 'vue-i18n';
-import { Button, Loading } from 'vant';
+import { Button, Loading, showToast } from 'vant';
 import BackgroundImg from './BackgroundImg.vue';
 import router from "@/router";
 import BackgroundImg1 from './BackgroundImg1.vue';
 import { _realtime } from "@/api/api";
 import { onMounted } from "vue";
 import store from "@/store";
+
+const token = computed(() => store.state.token);
 
 const jump = (id) => {
     store.commit('setStakeId', id)

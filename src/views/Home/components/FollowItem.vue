@@ -4,7 +4,9 @@
         <div class="title-box">
             <div class="left">
                 <div class="top">
-                    <div class="avatar">{{ (props.item.name || '').slice(0, 1) }}</div>
+                    <div class="avatar overflow-hidden">
+                        <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar}.png`)" alt="" />
+                    </div>
                     <div class="name">{{ props.item.name }}</div>
                     <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
                 </div>
@@ -21,11 +23,10 @@
 
         <div class="info-box">
             <div class="info-left">
-                <!-- <div class="info-title">RIO</div> -->
-                <div class="info-num" :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
+                <div class="text-[0.24rem] text-color2 mb-[0.2rem]">{{ $t('copy.total_revenue') }}</div>
+                <div class="text-[0.4rem] font-semibold mb-[0.2rem]" :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
                     ? '+' : '') }}{{ props.item.returnrate }}%</div>
-                <div class="info-text">
-                    <span>{{ $t('copy.total_revenue') }}</span>
+                <div class="text-[0.28rem]">
                     <b>{{ (props.item.returnamount > 0 ? '+' : '') }}{{ props.item.returnamount || '--' }}</b>
                 </div>
             </div>
@@ -238,7 +239,7 @@ const goFollow = () => {
         padding: 0.24rem 0.16rem 0.12rem 0.16rem;
 
         .detail-item {
-            flex: 1;
+            flex: 1.2;
             font-size: 0.24rem;
             line-height: 1.5;
 

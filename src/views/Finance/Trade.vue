@@ -26,7 +26,8 @@
                                     itemsMap[item.symbol] ? (itemsMap[item.symbol] > 0 ? '+' +
                                         itemsMap[item.symbol] : itemsMap[item.symbol]) + '%' : '--' }}
                             </div>
-                            <div class="absolute w-[0.6rem] h-[0.6rem] z-[1] right-[-0.5rem] top-[1rem]" v-if="i < itemList.length - 1"><img
+                            <div class="absolute w-[0.6rem] h-[0.6rem] z-[1] right-[-0.5rem] top-[1rem]"
+                                v-if="i < itemList.length - 1"><img
                                     v-lazy="getStaticImgUrl(`/static/img/finance/plus.svg`)" alt="img" /></div>
                         </div>
                     </div>
@@ -122,7 +123,8 @@
                                 <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative"
                                     :class="i ? '-ml-[0.1rem]' : ''" v-if="!isEmpty(stakeInfo)" :key="i"
                                     v-for="(item, i) in stakeInfo.items"><img
-                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.split('/')[0]}.svg`)" alt="img" /></div>
+                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.split('/')[0]}.svg`)"
+                                        alt="img" /></div>
                             </div>
                             <div class="text-[0.32rem]">{{ stakeInfo.name ? stakeInfo.name : '--' }}</div>
                         </div>
@@ -157,9 +159,9 @@
                                     form1.amount }}</span></div>
                         <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{
                             t('finance.portfolio_mining_header')
-                        }}<span class="text-white">&nbsp;{{ form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
+                            }}<span class="text-white">&nbsp;{{ form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
                                 t('finance.portfolio_mining_noti_fee')
-                            }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
+                                }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
                     </div>
                 </div>
                 <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
@@ -259,7 +261,7 @@
                         </div>
                         <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
                             maxStockNum
-                        }}</b>
+                            }}</b>
                     </div>
                 </div>
 
@@ -337,7 +339,7 @@ const amountStatus = ref('normal');
 const showValanceDetail = () => {
     showAmountDialog.value = true
 }
-
+const token = computed(() => store.state.token)
 const sessionToken = computed(() => store.state.sessionToken)
 const realtimeData = computed(() => store.state.realtimeData)
 const maxStockNum = computed(() => {
@@ -386,6 +388,15 @@ const minAmount = computed(() => {
 })
 
 const openConfirm = () => {
+    if (!token.value) {
+        showToast('请先登录再质押')
+        setTimeout(() => {
+            router.push({
+                name: 'login'
+            })
+        }, 50);
+        return;
+    }
     if (amountStatus.value != 'success') {
         showToast('请输入限额范围');
         return;
@@ -394,6 +405,11 @@ const openConfirm = () => {
 }
 
 const onSliderChange = (newValue) => {
+    if (!maxStockNum.value) {
+        sliderValue.value = 0
+        form1.value.amount = ''
+        return;
+    }
     if ((newValue * maxStockNum.value / 100) < minAmount.value || (newValue * maxStockNum.value / 100) > maxAmount.value) { amountStatus.value = 'error' }
     else amountStatus.value = 'success';
     sliderValue.value = newValue;
@@ -407,6 +423,11 @@ const onSliderChange = (newValue) => {
 };
 
 const changePercent = () => {
+    if (!maxStockNum.value) {
+        sliderValue.value = 0
+        form1.value.amount = ''
+        return;
+    }
     if (maxStockNum.value == "--" || !form1.value.amount)
         return (sliderValue.value = 0);
     if (form1.value.amount < minAmount.value || form1.value.amount > maxAmount.value) { amountStatus.value = 'error' }

@@ -9,7 +9,8 @@
             </Tab>
             <Tab class="mb-[1.2rem]" :title="t('finance.portfolio_order')" :active="activeTab == 1" :name="'1'">
                 <div class="px-[0.1rem]">
-                    <Order />
+                    <Order v-if="token"/>
+                    <NoData v-if="!token"/>
                 </div>
             </Tab>
         </Tabs>
@@ -20,8 +21,12 @@ import { Tabs, Tab } from 'vant';
 import StakingList from './components/StakingList.vue';
 import { useI18n } from 'vue-i18n';
 import Order from './components/Order.vue';
+import store from '@/store';
+import NoData from '@/components/NoData.vue';
 
 const { t } = useI18n();
+const token = computed(() => store.state.token);
+
 
 const activeTab = ref(1)
 
