@@ -128,7 +128,7 @@
       </div>
       </div>
 
-      <div class="account-box">
+      <div class="account-box" v-if="token">
         <div class="title">合约账户</div>
         <div class="info">
           <div>可用余额</div>
@@ -151,10 +151,18 @@
       <div class="van-popup-custom-title">
         {{ t("trade.ai_opening_confirm_order") }}
       </div>
+
       <div class="stock_submit_box">
-        <div class="item">
+        <div class="stock_submit_box_inner">
+          <div class="item">
           <div class="item_name">{{ t("trade.ai_opening_product_type") }}</div>
           <div class="item_val">
+            <div style="width: 0.4rem;height: 0.4rem;margin-right: 0.16rem;" v-if="form1.name && form1.name.replace('/USDT', '')">
+              <img v-lazy="getStaticImgUrl(
+                `/static/img/crypto/${form1.name.replace('/USDT', '').toUpperCase()}.svg`
+              )
+                " />
+            </div>
             <div class="item_val_text">{{ form1.name }}</div>
           </div>
         </div>
@@ -189,6 +197,7 @@
             <div class="item_val_text">{{ getRange() }}</div>
             <div class="item_val_unit">USDT</div>
           </div>
+        </div>
         </div>
 
         <FormItem style="margin-top: 0.4rem;" v-model="form1.safeword" size="large" input-type="password"
@@ -252,6 +261,7 @@ import Top from "@/components/Top.vue";
 import AmountPopup from "../AmountPopup.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
+import { getStaticImgUrl } from "@/utils/index.js"
 
 
 const { t } = useI18n();
@@ -609,6 +619,7 @@ defineExpose({
         display: flex;
         align-items: center;
         justify-content: space-between;
+        color: var(--ex-placeholder-color);
       }
 
       .btns {
@@ -858,6 +869,12 @@ defineExpose({
 
 .stock_submit_box {
   padding: 0.2rem 0.5rem 0.6rem;
+
+  .stock_submit_box_inner {
+    padding: 0.28rem;
+    border-radius: 0.32rem;
+    background-color: var(--ex-bg-white1);
+  }
 
   .item {
     display: flex;

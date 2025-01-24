@@ -588,7 +588,7 @@ setTimeout(() => {
     margin: 0.4rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white1);
     border-radius: 0.6rem;
     border: 1px solid var(--ex-border-color2);
 
@@ -1085,8 +1085,8 @@ setTimeout(() => {
 
       .bottom_btn_icon {
         margin-right: 0.08rem;
-        width: 0.52rem;
-        height: 0.52rem;
+        width: 0.48rem;
+        height: 0.48rem;
       }
     }
   }

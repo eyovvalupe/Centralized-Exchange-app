@@ -19,9 +19,9 @@
                     <AiBlock />
                 </div>
             </Tab>
-            <Tab :name="4" :title="'ETF'">
+            <!-- <Tab :name="4" :title="'ETF'">
                 <div class="pt-[0.2rem]">现货</div>
-            </Tab>
+            </Tab> -->
         </Tabs>
         </div>
     </div>

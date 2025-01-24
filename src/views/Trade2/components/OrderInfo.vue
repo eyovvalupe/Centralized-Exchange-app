@@ -5,8 +5,16 @@
     <div class="scroller">
 
       <div style="padding: 0.12rem;border-radius: 0.32rem;background-color: var(--ex-bg-color3);">
-        <div class="stock-info">
-          <div class="stock-info__head">
+        <div class="stock-info" style="display: flex;align-items: center;">
+          <div style="width: 0.88rem;height: 0.88rem;margin-right: 0.2rem;"
+            v-if="currStock.name && currStock.name.replace('/USDT', '')">
+            <img v-lazy="getStaticImgUrl(
+              `/static/img/crypto/${currStock.name.replace('/USDT', '').toUpperCase()}.svg`
+            )
+              " />
+          </div>
+          <div style="flex: 1;">
+            <div class="stock-info__head">
             <div class="stock-info__hl">
               <span class="stock-info__symbol" v-if="type == 'contract'">{{
                 currStock.name || "--"
@@ -36,6 +44,7 @@
             <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
               <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
             </div>
+          </div>
           </div>
         </div>
         <div class="info_boxs">
@@ -201,8 +210,8 @@
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
       <div class="btn btn2 disabled_btn" v-else>
-        <div class="btn_icon">
-          <img v-lazy="getStaticImgUrl('/static/img/trade/update_disabled.svg')" alt="img" />
+        <div class="btn_icon" style="opacity: 0.5;">
+          <img v-lazy="getStaticImgUrl('/static/img/trade/update.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_update") }}</div>
       </div>
@@ -213,8 +222,8 @@
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
       <div class="btn btn3 disabled_btn" v-else>
-        <div class="btn_icon">
-          <img v-lazy="getStaticImgUrl('/static/img/trade/close_disabled.svg')" alt="img" />
+        <div class="btn_icon" style="opacity: 0.5;">
+          <img v-lazy="getStaticImgUrl('/static/img/trade/close.svg')" alt="img" />
         </div>
         <div>{{ t("trade.stock_position_close") }}</div>
       </div>
@@ -225,8 +234,8 @@
         <div>{{ t("trade.order_info_cancel") }}</div>
       </div>
       <div class="btn btn4 disabled_btn" v-else>
-        <div class="btn_icon">
-          <img v-lazy="getStaticImgUrl('/static/img/trade/cancel_disabled.svg')" alt="img" />
+        <div class="btn_icon" style="opacity: 0.5;">
+          <img v-lazy="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
         </div>
         <div>{{ t("trade.order_info_cancel") }}</div>
       </div>
@@ -532,7 +541,7 @@ const copy = (text) => {
     align-items: center;
     justify-content: center;
     background-color: var(--ex-primary-color);
-    color: var(--ex-text-color--bg-primary);
+    color: var(--ex-white);
     font-size: 0.32rem;
     font-weight: 400;
     line-height: 100%;
@@ -542,7 +551,7 @@ const copy = (text) => {
     .btn_icon {
       width: 0.4rem;
       height: 0.4rem;
-      margin-bottom: 0.16rem;
+      margin-right: 0.08rem;
     }
   }
 

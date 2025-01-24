@@ -244,6 +244,7 @@ body .van-dialog {
 
         .van-tab {
             height: 0.8rem;
+            transition: all ease-in .2s;
 
             .van-tab__text {
                 font-size: 0.32rem;
@@ -282,6 +283,7 @@ body .van-dialog {
         .van-tab {
             height: 0.8rem;
             flex: 1;
+            transition: all ease-in .2s;
 
             .van-tab__text {
                 font-size: 0.32rem;
@@ -324,6 +326,7 @@ body .van-dialog {
 
         .van-tab {
             height: 0.8rem;
+            transition: all ease-in .2s;
 
             .van-tab__text {
                 font-size: 0.32rem;
@@ -377,6 +380,7 @@ body .van-dialog {
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
+                transition: all ease-in .2s;
             }
 
             .van-tab--active {
@@ -431,6 +435,7 @@ body .van-dialog {
             z-index: 1;
             flex: 1 0 auto;
             padding: 0 0.46rem;
+            transition: all ease-in .2s;
         }
 
         .van-tab {
@@ -607,6 +612,8 @@ body .van-dialog {
                 margin-right: 0.12rem;
                 border-radius: 1rem;
                 padding: 0 0.24rem;
+                background-color: var(--ex-bg-color3);
+                transition: all ease-in .2s;
             }
 
             .van-tab--active {
@@ -636,6 +643,7 @@ body .van-dialog {
                     border: 1px solid var(--ex-border-color);
                     margin-right: 0.12rem;
                     border-radius: 1rem;
+                    transition: all ease-in .2s;
                 }
     
                 .van-tab--active {
@@ -656,15 +664,6 @@ body .van-dialog {
             height: 1rem;
             background-color: var(--ex-bg-color);
             position: relative;
-            &::after {
-                content: "";
-                width: 100%;
-                height: 0.02rem;
-                background-color: var(--ex-bg-white2);
-                position: absolute;
-                left: 0;
-                bottom: 0.24rem;
-            }
     
             .van-tabs__nav {
                 margin: 0 !important;
@@ -680,24 +679,15 @@ body .van-dialog {
                     margin-right: 0.12rem;
                     border-radius: 1rem;
                     background-color: var(--ex-none);
-                    
+                    font-size: 0.3rem;
+                    transition: all ease-in .2s;
                 }
     
                 .van-tab--active {
-                    // background-color: var(--ex-white);
-                    color: var(--ex-primary-color);
+                    color: var(--ex-white);
                     position: relative;
-                    &::after {
-                        content: '';
-                        width: 0.48rem;
-                        height: 0.06rem;
-                        border-radius: 0.48rem;
-                        background-color: var(--ex-primary-color);
-                        position: absolute;
-                        bottom: 0;
-                        left: 50%;
-                        transform: translateX(-50%);
-                    }
+                    font-size: 0.36rem;
+                    font-weight: bold;
                 }
             }
     
@@ -728,6 +718,7 @@ body .van-dialog {
                 margin-right: 0.12rem;
                 border-radius: 1rem;
                 background-color: var(--ex-bg-color6);
+                transition: all ease-in .2s;
 
                 span {
                     font-size: 0.3rem;
@@ -771,6 +762,7 @@ body .van-dialog {
         }
 
         .van-tab {
+            transition: all ease-in .2s;
             border-radius: 0.32rem;
         }
 
@@ -831,6 +823,7 @@ body .van-dialog {
                 margin-right: 0.12rem;
                 border-radius: 0.5rem;
                 height: 0.68rem;
+                transition: all ease-in .2s;
                 box-sizing: border-box;
             }
 
@@ -876,6 +869,7 @@ body .van-dialog {
                 border-radius: 0.5rem;
                 height: 0.64rem;
                 box-sizing: border-box;
+                transition: all ease-in .2s;
             }
 
             .van-tab--active {

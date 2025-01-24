@@ -2,33 +2,27 @@
 <template>
     <div class="page-home2">
         <!-- 背景 -->
-        <div class="home2-bg1">
-            <img v-lazy="getStaticImgUrl('/static/home2/bg.png')" alt="">
-        </div>
-        <div class="home2-bg2">
-            <img v-lazy="getStaticImgUrl('/static/home2/bg-shadow.svg')" alt="">
-        </div>
 
         <!-- 内容 -->
         <div class="home2-content">
             <!-- 头部 -->
             <div class="home2-header">
-                <div class="icon" @click="jump('user', true)">
+                <div class="icon ripple-btn" @click="jump('user', true)">
                     <img v-if="token" v-lazy="getStaticImgUrl('/static/img/user/avatar2.svg')" alt="">
                     <img v-else v-lazy="getStaticImgUrl('/static/home2/avatar.svg')" alt="">
                 </div>
                 <div style="flex: 1;"></div>
-                <div @click="jump('search')" class="icon icon2" style="margin-right: 0.12rem;">
+                <div @click="jump('search')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
                     <img v-lazy="getStaticImgUrl('/static/home2/search.svg')" alt="">
                 </div>
-                <div @click="jump('notification')" class="icon icon2">
+                <div @click="jump('notification')" class="icon icon2 ripple-btn">
                     <img v-lazy="getStaticImgUrl('/static/home2/notice.svg')" alt="">
                 </div>
             </div>
 
 
             <!-- banner -->
-            <view @click="install" class="banners wow fadeInUp">
+            <view @click="install" class="banners wow fadeInUp" data-wow-duration="1s">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
                         <img v-lazy="getStaticImgUrl('/static/home2/banner1.png')" alt="">
@@ -41,32 +35,33 @@
 
             <!-- 质押挖矿 -->
             <div class="recommend-title">
-                <div class="point wow slideInLeft">
-                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
-                </div>
-                <div class="wow slideInLeft" style="flex: 1;">{{ t('finance.portfolio_title') }}</div>
-                <div class="recommend-icon wow slideInRight" @click="jump('finance', true, 1)">
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('finance.portfolio_title')
+                    }}</div>
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
+                    @click="jump('finance', true, 1)">
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 
             <div class="scroll-box">
-                <div class="scroll-con">
-                    <MiningItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'"
-                        style="margin-right: 0.32rem;display: inline-block;" v-for="i in 10" :key="i" />
+                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                    <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
                 </div>
             </div>
 
-            <div class="sub-banner wow fadeInUp">
+            <div class="sub-banner wow fadeInUp" data-wow-duration="0.6s">
                 <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
+
+                <div class="sub-box">
+                    <div class="title">领取模拟金</div>
+                    <div class="amount">$100000</div>
+                    <div class="btn ripple-primary">模拟交易</div>
+                </div>
             </div>
             <!-- 跟单 -->
             <div class="recommend-title" @click="jump('follow', false)">
-                <div class="point wow slideInLeft">
-                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
-                </div>
-                <div class="wow slideInLeft" style="flex: 1;">{{ t('copy.title') }}</div>
-                <div class="recommend-icon wow slideInRight">
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('copy.title') }}</div>
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -74,20 +69,18 @@
                 <div class="follow-btn wow slideInLeft">{{ t('copy.copy_option') }}</div>
             </div> -->
             <div class="scroll-box">
-                <div class="scroll-con">
+                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
-                        <FollowItem class="wow fadeInRight" :data-wow-delay="(0.3 + 0.5 * i) + 's'" :item="item" />
+                        <FollowItem class="follow-home-item" :item="item" />
                     </div>
                 </div>
             </div>
 
             <!-- 市场推荐 -->
-            <div class="recommend-title" style="margin-top: 0.8rem;">
-                <div class="point wow slideInLeft">
-                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
+            <div class="recommend-title" style="margin-top: 0.16rem;">
+                <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                 </div>
-                <div class="wow slideInLeft" style="flex: 1;">{{ t('home.market_trend') }}</div>
-                <div class="recommend-icon wow slideInRight">
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
@@ -97,14 +90,14 @@
 
 
             <!-- ad -->
-            <div class="ad wow fadeInUp">
+            <div class="ad wow fadeInUp" data-wow-duration="0.6s">
 
                 <div class="ad-bg"
                     :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }"></div>
                 <div class="ad-content">
                     <div class="title">{{ t('home.ad_title') }}</div>
                     <div>{{ t('home.ad_con') }}</div>
-                    <div class="btn">{{ t('home.ad_btn') }}</div>
+                    <div class="btn ripple-btn" @click="jump('trade')">{{ t('home.ad_btn') }}</div>
                 </div>
                 <div class="ad-tip">
                     <img v-lazy="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
@@ -113,37 +106,37 @@
 
             <!-- links -->
             <div class="links">
-                <div class="link-item wow slideInLeft">
+                <div class="link-item wow slideInLeft" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link1.png')" alt="">
                     </div>
                     <div>TheSantumNe...</div>
                 </div>
-                <div class="link-item wow slideInRight">
+                <div class="link-item wow slideInRight" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link2.png')" alt="">
                     </div>
                     <div>KEEPOFFTHE...</div>
                 </div>
-                <div class="link-item wow slideInLeft">
+                <div class="link-item wow slideInLeft" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link3.png')" alt="">
                     </div>
                     <div>AIORBIT</div>
                 </div>
-                <div class="link-item wow slideInRight">
+                <div class="link-item wow slideInRight" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link4.png')" alt="">
                     </div>
                     <div>GodsUnchained...</div>
                 </div>
-                <div class="link-item wow slideInLeft">
+                <div class="link-item wow slideInLeft" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link5.png')" alt="">
                     </div>
                     <div>PudgyRods</div>
                 </div>
-                <div class="link-item wow slideInRight">
+                <div class="link-item wow slideInRight" data-wow-duration="0.6s">
                     <div class="item-img">
                         <img v-lazy="getStaticImgUrl('/static/home2/link6.png')" alt="">
                     </div>
@@ -152,16 +145,6 @@
             </div>
 
 
-            <!-- 市场推荐 -->
-            <div class="recommend-title" style="margin-top: 0.36rem;">
-                <div class="point wow slideInLeft">
-                    <img v-lazy="getStaticImgUrl('/static/home2/point.svg')" alt="">
-                </div>
-                <div class="wow slideInLeft" style="flex: 1;">{{ t('home.news') }}</div>
-                <div class="recommend-icon wow slideInRight">
-                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
-                </div>
-            </div>
 
         </div>
     </div>
@@ -411,6 +394,28 @@ const followList = computed(() => store.state.followList || [])
 
 
 <style lang="less" scoped>
+@keyframes rotateShadow {
+    0% {
+        box-shadow: 0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+    }
+
+    25% {
+        box-shadow: 0 0.02rem 0.06rem rgba(0,166,9,0.5) inset;
+    }
+
+    50% {
+        box-shadow: -0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+    }
+
+    75% {
+        box-shadow: 0 -0.02rem 0.06rem rgba(0,166,9,0.5) inset;
+    }
+
+    100% {
+        box-shadow: 0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+    }
+}
+
 .page-home2 {
     background-color: var(--ex-bg-color);
     min-height: 100%;
@@ -469,7 +474,7 @@ const followList = computed(() => store.state.followList || [])
         }
 
         .banners {
-            margin: 0.32rem 0;
+            margin: 0.32rem 0 0.4rem 0;
 
             .swipers {
                 width: 100%;
@@ -508,6 +513,41 @@ const followList = computed(() => store.state.followList || [])
             width: 100%;
             height: 2.54rem;
             margin: 0.04rem 0 0.4rem 0;
+            position: relative;
+            background-color: var(--ex-bg-color3);
+            border-radius: 0.32rem;
+            overflow: hidden;
+
+            .sub-box {
+                position: absolute;
+                top: 0.28rem;
+                left: 0.64rem;
+                color: var(--ex-white);
+                line-height: 1.4;
+
+                .title {
+                    font-size: 0.32rem;
+                }
+
+                .amount {
+                    font-size: 0.6rem;
+                    font-weight: 700;
+                    color: var(--ex-warning-color);
+                }
+
+                .btn {
+                    height: 0.6rem;
+                    padding: 0 0.3rem;
+                    border-radius: 0.3rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: var(--ex-bg-color);
+                    font-size: 0.24rem;
+                    margin-top: 0.15rem;
+                    background-color: var(--ex-white);
+                }
+            }
         }
 
         .scroll-box {
@@ -515,6 +555,17 @@ const followList = computed(() => store.state.followList || [])
             overflow-x: auto;
             margin-bottom: 0.32rem;
             padding-right: 0.32rem;
+
+            .mining-home-item {
+                margin-right: 0.32rem;
+                display: inline-block;
+                position: relative;
+                animation: rotateShadow 3s linear infinite;
+            }
+            .follow-home-item {
+                position: relative;
+                animation: rotateShadow 3s linear infinite;
+            }
 
             .scroll-con {
                 white-space: nowrap;
@@ -629,7 +680,7 @@ const followList = computed(() => store.state.followList || [])
                 align-items: center;
                 justify-content: center;
                 font-size: 0.3rem;
-                color: var(--ex-black);
+                color: var(--ex-white);
                 margin-top: 0.4rem;
             }
         }

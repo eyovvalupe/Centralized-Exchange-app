@@ -14,7 +14,7 @@
           </div> -->
           <div class="size-[0.96rem] mr-[0.18rem] flex justify-center items-center"
             v-if="showIcon">
-            <img :src="getStaticImgUrl(`static/img/crypto/${item.name.split('/')[0]}.svg`)" alt="" />
+            <img @error="imgError" :src="getStaticImgUrl(`static/img/crypto/${item.name.split('/')[0]}.svg`)" alt="" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
             <div class="item_name flex items-center gap-1 mb-[0.2rem]">
@@ -96,7 +96,7 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
 import SparkLine from "./SparkLine.vue";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import router from "@/router";
 import { SwipeCell } from "vant";
 import store from "@/store";
@@ -217,6 +217,10 @@ const removeStock = (item) => {
   emits("remove", item);
 };
 
+
+const imgError = e => {
+  e.target.src = getStaticImgUrl(`static/img/crypto/default.svg`)
+}
 </script>
 
 <style lang="less" scoped>
@@ -267,7 +271,7 @@ const removeStock = (item) => {
   height: 1.62rem;
   padding: 0 0.3rem;
   position: relative;
-  background-color: var(--ex-bg-color3);
+  background-color: var(--ex-bg-white2);
   border-radius: 0.4rem;
   margin-top: 0.2rem;
 

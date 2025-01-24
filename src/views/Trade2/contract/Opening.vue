@@ -32,7 +32,7 @@
         </Tab>
       </Tabs>
 
-      <div class="account-box">
+      <div class="account-box" v-if="token">
         <div class="title">合约账户</div>
         <div class="info">
           <div>可用余额</div>
@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { Tab, Tabs } from "vant";
 import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
@@ -60,7 +60,9 @@ import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
+import store from "@/store";
 
+const token = computed(() => store.state.token)
 const jump = name => router.push({name})
 
 const props = defineProps({
@@ -145,6 +147,7 @@ defineExpose({
         display: flex;
         align-items: center;
         justify-content: space-between;
+        color: var(--ex-placeholder-color);
       }
 
       .btns {

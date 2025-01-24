@@ -54,25 +54,27 @@
         </div>
       </div>
       <div class="stock-info">
-        <div class="stock-info__symbol">{{ currItem.name || "--" }}</div>
-        <div class="stock-info__order_no">
-          <span>{{ t('trade.ai_position_order_id') }} {{ currItem.order_no || "--" }}</span>
-          <div class="stock-info__copy_icon" @click="copy(currItem.order_no)">
-            <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+
+        <div style="display: flex;align-items: center;">
+          <div style="width: 0.6rem;height: 0.6rem;margin-left: 0.16rem;"
+            v-if="currItem.name && currItem.name.replace('/USDT', '')">
+            <img v-lazy="getStaticImgUrl(
+              `/static/img/crypto/${currItem.name.replace('/USDT', '').toUpperCase()}.svg`
+            )
+              " />
+          </div>
+          <div style="flex: 1;">
+            <div class="stock-info__symbol">{{ currItem.name || "--" }}</div>
+            <div class="stock-info__order_no">
+              <span>{{ t('trade.ai_position_order_id') }} {{ currItem.order_no || "--" }}</span>
+              <div class="stock-info__copy_icon" @click="copy(currItem.order_no)">
+                <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="info_boxs">
-          <div class="info_box">
-            <div>{{ t('trade.ai_opening_time_zone') }}</div>
-            <div class="amount">{{ currItem.time }}{{ currItem.unit }}</div>
-          </div>
-          <div class="info_box info_box--line">
-            <div>{{ t('trade.ai_opening_network_amount') }}</div>
-            <div class="amount">
-              {{ currItem.lever }}
-            </div>
-          </div>
           <div class="info_box">
             <div>{{ t('trade.ai_opening_invest_amount') }}(USDT)</div>
             <div class="amount">
@@ -85,6 +87,18 @@
               {{ currItem.amountreturn }}
             </div>
           </div>
+
+          <div class="info_box">
+            <div>{{ t('trade.ai_opening_time_zone') }}</div>
+            <div class="amount">{{ currItem.time }}{{ currItem.unit }}</div>
+          </div>
+          <div class="info_box info_box--line">
+            <div>{{ t('trade.ai_opening_network_amount') }}</div>
+            <div class="amount">
+              {{ currItem.lever }}
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -485,9 +499,13 @@ defineExpose({
     position: relative;
     margin-top: 0.4rem;
 
+    &:nth-child(1) {
+      margin-top: 0;
+    }
+
     .amount {
       line-height: 0.44rem;
-      
+
       color: var(--ex-text-color);
       font-size: 0.3rem;
     }
