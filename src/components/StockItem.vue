@@ -96,7 +96,7 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
 import SparkLine from "./SparkLine.vue";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch } from "vue";
 import router from "@/router";
 import { SwipeCell } from "vant";
 import store from "@/store";
@@ -267,7 +267,7 @@ const removeStock = (item) => {
   height: 1.62rem;
   padding: 0 0.3rem;
   position: relative;
-  background-color: var(--ex-bg-color3);
+  background-color: var(--ex-bg-white2);
   border-radius: 0.4rem;
   margin-top: 0.2rem;
 

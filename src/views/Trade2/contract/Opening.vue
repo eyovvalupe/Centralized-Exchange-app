@@ -145,6 +145,7 @@ defineExpose({
         display: flex;
         align-items: center;
         justify-content: space-between;
+        color: var(--ex-placeholder-color);
       }
 
       .btns {

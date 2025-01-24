@@ -1,6 +1,6 @@
 <!-- ai交易元素 -->
 <template>
-  <div class="ai_item mask-btn" @click="clickItem">
+  <div class="ai_item " @click="clickItem">
     <div class="top">
       <div class="tl">
         <div class="name">{{ item.name }}</div>
@@ -16,23 +16,9 @@
           </div>
         </div>
       </div>
-      <div class="tr">
-        <div
-          class="px-[0.24rem] text-center min-w-[1.4rem] h-[0.72rem] leading-[0.72rem] text-[0.3rem] text-black bg-white rounded-[0.6rem] font-[600]">
-          {{ t('trade.ai_opening_trade') }}</div>
-      </div>
-    </div>
-    <div class="content">
-      <div class="mid">
-        <div class="ml">
-          <div class="ml-title">{{ t("trade.order_info_profit") }}(USDT)</div>
-          <div class="ml-val" :class="[item.income > 0 ? 'up' : 'down']">
-            {{ item.income }}
-          </div>
-        </div>
-        <div class="mr">
-          <div class="time-title">{{ t("trade.ai_opening_perform_time") }}</div>
-          <div class="time">
+      <div class="tr" style="text-align: right;">
+        <div class="time-title" style="color: var(--ex-placeholder-color);">{{ t("trade.ai_opening_perform_time") }}</div>
+          <div class="time" style="margin-top: 0.2rem;">
             {{
               formatSec(item.runtime)[0] +
               t("common.day") +
@@ -44,6 +30,19 @@
               t("common.min")
             }}
           </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="mid">
+        <div class="ml">
+          <div class="ml-title">{{ t("trade.order_info_profit") }}(USDT)</div>
+          <div class="ml-val" :class="[item.income > 0 ? 'up' : 'down']">
+            {{ item.income }}
+          </div>
+        </div>
+        <div class="mr">
+          <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
+          :ratio="props.item.ratio" />
         </div>
       </div>
       <div class="bot">
@@ -70,6 +69,8 @@
       </div>
     </div>
 
+    <div class="ripple-btn submit">{{ t('trade.ai_opening_trade') }}</div>
+
      <!-- 交易弹窗 -->
      <Popup class="trade-popup" teleport="body" v-model:show="showDialog" :title="''" position="bottom" close-on-popstate  >
       <div style="padding: 1.14rem 0.32rem 0 0.32rem">
@@ -94,6 +95,7 @@ import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { Popup, Icon } from "vant"
 import Opening from "@/views/Trade2/ai/Opening.vue"
+import SparkLine from "@/components/SparkLine.vue";
 
 
 const { t } = useI18n();
@@ -183,11 +185,25 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  background: var(--ex-bg-color2);
-  margin-bottom: 0.2rem;
+  background: var(--ex-bg-white2);
+  margin-bottom: 0.72rem;
   padding: 0 0.12rem 0.12rem 0.12rem;
-
-  
+  position: relative;
+  .submit {
+    height: 0.72rem;
+    width: 5.14rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--ex-primary-color);
+    color: var(--ex-white);
+    font-family: 0.3rem;
+    position: absolute;
+    bottom: -0.36rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 
   .top {
     padding: 0.24rem;
@@ -240,7 +256,7 @@ const formatSec = (seconds, t) => {
 
   .content {
     border-radius: 0.32rem;
-    background: var(--ex-bg-color7);
+    background: var(--ex-bg-color);
   }
 
   .mid {

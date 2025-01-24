@@ -224,28 +224,29 @@
     </div>
     <div class="stock_submit_box">
 
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-white2);padding:0.12rem;margin-bottom: 0.32rem;">
+      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-white1);padding:0.12rem;margin-bottom: 0.32rem;">
         <!-- 股票 -->
         <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
-          <div style="font-size: 0.32rem;margin-bottom: 0.1rem;">
-            {{ t("trade.contract_opening_contract") }}
-          </div>
-          <div style="color: var(--ex-text-color3); font-size: 0.24rem">
-            {{ currStock.name }}
+          <div style="font-size: 0.32rem;margin-bottom: 0.1rem;display: flex;align-items: center;justify-content: flex-start;">
+            <div style="width: 0.4rem;height: 0.4rem;margin-right: 0.16rem;" v-if="currStock.name && currStock.name.replace('/USDT', '')">
+              <img v-lazy="getStaticImgUrl(
+                `/static/img/crypto/${currStock.name.replace('/USDT', '').toUpperCase()}.svg`
+              )
+                " />
+            </div>
+            <span>{{ currStock.name }}</span>
           </div>
         </div>
 
-        <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color);padding: 0 0.28rem">
-          <!-- <div class="item">
-            <div class="item_name">{{ t("trade.contract_opening_contract") }}</div>
-            <div class="item_val">
-              <div style="line-height: 0.36rem">
-                <div style="text-align: right; font-size: 0.3rem">
-                  {{ currStock.name }}
-                </div>
-              </div>
+        <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0 0.28rem">
+          <div class="item">
+            <div class="item_name">
+              {{ t("trade.contract_opening_order_value") }}
             </div>
-          </div> -->
+            <div class="item_val">
+              {{ orderAmount }}
+            </div>
+          </div>
           <div class="item">
             <div class="item_name">{{ t("trade.stock_open") }}</div>
             <div class="item_val">
@@ -302,16 +303,10 @@
             </div>
           </div>
 
-          <div class="item">
-            <div class="item_name">
-              {{ t("trade.contract_opening_order_value") }}
-            </div>
-            <div class="item_val">
-              {{ orderAmount }}
-            </div>
-          </div>
+          
         </div>
 
+        
         <div class="money_box">
           <div class="amount">
             {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
@@ -324,10 +319,9 @@
 
       </div>
 
+      <div style="width: calc(100% + 1.2rem);height: 0.02rem;background-color: var(--ex-bg-white2);margin-bottom: 0.32rem;position: relative;left: -0.6rem;"></div>
 
 
-
-      <!-- <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div> -->
       <div class="item pass_ipt">
         <input style="width: 100%; height: 100%" v-model="safePass"
           :placeholder="t('trade.stock_opening_trade_pw_placeholder')" :type="showPassword ? 'text' : 'password'"
@@ -539,14 +533,13 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
 import {
-  Loading,
   Button,
   showToast,
   Popup,
   ActionSheet,
   Picker,
 } from "vant";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed } from "vue";
 import { _futures, _basic, _futuresPara, _futuresBuy } from "@/api/api";
 import store from "@/store";
 import Decimal from "decimal.js";
@@ -1618,7 +1611,7 @@ defineExpose({
 
       .tag {
         height: 0.44rem;
-        color: var(--ex-primary-color);
+        color: var(--ex-white);
         background-color: var(--ex-bg-color3);
         line-height: 0.44rem;
         padding: 0 0.3rem;
@@ -1679,32 +1672,13 @@ defineExpose({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-bg-color);
+    background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
     height: 1.4rem;
     text-align: center;
     margin-top: 0.2rem;
     position: relative;
 
-    &::after {
-      width: 0.16rem;
-      height: 0.34rem;
-      content: "";
-      background-color: var(--ex-bg-color);
-      position: absolute;
-      top: -0.28rem;
-      right: 1.1rem;
-    }
-
-    &::before {
-      width: 0.16rem;
-      height: 0.34rem;
-      content: "";
-      background-color: var(--ex-bg-color);
-      position: absolute;
-      top: -0.28rem;
-      left: 1.1rem;
-    }
 
     .amount {
       color: var(--ex-text-color2);

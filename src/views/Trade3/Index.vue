@@ -1,7 +1,7 @@
 <template>
     <div class="page-trade3">
         
-       <div class="search-bg">
+       <div class="max-width search-bg">
             <div class="search-box item">
                 <div class="search-icon" >
                     <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
@@ -63,7 +63,8 @@ onDeactivated(() => {
     .search-bg {
         position: fixed;
         top: 0;
-        left: 0;
+        left: 50%;
+        transform: translateX(-50%);
         width: 100%;
         height: 1.34rem;
         padding: 0.16rem 0.32rem 0 0.32rem;
