@@ -3,36 +3,28 @@
     <div class="follow_dialog">
         <div class="form">
             <!-- 数量 -->
-            <div class="item_box">
-                <div class="item_box_right">
-                    <FormItem :hasBot="true" :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
-                        :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-                        @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
-                        :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
-                        <template #bottom-con>
-                            <div @click="openConfirmBox"
-                                style="display: flex;align-items: center;justify-content: space-between;padding: 0 0.08rem 0 0.24rem">
-                                <div style="font-size: 0.24rem;color:var(--ex-white);">{{ t('assets.wallet_cash_value') }}</div>
-                                <div
-                                    style="color: var(--ex-white); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
-                                    <span>{{ t("assets.wallet_available_sim") }}</span>
-                                    <span style="color: var(--ex-primary-color);margin:0 0.08rem">{{
-                                        stockWalletAmount || '--' }} </span>
-                                    <span>USDT</span>
-                                </div>
-                            </div>
-                        </template>
-                        <template #scroll>
-                            <!-- 拖动 -->
-                            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-                        </template>
-                    </FormItem>
-                </div>
-            </div>
+            <!-- <FormItem :hasBot="true" :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
+                :max="maxStockNum" v-model="amount">
+                <FormItem :hasBot="true" :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
+                :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
+                @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
+                :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
+                
+            </FormItem> -->
+            <FormItem :hasScroll="true" :btnText="'USDT'" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
+            :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
+            @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
+            :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number"
+            >
+                <template #scroll>
+                    <!-- 拖动 -->
+                    <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                </template>
+            </FormItem>
             <div class="line"></div>
             <div class="item pass_ipt">
-                <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')" :type="showPassword ? 'text' : 'password'"
-                    class="ipt" />
+                <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
+                    :type="showPassword ? 'text' : 'password'" class="ipt" />
                 <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
                     @click="showPassword = true" alt="off" />
                 <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
@@ -41,7 +33,8 @@
         </div>
 
         <div class="btns btns2">
-            <Button :loading="plusLoading" class="btn btn2 btn3 ripple-btn" @click="submitPlus">{{ $t('copy.copy_order_cancel_confirm') }}</Button>
+            <Button :loading="plusLoading" class="btn btn2 btn3 ripple-btn" @click="submitPlus">{{
+                $t('copy.copy_order_cancel_confirm') }}</Button>
         </div>
     </div>
 </template>
@@ -61,12 +54,12 @@ const emits = defineEmits(['success'])
 const { t } = useI18n();
 const props = defineProps({
     mode: { // follow=跟单 plus=追加
-        type: String, 
+        type: String,
         default: 'follow'
     },
     item: {
         type: Object,
-        default: () => {}
+        default: () => { }
     }
 })
 
@@ -125,7 +118,7 @@ const changePercent = val => {
     if (!stockWalletAmount.value || !val) return sliderValue.value = 0
     sliderValue.value = new Decimal(val).mul(100).div(stockWalletAmount.value).ceil()
     if (sliderValue.value > 100) sliderValue.value = 100
-    if (sliderValue.value < 0 ) sliderValue.value = 0
+    if (sliderValue.value < 0) sliderValue.value = 0
     sliderValue.value = Number(sliderValue.value)
 }
 
