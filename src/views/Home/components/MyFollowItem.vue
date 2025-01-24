@@ -1,69 +1,132 @@
 <!-- 我的跟单元素 -->
 <template>
-    <div class="myfollow-item" v-if="!isEmpty(item)">
-        <div class="title-box" @click="goInfo">
-            <div class="left">
-                <div class="top">
-                    <div class="avatar overflow-hidden">
-                        <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar || 1}.png`)" alt="" />
+    <div class="flex flex-col">
+        <div class="myfollow-item mb-[0.6rem]" v-if="!isEmpty(item)">
+            <div class="title-box" @click="goInfo">
+                <div class="left">
+                    <div class="top">
+                        <div class="avatar overflow-hidden">
+                            <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar || 1}.png`)" alt="" />
+                        </div>
+                        <div class="name">{{ props.item.name }}</div>
+                        <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
                     </div>
-                    <div class="name">{{ props.item.name }}</div>
-                    <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
+                    <div class="bottom">
+                        <div class="bottom-info">
+                            <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
+                            <div>{{ props.item.followers }}</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bottom">
-                    <div class="bottom-info">
-                        <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
-                        <div>{{ props.item.followers }}</div>
+                <div class="btn" v-if="!props.showDetail">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                </div>
+                <div class="status" v-if="props.showDetail">{{ $t('copy.copy_order_detail_on') }}</div>
+            </div>
+
+            <div class="info-flex">
+                <div class="info-item">
+                    <div class="name">{{ $t('finance.portfolio_revenue') }}</div>
+                    <div class="val">{{ props.item.returnamount }}</div>
+                </div>
+                <div class="info-item" style="text-align: right;">
+                    <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
+                    <div class="val" @click="plus">
+                        <span>{{ props.item.amount }}</span>
                     </div>
                 </div>
             </div>
-            <div class="btn" v-if="!props.showDetail">
-                <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
-            </div>
-            <div class="status" v-if="props.showDetail">{{ $t('copy.copy_order_detail_on') }}</div>
-        </div>
-
-        <div class="info-flex">
-            <div class="info-item">
-                <div class="name">{{ $t('finance.portfolio_revenue') }}</div>
-                <div class="val">{{ props.item.returnamount }}</div>
-            </div>
-            <div class="info-item" style="text-align: right;">
-                <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
-                <div class="val" @click="plus">
-                    <span>{{ props.item.amount }}</span>
+            <div class="info-box">
+                <div class="info-item">
+                    <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
+                    <div class="val up">{{ props.item.today || '--' }}</div>
                 </div>
             </div>
-        </div>
-        <div class="info-box">
-            <div class="info-item">
-                <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
-                <div class="val up">{{ props.item.today || '--' }}</div>
-            </div>
-        </div>
-        
-        <div class="info-box" v-if="props.showDetail" style="margin-top: 0.12rem;">
-            <div class="info-item">
-                <div class="name">{{ $t('copy.copy_order_detail_duration') }}</div>
-                <div class="val up">--</div>
-            </div>
-        </div>
 
-        <div class="btns">
-            <div class="btn cancel ripple-primary" @click="cancel">{{ $t('copy.copy_order_detail_cancel') }}</div>
-            <div class="btn add ripple-btn" @click="plus">{{ $t('copy.copy_order_detail_confirm') }}</div>
+            <div class="info-box" v-if="props.showDetail" style="margin-top: 0.12rem;">
+                <div class="info-item">
+                    <div class="name">{{ $t('copy.copy_order_detail_duration') }}</div>
+                    <div class="val up">--</div>
+                </div>
+            </div>
+
+            <div class="btns">
+                <div class="btn cancel ripple-primary" @click="cancel">{{ $t('copy.copy_order_detail_cancel') }}</div>
+                <div class="btn add ripple-btn" @click="plus">{{ $t('copy.copy_order_detail_confirm') }}</div>
+            </div>
+        </div>
+        <div v-if="showDetail">
+            <Tabs type="custom-line-small" @change="onChange" v-model="activeTab" :swipeable="false" animated>
+                <Tab :title="'当前订单'" :name="'0'">
+                    <div class="px-[0.1rem] w-full pt-[0.28rem] flex flex-col">
+                        <div class="w-full h-[1.5rem] rounded-[0.32rem] mb-[0.2rem] items-center px-[0.4rem] flex justify-between"
+                            v-for="(item, i) in [1, 2]" style="background-color: var(--ex-bg-white);">
+                            <div class="flex items-center">
+                                <div class="w-[0.8rem] h-[0.8rem] mr-[0.2rem]">
+                                    <img v-lazy="getStaticImgUrl('static/img/follow/bot.svg')" alt="" />
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-[0.3rem] font-semibold text-color">BTC/USDT</div>
+                                    <div class="text-[0.28rem] text-color2">asdfasdf</div>
+                                </div>
+                            </div>
+                            <div class="flex">
+                                <div
+                                    class="w-[0.6rem] h-[0.6rem] rounded-[0.12rem] bg-time-red border-[0.02rem] flex items-center justify-center pt-[0.02rem] status-count">
+                                    <span class="text-[0.32rem] font-semibold">14</span>
+                                </div>
+                                <div class="h-[0.6rem] flex items-center pt-[0.02rem] text-[0.32rem] font-semibold" style="color: var(--ex-status-color9);">
+                                    &nbsp;:&nbsp;</div>
+                                <div
+                                    class="w-[0.6rem] h-[0.6rem] rounded-[0.12rem] bg-time-red border-[0.02rem] flex items-center justify-center pt-[0.02rem] status-count">
+                                    <span class="text-[0.32rem] font-semibold">30</span>
+                                </div>
+                                <div class="h-[0.6rem] flex items-center pt-[0.02rem] text-[0.32rem] font-semibold" style="color: var(--ex-status-color9);">
+                                    &nbsp;:&nbsp;</div>
+                                <div
+                                    class="w-[0.6rem] h-[0.6rem] rounded-[0.12rem] bg-time-red border-[0.02rem] flex items-center justify-center pt-[0.02rem] status-count">
+                                    <span class="text-[0.32rem] font-semibold">20</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Tab>
+                <Tab :title="'历史订单'" :name="'1'">
+                    <div class="px-[0.1rem] w-full pt-[0.28rem] flex flex-col">
+                        <div class="w-full h-[1.5rem] rounded-[0.32rem] mb-[0.2rem] items-center px-[0.4rem] flex justify-between"
+                            v-for="(item, i) in [1, 2]" style="background-color: var(--ex-bg-white);">
+                            <div class="flex items-center">
+                                <div class="w-[0.8rem] h-[0.8rem] mr-[0.2rem]">
+                                    <img v-lazy="getStaticImgUrl('static/img/follow/bot.svg')" alt="" />
+                                </div>
+                                <div class="flex flex-col">
+                                    <div class="text-[0.3rem] font-semibold text-color">BTC/USDT</div>
+                                    <div class="text-[0.28rem] text-color2">asdfasdf</div>
+                                </div>
+                            </div>
+                            <div class="flex flex-col justify-center">
+                               <div class="text-[0.32rem] font-semibold text-end" :class="true ? 'text-up' : 'text-down'">+8888</div>
+                               <div class="text-[0.28rem] text-color2 text-end">06-03 00:58:26</div>
+                            </div>
+                        </div>
+                    </div>
+                </Tab>
+            </Tabs>
         </div>
     </div>
 
 
     <!-- 取消跟单 -->
-    <BottomPopup v-model:show="showCancel" :title="$t('copy.copy_order_detail_cancel')" position="bottom" round closeable teleport="body">
+    <BottomPopup v-model:show="showCancel" :title="$t('copy.copy_order_detail_cancel')" position="bottom" round
+        closeable teleport="body">
         <div class="follow_dialog pb-[0.6rem]">
             <div class="w-full flex justify-center mb-[0.6rem] mt-[0.6rem]">{{ $t('copy.copy_order_cancel_con') }}</div>
 
             <div class="w-full flex gap-[0.3rem] justify-center">
-                <div class="w-[3rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black text-[0.28rem] font-semibold flex justify-center items-center ripple-primary" @click="showCancel = false">{{ $t('copy.copy_order_cancel_cancel') }}</div>
-                <div class="w-[3rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-white text-[0.28rem] font-semibold flex justify-center items-center ripple-btn" @click="openCancelPass">{{ $t('copy.copy_order_cancel_confirm') }}</div>
+                <div class="w-[3rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black text-[0.28rem] font-semibold flex justify-center items-center ripple-primary"
+                    @click="showCancel = false">{{ $t('copy.copy_order_cancel_cancel') }}</div>
+                <div class="w-[3rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-white text-[0.28rem] font-semibold flex justify-center items-center ripple-btn"
+                    @click="openCancelPass">{{ $t('copy.copy_order_cancel_confirm') }}</div>
             </div>
         </div>
     </BottomPopup>
@@ -71,11 +134,12 @@
     <SafePassword @submit="submitCancel" ref="safeRef" :key="'cancel'"></SafePassword>
 
     <!-- 追加弹窗 -->
-    <BottomPopup v-model:show="showPlus" :title="$t('copy.copy_order_detail_confirm')" position="bottom" round closeable teleport="body">
-        <FollowSubmit :mode="'plus'" :item="item"/>
+    <BottomPopup v-model:show="showPlus" :title="$t('copy.copy_order_detail_confirm')" position="bottom" round closeable
+        teleport="body">
+        <FollowSubmit :mode="'plus'" :item="item" @success="success" />
     </BottomPopup>
 
-   
+
 </template>
 
 <script setup>
@@ -84,12 +148,14 @@ import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
 import { _copyCancel, _copyAdd } from "@/api/api"
 import store from "@/store";
-import { showToast } from "vant"
+import { showToast, Tabs, Tab } from "vant"
 import SafePassword from "@/components/SafePassword.vue";
 import FollowSubmit from "./FollowSubmit.vue"
 import { isEmpty } from "@/utils/isEmpty";
+import { computed } from "vue";
 
 const emits = defineEmits(['openInfo', 'plus', 'cancel'])
+const myFollowList = computed(() => store.state.myCopy)
 
 const safeRef = ref()
 
@@ -109,7 +175,14 @@ const props = defineProps({
     }
 })
 
+const activeTab = ref(0)
+const onChange = () => {
 
+}
+
+const success = () => {
+    showPlus.value = false
+}
 
 // 取消订单
 const showCancel = ref(false)
@@ -135,6 +208,7 @@ const submitCancel = safeword => {
                 }).then(() => {
                     showToast('已撤单')
                     store.dispatch("updateMyFollowList")
+                    store.dispatch('updateMyCopyData')
                     emits('cancel', {})
                 }).finally(() => {
                     cancelLoading.value = false
@@ -170,7 +244,7 @@ const goInfo = () => {
 <style lang="less">
 .myfollow-item {
     width: 100%;
-    height: 100%;
+    // height: 100%;
     border-radius: 0.32rem;
     background: var(--ex-bg-color3);
     flex-shrink: 0;
@@ -183,7 +257,7 @@ const goInfo = () => {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        
+
 
         .left {
             flex: 1;
@@ -261,6 +335,7 @@ const goInfo = () => {
             width: 0.48rem;
             height: 0.48rem;
         }
+
         .status {
             position: absolute;
             top: 0;
@@ -355,5 +430,4 @@ const goInfo = () => {
 
 
 }
-
 </style>

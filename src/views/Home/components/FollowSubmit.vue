@@ -105,7 +105,6 @@ const submitPlus = () => {
                     follow: _copyApply,
                     plus: _copyAdd
                 }
-                console.log("check item before add copy =========> ", props.item)
                 reqs[props.mode]({
                     id: props.item.id,
                     token: token,
@@ -115,6 +114,7 @@ const submitPlus = () => {
                     showToast(t('safety.success_title'))
                     emits('success', {})
                     store.dispatch('updateMyFollowList')
+                    store.dispatch('updateMyCopyData')
                 }).finally(() => {
                     plusLoading.value = false
                     store.dispatch('updateSessionToken')

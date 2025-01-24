@@ -51,7 +51,7 @@
                         :style="typeChange == 'future' ? '' : 'background-color: var(--ex-bg-white2)'">合约</div>
                 </div>
                 <div class="list-i" v-for="(item, i) in myFollowList" :key="i">
-                    <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="true" />
+                    <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="false" />
                 </div>
                 <NoData v-if="!myFollowList.length" />
             </template>

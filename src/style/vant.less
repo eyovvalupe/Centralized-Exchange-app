@@ -405,6 +405,44 @@ body .van-dialog {
     }
 }
 
+.van-tabs--custom-line-small {
+    >.van-tabs__wrap {
+        border-bottom: 0.02rem solid var(--ex-border-color4);
+        .van-tabs__nav {
+            height: 0.7rem;
+            width: 3.4rem;
+            position: relative;
+
+            .van-tab {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                transition: all ease-in .2s;
+            }
+
+            .van-tab--active {
+                position: relative;
+
+                &::after {
+                    content: "";
+                    width: 0.4rem;
+                    height: 0.06rem;
+                    border-radius: 0.2rem;
+                    background-color: var(--ex-white);
+                    position: absolute;
+                    bottom: -0.01rem;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    z-index: 2;
+                }
+            }
+        }
+
+
+    }
+}
+
 .van-tabs--custom-scroll-card {
 
     >.van-tabs__wrap {
