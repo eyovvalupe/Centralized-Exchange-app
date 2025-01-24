@@ -5,7 +5,7 @@
                 <PledgeForm />
             </Tab>
             <Tab class="mb-[1.2rem]" :title="$t('finance.defi_borrow_order')">
-                <PledgeOrder />
+                <!-- <PledgeOrder /> -->
             </Tab>
         </Tabs>
     </div>
