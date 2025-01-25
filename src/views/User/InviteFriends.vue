@@ -5,7 +5,7 @@
       @change="changeActiveTab(activeTab, true)">
       <template #before>
         <div class="back" @click="back()">
-          <div class="w-[0.28rem] h-[0.28rem]">
+          <div class="w-[0.4rem] h-[0.4rem]">
             <img v-lazy="getStaticImgUrl('/static/img/user/back.svg')" />
           </div>
         </div>
@@ -130,7 +130,7 @@ const activeTab = ref(0);
 const initialSwipe = ref(activeTab.value);
 const inviteCode = computed(() => store.state.userInfo.uid);
 const moneyTextArr = ref(['1', '0', '0', '0', '0']);
-QRCode.toDataURL(`${MOBILE_INVITE_URL}?invitcode=${userInfo.value.uid}`).then((url) => {
+QRCode.toDataURL(`${MOBILE_INVITE_URL}?inviteCode=${userInfo.value.uid}`).then((url) => {
   codeUrl.value = url;
 });
 
@@ -169,7 +169,7 @@ const list = ref([
     amount: 2000,
   },
 ]);
-const url = ref(`${MOBILE_INVITE_URL}?invitCode=${userInfo.value.uid}`);
+const url = ref(`${MOBILE_INVITE_URL}?inviteCode=${userInfo.value.uid}`);
 const swipeChange = (val) => {
   activeTab.value = val;
 };

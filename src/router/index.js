@@ -791,7 +791,9 @@ router.beforeEach((to, from) => {
   if (from.name == 'google' && to.name == 'safety') {
     store.commit('setTransitionName', 'slide-left')
   }
-
+  if (to.query.inviteCode && to.path === '/') {
+    return { path: '/register', query: { inviteCode: to.query.inviteCode } }
+  }
   store.commit('setTransitionName', '')
   // if ((from.meta.pageType == "tab" && to.meta.pageType == "tab") || (from.meta.pageType != "tab" && to.meta.pageType != "tab")) {
   //   if (to.meta.index > from.meta.index) {

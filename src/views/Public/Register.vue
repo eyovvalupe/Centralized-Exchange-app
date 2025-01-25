@@ -1,6 +1,6 @@
 <!-- 注册页 -->
 <template>
-  <div class="page page-register" v-if="openPage">
+  <div class="page page-register">
     <!-- 图片验证 -->
     <template v-if="step == 1">
       <ImgCheck @success="next" @goBack="goBack" :loadingRegister="loading" />
@@ -255,7 +255,7 @@ const form = ref({
   username: "",
   password: "",
   guest: guest.value ? "true" : "false",
-  invateCode: "",
+  invateCode: route.query.inviteCode || '',
   safeword: "",
   // safeword2: ''
 });
@@ -278,6 +278,7 @@ const next = () => {
     loadingType: "circular",
   });
   if (guest.value == "guest") {
+
     _guestRegister({
       verifcode: verifcode.value,
       token: sessionToken.value,
@@ -482,25 +483,8 @@ const scrollCountryCode = () => {
   scrollRef.value.scrollTop = scrollRef.value.scrollTop + 100;
 };
 
-const openPage = ref(false)
-
 onMounted(() => {
-  if (Object.keys(route.query).length && route.query.invitCode) {
-    form.value.invateCode = route.query.invitCode;
-    setTimeout(() => {
-      openPage.value = true;
-      next();
-    }, 500);
-  }
-  else if (Object.keys(route.query).length && route.query.guest) {
-    step.value = 1;
-    openPage.value = true
-  } else if (Object.keys(route.query).length && !route.query.invitCode) {
-    router.replace({ name: 'home' })
-    setTimeout(() => {
-      openPage.value = true;
-    }, 500);
-  } else openPage.value = true;
+  if (route.query.inviteCode) next()
 });
 </script>
 
