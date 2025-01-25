@@ -1,800 +1,827 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import store from '@/store'
-import Home from '../views/Home/Home.vue'
+import { createRouter, createWebHashHistory } from "vue-router";
+import store from "@/store";
+import Home from "../views/Home/Home.vue";
+import { DESKTOP_INVITE_URL } from "@/config";
 
 const routes = [
   {
     // 首页
-    path: '/',
-    name: 'home',
+    path: "/",
+    name: "home",
     component: Home,
     meta: {
       keepAlive: true,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // 跟单广场
-    path: '/follow',
-    name: 'follow',
-    component: () => import('../views/Home/Follow/Index.vue'),
+    path: "/follow",
+    name: "follow",
+    component: () => import("../views/Home/Follow/Index.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 我的跟单
-    path: '/myfollow',
-    name: 'myfollow',
-    component: () => import('../views/Home/Follow/MyFollow.vue'),
+    path: "/myfollow",
+    name: "myfollow",
+    component: () => import("../views/Home/Follow/MyFollow.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 跟单详情
-    path: '/followDetail',
-    name: 'followDetail',
-    component: () => import('../views/Home/Follow/FollowDetail.vue'),
+    path: "/followDetail",
+    name: "followDetail",
+    component: () => import("../views/Home/Follow/FollowDetail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 跟单订单详情
-    path: '/followInfo',
-    name: 'followInfo',
-    component: () => import('../views/Home/Follow/FollowInfo.vue'),
+    path: "/followInfo",
+    name: "followInfo",
+    component: () => import("../views/Home/Follow/FollowInfo.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 3,
     },
   },
   {
     // 用户
-    path: '/user',
-    name: 'user',
-    component: () => import('../views/User/NewUser.vue'),
+    path: "/user",
+    name: "user",
+    component: () => import("../views/User/NewUser.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // 安全
-    path: '/safety',
-    name: 'safety',
-    component: () => import('../views/User/Safety.vue'),
+    path: "/safety",
+    name: "safety",
+    component: () => import("../views/User/Safety.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 修改登录密码
-    path: '/password',
-    name: 'password',
-    component: () => import('../views/User/LoginPassword.vue'),
+    path: "/password",
+    name: "password",
+    component: () => import("../views/User/LoginPassword.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 修改交易密码
-    path: '/fund',
-    name: 'fund',
-    component: () => import('../views/User/FundPassword.vue'),
+    path: "/fund",
+    name: "fund",
+    component: () => import("../views/User/FundPassword.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 操作成功
-    path: '/success',
-    name: 'success',
-    component: () => import('../views/User/Success.vue'),
+    path: "/success",
+    name: "success",
+    component: () => import("../views/User/Success.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 谷歌验证码绑定
-    path: '/google',
-    name: 'google',
-    component: () => import('../views/User/Google/Google.vue'),
+    path: "/google",
+    name: "google",
+    component: () => import("../views/User/Google/Google.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 谷歌验证码 - 已绑定
-    path: '/googleCode',
-    name: 'googleCode',
-    component: () => import('../views/User/Google/GoogleCode.vue'),
+    path: "/googleCode",
+    name: "googleCode",
+    component: () => import("../views/User/Google/GoogleCode.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 用户认证
-    path: '/kyc',
-    name: 'kyc',
-    component: () => import('../views/User/Kyc/Index.vue'),
+    path: "/kyc",
+    name: "kyc",
+    component: () => import("../views/User/Kyc/Index.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 提交成功
-    path: '/submit',
-    name: 'submit',
-    component: () => import('../views/User/Kyc/Submit.vue'),
+    path: "/submit",
+    name: "submit",
+    component: () => import("../views/User/Kyc/Submit.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 认证成功
-    path: '/kycSuccess',
-    name: 'kycSuccess',
-    component: () => import('../views/User/Kyc/KycSuccess.vue'),
+    path: "/kycSuccess",
+    name: "kycSuccess",
+    component: () => import("../views/User/Kyc/KycSuccess.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 收款账户
-    path: '/account',
-    name: 'account',
-    component: () => import('../views/User/Account/Account.vue'),
+    path: "/account",
+    name: "account",
+    component: () => import("../views/User/Account/Account.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 认证检测
-    path: '/check',
-    name: 'check',
-    component: () => import('../views/User/Account/Check.vue'),
+    path: "/check",
+    name: "check",
+    component: () => import("../views/User/Account/Check.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 添加银行卡
-    path: '/bank',
-    name: 'bank',
-    component: () => import('../views/User/Account/AddAccount.vue'),
+    path: "/bank",
+    name: "bank",
+    component: () => import("../views/User/Account/AddAccount.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 市场
-    path: '/market',
-    name: 'market',
-    component: () => import('../views/Market/Market.vue'),
+    path: "/market",
+    name: "market",
+    component: () => import("../views/Market/Market.vue"),
     meta: {
       keepAlive: true,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // 安全
-    path: '/deal',
-    name: 'deal',
-    component: () => import('../views/Market/buyCoin/Deal.vue'),
+    path: "/deal",
+    name: "deal",
+    component: () => import("../views/Market/buyCoin/Deal.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 买币-订单详情
-    path: '/orderDetails',
-    name: 'orderDetails',
-    component: () => import('../views/Market/buyCoin/OrderDetail.vue'),
+    path: "/orderDetails",
+    name: "orderDetails",
+    component: () => import("../views/Market/buyCoin/OrderDetail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 搜索
-    path: '/search',
-    name: 'search',
-    component: () => import('../views/Market/Search.vue'),
+    path: "/search",
+    name: "search",
+    component: () => import("../views/Market/Search.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 通知
-    path: '/notification',
-    name: 'notification',
-    component: () => import('../views/Notification/Index.vue'),
+    path: "/notification",
+    name: "notification",
+    component: () => import("../views/Notification/Index.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 通知详情
-    path: '/notification_detail',
-    name: 'notification_detail',
-    component: () => import('../views/Notification/Detail.vue'),
+    path: "/notification_detail",
+    name: "notification_detail",
+    component: () => import("../views/Notification/Detail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 市场详情
-    path: '/market_info',
-    name: 'market_info',
-    component: () => import('../views/Market/MarketInfo.vue'),
+    path: "/market_info",
+    name: "market_info",
+    component: () => import("../views/Market/MarketInfo.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 3,
     },
   },
   {
     // 产品详情
-    path: '/financial_info',
-    name: 'financial_info',
-    component: () => import('../views/Market/FinancialInfo.vue'),
+    path: "/financial_info",
+    name: "financial_info",
+    component: () => import("../views/Market/FinancialInfo.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
 
   {
     // 交易规则
-    path: '/trading_rules',
-    name: 'trading_rules',
-    component: () => import('../views/Market/TradingRules.vue'),
+    path: "/trading_rules",
+    name: "trading_rules",
+    component: () => import("../views/Market/TradingRules.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 登录
-    path: '/login',
-    name: 'login',
-    component: () => import('../views/Public/Login.vue'),
+    path: "/login",
+    name: "login",
+    component: () => import("../views/Public/Login.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'login',
+      pageType: "login",
     },
   },
   {
     // 忘记密码
-    path: '/fogot',
-    name: 'fogot',
-    component: () => import('../views/Public/Fogot.vue'),
+    path: "/fogot",
+    name: "fogot",
+    component: () => import("../views/Public/Fogot.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'login',
+      pageType: "login",
     },
   },
   {
     // 注册
-    path: '/register',
-    name: 'register',
-    component: () => import('../views/Public/Register.vue'),
+    path: "/register",
+    name: "register",
+    component: () => import("../views/Public/Register.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'login',
+      pageType: "login",
     },
   },
   {
     // 注册
-    path: '/safePassword',
-    name: 'safePassword',
-    component: () => import('../views/Public/SafePassword.vue'),
+    path: "/safePassword",
+    name: "safePassword",
+    component: () => import("../views/Public/SafePassword.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'login',
+      pageType: "login",
     },
   },
   {
     // 注册成功
-    path: '/registerSuccess',
-    name: 'registerSuccess',
-    component: () => import('../views/Public/RegisterSuccess.vue'),
+    path: "/registerSuccess",
+    name: "registerSuccess",
+    component: () => import("../views/Public/RegisterSuccess.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 2,
     },
   },
   {
     // 注册成功
-    path: '/registerSuccess2',
-    name: 'registerSuccess2',
-    component: () => import('../views/Public/RegisterSuccess2.vue'),
+    path: "/registerSuccess2",
+    name: "registerSuccess2",
+    component: () => import("../views/Public/RegisterSuccess2.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 语言
-    path: '/language',
-    name: 'language',
-    component: () => import('../views/Public/Language.vue'),
+    path: "/language",
+    name: "language",
+    component: () => import("../views/Public/Language.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 客服
-    path: '/chat',
-    name: 'chat',
-    component: () => import('../views/Chat/Index.vue'),
+    path: "/chat",
+    name: "chat",
+    component: () => import("../views/Chat/Index.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 交易
-    path: '/trade',
-    name: 'trade',
-    component: () => import('../views/Trade3/Index.vue'),
+    path: "/trade",
+    name: "trade",
+    component: () => import("../views/Trade3/Index.vue"),
     meta: {
       keepAlive: true,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // 交易订单
-    path: '/tradeOrder',
-    name: 'tradeOrder',
-    component: () => import('../views/Trade3/Order.vue'),
+    path: "/tradeOrder",
+    name: "tradeOrder",
+    component: () => import("../views/Trade3/Order.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 日期查询
-    path: '/date',
-    name: 'date',
-    component: () => import('../views/trade/Deta.vue'),
+    path: "/date",
+    name: "date",
+    component: () => import("../views/trade/Deta.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // IPO 详情
-    path: '/ipodetail',
-    name: 'ipodetail',
-    component: () => import('../views/trade/IPODetail.vue'),
+    path: "/ipodetail",
+    name: "ipodetail",
+    component: () => import("../views/trade/IPODetail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // 中签 IPO 详情
-    path: '/winningIPODetail',
-    name: 'winningIPODetail',
-    component: () => import('../views/trade/winningIPODetail.vue'),
+    path: "/winningIPODetail",
+    name: "winningIPODetail",
+    component: () => import("../views/trade/winningIPODetail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // 资产
-    path: '/assets',
-    name: 'assets',
-    component: () => import('../views/assets/Assets.vue'),
+    path: "/assets",
+    name: "assets",
+    component: () => import("../views/assets/Assets.vue"),
     meta: {
       keepAlive: true,
-      pageType: 'tab',
+      pageType: "tab",
     },
   },
   {
     // 划转
-    path: '/transfer',
-    name: 'transfer',
-    component: () => import('../views/assets/Transfer.vue'),
+    path: "/transfer",
+    name: "transfer",
+    component: () => import("../views/assets/Transfer.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 划转
-    path: '/transferRecord',
-    name: 'transferRecord',
-    component: () => import('../views/assets/TransferRecord.vue'),
+    path: "/transferRecord",
+    name: "transferRecord",
+    component: () => import("../views/assets/TransferRecord.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 兑换
-    path: '/swap',
-    name: 'swap',
-    component: () => import('../views/assets/Swap.vue'),
+    path: "/swap",
+    name: "swap",
+    component: () => import("../views/assets/Swap.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 兑换记录
-    path: '/swapRecord',
-    name: 'swapRecord',
-    component: () => import('../views/assets/SwapRecord.vue'),
+    path: "/swapRecord",
+    name: "swapRecord",
+    component: () => import("../views/assets/SwapRecord.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 借贷
-    path: '/loanList',
-    name: 'loanList',
-    component: () => import('../views/assets/LoanList.vue'),
+    path: "/loanList",
+    name: "loanList",
+    component: () => import("../views/assets/LoanList.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 借贷
-    path: '/loan',
-    name: 'loan',
-    component: () => import('../views/assets/Loan.vue'),
+    path: "/loan",
+    name: "loan",
+    component: () => import("../views/assets/Loan.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 提现
-    path: '/withdraw',
-    name: 'withdraw',
-    component: () => import('../views/assets/Withdraw.vue'),
+    path: "/withdraw",
+    name: "withdraw",
+    component: () => import("../views/assets/Withdraw.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 提现记录
-    path: '/withdrawRecord',
-    name: 'withdrawRecord',
-    component: () => import('../views/assets/WithdrawRecord.vue'),
+    path: "/withdrawRecord",
+    name: "withdrawRecord",
+    component: () => import("../views/assets/WithdrawRecord.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 提现详情
-    path: '/withdrawInfo',
-    name: 'withdrawInfo',
-    component: () => import('../views/assets/WithdrawRecordInfo.vue'),
+    path: "/withdrawInfo",
+    name: "withdrawInfo",
+    component: () => import("../views/assets/WithdrawRecordInfo.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 充值
-    path: '/topUp',
-    name: 'topUp',
-    component: () => import('../views/assets/TopUp.vue'),
+    path: "/topUp",
+    name: "topUp",
+    component: () => import("../views/assets/TopUp.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 充值-虚拟货币
-    path: '/topUpCrypto',
-    name: 'topUpCrypto',
-    component: () => import('../views/assets/TopUpCrypto.vue'),
+    path: "/topUpCrypto",
+    name: "topUpCrypto",
+    component: () => import("../views/assets/TopUpCrypto.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 充值中
-    path: '/recharging',
-    name: 'recharging',
-    component: () => import('../views/assets/Recharging.vue'),
+    path: "/recharging",
+    name: "recharging",
+    component: () => import("../views/assets/Recharging.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 充值详情
-    path: '/topUpItem',
-    name: 'topUpItem',
-    component: () => import('../views/assets/TopUpItem.vue'),
+    path: "/topUpItem",
+    name: "topUpItem",
+    component: () => import("../views/assets/TopUpItem.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 充值列表
-    path: '/topUpRecord',
-    name: 'topUpRecord',
-    component: () => import('../views/assets/TopUpRecord.vue'),
+    path: "/topUpRecord",
+    name: "topUpRecord",
+    component: () => import("../views/assets/TopUpRecord.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 充值详情
-    path: '/rechargeInfo',
-    name: 'rechargeInfo',
-    component: () => import('../views/assets/RechargeInfo.vue'),
+    path: "/rechargeInfo",
+    name: "rechargeInfo",
+    component: () => import("../views/assets/RechargeInfo.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 记录列表
-    path: '/recordList',
-    name: 'recordList',
-    component: () => import('../views/assets/RecordList.vue'),
+    path: "/recordList",
+    name: "recordList",
+    component: () => import("../views/assets/RecordList.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 认购
-    path: '/subscription',
-    name: 'subscription',
+    path: "/subscription",
+    name: "subscription",
     // component: () => import("../views/trade/Subscription.vue"),
-    component: () => import('../views/Market/IpoSubscription.vue'),
+    component: () => import("../views/Market/IpoSubscription.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
-    path: '/ipo/detail',
-    name: 'ipoDetail',
-    component: () => import('../views/Market/IpoDetail.vue'),
+    path: "/ipo/detail",
+    name: "ipoDetail",
+    component: () => import("../views/Market/IpoDetail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 3,
     },
   },
   {
-    path: '/ipo/orderDetail',
-    name: 'ipoOrderDetail',
-    component: () => import('../views/Market/IpoOrderDetail.vue'),
+    path: "/ipo/orderDetail",
+    name: "ipoOrderDetail",
+    component: () => import("../views/Market/IpoOrderDetail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 认购成功
-    path: '/subscriptionSuccess',
-    name: 'subscriptionSuccess',
-    component: () => import('../views/trade/components/Success.vue'),
+    path: "/subscriptionSuccess",
+    name: "subscriptionSuccess",
+    component: () => import("../views/trade/components/Success.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 关于
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/User/About.vue'),
+    path: "/about",
+    name: "about",
+    component: () => import("../views/User/About.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 充值
-    path: '/verification',
-    name: 'verification',
-    component: () => import('../views/assets/Verification.vue'),
+    path: "/verification",
+    name: "verification",
+    component: () => import("../views/assets/Verification.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
-    path:'/inviteFriends',
-    name: 'inviteFriends',
-    component: () => import('../views/User/InviteFriends.vue'),
+    path: "/inviteFriends",
+    name: "inviteFriends",
+    component: () => import("../views/User/InviteFriends.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
-    path: '/finance',
-    name: 'finance',
-    component: () => import('../views/Finance/Index.vue'),
+    path: "/inviteWaiting",
+    name: "inviteWaiting",
+    component: () => import("../views/User/InviteWaiting.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'tab'
-    },
-  },
-  {
-    path: '/stake',
-    name: 'stake',
-    component: () => import('../views/Finance/Trade.vue'),
-    meta: {
-      keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
-    path: '/pledge/orderDetail',
-    name: 'pledgeOrderDetail',
-    component: () => import('../views/Finance/PledgeOrderDetail.vue'),
+    path: "/finance",
+    name: "finance",
+    component: () => import("../views/Finance/Index.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "tab",
+    },
+  },
+  {
+    path: "/stake",
+    name: "stake",
+    component: () => import("../views/Finance/Trade.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
-    path: '/stakingOrderDetail',
-    name: 'stakingOrderDetail',
-    component: () => import('../views/Finance/StakingOrderDetail.vue'),
+    path: "/pledge/orderDetail",
+    name: "pledgeOrderDetail",
+    component: () => import("../views/Finance/PledgeOrderDetail.vue"),
     meta: {
       keepAlive: false,
-      pageType: 'child',
+      pageType: "child",
+      pageDeep: 1,
+    },
+  },
+  {
+    path: "/stakingOrderDetail",
+    name: "stakingOrderDetail",
+    component: () => import("../views/Finance/StakingOrderDetail.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: "child",
       pageDeep: 1,
     },
   },
   {
     // 找不到路由时
-    path: '/:pathMatch(.*)*',
-    redirect: '/',
+    path: "/:pathMatch(.*)*",
+    redirect: "/",
   },
- 
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(process.env.BASE_URL),
   routes,
-})
+});
 
 router.beforeEach((to, from) => {
-  if (from.meta.pageType == 'tab' && to.meta.pageType == 'child') {
-    store.commit('setTransitionName', 'slide-right')
-    return
+  if (from.meta.pageType == "tab" && to.meta.pageType == "child") {
+    store.commit("setTransitionName", "slide-right");
+    return;
   }
 
-  if (from.meta.pageType == 'child' && to.meta.pageType == 'tab') {
-    store.commit('setTransitionName', 'slide-left')
-    return
+  if (from.meta.pageType == "child" && to.meta.pageType == "tab") {
+    store.commit("setTransitionName", "slide-left");
+    return;
   }
 
-  if (from.meta.pageType == 'child' && to.meta.pageType == 'child') {
+  if (from.meta.pageType == "child" && to.meta.pageType == "child") {
     if (from.meta.pageDeep < to.meta.pageDeep) {
-      store.commit('setTransitionName', 'slide-right')
+      store.commit("setTransitionName", "slide-right");
     } else {
-      store.commit('setTransitionName', 'slide-left')
+      store.commit("setTransitionName", "slide-left");
     }
-    return
+    return;
   }
-  if (to.meta.pageType == 'login') {
-    store.commit('setTransitionName', 'slide-bottom')
-    return
+  if (to.meta.pageType == "login") {
+    store.commit("setTransitionName", "slide-bottom");
+    return;
   }
-  if (from.meta.pageType == 'login') {
-    store.commit('setTransitionName', 'slide-top')
-    return
+  if (from.meta.pageType == "login") {
+    store.commit("setTransitionName", "slide-top");
+    return;
   }
-  if (to.name == 'registerSuccess') {
-    store.commit('setTransitionName', 'slide-right')
+  if (to.name == "registerSuccess") {
+    store.commit("setTransitionName", "slide-right");
   }
-  if (from.name == 'registerSuccess') {
-    store.commit('setTransitionName', 'slide-left')
+  if (from.name == "registerSuccess") {
+    store.commit("setTransitionName", "slide-left");
   }
-  if (to.name == 'googleCode') {
-    store.commit('setTransitionName', 'slide-right')
+  if (to.name == "googleCode") {
+    store.commit("setTransitionName", "slide-right");
   }
-  if (from.name == 'googleCode') {
-    store.commit('setTransitionName', 'slide-left')
+  if (from.name == "googleCode") {
+    store.commit("setTransitionName", "slide-left");
   }
-  if (from.name == 'safety' && to.name == 'google') {
-    store.commit('setTransitionName', 'slide-right')
+  if (from.name == "safety" && to.name == "google") {
+    store.commit("setTransitionName", "slide-right");
   }
-  if (from.name == 'google' && to.name == 'safety') {
-    store.commit('setTransitionName', 'slide-left')
+  if (from.name == "google" && to.name == "safety") {
+    store.commit("setTransitionName", "slide-left");
   }
-  if (to.query.inviteCode && to.path === '/') {
-    return { path: '/register', query: { inviteCode: to.query.inviteCode } }
+  if (to.query.inviteCode && to.path === "/") {
+    const isBrowser =
+      typeof window != "undefined" && typeof window.document != "undefined";
+
+    const isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+
+    if (!isBrowser) {
+      window.location.href = "download-url";
+      return { path: "/inviteWaiting" };
+    } else if (!isMobile) {
+      window.location.href =
+        DESKTOP_INVITE_URL + `register?inviteCode=${to.query.inviteCode}`;
+      return { path: "/inviteWaiting" };
+    } else {
+      return { path: "/register", query: { inviteCode: to.query.inviteCode } };
+    }
   }
-  store.commit('setTransitionName', '')
+  store.commit("setTransitionName", "");
   // if ((from.meta.pageType == "tab" && to.meta.pageType == "tab") || (from.meta.pageType != "tab" && to.meta.pageType != "tab")) {
   //   if (to.meta.index > from.meta.index) {
   //     // 从右往左动画
@@ -806,6 +833,6 @@ router.beforeEach((to, from) => {
   //     transitionName.value = '';
   //   }
   // }
-})
+});
 
-export default router
+export default router;
