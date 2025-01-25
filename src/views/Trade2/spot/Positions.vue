@@ -667,7 +667,7 @@ getSessionToken();
     white-space: nowrap;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     line-height: 0.3rem;
 
     .name {
@@ -675,7 +675,6 @@ getSessionToken();
       color: var(--ex-text-color);
       font-weight: 600;
       line-height: 0.32rem;
-      margin-bottom: 0.28rem;
     }
 
     .lever {
