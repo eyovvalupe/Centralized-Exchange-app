@@ -52,10 +52,10 @@
                         :style="typeChange == 'future' ? '' : 'background-color: var(--ex-bg-white2)'">{{
                             $t('common.crypto') }}</div>
                 </div>
-                <div class="list-i" v-for="(item, i) in myFollowList" :key="i">
+                <div class="list-i" v-if="myFollowList.length" v-for="(item, i) in myFollowList" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="false" />
                 </div>
-                <NoData />
+                <NoData v-if="!myFollowList.length"/>
             </template>
         </div>
     </div>
