@@ -54,9 +54,8 @@
         </div>
       </div>
       <div class="stock-info">
-
         <div style="display: flex;align-items: center;">
-          <div style="width: 0.6rem;height: 0.6rem;margin-left: 0.16rem;"
+         <div style="width: 0.88rem;height: 0.88rem;margin-left: 0.2rem;"
             v-if="currItem.name && currItem.name.replace('/USDT', '')">
             <CryptoIcon :name="currItem.name.replace('/USDT', '').toUpperCase()" />
           </div>

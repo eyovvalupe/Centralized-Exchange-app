@@ -224,7 +224,7 @@
     </div>
     <div class="stock_submit_box">
 
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-white1);padding:0.12rem;margin-bottom: 0.32rem;">
+      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-white2);padding:0.12rem;margin-bottom: 0.32rem;">
         <!-- 股票 -->
         <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
           <div style="font-size: 0.32rem;margin-bottom: 0.1rem;display: flex;align-items: center;justify-content: flex-start;">
@@ -1580,7 +1580,7 @@ defineExpose({
 }
 
 .stock_submit_box {
-  padding: 0.2rem 0.6rem 0.6rem;
+  padding: 0.4rem 0.32rem 0.6rem 0.32rem;
 
   .item {
     display: flex;

@@ -587,7 +587,7 @@ export default {
     stock_position_cancel_con: "确认撤单吗？",
     stock_position_cancel_btn: "取消",
     stock_position_confirm_btn: "确认",
-    stock_position_status_none: "开仓",
+    stock_position_status_none: "委托中",
     stock_position_status_lock: "锁定",
     stock_position_status_open: "持仓",
     stock_position_status_done: "平仓",

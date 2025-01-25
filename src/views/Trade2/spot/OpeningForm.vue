@@ -230,7 +230,7 @@
     </div>
     <div class="stock_submit_box">
 
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding:0.12rem;margin-bottom: 0.32rem;">
+      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-white2);padding:0.12rem;margin-bottom: 0.32rem;">
         <!-- 股票 -->
         <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
           <div style="font-size: 0.32rem;margin-bottom: 0.1rem;">
@@ -241,7 +241,7 @@
           </div>
         </div>
 
-        <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color);padding: 0 0.28rem">
+        <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0 0.28rem">
           <div class="item">
             <div class="item_name">{{ t("trade.stock_open") }}</div>
             <div class="item_val">
@@ -1526,7 +1526,7 @@ defineExpose({
 }
 
 .stock_submit_box {
-  padding: 0.2rem 0.6rem 0.6rem;
+  padding: 0.4rem 0.32rem 0.6rem 0.32rem;
 
   .item {
     display: flex;
@@ -1594,7 +1594,7 @@ defineExpose({
     padding: 0.16rem 0.32rem;
     box-sizing: border-box;
     position: relative;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white1);
 
     img {
       width: 0.4rem;
@@ -1612,32 +1612,13 @@ defineExpose({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-bg-color);
+    background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
     height: 1.4rem;
     text-align: center;
     margin-top: 0.2rem;
     position: relative;
 
-    &::after {
-      width: 0.16rem;
-      height: 0.34rem;
-      content: "";
-      background-color: var(--ex-bg-color);
-      position: absolute;
-      top: -0.28rem;
-      right: 1.1rem;
-    }
-
-    &::before {
-      width: 0.16rem;
-      height: 0.34rem;
-      content: "";
-      background-color: var(--ex-bg-color);
-      position: absolute;
-      top: -0.28rem;
-      left: 1.1rem;
-    }
 
     .amount {
       color: var(--ex-text-color2);

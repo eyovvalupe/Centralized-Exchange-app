@@ -490,7 +490,7 @@ const copy = (text) => {
 }
 
 .order_info_box {
-  margin-top: 0.2rem;
+  margin-top: 0.12rem;
   padding: 0.2rem 0.28rem;
   border-radius: 0.32rem;
   background-color: var(--ex-bg-white2);
