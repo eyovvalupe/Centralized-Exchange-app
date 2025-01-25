@@ -1575,7 +1575,7 @@ defineExpose({
 
   .submit {
     margin-top: 0.2rem;
-    border-radius: 0.4rem;
+    border-radius: 1rem;
   }
 }
 

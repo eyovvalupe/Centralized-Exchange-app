@@ -1333,8 +1333,11 @@ defineExpose({
 }
 
 .form {
-  padding: 0.32rem 0;
-  position: relative;
+  padding: 0.28rem;
+    position: relative;
+    border-radius: 0.32rem;
+    background-color: var(--ex-bg-color3);
+    margin-top: 0.24rem;
 
   .subtitle {
     color: var(--ex-text-color);
@@ -1518,7 +1521,7 @@ defineExpose({
 
   .submit {
     margin-top: 0.2rem;
-    border-radius: 0.4rem;
+    border-radius: 1rem;
   }
 }
 
