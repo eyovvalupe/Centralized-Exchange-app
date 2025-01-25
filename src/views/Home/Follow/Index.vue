@@ -44,16 +44,18 @@
                     <div class="w-max px-[0.4rem] h-[0.78rem] rounded-[1rem] text-[0.3rem] font-semibold flex items-center justify-center"
                         :class="typeChange == 'option' ? 'bg-white text-black ripple-primary' : 'text-color2 ripple-btn'"
                         @click="typeChange = 'option'"
-                        :style="typeChange == 'option' ? '' : 'background-color: var(--ex-bg-white2)'">{{ $t('common.option') }}</div>
+                        :style="typeChange == 'option' ? '' : 'background-color: var(--ex-bg-white2)'">{{
+                            $t('common.option') }}</div>
                     <div class="w-max px-[0.4rem] h-[0.78rem] rounded-[1rem] text-[0.3rem] font-semibold flex items-center justify-center"
                         :class="typeChange == 'future' ? 'bg-white text-black ripple-primary' : 'text-color2 ripple-btn'"
                         @click="typeChange = 'future'"
-                        :style="typeChange == 'future' ? '' : 'background-color: var(--ex-bg-white2)'">{{ $t('common.crypto') }}</div>
+                        :style="typeChange == 'future' ? '' : 'background-color: var(--ex-bg-white2)'">{{
+                            $t('common.crypto') }}</div>
                 </div>
                 <div class="list-i" v-for="(item, i) in myFollowList" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="false" />
                 </div>
-                <NoData v-if="!myFollowList.length" />
+                <NoData />
             </template>
         </div>
     </div>
