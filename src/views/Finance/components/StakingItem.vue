@@ -13,7 +13,7 @@
                                 '-' + dataModify1(item.limits)[1]
                                 }}</div>
                             <div class="w-[0.24rem] h-[0.24rem]">
-                                <img v-lazy="getStaticImgUrl('static/img/crypto/USDT.svg')" alt="usdt" />
+                                <CryptoIcon :name="'USDT'" />
                             </div>
                         </div>
                     </div>
@@ -21,9 +21,8 @@
                     <div class="flex w-full bg-color py-[0.2rem] rounded-[0.32rem] mb-[0.12rem]">
                         <div class="flex flex-col px-[0.28rem] flex-1" v-for="(symbol, i) in item.items">
                             <div class="flex items-center mb-[0.1rem]">
-                                <div class="w-[0.4rem] h-[0.4rem] mr-[0.1rem]"><img
-                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${symbol.name.split('/')[0]}.svg`)"
-                                        alt="img" /></div>
+                                <div class="w-[0.4rem] h-[0.4rem] mr-[0.1rem]">
+                                    <CryptoIcon :name="symbol.name.split('/')[0]" /></div>
                                 <div class="text-color3 text-[0.28rem]">{{ symbol.name.split('/')[0] }}</div>
                             </div>
                             <div class="text-[0.28rem] font-semibold ml-[0.45rem]">{{ priceList[symbol.symbol] ?

@@ -43,7 +43,7 @@
         <div class="w-full flex items-center flex-col mb-[0.4rem]">
           <div class="mb-[0.16rem]">
             <div style="width: 1rem; height: 1rem">
-              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${selectedItem.name}.svg`)" alt="">
+              <CryptoIcon :name="selectedItem.name" />
             </div>
           </div>
           <div class="text-[0.3rem] text-color">

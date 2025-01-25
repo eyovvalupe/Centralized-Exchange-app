@@ -5,8 +5,7 @@
         <div class="item_title">
             <div class="item_label">
                 <div class="currency_icon" v-if="item.from">
-                    <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.from.toUpperCase()}.svg`)"
-                        :alt="item.from.toUpperCase()">
+                    <CryptoIcon :name="item.from.toUpperCase()" />
                 </div>
                 <div class="item_name">
                     <span v-if="item.from">{{ item.from.toUpperCase() }}</span>
@@ -21,8 +20,7 @@
 
             <div class="item_label">
                 <div class="currency_icon" v-if="item.to">
-                    <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.to.toUpperCase()}.svg`)"
-                        :alt="item.from.toUpperCase()">
+                    <CryptoIcon :name="item.to.toUpperCase()" />
                 </div>
                 <div class="item_name">
                     <span v-if="item.to">{{ item.to.toUpperCase() }}</span>

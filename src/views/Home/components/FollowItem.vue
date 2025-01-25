@@ -46,8 +46,8 @@
                 <div class="item-val">{{ props.item.amount }}</div>
             </div>
             <div class="icons">
-                <div class="icon" v-for="i in 5" :key="i"><img v-lazy="getStaticImgUrl('/static/img/crypto/USDT.svg')"
-                        alt=""></div>
+                <div class="icon" v-for="i in 5" :key="i">
+                    <CryptoIcon :name="'USDT'" /></div>
             </div>
         </div>
     </div>

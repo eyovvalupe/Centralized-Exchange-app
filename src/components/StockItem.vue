@@ -14,7 +14,7 @@
           </div> -->
           <div class="size-[0.96rem] mr-[0.18rem] flex justify-center items-center"
             v-if="showIcon">
-            <img @error="imgError" :src="getStaticImgUrl(`static/img/crypto/${item.name.split('/')[0]}.svg`)" alt="" />
+            <CryptoIcon :name="item.name.split('/')[0]" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
             <div class="item_name flex items-center gap-1 mb-[0.2rem]">
@@ -229,10 +229,6 @@ const removeStock = (item) => {
   emits("remove", item);
 };
 
-
-const imgError = e => {
-  e.target.src = getStaticImgUrl(`static/img/crypto/default.svg`)
-}
 </script>
 
 <style lang="less" scoped>

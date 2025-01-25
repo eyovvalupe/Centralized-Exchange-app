@@ -21,8 +21,7 @@
                 <div class="item account_item" @click="openDialog('from')">
                     <div class="currency" v-if="form.from">
                         <div class="currency_icon">
-                            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)"
-                                alt="currency">
+                            <CryptoIcon :name="form.from.toUpperCase()" />
                         </div>
                         <span>{{ form.fromName }}</span>
                     </div>
@@ -53,8 +52,7 @@
                 <div class="item account_item" @click="openDialog('to')">
                     <div class="currency">
                         <div class="currency_icon">
-                            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.to.toUpperCase()}.svg`)"
-                                alt="currency">
+                            <CryptoIcon :name="form.to.toUpperCase()" />
                         </div>
                         <span>{{ form.toName }}</span>
                     </div>
@@ -99,8 +97,7 @@
                     :class="{ 'swap_dialog_item_active': (clickKey == 'from' ? (form.from == item.currency) : (form.to == item.currency)) }"
                     v-for="(item, i) in wallet" :key="i">
                     <div class="icon">
-                        <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.svg`)"
-                            alt="currency">
+                        <CryptoIcon :name="item.currency.toUpperCase()" />
                     </div>
                     <span>{{ item.name }}</span>
 

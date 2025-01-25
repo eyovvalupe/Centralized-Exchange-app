@@ -1,7 +1,7 @@
 <template>
   <div class="tab" :class="{ open_tab: switchs[i] == true }" @click="switchOpen(i, $event)">
     <div class="tab_icon">
-      <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" class="rounded-full" alt="img" />
+      <CryptoIcon :name="item.name" class="rounded-full" />
     </div>
     <div class="name">{{ item.name }}</div>
     <div class="amount">{{ item.amount }}</div>

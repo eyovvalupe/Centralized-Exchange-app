@@ -22,8 +22,7 @@
             <div class="select_item">
               <div class="currency">
                 <div class="w-[0.48rem] h-[0.48rem] mr-[0.2rem]" v-if="form.currency">
-                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.currency.toUpperCase()}.svg`)"
-                    alt="currency" class="rounded-full" />
+                  <CryptoIcon :name="form.currency.toUpperCase()"  class="rounded-full" />
                 </div>
                 <span>{{ form.currency || "" }}</span>
               </div>
@@ -94,8 +93,7 @@
               keyStr.toUpperCase().indexOf(searchDialogStr) > -1
               ">
             <div class="icon">
-              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${keyStr.toUpperCase()}.svg`)" alt="currency"
-                class="rounded-full" />
+              <CryptoIcon class="rounded-full" :name="keyStr.toUpperCase()" />
             </div>
             <span>{{ keyStr.toUpperCase() }}</span>
 

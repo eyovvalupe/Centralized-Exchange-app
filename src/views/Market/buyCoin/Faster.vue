@@ -27,8 +27,7 @@
               @click="openDialog(2)">
               <div class="flex items-center">
                 <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
-                  <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
-                    alt="currency" />
+                  <CryptoIcon class="rounded-50" :name="currIn.name" />
                 </div>
                 <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
               </div>
@@ -56,8 +55,7 @@
               @click="openDialog(1)">
               <div class="flex items-center">
                 <div v-if="currOut.name" class="size-[0.52rem] mr-[0.16rem]">
-                  <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${currOut.name}.svg`)"
-                    alt="currency" />
+                  <CryptoIcon class="rounded-50" :name="currOut.name" />
                 </div>
                 <span class="text-[0.3rem] w-[1rem]">{{ currOut.name || "--" }}</span>
               </div>
@@ -124,7 +122,7 @@
               : currIn.name == item.name,
         }" @click="clickItem(item)">
           <div class="icon">
-            <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+            <CryptoIcon class="rounded-50" :name="item.name" />
           </div>
           <span>{{ item.name }}</span>
           <Icon v-if="

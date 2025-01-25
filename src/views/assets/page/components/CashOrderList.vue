@@ -11,7 +11,7 @@
         <span class="text-[0.32rem] text-up font-semibold">买入</span>
         <span class="text-[0.32rem] text-color font-semibold">&nbsp;USDT&nbsp;</span>
         <div class="USDT_icon relative top-[-0.02rem]">
-          <img v-lazy="getStaticImgUrl(`/static/img/crypto/USDT.svg`)" alt="">
+          <CryptoIcon :name="'USDT'" />
         </div>
       </div>
       <div>

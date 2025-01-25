@@ -5,8 +5,7 @@
 
       <div class="p-[0.32rem] bg-color3 rounded-[0.32rem]">
         <div class="flex items-center font-[600]">
-          <img class="size-[0.52rem] rounded-50 mr-[0.12rem]"
-            v-lazy="getStaticImgUrl(`/static/img/crypto/${currency.toUpperCase()}.svg`)" alt="currency" />
+          <CryptoIcon class="size-[0.52rem] rounded-50 mr-[0.12rem]" :name="currency.toUpperCase()" />
           {{ offset == 'buy' ? t('market.market_buy_list_buy') : t('market.market_buy_list_sell') }}{{ currency }}
         </div>
         <div class="pt-[0.24rem] flex items-center justify-between text-color">
@@ -64,9 +63,7 @@
               户主姓名：{{ currentAccount.accountName }}</div>
             <div class="flex items-center">
               <div class="card_icon">
-                <img v-if="currentAccount.channel === 'crypto'" class="rounded-50"
-                  v-lazy="getStaticImgUrl(`/static/img/crypto/${currentAccount.symbol?.toUpperCase()}.svg`)"
-                  alt="currency" />
+                <CryptoIcon v-if="currentAccount.channel === 'crypto'" class="rounded-50" :name="currentAccount.symbol?.toUpperCase()" />
                 <img v-else class="!size-[0.44rem]" v-lazy="getStaticImgUrl('/static/img/bank/card_icon.svg')"
                   alt="img" />
               </div>

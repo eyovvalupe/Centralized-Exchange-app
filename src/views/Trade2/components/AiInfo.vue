@@ -58,10 +58,7 @@
         <div style="display: flex;align-items: center;">
           <div style="width: 0.6rem;height: 0.6rem;margin-left: 0.16rem;"
             v-if="currItem.name && currItem.name.replace('/USDT', '')">
-            <img v-lazy="getStaticImgUrl(
-              `/static/img/crypto/${currItem.name.replace('/USDT', '').toUpperCase()}.svg`
-            )
-              " />
+            <CryptoIcon :name="currItem.name.replace('/USDT', '').toUpperCase()" />
           </div>
           <div style="flex: 1;">
             <div class="stock-info__symbol">{{ currItem.name || "--" }}</div>

@@ -4,8 +4,8 @@
     <div class="time">{{ formatDate(item.created) }}</div>
     <div class="item_box flex justify-between">
       <div class="flex items-center">
-        <span class="item_icon" v-if="item.account_from"><img
-            v-lazy="getStaticImgUrl(`/static/img/crypto/${item.from.toUpperCase()}.svg`)" alt="currency" /></span>
+        <span class="item_icon" v-if="item.account_from">
+          <CryptoIcon :name="item.from.toUpperCase()" /></span>
         <div class="flex flex-col h-[0.64rem] justify-between text-[0.28rem]">
           <span>{{
             item.from ? item.from : '--'
@@ -22,8 +22,8 @@
         <img v-lazy="getStaticImgUrl(`/static/img/assets/convert_sm.svg`)" alt="">
       </div>
       <div class="flex items-center">
-        <span class="item_icon"><img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.to.toUpperCase()}.svg`)"
-            alt="currency" /></span>
+        <span class="item_icon">
+          <CryptoIcon :name="item.to.toUpperCase()" /></span>
         <div class="flex flex-col justify-between h-[0.64rem]">
           <span>{{
             item.to ? item.to : '--'

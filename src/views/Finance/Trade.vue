@@ -16,8 +16,7 @@
                         <div
                             class="w-full flex flex-col bg-color2 px-[0.2rem] py-[0.32rem] rounded-[0.32rem] items-center">
                             <div class="w-[0.96rem] h-[0.96rem] mb-[0.32rem]">
-                                <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.split('/')[0]}.svg`)"
-                                    alt="img" />
+                                <CryptoIcon :name="item.name.split('/')[0]" />
                             </div>
                             <div class="mb-[0.24rem]">{{ item.name.split('/')[0] }}</div>
                             <div class="text-[0.32rem] font-standard text-color8"
@@ -122,9 +121,8 @@
                             <div class="flex">
                                 <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative"
                                     :class="i ? '-ml-[0.1rem]' : ''" v-if="!isEmpty(stakeInfo)" :key="i"
-                                    v-for="(item, i) in stakeInfo.items"><img
-                                        v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.split('/')[0]}.svg`)"
-                                        alt="img" /></div>
+                                    v-for="(item, i) in stakeInfo.items">
+                                    <CryptoIcon :name="item.name.split('/')[0]" /></div>
                             </div>
                             <div class="text-[0.32rem]">{{ stakeInfo.name ? stakeInfo.name : '--' }}</div>
                         </div>
@@ -246,10 +244,7 @@
                 position: relative;
                 top: -0.02rem;
               ">
-                                <img v-lazy="getStaticImgUrl(
-                                    `/static/img/crypto/USDT.svg`
-                                )
-                                    " />
+              <CryptoIcon :name="'USDT'" />
                             </div>
 
                             <span style="
