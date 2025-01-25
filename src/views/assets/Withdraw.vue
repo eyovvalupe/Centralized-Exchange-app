@@ -21,7 +21,7 @@
                 <div class="text-color5 text-[0.24rem] mb-[0.1rem]">{{ t('withdraw.currency') }}</div>
                 <div class="flex items-center">
                   <div class="currency_icon mr-[0.2rem]">
-                    <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.from.toUpperCase()}.svg`)" alt="currency" />
+                    <CryptoIcon :name="form.from.toUpperCase()" />
                   </div>
                   <span>{{ form.from.toUpperCase() }}</span>
                 </div>
@@ -72,9 +72,7 @@
                 v-if="showAccount.length && tabActive == 'cryptocurrency'">
                 <div class="flex">
                   <div class="card_icon">
-                    <img v-if="currAccount.symbol"
-                      v-lazy="getStaticImgUrl(`/static/img/crypto/${currAccount.symbol.toUpperCase()}.svg`)"
-                      alt="currency" />
+                    <CryptoIcon :name="currAccount.symbol.toUpperCase()" />
                   </div>
                   <div class="h-full flex items-center">
                     {{
@@ -188,7 +186,7 @@
             :class="{ swap_dialog_item_active: form.from == item.name }"
             v-for="(item, i) in searchDialogStr ? searchResult : wallet" :key="i">
             <div class="icon">
-              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name.toUpperCase()}.svg`)" alt="currency" />
+              <CryptoIcon :name="item.name.toUpperCase()" />
             </div>
             <span>{{ item.name.toUpperCase() }}</span>
             <div v-if="form.from == item.name" class="check_icon">
@@ -254,7 +252,7 @@
                 <div class="card_icon">
                   <img v-if="tabActive == 'bankCard'" v-lazy="getStaticImgUrl('/static/img/bank/card_default.svg')"
                     alt="img" />
-                  <img v-else v-lazy="getStaticImgUrl(`/static/img/crypto/${item.symbol}.svg`)" alt="currency" />
+                    <CryptoIcon v-else :name="item.symbol" />
                 </div>
                 <div class="card">
                   <div class="name">

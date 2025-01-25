@@ -46,8 +46,7 @@
               户主姓名：{{ item.accountName }}</div>
             <div class="flex items-center">
               <div class="card_icon">
-                <img v-if="tabsValue === 'crypto'" class="rounded-50"
-                  v-lazy="getStaticImgUrl(`/static/img/crypto/${item.symbol?.toUpperCase()}.svg`)" alt="currency" />
+                <CryptoIcon v-if="tabsValue === 'crypto'" class="rounded-50" :name="item.symbol?.toUpperCase()" />
                 <img v-else class="!size-[0.44rem]" v-lazy="getStaticImgUrl('/static/img/bank/card_icon.svg')"
                   alt="img" />
               </div>

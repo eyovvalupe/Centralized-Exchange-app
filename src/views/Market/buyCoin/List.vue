@@ -57,8 +57,7 @@
               <div class="text-12">
                 <div class="mb-[0.2rem] flex items-center text-16 font-semibold">
                   <!-- 加密货币图标 -->
-                  <img class="!h-4 !w-4 mr-[0.12rem] rounded-50"
-                    v-lazy="getStaticImgUrl(`/static/img/crypto/${item.crypto.toUpperCase()}.svg`)" alt="currency" />
+                  <CryptoIcon class="!h-4 !w-4 mr-[0.12rem] rounded-50" :name="item.crypto.toUpperCase()" />
                   <!-- 根据交易类型显示“购入”或“售出” -->
                   {{ item.crypto }}
                   

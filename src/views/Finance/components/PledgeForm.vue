@@ -25,8 +25,7 @@
               @click="showDialog = true;">
               <div class="flex items-center">
                 <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
-                  <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${currIn.name}.svg`)"
-                    alt="currency" />
+                  <CryptoIcon class="rounded-50" :name="currIn.name" />
                 </div>
                 <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
               </div>
@@ -118,7 +117,7 @@
             swap_dialog_item_active: currIn.name == item.name,
           }" @click="clickItem(item)">
             <div class="icon">
-              <img class="rounded-50" v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+              <CryptoIcon class="rounded-50" :name="item.name" />
             </div>
             <span>{{ item.name }}</span>
 

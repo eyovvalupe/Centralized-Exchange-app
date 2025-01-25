@@ -93,7 +93,7 @@
         <div v-for="(item, i) in fiatWallet" :key="i" class="swap_dialog_item"
           :class="{ swap_dialog_item_active: currCurrency.name == item.name }" @click="clickItem(item)">
           <div class="icon">
-            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="currency" />
+            <CryptoIcon :name="item.name" />
           </div>
           <span>{{ item.name.toUpperCase() }}</span>
           <Icon v-if="currCurrency.name == item.name" class="check_icon" name="success" />

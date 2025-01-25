@@ -24,7 +24,8 @@
             
             <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                 <div class="flex h-[0.4rem] items-center justify-center gap-[0.16rem]">
-                    <div class="size-[0.4rem]"><img v-lazy="getStaticImgUrl(`/static/img/crypto/${order.symbol}.svg`)" alt="img" /></div>
+                    <div class="size-[0.4rem]">
+                        <CryptoIcon :name="order.symbol" /></div>
                     <div class="text-[0.32rem]">{{ order.symbol }}</div>
                 </div>
             </div>
@@ -99,7 +100,9 @@
                     
                     <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
                         <div class="flex h-[0.4rem] items-center justify-center gap-[0.16rem]">
-                            <div class="size-[0.4rem]"><img v-lazy="getStaticImgUrl(`/static/img/crypto/${order.symbol}.svg`)" alt="img" /></div>
+                            <div class="size-[0.4rem]">
+                                <CryptoIcon :name="order.symbol" />
+                            </div>
                             <div class="text-[0.32rem]">{{ order.symbol }}</div>
                         </div>
                     </div>

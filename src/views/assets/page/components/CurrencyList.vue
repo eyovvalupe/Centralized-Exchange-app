@@ -23,7 +23,7 @@
         <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[0.26rem] mr-[0.2rem] flex items-center justify-center"
           style="background-color: var(--ex-white);">
           <div class=" w-[0.4rem] h-[0.4rem]">
-            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" class=" rounded-full" alt="">
+            <CryptoIcon :name="item.name" class="rounded-full" />
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>
@@ -38,7 +38,7 @@
         <div class="crypto_icon w-[0.52rem] h-[0.52rem] rounded-[0.26rem] flex justify-center items-center mr-[0.2rem]"
           style="background-color: var(--ex-white);">
           <div class="size-[0.4rem]">
-            <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.name}.svg`)" alt="">
+            <CryptoIcon :name="item.name" />
           </div>
         </div>
         <div class="text-[15px] text-color">{{ item.name }}</div>

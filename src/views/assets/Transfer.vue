@@ -31,8 +31,7 @@
 
               <div class="account_item relative">
                 <div class="account_item_icon" v-if="!isEmpty(form.fromCurrency)">
-                  <img :key="form.fromCurrency.name"
-                    v-lazy="getStaticImgUrl(`/static/img/crypto/${form.fromCurrency.name}.svg`)" alt="img" />
+                  <CryptoIcon :name="form.fromCurrency.name" />
                 </div>
                 <div class="item_content mr-[0.1rem]">
                   <span class="monty_span">{{
@@ -77,8 +76,7 @@
 
               <div class="account_item">
                 <div class="account_item_icon" v-if="!isEmpty(form.toCurrency)">
-                  <img :key="form.toCurrency.name"
-                    v-lazy="getStaticImgUrl(`/static/img/crypto/${form.toCurrency.name}.svg`)" alt="img" />
+                  <CryptoIcon :name="form.toCurrency.name" />
                 </div>
                 <div class="item_content mr-[0.1rem]">
                   <span class="monty_span">{{ !isEmpty(form.toCurrency) ? form.toCurrency.name : "" }}</span>
@@ -128,7 +126,7 @@
         <template #option="option">
           <div class="picker-item">
             <span class="picker-item__icon" v-if="!columnList.includes(option.key)">
-              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${option.key}.svg`)" alt="icon" />
+              <CryptoIcon :name="option.key" />
             </span>
             <span class="picker-item__text">
               {{ option.value }}

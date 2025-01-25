@@ -17,7 +17,7 @@
                       </div>
                       <div class="flex items-center">
                         <div style="width: 0.48rem;height:0.48rem" class="mr-[0.2rem]">
-                          <img v-lazy="getStaticImgUrl(`/static/img/crypto/${form.currency}.svg`)" alt="">
+                          <CryptoIcon :name="form.currency" />
                         </div>
                         <div class="ipt">{{ form.currency }}</div>
                       </div>
@@ -93,7 +93,7 @@
             v-for="item in searchRef ? searchResult : currencyMapList" :key="item">
               <div class="flex items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
-                  <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item}.svg`)" alt="">
+                  <CryptoIcon :name="item" />
                 </div>
                 <span class="text-[0.3rem]">{{ item }}</span>
               </div>

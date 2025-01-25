@@ -2,7 +2,7 @@
 <template>
   <div class="recgarge_item  ripple-btn" @click="goInfo">
     <div class="icon_box" v-if="item.currency">
-      <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.currency.toUpperCase()}.svg`)" alt="currency" />
+      <CryptoIcon :name="item.currency.toUpperCase()" />
     </div>
     <div class="content">
       <div class="item_title">{{ item.currency }}</div>

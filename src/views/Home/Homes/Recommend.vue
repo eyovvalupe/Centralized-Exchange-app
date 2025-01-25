@@ -112,7 +112,9 @@ const getRecommendData = () => {
 getRecommendData();
 
 
-
+defineExpose({
+    activeTab
+})
 
 </script>
 

@@ -5,8 +5,7 @@
       <template #title>
         <span class="flex items-center justify-center">
           <span class="mr-[0.16rem]" v-if="info.currCrypto">
-            <img class="size-[0.52rem] rounded-50"
-              v-lazy="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+            <CryptoIcon class="size-[0.52rem] rounded-50" :name="info.currCrypto.toUpperCase()" />
           </span>
           {{ title }}{{ info.currCrypto }}
 
@@ -43,8 +42,7 @@
             <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
             <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
               <span class="mr-[0.16rem]" v-if="info.currCrypto">
-                <img class="size-[0.52rem] rounded-50"
-                  v-lazy="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+                <CryptoIcon class="size-[0.52rem] rounded-50" :name="info.currCrypto.toUpperCase()" />
               </span>
               {{ title }}{{ info.currCrypto }}
 
@@ -81,8 +79,7 @@
             <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
             <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
               <span class="mr-[0.16rem]" v-if="info.currCrypto">
-                <img class="size-[0.52rem] rounded-50"
-                  v-lazy="getStaticImgUrl(`/static/img/crypto/${info.currCrypto.toUpperCase()}.svg`)" alt="currency" />
+                <CryptoIcon class="size-[0.52rem] rounded-50" :name="info.currCrypto.toUpperCase()" />
               </span>
               {{ title }}{{ info.currCrypto }}
 

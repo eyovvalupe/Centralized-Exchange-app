@@ -5,8 +5,8 @@
             <div class="flex flex-col justify-between">
                 <div class="flex">
                     <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative" v-for="(symbolItem, i) in item.items"
-                        :class="i ? '-ml-[0.1rem]' : ''"><img
-                            v-lazy="getStaticImgUrl(`/static/img/crypto/${symbolItem.name.split('/')[0]}.svg`)" alt="img" /></div>
+                        :class="i ? '-ml-[0.1rem]' : ''">
+                        <CryptoIcon :name="symbolItem.name.split('/')[0]" /></div>
                 </div>
                 <div class="text-[0.32rem]">{{ item.name }}</div>
             </div>

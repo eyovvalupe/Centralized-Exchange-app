@@ -158,10 +158,7 @@
           <div class="item_name">{{ t("trade.ai_opening_product_type") }}</div>
           <div class="item_val">
             <div style="width: 0.4rem;height: 0.4rem;margin-right: 0.16rem;" v-if="form1.name && form1.name.replace('/USDT', '')">
-              <img v-lazy="getStaticImgUrl(
-                `/static/img/crypto/${form1.name.replace('/USDT', '').toUpperCase()}.svg`
-              )
-                " />
+              <CryptoIcon :name="form1.name.replace('/USDT', '').toUpperCase()" />
             </div>
             <div class="item_val_text">{{ form1.name }}</div>
           </div>

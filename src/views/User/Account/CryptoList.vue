@@ -5,7 +5,7 @@
         <div class="list_page mask-btn">
           <div class="flex items-center mb-[0.32rem]">
             <div class="mr-[0.2rem]" style="width: 0.7rem;height: 0.7rem;">
-              <img v-lazy="getStaticImgUrl(`/static/img/crypto/${item.symbol.toUpperCase()}.svg`)" class=" rounded-full" alt="">
+              <CryptoIcon :name="item.symbol.toUpperCase()" class="rounded-full"  />
             </div>
             <span class="text-[0.32rem] text-color2">{{ item.symbol ? item.symbol.toUpperCase() : '--' }}</span>
           </div>

@@ -466,10 +466,7 @@
                 position: relative;
                 top: -0.02rem;
               ">
-              <img v-lazy="getStaticImgUrl(
-                `/static/img/crypto/${paramCurrency.toUpperCase()}.svg`
-              )
-                " />
+              <CryptoIcon :name="paramCurrency.toUpperCase()" />
             </div>
 
             <span style="

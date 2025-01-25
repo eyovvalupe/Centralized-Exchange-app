@@ -28,8 +28,8 @@
                 <div class="flex h-[0.4rem] items-center">
                     <div class="flex mr-[0.1rem] items-center">
                         <div class="w-[0.4rem] h-[0.4rem] relative" v-for="(symbolItem, i) in orderItem.items"
-                            :class="i ? '-ml-[0.1rem]' : ''"><img
-                                v-lazy="getStaticImgUrl(`/static/img/crypto/${symbolItem.name.split('/')[0]}.svg`)" alt="img" /></div>
+                            :class="i ? '-ml-[0.1rem]' : ''">
+                            <CryptoIcon :name="symbolItem.name.split('/')[0]" /></div>
                     </div>
                     <div class="text-[0.32rem] relative top-[0.04rem]">{{ orderItem.name }}</div>
                 </div>

@@ -229,10 +229,7 @@
         <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
           <div style="font-size: 0.32rem;margin-bottom: 0.1rem;display: flex;align-items: center;justify-content: flex-start;">
             <div style="width: 0.4rem;height: 0.4rem;margin-right: 0.16rem;" v-if="currStock.name && currStock.name.replace('/USDT', '')">
-              <img v-lazy="getStaticImgUrl(
-                `/static/img/crypto/${currStock.name.replace('/USDT', '').toUpperCase()}.svg`
-              )
-                " />
+              <CryptoIcon :name="currStock.name.replace('/USDT', '').toUpperCase()" />
             </div>
             <span>{{ currStock.name }}</span>
           </div>
@@ -475,10 +472,7 @@
                 position: relative;
                 top: -0.02rem;
               ">
-              <img v-lazy="getStaticImgUrl(
-                `/static/img/crypto/${paramCurrency.toUpperCase()}.svg`
-              )
-                " />
+              <CryptoIcon :name="paramCurrency.toUpperCase()" />
             </div>
 
             <span style="
