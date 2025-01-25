@@ -27,7 +27,7 @@
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                 <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
-                <div class="text-[0.28rem]">{{item.days}}天</div>
+                <div class="text-[0.28rem]">{{item.days}}{{ t('finance.portfolio_day_multi') }}</div>
             </div>
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                 <div class="text-[0.28rem] text-color2">{{ t('finance.defi_total_interest') }}</div>
