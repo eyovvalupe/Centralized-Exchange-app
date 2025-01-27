@@ -2,10 +2,14 @@
     <div class="pledge_page">
         <Tabs v-model:active="active" animated type="custom-card-stake" @change="onChange" style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;">
             <Tab :title="$t('finance.defi_coll_borrow')">
-                <PledgeForm />
+                <div class="px-[0.1rem]">
+                    <PledgeForm />
+                </div>
             </Tab>
             <Tab class="mb-[1.2rem]" :title="$t('finance.defi_borrow_order')">
-                <PledgeOrder v-if="token"/>
+                <div class="px-[0.1rem]" v-if="token">
+                    <PledgeOrder/>
+                </div>
                 <NoData v-if="!token"/>
             </Tab>
         </Tabs>
