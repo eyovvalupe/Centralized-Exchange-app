@@ -24,17 +24,16 @@
             </div>
 
             <!-- 欢迎 -->
-            <div class="welcome" >
-                <div class="name mb-[0.36rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
+            <div class="welcome">
+                <div class="name mb-[0.42rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
                 </div>
                 <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span
                         style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
-                <div class="title mb-[0.36rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
+                <div class="title mb-[0.42rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
                 <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">体验无限可能</div>
 
 
-                <div class="btns mt-[0.72rem] wow fadeIn"  data-wow-duration="1s"
-                    v-if="homeLoading && !token">
+                <div v-if="homeLoaded && !token" class="btns mt-[1rem] wow fadeIn" data-wow-duration="1s">
                     <div class="btn ripple-primary" @click="goLogin">登录</div>
                     <div class="btn btn2 ripple-btn" @click="goRegister">注册</div>
                 </div>
@@ -69,13 +68,13 @@
                 </div>
             </div>
             <!-- 质押挖矿 -->
-            <div class="scroll-box" v-if="fActive == 1">
+            <div class="scroll-box" v-if="homeLoaded && fActive == 1">
                 <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
                 </div>
             </div>
             <!-- 跟单 -->
-            <div class="scroll-box" v-if="fActive == 2">
+            <div class="scroll-box" v-if="homeLoaded && fActive == 2">
                 <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
                         <FollowItem class="follow-home-item" :item="item" />
@@ -394,7 +393,11 @@ watch(() => (token.value), (val) => {
     }
 })
 
+const homeLoaded = ref(false)
 onMounted(() => {
+    setTimeout(() => {
+        homeLoaded.value = true
+    }, 500)
     if (token.value && canExecuteToday()) getNotifiData();
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
@@ -456,7 +459,7 @@ const followList = computed(() => store.state.followList || [])
         object-position: center center;
         position: absolute;
         width: 100%;
-        height: 10rem;
+        height: 12.5rem;
         z-index: 0;
     }
 
@@ -494,15 +497,15 @@ const followList = computed(() => store.state.followList || [])
 
         .welcome {
             color: var(--ex-white);
-            padding: 1rem 0.2rem 0.4rem 0.2rem;
+            padding: 1.6rem 0.2rem 1.4rem 0.2rem;
             transform: all ease-in .2s;
 
             .name {
-                font-size: 0.32rem;
+                font-size: 0.4rem;
             }
 
             .title {
-                font-size: 0.64rem;
+                font-size: 0.68rem;
                 font-weight: bold;
             }
 

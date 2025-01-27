@@ -12,19 +12,20 @@
             <SkeletonAvatar style="margin-right: 0;" />
           </div>
           <div class="welcome">
-            <div class="name mb-[0.36rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
+            <div class="name mb-[0.42rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
             </div>
             <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span
                 style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
-            <div class="title mb-[0.36rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
+            <div class="title mb-[0.42rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
             <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">体验无限可能</div>
+
             <div v-if="token">&nbsp;</div>
-            <div class="btns mt-[0.72rem]" v-else>
+            <div v-else class="btns mt-[1rem] " data-wow-duration="1s">
               <div class="btn ripple-primary">登录</div>
               <div class="btn btn2 ripple-btn">注册</div>
             </div>
           </div>
-          <div style="margin-top: 0.1rem;">&nbsp;</div>
+          <div style="margin-top: 0.05rem;" v-if="!token">&nbsp;</div>
           <div style="margin-top: 0.32rem;">
             <SkeletonTitle style="height: 0.4rem;" :title-width="'100%'" />
           </div>
@@ -357,15 +358,15 @@ onMounted(() => {
   // transform: translateX(-50%) translateY(-50%);
   .welcome {
     color: var(--ex-white);
-    padding: 1rem 0.2rem 0.4rem 0.2rem;
+    padding: 1.6rem 0.2rem 1.4rem 0.2rem;
     transform: all ease-in .2s;
 
     .name {
-      font-size: 0.32rem;
+      font-size: 0.4rem;
     }
 
     .title {
-      font-size: 0.64rem;
+      font-size: 0.68rem;
       font-weight: bold;
     }
 
