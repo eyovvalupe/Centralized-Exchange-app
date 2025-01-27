@@ -182,7 +182,7 @@
         </BottomPopup>
         <!-- 余额提示 -->
         <Popup round v-model:show="showAmountDialog" closeable teleport="body">
-            <div style="width: 6.4rem">
+            <div style="width: 6.4rem; background-color: var(--ex-bg-white); padding-bottom: 0.4rem;">
                 <!-- 标题 -->
                 <div style="
           text-align: center;
@@ -191,7 +191,8 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 1px solid var(--ex-border-color);
+          border: 1px solid var(--ex-black);
+          background-color: var(--ex-bg-white);
         ">
                     {{ t("assets.wallet_available") }}
                 </div>
@@ -202,8 +203,8 @@
           align-items: center;
           justify-content: center;
           text-align: center;
-          background: var(--ex-bg-color2);
-          border: 1px solid var(--ex-border-color);
+          /* border: 1px solid var(--ex-border-color); */
+          background-color: var(--ex-bg-color2);
           border-radius: 0.32rem;
           line-height: 0.4rem;
           margin-top: 0.32rem;
@@ -267,7 +268,7 @@
           justify-content: space-between;
           padding: 0 0.4rem;
           font-size: 0.28rem;
-          margin: 0.64rem 0 0.4rem 0;
+          margin: 0.64rem 0 0 0;
         ">
                     <div class="ripple-primary" @click="router.push({ name: 'transfer' })" style="
             height: 0.8rem;
