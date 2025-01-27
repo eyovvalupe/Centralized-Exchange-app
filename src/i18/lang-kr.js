@@ -755,6 +755,8 @@ export default {
     trade_order_history: "주문 기록",
 
     left_search_result: "검색 결과",
+    spot_trade_available: "판매 가능",
+
   },
   inviteFriends: {
     invite: "친구 초대",

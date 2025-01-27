@@ -8,17 +8,22 @@
             t('finance.portfolio_title'),
         ]" @change="changeActiveTab(activeTab, true)" />
 
-        <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :touchable="true" :loop="false" :duration="300" ref="swipe" @change="swipeChange">
+        <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :touchable="true" :loop="false"
+            :duration="300" ref="swipe" @change="swipeChange">
             <SwipeItem>
                 <div style="height: calc(100vh - 2rem);">
-                    <Follow :from="'finance'"/>
+                    <Follow :from="'finance'" />
                 </div>
             </SwipeItem>
             <SwipeItem>
-                <div style="height: calc(100vh - 2rem);"><Pledge /></div>
+                <div style="height: calc(100vh - 2rem);">
+                    <Pledge />
+                </div>
             </SwipeItem>
             <SwipeItem>
-                <div style="height: calc(100vh - 2rem);"><Stake /></div>
+                <div style="height: calc(100vh - 2rem);">
+                    <Stake />
+                </div>
             </SwipeItem>
         </Swipe>
     </div>
@@ -46,7 +51,7 @@ const changeActiveTab = (val, slideSwipe = false) => {
     // Normalize the value for circular navigation
     if (val >= 3) normalizedVal = 0;
     if (val < 0) normalizedVal = 2;
-    
+
     activeTab.value = normalizedVal;
     if (loadedTab.value.indexOf(normalizedVal) == -1) {
         loadedTab.value.push(normalizedVal);

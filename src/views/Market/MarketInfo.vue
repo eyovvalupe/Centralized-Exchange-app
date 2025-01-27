@@ -159,13 +159,13 @@
         <span class="bottom_btn_icon">
           <img v-lazy="getStaticImgUrl('/static/img/market/up.svg')" />
         </span>
-        <span>{{ tradeType == 'spot' ? '买入' : t("market.market_marketinfo_long") }}</span>
+        <span>{{ tradeType == 'spot' ? t('market.market_buy_fast_buy') : t("market.market_marketinfo_long") }}</span>
       </div>
       <div class="bottom_btn ripple-btn" @click="goBuy(false)" style="background-color: var(--ex-down-color)">
         <span class="bottom_btn_icon">
           <img v-lazy="getStaticImgUrl('/static/img/market/down.svg')" />
         </span>
-        <span>{{ tradeType == 'spot' ? '卖出' : t("market.market_marketinfo_short") }}</span>
+        <span>{{ tradeType == 'spot' ? t('market.market_buy_fast_sell') : t("market.market_marketinfo_short") }}</span>
       </div>
     </div>
     <!-- 时间选择弹窗 -->

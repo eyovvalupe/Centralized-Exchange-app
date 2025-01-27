@@ -200,8 +200,8 @@
       class="submit ripple-btn" :color="props.activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
       <span style="color: var(--ex-white);">{{
         props.activeType == 1
-          ? '买入'
-          : '卖出'
+          ? $t('market.market_buy_fast_buy_btn')
+          : $t('market.market_buy_fast_sell_btn')
       }}</span>
     </Button>
 
@@ -226,7 +226,7 @@
   <!-- 开仓确认弹窗 -->
   <BottomPopup teleport="body" v-model:show="showModel" position="bottom" round closeable>
     <div class="van-popup-custom-title">
-      订单确认
+      {{ $t('market.market_buy_confirm_coin') }}
     </div>
     <div class="stock_submit_box">
 
@@ -248,8 +248,8 @@
               <div class="tag" :class="props.activeType == 1 ? 'green_tag' : 'red_tag'">
                 {{
                   props.activeType == 1
-                    ? '买入'
-                    : '卖出'
+                    ? $t('market.market_buy_fast_buy')
+                    : $t('market.market_buy_fast_sell')
                 }}
               </div>
             </div>
@@ -289,7 +289,7 @@
           </div>
           <!-- 收到 -->
           <div class="amount" v-if="props.activeType == 2">
-            预计收到 <strong>{{ getAmount }}</strong>
+            {{ $t('market.market_buy_optional_estreceive') }} <strong>{{ getAmount }}</strong>
           </div>
           <div class="fee">
             <!-- {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> + -->

@@ -755,6 +755,8 @@ export default {
     forex_position_title: "外匯/狀態",
     trade_order_history: "曆史訂單",
     left_search_result: "搜索結果",
+    spot_trade_available: "可售",
+
   },
   inviteFriends: {
     invite: "推薦朋友",

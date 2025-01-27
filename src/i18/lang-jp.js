@@ -756,6 +756,8 @@ export default {
     trade_order_history: "注文履歴",
 
     left_search_result: "検索結果",
+    spot_trade_available: "売り物になる",
+
   },
   inviteFriends: {
     invite: "友達を招待",

@@ -3,11 +3,11 @@
   <div class="opening">
     <div class="type_tabs">
       <div @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
-        买入
+        {{ $t('market.market_buy_fast_buy') }}
       </div>
       <div @click="activeType = 2" class="type_tab tab_ani"
         :class="{ 'active_type_tab active_type_tab2': activeType == 2 }">
-        卖出
+        {{ $t('market.market_buy_fast_sell') }}
       </div>
     </div>
 
@@ -33,16 +33,16 @@
       </Tabs>
 
       <div class="account-box" v-if="token">
-        <div class="title">现金账户</div>
+        <div class="title">{{ $t('trade.ai_opening_cash_wallet') }}</div>
         <div class="info">
-          <div>可用余额</div>
+          <div>{{ $t('market.market_faster_available') }}</div>
           <div>
             <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ stockWalletAmount || '--' }}</span>
             <span style="color:var(--ex-white)">&nbsp;USDT</span>
           </div>
         </div>
         <div class="info" style="margin-top: 0.4rem;">
-          <div>可售</div>
+          <div>{{ $t('trade.spot_trade_available') }}</div>
           <div>
             <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ currencyAmount || '--' }}</span>
             <span style="color:var(--ex-white)">&nbsp;{{ props.item.symbol ? props.item.symbol.replace('usdt', '').toUpperCase() : '' }}</span>
@@ -50,8 +50,8 @@
         </div>
 
         <div class="btns">
-          <div class="btn ripple-primary" @click="jump('topUpCrypto')">充值</div>
-          <div class="btn ripple-primary" @click="jump('transfer')">划转</div>
+          <div class="btn ripple-primary" @click="jump('topUpCrypto')">{{ $t('assets.recharge') }}</div>
+          <div class="btn ripple-primary" @click="jump('transfer')">{{ $t('assets.transfer') }}</div>
         </div>
       </div>
     </div>

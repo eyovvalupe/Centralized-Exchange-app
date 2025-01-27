@@ -767,6 +767,8 @@ export default {
     forex_position_title: "Forex/Status",
     trade_order_history: "History",
     left_search_result: "Result",
+    spot_trade_available: "Available",
+
   },
   inviteFriends: {
     invite: "Invite",

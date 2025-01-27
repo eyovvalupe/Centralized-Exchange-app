@@ -7,7 +7,7 @@
                     <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
                 </div>
 
-                <div class="ipt">搜索</div>
+                <div class="ipt">{{ $t('trade.stock_opening_search') }}</div>
             </div>
 
             <div class="bill-box" @click="jump('tradeOrder')">
@@ -21,7 +21,7 @@
     <!-- 搜索列表 -->
     <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
       <div class="van-popup-custom-title">
-        {{ recommendRef.activeTab == 0 ? '现货' : '合约' }}{{ t("trade.stock_opening_search") }}
+        {{ recommendRef.activeTab == 0 ? $t('common.spot') : $t('common.crypto') }}{{ t("trade.stock_opening_search") }}
       </div>
       <div class="search_dialog_trade">
         <!-- 搜索 -->

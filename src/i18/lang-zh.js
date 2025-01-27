@@ -753,6 +753,8 @@ export default {
     trade_order_history: "历史订单",
 
     left_search_result: "搜索结果",
+
+    spot_trade_available: "可售",
   },
   inviteFriends: {
     invite: "推荐朋友",
