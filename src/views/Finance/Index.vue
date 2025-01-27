@@ -16,7 +16,8 @@
                 <Pledge />
             </SwipeItem>
             <SwipeItem>
-                <Stake/>
+                <!-- 质押挖矿 -->
+                <Stake />
             </SwipeItem>
         </Swipe>
     </div>
@@ -35,7 +36,7 @@ const { t } = useI18n();
 
 const route = useRoute();
 
-const activeTab = ref(route.query.activeTab ? Number(route.query.activeTab) : 0);
+const activeTab = ref(route.query.activeTab ? Number(route.query.activeTab) : Number(localStorage.getItem('financeActiveTab')) || 0);
 const initialSwipe = ref(activeTab.value);
 const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
