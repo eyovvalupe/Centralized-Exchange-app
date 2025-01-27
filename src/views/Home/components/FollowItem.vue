@@ -46,7 +46,7 @@
                 <div class="item-val">{{ props.item.amount }}</div>
             </div>
             <div class="icons">
-                <div class="icon" v-for="(item, i) in currecies" :key="i">
+                <div class="icon" v-for="(item, i) in currencies" :key="i">
                     <CryptoIcon :name="item" /></div>
             </div>
         </div>
@@ -70,7 +70,7 @@ const props = defineProps({
     }
 })
 
-const currecies = ['USDT', 'BTC', 'ETH', 'TRX', 'LTC']
+const currencies = ['USDT', 'BTC', 'ETH', 'TRX', 'LTC']
 
 const goFollow = () => {
     store.commit('setCopyItem', props.item)
