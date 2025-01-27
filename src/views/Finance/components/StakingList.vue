@@ -59,17 +59,17 @@ const scrolHandle = () => {
 
 onMounted(() => {
     getList()
-    setTimeout(() => {
-        try {
-            moreDom = document.querySelector('.loading_more')
-            document.querySelector('.list').addEventListener('scroll', scrolHandle)
-        } catch {
-        }
-    }, 300)
+    // setTimeout(() => {
+    //     try {
+    //         moreDom = document.querySelector('.loading_more')
+    //         document.querySelector('.list').addEventListener('scroll', scrolHandle)
+    //     } catch {
+    //     }
+    // }, 300)
 })
-onUnmounted(() => {
-    try {
-        document.querySelector('.list').removeEventListener('scroll', scrolHandle)
-    } catch { }
-})
+// onUnmounted(() => {
+//     try {
+//         document.querySelector('.list').removeEventListener('scroll', scrolHandle)
+//     } catch { }
+// })
 </script>
