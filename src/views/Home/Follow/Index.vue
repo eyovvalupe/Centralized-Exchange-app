@@ -12,7 +12,7 @@
         </div> -->
 
         <Tabs type="custom-card" @change="onChange" v-model="activeTab"
-            style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;" :swipeable="false" animated>
+            style="height: calc(var(--vh) * 100 - 1.2rem); overflow-y: auto;" :swipeable="false" animated>
             <Tab :title="$t('copy.copy_portfolio')" :active="activeTab == 0" :name="'0'">
                 <div class="px-[0.1rem] pt-[0.32rem] pb-[1.6rem]">
                     <NoData v-if="!loading && !followList.length" />
