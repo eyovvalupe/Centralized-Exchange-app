@@ -3,7 +3,7 @@
         <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']" :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange"
             v-if="$props.activated" v-model:active="activeTab" animated shrink>
             <Tab :name="0" :title="t('common.spot')">
-               <div class="pl-[0.32rem] pr-[0.32rem]">
+               <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
                 <Loaidng v-if="commendLoading" :loading="commendLoading" />
                 <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0">
                     <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{...item, type: 'spot'}"
@@ -13,7 +13,7 @@
                </div>
             </Tab>
             <Tab :name="1" :title="$t('common.crypto')">
-                <div class="pl-[0.32rem] pr-[0.32rem]">
+                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                 <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
                     <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
