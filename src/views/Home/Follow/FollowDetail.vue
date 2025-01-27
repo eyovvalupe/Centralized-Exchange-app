@@ -314,6 +314,7 @@ import { isEmpty } from "@/utils/isEmpty";
 import store from "@/store";
 import { getPoints } from "@/utils/index.js"
 import follow from "@/store/follow";
+import router from "@/router";
 const points = getPoints('id-123456', 100)
 const token = computed(() => store.state.token)
 const { t } = useI18n()
@@ -325,6 +326,7 @@ const showPlus = ref(false)
 const plus = () => {
     if (!token.value) {
         showToast('请先登录一下')
+        router.push({name: 'login'})
         return;
     }
     showPlus.value = true
