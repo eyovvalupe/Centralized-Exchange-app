@@ -1,7 +1,7 @@
 <!-- 交易订单 -->
  <template>
     <div class="page trade-orders">
-        <Top :title="'交易订单'" />
+        <Top :title="$t('trade.trade_orders_title')" />
 
         <div style="padding:0.32rem">
             <Tabs :offset-top="'1.12rem'" class="van-tabs--sub van-tabs--sub_line" :sticky="true" :color="'var(--ex-primary-color)'"

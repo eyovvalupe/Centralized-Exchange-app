@@ -3,10 +3,10 @@
   <div v-if="token" class="positions">
     <div class="tr th">
       <div class="td td-5">{{ t("trade.contract_opening_contract") }}</div>
-      <div class="td td-2">状态</div>
-      <div class="td td-2">开仓</div>
+      <div class="td td-2">{{ t('trade.trade_orders_status') }}</div>
+      <div class="td td-2">{{ t('trade.stock_open') }}</div>
       <div class="td td-4" style="text-align: end !important; margin-right: 0.2rem !important">
-        价格
+        {{ t('trade.stock_opening_price') }}
       </div>
     </div>
     <NoData v-if="!contractPositionsList.length && !loading" />
@@ -41,9 +41,9 @@
         <div class="state" :class="'state-' + item.offset">
           {{
             item.offset == "buy"
-              ? '买入'
+              ? t('market.market_buy_fast_buy')
               : item.offset == "sell"
-                ? '卖出'
+                ? t('market.market_buy_fast_sell')
                 : "--"
           }}
         </div>

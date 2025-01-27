@@ -3,9 +3,9 @@
   <div class="inquire" v-if="token">
     <div class="tr th">
       <div class="td td-5">{{ t("trade.contract_opening_contract") }}</div>
-      <div class="td td-2">开仓</div>
+      <div class="td td-2">{{ t('trade.stock_open') }}</div>
       <div class="td td-6" style="text-align: end !important; margin-right: 0.2rem !important">
-        数量/成交价
+        {{ t('market.market_buy_list_wait_amount') + '/' + t('trade.trade_deal_price') }}
       </div>
     </div>
     <NoData v-if="!loading && !contractInquireList.length" />

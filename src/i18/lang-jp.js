@@ -760,7 +760,10 @@ export default {
 
     left_search_result: "検索結果",
     spot_trade_available: "売り物になる",
-
+    trade_orders_title: "取引注文",
+    trade_orders_current: "現在のデリゲート",
+    trade_orders_status: "状態",
+    trade_deal_price: "成交価格",
   },
   inviteFriends: {
     invite: "友達を招待",

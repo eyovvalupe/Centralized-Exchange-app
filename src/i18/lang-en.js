@@ -771,6 +771,10 @@ export default {
     trade_order_history: "History",
     left_search_result: "Result",
     spot_trade_available: "Available",
+    trade_orders_title: "Trading Orders",
+    trade_orders_current: "Open Orders",
+    trade_orders_status: "Status",
+    trade_deal_price: "Price",
 
   },
   inviteFriends: {

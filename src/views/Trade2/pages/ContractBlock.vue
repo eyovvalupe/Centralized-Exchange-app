@@ -9,7 +9,7 @@
             @showNavDialog="showNavDialog" @success="openSuccess" ref="OpeningRef" />
         </div>
       </Tab> -->
-      <Tab :title="'当前委托'" name="1">
+      <Tab :title="$t('trade.trade_orders_current')" name="1">
         <div class="stock_tab-body">
           <Positions :type="'constract'" v-if="loadTab.indexOf('1') > -1" />
         </div>

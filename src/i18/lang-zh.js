@@ -755,8 +755,11 @@ export default {
     trade_order_history: "历史订单",
 
     left_search_result: "搜索结果",
-
     spot_trade_available: "可售",
+    trade_orders_title: "交易订单",
+    trade_orders_current: "当前委托",
+    trade_orders_status: "状态",
+    trade_deal_price: "成交价",
   },
   inviteFriends: {
     invite: "推荐朋友",

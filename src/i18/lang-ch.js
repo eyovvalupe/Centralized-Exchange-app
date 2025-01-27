@@ -759,6 +759,10 @@ export default {
     trade_order_history: "曆史訂單",
     left_search_result: "搜索結果",
     spot_trade_available: "可售",
+    trade_orders_title: "交易訂單",
+    trade_orders_current: "當前委託",
+    trade_orders_status: "狀態",
+    trade_deal_price: "成交價",
 
   },
   inviteFriends: {

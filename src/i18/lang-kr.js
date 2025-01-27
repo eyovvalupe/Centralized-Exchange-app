@@ -759,6 +759,10 @@ export default {
 
     left_search_result: "검색 결과",
     spot_trade_available: "판매 가능",
+    trade_orders_title: "거래 주문",
+    trade_orders_current: "현재 주문",
+    trade_orders_status: "상태",
+    trade_deal_price: "체결가격",
 
   },
   inviteFriends: {
