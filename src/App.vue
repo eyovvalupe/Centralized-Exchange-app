@@ -2,7 +2,8 @@
   <router-view v-slot="{ Component }">
     <div v-show="pageLoading" class="full_page_loading">
       <!-- 首页骨架屏 -->
-       <Skeleton v-if="routeName == 'home'" style="padding-top: 0.4rem;flex-direction: column;opacity: 0.5;" animate>
+      <Skeleton v-if="routeName == 'home'"
+        style="padding: 0.12rem 0.24rem 0 0.24rem;flex-direction: column;opacity: 0.5;" animate>
         <template #template>
           <div :style="{ display: 'flex', width: '100%' }">
             <SkeletonAvatar />
@@ -10,25 +11,39 @@
             <SkeletonAvatar />
             <SkeletonAvatar style="margin-right: 0;" />
           </div>
-          <div style="margin-top: 0.32rem;">
-            <SkeletonImage style="width: 100%;border-radius: 0.32rem;height: 3.48rem;" />
+          <div class="welcome">
+            <div class="name mb-[0.36rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
+            </div>
+            <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span
+                style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
+            <div class="title mb-[0.36rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
+            <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">体验无限可能</div>
+            <div v-if="token">&nbsp;</div>
+            <div class="btns mt-[0.72rem]" v-else>
+              <div class="btn ripple-primary">登录</div>
+              <div class="btn btn2 ripple-btn">注册</div>
+            </div>
           </div>
+          <div style="margin-top: 0.1rem;">&nbsp;</div>
           <div style="margin-top: 0.32rem;">
-            <SkeletonTitle style="height: 0.48rem;" :title-width="'100%'" />
+            <SkeletonTitle style="height: 0.4rem;" :title-width="'100%'" />
+          </div>
+          <div style="margin-top: 0.32rem;display: flex;align-items: center;justify-content: flex-start;">
+            <SkeletonTitle style="height: 0.4rem;margin-right: 0.12rem;" :title-width="'1.6rem'" />
+            <SkeletonTitle style="height: 0.4rem;" :title-width="'1.6rem'" />
           </div>
           <div style="overflow: hidden;margin-top: 0.32rem;white-space: nowrap;">
             <SkeletonImage style="display:inline-flex;width: 4.6rem;border-radius: 0.32rem;height: 4.92rem;" />
-            <SkeletonImage style="display:inline-flex;width: 4.6rem;border-radius: 0.32rem;height: 4.92rem;margin-left: 0.32rem;" />
-          </div>
-          <div style="margin-top: 0.32rem;">
-            <SkeletonImage style="width: 100%;border-radius: 0.32rem;height: 2.54rem;" />
+            <SkeletonImage
+              style="display:inline-flex;width: 4.6rem;border-radius: 0.32rem;height: 4.92rem;margin-left: 0.32rem;" />
           </div>
           <div style="margin-top: 0.32rem;">
             <SkeletonTitle style="height: 0.48rem;" :title-width="'100%'" />
           </div>
         </template>
-       </Skeleton>
-       <Loading style="position: absolute;top: 50%;left: 50%;transform: translateX(-50) translateY(-50%);" v-else :type="'circular'" :size="44" color="var(--ex-primary-color)" />
+      </Skeleton>
+      <Loading style="position: absolute;top: 50%;left: 50%;transform: translateX(-50) translateY(-50%);" v-else
+        :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
     <div v-show="!pageLoading" class="app_scroll wow_scroll">
 
@@ -336,8 +351,47 @@ onMounted(() => {
   height: 100%;
   top: 0;
   left: 0;
+
   // left: 50%;
   // top: 40%;
   // transform: translateX(-50%) translateY(-50%);
+  .welcome {
+    color: var(--ex-white);
+    padding: 1rem 0.2rem 0.4rem 0.2rem;
+    transform: all ease-in .2s;
+
+    .name {
+      font-size: 0.32rem;
+    }
+
+    .title {
+      font-size: 0.64rem;
+      font-weight: bold;
+    }
+
+    .btns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.4rem;
+
+      .btn {
+        width: 3.2rem;
+        height: 0.88rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--ex-white);
+        border-radius: 1rem;
+        color: var(--ex-bg-color);
+        font-size: 0.32rem;
+      }
+
+      .btn2 {
+        background-color: var(--ex-primary-color);
+        color: var(--ex-white);
+      }
+    }
+  }
 }
 </style>

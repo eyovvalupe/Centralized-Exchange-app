@@ -280,13 +280,16 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.62rem;
+  height: 1.48rem;
   // padding: 0 0.3rem;
   position: relative;
   // background-color: var(--ex-bg-white2);
   // border-radius: 0.4rem;
   // margin-top: 0.2rem;
   border-bottom: 1px solid var(--ex-bg-white2);
+  &:first-child {
+    border-top: 1px solid var(--ex-bg-white2);
+  }
 
   .td5 {
     flex-shrink: 0;
@@ -457,22 +460,24 @@ const removeStock = (item) => {
   &::after {
     position: absolute;
     content: "";
-    width: 0.32rem;
+    width: 0.16rem;
     height: 100%;
     top: 0;
-    right: -0.32rem;
+    right: -0.16rem;
     background-color: rgb(var(--ex-none) / 0.12);
     transition: all ease-in .2s;
+    border-radius: 0 0.16rem 0.16rem 0;
   }
   &::before {
     position: absolute;
     content: "";
-    width: 0.32rem;
+    width: 0.16rem;
     height: 100%;
     top: 0;
-    left: -0.32rem;
+    left: -0.16rem;
     background-color: rgb(var(--ex-none) / 0.12);
     transition: all ease-in .2s;
+    border-radius: 0.16rem 0 0 0.16rem;
   }
 }
 
@@ -486,22 +491,24 @@ const removeStock = (item) => {
   &::after {
     position: absolute;
     content: "";
-    width: 0.32rem;
+    width: 0.16rem;
     height: 100%;
     top: 0;
-    right: -0.32rem;
+    right: -0.16rem;
     background-color: rgb(var(--ex-up-color-rgb) / 0.12);
     transition: all ease-in .2s;
+    border-radius: 0 0.16rem 0.16rem 0;
   }
   &::before {
     position: absolute;
     content: "";
-    width: 0.32rem;
+    width: 0.16rem;
     height: 100%;
     top: 0;
-    left: -0.32rem;
+    left: -0.16rem;
     background-color: rgb(var(--ex-up-color-rgb) / 0.12);
     transition: all ease-in .2s;
+    border-radius: 0.16rem 0 0 0.16rem;
   }
 
   .stock_item {
@@ -515,22 +522,24 @@ const removeStock = (item) => {
   &::after {
     position: absolute;
     content: "";
-    width: 0.32rem;
+    width: 0.16rem;
     height: 100%;
     top: 0;
-    right: -0.32rem;
+    right: -0.16rem;
     background-color: rgb(var(--ex-down-color-rgb) / 0.12);
     transition: all ease-in .2s;
+    border-radius: 0 0.16rem 0.16rem 0;
   }
   &::before {
     position: absolute;
     content: "";
-    width: 0.32rem;
+    width: 0.16rem;
     height: 100%;
     top: 0;
-    left: -0.32rem;
+    left: -0.16rem;
     background-color: rgb(var(--ex-down-color-rgb) / 0.12);
     transition: all ease-in .2s;
+    border-radius: 0.16rem 0 0 0.16rem;
   }
 
   .stock_item {

@@ -24,13 +24,17 @@
             </div>
 
             <!-- 欢迎 -->
-            <div class="welcome">
-                <div class="name mb-[0.36rem]">安全 | 边界 | 严格</div>
-                <div class="title mb-[0.16rem]"><span style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
-                <div class="title mb-[0.36rem]">交易所</div>
-                <div class="name">体验无限可能</div>
+            <div class="welcome" >
+                <div class="name mb-[0.36rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
+                </div>
+                <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span
+                        style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
+                <div class="title mb-[0.36rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
+                <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">体验无限可能</div>
 
-                <div class="btns mt-[0.72rem]" v-if="!token">
+
+                <div class="btns mt-[0.72rem] wow fadeIn"  data-wow-duration="1s"
+                    v-if="homeLoading && !token">
                     <div class="btn ripple-primary" @click="goLogin">登录</div>
                     <div class="btn btn2 ripple-btn" @click="goRegister">注册</div>
                 </div>
@@ -38,7 +42,7 @@
 
 
             <!-- banner -->
-            <view  class="banners wow fadeInUp" data-wow-duration="1s">
+            <!-- <view  class="banners wow fadeInUp" data-wow-duration="1s">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
                         <img v-lazy="getStaticImgUrl('/static/home2/banner1.png')" alt="">
@@ -47,7 +51,7 @@
                         <img v-lazy="getStaticImgUrl('/static/home2/banner2.png')" alt="">
                     </SwipeItem>
                 </Swipe>
-            </view>
+            </view> -->
 
             <!-- 理财 -->
             <div class="recommend-title">
@@ -59,24 +63,26 @@
                 </div>
             </div>
             <div class="f-tabs">
-                <div class="f-tab" :class="{'f-tab-active': fActive == 1}" @click="fActive = 1">{{ t('finance.portfolio_title') }}</div>
-                <div class="f-tab" :class="{'f-tab-active': fActive == 2}" @click="fActive = 2">{{ t('copy.title') }}</div>
+                <div class="f-tab" :class="{ 'f-tab-active': fActive == 1 }" @click="fActive = 1">{{
+                    t('finance.portfolio_title') }}</div>
+                <div class="f-tab" :class="{ 'f-tab-active': fActive == 2 }" @click="fActive = 2">{{ t('copy.title') }}
+                </div>
             </div>
             <!-- 质押挖矿 -->
-            <div class="scroll-box" v-show="fActive == 1">
+            <div class="scroll-box" v-if="fActive == 1">
                 <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
                 </div>
             </div>
             <!-- 跟单 -->
-            <div class="scroll-box" v-show="fActive == 2">
+            <div class="scroll-box" v-if="fActive == 2">
                 <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
                         <FollowItem class="follow-home-item" :item="item" />
                     </div>
                 </div>
             </div>
-            
+
 
             <!-- 市场推荐 -->
             <div class="recommend-title">
@@ -232,14 +238,19 @@ const subs = () => {
 
 
 const activated = ref(false);
+const homeLoading = ref(false)
 let wowObj = {}
 onActivated(() => {
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
     subs();
+    setTimeout(() => {
+        homeLoading.value = true
+    }, 500)
 });
 onDeactivated(() => {
     activated.value = false;
+    homeLoading.value = false
     // 取消订阅
     const socket = startSocket(() => {
         socket && socket.emit("realtime", ""); // 价格变化
@@ -412,23 +423,23 @@ const followList = computed(() => store.state.followList || [])
 <style lang="less" scoped>
 @keyframes rotateShadow {
     0% {
-        box-shadow: 0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0.02rem 0 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     25% {
-        box-shadow: 0 0.02rem 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0 0.02rem 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     50% {
-        box-shadow: -0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: -0.02rem 0 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     75% {
-        box-shadow: 0 -0.02rem 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0 -0.02rem 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     100% {
-        box-shadow: 0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0.02rem 0 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 }
 
@@ -439,13 +450,13 @@ const followList = computed(() => store.state.followList || [])
     overflow: hidden;
 
     .video-bg {
-      -o-object-fit: cover;
-      object-fit: cover;
-      -o-object-position: center center;
-      object-position: center center;
-      position: absolute;
+        -o-object-fit: cover;
+        object-fit: cover;
+        -o-object-position: center center;
+        object-position: center center;
+        position: absolute;
         width: 100%;
-        height: calc(var(--vh) * 100);
+        height: 10rem;
         z-index: 0;
     }
 
@@ -483,19 +494,24 @@ const followList = computed(() => store.state.followList || [])
 
         .welcome {
             color: var(--ex-white);
-            padding: 1rem  0.2rem 0.4rem 0.2rem;
+            padding: 1rem 0.2rem 0.4rem 0.2rem;
+            transform: all ease-in .2s;
+
             .name {
                 font-size: 0.32rem;
             }
+
             .title {
                 font-size: 0.64rem;
                 font-weight: bold;
             }
+
             .btns {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 margin-bottom: 0.4rem;
+
                 .btn {
                     width: 3.2rem;
                     height: 0.88rem;
@@ -507,6 +523,7 @@ const followList = computed(() => store.state.followList || [])
                     color: var(--ex-bg-color);
                     font-size: 0.32rem;
                 }
+
                 .btn2 {
                     background-color: var(--ex-primary-color);
                     color: var(--ex-white);
@@ -614,7 +631,8 @@ const followList = computed(() => store.state.followList || [])
             align-items: center;
             justify-content: flex-start;
             margin-bottom: 0.24rem;
-            .f-tab {    
+
+            .f-tab {
                 height: 0.68rem;
                 border-radius: 1rem;
                 margin-right: 0.12rem;
@@ -623,14 +641,17 @@ const followList = computed(() => store.state.followList || [])
                 align-items: center;
                 justify-content: center;
                 background-color: var(--ex-bg-white1);
-                color: rgba(255,255,255,0.7);
+                color: rgba(255, 255, 255, 0.7);
                 font-size: 0.28rem;
+                transition: all ease-in .2s;
             }
+
             .f-tab-active {
                 background-color: var(--ex-primary-color);
                 color: var(--ex-white);
             }
         }
+
         .scroll-box {
             width: calc(100% + 0.32rem);
             overflow-x: auto;
@@ -643,6 +664,7 @@ const followList = computed(() => store.state.followList || [])
                 position: relative;
                 animation: rotateShadow 3s linear infinite;
             }
+
             .follow-home-item {
                 position: relative;
                 animation: rotateShadow 3s linear infinite;
@@ -693,6 +715,7 @@ const followList = computed(() => store.state.followList || [])
                 font-size: 0.24rem;
                 color: var(--ex-text-color5);
             }
+
             .recommend-icon {
                 width: 0.24rem;
                 height: 0.24rem;
@@ -748,7 +771,7 @@ const followList = computed(() => store.state.followList || [])
                 height: auto;
                 right: 0;
                 bottom: 0;
-               
+
             }
 
             .title {
