@@ -848,11 +848,11 @@ setTimeout(() => {
 
   @media (min-width: 751px) {
     .submit {
-      max-width: 340px;
+      max-width: 375px;
     }
 
     .info_header {
-      max-width: 340px;
+      max-width: 375px; 
     }
   }
 

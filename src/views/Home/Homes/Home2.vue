@@ -77,7 +77,7 @@
             </div>
 
             <!-- 市场推荐 -->
-            <div class="recommend-title" style="margin-top: 0.16rem;">
+            <div class="recommend-title">
                 <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                 </div>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
@@ -451,7 +451,7 @@ const followList = computed(() => store.state.followList || [])
     .home2-content {
         position: relative;
         z-index: 1;
-        padding: 0 0.32rem 2rem 0.32rem;
+        padding: 0 0.24rem 2rem 0.24rem;
         display: flex;
         flex-direction: column;
 
@@ -475,7 +475,7 @@ const followList = computed(() => store.state.followList || [])
         }
 
         .banners {
-            margin: 0.32rem 0 0.4rem 0;
+            margin: 0.24rem 0 0.28rem 0;
 
             .swipers {
                 width: 100%;
@@ -513,7 +513,7 @@ const followList = computed(() => store.state.followList || [])
         .sub-banner {
             width: 100%;
             height: 2.54rem;
-            margin: 0.04rem 0 0.4rem 0;
+            margin: 0 0 0.28rem 0;
             position: relative;
             background-color: var(--ex-bg-color3);
             border-radius: 0.32rem;
@@ -554,11 +554,11 @@ const followList = computed(() => store.state.followList || [])
         .scroll-box {
             width: calc(100% + 0.32rem);
             overflow-x: auto;
-            margin-bottom: 0.32rem;
-            padding-right: 0.32rem;
+            margin-bottom: 0.28rem;
+            padding-right: 0.24rem;
 
             .mining-home-item {
-                margin-right: 0.32rem;
+                margin-right: 0.24rem;
                 display: inline-block;
                 position: relative;
                 animation: rotateShadow 3s linear infinite;
@@ -574,7 +574,7 @@ const followList = computed(() => store.state.followList || [])
                 .scroll-item-follow {
                     width: 6.04rem;
                     height: 3.32rem;
-                    margin-right: 0.32rem;
+                    margin-right: 0.24rem;
                     display: inline-block;
                 }
             }
@@ -598,9 +598,9 @@ const followList = computed(() => store.state.followList || [])
             align-items: center;
             justify-content: space-between;
             color: var(--ex-white);
-            font-size: 0.4rem;
+            font-size: 0.36rem;
             font-weight: 500;
-            margin-bottom: 0.32rem;
+            margin-bottom: 0.24rem;
 
             .point {
                 width: 0.28rem;
@@ -627,7 +627,7 @@ const followList = computed(() => store.state.followList || [])
             color: #fff;
             line-height: normal;
             border-radius: 0.32rem;
-            margin-top: 0.2rem;
+            margin-top: 0.16rem;
             position: relative;
             overflow: hidden;
             box-shadow: 0px 4px 10px 0px rgba(151, 225, 128, 0.15);
@@ -654,7 +654,7 @@ const followList = computed(() => store.state.followList || [])
                 align-items: flex-start;
                 justify-content: center;
                 padding: 0.4rem 0.32rem;
-
+                font-size: 0.28rem;
 
             }
 
@@ -664,10 +664,11 @@ const followList = computed(() => store.state.followList || [])
                 height: auto;
                 right: 0;
                 bottom: 0;
+               
             }
 
             .title {
-                font-size: 0.48rem;
+                font-size: 0.4rem;
                 font-weight: 600;
                 margin-bottom: 0.12rem;
             }
@@ -680,7 +681,7 @@ const followList = computed(() => store.state.followList || [])
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 0.3rem;
+                font-size: 0.28rem;
                 color: var(--ex-white);
                 margin-top: 0.4rem;
             }
@@ -691,11 +692,11 @@ const followList = computed(() => store.state.followList || [])
             flex-wrap: wrap;
             align-items: stretch;
             justify-content: space-between;
-            margin-top: 0.4rem;
+            margin-top: 0.32rem;
 
             .link-item {
                 background-color: var(--ex-bg-color3);
-                width: 3.28rem;
+                width: 3.4rem;
                 border-radius: 0.32rem;
                 padding: 0.12rem 0.12rem 0.16rem 0.12rem;
                 text-align: center;

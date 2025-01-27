@@ -277,16 +277,17 @@ const removeStock = (item) => {
   display: flex;
   align-items: center;
   height: 1.62rem;
-  padding: 0 0.3rem;
+  // padding: 0 0.3rem;
   position: relative;
   // background-color: var(--ex-bg-white2);
   // border-radius: 0.4rem;
-  margin-top: 0.2rem;
+  // margin-top: 0.2rem;
   border-bottom: 1px solid var(--ex-bg-white2);
 
   .td5 {
     flex-shrink: 0;
-    width: 3rem;
+    // width: 3rem;
+    flex: 2.5;
 
     .item_name {
       font-size: 0.32rem;
@@ -308,7 +309,7 @@ const removeStock = (item) => {
   }
 
   .td5--ac {
-    width: 2.3rem;
+    // width: 2.3rem;
   }
 
   .td2 {
@@ -349,7 +350,7 @@ const removeStock = (item) => {
   }
 
   .spark_line_box {
-    padding-right: 0.4rem;
+    padding: 0 0.1rem;
   }
 }
 
@@ -445,7 +446,9 @@ const removeStock = (item) => {
 }
 
 .stock_item_bg {
-  border-radius: 0.32rem;
+  // border-radius: 0.32rem;
+  transition: all ease-in .2s;
+  position: relative;
 }
 
 .stock_item_bg:active {
@@ -454,6 +457,22 @@ const removeStock = (item) => {
 
 .stock_item_up {
   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  &::after {
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    right: -0.32rem;
+    background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  }
+  &::before {
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    left: -0.32rem;
+    background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  }
 
   .stock_item {
     border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.12);
@@ -462,6 +481,22 @@ const removeStock = (item) => {
 
 .stock_item_down {
   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  &::after {
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    right: -0.32rem;
+    background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  }
+  &::before {
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    left: -0.32rem;
+    background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  }
 
   .stock_item {
     border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.12);
