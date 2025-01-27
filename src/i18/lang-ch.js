@@ -40,6 +40,16 @@ export default {
     news: "新聞",
     simulatedTradingTitle: "領取模擬金",
     simulatedTradingButton: "模擬交易",
+
+    secure: "安全",
+    convinient: "便利",
+    reliable: "嚴格",
+    landing_con1: "千萬用戶",
+    landing_con2: "都在用的",
+    landing_con3: "交易所",
+    landing_con4: "體驗無限可能",
+    landing_more: "更多",
+
   },
   login: {
     login: "登錄",

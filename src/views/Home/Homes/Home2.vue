@@ -25,18 +25,18 @@
 
             <!-- 欢迎 -->
             <div class="welcome" >
-                <div class="name mb-[0.36rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
+                <div class="name mb-[0.36rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">{{ t('home.secure') }} | {{ t('home.convinient') }} | {{ t('home.reliable') }}
                 </div>
                 <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span
-                        style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
-                <div class="title mb-[0.36rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
-                <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">体验无限可能</div>
+                        style="color:#F19009;margin-right: 0.04rem;">{{ t('home.landing_con1') }}</span>{{ t('home.landing_con2') }}</div>
+                <div class="title mb-[0.36rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">{{ t('home.landing_con3') }}</div>
+                <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">{{ t('home.landing_con4') }}</div>
 
 
                 <div class="btns mt-[0.72rem] wow fadeIn"  data-wow-duration="1s"
                     v-if="homeLoading && !token">
-                    <div class="btn ripple-primary" @click="goLogin">登录</div>
-                    <div class="btn btn2 ripple-btn" @click="goRegister">注册</div>
+                    <div class="btn ripple-primary" @click="goLogin">{{ t('login.login') }}</div>
+                    <div class="btn btn2 ripple-btn" @click="goRegister">{{ t('trade.stock_opening_token_register') }}</div>
                 </div>
             </div>
 
@@ -55,8 +55,8 @@
 
             <!-- 理财 -->
             <div class="recommend-title">
-                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">理财</div>
-                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">更多</span>
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('home.finance') }}</div>
+                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more') }}</span>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
                     @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
                     <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
@@ -88,7 +88,7 @@
             <div class="recommend-title">
                 <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                 </div>
-                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">更多</span>
+                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more') }}</span>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
                 </div>

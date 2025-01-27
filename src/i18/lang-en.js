@@ -500,6 +500,16 @@ export default {
     news: "News",
     simulatedTradingTitle: "Claim Mock Gold",
     simulatedTradingButton: "Mock Trading",
+
+    secure: "Safe",
+    convinient: "Simple",
+    reliable: "Reliable",
+    landing_con1: "Tens of Millions of Users",
+    landing_con2: " have joined",
+    landing_con3: " LORNA",
+    landing_con4: "Experience Infinite Possibilities",
+    landing_more: "More",
+
   },
   trade: {
     header_stock: "Stocks",

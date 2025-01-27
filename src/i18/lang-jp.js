@@ -305,6 +305,16 @@ export default {
     news: "ニュース",
     simulatedTradingTitle: "模擬ゴールドの獲得",
     simulatedTradingButton: "模擬取引",
+
+    secure: "安全",
+    convinient: "便利",
+    reliable: "厳格",
+    landing_con1: "何百万ユーザー",
+    landing_con2: "皆が使っている",
+    landing_con3: "取引所",
+    landing_con4: "無限の可能性を体験",
+    landing_more: "もっと",
+
   },
   assets: {
     recharge: "入金",

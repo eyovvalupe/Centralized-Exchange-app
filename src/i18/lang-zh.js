@@ -304,6 +304,15 @@ export default {
     news: "新闻",
     simulatedTradingTitle: "领取模拟金",
     simulatedTradingButton: "模拟交易",
+
+    secure: "安全",
+    convinient: "便捷",
+    reliable: "严格",
+    landing_con1: "千万用户",
+    landing_con2: "都在用的",
+    landing_con3: "交易所",
+    landing_con4: "体验无限可能",
+    landing_more: "更多",
   },
   assets: {
     recharge: "充值",

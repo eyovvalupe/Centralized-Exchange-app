@@ -306,6 +306,16 @@ export default {
     news: "뉴스",
     simulatedTradingTitle: "가상 금 획득",
     simulatedTradingButton: "가상 거래",
+
+    secure: "안전",
+    convinient: "편리",
+    reliable: "엄격",
+    landing_con1: "수천만 사용자",
+    landing_con2: "모두가 사용하는",
+    landing_con3: "거래소",
+    landing_con4: "무한한 가능성을 경험하세요",
+    landing_more: "더 많은",
+
   },
   assets: {
     recharge: "충전",
